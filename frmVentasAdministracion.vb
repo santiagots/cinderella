@@ -1,0 +1,396 @@
+﻿Public Class frmVentasAdministracion
+    Dim NegVentas As New Negocio.NegVentas
+    Dim NegStock As New Negocio.NegStock
+    Dim NegComisiones As New Negocio.NegComisiones
+    Dim id_Sucursal As String
+    Dim eVentas As New Entidades.Ventas
+    Dim Funciones As New Funciones
+
+    'Cuando carga el formulario.
+    Private Sub frmVentasAdministracion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Try
+            'Cambio el cursor a "WAIT"
+            Me.Cursor = Cursors.WaitCursor
+
+            'seteo el font a 8px
+            DG_Ventas.AlternatingRowsDefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DG_Ventas.DefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DG_Ventas.RowHeadersDefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DG_Ventas.ColumnHeadersDefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+
+            'seteo las imagenes
+            Dim ListaImagenes = New ImageList
+            ListaImagenes.ImageSize = New Size(32, 32)
+            ListaImagenes.TransparentColor = Color.Blue
+            ListaImagenes.ColorDepth = ColorDepth.Depth32Bit
+            ListaImagenes.Images.Add(My.Resources.Recursos.Ventas)
+            ListaImagenes.Images.Add(My.Resources.Recursos.Lapiz)
+            TabVentas.ImageList = ListaImagenes
+
+            'Sucursal default
+            id_Sucursal = My.Settings("Sucursal")
+
+            'icono de clientes
+            TbListado.ImageIndex = 0
+            'icono de detalle
+            TbDetalle.ImageIndex = 1
+
+            'Seteo fechas.
+            FDesde.Value = Now.Date.AddDays(-30)
+            FHasta.Value = Now.Date.AddDays(1)
+
+
+            'Cargo el datagrid
+            Dim dsVentas As New DataSet
+            dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
+            If dsVentas.Tables(0).Rows.Count > 0 Then
+                DG_Ventas.DataSource = dsVentas.Tables(0)
+                DG_Ventas.AutoGenerateColumns = False
+                DG_Ventas.ColumnHeadersVisible = True
+                DG_Ventas.Columns("id_Venta").Visible = False
+                DG_Ventas.Columns("Descuento").Visible = False
+                DG_Ventas.Columns("Empleado").DisplayIndex = 1
+                DG_Ventas.Columns("Cliente").DisplayIndex = 2
+                DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+                DG_Ventas.Columns("Fecha").DisplayIndex = 4
+                DG_Ventas.Columns("Anulado").DisplayIndex = 5
+                DG_Ventas.Columns("Facturado").DisplayIndex = 6
+                DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
+                DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
+                DG_Ventas.Refresh()
+                lbl_Msg.Visible = False
+            Else
+                DG_Ventas.DataSource = Nothing
+                DG_Ventas.ColumnHeadersVisible = False
+                DG_Ventas.Refresh()
+                lbl_Msg.Visible = True
+            End If
+
+            'Cambio el cursor a NORMAL.
+            Me.Cursor = Cursors.Arrow
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al listar las ventas de la sucursal.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    'Cuando selecciona un tab.
+    Private Sub TabVentas_Selected(ByVal sender As Object, ByVal e As System.Windows.Forms.TabControlEventArgs) Handles TabVentas.Selected
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+
+        If TabVentas.SelectedIndex = 0 Then 'TAB LISTADO DE VENTAS
+            'Actualizo el datagrid si se selecciona el tab del listado
+            Dim dsVentas As New DataSet
+            dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
+            If dsVentas.Tables(0).Rows.Count > 0 Then
+                DG_Ventas.DataSource = dsVentas.Tables(0)
+                DG_Ventas.AutoGenerateColumns = False
+                DG_Ventas.ColumnHeadersVisible = True
+                DG_Ventas.Columns("id_Venta").Visible = False
+                DG_Ventas.Columns("Descuento").Visible = False
+                DG_Ventas.Columns("Empleado").DisplayIndex = 1
+                DG_Ventas.Columns("Cliente").DisplayIndex = 2
+                DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+                DG_Ventas.Columns("Fecha").DisplayIndex = 4
+                DG_Ventas.Columns("Anulado").DisplayIndex = 5
+                DG_Ventas.Columns("Facturado").DisplayIndex = 6
+                DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
+                DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
+                DG_Ventas.Refresh()
+                lbl_Msg.Visible = False
+            Else
+                DG_Ventas.DataSource = Nothing
+                DG_Ventas.ColumnHeadersVisible = False
+                DG_Ventas.Refresh()
+                lbl_Msg.Visible = True
+            End If
+
+            'Seteo el id_CLiente en cero
+            eVentas.id_Venta = 0
+
+            'Limpio Formulario.
+            LimpiarFormulario()
+
+        ElseIf TabVentas.SelectedIndex = 1 Then 'TAB DETALLE DE LA VENTA
+            If eVentas.id_Venta > 0 Or eVentas.id_Venta <> Nothing Then
+
+            Else
+                MessageBox.Show("Debe seleccionar previamente una venta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabVentas.SelectedIndex = 0
+            End If
+        End If
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    'Cuando realiza doble click en el DG_Ventas.
+    Private Sub DG_Ventas_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Ventas.CellDoubleClick
+        Try
+            'Cambio el cursor a "WAIT"
+            Me.Cursor = Cursors.WaitCursor
+
+            'Traigo la venta
+            Dim id_Venta As Integer = DG_Ventas.Rows(e.RowIndex).Cells("id_Venta").Value()
+            Dim dsVentasDetalle, dsVentas As DataSet
+            dsVentas = NegVentas.TraerVenta(id_Venta)
+            eVentas.id_Venta = id_Venta
+            eVentas.id_Sucursal = dsVentas.Tables(0).Rows(0).Item("id_Sucursal").ToString
+            eVentas.id_Empleado = dsVentas.Tables(0).Rows(0).Item("id_Empleado").ToString
+
+            'Cargo los labels de la venta.
+            If dsVentas.Tables(0).Rows.Count <> 0 Then
+                lblCantidad.Text = dsVentas.Tables(0).Rows(0).Item("Cantidad_Total").ToString
+                lblMonto.Text = "$ " & Format(CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal), "###0.00")
+                lblFecha.Text = dsVentas.Tables(0).Rows(0).Item("Fecha").ToString
+                lblSucursal.Text = dsVentas.Tables(0).Rows(0).Item("Sucursal").ToString
+                lblSubtotal.Text = "$ " & Format(CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal), "###0.00")
+                lblDescuento.Text = "$ " & Format(CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal), "###0.00")
+                lblVenta.Text = dsVentas.Tables(0).Rows(0).Item("TiposVenta").ToString
+                lblPago.Text = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString
+
+                If dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
+                    lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString
+                Else
+                    lblCliente.Text = "- - - - - "
+                End If
+
+                If dsVentas.Tables(0).Rows(0).Item("Empleado").ToString <> "" Then
+                    lblVendedor.Text = dsVentas.Tables(0).Rows(0).Item("Empleado").ToString
+                Else
+                    lblVendedor.Text = "- - - - - "
+                End If
+
+                If dsVentas.Tables(0).Rows(0).Item("Encargado").ToString <> "" Then
+                    lblEncargado.Text = dsVentas.Tables(0).Rows(0).Item("Encargado").ToString
+                Else
+                    lblEncargado.Text = "- - - - - "
+                End If
+
+                If dsVentas.Tables(0).Rows(0).Item("Facturado").ToString = "1" Then
+                    lblFacturado.Text = "SI"
+                    BtnFactura.Visible = True
+                    frmVerFactura.id_Venta = id_Venta
+                Else
+                    lblFacturado.Text = "NO"
+                    BtnFactura.Visible = False
+                End If
+
+                If dsVentas.Tables(0).Rows(0).Item("Anulado").ToString = "1" Then
+                    lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", CDate(dsVentas.Tables(0).Rows(0).Item("FechaAnulado"))) & vbCrLf & Replace(Trim(dsVentas.Tables(0).Rows(0).Item("DescripcionAnulado").ToString), "<br />", vbCrLf)
+                    lblAnulado.Visible = True
+                    Gb_Anulado.Visible = False                    
+                Else
+                    lblAnulado.Visible = False
+                    Gb_Anulado.Visible = True
+                    txtDescripcionAnular.Clear()
+                End If
+
+                'Detalle de la venta.
+                dsVentasDetalle = NegVentas.TraerVentaDetalle(id_Venta)
+                For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
+
+                    'Creo la fila del producto.
+                    Dim dgvRow As New DataGridViewRow
+                    Dim dgvCell As DataGridViewCell
+
+                    'Valor de la Columna Numero
+                    dgvCell = New DataGridViewTextBoxCell()
+                    dgvCell.Value = DG_Productos.Rows.Count + 1
+                    dgvRow.Cells.Add(dgvCell)
+
+                    'Valor de la Columna Codigo
+                    dgvCell = New DataGridViewTextBoxCell()
+                    dgvCell.Value = ventaDetalle.item("Codigo").ToString
+                    dgvRow.Cells.Add(dgvCell)
+
+                    'Valor de la Columna Nombre
+                    dgvCell = New DataGridViewTextBoxCell()
+                    dgvCell.Value = ventaDetalle.item("Nombre").ToString
+                    dgvRow.Cells.Add(dgvCell)
+
+                    'Valor de la Columna Cantidad
+                    dgvCell = New DataGridViewTextBoxCell()
+                    dgvCell.Value = ventaDetalle.item("Cantidad").ToString
+                    dgvRow.Cells.Add(dgvCell)
+
+                    'Valor de la Columna Precio
+                    dgvCell = New DataGridViewTextBoxCell()
+                    dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
+                    dgvRow.Cells.Add(dgvCell)
+
+                    'Valor de la Columna Subtotal
+                    dgvCell = New DataGridViewTextBoxCell()
+                    dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
+                    dgvRow.Cells.Add(dgvCell)
+
+                    dgvRow.Height = "20"
+
+                    'Inserto la fila
+                    DG_Productos.Rows.Add(dgvRow)
+                Next
+            End If
+
+            'Cambio el cursor a NORMAL.
+            Me.Cursor = Cursors.Arrow
+
+            'hago foco en el tab_modificacion 
+            TabVentas.SelectedIndex = 1
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al obtener la venta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    'Cuando realiza click en anular venta.
+    Private Sub BtnAnular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAnular.Click
+        Dim Result As DialogResult
+        Dim ResultadoAnulado As Integer
+        Result = MessageBox.Show("¿Está seguro que desea anular la venta?", "Administración de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If Result = System.Windows.Forms.DialogResult.Yes Then 'Si acepta anular la venta
+            'Cambio el cursor a "WAIT"
+            TabVentas.Cursor = Cursors.WaitCursor
+
+            Try
+                'Actualizo el Producto.
+                Dim TextoAnulado As String = Replace(Trim(txtDescripcionAnular.Text), vbCrLf, "<br />")
+                ResultadoAnulado = NegVentas.AnularVenta(eVentas.id_Venta, TextoAnulado)
+
+                If ResultadoAnulado = 1 Then 'Se anulo la venta en productos correctamente.
+
+                    'Actualizo el Stock.
+                    Dim dsVentasDetalle As DataSet
+                    dsVentasDetalle = NegVentas.TraerVentaDetalle(eVentas.id_Venta)
+                    For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
+                        NegStock.AgregarStock(ventaDetalle.item("id_Producto").ToString(), eVentas.id_Sucursal, ventaDetalle.item("Cantidad").ToString())
+                    Next
+
+                    'Actualizo las comisiones.
+                    NegComisiones.AnularComisiones(eVentas.id_Empleado, eVentas.id_Sucursal, eVentas.id_Venta)
+
+                    'Limpio Formulario
+                    txtDescripcionAnular.Clear()
+                    Gb_Anulado.Visible = False
+                    lblAnulado.Visible = True
+                    lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", DateTime.Now)
+
+                    'Muestro el resultado
+                    MessageBox.Show("Se ha anulado la venta correctamente.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+
+                    'Muestro el resultado
+                    MessageBox.Show("No ha podido ser anulada la venta. Por favor, intente más tarde o contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+
+            Catch ex As Exception
+                'Muestro el resultado
+                MessageBox.Show("Se ha encontrado un error al anular la venta. Por favor, contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+            'Cambio el cursor a NORMAL.
+            TabVentas.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    'Limpia el formulario.
+    Sub LimpiarFormulario()
+        DG_Productos.Rows.Clear()
+        lblCantidad.Text = "- - - - -"
+        lblMonto.Text = "- - - - -"
+        lblFecha.Text = "- - - - -"
+        lblSucursal.Text = "- - - - -"
+        lblVendedor.Text = "- - - - -"
+        lblVenta.Text = "- - - - -"
+        lblPago.Text = "- - - - -"
+        lblFacturado.Text = "- - - - -"
+        lblCliente.Text = "- - - - -"
+        lblAnulado.Visible = False
+        BtnFactura.Visible = False
+        Gb_Anulado.Visible = False
+    End Sub
+
+    'Filtra las ventas.
+    Private Sub BtnFiltrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnFiltrar.Click
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+
+        'Cargo el datagrid
+        Dim dsVentas As New DataSet
+        dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
+
+        If dsVentas.Tables(0).Rows.Count > 0 Then
+            DG_Ventas.DataSource = dsVentas.Tables(0)
+            DG_Ventas.AutoGenerateColumns = False
+            DG_Ventas.ColumnHeadersVisible = True
+            DG_Ventas.Columns("id_Venta").Visible = False
+            DG_Ventas.Columns("Descuento").Visible = False
+            DG_Ventas.Columns("Empleado").DisplayIndex = 1
+            DG_Ventas.Columns("Cliente").DisplayIndex = 2
+            DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+            DG_Ventas.Columns("Fecha").DisplayIndex = 4
+            DG_Ventas.Columns("Anulado").DisplayIndex = 5
+            DG_Ventas.Columns("Facturado").DisplayIndex = 6
+            DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
+            DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
+            DG_Ventas.Refresh()
+            lbl_Msg.Visible = False
+        Else
+            DG_Ventas.DataSource = Nothing
+            DG_Ventas.ColumnHeadersVisible = False
+            DG_Ventas.Refresh()
+            lbl_Msg.Visible = True
+        End If
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    'Click en "Ver Detalle de Factura"
+    Private Sub BtnComisiones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnFactura.Click
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmVerFactura).MdiParent = MDIContenedor
+        Funciones.ControlInstancia(frmVerFactura).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    'Boton reestablecer.
+    Private Sub btn_Restablecer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_Restablecer.Click
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+
+        'Seteo fechas.
+        FDesde.Value = Now.Date.AddDays(-30)
+        FHasta.Value = Now.Date
+
+        'Cargo el datagrid
+        Dim dsVentas As New DataSet
+        dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
+
+        If dsVentas.Tables(0).Rows.Count > 0 Then
+            DG_Ventas.DataSource = dsVentas.Tables(0)
+            DG_Ventas.AutoGenerateColumns = False
+            DG_Ventas.ColumnHeadersVisible = True
+            DG_Ventas.Columns("id_Venta").Visible = False
+            DG_Ventas.Columns("Descuento").Visible = False
+            DG_Ventas.Columns("Empleado").DisplayIndex = 1
+            DG_Ventas.Columns("Cliente").DisplayIndex = 2
+            DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+            DG_Ventas.Columns("Fecha").DisplayIndex = 4
+            DG_Ventas.Columns("Anulado").DisplayIndex = 5
+            DG_Ventas.Columns("Facturado").DisplayIndex = 6
+            DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
+            DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
+            DG_Ventas.Refresh()
+            lbl_Msg.Visible = False
+        Else
+            DG_Ventas.DataSource = Nothing
+            DG_Ventas.ColumnHeadersVisible = False
+            DG_Ventas.Refresh()
+            lbl_Msg.Visible = True
+        End If
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+End Class
