@@ -27,6 +27,7 @@ Public Class NegEmpleados
             entEmpleado.Apellido = dsEmpleado.Tables(0).Rows(0).Item("Apellido").ToString
             entEmpleado.SueldoNormal = dsEmpleado.Tables(0).Rows(0).Item("SueldoNormal").ToString
             entEmpleado.SueldoFeriado = dsEmpleado.Tables(0).Rows(0).Item("SueldoFeriado").ToString
+            entEmpleado.SueldoPresentismo = dsEmpleado.Tables(0).Rows(0).Item("SueldoPresentismo").ToString
             entEmpleado.Direccion = dsEmpleado.Tables(0).Rows(0).Item("Direccion").ToString
             entEmpleado.Codigo_Postal = dsEmpleado.Tables(0).Rows(0).Item("Codigo_Postal").ToString
             entEmpleado.Cuil = dsEmpleado.Tables(0).Rows(0).Item("Cuil").ToString
@@ -85,6 +86,7 @@ Public Class NegEmpleados
                 .AddWithValue("@Direccion", eempleados.Direccion)
                 .AddWithValue("@SueldoNormal", eempleados.SueldoNormal)
                 .AddWithValue("@SueldoFeriado", eempleados.SueldoFeriado)
+                .AddWithValue("@SueldoPresentismo", eempleados.SueldoPresentismo)
                 .AddWithValue("@id_Provincia", eempleados.id_Provincia)
                 .AddWithValue("@id_Departamento", eempleados.id_Distrito)
                 .AddWithValue("@id_Localidad", eempleados.id_Localidad)
@@ -190,6 +192,7 @@ Public Class NegEmpleados
                 .AddWithValue("@Direccion", eempleados.Direccion)
                 .AddWithValue("@SueldoNormal", eempleados.SueldoNormal)
                 .AddWithValue("@SueldoFeriado", eempleados.SueldoFeriado)
+                .AddWithValue("@SueldoPresentismo", eempleados.SueldoPresentismo)
                 .AddWithValue("@id_Provincia", eempleados.id_Provincia)
                 .AddWithValue("@id_Departamento", eempleados.id_Distrito)
                 .AddWithValue("@id_Localidad", eempleados.id_Localidad)

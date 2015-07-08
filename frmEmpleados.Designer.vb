@@ -132,6 +132,10 @@ Partial Class frmEmpleados
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErrorEmpleados = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolEmpl = New System.Windows.Forms.ToolTip(Me.components)
+        Me.txt_SueldoPresente_mod = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.txt_SueldoPresente = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.TabEmpleados.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Empleados, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -187,8 +191,8 @@ Partial Class frmEmpleados
         Me.DG_Empleados.AllowUserToResizeColumns = False
         Me.DG_Empleados.AllowUserToResizeRows = False
         Me.DG_Empleados.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Empleados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Empleados.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Empleado, Me.Nombre, Me.Apellido, Me.Cuil, Me.Telefono, Me.Sucursal, Me.TipoEmpleado, Me.Habilitado, Me.Modificar, Me.Eliminar})
         Me.DG_Empleados.Cursor = System.Windows.Forms.Cursors.Hand
@@ -288,7 +292,7 @@ Partial Class frmEmpleados
         'GB_Buscar
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
         Me.GB_Buscar.Controls.Add(Me.btn_Buscar)
         Me.GB_Buscar.Controls.Add(Me.txt_buscar)
@@ -328,7 +332,7 @@ Partial Class frmEmpleados
         Me.btn_Buscar.Text = "Buscar"
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolEmpl.SetToolTip(Me.btn_Buscar, "Haz click aquí para buscar empleados con los criterios de busqueda seleccionados." & _
-                "")
+        "")
         Me.btn_Buscar.UseVisualStyleBackColor = True
         '
         'txt_buscar
@@ -362,8 +366,10 @@ Partial Class frmEmpleados
         'Group
         '
         Me.Group.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Group.Controls.Add(Me.txt_SueldoPresente)
+        Me.Group.Controls.Add(Me.Label25)
         Me.Group.Controls.Add(Me.txt_Cuil)
         Me.Group.Controls.Add(Me.Label21)
         Me.Group.Controls.Add(Me.FechaNacimiento)
@@ -460,7 +466,7 @@ Partial Class frmEmpleados
         Me.CheckSucursales.CheckOnClick = True
         Me.CheckSucursales.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CheckSucursales.FormattingEnabled = True
-        Me.CheckSucursales.Location = New System.Drawing.Point(392, 226)
+        Me.CheckSucursales.Location = New System.Drawing.Point(392, 187)
         Me.CheckSucursales.Name = "CheckSucursales"
         Me.CheckSucursales.Size = New System.Drawing.Size(347, 84)
         Me.CheckSucursales.TabIndex = 16
@@ -511,14 +517,14 @@ Partial Class frmEmpleados
         '
         'txt_SueldoNormal
         '
-        Me.txt_SueldoNormal.Location = New System.Drawing.Point(542, 315)
+        Me.txt_SueldoNormal.Location = New System.Drawing.Point(542, 286)
         Me.txt_SueldoNormal.Name = "txt_SueldoNormal"
         Me.txt_SueldoNormal.Size = New System.Drawing.Size(197, 21)
         Me.txt_SueldoNormal.TabIndex = 17
         '
         'txt_SueldoFeriado
         '
-        Me.txt_SueldoFeriado.Location = New System.Drawing.Point(542, 348)
+        Me.txt_SueldoFeriado.Location = New System.Drawing.Point(542, 319)
         Me.txt_SueldoFeriado.Name = "txt_SueldoFeriado"
         Me.txt_SueldoFeriado.Size = New System.Drawing.Size(197, 21)
         Me.txt_SueldoFeriado.TabIndex = 18
@@ -526,7 +532,7 @@ Partial Class frmEmpleados
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(389, 354)
+        Me.Label6.Location = New System.Drawing.Point(389, 325)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(148, 15)
         Me.Label6.TabIndex = 31
@@ -535,7 +541,7 @@ Partial Class frmEmpleados
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(389, 321)
+        Me.Label5.Location = New System.Drawing.Point(389, 292)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(147, 15)
         Me.Label5.TabIndex = 30
@@ -544,7 +550,7 @@ Partial Class frmEmpleados
         'lbl_Sucursal
         '
         Me.lbl_Sucursal.AutoSize = True
-        Me.lbl_Sucursal.Location = New System.Drawing.Point(390, 208)
+        Me.lbl_Sucursal.Location = New System.Drawing.Point(390, 169)
         Me.lbl_Sucursal.Name = "lbl_Sucursal"
         Me.lbl_Sucursal.Size = New System.Drawing.Size(147, 15)
         Me.lbl_Sucursal.TabIndex = 29
@@ -632,17 +638,17 @@ Partial Class frmEmpleados
         '
         'txt_Observaciones
         '
-        Me.txt_Observaciones.Location = New System.Drawing.Point(392, 118)
+        Me.txt_Observaciones.Location = New System.Drawing.Point(392, 114)
         Me.txt_Observaciones.MaxLength = 255
         Me.txt_Observaciones.Multiline = True
         Me.txt_Observaciones.Name = "txt_Observaciones"
-        Me.txt_Observaciones.Size = New System.Drawing.Size(347, 85)
+        Me.txt_Observaciones.Size = New System.Drawing.Size(347, 47)
         Me.txt_Observaciones.TabIndex = 15
         '
         'lbl_Observaciones
         '
         Me.lbl_Observaciones.AutoSize = True
-        Me.lbl_Observaciones.Location = New System.Drawing.Point(389, 101)
+        Me.lbl_Observaciones.Location = New System.Drawing.Point(389, 97)
         Me.lbl_Observaciones.Name = "lbl_Observaciones"
         Me.lbl_Observaciones.Size = New System.Drawing.Size(88, 15)
         Me.lbl_Observaciones.TabIndex = 19
@@ -791,8 +797,10 @@ Partial Class frmEmpleados
         'GB_Modificacion
         '
         Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Modificacion.Controls.Add(Me.txt_SueldoPresente_mod)
+        Me.GB_Modificacion.Controls.Add(Me.Label24)
         Me.GB_Modificacion.Controls.Add(Me.txt_Cuil_mod)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
         Me.GB_Modificacion.Controls.Add(Me.Label22)
@@ -905,7 +913,7 @@ Partial Class frmEmpleados
         Me.CheckSucursales_mod.CheckOnClick = True
         Me.CheckSucursales_mod.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CheckSucursales_mod.FormattingEnabled = True
-        Me.CheckSucursales_mod.Location = New System.Drawing.Point(392, 226)
+        Me.CheckSucursales_mod.Location = New System.Drawing.Point(391, 187)
         Me.CheckSucursales_mod.Name = "CheckSucursales_mod"
         Me.CheckSucursales_mod.Size = New System.Drawing.Size(347, 84)
         Me.CheckSucursales_mod.TabIndex = 16
@@ -956,14 +964,14 @@ Partial Class frmEmpleados
         '
         'txt_SueldoNormal_mod
         '
-        Me.txt_SueldoNormal_mod.Location = New System.Drawing.Point(542, 315)
+        Me.txt_SueldoNormal_mod.Location = New System.Drawing.Point(542, 286)
         Me.txt_SueldoNormal_mod.Name = "txt_SueldoNormal_mod"
         Me.txt_SueldoNormal_mod.Size = New System.Drawing.Size(197, 21)
         Me.txt_SueldoNormal_mod.TabIndex = 17
         '
         'txt_SueldoFeriado_mod
         '
-        Me.txt_SueldoFeriado_mod.Location = New System.Drawing.Point(542, 348)
+        Me.txt_SueldoFeriado_mod.Location = New System.Drawing.Point(542, 319)
         Me.txt_SueldoFeriado_mod.Name = "txt_SueldoFeriado_mod"
         Me.txt_SueldoFeriado_mod.Size = New System.Drawing.Size(197, 21)
         Me.txt_SueldoFeriado_mod.TabIndex = 18
@@ -971,7 +979,7 @@ Partial Class frmEmpleados
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(389, 354)
+        Me.Label8.Location = New System.Drawing.Point(389, 325)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(148, 15)
         Me.Label8.TabIndex = 63
@@ -980,7 +988,7 @@ Partial Class frmEmpleados
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(389, 321)
+        Me.Label12.Location = New System.Drawing.Point(389, 292)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(147, 15)
         Me.Label12.TabIndex = 62
@@ -1004,7 +1012,7 @@ Partial Class frmEmpleados
         'lbl_Sucursal_mod
         '
         Me.lbl_Sucursal_mod.AutoSize = True
-        Me.lbl_Sucursal_mod.Location = New System.Drawing.Point(390, 208)
+        Me.lbl_Sucursal_mod.Location = New System.Drawing.Point(389, 169)
         Me.lbl_Sucursal_mod.Name = "lbl_Sucursal_mod"
         Me.lbl_Sucursal_mod.Size = New System.Drawing.Size(147, 15)
         Me.lbl_Sucursal_mod.TabIndex = 61
@@ -1109,17 +1117,17 @@ Partial Class frmEmpleados
         '
         'txt_Observaciones_mod
         '
-        Me.txt_Observaciones_mod.Location = New System.Drawing.Point(392, 118)
+        Me.txt_Observaciones_mod.Location = New System.Drawing.Point(392, 114)
         Me.txt_Observaciones_mod.MaxLength = 255
         Me.txt_Observaciones_mod.Multiline = True
         Me.txt_Observaciones_mod.Name = "txt_Observaciones_mod"
-        Me.txt_Observaciones_mod.Size = New System.Drawing.Size(347, 85)
+        Me.txt_Observaciones_mod.Size = New System.Drawing.Size(347, 47)
         Me.txt_Observaciones_mod.TabIndex = 15
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(389, 101)
+        Me.Label7.Location = New System.Drawing.Point(389, 97)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(88, 15)
         Me.Label7.TabIndex = 52
@@ -1248,6 +1256,38 @@ Partial Class frmEmpleados
         Me.ToolEmpl.IsBalloon = True
         Me.ToolEmpl.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolEmpl.ToolTipTitle = "Ayuda"
+        '
+        'txt_SueldoPresente_mod
+        '
+        Me.txt_SueldoPresente_mod.Location = New System.Drawing.Point(541, 351)
+        Me.txt_SueldoPresente_mod.Name = "txt_SueldoPresente_mod"
+        Me.txt_SueldoPresente_mod.Size = New System.Drawing.Size(197, 21)
+        Me.txt_SueldoPresente_mod.TabIndex = 81
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(388, 357)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(155, 15)
+        Me.Label24.TabIndex = 82
+        Me.Label24.Text = "Sueldo por día Presente (*)"
+        '
+        'txt_SueldoPresente
+        '
+        Me.txt_SueldoPresente.Location = New System.Drawing.Point(542, 351)
+        Me.txt_SueldoPresente.Name = "txt_SueldoPresente"
+        Me.txt_SueldoPresente.Size = New System.Drawing.Size(197, 21)
+        Me.txt_SueldoPresente.TabIndex = 83
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(388, 357)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(155, 15)
+        Me.Label25.TabIndex = 84
+        Me.Label25.Text = "Sueldo por día Presente (*)"
         '
         'frmEmpleados
         '
@@ -1383,4 +1423,8 @@ Partial Class frmEmpleados
     Friend WithEvents Btn_Cancelar As System.Windows.Forms.Button
     Friend WithEvents txt_Cuil As System.Windows.Forms.MaskedTextBox
     Friend WithEvents txt_Cuil_mod As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents txt_SueldoPresente_mod As System.Windows.Forms.TextBox
+    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents txt_SueldoPresente As System.Windows.Forms.TextBox
+    Friend WithEvents Label25 As System.Windows.Forms.Label
 End Class

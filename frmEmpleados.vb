@@ -30,6 +30,7 @@ Public Class frmEmpleados
         txt_Direccion.Clear()
         txt_SueldoNormal.Clear()
         txt_SueldoFeriado.Clear()
+        txt_SueldoPresente.Clear()
         cb_Provincia.SelectedItem = Nothing
         fuc.SetearCheckboxlist(CheckSucursales, False)
         CheckSucursales.ClearSelected()
@@ -53,6 +54,7 @@ Public Class frmEmpleados
         txt_Direccion_mod.Clear()
         txt_SueldoNormal_mod.Clear()
         txt_SueldoFeriado_mod.Clear()
+        txt_SueldoPresente_mod.Clear()
         cb_Provincia_mod.SelectedItem = Nothing
         fuc.SetearCheckboxlist(CheckSucursales_mod, False)
         CheckSucursales_mod.ClearSelected()
@@ -210,7 +212,7 @@ Public Class frmEmpleados
 
     'Boton Agregar Empleado.
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
-        If txt_SueldoFeriado.Text = "" Or txt_SueldoNormal.Text = "" Or txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Apellido.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or cb_TipoEmpleado.SelectedItem Is Nothing Or CheckSucursales.SelectedItems.Count <= 0 Then
+        If txt_SueldoFeriado.Text = "" Or txt_SueldoNormal.Text = "" Or txt_SueldoPresente.Text = "" Or txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Apellido.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or cb_TipoEmpleado.SelectedItem Is Nothing Or CheckSucursales.SelectedItems.Count <= 0 Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -233,6 +235,7 @@ Public Class frmEmpleados
                 EEmpleados.Direccion = Trim(txt_Direccion.Text)
                 EEmpleados.SueldoFeriado = Trim(txt_SueldoFeriado.Text)
                 EEmpleados.SueldoNormal = Trim(txt_SueldoNormal.Text)
+                EEmpleados.SueldoPresentismo = Trim(txt_SueldoPresente.Text)
                 EEmpleados.id_Provincia = cb_Provincia.SelectedValue
                 EEmpleados.id_TipoEmpleado = cb_TipoEmpleado.SelectedValue
                 EEmpleados.id_Localidad = cb_Localidad.SelectedValue
@@ -269,7 +272,7 @@ Public Class frmEmpleados
 
     'Boton Modificar Empleado.
     Private Sub Btn_Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Modificar.Click
-        If txt_SueldoFeriado_mod.Text = "" Or txt_SueldoNormal_mod.Text = "" Or txt_Direccion_mod.Text = "" Or txt_CodigoPostal_mod.Text = "" Or txt_Nombre_mod.Text = "" Or txt_Apellido_mod.Text = "" Or cb_Provincia_mod.SelectedItem Is Nothing Or cb_Distrito_mod.SelectedItem Is Nothing Or cb_Localidad_mod.SelectedItem Is Nothing Or cb_TipoEmpleado_mod.SelectedItem Is Nothing Or CheckSucursales_mod.SelectedItems.Count <= 0 Then
+        If txt_SueldoFeriado_mod.Text = "" Or txt_SueldoNormal_mod.Text = "" Or txt_SueldoPresente_mod.Text = "" Or txt_Direccion_mod.Text = "" Or txt_CodigoPostal_mod.Text = "" Or txt_Nombre_mod.Text = "" Or txt_Apellido_mod.Text = "" Or cb_Provincia_mod.SelectedItem Is Nothing Or cb_Distrito_mod.SelectedItem Is Nothing Or cb_Localidad_mod.SelectedItem Is Nothing Or cb_TipoEmpleado_mod.SelectedItem Is Nothing Or CheckSucursales_mod.SelectedItems.Count <= 0 Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -292,6 +295,7 @@ Public Class frmEmpleados
                 EEmpleados.Direccion = Trim(txt_Direccion_mod.Text)
                 EEmpleados.SueldoFeriado = Trim(txt_SueldoFeriado_mod.Text)
                 EEmpleados.SueldoNormal = Trim(txt_SueldoNormal_mod.Text)
+                EEmpleados.SueldoPresentismo = Trim(txt_SueldoPresente_mod.Text)
                 EEmpleados.id_Provincia = cb_Provincia_mod.SelectedValue
                 EEmpleados.id_TipoEmpleado = cb_TipoEmpleado_mod.SelectedValue
                 EEmpleados.id_Localidad = cb_Localidad_mod.SelectedValue
@@ -426,12 +430,12 @@ Public Class frmEmpleados
                 End If
             End If
 
-        'Limpio los formularios
-        LimpiarFormAltaEmpleados()
-        LimpiarFormModificacionEmpleados()
+            'Limpio los formularios
+            LimpiarFormAltaEmpleados()
+            LimpiarFormModificacionEmpleados()
 
-        'Seteo el id_Empleado en cero
-        EEmpleados.id_Empleado = 0
+            'Seteo el id_Empleado en cero
+            EEmpleados.id_Empleado = 0
 
         ElseIf TabEmpleados.SelectedIndex = 1 Then 'TAB ALTA DE EMPLEADO
 
@@ -464,12 +468,12 @@ Public Class frmEmpleados
             EEmpleados.id_Empleado = 0
 
         ElseIf TabEmpleados.SelectedIndex = 2 Then 'TAB MODIFICACION DE EMPLEADO
-        If EEmpleados.id_Empleado > 0 Or EEmpleados.id_Empleado <> Nothing Then
+            If EEmpleados.id_Empleado > 0 Or EEmpleados.id_Empleado <> Nothing Then
 
-        Else
-            MessageBox.Show("Debe seleccionar previamente un empleado.", "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            TabEmpleados.SelectedIndex = 0
-        End If
+            Else
+                MessageBox.Show("Debe seleccionar previamente un empleado.", "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                TabEmpleados.SelectedIndex = 0
+            End If
         End If
 
         'Cambio el cursor a NORMAL.
@@ -530,6 +534,7 @@ Public Class frmEmpleados
             txt_Direccion_mod.Text = EEmpleados.Direccion
             txt_SueldoFeriado_mod.Text = EEmpleados.SueldoFeriado
             txt_SueldoNormal_mod.Text = EEmpleados.SueldoNormal
+            txt_SueldoPresente_mod.Text = EEmpleados.SueldoPresentismo
             FechaNacimiento_mod.Value = EEmpleados.FechaNacimiento
             FechaIngreso_mod.Value = EEmpleados.FechaIngreso
 
@@ -742,6 +747,7 @@ Public Class frmEmpleados
                 txt_Direccion_mod.Text = EEmpleados.Direccion
                 txt_SueldoFeriado_mod.Text = EEmpleados.SueldoFeriado
                 txt_SueldoNormal_mod.Text = EEmpleados.SueldoNormal
+                txt_SueldoPresente_mod.Text = EEmpleados.SueldoPresentismo
                 FechaNacimiento_mod.Value = EEmpleados.FechaNacimiento
                 FechaIngreso_mod.Value = EEmpleados.FechaIngreso
 
@@ -1042,6 +1048,21 @@ Public Class frmEmpleados
             ErrorEmpleados.SetError(txt_SueldoFeriado, Nothing)
         End If
     End Sub
+
+    'Valida solo moneda.
+    Private Sub txt_SueldoPresente_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_SueldoPresente.KeyPress
+        If e.KeyChar.ToString() = "." Then
+            e.KeyChar = CChar(",")
+        End If
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+            ErrorEmpleados.SetError(txt_SueldoPresente, "Debe ingresar el sueldo en el formato permitido. Ejemplo: 725,50")
+        Else
+            ErrorEmpleados.SetError(txt_SueldoPresente, Nothing)
+        End If
+    End Sub
 #End Region
 
 #Region "Región Validaciones de formulario Modificar"
@@ -1144,6 +1165,21 @@ Public Class frmEmpleados
             ErrorEmpleados.SetError(txt_SueldoFeriado_mod, "Debe ingresar el sueldo en el formato permitido. Ejemplo: 725,50")
         Else
             ErrorEmpleados.SetError(txt_SueldoFeriado_mod, Nothing)
+        End If
+    End Sub
+
+    'Valida solo moneda.
+    Private Sub txt_SueldoPresente_mod_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_SueldoPresente_mod.KeyPress, txt_SueldoPresente_mod.KeyPress
+        If e.KeyChar.ToString() = "." Then
+            e.KeyChar = CChar(",")
+        End If
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+            ErrorEmpleados.SetError(txt_SueldoPresente_mod, "Debe ingresar el sueldo en el formato permitido. Ejemplo: 725,50")
+        Else
+            ErrorEmpleados.SetError(txt_SueldoPresente_mod, Nothing)
         End If
     End Sub
 #End Region

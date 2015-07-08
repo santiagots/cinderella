@@ -2,7 +2,7 @@
 
     Private id_Empleado_, id_Sucursal_, id_TipoEmpleado_, id_Provincia_, id_Distrito_, id_Localidad_, Codigo_Postal_, Habilitado_ As Integer
     Private Nombre_, Apellido_, Direccion_, Telefono_, Telefono2_, Mail_, Observaciones_, Cuil_ As String
-    Private SueldoNormal_, SueldoFeriado_ As Double
+    Private SueldoNormal_, SueldoFeriado_, SueldoPresentismo_ As Double
     Private Sucursales_ As Object
     Private FechaNacimiento_, FechaIngreso_ As Date
     Dim Fecha_ As DateTime
@@ -166,6 +166,15 @@
         End Get
         Set(ByVal value As Double)
             SueldoFeriado_ = value
+        End Set
+    End Property
+
+    Public Property SueldoPresentismo() As Double
+        Get
+            Return SueldoPresentismo_
+        End Get
+        Set(ByVal value As Double)
+            SueldoPresentismo_ = value
         End Set
     End Property
 
