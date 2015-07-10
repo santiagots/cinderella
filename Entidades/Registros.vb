@@ -1,6 +1,7 @@
 ﻿Public Class Registros
     Private id_Registro_, id_Sucursal_ As Integer
-    Private Empleados_ As Object
+    Private EmpleadosPresente_ As Object
+    Private EmpleadosAusente_ As Object
     Private Fecha_ As String
 
     Public Property id_Registro() As Integer
@@ -30,12 +31,21 @@
         End Set
     End Property
 
-    Public Property Empleados() As System.Windows.Forms.CheckedListBox
+    Public Property EmpleadosPresente() As System.Windows.Forms.CheckedListBox
         Get
-            Return Empleados_
+            Return EmpleadosPresente_
         End Get
         Set(ByVal value As System.Windows.Forms.CheckedListBox)
-            Empleados_ = value
+            EmpleadosPresente_ = value
+        End Set
+    End Property
+
+    Public Property EmpleadosAusente() As System.Windows.Forms.CheckedListBox
+        Get
+            Return EmpleadosAusente_
+        End Get
+        Set(ByVal value As System.Windows.Forms.CheckedListBox)
+            EmpleadosAusente_ = value
         End Set
     End Property
 End Class

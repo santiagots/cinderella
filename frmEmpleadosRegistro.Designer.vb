@@ -29,16 +29,22 @@ Partial Class frmEmpleadosRegistro
         Me.LstFechas = New System.Windows.Forms.ListBox()
         Me.Tcontrol = New System.Windows.Forms.TabControl()
         Me.TabIngresar = New System.Windows.Forms.TabPage()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.CheckListEmpleadosAusentes = New System.Windows.Forms.CheckedListBox()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
-        Me.CheckListEmpleados = New System.Windows.Forms.CheckedListBox()
+        Me.CheckListEmpleadosPresentes = New System.Windows.Forms.CheckedListBox()
         Me.DT_Fecha = New System.Windows.Forms.DateTimePicker()
         Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.TabVisualizar = New System.Windows.Forms.TabPage()
         Me.Btn_Editar = New System.Windows.Forms.Button()
-        Me.CheckListEmpleadosEdit = New System.Windows.Forms.CheckedListBox()
+        Me.CheckListEmpleadosPresentesEdit = New System.Windows.Forms.CheckedListBox()
         Me.DT_FechaEdit = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Gb_Fechas2 = New System.Windows.Forms.GroupBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.CheckListEmpleadosAusentesEdit = New System.Windows.Forms.CheckedListBox()
         Me.Gb_Fechas.SuspendLayout()
         Me.Tcontrol.SuspendLayout()
         Me.TabIngresar.SuspendLayout()
@@ -49,14 +55,14 @@ Partial Class frmEmpleadosRegistro
         'Gb_Fechas
         '
         Me.Gb_Fechas.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Gb_Fechas.Controls.Add(Me.Btn_Eliminar)
         Me.Gb_Fechas.Controls.Add(Me.Label1)
         Me.Gb_Fechas.Controls.Add(Me.LstFechas)
         Me.Gb_Fechas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Gb_Fechas.Location = New System.Drawing.Point(14, 14)
+        Me.Gb_Fechas.Location = New System.Drawing.Point(12, 14)
         Me.Gb_Fechas.Name = "Gb_Fechas"
-        Me.Gb_Fechas.Size = New System.Drawing.Size(348, 452)
+        Me.Gb_Fechas.Size = New System.Drawing.Size(434, 452)
         Me.Gb_Fechas.TabIndex = 0
         Me.Gb_Fechas.TabStop = False
         Me.Gb_Fechas.Text = "Fechas Ingresas"
@@ -67,7 +73,7 @@ Partial Class frmEmpleadosRegistro
         Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
         Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(210, 19)
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(296, 19)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(130, 35)
         Me.Btn_Eliminar.TabIndex = 1
@@ -88,42 +94,76 @@ Partial Class frmEmpleadosRegistro
         'LstFechas
         '
         Me.LstFechas.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LstFechas.Cursor = System.Windows.Forms.Cursors.Hand
         Me.LstFechas.FormattingEnabled = True
         Me.LstFechas.ItemHeight = 15
         Me.LstFechas.Location = New System.Drawing.Point(10, 60)
         Me.LstFechas.Name = "LstFechas"
-        Me.LstFechas.Size = New System.Drawing.Size(330, 379)
+        Me.LstFechas.Size = New System.Drawing.Size(416, 379)
         Me.LstFechas.TabIndex = 2
         '
         'Tcontrol
         '
         Me.Tcontrol.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Tcontrol.Controls.Add(Me.TabIngresar)
         Me.Tcontrol.Controls.Add(Me.TabVisualizar)
         Me.Tcontrol.Location = New System.Drawing.Point(7, 23)
         Me.Tcontrol.Name = "Tcontrol"
         Me.Tcontrol.SelectedIndex = 0
-        Me.Tcontrol.Size = New System.Drawing.Size(397, 420)
+        Me.Tcontrol.Size = New System.Drawing.Size(416, 420)
         Me.Tcontrol.TabIndex = 4
         '
         'TabIngresar
         '
+        Me.TabIngresar.Controls.Add(Me.Label4)
+        Me.TabIngresar.Controls.Add(Me.Label3)
+        Me.TabIngresar.Controls.Add(Me.CheckListEmpleadosAusentes)
         Me.TabIngresar.Controls.Add(Me.Btn_Agregar)
-        Me.TabIngresar.Controls.Add(Me.CheckListEmpleados)
+        Me.TabIngresar.Controls.Add(Me.CheckListEmpleadosPresentes)
         Me.TabIngresar.Controls.Add(Me.DT_Fecha)
         Me.TabIngresar.Controls.Add(Me.lbl_Fecha)
         Me.TabIngresar.Location = New System.Drawing.Point(4, 24)
         Me.TabIngresar.Name = "TabIngresar"
         Me.TabIngresar.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIngresar.Size = New System.Drawing.Size(389, 392)
+        Me.TabIngresar.Size = New System.Drawing.Size(408, 392)
         Me.TabIngresar.TabIndex = 0
         Me.TabIngresar.Text = "Ingreso"
         Me.TabIngresar.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(204, 39)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(63, 15)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Ausencias"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(7, 39)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(68, 15)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Asistencias"
+        '
+        'CheckListEmpleadosAusentes
+        '
+        Me.CheckListEmpleadosAusentes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckListEmpleadosAusentes.CheckOnClick = True
+        Me.CheckListEmpleadosAusentes.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosAusentes.FormattingEnabled = True
+        Me.CheckListEmpleadosAusentes.Location = New System.Drawing.Point(207, 57)
+        Me.CheckListEmpleadosAusentes.Name = "CheckListEmpleadosAusentes"
+        Me.CheckListEmpleadosAusentes.Size = New System.Drawing.Size(190, 324)
+        Me.CheckListEmpleadosAusentes.TabIndex = 6
         '
         'Btn_Agregar
         '
@@ -139,18 +179,18 @@ Partial Class frmEmpleadosRegistro
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Agregar.UseVisualStyleBackColor = True
         '
-        'CheckListEmpleados
+        'CheckListEmpleadosPresentes
         '
-        Me.CheckListEmpleados.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckListEmpleados.CheckOnClick = True
-        Me.CheckListEmpleados.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CheckListEmpleados.FormattingEnabled = True
-        Me.CheckListEmpleados.Location = New System.Drawing.Point(10, 47)
-        Me.CheckListEmpleados.Name = "CheckListEmpleados"
-        Me.CheckListEmpleados.Size = New System.Drawing.Size(370, 340)
-        Me.CheckListEmpleados.TabIndex = 5
+        Me.CheckListEmpleadosPresentes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckListEmpleadosPresentes.CheckOnClick = True
+        Me.CheckListEmpleadosPresentes.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosPresentes.FormattingEnabled = True
+        Me.CheckListEmpleadosPresentes.Location = New System.Drawing.Point(10, 57)
+        Me.CheckListEmpleadosPresentes.Name = "CheckListEmpleadosPresentes"
+        Me.CheckListEmpleadosPresentes.Size = New System.Drawing.Size(190, 324)
+        Me.CheckListEmpleadosPresentes.TabIndex = 5
         '
         'DT_Fecha
         '
@@ -171,14 +211,17 @@ Partial Class frmEmpleadosRegistro
         '
         'TabVisualizar
         '
+        Me.TabVisualizar.Controls.Add(Me.Label6)
+        Me.TabVisualizar.Controls.Add(Me.CheckListEmpleadosAusentesEdit)
+        Me.TabVisualizar.Controls.Add(Me.Label5)
         Me.TabVisualizar.Controls.Add(Me.Btn_Editar)
-        Me.TabVisualizar.Controls.Add(Me.CheckListEmpleadosEdit)
+        Me.TabVisualizar.Controls.Add(Me.CheckListEmpleadosPresentesEdit)
         Me.TabVisualizar.Controls.Add(Me.DT_FechaEdit)
         Me.TabVisualizar.Controls.Add(Me.Label2)
         Me.TabVisualizar.Location = New System.Drawing.Point(4, 24)
         Me.TabVisualizar.Name = "TabVisualizar"
         Me.TabVisualizar.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabVisualizar.Size = New System.Drawing.Size(389, 392)
+        Me.TabVisualizar.Size = New System.Drawing.Size(408, 392)
         Me.TabVisualizar.TabIndex = 1
         Me.TabVisualizar.Text = "Editar / Detalle"
         Me.TabVisualizar.UseVisualStyleBackColor = True
@@ -197,18 +240,18 @@ Partial Class frmEmpleadosRegistro
         Me.Btn_Editar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Editar.UseVisualStyleBackColor = True
         '
-        'CheckListEmpleadosEdit
+        'CheckListEmpleadosPresentesEdit
         '
-        Me.CheckListEmpleadosEdit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckListEmpleadosEdit.CheckOnClick = True
-        Me.CheckListEmpleadosEdit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CheckListEmpleadosEdit.FormattingEnabled = True
-        Me.CheckListEmpleadosEdit.Location = New System.Drawing.Point(10, 47)
-        Me.CheckListEmpleadosEdit.Name = "CheckListEmpleadosEdit"
-        Me.CheckListEmpleadosEdit.Size = New System.Drawing.Size(370, 340)
-        Me.CheckListEmpleadosEdit.TabIndex = 9
+        Me.CheckListEmpleadosPresentesEdit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckListEmpleadosPresentesEdit.CheckOnClick = True
+        Me.CheckListEmpleadosPresentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosPresentesEdit.FormattingEnabled = True
+        Me.CheckListEmpleadosPresentesEdit.Location = New System.Drawing.Point(10, 57)
+        Me.CheckListEmpleadosPresentesEdit.Name = "CheckListEmpleadosPresentesEdit"
+        Me.CheckListEmpleadosPresentesEdit.Size = New System.Drawing.Size(190, 324)
+        Me.CheckListEmpleadosPresentesEdit.TabIndex = 9
         '
         'DT_FechaEdit
         '
@@ -230,21 +273,52 @@ Partial Class frmEmpleadosRegistro
         'Gb_Fechas2
         '
         Me.Gb_Fechas2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Fechas2.Controls.Add(Me.Tcontrol)
-        Me.Gb_Fechas2.Location = New System.Drawing.Point(368, 15)
+        Me.Gb_Fechas2.Location = New System.Drawing.Point(452, 15)
         Me.Gb_Fechas2.Name = "Gb_Fechas2"
-        Me.Gb_Fechas2.Size = New System.Drawing.Size(411, 451)
+        Me.Gb_Fechas2.Size = New System.Drawing.Size(430, 451)
         Me.Gb_Fechas2.TabIndex = 5
         Me.Gb_Fechas2.TabStop = False
         Me.Gb_Fechas2.Text = "Ingresar/Visualizar Fechas y Empleados"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(7, 39)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(68, 15)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Asistencias"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(204, 39)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(63, 15)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "Ausencias"
+        '
+        'CheckListEmpleadosAusentesEdit
+        '
+        Me.CheckListEmpleadosAusentesEdit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckListEmpleadosAusentesEdit.CheckOnClick = True
+        Me.CheckListEmpleadosAusentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosAusentesEdit.FormattingEnabled = True
+        Me.CheckListEmpleadosAusentesEdit.Location = New System.Drawing.Point(207, 57)
+        Me.CheckListEmpleadosAusentesEdit.Name = "CheckListEmpleadosAusentesEdit"
+        Me.CheckListEmpleadosAusentesEdit.Size = New System.Drawing.Size(190, 324)
+        Me.CheckListEmpleadosAusentesEdit.TabIndex = 11
         '
         'frmEmpleadosRegistro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(794, 472)
+        Me.ClientSize = New System.Drawing.Size(894, 472)
         Me.Controls.Add(Me.Gb_Fechas2)
         Me.Controls.Add(Me.Gb_Fechas)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -271,13 +345,19 @@ Partial Class frmEmpleadosRegistro
     Friend WithEvents Tcontrol As System.Windows.Forms.TabControl
     Friend WithEvents TabIngresar As System.Windows.Forms.TabPage
     Friend WithEvents Btn_Agregar As System.Windows.Forms.Button
-    Friend WithEvents CheckListEmpleados As System.Windows.Forms.CheckedListBox
+    Friend WithEvents CheckListEmpleadosPresentes As System.Windows.Forms.CheckedListBox
     Friend WithEvents DT_Fecha As System.Windows.Forms.DateTimePicker
     Friend WithEvents lbl_Fecha As System.Windows.Forms.Label
     Friend WithEvents TabVisualizar As System.Windows.Forms.TabPage
     Friend WithEvents Gb_Fechas2 As System.Windows.Forms.GroupBox
     Friend WithEvents Btn_Editar As System.Windows.Forms.Button
-    Friend WithEvents CheckListEmpleadosEdit As System.Windows.Forms.CheckedListBox
+    Friend WithEvents CheckListEmpleadosPresentesEdit As System.Windows.Forms.CheckedListBox
     Friend WithEvents DT_FechaEdit As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents CheckListEmpleadosAusentes As System.Windows.Forms.CheckedListBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents CheckListEmpleadosAusentesEdit As System.Windows.Forms.CheckedListBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
 End Class

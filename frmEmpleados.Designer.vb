@@ -739,7 +739,7 @@ Partial Class frmEmpleados
         Me.chk_Habilitado.Location = New System.Drawing.Point(542, 388)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado.TabIndex = 19
+        Me.chk_Habilitado.TabIndex = 20
         Me.chk_Habilitado.UseVisualStyleBackColor = True
         '
         'txt_Nombre
@@ -778,7 +778,7 @@ Partial Class frmEmpleados
         Me.Btn_Agregar.Location = New System.Drawing.Point(639, 412)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Agregar.TabIndex = 20
+        Me.Btn_Agregar.TabIndex = 21
         Me.Btn_Agregar.Text = "Agregar"
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolEmpl.SetToolTip(Me.Btn_Agregar, "Agrega el empleado al sistema.")
@@ -868,7 +868,7 @@ Partial Class frmEmpleados
         Me.Btn_Cancelar.Location = New System.Drawing.Point(427, 412)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Cancelar.TabIndex = 80
+        Me.Btn_Cancelar.TabIndex = 21
         Me.Btn_Cancelar.Text = "Cancelar"
         Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolEmpl.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de empleados.")
@@ -1003,7 +1003,7 @@ Partial Class frmEmpleados
         Me.Btn_Eliminar.Location = New System.Drawing.Point(533, 412)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Eliminar.TabIndex = 20
+        Me.Btn_Eliminar.TabIndex = 22
         Me.Btn_Eliminar.Text = "Eliminar"
         Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolEmpl.SetToolTip(Me.Btn_Eliminar, "Elimina el empleado del sistema.")
@@ -1201,7 +1201,7 @@ Partial Class frmEmpleados
         Me.chk_Habilitado_mod.Location = New System.Drawing.Point(542, 388)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
         Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado_mod.TabIndex = 19
+        Me.chk_Habilitado_mod.TabIndex = 20
         Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
         '
         'txt_Nombre_mod
@@ -1240,7 +1240,7 @@ Partial Class frmEmpleados
         Me.Btn_Modificar.Location = New System.Drawing.Point(639, 412)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Modificar.TabIndex = 21
+        Me.Btn_Modificar.TabIndex = 23
         Me.Btn_Modificar.Text = "Modificar"
         Me.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolEmpl.SetToolTip(Me.Btn_Modificar, "Modifica el empleado en el sistema.")
@@ -1262,7 +1262,7 @@ Partial Class frmEmpleados
         Me.txt_SueldoPresente_mod.Location = New System.Drawing.Point(541, 351)
         Me.txt_SueldoPresente_mod.Name = "txt_SueldoPresente_mod"
         Me.txt_SueldoPresente_mod.Size = New System.Drawing.Size(197, 21)
-        Me.txt_SueldoPresente_mod.TabIndex = 81
+        Me.txt_SueldoPresente_mod.TabIndex = 19
         '
         'Label24
         '
@@ -1278,7 +1278,7 @@ Partial Class frmEmpleados
         Me.txt_SueldoPresente.Location = New System.Drawing.Point(542, 351)
         Me.txt_SueldoPresente.Name = "txt_SueldoPresente"
         Me.txt_SueldoPresente.Size = New System.Drawing.Size(197, 21)
-        Me.txt_SueldoPresente.TabIndex = 83
+        Me.txt_SueldoPresente.TabIndex = 19
         '
         'Label25
         '
