@@ -7,12 +7,14 @@
     Dim NegAdicionales As New Negocio.NegAdicionales
     Dim eAdelantos As New Entidades.Adelantos
     Dim eEmpleados As New Entidades.Empleados
+    Dim NegErrores As New Negocio.NegManejadorErrores
     Dim fuc As New Funciones
     Dim id_Sucursal As String
     Dim id_Empleado As Integer
     Dim FDesde As String
     Dim FHasta As String
-    Dim SueldoDepositar As Double = 0
+    Dim SueldoPorDepositar As Double = 0
+    Dim SueldoDepositadoPago As Double = 0
 
     'Cuando se carga el formulario.
     Private Sub frmEmpleadosSaldos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -42,7 +44,9 @@
         txt_FDesde.Value = "01/" & d.Month.ToString() & "/" & d.Year.ToString
 
         'Seteo de grafica.
-        GbDetalle.Visible = False
+        GbSueldoTrabajado.Visible = False
+        GbSueldoAbonado.Visible = False
+        GbSueldoLiquidar.Visible = False
 
         'Cambio el cursor a "NORMAL"
         Me.Cursor = Cursors.Arrow
@@ -55,22 +59,28 @@
             Me.Cursor = Cursors.WaitCursor
 
             'Empieza a cargar.
-            GbDetalle.Visible = False
+            GbSueldoTrabajado.Visible = False
+            GbSueldoAbonado.Visible = False
+            GbSueldoLiquidar.Visible = False
 
             'Obtengo los datos.
             id_Empleado = CbEmpleados.SelectedValue
             eEmpleados = NegEmpleados.TraerEmpleado(id_Empleado)
             FDesde = txt_FDesde.Value.ToString("yyyy/MM/dd")
-            FHasta = txt_FHasta.Value.ToString("yyyy/MM/dd")
+            FHasta = txt_FDesde.Value.AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
+
             Dim Adelantos As Double = 0
             Dim Adicionales As Double = 0
             Dim Comisiones As Double = 0
             Dim Dias As Integer = 0
             Dim DiasFeriados As Integer = 0
+            Dim DiasAusente As Integer = 0
             Dim SueldoNormal As Double = 0
             Dim SueldoFeriado As Double = 0
+            Dim SueldoPresentismo As Double = 0
+            Dim SueldoPorPagar As Double = 0
             Dim Vacaciones As Double = 0
-            Dim Aguinaldo As Double = 0            
+            Dim Aguinaldo As Double = 0
             Dim Subto As Double = 0
             Dim SueldoMano As Double = 0
             Dim Sueldo As Double = 0
@@ -114,6 +124,23 @@
             'Obtengo el total de recibos.
             Sueldo = NegRecibos.ObtenerRecibos(id_Empleado, id_Sucursal, FDesde, FHasta)
 
+            'Obtengo el Sueldo Depositado Pago del empleado
+            SueldoDepositadoPago = NegEmpleados.SueldoDepositadoTotla(id_Empleado, id_Sucursal, FDesde, FHasta)
+            If SueldoDepositadoPago <> 0 Then
+                BtnSueldosPagados.Visible = True
+            Else
+                BtnSueldosPagados.Visible = False
+            End If
+
+            SueldoPorPagar = Sueldo - SueldoDepositadoPago
+            If SueldoPorPagar <> 0 Then
+                lblSueldoDepositarMaximo.Visible = True
+                txt_Saldo.ReadOnly = False
+            Else
+                lblSueldoDepositarMaximo.Visible = False
+                txt_Saldo.ReadOnly = True
+            End If
+
             'Obtengo el total de aguinaldo.
             Aguinaldo = NegRecibos.ObtenerAguinaldo(id_Empleado, id_Sucursal, FDesde, FHasta)
             If Aguinaldo <> 0 Then
@@ -140,14 +167,20 @@
                 BtnFeriados.Visible = False
             End If
 
+            'Obtengo el total de Presentimo.
+            DiasAusente = NegRegistros.ObtenerDiasAusentes(id_Empleado, id_Sucursal, FDesde, FHasta)
+            If DiasAusente = 0 Then
+                SueldoPresentismo = Dias * eEmpleados.SueldoPresentismo
+            End If
+
             'Obtengo el Saldo.
             If Adelantos < 0 Then
                 Adelantos = Adelantos * -1
             End If
 
-            Subto = (Comisiones + SueldoNormal + SueldoFeriado + Aguinaldo + Vacaciones + Adicionales)
+            Subto = (Comisiones + SueldoNormal + SueldoFeriado + Aguinaldo + Vacaciones + Adicionales + SueldoPresentismo)
 
-            formula1 = Subto - Adelantos - Sueldo
+            formula1 = Subto - Adelantos - SueldoPorPagar
             If formula1 >= 0 Then
                 formula2 = 0
             Else
@@ -155,13 +188,13 @@
             End If
 
             If (Sueldo - formula2) >= 0 Then
-                SueldoDepositar = Sueldo - SueldoMano
+                SueldoPorDepositar = SueldoPorPagar - SueldoMano
             Else
-                SueldoDepositar = 0
+                SueldoPorDepositar = 0
             End If
 
-            If (Subto - Adelantos - Sueldo) >= 0 Then
-                SueldoMano = Subto - Adelantos - Sueldo
+            If (Subto - Adelantos - SueldoPorPagar) >= 0 Then
+                SueldoMano = Subto - Adelantos - SueldoPorPagar
             Else
                 SueldoMano = 0
             End If
@@ -172,16 +205,17 @@
             txt_Comisiones.Text = Comisiones.ToString("c")
             txt_Dias.Text = SueldoNormal.ToString("c")
             txt_DiasFeriados.Text = SueldoFeriado.ToString("c")
+            txt_Presentismo.Text = SueldoPresentismo.ToString("c")
             txt_Vacaciones.Text = Vacaciones.ToString("c")
             txt_Aguinaldo.Text = Aguinaldo.ToString("c")
-            lbl_diasn.Text = "(" & Dias & " día/s trab.)"
-            lbl_diasf.Text = "(" & DiasFeriados & " día/s trab.)"
             txt_subto.Text = Subto.ToString("c")
             txt_sueldoMano.Text = SueldoMano.ToString("c")
-            txt_Saldo.Text = SueldoDepositar.ToString("c")
+            txt_Saldo.Text = SueldoPorDepositar.ToString("c")
             txt_Deuda.Text = Deuda.ToString("c")
+            txt_SueldosPagados.Text = SueldoDepositadoPago.ToString("c")
+            lblSueldoDepositarMaximo.Text = String.Format("(Máximo {0:C})", SueldoPorDepositar)
 
-            If NegEmpleados.SueldoDepositado(id_Empleado, id_Sucursal, FDesde) = 1 Then
+            If SueldoPorDepositar = 0 Then
                 btn_depositar.Enabled = False
                 ToolEmpleados.SetToolTip(btn_depositar, "Deposito de sueldo ya realizado.")
             Else
@@ -190,7 +224,9 @@
             End If
 
             'Termino de cargar.
-            GbDetalle.Visible = True
+            GbSueldoTrabajado.Visible = True
+            GbSueldoAbonado.Visible = True
+            GbSueldoLiquidar.Visible = True
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
@@ -214,9 +250,9 @@
         txt_Saldo.Clear()
         txt_Vacaciones.Clear()
         txt_Aguinaldo.Clear()
-        lbl_diasn.Text = "(---)"
-        lbl_diasf.Text = "(---)"
-        GbDetalle.Visible = False
+        GbSueldoTrabajado.Visible = False
+        GbSueldoAbonado.Visible = False
+        GbSueldoLiquidar.Visible = False
     End Sub
 
     'Link COMISIONES.
@@ -303,12 +339,26 @@
         Me.Cursor = Cursors.Arrow
     End Sub
 
+    'Link SUELDOS PAGADOS
+    Private Sub BtnSueldosPagados_Click(sender As Object, e As EventArgs) Handles BtnSueldosPagados.Click
+        Me.Cursor = Cursors.WaitCursor
+        frmVerSueldosEmpleado.id_Empleado = id_Empleado
+        frmVerSueldosEmpleado.id_Sucursal = id_Sucursal
+        frmVerSueldosEmpleado.FDesde = FDesde
+        frmVerSueldosEmpleado.FHasta = FHasta
+        fuc.ControlInstancia(frmVerSueldosEmpleado).MdiParent = MDIContenedor
+        fuc.ControlInstancia(frmVerSueldosEmpleado).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
     Private Sub btn_depositar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_depositar.Click
 
         If MessageBox.Show("¿Ésta seguro que desea efectuar el deposito del sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre & " ?", "Visualización de movimientos de Empleados", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
             Try
                 'Cambio el cursor a "WAIT"
                 Me.Cursor = Cursors.WaitCursor
+
+                Dim sueldoDepositado As Integer = CDbl(txt_Saldo.Text)
 
                 'Agrego el gasto del sueldo a depositar.
                 Dim NegMovimiento As New Negocio.NegMovimientos
@@ -318,14 +368,14 @@
                 eGasto.id_Sucursal = id_Sucursal
                 eGasto.id_Tipo = 42 'tipo sueldo a depositar
                 eGasto.Fecha = Now
-                eGasto.Monto = SueldoDepositar
+                eGasto.Monto = sueldoDepositado
                 NegMovimiento.AltaMovGasto(eGasto)
 
                 'Agrego el retiro de socios en forma negativa.
                 Dim eRetiro As New Entidades.MovRetiro
                 eRetiro.id_Movimiento = 0
                 eRetiro.id_Sucursal = id_Sucursal
-                eRetiro.Monto = SueldoDepositar * -1
+                eRetiro.Monto = sueldoDepositado * -1
                 eRetiro.Fecha = Now
                 eRetiro.Encargado = "Cinderella"
                 eRetiro.Persona = "Cinderella"
@@ -336,17 +386,37 @@
                 Dim eDeposito As New Entidades.Depositos
                 eDeposito.id_Sucursal = id_Sucursal
                 eDeposito.id_Empleado = id_Empleado
-                eDeposito.Monto = SueldoDepositar
+                eDeposito.Monto = sueldoDepositado
                 eDeposito.Fecha = Now
                 eDeposito.Mes = Month(txt_FDesde.Text)
                 eDeposito.Anio = Year(txt_FDesde.Text)
                 eDeposito.Habilitado = 1
                 NegEmpleados.AltaDeposito(eDeposito)
 
-                btn_depositar.Enabled = False
-                ToolEmpleados.SetToolTip(btn_depositar, "Deposito de sueldo ya realizado.")
+                'actualizo los valores del sueldo depositado y sueldo por depositar
+                SueldoDepositadoPago += sueldoDepositado
+                txt_SueldosPagados.Text = SueldoDepositadoPago.ToString("c")
+
+                SueldoPorDepositar -= sueldoDepositado
+                txt_Saldo.Text = (SueldoPorDepositar).ToString("c")
+                lblSueldoDepositarMaximo.Text = String.Format("(Máximo {0:C})", SueldoPorDepositar)
+
+                If SueldoPorDepositar <> 0 Then
+                    lblSueldoDepositarMaximo.Visible = True
+                    txt_Saldo.ReadOnly = False
+                Else
+                    lblSueldoDepositarMaximo.Visible = False
+                    txt_Saldo.ReadOnly = True
+                End If
+
+                'actualizo el estado del boton en caso de que no se encuentre mas sueldo para depositar
+                If SueldoPorDepositar = 0 Then
+                    btn_depositar.Enabled = False
+                    ToolEmpleados.SetToolTip(btn_depositar, "Deposito de sueldo ya realizado.")
+                End If
 
                 MessageBox.Show("Se ha depositado correctamente el sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre, "Visualización de movimientos de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
 
                 'Cambio el cursor a "NORMAL"
                 Me.Cursor = Cursors.Arrow
@@ -358,4 +428,35 @@
         End If
 
     End Sub
+
+
+    Private Sub txt_Saldo_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Saldo.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txt_Saldo_Leave(sender As Object, e As EventArgs) Handles txt_Saldo.Leave
+        If (txt_Saldo.Text = String.Empty) Then
+            txt_Saldo.Text = SueldoPorDepositar.ToString("c")
+            Return
+        End If
+
+        Dim SaldoDepositarIngresado As Double = CDbl(txt_Saldo.Text)
+
+        If (SueldoPorDepositar < SaldoDepositarIngresado) Then
+            ErrorProvider.SetError(txt_Saldo, "El sueldo ingresado debe ser menor o igual al Máximo.")
+        Else
+            txt_Saldo.Text = SaldoDepositarIngresado.ToString("c")
+        End If
+    End Sub
+
+    Private Sub txt_Saldo_Enter(sender As Object, e As EventArgs) Handles txt_Saldo.Enter
+        If (Not txt_Saldo.ReadOnly) Then
+            txt_Saldo.Text = String.Empty
+        End If
+    End Sub
+
 End Class

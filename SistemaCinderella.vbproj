@@ -711,6 +711,12 @@
     <Compile Include="frmVerSueldos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmVerSueldosEmpleado.Designer.vb">
+      <DependentUpon>frmVerSueldosEmpleado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmVerSueldosEmpleado.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmVerVacaciones.Designer.vb">
       <DependentUpon>frmVerVacaciones.vb</DependentUpon>
     </Compile>
@@ -1054,6 +1060,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerSueldos.resx">
       <DependentUpon>frmVerSueldos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVerSueldosEmpleado.resx">
+      <DependentUpon>frmVerSueldosEmpleado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerVacaciones.resx">
       <DependentUpon>frmVerVacaciones.vb</DependentUpon>

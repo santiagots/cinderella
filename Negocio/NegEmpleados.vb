@@ -444,6 +444,36 @@ Public Class NegEmpleados
         End If
     End Function
 
+    'Funcion que returna el total de sueldo depositados en un periodo de tiempo.
+    Function SueldoDepositadoTotla(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As Integer
+        Dim ds As DataSet
+        Dim SueldoDepositado As Integer = 0
+
+        If (HayInternet) Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_detalle @id_Sucursal=" & id_Sucursal & ", @id_Empleado='" & id_Empleado & "', @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_detalle @id_Sucursal=" & id_Sucursal & ", @id_Empleado='" & id_Empleado & "', @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
+        End If
+
+        For Each emp In ds.Tables(0).Rows
+            SueldoDepositado += CInt(emp.Item("Monto"))
+        Next
+        Return SueldoDepositado
+    End Function
+
+    'Funcion que returna el detalle de sueldo depositados en un periodo de tiempo.
+    Function SueldoDepositadoDetalle(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As DataSet
+        Dim ds As DataSet
+        Dim SueldoDepositado As Integer = 0
+
+        If (HayInternet) Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_detalle @id_Sucursal=" & id_Sucursal & ", @id_Empleado='" & id_Empleado & "', @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_detalle @id_Sucursal=" & id_Sucursal & ", @id_Empleado='" & id_Empleado & "', @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
+        End If
+
+        Return ds
+    End Function
     'Funcion para insertar un adelanto.
     Function AltaDeposito(ByVal eDeposito As Entidades.Depositos) As String
         'Declaro variables
