@@ -80,6 +80,7 @@
     <Compile Include="Cuenta_Corriente.vb" />
     <Compile Include="Depositos.vb" />
     <Compile Include="Empleados.vb" />
+    <Compile Include="EstadoCuenta.vb" />
     <Compile Include="Facturacion.vb" />
     <Compile Include="Mail.vb" />
     <Compile Include="Materiales.vb" />

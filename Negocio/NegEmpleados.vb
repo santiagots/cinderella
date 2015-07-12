@@ -445,7 +445,7 @@ Public Class NegEmpleados
     End Function
 
     'Funcion que returna el total de sueldo depositados en un periodo de tiempo.
-    Function SueldoDepositadoTotla(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As Integer
+    Function SueldoDepositadoTotal(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As Integer
         Dim ds As DataSet
         Dim SueldoDepositado As Integer = 0
 
@@ -517,6 +517,96 @@ Public Class NegEmpleados
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Function ObtenerEstadoCuenta(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As EstadoCuenta
+
+        Dim cmd As New SqlCommand
+        'Conecto
+        If (HayInternet) Then
+            cmd.Connection = clsDatos.ConectarRemoto()
+        Else
+            cmd.Connection = clsDatos.ConectarLocal()
+        End If
+
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Empleado_Obtener_Estado_Cuenta"
+        With cmd.Parameters
+            .AddWithValue("@id_Empleado", id_Empleado)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@FDesde", FechaDesde)
+            .AddWithValue("@FHasta", FechaHasta)
+        End With
+
+        Dim DiasFeriados As New SqlParameter("@DiasFeriados", SqlDbType.Int)
+        DiasFeriados.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(DiasFeriados)
+
+        Dim DiasNormales As New SqlParameter("@DiasNormales", SqlDbType.Int)
+        DiasNormales.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(DiasNormales)
+
+        Dim DiasAusente As New SqlParameter("@DiasAusente", SqlDbType.Int)
+        DiasAusente.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(DiasAusente)
+
+        Dim Adicionales As New SqlParameter("@Adicionales", SqlDbType.Float)
+        Adicionales.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(Adicionales)
+
+        Dim Vacaciones As New SqlParameter("@Vacaciones", SqlDbType.Float)
+        Vacaciones.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(Vacaciones)
+
+        Dim Aguinaldo As New SqlParameter("@Aguinaldo", SqlDbType.Float)
+        Aguinaldo.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(Aguinaldo)
+
+        Dim RecivoSueldo As New SqlParameter("@RecivoSueldo", SqlDbType.Float)
+        RecivoSueldo.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(RecivoSueldo)
+
+        Dim Comisiones As New SqlParameter("@Comisiones", SqlDbType.Float)
+        Comisiones.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(Comisiones)
+
+        Dim Adelantos As New SqlParameter("@Adelantos", SqlDbType.Float)
+        Adelantos.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(Adelantos)
+
+        Dim SueldoPagado As New SqlParameter("@SueldoPagado", SqlDbType.Float)
+        SueldoPagado.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(SueldoPagado)
+
+        Dim Deuda As New SqlParameter("@Deuda", SqlDbType.Float)
+        Deuda.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(Deuda)
+
+        cmd.ExecuteNonQuery()
+
+        'Desconecto
+        If (HayInternet) Then
+            clsDatos.DesconectarRemoto()
+        Else
+            clsDatos.DesconectarLocal()
+        End If
+
+        Dim estadoCuenta As EstadoCuenta = New EstadoCuenta()
+
+        estadoCuenta.Adicionales = Adicionales.Value
+        estadoCuenta.Adelantos = Adelantos.Value
+        estadoCuenta.Comisiones = Comisiones.Value
+        estadoCuenta.Deudas = Deuda.Value
+        estadoCuenta.CantidadDiasAusente = DiasAusente.Value
+        estadoCuenta.CantidadDiasFeriados = DiasFeriados.Value
+        estadoCuenta.CantidadDiasNormales = DiasNormales.Value
+        estadoCuenta.RecivoSueldo = RecivoSueldo.Value
+        estadoCuenta.Aguinaldo = Aguinaldo.Value
+        estadoCuenta.SueldoPago = SueldoPagado.Value
+        estadoCuenta.Vacaciones = Vacaciones.Value
+
+        'muestro el mensaje
+        Return estadoCuenta
     End Function
 
 End Class

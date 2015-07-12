@@ -80,14 +80,14 @@ Partial Class frmReciboSueldo
         Me.btnAceptar.Text = "Aceptar"
         Me.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolTip1.SetToolTip(Me.btnAceptar, "Al aceptar el formulario se registrará en el sistema el recibo de sueldo del empl" & _
-                "eado seleccionado.")
+        "eado seleccionado.")
         Me.btnAceptar.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.txtAguinaldo)
         Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.txtVacaciones)
@@ -113,40 +113,40 @@ Partial Class frmReciboSueldo
         'txtAguinaldo
         '
         Me.txtAguinaldo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtAguinaldo.Location = New System.Drawing.Point(127, 137)
+        Me.txtAguinaldo.Location = New System.Drawing.Point(144, 136)
         Me.txtAguinaldo.Name = "txtAguinaldo"
         Me.txtAguinaldo.Size = New System.Drawing.Size(140, 21)
         Me.txtAguinaldo.TabIndex = 3
         Me.ToolTip1.SetToolTip(Me.txtAguinaldo, "Si ingresa un monto para un mes y año ya cargado, éste será modificado por el nue" & _
-                "vo valor ingresado.")
+        "vo valor ingresado.")
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(11, 138)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(62, 15)
+        Me.Label7.Size = New System.Drawing.Size(121, 15)
         Me.Label7.TabIndex = 14
-        Me.Label7.Text = "Aguinaldo"
+        Me.Label7.Text = "Diferencia Aguinaldo"
         '
         'txtVacaciones
         '
         Me.txtVacaciones.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtVacaciones.Location = New System.Drawing.Point(127, 110)
+        Me.txtVacaciones.Location = New System.Drawing.Point(144, 109)
         Me.txtVacaciones.Name = "txtVacaciones"
         Me.txtVacaciones.Size = New System.Drawing.Size(140, 21)
         Me.txtVacaciones.TabIndex = 2
         Me.ToolTip1.SetToolTip(Me.txtVacaciones, "Si ingresa un monto para un mes y año ya cargado, éste será modificado por el nue" & _
-                "vo valor ingresado.")
+        "vo valor ingresado.")
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(11, 110)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(70, 15)
+        Me.Label6.Size = New System.Drawing.Size(127, 15)
         Me.Label6.TabIndex = 12
-        Me.Label6.Text = "Vacaciones"
+        Me.Label6.Text = "Diferencia vacaciones"
         '
         'Label5
         '
@@ -172,7 +172,7 @@ Partial Class frmReciboSueldo
         Me.Cb_Meses.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Meses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Meses.FormattingEnabled = True
-        Me.Cb_Meses.Location = New System.Drawing.Point(127, 53)
+        Me.Cb_Meses.Location = New System.Drawing.Point(144, 51)
         Me.Cb_Meses.Name = "Cb_Meses"
         Me.Cb_Meses.Size = New System.Drawing.Size(140, 23)
         Me.Cb_Meses.TabIndex = 9
@@ -180,12 +180,12 @@ Partial Class frmReciboSueldo
         'txtMonto
         '
         Me.txtMonto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtMonto.Location = New System.Drawing.Point(127, 83)
+        Me.txtMonto.Location = New System.Drawing.Point(144, 82)
         Me.txtMonto.Name = "txtMonto"
         Me.txtMonto.Size = New System.Drawing.Size(140, 21)
         Me.txtMonto.TabIndex = 1
         Me.ToolTip1.SetToolTip(Me.txtMonto, "Si ingresa un monto para un mes y año ya cargado, éste será modificado por el nue" & _
-                "vo valor ingresado.")
+        "vo valor ingresado.")
         '
         'cb_Empleados
         '
@@ -193,9 +193,9 @@ Partial Class frmReciboSueldo
         Me.cb_Empleados.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_Empleados.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Empleados.FormattingEnabled = True
-        Me.cb_Empleados.Location = New System.Drawing.Point(127, 23)
+        Me.cb_Empleados.Location = New System.Drawing.Point(144, 23)
         Me.cb_Empleados.Name = "cb_Empleados"
-        Me.cb_Empleados.Size = New System.Drawing.Size(330, 23)
+        Me.cb_Empleados.Size = New System.Drawing.Size(313, 23)
         Me.cb_Empleados.TabIndex = 0
         '
         'Label3

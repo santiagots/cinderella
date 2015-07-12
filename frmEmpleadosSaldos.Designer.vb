@@ -71,7 +71,6 @@ Partial Class frmEmpleadosSaldos
         Me.GbSueldoLiquidar = New System.Windows.Forms.GroupBox()
         Me.lblSueldoDepositarMaximo = New System.Windows.Forms.Label()
         Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GbSueldoTrabajado.SuspendLayout()
         Me.GbSueldoAbonado.SuspendLayout()
@@ -621,7 +620,6 @@ Partial Class frmEmpleadosSaldos
         '
         'GbSueldoLiquidar
         '
-        Me.GbSueldoLiquidar.Controls.Add(Me.Button1)
         Me.GbSueldoLiquidar.Controls.Add(Me.btn_depositar)
         Me.GbSueldoLiquidar.Controls.Add(Me.lblSueldoDepositarMaximo)
         Me.GbSueldoLiquidar.Controls.Add(Me.Label8)
@@ -649,21 +647,6 @@ Partial Class frmEmpleadosSaldos
         '
         Me.ErrorProvider.BlinkRate = 200
         Me.ErrorProvider.ContainerControl = Me
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.Pagar_48
-        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button1.Location = New System.Drawing.Point(296, 88)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(112, 40)
-        Me.Button1.TabIndex = 37
-        Me.Button1.Text = "Pagar en Mano"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'frmEmpleadosSaldos
         '
@@ -739,5 +722,4 @@ Partial Class frmEmpleadosSaldos
     Friend WithEvents BtnSueldosPagados As System.Windows.Forms.Button
     Friend WithEvents lblSueldoDepositarMaximo As System.Windows.Forms.Label
     Friend WithEvents ErrorProvider As System.Windows.Forms.ErrorProvider
-    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class
