@@ -58,12 +58,6 @@ Public Class MDIContenedor
             'Voy seteando la barra de progreso
             frmCargadorAltaProductos.BarraProgreso.Value += 1
 
-            'ADELANTOS
-            If Not (objusuario.EsPatenteValida(228, VariablesGlobales.Patentes)) Then
-                Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Visible = False
-            Else
-                Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Visible = True
-            End If
             'Voy seteando la barra de progreso
             frmCargadorAltaProductos.BarraProgreso.Value += 1
 
@@ -707,7 +701,7 @@ Public Class MDIContenedor
         End If
     End Sub
 
-    Private Sub AdelantoDeEfectivoAEmpleadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Click
+    Private Sub AdelantoDeEfectivoAEmpleadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'para administrar empelados es necesario esta online
         If (VariablesGlobales.HayConexion = False) Then
             dialogoConexion.ShowDialog()

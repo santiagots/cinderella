@@ -11,13 +11,14 @@ Public Class frmEmpleadosSaldos
     Dim eEmpleados As New Entidades.Empleados
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim estadoCuenta As EstadoCuenta
+    Dim ClsFunciones As New Funciones
     Dim fuc As New Funciones
     Dim id_Sucursal As String
     Dim id_Empleado As Integer
     Dim FDesde As String
     Dim FHasta As String
     Dim SueldoPorDepositar As Double = 0
-    Dim SueldoMano As Double = 0
+    Dim SueldoPorPagarEnMano As Double = 0
 
     'Cuando se carga el formulario.
     Private Sub frmEmpleadosSaldos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -44,7 +45,6 @@ Public Class frmEmpleadosSaldos
         End If
 
         Dim d As DateTime = DateTime.Now
-        txt_FDesde.Value = "01/" & d.Month.ToString() & "/" & d.Year.ToString
 
         'Seteo de grafica.
         GbSueldoTrabajado.Visible = False
@@ -69,11 +69,13 @@ Public Class frmEmpleadosSaldos
             'Obtengo los datos.
             id_Empleado = CbEmpleados.SelectedValue
             eEmpleados = NegEmpleados.TraerEmpleado(id_Empleado)
-            FDesde = New DateTime(txt_FDesde.Value.Year, txt_FDesde.Value.Month, 1).ToString("yyyy/MM/dd")
-            FHasta = New DateTime(txt_FDesde.Value.Year, txt_FDesde.Value.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
+
+            FDesde = New DateTime(txtDate.Value.Year, txtDate.Value.Month, 1).ToString("yyyy/MM/dd")
+            FHasta = New DateTime(txtDate.Value.Year, txtDate.Value.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
+            Dim DiferenciaMeses As Integer = (txtDate.Value.Month - DateTime.Now.Month) + 12 * (txtDate.Value.Year - DateTime.Now.Year)
 
             SueldoPorDepositar = 0
-            SueldoMano = 0
+            SueldoPorPagarEnMano = 0
 
             Dim DiasAusente As Integer = 0
             Dim SueldoNormal As Double = 0
@@ -90,54 +92,31 @@ Public Class frmEmpleadosSaldos
             'obtengo el estado de cuenta del mes en curso
             estadoCuenta = NegEmpleados.ObtenerEstadoCuenta(id_Empleado, id_Sucursal, FDesde, FHasta)
 
-            BtnAdicionales.Visible = estadoCuenta.Adicionales <> 0
-            BtnComisiones.Visible = estadoCuenta.Comisiones <> 0
-            BtnVacaciones.Visible = estadoCuenta.Vacaciones <> 0
-            BtnAguinaldo.Visible = estadoCuenta.Aguinaldo <> 0
-            BtnAdelantos.Visible = estadoCuenta.Adelantos <> 0
-            BtnSueldosPagados.Visible = estadoCuenta.SueldoPago <> 0
-
-            If estadoCuenta.CantidadDiasNormales > 0 Then
-                SueldoNormal = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoNormal
-                BtnRegulares.Visible = True
+            'si la deuda del mes seleccionado no tiene valor 
+            If (Not estadoCuenta.Deuda.HasValue) Then
+                'y si el mes seleccionado no es un mes futuro
+                If (DiferenciaMeses < 1) Then
+                    'Calcula la deuda que le corresponde a este mes
+                    Deuda = CalcularDeudaMesVencidos(id_Empleado, id_Sucursal, FDesde, FHasta, False)
+                End If
             Else
-                BtnRegulares.Visible = False
+                Deuda = estadoCuenta.Deuda.Value
             End If
 
-            If estadoCuenta.CantidadDiasFeriados > 0 Then
-                SueldoFeriado = estadoCuenta.CantidadDiasFeriados * eEmpleados.SueldoFeriado
-                BtnFeriados.Visible = True
-            Else
-                BtnFeriados.Visible = False
-            End If
+            MostrarBotonesDetalle()
+
+            SueldoNormal = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoNormal
+            SueldoFeriado = estadoCuenta.CantidadDiasFeriados * eEmpleados.SueldoFeriado
 
             If estadoCuenta.CantidadDiasAusente = 0 Then
-                SueldoPresentismo = estadoCuenta.CantidadDiasAusente * eEmpleados.SueldoPresentismo
+                SueldoPresentismo = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoPresentismo
             End If
 
             SubTotalTrabajado = (estadoCuenta.Comisiones + SueldoNormal + SueldoFeriado + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + SueldoPresentismo)
 
-            Deuda = 0
-
             SubTotalAbonado = estadoCuenta.Adelantos + estadoCuenta.SueldoPago + Deuda
 
-            'Si la diferencia entre el sueldo trabajado y el ya abonado es menor a 0 quiere decir que lo que el empleado trabajo no llega a cubrir lo que se le pago
-            'Esto se representa con un sueldo en mano negativo que para el proximo mes se tranforma en deuda
-            If (SubTotalTrabajado - SubTotalAbonado < 0) Then
-                SueldoPorDepositar = 0
-                SueldoMano = SubTotalTrabajado - SubTotalAbonado
-            Else
-                'Si la diferencia entre el sueldo trabajado y el ya abonado no llega a cubrir lo declarado en el recibo de sueldo
-                'El sueldo por depositar es esta diferencia de valores y su sueldo en mano es 0
-                If (SubTotalTrabajado - SubTotalAbonado < estadoCuenta.RecivoSueldo) Then
-                    SueldoPorDepositar = SubTotalTrabajado - SubTotalAbonado
-                    SueldoMano = 0
-                Else
-                    'Si lo llega a cubrir, el suledo a depositar es el recivo de sueldo menos lo ya pago. El sueldo en mano es el sueldo que le queda por cobrar que excede del recibo de sueldo 
-                    SueldoPorDepositar = estadoCuenta.RecivoSueldo - estadoCuenta.SueldoPago
-                    SueldoMano = SubTotalTrabajado - SubTotalAbonado - SueldoPorDepositar
-                End If
-            End If
+            CalcularSueldos(SubTotalTrabajado, SubTotalAbonado)
 
             If SueldoPorDepositar <> 0 Then
                 lblSueldoDepositarMaximo.Visible = True
@@ -145,6 +124,14 @@ Public Class frmEmpleadosSaldos
             Else
                 lblSueldoDepositarMaximo.Visible = False
                 txt_Saldo.ReadOnly = True
+            End If
+
+            If SueldoPorPagarEnMano > 0 Then
+                lblSueldoPagarManoMaximo.Visible = True
+                txt_sueldoMano.ReadOnly = False
+            Else
+                lblSueldoPagarManoMaximo.Visible = False
+                txt_sueldoMano.ReadOnly = True
             End If
 
             'Muestro
@@ -157,19 +144,14 @@ Public Class frmEmpleadosSaldos
             txt_Vacaciones.Text = estadoCuenta.Vacaciones.ToString("c")
             txt_Aguinaldo.Text = estadoCuenta.Aguinaldo.ToString("c")
             txt_subto.Text = SubTotalTrabajado.ToString("c")
-            txt_sueldoMano.Text = SueldoMano.ToString("c")
+            txt_sueldoMano.Text = SueldoPorPagarEnMano.ToString("c")
             txt_Saldo.Text = SueldoPorDepositar.ToString("c")
             txt_Deuda.Text = Deuda.ToString("c")
             txt_SueldosPagados.Text = estadoCuenta.SueldoPago.ToString("c")
             lblSueldoDepositarMaximo.Text = String.Format("(Máximo {0:C})", SueldoPorDepositar)
+            lblSueldoPagarManoMaximo.Text = String.Format("(Sugerido {0:C})", SueldoPorPagarEnMano)
 
-            If (SueldoPorDepositar = 0 Or SueldoMano <= 0) Then
-                btn_depositar.Enabled = False
-                ToolEmpleados.SetToolTip(btn_depositar, "No se dispone de sueldo a depositar o a pagar en mano.")
-            Else
-                btn_depositar.Enabled = True
-                ToolEmpleados.SetToolTip(btn_depositar, "Depositar sueldo y pago en mano.")
-            End If
+            ActualizarEstadoBotones()
 
             'Termino de cargar.
             GbSueldoTrabajado.Visible = True
@@ -181,7 +163,7 @@ Public Class frmEmpleadosSaldos
 
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha encontrado un error al consultar el estado de cuenta del empleado. Por favor, intente más tarde.", "Visualización de movimientos de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Se ha encontrado un error al consultar el estado de cuenta del empleado. Por favor, intente más tarde.", "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Sub
 
@@ -198,10 +180,113 @@ Public Class frmEmpleadosSaldos
         txt_Saldo.Clear()
         txt_Vacaciones.Clear()
         txt_Aguinaldo.Clear()
+        txtDescripcionPagoMano.Clear()
         GbSueldoTrabajado.Visible = False
         GbSueldoAbonado.Visible = False
         GbSueldoLiquidar.Visible = False
     End Sub
+
+    Sub MostrarBotonesDetalle()
+        BtnAdicionales.Visible = estadoCuenta.Adicionales <> 0
+        BtnComisiones.Visible = estadoCuenta.Comisiones <> 0
+        BtnVacaciones.Visible = estadoCuenta.Vacaciones <> 0
+        BtnAguinaldo.Visible = estadoCuenta.Aguinaldo <> 0
+        BtnAdelantos.Visible = estadoCuenta.Adelantos <> 0
+        BtnSueldosPagados.Visible = estadoCuenta.SueldoPago <> 0
+        BtnRegulares.Visible = estadoCuenta.CantidadDiasNormales > 0
+        BtnFeriados.Visible = estadoCuenta.CantidadDiasFeriados > 0
+    End Sub
+
+    Sub CalcularSueldos(ByVal SubTotalTrabajado As Double, ByVal SubTotalAbonado As Double)
+
+        'Si la diferencia entre el sueldo trabajado y el ya abonado es menor a 0 quiere decir que lo que el empleado trabajo no llega a cubrir lo que se le pago
+        'Esto se representa con un sueldo en mano negativo que para el proximo mes se tranforma en deuda
+        If (SubTotalTrabajado - SubTotalAbonado < 0) Then
+            SueldoPorDepositar = 0
+            SueldoPorPagarEnMano = SubTotalTrabajado - SubTotalAbonado
+        Else
+            'Si la diferencia entre el sueldo trabajado y el ya abonado no llega a cubrir lo declarado en el recibo de sueldo
+            'El sueldo por depositar es esta diferencia de valores y su sueldo en mano es 0
+            If (SubTotalTrabajado - SubTotalAbonado < estadoCuenta.RecivoSueldo) Then
+                SueldoPorDepositar = SubTotalTrabajado - SubTotalAbonado
+                SueldoPorPagarEnMano = 0
+            Else
+                'Si lo llega a cubrir, el suledo a depositar es el recivo de sueldo menos lo ya pago. El sueldo en mano es el sueldo que le queda por cobrar que excede del recibo de sueldo 
+                SueldoPorDepositar = estadoCuenta.RecivoSueldo - estadoCuenta.SueldoPago
+                SueldoPorPagarEnMano = SubTotalTrabajado - SubTotalAbonado - SueldoPorDepositar
+            End If
+        End If
+    End Sub
+
+    'Funcion para obtener la deuda 
+    Private Function CalcularDeudaMesVencidos(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As DateTime, ByVal FechaHasta As DateTime, ByVal TuvoDeuda As Boolean) As Double
+        Dim SueldoPresentismo As Double = 0
+        Dim Deuda As Double = 0
+
+        'Obtengo es tada del cuanta del mes anterior
+        Dim estadoCuenta = NegEmpleados.ObtenerEstadoCuenta(id_Empleado, id_Sucursal, FechaDesde.AddMonths(-1).ToString("yyyy/MM/dd"), FechaDesde.AddDays(-1).ToString("yyyy/MM/dd"))
+
+        'En caso que la deuda no tenga valor es porque no se tiene deuda registrada para este mes, por lo que calculo la deuda
+        If (Not estadoCuenta.Deuda.HasValue) Then
+            'Antes de entrar al proceso recirsivo verifico que el empleado halla tenido algun registro de deuda para tener un corte de la recursividad
+            If (TuvoDeuda Or NegEmpleados.UltimaDeuda(id_Empleado, id_Sucursal, FechaDesde) = DateTime.MinValue).HasValue Then
+                'Calcula la deuda que le corresponde a este mes
+                Deuda = CalcularDeudaMesVencidos(id_Empleado, id_Sucursal, FechaDesde.AddMonths(-1).ToString("yyyy/MM/dd"), FechaDesde.AddDays(-1).ToString("yyyy/MM/dd"), True)
+            End If
+        Else
+            Deuda = estadoCuenta.Deuda.Value
+        End If
+
+        If estadoCuenta.CantidadDiasAusente = 0 Then
+            SueldoPresentismo = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoPresentismo
+        End If
+
+        'Calculo el total trabajado y el total abonado
+        Dim SubTotalTrabajado As Double = (estadoCuenta.Comisiones + estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoNormal + estadoCuenta.CantidadDiasFeriados * eEmpleados.SueldoFeriado + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + SueldoPresentismo)
+        Dim SubTotalAbonado As Double = estadoCuenta.Adelantos + estadoCuenta.SueldoPago + Deuda
+
+        Deuda = -(SubTotalTrabajado - SubTotalAbonado)
+        'Registro la deuda
+        NegEmpleados.ActualizarDeuda(id_Empleado, id_Sucursal, Deuda, FechaDesde)
+        Return Deuda
+    End Function
+
+    Sub ActualizarEstadoBotones()
+
+        Dim fechaDesde As DateTime = New DateTime(txtDate.Value.Year, txtDate.Value.Month, 1).ToString("yyyy/MM/dd")
+        Dim DiferenciaMeses As Integer = (fechaDesde.Month - DateTime.Now.Month) + 12 * (fechaDesde.Year - DateTime.Now.Year)
+
+        'Los pagos se pueden realizar si la diferencia de meses es menor a 1 (la fecha seleccionada no puede ser en un mes posterior a la actual)
+        'Los pagos se pueden realizar si la diferencia de meses es mayor a -2 (la fecha seleccionada no puede ser en 2 mes antes a la actual)
+        If Not (DiferenciaMeses < 1 And DiferenciaMeses > -2) Then
+            btn_depositar.Enabled = False
+            ToolEmpleados.SetToolTip(btn_depositar, "No se permite realizar depósitos en el periodo seleccionado.")
+            btnPagoMano.Enabled = False
+            ToolEmpleados.SetToolTip(btnPagoMano, "No se permite realizar pagos en manos en el periodo seleccionado.")
+            Return
+        End If
+
+        'actualizo el estado del boton en caso de que no se encuentre mas sueldo para depositar
+        If (SueldoPorDepositar = 0) Then
+            btn_depositar.Enabled = False
+            lblSueldoDepositarMaximo.Visible = False
+            ToolEmpleados.SetToolTip(btn_depositar, "No se dispone de sueldo para depositar.")
+        Else
+            btn_depositar.Enabled = True
+            ToolEmpleados.SetToolTip(btn_depositar, "Depositar sueldo.")
+        End If
+
+        'actualizo el estado del boton en caso de que no se encuentre mas sueldo para pagar en mano
+        If (SueldoPorPagarEnMano <= 0) Then
+            btnPagoMano.Enabled = False
+            lblSueldoPagarManoMaximo.Visible = False
+            ToolEmpleados.SetToolTip(btnPagoMano, "No se dispone de sueldo para pagar en mano.")
+        Else
+            btnPagoMano.Enabled = True
+            ToolEmpleados.SetToolTip(btnPagoMano, "Pago en mano.")
+        End If
+    End Sub
+
 
     'Link COMISIONES.
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnComisiones.Click
@@ -300,8 +385,12 @@ Public Class frmEmpleadosSaldos
     End Sub
 
     Private Sub btn_depositar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_depositar.Click
+        If (SueldoPorDepositar < CDbl(txt_Saldo.Text)) Then
+            MessageBox.Show("El monto ingresado en Sueldo a Depositar es mayor al Máximo permitido. Debe ingresar un monto igual o menor al Máximo. ", "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
 
-        If MessageBox.Show("¿Ésta seguro que desea efectuar el deposito del sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre & " ?", "Visualización de movimientos de Empleados", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+        If MessageBox.Show("¿Ésta seguro que desea efectuar el deposito del sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre & " ?", "Estado de Cuenta del Empleado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
             Try
                 'Cambio el cursor a "WAIT"
                 Me.Cursor = Cursors.WaitCursor
@@ -335,9 +424,9 @@ Public Class frmEmpleadosSaldos
                 eDeposito.id_Sucursal = id_Sucursal
                 eDeposito.id_Empleado = id_Empleado
                 eDeposito.Monto = sueldoDepositado
-                eDeposito.Fecha = Now
-                eDeposito.Mes = Month(txt_FDesde.Text)
-                eDeposito.Anio = Year(txt_FDesde.Text)
+                eDeposito.Fecha = txtDate.Value.ToString("yyyy/MM/dd")
+                eDeposito.Mes = Month(txtDate.Text)
+                eDeposito.Anio = Year(txtDate.Text)
                 eDeposito.Habilitado = 1
                 NegEmpleados.AltaDeposito(eDeposito)
 
@@ -349,6 +438,10 @@ Public Class frmEmpleadosSaldos
                 txt_Saldo.Text = (SueldoPorDepositar).ToString("c")
                 lblSueldoDepositarMaximo.Text = String.Format("(Máximo {0:C})", SueldoPorDepositar)
 
+                'El monto de la deuda se calcula con el faltante del sueldo que se debio depositar + el sueldo en mano que se pudo haber pagado de mas por la funcionalidad de adelantos o de menos por que no se liquido el total que le corresponde al empleado
+                'Ambos montos se cambian de signo para que quede consistente en el calculo del proximo mes
+                ActualizarDeuda(-SueldoPorDepositar + -SueldoPorPagarEnMano)
+
                 If SueldoPorDepositar <> 0 Then
                     lblSueldoDepositarMaximo.Visible = True
                     txt_Saldo.ReadOnly = False
@@ -357,47 +450,98 @@ Public Class frmEmpleadosSaldos
                     txt_Saldo.ReadOnly = True
                 End If
 
-                'Registro el pago del sueldo en mano si el mismo es mayor a 0
-                If (SueldoMano > 0) Then
-                    Dim EAdelanto As New Entidades.Adelantos
-                    EAdelanto.id_Adelanto = 0
-                    EAdelanto.Fecha = Now
-                    EAdelanto.Monto = SueldoMano
-                    EAdelanto.id_Empleado = id_Empleado
-                    EAdelanto.id_Sucursal = id_Sucursal
-                    EAdelanto.Descripcion = "Depósito de sueldo"
-                    NegAdelantos.AltaAdelanto(EAdelanto)
+                txtDescripcionPagoMano.Clear()
 
-                    estadoCuenta.Adelantos += SueldoMano
-                    txt_Adelantos.Text = estadoCuenta.Adelantos.ToString("c")
-                    txt_sueldoMano.Text = 0.ToString("c")
-                End If
+                ActualizarEstadoBotones()
 
-                'actualizo el estado del boton en caso de que no se encuentre mas sueldo para depositar
-                If SueldoPorDepositar = 0 Then
-                    btn_depositar.Enabled = False
-                    ToolEmpleados.SetToolTip(btn_depositar, "Deposito de sueldo ya realizado.")
-                End If
-
-                MessageBox.Show("Se ha depositado correctamente el sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre, "Visualización de movimientos de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("Se ha depositado correctamente el sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre, "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 'Cambio el cursor a "NORMAL"
                 Me.Cursor = Cursors.Arrow
 
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
-                MessageBox.Show("Se ha encontrado un error al depositar el sueldo del empleado. Por favor, intente más tarde.", "Visualización de movimientos de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show("Se ha encontrado un error al depositar el sueldo del empleado. Por favor, intente más tarde.", "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End Try
         End If
 
     End Sub
 
+    Private Sub btnPagoMano_Click(sender As Object, e As EventArgs) Handles btnPagoMano.Click
+        If txtDescripcionPagoMano.Text = "" Then
+            MessageBox.Show("Debe completar el campos descripción para poder realizar un pago en mano.", "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
 
+        If MessageBox.Show("¿Ésta seguro que desea efectuar el pago en mano del sueldo del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre & " ?", "Estado de Cuenta del Empleado", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+            Try
+                'Cambio el cursor a "WAIT"
+                Me.Cursor = Cursors.WaitCursor
+
+                Dim sueldoPagadoEnMano As Double = CDbl(txt_sueldoMano.Text)
+
+                'Registro el pago del sueldo en mano si el mismo es mayor a 0
+                Dim EAdelanto As New Entidades.Adelantos
+                EAdelanto.id_Adelanto = 0
+                EAdelanto.Fecha = txtDate.Value.ToString("yyyy/MM/dd")
+                EAdelanto.Monto = sueldoPagadoEnMano
+                EAdelanto.id_Empleado = id_Empleado
+                EAdelanto.id_Sucursal = id_Sucursal
+                EAdelanto.Descripcion = txtDescripcionPagoMano.Text
+                NegAdelantos.AltaAdelanto(EAdelanto)
+
+                estadoCuenta.Adelantos += sueldoPagadoEnMano
+                txt_Adelantos.Text = estadoCuenta.Adelantos.ToString("c")
+
+                SueldoPorPagarEnMano -= sueldoPagadoEnMano
+                txt_sueldoMano.Text = SueldoPorPagarEnMano.ToString("c")
+                lblSueldoPagarManoMaximo.Text = String.Format("(Sugerido {0:C})", SueldoPorPagarEnMano)
+
+                'El monto de la deuda se calcula con el faltante del sueldo que se debio depositar + el sueldo en mano que se pudo haber pagado de mas por la funcionalidad de adelantos o de menos por que no se liquido el total que le corresponde al empleado
+                'Ambos montos se cambian de signo para que quede consistente en el calculo del proximo mes
+                ActualizarDeuda(-SueldoPorDepositar + -SueldoPorPagarEnMano)
+
+                If SueldoPorPagarEnMano > 0 Then
+                    lblSueldoPagarManoMaximo.Visible = True
+                    txt_sueldoMano.ReadOnly = False
+                Else
+                    lblSueldoPagarManoMaximo.Visible = False
+                    txt_sueldoMano.ReadOnly = True
+                End If
+
+                txtDescripcionPagoMano.Clear()
+
+                ActualizarEstadoBotones()
+
+                MessageBox.Show("Se ha pagado correctamente el sueldo en mano del empleado " & eEmpleados.Apellido & ", " & eEmpleados.Nombre, "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+
+            Catch ex As Exception
+                Me.Cursor = Cursors.Arrow
+                MessageBox.Show("Se ha encontrado un error al depositar el sueldo del empleado. Por favor, intente más tarde.", "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End Try
+        End If
+    End Sub
+
+    Private Sub ActualizarDeuda(monto As Double)
+        Dim fechaDeuda As DateTime = New DateTime(txtDate.Value.Year, txtDate.Value.Month, 1).AddMonths(1)
+        NegEmpleados.ActualizarDeuda(id_Empleado, id_Sucursal, monto, fechaDeuda)
+    End Sub
+
+    'Valida que solo se ingresen valores numericos
     Private Sub txt_Saldo_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Saldo.KeyPress
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
         If KeyAscii = 0 Then
             e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txt_Saldo_Enter(sender As Object, e As EventArgs) Handles txt_Saldo.Enter
+        If (Not txt_Saldo.ReadOnly) Then
+            txt_Saldo.Text = String.Empty
         End If
     End Sub
 
@@ -412,14 +556,34 @@ Public Class frmEmpleadosSaldos
         If (SueldoPorDepositar < SaldoDepositarIngresado) Then
             ErrorProvider.SetError(txt_Saldo, "El sueldo ingresado debe ser menor o igual al Máximo.")
         Else
-            txt_Saldo.Text = SaldoDepositarIngresado.ToString("c")
+            ErrorProvider.SetError(txt_Saldo, String.Empty)
+        End If
+        txt_Saldo.Text = SaldoDepositarIngresado.ToString("c")
+    End Sub
+
+    Private Sub txt_sueldoMano_Enter(sender As Object, e As EventArgs) Handles txt_sueldoMano.Enter
+        If (Not txt_sueldoMano.ReadOnly) Then
+            txt_sueldoMano.Text = String.Empty
         End If
     End Sub
 
-    Private Sub txt_Saldo_Enter(sender As Object, e As EventArgs) Handles txt_Saldo.Enter
-        If (Not txt_Saldo.ReadOnly) Then
-            txt_Saldo.Text = String.Empty
+    'Valida que solo se ingresen valores numericos
+    Private Sub txt_sueldoMano_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_sueldoMano.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
         End If
+    End Sub
+
+    Private Sub txt_sueldoMano_Leave(sender As Object, e As EventArgs) Handles txt_sueldoMano.Leave
+        If (txt_sueldoMano.Text = String.Empty) Then
+            txt_sueldoMano.Text = SueldoPorPagarEnMano.ToString("c")
+            Return
+        End If
+
+        Dim SaldoPagoManoIngresado As Double = CDbl(txt_sueldoMano.Text)
+        txt_sueldoMano.Text = SaldoPagoManoIngresado.ToString("c")
     End Sub
 
 End Class

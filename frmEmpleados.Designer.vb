@@ -46,6 +46,8 @@ Partial Class frmEmpleados
         Me.lbl_descripcion_bus = New System.Windows.Forms.Label()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.Group = New System.Windows.Forms.GroupBox()
+        Me.txt_SueldoPresente = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.txt_Cuil = New System.Windows.Forms.MaskedTextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.FechaNacimiento = New System.Windows.Forms.DateTimePicker()
@@ -88,6 +90,8 @@ Partial Class frmEmpleados
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.txt_SueldoPresente_mod = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
         Me.txt_Cuil_mod = New System.Windows.Forms.MaskedTextBox()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Label22 = New System.Windows.Forms.Label()
@@ -132,10 +136,6 @@ Partial Class frmEmpleados
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErrorEmpleados = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolEmpl = New System.Windows.Forms.ToolTip(Me.components)
-        Me.txt_SueldoPresente_mod = New System.Windows.Forms.TextBox()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.txt_SueldoPresente = New System.Windows.Forms.TextBox()
-        Me.Label25 = New System.Windows.Forms.Label()
         Me.TabEmpleados.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Empleados, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -417,6 +417,22 @@ Partial Class frmEmpleados
         Me.Group.TabIndex = 0
         Me.Group.TabStop = False
         Me.Group.Text = "Formulario de Alta"
+        '
+        'txt_SueldoPresente
+        '
+        Me.txt_SueldoPresente.Location = New System.Drawing.Point(542, 351)
+        Me.txt_SueldoPresente.Name = "txt_SueldoPresente"
+        Me.txt_SueldoPresente.Size = New System.Drawing.Size(197, 21)
+        Me.txt_SueldoPresente.TabIndex = 19
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(388, 357)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(135, 15)
+        Me.Label25.TabIndex = 84
+        Me.Label25.Text = "Premio Presentismo (*)"
         '
         'txt_Cuil
         '
@@ -851,6 +867,22 @@ Partial Class frmEmpleados
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
         '
+        'txt_SueldoPresente_mod
+        '
+        Me.txt_SueldoPresente_mod.Location = New System.Drawing.Point(541, 351)
+        Me.txt_SueldoPresente_mod.Name = "txt_SueldoPresente_mod"
+        Me.txt_SueldoPresente_mod.Size = New System.Drawing.Size(197, 21)
+        Me.txt_SueldoPresente_mod.TabIndex = 19
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(388, 357)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(135, 15)
+        Me.Label24.TabIndex = 82
+        Me.Label24.Text = "Premio Presentismo (*)"
+        '
         'txt_Cuil_mod
         '
         Me.txt_Cuil_mod.Location = New System.Drawing.Point(134, 97)
@@ -1256,38 +1288,6 @@ Partial Class frmEmpleados
         Me.ToolEmpl.IsBalloon = True
         Me.ToolEmpl.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolEmpl.ToolTipTitle = "Ayuda"
-        '
-        'txt_SueldoPresente_mod
-        '
-        Me.txt_SueldoPresente_mod.Location = New System.Drawing.Point(541, 351)
-        Me.txt_SueldoPresente_mod.Name = "txt_SueldoPresente_mod"
-        Me.txt_SueldoPresente_mod.Size = New System.Drawing.Size(197, 21)
-        Me.txt_SueldoPresente_mod.TabIndex = 19
-        '
-        'Label24
-        '
-        Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(388, 357)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(155, 15)
-        Me.Label24.TabIndex = 82
-        Me.Label24.Text = "Sueldo por día Presente (*)"
-        '
-        'txt_SueldoPresente
-        '
-        Me.txt_SueldoPresente.Location = New System.Drawing.Point(542, 351)
-        Me.txt_SueldoPresente.Name = "txt_SueldoPresente"
-        Me.txt_SueldoPresente.Size = New System.Drawing.Size(197, 21)
-        Me.txt_SueldoPresente.TabIndex = 19
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(388, 357)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(155, 15)
-        Me.Label25.TabIndex = 84
-        Me.Label25.Text = "Sueldo por día Presente (*)"
         '
         'frmEmpleados
         '

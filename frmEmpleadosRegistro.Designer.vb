@@ -37,14 +37,14 @@ Partial Class frmEmpleadosRegistro
         Me.DT_Fecha = New System.Windows.Forms.DateTimePicker()
         Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.TabVisualizar = New System.Windows.Forms.TabPage()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.CheckListEmpleadosAusentesEdit = New System.Windows.Forms.CheckedListBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.Btn_Editar = New System.Windows.Forms.Button()
         Me.CheckListEmpleadosPresentesEdit = New System.Windows.Forms.CheckedListBox()
         Me.DT_FechaEdit = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Gb_Fechas2 = New System.Windows.Forms.GroupBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.CheckListEmpleadosAusentesEdit = New System.Windows.Forms.CheckedListBox()
         Me.Gb_Fechas.SuspendLayout()
         Me.Tcontrol.SuspendLayout()
         Me.TabIngresar.SuspendLayout()
@@ -139,9 +139,9 @@ Partial Class frmEmpleadosRegistro
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(204, 39)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(63, 15)
+        Me.Label4.Size = New System.Drawing.Size(154, 15)
         Me.Label4.TabIndex = 8
-        Me.Label4.Text = "Ausencias"
+        Me.Label4.Text = "Ausencias o llegadas tarde"
         '
         'Label3
         '
@@ -226,6 +226,37 @@ Partial Class frmEmpleadosRegistro
         Me.TabVisualizar.Text = "Editar / Detalle"
         Me.TabVisualizar.UseVisualStyleBackColor = True
         '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(204, 39)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(63, 15)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "Ausencias"
+        '
+        'CheckListEmpleadosAusentesEdit
+        '
+        Me.CheckListEmpleadosAusentesEdit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckListEmpleadosAusentesEdit.CheckOnClick = True
+        Me.CheckListEmpleadosAusentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosAusentesEdit.FormattingEnabled = True
+        Me.CheckListEmpleadosAusentesEdit.Location = New System.Drawing.Point(207, 57)
+        Me.CheckListEmpleadosAusentesEdit.Name = "CheckListEmpleadosAusentesEdit"
+        Me.CheckListEmpleadosAusentesEdit.Size = New System.Drawing.Size(190, 324)
+        Me.CheckListEmpleadosAusentesEdit.TabIndex = 11
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(7, 39)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(68, 15)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Asistencias"
+        '
         'Btn_Editar
         '
         Me.Btn_Editar.Cursor = System.Windows.Forms.Cursors.Hand
@@ -282,37 +313,6 @@ Partial Class frmEmpleadosRegistro
         Me.Gb_Fechas2.TabIndex = 5
         Me.Gb_Fechas2.TabStop = False
         Me.Gb_Fechas2.Text = "Ingresar/Visualizar Fechas y Empleados"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(7, 39)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(68, 15)
-        Me.Label5.TabIndex = 10
-        Me.Label5.Text = "Asistencias"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(204, 39)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(63, 15)
-        Me.Label6.TabIndex = 12
-        Me.Label6.Text = "Ausencias"
-        '
-        'CheckListEmpleadosAusentesEdit
-        '
-        Me.CheckListEmpleadosAusentesEdit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckListEmpleadosAusentesEdit.CheckOnClick = True
-        Me.CheckListEmpleadosAusentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CheckListEmpleadosAusentesEdit.FormattingEnabled = True
-        Me.CheckListEmpleadosAusentesEdit.Location = New System.Drawing.Point(207, 57)
-        Me.CheckListEmpleadosAusentesEdit.Name = "CheckListEmpleadosAusentesEdit"
-        Me.CheckListEmpleadosAusentesEdit.Size = New System.Drawing.Size(190, 324)
-        Me.CheckListEmpleadosAusentesEdit.TabIndex = 11
         '
         'frmEmpleadosRegistro
         '

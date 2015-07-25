@@ -519,6 +519,48 @@ Public Class NegEmpleados
         End Try
     End Function
 
+    'Funcion para insertar un adelanto.
+    Function ActualizarDeuda(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Monto As Double, ByVal Fecha As Date) As String
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+
+        Try
+            'Conecto
+            If (HayInternet) Then
+                cmd.Connection = clsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = clsDatos.ConectarLocal()
+            End If
+
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Deuda_Actualizar"
+            With cmd.Parameters
+                .AddWithValue("@id_Empleado", id_Empleado)
+                .AddWithValue("@id_Sucursal", id_Sucursal)
+                .AddWithValue("@Monto", Monto)
+                .AddWithValue("@Fecha", Fecha)
+            End With
+
+            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto
+            If (HayInternet) Then
+                clsDatos.DesconectarRemoto()
+            Else
+                clsDatos.DesconectarLocal()
+            End If
+
+            'muestro el mensaje
+            Return respuesta.Value
+        Catch ex As Exception
+            Return ex.Message
+        End Try
+    End Function
+
     Function ObtenerEstadoCuenta(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As EstadoCuenta
 
         Dim cmd As New SqlCommand
@@ -596,7 +638,6 @@ Public Class NegEmpleados
         estadoCuenta.Adicionales = Adicionales.Value
         estadoCuenta.Adelantos = Adelantos.Value
         estadoCuenta.Comisiones = Comisiones.Value
-        estadoCuenta.Deudas = Deuda.Value
         estadoCuenta.CantidadDiasAusente = DiasAusente.Value
         estadoCuenta.CantidadDiasFeriados = DiasFeriados.Value
         estadoCuenta.CantidadDiasNormales = DiasNormales.Value
@@ -605,8 +646,50 @@ Public Class NegEmpleados
         estadoCuenta.SueldoPago = SueldoPagado.Value
         estadoCuenta.Vacaciones = Vacaciones.Value
 
-        'muestro el mensaje
+        If IsDBNull(Deuda.Value) Then
+            estadoCuenta.Deuda = Nothing
+        Else
+            estadoCuenta.Deuda = Deuda.Value
+        End If
+
         Return estadoCuenta
+    End Function
+
+    Function UltimaDeuda(id_Empleado As Integer, id_Sucursal As Integer, fechaDesde As DateTime) As DateTime?
+        Dim cmd As New SqlCommand
+        'Conecto
+        If (HayInternet) Then
+            cmd.Connection = clsDatos.ConectarRemoto()
+        Else
+            cmd.Connection = clsDatos.ConectarLocal()
+        End If
+
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Deuda_UltimaDeuda"
+        With cmd.Parameters
+            .AddWithValue("@id_Empleado", id_Empleado)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@fechaDesde", fechaDesde)
+        End With
+
+        Dim fecha As New SqlParameter("@fecha", SqlDbType.Date)
+        fecha.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(fecha)
+
+        cmd.ExecuteNonQuery()
+
+        'Desconecto
+        If (HayInternet) Then
+            clsDatos.DesconectarRemoto()
+        Else
+            clsDatos.DesconectarLocal()
+        End If
+
+        If IsDBNull(fecha.Value) Then
+            Return Nothing
+        Else
+            Return fecha.Value
+        End If
     End Function
 
 End Class

@@ -125,9 +125,9 @@ Partial Class frmReciboSueldo
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(11, 138)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(121, 15)
+        Me.Label7.Size = New System.Drawing.Size(62, 15)
         Me.Label7.TabIndex = 14
-        Me.Label7.Text = "Diferencia Aguinaldo"
+        Me.Label7.Text = "Aguinaldo"
         '
         'txtVacaciones
         '
@@ -144,9 +144,9 @@ Partial Class frmReciboSueldo
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(11, 110)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(127, 15)
+        Me.Label6.Size = New System.Drawing.Size(70, 15)
         Me.Label6.TabIndex = 12
-        Me.Label6.Text = "Diferencia vacaciones"
+        Me.Label6.Text = "Vacaciones"
         '
         'Label5
         '

@@ -92,13 +92,13 @@
         End Set
     End Property
 
-    Private Deudas_ As Double
-    Public Property Deudas() As Double
+    Private Deuda_ As Double?
+    Public Property Deuda() As Double?
         Get
-            Return Deudas_
+            Return Deuda_
         End Get
-        Set(ByVal value As Double)
-            Deudas_ = value
+        Set(ByVal value As Double?)
+            Deuda_ = value
         End Set
     End Property
 

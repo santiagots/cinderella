@@ -41,7 +41,6 @@ Partial Class MDIContenedor
         Me.VisualizaciónDeSaldoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.AdicionalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReciboDeSueldoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegistroDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_EtiquetasMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -237,7 +236,7 @@ Partial Class MDIContenedor
         '
         'Btn_EmpleadosMenu
         '
-        Me.Btn_EmpleadosMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeEmpleadosToolStripMenuItem, Me.VisualizaciónDeSaldoToolStripMenuItem, Me.ToolStripSeparator5, Me.AdicionalesToolStripMenuItem, Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem, Me.ReciboDeSueldoToolStripMenuItem, Me.RegistroDeEmpleadosToolStripMenuItem})
+        Me.Btn_EmpleadosMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeEmpleadosToolStripMenuItem, Me.VisualizaciónDeSaldoToolStripMenuItem, Me.ToolStripSeparator5, Me.AdicionalesToolStripMenuItem, Me.ReciboDeSueldoToolStripMenuItem, Me.RegistroDeEmpleadosToolStripMenuItem})
         Me.Btn_EmpleadosMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Empleado
         Me.Btn_EmpleadosMenu.Name = "Btn_EmpleadosMenu"
         Me.Btn_EmpleadosMenu.Size = New System.Drawing.Size(152, 22)
@@ -268,13 +267,6 @@ Partial Class MDIContenedor
         Me.AdicionalesToolStripMenuItem.Name = "AdicionalesToolStripMenuItem"
         Me.AdicionalesToolStripMenuItem.Size = New System.Drawing.Size(246, 22)
         Me.AdicionalesToolStripMenuItem.Text = "Pago de Adicionales"
-        '
-        'AdelantoDeEfectivoAEmpleadosToolStripMenuItem
-        '
-        Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.adelantos
-        Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Name = "AdelantoDeEfectivoAEmpleadosToolStripMenuItem"
-        Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Size = New System.Drawing.Size(246, 22)
-        Me.AdelantoDeEfectivoAEmpleadosToolStripMenuItem.Text = "Adelanto de Efectivo"
         '
         'ReciboDeSueldoToolStripMenuItem
         '
@@ -867,7 +859,7 @@ Partial Class MDIContenedor
         Me.Btn_ResumenDiario.Text = "Resumen Diario"
         Me.Btn_ResumenDiario.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.ToolTip.SetToolTip(Me.Btn_ResumenDiario, "Permite consultar la caja diaria y realizar además las operaciones de Cierre y Ap" & _
-                "ertura.")
+        "ertura.")
         Me.Btn_ResumenDiario.UseVisualStyleBackColor = True
         Me.Btn_ResumenDiario.Visible = False
         '
@@ -1184,7 +1176,6 @@ Partial Class MDIContenedor
     Friend WithEvents AdmDeStockToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AdmDeEmpleadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RegistroDeEmpleadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents AdelantoDeEfectivoAEmpleadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AdmDeSucursalesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents VisualizaciónDeSaldoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AdministraciónToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
