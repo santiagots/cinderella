@@ -1,4 +1,6 @@
-﻿Public Class frmProductos
+﻿Imports System.Configuration
+
+Public Class frmProductos
     Dim NegProductos As New Negocio.NegProductos
     Dim fuc As New Funciones
     Dim NegErrores As New Negocio.NegManejadorErrores
@@ -1365,5 +1367,59 @@
         End If
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btn_Exportar.Click
+        Try
+            'Configuro la pantalla de guardado de archivos
+            SaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            SaveFileDialog.FileName = "Productos"
+            SaveFileDialog.Filter = "Excel Files|*.xlsx;"
+
+            If SaveFileDialog.ShowDialog() = DialogResult.OK Then
+                'Cambio el cursor a "WAIT"
+                Me.Cursor = Cursors.WaitCursor
+
+                frmCargadorDeEspera.Show()
+                frmCargadorDeEspera.Text = "Generando Exportacion a Excel "
+                frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
+                frmCargadorDeEspera.BarraProgreso.Minimum = 0
+                frmCargadorDeEspera.BarraProgreso.Maximum = 7
+                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.Refresh()
+
+                AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
+
+                'Exporto el listado de productos a Excel
+                NegProductos.ExportarExcel(SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantilla"))
+
+                'Voy seteando la barra de progreso
+                frmCargadorDeEspera.Close()
+                frmCargadorDeEspera.Dispose()
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+
+                'si no completo la descripcion, muestro un msg de error.
+                MessageBox.Show("Se ha exportado el listado de productos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha producido un error un error en la exportación de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Public Sub UpdateProgress(ProgressStep As Integer, ProgressText As String)
+        frmCargadorDeEspera.lbl_Descripcion.Text = ProgressText
+        frmCargadorDeEspera.BarraProgreso.Value = ProgressStep
+        frmCargadorDeEspera.Refresh()
+    End Sub
+
+    Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar.Click
+        OpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        OpenFileDialog.Filter = "Excel Files|*.xlsx;"
+        If OpenFileDialog.ShowDialog() = DialogResult.OK Then
+            'OpenFileDialog.FileName
+        End If
+    End Sub
 #End Region
 End Class

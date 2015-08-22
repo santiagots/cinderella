@@ -31,6 +31,8 @@ Partial Class frmProductos
         Me.TbListado = New System.Windows.Forms.TabPage()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
+        Me.btn_Importar = New System.Windows.Forms.Button()
+        Me.btn_Exportar = New System.Windows.Forms.Button()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.btn_Buscar = New System.Windows.Forms.Button()
         Me.rb_Opcion2 = New System.Windows.Forms.RadioButton()
@@ -100,6 +102,7 @@ Partial Class frmProductos
         Me.lbl_Nombre = New System.Windows.Forms.Label()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.txt_Costo_mod = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
@@ -157,7 +160,8 @@ Partial Class frmProductos
         Me.Cargar = New System.Windows.Forms.OpenFileDialog()
         Me.ErrorProductos = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Btn_Cancelar = New System.Windows.Forms.Button()
+        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.TabProductos.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -214,7 +218,9 @@ Partial Class frmProductos
         'GB_Buscar
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Buscar.Controls.Add(Me.btn_Importar)
+        Me.GB_Buscar.Controls.Add(Me.btn_Exportar)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
         Me.GB_Buscar.Controls.Add(Me.btn_Buscar)
         Me.GB_Buscar.Controls.Add(Me.rb_Opcion2)
@@ -227,6 +233,38 @@ Partial Class frmProductos
         Me.GB_Buscar.TabIndex = 3
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Producto"
+        '
+        'btn_Importar
+        '
+        Me.btn_Importar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Importar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
+        Me.btn_Importar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Importar.Location = New System.Drawing.Point(654, 24)
+        Me.btn_Importar.Name = "btn_Importar"
+        Me.btn_Importar.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Importar.TabIndex = 8
+        Me.btn_Importar.Text = "Importar"
+        Me.btn_Importar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btn_Importar, "Haz click aquí para restablecer los filtros y el listado de productos.")
+        Me.btn_Importar.UseVisualStyleBackColor = True
+        '
+        'btn_Exportar
+        '
+        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Exportar.Location = New System.Drawing.Point(548, 23)
+        Me.btn_Exportar.Name = "btn_Exportar"
+        Me.btn_Exportar.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Exportar.TabIndex = 7
+        Me.btn_Exportar.Text = "Exportar"
+        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btn_Exportar, "Haz click aquí para restablecer los filtros y el listado de productos.")
+        Me.btn_Exportar.UseVisualStyleBackColor = True
         '
         'btn_Restablecer
         '
@@ -255,7 +293,7 @@ Partial Class frmProductos
         Me.btn_Buscar.Text = "Buscar"
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.btn_Buscar, "Haz click aquí para buscar productos con los criterios de busqueda seleccionados." & _
-                "")
+        "")
         Me.btn_Buscar.UseVisualStyleBackColor = True
         '
         'rb_Opcion2
@@ -299,8 +337,8 @@ Partial Class frmProductos
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DG_Productos.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Producto, Me.Nombre, Me.Codigo, Me.Categoria, Me.Subcategoria, Me.Proveedor, Me.Habilitado, Me.Modificar, Me.Eliminar})
         Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Hand
@@ -411,8 +449,8 @@ Partial Class frmProductos
         'GB_Alta
         '
         Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Alta.Controls.Add(Me.Label25)
         Me.GB_Alta.Controls.Add(Me.txt_Costo)
         Me.GB_Alta.Controls.Add(Me.Label23)
@@ -947,8 +985,8 @@ Partial Class frmProductos
         'GB_Modificacion
         '
         Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
         Me.GB_Modificacion.Controls.Add(Me.Label26)
         Me.GB_Modificacion.Controls.Add(Me.txt_Costo_mod)
@@ -999,6 +1037,21 @@ Partial Class frmProductos
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
+        '
+        'Btn_Cancelar
+        '
+        Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(650, 504)
+        Me.Btn_Cancelar.Name = "Btn_Cancelar"
+        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Cancelar.TabIndex = 87
+        Me.Btn_Cancelar.Text = "Cancelar"
+        Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de productos")
+        Me.Btn_Cancelar.UseVisualStyleBackColor = True
         '
         'Label26
         '
@@ -1539,20 +1592,9 @@ Partial Class frmProductos
         Me.ToolProd.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolProd.ToolTipTitle = "Ayuda"
         '
-        'Btn_Cancelar
+        'OpenFileDialog
         '
-        Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(650, 504)
-        Me.Btn_Cancelar.Name = "Btn_Cancelar"
-        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Cancelar.TabIndex = 87
-        Me.Btn_Cancelar.Text = "Cancelar"
-        Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de productos")
-        Me.Btn_Cancelar.UseVisualStyleBackColor = True
+        Me.OpenFileDialog.FileName = "OpenFileDialog"
         '
         'frmProductos
         '
@@ -1719,4 +1761,8 @@ Partial Class frmProductos
     Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents Btn_Cancelar As System.Windows.Forms.Button
+    Friend WithEvents btn_Exportar As System.Windows.Forms.Button
+    Friend WithEvents btn_Importar As System.Windows.Forms.Button
+    Friend WithEvents OpenFileDialog As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents SaveFileDialog As System.Windows.Forms.SaveFileDialog
 End Class

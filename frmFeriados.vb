@@ -46,6 +46,11 @@
         End If
     End Sub
 
+    Private Sub abc()
+        Calendario.UpdateBoldedDates()
+    End Sub
+
+
     'Cuando hace click en "Ver Lista".
     Private Sub link_Visualizar_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles link_Visualizar.LinkClicked
         'Declaracion de variables
@@ -110,4 +115,7 @@
         End If
     End Sub
 
+    Private Sub Calendario_DateSelected(sender As Object, e As DateRangeEventArgs) Handles Calendario.DateSelected
+        sender.UpdateBoldedDates() 'Actualizo el calendario.
+    End Sub
 End Class

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -53,6 +53,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -63,6 +64,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -101,6 +103,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -111,6 +114,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CodigoBarras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -1126,8 +1130,10 @@
     <Content Include="Imagenes\btn_ventas_32.png" />
     <Content Include="Imagenes\bt_Caja_32.png" />
     <Content Include="Imagenes\bt_Egresos2_32.png" />
+    <Content Include="Imagenes\bt_Egresos_32.png" />
     <Content Include="Imagenes\bt_Gastos_32.png" />
     <Content Include="Imagenes\bt_Impuestos2_32.png" />
+    <Content Include="Imagenes\bt_Impuestos_32.png" />
     <Content Include="Imagenes\bt_MovimientosList_32.png" />
     <Content Include="Imagenes\bt_Movimientos_32.png" />
     <Content Include="Imagenes\bt_Recibo_32.png" />
@@ -1140,9 +1146,14 @@
     <Content Include="Imagenes\desconectado_32.png" />
     <Content Include="Imagenes\Detalle_Pequeno.png" />
     <Content Include="Imagenes\etiquetas\Etiqueta_Vacia.jpg" />
+    <None Include="Imagenes\export_excel.png" />
+    <Content Include="Imagenes\Etiqueta_Imprimir.jpg" />
+    <Content Include="Imagenes\Etiqueta_Vacia.jpg" />
     <Content Include="Imagenes\flecha_der.png" />
     <Content Include="Imagenes\flecha_izq.png" />
     <Content Include="Imagenes\fondo_central.jpg" />
+    <None Include="Imagenes\Import-Excel.png" />
+    <Content Include="Imagenes\icono_buscar_48.png" />
     <Content Include="Imagenes\movimientos.png" />
     <Content Include="Imagenes\ProductosMasivos_32.png" />
     <Content Include="Imagenes\Productos_32.png" />
@@ -1194,6 +1205,9 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Plantilla\Template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="SistemaCinderella_1_TemporaryKey.pfx" />
     <None Include="SistemaCinderella_2_TemporaryKey.pfx" />
     <None Include="SistemaCinderella_3_TemporaryKey.pfx" />

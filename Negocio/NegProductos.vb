@@ -1,13 +1,28 @@
-﻿Imports Entidades
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports Entidades
 Imports System.Data.SqlClient
 Imports Datos
 
+Public Enum Fortmats
+    Texto
+    Moneda
+    Numerico
+End Enum
+
+
 Public Class NegProductos
+
+    Public Delegate Sub UpdateProgressDelegate(ProgressStep As Integer, ProgressText As String)
+    Public Event UpdateProgress As UpdateProgressDelegate
+
     Dim objProducto As Entidades.Productos
     Dim clsDatos As New Datos.Conexion
     Dim con As New Conexion
     Dim ClsFunciones As New Funciones
     Dim HayInternet As Boolean = ClsFunciones.GotInternet
+
+    Const MaxRowsData As Integer = 100000
+    Const MinRowsData As Integer = 2
 
 #Region "Funciones de Seleccion"
     'Funcion para consultar un producto.
@@ -304,7 +319,7 @@ Public Class NegProductos
             Next
         End If
 
-        Return eproductos        
+        Return eproductos
     End Function
 
     'Funcion que trae el precio del producto dependiendo del codigo ( barra y producto ) y el precio seteado en el programa 
@@ -1082,6 +1097,263 @@ Public Class NegProductos
         End If
     End Function
 
+#End Region
+
+#Region "Funciones Exportar Excel"
+    Function ExportarExcel(nombreArchivo As String, nombrePlantilla As String) As Integer
+        Dim cmd As New SqlCommand
+        Dim adapter As New SqlDataAdapter
+        Dim dsProductos As DataSet = New DataSet()
+        Dim dsCategoria As DataSet = New DataSet()
+        Dim dsSubCategoria As DataSet = New DataSet()
+        Dim dsProveedor As DataSet = New DataSet()
+        Try
+            cmd.Connection = clsDatos.ConectarRemoto()
+            cmd.CommandType = CommandType.StoredProcedure
+
+            RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
+            cmd.CommandText = "sp_Productos_ListadoExcel"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProductos)
+
+            RaiseEvent UpdateProgress(2, "Obteniendo Categorias...")
+            cmd.CommandText = "sp_ProductosCategorias_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsCategoria)
+
+            RaiseEvent UpdateProgress(3, "Obteniendo Subcategorias...")
+            cmd.CommandText = "sp_ProductosSubcategorias_ListadoCompletoExcel"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsSubCategoria)
+
+            RaiseEvent UpdateProgress(4, "Obteniendo Proveedores...")
+            cmd.CommandText = "sp_Proveedores_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProveedor)
+
+            Dim xlApp As Excel.Application
+            Dim xlWorkBook As Excel.Workbook
+            Dim xlWorkSheet As Excel.Worksheet
+            Dim misValue As Object = System.Reflection.Missing.Value
+
+            xlApp = New Excel.Application()
+            xlApp.DisplayAlerts = False
+            xlWorkBook = xlApp.Workbooks.Open(System.IO.Path.GetFullPath(nombrePlantilla))
+            xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
+
+            xlWorkSheet.Name = "Productos"
+
+            RaiseEvent UpdateProgress(5, "Cargando datos en Excel...")
+            AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
+
+            '//Oculto la primera columan ya que en esta se eunetra el ID del producto y no debe ser modificado
+            xlWorkSheet.Range("A1").EntireColumn.Hidden = True
+
+            RaiseEvent UpdateProgress(6, "Armando validaciones en Excel...")
+            '//Seteo el formato de la columnas y validacion
+            '//Codigo
+            SetColumnFormat(xlWorkSheet, "B", Fortmats.Texto)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateTextLength, Excel.XlFormatConditionOperator.xlBetween, "B", "1;255", "El código ingresado no debe estar vacío y debe ser menor a los 255 caracteres.")
+            '//Nombre
+            SetColumnFormat(xlWorkSheet, "C", Fortmats.Texto)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateTextLength, Excel.XlFormatConditionOperator.xlBetween, "C", "1;255", "El Nombre ingresado no debe estar vacío y debe ser menor a los 255 caracteres.")
+            '//Origen
+            SetColumnFormat(xlWorkSheet, "G", Fortmats.Texto)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateTextLength, Excel.XlFormatConditionOperator.xlBetween, "G", "1;255", "El origen ingresado no debe estar vacío y debe ser menor a los 255 caracteres.")
+            '//Tamaño
+            SetColumnFormat(xlWorkSheet, "H", Fortmats.Texto)
+            '//Costo
+            SetColumnFormat(xlWorkSheet, "I", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "I", "=NOT(ISBLANK($I2))", "El monto ingresado no debe estar vacío.")
+            '//Codigo Barra
+            SetColumnFormat(xlWorkSheet, "J", Fortmats.Numerico)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateWholeNumber, Excel.XlFormatConditionOperator.xlBetween, "J", "1000000000000;9999999999999", "El código barras ingresado no debe estar vacío y debe tener 13 dígitos.")
+            '//Precio Tigre
+            SetColumnFormat(xlWorkSheet, "K", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "K", "=NOT(ISBLANK($K2))", "El monto ingresado no debe estar vacío.")
+            '//Precio Sarmiento
+            SetColumnFormat(xlWorkSheet, "L", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "L", "=NOT(ISBLANK($L2))", "El monto ingresado no debe estar vacío.")
+            '//Precio Capital
+            SetColumnFormat(xlWorkSheet, "M", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "M", "=NOT(ISBLANK($M2))", "El monto ingresado no debe estar vacío.")
+            '// Precio Mayorista SF
+            SetColumnFormat(xlWorkSheet, "N", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "N", "=NOT(ISBLANK($N2))", "El monto ingresado no debe estar vacío.")
+            '//Precio Mayorista CF
+            SetColumnFormat(xlWorkSheet, "O", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "O", "=NOT(ISBLANK($O2))", "El monto ingresado no debe estar vacío.")
+            '//Precio Mayorista CFR
+            SetColumnFormat(xlWorkSheet, "P", Fortmats.Moneda)
+            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "P", "=NOT(ISBLANK($P2))", "El monto ingresado no debe estar vacío.")
+
+            '//Agrego la validacion de combos para el cargado de la categoria
+            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
+
+            '//Agrego la validacion de combos anidados para el cargado de la SubCategoria
+            AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D2")
+
+            '//Agrego la validacion de combos para el cargado de los porveedores
+            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F")
+
+            '//Agrego la validacion de combos para el cargado de Habilitado
+            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R")
+
+            RaiseEvent UpdateProgress(7, "Guardando Excel...")
+            xlWorkBook.SaveAs(nombreArchivo, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, False, False, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, True, misValue, misValue, misValue)
+            xlWorkBook.Close(True, misValue, misValue)
+            xlApp.Quit()
+
+            releaseObject(xlWorkSheet)
+            releaseObject(xlWorkBook)
+            releaseObject(xlApp)
+
+            'MessageBox.Show("Excel file created , you can find the file c:\\csharp.net-informations.xls");
+        Catch ex As Exception
+            Return ex.Message
+        End Try
+        Return 1
+    End Function
+
+    Private Sub AddDataSetToWorkSheet(dsProductos As DataSet, xlWorkSheet As Excel.Worksheet)
+        Dim data(dsProductos.Tables(0).Rows.Count + 1, dsProductos.Tables(0).Columns.Count) As Object
+
+        'Agrego el nombre de la Columna
+        For i As Integer = 0 To dsProductos.Tables(0).Columns.Count - 1
+            data(0, i) = dsProductos.Tables(0).Columns(i).ColumnName
+        Next
+
+        'Agrego los datos de la tabla
+        For i As Integer = 0 To dsProductos.Tables(0).Rows.Count - 1
+            For j As Integer = 0 To dsProductos.Tables(0).Columns.Count - 1
+
+                'Sumo 1 porque la posicion 0 le pertenece a las columnas
+                data(i + 1, j) = dsProductos.Tables(0).Rows(i).ItemArray(j)
+            Next
+        Next
+
+
+
+        Dim startCell As Excel.Range = CType(xlWorkSheet.Cells(1, 1), Excel.Range)
+        Dim endCell As Excel.Range = CType(xlWorkSheet.Cells(dsProductos.Tables(0).Rows.Count + 1, dsProductos.Tables(0).Columns.Count), Excel.Range)
+        Dim writeRange As Excel.Range = xlWorkSheet.Range(startCell, endCell)
+        writeRange.Value2 = data
+        writeRange.Columns.AutoFit()
+    End Sub
+
+    Private Sub AgregarValidacionPorCombo(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, options As String(), Name As String, Column As String)
+
+        Dim sheetValidation = xlWorkBook.Sheets.Add()
+        sheetValidation.Name = Name
+        sheetValidation.Visible = False
+
+        'agergo los elementos del combo a la nueva hoja
+        For i As Integer = 0 To options.Length - 1
+            Dim Cell = String.Format("A{0}", (i + 1))
+            sheetValidation.Range(Cell).Value = options(i)
+        Next
+
+        xlWorkBook.Names.Add(Name.Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(1), options.Length)))
+
+        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
+        Dim lookupValues = String.Format("={0}", Name)
+
+        validatingCellsRange.Validation.Delete()
+        validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)
+        validatingCellsRange.Validation.InCellDropdown = True
+    End Sub
+
+    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String)
+
+        Dim sheetValidation = xlWorkBook.Sheets.Add()
+        sheetValidation.Name = Name
+        sheetValidation.Visible = False
+
+        Dim categorias = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(r) r.ItemArray(0).ToString()).Distinct().ToArray()
+
+        For i As Integer = 0 To categorias.Length - 1
+
+            Dim subCategorias As String() = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Where(Function(r) r.ItemArray(0).ToString() = categorias(i)).Select(Function(y) y.ItemArray(1).ToString()).ToArray()
+            Dim j As Integer = 0
+
+            For Each subcategoria As String In subCategorias
+                j = j + 1
+                Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
+                sheetValidation.Range(Cell).Value = subcategoria
+
+            Next
+            xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
+        Next
+
+        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
+
+        Dim lookupValues = String.Format(String.Format("=indirect(SUBSTITUTE(${0};"" "";""_""))", Relacionado))
+
+        validatingCellsRange.Validation.Delete()
+        validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList,
+                Excel.XlDVAlertStyle.xlValidAlertStop,
+                Excel.XlFormatConditionOperator.xlBetween, lookupValues)
+        validatingCellsRange.Validation.InCellDropdown = True
+    End Sub
+
+
+    Private Sub AgregaValidacion(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, ValidationType As Excel.XlDVType, ConditionOperator As Excel.XlFormatConditionOperator, Column As String, lookupValues As String, ErrorMenssage As String)
+        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
+
+        If ValidationType = Excel.XlDVType.xlValidateCustom Then
+            validatingCellsRange.Validation.Add(ValidationType, Excel.XlDVAlertStyle.xlValidAlertStop, Type.Missing, lookupValues)
+        ElseIf ConditionOperator = Excel.XlFormatConditionOperator.xlBetween Then
+            Dim cantidad As String() = lookupValues.Split(New Char() {";"})
+            validatingCellsRange.Validation.Add(ValidationType, Excel.XlDVAlertStyle.xlValidAlertStop, ConditionOperator, cantidad(0), cantidad(1))
+        Else
+            validatingCellsRange.Validation.Add(ValidationType, Excel.XlDVAlertStyle.xlValidAlertStop, ConditionOperator, lookupValues)
+        End If
+
+
+        validatingCellsRange.Validation.IgnoreBlank = False
+        validatingCellsRange.Validation.ErrorTitle = "Valore ingresado incorrecto"
+        validatingCellsRange.Validation.ErrorMessage = ErrorMenssage
+    End Sub
+
+    Private Sub SetColumnFormat(sheet As Excel.Worksheet, column As String, format As Fortmats)
+
+        Dim Range As Excel.Range = sheet.Range(column + MinRowsData.ToString(), column + MaxRowsData.ToString())
+
+        Select Case format
+            Case Fortmats.Moneda : Range.NumberFormat = "$#,##0.00;$-#,##0.00"
+            Case Fortmats.Texto : Range.NumberFormat = "@"
+            Case Fortmats.Numerico : Range.NumberFormat = "0"
+        End Select
+
+    End Sub
+
+    Private Function IntToLetters(value As Integer) As String
+        Dim result As String = String.Empty
+
+        While value > 0
+            value = value - 1
+            result = Chr(65 + value Mod 26) + result
+            value /= 26
+        End While
+
+        Return result
+    End Function
+
+    Private Sub releaseObject(obj As Object)
+        Try
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
+            obj = Nothing
+
+        Catch ex As Exception
+
+            obj = Nothing
+
+        Finally
+
+            GC.Collect()
+        End Try
+    End Sub
 #End Region
 
 End Class
