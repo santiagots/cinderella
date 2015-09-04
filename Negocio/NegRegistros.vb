@@ -29,7 +29,6 @@ Public Class NegRegistros
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim id_Registro As Integer
-        Dim id_Empleado As Integer
         Dim NombreEmpleado As String = ""
         Try
             'Conecto

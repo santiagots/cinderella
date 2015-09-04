@@ -398,6 +398,13 @@ Public Class frmProductos
             DG_Productos.Columns("Eliminar").Visible = False
         End If
 
+
+        If (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")) Then
+            Me.ToolProd.SetToolTip(Me.btn_Restore, String.Format("Haz click aquí para restaurar la informacion del los productos con la ultima copia de seguridad con fecha {0}", System.IO.File.GetCreationTime(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml").ToString("dd/MM/yyyy hh:mm:ss")))
+        Else
+            btn_Restore.Enabled = False
+        End If
+
         'Cambio el cursor a NORMAL.
         TabProductos.Cursor = Cursors.Arrow
     End Sub
@@ -1379,7 +1386,7 @@ Public Class frmProductos
                 Me.Cursor = Cursors.WaitCursor
 
                 frmCargadorDeEspera.Show()
-                frmCargadorDeEspera.Text = "Generando Exportacion a Excel "
+                frmCargadorDeEspera.Text = "Generando Exportación a Excel "
                 frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
                 frmCargadorDeEspera.BarraProgreso.Minimum = 0
                 frmCargadorDeEspera.BarraProgreso.Maximum = 7
@@ -1403,9 +1410,118 @@ Public Class frmProductos
             End If
 
         Catch ex As Exception
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.Close()
+            frmCargadorDeEspera.Dispose()
+
+            'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error un error en la exportación de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar.Click
+        Try
+            OpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            OpenFileDialog.Filter = "Excel Files|*.xlsx;"
+            OpenFileDialog.FileName = String.Empty
+
+            If OpenFileDialog.ShowDialog() = DialogResult.OK Then
+                'Cambio el cursor a "WAIT"
+                Me.Cursor = Cursors.WaitCursor
+
+                frmCargadorDeEspera.Show()
+                frmCargadorDeEspera.Text = "Generando Importación del Excel "
+                frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
+                frmCargadorDeEspera.BarraProgreso.Minimum = 0
+                frmCargadorDeEspera.BarraProgreso.Maximum = 4
+                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.Refresh()
+
+                AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
+
+                Dim DatosConError As DataTable = New DataTable()
+
+                Dim Mensaje As String = NegProductos.ImportarExcel(OpenFileDialog.FileName, DatosConError)
+
+                'Voy seteando la barra de progreso
+                frmCargadorDeEspera.Close()
+                frmCargadorDeEspera.Dispose()
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+
+                MessageBox.Show(Mensaje, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                'Si se genero el backup habilito el boton de restaurar
+                If (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")) Then
+                    Me.ToolProd.SetToolTip(Me.btn_Restore, String.Format("Haz click aquí para restaurar la informacion del los productos con la ultima copia de seguridad con fecha {0}", System.IO.File.GetCreationTime(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml").ToString("dd/MM/yyyy hh:mm:ss")))
+                Else
+                    btn_Restore.Enabled = False
+                End If
+
+                'si en el proceso de importacion alguna fila modificada no fue importada por algun motivo 
+                If (DatosConError.Rows.Count > 0) Then
+                    'muestro en pantalla las filas con errores
+                    Dim frmProductosErrorImportar As frmProductosErrorImportar = New frmProductosErrorImportar()
+
+                    'Elimino la columna de ID para que no se muestre
+                    DatosConError.Columns.RemoveAt(0)
+                    frmProductosErrorImportar.productosError = DatosConError
+
+                    frmProductosErrorImportar.ShowDialog()
+                End If
+            End If
+
+        Catch ex As Exception
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.Close()
+            frmCargadorDeEspera.Dispose()
+
+            'Cambio el cursor a "NORMAL"
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha producido un error en la importación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub btn_Restore_Click(sender As Object, e As EventArgs) Handles btn_Restore.Click
+
+        If (MessageBox.Show("Esta seguro que desea restaurar los valores de los productos en la base de datos?", "Administración de Productos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes) Then
+            Try
+                'Cambio el cursor a "WAIT"
+                Me.Cursor = Cursors.WaitCursor
+
+                frmCargadorDeEspera.Show()
+                frmCargadorDeEspera.Text = "Restaurando valores a la Base"
+                frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
+                frmCargadorDeEspera.BarraProgreso.Minimum = 0
+                frmCargadorDeEspera.BarraProgreso.Maximum = 4
+                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.Refresh()
+
+                AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
+
+                NegProductos.Restaurar()
+
+                'Voy seteando la barra de progreso
+                frmCargadorDeEspera.Close()
+                frmCargadorDeEspera.Dispose()
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+
+                MessageBox.Show("Se han restaurado lo valores en la base de datos correctamente", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Catch ex As Exception
+                'Voy seteando la barra de progreso
+                frmCargadorDeEspera.Close()
+                frmCargadorDeEspera.Dispose()
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+                MessageBox.Show("Se ha producido un error en la restauracion de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+
     End Sub
 
     Public Sub UpdateProgress(ProgressStep As Integer, ProgressText As String)
@@ -1414,12 +1530,7 @@ Public Class frmProductos
         frmCargadorDeEspera.Refresh()
     End Sub
 
-    Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar.Click
-        OpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-        OpenFileDialog.Filter = "Excel Files|*.xlsx;"
-        If OpenFileDialog.ShowDialog() = DialogResult.OK Then
-            'OpenFileDialog.FileName
-        End If
-    End Sub
+
 #End Region
+
 End Class

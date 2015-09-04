@@ -2,6 +2,12 @@
 Imports Entidades
 Imports System.Data.SqlClient
 Imports Datos
+Imports System.Configuration
+Imports System.Windows.Forms
+Imports System.Text
+Imports System.Data.OleDb
+Imports System.IO
+Imports System.Linq
 
 Public Enum Fortmats
     Texto
@@ -21,7 +27,7 @@ Public Class NegProductos
     Dim ClsFunciones As New Funciones
     Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
-    Const MaxRowsData As Integer = 100000
+    Const MaxRowsData As Integer = 9999
     Const MinRowsData As Integer = 2
 
 #Region "Funciones de Seleccion"
@@ -389,26 +395,7 @@ Public Class NegProductos
             id_Producto = UltimoProducto()
 
             'Actualizo el codigo de barras
-            Dim CodigoBarra As String = ""
-            Dim CodigoProducto As String = ""
-
-            If Len(CStr(id_Producto)) < 5 Then
-
-                For i = 1 To 5 - Len(CStr(id_Producto))
-                    CodigoProducto &= "0"
-                Next
-                CodigoProducto = CodigoProducto & id_Producto
-            Else
-                CodigoProducto = id_Producto
-            End If
-
-            CodigoBarra = "7791234" & CodigoProducto
-
-            Dim funcionescodigo As New CodigoBarras.funciones
-            Dim DigitoVerificador As Integer
-            DigitoVerificador = funcionescodigo.CalcularVerificador(CodigoBarra)
-
-            CodigoBarra = CodigoBarra & DigitoVerificador
+            Dim CodigoBarra As String = ArmarCodigoBarras(id_Producto)
 
             'Actualizo el codigo de barras
             Dim cmd12 As New SqlCommand
@@ -533,6 +520,30 @@ Public Class NegProductos
         End Try
     End Function
 
+    Private Function ArmarCodigoBarras(id_Producto As String) As String
+        Dim CodigoBarra As String = ""
+        Dim CodigoProducto As String = ""
+
+        If Len(CStr(id_Producto)) < 5 Then
+
+            For i = 1 To 5 - Len(CStr(id_Producto))
+                CodigoProducto &= "0"
+            Next
+            CodigoProducto = CodigoProducto & id_Producto
+        Else
+            CodigoProducto = id_Producto
+        End If
+
+        CodigoBarra = "7791234" & CodigoProducto
+
+        Dim funcionescodigo As New CodigoBarras.funciones
+        Dim DigitoVerificador As Integer
+        DigitoVerificador = funcionescodigo.CalcularVerificador(CodigoBarra)
+
+        CodigoBarra = CodigoBarra & DigitoVerificador
+        Return CodigoBarra
+    End Function
+
     'Funcion para insertar un producto - en seccion alta masiva de productos.
     Function AltaProductoMasivo(ByVal eproductos As Entidades.Productos) As Integer
         'Declaro variables
@@ -571,26 +582,7 @@ Public Class NegProductos
             id_Producto = UltimoProducto()
 
             'Actualizo el codigo de barras
-            Dim CodigoBarra As String = ""
-            Dim CodigoProducto As String = ""
-
-            If Len(CStr(id_Producto)) < 5 Then
-
-                For i = 1 To 5 - Len(CStr(id_Producto))
-                    CodigoProducto &= "0"
-                Next
-                CodigoProducto = CodigoProducto & id_Producto
-            Else
-                CodigoProducto = id_Producto
-            End If
-
-            CodigoBarra = "7791234" & CodigoProducto
-
-            Dim funcionescodigo As New CodigoBarras.funciones
-            Dim DigitoVerificador As Integer
-            DigitoVerificador = funcionescodigo.CalcularVerificador(CodigoBarra)
-
-            CodigoBarra = CodigoBarra & DigitoVerificador
+            Dim CodigoBarra As String = ArmarCodigoBarras(id_Producto)
 
             'Actualizo el codigo de barras
             Dim cmd12 As New SqlCommand
@@ -1137,8 +1129,7 @@ Public Class NegProductos
             Dim misValue As Object = System.Reflection.Missing.Value
 
             xlApp = New Excel.Application()
-            xlApp.DisplayAlerts = False
-            xlWorkBook = xlApp.Workbooks.Open(System.IO.Path.GetFullPath(nombrePlantilla))
+            xlWorkBook = xlApp.Workbooks.Add(System.IO.Path.GetFullPath(nombrePlantilla))
             xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
 
             xlWorkSheet.Name = "Productos"
@@ -1150,43 +1141,7 @@ Public Class NegProductos
             xlWorkSheet.Range("A1").EntireColumn.Hidden = True
 
             RaiseEvent UpdateProgress(6, "Armando validaciones en Excel...")
-            '//Seteo el formato de la columnas y validacion
-            '//Codigo
-            SetColumnFormat(xlWorkSheet, "B", Fortmats.Texto)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateTextLength, Excel.XlFormatConditionOperator.xlBetween, "B", "1;255", "El código ingresado no debe estar vacío y debe ser menor a los 255 caracteres.")
-            '//Nombre
-            SetColumnFormat(xlWorkSheet, "C", Fortmats.Texto)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateTextLength, Excel.XlFormatConditionOperator.xlBetween, "C", "1;255", "El Nombre ingresado no debe estar vacío y debe ser menor a los 255 caracteres.")
-            '//Origen
-            SetColumnFormat(xlWorkSheet, "G", Fortmats.Texto)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateTextLength, Excel.XlFormatConditionOperator.xlBetween, "G", "1;255", "El origen ingresado no debe estar vacío y debe ser menor a los 255 caracteres.")
-            '//Tamaño
-            SetColumnFormat(xlWorkSheet, "H", Fortmats.Texto)
-            '//Costo
-            SetColumnFormat(xlWorkSheet, "I", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "I", "=NOT(ISBLANK($I2))", "El monto ingresado no debe estar vacío.")
-            '//Codigo Barra
-            SetColumnFormat(xlWorkSheet, "J", Fortmats.Numerico)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateWholeNumber, Excel.XlFormatConditionOperator.xlBetween, "J", "1000000000000;9999999999999", "El código barras ingresado no debe estar vacío y debe tener 13 dígitos.")
-            '//Precio Tigre
-            SetColumnFormat(xlWorkSheet, "K", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "K", "=NOT(ISBLANK($K2))", "El monto ingresado no debe estar vacío.")
-            '//Precio Sarmiento
-            SetColumnFormat(xlWorkSheet, "L", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "L", "=NOT(ISBLANK($L2))", "El monto ingresado no debe estar vacío.")
-            '//Precio Capital
-            SetColumnFormat(xlWorkSheet, "M", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "M", "=NOT(ISBLANK($M2))", "El monto ingresado no debe estar vacío.")
-            '// Precio Mayorista SF
-            SetColumnFormat(xlWorkSheet, "N", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "N", "=NOT(ISBLANK($N2))", "El monto ingresado no debe estar vacío.")
-            '//Precio Mayorista CF
-            SetColumnFormat(xlWorkSheet, "O", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "O", "=NOT(ISBLANK($O2))", "El monto ingresado no debe estar vacío.")
-            '//Precio Mayorista CFR
-            SetColumnFormat(xlWorkSheet, "P", Fortmats.Moneda)
-            AgregaValidacion(xlWorkBook, xlWorkSheet, Excel.XlDVType.xlValidateCustom, Excel.XlFormatConditionOperator.xlBetween, "P", "=NOT(ISBLANK($P2))", "El monto ingresado no debe estar vacío.")
-
+           
             '//Agrego la validacion de combos para el cargado de la categoria
             AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
 
@@ -1200,17 +1155,17 @@ Public Class NegProductos
             AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R")
 
             RaiseEvent UpdateProgress(7, "Guardando Excel...")
+            xlApp.DisplayAlerts = False
             xlWorkBook.SaveAs(nombreArchivo, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, False, False, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, True, misValue, misValue, misValue)
-            xlWorkBook.Close(True, misValue, misValue)
+            xlApp.DisplayAlerts = True
+            xlWorkBook.Close(0)
+            xlApp.Workbooks.Close()
             xlApp.Quit()
-
-            releaseObject(xlWorkSheet)
-            releaseObject(xlWorkBook)
-            releaseObject(xlApp)
-
-            'MessageBox.Show("Excel file created , you can find the file c:\\csharp.net-informations.xls");
         Catch ex As Exception
             Return ex.Message
+
+        Finally
+            KillExcel()
         End Try
         Return 1
     End Function
@@ -1284,47 +1239,6 @@ Public Class NegProductos
             Next
             xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
         Next
-
-        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
-
-        Dim lookupValues = String.Format(String.Format("=indirect(SUBSTITUTE(${0};"" "";""_""))", Relacionado))
-
-        validatingCellsRange.Validation.Delete()
-        validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList,
-                Excel.XlDVAlertStyle.xlValidAlertStop,
-                Excel.XlFormatConditionOperator.xlBetween, lookupValues)
-        validatingCellsRange.Validation.InCellDropdown = True
-    End Sub
-
-
-    Private Sub AgregaValidacion(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, ValidationType As Excel.XlDVType, ConditionOperator As Excel.XlFormatConditionOperator, Column As String, lookupValues As String, ErrorMenssage As String)
-        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
-
-        If ValidationType = Excel.XlDVType.xlValidateCustom Then
-            validatingCellsRange.Validation.Add(ValidationType, Excel.XlDVAlertStyle.xlValidAlertStop, Type.Missing, lookupValues)
-        ElseIf ConditionOperator = Excel.XlFormatConditionOperator.xlBetween Then
-            Dim cantidad As String() = lookupValues.Split(New Char() {";"})
-            validatingCellsRange.Validation.Add(ValidationType, Excel.XlDVAlertStyle.xlValidAlertStop, ConditionOperator, cantidad(0), cantidad(1))
-        Else
-            validatingCellsRange.Validation.Add(ValidationType, Excel.XlDVAlertStyle.xlValidAlertStop, ConditionOperator, lookupValues)
-        End If
-
-
-        validatingCellsRange.Validation.IgnoreBlank = False
-        validatingCellsRange.Validation.ErrorTitle = "Valore ingresado incorrecto"
-        validatingCellsRange.Validation.ErrorMessage = ErrorMenssage
-    End Sub
-
-    Private Sub SetColumnFormat(sheet As Excel.Worksheet, column As String, format As Fortmats)
-
-        Dim Range As Excel.Range = sheet.Range(column + MinRowsData.ToString(), column + MaxRowsData.ToString())
-
-        Select Case format
-            Case Fortmats.Moneda : Range.NumberFormat = "$#,##0.00;$-#,##0.00"
-            Case Fortmats.Texto : Range.NumberFormat = "@"
-            Case Fortmats.Numerico : Range.NumberFormat = "0"
-        End Select
-
     End Sub
 
     Private Function IntToLetters(value As Integer) As String
@@ -1339,21 +1253,405 @@ Public Class NegProductos
         Return result
     End Function
 
-    Private Sub releaseObject(obj As Object)
-        Try
+    Private Sub KillExcel()
 
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
-            obj = Nothing
+        Dim proc As System.Diagnostics.Process
+        For Each proc In System.Diagnostics.Process.GetProcessesByName("EXCEL")
+            If proc.MainWindowTitle.ToString = "" Then
+                proc.Kill()
+            End If
+        Next
 
-        Catch ex As Exception
-
-            obj = Nothing
-
-        Finally
-
-            GC.Collect()
-        End Try
     End Sub
 #End Region
 
+
+#Region "Funciones Importar Excel"
+    Function ImportarExcel(fileName As String, ByRef DatosConError As DataTable) As String
+
+        Dim dsCategoria As DataSet = New DataSet()
+        Dim dsProveedor As DataSet = New DataSet()
+        Dim dsSubCategoria As DataSet = New DataSet()
+        Dim dsProductos As DataSet = New DataSet()
+        Dim dsBackUp As DataSet = New DataSet()
+        Dim sourceData As DataTable
+
+        Dim encripta As New ClsEncriptacion()
+        Using conn As SqlConnection = New SqlConnection()
+
+            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.Open()
+
+            RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
+
+            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM [CINDERELLA].[dbo].[PRECIOS]", conn)
+            Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "[CINDERELLA].[dbo].[PRECIOS]")
+
+            cmd = New SqlCommand("SELECT * FROM  [CINDERELLA].[dbo].[STOCK]", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "[CINDERELLA].[dbo].[STOCK]")
+
+            cmd = New SqlCommand("SELECT * FROM  [CINDERELLA].[dbo].[PRODUCTOS]", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "[CINDERELLA].[dbo].[PRODUCTOS]")
+
+            'Guardo la informacion de la tabla antes de ser actualizada
+            dsBackUp.WriteXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")
+
+            cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM [CINDERELLA].[dbo].[PRODUCTOS_CATEGORIAS]", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsCategoria)
+
+            cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM [CINDERELLA].[dbo].[PRODUCTOS_SUBCATEGORIAS] ", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsSubCategoria)
+
+            cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM [CINDERELLA].[dbo].[PROVEEDORES]  ", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProveedor)
+
+
+            cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProductos)
+        End Using
+
+        RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
+        sourceData = GetDataFormExcel(fileName, "Productos").Tables(0)
+
+        If Not (verificarColumnasExcel(sourceData)) Then
+            Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
+        End If
+
+        DatosConError = dsProductos.Tables(0).Clone()
+        DatosConError.Columns.Add("Descripcion_Error")
+
+        RaiseEvent UpdateProgress(3, "Validando informacion del Excel...")
+        'Obtengo las filas eliminadas 
+        Dim DatosEliminados = obtenerFilasEliminadas(dsProductos.Tables(0), sourceData)
+
+        'Eliminos las filar que tiene un mismo codigo y lo inserto como error
+        sourceData = ElmininarFilasComMismoValor(sourceData, DatosConError, "Codigo")
+
+        'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
+        Dim DatosActualizados = obtenerFilasModificadas(dsProductos, sourceData)
+
+        'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
+        Dim DatosNuevos As List(Of DataRow) = sourceData.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
+
+        'Verifico que estos productos nuevos no se encuentren en la base de datos
+        DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
+
+        'De las filas modificadas verifico que esten bien cargadas
+        DatosActualizados = ValidarDatosVacios(DatosActualizados, DatosConError)
+
+        'De las filas nuevas verifico que esten bien cargadas
+        DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
+
+        RaiseEvent UpdateProgress(4, "Actualizando informacion en la base de datos...")
+        Dim productos As StringBuilder = New StringBuilder()
+
+        Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
+
+        'Armo sentiencias Delete
+        productos.Append(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo))
+        'Armo sentiencias Update
+        productos.Append(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo))
+        'Armo sentiencias Insert
+        productos.Append(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo))
+
+        If (productos.Length > 0) Then
+            Using conn As SqlConnection = New SqlConnection()
+
+                conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+                conn.Open()
+                Using tran As SqlTransaction = conn.BeginTransaction()
+
+                    Try
+                        Dim cmd As SqlCommand = New SqlCommand(productos.ToString(), conn)
+                        cmd.Transaction = tran
+                        cmd.ExecuteNonQuery()
+                        tran.Commit()
+                    Catch ex As Exception
+                        tran.Rollback()
+                        Throw
+                    End Try
+                End Using
+            End Using
+            If (DatosConError.Rows.Count = 0) Then
+                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos y se han eliminado {2} productos.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count)
+            Else
+                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos, se han eliminado {2} productos y se encontrar {3} productos con errores para ser inportados.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count, DatosConError.Rows.Count)
+            End If
+
+        Else
+            If (DatosConError.Rows.Count = 0) Then
+                Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
+            Else
+                Return String.Format("Se encontrar {0} productos con errores para ser inportados.", DatosConError.Rows.Count)
+            End If
+        End If
+    End Function
+
+    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer) As StringBuilder
+        Dim i As Integer = 0
+        Dim sql As StringBuilder = New StringBuilder()
+        Dim codigoBarras As String
+
+        Do While (i < Datos.Count)
+            'Obtengo el codigo de la Categoria ingresada
+            Dim categoriaDescripcion As String = Datos(i)("Categoria").ToString()
+            Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = categoriaDescripcion).FirstOrDefault()
+
+            'Obtengo el codigo de la SubCategoria ingresada
+            Dim subCategoriaDescripcion As String = Datos(i)("SubCategoria").ToString()
+            Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = subCategoriaDescripcion).FirstOrDefault()
+
+            'Obtengo el codigo de la Proveedor ingresada
+            Dim ProveedorDescripcion As String = Datos(i)("Proveedor").ToString()
+            Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = ProveedorDescripcion).FirstOrDefault()
+
+            'Obtengo el codigo de Habilitacion
+            Dim habilitado As Integer = If(Datos(i)(17).ToString() = "Si", 1, 0)
+
+            If (comando = "Insert") Then
+                If (String.IsNullOrEmpty(Datos(i)("CodigoBarra").ToString())) Then
+                    codigoBarras = ArmarCodigoBarras(idProductoMaximo + i)
+                Else
+                    codigoBarras = Datos(i)("CodigoBarra")
+                End If
+
+                ArmarInsert(sql, Datos(i), categoria, subCategoria, Proveedor, codigoBarras, habilitado)
+
+            ElseIf (comando = "Update") Then
+                If (String.IsNullOrEmpty(Datos(i)("CodigoBarra").ToString())) Then
+                    codigoBarras = ArmarCodigoBarras(Datos(i)("id_producto").ToString())
+                Else
+                    codigoBarras = Datos(i)("CodigoBarra")
+                End If
+                ArmarUpdate(sql, Datos(i), categoria, subCategoria, Proveedor, codigoBarras, habilitado)
+            ElseIf (comando = "Delete") Then
+                ArmarDelete(sql, Datos(i))
+            End If
+            i = (i + 1)
+        Loop
+        Return sql
+    End Function
+
+    Sub ArmarInsert(ByRef Productos As StringBuilder, DatosAGuardar As DataRow, categoria As DataRow, subCategoria As DataRow, Proveedor As DataRow, CodigoBarras As String, habilitado As Integer)
+        Productos.AppendFormat("INSERT INTO [dbo].[PRODUCTOS] ([id_Categoria],[id_Subcategoria],[id_Proveedor],[Nombre],[Descripcion],[Costo],[Origen],[Tamano],[Codigo],[CodigoBarra],[Fecha],[Habilitado],[Novedad],[SubirWeb]) VALUES ({0},{1},{2},'{3}','{4}',{5},'{6}','{7}','{8}','{9}','{10}',{11},{12},{13})", categoria.ItemArray(0), subCategoria.ItemArray(0), Proveedor.ItemArray(0), DatosAGuardar(2), DatosAGuardar(16), Decimal.Parse(DatosAGuardar(8).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(6), DatosAGuardar(7), DatosAGuardar(1), CodigoBarras, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"), habilitado, 0, 0)
+        Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2})", "1", Decimal.Parse(DatosAGuardar(10).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
+        Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2})", "2", Decimal.Parse(DatosAGuardar(11).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
+        Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2})", "3", Decimal.Parse(DatosAGuardar(12).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
+        Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2})", "4", Decimal.Parse(DatosAGuardar(13).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
+        Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2})", "5", Decimal.Parse(DatosAGuardar(14).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
+        Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2})", "6", Decimal.Parse(DatosAGuardar(15).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
+    End Sub
+
+    Sub ArmarDelete(ByRef Productos As StringBuilder, DatosAGuardar As DataRow)
+        Productos.AppendFormat("DELETE FROM [dbo].[STOCK] WHERE [id_Producto] = {0}", DatosAGuardar(0))
+        Productos.AppendFormat("DELETE FROM [dbo].[PRECIOS] WHERE [id_Producto] = {0}", DatosAGuardar(0))
+        Productos.AppendFormat("DELETE FROM [dbo].[PRODUCTOS] WHERE id_producto = {0}", DatosAGuardar(0))
+    End Sub
+
+    Sub ArmarUpdate(ByRef Productos As StringBuilder, DatosAGuardar As DataRow, categoria As DataRow, subCategoria As DataRow, Proveedor As DataRow, CodigoBarras As String, habilitado As Integer)
+        Productos.AppendFormat("UPDATE [dbo].[PRODUCTOS]   SET [id_Categoria] = {0} ,[id_Subcategoria] = {1} ,[id_Proveedor] = {2} ,[Nombre] = '{3}' ,[Descripcion] = '{4}' ,[Costo] = {5} ,[Origen] = '{6}' ,[Tamano] = '{7}' ,[Codigo] = '{8}' ,[CodigoBarra] = '{9}' ,[Habilitado] = {10} ,[Novedad] = {11} ,[SubirWeb] = {12} WHERE id_producto = {13}", categoria.ItemArray(0), subCategoria.ItemArray(0), Proveedor.ItemArray(0), DatosAGuardar(2), DatosAGuardar(16), Decimal.Parse(DatosAGuardar(8).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(6), DatosAGuardar(7), DatosAGuardar(1), CodigoBarras, habilitado, 0, 0, DatosAGuardar(0))
+        Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}", Decimal.Parse(DatosAGuardar(10).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "1")
+        Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}", Decimal.Parse(DatosAGuardar(11).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "2")
+        Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}", Decimal.Parse(DatosAGuardar(12).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "3")
+        Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}", Decimal.Parse(DatosAGuardar(13).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "4")
+        Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}", Decimal.Parse(DatosAGuardar(14).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "5")
+        Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}", Decimal.Parse(DatosAGuardar(15).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "6")
+    End Sub
+
+    Function verificarColumnasExcel(datos As DataTable) As Boolean
+
+        'verifico que la cantidad de columnas no halla sido modificada 
+        If datos.Columns.Count <> 18 Then
+            Return False
+        End If
+
+        'verifico que los nombres y orden de las columnas no hallan sido modificadas 
+        If datos.Columns(0).ColumnName <> "id_producto" Or datos.Columns(1).ColumnName <> "Codigo" Or
+            datos.Columns(2).ColumnName <> "Nombre" Or datos.Columns(3).ColumnName <> "Categoria" Or
+            datos.Columns(4).ColumnName <> "SubCategoria" Or datos.Columns(5).ColumnName <> "Proveedor" Or
+            datos.Columns(6).ColumnName <> "Origen" Or datos.Columns(7).ColumnName <> "Tamaño" Or
+            datos.Columns(8).ColumnName <> "Costo" Or datos.Columns(9).ColumnName <> "CodigoBarra" Or
+            datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Tarjeta_Tigre" Or
+            datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Tarjeta_Capital" Or
+            datos.Columns(14).ColumnName <> "Mayor_SF" Or datos.Columns(15).ColumnName <> "Mayor_CF" Or
+            datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Then
+            Return False
+        End If
+        Return True
+    End Function
+
+    Function obtenerFilasEliminadas(base As DataTable, importados As DataTable) As List(Of DataRow)
+        Dim hTable As Hashtable = New Hashtable()
+        Dim deleteList As List(Of DataRow) = New List(Of DataRow)
+
+        'Agrego las valores a un HashTable para determinar si el valor de la columan se encuentra duplicado
+        For Each drow As DataRow In importados.Rows
+            If drow("id_producto").ToString() <> "" Then
+                If Not hTable.Contains(Integer.Parse(drow("id_producto").ToString())) Then
+                    hTable.Add(Integer.Parse(drow("id_producto").ToString()), String.Empty)
+                End If
+            End If
+        Next
+
+        For Each drow As DataRow In base.Rows
+            If Not hTable.Contains(Integer.Parse(drow("id_producto").ToString())) Then
+                deleteList.Add(drow)
+            End If
+        Next
+
+        Return deleteList
+    End Function
+
+    Function ElmininarFilasComMismoValor(dTable As DataTable, ByRef errors As DataTable, colName As String) As DataTable
+        Dim hTable As Hashtable = New Hashtable()
+        Dim duplicateList As ArrayList = New ArrayList()
+
+        'Agrego las valores a un HashTable para determinar si el valor de la columan se encuentra duplicado
+        For Each drow As DataRow In dTable.Rows
+
+            If hTable.Contains(drow(colName)) Then
+                duplicateList.Add(drow)
+            Else
+                hTable.Add(drow(colName), String.Empty)
+            End If
+        Next
+
+        'Elimino el valor duplicado de la lista 
+        For Each dRow As DataRow In duplicateList
+            errors.ImportRow(dRow)
+            errors.Rows.Item(errors.Rows.Count - 1)("Descripcion_Error") = "Producto con Código duplicado"
+            dTable.Rows.Remove(dRow)
+        Next
+
+        Return dTable
+    End Function
+
+    Function obtenerFilasModificadas(dsProductos As DataSet, sourceData As DataTable) As List(Of DataRow)
+        Return (From product In dsProductos.Tables(0).AsEnumerable()
+                                 Join d In sourceData.AsEnumerable() On product(0).ToString() Equals d(0).ToString()
+                                 Where (product(1).ToString() <> d(1).ToString() Or
+                                       product(2).ToString() <> d(2).ToString() Or
+                                       product(3).ToString() <> d(3).ToString() Or
+                                       product(4).ToString() <> d(4).ToString() Or
+                                       product(5).ToString() <> d(5).ToString() Or
+                                       product(6).ToString() <> d(6).ToString() Or
+                                       product(7).ToString() <> d(7).ToString() Or
+                                       Decimal.Parse(If(product(8).ToString() = "", "0", product(8).ToString())) <> Decimal.Parse(If(d(8).ToString() = "", "0", d(8).ToString())) Or
+                                       product(9).ToString() <> d(9).ToString() Or
+                                       Decimal.Parse(If(product(10).ToString() = "", "0", product(10).ToString())) <> Decimal.Parse(If(d(10).ToString() = "", "0", d(10).ToString())) Or
+                                       Decimal.Parse(If(product(11).ToString() = "", "0", product(11).ToString())) <> Decimal.Parse(If(d(11).ToString() = "", "0", d(11).ToString())) Or
+                                       Decimal.Parse(If(product(12).ToString() = "", "0", product(12).ToString())) <> Decimal.Parse(If(d(12).ToString() = "", "0", d(12).ToString())) Or
+                                       Decimal.Parse(If(product(13).ToString() = "", "0", product(13).ToString())) <> Decimal.Parse(If(d(13).ToString() = "", "0", d(13).ToString())) Or
+                                       Decimal.Parse(If(product(14).ToString() = "", "0", product(14).ToString())) <> Decimal.Parse(If(d(14).ToString() = "", "0", d(14).ToString())) Or
+                                       Decimal.Parse(If(product(15).ToString() = "", "0", product(15).ToString())) <> Decimal.Parse(If(d(15).ToString() = "", "0", d(15).ToString())) Or
+                                       product(16).ToString() <> d(16).ToString() Or
+                                       product(17).ToString() <> d(17).ToString())
+                                Select d).ToList()
+    End Function
+
+    Function ValidarDatosVacios(datos As List(Of DataRow), ByRef DatosConError As DataTable) As List(Of DataRow)
+
+        Dim DatosAGuardar As List(Of DataRow) = New List(Of DataRow)
+        Dim dummy As Decimal
+
+        For Each row As DataRow In datos
+
+            If (row(1).ToString() <> String.Empty And
+                row(2).ToString() <> String.Empty And
+               row(3).ToString() <> String.Empty And
+               row(4).ToString() <> String.Empty And
+               row(5).ToString() <> String.Empty And
+               Decimal.TryParse(row(8).ToString(), dummy) And
+               Decimal.TryParse(row(10).ToString(), dummy) And
+               Decimal.TryParse(row(11).ToString(), dummy) And
+               Decimal.TryParse(row(12).ToString(), dummy) And
+               Decimal.TryParse(row(13).ToString(), dummy) And
+               Decimal.TryParse(row(14).ToString(), dummy) And
+               Decimal.TryParse(row(15).ToString(), dummy) And
+               row(17).ToString() <> String.Empty) Then
+
+                DatosAGuardar.Add(row)
+            Else
+                DatosConError.ImportRow(row)
+                DatosConError.Rows.Item(DatosConError.Rows.Count - 1)("Descripcion_Error") = "Campo obligatorio vacío"
+            End If
+
+        Next
+        Return DatosAGuardar
+    End Function
+
+    Function GetDataFormExcel(fileName As String, workSheetName As String) As DataSet
+
+        Dim connectionString As String = String.Format("Provider=Microsoft.ACE.OLEDB.12.0; data source='{0}'; Extended Properties=""Excel 12.0;HDR=YES;IMEX=1"" ", fileName)
+
+        Dim query As String = String.Format("SELECT * FROM [{0}$] WHERE Codigo <> ''", workSheetName)
+
+        Dim data As DataSet = New DataSet()
+        Using con = New OleDbConnection(connectionString)
+
+            con.Open()
+            Dim adapter As OleDbDataAdapter = New OleDbDataAdapter(query, con)
+            adapter.Fill(data)
+        End Using
+
+        Return data
+    End Function
+
+#End Region
+
+    Sub Restaurar()
+
+        Dim dsBackUp As DataSet = New DataSet()
+        Dim encripta As New ClsEncriptacion()
+        Dim paso As Integer = 1
+
+        RaiseEvent UpdateProgress(paso, "Obteniendo información del BackUp...")
+        paso += 1
+        dsBackUp.ReadXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml", XmlReadMode.Auto)
+
+
+        For Each row As DataRow In dsBackUp.Tables(0).Rows
+            row("Precio") = row("Precio").ToString().Replace(".", ",")
+        Next
+
+        Using conn As SqlConnection = New SqlConnection()
+
+            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.Open()
+            Using tran As SqlTransaction = conn.BeginTransaction()
+
+                Try
+                    Using bulkCopy As SqlBulkCopy = New SqlBulkCopy(conn, SqlBulkCopyOptions.KeepIdentity, tran)
+
+                        For Each table As DataTable In dsBackUp.Tables
+
+                            Dim cmd As SqlCommand = New SqlCommand(String.Format("DELETE  FROM {0}", table.TableName), conn, tran)
+                            cmd.ExecuteNonQuery()
+
+                        Next
+
+                        For Each table As DataTable In dsBackUp.Tables
+
+                            RaiseEvent UpdateProgress(paso, "Guardando información en base de datos...")
+                            paso += 1
+                            bulkCopy.DestinationTableName = table.TableName
+                            bulkCopy.WriteToServer(table)
+
+                        Next
+                    End Using
+                    tran.Commit()
+                Catch ex As Exception
+                    tran.Rollback()
+                    Throw
+                End Try
+            End Using
+        End Using
+    End Sub
 End Class

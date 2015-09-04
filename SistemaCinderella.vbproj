@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>12</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -45,7 +45,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
@@ -101,7 +101,7 @@
     <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -484,6 +484,12 @@
       <DependentUpon>frmProductosCat.vb</DependentUpon>
     </Compile>
     <Compile Include="frmProductosCat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProductosErrorImportar.Designer.vb">
+      <DependentUpon>frmProductosErrorImportar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProductosErrorImportar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmProductosMasiva.Designer.vb">
@@ -949,6 +955,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductosCat.resx">
       <DependentUpon>frmProductosCat.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProductosErrorImportar.resx">
+      <DependentUpon>frmProductosErrorImportar.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductosMasiva.resx">
       <DependentUpon>frmProductosMasiva.vb</DependentUpon>
@@ -1560,15 +1569,6 @@
     </PublishFile>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core">
-      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>4</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="Microsoft.Office.Interop.Excel">
       <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>1</VersionMajor>

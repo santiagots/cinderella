@@ -162,6 +162,7 @@ Partial Class frmProductos
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
+        Me.btn_Restore = New System.Windows.Forms.Button()
         Me.TabProductos.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -219,6 +220,7 @@ Partial Class frmProductos
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Buscar.Controls.Add(Me.btn_Restore)
         Me.GB_Buscar.Controls.Add(Me.btn_Importar)
         Me.GB_Buscar.Controls.Add(Me.btn_Exportar)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
@@ -241,13 +243,13 @@ Partial Class frmProductos
         Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
         Me.btn_Importar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Importar.Location = New System.Drawing.Point(654, 24)
+        Me.btn_Importar.Location = New System.Drawing.Point(548, 24)
         Me.btn_Importar.Name = "btn_Importar"
         Me.btn_Importar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Importar.TabIndex = 8
         Me.btn_Importar.Text = "Importar"
         Me.btn_Importar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.btn_Importar, "Haz click aquí para restablecer los filtros y el listado de productos.")
+        Me.ToolProd.SetToolTip(Me.btn_Importar, "Haz click aquí para importar la información  de los productos a través de Excel")
         Me.btn_Importar.UseVisualStyleBackColor = True
         '
         'btn_Exportar
@@ -257,13 +259,13 @@ Partial Class frmProductos
         Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
         Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Exportar.Location = New System.Drawing.Point(548, 23)
+        Me.btn_Exportar.Location = New System.Drawing.Point(442, 24)
         Me.btn_Exportar.Name = "btn_Exportar"
         Me.btn_Exportar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Exportar.TabIndex = 7
         Me.btn_Exportar.Text = "Exportar"
         Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.btn_Exportar, "Haz click aquí para restablecer los filtros y el listado de productos.")
+        Me.ToolProd.SetToolTip(Me.btn_Exportar, "Haz click aquí para exportar la información  de los productos a Excel")
         Me.btn_Exportar.UseVisualStyleBackColor = True
         '
         'btn_Restablecer
@@ -271,7 +273,7 @@ Partial Class frmProductos
         Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restablecer.Location = New System.Drawing.Point(760, 24)
+        Me.btn_Restablecer.Location = New System.Drawing.Point(760, 23)
         Me.btn_Restablecer.Name = "btn_Restablecer"
         Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
         Me.btn_Restablecer.TabIndex = 6
@@ -1596,6 +1598,18 @@ Partial Class frmProductos
         '
         Me.OpenFileDialog.FileName = "OpenFileDialog"
         '
+        'btn_Restore
+        '
+        Me.btn_Restore.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Restore.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Restore.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Restore.Location = New System.Drawing.Point(654, 24)
+        Me.btn_Restore.Name = "btn_Restore"
+        Me.btn_Restore.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Restore.TabIndex = 9
+        Me.btn_Restore.Text = "Restaurar Productos"
+        Me.btn_Restore.UseVisualStyleBackColor = True
+        '
         'frmProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1765,4 +1779,5 @@ Partial Class frmProductos
     Friend WithEvents btn_Importar As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog As System.Windows.Forms.OpenFileDialog
     Friend WithEvents SaveFileDialog As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents btn_Restore As System.Windows.Forms.Button
 End Class
