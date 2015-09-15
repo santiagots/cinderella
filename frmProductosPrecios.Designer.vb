@@ -143,44 +143,44 @@ Partial Class frmProductosPrecios
         'Precio1
         '
         Me.Precio1.FillWeight = 71.22996!
-        Me.Precio1.HeaderText = "Tigre"
+        Me.Precio1.HeaderText = "Efect. Tigre"
         Me.Precio1.Name = "Precio1"
-        Me.Precio1.ToolTipText = "Público Tigre"
+        Me.Precio1.ToolTipText = "Efectivo Tigre"
         '
         'Precio2
         '
         Me.Precio2.FillWeight = 71.22996!
-        Me.Precio2.HeaderText = "Sarmiento"
+        Me.Precio2.HeaderText = "Tarj. Tigre"
         Me.Precio2.Name = "Precio2"
-        Me.Precio2.ToolTipText = "Público Sarmiento"
+        Me.Precio2.ToolTipText = "Tarjeta Tigre"
         '
         'Precio3
         '
         Me.Precio3.FillWeight = 71.22996!
-        Me.Precio3.HeaderText = "Capital"
+        Me.Precio3.HeaderText = "Efect. Capital"
         Me.Precio3.Name = "Precio3"
-        Me.Precio3.ToolTipText = "Público Capital"
+        Me.Precio3.ToolTipText = "Efectivo Capital"
         '
         'Precio4
         '
         Me.Precio4.FillWeight = 71.22996!
-        Me.Precio4.HeaderText = "SF"
+        Me.Precio4.HeaderText = "Tarj. Capital"
         Me.Precio4.Name = "Precio4"
-        Me.Precio4.ToolTipText = "Mayorista SF"
+        Me.Precio4.ToolTipText = "Tarjeta Capital"
         '
         'Precio5
         '
         Me.Precio5.FillWeight = 71.22996!
-        Me.Precio5.HeaderText = "CF"
+        Me.Precio5.HeaderText = "Mayorista SF"
         Me.Precio5.Name = "Precio5"
-        Me.Precio5.ToolTipText = "Mayorista CF"
+        Me.Precio5.ToolTipText = "Mayorista SF"
         '
         'Precio6
         '
         Me.Precio6.FillWeight = 71.22996!
-        Me.Precio6.HeaderText = "CFR"
+        Me.Precio6.HeaderText = "Mayorista CF"
         Me.Precio6.Name = "Precio6"
-        Me.Precio6.ToolTipText = "Mayorista CFR"
+        Me.Precio6.ToolTipText = "Mayorista CF"
         '
         'Btn_Finalizar
         '

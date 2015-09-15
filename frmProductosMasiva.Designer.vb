@@ -154,37 +154,37 @@ Partial Class frmProductosMasiva
         '
         'Precio1
         '
-        Me.Precio1.HeaderText = "Público Tigre"
+        Me.Precio1.HeaderText = "Efectivo Tigre"
         Me.Precio1.Name = "Precio1"
         Me.Precio1.Width = 60
         '
         'Precio2
         '
-        Me.Precio2.HeaderText = "Público Sarmiento"
+        Me.Precio2.HeaderText = "Tarjeta Tigre"
         Me.Precio2.Name = "Precio2"
         Me.Precio2.Width = 60
         '
         'Precio3
         '
-        Me.Precio3.HeaderText = "Público Capital"
+        Me.Precio3.HeaderText = "Efectivo Capital"
         Me.Precio3.Name = "Precio3"
         Me.Precio3.Width = 60
         '
         'Precio4
         '
-        Me.Precio4.HeaderText = "Mayorista SF"
+        Me.Precio4.HeaderText = "Tarjeta Capital"
         Me.Precio4.Name = "Precio4"
         Me.Precio4.Width = 60
         '
         'Precio5
         '
-        Me.Precio5.HeaderText = "Mayorista CF"
+        Me.Precio5.HeaderText = "Mayorista SF"
         Me.Precio5.Name = "Precio5"
         Me.Precio5.Width = 60
         '
         'Precio6
         '
-        Me.Precio6.HeaderText = "Mayorista CFR"
+        Me.Precio6.HeaderText = "Mayorista CF"
         Me.Precio6.Name = "Precio6"
         Me.Precio6.Width = 60
         '

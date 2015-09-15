@@ -122,17 +122,17 @@ Public Class frmReportePrecios
                         For Each item2 In ChkPrecios.CheckedItems
                             If item2 = "Costo" Then
                                 dr(3) = EProductos.Costo
-                            ElseIf item2 = "Público Tigre" Then
+                            ElseIf item2 = "Efectivo Tigre" Then
                                 dr(4) = EProductos.Precio1
-                            ElseIf item2 = "Público Sarmiento" Then
+                            ElseIf item2 = "Tarjeta Tigre" Then
                                 dr(5) = EProductos.Precio2
-                            ElseIf item2 = "Público Capital" Then
+                            ElseIf item2 = "Efectivo Capital" Then
                                 dr(6) = EProductos.Precio3
-                            ElseIf item2 = "Mayorista SF" Then
+                            ElseIf item2 = "Tarjeta Capital" Then
                                 dr(7) = EProductos.Precio4
-                            ElseIf item2 = "Mayorista CF" Then
+                            ElseIf item2 = "Mayorista SF" Then
                                 dr(8) = EProductos.Precio5
-                            ElseIf item2 = "Mayorista CFR" Then
+                            ElseIf item2 = "Mayorista CF" Then
                                 dr(9) = EProductos.Precio6
                             End If
                         Next

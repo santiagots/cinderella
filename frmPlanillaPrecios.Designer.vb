@@ -56,8 +56,8 @@ Partial Class frmPlanillaPrecios
         'Gb_Filtros
         '
         Me.Gb_Filtros.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Filtros.Controls.Add(Me.txt_Busqueda)
         Me.Gb_Filtros.Controls.Add(Me.Label7)
         Me.Gb_Filtros.Controls.Add(Me.lbl_Contador2)
@@ -141,7 +141,7 @@ Partial Class frmPlanillaPrecios
         Me.Btn_Agregar.Text = "Agregar"
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.ToolPrecios.SetToolTip(Me.Btn_Agregar, "Haz click aquí para agregar los productos tildados a la lista final de productos " & _
-                "seleccionados.")
+        "seleccionados.")
         Me.Btn_Agregar.UseVisualStyleBackColor = True
         '
         'LsProductos
@@ -249,7 +249,7 @@ Partial Class frmPlanillaPrecios
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.ToolPrecios.SetToolTip(Me.Button1, "Haz click aquí para filtrar los productos del sistema teniendo en cuenta los sigu" & _
-                "ientes parámetros: Proveedores, Categorías y Subcategorías seleccionadas.")
+        "ientes parámetros: Proveedores, Categorías y Subcategorías seleccionadas.")
         Me.Button1.UseVisualStyleBackColor = True
         '
         'lbl_Msg
@@ -270,8 +270,8 @@ Partial Class frmPlanillaPrecios
         Me.Label4.Size = New System.Drawing.Size(596, 32)
         Me.Label4.TabIndex = 9
         Me.Label4.Text = "Seleccione los filtros que desee para generar la lista de precios que mejor se aj" & _
-            "uste a sus requerimientos. Recuerde que dicho proceso puede tardar algunos minut" & _
-            "os."
+    "uste a sus requerimientos. Recuerde que dicho proceso puede tardar algunos minut" & _
+    "os."
         '
         'btn_Restablecer
         '
@@ -303,7 +303,7 @@ Partial Class frmPlanillaPrecios
         Me.btn_Buscar.Text = "Ejecutar"
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolPrecios.SetToolTip(Me.btn_Buscar, "Haz click aquí para confeccionar el listado de precios según los criterios selecc" & _
-                "ionados.")
+        "ionados.")
         Me.btn_Buscar.UseVisualStyleBackColor = True
         '
         'Chk_Productos
@@ -363,7 +363,7 @@ Partial Class frmPlanillaPrecios
         Me.chk_Precios.CheckOnClick = True
         Me.chk_Precios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.chk_Precios.FormattingEnabled = True
-        Me.chk_Precios.Items.AddRange(New Object() {"Costo", "Público Tigre", "Público Sarmiento", "Público Capital", "Mayorista SF", "Mayorista CF", "Mayorista CFR"})
+        Me.chk_Precios.Items.AddRange(New Object() {"Costo", "Efectivo Tigre", "Tarjeta Tigre", "Efectivo Capital", "Tarjeta Capital", "Mayorista SF", "Mayorista CF"})
         Me.chk_Precios.Location = New System.Drawing.Point(9, 428)
         Me.chk_Precios.Name = "chk_Precios"
         Me.chk_Precios.Size = New System.Drawing.Size(228, 116)

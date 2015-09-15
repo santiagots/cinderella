@@ -24,6 +24,7 @@ Public Class NegSucursales
             entSucursal.id_Provincia = dsSucursal.Tables(0).Rows(0).Item("id_Provincia").ToString
             entSucursal.id_Localidad = dsSucursal.Tables(0).Rows(0).Item("id_Localidad").ToString
             entSucursal.id_Distrito = dsSucursal.Tables(0).Rows(0).Item("id_Departamento").ToString
+            entSucursal.id_ListaGrupoPrecio = dsSucursal.Tables(0).Rows(0).Item("id_ListaGrupoPrecio").ToString
             entSucursal.ComisionEncargado = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado"))
             entSucursal.ComisionVendedor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Vendedor"))
             entSucursal.ComisionEncargadoFeriado = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado_Feriado"))
@@ -50,6 +51,7 @@ Public Class NegSucursales
                 .AddWithValue("@id_Provincia", esucursales.id_Provincia)
                 .AddWithValue("@id_Departamento", esucursales.id_Distrito)
                 .AddWithValue("@id_Localidad", esucursales.id_Localidad)
+                .AddWithValue("@id_ListaGrupoPrecio", esucursales.id_ListaGrupoPrecio)
                 .AddWithValue("@ComisionVendedor", esucursales.ComisionVendedor)
                 .AddWithValue("@ComisionEncargado", esucursales.ComisionEncargado)
                 .AddWithValue("@ComisionVendedorFeriado", esucursales.ComisionVendedorFeriado)
@@ -95,6 +97,7 @@ Public Class NegSucursales
                 .AddWithValue("@id_Provincia", esucursales.id_Provincia)
                 .AddWithValue("@id_Departamento", esucursales.id_Distrito)
                 .AddWithValue("@id_Localidad", esucursales.id_Localidad)
+                .AddWithValue("@id_ListaGrupoPrecio", esucursales.id_ListaGrupoPrecio)
                 .AddWithValue("@CodigoPostal", esucursales.Codigo_Postal)
                 .AddWithValue("@ComisionVendedor", esucursales.ComisionVendedor)
                 .AddWithValue("@ComisionEncargado", esucursales.ComisionEncargado)

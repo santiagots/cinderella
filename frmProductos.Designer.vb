@@ -31,6 +31,7 @@ Partial Class frmProductos
         Me.TbListado = New System.Windows.Forms.TabPage()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
+        Me.btn_Restore = New System.Windows.Forms.Button()
         Me.btn_Importar = New System.Windows.Forms.Button()
         Me.btn_Exportar = New System.Windows.Forms.Button()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
@@ -162,7 +163,6 @@ Partial Class frmProductos
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.btn_Restore = New System.Windows.Forms.Button()
         Me.TabProductos.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -235,6 +235,18 @@ Partial Class frmProductos
         Me.GB_Buscar.TabIndex = 3
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Producto"
+        '
+        'btn_Restore
+        '
+        Me.btn_Restore.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Restore.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Restore.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Restore.Location = New System.Drawing.Point(654, 24)
+        Me.btn_Restore.Name = "btn_Restore"
+        Me.btn_Restore.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Restore.TabIndex = 9
+        Me.btn_Restore.Text = "Restaurar Productos"
+        Me.btn_Restore.UseVisualStyleBackColor = True
         '
         'btn_Importar
         '
@@ -573,9 +585,9 @@ Partial Class frmProductos
         Me.lbl_Precio6.AutoSize = True
         Me.lbl_Precio6.Location = New System.Drawing.Point(6, 197)
         Me.lbl_Precio6.Name = "lbl_Precio6"
-        Me.lbl_Precio6.Size = New System.Drawing.Size(87, 15)
+        Me.lbl_Precio6.Size = New System.Drawing.Size(78, 15)
         Me.lbl_Precio6.TabIndex = 53
-        Me.lbl_Precio6.Text = "Mayorista CFR"
+        Me.lbl_Precio6.Text = "Mayorista CF"
         '
         'txt_Precio6
         '
@@ -591,7 +603,7 @@ Partial Class frmProductos
         Me.lbl_Precio5.Name = "lbl_Precio5"
         Me.lbl_Precio5.Size = New System.Drawing.Size(78, 15)
         Me.lbl_Precio5.TabIndex = 50
-        Me.lbl_Precio5.Text = "Mayorista CF"
+        Me.lbl_Precio5.Text = "Mayorista SF"
         '
         'txt_Precio4
         '
@@ -612,9 +624,9 @@ Partial Class frmProductos
         Me.lbl_Precio4.AutoSize = True
         Me.lbl_Precio4.Location = New System.Drawing.Point(6, 135)
         Me.lbl_Precio4.Name = "lbl_Precio4"
-        Me.lbl_Precio4.Size = New System.Drawing.Size(78, 15)
+        Me.lbl_Precio4.Size = New System.Drawing.Size(86, 15)
         Me.lbl_Precio4.TabIndex = 51
-        Me.lbl_Precio4.Text = "Mayorista SF"
+        Me.lbl_Precio4.Text = "Tarjeta Capital"
         '
         'txt_Precio2
         '
@@ -628,9 +640,9 @@ Partial Class frmProductos
         Me.lbl_Precio1.AutoSize = True
         Me.lbl_Precio1.Location = New System.Drawing.Point(6, 30)
         Me.lbl_Precio1.Name = "lbl_Precio1"
-        Me.lbl_Precio1.Size = New System.Drawing.Size(79, 15)
+        Me.lbl_Precio1.Size = New System.Drawing.Size(80, 15)
         Me.lbl_Precio1.TabIndex = 47
-        Me.lbl_Precio1.Text = "Público Tigre"
+        Me.lbl_Precio1.Text = "Efectivo Tigre"
         '
         'txt_Precio3
         '
@@ -644,9 +656,9 @@ Partial Class frmProductos
         Me.lbl_Precio2.AutoSize = True
         Me.lbl_Precio2.Location = New System.Drawing.Point(6, 65)
         Me.lbl_Precio2.Name = "lbl_Precio2"
-        Me.lbl_Precio2.Size = New System.Drawing.Size(108, 15)
+        Me.lbl_Precio2.Size = New System.Drawing.Size(76, 15)
         Me.lbl_Precio2.TabIndex = 48
-        Me.lbl_Precio2.Text = "Público Sarmiento"
+        Me.lbl_Precio2.Text = "Tarjeta Tigre"
         '
         'txt_Precio1
         '
@@ -660,9 +672,9 @@ Partial Class frmProductos
         Me.lbl_Precio3.AutoSize = True
         Me.lbl_Precio3.Location = New System.Drawing.Point(6, 100)
         Me.lbl_Precio3.Name = "lbl_Precio3"
-        Me.lbl_Precio3.Size = New System.Drawing.Size(89, 15)
+        Me.lbl_Precio3.Size = New System.Drawing.Size(90, 15)
         Me.lbl_Precio3.TabIndex = 49
-        Me.lbl_Precio3.Text = "Público Capital"
+        Me.lbl_Precio3.Text = "Efectivo Capital"
         '
         'lbl_Foto2
         '
@@ -1176,9 +1188,9 @@ Partial Class frmProductos
         Me.Label22.AutoSize = True
         Me.Label22.Location = New System.Drawing.Point(6, 194)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(87, 15)
+        Me.Label22.Size = New System.Drawing.Size(78, 15)
         Me.Label22.TabIndex = 53
-        Me.Label22.Text = "Mayorista CFR"
+        Me.Label22.Text = "Mayorista CF"
         '
         'txt_Precio6_mod
         '
@@ -1194,7 +1206,7 @@ Partial Class frmProductos
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(78, 15)
         Me.Label17.TabIndex = 50
-        Me.Label17.Text = "Mayorista CF"
+        Me.Label17.Text = "Mayorista SF"
         '
         'txt_Precio4_mod
         '
@@ -1215,9 +1227,9 @@ Partial Class frmProductos
         Me.Label18.AutoSize = True
         Me.Label18.Location = New System.Drawing.Point(6, 135)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(78, 15)
+        Me.Label18.Size = New System.Drawing.Size(86, 15)
         Me.Label18.TabIndex = 51
-        Me.Label18.Text = "Mayorista SF"
+        Me.Label18.Text = "Tarjeta Capital"
         '
         'txt_Precio2_mod
         '
@@ -1231,9 +1243,9 @@ Partial Class frmProductos
         Me.Label19.AutoSize = True
         Me.Label19.Location = New System.Drawing.Point(6, 30)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(79, 15)
+        Me.Label19.Size = New System.Drawing.Size(80, 15)
         Me.Label19.TabIndex = 47
-        Me.Label19.Text = "Público Tigre"
+        Me.Label19.Text = "Efectivo Tigre"
         '
         'txt_Precio3_mod
         '
@@ -1247,9 +1259,9 @@ Partial Class frmProductos
         Me.Label20.AutoSize = True
         Me.Label20.Location = New System.Drawing.Point(6, 65)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(108, 15)
+        Me.Label20.Size = New System.Drawing.Size(76, 15)
         Me.Label20.TabIndex = 48
-        Me.Label20.Text = "Público Sarmiento"
+        Me.Label20.Text = "Tarjeta Tigre"
         '
         'txt_Precio1_mod
         '
@@ -1263,9 +1275,9 @@ Partial Class frmProductos
         Me.Label21.AutoSize = True
         Me.Label21.Location = New System.Drawing.Point(6, 100)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(89, 15)
+        Me.Label21.Size = New System.Drawing.Size(90, 15)
         Me.Label21.TabIndex = 49
-        Me.Label21.Text = "Público Capital"
+        Me.Label21.Text = "Efectivo Capital"
         '
         'chk_Novedad_mod
         '
@@ -1597,18 +1609,6 @@ Partial Class frmProductos
         'OpenFileDialog
         '
         Me.OpenFileDialog.FileName = "OpenFileDialog"
-        '
-        'btn_Restore
-        '
-        Me.btn_Restore.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Restore.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Restore.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restore.Location = New System.Drawing.Point(654, 24)
-        Me.btn_Restore.Name = "btn_Restore"
-        Me.btn_Restore.Size = New System.Drawing.Size(100, 40)
-        Me.btn_Restore.TabIndex = 9
-        Me.btn_Restore.Text = "Restaurar Productos"
-        Me.btn_Restore.UseVisualStyleBackColor = True
         '
         'frmProductos
         '

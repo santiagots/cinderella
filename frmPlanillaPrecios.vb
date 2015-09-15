@@ -348,17 +348,17 @@ Public Class frmPlanillaPrecios
                     For i = 3 To chk_Precios.CheckedItems.Count + 2
                         If chk_Precios.CheckedItems(i - 3) = "Costo" Then
                             dr(i) = EProductos.Costo
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Público Tigre" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Efectivo Tigre" Then
                             dr(i) = EProductos.Precio1
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Público Sarmiento" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Tarjeta Tigre" Then
                             dr(i) = EProductos.Precio2
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Público Capital" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Efectivo Capital" Then
                             dr(i) = EProductos.Precio3
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista SF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Tarjeta Capital" Then
                             dr(i) = EProductos.Precio4
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista CF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista SF" Then
                             dr(i) = EProductos.Precio5
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista CFR" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista CF" Then
                             dr(i) = EProductos.Precio6
                         End If
                     Next
@@ -371,17 +371,17 @@ Public Class frmPlanillaPrecios
                     For i = 2 To chk_Precios.CheckedItems.Count + 1
                         If chk_Precios.CheckedItems(i - 2) = "Costo" Then
                             dr(i) = EProductos.Costo
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Público Tigre" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Efectivo Tigre" Then
                             dr(i) = EProductos.Precio1
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Público Sarmiento" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Tarjeta Tigre" Then
                             dr(i) = EProductos.Precio2
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Público Capital" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Efectivo Capital" Then
                             dr(i) = EProductos.Precio3
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista SF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Tarjeta Capital" Then
                             dr(i) = EProductos.Precio4
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista CF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista SF" Then
                             dr(i) = EProductos.Precio5
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista CFR" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista CF" Then
                             dr(i) = EProductos.Precio6
                         End If
                     Next
@@ -459,18 +459,18 @@ Public Class frmPlanillaPrecios
                 For Each item2 In chk_Precios.CheckedItems
                     If item2 = "Costo" Then
                         PdfPCell = New PdfPCell(New Phrase(New Chunk("Costo", fontHead)))
-                    ElseIf item2 = "Público Tigre" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Tigre", fontHead)))
-                    ElseIf item2 = "Público Sarmiento" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Sarm.", fontHead)))
-                    ElseIf item2 = "Público Capital" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Capital", fontHead)))
+                    ElseIf item2 = "Efectivo Tigre" Then
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Efect. Tigre", fontHead)))
+                    ElseIf item2 = "Tarjeta Tigre" Then
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Tarj. Tigre", fontHead)))
+                    ElseIf item2 = "Efectivo Capital" Then
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Efect. Capital", fontHead)))
+                    ElseIf item2 = "Tarjeta Capital" Then
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Tarj. Capital", fontHead)))
                     ElseIf item2 = "Mayorista SF" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("SF", fontHead)))
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Mayorista SF", fontHead)))
                     ElseIf item2 = "Mayorista CF" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("CF", fontHead)))
-                    ElseIf item2 = "Mayorista CFR" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("CFR", fontHead)))
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Mayorista CF", fontHead)))
                     End If
                     PdfPCell.HorizontalAlignment = Element.ALIGN_CENTER
                     PdfTable.AddCell(PdfPCell)

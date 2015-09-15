@@ -1,6 +1,6 @@
 ﻿Public Class Sucursales
 
-    Private id_Sucursal_, Habilitado_, id_Provincia_, id_Distrito_, id_Localidad_, Codigo_Postal_ As Integer
+    Private id_Sucursal_, Habilitado_, id_Provincia_, id_Distrito_, id_Localidad_, Codigo_Postal_, id_ListaGrupoPrecio_ As Integer
     Private Nombre_, Direccion_, Telefono_ As String
     Private ComisionEncargado_, ComisionVendedor_, ComisionEncargadoFeriado_, ComisionVendedorFeriado_, ComisionEncargadoMayor_, ComisionVendedorMayor_ As Double
     Public Property id_Sucursal() As Integer
@@ -134,4 +134,14 @@
             Habilitado_ = value
         End Set
     End Property
+
+    Public Property id_ListaGrupoPrecio() As String
+        Get
+            Return id_ListaGrupoPrecio_
+        End Get
+        Set(ByVal value As String)
+            id_ListaGrupoPrecio_ = value
+        End Set
+    End Property
+
 End Class
