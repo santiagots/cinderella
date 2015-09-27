@@ -212,6 +212,7 @@
                 End If
             Next
 
+            'TODO: Ver con que lista de precio se tiene que realizar esta accion, dado que ahora al poder seleccionar la lista al momento de vender el producto cual deberia ser el valor de la devolucion??
             'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
             Dim Precio As Double = 0
             Select Case My.Settings("ListaPrecio")

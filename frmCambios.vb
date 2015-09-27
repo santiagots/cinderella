@@ -1,6 +1,9 @@
 ﻿Public Class frmCambios
     'Instancias
     Dim NegProductos As New Negocio.NegProductos
+    Public CodigoProducto As String
+    Public codigoBarras As String
+
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
         Me.Close()
     End Sub
@@ -9,12 +12,10 @@
         Me.Cursor = Cursors.WaitCursor
         If Not txt_Codigo.Text.Trim = "" Then
             If txt_Codigo.TextLength >= 13 Then
-                frmVentas.txt_CodigoBarra.Clear()
-                frmVentas.AgregarItem(txt_Codigo.Text.Trim, 2, 2)
+                codigoBarras = txt_Codigo.Text.Trim
                 Me.Close()
             Else
-                frmVentas.txt_CodigoBarra.Clear()
-                frmVentas.AgregarItem(txt_Codigo.Text.Trim, 3, 2)
+                CodigoProducto = txt_Codigo.Text.Trim
                 Me.Close()
             End If
         End If
@@ -27,12 +28,10 @@
             Me.Cursor = Cursors.WaitCursor
             If Not txt_Codigo.Text.Trim = "" Then
                 If txt_Codigo.TextLength >= 13 Then
-                    frmVentas.txt_CodigoBarra.Clear()
-                    frmVentas.AgregarItem(txt_Codigo.Text.Trim, 2, 2)
+                    codigoBarras = txt_Codigo.Text.Trim
                     Me.Close()
                 Else
-                    frmVentas.txt_CodigoBarra.Clear()
-                    frmVentas.AgregarItem(txt_Codigo.Text.Trim, 3, 2)
+                    CodigoProducto = txt_Codigo.Text.Trim
                     Me.Close()
                 End If
             End If

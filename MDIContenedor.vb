@@ -740,8 +740,9 @@ Public Class MDIContenedor
     Private Sub VentasToolStripMenuItem1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VentasToolStripMenuItem1.Click
         'para administrar ventas no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmVentas).MdiParent = Me
-        Funciones.ControlInstancia(frmVentas).Show()
+        Dim frmVentas As frmVentas = New frmVentas()
+        frmVentas.MdiParent = Me
+        frmVentas.Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -776,8 +777,9 @@ Public Class MDIContenedor
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoVentas.Click
         'para administrar ventas no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmVentas).MdiParent = Me
-        Funciones.ControlInstancia(frmVentas).Show()
+        Dim frmVentas As frmVentas = New frmVentas()
+        frmVentas.MdiParent = Me
+        frmVentas.Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

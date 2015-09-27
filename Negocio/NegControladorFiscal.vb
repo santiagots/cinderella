@@ -6,7 +6,8 @@ Public Class NegControladorFiscal
     'Constructor.
     Sub New()
         oEpsonFP = New EpsonFPHostControl()
-        oEpsonFP.CommPort = TxCommPort.Com1
+        'oEpsonFP.CommPort = TxCommPort.Com1
+        oEpsonFP.CommPort = TxCommPort.USB
         oEpsonFP.BaudRate = TxBaudRate.br9600
         oEpsonFP.ProtocolType = TxProtocolType.protocol_Extended
     End Sub

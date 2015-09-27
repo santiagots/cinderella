@@ -238,7 +238,7 @@
     'Cargo el combo de Precios.
     Private Sub cb_ListaPrecios_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_ListaPrecios.GotFocus
         Dim dsListas As New DataSet
-        dsListas = NegListasPrecio.ListadoListasPrecios()
+        dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
         If dsListas.Tables(0).Rows.Count > 0 Then
             cb_ListaPrecios.DataSource = Nothing
             cb_ListaPrecios.DataSource = dsListas.Tables(0)
@@ -309,7 +309,7 @@
     'Cargo el combo de Precios.
     Private Sub cb_ListaPrecios_mod_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_ListaPrecios_mod.GotFocus
         Dim dsListas As New DataSet
-        dsListas = NegListasPrecio.ListadoListasPrecios()
+        dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
         If dsListas.Tables(0).Rows.Count > 0 Then
             cb_ListaPrecios_mod.DataSource = Nothing
             cb_ListaPrecios_mod.DataSource = dsListas.Tables(0)
@@ -635,7 +635,7 @@
 
                 'Cargo el combo de listado de precios
                 Dim dsListas As New DataSet
-                dsListas = NegListasPrecio.ListadoListasPrecios()
+                dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
                 If dsListas.Tables(0).Rows.Count > 0 Then
                     cb_ListaPrecios_mod.DataSource = Nothing
                     cb_ListaPrecios_mod.DataSource = dsListas.Tables(0)
@@ -829,7 +829,7 @@
 
             'Cargo el combo de listado de precios
             Dim dsListas As New DataSet
-            dsListas = NegListasPrecio.ListadoListasPrecios()
+            dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
             If dsListas.Tables(0).Rows.Count > 0 Then
                 cb_ListaPrecios_mod.DataSource = Nothing
                 cb_ListaPrecios_mod.DataSource = dsListas.Tables(0)

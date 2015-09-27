@@ -2,6 +2,10 @@
     Dim NegClientes As New Negocio.NegClientes
     Dim dsClientes As DataSet
 
+    Public idCliente As String
+    Public razonSocialCliente As String
+    Public idListaPrecio As String
+
     'Tecla ENTER en el campo buscar.
     Private Sub txt_Buscar_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_Buscar.KeyPress
         If e.KeyChar = ChrW(Keys.Enter) Then
@@ -132,18 +136,10 @@
 
             If DG_Clientes.SelectedRows.Count > 0 Then
                 If e.RowIndex >= 0 Then
-                    Dim id_Cliente As String = DG_Clientes.Rows(e.RowIndex).Cells("id_Cliente").Value()
-                    Dim RazonSocial As String = DG_Clientes.Rows(e.RowIndex).Cells("RazonSocial").Value()
-                    Dim id_ListaPrecio As String = DG_Clientes.Rows(e.RowIndex).Cells("id_ListaPrecio").Value()
-                    If id_Cliente <> "" And RazonSocial <> "" Then
-                        frmVentas.txt_id_Cliente.Clear()
-                        frmVentas.txt_RazonSocial.Clear()
-                        frmVentas.LimpiarFormVentas_2()
-                        frmVentas.txt_id_Cliente.Text = id_Cliente
-                        frmVentas.txt_RazonSocial.Text = RazonSocial
-                        frmVentas.id_ListaCliente = id_ListaPrecio
-                        Me.Close()
-                    End If
+                    idCliente = DG_Clientes.Rows(e.RowIndex).Cells("id_Cliente").Value()
+                    razonSocialCliente = DG_Clientes.Rows(e.RowIndex).Cells("RazonSocial").Value()
+                    idListaPrecio = DG_Clientes.Rows(e.RowIndex).Cells("id_ListaPrecio").Value()
+                    Me.Close()
                 End If
             End If
 

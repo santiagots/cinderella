@@ -24,8 +24,8 @@ Public Class frmConfiguracion
         End If
 
         'Cargo el listado de Precios.
-        If (NListas.ListadoListasPrecios().Tables.Count <> 0) Then
-            cb_Precios.DataSource = NListas.ListadoListasPrecios().Tables(0)
+        If (NListas.ListadoGrupoPrecios().Tables.Count <> 0) Then
+            cb_Precios.DataSource = NListas.ListadoGrupoPrecios().Tables(0)
             cb_Precios.DisplayMember = "ListaPrecio"
             cb_Precios.ValueMember = "id_Lista"
             cb_Precios.SelectedValue = My.Settings("ListaPrecio")

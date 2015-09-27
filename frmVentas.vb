@@ -9,10 +9,11 @@
     Dim NegMensajes As New Negocio.NegMensajes
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim EntProducto As New Entidades.Productos
+    Dim NegListasPrecio As New Negocio.NegListasPrecio
     Dim EntVentas As New Entidades.Ventas
     Dim Funciones As New Funciones
     Dim id_Sucursal As Integer
-    Public id_ListaCliente As Integer = 0
+    'Public id_ListaCliente As Integer = 0
     Dim Nombre_Sucursal As String
 
 
@@ -30,7 +31,7 @@
         Cb_TipoPago.SelectedItem = "Seleccione un tipo de pago..."
         Cb_Encargados.SelectedItem = "Seleccione un encargado..."
         Cb_Vendedores.SelectedItem = "Seleccione un vendedor..."
-        id_ListaCliente = 0
+        Cb_ListaPrecio.SelectedIndex = Nothing
         txt_CodigoBarra.Focus()
     End Sub
 
@@ -40,7 +41,7 @@
         txt_Total.Text = "0,00"
         txt_Subtotal.Text = "0,00"
         txt_Descuento.Text = "0,00"
-        id_ListaCliente = 0
+        Cb_ListaPrecio.SelectedIndex = Nothing
         txt_CodigoBarra.Clear()
         txt_CodigoBarra.Focus()        
     End Sub
@@ -114,17 +115,10 @@
             If Repetido = False And SinStock = False Then
                 NumeroFila = DG_Productos.Rows.Count + 1
 
-                'Primero, me fijo si hay un cliente mayorista seteado y utilizo su idlista.
-                Dim Lista As Integer = 0
-                If id_ListaCliente > 0 Then
-                    Lista = id_ListaCliente
-                Else
-                    Lista = My.Settings("ListaPrecio")
-                End If
-
                 'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
                 Dim Precio As Double = 0
-                Select Case Lista
+                'Select Case Lista
+                Select Case Cb_ListaPrecio.SelectedValue()
                     Case "1"
                         Precio = EntProducto.Precio1
                     Case "2"
@@ -183,9 +177,9 @@
                 'Valor de la Columna Precio
                 dgvCell = New DataGridViewTextBoxCell()
                 If TipoAccion = 2 Then
-                    dgvCell.Value = (PRECIO * -1)
+                    dgvCell.Value = (Precio * -1)
                 Else
-                    dgvCell.Value = PRECIO
+                    dgvCell.Value = Precio
                 End If
 
                 dgvRow.Cells.Add(dgvCell)
@@ -193,15 +187,45 @@
                 'Valor de la Columna Subtotal
                 dgvCell = New DataGridViewTextBoxCell()
                 If TipoAccion = 2 Then
-                    dgvCell.Value = (PRECIO * -1)
+                    dgvCell.Value = (Precio * -1)
                 Else
-                    dgvCell.Value = PRECIO
+                    dgvCell.Value = Precio
                 End If
                 dgvRow.Cells.Add(dgvCell)
 
                 'Valor de la Columna Eliminar
                 dgvCell = New DataGridViewImageCell()
                 dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
+                dgvRow.Cells.Add(dgvCell)
+
+                'Valor de la Columna Precio1
+                dgvCell = New DataGridViewImageCell()
+                dgvCell.Value = EntProducto.Precio1
+                dgvRow.Cells.Add(dgvCell)
+
+                'Valor de la Columna Precio2
+                dgvCell = New DataGridViewImageCell()
+                dgvCell.Value = EntProducto.Precio2
+                dgvRow.Cells.Add(dgvCell)
+
+                'Valor de la Columna Precio3
+                dgvCell = New DataGridViewImageCell()
+                dgvCell.Value = EntProducto.Precio3
+                dgvRow.Cells.Add(dgvCell)
+
+                'Valor de la Columna Precio4
+                dgvCell = New DataGridViewImageCell()
+                dgvCell.Value = EntProducto.Precio4
+                dgvRow.Cells.Add(dgvCell)
+
+                'Valor de la Columna Precio5
+                dgvCell = New DataGridViewImageCell()
+                dgvCell.Value = EntProducto.Precio5
+                dgvRow.Cells.Add(dgvCell)
+
+                'Valor de la Columna Precio6
+                dgvCell = New DataGridViewImageCell()
+                dgvCell.Value = EntProducto.Precio6
                 dgvRow.Cells.Add(dgvCell)
 
                 If TipoAccion = 2 Then
@@ -299,9 +323,11 @@
     'Si desea buscar un producto, se visualiza el formulario.
     Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmBuscarProducto).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmBuscarProducto).Show()
-        frmBuscarProducto.TipoForm = 1
+        Dim frmBuscarProducto As frmBuscarProducto = New frmBuscarProducto()
+        frmBuscarProducto.ShowDialog()
+        If (Not String.IsNullOrEmpty(frmBuscarProducto.idProducto)) Then
+            AgregarItem(frmBuscarProducto.idProducto, 1)
+        End If
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -398,6 +424,16 @@
             Cb_TipoPago.SelectedValue = 0
             Cb_TipoPago.Refresh()
         End If
+
+        'Cargo el combo de Lista de precios para un cliente minorista
+        Dim dsListaPrecio As DataSet = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
+        If dsListaPrecio.Tables(0).Rows.Count > 0 Then
+            Cb_ListaPrecio.DataSource = Nothing
+            Cb_ListaPrecio.DataSource = dsListaPrecio.Tables(0)
+            Cb_ListaPrecio.DisplayMember = "ListaPrecio"
+            Cb_ListaPrecio.ValueMember = "id_Lista"
+            Cb_ListaPrecio.Refresh()
+        End If
     End Sub
 
     'Actualizo la hora que se muestra dentro del formulario.
@@ -407,13 +443,30 @@
 
     'Dependiendo para que tipo de cliente es la venta, muestro o oculto el panel de clientes.
     Private Sub cb_Tipo_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Tipo.SelectedIndexChanged
+
+        Dim dsListas As DataSet
+        'Mayorista
         If cb_Tipo.SelectedIndex = 1 Then
             Gb_Cliente.Enabled = True
+            'Cargo la lista de precios con las opciones mayoristas
+            dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
         Else
+            'Minorista
             Gb_Cliente.Enabled = False
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
+            'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
+            dsListas = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
         End If
+
+        If dsListas.Tables(0).Rows.Count > 0 Then
+            Cb_ListaPrecio.DataSource = Nothing
+            Cb_ListaPrecio.DataSource = dsListas.Tables(0)
+            Cb_ListaPrecio.DisplayMember = "ListaPrecio"
+            Cb_ListaPrecio.ValueMember = "id_Lista"
+            Cb_ListaPrecio.Refresh()
+        End If
+
         LimpiarFormVentas_2()
     End Sub
 
@@ -459,8 +512,18 @@
     'Si desea buscar un cliente mayorista se visualiza el formulario.
     Private Sub Btn_BuscarCliente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_BuscarCliente.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmBuscarClienteMayorista).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmBuscarClienteMayorista).Show()
+        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        frmBuscarClienteMayorista.ShowDialog()
+
+
+        If frmBuscarClienteMayorista.idCliente <> "" And frmBuscarClienteMayorista.razonSocialCliente <> "" Then
+            txt_id_Cliente.Clear()
+            txt_RazonSocial.Clear()
+            LimpiarFormVentas_2()
+            txt_id_Cliente.Text = frmBuscarClienteMayorista.idCliente
+            txt_RazonSocial.Text = frmBuscarClienteMayorista.razonSocialCliente
+            Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.idListaPrecio
+        End If
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -772,8 +835,46 @@
 
     Private Sub Btn_Cambiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmCambios).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmCambios).Show()
+        Dim frmCambios As frmCambios = New frmCambios()
+        frmCambios.ShowDialog()
+        If (Not String.IsNullOrEmpty(frmCambios.codigoBarras)) Then
+            AgregarItem(frmCambios.codigoBarras, 2, 2)
+        ElseIf (Not String.IsNullOrEmpty(frmCambios.CodigoProducto)) Then
+            AgregarItem(frmCambios.CodigoProducto, 3, 2)
+        End If
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub Cb_ListaPrecio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_ListaPrecio.SelectedIndexChanged
+        Dim Precio As Double = 0
+        For Each row As DataGridViewRow In DG_Productos.Rows
+            'Actualizo el precio de cada item segun la nueva lista de precios seleccioanda
+            Select Case Cb_ListaPrecio.SelectedValue()
+                Case "1"
+                    Precio = CDbl(row.Cells("Precio1").Value)
+                Case "2"
+                    Precio = CDbl(row.Cells("Precio2").Value)
+                Case "3"
+                    Precio = CDbl(row.Cells("Precio3").Value)
+                Case "4"
+                    Precio = CDbl(row.Cells("Precio4").Value)
+                Case "5"
+                    Precio = CDbl(row.Cells("Precio5").Value)
+                Case "6"
+                    Precio = CDbl(row.Cells("Precio6").Value)
+            End Select
+
+            Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+            If esDevolucion Then
+                row.Cells("PRECIO").Value = Precio * -1
+            Else
+                row.Cells("PRECIO").Value = Precio
+            End If
+
+            row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Next
+        'Actualizo los totales
+        CalcularPreciosDescuento()
+
     End Sub
 End Class

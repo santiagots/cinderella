@@ -4,6 +4,11 @@
     Private RazonSocial_, Contacto_, Cuit_, Transporte_, Direccion_, Mail_, Telefono_, Observaciones_ As String
     Dim Fecha_ As DateTime
 
+    Public Enum Tipo
+        Minorista
+        Mayorista
+    End Enum
+
     Public Property id_Cliente() As Integer
         Get
             Return id_Cliente_

@@ -48,6 +48,7 @@ Partial Class frmClientes
         Me.Compras = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
+        Me.txt_Cuit = New System.Windows.Forms.MaskedTextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.cb_Localidad = New System.Windows.Forms.ComboBox()
         Me.cb_Distrito = New System.Windows.Forms.ComboBox()
@@ -81,6 +82,7 @@ Partial Class frmClientes
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.txt_cuit_mod = New System.Windows.Forms.MaskedTextBox()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Btn_Eliminar = New System.Windows.Forms.Button()
@@ -118,8 +120,6 @@ Partial Class frmClientes
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.ErroresClie = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolCliente = New System.Windows.Forms.ToolTip(Me.components)
-        Me.txt_Cuit = New System.Windows.Forms.MaskedTextBox()
-        Me.txt_cuit_mod = New System.Windows.Forms.MaskedTextBox()
         Me.TabClientes.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -159,7 +159,7 @@ Partial Class frmClientes
         'GB_Buscar
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
         Me.GB_Buscar.Controls.Add(Me.btn_Buscar)
         Me.GB_Buscar.Controls.Add(Me.txt_buscar)
@@ -225,8 +225,8 @@ Partial Class frmClientes
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DG_Clientes.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Clientes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Cliente, Me.RazonSocial, Me.Cuit, Me.Telefono, Me.Direccion, Me.Mail, Me.ListaPrecio, Me.Habilitado, Me.Modificar, Me.Eliminar, Me.Compras})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
@@ -362,8 +362,8 @@ Partial Class frmClientes
         'GB_Alta
         '
         Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Alta.Controls.Add(Me.txt_Cuit)
         Me.GB_Alta.Controls.Add(Me.Label17)
         Me.GB_Alta.Controls.Add(Me.cb_Localidad)
@@ -404,11 +404,19 @@ Partial Class frmClientes
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de Alta"
         '
+        'txt_Cuit
+        '
+        Me.txt_Cuit.Location = New System.Drawing.Point(151, 71)
+        Me.txt_Cuit.Mask = "99-99999999-9"
+        Me.txt_Cuit.Name = "txt_Cuit"
+        Me.txt_Cuit.Size = New System.Drawing.Size(209, 21)
+        Me.txt_Cuit.TabIndex = 2
+        '
         'Label17
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(6, 383)
+        Me.Label17.Location = New System.Drawing.Point(6, 382)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(117, 13)
         Me.Label17.TabIndex = 68
@@ -695,7 +703,7 @@ Partial Class frmClientes
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(632, 368)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(632, 367)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 16
@@ -716,8 +724,8 @@ Partial Class frmClientes
         'GB_Modificacion
         '
         Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Modificacion.Controls.Add(Me.txt_cuit_mod)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
         Me.GB_Modificacion.Controls.Add(Me.Label18)
@@ -760,13 +768,21 @@ Partial Class frmClientes
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
         '
+        'txt_cuit_mod
+        '
+        Me.txt_cuit_mod.Location = New System.Drawing.Point(151, 71)
+        Me.txt_cuit_mod.Mask = "99-99999999-9"
+        Me.txt_cuit_mod.Name = "txt_cuit_mod"
+        Me.txt_cuit_mod.Size = New System.Drawing.Size(209, 21)
+        Me.txt_cuit_mod.TabIndex = 2
+        '
         'Btn_Cancelar
         '
         Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(420, 368)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(420, 367)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 81
@@ -779,7 +795,7 @@ Partial Class frmClientes
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(6, 383)
+        Me.Label18.Location = New System.Drawing.Point(6, 382)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(117, 13)
         Me.Label18.TabIndex = 69
@@ -792,7 +808,7 @@ Partial Class frmClientes
         Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
         Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(526, 368)
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(526, 367)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Eliminar.TabIndex = 16
@@ -1081,7 +1097,7 @@ Partial Class frmClientes
         Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(632, 368)
+        Me.Btn_Modificar.Location = New System.Drawing.Point(632, 367)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Modificar.TabIndex = 17
@@ -1119,22 +1135,6 @@ Partial Class frmClientes
         Me.ToolCliente.IsBalloon = True
         Me.ToolCliente.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCliente.ToolTipTitle = "Ayuda."
-        '
-        'txt_Cuit
-        '
-        Me.txt_Cuit.Location = New System.Drawing.Point(151, 71)
-        Me.txt_Cuit.Mask = "99-99999999-9"
-        Me.txt_Cuit.Name = "txt_Cuit"
-        Me.txt_Cuit.Size = New System.Drawing.Size(209, 21)
-        Me.txt_Cuit.TabIndex = 2
-        '
-        'txt_cuit_mod
-        '
-        Me.txt_cuit_mod.Location = New System.Drawing.Point(151, 71)
-        Me.txt_cuit_mod.Mask = "99-99999999-9"
-        Me.txt_cuit_mod.Name = "txt_cuit_mod"
-        Me.txt_cuit_mod.Size = New System.Drawing.Size(209, 21)
-        Me.txt_cuit_mod.TabIndex = 2
         '
         'frmClientes
         '

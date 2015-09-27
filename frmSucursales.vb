@@ -5,7 +5,6 @@
     Dim NegLocalidades As New Negocio.NegLocalidades
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim ESucursales As New Entidades.Sucursales
-    Dim NegListasPrecio As New Negocio.NegListasPrecio
 
 #Region "Región de Validaciones"
     'Valido que ingrese el nombre.
@@ -439,8 +438,6 @@
                 DG_Sucursales.Columns("Eliminar").Visible = False
             End If
 
-            CargarCombosAltaSucursal()
-
             'Cambio el cursor a NORMAL.
             TabSucursales.Cursor = Cursors.Arrow
         Catch ex As Exception
@@ -553,18 +550,6 @@
                 cb_Localidad_mod.ValueMember = "id_Localidad"
                 cb_Localidad_mod.SelectedValue = ESucursales.id_Localidad
                 cb_Localidad_mod.Refresh()
-            End If
-
-            'Cargo el combo de Grupo de Precios
-            Dim dsGrupoPrecios As New DataSet
-            dsGrupoPrecios = NegListasPrecio.ListadoGrupoPrecios()
-            If (dsGrupoPrecios.Tables(0).Rows.Count > 0) Then
-                cb_Lista_Precios_Mod.DataSource = Nothing
-                cb_Lista_Precios_Mod.DataSource = dsGrupoPrecios.Tables(0)
-                cb_Lista_Precios_Mod.DisplayMember = "ListaPrecio"
-                cb_Lista_Precios_Mod.ValueMember = "id_Lista"
-                cb_Lista_Precios_Mod.SelectedValue = ESucursales.id_ListaGrupoPrecio
-                cb_Lista_Precios_Mod.Refresh()
             End If
 
             If ESucursales.Habilitado = "1" Then
@@ -691,18 +676,6 @@
                     cb_Localidad_mod.Refresh()
                 End If
 
-                'Cargo el combo de Grupo de Precios
-                Dim dsGrupoPrecios As New DataSet
-                dsGrupoPrecios = NegListasPrecio.ListadoGrupoPrecios()
-                If (dsGrupoPrecios.Tables(0).Rows.Count > 0) Then
-                    cb_Lista_Precios_Mod.DataSource = Nothing
-                    cb_Lista_Precios_Mod.DataSource = dsGrupoPrecios.Tables(0)
-                    cb_Lista_Precios_Mod.DisplayMember = "ListaPrecio"
-                    cb_Lista_Precios_Mod.ValueMember = "id_Lista"
-                    cb_Lista_Precios_Mod.SelectedValue = ESucursales.id_ListaGrupoPrecio
-                    cb_Lista_Precios_Mod.Refresh()
-                End If
-
                 If ESucursales.Habilitado = "1" Then
                     chk_Habilitado_mod.Checked = True
                 Else
@@ -723,7 +696,7 @@
 
     'Boton Agregar Sucursal.
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
-        If txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or cb_Lista_Precios.SelectedItem Is Nothing Or txt_ComisionEncargado.Text = "" Or txt_ComisionEncargadoFeriado.Text = "" Or txt_ComisionVendedor.Text = "" Or txt_ComisionVendedorFeriado.Text = "" Or txt_ComisionEncargadoMayor.Text = "" Or txt_ComisionVendedorMayor.Text = "" Then
+        If txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or txt_ComisionEncargado.Text = "" Or txt_ComisionEncargadoFeriado.Text = "" Or txt_ComisionVendedor.Text = "" Or txt_ComisionVendedorFeriado.Text = "" Or txt_ComisionEncargadoMayor.Text = "" Or txt_ComisionVendedorMayor.Text = "" Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -738,7 +711,6 @@
                 ESucursales.id_Provincia = cb_Provincia.SelectedValue
                 ESucursales.id_Localidad = cb_Localidad.SelectedValue
                 ESucursales.id_Distrito = cb_Distrito.SelectedValue
-                ESucursales.id_ListaGrupoPrecio = cb_Lista_Precios.SelectedValue
                 ESucursales.ComisionVendedor = Trim(txt_ComisionVendedor.Text)
                 ESucursales.ComisionEncargado = Trim(txt_ComisionEncargado.Text)
                 ESucursales.ComisionVendedorFeriado = Trim(txt_ComisionVendedorFeriado.Text)
@@ -821,7 +793,7 @@
 
     'Boton Modificar Sucursal.
     Private Sub Btn_Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Modificar.Click
-        If txt_Direccion_mod.Text = "" Or txt_CodigoPostal_mod.Text = "" Or txt_Nombre_mod.Text = "" Or cb_Provincia_mod.SelectedItem Is Nothing Or cb_Distrito_mod.SelectedItem Is Nothing Or cb_Localidad_mod.SelectedItem Is Nothing Or cb_Lista_Precios_Mod.SelectedItem is Nothing Or txt_ComisionEncargado_mod.Text = "" Or txt_ComisionEncargadoFeriado_mod.Text = "" Or txt_ComisionVendedor_mod.Text = "" Or txt_ComisionVendedorFeriado_mod.Text = "" Or txt_ComisionVendedorMayor_mod.Text = "" Or txt_ComisionEncargadoMayor_mod.Text = "" Then
+        If txt_Direccion_mod.Text = "" Or txt_CodigoPostal_mod.Text = "" Or txt_Nombre_mod.Text = "" Or cb_Provincia_mod.SelectedItem Is Nothing Or cb_Distrito_mod.SelectedItem Is Nothing Or cb_Localidad_mod.SelectedItem Is Nothing Or txt_ComisionEncargado_mod.Text = "" Or txt_ComisionEncargadoFeriado_mod.Text = "" Or txt_ComisionVendedor_mod.Text = "" Or txt_ComisionVendedorFeriado_mod.Text = "" Or txt_ComisionVendedorMayor_mod.Text = "" Or txt_ComisionEncargadoMayor_mod.Text = "" Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -836,7 +808,6 @@
                 ESucursales.id_Provincia = cb_Provincia_mod.SelectedValue
                 ESucursales.id_Localidad = cb_Localidad_mod.SelectedValue
                 ESucursales.id_Distrito = cb_Distrito_mod.SelectedValue
-                ESucursales.id_ListaGrupoPrecio = cb_Lista_Precios_Mod.SelectedValue
                 ESucursales.ComisionVendedor = Trim(txt_ComisionVendedor_mod.Text)
                 ESucursales.ComisionEncargado = Trim(txt_ComisionEncargado_mod.Text)
                 ESucursales.ComisionVendedorFeriado = Trim(txt_ComisionVendedorFeriado_mod.Text)
@@ -869,19 +840,19 @@
     End Sub
 
     'Cargo el combo de Provincias.
-    'Private Sub cb_Provincia_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Provincia.GotFocus
-    '    Dim dsProvincias As New DataSet
-    '    dsProvincias = NegProvincias.ListadoProvincias()
-    '    If (dsProvincias.Tables(0).Rows.Count > 0) Then
-    '        cb_Provincia.DataSource = Nothing
-    '        cb_Provincia.DataSource = dsProvincias.Tables(0)
-    '        cb_Provincia.DisplayMember = "Descripcion"
-    '        cb_Provincia.ValueMember = "id_Provincia"
-    '        cb_Provincia.Refresh()
-    '        cb_Localidad.DataSource = Nothing
-    '        cb_Localidad.Refresh()
-    '    End If
-    'End Sub
+    Private Sub cb_Provincia_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Provincia.GotFocus
+        Dim dsProvincias As New DataSet
+        dsProvincias = NegProvincias.ListadoProvincias()
+        If (dsProvincias.Tables(0).Rows.Count > 0) Then
+            cb_Provincia.DataSource = Nothing
+            cb_Provincia.DataSource = dsProvincias.Tables(0)
+            cb_Provincia.DisplayMember = "Descripcion"
+            cb_Provincia.ValueMember = "id_Provincia"
+            cb_Provincia.Refresh()
+            cb_Localidad.DataSource = Nothing
+            cb_Localidad.Refresh()
+        End If
+    End Sub
 
     'Cargo el combo de Localidades.
     Private Sub cb_Distrito_SelectionChangeCommitted(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Distrito.SelectionChangeCommitted
@@ -976,7 +947,6 @@
         cb_Provincia.SelectedItem = Nothing
         cb_Localidad.SelectedItem = Nothing
         cb_Distrito.SelectedItem = Nothing
-        cb_Lista_Precios.SelectedItem = Nothing
         chk_Habilitado.Checked = True
     End Sub
 
@@ -996,35 +966,8 @@
         cb_Provincia_mod.SelectedItem = Nothing
         cb_Localidad_mod.SelectedItem = Nothing
         cb_Distrito_mod.SelectedItem = Nothing
-        cb_Lista_Precios_Mod.SelectedItem = Nothing
         chk_Habilitado_mod.Checked = True
     End Sub
 #End Region
-
-    Private Sub CargarCombosAltaSucursal()
-
-        'Cargo el combo de Grupo de Precios
-        Dim dsGrupoPrecios As New DataSet
-        dsGrupoPrecios = NegListasPrecio.ListadoGrupoPrecios()
-        If (dsGrupoPrecios.Tables(0).Rows.Count > 0) Then
-            cb_Lista_Precios.DataSource = Nothing
-            cb_Lista_Precios.DataSource = dsGrupoPrecios.Tables(0)
-            cb_Lista_Precios.DisplayMember = "ListaPrecio"
-            cb_Lista_Precios.ValueMember = "id_Lista"
-            cb_Lista_Precios.Refresh()
-        End If
-
-        'Cargo el combo de Grupo de Provincias
-        Dim dsProvincias As New DataSet
-        dsProvincias = NegProvincias.ListadoProvincias()
-        If (dsProvincias.Tables(0).Rows.Count > 0) Then
-            cb_Provincia.DataSource = Nothing
-            cb_Provincia.DataSource = dsProvincias.Tables(0)
-            cb_Provincia.DisplayMember = "Descripcion"
-            cb_Provincia.ValueMember = "id_Provincia"
-            cb_Provincia.Refresh()
-        End If
-
-    End Sub
 
 End Class

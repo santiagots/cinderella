@@ -2,6 +2,7 @@
     Dim NegProductos As New Negocio.NegProductos
     Dim dsProductos As New DataSet
     Public TipoForm As Integer
+    Public idProducto As String
 
     'Click en Buscar producto!.
     Private Sub btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_Buscar.Click
@@ -55,17 +56,18 @@
 
             If DG_Productos.SelectedRows.Count > 0 Then
                 If e.RowIndex >= 0 Then
-                    Dim id_Producto As String = DG_Productos.Rows(e.RowIndex).Cells("id_Producto").Value()
-                    If id_Producto <> "" Then
+                    idProducto = DG_Productos.Rows(e.RowIndex).Cells("id_Producto").Value()
+                    If idProducto <> "" Then
                         If TipoForm = 1 Then
-                            frmVentas.txt_CodigoBarra.Clear()
-                            frmVentas.AgregarItem(id_Producto, 1)
+                            'TODO: restructurar esta seccion
+                            'frmVentas.txt_CodigoBarra.Clear()
+                            'frmVentas.AgregarItem(idProducto, 1)
                         ElseIf TipoForm = 2 Then
                             frmDevoluciones.txt_CodigoBarra.Clear()
-                            frmDevoluciones.AgregarItem(id_Producto, 1)
+                            frmDevoluciones.AgregarItem(idProducto, 1)
                         ElseIf TipoForm = 3 Then
                             frmCargarMercaderiaEgreso.txt_CodigoBarra.Clear()
-                            frmCargarMercaderiaEgreso.AgregarItem(id_Producto, 1)
+                            frmCargarMercaderiaEgreso.AgregarItem(idProducto, 1)
                         End If
                         Me.Close()
                     End If

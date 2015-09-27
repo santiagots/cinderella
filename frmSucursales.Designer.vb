@@ -112,12 +112,6 @@ Partial Class frmSucursales
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErroresSucursal = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolSucursal = New System.Windows.Forms.ToolTip(Me.components)
-        Me.GB_GrupoPrecios = New System.Windows.Forms.GroupBox()
-        Me.cb_Lista_Precios_Mod = New System.Windows.Forms.ComboBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.cb_Lista_Precios = New System.Windows.Forms.ComboBox()
         Me.TabSucursales.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Sucursales, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -134,8 +128,6 @@ Partial Class frmSucursales
         Me.GB_Comisiones2_mod.SuspendLayout()
         Me.GB_Comisiones_mod.SuspendLayout()
         CType(Me.ErroresSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GB_GrupoPrecios.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabSucursales
@@ -148,7 +140,7 @@ Partial Class frmSucursales
         Me.TabSucursales.Location = New System.Drawing.Point(0, 0)
         Me.TabSucursales.Name = "TabSucursales"
         Me.TabSucursales.SelectedIndex = 0
-        Me.TabSucursales.Size = New System.Drawing.Size(794, 562)
+        Me.TabSucursales.Size = New System.Drawing.Size(794, 522)
         Me.TabSucursales.TabIndex = 2
         '
         'TbListado
@@ -261,7 +253,7 @@ Partial Class frmSucursales
         Me.TbAlta.Location = New System.Drawing.Point(4, 29)
         Me.TbAlta.Name = "TbAlta"
         Me.TbAlta.Padding = New System.Windows.Forms.Padding(3)
-        Me.TbAlta.Size = New System.Drawing.Size(786, 529)
+        Me.TbAlta.Size = New System.Drawing.Size(786, 489)
         Me.TbAlta.TabIndex = 1
         Me.TbAlta.Text = "Alta de Sucursal"
         Me.TbAlta.UseVisualStyleBackColor = True
@@ -271,7 +263,6 @@ Partial Class frmSucursales
         Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Alta.Controls.Add(Me.GroupBox3)
         Me.GB_Alta.Controls.Add(Me.GroupBox1)
         Me.GB_Alta.Controls.Add(Me.Label1)
         Me.GB_Alta.Controls.Add(Me.GB_Sucursal)
@@ -281,7 +272,7 @@ Partial Class frmSucursales
         Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Alta.Location = New System.Drawing.Point(12, 7)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(764, 505)
+        Me.GB_Alta.Size = New System.Drawing.Size(764, 465)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de alta de sucursal."
@@ -334,7 +325,7 @@ Partial Class frmSucursales
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(11, 476)
+        Me.Label1.Location = New System.Drawing.Point(11, 436)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(117, 13)
         Me.Label1.TabIndex = 17
@@ -608,7 +599,7 @@ Partial Class frmSucursales
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(643, 449)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(643, 409)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 19
@@ -622,7 +613,7 @@ Partial Class frmSucursales
         Me.TbMod.Controls.Add(Me.GB_Modificacion)
         Me.TbMod.Location = New System.Drawing.Point(4, 29)
         Me.TbMod.Name = "TbMod"
-        Me.TbMod.Size = New System.Drawing.Size(786, 529)
+        Me.TbMod.Size = New System.Drawing.Size(786, 489)
         Me.TbMod.TabIndex = 2
         Me.TbMod.Text = "Modificación de Sucursal"
         Me.TbMod.UseVisualStyleBackColor = True
@@ -632,7 +623,6 @@ Partial Class frmSucursales
         Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Modificacion.Controls.Add(Me.GB_GrupoPrecios)
         Me.GB_Modificacion.Controls.Add(Me.GroupBox2)
         Me.GB_Modificacion.Controls.Add(Me.Label2)
         Me.GB_Modificacion.Controls.Add(Me.GB_Sucursal_mod)
@@ -643,7 +633,7 @@ Partial Class frmSucursales
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(12, 7)
         Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(764, 505)
+        Me.GB_Modificacion.Size = New System.Drawing.Size(764, 465)
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de modificación de sucursal."
@@ -656,7 +646,7 @@ Partial Class frmSucursales
         Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Location = New System.Drawing.Point(443, 276)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(300, 115)
+        Me.GroupBox2.Size = New System.Drawing.Size(300, 109)
         Me.GroupBox2.TabIndex = 16
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Comisiones Ventas Mayoristas"
@@ -696,7 +686,7 @@ Partial Class frmSucursales
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(11, 476)
+        Me.Label2.Location = New System.Drawing.Point(11, 436)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(117, 13)
         Me.Label2.TabIndex = 18
@@ -722,7 +712,7 @@ Partial Class frmSucursales
         Me.GB_Sucursal_mod.Controls.Add(Me.txt_Telefono_mod)
         Me.GB_Sucursal_mod.Location = New System.Drawing.Point(14, 34)
         Me.GB_Sucursal_mod.Name = "GB_Sucursal_mod"
-        Me.GB_Sucursal_mod.Size = New System.Drawing.Size(412, 357)
+        Me.GB_Sucursal_mod.Size = New System.Drawing.Size(412, 351)
         Me.GB_Sucursal_mod.TabIndex = 1
         Me.GB_Sucursal_mod.TabStop = False
         Me.GB_Sucursal_mod.Text = "Información del Establecimiento"
@@ -970,7 +960,7 @@ Partial Class frmSucursales
         Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(537, 449)
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(537, 409)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Eliminar.TabIndex = 19
@@ -987,7 +977,7 @@ Partial Class frmSucursales
         Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(643, 449)
+        Me.Btn_Modificar.Location = New System.Drawing.Point(643, 409)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Modificar.TabIndex = 20
@@ -1007,71 +997,11 @@ Partial Class frmSucursales
         Me.ToolSucursal.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolSucursal.ToolTipTitle = "Ayuda"
         '
-        'GB_GrupoPrecios
-        '
-        Me.GB_GrupoPrecios.Controls.Add(Me.cb_Lista_Precios_Mod)
-        Me.GB_GrupoPrecios.Controls.Add(Me.Label7)
-        Me.GB_GrupoPrecios.Location = New System.Drawing.Point(14, 397)
-        Me.GB_GrupoPrecios.Name = "GB_GrupoPrecios"
-        Me.GB_GrupoPrecios.Size = New System.Drawing.Size(412, 76)
-        Me.GB_GrupoPrecios.TabIndex = 21
-        Me.GB_GrupoPrecios.TabStop = False
-        Me.GB_GrupoPrecios.Text = "Lista de Precios Minorista"
-        '
-        'cb_Lista_Precios_Mod
-        '
-        Me.cb_Lista_Precios_Mod.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Lista_Precios_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Lista_Precios_Mod.FormattingEnabled = True
-        Me.cb_Lista_Precios_Mod.Location = New System.Drawing.Point(141, 28)
-        Me.cb_Lista_Precios_Mod.Name = "cb_Lista_Precios_Mod"
-        Me.cb_Lista_Precios_Mod.Size = New System.Drawing.Size(242, 21)
-        Me.cb_Lista_Precios_Mod.TabIndex = 58
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(8, 37)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(42, 13)
-        Me.Label7.TabIndex = 59
-        Me.Label7.Text = "Lista (*)"
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.cb_Lista_Precios)
-        Me.GroupBox3.Controls.Add(Me.Label8)
-        Me.GroupBox3.Location = New System.Drawing.Point(14, 391)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(412, 76)
-        Me.GroupBox3.TabIndex = 22
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Lista de Precios Minorista"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(8, 37)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(42, 13)
-        Me.Label8.TabIndex = 59
-        Me.Label8.Text = "Lista (*)"
-        '
-        'cb_Lista_Precios
-        '
-        Me.cb_Lista_Precios.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Lista_Precios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Lista_Precios.FormattingEnabled = True
-        Me.cb_Lista_Precios.Location = New System.Drawing.Point(139, 29)
-        Me.cb_Lista_Precios.Name = "cb_Lista_Precios"
-        Me.cb_Lista_Precios.Size = New System.Drawing.Size(242, 21)
-        Me.cb_Lista_Precios.TabIndex = 28
-        '
         'frmSucursales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(794, 562)
+        Me.ClientSize = New System.Drawing.Size(794, 522)
         Me.Controls.Add(Me.TabSucursales)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -1106,10 +1036,6 @@ Partial Class frmSucursales
         Me.GB_Comisiones_mod.ResumeLayout(False)
         Me.GB_Comisiones_mod.PerformLayout()
         CType(Me.ErroresSucursal, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GB_GrupoPrecios.ResumeLayout(False)
-        Me.GB_GrupoPrecios.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1198,10 +1124,4 @@ Partial Class frmSucursales
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents txt_ComisionVendedorMayor_mod As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents GB_GrupoPrecios As System.Windows.Forms.GroupBox
-    Friend WithEvents cb_Lista_Precios_Mod As System.Windows.Forms.ComboBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents cb_Lista_Precios As System.Windows.Forms.ComboBox
 End Class
