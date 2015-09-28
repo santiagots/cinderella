@@ -13,7 +13,6 @@
     Dim EntVentas As New Entidades.Ventas
     Dim Funciones As New Funciones
     Dim id_Sucursal As Integer
-    'Public id_ListaCliente As Integer = 0
     Dim Nombre_Sucursal As String
 
 
@@ -117,7 +116,6 @@
 
                 'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
                 Dim Precio As Double = 0
-                'Select Case Lista
                 Select Case Cb_ListaPrecio.SelectedValue()
                     Case "1"
                         Precio = EntProducto.Precio1
@@ -304,7 +302,7 @@
             'MessageBox.Show("No puede aplicar un descuento mayor o igual que el total de la compra.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
 
-        If total < 0 Then
+        If total <= 0 Then
             Btn_Finalizar.Visible = False
         Else
             Btn_Finalizar.Visible = True

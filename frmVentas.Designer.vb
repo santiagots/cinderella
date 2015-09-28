@@ -571,7 +571,7 @@ Partial Class frmVentas
         Me.GB_TipoPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_TipoPago.Location = New System.Drawing.Point(592, 196)
         Me.GB_TipoPago.Name = "GB_TipoPago"
-        Me.GB_TipoPago.Size = New System.Drawing.Size(350, 59)
+        Me.GB_TipoPago.Size = New System.Drawing.Size(346, 59)
         Me.GB_TipoPago.TabIndex = 12
         Me.GB_TipoPago.TabStop = False
         Me.GB_TipoPago.Text = "TIPO DE PAGO"
@@ -586,7 +586,7 @@ Partial Class frmVentas
         Me.Cb_TipoPago.FormattingEnabled = True
         Me.Cb_TipoPago.Location = New System.Drawing.Point(119, 20)
         Me.Cb_TipoPago.Name = "Cb_TipoPago"
-        Me.Cb_TipoPago.Size = New System.Drawing.Size(224, 23)
+        Me.Cb_TipoPago.Size = New System.Drawing.Size(220, 23)
         Me.Cb_TipoPago.TabIndex = 10
         '
         'Label6
@@ -709,7 +709,7 @@ Partial Class frmVentas
         Me.GB_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_ListaPrecio.Location = New System.Drawing.Point(592, 261)
         Me.GB_ListaPrecio.Name = "GB_ListaPrecio"
-        Me.GB_ListaPrecio.Size = New System.Drawing.Size(350, 59)
+        Me.GB_ListaPrecio.Size = New System.Drawing.Size(346, 59)
         Me.GB_ListaPrecio.TabIndex = 22
         Me.GB_ListaPrecio.TabStop = False
         Me.GB_ListaPrecio.Text = "LISTA PRECIOS"
@@ -722,9 +722,9 @@ Partial Class frmVentas
         Me.Cb_ListaPrecio.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Cb_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Cb_ListaPrecio.FormattingEnabled = True
-        Me.Cb_ListaPrecio.Location = New System.Drawing.Point(127, 22)
+        Me.Cb_ListaPrecio.Location = New System.Drawing.Point(119, 22)
         Me.Cb_ListaPrecio.Name = "Cb_ListaPrecio"
-        Me.Cb_ListaPrecio.Size = New System.Drawing.Size(217, 23)
+        Me.Cb_ListaPrecio.Size = New System.Drawing.Size(221, 23)
         Me.Cb_ListaPrecio.Sorted = True
         Me.Cb_ListaPrecio.TabIndex = 11
         '
