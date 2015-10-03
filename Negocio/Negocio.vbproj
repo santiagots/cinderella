@@ -95,6 +95,7 @@
     <Compile Include="NegConexionFtp.vb" />
     <Compile Include="NegControladorFiscal.vb" />
     <Compile Include="NegCuentaCorriente.vb" />
+    <Compile Include="NegDevolucion.vb" />
     <Compile Include="NegDistritos.vb" />
     <Compile Include="NegEmpleados.vb" />
     <Compile Include="NegFacturacion.vb" />

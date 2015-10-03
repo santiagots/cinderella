@@ -10,7 +10,8 @@
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim EntProducto As New Entidades.Productos
     Dim NegListasPrecio As New Negocio.NegListasPrecio
-    Dim EntVentas As New Entidades.Ventas
+    Dim NegDevolucion As New Negocio.NegDevolucion
+    Dim EntDevolucion As New Entidades.Devolucion
     Dim Funciones As New Funciones
     Dim EMovEgreso As New Entidades.MovEgreso
     Dim NegMovimientos As New Negocio.NegMovimientos
@@ -127,9 +128,25 @@
 
     'Evento que se ejecuta cuando finaliza la devolucion.
     Private Sub Btn_Finalizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Finalizar.Click
-        Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
         Dim TotalMonto As Double = CalcularPrecioTotal()
         Dim id_Producto As Integer = 0
+
+        'Obtengo toda la informacion.
+        Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
+        Dim TipoVenta As Integer = 0 'Tipo de Venta.
+        Dim TipoPago As Integer = Cb_TipoPago.SelectedValue 'Tipo de Pago.
+        Dim id_Empleado As Integer = Cb_Vendedores.SelectedValue 'ID de Vendedor.
+        Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
+        Dim id_Cliente As Integer = 0 'ID de Cliente.
+        Dim Facturar As Boolean = False 'Variable que indica si la venta ´facturará o no.
+        Dim Descuento As Double = txt_Descuento.Text.Trim 'Descuento ingresado.
+        Dim MontoTotalSinDescuento As Double = CalcularPrecioTotal() 'Monto total de la venta.
+        Dim MontoTotal As Double = MontoTotalSinDescuento + Descuento  'Monto total de la venta menos el descuento.
+        Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
+        Dim Monto As Double = 0 'Será el monto que le corresponda al empleado dependiendo de la comision y el MontoTotal.
+        Dim Comision As Double = 0 'Será la comision del empleado, determinada por la sucursal y el dia de la semana.
+        Dim PosibilidadDeFacturar As String = My.Settings("ControladorStatus") 'Variable de configuración que indica si la sucursal puede facturar o no.
+        Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
 
         'Chequeo que haya al menos un producto cargado.
         If TotalProductos <= 0 Then
@@ -160,7 +177,59 @@
                             NegStock.AgregarStock(id_Producto, id_Sucursal, CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
                         Next
 
+                        'Seteo Tipo de Pago para la controladora fiscal
+                        If TipoPago = 1 Then
+                            TipoPagoControlador = "EFECTIVO"
+                        ElseIf TipoPago = 2 Then
+                            TipoPagoControlador = "CREDITO"
+                        ElseIf TipoPago = 3 Then
+                            TipoPagoControlador = "DEBITO"
+                        Else
+                            TipoPagoControlador = "CHEQUE"
+                        End If
+
+                        'Seteo TipoVenta
+                        If cb_Tipo.SelectedItem = "Minorista" Then
+                            TipoVenta = 1
+                        Else
+                            TipoVenta = 2
+                        End If
+
+                        'Seteo ID Cliente
+                        If txt_id_Cliente.Text = "" Then
+                            id_Cliente = 0
+                        Else
+                            id_Cliente = CInt(txt_id_Cliente.Text)
+                        End If
+
+                        EntDevolucion.id_Cliente = id_Cliente
+                        EntDevolucion.id_Empleado = id_Empleado
+                        EntDevolucion.id_Encargado = id_Encargado
+                        EntDevolucion.id_Sucursal = id_Sucursal
+                        EntDevolucion.id_TipoPago = TipoPago
+                        EntDevolucion.id_TipoDevolucion = TipoVenta
+                        EntDevolucion.CantidadTotal = CantidadTotal
+                        EntDevolucion.Descuento = Descuento
+                        EntDevolucion.SubTotal = MontoTotalSinDescuento
+                        EntDevolucion.PrecioTotal = MontoTotal
+                        EntDevolucion.Habilitado = 1
+                        EntDevolucion.NotaCredito = 0
+                        EntDevolucion.Detalle = New List(Of Entidades.Devolucion_Detalle)
+
+                        For i = 0 To DG_Productos.Rows.Count - 1
+                                'Creo un nuevo detalle, lleno el objeto e inserto en la bdd.
+                            Dim EntDevolucionDetalle As New Entidades.Devolucion_Detalle
+                            EntDevolucionDetalle.id_Detalle = 0
+                            EntDevolucionDetalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
+                            EntDevolucionDetalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
+                            EntDevolucionDetalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                            EntDevolucion.Detalle.Add(EntDevolucionDetalle)
+                        Next
+
+                        NegDevolucion.NuevaDevolucion(EntDevolucion)
+
                         'Se registra el movimiento de salida de dinero en la sucursal.
+                        'TODO:Ver que hacer con el registro de las devoluciones como egresos
                         EMovEgreso.Aceptado = 1
                         EMovEgreso.Fecha = Now.ToString 'fecha actual.
                         EMovEgreso.id_Sucursal = id_Sucursal 'Sucursal donde se realiza la devolución.
@@ -526,7 +595,14 @@
             MessageBox.Show("Se ha producido un error al agregar el producto.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
+    'Funcion que calcula la cantidad de productos del DATAGRID
+    Function CalcularCantidadTotal()
+        Dim cant As Integer
+        For i = 0 To (DG_Productos.Rows.Count - 1)
+            cant += CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
+        Next
+        Return cant
+    End Function
     'Funcion que calcula el total en pesos del DATAGRID
     Function CalcularPrecioTotal()
         Dim subtotal As Double

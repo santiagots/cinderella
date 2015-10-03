@@ -5,10 +5,21 @@ Public Class NegVentas
     Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
-    Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas) As Boolean
+    Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas, EntDetalleVenta As List(Of Entidades.Ventas_Detalle)) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim dt As DataTable = New DataTable()
+
+        'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
+        dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
+        dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
+        dt.Columns.Add("Precio", Type.GetType("System.Double"))
+
+        For Each item As Entidades.Ventas_Detalle In EntDetalleVenta
+            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio)
+        Next
+
         Try
             'Conecto a la bdd.
             If HayInternet Then
@@ -36,48 +47,10 @@ Public Class NegVentas
                 .AddWithValue("@Facturado", EntVenta.Facturado)
             End With
 
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
-                ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
-            End If
-
-            'retorno valor
-            Return CBool(respuesta.Value)
-        Catch ex As Exception
-            Return False
-        End Try
-    End Function
-
-    'Funcion que inserta un nuevo registro en la tabla VENTAS_DETALLE.
-    Public Function NuevaVentaDetalle(ByVal EntVentaDetalle As Entidades.Ventas_Detalle) As Boolean
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim msg As String = ""
-        Try
-            'Conecto a la bdd.
-            If HayInternet Then
-                cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Cargo y Ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_VentasDetalle_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Venta", EntVentaDetalle.id_Venta)
-                .AddWithValue("@id_Producto", EntVentaDetalle.id_Producto)
-                .AddWithValue("@Cantidad", EntVentaDetalle.Cantidad)
-                .AddWithValue("@Precio", EntVentaDetalle.Precio)
-            End With
+            'Declaro el tipo de dato para el detalle de la venta
+            Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
+            param.SqlDbType = SqlDbType.Structured
+            param.TypeName = "dbo.VENTA_DETALLE_TYPE"
 
             'Respuesta del stored.
             Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)

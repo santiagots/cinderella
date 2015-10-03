@@ -1,6 +1,7 @@
 ﻿Imports Entidades
 Imports System.Data.SqlClient
 Imports Datos
+
 Public Class NegStock
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
@@ -247,65 +248,66 @@ Public Class NegStock
         Dim dsStock As New DataSet
 
         Try
+            'Se comenta esta funcionalidad porque no se estaba utilizando la respuesta de este metodo en absoluto
+            'If HayInternet Then
+            '    dsStock = clsDatos.ConsultarBaseRemoto("Select Stock_Actual,Stock_Minimo from Stock where id_Producto='" & id_Producto & "' and id_Sucursal='" & id_Sucursal & "'")
+            'Else
+            '    dsStock = clsDatos.ConsultarBaseLocal("Select Stock_Actual,Stock_Minimo from Stock where id_Producto='" & id_Producto & "' and id_Sucursal='" & id_Sucursal & "'")
+            'End If
+
+            'StockActual = CInt(dsStock.Tables(0).Rows(0).Item("Stock_Actual"))
+            'StockMinimo = CInt(dsStock.Tables(0).Rows(0).Item("Stock_Minimo"))
+            'NuevoStock = StockActual - Cantidad
+
+            ''Si queda stock
+            'If NuevoStock >= 0 Then
+            '    If NuevoStock = 0 Then
+            '        'HOLA ADMINISTRADOR NO TE QUEDAN PRODUCTOS.
+            '    ElseIf NuevoStock <= StockMinimo Then
+            '        'HOLA ADMINISTRADOR TE QUEDA POCOS PRODUCTOS.
+            '    End If
+
+            'Actualizo la base con el nuevo stock.
+            'Declaro variables
+            Dim cmd As New SqlCommand
+            Dim msg As Boolean = False
+
+            'Conecto la bdd
             If HayInternet Then
-                dsStock = clsDatos.ConsultarBaseRemoto("Select Stock_Actual,Stock_Minimo from Stock where id_Producto='" & id_Producto & "' and id_Sucursal='" & id_Sucursal & "'")
+                cmd.Connection = clsDatos.ConectarRemoto()
             Else
-                dsStock = clsDatos.ConsultarBaseLocal("Select Stock_Actual,Stock_Minimo from Stock where id_Producto='" & id_Producto & "' and id_Sucursal='" & id_Sucursal & "'")
+                cmd.Connection = clsDatos.ConectarLocal()
             End If
 
-            StockActual = CInt(dsStock.Tables(0).Rows(0).Item("Stock_Actual"))
-            StockMinimo = CInt(dsStock.Tables(0).Rows(0).Item("Stock_Minimo"))
-            NuevoStock = StockActual - Cantidad
+            'Ejecuto el Stored.
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Stock_Disminucion"
+            With cmd.Parameters
+                .AddWithValue("@id_Producto", id_Producto)
+                .AddWithValue("@cantidad", Cantidad)
+                .AddWithValue("@id_Sucursal", id_Sucursal)
+            End With
 
-            'Si queda stock
-            If NuevoStock >= 0 Then
-                If NuevoStock = 0 Then
-                    'HOLA ADMINISTRADOR NO TE QUEDAN PRODUCTOS.
-                ElseIf NuevoStock <= StockMinimo Then
-                    'HOLA ADMINISTRADOR TE QUEDA POCOS PRODUCTOS.
-                End If
+            'Respuesta del Stored.
+            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
 
-                'Actualizo la base con el nuevo stock.
-                'Declaro variables
-                Dim cmd As New SqlCommand
-                Dim msg As Boolean = False
-
-                'Conecto la bdd
-                If HayInternet Then
-                    cmd.Connection = clsDatos.ConectarRemoto()
-                Else
-                    cmd.Connection = clsDatos.ConectarLocal()
-                End If
-
-                'Ejecuto el Stored.
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.CommandText = "sp_Stock_Disminucion"
-                With cmd.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@NuevoStock", NuevoStock)
-                    .AddWithValue("@id_Sucursal", id_Sucursal)
-                End With
-
-                'Respuesta del Stored.
-                Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta.Direction = ParameterDirection.Output
-                cmd.Parameters.Add(respuesta)
-                cmd.ExecuteNonQuery()
-
-                'Desconecto la bdd
-                If HayInternet Then
-                    clsDatos.DesconectarRemoto()
-                Else
-                    clsDatos.DesconectarLocal()
-                End If
-
-                'muestro el mensaje
-                Return respuesta.Value
+            'Desconecto la bdd
+            If HayInternet Then
+                clsDatos.DesconectarRemoto()
             Else
-                'El stock es menor que cero!
-                'hey jonhy! la gente está muy loca!
-                Return False
+                clsDatos.DesconectarLocal()
             End If
+
+            'muestro el mensaje
+            Return respuesta.Value
+            'Else
+            ''El stock es menor que cero!
+            ''hey jonhy! la gente está muy loca!
+            'Return False
+            'End If
 
         Catch ex As Exception
             Return False
