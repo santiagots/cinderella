@@ -425,7 +425,7 @@ Partial Class frmDevoluciones
         '
         'GB_ListaPrecio
         '
-        Me.GB_ListaPrecio.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.GB_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_ListaPrecio.Controls.Add(Me.Cb_ListaPrecio)
         Me.GB_ListaPrecio.Controls.Add(Me.Label14)
         Me.GB_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -463,7 +463,7 @@ Partial Class frmDevoluciones
         '
         'GB_TipoPago
         '
-        Me.GB_TipoPago.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.GB_TipoPago.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_TipoPago.Controls.Add(Me.Cb_TipoPago)
         Me.GB_TipoPago.Controls.Add(Me.Label10)
         Me.GB_TipoPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

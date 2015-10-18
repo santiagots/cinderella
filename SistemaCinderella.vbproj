@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>17</ApplicationRevision>
+    <ApplicationRevision>21</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -414,10 +414,10 @@
     <Compile Include="frmMovimientoPlanilla.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoRetiro.Designer.vb">
-      <DependentUpon>frmMovimientoRetiro.vb</DependentUpon>
+    <Compile Include="frmMovimientoSocios.Designer.vb">
+      <DependentUpon>frmMovimientoSocios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoRetiro.vb">
+    <Compile Include="frmMovimientoSocios.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmNotificacionesListado.Designer.vb">
@@ -576,6 +576,12 @@
     <Compile Include="frmStockBitacora.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmStockFaltante.Designer.vb">
+      <DependentUpon>frmStockFaltante.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStockFaltante.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmStockMasiva.Designer.vb">
       <DependentUpon>frmStockMasiva.vb</DependentUpon>
     </Compile>
@@ -708,10 +714,10 @@
     <Compile Include="frmVerRegulares.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerRetiros.Designer.vb">
-      <DependentUpon>frmVerRetiros.vb</DependentUpon>
+    <Compile Include="frmVerMovimientosSocios.Designer.vb">
+      <DependentUpon>frmVerMovimientosSocios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerRetiros.vb">
+    <Compile Include="frmVerMovimientosSocios.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmVerSueldos.Designer.vb">
@@ -920,8 +926,8 @@
     <EmbeddedResource Include="frmMovimientoPlanilla.resx">
       <DependentUpon>frmMovimientoPlanilla.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoRetiro.resx">
-      <DependentUpon>frmMovimientoRetiro.vb</DependentUpon>
+    <EmbeddedResource Include="frmMovimientoSocios.resx">
+      <DependentUpon>frmMovimientoSocios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmNotificacionesListado.resx">
       <DependentUpon>frmNotificacionesListado.vb</DependentUpon>
@@ -1001,6 +1007,9 @@
     <EmbeddedResource Include="frmStockBitacora.resx">
       <DependentUpon>frmStockBitacora.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmStockFaltante.resx">
+      <DependentUpon>frmStockFaltante.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmStockMasiva.resx">
       <DependentUpon>frmStockMasiva.vb</DependentUpon>
     </EmbeddedResource>
@@ -1067,8 +1076,8 @@
     <EmbeddedResource Include="frmVerRegulares.resx">
       <DependentUpon>frmVerRegulares.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerRetiros.resx">
-      <DependentUpon>frmVerRetiros.vb</DependentUpon>
+    <EmbeddedResource Include="frmVerMovimientosSocios.resx">
+      <DependentUpon>frmVerMovimientosSocios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerSueldos.resx">
       <DependentUpon>frmVerSueldos.vb</DependentUpon>

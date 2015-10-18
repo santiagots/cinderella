@@ -48,6 +48,7 @@
 
             'Seteo las variables
             Dim Tipo As String = DG_Movimientos.Rows(e.RowIndex).Cells("Tipo").Value()
+            Dim Descripcion As String = DG_Movimientos.Rows(e.RowIndex).Cells("Descripcion").Value()
             Dim id_Mov As Integer = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
 
             'Dependiendo del tipo abro un form u otro.
@@ -71,11 +72,17 @@
                 frmMovimientoImpuesto.id_Movimiento = id_Mov
                 Funciones.ControlInstancia(frmMovimientoImpuesto).MdiParent = MDIContenedor
                 Funciones.ControlInstancia(frmMovimientoImpuesto).Show()
-            ElseIf Tipo = "Retiro de Socio" Then
+            ElseIf Tipo = "Movimiento de Socio" Then
                 Me.WindowState = FormWindowState.Minimized
-                frmMovimientoRetiro.id_Movimiento = id_Mov
-                Funciones.ControlInstancia(frmMovimientoRetiro).MdiParent = MDIContenedor
-                Funciones.ControlInstancia(frmMovimientoRetiro).Show()
+                If (Descripcion = "Retiro de socio") Then
+                    frmMovimientoSocios.Accion = 0
+                Else
+                    frmMovimientoSocios.Accion = 1
+                End If
+                frmMovimientoSocios.id_Movimiento = id_Mov
+                Funciones.ControlInstancia(frmMovimientoSocios).MdiParent = MDIContenedor
+                Funciones.ControlInstancia(frmMovimientoSocios).Show()
+
             ElseIf Tipo = "Caja Fuerte" Then
                 Me.WindowState = FormWindowState.Minimized
                 frmMovimientoCajaFuerte.id_Movimiento = id_Mov
@@ -96,6 +103,7 @@
 
                     'Seteo las variables
                     Dim Tipo As String = DG_Movimientos.Rows(e.RowIndex).Cells("Tipo").Value()
+                    Dim Descripcion As String = DG_Movimientos.Rows(e.RowIndex).Cells("Descripcion").Value()
                     Dim id_Mov As Integer = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
 
                     'Dependiendo del tipo abro un form u otro.
@@ -113,8 +121,12 @@
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 3, id_Reg)
                     ElseIf Tipo = "Impuesto" Then
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 4)
-                    ElseIf Tipo = "Retiro de Socio" Then
-                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 5)
+                    ElseIf Tipo = "Movimiento de Socio" Then
+                        If (Descripcion = "Retiro de socio") Then
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 5)
+                        Else
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 7)
+                        End If
                     ElseIf Tipo = "Caja Fuerte" Then
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 6)
                     End If
@@ -240,13 +252,13 @@
             frmCargadorDeEspera.Text = "Generando el listado de Movimientos de la Sucursal " & Nombre_Sucursal
             frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
             frmCargadorDeEspera.BarraProgreso.Minimum = 0
-            frmCargadorDeEspera.BarraProgreso.Maximum = 7
+            frmCargadorDeEspera.BarraProgreso.Maximum = 8
             frmCargadorDeEspera.BarraProgreso.Value = 1
             frmCargadorDeEspera.Refresh()
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 2
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando movimientos de diferencias de caja... (1/6)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando movimientos de diferencias de caja... (1/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Dif. de Caja.
@@ -260,7 +272,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 3
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Gastos... (2/6)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Gastos... (2/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Gastos.
@@ -276,7 +288,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 4
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Impuestos... (3/6)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Impuestos... (3/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Impuestos.
@@ -290,7 +302,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 5
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Egresos... (4/6)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Egresos... (4/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Egresos.
@@ -310,7 +322,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 6
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Retiro de socios... (5/6)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Retiro de socios... (5/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Retiro de socios.
@@ -318,13 +330,27 @@
             DsRetiro = NegMovimiento.ObtenerMovRetiro(id_Sucursal, Anio, NumeroMes)
             If DsRetiro IsNot Nothing Then
                 For Each mov In DsRetiro.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), "Retiro de socio", mov.item("Monto"), "Retiro de Socio")
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), "Retiro de socio", mov.item("Monto"), "Movimiento de Socio")
                 Next
             End If
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 7
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Caja Fuerte... (6/6)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Aporte de socios... (6/7)"
+            frmCargadorDeEspera.Refresh()
+
+            'Cargo los movimientos de Aporte de socios.
+            Dim DsAporte As New DataSet
+            DsAporte = NegMovimiento.ObtenerMovAporte(id_Sucursal, Anio, NumeroMes)
+            If DsAporte IsNot Nothing Then
+                For Each mov In DsAporte.Tables(0).Rows
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), "Aporte de socio", mov.item("Monto"), "Movimiento de Socio")
+                Next
+            End If
+
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.BarraProgreso.Value = 8
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Caja Fuerte... (7/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Caja Fuerte
@@ -375,15 +401,25 @@
                     AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Impuesto")
                 Next
             End If
-        ElseIf Tipo = "Retiros de Socios" Then
+        ElseIf Tipo = "Movimiento de Socio" Then
             'Cargo los movimientos de Retiro de socios.
             Dim DsRetiro As New DataSet
             DsRetiro = NegMovimiento.ObtenerMovRetiro(id_Sucursal, Anio, NumeroMes)
             If DsRetiro IsNot Nothing Then
                 For Each mov In DsRetiro.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), "Retiro de socios", mov.item("Monto"), "Retiro de Socio")
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), "Retiro de socios", mov.item("Monto"), "Movimiento de Socio")
                 Next
             End If
+
+            'Cargo los movimientos de Aporte de socios.
+            Dim DsAporte As New DataSet
+            DsAporte = NegMovimiento.ObtenerMovAporte(id_Sucursal, Anio, NumeroMes)
+            If DsAporte IsNot Nothing Then
+                For Each mov In DsAporte.Tables(0).Rows
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), "Aporte de socio", mov.item("Monto"), "Movimiento de Socio")
+                Next
+            End If
+
         ElseIf Tipo = "Caja Fuerte" Then
             'Cargo los movimientos de Caja Fuerte
             Dim DsCajaFuerte As New DataSet

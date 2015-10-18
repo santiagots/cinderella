@@ -1,5 +1,9 @@
-﻿Public Class frmVentas
+﻿Imports System.Linq
+
+Public Class frmVentas
     'Instancias
+    Dim NegSucursal As New Negocio.NegSucursales
+    Dim EntSucursal As Entidades.Sucursales
     Dim NegProductos As New Negocio.NegProductos
     Dim NegEmpleados As New Negocio.NegEmpleados
     Dim NegTiposPagos As New Negocio.NegTipoPago
@@ -16,6 +20,7 @@
     Dim Funciones As New Funciones
     Dim id_Sucursal As Integer
     Dim Nombre_Sucursal As String
+    Dim ProductoCantidadAnterior As Integer
 
 
 #Region "Region Funciones"
@@ -56,9 +61,11 @@
             'Declaracion de Variables
             Dim NumeroFila As Integer = 0
             Dim i As Integer
+            Dim SinStock As Boolean = False
+            Dim cantidad As Integer = 1
             Dim subtotal As Double = 0
             Dim Repetido As Boolean = False
-            Dim SinStock As Boolean = False
+            'Dim SinStock As Boolean = False
             Dim CodigoBarras As String
             Dim id_Producto As Integer
             Dim Codigo As String = ""
@@ -70,8 +77,8 @@
                 CodigoBarras = Numero
                 EntProducto = NegProductos.TraerProductoPorCodBarra(CodigoBarras) 'Traigo el producto.      
             Else 'Si manda el CODIGO DE PRODUCTO
-                CODIGO = Numero
-                EntProducto = NegProductos.TraerProductoPorCodigo(CODIGO) 'Traigo el producto.      
+                Codigo = Numero
+                EntProducto = NegProductos.TraerProductoPorCodigo(Codigo) 'Traigo el producto.      
             End If
 
             'Si no encuentra el producto, sale de la funcion.
@@ -83,28 +90,33 @@
                 Exit Sub
             End If
 
-            'Primero chequeo si se posee stock del producto.
-            If NegStock.ComprobarStock(EntProducto.id_Producto, 1, id_Sucursal) Then
-                SinStock = False
-            Else
-                SinStock = True
-            End If
-
             'Me fijo si ya se encuentra agregado. Si está aumento su cantidad.
             For i = 0 To DG_Productos.Rows.Count - 1
                 If DG_Productos.Rows(i).Cells.Item("ID").Value = EntProducto.id_Producto Then
                     Repetido = True
 
                     If TipoAccion = 1 Then
-                        'Primero chequeo si se posee stock del producto.
-                        If NegStock.ComprobarStock(EntProducto.id_Producto, (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value + 1), id_Sucursal) Then
-                            DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value += 1
-                            DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value = (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value * DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
-                            CalcularPreciosDescuento()
-                        Else
+
+                        'Chequeo si se posee stock del producto
+                        If Not NegStock.ComprobarStock(EntProducto.id_Producto, DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value + 1, id_Sucursal) Then
+                            'Seteo el cursor.
                             Me.Cursor = Cursors.Arrow
-                            MessageBox.Show("El producto seleccionado no cuenta con stock suficiente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
+                            Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value + 1)
+                            'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
+                            If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                                DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value = frmStockFaltante.stockCargado
+                                DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value = (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value * DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                                CalcularPreciosDescuento()
+                                Return
+                            Else
+                                Return
+                            End If
                         End If
+
+                        DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value += 1
+                        DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value = (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value * DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                        CalcularPreciosDescuento()
                     Else
                         Me.Cursor = Cursors.Arrow
                         MessageBox.Show("El producto seleccionado ya se encuentra ingresado.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -112,8 +124,25 @@
                 End If
             Next
 
+
+
             'Si  hay stock inserto una nueva fila.
-            If Repetido = False And SinStock = False Then
+            If Repetido = False Then
+
+                'Chequeo si se posee stock del producto, como el produto no esta repetido consulto por si hay 1
+                If Not NegStock.ComprobarStock(EntProducto.id_Producto, 1, id_Sucursal) Then
+                    'Seteo el cursor.
+                    Me.Cursor = Cursors.Arrow
+                    'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
+                    Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, 1)
+                    'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
+                    If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                        cantidad = frmStockFaltante.stockCargado
+                    Else
+                        Return
+                    End If
+                End If
+
                 NumeroFila = DG_Productos.Rows.Count + 1
 
                 'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
@@ -171,7 +200,7 @@
 
                 'Valor de la Columna Cantidad
                 dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = "1"
+                dgvCell.Value = cantidad.ToString()
                 dgvRow.Cells.Add(dgvCell)
 
                 'Valor de la Columna Precio
@@ -189,7 +218,7 @@
                 If TipoAccion = 2 Then
                     dgvCell.Value = (Precio * -1)
                 Else
-                    dgvCell.Value = Precio
+                    dgvCell.Value = Precio * cantidad
                 End If
                 dgvRow.Cells.Add(dgvCell)
 
@@ -237,11 +266,6 @@
 
                 'Inserto la fila
                 DG_Productos.Rows.Add(dgvRow)
-            End If
-
-            If SinStock And TipoAccion = 1 Then
-                Me.Cursor = Cursors.Arrow
-                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
 
             'Lo muestro en el label
@@ -312,6 +336,17 @@
             Btn_Finalizar.Visible = True
         End If
     End Sub
+
+    Private Sub PosicionarListaPreciosSegunFormaDePago()
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            If Cb_TipoPago.Text = "Efectivo" Then
+                Cb_ListaPrecio.SelectedIndex = Cb_ListaPrecio.FindString("Efectivo")
+            Else
+                Cb_ListaPrecio.SelectedIndex = Cb_ListaPrecio.FindString("Tarjeta")
+            End If
+        End If
+    End Sub
+
 #End Region
 
     'Cancela la venta, setea variables por default.
@@ -337,6 +372,11 @@
         DG_Productos.EditMode = DataGridViewEditMode.EditProgrammatically
         DG_Productos.CurrentCell = DG_Productos.CurrentCell
         DG_Productos.BeginEdit(True)
+        'Si va a iniciar a modifica la cantidad de un producto
+        If DG_Productos.Columns(e.ColumnIndex).Name = "CANTIDAD" Then
+            'Guardo la cantidad antes de iniciar la modificacion
+            ProductoCantidadAnterior = DG_Productos(e.ColumnIndex, e.RowIndex).Value
+        End If
     End Sub
 
     'Cuando realiza un click dentro del datagrid de productos.
@@ -364,6 +404,7 @@
 
     'Cuando Carga el formulario de ventas.
     Private Sub frmVentas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         'Seteo la fecha
         lbl_Fecha.Text = Now.Date.ToString("d MMM yyyy")
 
@@ -374,6 +415,9 @@
         'Sucursal default
         id_Sucursal = My.Settings("Sucursal")
         Nombre_Sucursal = My.Settings("NombreSucursal")
+
+        'lleno la entidad sucursales
+        EntSucursal = NegSucursal.TraerSucursal(id_Sucursal)
 
         'Seteo el nombre de la sucursal
         lbl_Sucursal.Text = Nombre_Sucursal
@@ -470,27 +514,30 @@
         End If
 
         LimpiarFormVentas_2()
+
+        PosicionarListaPreciosSegunFormaDePago()
+
     End Sub
 
     'Programo para cuando modifica la cantidad de un producto se actualice el grid.
     Private Sub DG_Productos_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Productos.CellEndEdit
         If DG_Productos.Columns(e.ColumnIndex).Name = "CANTIDAD" Then 'Si se modifica la cantidad de un producto
-
-            'verifico si es una devolucion, para eso me fijo en el valor del producto. si es negativo es una devolucion.
-            'Primero chequeo si se posee stock del producto.
-            If (NegStock.ComprobarStock(DG_Productos("ID", e.RowIndex).Value, DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString(), id_Sucursal) Or DG_Productos("PRECIO", e.RowIndex).Value < 0) Then
-                'Actualizo el campo SUBTOTAL del producto.
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
-                'Recalculo el Total y lo muestro en el label
-                CalcularPreciosDescuento()
-            Else
-                'Actualizo el campo SUBTOTAL del producto.
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("PRECIO", e.RowIndex).Value.ToString()
-                DG_Productos(e.ColumnIndex, e.RowIndex).Value = 1
-                'Recalculo el Total y lo muestro en el label
-                CalcularPreciosDescuento()
-                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            'Verifico si hay stock disponible de la cantidad ingresada del producto
+            If (DG_Productos("PRECIO", e.RowIndex).Value > 0 And Not NegStock.ComprobarStock(DG_Productos("ID", e.RowIndex).Value, DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString(), id_Sucursal)) Then
+                'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
+                Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(DG_Productos("ID", e.RowIndex).Value, DG_Productos("CODIGO", e.RowIndex).Value, id_Sucursal, DG_Productos(e.ColumnIndex, e.RowIndex).Value)
+                'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
+                If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                    DG_Productos(e.ColumnIndex, e.RowIndex).Value = frmStockFaltante.stockCargado
+                Else
+                    DG_Productos(e.ColumnIndex, e.RowIndex).Value = ProductoCantidadAnterior
+                    Return
+                End If
             End If
+            'Actualizo el campo SUBTOTAL del producto.
+            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+            'Recalculo el Total y lo muestro en el label
+            CalcularPreciosDescuento()
 
         ElseIf DG_Productos.Columns(e.ColumnIndex).Name = "PRECIO" Then
 
@@ -642,16 +689,6 @@
                                 'EDIT: ¿DE QUE ESTÁS HABLANDO WILLIS?
 
                                 If CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) < 0 Then
-
-                                    'Creo un detalle de la devolucion
-                                    Dim EntDevolucionDetalle As New Entidades.Devolucion_Detalle
-                                    EntDevolucionDetalle.id_Detalle = 0
-                                    EntDevolucionDetalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
-                                    EntDevolucionDetalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
-                                    EntDevolucionDetalle.Precio = -CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
-                                    DetalleDevolucion.Add(EntDevolucionDetalle)
-
-
                                     NegStock.AgregarStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal, CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
                                     'tambien hay que registrar el movimiento en la sucursal 
                                     'Se registra el movimiento de salida de dinero en la sucursal.
@@ -671,39 +708,10 @@
                                 Else
                                     NegStock.DisminuirStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value), id_Sucursal)
                                 End If
-
-                                'Compruebo el stock Actual del producto, si es menor que el minimo aviso al administrador.
-                                If Not (NegStock.ComprobarStockMinimo(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal)) Then
-                                    'El stock Actual es inferior al stock minimo establecido,aviso.
-                                    Dim Asunto As String = "IMPORTANTE: Stock Insuficiente"
-                                    Dim Mensaje As String = "Hola administrador, se le informa que el producto " & DG_Productos.Rows(i).Cells.Item("NOMBRE").Value & " tiene un stock inferior minimo establecido."
-                                    Dim id_Usuario As Integer = VariablesGlobales.objUsuario.id_Usuario
-                                    Dim id_UsuarioDestino As Integer = "1"
-                                    NegMensajes.EnviarMensaje(Asunto, Mensaje, id_Usuario, id_UsuarioDestino)
-                                End If
                             End If
                         Next
 
                         NegVentas.NuevaVenta(EntVentas, DetalleVenta)
-
-                        If (DetalleDevolucion.Count > 0) Then
-                            'Si existe un detalle quiere decir que se realizo una devolucion
-                            'Datos de la devolucion.
-                            EntDevolucion.id_Cliente = id_Cliente
-                            EntDevolucion.id_Empleado = id_Empleado
-                            EntDevolucion.id_Encargado = id_Encargado
-                            EntDevolucion.id_Sucursal = id_Sucursal
-                            EntDevolucion.id_TipoPago = TipoPago
-                            EntDevolucion.id_TipoDevolucion = TipoVenta
-                            EntDevolucion.CantidadTotal = CantidadTotal
-                            EntDevolucion.Descuento = 0 'no se registra descuento porque el mismo es de la venta
-                            EntDevolucion.SubTotal = DetalleDevolucion.Sum(Function(x) x.Precio * x.Cantidad) 'el subtotal tiene que ser la suma de los productos devueltos
-                            EntDevolucion.PrecioTotal = DetalleDevolucion.Sum(Function(x) x.Precio * x.Cantidad) 'el total tiene que ser la suma de los productos devueltos
-                            EntDevolucion.Habilitado = 1
-                            EntDevolucion.NotaCredito = 0
-                            'Guardo la devolucion
-                            NegDevolucion.NuevaDevolucion(EntDevolucion)
-                        End If
 
                         'Numero de Venta.
                         Dim id_Venta As Integer = NegVentas.ObtenerID()
@@ -781,7 +789,7 @@
                         MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
                 End If
-                End If
+            End If
         Catch ex As Exception
             'Seteo el cursor.
             Me.Cursor = Cursors.Arrow
@@ -906,4 +914,9 @@
         CalcularPreciosDescuento()
 
     End Sub
+
+    Private Sub Cb_TipoPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoPago.SelectedIndexChanged
+        PosicionarListaPreciosSegunFormaDePago()
+    End Sub
+
 End Class

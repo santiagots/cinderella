@@ -36,6 +36,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbTipo = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DG_Movimientos = New System.Windows.Forms.DataGridView()
+        Me.ToolMov = New System.Windows.Forms.ToolTip(Me.components)
         Me.id_Movimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -43,7 +44,6 @@ Partial Class frmMovimientoPlanilla
         Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VerDetalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ToolMov = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.DG_Movimientos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,8 +52,8 @@ Partial Class frmMovimientoPlanilla
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.GroupBox2)
         Me.GroupBox1.Controls.Add(Me.DG_Movimientos)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
@@ -62,7 +62,7 @@ Partial Class frmMovimientoPlanilla
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "A continuación podrá visualizar un listado de todos los movimientos realizados en" & _
-            " la sucursal."
+    " la sucursal."
         '
         'GroupBox2
         '
@@ -101,7 +101,7 @@ Partial Class frmMovimientoPlanilla
         Me.BtnBuscar.Size = New System.Drawing.Size(40, 40)
         Me.BtnBuscar.TabIndex = 6
         Me.ToolMov.SetToolTip(Me.BtnBuscar, "Haz click aquí para buscar movimientos con los criterios de busqueda seleccionado" & _
-                "s.")
+        "s.")
         Me.BtnBuscar.UseVisualStyleBackColor = True
         '
         'CbMeses
@@ -149,7 +149,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbTipo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbTipo.FormattingEnabled = True
-        Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Diferencias de Caja", "Egresos", "Gastos", "Impuestos", "Retiros de Socios", "Caja Fuerte"})
+        Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Diferencias de Caja", "Egresos", "Gastos", "Impuestos", "Movimiento de Socio", "Caja Fuerte"})
         Me.CbTipo.Location = New System.Drawing.Point(402, 29)
         Me.CbTipo.Name = "CbTipo"
         Me.CbTipo.Size = New System.Drawing.Size(160, 23)
@@ -171,8 +171,8 @@ Partial Class frmMovimientoPlanilla
         Me.DG_Movimientos.AllowUserToDeleteRows = False
         Me.DG_Movimientos.AllowUserToResizeRows = False
         Me.DG_Movimientos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Movimientos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Movimientos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Movimientos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Movimiento, Me.Fecha, Me.Tipo, Me.Descripcion, Me.Monto, Me.VerDetalle, Me.Eliminar})
@@ -185,6 +185,12 @@ Partial Class frmMovimientoPlanilla
         Me.DG_Movimientos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Movimientos.Size = New System.Drawing.Size(658, 350)
         Me.DG_Movimientos.TabIndex = 2
+        '
+        'ToolMov
+        '
+        Me.ToolMov.IsBalloon = True
+        Me.ToolMov.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolMov.ToolTipTitle = "Ayuda"
         '
         'id_Movimiento
         '
@@ -203,9 +209,11 @@ Partial Class frmMovimientoPlanilla
         '
         'Tipo
         '
+        Me.Tipo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.Tipo.HeaderText = "Tipo"
         Me.Tipo.Name = "Tipo"
         Me.Tipo.ReadOnly = True
+        Me.Tipo.Width = 56
         '
         'Descripcion
         '
@@ -239,12 +247,6 @@ Partial Class frmMovimientoPlanilla
         Me.Eliminar.Name = "Eliminar"
         Me.Eliminar.ReadOnly = True
         Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        '
-        'ToolMov
-        '
-        Me.ToolMov.IsBalloon = True
-        Me.ToolMov.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolMov.ToolTipTitle = "Ayuda"
         '
         'frmMovimientoPlanilla
         '

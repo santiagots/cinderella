@@ -1,4 +1,10 @@
-﻿Public Class MovRetiro
+﻿Public Enum MoviminetoSocios
+    Retiro
+    Aporte
+End Enum
+
+
+Public Class MovSocios
     Private id_Movimiento_, id_Sucursal_ As Integer
     Private Monto_ As Double
     Private Descripcion_, Encargado_, Persona_ As String

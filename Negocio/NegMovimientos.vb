@@ -282,7 +282,7 @@ Public Class NegMovimientos
     End Function
 
     'Funcion para insertar un retiro de socios.
-    Function AltaMovRetiro(ByVal eRetiro As Entidades.MovRetiro) As String
+    Function AltaMovRetiro(ByVal eRetiro As Entidades.MovSocios) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
@@ -297,6 +297,51 @@ Public Class NegMovimientos
 
             cmd.CommandType = CommandType.StoredProcedure
             cmd.CommandText = "sp_MovRetiro_Alta"
+            With cmd.Parameters
+                .AddWithValue("@id_Movimiento", eRetiro.id_Movimiento)
+                .AddWithValue("@id_Sucursal", eRetiro.id_Sucursal)
+                .AddWithValue("@Monto", eRetiro.Monto)
+                .AddWithValue("@Descripcion", eRetiro.Descripcion)
+                .AddWithValue("@Encargado", eRetiro.Encargado)
+                .AddWithValue("@Persona", eRetiro.Persona)
+                .AddWithValue("@Fecha", eRetiro.Fecha)
+            End With
+
+            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto
+            If (HayInternet) Then
+                clsDatos.DesconectarRemoto()
+            Else
+                clsDatos.DesconectarLocal()
+            End If
+
+            'muestro el mensaje
+            Return respuesta.Value
+        Catch ex As Exception
+            Return ex.Message
+        End Try
+    End Function
+
+    'Funcion para insertar un aporte de socios.
+    Function AltaMovAporte(ByVal eRetiro As Entidades.MovSocios) As String
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+
+        Try
+            'Conecto
+            If (HayInternet) Then
+                cmd.Connection = clsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = clsDatos.ConectarLocal()
+            End If
+
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_MovAporte_Alta"
             With cmd.Parameters
                 .AddWithValue("@id_Movimiento", eRetiro.id_Movimiento)
                 .AddWithValue("@id_Sucursal", eRetiro.id_Sucursal)
@@ -711,6 +756,17 @@ Public Class NegMovimientos
         Return ds
     End Function
 
+    'Obtener un listado de Retiros de socios por rango de fechas.
+    Function ObtenerMovAporteFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+        Return ds
+    End Function
+
     'Obtener un listado de diferencias de caja por rango de fechas.
     Function ObtenerMovCajaFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As Integer)
         Dim ds As New DataSet
@@ -773,6 +829,17 @@ Public Class NegMovimientos
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
+        End If
+        Return ds
+    End Function
+
+    'Obtener un listado de Aporte de Socio.
+    Function ObtenerMovAporte(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         End If
         Return ds
     End Function

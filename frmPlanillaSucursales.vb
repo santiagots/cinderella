@@ -141,13 +141,13 @@ Public Class frmPlanillaSucursales
         Dim TotImpuestos As Integer = 0
         Dim totCaja As Integer = 0
         Dim TotGastos As Integer = 0
-        Dim TotRetiros As Integer = 0
+        Dim TotMoviminetosSocios As Integer = 0
         Dim TotIngresos As Integer = 0
         Dim DsEgreso As New DataSet
         Dim DsGasto As New DataSet
         Dim DsCaja As New DataSet
         Dim DsImpuesto As New DataSet
-        Dim DsRetiro As New DataSet
+        Dim DsMovimientoSocios As New DataSet
         Dim id_Sucursal As Integer = Cb_Sucursal.SelectedValue
 
         'bloqueo los controles
@@ -221,9 +221,9 @@ Public Class frmPlanillaSucursales
         DsCaja = NegMovi.ListadoTiposMov(4)
         totCaja = DsCaja.Tables(0).Rows.Count
 
-        'Consulta - Retiro de Socios.
-        DsRetiro = NegMovi.ListadoTiposMov(5)
-        TotRetiros = DsRetiro.Tables(0).Rows.Count
+        'Consulta - Movimientos de Socios.
+        DsMovimientoSocios = NegMovi.ListadoTiposMov(5)
+        TotMoviminetosSocios = DsMovimientoSocios.Tables(0).Rows.Count
         '------------------------------------------Consulto la cantidad de Movimientos----------------------------'
 
         'Si se genero una plantilla de excel, primero la borro.
@@ -310,14 +310,14 @@ Public Class frmPlanillaSucursales
                     Costo = 0
                 End If
 
-                    If Costo > 0 Then
-                        xlWorkSheet.Cells(ComienzoIngreso + w, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                    Else
-                        xlWorkSheet.Cells(ComienzoIngreso + w, (inicio + 2)) = "-"
-                    End If
+                If Costo > 0 Then
+                    xlWorkSheet.Cells(ComienzoIngreso + w, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
+                Else
+                    xlWorkSheet.Cells(ComienzoIngreso + w, (inicio + 2)) = "-"
+                End If
 
-                    'Se incrementa el subtotal.
-                    CostoTotal += Costo
+                'Se incrementa el subtotal.
+                CostoTotal += Costo
 
             Next
 
@@ -615,19 +615,25 @@ Public Class frmPlanillaSucursales
         frmCargadorDeEspera.Refresh()
 
         xlWorkSheet.Cells((ComienzoCaja + totCaja + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 1) = "RETIROS DE SOCIOS"
+        xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 1) = "MOVIMINETO DE SOCIOS"
         xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 1).style = "EstiloCategoria"
 
+        Dim TotalMovimientoSocios As Dictionary(Of Integer, Double) = New Dictionary(Of Integer, Double)(FinPeriodo)
         Dim ComienzoRetiros As Integer = ComienzoCaja + totCaja + 2
         Dim CostoTotalRetiro As Double = 0
-        For r = 1 To TotRetiros
+
+        Dim dv As DataView = DsMovimientoSocios.Tables(0).DefaultView
+        dv.Sort = "Tipo desc"
+        Dim TiposMovimientos As DataTable = dv.ToTable()
+
+        For r = 1 To TotMoviminetosSocios
 
             Dim rds As Integer = (r - 1)
-            xlWorkSheet.Cells(ComienzoRetiros + r, 1) = DsRetiro.Tables(0).Rows(rds).Item("Tipo").ToString()
+            xlWorkSheet.Cells(ComienzoRetiros + r, 1) = TiposMovimientos.Rows(rds).Item("Tipo").ToString()
 
             Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
             Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            Dim id_Tipo As Integer = DsRetiro.Tables(0).Rows(rds).Item(0).ToString()
+            Dim id_Tipo As Integer = TiposMovimientos.Rows(rds).Item(0).ToString()
             Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 5, id_Tipo)
 
             '-----Completo los valores de los mov por dia-----
@@ -644,7 +650,14 @@ Public Class frmPlanillaSucursales
                     Costo = 0
                 End If
 
-                If Costo > 0 Then
+                If (TotalMovimientoSocios.ContainsKey(i)) Then
+                    TotalMovimientoSocios(i) -= Costo
+                Else
+                    TotalMovimientoSocios.Add(i, Costo)
+                End If
+
+
+                If Costo <> 0 Then
                     xlWorkSheet.Cells(ComienzoRetiros + r, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
                 Else
                     xlWorkSheet.Cells(ComienzoRetiros + r, (inicio + 2)) = "-"
@@ -655,22 +668,34 @@ Public Class frmPlanillaSucursales
             Next
 
             'Se coloca el subtotal en la celda.
-            If CostoTotal > 0 Then
+            If CostoTotal <> 0 Then
                 xlWorkSheet.Cells(ComienzoRetiros + r, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells(ComienzoRetiros + r, 2) = "-"
             End If
 
             'Se incrementa el subtotal de los ingresos.
-            CostoTotalRetiro += CostoTotal
+            If (r = 1) Then
+                CostoTotalRetiro = CostoTotal
+            Else
+                CostoTotalRetiro -= CostoTotal
+            End If
             '-----Completo los valores de los mov por dia-----
         Next
 
-        If CostoTotalRetiro > 0 Then
+        If CostoTotalRetiro <> 0 Then
             xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 2) = "$ " & Format(CType(CostoTotalRetiro, Decimal), "###0.00")
         Else
             xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 2) = "-"
         End If
+
+        For Each item As KeyValuePair(Of Integer, Double) In TotalMovimientoSocios
+            If item.Value <> 0 Then
+                xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), item.Key + 2) = "$ " & Format(CType(item.Value, Decimal), "###0.00")
+            Else
+                xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), item.Key + 2) = "-"
+            End If
+        Next
         '------------------------------------------RETIROS DE SOCIO----------------------------------------------'
 
         'Voy seteando la barra de progreso

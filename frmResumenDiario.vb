@@ -53,6 +53,7 @@
         txt_Sobrante.Clear()
         txt_Efectivo.Clear()
         txt_DevolucionesEgr.Clear()
+        txt_Aporte.Clear()
 
     End Sub
 
@@ -67,7 +68,7 @@
             frmCargadorDeEspera.Text = "Generando Resumen Diario... "
             frmCargadorDeEspera.lbl_Descripcion.Text = "Iniciando... "
             frmCargadorDeEspera.BarraProgreso.Minimum = 0
-            frmCargadorDeEspera.BarraProgreso.Maximum = 20
+            frmCargadorDeEspera.BarraProgreso.Maximum = 21
             frmCargadorDeEspera.BarraProgreso.Value = 1
             frmCargadorDeEspera.Refresh()
 
@@ -98,6 +99,15 @@
             Dim VentasMinoristas As Double = 0
             VentasMinoristas = NegVen.TotalVentasMinoristas(id_Sucursal, Fecha)
             txt_VentaMinorista.Text = "$ " & Format(CType((VentasMinoristas), Decimal), "###0.00") & ".-"
+
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo Aporte Socios..."
+            frmCargadorDeEspera.BarraProgreso.Value += 1
+            frmCargadorDeEspera.Refresh()
+
+            Dim AporteSocios As Double = 0
+            AporteSocios = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 6)
+            txt_Aporte.Text = "$ " & Format(CType((AporteSocios), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo ventas minoristas..."
@@ -275,7 +285,7 @@
             Dim Ingresos As Double = 0
             Dim Egresos As Double = 0
 
-            Ingresos = VentasEfectivo + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte
+            Ingresos = VentasEfectivo + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
             Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Adicionales + Comision + IngresoCajaFuerte + DevolucionEgreso
             '    MessageBox.Show(Ingresos, "ingresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Saldo = Ingresos - Egresos

@@ -58,6 +58,7 @@
             Dim Faltante As Double = 0
             Dim Gasto As Double = 0
             Dim Retiro As Double = 0
+            Dim Aporte As Double = 0
             Dim EfectivoEgreso As Double = 0
             Dim Saldo As Double = 0
 
@@ -77,7 +78,8 @@
             VentasFacturado = NegVen.ObtenerVentasSucursalFacturado(id_Sucursal, FDesde, FHasta)
             Sobrante = NegMov.ObtenerTotalMovCaja(id_Sucursal, FDesde, FHasta, "Sobrante")
             EfectivoIngreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Ingresos")
-            Ingresos = Ventas + Sobrante + EfectivoIngreso
+            Aporte = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 6)
+            Ingresos = Ventas + Sobrante + EfectivoIngreso + Aporte
 
             '----------EGRESOS---------------'
             'obtengo los adelantos de la sucursal.
@@ -127,6 +129,7 @@
             txt_Retiro.Text = "$ " & Format(CType((Retiro), Decimal), "###0.00") & ".-"
             txt_EfectivoEgreso.Text = "$ " & Format(CType((EfectivoEgreso), Decimal), "###0.00") & ".-"
             txt_Mercaderias.Text = "$ " & Format(CType((Mercaderias), Decimal), "###0.00") & ".-"
+            txt_Aporte.Text = "$ " & Format(CType((Aporte), Decimal), "###0.00") & ".-"
             lbl_Saldo.Text = "$ " & Format(CType((Saldo), Decimal), "###0.00") & ".-"
             lbl_TotalIngresos.Text = "$ " & Format(CType((Ingresos), Decimal), "###0.00") & ".-"
             lbl_TotalEgresos.Text = "$ " & Format(CType((Egresos), Decimal), "###0.00") & ".-"
@@ -235,10 +238,11 @@
     'LINK RETIROS.
     Private Sub Btn_Retiro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Retiro.Click
         Me.Cursor = Cursors.WaitCursor
-        frmVerRetiros.FDesde = FDesde
-        frmVerRetiros.FHasta = FHasta
-        Funciones.ControlInstancia(frmVerRetiros).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmVerRetiros).Show()
+        frmVerMovimientosSocios.FDesde = FDesde
+        frmVerMovimientosSocios.FHasta = FHasta
+        frmVerMovimientosSocios.tipoMovimiento = Entidades.MoviminetoSocios.Retiro
+        Funciones.ControlInstancia(frmVerMovimientosSocios).MdiParent = MDIContenedor
+        Funciones.ControlInstancia(frmVerMovimientosSocios).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -314,6 +318,17 @@
         frmVerAdicionalesSucursal.FHasta = FHasta
         Funciones.ControlInstancia(frmVerAdicionalesSucursal).MdiParent = MDIContenedor
         Funciones.ControlInstancia(frmVerAdicionalesSucursal).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    'LINK APORTE
+    Private Sub Btn_Aporte_Click(sender As Object, e As EventArgs) Handles Btn_Aporte.Click
+        Me.Cursor = Cursors.WaitCursor
+        frmVerMovimientosSocios.FDesde = FDesde
+        frmVerMovimientosSocios.FHasta = FHasta
+        frmVerMovimientosSocios.tipoMovimiento = Entidades.MoviminetoSocios.Aporte
+        Funciones.ControlInstancia(frmVerMovimientosSocios).MdiParent = MDIContenedor
+        Funciones.ControlInstancia(frmVerMovimientosSocios).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 End Class

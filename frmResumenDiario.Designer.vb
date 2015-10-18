@@ -97,6 +97,8 @@ Partial Class frmResumenDiario
         Me.ErrorResumen = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.lbl_DispoEfect = New System.Windows.Forms.Label()
+        Me.txt_Aporte = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.GbDetalle.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GB_Caja.SuspendLayout()
@@ -109,6 +111,8 @@ Partial Class frmResumenDiario
         '
         'GbDetalle
         '
+        Me.GbDetalle.Controls.Add(Me.txt_Aporte)
+        Me.GbDetalle.Controls.Add(Me.Label17)
         Me.GbDetalle.Controls.Add(Me.txt_Adicional)
         Me.GbDetalle.Controls.Add(Me.Label16)
         Me.GbDetalle.Controls.Add(Me.txt_DevolucionesEgr)
@@ -154,7 +158,7 @@ Partial Class frmResumenDiario
         Me.GbDetalle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GbDetalle.Location = New System.Drawing.Point(12, 168)
         Me.GbDetalle.Name = "GbDetalle"
-        Me.GbDetalle.Size = New System.Drawing.Size(802, 311)
+        Me.GbDetalle.Size = New System.Drawing.Size(802, 336)
         Me.GbDetalle.TabIndex = 5
         Me.GbDetalle.TabStop = False
         Me.GbDetalle.Text = "Resumen Diario"
@@ -198,7 +202,7 @@ Partial Class frmResumenDiario
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(478, 281)
+        Me.Label12.Location = New System.Drawing.Point(488, 308)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(129, 15)
         Me.Label12.TabIndex = 77
@@ -207,7 +211,7 @@ Partial Class frmResumenDiario
         'txt_CajaFuerteIng
         '
         Me.txt_CajaFuerteIng.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_CajaFuerteIng.Location = New System.Drawing.Point(660, 278)
+        Me.txt_CajaFuerteIng.Location = New System.Drawing.Point(670, 305)
         Me.txt_CajaFuerteIng.Name = "txt_CajaFuerteIng"
         Me.txt_CajaFuerteIng.ReadOnly = True
         Me.txt_CajaFuerteIng.Size = New System.Drawing.Size(125, 21)
@@ -234,7 +238,7 @@ Partial Class frmResumenDiario
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(479, 80)
+        Me.Label10.Location = New System.Drawing.Point(489, 107)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(171, 15)
         Me.Label10.TabIndex = 73
@@ -243,7 +247,7 @@ Partial Class frmResumenDiario
         'txt_Efectivo
         '
         Me.txt_Efectivo.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_Efectivo.Location = New System.Drawing.Point(660, 74)
+        Me.txt_Efectivo.Location = New System.Drawing.Point(670, 101)
         Me.txt_Efectivo.Name = "txt_Efectivo"
         Me.txt_Efectivo.ReadOnly = True
         Me.txt_Efectivo.Size = New System.Drawing.Size(125, 21)
@@ -296,7 +300,7 @@ Partial Class frmResumenDiario
         'lblVarios
         '
         Me.lblVarios.AutoSize = True
-        Me.lblVarios.Location = New System.Drawing.Point(479, 53)
+        Me.lblVarios.Location = New System.Drawing.Point(489, 80)
         Me.lblVarios.Name = "lblVarios"
         Me.lblVarios.Size = New System.Drawing.Size(102, 15)
         Me.lblVarios.TabIndex = 67
@@ -305,7 +309,7 @@ Partial Class frmResumenDiario
         'txt_Sobrante
         '
         Me.txt_Sobrante.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_Sobrante.Location = New System.Drawing.Point(660, 47)
+        Me.txt_Sobrante.Location = New System.Drawing.Point(670, 74)
         Me.txt_Sobrante.Name = "txt_Sobrante"
         Me.txt_Sobrante.ReadOnly = True
         Me.txt_Sobrante.Size = New System.Drawing.Size(125, 21)
@@ -350,7 +354,7 @@ Partial Class frmResumenDiario
         'txt_TotalVentas
         '
         Me.txt_TotalVentas.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_TotalVentas.Location = New System.Drawing.Point(660, 104)
+        Me.txt_TotalVentas.Location = New System.Drawing.Point(670, 131)
         Me.txt_TotalVentas.Name = "txt_TotalVentas"
         Me.txt_TotalVentas.ReadOnly = True
         Me.txt_TotalVentas.Size = New System.Drawing.Size(125, 21)
@@ -359,7 +363,7 @@ Partial Class frmResumenDiario
         'lblTotalVentas
         '
         Me.lblTotalVentas.AutoSize = True
-        Me.lblTotalVentas.Location = New System.Drawing.Point(479, 110)
+        Me.lblTotalVentas.Location = New System.Drawing.Point(489, 137)
         Me.lblTotalVentas.Name = "lblTotalVentas"
         Me.lblTotalVentas.Size = New System.Drawing.Size(74, 15)
         Me.lblTotalVentas.TabIndex = 61
@@ -368,7 +372,7 @@ Partial Class frmResumenDiario
         'lblMayorista
         '
         Me.lblMayorista.AutoSize = True
-        Me.lblMayorista.Location = New System.Drawing.Point(479, 226)
+        Me.lblMayorista.Location = New System.Drawing.Point(489, 253)
         Me.lblMayorista.Name = "lblMayorista"
         Me.lblMayorista.Size = New System.Drawing.Size(94, 15)
         Me.lblMayorista.TabIndex = 57
@@ -377,7 +381,7 @@ Partial Class frmResumenDiario
         'txt_VentaMayorista
         '
         Me.txt_VentaMayorista.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentaMayorista.Location = New System.Drawing.Point(660, 220)
+        Me.txt_VentaMayorista.Location = New System.Drawing.Point(670, 247)
         Me.txt_VentaMayorista.Name = "txt_VentaMayorista"
         Me.txt_VentaMayorista.ReadOnly = True
         Me.txt_VentaMayorista.Size = New System.Drawing.Size(125, 21)
@@ -386,7 +390,7 @@ Partial Class frmResumenDiario
         'lblMinorista
         '
         Me.lblMinorista.AutoSize = True
-        Me.lblMinorista.Location = New System.Drawing.Point(479, 255)
+        Me.lblMinorista.Location = New System.Drawing.Point(489, 282)
         Me.lblMinorista.Name = "lblMinorista"
         Me.lblMinorista.Size = New System.Drawing.Size(92, 15)
         Me.lblMinorista.TabIndex = 54
@@ -395,7 +399,7 @@ Partial Class frmResumenDiario
         'txt_VentaMinorista
         '
         Me.txt_VentaMinorista.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentaMinorista.Location = New System.Drawing.Point(660, 249)
+        Me.txt_VentaMinorista.Location = New System.Drawing.Point(670, 276)
         Me.txt_VentaMinorista.Name = "txt_VentaMinorista"
         Me.txt_VentaMinorista.ReadOnly = True
         Me.txt_VentaMinorista.Size = New System.Drawing.Size(125, 21)
@@ -404,7 +408,7 @@ Partial Class frmResumenDiario
         'lblTotalFacturado
         '
         Me.lblTotalFacturado.AutoSize = True
-        Me.lblTotalFacturado.Location = New System.Drawing.Point(479, 197)
+        Me.lblTotalFacturado.Location = New System.Drawing.Point(489, 224)
         Me.lblTotalFacturado.Name = "lblTotalFacturado"
         Me.lblTotalFacturado.Size = New System.Drawing.Size(92, 15)
         Me.lblTotalFacturado.TabIndex = 51
@@ -413,7 +417,7 @@ Partial Class frmResumenDiario
         'txt_TotalFacturado
         '
         Me.txt_TotalFacturado.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_TotalFacturado.Location = New System.Drawing.Point(660, 191)
+        Me.txt_TotalFacturado.Location = New System.Drawing.Point(670, 218)
         Me.txt_TotalFacturado.Name = "txt_TotalFacturado"
         Me.txt_TotalFacturado.ReadOnly = True
         Me.txt_TotalFacturado.Size = New System.Drawing.Size(125, 21)
@@ -440,7 +444,7 @@ Partial Class frmResumenDiario
         'lbl_Faltante
         '
         Me.lbl_Faltante.AutoSize = True
-        Me.lbl_Faltante.Location = New System.Drawing.Point(479, 168)
+        Me.lbl_Faltante.Location = New System.Drawing.Point(489, 195)
         Me.lbl_Faltante.Name = "lbl_Faltante"
         Me.lbl_Faltante.Size = New System.Drawing.Size(108, 15)
         Me.lbl_Faltante.TabIndex = 45
@@ -449,7 +453,7 @@ Partial Class frmResumenDiario
         'txt_VentasTarjeta
         '
         Me.txt_VentasTarjeta.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentasTarjeta.Location = New System.Drawing.Point(660, 162)
+        Me.txt_VentasTarjeta.Location = New System.Drawing.Point(670, 189)
         Me.txt_VentasTarjeta.Name = "txt_VentasTarjeta"
         Me.txt_VentasTarjeta.ReadOnly = True
         Me.txt_VentasTarjeta.Size = New System.Drawing.Size(125, 21)
@@ -476,7 +480,7 @@ Partial Class frmResumenDiario
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(479, 139)
+        Me.Label6.Location = New System.Drawing.Point(489, 166)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(158, 15)
         Me.Label6.TabIndex = 38
@@ -494,7 +498,7 @@ Partial Class frmResumenDiario
         'txt_VentasEfectivo
         '
         Me.txt_VentasEfectivo.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentasEfectivo.Location = New System.Drawing.Point(660, 133)
+        Me.txt_VentasEfectivo.Location = New System.Drawing.Point(670, 160)
         Me.txt_VentasEfectivo.Name = "txt_VentasEfectivo"
         Me.txt_VentasEfectivo.ReadOnly = True
         Me.txt_VentasEfectivo.Size = New System.Drawing.Size(125, 21)
@@ -503,7 +507,7 @@ Partial Class frmResumenDiario
         'txt_CajaInicial
         '
         Me.txt_CajaInicial.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_CajaInicial.Location = New System.Drawing.Point(661, 17)
+        Me.txt_CajaInicial.Location = New System.Drawing.Point(671, 44)
         Me.txt_CajaInicial.Name = "txt_CajaInicial"
         Me.txt_CajaInicial.ReadOnly = True
         Me.txt_CajaInicial.Size = New System.Drawing.Size(125, 21)
@@ -521,7 +525,7 @@ Partial Class frmResumenDiario
         'lblCaja
         '
         Me.lblCaja.AutoSize = True
-        Me.lblCaja.Location = New System.Drawing.Point(479, 23)
+        Me.lblCaja.Location = New System.Drawing.Point(489, 50)
         Me.lblCaja.Name = "lblCaja"
         Me.lblCaja.Size = New System.Drawing.Size(67, 15)
         Me.lblCaja.TabIndex = 31
@@ -596,7 +600,7 @@ Partial Class frmResumenDiario
         'lblSucursalNombre
         '
         Me.lblSucursalNombre.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblSucursalNombre.AutoSize = True
         Me.lblSucursalNombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSucursalNombre.Location = New System.Drawing.Point(70, 50)
@@ -608,7 +612,7 @@ Partial Class frmResumenDiario
         'lblSucursal
         '
         Me.lblSucursal.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblSucursal.AutoSize = True
         Me.lblSucursal.Location = New System.Drawing.Point(6, 50)
         Me.lblSucursal.Name = "lblSucursal"
@@ -619,7 +623,7 @@ Partial Class frmResumenDiario
         'txt_Fecha
         '
         Me.txt_Fecha.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Fecha.Location = New System.Drawing.Point(73, 86)
         Me.txt_Fecha.Name = "txt_Fecha"
         Me.txt_Fecha.Size = New System.Drawing.Size(243, 21)
@@ -644,7 +648,7 @@ Partial Class frmResumenDiario
         'lblFechaD
         '
         Me.lblFechaD.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblFechaD.AutoSize = True
         Me.lblFechaD.Location = New System.Drawing.Point(6, 91)
         Me.lblFechaD.Name = "lblFechaD"
@@ -672,7 +676,7 @@ Partial Class frmResumenDiario
         Me.Btn_Cerrar.Text = "Cerrar Caja"
         Me.Btn_Cerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolResumen.SetToolTip(Me.Btn_Cerrar, "Permite cerrar la caja diaria. Tener en cuenta que ésta operación deberá " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "llevar" & _
-                "se a cabo sólo al finalizar el día.")
+        "se a cabo sólo al finalizar el día.")
         Me.Btn_Cerrar.UseVisualStyleBackColor = True
         '
         'Btn_Abrir
@@ -712,7 +716,7 @@ Partial Class frmResumenDiario
         Me.GB_Caja.Controls.Add(Me.Label9)
         Me.GB_Caja.Controls.Add(Me.Label8)
         Me.GB_Caja.Controls.Add(Me.Label7)
-        Me.GB_Caja.Location = New System.Drawing.Point(12, 485)
+        Me.GB_Caja.Location = New System.Drawing.Point(13, 508)
         Me.GB_Caja.Name = "GB_Caja"
         Me.GB_Caja.Size = New System.Drawing.Size(396, 87)
         Me.GB_Caja.TabIndex = 65
@@ -782,7 +786,7 @@ Partial Class frmResumenDiario
         '
         Me.GB_Monto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Monto.Controls.Add(Me.lbl_Saldo)
-        Me.GB_Monto.Location = New System.Drawing.Point(418, 487)
+        Me.GB_Monto.Location = New System.Drawing.Point(419, 510)
         Me.GB_Monto.Name = "GB_Monto"
         Me.GB_Monto.Size = New System.Drawing.Size(120, 85)
         Me.GB_Monto.TabIndex = 66
@@ -804,7 +808,7 @@ Partial Class frmResumenDiario
         '
         Me.GroupBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.lbl_DispoCheq)
-        Me.GroupBox1.Location = New System.Drawing.Point(544, 487)
+        Me.GroupBox1.Location = New System.Drawing.Point(545, 510)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(138, 85)
         Me.GroupBox1.TabIndex = 67
@@ -860,7 +864,7 @@ Partial Class frmResumenDiario
         Me.Label13.Size = New System.Drawing.Size(159, 65)
         Me.Label13.TabIndex = 64
         Me.Label13.Text = "Por favor, ingrese el monto físico que se encuentra en la sucursal para cerrar la" & _
-            " caja."
+    " caja."
         '
         'ErrorResumen
         '
@@ -871,7 +875,7 @@ Partial Class frmResumenDiario
         '
         Me.GroupBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox4.Controls.Add(Me.lbl_DispoEfect)
-        Me.GroupBox4.Location = New System.Drawing.Point(688, 487)
+        Me.GroupBox4.Location = New System.Drawing.Point(689, 510)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(125, 85)
         Me.GroupBox4.TabIndex = 68
@@ -889,11 +893,29 @@ Partial Class frmResumenDiario
         Me.lbl_DispoEfect.Text = "$ 100.000.-"
         Me.lbl_DispoEfect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'txt_Aporte
+        '
+        Me.txt_Aporte.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.txt_Aporte.Location = New System.Drawing.Point(670, 18)
+        Me.txt_Aporte.Name = "txt_Aporte"
+        Me.txt_Aporte.ReadOnly = True
+        Me.txt_Aporte.Size = New System.Drawing.Size(125, 21)
+        Me.txt_Aporte.TabIndex = 82
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(488, 24)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(99, 15)
+        Me.Label17.TabIndex = 83
+        Me.Label17.Text = "Aporte de Socios"
+        '
         'frmResumenDiario
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(824, 582)
+        Me.ClientSize = New System.Drawing.Size(824, 599)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox1)
@@ -996,4 +1018,6 @@ Partial Class frmResumenDiario
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents lbl_DispoEfect As System.Windows.Forms.Label
+    Friend WithEvents txt_Aporte As System.Windows.Forms.TextBox
+    Friend WithEvents Label17 As System.Windows.Forms.Label
 End Class

@@ -928,8 +928,8 @@ Public Class MDIContenedor
             dialogoConexion.ShowDialog()
         Else
             Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmMovimientoRetiro).MdiParent = Me
-            Funciones.ControlInstancia(frmMovimientoRetiro).Show()
+            Funciones.ControlInstancia(frmMovimientoSocios).MdiParent = Me
+            Funciones.ControlInstancia(frmMovimientoSocios).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub
@@ -988,8 +988,8 @@ Public Class MDIContenedor
             dialogoConexion.ShowDialog()
         Else
             Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmMovimientoRetiro).MdiParent = Me
-            Funciones.ControlInstancia(frmMovimientoRetiro).Show()
+            Funciones.ControlInstancia(frmMovimientoSocios).MdiParent = Me
+            Funciones.ControlInstancia(frmMovimientoSocios).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

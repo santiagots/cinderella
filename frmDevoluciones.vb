@@ -307,22 +307,10 @@
     'Programo para cuando modifica la cantidad de un producto se actualice el grid.
     Private Sub DG_Productos_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Productos.CellEndEdit
         If DG_Productos.Columns(e.ColumnIndex).Name = "CANTIDAD" Then 'Si se modifica la cantidad de un producto
-
-            'verifico si es una devolucion, para eso me fijo en el valor del producto. si es negativo es una devolucion.
-            'Primero chequeo si se posee stock del producto.
-            If (NegStock.ComprobarStock(DG_Productos("ID", e.RowIndex).Value, DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString(), id_Sucursal) Or DG_Productos("PRECIO", e.RowIndex).Value < 0) Then
-                'Actualizo el campo SUBTOTAL del producto.
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
-                'Recalculo el Total y lo muestro en el label
-                CalcularPreciosDescuento()
-            Else
-                'Actualizo el campo SUBTOTAL del producto.
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("PRECIO", e.RowIndex).Value.ToString()
-                DG_Productos(e.ColumnIndex, e.RowIndex).Value = 1
-                'Recalculo el Total y lo muestro en el label
-                CalcularPreciosDescuento()
-                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            End If
+            'Actualizo el campo SUBTOTAL del producto.
+            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+            'Recalculo el Total y lo muestro en el label
+            CalcularPreciosDescuento()
 
         ElseIf DG_Productos.Columns(e.ColumnIndex).Name = "PRECIO" Then
 
@@ -418,6 +406,10 @@
         Else
             CalcularPreciosDescuento()
         End If
+    End Sub
+
+    Private Sub Cb_TipoPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoPago.SelectedIndexChanged
+        PosicionarListaPreciosSegunFormaDePago()
     End Sub
 
 #End Region
@@ -667,6 +659,8 @@
         End If
 
         LimpiarFormDevolucion_2()
+
+        PosicionarListaPreciosSegunFormaDePago()
     End Sub
 
     Private Sub Cb_ListaPrecio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_ListaPrecio.SelectedIndexChanged
@@ -731,6 +725,16 @@
             Btn_Finalizar.Visible = False
         Else
             Btn_Finalizar.Visible = True
+        End If
+    End Sub
+
+    Private Sub PosicionarListaPreciosSegunFormaDePago()
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            If Cb_TipoPago.Text = "Efectivo" Then
+                Cb_ListaPrecio.SelectedIndex = Cb_ListaPrecio.FindString("Efectivo")
+            Else
+                Cb_ListaPrecio.SelectedIndex = Cb_ListaPrecio.FindString("Tarjeta")
+            End If
         End If
     End Sub
 

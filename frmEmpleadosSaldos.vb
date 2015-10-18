@@ -421,7 +421,7 @@ Public Class frmEmpleadosSaldos
                 NegMovimiento.AltaMovGasto(eGasto)
 
                 'Agrego el retiro de socios en forma negativa.
-                Dim eRetiro As New Entidades.MovRetiro
+                Dim eRetiro As New Entidades.MovSocios
                 eRetiro.id_Movimiento = 0
                 eRetiro.id_Sucursal = id_Sucursal
                 eRetiro.Monto = sueldoDepositado * -1

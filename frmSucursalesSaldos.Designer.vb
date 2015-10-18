@@ -111,6 +111,10 @@ Partial Class frmSucursalesSaldos
         Me.txt_Adelanto = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.ToolEstado = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txt_Aporte = New System.Windows.Forms.TextBox()
+        Me.Button15 = New System.Windows.Forms.Button()
+        Me.Btn_Aporte = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         Me.GbDetalle.SuspendLayout()
         Me.SuspendLayout()
@@ -167,7 +171,7 @@ Partial Class frmSucursalesSaldos
         'lblSucursalNombre
         '
         Me.lblSucursalNombre.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblSucursalNombre.AutoSize = True
         Me.lblSucursalNombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSucursalNombre.Location = New System.Drawing.Point(115, 27)
@@ -179,7 +183,7 @@ Partial Class frmSucursalesSaldos
         'lblSucursal
         '
         Me.lblSucursal.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblSucursal.AutoSize = True
         Me.lblSucursal.Location = New System.Drawing.Point(15, 28)
         Me.lblSucursal.Name = "lblSucursal"
@@ -190,7 +194,7 @@ Partial Class frmSucursalesSaldos
         'txt_FDesde
         '
         Me.txt_FDesde.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_FDesde.Location = New System.Drawing.Point(117, 51)
         Me.txt_FDesde.Name = "txt_FDesde"
         Me.txt_FDesde.Size = New System.Drawing.Size(245, 21)
@@ -199,7 +203,7 @@ Partial Class frmSucursalesSaldos
         'txt_FHasta
         '
         Me.txt_FHasta.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_FHasta.Location = New System.Drawing.Point(117, 86)
         Me.txt_FHasta.Name = "txt_FHasta"
         Me.txt_FHasta.Size = New System.Drawing.Size(245, 21)
@@ -223,7 +227,7 @@ Partial Class frmSucursalesSaldos
         'lblFechaH
         '
         Me.lblFechaH.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblFechaH.AutoSize = True
         Me.lblFechaH.Location = New System.Drawing.Point(15, 91)
         Me.lblFechaH.Name = "lblFechaH"
@@ -234,7 +238,7 @@ Partial Class frmSucursalesSaldos
         'lblFechaD
         '
         Me.lblFechaD.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblFechaD.AutoSize = True
         Me.lblFechaD.Location = New System.Drawing.Point(15, 57)
         Me.lblFechaD.Name = "lblFechaD"
@@ -244,6 +248,10 @@ Partial Class frmSucursalesSaldos
         '
         'GbDetalle
         '
+        Me.GbDetalle.Controls.Add(Me.Label16)
+        Me.GbDetalle.Controls.Add(Me.txt_Aporte)
+        Me.GbDetalle.Controls.Add(Me.Button15)
+        Me.GbDetalle.Controls.Add(Me.Btn_Aporte)
         Me.GbDetalle.Controls.Add(Me.Button14)
         Me.GbDetalle.Controls.Add(Me.Label12)
         Me.GbDetalle.Controls.Add(Me.txt_Mercaderias)
@@ -353,7 +361,7 @@ Partial Class frmSucursalesSaldos
         'txt_Mercaderias
         '
         Me.txt_Mercaderias.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Mercaderias.Location = New System.Drawing.Point(674, 154)
         Me.txt_Mercaderias.Name = "txt_Mercaderias"
         Me.txt_Mercaderias.ReadOnly = True
@@ -373,7 +381,7 @@ Partial Class frmSucursalesSaldos
         'Label15
         '
         Me.Label15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(413, 382)
@@ -386,7 +394,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_TotalEgresos.AutoSize = True
         Me.lbl_TotalEgresos.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalEgresos.Location = New System.Drawing.Point(670, 290)
+        Me.lbl_TotalEgresos.Location = New System.Drawing.Point(671, 315)
         Me.lbl_TotalEgresos.Name = "lbl_TotalEgresos"
         Me.lbl_TotalEgresos.Size = New System.Drawing.Size(129, 24)
         Me.lbl_TotalEgresos.TabIndex = 83
@@ -395,10 +403,10 @@ Partial Class frmSucursalesSaldos
         'Label14
         '
         Me.Label14.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(503, 290)
+        Me.Label14.Location = New System.Drawing.Point(504, 315)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(62, 24)
         Me.Label14.TabIndex = 82
@@ -408,7 +416,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_TotalIngresos.AutoSize = True
         Me.lbl_TotalIngresos.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalIngresos.Location = New System.Drawing.Point(218, 290)
+        Me.lbl_TotalIngresos.Location = New System.Drawing.Point(219, 315)
         Me.lbl_TotalIngresos.Name = "lbl_TotalIngresos"
         Me.lbl_TotalIngresos.Size = New System.Drawing.Size(129, 24)
         Me.lbl_TotalIngresos.TabIndex = 81
@@ -417,10 +425,10 @@ Partial Class frmSucursalesSaldos
         'Label13
         '
         Me.Label13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(51, 290)
+        Me.Label13.Location = New System.Drawing.Point(52, 315)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(62, 24)
         Me.Label13.TabIndex = 80
@@ -466,7 +474,7 @@ Partial Class frmSucursalesSaldos
         'txt_Adicional
         '
         Me.txt_Adicional.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Adicional.Location = New System.Drawing.Point(674, 50)
         Me.txt_Adicional.Name = "txt_Adicional"
         Me.txt_Adicional.ReadOnly = True
@@ -476,7 +484,7 @@ Partial Class frmSucursalesSaldos
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(52, 240)
+        Me.Label10.Location = New System.Drawing.Point(52, 261)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(62, 15)
         Me.Label10.TabIndex = 75
@@ -484,7 +492,7 @@ Partial Class frmSucursalesSaldos
         '
         'txt_VentasFacturado
         '
-        Me.txt_VentasFacturado.Location = New System.Drawing.Point(223, 237)
+        Me.txt_VentasFacturado.Location = New System.Drawing.Point(223, 258)
         Me.txt_VentasFacturado.Name = "txt_VentasFacturado"
         Me.txt_VentasFacturado.ReadOnly = True
         Me.txt_VentasFacturado.Size = New System.Drawing.Size(125, 21)
@@ -647,7 +655,7 @@ Partial Class frmSucursalesSaldos
         'txt_Comision
         '
         Me.txt_Comision.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Comision.Location = New System.Drawing.Point(674, 102)
         Me.txt_Comision.Name = "txt_Comision"
         Me.txt_Comision.ReadOnly = True
@@ -675,7 +683,7 @@ Partial Class frmSucursalesSaldos
         Me.Button1.TabIndex = 34
         Me.Button1.Tag = "Ver Detalle"
         Me.ToolEstado.SetToolTip(Me.Button1, "Efectivo empleado para pagar bienes a otras sucursales, envio de efectivo a otras" & _
-                " sucursales, etc.")
+        " sucursales, etc.")
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
@@ -830,7 +838,7 @@ Partial Class frmSucursalesSaldos
         'txt_EfectivoEgreso
         '
         Me.txt_EfectivoEgreso.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_EfectivoEgreso.Location = New System.Drawing.Point(674, 258)
         Me.txt_EfectivoEgreso.Name = "txt_EfectivoEgreso"
         Me.txt_EfectivoEgreso.ReadOnly = True
@@ -863,7 +871,7 @@ Partial Class frmSucursalesSaldos
         'txt_Efectivo
         '
         Me.txt_Efectivo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Efectivo.Location = New System.Drawing.Point(222, 48)
         Me.txt_Efectivo.Name = "txt_Efectivo"
         Me.txt_Efectivo.ReadOnly = True
@@ -896,7 +904,7 @@ Partial Class frmSucursalesSaldos
         'txt_Retiro
         '
         Me.txt_Retiro.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Retiro.Location = New System.Drawing.Point(674, 232)
         Me.txt_Retiro.Name = "txt_Retiro"
         Me.txt_Retiro.ReadOnly = True
@@ -929,7 +937,7 @@ Partial Class frmSucursalesSaldos
         'txt_Gasto
         '
         Me.txt_Gasto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Gasto.Location = New System.Drawing.Point(674, 206)
         Me.txt_Gasto.Name = "txt_Gasto"
         Me.txt_Gasto.ReadOnly = True
@@ -962,7 +970,7 @@ Partial Class frmSucursalesSaldos
         'txt_Faltante
         '
         Me.txt_Faltante.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Faltante.Location = New System.Drawing.Point(674, 180)
         Me.txt_Faltante.Name = "txt_Faltante"
         Me.txt_Faltante.ReadOnly = True
@@ -986,7 +994,7 @@ Partial Class frmSucursalesSaldos
         'txt_Sueldo
         '
         Me.txt_Sueldo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Sueldo.Location = New System.Drawing.Point(674, 76)
         Me.txt_Sueldo.Name = "txt_Sueldo"
         Me.txt_Sueldo.ReadOnly = True
@@ -1047,7 +1055,7 @@ Partial Class frmSucursalesSaldos
         'txt_Impuesto
         '
         Me.txt_Impuesto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Impuesto.Location = New System.Drawing.Point(674, 128)
         Me.txt_Impuesto.Name = "txt_Impuesto"
         Me.txt_Impuesto.ReadOnly = True
@@ -1071,8 +1079,8 @@ Partial Class frmSucursalesSaldos
         'txt_Venta
         '
         Me.txt_Venta.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.txt_Venta.Location = New System.Drawing.Point(223, 263)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.txt_Venta.Location = New System.Drawing.Point(223, 284)
         Me.txt_Venta.Name = "txt_Venta"
         Me.txt_Venta.ReadOnly = True
         Me.txt_Venta.Size = New System.Drawing.Size(125, 21)
@@ -1090,7 +1098,7 @@ Partial Class frmSucursalesSaldos
         'lblVentas
         '
         Me.lblVentas.AutoSize = True
-        Me.lblVentas.Location = New System.Drawing.Point(52, 265)
+        Me.lblVentas.Location = New System.Drawing.Point(52, 286)
         Me.lblVentas.Name = "lblVentas"
         Me.lblVentas.Size = New System.Drawing.Size(44, 15)
         Me.lblVentas.TabIndex = 31
@@ -1127,7 +1135,7 @@ Partial Class frmSucursalesSaldos
         'txt_Sobrante
         '
         Me.txt_Sobrante.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Sobrante.Location = New System.Drawing.Point(222, 21)
         Me.txt_Sobrante.Name = "txt_Sobrante"
         Me.txt_Sobrante.ReadOnly = True
@@ -1137,7 +1145,7 @@ Partial Class frmSucursalesSaldos
         'txt_Adelanto
         '
         Me.txt_Adelanto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txt_Adelanto.Location = New System.Drawing.Point(674, 24)
         Me.txt_Adelanto.Name = "txt_Adelanto"
         Me.txt_Adelanto.ReadOnly = True
@@ -1147,7 +1155,7 @@ Partial Class frmSucursalesSaldos
         'Label8
         '
         Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(13, 382)
@@ -1161,6 +1169,51 @@ Partial Class frmSucursalesSaldos
         Me.ToolEstado.IsBalloon = True
         Me.ToolEstado.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolEstado.ToolTipTitle = "Ayuda"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(51, 238)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(99, 15)
+        Me.Label16.TabIndex = 92
+        Me.Label16.Text = "Aporte de Socios"
+        '
+        'txt_Aporte
+        '
+        Me.txt_Aporte.Location = New System.Drawing.Point(222, 235)
+        Me.txt_Aporte.Name = "txt_Aporte"
+        Me.txt_Aporte.ReadOnly = True
+        Me.txt_Aporte.Size = New System.Drawing.Size(125, 21)
+        Me.txt_Aporte.TabIndex = 91
+        '
+        'Button15
+        '
+        Me.Button15.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Button15.FlatAppearance.BorderSize = 0
+        Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button15.Image = CType(resources.GetObject("Button15.Image"), System.Drawing.Image)
+        Me.Button15.Location = New System.Drawing.Point(356, 232)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(21, 21)
+        Me.Button15.TabIndex = 89
+        Me.Button15.Tag = "Ver Detalle"
+        Me.ToolEstado.SetToolTip(Me.Button15, "Efectivo aportado por socios de la empresa.")
+        Me.Button15.UseVisualStyleBackColor = True
+        '
+        'Btn_Aporte
+        '
+        Me.Btn_Aporte.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Aporte.FlatAppearance.BorderSize = 0
+        Me.Btn_Aporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Btn_Aporte.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
+        Me.Btn_Aporte.Location = New System.Drawing.Point(384, 232)
+        Me.Btn_Aporte.Name = "Btn_Aporte"
+        Me.Btn_Aporte.Size = New System.Drawing.Size(21, 21)
+        Me.Btn_Aporte.TabIndex = 90
+        Me.Btn_Aporte.Tag = "Ver Detalle"
+        Me.ToolEstado.SetToolTip(Me.Btn_Aporte, "Hace click aquí para ver un detalle completo de éste item.")
+        Me.Btn_Aporte.UseVisualStyleBackColor = True
         '
         'frmSucursalesSaldos
         '
@@ -1270,4 +1323,8 @@ Partial Class frmSucursalesSaldos
     Friend WithEvents Button14 As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents txt_Mercaderias As System.Windows.Forms.TextBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents txt_Aporte As System.Windows.Forms.TextBox
+    Friend WithEvents Button15 As System.Windows.Forms.Button
+    Friend WithEvents Btn_Aporte As System.Windows.Forms.Button
 End Class
