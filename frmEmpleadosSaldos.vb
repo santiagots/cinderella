@@ -424,12 +424,12 @@ Public Class frmEmpleadosSaldos
                 Dim eRetiro As New Entidades.MovSocios
                 eRetiro.id_Movimiento = 0
                 eRetiro.id_Sucursal = id_Sucursal
-                eRetiro.Monto = sueldoDepositado * -1
+                eRetiro.Monto = sueldoDepositado
                 eRetiro.Fecha = Now
                 eRetiro.Encargado = "Cinderella"
                 eRetiro.Persona = "Cinderella"
-                eRetiro.Descripcion = "Retiro en negativo por pago de sueldo a empleado"
-                NegMovimiento.AltaMovRetiro(eRetiro)
+                eRetiro.Descripcion = "Aporte por pago de sueldo a empleado"
+                NegMovimiento.AltaMovAporte(eRetiro)
 
                 'Agrego el deposito del empleado.
                 Dim eDeposito As New Entidades.Depositos

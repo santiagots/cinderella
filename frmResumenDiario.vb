@@ -45,6 +45,7 @@
         txt_Mercaderias.Clear()
         txt_TotalVentas.Clear()
         txt_VentasEfectivo.Clear()
+        txt_VentasCheque.Clear()
         txt_VentasTarjeta.Clear()
         txt_TotalFacturado.Clear()
         txt_VentaMayorista.Clear()
@@ -141,12 +142,15 @@
             frmCargadorDeEspera.BarraProgreso.Value += 1
             frmCargadorDeEspera.Refresh()
 
-            Dim VentasEfectivo As Double = 0
-            VentasEfectivo = NegVen.TotalVentasEfectivo(id_Sucursal, Fecha)
-            txt_VentasEfectivo.Text = "$ " & Format(CType((VentasEfectivo), Decimal), "###0.00") & ".-"
-
             Dim VentasCheque As Double = 0
             VentasCheque = NegVen.TotalVentasCheque(id_Sucursal, Fecha)
+            txt_VentasCheque.Text = "$ " & Format(CType((VentasCheque), Decimal), "###0.00") & ".-"
+
+            Dim VentasEfectivo As Double = 0
+            VentasEfectivo = NegVen.TotalVentasEfectivo(id_Sucursal, Fecha)
+            'A la variable VentaEfectivo le resto la variable VentasCheques porque VentasEfectivo incluye los montos de los cheques
+            txt_VentasEfectivo.Text = "$ " & Format(CType((VentasEfectivo - VentasCheque), Decimal), "###0.00") & ".-"
+
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo el total de ventas en efectivo..."
