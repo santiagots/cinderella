@@ -44,7 +44,7 @@
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error al cargar el formulario. Por favor, contáctese con el administrador", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error al cargar el formulario. Por favor, contáctese con el administrador", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Sub
@@ -104,7 +104,7 @@
 
     'Evento que se ejecuta cuando cancela la carga.
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
-        If MessageBox.Show("Ésta seguro que desea cancelar la carga de mercaderias?", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+        If MessageBox.Show("Ésta seguro que desea cancelar la carga de mercaderias?", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
             'Limpio el Formulario.
             LimpiarFormDevoluciones()
             'Cierro el Formulario.
@@ -138,7 +138,7 @@
 
             Else 'si el campo está vacio.
                 txt_CodigoBarra.Focus()
-                MessageBox.Show("Ingrese un código de barra o un código de producto.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("Ingrese un código de barra o un código de producto.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         End If
     End Sub
@@ -147,12 +147,12 @@
     Private Sub DG_Productos_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Productos.CellContentClick
         If DG_Productos.Columns(e.ColumnIndex).Name = "ELIMINAR" Then 'Si se hace click en el boton "eliminar" de la fila.
             Dim Result As DialogResult
-            Result = MessageBox.Show("¿Está seguro que desea eliminar el item seleccionado?", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            Result = MessageBox.Show("¿Está seguro que desea eliminar el item seleccionado?", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
             If Result = System.Windows.Forms.DialogResult.Yes Then 'Si acepta eliminar el item
                 Dim id_Producto As Integer = DG_Productos.Rows(e.RowIndex).Cells("id_Producto").Value
                 If id_Producto = 0 Then
                     'si no completo la descripcion, muestro un msg de error.
-                    MessageBox.Show("No se puede eliminar el item.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    MessageBox.Show("No se puede eliminar el item.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Else
                     'Elimino el item
                     DG_Productos.Rows.RemoveAt(e.RowIndex)
@@ -188,7 +188,7 @@
                 Dim entStock As New Entidades.Stock
                 entStock = NegStock.TraerStockProducto(DG_Productos("id_Producto", e.RowIndex).Value, id_Sucursal)
 
-                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente en la sucursal." + vbCrLf + "Stock actual: " + entStock.Stock_Actual.ToString, "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente en la sucursal." + vbCrLf + "Stock actual: " + entStock.Stock_Actual.ToString, "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
         End If
     End Sub
@@ -253,7 +253,7 @@
                 txt_CodigoBarra.Clear()
                 txt_CodigoBarra.Focus()
                 Me.Cursor = Cursors.Arrow
-                MessageBox.Show("No se ha encontrado el producto. Por favor, intente nuevamente.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("No se ha encontrado el producto. Por favor, intente nuevamente.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Exit Sub
             End If
 
@@ -275,7 +275,7 @@
                         txt_Total.Text = Format(CType(CalcularPrecioTotal(), Decimal), "###0.00")
                         txt_Cantidad.Text = CalcularCantidadTotal()
                     Else
-                        MessageBox.Show("El producto seleccionado no cuenta con stock suficiente en la sucursal.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        MessageBox.Show("El producto seleccionado no cuenta con stock suficiente en la sucursal.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     End If
                 End If
             Next
@@ -343,7 +343,7 @@
 
             If SinStock Then
                 Me.Cursor = Cursors.Arrow
-                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente en la sucursal.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show("El producto seleccionado no cuenta con stock suficiente en la sucursal.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
 
             'Lo muestro en el label
@@ -358,7 +358,7 @@
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error al agregar el producto.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error al agregar el producto.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

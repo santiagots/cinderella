@@ -33,6 +33,7 @@
 
             'Empieza a cargar.
             GbDetalle.Visible = False
+            GbDetalleVenta.Visible = False
 
             'Declaracion de Variables
             Dim Ingresos As Double = 0
@@ -50,8 +51,8 @@
             Dim EfectivoIngreso As Double = 0
             Dim Mercaderias As Double = 0
 
+            Dim DevolucionEgreso As Double = 0
             Dim Adelantos As Double = 0
-            Dim Adicional As Double = 0
             Dim Sueldo As Double = 0
             Dim Comision As Double = 0
             Dim Impuesto As Double = 0
@@ -82,9 +83,8 @@
             Ingresos = Ventas + Sobrante + EfectivoIngreso + Aporte
 
             '----------EGRESOS---------------'
-            'obtengo los adelantos de la sucursal.
+            DevolucionEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Devolucion")
             Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, FDesde, FHasta)
-            Adicional = NegAdic.ObtenerAdicionalesSucursal(id_Sucursal, FDesde, FHasta)
             Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, FDesde, FHasta)
             Comision = NegEmp.ObtenerComisionesSucursal(id_Sucursal, FDesde, FHasta)
             Impuesto = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 3)
@@ -94,7 +94,7 @@
             EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Egresos")
             Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, FDesde, FHasta)
 
-            Egresos = Adelantos + Adicional + Sueldo + Comision + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
+            Egresos = Adelantos + DevolucionEgreso + Sueldo + Comision + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
 
             '------------SALDO---------------'
             Saldo = Ingresos - Egresos
@@ -120,7 +120,7 @@
             txt_Sobrante.Text = "$ " & Format(CType((Sobrante), Decimal), "###0.00") & ".-"
             txt_Efectivo.Text = "$ " & Format(CType((EfectivoIngreso), Decimal), "###0.00") & ".-"
             txt_Adelanto.Text = "$ " & Format(CType((Adelantos), Decimal), "###0.00") & ".-"
-            txt_Adicional.Text = "$ " & Format(CType((Adicional), Decimal), "###0.00") & ".-"
+            txt_DevolucionesEgr.Text = "$ " & Format(CType((DevolucionEgreso), Decimal), "###0.00") & ".-"
             txt_Sueldo.Text = "$ " & Format(CType((Sueldo), Decimal), "###0.00") & ".-"
             txt_Comision.Text = "$ " & Format(CType((Comision), Decimal), "###0.00") & ".-"
             txt_Impuesto.Text = "$ " & Format(CType((Impuesto), Decimal), "###0.00") & ".-"
@@ -153,6 +153,7 @@
             Me.Left = (Screen.PrimaryScreen.WorkingArea.Width - Me.Width) / 2
             Me.Top = (Screen.PrimaryScreen.WorkingArea.Height - Me.Height) / 2
             GbDetalle.Visible = True
+            GbDetalleVenta.Visible = True
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
@@ -186,6 +187,7 @@
         Me.Left = (Screen.PrimaryScreen.WorkingArea.Width - Me.Width) / 2
         Me.Top = (Screen.PrimaryScreen.WorkingArea.Height - Me.Height) / 2
         GbDetalle.Visible = False
+        GbDetalleVenta.Visible = False
     End Sub
 
     Private Sub Btn_Salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Salir.Click
@@ -311,7 +313,7 @@
     End Sub
 
     'LINK ADICIONALES
-    Private Sub Btn_Adicional_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Adicional.Click
+    Private Sub Btn_Adicional_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.Cursor = Cursors.WaitCursor
         frmVerAdicionalesSucursal.id_Sucursal = id_Sucursal
         frmVerAdicionalesSucursal.FDesde = FDesde
@@ -329,6 +331,17 @@
         frmVerMovimientosSocios.tipoMovimiento = Entidades.MoviminetoSocios.Aporte
         Funciones.ControlInstancia(frmVerMovimientosSocios).MdiParent = MDIContenedor
         Funciones.ControlInstancia(frmVerMovimientosSocios).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    'LINK DEVOLUCIONES
+    Private Sub Btn_Devoluciones_Click(sender As Object, e As EventArgs) Handles Btn_Devoluciones.Click
+        Me.Cursor = Cursors.WaitCursor
+        frmVerDevoluciones.id_Sucursal = id_Sucursal
+        frmVerDevoluciones.FDesde = FDesde
+        frmVerDevoluciones.FHasta = FHasta
+        Funciones.ControlInstancia(frmVerDevoluciones).MdiParent = MDIContenedor
+        Funciones.ControlInstancia(frmVerDevoluciones).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 End Class

@@ -302,7 +302,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 5
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Egresos... (4/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Envíos a otras sucursales... (4/7)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Egresos.
@@ -313,10 +313,10 @@
                     Dim description As String = mov.item("Tipo")
                     Dim destiny As Boolean = False
                     If mov.item("id_Sucursal") <> id_Sucursal Then
-                        description = mov.item("Tipo") & " (INGRESO)"
+                        description = mov.item("Tipo") & " (ENV. OTRAS SUC.)"
                         destiny = True
                     End If
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), description, mov.item("Monto"), "Egreso", destiny, mov.item("Aceptado"))
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), description, mov.item("Monto"), "Env. otras Suc.", destiny, mov.item("Aceptado"))
                 Next
             End If
 

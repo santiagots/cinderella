@@ -73,4 +73,17 @@ Public Class NegDevolucion
         End Try
     End Function
 
+    'Funcion que obtiene el listado de devoluciones de una sucursal.
+    Public Function ObtenerDevolucionesSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
+        Dim ds As New DataSet
+
+        If HayInternet Then
+            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devoluciones_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devoluciones_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        Return ds
+    End Function
+
 End Class

@@ -412,14 +412,14 @@ Public Class frmPlanillaSucursales
 
         '------------------------------------------GASTOS--------------------------------------------------------'
 
-        '------------------------------------------EGRESOS-------------------------------------------------------'
+        '------------------------------------------ENVÍOS A OTRAS SUC.-------------------------------------------------------'
         'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando egresos... (4/8)"
+        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando Envíos a otras Sucursales... (4/8)"
         frmCargadorDeEspera.BarraProgreso.Value = 3
         frmCargadorDeEspera.Refresh()
 
         xlWorkSheet.Cells((ComienzoGasto + TotGastos + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 1) = "EGRESOS"
+        xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 1) = "ENVÍOS A OTRAS SUC."
         xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 1).style = "EstiloCategoria"
 
         Dim ComienzoEgreso As Integer = ComienzoGasto + TotGastos + 2

@@ -147,7 +147,7 @@ Partial Class frmCargarMercaderiaCantidad
         Me.MinimizeBox = False
         Me.Name = "frmCargarMercaderiaCantidad"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Movimientos | Egresos | Cargar Mercaderías"
+        Me.Text = "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)

@@ -146,7 +146,7 @@
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error al cargar el formulario. Por favor, contáctese con el administrador", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error al cargar el formulario. Por favor, contáctese con el administrador", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
         
     End Sub
@@ -200,16 +200,16 @@
     'Cuando hace click en Aceptar.
     Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
         If CbSucursal.SelectedValue = id_Sucursal Then
-            MessageBox.Show("La sucursal de destino debe ser distinta a la sucursal de origen", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("La sucursal de destino debe ser distinta a la sucursal de origen", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             If txtDate.Text = "" Or CInt(CbTipo.SelectedValue) = 0 Or CInt(CbSucursal.SelectedValue) = 0 Then
-                MessageBox.Show("Debe completar los campos requeridos.", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("Debe completar los campos requeridos.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Else
                 If CbTipo.SelectedValue <> "19" And txtMonto.Text = "" Then 'Si no es Cat Mercaderias y no cargo el monto, lo informo.
                     txtMonto.Focus()
-                    MessageBox.Show("Debe completar el campo Monto.", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    MessageBox.Show("Debe completar el campo Monto.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 ElseIf CbTipo.SelectedValue <> "19" And CbTipo.SelectedValue <> "16" And CbSubtipo.SelectedItem Is Nothing Then 'Si no es Cat Mercaderias o Efectivo y no cargo el subtipo, lo informo.
-                    MessageBox.Show("Debe seleccionar un subtipo.", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    MessageBox.Show("Debe seleccionar un subtipo.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Else
                     Try
                         'Cambio el cursor a "WAIT"
@@ -292,7 +292,7 @@
                         Me.Cursor = Cursors.Arrow
 
                         'Ejecuto el sp.
-                        If (MessageBox.Show(MsgEstado, "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Information) = vbOK) Then
+                        If (MessageBox.Show(MsgEstado, "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Information) = vbOK) Then
                             'Cierro el form
                             Me.Close()
                             Me.Dispose()
@@ -300,7 +300,7 @@
 
                     Catch ex As Exception
                         Me.Cursor = Cursors.Arrow
-                        MessageBox.Show("Se ha producido un error al registrar el movimiento. Por favor, intente más tarde.", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show("Se ha producido un error al registrar el movimiento. Por favor, intente más tarde.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
 
@@ -367,7 +367,7 @@
             Me.Cursor = Cursors.Arrow
         Else
             CbSucursal.Focus()
-            MessageBox.Show("Debe seleccionar una sucursal destino.", "Movimientos | Egresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show("Debe seleccionar una sucursal destino.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
     End Sub
 

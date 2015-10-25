@@ -48,8 +48,8 @@ Partial Class frmPlanillaSucursales
         Me.DG_Planilla.AllowUserToDeleteRows = False
         Me.DG_Planilla.AllowUserToResizeRows = False
         Me.DG_Planilla.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Planilla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
@@ -103,7 +103,7 @@ Partial Class frmPlanillaSucursales
         'GB_Controles
         '
         Me.GB_Controles.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Controles.Controls.Add(Me.Btn_Excel)
         Me.GB_Controles.Controls.Add(Me.Label4)
         Me.GB_Controles.Controls.Add(Me.Cb_Sucursal)
@@ -170,7 +170,7 @@ Partial Class frmPlanillaSucursales
         Me.btn_Filtrar.TabIndex = 12
         Me.btn_Filtrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolTip1.SetToolTip(Me.btn_Filtrar, "Refinar la planilla. Se tomarán en cuenta, las diferentes opciones seleccionadas." & _
-                "")
+        "")
         Me.btn_Filtrar.UseVisualStyleBackColor = True
         '
         'Label3

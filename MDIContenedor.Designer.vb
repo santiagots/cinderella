@@ -476,7 +476,7 @@ Partial Class MDIContenedor
         Me.MovimientosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ListadoDeMovimientosToolStripMenuItem, Me.GastosToolStripMenuItem, Me.EgresosToolStripMenuItem, Me.ImpuestosToolStripMenuItem, Me.DifDeCajaToolStripMenuItem, Me.RetiroSociosToolStripMenuItem, Me.CajaFuerteToolStripMenuItem})
         Me.MovimientosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Movimientos_32
         Me.MovimientosToolStripMenuItem.Name = "MovimientosToolStripMenuItem"
-        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.MovimientosToolStripMenuItem.Text = "Movimientos"
         Me.MovimientosToolStripMenuItem.ToolTipText = "Permite la administración de Movimientos del sistema."
         '
@@ -499,7 +499,7 @@ Partial Class MDIContenedor
         Me.EgresosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.bt_Egresos_32
         Me.EgresosToolStripMenuItem.Name = "EgresosToolStripMenuItem"
         Me.EgresosToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
-        Me.EgresosToolStripMenuItem.Text = "Egresos"
+        Me.EgresosToolStripMenuItem.Text = "Env. otras Suc."
         '
         'ImpuestosToolStripMenuItem
         '
@@ -950,9 +950,9 @@ Partial Class MDIContenedor
         Me.AccesoEgresos.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.AccesoEgresos.Name = "AccesoEgresos"
         Me.AccesoEgresos.Size = New System.Drawing.Size(76, 51)
-        Me.AccesoEgresos.Text = "Egresos"
+        Me.AccesoEgresos.Text = "Env. otras Suc."
         Me.AccesoEgresos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.AccesoEgresos.ToolTipText = "Acceso a Egresos"
+        Me.AccesoEgresos.ToolTipText = "Movimiento a otras Sucursales"
         '
         'AccesoImpuestos
         '

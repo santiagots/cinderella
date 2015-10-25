@@ -672,6 +672,12 @@
     <Compile Include="frmVerComprasCliente.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmVerDevoluciones.Designer.vb">
+      <DependentUpon>frmVerDevoluciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmVerDevoluciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmVerDifCaja.Designer.vb">
       <DependentUpon>frmVerDifCaja.vb</DependentUpon>
     </Compile>
@@ -1054,6 +1060,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerComprasCliente.resx">
       <DependentUpon>frmVerComprasCliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVerDevoluciones.resx">
+      <DependentUpon>frmVerDevoluciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerDifCaja.resx">
       <DependentUpon>frmVerDifCaja.vb</DependentUpon>

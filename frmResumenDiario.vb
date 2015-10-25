@@ -41,12 +41,12 @@
         txt_RetirosCaja.Clear()
         txt_Gastos.Clear()
         txt_Sueldo.Clear()
-        txt_Adicional.Clear()
         txt_Mercaderias.Clear()
         txt_TotalVentas.Clear()
         txt_VentasEfectivo.Clear()
         txt_VentasCheque.Clear()
-        txt_VentasTarjeta.Clear()
+        txt_VentasCredito.Clear()
+        txt_VentasDebito.Clear()
         txt_TotalFacturado.Clear()
         txt_VentaMayorista.Clear()
         txt_VentaMinorista.Clear()
@@ -157,9 +157,13 @@
             frmCargadorDeEspera.BarraProgreso.Value += 1
             frmCargadorDeEspera.Refresh()
 
-            Dim VentasTarjeta As Double = 0
-            VentasTarjeta = NegVen.TotalVentasTarjetas(id_Sucursal, Fecha)
-            txt_VentasTarjeta.Text = "$ " & Format(CType((VentasTarjeta), Decimal), "###0.00") & ".-"
+            Dim VentasCredito As Double = 0
+            VentasCredito = NegVen.ObtenerVentasSucursalCredito(id_Sucursal, Fecha, Fecha)
+            txt_VentasCredito.Text = "$ " & Format(CType((VentasCredito), Decimal), "###0.00") & ".-"
+
+            Dim VentasDevito As Double = 0
+            VentasDevito = NegVen.ObtenerVentasSucursalDebito(id_Sucursal, Fecha, Fecha)
+            txt_VentasDebito.Text = "$ " & Format(CType((VentasDevito), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo el total de ventas en tarjetas..."
@@ -246,10 +250,6 @@
             frmCargadorDeEspera.BarraProgreso.Value += 1
             frmCargadorDeEspera.Refresh()
 
-            Dim Adicionales As Double = 0
-            Adicionales = NegAdic.ObtenerAdicionalesSucursal(id_Sucursal, Fecha, Fecha)
-            txt_Adicional.Text = "$ " & Format(CType((Adicionales), Decimal), "###0.00") & ".-"
-
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo adicionales de empleados..."
             frmCargadorDeEspera.BarraProgreso.Value += 1
@@ -290,7 +290,7 @@
             Dim Egresos As Double = 0
 
             Ingresos = VentasEfectivo + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
-            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Adicionales + Comision + IngresoCajaFuerte + DevolucionEgreso
+            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Comision + IngresoCajaFuerte + DevolucionEgreso
             '    MessageBox.Show(Ingresos, "ingresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Saldo = Ingresos - Egresos
 

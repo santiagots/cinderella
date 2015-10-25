@@ -317,7 +317,7 @@ Partial Class frmMovimientoEgreso
         Me.MaximizeBox = False
         Me.Name = "frmMovimientoEgreso"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Movimientos | Egresos"
+        Me.Text = "Movimientos | Envió a Otras Sucursales"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.ErrorEgresos, System.ComponentModel.ISupportInitialize).EndInit()

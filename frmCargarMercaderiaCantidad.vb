@@ -27,7 +27,7 @@
     Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
         Try
             If txt_Cantidad.Text = "" Then
-                MessageBox.Show("El campo Cantidad no puede estar vacio.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("El campo Cantidad no puede estar vacio.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Else
                 Cantidad = Trim(txt_Cantidad.Text)
                 frmCargarMercaderiaEgreso.AgregarItem(Codigo, Tipo, Cantidad)
@@ -35,7 +35,7 @@
                 frmCargarMercaderiaEgreso.Focus()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message.ToString, "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex.Message.ToString, "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -46,7 +46,7 @@
 
             Try
                 If txt_Cantidad.Text = "" Then
-                    MessageBox.Show("El campo Cantidad no puede estar vacio.", "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    MessageBox.Show("El campo Cantidad no puede estar vacio.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Else
                     Cantidad = Trim(txt_Cantidad.Text)
                     frmCargarMercaderiaEgreso.AgregarItem(Codigo, Tipo, Cantidad)
@@ -54,7 +54,7 @@
                     frmCargarMercaderiaEgreso.Focus()
                 End If
             Catch ex As Exception
-                MessageBox.Show(ex.Message.ToString, "Movimientos | Egresos | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show(ex.Message.ToString, "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
 
         Else
