@@ -26,17 +26,15 @@ Partial Class frmPlanillaSucursales
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPlanillaSucursales))
         Me.DG_Planilla = New System.Windows.Forms.DataGridView()
-        Me.Cb_Periodo = New System.Windows.Forms.ComboBox()
-        Me.Cb_Anios = New System.Windows.Forms.ComboBox()
-        Me.Cb_Meses = New System.Windows.Forms.ComboBox()
         Me.GB_Controles = New System.Windows.Forms.GroupBox()
+        Me.txt_FHasta = New System.Windows.Forms.DateTimePicker()
+        Me.txt_FDesde = New System.Windows.Forms.DateTimePicker()
         Me.Btn_Excel = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Cb_Sucursal = New System.Windows.Forms.ComboBox()
         Me.btn_Filtrar = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.DG_Planilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Controles.SuspendLayout()
@@ -51,6 +49,7 @@ Partial Class frmPlanillaSucursales
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Planilla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.DG_Planilla.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -62,73 +61,53 @@ Partial Class frmPlanillaSucursales
         Me.DG_Planilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Planilla.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Planilla.GridColor = System.Drawing.SystemColors.ControlText
-        Me.DG_Planilla.Location = New System.Drawing.Point(14, 93)
+        Me.DG_Planilla.Location = New System.Drawing.Point(14, 121)
         Me.DG_Planilla.Name = "DG_Planilla"
         Me.DG_Planilla.ReadOnly = True
         Me.DG_Planilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Planilla.Size = New System.Drawing.Size(816, 467)
+        Me.DG_Planilla.Size = New System.Drawing.Size(956, 439)
         Me.DG_Planilla.TabIndex = 1
-        '
-        'Cb_Periodo
-        '
-        Me.Cb_Periodo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Periodo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_Periodo.FormattingEnabled = True
-        Me.Cb_Periodo.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Periodo.Location = New System.Drawing.Point(354, 28)
-        Me.Cb_Periodo.Name = "Cb_Periodo"
-        Me.Cb_Periodo.Size = New System.Drawing.Size(138, 23)
-        Me.Cb_Periodo.TabIndex = 8
-        '
-        'Cb_Anios
-        '
-        Me.Cb_Anios.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Anios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_Anios.FormattingEnabled = True
-        Me.Cb_Anios.Location = New System.Drawing.Point(43, 27)
-        Me.Cb_Anios.Name = "Cb_Anios"
-        Me.Cb_Anios.Size = New System.Drawing.Size(95, 23)
-        Me.Cb_Anios.TabIndex = 6
-        '
-        'Cb_Meses
-        '
-        Me.Cb_Meses.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Meses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_Meses.FormattingEnabled = True
-        Me.Cb_Meses.Location = New System.Drawing.Point(184, 28)
-        Me.Cb_Meses.Name = "Cb_Meses"
-        Me.Cb_Meses.Size = New System.Drawing.Size(101, 23)
-        Me.Cb_Meses.TabIndex = 5
         '
         'GB_Controles
         '
         Me.GB_Controles.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Controles.Controls.Add(Me.txt_FHasta)
+        Me.GB_Controles.Controls.Add(Me.txt_FDesde)
         Me.GB_Controles.Controls.Add(Me.Btn_Excel)
         Me.GB_Controles.Controls.Add(Me.Label4)
         Me.GB_Controles.Controls.Add(Me.Cb_Sucursal)
         Me.GB_Controles.Controls.Add(Me.btn_Filtrar)
         Me.GB_Controles.Controls.Add(Me.Label3)
         Me.GB_Controles.Controls.Add(Me.Label2)
-        Me.GB_Controles.Controls.Add(Me.Label1)
-        Me.GB_Controles.Controls.Add(Me.Cb_Periodo)
-        Me.GB_Controles.Controls.Add(Me.Cb_Meses)
-        Me.GB_Controles.Controls.Add(Me.Cb_Anios)
         Me.GB_Controles.Location = New System.Drawing.Point(14, 14)
         Me.GB_Controles.Name = "GB_Controles"
-        Me.GB_Controles.Size = New System.Drawing.Size(818, 60)
+        Me.GB_Controles.Size = New System.Drawing.Size(958, 101)
         Me.GB_Controles.TabIndex = 9
         Me.GB_Controles.TabStop = False
         Me.GB_Controles.Text = "Seleccione los diferentes filtros si desea refinar su planilla de movimientos."
         '
+        'txt_FHasta
+        '
+        Me.txt_FHasta.Location = New System.Drawing.Point(472, 25)
+        Me.txt_FHasta.Name = "txt_FHasta"
+        Me.txt_FHasta.Size = New System.Drawing.Size(245, 21)
+        Me.txt_FHasta.TabIndex = 17
+        '
+        'txt_FDesde
+        '
+        Me.txt_FDesde.Location = New System.Drawing.Point(108, 26)
+        Me.txt_FDesde.Name = "txt_FDesde"
+        Me.txt_FDesde.Size = New System.Drawing.Size(245, 21)
+        Me.txt_FDesde.TabIndex = 16
+        '
         'Btn_Excel
         '
-        Me.Btn_Excel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Excel.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Excel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Excel.Image = Global.SistemaCinderella.My.Resources.Recursos.Btn_Excel
         Me.Btn_Excel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Excel.Location = New System.Drawing.Point(726, 16)
+        Me.Btn_Excel.Location = New System.Drawing.Point(472, 52)
         Me.Btn_Excel.Name = "Btn_Excel"
         Me.Btn_Excel.Size = New System.Drawing.Size(40, 40)
         Me.Btn_Excel.TabIndex = 15
@@ -140,7 +119,7 @@ Partial Class frmPlanillaSucursales
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(498, 31)
+        Me.Label4.Location = New System.Drawing.Point(6, 64)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(63, 15)
         Me.Label4.TabIndex = 14
@@ -152,19 +131,18 @@ Partial Class frmPlanillaSucursales
         Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursal.FormattingEnabled = True
         Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursal.Location = New System.Drawing.Point(567, 27)
+        Me.Cb_Sucursal.Location = New System.Drawing.Point(108, 61)
         Me.Cb_Sucursal.Name = "Cb_Sucursal"
-        Me.Cb_Sucursal.Size = New System.Drawing.Size(152, 23)
+        Me.Cb_Sucursal.Size = New System.Drawing.Size(245, 23)
         Me.Cb_Sucursal.TabIndex = 13
         '
         'btn_Filtrar
         '
-        Me.btn_Filtrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Filtrar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Filtrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Filtrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Filtrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Filtrar.Location = New System.Drawing.Point(772, 16)
+        Me.btn_Filtrar.Location = New System.Drawing.Point(518, 52)
         Me.btn_Filtrar.Name = "btn_Filtrar"
         Me.btn_Filtrar.Size = New System.Drawing.Size(40, 40)
         Me.btn_Filtrar.TabIndex = 12
@@ -177,31 +155,21 @@ Partial Class frmPlanillaSucursales
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(291, 31)
+        Me.Label3.Location = New System.Drawing.Point(370, 27)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(57, 15)
+        Me.Label3.Size = New System.Drawing.Size(81, 15)
         Me.Label3.TabIndex = 11
-        Me.Label3.Text = "Período"
+        Me.Label3.Text = "Período Fin"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(6, 31)
+        Me.Label2.Location = New System.Drawing.Point(6, 30)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(31, 15)
+        Me.Label2.Size = New System.Drawing.Size(96, 15)
         Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Año"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(144, 31)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(34, 15)
-        Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Mes"
+        Me.Label2.Text = "Período Inicio"
         '
         'ToolTip1
         '
@@ -213,7 +181,7 @@ Partial Class frmPlanillaSucursales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(844, 572)
+        Me.ClientSize = New System.Drawing.Size(984, 572)
         Me.Controls.Add(Me.GB_Controles)
         Me.Controls.Add(Me.DG_Planilla)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -230,16 +198,14 @@ Partial Class frmPlanillaSucursales
 
     End Sub
     Friend WithEvents DG_Planilla As System.Windows.Forms.DataGridView
-    Friend WithEvents Cb_Periodo As System.Windows.Forms.ComboBox
-    Friend WithEvents Cb_Anios As System.Windows.Forms.ComboBox
-    Friend WithEvents Cb_Meses As System.Windows.Forms.ComboBox
     Friend WithEvents GB_Controles As System.Windows.Forms.GroupBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btn_Filtrar As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Cb_Sucursal As System.Windows.Forms.ComboBox
     Friend WithEvents Btn_Excel As System.Windows.Forms.Button
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents txt_FHasta As System.Windows.Forms.DateTimePicker
+    Friend WithEvents txt_FDesde As System.Windows.Forms.DateTimePicker
 End Class

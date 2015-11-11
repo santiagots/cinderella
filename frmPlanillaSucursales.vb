@@ -1,9 +1,12 @@
 ﻿Imports System.Data.OleDb
 Imports Microsoft.Office.Interop
 Imports System.Globalization
+Imports System.Configuration
+
 Public Class frmPlanillaSucursales
     Dim NegMovi As New Negocio.NegMovimientos
     Dim NegSucursal As New Negocio.NegSucursales
+    Dim NegPlanillaSucursales As New Negocio.NegPlanillaSucursales
     Dim NegVen As New Negocio.NegVentas
     Dim ClsFunciones As New Funciones
 
@@ -11,14 +14,18 @@ Public Class frmPlanillaSucursales
     'Load del Formulario
     Private Sub frmPlanillaSucursales_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Try
-            'Cargo el combo con los meses.
-            ClsFunciones.CargarComboMeses(Cb_Meses)
+            Dim primerDiaMes As Date = DateTime.Today.AddDays(1 - DateTime.Today.Day)
+            Dim ultimoDiaMes As Date = primerDiaMes.AddMonths(1).AddSeconds(-1)
 
-            'Cargo el combo con los anios.
-            ClsFunciones.CargarComboAnios(Cb_Anios)
+            'Cargo la fecha hasta con el primer dia del mes
+            txt_FDesde.Value = DateTime.Today.AddDays(1 - DateTime.Today.Day)
+            'Cargo la fecha desde con la fecha actual
+            txt_FHasta.Value = Date.Today()
+            txt_FDesde.MinDate = primerDiaMes
+            txt_FDesde.MaxDate = ultimoDiaMes
 
-            'Cargo el combo con los periodos.
-            Cb_Periodo.SelectedItem = "Mes Completo"
+            txt_FHasta.MinDate = primerDiaMes
+            txt_FHasta.MaxDate = ultimoDiaMes
 
             'Cargo el combo con las sucursales.
             Dim dsSucursal As New DataSet
@@ -53,15 +60,34 @@ Public Class frmPlanillaSucursales
         Try
             If Cb_Sucursal.SelectedValue Is Nothing Then
                 MessageBox.Show("Debe seleccionar una sucursal.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            ElseIf (txt_FHasta.Value < txt_FDesde.Value) Then
+                MessageBox.Show("El rango de fechas seleccionado es incorrecto.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
+
+                'Muestro el form de espera..
+                frmCargadorDeEspera.Show()
+                frmCargadorDeEspera.Text = "Generando la planilla de Movimientos de la Sucursal " & DirectCast(Cb_Sucursal.SelectedItem, System.Data.DataRowView).Row.ItemArray(1)
+                frmCargadorDeEspera.lbl_Descripcion.Text = "Iniciando... "
+                frmCargadorDeEspera.BarraProgreso.Minimum = 0
+                frmCargadorDeEspera.BarraProgreso.Maximum = 13
+                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.Refresh()
+
                 'Limpiar la grilla.
                 LimpiarGrilla()
 
-                'Armo el excel
-                ConfeccionarExcel()
+                'Cargo la grilla.
+                CargarGrilla()
 
-                'Levanto el excel armado.
-                RecuperarExcel()
+                'Defino el color alternativo de las rows
+                DG_Planilla.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(255, 221, 235, 247)
+
+                DG_Planilla.Columns("Nivel").Visible = False
+
+                'Defino el formato de las columnas
+                For i As Integer = 2 To DG_Planilla.Columns.Count - 1
+                    DG_Planilla.Columns(i).DefaultCellStyle.Format = "c"
+                Next
 
                 'Programo que las columnas no sean 'sorteables'.
                 For Each column In DG_Planilla.Columns
@@ -69,10 +95,14 @@ Public Class frmPlanillaSucursales
                 Next
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha encontrado un error al generar la grilla de movimientos. Por favor, vuelva a intentar más tarde o contáctese con el Administrador", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Close()
             Me.Dispose()
+        Finally
+            frmCargadorDeEspera.Close()
+            frmCargadorDeEspera.Dispose()
         End Try
+
 
         'Cambio el cursor.
         Me.Cursor = Cursors.Arrow
@@ -81,710 +111,278 @@ Public Class frmPlanillaSucursales
     'Evento click del boton que permite guardar la planilla.
     Private Sub Btn_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Excel.Click
         'Si no se genero una plantilla de excel lo informo.
-        If Not System.IO.File.Exists(Application.StartupPath & "\planilla.xls") Then
-            MessageBox.Show("No se ha encontrado una planilla de excel para exportar. Por favor, intente más tarde.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If DG_Planilla.Rows.Count = 0 Then
+            MessageBox.Show("No se ha encontrado una planilla a exportar. Por favor, genere una planilla para poder ser exportada.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         Else
             Try
+                'Configuro la pantalla de guardado de archivos
                 Dim DialogSave As New SaveFileDialog()
-
-                ' Extension por defecto
-                DialogSave.DefaultExt = "xls"
-
-                ' Extensiones disponibles
-                DialogSave.Filter = "Microsoft Excel (*.xls)|*.xls | All files (*.*)|*.*"
-                DialogSave.FileName = "planilla"
-
-                'Anadir extension en cas de que el usuario no lo haga
-                DialogSave.AddExtension = True
-
-                ' Restaura el directosio selectionado la proxima vez
-                DialogSave.RestoreDirectory = True
-
-                ' Titulo de la ventana
-                DialogSave.Title = "¿Dónde desea guardar la planilla de movimientos de sucursales?"
-
-                ' Directorio donde compenzar a buscar
-                DialogSave.InitialDirectory = "C:/"
+                DialogSave.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                DialogSave.FileName = "MoviminetoSucursal"
+                DialogSave.Filter = "Excel Files|*.xlsx;"
 
                 If DialogSave.ShowDialog() = DialogResult.OK Then
-                    FileCopy(Application.StartupPath & "\planilla.xls", DialogSave.FileName)
-                    If System.IO.File.Exists(DialogSave.FileName) Then
-                        MessageBox.Show("La planilla ha sido guardada correctamente.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Else
-                        MessageBox.Show("La planilla no ha sido guardada.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    End If
+                    Me.Cursor = Cursors.WaitCursor
+                    ExportarAExcel(DialogSave.FileName)
                 End If
 
-                DialogSave.Dispose()
-                DialogSave = Nothing
+                'si no completo la descripcion, muestro un msg de error.
+                MessageBox.Show("Se ha exportado el listado de movimientos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Catch ex As Exception
-                MessageBox.Show(ex.Message.ToString, "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Finally
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
             End Try
+
+
         End If
+    End Sub
+    Private Sub DG_Planilla_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Planilla.CellFormatting
+        If (Not IsDBNull(DG_Planilla.Rows(e.RowIndex).Cells("Nivel").Value) AndAlso DG_Planilla.Rows(e.RowIndex).Cells("Nivel").Value = 1) Then
+            e.CellStyle.BackColor = Color.FromArgb(255, 91, 155, 213)
+            e.CellStyle.Font = New Font(e.CellStyle.Font, FontStyle.Bold)
+            e.CellStyle.ForeColor = Color.White
+        ElseIf (Not IsDBNull(DG_Planilla.Rows(e.RowIndex).Cells("Nivel").Value) AndAlso DG_Planilla.Rows(e.RowIndex).Cells("Nivel").Value = 0) Then
+            e.CellStyle.BackColor = Color.FromArgb(255, 91, 155, 213)
+            e.CellStyle.Font = New Font(e.CellStyle.Font.Name, (e.CellStyle.Font.Size + 2), FontStyle.Bold)
+            e.CellStyle.ForeColor = Color.White
+        ElseIf (Not IsDBNull(DG_Planilla.Rows(e.RowIndex).Cells("Nivel").Value) AndAlso DG_Planilla.Rows(e.RowIndex).Cells("Nivel").Value = -1) Then
+            e.CellStyle.BackColor = Color.FromArgb(255, 91, 155, 213)
+            e.CellStyle.Font = New Font(e.CellStyle.Font, FontStyle.Bold)
+            e.CellStyle.ForeColor = Color.White
+            e.CellStyle.Format = "P"
+        Else
+            e.CellStyle.Font = New Font(e.CellStyle.Font.Name, (e.CellStyle.Font.Size - 2))
+        End If
+
     End Sub
 #End Region
 
 #Region "Region de Funciones que arman y muestran la planilla"
-    Private Sub ConfeccionarExcel()
-        'Declare
-        Dim xlApp As Excel.Application
-        Dim xlWorkBook As Excel.Workbook
-        Dim xlWorkSheet As Excel.Worksheet
-        Dim anio As Integer = Cb_Anios.SelectedItem
-        Dim mes As Integer = ClsFunciones.ObtenerNumeroMes(Cb_Meses.SelectedItem)
-        Dim periodo As Integer = ClsFunciones.ObtenerNumeroPeriodo(Cb_Periodo.SelectedItem)
-        Dim FinPeriodo As Integer
-        Dim InicioPeriodo As Integer
-        Dim inicio As Integer = 0
-        Dim TotEgresos As Integer = 0
-        Dim TotImpuestos As Integer = 0
-        Dim totCaja As Integer = 0
-        Dim TotGastos As Integer = 0
-        Dim TotMoviminetosSocios As Integer = 0
-        Dim TotIngresos As Integer = 0
-        Dim DsEgreso As New DataSet
-        Dim DsGasto As New DataSet
-        Dim DsCaja As New DataSet
-        Dim DsImpuesto As New DataSet
-        Dim DsMovimientoSocios As New DataSet
-        Dim id_Sucursal As Integer = Cb_Sucursal.SelectedValue
-
-        'bloqueo los controles
-        GB_Controles.Enabled = False
-
-        'Muestro el form de espera..
-        frmCargadorDeEspera.Show()
-        frmCargadorDeEspera.Text = "Generando la planilla de Movimientos de la Sucursal " & DirectCast(Cb_Sucursal.SelectedItem, System.Data.DataRowView).Row.ItemArray(1)
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Iniciando... (1/8)"
-        frmCargadorDeEspera.BarraProgreso.Minimum = 0
-        frmCargadorDeEspera.BarraProgreso.Maximum = 8
-        frmCargadorDeEspera.BarraProgreso.Value = 1
-        frmCargadorDeEspera.Refresh()
-
-        xlApp = New Excel.Application
-        xlWorkBook = xlApp.Workbooks.Add()
-        xlWorkSheet = xlWorkBook.Worksheets(1)
-
-        '------------------------------------------Estilos para el excel------------------------------------------'
-        Dim EstiloEncabezado As Microsoft.Office.Interop.Excel.Style
-        EstiloEncabezado = xlWorkBook.Styles.Add("EstiloEncabezado")
-        EstiloEncabezado.Font.Bold = True
-        EstiloEncabezado.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White)
-        EstiloEncabezado.Font.Size = 11
-        EstiloEncabezado.Font.Name = "Arial"
-        EstiloEncabezado.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.DarkGreen)
-        EstiloEncabezado.Interior.Pattern = Microsoft.Office.Interop.Excel.XlPattern.xlPatternSolid
-
-        Dim EstiloCategoria As Microsoft.Office.Interop.Excel.Style
-        EstiloCategoria = xlWorkBook.Styles.Add("EstiloCategoria")
-        EstiloCategoria.Font.Bold = True
-        EstiloCategoria.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black)
-        EstiloCategoria.Font.Size = 11
-        EstiloCategoria.Font.Name = "Arial"
-        EstiloCategoria.Font.Underline = True
-
-        Dim EstiloCuerpo As Microsoft.Office.Interop.Excel.Style
-        EstiloCuerpo = xlWorkBook.Styles.Add("EstiloCuerpo")
-        EstiloCuerpo.Font.Bold = False
-        EstiloCuerpo.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black)
-        EstiloCuerpo.Font.Size = 10
-        EstiloCuerpo.Font.Name = "Arial"
-        EstiloCuerpo.Font.Underline = False
-        '------------------------------------------Estilos para el excel------------------------------------------'
-
-        '------------------------------------------Consulto la cantidad de Movimientos----------------------------'
-        'Ingresos
-        Dim VectorIngresos As New Collection
-        VectorIngresos.Add("Caja Inicial", 1)
-        VectorIngresos.Add("Ventas Mayoristas", 2)
-        VectorIngresos.Add("Ventas Minoristas", 3)
-        VectorIngresos.Add("Ventas Facturadas", 4)
-        VectorIngresos.Add("Ventas con Tarjeta de Crédito", 5)
-        VectorIngresos.Add("Ventas Totales", 6)
-        VectorIngresos.Add("Efectivo desde otra sucursal", 7)
-        TotIngresos = VectorIngresos.Count
-
-        'Consulta - Gastos.
-        DsGasto = NegMovi.ListadoTiposMov(1)
-        TotGastos = DsGasto.Tables(0).Rows.Count
-
-        'Consulta - Egresos.
-        DsEgreso = NegMovi.ListadoTiposMov(2)
-        TotEgresos = DsEgreso.Tables(0).Rows.Count
-
-        'Consulta - Impuestos.
-        DsImpuesto = NegMovi.ListadoTiposMov(3)
-        TotImpuestos = DsImpuesto.Tables(0).Rows.Count
-
-        'Consulta - Diferencia de Cajas.
-        DsCaja = NegMovi.ListadoTiposMov(4)
-        totCaja = DsCaja.Tables(0).Rows.Count
-
-        'Consulta - Movimientos de Socios.
-        DsMovimientoSocios = NegMovi.ListadoTiposMov(5)
-        TotMoviminetosSocios = DsMovimientoSocios.Tables(0).Rows.Count
-        '------------------------------------------Consulto la cantidad de Movimientos----------------------------'
-
-        'Si se genero una plantilla de excel, primero la borro.
-        If System.IO.File.Exists(Application.StartupPath & "\planilla.xls") Then
-            System.IO.File.Delete(Application.StartupPath & "\planilla.xls")
-        End If
-
-        'Dependiendo del periodo, establezco el rango.
-        If periodo = 0 Then
-            InicioPeriodo = 1
-            FinPeriodo = Date.DaysInMonth(anio, mes)
-        ElseIf periodo = 1 Then
-            InicioPeriodo = 1
-            FinPeriodo = 15
-        Else
-            InicioPeriodo = Date.DaysInMonth(anio, mes) - 15
-            FinPeriodo = Date.DaysInMonth(anio, mes)
-        End If
-
-        'Comienzo a formatear el excel.
-        xlWorkSheet.Cells.Style = "EstiloCuerpo"
-
-        xlWorkSheet.Cells(1, 1) = "Tipo/Día"
-        xlWorkSheet.Cells(1, 1).style = "EstiloEncabezado"
-
-        xlWorkSheet.Cells(1, 2) = "Mensual"
-        xlWorkSheet.Cells(1, 2).style = "EstiloEncabezado"
-
-        '------------------------------------------INGRESOS------------------------------------------------------'
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando ingresos... (2/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 2
-        frmCargadorDeEspera.Refresh()
-
-        xlWorkSheet.Cells(2, 1) = "INGRESOS"
-        xlWorkSheet.Cells(2, 1).style = "EstiloCategoria"
-
-        Dim ComienzoIngreso As Integer = 2
-        Dim CostoTotalIngreso As Double = 0
-        For w = 1 To TotIngresos
-
-            Dim wds As Integer = (w - 1)
-            xlWorkSheet.Cells(ComienzoIngreso + w, 1) = VectorIngresos.Item(w).ToString()
-
-            '-----Completo los valores de los mov por dia-----
-            ' Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            '  Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            '  Dim id_Tipo As Integer = DsGasto.Tables(0).Rows(wds).Item(0).ToString()
-            '  Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 1, id_Tipo)
-            Dim HayMovimientos As Integer = 1
-
-            Dim CostoTotal As Double = 0
-            For i = InicioPeriodo To FinPeriodo
-                inicio = (i - InicioPeriodo) + 1
-                'Se obtiene la suma del dia y se coloca en la celda.
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                Dim Costo As Double = 0
-
-                If HayMovimientos = 1 Then
-                    If w = 1 Then
-                        Dim entCaja As New Entidades.CajaInicial
-                        Dim NegCaja As New Negocio.NegCajaInicial
-                        entCaja = NegCaja.ObtenerCaja(id_Sucursal, Fecha)
-                        If entCaja.id_Caja > 0 Then
-                            Costo = entCaja.Monto
-                        Else
-                            Costo = 0
-                        End If
-                    ElseIf w = 2 Then
-                        Costo = NegVen.TotalVentasMayoristas(id_Sucursal, Fecha)
-                    ElseIf w = 3 Then
-                        Costo = NegVen.TotalVentasMinoristas(id_Sucursal, Fecha)
-                    ElseIf w = 4 Then
-                        Costo = NegVen.TotalVentasFacturado(id_Sucursal, Fecha)
-                    ElseIf w = 5 Then
-                        Costo = NegVen.TotalVentasTarjetas(id_Sucursal, Fecha)
-                    ElseIf w = 6 Then
-                        Costo = NegVen.TotalVentas(id_Sucursal, Fecha)
-                    ElseIf w = 7 Then
-                        Costo = NegMovi.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Ingresos")
-                    End If
-
-                Else
-                    Costo = 0
-                End If
-
-                If Costo > 0 Then
-                    xlWorkSheet.Cells(ComienzoIngreso + w, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                Else
-                    xlWorkSheet.Cells(ComienzoIngreso + w, (inicio + 2)) = "-"
-                End If
-
-                'Se incrementa el subtotal.
-                CostoTotal += Costo
-
-            Next
-
-            'Se coloca el subtotal en la celda.
-            If CostoTotal > 0 Then
-                xlWorkSheet.Cells(ComienzoIngreso + w, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells(ComienzoIngreso + w, 2) = "-"
-            End If
-
-            'Se incrementa el subtotal de los ingresos.
-            If w = 4 Then
-                CostoTotalIngreso += CostoTotal
-            End If
-            '-----Completo los valores de los mov por dia-----
-
-        Next
-
-        If CostoTotalIngreso > 0 Then
-            xlWorkSheet.Cells(2, 2) = "$ " & Format(CType(CostoTotalIngreso, Decimal), "###0.00")
-        Else
-            xlWorkSheet.Cells(2, 2) = "-"
-        End If
-
-        '------------------------------------------INGRESOS------------------------------------------------------'
-
-        '------------------------------------------GASTOS--------------------------------------------------------'
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando gastos... (3/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 2
-        frmCargadorDeEspera.Refresh()
-
-
-        xlWorkSheet.Cells((ComienzoIngreso + TotIngresos + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoIngreso + TotIngresos + 2), 1) = "GASTOS"
-        xlWorkSheet.Cells((ComienzoIngreso + TotIngresos + 2), 1).style = "EstiloCategoria"
-
-        Dim ComienzoGasto As Integer = ComienzoIngreso + TotIngresos + 2
-        Dim CostoTotalGasto As Double = 0
-        For w = 1 To TotGastos
-
-            Dim wds As Integer = (w - 1)
-            xlWorkSheet.Cells(ComienzoGasto + w, 1) = DsGasto.Tables(0).Rows(wds).Item("Tipo").ToString()
-
-            '-----Completo los valores de los mov por dia-----
-            Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            Dim id_Tipo As Integer = DsGasto.Tables(0).Rows(wds).Item(0).ToString()
-            Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 1, id_Tipo)
-
-            Dim CostoTotal As Double = 0
-            For i = InicioPeriodo To FinPeriodo
-                inicio = (i - InicioPeriodo) + 1
-                'Se obtiene la suma del dia y se coloca en la celda.
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                Dim Costo As Double = 0
-
-                If HayMovimientos = 1 Then
-                    Costo = NegMovi.ObtenerMovimiento(id_Sucursal, Fecha, 1, id_Tipo)
-                Else
-                    Costo = 0
-                End If
-
-                If Costo > 0 Then
-                    xlWorkSheet.Cells(ComienzoGasto + w, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                Else
-                    xlWorkSheet.Cells(ComienzoGasto + w, (inicio + 2)) = "-"
-                End If
-
-                'Se incrementa el subtotal.
-                CostoTotal += Costo
-            Next
-
-            'Se coloca el subtotal en la celda.
-            If CostoTotal > 0 Then
-                xlWorkSheet.Cells(ComienzoGasto + w, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells(ComienzoGasto + w, 2) = "-"
-            End If
-
-            'Se incrementa el subtotal de los ingresos.
-            CostoTotalGasto += CostoTotal
-            '-----Completo los valores de los mov por dia-----
-
-        Next
-
-        If CostoTotalGasto > 0 Then
-            xlWorkSheet.Cells(ComienzoIngreso + TotIngresos + 2, 2) = "$ " & Format(CType(CostoTotalGasto, Decimal), "###0.00")
-        Else
-            xlWorkSheet.Cells(ComienzoIngreso + TotIngresos + 2, 2) = "-"
-        End If
-
-        '------------------------------------------GASTOS--------------------------------------------------------'
-
-        '------------------------------------------ENVÍOS A OTRAS SUC.-------------------------------------------------------'
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando Envíos a otras Sucursales... (4/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 3
-        frmCargadorDeEspera.Refresh()
-
-        xlWorkSheet.Cells((ComienzoGasto + TotGastos + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 1) = "ENVÍOS A OTRAS SUC."
-        xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 1).style = "EstiloCategoria"
-
-        Dim ComienzoEgreso As Integer = ComienzoGasto + TotGastos + 2
-        Dim CostoTotalEgreso As Double = 0
-        For e = 1 To TotEgresos
-
-            Dim eds As Integer = (e - 1)
-            xlWorkSheet.Cells(ComienzoEgreso + e, 1) = DsEgreso.Tables(0).Rows(eds).Item("Tipo").ToString()
-
-            '-----Completo los valores de los mov por dia-----
-            Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            Dim id_Tipo As Integer = DsEgreso.Tables(0).Rows(eds).Item(0).ToString()
-            Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 2, id_Tipo)
-
-            Dim CostoTotal As Double = 0
-            For i = InicioPeriodo To FinPeriodo
-                inicio = (i - InicioPeriodo) + 1
-                'Se obtiene la suma del dia y se coloca en la celda.
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                Dim Costo As Double = 0
-
-                If HayMovimientos = 1 Then
-                    Costo = NegMovi.ObtenerMovimiento(id_Sucursal, Fecha, 2, id_Tipo)
-                Else
-                    Costo = 0
-                End If
-
-                If Costo > 0 Then
-                    xlWorkSheet.Cells(ComienzoEgreso + e, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                Else
-                    xlWorkSheet.Cells(ComienzoEgreso + e, (inicio + 2)) = "-"
-                End If
-
-                'Se incrementa el subtotal.
-                CostoTotal += Costo
-            Next
-
-            'Se coloca el subtotal en la celda.
-            If CostoTotal > 0 Then
-                xlWorkSheet.Cells(ComienzoEgreso + e, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells(ComienzoEgreso + e, 2) = "-"
-            End If
-
-            'Se incrementa el subtotal de los ingresos.
-            CostoTotalEgreso += CostoTotal
-            '-----Completo los valores de los mov por dia-----
-
-        Next
-
-        If CostoTotalEgreso > 0 Then
-            xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 2) = "$ " & Format(CType(CostoTotalEgreso, Decimal), "###0.00")
-        Else
-            xlWorkSheet.Cells((ComienzoGasto + TotGastos + 2), 2) = "-"
-        End If
-        '------------------------------------------EGRESOS-------------------------------------------------------'
-
-        '------------------------------------------IMPUESTOS-----------------------------------------------------'
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando impuestos... (5/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 4
-        frmCargadorDeEspera.Refresh()
-
-        xlWorkSheet.Cells((ComienzoEgreso + TotEgresos + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoEgreso + TotEgresos + 2), 1) = "IMPUESTOS"
-        xlWorkSheet.Cells((ComienzoEgreso + TotEgresos + 2), 1).style = "EstiloCategoria"
-
-        Dim ComienzoImpuestos As Integer = ComienzoEgreso + TotEgresos + 2
-        Dim CostoTotalImpuesto As Double = 0
-        For q = 1 To TotImpuestos
-
-            Dim qds As Integer = (q - 1)
-            xlWorkSheet.Cells(ComienzoImpuestos + q, 1) = DsImpuesto.Tables(0).Rows(qds).Item("Tipo").ToString()
-
-            '-----Completo los valores de los mov por dia-----
-            Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            Dim id_Tipo As Integer = DsImpuesto.Tables(0).Rows(qds).Item(0).ToString()
-            Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 3, id_Tipo)
-
-            Dim CostoTotal As Double = 0
-            For i = InicioPeriodo To FinPeriodo
-                inicio = (i - InicioPeriodo) + 1
-                'Se obtiene la suma del dia y se coloca en la celda.
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                Dim Costo As Double = 0
-
-                If HayMovimientos = 1 Then
-                    Costo = NegMovi.ObtenerMovimiento(id_Sucursal, Fecha, 3, id_Tipo)
-                Else
-                    Costo = 0
-                End If
-
-                If Costo > 0 Then
-                    xlWorkSheet.Cells(ComienzoImpuestos + q, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                Else
-                    xlWorkSheet.Cells(ComienzoImpuestos + q, (inicio + 2)) = "-"
-                End If
-
-                'Se incrementa el subtotal.
-                CostoTotal += Costo
-            Next
-
-            'Se coloca el subtotal en la celda.
-            If CostoTotal > 0 Then
-                xlWorkSheet.Cells(ComienzoImpuestos + q, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells(ComienzoImpuestos + q, 2) = "-"
-            End If
-
-            'Se incrementa el subtotal de los ingresos.
-            CostoTotalImpuesto += CostoTotal
-            '-----Completo los valores de los mov por dia-----
-        Next
-
-        If CostoTotalImpuesto > 0 Then
-            xlWorkSheet.Cells((ComienzoEgreso + TotEgresos + 2), 2) = "$ " & Format(CType(CostoTotalImpuesto, Decimal), "###0.00")
-        Else
-            xlWorkSheet.Cells((ComienzoEgreso + TotEgresos + 2), 2) = "-"
-        End If
-        '------------------------------------------IMPUESTOS-----------------------------------------------------'
-
-        '------------------------------------------DIFERENCIAS DE CAJA-------------------------------------------'
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando diferencias de caja... (6/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 5
-        frmCargadorDeEspera.Refresh()
-
-        xlWorkSheet.Cells((ComienzoImpuestos + TotImpuestos + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoImpuestos + TotImpuestos + 2), 1) = "DIFERENCIA DE CAJA"
-        xlWorkSheet.Cells((ComienzoImpuestos + TotImpuestos + 2), 1).style = "EstiloCategoria"
-
-        Dim ComienzoCaja As Integer = ComienzoImpuestos + TotImpuestos + 2
-        Dim CostoTotalCaja As Double = 0
-        For r = 1 To totCaja
-
-            Dim rds As Integer = (r - 1)
-            xlWorkSheet.Cells(ComienzoCaja + r, 1) = DsCaja.Tables(0).Rows(rds).Item("Tipo").ToString()
-
-            Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            Dim id_Tipo As Integer = DsCaja.Tables(0).Rows(rds).Item(0).ToString()
-            Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 4, id_Tipo)
-
-            '-----Completo los valores de los mov por dia-----
-            Dim CostoTotal As Double = 0
-            For i = InicioPeriodo To FinPeriodo
-                inicio = (i - InicioPeriodo) + 1
-                'Se obtiene la suma del dia y se coloca en la celda.
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                Dim Costo As Double = 0
-
-                If HayMovimientos = 1 Then
-                    Costo = NegMovi.ObtenerMovimiento(id_Sucursal, Fecha, 4, id_Tipo)
-                Else
-                    Costo = 0
-                End If
-
-                If Costo > 0 Then
-                    xlWorkSheet.Cells(ComienzoCaja + r, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                Else
-                    xlWorkSheet.Cells(ComienzoCaja + r, (inicio + 2)) = "-"
-                End If
-
-                'Se incrementa el subtotal.
-                CostoTotal += Costo
-            Next
-
-            'Se coloca el subtotal en la celda.
-            If CostoTotal > 0 Then
-                xlWorkSheet.Cells(ComienzoCaja + r, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells(ComienzoCaja + r, 2) = "-"
-            End If
-
-            'Se incrementa el subtotal de los ingresos.
-            CostoTotalCaja += CostoTotal
-            '-----Completo los valores de los mov por dia-----
-        Next
-
-        If CostoTotalCaja > 0 Then
-            xlWorkSheet.Cells((ComienzoImpuestos + TotImpuestos + 2), 2) = "$ " & Format(CType(CostoTotalCaja, Decimal), "###0.00")
-        Else
-            xlWorkSheet.Cells((ComienzoImpuestos + TotImpuestos + 2), 2) = "-"
-        End If
-        '------------------------------------------DIFERENCIAS DE CAJA-------------------------------------------'
-
-        '------------------------------------------RETIROS DE SOCIO----------------------------------------------'
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Calculando retiros de socio... (7/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 6
-        frmCargadorDeEspera.Refresh()
-
-        xlWorkSheet.Cells((ComienzoCaja + totCaja + 1), 1) = ""
-        xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 1) = "MOVIMINETO DE SOCIOS"
-        xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 1).style = "EstiloCategoria"
-
-        Dim TotalMovimientoSocios As Dictionary(Of Integer, Double) = New Dictionary(Of Integer, Double)(FinPeriodo)
-        Dim ComienzoRetiros As Integer = ComienzoCaja + totCaja + 2
-        Dim CostoTotalRetiro As Double = 0
-
-        Dim dv As DataView = DsMovimientoSocios.Tables(0).DefaultView
-        dv.Sort = "Tipo desc"
-        Dim TiposMovimientos As DataTable = dv.ToTable()
-
-        For r = 1 To TotMoviminetosSocios
-
-            Dim rds As Integer = (r - 1)
-            xlWorkSheet.Cells(ComienzoRetiros + r, 1) = TiposMovimientos.Rows(rds).Item("Tipo").ToString()
-
-            Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
-            Dim id_Tipo As Integer = TiposMovimientos.Rows(rds).Item(0).ToString()
-            Dim HayMovimientos As Integer = NegMovi.ConsultarMovimiento(id_Sucursal, FDesde, FHasta, 5, id_Tipo)
-
-            '-----Completo los valores de los mov por dia-----
-            Dim CostoTotal As Double = 0
-            For i = InicioPeriodo To FinPeriodo
-                inicio = (i - InicioPeriodo) + 1
-                'Se obtiene la suma del dia y se coloca en la celda.
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                Dim Costo As Double = 0
-
-                If HayMovimientos = 1 Then
-                    Costo = NegMovi.ObtenerMovimiento(id_Sucursal, Fecha, 5, id_Tipo)
-                Else
-                    Costo = 0
-                End If
-
-                If (TotalMovimientoSocios.ContainsKey(i)) Then
-                    TotalMovimientoSocios(i) -= Costo
-                Else
-                    TotalMovimientoSocios.Add(i, Costo)
-                End If
-
-
-                If Costo <> 0 Then
-                    xlWorkSheet.Cells(ComienzoRetiros + r, (inicio + 2)) = "$ " & Format(CType(Costo, Decimal), "###0.00")
-                Else
-                    xlWorkSheet.Cells(ComienzoRetiros + r, (inicio + 2)) = "-"
-                End If
-
-                'Se incrementa el subtotal.
-                CostoTotal += Costo
-            Next
-
-            'Se coloca el subtotal en la celda.
-            If CostoTotal <> 0 Then
-                xlWorkSheet.Cells(ComienzoRetiros + r, 2) = "$ " & Format(CType(CostoTotal, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells(ComienzoRetiros + r, 2) = "-"
-            End If
-
-            'Se incrementa el subtotal de los ingresos.
-            If (r = 1) Then
-                CostoTotalRetiro = CostoTotal
-            Else
-                CostoTotalRetiro -= CostoTotal
-            End If
-            '-----Completo los valores de los mov por dia-----
-        Next
-
-        If CostoTotalRetiro <> 0 Then
-            xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 2) = "$ " & Format(CType(CostoTotalRetiro, Decimal), "###0.00")
-        Else
-            xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), 2) = "-"
-        End If
-
-        For Each item As KeyValuePair(Of Integer, Double) In TotalMovimientoSocios
-            If item.Value <> 0 Then
-                xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), item.Key + 2) = "$ " & Format(CType(item.Value, Decimal), "###0.00")
-            Else
-                xlWorkSheet.Cells((ComienzoCaja + totCaja + 2), item.Key + 2) = "-"
-            End If
-        Next
-        '------------------------------------------RETIROS DE SOCIO----------------------------------------------'
-
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.lbl_Descripcion.Text = "Confeccionando planilla... (8/8)"
-        frmCargadorDeEspera.BarraProgreso.Value = 7
-        frmCargadorDeEspera.Refresh()
-
-        'Armo la cabecera con los dias de la semana del rango seleccionado.
-        For i = InicioPeriodo To FinPeriodo
-            inicio = (i - InicioPeriodo) + 1
-            Dim dateValue As Date = i & "/" & mes & "/" & anio
-            xlWorkSheet.Cells(1, (inicio + 2)) = i & "º " & dateValue.ToString("dddd", New CultureInfo("es-ES"))
-            xlWorkSheet.Cells(1, (inicio + 2)).style = "EstiloEncabezado"
-        Next
-
-        'Ajusto las columnas dependiendo de las celdas.
-        xlWorkSheet.Columns.AutoFit()
-
-        'Almaceno el excel.
-        xlApp.DisplayAlerts = False
-        xlWorkBook.SaveAs(Application.StartupPath & "\planilla.xls", Excel.XlFileFormat.xlExcel8)
-        xlWorkBook.Close()
-        xlApp.DisplayAlerts = True
-        xlApp.Quit()
-
-        'Limpio las variables utilizadas.
-        ClsFunciones.releaseObject(xlApp)
-        ClsFunciones.releaseObject(xlWorkBook)
-        ClsFunciones.releaseObject(xlWorkSheet)
-
-        'Voy seteando la barra de progreso
-        frmCargadorDeEspera.Close()
-        frmCargadorDeEspera.Dispose()
-
-        'bloqueo los controles
-        GB_Controles.Enabled = True
-
-    End Sub
-
-    Private Sub RecuperarExcel()
-        Try
-            'Levanto el excel armado.
-            Dim strconn As String
-            Dim dt As New DataTable
-            Dim ObjExcel As Excel.Application
-            Dim ObjW As Excel.Workbook
-            Dim Hoja As String = "Hoja1"
-            ObjExcel = New Excel.Application
-            ObjW = ObjExcel.Workbooks.Open(Application.StartupPath & "\planilla.xls")
-
-            'Objeto el nombre de la hoja.
-            If ObjW.Sheets(1).Name <> "" Then
-                Hoja = ObjW.Sheets(1).Name
-            End If
-
-            'Elimino los objetos.
-            ObjW.Close()
-            ObjExcel.Quit()
-            ClsFunciones.releaseObject(ObjExcel)
-            ClsFunciones.releaseObject(ObjW)
-
-            strconn = "Provider=Microsoft.Jet.Oledb.4.0; data source= " & Application.StartupPath & "\planilla.xls;Extended properties=""Excel 8.0;hdr=yes;imex=1"""
-            Dim mconn As New OleDbConnection(strconn)
-            Dim ad As New OleDbDataAdapter("Select * from [" & Hoja & "$]", mconn)
-            mconn.Open()
-            ad.Fill(dt)
-            mconn.Close()
-            DG_Planilla.DataSource = dt
-
-            'Seteo el estilo de la cabecera.
-            DG_Planilla.ColumnHeadersVisible = True
-            Dim columnHeaderStyle As New DataGridViewCellStyle()
-            columnHeaderStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            columnHeaderStyle.Font = New Font("Verdana", 10, FontStyle.Bold)
-            DG_Planilla.ColumnHeadersDefaultCellStyle = columnHeaderStyle
-            DG_Planilla.AutoResizeColumnHeadersHeight()
-            DG_Planilla.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders)
-            DG_Planilla.Columns(0).Frozen = True
-        Catch ex As Exception
-            frmCargadorDeEspera.Close()
-            frmCargadorDeEspera.Dispose()
-            MessageBox.Show(ex.Message, "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)            
-        End Try
-    End Sub
 
     Private Sub LimpiarGrilla()
         DG_Planilla.DataSource = Nothing
         DG_Planilla.Rows.Clear()
     End Sub
-#End Region
 
+    Private Sub CargarGrilla()
+        Dim fechaDesde As String = txt_FDesde.Value.ToString("yyyy-MM-dd")
+        Dim fechaHasta As String = txt_FHasta.Value.ToString("yyyy-MM-dd")
+        Dim id_Sucursal As Integer = Cb_Sucursal.SelectedValue
+
+        Dim Movimientos As DataTable = New DataTable()
+
+        'Indice Mercaderia
+        ActualizarPantallaCarga("Obteniendo Indice Mercaderías / Ventas (1/14)", 1)
+        Dim IndiceMercaderia As DataSet = NegPlanillaSucursales.ObtenerIndiceMercaderia(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(IndiceMercaderia.Tables(0))
+
+        'Indice Sueldo
+        ActualizarPantallaCarga("Obteniendo Indice Sueldos / Ventas (2/14)", 2)
+        Dim IndiceSueldo As DataSet = NegPlanillaSucursales.ObtenerIndiceSueldo(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(IndiceSueldo.Tables(0))
+
+
+        'Indice Alquiler
+        ActualizarPantallaCarga("Obteniendo Indice Alquiler / Ventas (3/14)", 3)
+        Dim IndiceAlquiler As DataSet = NegPlanillaSucursales.ObtenerIndiceAlquiler(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(IndiceAlquiler.Tables(0))
+
+        'Disponibilidades
+        ActualizarPantallaCarga("Obteniendo Disponibilidades (4/14)", 4)
+        Dim Disponibilidades As DataSet = NegPlanillaSucursales.ObtenerDisponibilidades(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(Disponibilidades.Tables(0))
+
+        'Ventas
+        ActualizarPantallaCarga("Obteniendo Ventas (5/14)", 5)
+        Dim Ventas As DataSet = NegPlanillaSucursales.ObtenerVentas(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(Ventas.Tables(0))
+
+        'Mercaderia
+        ActualizarPantallaCarga("Obteniendo Mercaderia (6/14)", 6)
+        Dim Mercaderia As DataSet = NegPlanillaSucursales.ObtenerMercaderia(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(Mercaderia.Tables(0))
+
+        'Sueldos
+        ActualizarPantallaCarga("Obteniendo Sueldos (7/14)", 7)
+        Dim Sueldos As DataSet = NegPlanillaSucursales.ObtenerSueldos(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(Sueldos.Tables(0))
+
+        'Caja
+        ActualizarPantallaCarga("Obteniendo Diferencias de Caja (8/14)", 8)
+        Dim Caja As DataSet = NegPlanillaSucursales.ObtenerCaja(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(Caja.Tables(0))
+
+        'Movimiento Socios
+        ActualizarPantallaCarga("Obteniendo Movimientos de Socios (9/14)", 9)
+        Dim MovimientoSocios As DataSet = NegPlanillaSucursales.ObtenerMovimientoSocios(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(MovimientoSocios.Tables(0))
+
+        'Movimiento Sucursales
+        ActualizarPantallaCarga("Obteniendo Movimientos entre Sucursales (11/14)", 10)
+        Dim MovimientosSucursales As DataSet = NegPlanillaSucursales.ObtenerMovimientosSucursales(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(MovimientosSucursales.Tables(0))
+
+        'Gastos
+        ActualizarPantallaCarga("Obteniendo Gastos (12/14)", 11)
+        Dim MovimientosGastos As DataSet = NegPlanillaSucursales.ObtenerGastos(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(MovimientosGastos.Tables(0))
+
+        'Impuestos
+        ActualizarPantallaCarga("Obteniendo Impuestos (13/14)", 12)
+        Dim MovimientosImpuestos As DataSet = NegPlanillaSucursales.ObtenerImpuestos(id_Sucursal, fechaDesde, fechaHasta)
+        Movimientos.Merge(MovimientosImpuestos.Tables(0))
+
+        'Resultado Financiero
+        ActualizarPantallaCarga("Obteniendo Resultado Financiero (14/14)", 13)
+        Dim ResultadoFinanciero As DataRow = Movimientos.NewRow()
+
+        'inicializo la row de resultado financiero a 0
+        For Each col As DataColumn In Movimientos.Columns
+
+            If (IsDBNull(ResultadoFinanciero(col))) Then
+                ResultadoFinanciero(col) = 0
+            End If
+        Next
+
+        'calculo el resultado financiero a partir de los DS recuperados
+        'Resultado Financiero (ventas – mercaderías – sueldos + diferencia caja – gastos – impuestos)
+        For i As Integer = 2 To Ventas.Tables(0).Rows(0).ItemArray.Count - 1
+            ResultadoFinanciero.Item(i) += Ventas.Tables(0).Rows(0).Item(i)
+        Next
+
+        For i As Integer = 2 To Mercaderia.Tables(0).Rows(0).ItemArray.Count - 1
+            ResultadoFinanciero.Item(i) -= Mercaderia.Tables(0).Rows(0).Item(i)
+        Next
+
+        For i As Integer = 2 To Sueldos.Tables(0).Rows(0).ItemArray.Count - 1
+            ResultadoFinanciero.Item(i) -= Sueldos.Tables(0).Rows(0).Item(i)
+        Next
+
+        For i As Integer = 2 To Caja.Tables(0).Rows(0).ItemArray.Count - 1
+            ResultadoFinanciero.Item(i) += Caja.Tables(0).Rows(0).Item(i)
+        Next
+
+        For i As Integer = 2 To MovimientosGastos.Tables(0).Rows(0).ItemArray.Count - 1
+            ResultadoFinanciero.Item(i) -= MovimientosGastos.Tables(0).Rows(0).Item(i)
+        Next
+
+        For i As Integer = 2 To MovimientosImpuestos.Tables(0).Rows(0).ItemArray.Count - 1
+            ResultadoFinanciero.Item(i) -= MovimientosImpuestos.Tables(0).Rows(0).Item(i)
+        Next
+
+        ResultadoFinanciero.Item(0) = "Resultado Financiero"
+
+        ResultadoFinanciero.Item(1) = 0
+
+        Movimientos.Rows.InsertAt(ResultadoFinanciero, 0)
+
+        DG_Planilla.DataSource = Movimientos
+    End Sub
+
+    Private Sub ActualizarPantallaCarga(texto As String, Progreso As Integer)
+        'Voy seteando la barra de progreso
+        frmCargadorDeEspera.lbl_Descripcion.Text = texto
+        frmCargadorDeEspera.BarraProgreso.Value = Progreso
+        frmCargadorDeEspera.Refresh()
+    End Sub
+
+    Private Sub ExportarAExcel(nombreArchivo As String)
+        Dim source1 As New BindingSource
+        Dim APP As New Excel.Application
+        Dim worksheet As Excel.Worksheet
+        Dim workbook As Excel.Workbook
+        Dim misValue As Object = System.Reflection.Missing.Value
+
+        workbook = APP.Workbooks.Add(misValue)
+        worksheet = CType(workbook.Worksheets.Item(1), Excel.Worksheet)
+
+        '------------------------------------------Estilos para el excel------------------------------------------'
+        Dim EstiloEncabezado As Microsoft.Office.Interop.Excel.Style
+        EstiloEncabezado = workbook.Styles.Add("EstiloEncabezado")
+        EstiloEncabezado.Font.Bold = True
+        EstiloEncabezado.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White)
+        EstiloEncabezado.Font.Size = 11
+        EstiloEncabezado.Font.Name = "Microsoft Sans Serif"
+        EstiloEncabezado.Interior.Color = Color.FromArgb(255, 91, 155, 213)
+        EstiloEncabezado.Interior.Pattern = Microsoft.Office.Interop.Excel.XlPattern.xlPatternSolid
+
+        Dim EstiloCategoria As Microsoft.Office.Interop.Excel.Style
+        EstiloCategoria = workbook.Styles.Add("EstiloCategoria")
+        EstiloCategoria.Font.Bold = True
+        EstiloCategoria.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White)
+        EstiloCategoria.Font.Size = 9
+        EstiloCategoria.Font.Name = "Microsoft Sans Serif"
+        EstiloCategoria.Interior.Color = Color.FromArgb(255, 91, 155, 213)
+        EstiloCategoria.Interior.Pattern = Microsoft.Office.Interop.Excel.XlPattern.xlPatternSolid
+        '------------------------------------------Estilos para el excel------------------------------------------'
+
+        'Export Header Names Start
+        Dim columnIndex As Integer = 0
+        For j As Integer = 0 To DG_Planilla.Columns.Count - 1
+            If (DG_Planilla.Columns(j).Name = "Nivel") Then
+                Continue For
+            End If
+            worksheet.Cells(1, columnIndex + 1).Value = DG_Planilla.Columns(j).Name
+            worksheet.Cells(1, columnIndex + 1).style = "EstiloEncabezado"
+            If (j > 1) Then
+                worksheet.Cells(1, columnIndex + 1).NumberFormat = "yyyy/MM/dd"
+            End If
+            columnIndex += 1
+        Next
+        'Export Header Name End
+
+
+        'Export Each Row Start
+        For i As Integer = 0 To DG_Planilla.Rows.Count - 1
+            columnIndex = 0
+            For j As Integer = 0 To DG_Planilla.Columns.Count - 1
+                If (Not DG_Planilla.Columns(j).Visible) Then
+                    Continue For
+                End If
+
+                If (DG_Planilla.Item("Nivel", i).Value <= 1) Then
+                    worksheet.Cells(i + 2, columnIndex + 1).style = "EstiloCategoria"
+                End If
+
+                If (DG_Planilla.Item("Nivel", i).Value = -1) Then
+                    worksheet.Cells(i + 2, columnIndex + 1).NumberFormat = "0.00%"
+                Else
+                    worksheet.Cells(i + 2, columnIndex + 1).NumberFormat = "$ #.###,00"
+                End If
+                worksheet.Cells(i + 2, columnIndex + 1).Value = DG_Planilla.Item(j, i).Value
+                columnIndex += 1
+            Next
+        Next
+        'Export Each Row End
+
+        'Auto fit columns
+        Dim startCell As Excel.Range = CType(worksheet.Cells(1, 1), Excel.Range)
+        Dim endCell As Excel.Range = CType(worksheet.Cells(DG_Planilla.Rows.Count + 1, DG_Planilla.Columns.Count), Excel.Range)
+        Dim writeRange As Excel.Range = worksheet.Range(startCell, endCell)
+        writeRange.Columns.AutoFit()
+
+        APP.DisplayAlerts = False
+        workbook.SaveAs(nombreArchivo, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, False, False, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, True, misValue, misValue, misValue)
+        APP.DisplayAlerts = True
+        workbook.Close(0)
+        APP.Workbooks.Close()
+        APP.Quit()
+        KillExcel()
+    End Sub
+
+    Private Sub KillExcel()
+
+        Dim proc As System.Diagnostics.Process
+        For Each proc In System.Diagnostics.Process.GetProcessesByName("EXCEL")
+            If proc.MainWindowTitle.ToString = "" Then
+                proc.Kill()
+            End If
+        Next
+
+    End Sub
+
+#End Region
 End Class
