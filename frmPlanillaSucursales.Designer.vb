@@ -59,7 +59,7 @@ Partial Class frmPlanillaSucursales
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DG_Planilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Planilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Planilla.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.DG_Planilla.Cursor = System.Windows.Forms.Cursors.Default
         Me.DG_Planilla.GridColor = System.Drawing.SystemColors.ControlText
         Me.DG_Planilla.Location = New System.Drawing.Point(14, 121)
         Me.DG_Planilla.Name = "DG_Planilla"

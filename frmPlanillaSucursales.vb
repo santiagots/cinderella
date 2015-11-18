@@ -9,6 +9,7 @@ Public Class frmPlanillaSucursales
     Dim NegPlanillaSucursales As New Negocio.NegPlanillaSucursales
     Dim NegVen As New Negocio.NegVentas
     Dim ClsFunciones As New Funciones
+    Const LinkADetalles As String = "Mercaderia|Sueldos"
 
 #Region "Region de Eventos"
     'Load del Formulario
@@ -385,4 +386,46 @@ Public Class frmPlanillaSucursales
     End Sub
 
 #End Region
+
+    Private Sub DG_Planilla_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Planilla.CellMouseEnter
+        If (e.RowIndex <> -1 AndAlso LinkADetalles.Contains(DG_Planilla.Item(0, e.RowIndex).Value.ToString())) Then
+            DG_Planilla.Cursor = Cursors.Hand
+        Else
+            DG_Planilla.Cursor = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub DG_Planilla_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Planilla.CellClick
+        If (e.RowIndex <> -1 AndAlso LinkADetalles.Contains(DG_Planilla.Item(0, e.RowIndex).Value.ToString())) Then
+            Try
+                Dim fechaDesde As String = txt_FDesde.Value.ToString("yyyy-MM-dd")
+                Dim fechaHasta As String = txt_FHasta.Value.ToString("yyyy-MM-dd")
+                Dim id_Sucursal As Integer = Cb_Sucursal.SelectedValue
+
+                Dim frmPlanillaSucursalesDetalle As frmPlanillaSucursalesDetalle = New frmPlanillaSucursalesDetalle()
+                frmPlanillaSucursalesDetalle.FDesde = fechaDesde
+                frmPlanillaSucursalesDetalle.FHasta = fechaHasta
+                frmPlanillaSucursalesDetalle.NombreDetalle = DG_Planilla.Item(0, e.RowIndex).Value.ToString()
+
+                Dim dt As DataTable = New DataTable()
+
+                Me.Cursor = Cursors.WaitCursor
+
+                Select Case DG_Planilla.Item(0, e.RowIndex).Value.ToString()
+                    Case "Mercaderia"
+                        dt = NegPlanillaSucursales.ObtenerMercaderiaDetalle(id_Sucursal, fechaDesde, fechaHasta).Tables(0)
+                    Case "Sueldos"
+                        dt = NegPlanillaSucursales.ObtenerSueldosDetalle(id_Sucursal, fechaDesde, fechaHasta).Tables(0)
+                End Select
+
+                Me.Cursor = Cursors.Default
+
+                frmPlanillaSucursalesDetalle.DetalleDataTable = dt
+                frmPlanillaSucursalesDetalle.ShowDialog()
+            Catch ex As Exception
+                Me.Cursor = Cursors.Default
+                MessageBox.Show("Se ha encontrado un error al generar la grilla de detalles. Por favor, vuelva a intentar más tarde o contáctese con el Administrador", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+    End Sub
 End Class

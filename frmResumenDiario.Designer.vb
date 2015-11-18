@@ -96,12 +96,12 @@ Partial Class frmResumenDiario
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.lbl_DispoEfect = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.txt_VentasCheque = New System.Windows.Forms.TextBox()
-        Me.Label18 = New System.Windows.Forms.Label()
         Me.txt_VentasCredito = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.txt_VentasDebito = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
+        Me.txt_VentasCheque = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.GbDetalle.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GB_Caja.SuspendLayout()
@@ -454,7 +454,7 @@ Partial Class frmResumenDiario
         'lblMayorista
         '
         Me.lblMayorista.AutoSize = True
-        Me.lblMayorista.Location = New System.Drawing.Point(7, 158)
+        Me.lblMayorista.Location = New System.Drawing.Point(6, 185)
         Me.lblMayorista.Name = "lblMayorista"
         Me.lblMayorista.Size = New System.Drawing.Size(60, 15)
         Me.lblMayorista.TabIndex = 57
@@ -463,7 +463,7 @@ Partial Class frmResumenDiario
         'txt_VentaMayorista
         '
         Me.txt_VentaMayorista.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentaMayorista.Location = New System.Drawing.Point(97, 152)
+        Me.txt_VentaMayorista.Location = New System.Drawing.Point(96, 179)
         Me.txt_VentaMayorista.Name = "txt_VentaMayorista"
         Me.txt_VentaMayorista.ReadOnly = True
         Me.txt_VentaMayorista.Size = New System.Drawing.Size(125, 21)
@@ -472,7 +472,7 @@ Partial Class frmResumenDiario
         'lblMinorista
         '
         Me.lblMinorista.AutoSize = True
-        Me.lblMinorista.Location = New System.Drawing.Point(8, 185)
+        Me.lblMinorista.Location = New System.Drawing.Point(7, 158)
         Me.lblMinorista.Name = "lblMinorista"
         Me.lblMinorista.Size = New System.Drawing.Size(58, 15)
         Me.lblMinorista.TabIndex = 54
@@ -481,7 +481,7 @@ Partial Class frmResumenDiario
         'txt_VentaMinorista
         '
         Me.txt_VentaMinorista.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentaMinorista.Location = New System.Drawing.Point(97, 179)
+        Me.txt_VentaMinorista.Location = New System.Drawing.Point(96, 152)
         Me.txt_VentaMinorista.Name = "txt_VentaMinorista"
         Me.txt_VentaMinorista.ReadOnly = True
         Me.txt_VentaMinorista.Size = New System.Drawing.Size(125, 21)
@@ -890,24 +890,6 @@ Partial Class frmResumenDiario
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Detalle Ventas"
         '
-        'txt_VentasCheque
-        '
-        Me.txt_VentasCheque.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.txt_VentasCheque.Location = New System.Drawing.Point(96, 45)
-        Me.txt_VentasCheque.Name = "txt_VentasCheque"
-        Me.txt_VentasCheque.ReadOnly = True
-        Me.txt_VentasCheque.Size = New System.Drawing.Size(125, 21)
-        Me.txt_VentasCheque.TabIndex = 58
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(8, 51)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(50, 15)
-        Me.Label18.TabIndex = 59
-        Me.Label18.Text = "Cheque"
-        '
         'txt_VentasCredito
         '
         Me.txt_VentasCredito.Location = New System.Drawing.Point(95, 72)
@@ -941,6 +923,24 @@ Partial Class frmResumenDiario
         Me.Label19.Size = New System.Drawing.Size(43, 15)
         Me.Label19.TabIndex = 73
         Me.Label19.Text = "Debito"
+        '
+        'txt_VentasCheque
+        '
+        Me.txt_VentasCheque.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.txt_VentasCheque.Location = New System.Drawing.Point(96, 45)
+        Me.txt_VentasCheque.Name = "txt_VentasCheque"
+        Me.txt_VentasCheque.ReadOnly = True
+        Me.txt_VentasCheque.Size = New System.Drawing.Size(125, 21)
+        Me.txt_VentasCheque.TabIndex = 58
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(8, 51)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(50, 15)
+        Me.Label18.TabIndex = 59
+        Me.Label18.Text = "Cheque"
         '
         'frmResumenDiario
         '

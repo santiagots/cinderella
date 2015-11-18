@@ -47,6 +47,20 @@ Public Class NegPlanillaSucursales
         Return ds
     End Function
 
+    'Obtener Mercaderia Detalle
+    Function ObtenerMercaderiaDetalle(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Mercaderia_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Mercaderia_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        SetCeroToDBnull(ds)
+        AddTotalColumn(ds, "Total")
+        Return ds
+    End Function
+
     'Obtener Sueldos
     Function ObtenerSueldos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
@@ -54,6 +68,20 @@ Public Class NegPlanillaSucursales
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Sueldos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Sueldos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        SetCeroToDBnull(ds)
+        AddTotalColumn(ds, "Total")
+        Return ds
+    End Function
+
+    'Obtener Sueldos Detalle
+    Function ObtenerSueldosDetalle(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Sueldos_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Sueldos_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         End If
 
         SetCeroToDBnull(ds)
@@ -96,6 +124,34 @@ Public Class NegPlanillaSucursales
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Movimientos_Sucursales @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Movimientos_Sucursales @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        SetCeroToDBnull(ds)
+        AddTotalColumn(ds, "Total")
+        Return ds
+    End Function
+
+    'Obtener Movimientos Sucursales Envios
+    Function ObtenerMovimientosSucursalesEnvios(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Envios @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Envios @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        SetCeroToDBnull(ds)
+        AddTotalColumn(ds, "Total")
+        Return ds
+    End Function
+
+    'Obtener Movimientos Sucursales Recibos
+    Function ObtenerMovimientosSucursalesRecibos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Recibos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Recibos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         End If
 
         SetCeroToDBnull(ds)

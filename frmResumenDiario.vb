@@ -237,13 +237,11 @@
             frmCargadorDeEspera.BarraProgreso.Value += 1
             frmCargadorDeEspera.Refresh()
 
-            'Dim Sueldo As Double = 0
-            'Sueldo = NegEmp.ObtenerSueldosSucursalDia(id_Sucursal, Fecha)
-            'txt_Sueldo.Text = "$ " & Format(CType((Sueldo), Decimal), "###0.00") & ".-"
-
             Dim Adelantos As Double = 0
+            Dim Sueldo As Double = 0
             Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, Fecha, Fecha)
-            txt_Sueldo.Text = "$ " & Format(CType((Adelantos), Decimal), "###0.00") & ".-"
+            Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, Fecha, Fecha)
+            txt_Sueldo.Text = "$ " & Format(CType((Sueldo + Adelantos), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo adelantos de empleados..."
@@ -289,8 +287,8 @@
             Dim Ingresos As Double = 0
             Dim Egresos As Double = 0
 
-            Ingresos = VentasEfectivo + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
-            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Comision + IngresoCajaFuerte + DevolucionEgreso
+            Ingresos = TotalVentas + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
+            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + Comision + IngresoCajaFuerte + DevolucionEgreso
             '    MessageBox.Show(Ingresos, "ingresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Saldo = Ingresos - Egresos
 

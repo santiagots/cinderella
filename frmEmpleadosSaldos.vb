@@ -397,7 +397,7 @@ Public Class frmEmpleadosSaldos
     End Sub
 
     Private Sub btn_depositar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_depositar.Click
-        If (SueldoPorDepositar < CDbl(txt_Saldo.Text)) Then
+        If (Math.Round(SueldoPorDepositar, 2) < CDbl(txt_Saldo.Text)) Then
             MessageBox.Show("El monto ingresado en Sueldo a Depositar es mayor al Máximo permitido. Debe ingresar un monto igual o menor al Máximo. ", "Estado de Cuenta del Empleado", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
@@ -409,18 +409,19 @@ Public Class frmEmpleadosSaldos
 
                 Dim sueldoDepositado As Double = CDbl(txt_Saldo.Text)
 
-                'Agrego el gasto del sueldo a depositar.
-                Dim NegMovimiento As New Negocio.NegMovimientos
-                Dim eGasto As New Entidades.MovGasto
-                eGasto.id_Movimiento = 0
-                eGasto.id_Registro = 0
-                eGasto.id_Sucursal = id_Sucursal
-                eGasto.id_Tipo = 42 'tipo sueldo a depositar
-                eGasto.Fecha = Now
-                eGasto.Monto = sueldoDepositado
-                NegMovimiento.AltaMovGasto(eGasto)
+                ''Agrego el gasto del sueldo a depositar.
+                'Dim NegMovimiento As New Negocio.NegMovimientos
+                'Dim eGasto As New Entidades.MovGasto
+                'eGasto.id_Movimiento = 0
+                'eGasto.id_Registro = 0
+                'eGasto.id_Sucursal = id_Sucursal
+                'eGasto.id_Tipo = 42 'tipo sueldo a depositar
+                'eGasto.Fecha = Now
+                'eGasto.Monto = sueldoDepositado
+                'NegMovimiento.AltaMovGasto(eGasto)
 
                 'Agrego el retiro de socios en forma negativa.
+                Dim NegMovimiento As New Negocio.NegMovimientos
                 Dim eRetiro As New Entidades.MovSocios
                 eRetiro.id_Movimiento = 0
                 eRetiro.id_Sucursal = id_Sucursal

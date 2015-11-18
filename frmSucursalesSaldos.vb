@@ -54,7 +54,6 @@
             Dim DevolucionEgreso As Double = 0
             Dim Adelantos As Double = 0
             Dim Sueldo As Double = 0
-            Dim Comision As Double = 0
             Dim Impuesto As Double = 0
             Dim Faltante As Double = 0
             Dim Gasto As Double = 0
@@ -86,7 +85,6 @@
             DevolucionEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Devolucion")
             Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, FDesde, FHasta)
             Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, FDesde, FHasta)
-            Comision = NegEmp.ObtenerComisionesSucursal(id_Sucursal, FDesde, FHasta)
             Impuesto = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 3)
             Gasto = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 1)
             Retiro = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 5)
@@ -94,7 +92,7 @@
             EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Egresos")
             Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, FDesde, FHasta)
 
-            Egresos = Adelantos + DevolucionEgreso + Sueldo + Comision + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
+            Egresos = Adelantos + DevolucionEgreso + Sueldo + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
 
             '------------SALDO---------------'
             Saldo = Ingresos - Egresos
@@ -119,10 +117,8 @@
             txt_VentasFacturado.Text = "$ " & Format(CType((VentasFacturado), Decimal), "###0.00") & ".-"
             txt_Sobrante.Text = "$ " & Format(CType((Sobrante), Decimal), "###0.00") & ".-"
             txt_Efectivo.Text = "$ " & Format(CType((EfectivoIngreso), Decimal), "###0.00") & ".-"
-            txt_Adelanto.Text = "$ " & Format(CType((Adelantos), Decimal), "###0.00") & ".-"
             txt_DevolucionesEgr.Text = "$ " & Format(CType((DevolucionEgreso), Decimal), "###0.00") & ".-"
-            txt_Sueldo.Text = "$ " & Format(CType((Sueldo), Decimal), "###0.00") & ".-"
-            txt_Comision.Text = "$ " & Format(CType((Comision), Decimal), "###0.00") & ".-"
+            txt_Sueldo.Text = "$ " & Format(CType((Sueldo + Adelantos), Decimal), "###0.00") & ".-"
             txt_Impuesto.Text = "$ " & Format(CType((Impuesto), Decimal), "###0.00") & ".-"
             txt_Faltante.Text = "$ " & Format(CType((Faltante), Decimal), "###0.00") & ".-"
             txt_Gasto.Text = "$ " & Format(CType((Gasto), Decimal), "###0.00") & ".-"
@@ -169,7 +165,6 @@
     End Sub
 
     Sub LimpiarForm()
-        txt_Adelanto.Clear()
         txt_Efectivo.Clear()
         txt_Faltante.Clear()
         txt_Gasto.Clear()
@@ -177,7 +172,6 @@
         txt_Retiro.Clear()
         txt_Sobrante.Clear()
         txt_Sueldo.Clear()
-        txt_Comision.Clear()
         txt_Venta.Clear()
         txt_FDesde.Value = Today.AddMonths(-1)
         txt_FHasta.Value = Today.AddDays(1)
@@ -203,17 +197,6 @@
         frmVerVentas.FHasta = FHasta
         Funciones.ControlInstancia(frmVerVentas).MdiParent = MDIContenedor
         Funciones.ControlInstancia(frmVerVentas).Show()
-        Me.Cursor = Cursors.Arrow
-    End Sub
-
-    'Link ADELANTOS.
-    Private Sub BtnAdelantos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Adelanto.Click
-        Me.Cursor = Cursors.WaitCursor
-        frmVerAdelantosSucursal.id_Sucursal = id_Sucursal
-        frmVerAdelantosSucursal.FDesde = FDesde
-        frmVerAdelantosSucursal.FHasta = FHasta
-        Funciones.ControlInstancia(frmVerAdelantosSucursal).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmVerAdelantosSucursal).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -294,21 +277,11 @@
 
     'LINK SUELDOS.
     Private Sub Btn_Sueldo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Sueldo.Click
-        Me.Cursor = Cursors.WaitCursor
-        frmVerSueldos.FDesde = FDesde
-        frmVerSueldos.FHasta = FHasta
-        Funciones.ControlInstancia(frmVerSueldos).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmVerSueldos).Show()
-        Me.Cursor = Cursors.Arrow
-    End Sub
-
-    'LINK COMISIONES.
-    Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
-        Me.Cursor = Cursors.WaitCursor
-        frmVerComision.FDesde = FDesde
-        frmVerComision.FHasta = FHasta
-        Funciones.ControlInstancia(frmVerComision).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmVerComision).Show()
+        frmVerSueldosSucursal.id_Sucursal = id_Sucursal
+        frmVerSueldosSucursal.FDesde = FDesde
+        frmVerSueldosSucursal.FHasta = FHasta
+        fuc.ControlInstancia(frmVerSueldosSucursal).MdiParent = MDIContenedor
+        fuc.ControlInstancia(frmVerSueldosSucursal).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

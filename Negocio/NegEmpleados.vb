@@ -323,42 +323,12 @@ Public Class NegEmpleados
     End Function
 
     'Obtiene la sumatoria de todos los sueldos de la sucursal.
-    Function ObtenerSueldosSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        'Declaracion de variables
-        Dim NegRegistros As New Negocio.NegRegistros
-        Dim TotEmpleados As Integer = 0
-        Dim dsEmpleados As New DataSet
-        'Dim Comision As Double = 0
-        Dim Dias As Integer = 0
-        Dim DiasFeriados As Integer = 0
-        Dim SueldoNormal As Double = 0
-        Dim SueldoFeriado As Double = 0
-        'Dim TotalComisionesEmp As Double = 0
-        Dim TotalSueldosEmp As Double = 0
+    Function ObtenerSueldosSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
 
-        dsEmpleados = ListadoEmpleadosSucursal(id_Sucursal)
-        TotEmpleados = dsEmpleados.Tables(0).Rows.Count
+        Dim SueldosSucursal As DataSet = SueldoDepositadoDetalleSucursal(id_Sucursal, FDesde, FHasta)
 
-        For Each emp In dsEmpleados.Tables(0).Rows
-            Dim Sueldo As Double = 0
-            Dim id_Empleado As Integer = 0
+        Dim TotalSueldosEmp As Double = SueldosSucursal.Tables(0).AsEnumerable().Sum(Function(row) row.Field(Of Double)("Monto"))
 
-            id_Empleado = CInt(emp.Item("id_Empleado"))
-            Dias = NegRegistros.ObtenerDias(id_Empleado, id_Sucursal, FDesde, FHasta)
-            DiasFeriados = NegRegistros.ObtenerDiasFeriados(id_Empleado, id_Sucursal, FDesde, FHasta)
-            SueldoNormal = CDbl(emp.Item("SueldoNormal"))
-            SueldoFeriado = CDbl(emp.Item("SueldoFeriado"))
-
-            If (Dias + DiasFeriados) > 0 Then
-                Sueldo = (Dias * SueldoNormal) + (DiasFeriados * SueldoFeriado)
-            Else
-                Sueldo = 0
-            End If
-
-            'Acumulo los totales del empleado.
-            TotalSueldosEmp += Sueldo
-        Next
-        
         Return TotalSueldosEmp
     End Function
 
@@ -470,6 +440,20 @@ Public Class NegEmpleados
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_detalle @id_Sucursal=" & id_Sucursal & ", @id_Empleado='" & id_Empleado & "', @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_detalle @id_Sucursal=" & id_Sucursal & ", @id_Empleado='" & id_Empleado & "', @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
+        End If
+
+        Return ds
+    End Function
+
+    'Funcion que returna el detalle de sueldo depositados en un periodo de tiempo.
+    Function SueldoDepositadoDetalleSucursal(ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As DataSet
+        Dim ds As DataSet
+        Dim SueldoDepositado As Integer = 0
+
+        If (HayInternet) Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
         End If
 
         Return ds

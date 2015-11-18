@@ -54,10 +54,6 @@ Partial Class frmSucursalesSaldos
         Me.Label13 = New System.Windows.Forms.Label()
         Me.lblEgresos = New System.Windows.Forms.Label()
         Me.lblIngresos = New System.Windows.Forms.Label()
-        Me.Button11 = New System.Windows.Forms.Button()
-        Me.Button12 = New System.Windows.Forms.Button()
-        Me.txt_Comision = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -66,7 +62,6 @@ Partial Class frmSucursalesSaldos
         Me.Button6 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button8 = New System.Windows.Forms.Button()
-        Me.Button9 = New System.Windows.Forms.Button()
         Me.Button10 = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Btn_EfectivoEgreso = New System.Windows.Forms.Button()
@@ -88,17 +83,14 @@ Partial Class frmSucursalesSaldos
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lbl_Saldo = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.lblAdelantos = New System.Windows.Forms.Label()
         Me.Btn_Impuesto = New System.Windows.Forms.Button()
         Me.txt_Impuesto = New System.Windows.Forms.TextBox()
         Me.Btn_Venta = New System.Windows.Forms.Button()
         Me.txt_Venta = New System.Windows.Forms.TextBox()
         Me.lblVarios = New System.Windows.Forms.Label()
         Me.lblVentas = New System.Windows.Forms.Label()
-        Me.Btn_Adelanto = New System.Windows.Forms.Button()
         Me.Btn_Sobrante = New System.Windows.Forms.Button()
         Me.txt_Sobrante = New System.Windows.Forms.TextBox()
-        Me.txt_Adelanto = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txt_VentasFacturado = New System.Windows.Forms.TextBox()
@@ -147,7 +139,7 @@ Partial Class frmSucursalesSaldos
         Me.Btn_Salir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Salir.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Salir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Salir.Location = New System.Drawing.Point(919, 41)
+        Me.Btn_Salir.Location = New System.Drawing.Point(762, 44)
         Me.Btn_Salir.Name = "Btn_Salir"
         Me.Btn_Salir.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Salir.TabIndex = 15
@@ -162,7 +154,7 @@ Partial Class frmSucursalesSaldos
         Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
         Me.Btn_Limpiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Limpiar.Location = New System.Drawing.Point(808, 41)
+        Me.Btn_Limpiar.Location = New System.Drawing.Point(639, 44)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Limpiar.TabIndex = 5
@@ -218,7 +210,7 @@ Partial Class frmSucursalesSaldos
         Me.Btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.Btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Buscar.Location = New System.Drawing.Point(685, 40)
+        Me.Btn_Buscar.Location = New System.Drawing.Point(517, 44)
         Me.Btn_Buscar.Name = "Btn_Buscar"
         Me.Btn_Buscar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Buscar.TabIndex = 4
@@ -269,10 +261,6 @@ Partial Class frmSucursalesSaldos
         Me.GbDetalle.Controls.Add(Me.Label13)
         Me.GbDetalle.Controls.Add(Me.lblEgresos)
         Me.GbDetalle.Controls.Add(Me.lblIngresos)
-        Me.GbDetalle.Controls.Add(Me.Button11)
-        Me.GbDetalle.Controls.Add(Me.Button12)
-        Me.GbDetalle.Controls.Add(Me.txt_Comision)
-        Me.GbDetalle.Controls.Add(Me.Label5)
         Me.GbDetalle.Controls.Add(Me.Button1)
         Me.GbDetalle.Controls.Add(Me.Button2)
         Me.GbDetalle.Controls.Add(Me.Button3)
@@ -281,7 +269,6 @@ Partial Class frmSucursalesSaldos
         Me.GbDetalle.Controls.Add(Me.Button6)
         Me.GbDetalle.Controls.Add(Me.Button7)
         Me.GbDetalle.Controls.Add(Me.Button8)
-        Me.GbDetalle.Controls.Add(Me.Button9)
         Me.GbDetalle.Controls.Add(Me.Button10)
         Me.GbDetalle.Controls.Add(Me.Label3)
         Me.GbDetalle.Controls.Add(Me.Btn_EfectivoEgreso)
@@ -303,22 +290,19 @@ Partial Class frmSucursalesSaldos
         Me.GbDetalle.Controls.Add(Me.Label2)
         Me.GbDetalle.Controls.Add(Me.lbl_Saldo)
         Me.GbDetalle.Controls.Add(Me.Label1)
-        Me.GbDetalle.Controls.Add(Me.lblAdelantos)
         Me.GbDetalle.Controls.Add(Me.Btn_Impuesto)
         Me.GbDetalle.Controls.Add(Me.txt_Impuesto)
         Me.GbDetalle.Controls.Add(Me.Btn_Venta)
         Me.GbDetalle.Controls.Add(Me.txt_Venta)
         Me.GbDetalle.Controls.Add(Me.lblVarios)
         Me.GbDetalle.Controls.Add(Me.lblVentas)
-        Me.GbDetalle.Controls.Add(Me.Btn_Adelanto)
         Me.GbDetalle.Controls.Add(Me.Btn_Sobrante)
         Me.GbDetalle.Controls.Add(Me.txt_Sobrante)
-        Me.GbDetalle.Controls.Add(Me.txt_Adelanto)
         Me.GbDetalle.Controls.Add(Me.Label8)
         Me.GbDetalle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GbDetalle.Location = New System.Drawing.Point(10, 137)
         Me.GbDetalle.Name = "GbDetalle"
-        Me.GbDetalle.Size = New System.Drawing.Size(806, 407)
+        Me.GbDetalle.Size = New System.Drawing.Size(806, 353)
         Me.GbDetalle.TabIndex = 2
         Me.GbDetalle.TabStop = False
         Me.GbDetalle.Text = "Detalle del período solicitado"
@@ -451,7 +435,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_DisponibleTotal.AutoSize = True
         Me.lbl_DisponibleTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DisponibleTotal.Location = New System.Drawing.Point(634, 366)
+        Me.lbl_DisponibleTotal.Location = New System.Drawing.Point(625, 319)
         Me.lbl_DisponibleTotal.Name = "lbl_DisponibleTotal"
         Me.lbl_DisponibleTotal.Size = New System.Drawing.Size(162, 29)
         Me.lbl_DisponibleTotal.TabIndex = 85
@@ -463,7 +447,7 @@ Partial Class frmSucursalesSaldos
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(415, 366)
+        Me.Label15.Location = New System.Drawing.Point(406, 319)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(213, 29)
         Me.Label15.TabIndex = 84
@@ -473,7 +457,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_TotalEgresos.AutoSize = True
         Me.lbl_TotalEgresos.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalEgresos.Location = New System.Drawing.Point(219, 311)
+        Me.lbl_TotalEgresos.Location = New System.Drawing.Point(219, 264)
         Me.lbl_TotalEgresos.Name = "lbl_TotalEgresos"
         Me.lbl_TotalEgresos.Size = New System.Drawing.Size(129, 24)
         Me.lbl_TotalEgresos.TabIndex = 83
@@ -485,7 +469,7 @@ Partial Class frmSucursalesSaldos
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(52, 311)
+        Me.Label14.Location = New System.Drawing.Point(52, 264)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(62, 24)
         Me.Label14.TabIndex = 82
@@ -495,7 +479,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_TotalIngresos.AutoSize = True
         Me.lbl_TotalIngresos.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalIngresos.Location = New System.Drawing.Point(619, 311)
+        Me.lbl_TotalIngresos.Location = New System.Drawing.Point(610, 264)
         Me.lbl_TotalIngresos.Name = "lbl_TotalIngresos"
         Me.lbl_TotalIngresos.Size = New System.Drawing.Size(129, 24)
         Me.lbl_TotalIngresos.TabIndex = 81
@@ -507,7 +491,7 @@ Partial Class frmSucursalesSaldos
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(452, 311)
+        Me.Label13.Location = New System.Drawing.Point(443, 264)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(62, 24)
         Me.Label13.TabIndex = 80
@@ -536,53 +520,6 @@ Partial Class frmSucursalesSaldos
         Me.lblIngresos.TabIndex = 72
         Me.lblIngresos.Text = "I" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "N" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "G" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "R" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "E" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "S" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "O" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "S"
         Me.lblIngresos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Button11
-        '
-        Me.Button11.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Button11.FlatAppearance.BorderSize = 0
-        Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button11.Image = CType(resources.GetObject("Button11.Image"), System.Drawing.Image)
-        Me.Button11.Location = New System.Drawing.Point(350, 237)
-        Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(21, 21)
-        Me.Button11.TabIndex = 59
-        Me.Button11.Tag = "Ver Detalle"
-        Me.ToolEstado.SetToolTip(Me.Button11, "Comisiones a la fecha de los empleados de la sucursal.")
-        Me.Button11.UseVisualStyleBackColor = True
-        '
-        'Button12
-        '
-        Me.Button12.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button12.FlatAppearance.BorderSize = 0
-        Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button12.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
-        Me.Button12.Location = New System.Drawing.Point(373, 237)
-        Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(21, 21)
-        Me.Button12.TabIndex = 60
-        Me.Button12.Tag = "Ver Detalle"
-        Me.ToolEstado.SetToolTip(Me.Button12, "Hace click aquí para ver un detalle completo de éste item.")
-        Me.Button12.UseVisualStyleBackColor = True
-        '
-        'txt_Comision
-        '
-        Me.txt_Comision.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.txt_Comision.Location = New System.Drawing.Point(223, 236)
-        Me.txt_Comision.Name = "txt_Comision"
-        Me.txt_Comision.ReadOnly = True
-        Me.txt_Comision.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Comision.TabIndex = 58
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(53, 239)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(148, 15)
-        Me.Label5.TabIndex = 61
-        Me.Label5.Text = "Comisiones a Empleados"
         '
         'Button1
         '
@@ -696,20 +633,6 @@ Partial Class frmSucursalesSaldos
         Me.Button8.Tag = "Ver Detalle"
         Me.ToolEstado.SetToolTip(Me.Button8, "Ventas realizadas en la sucursal.")
         Me.Button8.UseVisualStyleBackColor = True
-        '
-        'Button9
-        '
-        Me.Button9.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Button9.FlatAppearance.BorderSize = 0
-        Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
-        Me.Button9.Location = New System.Drawing.Point(349, 263)
-        Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(21, 21)
-        Me.Button9.TabIndex = 16
-        Me.Button9.Tag = "Ver Detalle"
-        Me.ToolEstado.SetToolTip(Me.Button9, "Adelantos realizados a los empleados de la sucursal.")
-        Me.Button9.UseVisualStyleBackColor = True
         '
         'Button10
         '
@@ -927,7 +850,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_Saldo.AutoSize = True
         Me.lbl_Saldo.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Saldo.Location = New System.Drawing.Point(200, 366)
+        Me.lbl_Saldo.Location = New System.Drawing.Point(200, 319)
         Me.lbl_Saldo.Name = "lbl_Saldo"
         Me.lbl_Saldo.Size = New System.Drawing.Size(162, 29)
         Me.lbl_Saldo.TabIndex = 36
@@ -941,15 +864,6 @@ Partial Class frmSucursalesSaldos
         Me.Label1.Size = New System.Drawing.Size(64, 15)
         Me.Label1.TabIndex = 38
         Me.Label1.Text = "Impuestos"
-        '
-        'lblAdelantos
-        '
-        Me.lblAdelantos.AutoSize = True
-        Me.lblAdelantos.Location = New System.Drawing.Point(53, 266)
-        Me.lblAdelantos.Name = "lblAdelantos"
-        Me.lblAdelantos.Size = New System.Drawing.Size(137, 15)
-        Me.lblAdelantos.TabIndex = 37
-        Me.lblAdelantos.Text = "Adelantos a Empleados"
         '
         'Btn_Impuesto
         '
@@ -1017,20 +931,6 @@ Partial Class frmSucursalesSaldos
         Me.lblVentas.TabIndex = 31
         Me.lblVentas.Text = "Totales Ventas"
         '
-        'Btn_Adelanto
-        '
-        Me.Btn_Adelanto.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Adelanto.FlatAppearance.BorderSize = 0
-        Me.Btn_Adelanto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Btn_Adelanto.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
-        Me.Btn_Adelanto.Location = New System.Drawing.Point(373, 263)
-        Me.Btn_Adelanto.Name = "Btn_Adelanto"
-        Me.Btn_Adelanto.Size = New System.Drawing.Size(21, 21)
-        Me.Btn_Adelanto.TabIndex = 17
-        Me.Btn_Adelanto.Tag = "Ver Detalle"
-        Me.ToolEstado.SetToolTip(Me.Btn_Adelanto, "Hace click aquí para ver un detalle completo de éste item.")
-        Me.Btn_Adelanto.UseVisualStyleBackColor = True
-        '
         'Btn_Sobrante
         '
         Me.Btn_Sobrante.Cursor = System.Windows.Forms.Cursors.Hand
@@ -1055,23 +955,13 @@ Partial Class frmSucursalesSaldos
         Me.txt_Sobrante.Size = New System.Drawing.Size(125, 21)
         Me.txt_Sobrante.TabIndex = 9
         '
-        'txt_Adelanto
-        '
-        Me.txt_Adelanto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.txt_Adelanto.Location = New System.Drawing.Point(223, 263)
-        Me.txt_Adelanto.Name = "txt_Adelanto"
-        Me.txt_Adelanto.ReadOnly = True
-        Me.txt_Adelanto.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Adelanto.TabIndex = 15
-        '
         'Label8
         '
         Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(39, 366)
+        Me.Label8.Location = New System.Drawing.Point(39, 319)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(155, 29)
         Me.Label8.TabIndex = 35
@@ -1220,7 +1110,7 @@ Partial Class frmSucursalesSaldos
         Me.GbDetalleVenta.Controls.Add(Me.Label10)
         Me.GbDetalleVenta.Location = New System.Drawing.Point(822, 137)
         Me.GbDetalleVenta.Name = "GbDetalleVenta"
-        Me.GbDetalleVenta.Size = New System.Drawing.Size(219, 407)
+        Me.GbDetalleVenta.Size = New System.Drawing.Size(219, 353)
         Me.GbDetalleVenta.TabIndex = 3
         Me.GbDetalleVenta.TabStop = False
         Me.GbDetalleVenta.Text = "Detalle Ventas"
@@ -1229,7 +1119,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1054, 552)
+        Me.ClientSize = New System.Drawing.Size(1054, 502)
         Me.Controls.Add(Me.GbDetalleVenta)
         Me.Controls.Add(Me.GbDetalle)
         Me.Controls.Add(Me.GroupBox2)
@@ -1256,10 +1146,8 @@ Partial Class frmSucursalesSaldos
     Friend WithEvents lblFechaH As System.Windows.Forms.Label
     Friend WithEvents lblFechaD As System.Windows.Forms.Label
     Friend WithEvents GbDetalle As System.Windows.Forms.GroupBox
-    Friend WithEvents Btn_Adelanto As System.Windows.Forms.Button
     Friend WithEvents Btn_Sobrante As System.Windows.Forms.Button
     Friend WithEvents txt_Sobrante As System.Windows.Forms.TextBox
-    Friend WithEvents txt_Adelanto As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents lblSucursalNombre As System.Windows.Forms.Label
     Friend WithEvents lblSucursal As System.Windows.Forms.Label
@@ -1268,7 +1156,6 @@ Partial Class frmSucursalesSaldos
     Friend WithEvents lblVarios As System.Windows.Forms.Label
     Friend WithEvents lblVentas As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents lblAdelantos As System.Windows.Forms.Label
     Friend WithEvents Btn_Impuesto As System.Windows.Forms.Button
     Friend WithEvents txt_Impuesto As System.Windows.Forms.TextBox
     Friend WithEvents lbl_Saldo As System.Windows.Forms.Label
@@ -1299,14 +1186,9 @@ Partial Class frmSucursalesSaldos
     Friend WithEvents Button6 As System.Windows.Forms.Button
     Friend WithEvents Button7 As System.Windows.Forms.Button
     Friend WithEvents Button8 As System.Windows.Forms.Button
-    Friend WithEvents Button9 As System.Windows.Forms.Button
     Friend WithEvents Button10 As System.Windows.Forms.Button
     Friend WithEvents Btn_Limpiar As System.Windows.Forms.Button
     Friend WithEvents Btn_Salir As System.Windows.Forms.Button
-    Friend WithEvents Button11 As System.Windows.Forms.Button
-    Friend WithEvents Button12 As System.Windows.Forms.Button
-    Friend WithEvents txt_Comision As System.Windows.Forms.TextBox
-    Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents lblMinorista As System.Windows.Forms.Label
     Friend WithEvents txt_VentaMinorista As System.Windows.Forms.TextBox
     Friend WithEvents lblMayorista As System.Windows.Forms.Label

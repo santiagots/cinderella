@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>24</ApplicationRevision>
+    <ApplicationRevision>27</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -474,6 +474,12 @@
     <Compile Include="frmPlanillaSucursales.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmPlanillaSucursalesDetalle.Designer.vb">
+      <DependentUpon>frmPlanillaSucursalesDetalle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlanillaSucursalesDetalle.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmProductos.Designer.vb">
       <DependentUpon>frmProductos.vb</DependentUpon>
     </Compile>
@@ -738,6 +744,12 @@
     <Compile Include="frmVerSueldosEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmVerSueldosSucursal.Designer.vb">
+      <DependentUpon>frmVerSueldosSucursal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmVerSueldosSucursal.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmVerVacaciones.Designer.vb">
       <DependentUpon>frmVerVacaciones.vb</DependentUpon>
     </Compile>
@@ -962,6 +974,9 @@
     <EmbeddedResource Include="frmPlanillaSucursales.resx">
       <DependentUpon>frmPlanillaSucursales.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPlanillaSucursalesDetalle.resx">
+      <DependentUpon>frmPlanillaSucursalesDetalle.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmProductos.resx">
       <DependentUpon>frmProductos.vb</DependentUpon>
     </EmbeddedResource>
@@ -1093,6 +1108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerSueldosEmpleado.resx">
       <DependentUpon>frmVerSueldosEmpleado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVerSueldosSucursal.resx">
+      <DependentUpon>frmVerSueldosSucursal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerVacaciones.resx">
       <DependentUpon>frmVerVacaciones.vb</DependentUpon>
