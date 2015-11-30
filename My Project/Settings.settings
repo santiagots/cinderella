@@ -66,5 +66,14 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">0Tvkneh8HcrERuMerFzACRwWiZZg35fXKOi3SK1IWATfrSUVr4B1vhig2+uF9RoZjAu0GhQjaJPS83vNW7a6BIgtE9hqLOwzZbQceOJchkSCCcO9DO6GIiUAGeBwHMwztfqBhcEHUcpKfiqT6sAg+Q==</Value>
     </Setting>
+    <Setting Name="PuntoVentaFacturacionManual" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="PuntoVentaFacturacionTicket" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="PuntoVentaFacturacionElectronica" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

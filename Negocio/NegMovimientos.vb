@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Linq
 
 Public Class NegMovimientos
     Dim clsDatos As New Datos.Conexion
@@ -918,8 +919,19 @@ Public Class NegMovimientos
         Return ds
     End Function
 
+    'Obtener la relacion entre egresos y gastos
+    Function ObtenerRelacionEgresosGastos() As DataSet
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_Obtener_Relacion_Egresos_Gastos")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_Obtener_Relacion_Egresos_Gastos")
+        End If
+        Return ds
+    End Function
+
     'Acepta un movimiento determinado.
-    Function AceptarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer)
+    Function AceptarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Subtipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer, Monto As Decimal)
         Dim cmd As New SqlCommand
         Try
             'Conecto a la bdd.
@@ -958,13 +970,6 @@ Public Class NegMovimientos
 
                 'Disminuyo el stock de la sucursal.
                 dsMercaderias = ObtenerMovEgresoMercaderias(id_Movimiento, id_Sucursal)
-                'If dsMercaderias IsNot Nothing Then
-                '    If dsMercaderias.Tables(0).Rows.Count > 0 Then
-                '        For Each prod In dsMercaderias.Tables(0).Rows
-                '            NStock.DisminuirStock(prod.item("id_Producto"), prod.item("Cantidad"), prod.item("id_Sucursal"))
-                '        Next
-                '    End If
-                'End If
 
                 'Aumento el stock de la sucursal Destino.
                 If dsMercaderias IsNot Nothing Then
@@ -974,6 +979,54 @@ Public Class NegMovimientos
                         Next
                     End If
                 End If
+
+                'genero un gasto negativo en la sucursal origen
+                Dim eGasto As Entidades.MovGasto = New Entidades.MovGasto()
+                eGasto.id_Movimiento = 0
+                eGasto.id_Registro = 0
+                eGasto.id_Sucursal = id_Sucursal
+                eGasto.id_Tipo = 20
+                eGasto.Fecha = Now
+                eGasto.Monto = -Monto
+
+                AltaMovGasto(eGasto)
+
+                'genero un gasto positivo en la sucursal destino
+                eGasto.id_Movimiento = 0
+                eGasto.id_Registro = 0
+                eGasto.id_Sucursal = id_SucursalConect
+                eGasto.id_Tipo = 20
+                eGasto.Fecha = Now
+                eGasto.Monto = Monto
+
+                AltaMovGasto(eGasto)
+
+            End If
+
+            'Si es mobimiento de bienes
+            If id_Tipo = 18 Then
+                Dim Relaciones As DataSet = ObtenerRelacionEgresosGastos()
+                Dim Relacio = Relaciones.Tables(0).AsEnumerable.Where(Function(x) x.Field(Of Integer)("id_TipoEgreso") = id_Subtipo).FirstOrDefault()
+                'genero un gasto negativo en la sucursal origen
+                Dim eGasto As Entidades.MovGasto = New Entidades.MovGasto()
+                eGasto.id_Movimiento = 0
+                eGasto.id_Registro = 0
+                eGasto.id_Sucursal = id_Sucursal
+                eGasto.id_Tipo = Relacio("id_TipoGasto")
+                eGasto.Fecha = Now
+                eGasto.Monto = -Monto
+
+                AltaMovGasto(eGasto)
+
+                'genero un gasto positivo en la sucursal destino
+                eGasto.id_Movimiento = 0
+                eGasto.id_Registro = 0
+                eGasto.id_Sucursal = id_SucursalConect
+                eGasto.id_Tipo = Relacio("id_TipoGasto")
+                eGasto.Fecha = Now
+                eGasto.Monto = Monto
+
+                AltaMovGasto(eGasto)
             End If
 
             Return respuesta.Value

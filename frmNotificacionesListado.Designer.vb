@@ -47,6 +47,7 @@ Partial Class frmNotificacionesListado
         Me.ToolNotif = New System.Windows.Forms.ToolTip(Me.components)
         Me.id_Movimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id_Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id_Subtipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id_Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -66,8 +67,8 @@ Partial Class frmNotificacionesListado
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.Gb_Detalle)
         Me.GroupBox1.Controls.Add(Me.Btn_Cancelar)
         Me.GroupBox1.Controls.Add(Me.DG_Notificaciones)
@@ -77,8 +78,8 @@ Partial Class frmNotificacionesListado
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Debajo se listarán todas las notificaciones. Generalmente serán movimientos que l" & _
-            "levaron a cabo otras sucursales con ésta sucursal. Deberán ser ""aceptadas"" para " & _
-            "que surjan efecto."
+    "levaron a cabo otras sucursales con ésta sucursal. Deberán ser ""aceptadas"" para " & _
+    "que surjan efecto."
         '
         'Gb_Detalle
         '
@@ -260,11 +261,11 @@ Partial Class frmNotificacionesListado
         Me.DG_Notificaciones.AllowUserToDeleteRows = False
         Me.DG_Notificaciones.AllowUserToResizeRows = False
         Me.DG_Notificaciones.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Notificaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Notificaciones.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
-        Me.DG_Notificaciones.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Movimiento, Me.id_Tipo, Me.id_Sucursal, Me.Fecha, Me.Sucursal, Me.Tipo, Me.Descripcion, Me.Monto, Me.Aceptado, Me.Comentarios, Me.Comentario, Me.Aceptar, Me.Eliminar})
+        Me.DG_Notificaciones.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Movimiento, Me.id_Tipo, Me.id_Subtipo, Me.id_Sucursal, Me.Fecha, Me.Sucursal, Me.Tipo, Me.Descripcion, Me.Monto, Me.Aceptado, Me.Comentarios, Me.Comentario, Me.Aceptar, Me.Eliminar})
         Me.DG_Notificaciones.Location = New System.Drawing.Point(10, 34)
         Me.DG_Notificaciones.MultiSelect = False
         Me.DG_Notificaciones.Name = "DG_Notificaciones"
@@ -293,6 +294,13 @@ Partial Class frmNotificacionesListado
         Me.id_Tipo.HeaderText = "id_Tipo"
         Me.id_Tipo.Name = "id_Tipo"
         Me.id_Tipo.ReadOnly = True
+        '
+        'id_Subtipo
+        '
+        Me.id_Subtipo.HeaderText = "id_Subtipo"
+        Me.id_Subtipo.Name = "id_Subtipo"
+        Me.id_Subtipo.ReadOnly = True
+        Me.id_Subtipo.Visible = False
         '
         'id_Sucursal
         '
@@ -419,6 +427,7 @@ Partial Class frmNotificacionesListado
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents id_Movimiento As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents id_Tipo As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents id_Subtipo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents id_Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn

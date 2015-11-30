@@ -1,4 +1,11 @@
-﻿Public Class Facturacion
+﻿Public Enum TipoFactura
+    Ticket = 0
+    Manual = 1
+    Electronica = 2
+End Enum
+
+
+Public Class Facturacion
     Private id_Venta_, id_Facturacion_ As Integer
     Dim Monto_ As Double
     Dim NumeroFactura_, TipoFactura_, CondicionIva_, Direccion_, Nombre_, Localidad_, Cuit_ As String
@@ -99,4 +106,36 @@
             Fecha_ = value
         End Set
     End Property
+
+    Private _TipoRecibo As TipoFactura
+    Public Property TipoRecibo() As TipoFactura
+        Get
+            Return _TipoRecibo
+        End Get
+        Set(ByVal value As TipoFactura)
+            _TipoRecibo = value
+        End Set
+    End Property
+
+    Private _IdSucursal As Integer
+    Public Property IdSucursal() As Integer
+        Get
+            Return _IdSucursal
+        End Get
+        Set(ByVal value As Integer)
+            _IdSucursal = value
+        End Set
+    End Property
+
+    Private _PuntoVenta As Integer
+    Public Property PuntoVenta() As Integer
+        Get
+            Return _PuntoVenta
+        End Get
+        Set(ByVal value As Integer)
+            _PuntoVenta = value
+        End Set
+    End Property
+
+
 End Class

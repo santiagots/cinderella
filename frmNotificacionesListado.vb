@@ -47,9 +47,11 @@
                         'Seteo las variables
                         Dim id_Mov As Integer = DG_Notificaciones.Rows(e.RowIndex).Cells("id_Movimiento").Value()
                         Dim id_Tipo As Integer = DG_Notificaciones.Rows(e.RowIndex).Cells("id_Tipo").Value()
+                        Dim id_Subtipo As Integer = DG_Notificaciones.Rows(e.RowIndex).Cells("id_Subtipo").Value()
                         Dim id_Sucu As Integer = DG_Notificaciones.Rows(e.RowIndex).Cells("id_Sucursal").Value()
+                        Dim Monto As Decimal = DG_Notificaciones.Rows(e.RowIndex).Cells("Monto").Value()
 
-                        If NegMovimiento.AceptarMovimiento(id_Mov, id_Tipo, id_Sucu, My.Settings.Sucursal) Then
+                        If NegMovimiento.AceptarMovimiento(id_Mov, id_Tipo, id_Subtipo, id_Sucu, My.Settings.Sucursal, Monto) Then
                             CargarPlanilla() 'Recargo la planilla.
                             Functions.ActualizarNotificaciones() 'Actualizo las notificaciones.
                             MessageBox.Show("El movimiento se ha aceptado correctamente.", "Notificaciones de la sucursal " & My.Settings.NombreSucursal, MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -149,7 +151,7 @@
 #End Region
 
 #Region "Region de Funciones"
-    Sub AgregarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Sucursal As Integer, ByVal Sucu As String, ByVal Fecha As String, ByVal Tipo As String, ByVal Descripcion As String, ByVal Monto As Double, ByVal Aceptado As String, ByVal Comentarios As String)
+    Sub AgregarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Subtipo As Integer, ByVal id_Sucursal As Integer, ByVal Sucu As String, ByVal Fecha As String, ByVal Tipo As String, ByVal Descripcion As String, ByVal Monto As Double, ByVal Aceptado As String, ByVal Comentarios As String)
 
         'Creo la fila del producto.
         Dim dgvRow As New DataGridViewRow
@@ -163,6 +165,11 @@
         'Valor de la Columna id_Tipo
         dgvCell = New DataGridViewTextBoxCell()
         dgvCell.Value = id_Tipo
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna id_Subtipo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = id_Subtipo
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna id_Sucursal
@@ -271,7 +278,7 @@
         If dsMovimientos IsNot Nothing Then
             If dsMovimientos.Tables(0).Rows.Count > 0 Then
                 For Each mov In dsMovimientos.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("id_Tipo"), mov.item("id_Sucursal"), mov.item("Sucursal"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Descrip"), mov.item("Monto"), mov.item("Acept"), mov.item("Descripcion"))
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("id_Tipo"), mov.item("id_Subtipo"), mov.item("id_Sucursal"), mov.item("Sucursal"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Descrip"), mov.item("Monto"), mov.item("Acept"), mov.item("Descripcion"))
                 Next
             End If
         End If

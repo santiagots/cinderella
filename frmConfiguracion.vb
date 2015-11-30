@@ -2,6 +2,7 @@
 Public Class frmConfiguracion
     Dim NSucursales As New Negocio.NegSucursales
     Dim NListas As New Negocio.NegListasPrecio
+    Dim NegErrores As New Negocio.NegManejadorErrores
 
     'Load del formulario.
     Private Sub frmConfiguracion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -45,6 +46,10 @@ Public Class frmConfiguracion
             RContrNO.Checked = False
         End If
         txt_MontoControlador.Text = My.Settings("ControladorMontoTope")
+
+        txt_PuntoVentaElectronica.Text = My.Settings.PuntoVentaFacturacionElectronica
+        txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
+        txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
 
         'Comprobacion de notificaciones.
         Cb_Segundos.SelectedItem = CStr(CInt((My.Settings("TemporizadorNotificacion") / 1000)))
@@ -138,13 +143,16 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If (RContrSI.Checked Or RContrNO.Checked) And (txt_MontoControlador.Text <> "") Then
+            If (RContrSI.Checked Or RContrNO.Checked) And (txt_MontoControlador.Text <> "" And txt_PuntoVentaControladora.Text <> "" And txt_PuntoVentaElectronica.Text <> "" And txt_PuntoVentaManual.Text <> "") Then
                 If RContrSI.Checked Then
                     My.Settings.ControladorStatus = "SI"
                 Else
                     My.Settings.ControladorStatus = "NO"
                 End If
                 My.Settings.ControladorMontoTope = Trim(txt_MontoControlador.Text)
+                My.Settings.PuntoVentaFacturacionElectronica = Integer.Parse(Trim(txt_PuntoVentaElectronica.Text))
+                My.Settings.PuntoVentaFacturacionTicket = Integer.Parse(Trim(txt_PuntoVentaControladora.Text))
+                My.Settings.PuntoVentaFacturacionManual = Integer.Parse(Trim(txt_PuntoVentaManual.Text))
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -236,6 +244,30 @@ Public Class frmConfiguracion
             Rb1.Checked = False
         Else
             Rb1.Checked = True
+        End If
+    End Sub
+
+    Private Sub txt_PuntoVentaControladora_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaControladora.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txt_PuntoVentaManual_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaManual.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txt_PuntoVentaElectronica_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaElectronica.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
         End If
     End Sub
 End Class

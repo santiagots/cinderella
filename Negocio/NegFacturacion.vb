@@ -32,6 +32,9 @@ Public Class NegFacturacion
                 .AddWithValue("@Direccion", EntFacturacion.Direccion)
                 .AddWithValue("@Localidad", EntFacturacion.Localidad)
                 .AddWithValue("@TipoFactura", EntFacturacion.TipoFactura)
+                .AddWithValue("@PuntoVenta", EntFacturacion.PuntoVenta)
+                .AddWithValue("@Id_Sucursal", EntFacturacion.IdSucursal)
+                .AddWithValue("@TipoRecibo", EntFacturacion.TipoRecibo)
             End With
 
             'Respuesta del stored.
@@ -49,6 +52,94 @@ Public Class NegFacturacion
 
             'retorno valor
             Return CBool(respuesta.Value)
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    'Funcion que retorna el ultimo numero utilizado en una factura 
+    Public Function ObtenerUltimoNumeroFactura(ByVal TipoRecibo As Entidades.TipoFactura, ByVal PuntoVenta As Integer, ByVal Id_Sucursal As Integer) As String
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+        'Conecto a la bdd.
+
+        Try
+            If (HayInternet) Then
+                cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
+            End If
+
+            'Ejecuto el stored.
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Facturacion_Ultimo_Numero"
+            With cmd.Parameters
+                .AddWithValue("@TipoRecibo", TipoRecibo)
+                .AddWithValue("@PuntoVenta", PuntoVenta)
+                .AddWithValue("@Id_Sucursal", Id_Sucursal)
+            End With
+
+            'Respuesta del stored.
+            Dim respuesta As New SqlParameter("@NumeroFactura", SqlDbType.VarChar, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto la bdd.
+            If (HayInternet) Then
+                ClsDatos.DesconectarRemoto()
+            Else
+                ClsDatos.DesconectarLocal()
+            End If
+
+            'retorno valor
+            Return respuesta.Value
+        Catch ex As Exception
+            Return 0
+        End Try
+    End Function
+
+    'Funcion que verifica si un numero de factura esta utilizado
+    Public Function NumeroFacturaUtilizado(ByVal TipoRecibo As Entidades.TipoFactura, ByVal PuntoVenta As Integer, ByVal Id_Sucursal As Integer, ByVal NumeroFactura As String) As Boolean
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+
+        Try
+
+            'Conecto a la bdd.
+            If (HayInternet) Then
+                cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
+            End If
+
+            'Ejecuto el stored.
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Facturacion_Existe_Numero"
+            With cmd.Parameters
+                .AddWithValue("@TipoRecibo", TipoRecibo)
+                .AddWithValue("@PuntoVenta", PuntoVenta)
+                .AddWithValue("@Id_Sucursal", Id_Sucursal)
+                .AddWithValue("@NumeroFactura", NumeroFactura)
+            End With
+
+            'Respuesta del stored.
+            Dim respuesta As New SqlParameter("@Existe", SqlDbType.Bit, 1)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto la bdd.
+            If (HayInternet) Then
+                ClsDatos.DesconectarRemoto()
+            Else
+                ClsDatos.DesconectarLocal()
+            End If
+
+            'retorno valor
+            Return Boolean.Parse(respuesta.Value.ToString())
         Catch ex As Exception
             Return False
         End Try
@@ -76,6 +167,10 @@ Public Class NegFacturacion
             entFactura.Localidad = dsFactura.Tables(0).Rows(0).Item("Localidad").ToString
             entFactura.Cuit = dsFactura.Tables(0).Rows(0).Item("Cuit").ToString
             entFactura.Fecha = dsFactura.Tables(0).Rows(0).Item("Fecha").ToString
+            entFactura.PuntoVenta = dsFactura.Tables(0).Rows(0).Item("PuntoVenta").ToString
+            entFactura.TipoRecibo = Integer.Parse(dsFactura.Tables(0).Rows(0).Item("TipoRecibo").ToString)
+            entFactura.IdSucursal = dsFactura.Tables(0).Rows(0).Item("Id_Sucursal").ToString
+
         End If
         Return entFactura
     End Function

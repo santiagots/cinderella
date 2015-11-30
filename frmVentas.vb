@@ -766,7 +766,7 @@ Public Class frmVentas
 
                         'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                         If Facturar Then
-                            If (MessageBox.Show("Se llevará a cabo la factura de la venta Nº " & id_Venta & ", ¿Desea Continuar?.", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                            If (MessageBox.Show("¿Facturar la venta Nº " & id_Venta & "?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
 
                                 'Seteo el cursor.
                                 Me.Cursor = Cursors.WaitCursor
