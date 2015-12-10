@@ -32,10 +32,74 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
+    'Funcion que Abre un Tique.
+    Public Function AbrirTicket(ByVal Control As Entidades.ControladorFiscal) As Boolean
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCOMP1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCOMP2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP3)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.CUIT)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCUIT)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.RI)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField("")
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    'Funcion que Abre una Nota de Credito.
+    Public Function AbrirNotaCredito(ByVal Control As Entidades.ControladorFiscal) As Boolean
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCOMP1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCOMP2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP3)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.CUIT)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCUIT)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.RI)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField("")
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+
     'Funcion que Cierra un Tique.
     Public Function CerrarTicket(ByVal Control As Entidades.ControladorFiscal)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H6))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField("1")
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COLAR1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField("2")
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COLAR2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField("3")
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COLAR3)
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        If oEpsonFP.GetExtraField(1) = "" Then
+            Return 0
+        Else
+            Return oEpsonFP.GetExtraField(1)
+        End If
+
+    End Function
+
+    'Funcion que Cierra un Tique.
+    Public Function CerrarNotaCredito(ByVal Control As Entidades.ControladorFiscal)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H6))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField("1")
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COLAR1)
@@ -68,11 +132,39 @@ Public Class NegControladorFiscal
         Return sSubtotal
     End Function
 
+    'Funcion que obtiene el subtotal de una Nota de Credito.
+    Public Function SubtotalNotaCredito()
+        Dim sSubtotal As String = ""
+        Dim bAnswer As Boolean = False
+
+        'Get Subtotal
+        bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H3))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        sSubtotal = oEpsonFP.GetExtraField(1)
+        FPDelay()
+        Return sSubtotal
+    End Function
+
     'Funcion que Agrega descuentos.
     Public Function DescuentosTicket(ByVal descrip As String, ByVal descuento As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H4))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(descrip)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(descuento)
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    'Funcion que Agrega descuentos a la nota de credito.
+    Public Function DescuentosNotaCredito(ByVal descrip As String, ByVal descuento As String)
+        Dim bAnswer As Boolean = False
+
+        bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(descrip)
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(descuento)
@@ -99,6 +191,26 @@ Public Class NegControladorFiscal
     Public Function AgregarItemTicket(ByVal Control As Entidades.ControladorFiscal)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H2))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H18))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DE1)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DE2)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DE3)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DE4)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DPPAL)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.CANTIDAD)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.PUNITARIO)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.TIVA)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.IIF)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.IIP)
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    'Funcion que Agrega un item a una Nota de Credito.
+    Public Function AgregarItemNotaCredito(ByVal Control As Entidades.ControladorFiscal)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H18))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DE1)
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DE2)

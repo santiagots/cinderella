@@ -50,7 +50,45 @@ Public Class NegMovimientos
         Return ds
     End Function
 
-    'NUEVOS'
+    'Funcion para insertar un Gasto.
+    Function ConsultaSaldo(ByVal idSucursal As Integer, ByVal fecha As String) As Double
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+
+        Try
+            'Conecto
+            If (HayInternet) Then
+                cmd.Connection = clsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = clsDatos.ConectarLocal()
+            End If
+
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_MovSaldo_Total"
+            With cmd.Parameters
+                .AddWithValue("@id_Sucursal", idSucursal)
+                .AddWithValue("@Fecha", fecha)
+            End With
+
+            Dim respuesta As New SqlParameter("@Monto", SqlDbType.Float)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto
+            If (HayInternet) Then
+                clsDatos.DesconectarRemoto()
+            Else
+                clsDatos.DesconectarLocal()
+            End If
+
+            'muestro el mensaje
+            Return respuesta.Value
+        Catch ex As Exception
+            Return ex.Message
+        End Try
+    End Function
 
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarMovimiento(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal id_Seccion As Integer, ByVal id_Tipo As Integer) As Double

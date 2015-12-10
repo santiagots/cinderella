@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>30</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1200,6 +1200,7 @@
     <None Include="Imagenes\Import-Excel.png" />
     <Content Include="Imagenes\icono_buscar_48.png" />
     <Content Include="Imagenes\movimientos.png" />
+    <None Include="Imagenes\nota_credito.png" />
     <Content Include="Imagenes\ProductosMasivos_32.png" />
     <Content Include="Imagenes\Productos_32.png" />
     <Content Include="Imagenes\registracion.gif" />

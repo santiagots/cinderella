@@ -36,7 +36,6 @@ Partial Class frmMovimientoPlanilla
         Me.CbTipo = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DG_Movimientos = New System.Windows.Forms.DataGridView()
-        Me.ToolMov = New System.Windows.Forms.ToolTip(Me.components)
         Me.id_Movimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -44,6 +43,7 @@ Partial Class frmMovimientoPlanilla
         Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VerDetalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ToolMov = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.DG_Movimientos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -149,7 +149,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbTipo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbTipo.FormattingEnabled = True
-        Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Diferencias de Caja", "Egresos", "Gastos", "Impuestos", "Movimiento de Socio", "Caja Fuerte"})
+        Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Diferencias de Caja", "Egresos", "Gastos", "Impuestos", "Movimiento de Socio", "Caja Fuerte", "Devoluciones"})
         Me.CbTipo.Location = New System.Drawing.Point(402, 29)
         Me.CbTipo.Name = "CbTipo"
         Me.CbTipo.Size = New System.Drawing.Size(160, 23)
@@ -185,12 +185,6 @@ Partial Class frmMovimientoPlanilla
         Me.DG_Movimientos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Movimientos.Size = New System.Drawing.Size(658, 350)
         Me.DG_Movimientos.TabIndex = 2
-        '
-        'ToolMov
-        '
-        Me.ToolMov.IsBalloon = True
-        Me.ToolMov.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolMov.ToolTipTitle = "Ayuda"
         '
         'id_Movimiento
         '
@@ -247,6 +241,12 @@ Partial Class frmMovimientoPlanilla
         Me.Eliminar.Name = "Eliminar"
         Me.Eliminar.ReadOnly = True
         Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'ToolMov
+        '
+        Me.ToolMov.IsBalloon = True
+        Me.ToolMov.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolMov.ToolTipTitle = "Ayuda"
         '
         'frmMovimientoPlanilla
         '

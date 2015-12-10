@@ -95,7 +95,7 @@
             Egresos = Adelantos + DevolucionEgreso + Sueldo + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
 
             '------------SALDO---------------'
-            Saldo = Ingresos - Egresos
+            Saldo = NegMov.ConsultaSaldo(id_Sucursal, FHasta)
 
 
             '------------DISPONIBLE TOTAL---------------'
@@ -174,7 +174,7 @@
         txt_Sueldo.Clear()
         txt_Venta.Clear()
         txt_FDesde.Value = Today.AddMonths(-1)
-        txt_FHasta.Value = Today.AddDays(1)
+        txt_FHasta.Value = Today
 
         Me.Height = 200
         Me.Refresh()

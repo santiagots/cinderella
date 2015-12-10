@@ -4,6 +4,7 @@
     Dim Nombre_Sucursal As String
     Dim Funciones As New Funciones
     Dim NegMovimiento As New Negocio.NegMovimientos
+    Dim NegDevolucion As New Negocio.NegDevolucion
 
 #Region "Region de Eventos"
     'Load del formulario.
@@ -252,13 +253,13 @@
             frmCargadorDeEspera.Text = "Generando el listado de Movimientos de la Sucursal " & Nombre_Sucursal
             frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
             frmCargadorDeEspera.BarraProgreso.Minimum = 0
-            frmCargadorDeEspera.BarraProgreso.Maximum = 8
+            frmCargadorDeEspera.BarraProgreso.Maximum = 9
             frmCargadorDeEspera.BarraProgreso.Value = 1
             frmCargadorDeEspera.Refresh()
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 2
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando movimientos de diferencias de caja... (1/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando movimientos de diferencias de caja... (1/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Dif. de Caja.
@@ -272,7 +273,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 3
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Gastos... (2/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Gastos... (2/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Gastos.
@@ -288,7 +289,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 4
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Impuestos... (3/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Impuestos... (3/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Impuestos.
@@ -302,7 +303,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 5
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Envíos a otras sucursales... (4/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Envíos a otras sucursales... (4/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Egresos.
@@ -322,7 +323,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 6
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Retiro de socios... (5/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Retiro de socios... (5/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Retiro de socios.
@@ -336,7 +337,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 7
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Aporte de socios... (6/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Aporte de socios... (6/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Aporte de socios.
@@ -350,7 +351,7 @@
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 8
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Caja Fuerte... (7/7)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Caja Fuerte... (7/8)"
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Caja Fuerte
@@ -361,6 +362,22 @@
                     AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Caja Fuerte")
                 Next
             End If
+
+            'Cargo las dovoluciones.
+            Dim DsDevoluciones As New DataSet
+            Dim FDesde As String = New Date(Anio, NumeroMes, 1).ToString("yyyy/MM/dd")
+            Dim FHasta As String = New Date(Anio, NumeroMes, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
+            DsDevoluciones = NegDevolucion.ObtenerDevolucionesSucursalListado(id_Sucursal, FDesde, FHasta)
+            If DsDevoluciones IsNot Nothing Then
+                For Each mov In DsDevoluciones.Tables(0).Rows
+                    AgregarMovimiento(mov.item("id_devolucion"), mov.item("Fecha"), mov.item("Tipo_Pago"), mov.item("Precio_Total"), "Devolución", True)
+                Next
+            End If
+
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.BarraProgreso.Value = 9
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Devoluciones... (8/8)"
+            frmCargadorDeEspera.Refresh()
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.Close()
@@ -429,7 +446,21 @@
                     AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Caja Fuerte")
                 Next
             End If
+
+        ElseIf Tipo = "Devoluciones" Then
+            'Cargo las dovoluciones.
+            Dim DsDevoluciones As New DataSet
+            Dim FDesde As String = New Date(Anio, NumeroMes, 1).ToString("yyyy/MM/dd")
+            Dim FHasta As String = New Date(Anio, NumeroMes, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
+            DsDevoluciones = NegDevolucion.ObtenerDevolucionesSucursalListado(id_Sucursal, FDesde, FHasta)
+            If DsDevoluciones IsNot Nothing Then
+                For Each mov In DsDevoluciones.Tables(0).Rows
+                    AgregarMovimiento(mov.item("id_devolucion"), mov.item("Fecha"), mov.item("Tipo_Pago"), mov.item("Precio_Total"), "Devolución", True)
+                Next
+            End If
         End If
+
+
 
         'Ordeno las filas, por fecha descendientemente.
         DG_Movimientos.Sort(DG_Movimientos.Columns(1), System.ComponentModel.ListSortDirection.Descending)

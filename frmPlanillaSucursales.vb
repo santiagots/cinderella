@@ -320,16 +320,26 @@ Public Class frmPlanillaSucursales
         EstiloCategoria.Interior.Pattern = Microsoft.Office.Interop.Excel.XlPattern.xlPatternSolid
         '------------------------------------------Estilos para el excel------------------------------------------'
 
+        worksheet.Cells(1, 1).Value = "Sucursal:"
+        worksheet.Cells(1, 1).style = "EstiloEncabezado"
+        worksheet.Cells(1, 2).Value = DirectCast(Cb_Sucursal.SelectedItem, System.Data.DataRowView).Row.ItemArray(1)
+        worksheet.Cells(1, 2).style = "EstiloEncabezado"
+
+        worksheet.Cells(2, 1).Value = "Período:"
+        worksheet.Cells(2, 1).style = "EstiloEncabezado"
+        worksheet.Cells(2, 2).Value = String.Format("{0} a {1}", txt_FDesde.Value.ToString("yyyy/MM/dd"), txt_FHasta.Value.ToString("yyyy/MM/dd"))
+        worksheet.Cells(2, 2).style = "EstiloEncabezado"
+
         'Export Header Names Start
         Dim columnIndex As Integer = 0
         For j As Integer = 0 To DG_Planilla.Columns.Count - 1
             If (DG_Planilla.Columns(j).Name = "Nivel") Then
                 Continue For
             End If
-            worksheet.Cells(1, columnIndex + 1).Value = DG_Planilla.Columns(j).Name
-            worksheet.Cells(1, columnIndex + 1).style = "EstiloEncabezado"
+            worksheet.Cells(4, columnIndex + 1).Value = DG_Planilla.Columns(j).Name
+            worksheet.Cells(4, columnIndex + 1).style = "EstiloEncabezado"
             If (j > 1) Then
-                worksheet.Cells(1, columnIndex + 1).NumberFormat = "yyyy/MM/dd"
+                worksheet.Cells(4, columnIndex + 1).NumberFormat = "yyyy/MM/dd"
             End If
             columnIndex += 1
         Next
@@ -345,15 +355,15 @@ Public Class frmPlanillaSucursales
                 End If
 
                 If (DG_Planilla.Item("Nivel", i).Value <= 1) Then
-                    worksheet.Cells(i + 2, columnIndex + 1).style = "EstiloCategoria"
+                    worksheet.Cells(i + 5, columnIndex + 1).style = "EstiloCategoria"
                 End If
 
                 If (DG_Planilla.Item("Nivel", i).Value = -1) Then
-                    worksheet.Cells(i + 2, columnIndex + 1).NumberFormat = "0.00%"
+                    worksheet.Cells(i + 5, columnIndex + 1).NumberFormat = "0.00%"
                 Else
-                    worksheet.Cells(i + 2, columnIndex + 1).NumberFormat = "$ #.###,00"
+                    worksheet.Cells(i + 5, columnIndex + 1).NumberFormat = "$ ###0.00"
                 End If
-                worksheet.Cells(i + 2, columnIndex + 1).Value = DG_Planilla.Item(j, i).Value
+                worksheet.Cells(i + 5, columnIndex + 1).Value = DG_Planilla.Item(j, i).Value
                 columnIndex += 1
             Next
         Next

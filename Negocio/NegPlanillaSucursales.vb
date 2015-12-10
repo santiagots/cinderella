@@ -29,7 +29,6 @@ Public Class NegPlanillaSucursales
         End If
 
         SetCeroToDBnull(ds)
-        AddTotalColumn(ds, "Total")
         Return ds
     End Function
 

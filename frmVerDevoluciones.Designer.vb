@@ -27,6 +27,8 @@ Partial Class frmVerDevoluciones
         Me.DG_Comisiones = New System.Windows.Forms.DataGridView()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Tipo_Pago = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id_devolucion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Gb_Comisiones.SuspendLayout()
         CType(Me.DG_Comisiones, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -71,7 +73,7 @@ Partial Class frmVerDevoluciones
         Me.DG_Comisiones.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Comisiones.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Comisiones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Comisiones.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Fecha, Me.Monto})
+        Me.DG_Comisiones.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Fecha, Me.Monto, Me.Tipo_Pago, Me.id_devolucion})
         Me.DG_Comisiones.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Comisiones.Location = New System.Drawing.Point(7, 23)
         Me.DG_Comisiones.Name = "DG_Comisiones"
@@ -97,6 +99,21 @@ Partial Class frmVerDevoluciones
         Me.Monto.Name = "Monto"
         Me.Monto.ReadOnly = True
         '
+        'Tipo_Pago
+        '
+        Me.Tipo_Pago.DataPropertyName = "Tipo_Pago"
+        Me.Tipo_Pago.HeaderText = "Forma de Pago"
+        Me.Tipo_Pago.Name = "Tipo_Pago"
+        Me.Tipo_Pago.ReadOnly = True
+        '
+        'id_devolucion
+        '
+        Me.id_devolucion.DataPropertyName = "id_devolucion"
+        Me.id_devolucion.HeaderText = "id_devolucion"
+        Me.id_devolucion.Name = "id_devolucion"
+        Me.id_devolucion.ReadOnly = True
+        Me.id_devolucion.Visible = False
+        '
         'frmVerDevoluciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -115,4 +132,6 @@ Partial Class frmVerDevoluciones
     Friend WithEvents DG_Comisiones As System.Windows.Forms.DataGridView
     Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Monto As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Tipo_Pago As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents id_devolucion As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

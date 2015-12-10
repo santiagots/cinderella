@@ -228,18 +228,6 @@
 
                         NegDevolucion.NuevaDevolucion(EntDevolucion)
 
-                        'Se registra el movimiento de salida de dinero en la sucursal.
-                        'TODO:Ver que hacer con el registro de las devoluciones como egresos
-                        EMovEgreso.Aceptado = 1
-                        EMovEgreso.Fecha = Now.ToString 'fecha actual.
-                        EMovEgreso.id_Sucursal = id_Sucursal 'Sucursal donde se realiza la devolución.
-                        EMovEgreso.id_SucursalDestino = id_Sucursal 'Sucursal donde se realiza la devolución.
-                        EMovEgreso.Descripcion = "Egreso de dinero por devolución de mercaderia." 'descripcion del movimiento
-                        EMovEgreso.Monto = TotalMonto 'Monto devuelto por los productos que ingresaron.
-                        EMovEgreso.id_Tipo = 16 'Tipo: Efectivo.
-                        EMovEgreso.id_Subtipo = 0 'No posee subtipo.
-                        NegMovimientos.AltaMovEgreso(EMovEgreso)
-
                         'Limpio el form
                         LimpiarFormDevoluciones()
 
