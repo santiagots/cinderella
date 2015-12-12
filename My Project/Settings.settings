@@ -75,5 +75,8 @@
     <Setting Name="PuntoVentaFacturacionElectronica" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
+    <Setting Name="MontoMaximoNotaCredito" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -145,7 +145,6 @@
         Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
         Dim Monto As Double = 0 'Será el monto que le corresponda al empleado dependiendo de la comision y el MontoTotal.
         Dim Comision As Double = 0 'Será la comision del empleado, determinada por la sucursal y el dia de la semana.
-        Dim PosibilidadDeFacturar As String = My.Settings("ControladorStatus") 'Variable de configuración que indica si la sucursal puede facturar o no.
         Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
 
         'Chequeo que haya al menos un producto cargado.
@@ -217,7 +216,7 @@
                         EntDevolucion.Detalle = New List(Of Entidades.Devolucion_Detalle)
 
                         For i = 0 To DG_Productos.Rows.Count - 1
-                                'Creo un nuevo detalle, lleno el objeto e inserto en la bdd.
+                            'Creo un nuevo detalle, lleno el objeto e inserto en la bdd.
                             Dim EntDevolucionDetalle As New Entidades.Devolucion_Detalle
                             EntDevolucionDetalle.id_Detalle = 0
                             EntDevolucionDetalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
@@ -226,7 +225,12 @@
                             EntDevolucion.Detalle.Add(EntDevolucionDetalle)
                         Next
 
-                        NegDevolucion.NuevaDevolucion(EntDevolucion)
+                        Dim idDevolucion As String = NegDevolucion.NuevaDevolucion(EntDevolucion)
+                        If (idDevolucion = "0") Then
+                            Me.Cursor = Cursors.Arrow
+                            MessageBox.Show("Se ha producido un error al registrar la devolución. Por favor, Comuniquese con el administrador.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Return
+                        End If
 
                         'Limpio el form
                         LimpiarFormDevoluciones()
@@ -236,9 +240,40 @@
 
                         'Muestro el mensaje de ok.
                         If (MessageBox.Show("Se ha realizado la devolución correctamente.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Information) = vbOK) Then
-                            'Cierro el form.
-                            Me.Dispose()
-                            Me.Close()
+
+
+                            'Si el total es mayor que cero y no supera el monto maximo para la generacion de notas de credito.
+                            If MontoTotal <= 0 And CDbl(MontoTotal) > CDbl(My.Settings("MontoMaximoNotaCredito")) Then
+                                MessageBox.Show("La devolución excede el máximo permitido para la generación de notas de crédito. El pedido no podrá ser generado.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Else
+                                Facturar = True
+                            End If
+
+                            'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
+                            If Facturar Then
+                                If (MessageBox.Show("¿Generar nota de crédito Nº " & idDevolucion & "?", "Administración de Devoluciones", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+
+                                    'Seteo el cursor.
+                                    Me.Cursor = Cursors.WaitCursor
+
+                                    'Abro el form de datos de facturacion.
+                                    frmFacturar.NotaCredito = True
+                                    frmFacturar.id_Devolucion = Integer.Parse(idDevolucion)
+                                    frmFacturar.Monto = MontoTotal
+                                    frmFacturar.Descuento = Descuento
+                                    frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
+                                    frmFacturar.TipoPago = TipoPagoControlador
+                                    Funciones.ControlInstancia(frmFacturar).Show()
+
+                                    'Seteo el cursor.
+                                    Me.Cursor = Cursors.Arrow
+
+                                End If
+
+                                'Cierro el form.
+                                Me.Dispose()
+                                Me.Close()
+                            End If
                         End If
 
                     Catch ex As Exception

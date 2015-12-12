@@ -16,23 +16,6 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datos", "Datos\Datos.vbproj", "{031B7818-3E58-477F-BFAD-17166F3026AF}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://german:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Datos\\Datos.vbproj
-		SccProjectName1 = Datos
-		SccLocalPath1 = Datos
-		SccProjectUniqueName2 = Entidades\\Entidades.vbproj
-		SccProjectName2 = Entidades
-		SccLocalPath2 = Entidades
-		SccProjectUniqueName3 = Negocio\\Negocio.vbproj
-		SccProjectName3 = Negocio
-		SccLocalPath3 = Negocio
-		SccProjectUniqueName4 = SistemaCinderella.vbproj
-		SccLocalPath4 = .
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

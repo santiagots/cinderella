@@ -296,6 +296,18 @@ Namespace My
                 Me("PuntoVentaFacturacionElectronica") = value
             End Set
         End Property
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("3000")> _
+        Public Property MontoMaximoNotaCredito() As String
+            Get
+                Return CType(Me("MontoMaximoNotaCredito"), String)
+            End Get
+            Set(value As String)
+                Me("MontoMaximoNotaCredito") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

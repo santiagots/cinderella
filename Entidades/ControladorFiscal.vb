@@ -207,4 +207,15 @@
             LREMITO2_ = value
         End Set
     End Property
+
+    Private COMPROBANTEORIGEN_ As String
+    Public Property COMPROBANTEORIGEN() As String
+        Get
+            Return ComprobanteOrigen_
+        End Get
+        Set(ByVal value As String)
+            ComprobanteOrigen_ = value
+        End Set
+    End Property
+
 End Class

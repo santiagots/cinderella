@@ -46,6 +46,7 @@ Public Class frmConfiguracion
             RContrNO.Checked = False
         End If
         txt_MontoControlador.Text = My.Settings("ControladorMontoTope")
+        txt_MontoMaximoNotaCredito.Text = My.Settings("MontoMaximoNotaCredito")
 
         txt_PuntoVentaElectronica.Text = My.Settings.PuntoVentaFacturacionElectronica
         txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
@@ -150,6 +151,7 @@ Public Class frmConfiguracion
                     My.Settings.ControladorStatus = "NO"
                 End If
                 My.Settings.ControladorMontoTope = Trim(txt_MontoControlador.Text)
+                My.Settings.MontoMaximoNotaCredito = Trim(txt_MontoMaximoNotaCredito.Text)
                 My.Settings.PuntoVentaFacturacionElectronica = Integer.Parse(Trim(txt_PuntoVentaElectronica.Text))
                 My.Settings.PuntoVentaFacturacionTicket = Integer.Parse(Trim(txt_PuntoVentaControladora.Text))
                 My.Settings.PuntoVentaFacturacionManual = Integer.Parse(Trim(txt_PuntoVentaManual.Text))

@@ -140,10 +140,10 @@ Public Class MDIContenedor
 
             'CAMBIOS Y DEVOLUCIONES
             If Not (objusuario.EsPatenteValida(230, VariablesGlobales.Patentes)) Then
-                Me.CambiosYDevolucionesToolStripMenuItem.Visible = False
+                Me.Btn_DevolucionesMenu.Visible = False
                 Me.AccesoCambios.Visible = False
             Else
-                Me.CambiosYDevolucionesToolStripMenuItem.Visible = True
+                Me.Btn_DevolucionesMenu.Visible = True
                 Me.AccesoCambios.Visible = True
             End If
             'Voy seteando la barra de progreso
@@ -814,7 +814,7 @@ Public Class MDIContenedor
         End If
     End Sub
 
-    Private Sub CambiosYDevolucionesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CambiosYDevolucionesToolStripMenuItem.Click
+    Private Sub CambiosYDevolucionesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'para administrar cambios no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmDevoluciones).MdiParent = Me
@@ -1223,5 +1223,21 @@ Public Class MDIContenedor
             Funciones.ControlInstancia(frmAdicionales).Show()
             Me.Cursor = Cursors.Arrow
         End If
+    End Sub
+
+    Private Sub DevolucionesMenu_Click(sender As Object, e As EventArgs) Handles DevolucionesMenu.Click
+        'para administrar cambios no es necesario esta online
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmDevoluciones).MdiParent = Me
+        Funciones.ControlInstancia(frmDevoluciones).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub AdministracionDevolucionesMenu_Click(sender As Object, e As EventArgs) Handles AdministracionDevolucionesMenu.Click
+        'para administrar ventas no es necesario esta online
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmDevolucionesAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmDevolucionesAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
     End Sub
 End Class

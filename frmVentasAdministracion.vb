@@ -180,7 +180,7 @@
                 If dsVentas.Tables(0).Rows(0).Item("Anulado").ToString = "1" Then
                     lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", CDate(dsVentas.Tables(0).Rows(0).Item("FechaAnulado"))) & vbCrLf & Replace(Trim(dsVentas.Tables(0).Rows(0).Item("DescripcionAnulado").ToString), "<br />", vbCrLf)
                     lblAnulado.Visible = True
-                    Gb_Anulado.Visible = False                    
+                    Gb_Anulado.Visible = False
                 Else
                     lblAnulado.Visible = False
                     Gb_Anulado.Visible = True

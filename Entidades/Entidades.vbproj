@@ -27,6 +27,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Entidades.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -97,6 +98,7 @@
     <Compile Include="Movimientos.vb" />
     <Compile Include="MovImpuesto.vb" />
     <Compile Include="MovSocios.vb" />
+    <Compile Include="NotaCredito.vb" />
     <Compile Include="Patentes.vb" />
     <Compile Include="Perfiles.vb" />
     <Compile Include="Precios.vb" />

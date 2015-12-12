@@ -32,27 +32,6 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    'Funcion que Abre un Tique.
-    Public Function AbrirTicket(ByVal Control As Entidades.ControladorFiscal) As Boolean
-        Dim bAnswer As Boolean = False
-        bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H1))
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCOMP1)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCOMP2)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP1)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP2)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.DCOMP3)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.CUIT)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.NCUIT)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.RI)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO1)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO2)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField("")
-        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
-        FPDelay()
-        Return bAnswer
-    End Function
-
     'Funcion que Abre una Nota de Credito.
     Public Function AbrirNotaCredito(ByVal Control As Entidades.ControladorFiscal) As Boolean
         Dim bAnswer As Boolean = False
@@ -68,7 +47,7 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.RI)
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO1)
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.LREMITO2)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField("")
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COMPROBANTEORIGEN)
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         Return bAnswer
@@ -107,6 +86,7 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COLAR2)
         If bAnswer Then bAnswer = oEpsonFP.AddDataField("3")
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Control.COLAR3)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField("")
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         If oEpsonFP.GetExtraField(1) = "" Then
@@ -236,6 +216,11 @@ Public Class NegControladorFiscal
             state = False
         End If
         Return state
+    End Function
+
+    'Funcion que abre cerrar los puertos de la impresora.
+    Public Function CerrarPuerto()
+        oEpsonFP.ClosePort()
     End Function
 
     Public Function PrinterStatus()

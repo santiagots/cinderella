@@ -592,7 +592,6 @@ Public Class frmVentas
             Dim MontoTotal As Double = MontoTotalSinDescuento + Descuento  'Monto total de la venta menos el descuento.
             Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
             Dim Monto As Double = 0 'Será el monto que le corresponda al empleado dependiendo de la comision y el MontoTotal.
-            Dim PosibilidadDeFacturar As String = My.Settings("ControladorStatus") 'Variable de configuración que indica si la sucursal puede facturar o no.
             Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
 
             'Seteo Tipo de Pago para la controladora fiscal
@@ -639,8 +638,8 @@ Public Class frmVentas
                 Else
                     'Tiene asignado vendedor.
                     If MessageBox.Show("¿Ésta seguro que desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                        'Si la sucursal puede facturar y el total es mayor que cero.
-                        If PosibilidadDeFacturar = "SI" And MontoTotal > 0 Then
+                        'Si el total es mayor que cero.
+                        If MontoTotal > 0 Then
                             'Pregunto si desea realizar la factura de la venta.
                             If MessageBox.Show("¿Desea llevar a cabo factura de la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
                                 'Si el Monto excede el máximo permitido para facturar, aviso al usuario.

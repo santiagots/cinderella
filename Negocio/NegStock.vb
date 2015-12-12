@@ -295,7 +295,7 @@ Public Class NegStock
         Catch ex As Exception
             Return False
         End Try
-
+        Return True
     End Function
 
     'Update Stock.

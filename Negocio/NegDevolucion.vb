@@ -5,7 +5,7 @@ Public Class NegDevolucion
     Dim ClsFunciones As New Funciones
     Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
-    Public Function NuevaDevolucion(ByVal Devolucion As Entidades.Devolucion) As Boolean
+    Public Function NuevaDevolucion(ByVal Devolucion As Entidades.Devolucion) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
@@ -67,9 +67,9 @@ Public Class NegDevolucion
             End If
 
             'retorno valor
-            Return CBool(respuesta.Value)
+            Return respuesta.Value
         Catch ex As Exception
-            Return False
+            Return "0"
         End Try
     End Function
 
@@ -84,6 +84,136 @@ Public Class NegDevolucion
         End If
 
         Return ds
+    End Function
+
+    'Funcion para consultar un detalle de laa venta.
+    Public Function TraerDevolucionDetalle(ByVal id_Venta As Integer)
+        Dim dsVentas As New DataSet
+
+        If (HayInternet) Then
+            dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Venta=" & id_Venta)
+        Else
+            dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Venta=" & id_Venta)
+        End If
+
+        Return dsVentas
+    End Function
+
+    'Funcion para listar todas las devoluciones por FECHA.
+    Function ListadoDevolucionesCompletoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
+        If HayInternet Then
+            Return ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            Return ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+    End Function
+
+    'Funcion para consultar una devolucion.
+    Public Function TraerDevolucion(ByVal id_Devolucion As Integer)
+        Dim dsDevolucion As New DataSet
+
+        If (HayInternet) Then
+            dsDevolucion = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
+        Else
+            dsDevolucion = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
+        End If
+
+        Return dsDevolucion
+    End Function
+
+    Function AnularDevolucion(id_Devolucion As Integer, Texto As String) As Integer
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+        Try
+            'Conecto a la bdd.
+            If HayInternet Then
+                cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
+            End If
+
+            If (Texto = "") Then
+                Texto = "No se ingreso el motivo."
+            End If
+
+            'Cargo y ejecuto el stored.
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Devolucion_Anular"
+            With cmd.Parameters
+                .AddWithValue("@id_Devolucion", id_Devolucion)
+                .AddWithValue("@Texto", Texto)
+                .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
+            End With
+
+            'Respuesta del stored.
+            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto la bdd.
+            If HayInternet Then
+                ClsDatos.DesconectarRemoto()
+            Else
+                ClsDatos.DesconectarLocal()
+            End If
+
+            'retorno valor
+            Return respuesta.Value
+        Catch ex As Exception
+            Return 0
+        End Try
+    End Function
+
+    'Funcion que actualiza una venta como facturada o no facturada.
+    Public Function GeneracionNotaCredito(ByVal NotaCredito As Boolean, ByVal id_Devolucion As Integer)
+        Dim GenerarNotaCredito As Integer = 0
+
+        If NotaCredito Then
+            GenerarNotaCredito = 1
+        Else
+            GenerarNotaCredito = 0
+        End If
+
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+        Try
+            'Conecto a la bdd.
+            If HayInternet Then
+                cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
+            End If
+
+            'Cargo y ejecuto el stored.
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Devolucion_GeneracionNotaCredito"
+            With cmd.Parameters
+                .AddWithValue("@id_Devolucion", id_Devolucion)
+                .AddWithValue("@NotaCredito", GenerarNotaCredito)
+            End With
+
+            'Respuesta del stored.
+            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+
+            'Desconecto la bdd.
+            If HayInternet Then
+                ClsDatos.DesconectarRemoto()
+            Else
+                ClsDatos.DesconectarLocal()
+            End If
+
+            'retorno valor
+            Return respuesta.Value
+        Catch ex As Exception
+            Return 0
+        End Try
+
     End Function
 
 End Class

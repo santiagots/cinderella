@@ -269,22 +269,28 @@ Public Class frmPlanillaPrecios
             If item2 = "Costo" Then
                 dt.Columns.Add("Costo", Type.GetType("System.Double"))
                 dt.Columns("Costo").DefaultValue = 0
-            ElseIf item2 = "Público Tigre" Then
+
+            ElseIf item2 = "Efectivo Tigre" Then
                 dt.Columns.Add("Precio1", Type.GetType("System.Double"))
                 dt.Columns("Precio1").DefaultValue = 0
-            ElseIf item2 = "Público Sarmiento" Then
+
+            ElseIf item2 = "Tarjeta Tigre" Then
                 dt.Columns.Add("Precio2", Type.GetType("System.Double"))
                 dt.Columns("Precio2").DefaultValue = 0
-            ElseIf item2 = "Público Capital" Then
+
+            ElseIf item2 = "Efectivo Capital" Then
                 dt.Columns.Add("Precio3", Type.GetType("System.Double"))
                 dt.Columns("Precio3").DefaultValue = 0
-            ElseIf item2 = "Mayorista SF" Then
+
+            ElseIf item2 = "Tarjeta Capital" Then
                 dt.Columns.Add("Precio4", Type.GetType("System.Double"))
                 dt.Columns("Precio4").DefaultValue = 0
-            ElseIf item2 = "Mayorista CF" Then
+
+            ElseIf item2 = "Mayorista SF" Then
                 dt.Columns.Add("Precio5", Type.GetType("System.Double"))
                 dt.Columns("Precio5").DefaultValue = 0
-            ElseIf item2 = "Mayorista CFR" Then
+
+            ElseIf item2 = "Mayorista CF" Then
                 dt.Columns.Add("Precio6", Type.GetType("System.Double"))
                 dt.Columns("Precio6").DefaultValue = 0
             End If
