@@ -24,11 +24,10 @@ Partial Class frmVentasAdministracion
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVentasAdministracion))
         Me.TabVentas = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -43,6 +42,7 @@ Partial Class frmVentasAdministracion
         Me.DG_Ventas = New System.Windows.Forms.DataGridView()
         Me.TbDetalle = New System.Windows.Forms.TabPage()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
+        Me.BtnEmitirFactura = New System.Windows.Forms.Button()
         Me.lblEncargado = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.lblSubtotal = New System.Windows.Forms.Label()
@@ -80,14 +80,16 @@ Partial Class frmVentasAdministracion
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolVentas = New System.Windows.Forms.ToolTip(Me.components)
         Me.id_Venta = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Facturado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoFactura = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.NumFactura = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabVentas.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -96,13 +98,14 @@ Partial Class frmVentasAdministracion
         Me.lblcontenedor.SuspendLayout()
         Me.Gb_Anulado.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TipoFacturaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabVentas
         '
         Me.TabVentas.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabVentas.Controls.Add(Me.TbListado)
         Me.TabVentas.Controls.Add(Me.TbDetalle)
         Me.TabVentas.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -139,7 +142,7 @@ Partial Class frmVentasAdministracion
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.btn_Restablecer)
         Me.GroupBox1.Controls.Add(Me.BtnFiltrar)
         Me.GroupBox1.Controls.Add(Me.Label12)
@@ -227,18 +230,18 @@ Partial Class frmVentasAdministracion
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DG_Ventas.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Ventas.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Ventas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_Ventas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Venta, Me.Empleado, Me.Cliente, Me.MontoTotal, Me.Anulado, Me.Facturado, Me.Fecha})
+        Me.DG_Ventas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Venta, Me.Empleado, Me.Cliente, Me.MontoTotal, Me.Anulado, Me.Fecha, Me.TipoFactura, Me.NumFactura})
         Me.DG_Ventas.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Ventas.Location = New System.Drawing.Point(10, 105)
         Me.DG_Ventas.MultiSelect = False
         Me.DG_Ventas.Name = "DG_Ventas"
         Me.DG_Ventas.ReadOnly = True
         Me.DG_Ventas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DG_Ventas.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DG_Ventas.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DG_Ventas.RowTemplate.Height = 30
         Me.DG_Ventas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Ventas.Size = New System.Drawing.Size(782, 402)
@@ -257,8 +260,9 @@ Partial Class frmVentasAdministracion
         'lblcontenedor
         '
         Me.lblcontenedor.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblcontenedor.Controls.Add(Me.BtnEmitirFactura)
         Me.lblcontenedor.Controls.Add(Me.lblEncargado)
         Me.lblcontenedor.Controls.Add(Me.Label16)
         Me.lblcontenedor.Controls.Add(Me.lblSubtotal)
@@ -294,6 +298,20 @@ Partial Class frmVentasAdministracion
         Me.lblcontenedor.TabIndex = 0
         Me.lblcontenedor.TabStop = False
         Me.lblcontenedor.Text = "Información de la venta realizada."
+        '
+        'BtnEmitirFactura
+        '
+        Me.BtnEmitirFactura.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnEmitirFactura.FlatAppearance.BorderSize = 0
+        Me.BtnEmitirFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnEmitirFactura.Image = Global.SistemaCinderella.My.Resources.Recursos.TicketPequeño
+        Me.BtnEmitirFactura.Location = New System.Drawing.Point(268, 363)
+        Me.BtnEmitirFactura.Name = "BtnEmitirFactura"
+        Me.BtnEmitirFactura.Size = New System.Drawing.Size(18, 18)
+        Me.BtnEmitirFactura.TabIndex = 37
+        Me.BtnEmitirFactura.Tag = "Ver Detalle"
+        Me.ToolVentas.SetToolTip(Me.BtnEmitirFactura, "Generar factura")
+        Me.BtnEmitirFactura.UseVisualStyleBackColor = True
         '
         'lblEncargado
         '
@@ -370,6 +388,7 @@ Partial Class frmVentasAdministracion
         Me.BtnFactura.Size = New System.Drawing.Size(18, 18)
         Me.BtnFactura.TabIndex = 30
         Me.BtnFactura.Tag = "Ver Detalle"
+        Me.ToolVentas.SetToolTip(Me.BtnFactura, "Ver detalle factura")
         Me.BtnFactura.UseVisualStyleBackColor = True
         '
         'lblAnulado
@@ -542,6 +561,7 @@ Partial Class frmVentasAdministracion
         Me.BtnAnular.TabIndex = 14
         Me.BtnAnular.Text = "Anular"
         Me.BtnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolVentas.SetToolTip(Me.BtnAnular, "Anular venta")
         Me.BtnAnular.UseVisualStyleBackColor = True
         '
         'Label7
@@ -572,8 +592,8 @@ Partial Class frmVentasAdministracion
         Me.DG_Productos.AllowUserToDeleteRows = False
         Me.DG_Productos.AllowUserToResizeRows = False
         Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Productos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Productos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
@@ -619,9 +639,9 @@ Partial Class frmVentasAdministracion
         '
         'PRECIO
         '
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle4
         Me.PRECIO.FillWeight = 81.69429!
         Me.PRECIO.HeaderText = "Precio"
         Me.PRECIO.Name = "PRECIO"
@@ -629,9 +649,9 @@ Partial Class frmVentasAdministracion
         '
         'SUBTOTAL
         '
-        DataGridViewCellStyle6.Format = "C2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle5.Format = "C2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle5
         Me.SUBTOTAL.FillWeight = 91.37056!
         Me.SUBTOTAL.HeaderText = "Subtotal"
         Me.SUBTOTAL.Name = "SUBTOTAL"
@@ -731,21 +751,11 @@ Partial Class frmVentasAdministracion
         Me.Anulado.DataPropertyName = "Anulado"
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         Me.Anulado.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Anulado.FillWeight = 45.04225!
+        Me.Anulado.FillWeight = 55.0!
         Me.Anulado.HeaderText = "Anulado"
         Me.Anulado.MaxInputLength = 10
         Me.Anulado.Name = "Anulado"
         Me.Anulado.ReadOnly = True
-        '
-        'Facturado
-        '
-        Me.Facturado.DataPropertyName = "Facturado"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Facturado.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Facturado.FillWeight = 47.6984!
-        Me.Facturado.HeaderText = "Facturado"
-        Me.Facturado.Name = "Facturado"
-        Me.Facturado.ReadOnly = True
         '
         'Fecha
         '
@@ -754,6 +764,21 @@ Partial Class frmVentasAdministracion
         Me.Fecha.HeaderText = "Fecha"
         Me.Fecha.Name = "Fecha"
         Me.Fecha.ReadOnly = True
+        '
+        'TipoFactura
+        '
+        Me.TipoFactura.DataPropertyName = "TipoRecibo"
+        Me.TipoFactura.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
+        Me.TipoFactura.HeaderText = "Facturado"
+        Me.TipoFactura.Name = "TipoFactura"
+        Me.TipoFactura.ReadOnly = True
+        '
+        'NumFactura
+        '
+        Me.NumFactura.DataPropertyName = "NumeroFactura"
+        Me.NumFactura.HeaderText = "Numero"
+        Me.NumFactura.Name = "NumFactura"
+        Me.NumFactura.ReadOnly = True
         '
         'frmVentasAdministracion
         '
@@ -778,6 +803,7 @@ Partial Class frmVentasAdministracion
         Me.Gb_Anulado.ResumeLayout(False)
         Me.Gb_Anulado.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TipoFacturaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -832,11 +858,14 @@ Partial Class frmVentasAdministracion
     Friend WithEvents PRECIO As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents SUBTOTAL As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ToolVentas As System.Windows.Forms.ToolTip
+    Friend WithEvents BtnEmitirFactura As System.Windows.Forms.Button
+    Friend WithEvents TipoFacturaBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents id_Venta As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Empleado As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Cliente As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents MontoTotal As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Anulado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Facturado As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents TipoFactura As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents NumFactura As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

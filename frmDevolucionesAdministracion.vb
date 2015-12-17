@@ -6,6 +6,12 @@
     Dim eDevolucion As New Entidades.Devolucion
     Dim Funciones As New Funciones
 
+    Dim id_DevolucionDetalle As Integer = 0
+    Dim MontoTotalDetalle As Double = 0
+    Dim DescuentoDetalle As Double = 0
+    Dim SubTotalDetalle As Double = 0
+    Dim TipoPagoDetalle As String = String.Empty
+
     Private Sub frmDevolucionesAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             'Cambio el cursor a "WAIT"
@@ -38,6 +44,21 @@
             FDesde.Value = Now.Date.AddDays(-30)
             FHasta.Value = Now.Date.AddDays(1)
 
+            Dim TipoFactura As DataGridViewComboBoxColumn = DG_Devolucion.Columns("TipoNotaCredito")
+
+            TipoFactura.ValueMember = "Key"
+            TipoFactura.DisplayMember = "Value"
+
+            Dim TiposPago As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))()
+            For Each tipo As Entidades.TipoFactura In [Enum].GetValues(GetType(Entidades.TipoFactura))
+                Dim value As String = [Enum].GetName(GetType(Entidades.TipoFactura), tipo)
+                Dim Key As Integer = tipo
+                TiposPago.Add(New KeyValuePair(Of Integer, String)(Key, value.ToUpper()))
+            Next
+
+            TiposPago.Add(New KeyValuePair(Of Integer, String)(-1, "NO"))
+            TipoFactura.DataSource = TiposPago
+
 
             'Cargo el datagrid
             Dim dsVentas As New DataSet
@@ -53,7 +74,6 @@
                 DG_Devolucion.Columns("MontoTotal").DisplayIndex = 3
                 DG_Devolucion.Columns("Fecha").DisplayIndex = 4
                 DG_Devolucion.Columns("Anulado").DisplayIndex = 5
-                DG_Devolucion.Columns("Facturado").DisplayIndex = 6
                 DG_Devolucion.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Devolucion.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
                 DG_Devolucion.Refresh()
@@ -92,7 +112,6 @@
             DG_Devolucion.Columns("MontoTotal").DisplayIndex = 3
             DG_Devolucion.Columns("Fecha").DisplayIndex = 4
             DG_Devolucion.Columns("Anulado").DisplayIndex = 5
-            DG_Devolucion.Columns("Facturado").DisplayIndex = 6
             DG_Devolucion.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Devolucion.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Devolucion.Refresh()
@@ -155,23 +174,27 @@
             LimpiarFormulario()
 
             'Traigo la venta
-            Dim id_Devolucion As Integer = DG_Devolucion.Rows(e.RowIndex).Cells("id_Devolucion").Value()
+            id_DevolucionDetalle = DG_Devolucion.Rows(e.RowIndex).Cells("id_Devolucion").Value()
             Dim dsDevolucionDetalle, dsDevolucion As DataSet
-            dsDevolucion = NegDevolucion.TraerDevolucion(id_Devolucion)
-            eDevolucion.id_Devolucion = id_Devolucion
+            dsDevolucion = NegDevolucion.TraerDevolucion(id_DevolucionDetalle)
+            eDevolucion.id_Devolucion = id_DevolucionDetalle
             eDevolucion.id_Sucursal = dsDevolucion.Tables(0).Rows(0).Item("id_Sucursal").ToString
             eDevolucion.id_Empleado = dsDevolucion.Tables(0).Rows(0).Item("id_Empleado").ToString
 
             'Cargo los labels de la venta.
             If dsDevolucion.Tables(0).Rows.Count <> 0 Then
                 lblCantidad.Text = dsDevolucion.Tables(0).Rows(0).Item("Cantidad_Total").ToString
-                lblMonto.Text = "$ " & Format(CType(dsDevolucion.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal), "###0.00")
+                MontoTotalDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
+                lblMonto.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
                 lblFecha.Text = dsDevolucion.Tables(0).Rows(0).Item("Fecha").ToString
                 lblSucursal.Text = dsDevolucion.Tables(0).Rows(0).Item("Sucursal").ToString
-                lblSubtotal.Text = "$ " & Format(CType(dsDevolucion.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal), "###0.00")
-                lblDescuento.Text = "$ " & Format(CType(dsDevolucion.Tables(0).Rows(0).Item("Descuento").ToString, Decimal), "###0.00")
+                SubTotalDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
+                lblSubtotal.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+                DescuentoDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
+                lblDescuento.Text = "$ " & Format(DescuentoDetalle, "###0.00")
                 lblVenta.Text = dsDevolucion.Tables(0).Rows(0).Item("TiposDevolucion").ToString
-                lblPago.Text = dsDevolucion.Tables(0).Rows(0).Item("TiposPago").ToString
+                TipoPagoDetalle = dsDevolucion.Tables(0).Rows(0).Item("TiposPago").ToString
+                lblPago.Text = TipoPagoDetalle
 
                 If dsDevolucion.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsDevolucion.Tables(0).Rows(0).Item("RazonSocial").ToString
@@ -191,13 +214,17 @@
                     lblEncargado.Text = "- - - - - "
                 End If
 
-                If dsDevolucion.Tables(0).Rows(0).Item("NotaCredito").ToString = "1" Then
-                    lblFacturado.Text = "SI"
+                Dim TipoNotaCredito As Integer = Integer.Parse(dsDevolucion.Tables(0).Rows(0).Item("NotaCredito").ToString)
+
+                If TipoNotaCredito >= 0 Then
+                    lblNotaCredito.Text = [Enum].GetName(GetType(Entidades.TipoFactura), TipoNotaCredito)
                     BtnNotaCredito.Visible = True
-                    FrmVerNotaCredito.id_Devolucion = id_Devolucion
+                    BtnEmitirFactura.Visible = False
+                    FrmVerNotaCredito.id_Devolucion = id_DevolucionDetalle
                 Else
-                    lblFacturado.Text = "NO"
+                    lblNotaCredito.Text = "NO"
                     BtnNotaCredito.Visible = False
+                    BtnEmitirFactura.Visible = True
                 End If
 
                 If dsDevolucion.Tables(0).Rows(0).Item("Anulado").ToString = "1" Then
@@ -211,7 +238,7 @@
                 End If
 
                 'Detalle de la venta.
-                dsDevolucionDetalle = NegDevolucion.TraerDevolucionDetalle(id_Devolucion)
+                dsDevolucionDetalle = NegDevolucion.TraerDevolucionDetalle(id_DevolucionDetalle)
                 For Each ventaDetalle In dsDevolucionDetalle.Tables(0).Rows
 
                     'Creo la fila del producto.
@@ -322,7 +349,7 @@
         lblVendedor.Text = "- - - - -"
         lblVenta.Text = "- - - - -"
         lblPago.Text = "- - - - -"
-        lblFacturado.Text = "- - - - -"
+        lblNotaCredito.Text = "- - - - -"
         lblCliente.Text = "- - - - -"
         lblAnulado.Visible = False
         BtnNotaCredito.Visible = False
@@ -333,6 +360,29 @@
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(FrmVerNotaCredito).MdiParent = MDIContenedor
         Funciones.ControlInstancia(FrmVerNotaCredito).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub DG_Devolucion_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Devolucion.CellFormatting
+        If (e.ColumnIndex = DG_Devolucion.Columns("NumeroNotaCredito").Index And Not e.Value Is DBNull.Value) Then
+            e.Value = e.Value.ToString().PadLeft(10, "0")
+        End If
+    End Sub
+
+    Private Sub BtnEmitirFactura_Click(sender As Object, e As EventArgs) Handles BtnEmitirFactura.Click
+        'Seteo el cursor.
+        Me.Cursor = Cursors.WaitCursor
+
+        'Abro el form de datos de facturacion.
+        frmFacturar.id_Devolucion = id_DevolucionDetalle
+        frmFacturar.Monto = MontoTotalDetalle
+        frmFacturar.Descuento = DescuentoDetalle
+        frmFacturar.MontoSinDescuento = SubTotalDetalle
+        frmFacturar.TipoPago = TipoPagoDetalle
+        frmFacturar.NotaCredito = True
+        Funciones.ControlInstancia(frmFacturar).Show()
+
+        'Seteo el cursor.
         Me.Cursor = Cursors.Arrow
     End Sub
 End Class

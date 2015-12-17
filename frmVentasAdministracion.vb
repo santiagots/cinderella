@@ -6,6 +6,12 @@
     Dim eVentas As New Entidades.Ventas
     Dim Funciones As New Funciones
 
+    Dim id_VentaDetalle As Integer = 0
+    Dim MontoTotalDetalle As Double = 0
+    Dim DescuentoDetalle As Double = 0
+    Dim SubTotalDetalle As Double = 0
+    Dim TipoPagoDetalle As String = String.Empty
+
     'Cuando carga el formulario.
     Private Sub frmVentasAdministracion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Try
@@ -39,6 +45,20 @@
             FDesde.Value = Now.Date.AddDays(-30)
             FHasta.Value = Now.Date.AddDays(1)
 
+            Dim TipoFactura As DataGridViewComboBoxColumn = DG_Ventas.Columns("TipoFactura")
+
+            TipoFactura.ValueMember = "Key"
+            TipoFactura.DisplayMember = "Value"
+
+            Dim TiposPago As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))()
+            For Each tipo As Entidades.TipoFactura In [Enum].GetValues(GetType(Entidades.TipoFactura))
+                Dim value As String = [Enum].GetName(GetType(Entidades.TipoFactura), tipo)
+                Dim Key As Integer = tipo
+                TiposPago.Add(New KeyValuePair(Of Integer, String)(Key, value.ToUpper()))
+            Next
+
+            TiposPago.Add(New KeyValuePair(Of Integer, String)(-1, "NO"))
+            TipoFactura.DataSource = TiposPago
 
             'Cargo el datagrid
             Dim dsVentas As New DataSet
@@ -54,9 +74,10 @@
                 DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
                 DG_Ventas.Columns("Fecha").DisplayIndex = 4
                 DG_Ventas.Columns("Anulado").DisplayIndex = 5
-                DG_Ventas.Columns("Facturado").DisplayIndex = 6
                 DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
+                DG_Ventas.Columns("NumFactura").DefaultCellStyle.Format = "D5"
+                DG_Ventas.Columns("NumFactura").ValueType = GetType(Integer)
                 DG_Ventas.Refresh()
                 lbl_Msg.Visible = False
             Else
@@ -94,7 +115,6 @@
                 DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
                 DG_Ventas.Columns("Fecha").DisplayIndex = 4
                 DG_Ventas.Columns("Anulado").DisplayIndex = 5
-                DG_Ventas.Columns("Facturado").DisplayIndex = 6
                 DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
                 DG_Ventas.Refresh()
@@ -132,23 +152,27 @@
             Me.Cursor = Cursors.WaitCursor
 
             'Traigo la venta
-            Dim id_Venta As Integer = DG_Ventas.Rows(e.RowIndex).Cells("id_Venta").Value()
+            id_VentaDetalle = DG_Ventas.Rows(e.RowIndex).Cells("id_Venta").Value()
             Dim dsVentasDetalle, dsVentas As DataSet
-            dsVentas = NegVentas.TraerVenta(id_Venta)
-            eVentas.id_Venta = id_Venta
+            dsVentas = NegVentas.TraerVenta(id_VentaDetalle)
+            eVentas.id_Venta = id_VentaDetalle
             eVentas.id_Sucursal = dsVentas.Tables(0).Rows(0).Item("id_Sucursal").ToString
             eVentas.id_Empleado = dsVentas.Tables(0).Rows(0).Item("id_Empleado").ToString
 
             'Cargo los labels de la venta.
             If dsVentas.Tables(0).Rows.Count <> 0 Then
                 lblCantidad.Text = dsVentas.Tables(0).Rows(0).Item("Cantidad_Total").ToString
-                lblMonto.Text = "$ " & Format(CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal), "###0.00")
+                MontoTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
+                lblMonto.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
                 lblFecha.Text = dsVentas.Tables(0).Rows(0).Item("Fecha").ToString
                 lblSucursal.Text = dsVentas.Tables(0).Rows(0).Item("Sucursal").ToString
-                lblSubtotal.Text = "$ " & Format(CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal), "###0.00")
-                lblDescuento.Text = "$ " & Format(CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal), "###0.00")
+                SubTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
+                lblSubtotal.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+                DescuentoDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
+                lblDescuento.Text = "$ " & Format(DescuentoDetalle, "###0.00")
                 lblVenta.Text = dsVentas.Tables(0).Rows(0).Item("TiposVenta").ToString
-                lblPago.Text = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString
+                TipoPagoDetalle = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString
+                lblPago.Text = TipoPagoDetalle
 
                 If dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString
@@ -168,13 +192,17 @@
                     lblEncargado.Text = "- - - - - "
                 End If
 
-                If dsVentas.Tables(0).Rows(0).Item("Facturado").ToString = "1" Then
-                    lblFacturado.Text = "SI"
+                Dim TipoFactura As Integer = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("TipoFactura").ToString)
+
+                If TipoFactura >= 0 Then
+                    lblFacturado.Text = [Enum].GetName(GetType(Entidades.TipoFactura), TipoFactura)
                     BtnFactura.Visible = True
-                    frmVerFactura.id_Venta = id_Venta
+                    BtnEmitirFactura.Visible = False
+                    frmVerFactura.id_Venta = id_VentaDetalle
                 Else
                     lblFacturado.Text = "NO"
                     BtnFactura.Visible = False
+                    BtnEmitirFactura.Visible = True
                 End If
 
                 If dsVentas.Tables(0).Rows(0).Item("Anulado").ToString = "1" Then
@@ -188,7 +216,7 @@
                 End If
 
                 'Detalle de la venta.
-                dsVentasDetalle = NegVentas.TraerVentaDetalle(id_Venta)
+                dsVentasDetalle = NegVentas.TraerVentaDetalle(id_VentaDetalle)
                 For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
 
                     'Creo la fila del producto.
@@ -330,7 +358,6 @@
             DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
             DG_Ventas.Columns("Fecha").DisplayIndex = 4
             DG_Ventas.Columns("Anulado").DisplayIndex = 5
-            DG_Ventas.Columns("Facturado").DisplayIndex = 6
             DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Ventas.Refresh()
@@ -378,7 +405,6 @@
             DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
             DG_Ventas.Columns("Fecha").DisplayIndex = 4
             DG_Ventas.Columns("Anulado").DisplayIndex = 5
-            DG_Ventas.Columns("Facturado").DisplayIndex = 6
             DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Ventas.Refresh()
@@ -392,5 +418,27 @@
 
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub BtnEmitirFactura_Click(sender As Object, e As EventArgs) Handles BtnEmitirFactura.Click
+        'Seteo el cursor.
+        Me.Cursor = Cursors.WaitCursor
+
+        'Abro el form de datos de facturacion.
+        frmFacturar.id_Venta = id_VentaDetalle
+        frmFacturar.Monto = MontoTotalDetalle
+        frmFacturar.Descuento = DescuentoDetalle
+        frmFacturar.MontoSinDescuento = SubTotalDetalle
+        frmFacturar.TipoPago = TipoPagoDetalle
+        Funciones.ControlInstancia(frmFacturar).Show()
+
+        'Seteo el cursor.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub DG_Ventas_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Ventas.CellFormatting
+        If (e.ColumnIndex = DG_Ventas.Columns("NumFactura").Index And Not e.Value Is DBNull.Value) Then
+            e.Value = e.Value.ToString().PadLeft(10, "0")
+        End If
     End Sub
 End Class

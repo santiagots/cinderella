@@ -61,6 +61,8 @@ Partial Class frmFacturar
         Me.txt_NumeroFacturaManual = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.btnNotaCredito = New System.Windows.Forms.Button()
+        Me.txt_Pago = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -72,6 +74,8 @@ Partial Class frmFacturar
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.txt_Pago)
+        Me.GroupBox1.Controls.Add(Me.Label16)
         Me.GroupBox1.Controls.Add(Me.txt_Comprobante_Origen)
         Me.GroupBox1.Controls.Add(Me.Label15)
         Me.GroupBox1.Controls.Add(Me.lbl_Subtotal)
@@ -98,14 +102,14 @@ Partial Class frmFacturar
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox1.Size = New System.Drawing.Size(368, 294)
+        Me.GroupBox1.Size = New System.Drawing.Size(368, 319)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Información"
         '
         'txt_Comprobante_Origen
         '
-        Me.txt_Comprobante_Origen.Location = New System.Drawing.Point(139, 265)
+        Me.txt_Comprobante_Origen.Location = New System.Drawing.Point(140, 292)
         Me.txt_Comprobante_Origen.Name = "txt_Comprobante_Origen"
         Me.txt_Comprobante_Origen.Size = New System.Drawing.Size(219, 21)
         Me.txt_Comprobante_Origen.TabIndex = 6
@@ -113,7 +117,7 @@ Partial Class frmFacturar
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(6, 267)
+        Me.Label15.Location = New System.Drawing.Point(7, 294)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(122, 15)
         Me.Label15.TabIndex = 23
@@ -201,7 +205,7 @@ Partial Class frmFacturar
         '
         'txt_Cuit
         '
-        Me.txt_Cuit.Location = New System.Drawing.Point(140, 241)
+        Me.txt_Cuit.Location = New System.Drawing.Point(141, 268)
         Me.txt_Cuit.Name = "txt_Cuit"
         Me.txt_Cuit.Size = New System.Drawing.Size(219, 21)
         Me.txt_Cuit.TabIndex = 5
@@ -209,7 +213,7 @@ Partial Class frmFacturar
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 247)
+        Me.Label3.Location = New System.Drawing.Point(7, 274)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(120, 15)
         Me.Label3.TabIndex = 12
@@ -217,21 +221,21 @@ Partial Class frmFacturar
         '
         'txt_Localidad
         '
-        Me.txt_Localidad.Location = New System.Drawing.Point(139, 217)
+        Me.txt_Localidad.Location = New System.Drawing.Point(140, 244)
         Me.txt_Localidad.Name = "txt_Localidad"
         Me.txt_Localidad.Size = New System.Drawing.Size(219, 21)
         Me.txt_Localidad.TabIndex = 4
         '
         'txt_Direccion
         '
-        Me.txt_Direccion.Location = New System.Drawing.Point(140, 193)
+        Me.txt_Direccion.Location = New System.Drawing.Point(141, 220)
         Me.txt_Direccion.Name = "txt_Direccion"
         Me.txt_Direccion.Size = New System.Drawing.Size(219, 21)
         Me.txt_Direccion.TabIndex = 3
         '
         'txt_Nombre
         '
-        Me.txt_Nombre.Location = New System.Drawing.Point(140, 169)
+        Me.txt_Nombre.Location = New System.Drawing.Point(141, 196)
         Me.txt_Nombre.Name = "txt_Nombre"
         Me.txt_Nombre.Size = New System.Drawing.Size(219, 21)
         Me.txt_Nombre.TabIndex = 2
@@ -242,7 +246,7 @@ Partial Class frmFacturar
         Me.Cb_IVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_IVA.FormattingEnabled = True
         Me.Cb_IVA.Items.AddRange(New Object() {"Responsable Inscripto", "Consumidor Final"})
-        Me.Cb_IVA.Location = New System.Drawing.Point(139, 143)
+        Me.Cb_IVA.Location = New System.Drawing.Point(140, 170)
         Me.Cb_IVA.Name = "Cb_IVA"
         Me.Cb_IVA.Size = New System.Drawing.Size(219, 23)
         Me.Cb_IVA.TabIndex = 1
@@ -250,7 +254,7 @@ Partial Class frmFacturar
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 222)
+        Me.Label7.Location = New System.Drawing.Point(7, 249)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(61, 15)
         Me.Label7.TabIndex = 6
@@ -259,7 +263,7 @@ Partial Class frmFacturar
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(6, 197)
+        Me.Label6.Location = New System.Drawing.Point(7, 224)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(59, 15)
         Me.Label6.TabIndex = 5
@@ -268,7 +272,7 @@ Partial Class frmFacturar
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(6, 172)
+        Me.Label5.Location = New System.Drawing.Point(7, 199)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(107, 15)
         Me.Label5.TabIndex = 4
@@ -287,7 +291,7 @@ Partial Class frmFacturar
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 147)
+        Me.Label2.Location = New System.Drawing.Point(7, 174)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(99, 15)
@@ -311,7 +315,7 @@ Partial Class frmFacturar
         Me.btnFacturar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnFacturar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
         Me.btnFacturar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnFacturar.Location = New System.Drawing.Point(655, 389)
+        Me.btnFacturar.Location = New System.Drawing.Point(655, 414)
         Me.btnFacturar.Name = "btnFacturar"
         Me.btnFacturar.Size = New System.Drawing.Size(100, 40)
         Me.btnFacturar.TabIndex = 13
@@ -392,7 +396,7 @@ Partial Class frmFacturar
         Me.GB_FacturacionManual.Controls.Add(Me.Label8)
         Me.GB_FacturacionManual.Location = New System.Drawing.Point(388, 89)
         Me.GB_FacturacionManual.Name = "GB_FacturacionManual"
-        Me.GB_FacturacionManual.Size = New System.Drawing.Size(367, 294)
+        Me.GB_FacturacionManual.Size = New System.Drawing.Size(367, 319)
         Me.GB_FacturacionManual.TabIndex = 3
         Me.GB_FacturacionManual.TabStop = False
         Me.GB_FacturacionManual.Text = "Información Facturación Manual"
@@ -443,7 +447,7 @@ Partial Class frmFacturar
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 28)
+        Me.Label8.Location = New System.Drawing.Point(6, 25)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(96, 15)
         Me.Label8.TabIndex = 0
@@ -456,7 +460,7 @@ Partial Class frmFacturar
         Me.btnNotaCredito.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNotaCredito.Image = Global.SistemaCinderella.My.Resources.Recursos.nota_credito
         Me.btnNotaCredito.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNotaCredito.Location = New System.Drawing.Point(549, 389)
+        Me.btnNotaCredito.Location = New System.Drawing.Point(549, 414)
         Me.btnNotaCredito.Name = "btnNotaCredito"
         Me.btnNotaCredito.Size = New System.Drawing.Size(100, 40)
         Me.btnNotaCredito.TabIndex = 12
@@ -464,11 +468,27 @@ Partial Class frmFacturar
         Me.btnNotaCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnNotaCredito.UseVisualStyleBackColor = True
         '
+        'txt_Pago
+        '
+        Me.txt_Pago.Location = New System.Drawing.Point(140, 146)
+        Me.txt_Pago.Name = "txt_Pago"
+        Me.txt_Pago.Size = New System.Drawing.Size(219, 21)
+        Me.txt_Pago.TabIndex = 24
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(7, 148)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(36, 15)
+        Me.Label16.TabIndex = 25
+        Me.Label16.Text = "Pago"
+        '
         'frmFacturar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(766, 440)
+        Me.ClientSize = New System.Drawing.Size(766, 465)
         Me.Controls.Add(Me.btnNotaCredito)
         Me.Controls.Add(Me.GB_FacturacionManual)
         Me.Controls.Add(Me.GroupBox3)
@@ -532,4 +552,6 @@ Partial Class frmFacturar
     Friend WithEvents btnNotaCredito As System.Windows.Forms.Button
     Friend WithEvents txt_Comprobante_Origen As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents txt_Pago As System.Windows.Forms.TextBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
 End Class

@@ -78,5 +78,8 @@
     <Setting Name="MontoMaximoNotaCredito" Type="System.String" Scope="User">
       <Value Profile="(Default)">3000</Value>
     </Setting>
+    <Setting Name="ConexionControladora" Type="System.String" Scope="User">
+      <Value Profile="(Default)">USB</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

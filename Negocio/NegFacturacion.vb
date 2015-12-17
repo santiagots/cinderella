@@ -58,7 +58,7 @@ Public Class NegFacturacion
     End Function
 
     'Funcion que retorna el ultimo numero utilizado en una factura 
-    Public Function ObtenerUltimoNumeroFactura(ByVal TipoRecibo As Entidades.TipoFactura, ByVal PuntoVenta As Integer, ByVal Id_Sucursal As Integer) As String
+    Public Function ObtenerUltimoNumeroFactura(ByVal TipoRecibo As Entidades.TipoFactura, ByVal PuntoVenta As Integer, ByVal Id_Sucursal As Integer, ByVal tipoFactura As String) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
@@ -78,6 +78,7 @@ Public Class NegFacturacion
                 .AddWithValue("@TipoRecibo", TipoRecibo)
                 .AddWithValue("@PuntoVenta", PuntoVenta)
                 .AddWithValue("@Id_Sucursal", Id_Sucursal)
+                .AddWithValue("@tipoFactura", tipoFactura)
             End With
 
             'Respuesta del stored.
@@ -101,7 +102,7 @@ Public Class NegFacturacion
     End Function
 
     'Funcion que verifica si un numero de factura esta utilizado
-    Public Function NumeroFacturaUtilizado(ByVal TipoRecibo As Entidades.TipoFactura, ByVal PuntoVenta As Integer, ByVal Id_Sucursal As Integer, ByVal NumeroFactura As String) As Boolean
+    Public Function NumeroFacturaUtilizado(ByVal TipoRecibo As Entidades.TipoFactura, ByVal PuntoVenta As Integer, ByVal Id_Sucursal As Integer, ByVal NumeroFactura As String, ByVal tipoFactura As String) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
@@ -123,6 +124,7 @@ Public Class NegFacturacion
                 .AddWithValue("@PuntoVenta", PuntoVenta)
                 .AddWithValue("@Id_Sucursal", Id_Sucursal)
                 .AddWithValue("@NumeroFactura", NumeroFactura)
+                .AddWithValue("@tipoFactura", tipoFactura)
             End With
 
             'Respuesta del stored.

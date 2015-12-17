@@ -638,18 +638,13 @@ Public Class frmVentas
                 Else
                     'Tiene asignado vendedor.
                     If MessageBox.Show("¿Ésta seguro que desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                        'Si el total es mayor que cero.
-                        If MontoTotal > 0 Then
-                            'Pregunto si desea realizar la factura de la venta.
-                            If MessageBox.Show("¿Desea llevar a cabo factura de la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                                'Si el Monto excede el máximo permitido para facturar, aviso al usuario.
-                                If CDbl(MontoTotal) > CDbl(My.Settings("ControladorMontoTope")) Then
-                                    MessageBox.Show("La venta excede el máximo permitido para facturación. El pedido no podrá ser facturado.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                                Else
-                                    Facturar = True
-                                End If
-                            End If
+                        'Si el total es mayor que cero y el Monto excede el máximo permitido para facturar, aviso al usuario
+                        If MontoTotal > 0 And CDbl(MontoTotal) > CDbl(My.Settings("ControladorMontoTope")) Then
+                            MessageBox.Show("La venta excede el máximo permitido para facturación. El pedido no podrá ser facturado.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Else
+                            Facturar = True
                         End If
+
 
                         'Seteo el cursor.
                         Me.Cursor = Cursors.WaitCursor
@@ -689,104 +684,90 @@ Public Class frmVentas
 
                                 If CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) < 0 Then
                                     NegStock.AgregarStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal, CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
-                                    'tambien hay que registrar el movimiento en la sucursal 
-                                    'Se registra el movimiento de salida de dinero en la sucursal.
-                                    'TODO:Ver que hacer con el registro de las devoluciones como egresos
-                                    Dim EMovEgreso As New Entidades.MovEgreso
-                                    Dim NegMovimientos As New Negocio.NegMovimientos
-                                    EMovEgreso.Aceptado = 1
-                                    EMovEgreso.Fecha = Now.ToString 'fecha actual.
-                                    EMovEgreso.id_Sucursal = id_Sucursal 'Sucursal donde se realiza la devolución.
-                                    EMovEgreso.id_SucursalDestino = id_Sucursal 'Sucursal donde se realiza la devolución.
-                                    EMovEgreso.Descripcion = "Egreso de dinero por devolución de mercaderia." 'descripcion del movimiento
-                                    EMovEgreso.Monto = Math.Abs(CInt(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) * CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))  'Monto devuelto por los productos que ingresaron.
-                                    EMovEgreso.id_Tipo = 16 'Tipo: Efectivo.
-                                    EMovEgreso.id_Subtipo = 0 'No posee subtipo.
-                                    NegMovimientos.AltaMovEgreso(EMovEgreso)
-
                                 Else
                                     NegStock.DisminuirStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value), id_Sucursal)
                                 End If
                             End If
                         Next
 
-                        NegVentas.NuevaVenta(EntVentas, DetalleVenta)
+                        If NegVentas.NuevaVenta(EntVentas, DetalleVenta) Then
 
-                        'Numero de Venta.
-                        Dim id_Venta As Integer = NegVentas.ObtenerID()
+                            'Numero de Venta.
+                            Dim id_Venta As Integer = NegVentas.ObtenerID()
 
-                        'Comisiones para el vendedor.
-                        Dim EntComisiones As New Entidades.Comisiones
+                            'Comisiones para el vendedor.
+                            Dim EntComisiones As New Entidades.Comisiones
 
-                        Dim ComisionVendedor As Double = 0
-                        Dim ComisionEncargado As Double = 0
+                            Dim ComisionVendedor As Double = 0
+                            Dim ComisionEncargado As Double = 0
 
-                        'Obtengo las comisions del vendedor y encargado determinada por la sucursal y el dia de la semana.
-                        NegComisiones.ObtenerComision(id_Sucursal, id_Cliente, ComisionVendedor, ComisionEncargado)
+                            'Obtengo las comisions del vendedor y encargado determinada por la sucursal y el dia de la semana.
+                            NegComisiones.ObtenerComision(id_Sucursal, id_Cliente, ComisionVendedor, ComisionEncargado)
 
-                        'Calculo el monto para el empleado dependiendo de la comision
-                        Monto = (MontoTotal * ComisionVendedor) / 100
+                            'Calculo el monto para el empleado dependiendo de la comision
+                            Monto = (MontoTotal * ComisionVendedor) / 100
 
-                        'Completo la Clase de Comisiones 
-                        EntComisiones.id_Sucursal = id_Sucursal
-                        EntComisiones.id_Venta = id_Venta
-                        EntComisiones.id_Empleado = id_Empleado
-                        EntComisiones.Comision = ComisionVendedor
-                        EntComisiones.Monto = Monto
+                            'Completo la Clase de Comisiones 
+                            EntComisiones.id_Sucursal = id_Sucursal
+                            EntComisiones.id_Venta = id_Venta
+                            EntComisiones.id_Empleado = id_Empleado
+                            EntComisiones.Comision = ComisionVendedor
+                            EntComisiones.Monto = Monto
 
-                        'Agrego la Comision
-                        NegComisiones.AgregarComision(EntComisiones)
+                            'Agrego la Comision
+                            NegComisiones.AgregarComision(EntComisiones)
 
-                        'Comisiones para el encargado.
-                        Dim EntComisiones2 As New Entidades.Comisiones
+                            'Comisiones para el encargado.
+                            Dim EntComisiones2 As New Entidades.Comisiones
 
-                        'Calculo el monto para el empleado dependiendo de la comision
-                        Monto = (MontoTotal * ComisionEncargado) / 100
+                            'Calculo el monto para el empleado dependiendo de la comision
+                            Monto = (MontoTotal * ComisionEncargado) / 100
 
-                        'Completo la Clase de Comisiones 
-                        EntComisiones2.id_Sucursal = id_Sucursal
-                        EntComisiones2.id_Venta = id_Venta
-                        EntComisiones2.id_Empleado = id_Encargado
-                        EntComisiones2.Comision = ComisionEncargado
-                        EntComisiones2.Monto = Monto
+                            'Completo la Clase de Comisiones 
+                            EntComisiones2.id_Sucursal = id_Sucursal
+                            EntComisiones2.id_Venta = id_Venta
+                            EntComisiones2.id_Empleado = id_Encargado
+                            EntComisiones2.Comision = ComisionEncargado
+                            EntComisiones2.Monto = Monto
 
-                        'Agrego la Comision
-                        NegComisiones.AgregarComision(EntComisiones2)
+                            'Agrego la Comision
+                            NegComisiones.AgregarComision(EntComisiones2)
 
-                        'Fin de la venta.
-                        'Limpio el Formulario.
-                        LimpiarFormVentas()
+                            'Fin de la venta.
+                            'Limpio el Formulario.
+                            LimpiarFormVentas()
 
-                        'Seteo el cursor.
-                        Me.Cursor = Cursors.Arrow
+                            'Seteo el cursor.
+                            Me.Cursor = Cursors.Arrow
 
-                        'Muestro Mensaje.
-                        MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                            'Muestro Mensaje.
+                            MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
 
-                        'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
-                        If Facturar Then
-                            If (MessageBox.Show("¿Facturar la venta Nº " & id_Venta & "?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                            'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
+                            If Facturar Then
+                                If (MessageBox.Show("¿Facturar la venta Nº " & id_Venta & "?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
 
-                                'Seteo el cursor.
-                                Me.Cursor = Cursors.WaitCursor
+                                    'Seteo el cursor.
+                                    Me.Cursor = Cursors.WaitCursor
 
-                                'Abro el form de datos de facturacion.
-                                frmFacturar.id_Venta = id_Venta
-                                frmFacturar.Monto = MontoTotal
-                                frmFacturar.Descuento = Descuento
-                                frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
-                                frmFacturar.TipoPago = TipoPagoControlador
-                                Funciones.ControlInstancia(frmFacturar).Show()
+                                    'Abro el form de datos de facturacion.
+                                    frmFacturar.id_Venta = id_Venta
+                                    frmFacturar.Monto = MontoTotal
+                                    frmFacturar.Descuento = Descuento
+                                    frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
+                                    frmFacturar.TipoPago = TipoPagoControlador
+                                    Funciones.ControlInstancia(frmFacturar).Show()
 
-                                'Seteo el cursor.
-                                Me.Cursor = Cursors.Arrow
+                                    'Seteo el cursor.
+                                    Me.Cursor = Cursors.Arrow
 
+                                End If
                             End If
+                        Else
+                            'Muestro Mensaje.
+                            MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
-                    Else
-                        'Muestro Mensaje.
-                        MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End If
+                End If
                 End If
             End If
         Catch ex As Exception

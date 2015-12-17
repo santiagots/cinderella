@@ -22,7 +22,7 @@
             lbl_Localidad.Text = entFacturacion.Localidad
             lbl_Total.Text = "$ " & Format(CType(entFacturacion.Monto, Decimal), "###0.00")
             lbl_Fecha.Text = entFacturacion.Fecha
-            lbl_NumeroFactura.Text = entFacturacion.NumeroFactura
+            lbl_NumeroFactura.Text = entFacturacion.NumeroFactura.PadLeft(10, "0")
             If entFacturacion.TipoFactura = "A" Then
                 lbl_Condicion.Text = "Responsable Inscripto"
             Else

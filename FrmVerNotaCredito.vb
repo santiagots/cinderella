@@ -22,7 +22,7 @@
             lbl_Localidad.Text = EntNotaCredito.Localidad
             lbl_Total.Text = "$ " & Format(CType(EntNotaCredito.Monto, Decimal), "###0.00")
             lbl_Fecha.Text = EntNotaCredito.Fecha
-            lbl_NumeroNota.Text = EntNotaCredito.NumeroNotaCredito
+            lbl_NumeroNota.Text = EntNotaCredito.NumeroNotaCredito.ToString().PadLeft(10, "0")
             If EntNotaCredito.TipoFactura = "A" Then
                 lbl_Condicion.Text = "Responsable Inscripto"
             Else

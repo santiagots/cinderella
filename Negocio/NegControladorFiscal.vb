@@ -4,10 +4,16 @@ Public Class NegControladorFiscal
     Public oEpsonFP As EpsonFPHostControl
 
     'Constructor.
-    Sub New()
+    Sub New(TipoConexion As String)
         oEpsonFP = New EpsonFPHostControl()
-        oEpsonFP.CommPort = TxCommPort.Com1
-        oEpsonFP.BaudRate = TxBaudRate.br9600
+
+        If (TipoConexion = "USB") Then
+            oEpsonFP.CommPort = TxCommPort.USB
+        Else
+            oEpsonFP.CommPort = TxCommPort.Com1
+            oEpsonFP.BaudRate = TxBaudRate.br9600
+        End If
+
         oEpsonFP.ProtocolType = TxProtocolType.protocol_Extended
     End Sub
 
@@ -154,14 +160,14 @@ Public Class NegControladorFiscal
     End Function
 
     'Funcion que Paga un Tique.
-    Public Function PagarTicket(ByVal tPayment As String, ByVal sSubtotal As String)
+    Public Function PagarTicket(ByVal TipoPago As String, ByVal MontoPago As String)
         Dim bAnswer As Boolean = False
         'Send Payment
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H5))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField("")
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(tPayment)
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(sSubtotal)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(TipoPago)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(MontoPago)
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         Return bAnswer

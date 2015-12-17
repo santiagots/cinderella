@@ -45,6 +45,7 @@ Public Class frmConfiguracion
         Else
             RContrNO.Checked = False
         End If
+        Cb_ConexionControladora.SelectedItem = My.Settings("ConexionControladora").ToString()
         txt_MontoControlador.Text = My.Settings("ControladorMontoTope")
         txt_MontoMaximoNotaCredito.Text = My.Settings("MontoMaximoNotaCredito")
 
@@ -150,6 +151,7 @@ Public Class frmConfiguracion
                 Else
                     My.Settings.ControladorStatus = "NO"
                 End If
+                My.Settings.ConexionControladora = Cb_ConexionControladora.SelectedItem
                 My.Settings.ControladorMontoTope = Trim(txt_MontoControlador.Text)
                 My.Settings.MontoMaximoNotaCredito = Trim(txt_MontoMaximoNotaCredito.Text)
                 My.Settings.PuntoVentaFacturacionElectronica = Integer.Parse(Trim(txt_PuntoVentaElectronica.Text))
