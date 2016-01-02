@@ -216,4 +216,19 @@ Public Class NegDevolucion
 
     End Function
 
+    Public Function TotalDevolucionesEfectivo(ByVal id_Sucursal As Integer, ByVal Fecha As String)
+        Dim ds As New DataSet
+        If HayInternet Then
+            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devoluciones_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
+        Else
+            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devoluciones_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
+        End If
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("DevolucionesTotales").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("DevolucionesTotales").ToString
+        Else
+            Return 0
+        End If
+    End Function
+
 End Class

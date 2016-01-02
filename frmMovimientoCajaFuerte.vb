@@ -48,6 +48,7 @@
                 btnAceptar.Text = "Modificar"
                 ToolCaja.SetToolTip(btnAceptar, "Al hacer click en el botón 'Modificar' del formulario se modificará en el sistema el movimiento de caja fuerte cargado.")
             Else
+                CbTipo.SelectedIndex = 0
                 btnAceptar.Text = "Aceptar"
                 ToolCaja.SetToolTip(btnAceptar, "Al hacer click en el botón 'Aceptar' del formulario se registrará en el sistema el movimiento de caja fuerte.")
             End If
@@ -108,9 +109,9 @@
                 eCaja.id_Sucursal = id_Sucursal
 
                 If CbTipo.SelectedItem = "Ingreso a Caja Chica." Then
-                    eCaja.id_Tipo = 1
-                Else
                     eCaja.id_Tipo = 2
+                Else
+                    eCaja.id_Tipo = 1
                 End If
 
                 If Trim(txtDescripcion.Text) = "" Then
@@ -125,10 +126,10 @@
                 'controlo si hay sufiente dinero en caja para poder retirar    
                 If (eCaja.id_Tipo = 1) Then
                     Dim CajaFuerteTotal As Double = 0
-                    CajaFuerteTotal = NegMovimiento.ConsultarTotalCajaFuerte(id_Sucursal)
+                    CajaFuerteTotal = NegMovimiento.ConsultarTotalCajaFuerte(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
                     If (CajaFuerteTotal < eCaja.Monto) Then
                         Dim str_mensaje As String
-                        str_mensaje = "No hay suficiente dinero en la caja para realizar esa operacion." + vbCrLf + "Total disponible:" + CajaFuerteTotal.ToString
+                        str_mensaje = "No hay suficiente dinero en la caja para realizar esa operación." + vbCrLf + "Total disponible en Caja Fuerte:" + CajaFuerteTotal.ToString
                         MessageBox.Show(str_mensaje, "Dinero insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                         Me.Cursor = Cursors.Default
                         Exit Sub
@@ -137,12 +138,17 @@
 
                 'controlo si hay sufiente dinero en caja chica para para poder ingresar a la caja fuerte
                 If (eCaja.id_Tipo = 2) Then
-                    Dim CajaFuerteTotal As Double = 0
-                    'CajaFuerteTotal = NegMovimiento.   .ConsultarTotalCajaFuerte(id_Sucursal)
-                    If (CajaFuerteTotal < eCaja.Monto) Then
+                    Dim CajaChica As Double = NegMovimiento.ConsultaSaldo(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
+                    If (CajaChica < eCaja.Monto) Then
                         Dim str_mensaje As String
-                        str_mensaje = "No hay suficiente dinero en la caja para realizar esa operacion." + vbCrLf + "Total disponible:" + CajaFuerteTotal.ToString
+                        str_mensaje = "No hay suficiente dinero en la Caja Chica para realizar esa operación." + vbCrLf + "Total disponible en Caja Chica:" + CajaChica.ToString
                         MessageBox.Show(str_mensaje, "Dinero insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                        Me.Cursor = Cursors.Default
+                        Exit Sub
+                    ElseIf (0 >= eCaja.Monto) Then
+                        Dim str_mensaje As String
+                        str_mensaje = "El monto ingresado debe ser mayor a 0."
+                        MessageBox.Show(str_mensaje, "Error en Monto", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                         Me.Cursor = Cursors.Default
                         Exit Sub
                     End If

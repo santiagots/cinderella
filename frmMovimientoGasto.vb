@@ -7,6 +7,7 @@
     Dim dsMovimiento As New DataSet
     Public id_Movimiento As Integer = 0
     Dim Funciones As New Funciones
+    Dim SoloLectura As Boolean = False
 
     'Al cerrar el formulario me fijo si está abierto el form de listados, si lo está, hago foco.
     Private Sub frmMovimientoGasto_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -51,6 +52,13 @@
                 CbTipo.SelectedValue = dsMovimiento.Tables(0).Rows(0).Item("id_Tipo").ToString
                 btnAceptar.Text = "Modificar"
                 ToolGastos.SetToolTip(btnAceptar, "Al hacer click en el botón 'Modificar' del formulario se modificará en el sistema el retiro de dinero del socio cargado.")
+
+                txtMonto.Enabled = Not dsMovimiento.Tables(0).Rows(0).Item("SoloLectura")
+                txtDate.Enabled = Not dsMovimiento.Tables(0).Rows(0).Item("SoloLectura")
+                CbTipo.Enabled = Not dsMovimiento.Tables(0).Rows(0).Item("SoloLectura")
+                btnAceptar.Enabled = Not dsMovimiento.Tables(0).Rows(0).Item("SoloLectura")
+                SoloLectura = dsMovimiento.Tables(0).Rows(0).Item("SoloLectura")
+
             Else
                 btnAceptar.Text = "Aceptar"
                 ToolGastos.SetToolTip(btnAceptar, "Al hacer click en el botón 'Aceptar' del formulario se registrará en el sistema el retiro de dinero del socio.")
@@ -93,7 +101,12 @@
 
     'Cuando hace click en Cancelar
     Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
-        LimpiarFormulario()
+        If (SoloLectura) Then
+            Me.Close()
+        Else
+            LimpiarFormulario()
+        End If
+
     End Sub
 
     'Cuando hace click en Aceptar.
@@ -117,6 +130,7 @@
                 eGasto.id_Tipo = CbTipo.SelectedValue
                 eGasto.Fecha = Trim(txtDate.Text)
                 eGasto.Monto = Trim(txtMonto.Text)
+                eGasto.SoloLectura = False
 
                 'Limpiar Formulario.
                 LimpiarFormulario()

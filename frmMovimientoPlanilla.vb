@@ -4,7 +4,6 @@
     Dim Nombre_Sucursal As String
     Dim Funciones As New Funciones
     Dim NegMovimiento As New Negocio.NegMovimientos
-    Dim NegDevolucion As New Negocio.NegDevolucion
 
 #Region "Region de Eventos"
     'Load del formulario.
@@ -89,6 +88,19 @@
                 frmMovimientoCajaFuerte.id_Movimiento = id_Mov
                 Funciones.ControlInstancia(frmMovimientoCajaFuerte).MdiParent = MDIContenedor
                 Funciones.ControlInstancia(frmMovimientoCajaFuerte).Show()
+
+            ElseIf Tipo = "Env. otras Suc." Then
+                Me.WindowState = FormWindowState.Minimized
+                frmMovimientoEgreso.id_Movimiento = id_Mov
+                Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
+                Funciones.ControlInstancia(frmMovimientoEgreso).Show()
+
+            ElseIf Tipo = "Rec.otras Suc." Then
+                Me.WindowState = FormWindowState.Minimized
+                frmMovimientoEgreso.id_Movimiento = id_Mov
+                frmMovimientoEgreso.Envio = False
+                Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
+                Funciones.ControlInstancia(frmMovimientoEgreso).Show()
             End If
 
             'Cambio el cursor a NORMAL.
@@ -112,7 +124,7 @@
 
                     If Tipo = "Dif. de Caja" Then
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 1)
-                    ElseIf Tipo = "Egreso" Then
+                    ElseIf Tipo = "Env. otras Suc." Then
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 2)
                     ElseIf Tipo = "Gasto" Then
                         Dim dsMov As New DataSet
@@ -253,7 +265,7 @@
             frmCargadorDeEspera.Text = "Generando el listado de Movimientos de la Sucursal " & Nombre_Sucursal
             frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
             frmCargadorDeEspera.BarraProgreso.Minimum = 0
-            frmCargadorDeEspera.BarraProgreso.Maximum = 9
+            frmCargadorDeEspera.BarraProgreso.Maximum = 8
             frmCargadorDeEspera.BarraProgreso.Value = 1
             frmCargadorDeEspera.Refresh()
 
@@ -281,7 +293,7 @@
             DsGasto = NegMovimiento.ObtenerMovGasto(id_Sucursal, Anio, NumeroMes)
             If DsGasto IsNot Nothing Then
                 For Each mov In DsGasto.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Gasto")
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Gasto", mov.item("SoloLectura"))
                 Next
             End If
 
@@ -308,16 +320,21 @@
 
             'Cargo los movimientos de Egresos.
             Dim DsEgreso As New DataSet
+
             DsEgreso = NegMovimiento.ObtenerMovEgreso(id_Sucursal, Anio, NumeroMes)
             If DsEgreso IsNot Nothing Then
                 For Each mov In DsEgreso.Tables(0).Rows
                     Dim description As String = mov.item("Tipo")
                     Dim destiny As Boolean = False
+                    Dim TipoMov As String = String.Empty
                     If mov.item("id_Sucursal") <> id_Sucursal Then
-                        description = mov.item("Tipo") & " (ENV. OTRAS SUC.)"
                         destiny = True
+                        TipoMov = "Rec.otras Suc."
+                    Else
+                        TipoMov = "Env. otras Suc."
+                        destiny = False
                     End If
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), description, mov.item("Monto"), "Env. otras Suc.", destiny, mov.item("Aceptado"))
+                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), description, mov.item("Monto"), TipoMov, destiny, mov.item("Aceptado"))
                 Next
             End If
 
@@ -363,20 +380,7 @@
                 Next
             End If
 
-            'Cargo las dovoluciones.
-            Dim DsDevoluciones As New DataSet
-            Dim FDesde As String = New Date(Anio, NumeroMes, 1).ToString("yyyy/MM/dd")
-            Dim FHasta As String = New Date(Anio, NumeroMes, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
-            DsDevoluciones = NegDevolucion.ObtenerDevolucionesSucursalListado(id_Sucursal, FDesde, FHasta)
-            If DsDevoluciones IsNot Nothing Then
-                For Each mov In DsDevoluciones.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_devolucion"), mov.item("Fecha"), mov.item("Tipo_Pago"), mov.item("Precio_Total"), "Devolución", True)
-                Next
-            End If
 
-            'Voy seteando la barra de progreso
-            frmCargadorDeEspera.BarraProgreso.Value = 9
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando Devoluciones... (8/8)"
             frmCargadorDeEspera.Refresh()
 
             'Voy seteando la barra de progreso
@@ -447,17 +451,6 @@
                 Next
             End If
 
-        ElseIf Tipo = "Devoluciones" Then
-            'Cargo las dovoluciones.
-            Dim DsDevoluciones As New DataSet
-            Dim FDesde As String = New Date(Anio, NumeroMes, 1).ToString("yyyy/MM/dd")
-            Dim FHasta As String = New Date(Anio, NumeroMes, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")
-            DsDevoluciones = NegDevolucion.ObtenerDevolucionesSucursalListado(id_Sucursal, FDesde, FHasta)
-            If DsDevoluciones IsNot Nothing Then
-                For Each mov In DsDevoluciones.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_devolucion"), mov.item("Fecha"), mov.item("Tipo_Pago"), mov.item("Precio_Total"), "Devolución", True)
-                Next
-            End If
         End If
 
 

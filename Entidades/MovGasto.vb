@@ -56,4 +56,15 @@
             Fecha_ = value
         End Set
     End Property
+
+    Private SoloLectura_ As Boolean
+    Public Property SoloLectura() As Boolean
+        Get
+            Return SoloLectura_
+        End Get
+        Set(ByVal value As Boolean)
+            SoloLectura_ = value
+        End Set
+    End Property
+
 End Class

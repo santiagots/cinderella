@@ -139,12 +139,12 @@ Public Class NegMovimientos
     End Function
 
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
-    Function ConsultarTotalCajaFuerte(ByVal id_Sucursal As Integer) As Double
+    Function ConsultarTotalCajaFuerte(ByVal id_Sucursal As Integer, ByVal Fecha As String) As Double
         Dim ds As New DataSet
         If HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal)
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal)
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         End If
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Total").ToString <> "" Then
@@ -433,6 +433,7 @@ Public Class NegMovimientos
                 .AddWithValue("@id_Registro", eGasto.id_Registro)
                 .AddWithValue("@Monto", eGasto.Monto)
                 .AddWithValue("@Fecha", eGasto.Fecha)
+                .AddWithValue("@SoloLectura", eGasto.SoloLectura)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -623,8 +624,8 @@ Public Class NegMovimientos
                         End If
                     End If
 
-                    'Disminuyo el stock de la sucursal destino.
-                    If dsMercaderias IsNot Nothing Then
+                    'Disminuyo el stock de la sucursal destino si se acepto el envio.
+                    If dsMercaderias IsNot Nothing And DsMovimiento.Tables(0).Rows(0).Item("Aceptado") = 1 Then
                         If dsMercaderias.Tables(0).Rows.Count > 0 Then
                             For Each prod In dsMercaderias.Tables(0).Rows
                                 NStock.DisminuirStock(prod.item("id_Producto"), prod.item("Cantidad"), SucuDestino)
@@ -1026,6 +1027,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
                 eGasto.Monto = -Monto
+                eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
 
@@ -1036,6 +1038,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
                 eGasto.Monto = Monto
+                eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
 
@@ -1053,6 +1056,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = Relacio("id_TipoGasto")
                 eGasto.Fecha = Now
                 eGasto.Monto = -Monto
+                eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
 
@@ -1063,6 +1067,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = Relacio("id_TipoGasto")
                 eGasto.Fecha = Now
                 eGasto.Monto = Monto
+                eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
             End If

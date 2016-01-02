@@ -82,7 +82,7 @@ Public Class frmPlanillaSucursales
 
                 'Defino el color alternativo de las rows
                 DG_Planilla.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(255, 221, 235, 247)
-
+                DG_Planilla.Columns("Descripcion").Frozen = True
                 DG_Planilla.Columns("Nivel").Visible = False
 
                 'Defino el formato de las columnas

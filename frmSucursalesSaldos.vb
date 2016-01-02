@@ -100,7 +100,7 @@
 
             '------------DISPONIBLE TOTAL---------------'
             Dim CajaFuerteTotal As Double = 0
-            CajaFuerteTotal = NegMov.ConsultarTotalCajaFuerte(id_Sucursal)
+            CajaFuerteTotal = NegMov.ConsultarTotalCajaFuerte(id_Sucursal, FHasta)
 
             Dim DisponibleTotal As Double = 0
             DisponibleTotal = Saldo + CajaFuerteTotal

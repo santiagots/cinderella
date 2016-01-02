@@ -247,18 +247,17 @@ Public Class NegCajaInicial
         Dim Faltante As Double = 0
         Faltante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Faltante")
 
+        Dim AporteSocios As Double = 0
+        AporteSocios = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 6)
+
         Dim Sueldo As Double = 0
-        'Sueldo = NegEmp.ObtenerSueldosSucursalDia(id_Sucursal, Fecha)
+        Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, Fecha, Fecha)
 
         Dim Mercaderias As Double = 0
-        'Mercaderias = NegMerca.TotalMercaderia(id_Sucursal, Fecha)
         Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, Fecha, Fecha)
 
         Dim Adelantos As Double = 0
         Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, Fecha, Fecha)
-
-        Dim Comision As Double = 0
-        'Comision = NegEmp.ObtenerComisionesSucursal(id_Sucursal, Fecha, Fecha)
 
         Dim EgresoCajaFuerte As Double = 0
         EgresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 1)
@@ -266,13 +265,16 @@ Public Class NegCajaInicial
         Dim IngresoCajaFuerte As Double = 0
         IngresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 2)
 
+        Dim NegDevolucion As Negocio.NegDevolucion = New Negocio.NegDevolucion()
+        Dim DevolucionesEfectivo As Double = NegDevolucion.TotalDevolucionesEfectivo(id_Sucursal, Fecha)
+
         'Calculo el saldo.
         Dim Ingresos As Double = 0
         Dim Egresos As Double = 0
         Dim Saldo As Double = 0
 
-        Ingresos = VentasEfectivo + Sobrante + entCaja.Monto + EfectivoIngreso + EgresoCajaFuerte
-        Egresos = EfectivoEgreso + Gastos + Mercaderias + Sueldo + Impuesto + RetirosCaja + Faltante + Adelantos + Comision + IngresoCajaFuerte
+        Ingresos = VentasEfectivo + Sobrante + entCaja.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
+        Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + IngresoCajaFuerte + DevolucionesEfectivo
         Saldo = Ingresos - Egresos
 
         Return Format(CType((Saldo), Decimal), "###0.00")

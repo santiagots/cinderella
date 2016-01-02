@@ -83,6 +83,8 @@
                 eGasto.Fecha = Now
                 eGasto.Monto = Trim(txt_Monto.Text)
                 NegMov.AltaMovGasto(eGasto)
+                eGasto.SoloLectura = False
+
                 Me.Cursor = Cursors.Arrow
 
                 MessageBox.Show("El pago se ha efectuado correctamente.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Information)

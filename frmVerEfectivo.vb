@@ -20,11 +20,11 @@
             End If
 
             If Tipo = "Ingresos" Then
-                Me.Text = "Ingresos de efectivo en la sucursal " & My.Settings("NombreSucursal")
-                Gb_Comisiones.Text = "Ingresos de efectivo entre el " & FDesde & " hasta el " & FHasta
+                Me.Text = "Ingresos en la sucursal " & My.Settings("NombreSucursal")
+                Gb_Comisiones.Text = "Ingresos entre el " & FDesde & " hasta el " & FHasta
             ElseIf Tipo = "Egresos" Then
-                Me.Text = "Egresos de efectivo en la sucursal " & My.Settings("NombreSucursal")
-                Gb_Comisiones.Text = "Egresos de efectivo entre el " & FDesde & " hasta el " & FHasta
+                Me.Text = "Egresos en la sucursal " & My.Settings("NombreSucursal")
+                Gb_Comisiones.Text = "Egresos entre el " & FDesde & " hasta el " & FHasta
             End If
 
             'Cambio el cursor a "NORMAL"

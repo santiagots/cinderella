@@ -31,6 +31,8 @@
                 eGasto.Fecha = txt_Fecha.Value
                 eGasto.Monto = Trim(txt_Monto.Text)
                 eGasto.id_Registro = NegCuenta.ObtenerUltimoID()
+                eGasto.SoloLectura = False
+
                 NegMov.AltaMovGasto(eGasto)
 
                 LimpiarForm()

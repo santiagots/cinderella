@@ -12,6 +12,7 @@
     Dim dsMovimiento As New DataSet
     Public dsProductos As New DataTable
     Public id_Movimiento As Integer = 0
+    Public Envio As Boolean = True
 
     'Al cerrar el formulario me fijo si está abierto el form de listados, si lo está, hago foco.
     Private Sub frmMovimientoEgreso_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -30,6 +31,11 @@
     Private Sub frmMovimientoEgreso_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
+
+        If (Not Envio) Then
+            Me.Text = "Movimientos | Recepción de Otras Sucursales"
+            GroupBox1.Text = "Alta de movimientos de ""Recepción"" en la sucursal."
+        End If
 
         Try
             'Sucursal default.
@@ -63,6 +69,7 @@
 
             'Chequeo si hay ID modifico los textos.
             If id_Movimiento <> 0 Then
+                btnCancelar.Visible = False
                 'Cargo el movimiento en los controles
                 dsMovimiento = NegMovimiento.ObtenerMov(id_Movimiento, id_Sucursal, "Egreso")
                 If dsMovimiento.Tables(0).Rows.Count = 0 Then
@@ -123,7 +130,7 @@
                     End If
                 End If
 
-                If dsMovimiento.Tables(0).Rows(0).Item("Aceptado") = 1 Then
+                If dsMovimiento.Tables(0).Rows(0).Item("Aceptado") = 1 Or dsMovimiento.Tables(0).Rows(0).Item("Id_SucursalDestino") = My.Settings("Sucursal") Then
                     btnAceptar.Enabled = False
                     btnAceptar.Text = "No Dispo."
                     txtMonto.ReadOnly = True
@@ -132,6 +139,7 @@
                     CbSubtipo.Enabled = False
                     txtDate.Enabled = False
                     txtDescripcion.ReadOnly = True
+                    Btn_CargarMercaderia.Visible = False
                 Else
                     btnAceptar.Enabled = True
                     btnAceptar.Text = "Modificar"
@@ -210,6 +218,8 @@
                     MessageBox.Show("Debe completar el campo Monto.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 ElseIf CbTipo.SelectedValue <> "19" And CbTipo.SelectedValue <> "16" And CbSubtipo.SelectedItem Is Nothing Then 'Si no es Cat Mercaderias o Efectivo y no cargo el subtipo, lo informo.
                     MessageBox.Show("Debe seleccionar un subtipo.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                ElseIf CbTipo.SelectedValue = "19" And dsProductos.Rows.Count = 0 Then 'Si es Cat Mercaderias y no cargo ningun producto, lo informo.
+                    MessageBox.Show("Debe agregar al menos un producto.", "Movimientos | Envió a Otras Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Else
                     Try
                         'Cambio el cursor a "WAIT"

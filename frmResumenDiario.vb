@@ -148,8 +148,7 @@
 
             Dim VentasEfectivo As Double = 0
             VentasEfectivo = NegVen.TotalVentasEfectivo(id_Sucursal, Fecha)
-            'A la variable VentaEfectivo le resto la variable VentasCheques porque VentasEfectivo incluye los montos de los cheques
-            txt_VentasEfectivo.Text = "$ " & Format(CType((VentasEfectivo - VentasCheque), Decimal), "###0.00") & ".-"
+            txt_VentasEfectivo.Text = "$ " & Format(CType((VentasEfectivo), Decimal), "###0.00") & ".-"
 
 
             'Voy seteando la barra de progreso
@@ -280,16 +279,15 @@
             frmCargadorDeEspera.BarraProgreso.Value += 1
             frmCargadorDeEspera.Refresh()
 
-            Dim Comision As Double = 0
-            'Comision = NegEmp.ObtenerComisionesSucursal(id_Sucursal, Fecha, Fecha)
-
             'Calculo el saldo.
             Dim Ingresos As Double = 0
             Dim Egresos As Double = 0
 
-            Ingresos = TotalVentas + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
-            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + Comision + IngresoCajaFuerte + DevolucionEgreso
-            '    MessageBox.Show(Ingresos, "ingresos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Dim NegDevolucion As Negocio.NegDevolucion = New Negocio.NegDevolucion()
+            Dim DevolucionesEfectivo As Double = NegDevolucion.TotalDevolucionesEfectivo(id_Sucursal, Fecha)
+
+            Ingresos = VentasEfectivo + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
+            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + IngresoCajaFuerte + DevolucionesEfectivo
             Saldo = Ingresos - Egresos
 
             lbl_Saldo.Text = "$ " & Format(CType((Saldo), Decimal), "###0.00") & ".-"
@@ -300,10 +298,10 @@
             End If
 
             Dim CajaFuerteTotal As Double = 0
-            CajaFuerteTotal = NegMov.ConsultarTotalCajaFuerte(id_Sucursal)
+            CajaFuerteTotal = NegMov.ConsultarTotalCajaFuerte(id_Sucursal, Fecha)
 
             Dim DisponibleEfectivo As Double = 0
-            DisponibleEfectivo = Saldo + CajaFuerteTotal - VentasCheque
+            DisponibleEfectivo = Saldo + CajaFuerteTotal
 
             lbl_DispoEfect.Text = "$ " & Format(CType((DisponibleEfectivo), Decimal), "###0.00") & ".-"
             lbl_DispoCheq.Text = "$ " & Format(CType((VentasCheque), Decimal), "###0.00") & ".-"
