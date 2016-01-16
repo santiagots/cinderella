@@ -605,8 +605,10 @@ Public Class NegMovimientos
                 Dim DsMovimiento As New DataSet
                 DsMovimiento = ObtenerMov(id_Movimiento, id_Sucursal, "Egreso")
 
+                Dim id_Tipo As String = DsMovimiento.Tables(0).Rows(0).Item("id_Tipo").ToString
+
                 'Si es mercaderia, hago un rollback del stock
-                If DsMovimiento.Tables(0).Rows(0).Item("id_Tipo").ToString = "19" Then
+                If id_Tipo = "19" Then
 
                     EsMercaderia = 1
                     Dim dsMercaderias As New DataSet

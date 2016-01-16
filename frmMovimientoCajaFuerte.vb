@@ -39,10 +39,10 @@
                 txtMonto.Text = Format(CType(dsMovimiento.Tables(0).Rows(0).Item("Monto").ToString, Decimal), "###0.00")
                 txtDate.Text = dsMovimiento.Tables(0).Rows(0).Item("Fecha").ToString
 
-                If dsMovimiento.Tables(0).Rows(0).Item("Tipo").ToString = "Ingreso a Caja Chica." Then
-                    CbTipo.SelectedItem = "Ingreso a Caja Chica."
+                If dsMovimiento.Tables(0).Rows(0).Item("Tipo").ToString = "Ingreso a Caja Fuerte." Then
+                    CbTipo.SelectedItem = "Ingreso a Caja Fuerte."
                 Else
-                    CbTipo.SelectedItem = "Egreso de Caja Chica."
+                    CbTipo.SelectedItem = "Egreso de Caja Fuerte."
                 End If
 
                 btnAceptar.Text = "Modificar"
@@ -108,7 +108,7 @@
                 End If
                 eCaja.id_Sucursal = id_Sucursal
 
-                If CbTipo.SelectedItem = "Ingreso a Caja Chica." Then
+                If CbTipo.SelectedItem = "Ingreso a Caja Fuerte." Then
                     eCaja.id_Tipo = 2
                 Else
                     eCaja.id_Tipo = 1

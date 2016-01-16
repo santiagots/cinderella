@@ -111,7 +111,7 @@ Partial Class frmMovimientoCajaFuerte
         Me.CbTipo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbTipo.FormattingEnabled = True
-        Me.CbTipo.Items.AddRange(New Object() {"Ingreso a Caja Chica.", "Egreso de Caja Chica."})
+        Me.CbTipo.Items.AddRange(New Object() {"Ingreso a Caja Fuerte.", "Egreso de Caja Fuerte."})
         Me.CbTipo.Location = New System.Drawing.Point(127, 82)
         Me.CbTipo.Name = "CbTipo"
         Me.CbTipo.Size = New System.Drawing.Size(229, 23)

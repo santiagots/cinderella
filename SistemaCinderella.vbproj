@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>33</ApplicationRevision>
+    <ApplicationRevision>37</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -160,6 +160,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ControlDeUsuario\ucDetalleCheque.Designer.vb">
+      <DependentUpon>ucDetalleCheque.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ControlDeUsuario\ucDetalleCheque.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="db\DsDatos.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -196,6 +202,12 @@
       <DependentUpon>frmAromas.vb</DependentUpon>
     </Compile>
     <Compile Include="frmAromas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBanco.Designer.vb">
+      <DependentUpon>frmBanco.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmBanco.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmBrowser.Designer.vb">
@@ -250,6 +262,12 @@
       <DependentUpon>frmCargarMercaderiaEgreso.vb</DependentUpon>
     </Compile>
     <Compile Include="frmCargarMercaderiaEgreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChequesAlta.Designer.vb">
+      <DependentUpon>frmChequesAlta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmChequesAlta.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDevoluciones.Designer.vb">
@@ -830,6 +848,9 @@
     <Compile Include="VariablesGlobales.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ControlDeUsuario\ucDetalleCheque.resx">
+      <DependentUpon>ucDetalleCheque.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DialogIngresos.resx">
       <DependentUpon>DialogIngresos.vb</DependentUpon>
     </EmbeddedResource>
@@ -844,6 +865,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAromas.resx">
       <DependentUpon>frmAromas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBanco.resx">
+      <DependentUpon>frmBanco.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBrowser.resx">
       <DependentUpon>frmBrowser.vb</DependentUpon>
@@ -871,6 +895,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCargarMercaderiaEgreso.resx">
       <DependentUpon>frmCargarMercaderiaEgreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChequesAlta.resx">
+      <DependentUpon>frmChequesAlta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDevoluciones.resx">
       <DependentUpon>frmDevoluciones.vb</DependentUpon>
@@ -1154,6 +1181,7 @@
     <Content Include="dlls\Interop.EpsonFPHostControlX.dll" />
     <Content Include="dlls\itextsharp.dll" />
     <Content Include="Imagenes\adelantos.png" />
+    <None Include="Imagenes\banco.png" />
     <Content Include="Imagenes\Boton_Ventas.png" />
     <Content Include="Imagenes\btn_AbrirCaja_32.png" />
     <Content Include="Imagenes\btn_agregar2_32.png" />
@@ -1189,6 +1217,7 @@
     <Content Include="Imagenes\btn_Sistema_32.png" />
     <Content Include="Imagenes\btn_standby_16.png" />
     <Content Include="Imagenes\btn_Update.png" />
+    <None Include="Imagenes\btn_Update_24.png" />
     <Content Include="Imagenes\btn_Update_32.png" />
     <Content Include="Imagenes\btn_Ventana_32.png" />
     <Content Include="Imagenes\btn_ventas_32.png" />
@@ -1266,6 +1295,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\DataSources\Entidades.Banco.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>

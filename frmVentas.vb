@@ -756,18 +756,34 @@ Public Class frmVentas
                                     frmFacturar.Descuento = Descuento
                                     frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
                                     frmFacturar.TipoPago = TipoPagoControlador
-                                    Funciones.ControlInstancia(frmFacturar).Show()
+                                    Funciones.ControlInstancia(frmFacturar).ShowDialog()
 
                                     'Seteo el cursor.
                                     Me.Cursor = Cursors.Arrow
-
+                                Else
+                                    Facturar = False
                                 End If
                             End If
+
+                            'Si el tipo de pago es cheque abro la ventana para cargar ingresar el cheque
+                            If TipoPago = 4 Then
+                                'Seteo el cursor.
+                                Me.Cursor = Cursors.WaitCursor
+
+                                'Abro el form para cargar el cheque.
+                                Dim frmChequesAlta As frmChequesAlta = New frmChequesAlta()
+                                frmChequesAlta.Facturado = Facturar
+                                Funciones.ControlInstancia(frmChequesAlta).ShowDialog()
+
+                                'Seteo el cursor.
+                                Me.Cursor = Cursors.Arrow
+                            End If
+
                         Else
                             'Muestro Mensaje.
                             MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
-                End If
+                    End If
                 End If
             End If
         Catch ex As Exception

@@ -1,5 +1,6 @@
 ﻿Public Class frmNotificacionesListado
     Dim NegMovimiento As New Negocio.NegMovimientos
+    Dim NegCajaInicial As New Negocio.NegCajaInicial
     Dim Functions As New Funciones
 
 #Region "Region de Eventos"

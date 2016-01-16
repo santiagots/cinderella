@@ -166,8 +166,6 @@ Public Class NegCajaInicial
                 .AddWithValue("@Empleado", EntCaja.Empleado)
                 .AddWithValue("@id_Sucursal", EntCaja.id_Sucursal)
                 .AddWithValue("@Monto", EntCaja.Monto)
-                .AddWithValue("@Fecha", EntCaja.Fecha)
-                .AddWithValue("@Hora", EntCaja.Hora)
             End With
 
             'Respuesta del stored.

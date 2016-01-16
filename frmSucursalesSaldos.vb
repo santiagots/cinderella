@@ -60,6 +60,7 @@
             Dim Retiro As Double = 0
             Dim Aporte As Double = 0
             Dim EfectivoEgreso As Double = 0
+            Dim PendienteAutorizar As Double = 0
             Dim Saldo As Double = 0
 
             '--------OBTENGO LOS DATOS-------'
@@ -90,6 +91,7 @@
             Retiro = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 5)
             Faltante = NegMov.ObtenerTotalMovCaja(id_Sucursal, FDesde, FHasta, "Faltante")
             EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Egresos")
+            PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "EgresosPendientes")
             Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, FDesde, FHasta)
 
             Egresos = Adelantos + DevolucionEgreso + Sueldo + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
@@ -124,6 +126,7 @@
             txt_Gasto.Text = "$ " & Format(CType((Gasto), Decimal), "###0.00") & ".-"
             txt_Retiro.Text = "$ " & Format(CType((Retiro), Decimal), "###0.00") & ".-"
             txt_EfectivoEgreso.Text = "$ " & Format(CType((EfectivoEgreso), Decimal), "###0.00") & ".-"
+            txt_PendienteAutorizar.Text = "$ " & Format(CType((PendienteAutorizar), Decimal), "###0.00") & ".-"
             txt_Mercaderias.Text = "$ " & Format(CType((Mercaderias), Decimal), "###0.00") & ".-"
             txt_Aporte.Text = "$ " & Format(CType((Aporte), Decimal), "###0.00") & ".-"
             lbl_Saldo.Text = "$ " & Format(CType((Saldo), Decimal), "###0.00") & ".-"
@@ -315,6 +318,16 @@
         frmVerDevoluciones.FHasta = FHasta
         Funciones.ControlInstancia(frmVerDevoluciones).MdiParent = MDIContenedor
         Funciones.ControlInstancia(frmVerDevoluciones).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        Me.Cursor = Cursors.WaitCursor
+        frmVerEfectivo.FDesde = FDesde
+        frmVerEfectivo.FHasta = FHasta
+        frmVerEfectivo.Tipo = "EgresosPendientes"
+        Funciones.ControlInstancia(frmVerEfectivo).MdiParent = MDIContenedor
+        Funciones.ControlInstancia(frmVerEfectivo).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 End Class

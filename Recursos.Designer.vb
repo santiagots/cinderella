@@ -147,6 +147,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend Shared ReadOnly Property banco() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("banco", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend Shared ReadOnly Property Boton_Agregar() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Boton_Agregar", resourceCulture)
@@ -220,6 +230,16 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Btn_Excel() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Btn_Excel", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend Shared ReadOnly Property btn_Update_24() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("btn_Update_24", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

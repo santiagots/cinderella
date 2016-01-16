@@ -25,6 +25,9 @@
             ElseIf Tipo = "Egresos" Then
                 Me.Text = "Egresos en la sucursal " & My.Settings("NombreSucursal")
                 Gb_Comisiones.Text = "Egresos entre el " & FDesde & " hasta el " & FHasta
+            ElseIf Tipo = "EgresosPendientes" Then
+                Me.Text = "Egresos pendientes de autorizar en la sucursal " & My.Settings("NombreSucursal")
+                Gb_Comisiones.Text = "Egresos pendientes de autorizar entre el " & FDesde & " hasta el " & FHasta
             End If
 
             'Cambio el cursor a "NORMAL"

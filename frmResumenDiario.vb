@@ -182,6 +182,10 @@
             EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Egresos")
             txt_EfectivoEgreso.Text = "$ " & Format(CType((EfectivoEgreso), Decimal), "###0.00") & ".-"
 
+            Dim PendienteAutorizar As Double = 0
+            PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Date.MinValue.ToString("yyyy/MM/dd"), Fecha, "EgresosPendientes")
+            txt_PendienteAutorizar.Text = "$ " & Format(CType((PendienteAutorizar), Decimal), "###0.00") & ".-"
+
             Dim DevolucionEgreso As Double = 0
             DevolucionEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Devolucion")
             txt_DevolucionesEgr.Text = "$ " & Format(CType((DevolucionEgreso), Decimal), "###0.00") & ".-"
@@ -290,7 +294,9 @@
             Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + IngresoCajaFuerte + DevolucionesEfectivo
             Saldo = Ingresos - Egresos
 
-            lbl_Saldo.Text = "$ " & Format(CType((Saldo), Decimal), "###0.00") & ".-"
+            'Resto el pendiente de autorizar para el que Saldo de este dia lo contemple
+            'No lo resto de la variable saldo para que este concepto no forme parte del valor del cierre de la caja
+            lbl_Saldo.Text = "$ " & Format(CType((Saldo - PendienteAutorizar), Decimal), "###0.00") & ".-"
             If Saldo < 0 Then
                 lbl_Saldo.ForeColor = Color.Red
             Else
@@ -301,7 +307,7 @@
             CajaFuerteTotal = NegMov.ConsultarTotalCajaFuerte(id_Sucursal, Fecha)
 
             Dim DisponibleEfectivo As Double = 0
-            DisponibleEfectivo = Saldo + CajaFuerteTotal
+            DisponibleEfectivo = Saldo - PendienteAutorizar + CajaFuerteTotal
 
             lbl_DispoEfect.Text = "$ " & Format(CType((DisponibleEfectivo), Decimal), "###0.00") & ".-"
             lbl_DispoCheq.Text = "$ " & Format(CType((VentasCheque), Decimal), "###0.00") & ".-"
