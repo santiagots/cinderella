@@ -45,6 +45,7 @@ Public Class NegVentas
                 .AddWithValue("@Anulado", EntVenta.Anulado)
                 .AddWithValue("@Habilitado", EntVenta.Habilitado)
                 .AddWithValue("@Facturado", EntVenta.Facturado)
+                .AddWithValue("@DiferenciaPagoCheque", EntVenta.DiferenciaPagoCheque)
             End With
 
             'Declaro el tipo de dato para el detalle de la venta

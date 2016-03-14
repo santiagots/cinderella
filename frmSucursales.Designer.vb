@@ -30,13 +30,6 @@ Partial Class frmSucursales
         Me.TabSucursales = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
         Me.DG_Sucursales = New System.Windows.Forms.DataGridView()
-        Me.id_Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Direccion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -46,6 +39,8 @@ Partial Class frmSucursales
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GB_Sucursal = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txt_CodigoVenta = New System.Windows.Forms.TextBox()
         Me.lbl_Nombre = New System.Windows.Forms.Label()
         Me.lbl_Habilitado = New System.Windows.Forms.Label()
         Me.txt_Nombre = New System.Windows.Forms.TextBox()
@@ -82,6 +77,8 @@ Partial Class frmSucursales
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.GB_Sucursal_mod = New System.Windows.Forms.GroupBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txt_CodigoVenta_mod = New System.Windows.Forms.TextBox()
         Me.lbl_Nombre_mod = New System.Windows.Forms.Label()
         Me.lbl_Habilitado_mod = New System.Windows.Forms.Label()
         Me.txt_Nombre_mod = New System.Windows.Forms.TextBox()
@@ -112,6 +109,13 @@ Partial Class frmSucursales
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErroresSucursal = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolSucursal = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Direccion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id_Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabSucursales.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Sucursales, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -180,73 +184,6 @@ Partial Class frmSucursales
         Me.DG_Sucursales.Size = New System.Drawing.Size(766, 454)
         Me.DG_Sucursales.TabIndex = 0
         '
-        'id_Sucursal
-        '
-        Me.id_Sucursal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.id_Sucursal.DataPropertyName = "id_Sucursal"
-        Me.id_Sucursal.HeaderText = "ID"
-        Me.id_Sucursal.MaxInputLength = 10
-        Me.id_Sucursal.Name = "id_Sucursal"
-        Me.id_Sucursal.ReadOnly = True
-        Me.id_Sucursal.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.id_Sucursal.Width = 51
-        '
-        'Nombre
-        '
-        Me.Nombre.DataPropertyName = "Nombre"
-        Me.Nombre.FillWeight = 172.4676!
-        Me.Nombre.HeaderText = "Nombre"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'Direccion
-        '
-        Me.Direccion.DataPropertyName = "Direccion"
-        Me.Direccion.FillWeight = 141.4971!
-        Me.Direccion.HeaderText = "Dirección"
-        Me.Direccion.Name = "Direccion"
-        Me.Direccion.ReadOnly = True
-        '
-        'Telefono
-        '
-        Me.Telefono.DataPropertyName = "Telefono"
-        Me.Telefono.FillWeight = 124.3305!
-        Me.Telefono.HeaderText = "Teléfono"
-        Me.Telefono.Name = "Telefono"
-        Me.Telefono.ReadOnly = True
-        '
-        'Habilitado
-        '
-        Me.Habilitado.DataPropertyName = "estado"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Habilitado.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Habilitado.FillWeight = 54.33104!
-        Me.Habilitado.HeaderText = "Habilitado"
-        Me.Habilitado.MaxInputLength = 10
-        Me.Habilitado.Name = "Habilitado"
-        Me.Habilitado.ReadOnly = True
-        Me.Habilitado.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Modificar
-        '
-        Me.Modificar.FillWeight = 52.82832!
-        Me.Modificar.HeaderText = "Modificar"
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Modificar.ToolTipText = "Modificar Sucursal"
-        '
-        'Eliminar
-        '
-        Me.Eliminar.FillWeight = 54.54546!
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Eliminar.ToolTipText = "Eliminar Sucursal"
-        '
         'TbAlta
         '
         Me.TbAlta.Controls.Add(Me.GB_Alta)
@@ -285,7 +222,7 @@ Partial Class frmSucursales
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Location = New System.Drawing.Point(443, 276)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(300, 109)
+        Me.GroupBox1.Size = New System.Drawing.Size(300, 127)
         Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Comisiones Ventas Mayoristas"
@@ -333,6 +270,8 @@ Partial Class frmSucursales
         '
         'GB_Sucursal
         '
+        Me.GB_Sucursal.Controls.Add(Me.Label8)
+        Me.GB_Sucursal.Controls.Add(Me.txt_CodigoVenta)
         Me.GB_Sucursal.Controls.Add(Me.lbl_Nombre)
         Me.GB_Sucursal.Controls.Add(Me.lbl_Habilitado)
         Me.GB_Sucursal.Controls.Add(Me.txt_Nombre)
@@ -351,10 +290,28 @@ Partial Class frmSucursales
         Me.GB_Sucursal.Controls.Add(Me.txt_Telefono)
         Me.GB_Sucursal.Location = New System.Drawing.Point(14, 34)
         Me.GB_Sucursal.Name = "GB_Sucursal"
-        Me.GB_Sucursal.Size = New System.Drawing.Size(412, 351)
+        Me.GB_Sucursal.Size = New System.Drawing.Size(412, 371)
         Me.GB_Sucursal.TabIndex = 1
         Me.GB_Sucursal.TabStop = False
         Me.GB_Sucursal.Text = "Información del Establecimiento"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(7, 310)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(84, 13)
+        Me.Label8.TabIndex = 61
+        Me.Label8.Text = "Código Venta (*)"
+        '
+        'txt_CodigoVenta
+        '
+        Me.txt_CodigoVenta.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txt_CodigoVenta.Location = New System.Drawing.Point(138, 303)
+        Me.txt_CodigoVenta.MaxLength = 2
+        Me.txt_CodigoVenta.Name = "txt_CodigoVenta"
+        Me.txt_CodigoVenta.Size = New System.Drawing.Size(241, 20)
+        Me.txt_CodigoVenta.TabIndex = 60
         '
         'lbl_Nombre
         '
@@ -368,7 +325,7 @@ Partial Class frmSucursales
         'lbl_Habilitado
         '
         Me.lbl_Habilitado.AutoSize = True
-        Me.lbl_Habilitado.Location = New System.Drawing.Point(7, 302)
+        Me.lbl_Habilitado.Location = New System.Drawing.Point(7, 338)
         Me.lbl_Habilitado.Name = "lbl_Habilitado"
         Me.lbl_Habilitado.Size = New System.Drawing.Size(54, 13)
         Me.lbl_Habilitado.TabIndex = 2
@@ -397,7 +354,7 @@ Partial Class frmSucursales
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(139, 301)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(139, 337)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado.TabIndex = 9
@@ -646,7 +603,7 @@ Partial Class frmSucursales
         Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Location = New System.Drawing.Point(443, 276)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(300, 109)
+        Me.GroupBox2.Size = New System.Drawing.Size(300, 127)
         Me.GroupBox2.TabIndex = 16
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Comisiones Ventas Mayoristas"
@@ -694,6 +651,8 @@ Partial Class frmSucursales
         '
         'GB_Sucursal_mod
         '
+        Me.GB_Sucursal_mod.Controls.Add(Me.Label7)
+        Me.GB_Sucursal_mod.Controls.Add(Me.txt_CodigoVenta_mod)
         Me.GB_Sucursal_mod.Controls.Add(Me.lbl_Nombre_mod)
         Me.GB_Sucursal_mod.Controls.Add(Me.lbl_Habilitado_mod)
         Me.GB_Sucursal_mod.Controls.Add(Me.txt_Nombre_mod)
@@ -712,10 +671,28 @@ Partial Class frmSucursales
         Me.GB_Sucursal_mod.Controls.Add(Me.txt_Telefono_mod)
         Me.GB_Sucursal_mod.Location = New System.Drawing.Point(14, 34)
         Me.GB_Sucursal_mod.Name = "GB_Sucursal_mod"
-        Me.GB_Sucursal_mod.Size = New System.Drawing.Size(412, 351)
+        Me.GB_Sucursal_mod.Size = New System.Drawing.Size(412, 369)
         Me.GB_Sucursal_mod.TabIndex = 1
         Me.GB_Sucursal_mod.TabStop = False
         Me.GB_Sucursal_mod.Text = "Información del Establecimiento"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(7, 308)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(84, 13)
+        Me.Label7.TabIndex = 59
+        Me.Label7.Text = "Código Venta (*)"
+        '
+        'txt_CodigoVenta_mod
+        '
+        Me.txt_CodigoVenta_mod.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txt_CodigoVenta_mod.Location = New System.Drawing.Point(140, 300)
+        Me.txt_CodigoVenta_mod.MaxLength = 2
+        Me.txt_CodigoVenta_mod.Name = "txt_CodigoVenta_mod"
+        Me.txt_CodigoVenta_mod.Size = New System.Drawing.Size(241, 20)
+        Me.txt_CodigoVenta_mod.TabIndex = 58
         '
         'lbl_Nombre_mod
         '
@@ -729,7 +706,7 @@ Partial Class frmSucursales
         'lbl_Habilitado_mod
         '
         Me.lbl_Habilitado_mod.AutoSize = True
-        Me.lbl_Habilitado_mod.Location = New System.Drawing.Point(7, 302)
+        Me.lbl_Habilitado_mod.Location = New System.Drawing.Point(7, 337)
         Me.lbl_Habilitado_mod.Name = "lbl_Habilitado_mod"
         Me.lbl_Habilitado_mod.Size = New System.Drawing.Size(54, 13)
         Me.lbl_Habilitado_mod.TabIndex = 31
@@ -749,7 +726,7 @@ Partial Class frmSucursales
         Me.chk_Habilitado_mod.AutoSize = True
         Me.chk_Habilitado_mod.Checked = True
         Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(140, 302)
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(140, 337)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
         Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado_mod.TabIndex = 9
@@ -997,6 +974,73 @@ Partial Class frmSucursales
         Me.ToolSucursal.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolSucursal.ToolTipTitle = "Ayuda"
         '
+        'Eliminar
+        '
+        Me.Eliminar.FillWeight = 54.54546!
+        Me.Eliminar.HeaderText = "Eliminar"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Eliminar.ToolTipText = "Eliminar Sucursal"
+        '
+        'Modificar
+        '
+        Me.Modificar.FillWeight = 52.82832!
+        Me.Modificar.HeaderText = "Modificar"
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Modificar.ToolTipText = "Modificar Sucursal"
+        '
+        'Habilitado
+        '
+        Me.Habilitado.DataPropertyName = "estado"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Habilitado.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Habilitado.FillWeight = 54.33104!
+        Me.Habilitado.HeaderText = "Habilitado"
+        Me.Habilitado.MaxInputLength = 10
+        Me.Habilitado.Name = "Habilitado"
+        Me.Habilitado.ReadOnly = True
+        Me.Habilitado.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'Telefono
+        '
+        Me.Telefono.DataPropertyName = "Telefono"
+        Me.Telefono.FillWeight = 124.3305!
+        Me.Telefono.HeaderText = "Teléfono"
+        Me.Telefono.Name = "Telefono"
+        Me.Telefono.ReadOnly = True
+        '
+        'Direccion
+        '
+        Me.Direccion.DataPropertyName = "Direccion"
+        Me.Direccion.FillWeight = 141.4971!
+        Me.Direccion.HeaderText = "Dirección"
+        Me.Direccion.Name = "Direccion"
+        Me.Direccion.ReadOnly = True
+        '
+        'Nombre
+        '
+        Me.Nombre.DataPropertyName = "Nombre"
+        Me.Nombre.FillWeight = 172.4676!
+        Me.Nombre.HeaderText = "Nombre"
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        '
+        'id_Sucursal
+        '
+        Me.id_Sucursal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.id_Sucursal.DataPropertyName = "id_Sucursal"
+        Me.id_Sucursal.HeaderText = "ID"
+        Me.id_Sucursal.MaxInputLength = 10
+        Me.id_Sucursal.Name = "id_Sucursal"
+        Me.id_Sucursal.ReadOnly = True
+        Me.id_Sucursal.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.id_Sucursal.Width = 51
+        '
         'frmSucursales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1107,13 +1151,6 @@ Partial Class frmSucursales
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents ToolSucursal As System.Windows.Forms.ToolTip
-    Friend WithEvents id_Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Nombre As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Direccion As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Telefono As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Habilitado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents txt_ComisionEncargadoMayor As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
@@ -1124,4 +1161,15 @@ Partial Class frmSucursales
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents txt_ComisionVendedorMayor_mod As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents txt_CodigoVenta As System.Windows.Forms.TextBox
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents txt_CodigoVenta_mod As System.Windows.Forms.TextBox
+    Friend WithEvents id_Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Nombre As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Direccion As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Telefono As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Habilitado As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
 End Class

@@ -46,6 +46,8 @@ Partial Class frmConfiguracion
         Me.BtnMailing = New System.Windows.Forms.Button()
         Me.lblPort = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Cb_ConexionControladora = New System.Windows.Forms.ComboBox()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txt_MontoMaximoNotaCredito = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -70,10 +72,9 @@ Partial Class frmConfiguracion
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.BtnNotificaciones = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.Cb_Segundos = New System.Windows.Forms.ComboBox()
+        Me.Cb_TiempoComprobacionMensajes = New System.Windows.Forms.ComboBox()
         Me.TabInternet = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.Rb2 = New System.Windows.Forms.RadioButton()
@@ -83,8 +84,10 @@ Partial Class frmConfiguracion
         Me.BtnInternet = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Cb_SegundosInternet = New System.Windows.Forms.ComboBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Cb_ConexionControladora = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoComprobacionMovimientos = New System.Windows.Forms.ComboBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoComprobacionCheques = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -357,6 +360,26 @@ Partial Class frmConfiguracion
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Configuración de Controlador Fiscal"
         '
+        'Cb_ConexionControladora
+        '
+        Me.Cb_ConexionControladora.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_ConexionControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_ConexionControladora.FormattingEnabled = True
+        Me.Cb_ConexionControladora.Items.AddRange(New Object() {"USB", "COM1"})
+        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(238, 56)
+        Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
+        Me.Cb_ConexionControladora.Size = New System.Drawing.Size(111, 23)
+        Me.Cb_ConexionControladora.TabIndex = 22
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(9, 59)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(106, 15)
+        Me.Label17.TabIndex = 21
+        Me.Label17.Text = "Tipo de Conexión:"
+        '
         'Label15
         '
         Me.Label15.AutoSize = True
@@ -579,31 +602,25 @@ Partial Class frmConfiguracion
         Me.TabNotificaciones.Name = "TabNotificaciones"
         Me.TabNotificaciones.Size = New System.Drawing.Size(386, 323)
         Me.TabNotificaciones.TabIndex = 4
-        Me.TabNotificaciones.Text = "Notificaciones"
+        Me.TabNotificaciones.Text = "Alertas"
         Me.TabNotificaciones.UseVisualStyleBackColor = True
         '
         'GroupBox5
         '
+        Me.GroupBox5.Controls.Add(Me.Label18)
+        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionCheques)
         Me.GroupBox5.Controls.Add(Me.Label1)
+        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionMovimientos)
         Me.GroupBox5.Controls.Add(Me.BtnNotificaciones)
         Me.GroupBox5.Controls.Add(Me.Label9)
-        Me.GroupBox5.Controls.Add(Me.Cb_Segundos)
+        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionMensajes)
         Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox5.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(386, 323)
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Configuración de Notificaciones"
-        '
-        'Label1
-        '
-        Me.Label1.Location = New System.Drawing.Point(9, 28)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(371, 33)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Las notificaciones que recibe el sistema  son todos aquellos movimientos que otra" & _
-    "s sucursales hacen con el sistema."
+        Me.GroupBox5.Text = "Configuración de Alertas"
         '
         'BtnNotificaciones
         '
@@ -622,23 +639,22 @@ Partial Class frmConfiguracion
         '
         'Label9
         '
-        Me.Label9.Location = New System.Drawing.Point(9, 90)
+        Me.Label9.Location = New System.Drawing.Point(8, 28)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(153, 36)
+        Me.Label9.Size = New System.Drawing.Size(261, 36)
         Me.Label9.TabIndex = 3
-        Me.Label9.Text = "Período de Comprobación ( en segundos )"
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Label9.Text = "Período de comprobación de nuevos mensajes (Minutos)"
         '
-        'Cb_Segundos
+        'Cb_TiempoComprobacionMensajes
         '
-        Me.Cb_Segundos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Segundos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_Segundos.FormattingEnabled = True
-        Me.Cb_Segundos.Items.AddRange(New Object() {"30", "60", "120", "300"})
-        Me.Cb_Segundos.Location = New System.Drawing.Point(241, 90)
-        Me.Cb_Segundos.Name = "Cb_Segundos"
-        Me.Cb_Segundos.Size = New System.Drawing.Size(101, 23)
-        Me.Cb_Segundos.TabIndex = 3
+        Me.Cb_TiempoComprobacionMensajes.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionMensajes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionMensajes.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionMensajes.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionMensajes.Location = New System.Drawing.Point(275, 35)
+        Me.Cb_TiempoComprobacionMensajes.Name = "Cb_TiempoComprobacionMensajes"
+        Me.Cb_TiempoComprobacionMensajes.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionMensajes.TabIndex = 3
         '
         'TabInternet
         '
@@ -742,25 +758,43 @@ Partial Class frmConfiguracion
         Me.Cb_SegundosInternet.Size = New System.Drawing.Size(101, 23)
         Me.Cb_SegundosInternet.TabIndex = 3
         '
-        'Label17
+        'Label1
         '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(9, 59)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(106, 15)
-        Me.Label17.TabIndex = 21
-        Me.Label17.Text = "Tipo de Conexión:"
+        Me.Label1.Location = New System.Drawing.Point(8, 70)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(261, 36)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "Período de comprobación de movimientos entre sucursales (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
-        'Cb_ConexionControladora
+        'Cb_TiempoComprobacionMovimientos
         '
-        Me.Cb_ConexionControladora.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_ConexionControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_ConexionControladora.FormattingEnabled = True
-        Me.Cb_ConexionControladora.Items.AddRange(New Object() {"USB", "COM1"})
-        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(238, 56)
-        Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
-        Me.Cb_ConexionControladora.Size = New System.Drawing.Size(111, 23)
-        Me.Cb_ConexionControladora.TabIndex = 22
+        Me.Cb_TiempoComprobacionMovimientos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionMovimientos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionMovimientos.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionMovimientos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionMovimientos.Location = New System.Drawing.Point(275, 77)
+        Me.Cb_TiempoComprobacionMovimientos.Name = "Cb_TiempoComprobacionMovimientos"
+        Me.Cb_TiempoComprobacionMovimientos.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionMovimientos.TabIndex = 6
+        '
+        'Label18
+        '
+        Me.Label18.Location = New System.Drawing.Point(9, 112)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(261, 36)
+        Me.Label18.TabIndex = 7
+        Me.Label18.Text = "Período de comprobación de cheques por vencer (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Cb_TiempoComprobacionCheques
+        '
+        Me.Cb_TiempoComprobacionCheques.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionCheques.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionCheques.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionCheques.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionCheques.Location = New System.Drawing.Point(276, 119)
+        Me.Cb_TiempoComprobacionCheques.Name = "Cb_TiempoComprobacionCheques"
+        Me.Cb_TiempoComprobacionCheques.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionCheques.TabIndex = 8
         '
         'frmConfiguracion
         '
@@ -835,10 +869,9 @@ Partial Class frmConfiguracion
     Friend WithEvents TabFacturacion As System.Windows.Forms.TabPage
     Friend WithEvents TabNotificaciones As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents BtnNotificaciones As System.Windows.Forms.Button
     Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Cb_Segundos As System.Windows.Forms.ComboBox
+    Friend WithEvents Cb_TiempoComprobacionMensajes As System.Windows.Forms.ComboBox
     Friend WithEvents TabInternet As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
@@ -860,4 +893,8 @@ Partial Class frmConfiguracion
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents Cb_ConexionControladora As System.Windows.Forms.ComboBox
     Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents Cb_TiempoComprobacionCheques As System.Windows.Forms.ComboBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Cb_TiempoComprobacionMovimientos As System.Windows.Forms.ComboBox
 End Class

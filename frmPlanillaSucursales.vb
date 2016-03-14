@@ -125,10 +125,10 @@ Public Class frmPlanillaSucursales
                 If DialogSave.ShowDialog() = DialogResult.OK Then
                     Me.Cursor = Cursors.WaitCursor
                     ExportarAExcel(DialogSave.FileName)
-                End If
 
-                'si no completo la descripcion, muestro un msg de error.
-                MessageBox.Show("Se ha exportado el listado de movimientos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    'si no completo la descripcion, muestro un msg de error.
+                    MessageBox.Show("Se ha exportado el listado de movimientos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
 
             Catch ex As Exception
                 MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -136,8 +136,6 @@ Public Class frmPlanillaSucursales
                 'Cambio el cursor a "NORMAL"
                 Me.Cursor = Cursors.Arrow
             End Try
-
-
         End If
     End Sub
     Private Sub DG_Planilla_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Planilla.CellFormatting

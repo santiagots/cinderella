@@ -13,7 +13,7 @@
     <AssemblyName>SistemaCinderella</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <IsWebBootstrapper>true</IsWebBootstrapper>
@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>37</ApplicationRevision>
+    <ApplicationRevision>46</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -264,10 +264,22 @@
     <Compile Include="frmCargarMercaderiaEgreso.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmChequesAdministracion.Designer.vb">
+      <DependentUpon>frmChequesAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmChequesAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmChequesAlta.Designer.vb">
       <DependentUpon>frmChequesAlta.vb</DependentUpon>
     </Compile>
     <Compile Include="frmChequesAlta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChequesAltaMasiva.Designer.vb">
+      <DependentUpon>frmChequesAltaMasiva.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmChequesAltaMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDevoluciones.Designer.vb">
@@ -845,6 +857,7 @@
     <Compile Include="SplashScreen.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\SortableBindingList.vb" />
     <Compile Include="VariablesGlobales.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -896,8 +909,14 @@
     <EmbeddedResource Include="frmCargarMercaderiaEgreso.resx">
       <DependentUpon>frmCargarMercaderiaEgreso.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmChequesAdministracion.resx">
+      <DependentUpon>frmChequesAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmChequesAlta.resx">
       <DependentUpon>frmChequesAlta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChequesAltaMasiva.resx">
+      <DependentUpon>frmChequesAltaMasiva.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDevoluciones.resx">
       <DependentUpon>frmDevoluciones.vb</DependentUpon>
@@ -1094,6 +1113,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmVentasAdministracion.resx">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerAdelantos.resx">
       <DependentUpon>frmVerAdelantos.vb</DependentUpon>
@@ -1235,6 +1255,7 @@
     <Content Include="Imagenes\Cambios_32.png" />
     <Content Include="Imagenes\Cancelar_32.png" />
     <Content Include="Imagenes\cargando.gif" />
+    <None Include="Imagenes\cehque_32.png" />
     <Content Include="Imagenes\conectado_32.gif" />
     <Content Include="Imagenes\desconectado_32.png" />
     <Content Include="Imagenes\Detalle_Pequeno.png" />
@@ -1296,6 +1317,7 @@
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
     <None Include="My Project\DataSources\Entidades.Banco.datasource" />
+    <None Include="My Project\DataSources\Entidades.Cheque.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>

@@ -5,10 +5,13 @@
     Dim NegNotaCredito As New Negocio.NegNotaCredito
     Dim NegDevolucion As New Negocio.NegDevolucion
     Dim NegErrores As New Negocio.NegManejadorErrores
+    Dim NegClientes As New Negocio.NegClientes
+    Dim NegLocalidades As New Negocio.NegLocalidades
     Dim Func As New Funciones
     Dim EntFacturacion As New Entidades.Facturacion
     Dim EntNotaCredito As New Entidades.NotaCredito
     Dim EntControlador As New Entidades.ControladorFiscal
+
     Public NotaCredito As Boolean = False
     Dim TipoFactura As String = ""
     Public Monto As Double
@@ -17,6 +20,7 @@
     Public id_Devolucion As Integer
     Public Descuento As Double
     Public MontoSinDescuento As Double
+    Public id_Cliente As Integer
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
@@ -88,6 +92,19 @@
             txt_Pago.Text = CType(Monto, Decimal)
             txt_Comprobante_Origen.Text = "No Requerido."
             txt_Comprobante_Origen.ReadOnly = True
+        End If
+
+        'Si la facturacion es para un cliente 
+        If (id_Cliente <> 0) Then
+            'cargo de forma automatica la infomacion del cliente
+            Dim cliente As Entidades.Clientes = NegClientes.TraerCliente(id_Cliente)
+            'Si el cliente es "responsable inscripto" selecciono dicha opcion en caso contrario selecciono "consumidor final"
+            Cb_IVA.SelectedIndex = If(cliente.id_CondicionIva = 3, 0, 1)
+            txt_Nombre.Text = cliente.RazonSocial
+            txt_Direccion.Text = cliente.Direccion
+            Dim localidad As DataRow = NegLocalidades.ListadoLocalidades(cliente.id_Distrito).Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.ItemArray(0) = cliente.id_Localidad).FirstOrDefault()
+            txt_Localidad.Text = If(localidad Is Nothing, "", localidad.ItemArray(2))
+            txt_Cuit.Text = cliente.Cuit.Replace("-", "")
         End If
     End Sub
 

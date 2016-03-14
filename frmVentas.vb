@@ -1,4 +1,5 @@
 ﻿Imports System.Linq
+Imports System.Threading.Tasks
 
 Public Class frmVentas
     'Instancias
@@ -38,17 +39,6 @@ Public Class frmVentas
         Cb_Encargados.SelectedItem = "Seleccione un encargado..."
         Cb_Vendedores.SelectedItem = "Seleccione un vendedor..."
         Cb_ListaPrecio.SelectedIndex = Nothing
-        txt_CodigoBarra.Focus()
-    End Sub
-
-    'Limpiar Formulario2
-    Public Sub LimpiarFormVentas_2()
-        DG_Productos.Rows.Clear()
-        txt_Total.Text = "0,00"
-        txt_Subtotal.Text = "0,00"
-        txt_Descuento.Text = "0,00"
-        Cb_ListaPrecio.SelectedIndex = Nothing
-        txt_CodigoBarra.Clear()
         txt_CodigoBarra.Focus()
     End Sub
 
@@ -347,6 +337,26 @@ Public Class frmVentas
         End If
     End Sub
 
+    'Funcion que invoca el formulario de carga de cheques de forma asincornica para no bloquear el funcionamiento de la aplicacion a la espera de que se cierre la carga de los cheques 
+    Async Function CargarCheques(ByVal Facturar As Boolean, ByVal MontoTotal As Double) As Task(Of Double)
+        Me.Hide()
+        Dim respuesta As Double = Await Task.Run((Function() (Me.abrirForm(Facturar, MontoTotal))))
+        Me.Show()
+        Return respuesta
+    End Function
+
+    'Funcion que muestra la pantalla de cheques
+    Private Function abrirForm(factura As Boolean, monto As Double) As Double
+        Dim frmChequesAltaMasiva As frmChequesAltaMasiva = New frmChequesAltaMasiva()
+        frmChequesAltaMasiva.Facturado = factura
+        frmChequesAltaMasiva.MontoVenta = monto
+
+        If (frmChequesAltaMasiva.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+            Return frmChequesAltaMasiva.DiferenciaPagoCheques
+        End If
+        Return -1
+    End Function
+
 #End Region
 
     'Cancela la venta, setea variables por default.
@@ -513,8 +523,6 @@ Public Class frmVentas
             Cb_ListaPrecio.Refresh()
         End If
 
-        LimpiarFormVentas_2()
-
         PosicionarListaPreciosSegunFormaDePago()
 
     End Sub
@@ -568,7 +576,6 @@ Public Class frmVentas
         If frmBuscarClienteMayorista.idCliente <> "" And frmBuscarClienteMayorista.razonSocialCliente <> "" Then
             txt_id_Cliente.Clear()
             txt_RazonSocial.Clear()
-            LimpiarFormVentas_2()
             txt_id_Cliente.Text = frmBuscarClienteMayorista.idCliente
             txt_RazonSocial.Text = frmBuscarClienteMayorista.razonSocialCliente
             Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.idListaPrecio
@@ -577,7 +584,7 @@ Public Class frmVentas
     End Sub
 
     'Al finalizar la venta.
-    Private Sub Btn_Finalizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Finalizar.Click
+    Private Async Sub Btn_Finalizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Finalizar.Click
         Try
             'Obtengo toda la informacion.
             Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
@@ -593,6 +600,7 @@ Public Class frmVentas
             Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
             Dim Monto As Double = 0 'Será el monto que le corresponda al empleado dependiendo de la comision y el MontoTotal.
             Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
+            Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
 
             'Seteo Tipo de Pago para la controladora fiscal
             If TipoPago = 1 Then
@@ -642,9 +650,22 @@ Public Class frmVentas
                         If MontoTotal > 0 And CDbl(MontoTotal) > CDbl(My.Settings("ControladorMontoTope")) Then
                             MessageBox.Show("La venta excede el máximo permitido para facturación. El pedido no podrá ser facturado.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         Else
-                            Facturar = True
+                            If (MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                                Facturar = True
+                            Else
+                                Facturar = False
+                            End If
                         End If
 
+                        'Si el tipo de pago es cheque abro la ventana para cargar ingresar el cheque
+                        If TipoPago = 4 Then
+                            'invoca la pantalla de carga de cheques y quedo a la espera del cierre
+                            DiferenciaPagoCheque = Await CargarCheques(Facturar, MontoTotal)
+                            'en caso que la diferencia de pago en cheques sea -1 es porque el usuario cancelo la carga de los cheques y se cancela la alta de la venta
+                            If (DiferenciaPagoCheque = -1) Then
+                                Return
+                            End If
+                        End If
 
                         'Seteo el cursor.
                         Me.Cursor = Cursors.WaitCursor
@@ -659,10 +680,11 @@ Public Class frmVentas
                         EntVentas.CantidadTotal = CantidadTotal
                         EntVentas.Descuento = Descuento
                         EntVentas.SubTotal = MontoTotalSinDescuento
-                        EntVentas.PrecioTotal = MontoTotal
+                        EntVentas.PrecioTotal = MontoTotal - DiferenciaPagoCheque
                         EntVentas.Anulado = 0
                         EntVentas.Habilitado = 1
                         EntVentas.Facturado = 0
+                        EntVentas.DiferenciaPagoCheque = DiferenciaPagoCheque
 
                         Dim DetalleDevolucion As List(Of Entidades.Devolucion_Detalle) = New List(Of Entidades.Devolucion_Detalle)
                         Dim DetalleVenta As List(Of Entidades.Ventas_Detalle) = New List(Of Entidades.Ventas_Detalle)
@@ -745,40 +767,21 @@ Public Class frmVentas
 
                             'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                             If Facturar Then
-                                If (MessageBox.Show("¿Facturar la venta Nº " & id_Venta & "?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
-
-                                    'Seteo el cursor.
-                                    Me.Cursor = Cursors.WaitCursor
-
-                                    'Abro el form de datos de facturacion.
-                                    frmFacturar.id_Venta = id_Venta
-                                    frmFacturar.Monto = MontoTotal
-                                    frmFacturar.Descuento = Descuento
-                                    frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
-                                    frmFacturar.TipoPago = TipoPagoControlador
-                                    Funciones.ControlInstancia(frmFacturar).ShowDialog()
-
-                                    'Seteo el cursor.
-                                    Me.Cursor = Cursors.Arrow
-                                Else
-                                    Facturar = False
-                                End If
-                            End If
-
-                            'Si el tipo de pago es cheque abro la ventana para cargar ingresar el cheque
-                            If TipoPago = 4 Then
                                 'Seteo el cursor.
                                 Me.Cursor = Cursors.WaitCursor
 
-                                'Abro el form para cargar el cheque.
-                                Dim frmChequesAlta As frmChequesAlta = New frmChequesAlta()
-                                frmChequesAlta.Facturado = Facturar
-                                Funciones.ControlInstancia(frmChequesAlta).ShowDialog()
+                                'Abro el form de datos de facturacion.
+                                frmFacturar.id_Venta = id_Venta
+                                frmFacturar.id_Cliente = id_Cliente
+                                frmFacturar.Monto = MontoTotal
+                                frmFacturar.Descuento = Descuento
+                                frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
+                                frmFacturar.TipoPago = TipoPagoControlador
+                                Funciones.ControlInstancia(frmFacturar).ShowDialog()
 
                                 'Seteo el cursor.
                                 Me.Cursor = Cursors.Arrow
                             End If
-
                         Else
                             'Muestro Mensaje.
                             MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)

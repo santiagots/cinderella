@@ -87,7 +87,9 @@
     <Compile Include="NegAdelantos.vb" />
     <Compile Include="NegAdicionales.vb" />
     <Compile Include="NegAromas.vb" />
+    <Compile Include="NegBanco.vb" />
     <Compile Include="NegCajaInicial.vb" />
+    <Compile Include="NegCheque.vb" />
     <Compile Include="NegClientes.vb" />
     <Compile Include="NegColores.vb" />
     <Compile Include="NegComisiones.vb" />

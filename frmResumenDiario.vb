@@ -290,13 +290,9 @@
             Dim NegDevolucion As Negocio.NegDevolucion = New Negocio.NegDevolucion()
             Dim DevolucionesEfectivo As Double = NegDevolucion.TotalDevolucionesEfectivo(id_Sucursal, Fecha)
 
-            Ingresos = VentasEfectivo + Sobrante + entCaja2.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
-            Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + IngresoCajaFuerte + DevolucionesEfectivo
-            Saldo = Ingresos - Egresos
+            Saldo = NegMov.ConsultaSaldo(id_Sucursal, Fecha)
 
-            'Resto el pendiente de autorizar para el que Saldo de este dia lo contemple
-            'No lo resto de la variable saldo para que este concepto no forme parte del valor del cierre de la caja
-            lbl_Saldo.Text = "$ " & Format(CType((Saldo - PendienteAutorizar), Decimal), "###0.00") & ".-"
+            lbl_Saldo.Text = "$ " & Format(CType((Saldo), Decimal), "###0.00") & ".-"
             If Saldo < 0 Then
                 lbl_Saldo.ForeColor = Color.Red
             Else
@@ -310,7 +306,9 @@
             DisponibleEfectivo = Saldo - PendienteAutorizar + CajaFuerteTotal
 
             lbl_DispoEfect.Text = "$ " & Format(CType((DisponibleEfectivo), Decimal), "###0.00") & ".-"
-            lbl_DispoCheq.Text = "$ " & Format(CType((VentasCheque), Decimal), "###0.00") & ".-"
+
+            Dim TotalDisponibleCheques As Double = Negocio.NegCheque.TraerCheques(id_Sucursal).Where(Function(x) x.Estado <> Entidades.ChequeEstado.Salido).Sum(Function(x) x.Importe)
+            lbl_DispoCheq.Text = "$ " & Format(CType((TotalDisponibleCheques), Decimal), "###0.00") & ".-"
 
             If DisponibleEfectivo < 0 Then
                 lbl_DispoEfect.ForeColor = Color.Red

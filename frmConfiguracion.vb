@@ -54,7 +54,9 @@ Public Class frmConfiguracion
         txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
 
         'Comprobacion de notificaciones.
-        Cb_Segundos.SelectedItem = CStr(CInt((My.Settings("TemporizadorNotificacion") / 1000)))
+        Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
+        Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
+        Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
 
         'Comprobacion de internet.
         Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
@@ -192,8 +194,11 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If Cb_Segundos.SelectedItem IsNot Nothing Then
-                My.Settings.TemporizadorNotificacion = (Cb_Segundos.SelectedItem * 10000)
+            If Cb_TiempoComprobacionMensajes.SelectedItem IsNot Nothing AndAlso Cb_TiempoComprobacionMovimientos.SelectedItem IsNot Nothing AndAlso Cb_TiempoComprobacionCheques.SelectedItem IsNot Nothing Then
+                My.Settings.TemporizadorMensajes = (Cb_TiempoComprobacionMensajes.SelectedItem * 60000)
+                My.Settings.TemporizadorMovimientos = (Cb_TiempoComprobacionMovimientos.SelectedItem * 60000)
+                My.Settings.TemporizadorCheques = (Cb_TiempoComprobacionCheques.SelectedItem * 60000)
+
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else

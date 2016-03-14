@@ -343,6 +343,8 @@ Public Class NegMovimientos
                 .AddWithValue("@Descripcion", eRetiro.Descripcion)
                 .AddWithValue("@Encargado", eRetiro.Encargado)
                 .AddWithValue("@Persona", eRetiro.Persona)
+                .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
+                .AddWithValue("@id_Cheque", eRetiro.IdCheque)
                 .AddWithValue("@Fecha", eRetiro.Fecha)
             End With
 
@@ -388,6 +390,8 @@ Public Class NegMovimientos
                 .AddWithValue("@Descripcion", eRetiro.Descripcion)
                 .AddWithValue("@Encargado", eRetiro.Encargado)
                 .AddWithValue("@Persona", eRetiro.Persona)
+                .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
+                .AddWithValue("@id_Cheque", eRetiro.IdCheque)
                 .AddWithValue("@Fecha", eRetiro.Fecha)
             End With
 

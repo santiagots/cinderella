@@ -31,6 +31,7 @@ Public Class NegSucursales
             entSucursal.ComisionVendedorFeriado = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Vendedor_Feriado"))
             entSucursal.ComisionEncargadoMayor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado_Mayor"))
             entSucursal.ComisionVendedorMayor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Vendedor_Mayor"))
+            entSucursal.CodigoVenta = dsSucursal.Tables(0).Rows(0).Item("Codigo_Venta").ToString
         End If
         Return entSucursal
     End Function
@@ -60,6 +61,7 @@ Public Class NegSucursales
                 .AddWithValue("@ComisionEncargadoMayor", esucursales.ComisionEncargadoMayor)
                 .AddWithValue("@CodigoPostal", esucursales.Codigo_Postal)
                 .AddWithValue("@Telefono", esucursales.Telefono)
+                .AddWithValue("@CodigoVenta", esucursales.CodigoVenta)
                 .AddWithValue("@Habilitado", esucursales.Habilitado)
             End With
 
@@ -106,6 +108,7 @@ Public Class NegSucursales
                 .AddWithValue("@ComisionVendedorMayor", esucursales.ComisionVendedorMayor)
                 .AddWithValue("@ComisionEncargadoMayor", esucursales.ComisionEncargadoMayor)
                 .AddWithValue("@Telefono", esucursales.Telefono)
+                .AddWithValue("@CodigoVenta", esucursales.CodigoVenta)
                 .AddWithValue("@Habilitado", esucursales.Habilitado)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)

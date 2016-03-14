@@ -137,4 +137,15 @@
             Fecha_ = value
         End Set
     End Property
+
+    Private DiferenciaPagoCheque_ As Double
+    Public Property DiferenciaPagoCheque() As Double
+        Get
+            Return DiferenciaPagoCheque_
+        End Get
+        Set(ByVal value As Double)
+            DiferenciaPagoCheque_ = value
+        End Set
+    End Property
+
 End Class

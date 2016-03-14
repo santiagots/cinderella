@@ -144,4 +144,15 @@
         End Set
     End Property
 
+    Private codigoVenta_ As String
+    Public Property CodigoVenta() As String
+        Get
+            Return codigoVenta_
+        End Get
+        Set(ByVal value As String)
+            codigoVenta_ = value
+        End Set
+    End Property
+
+
 End Class

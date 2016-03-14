@@ -1382,14 +1382,14 @@ Public Class NegProductos
             If (DatosConError.Rows.Count = 0) Then
                 Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos y se han eliminado {2} productos.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count)
             Else
-                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos, se han eliminado {2} productos y se encontrar {3} productos con errores para ser inportados.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count, DatosConError.Rows.Count)
+                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos, se han eliminado {2} productos y se encontrar {3} productos con errores para ser importados.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count, DatosConError.Rows.Count)
             End If
 
         Else
             If (DatosConError.Rows.Count = 0) Then
                 Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
             Else
-                Return String.Format("Se encontrar {0} productos con errores para ser inportados.", DatosConError.Rows.Count)
+                Return String.Format("Se encontrar {0} productos con errores para ser importados.", DatosConError.Rows.Count)
             End If
         End If
     End Function

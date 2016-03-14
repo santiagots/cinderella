@@ -160,6 +160,24 @@
         End If
     End Sub
 
+    'valido que ingrese el codigo venta. - MODIF.
+    Private Sub txt_CodigoVenta_mod_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txt_CodigoVenta_mod.Validating
+        If txt_CodigoVenta_mod.Text = "" Then
+            ErroresSucursal.SetError(txt_CodigoVenta_mod, "Debe completar el código de venta.")
+        Else
+            ErroresSucursal.SetError(txt_CodigoVenta_mod, Nothing)
+        End If
+    End Sub
+
+    'valido que ingrese el codigo venta.
+    Private Sub txt_CodigoVenta_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txt_CodigoVenta.Validating
+        If txt_CodigoVenta.Text = "" Then
+            ErroresSucursal.SetError(txt_CodigoVenta, "Debe completar el código de venta.")
+        Else
+            ErroresSucursal.SetError(txt_CodigoVenta, Nothing)
+        End If
+    End Sub
+
     'valido que ingrese la comisión. - MODIF.
     Private Sub txt_ComisionVendedor_mod_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles txt_ComisionVendedor_mod.Validating
         If txt_ComisionVendedor_mod.Text = "" Then
@@ -367,6 +385,24 @@
         End If
     End Sub
 
+    'valido que el codigo venta sea formato alfavetico. - MODIF.
+    Private Sub txt_CodigoVenta_mod_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_CodigoVenta_mod.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloLetras(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    'valido que el codigo venta sea formato alfavetico.
+    Private Sub txt_CodigoVenta_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_CodigoVenta.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloLetras(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
 #End Region
 
 #Region "Región de Eventos"
@@ -515,6 +551,7 @@
             txt_ComisionVendedorFeriado_mod.Text = ESucursales.ComisionVendedorFeriado
             txt_ComisionEncargadoMayor_mod.Text = ESucursales.ComisionEncargadoMayor
             txt_ComisionVendedorMayor_mod.Text = ESucursales.ComisionVendedorMayor
+            txt_CodigoVenta_mod.Text = ESucursales.CodigoVenta
 
             'Cargo el combo de Provincias
             Dim dsProvincias As New DataSet
@@ -696,7 +733,7 @@
 
     'Boton Agregar Sucursal.
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
-        If txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or txt_ComisionEncargado.Text = "" Or txt_ComisionEncargadoFeriado.Text = "" Or txt_ComisionVendedor.Text = "" Or txt_ComisionVendedorFeriado.Text = "" Or txt_ComisionEncargadoMayor.Text = "" Or txt_ComisionVendedorMayor.Text = "" Then
+        If txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or txt_ComisionEncargado.Text = "" Or txt_ComisionEncargadoFeriado.Text = "" Or txt_ComisionVendedor.Text = "" Or txt_ComisionVendedorFeriado.Text = "" Or txt_ComisionEncargadoMayor.Text = "" Or txt_ComisionVendedorMayor.Text = "" Or txt_CodigoVenta.Text = "" Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -717,6 +754,7 @@
                 ESucursales.ComisionEncargadoFeriado = Trim(txt_ComisionEncargadoFeriado.Text)
                 ESucursales.ComisionVendedorMayor = Trim(txt_ComisionVendedorMayor.Text)
                 ESucursales.ComisionEncargadoMayor = Trim(txt_ComisionEncargadoMayor.Text)
+                ESucursales.CodigoVenta = Trim(txt_CodigoVenta.Text)
 
                 If chk_Habilitado.Checked = True Then
                     ESucursales.Habilitado = 1
@@ -793,7 +831,7 @@
 
     'Boton Modificar Sucursal.
     Private Sub Btn_Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Modificar.Click
-        If txt_Direccion_mod.Text = "" Or txt_CodigoPostal_mod.Text = "" Or txt_Nombre_mod.Text = "" Or cb_Provincia_mod.SelectedItem Is Nothing Or cb_Distrito_mod.SelectedItem Is Nothing Or cb_Localidad_mod.SelectedItem Is Nothing Or txt_ComisionEncargado_mod.Text = "" Or txt_ComisionEncargadoFeriado_mod.Text = "" Or txt_ComisionVendedor_mod.Text = "" Or txt_ComisionVendedorFeriado_mod.Text = "" Or txt_ComisionVendedorMayor_mod.Text = "" Or txt_ComisionEncargadoMayor_mod.Text = "" Then
+        If txt_Direccion_mod.Text = "" Or txt_CodigoPostal_mod.Text = "" Or txt_Nombre_mod.Text = "" Or cb_Provincia_mod.SelectedItem Is Nothing Or cb_Distrito_mod.SelectedItem Is Nothing Or cb_Localidad_mod.SelectedItem Is Nothing Or txt_ComisionEncargado_mod.Text = "" Or txt_ComisionEncargadoFeriado_mod.Text = "" Or txt_ComisionVendedor_mod.Text = "" Or txt_ComisionVendedorFeriado_mod.Text = "" Or txt_ComisionVendedorMayor_mod.Text = "" Or txt_ComisionEncargadoMayor_mod.Text = "" Or txt_CodigoVenta_mod.Text = "" Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -814,6 +852,7 @@
                 ESucursales.ComisionEncargadoFeriado = Trim(txt_ComisionEncargadoFeriado_mod.Text)
                 ESucursales.ComisionVendedorMayor = Trim(txt_ComisionVendedorMayor_mod.Text)
                 ESucursales.ComisionEncargadoMayor = Trim(txt_ComisionEncargadoMayor_mod.Text)
+                ESucursales.CodigoVenta = Trim(txt_CodigoVenta_mod.Text)
 
                 If chk_Habilitado_mod.Checked = True Then
                     ESucursales.Habilitado = 1
@@ -944,6 +983,7 @@
         txt_ComisionVendedorFeriado.Clear()
         txt_ComisionEncargadoMayor.Clear()
         txt_ComisionVendedorMayor.Clear()
+        txt_CodigoVenta.Clear()
         cb_Provincia.SelectedItem = Nothing
         cb_Localidad.SelectedItem = Nothing
         cb_Distrito.SelectedItem = Nothing
@@ -962,6 +1002,7 @@
         txt_ComisionEncargadoFeriado_mod.Clear()
         txt_ComisionVendedorFeriado_mod.Clear()
         txt_ComisionEncargadoMayor_mod.Clear()
+        txt_CodigoVenta_mod.Clear()
         txt_ComisionVendedorMayor_mod.Clear()
         cb_Provincia_mod.SelectedItem = Nothing
         cb_Localidad_mod.SelectedItem = Nothing

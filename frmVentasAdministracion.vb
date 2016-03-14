@@ -5,6 +5,7 @@
     Dim id_Sucursal As String
     Dim eVentas As New Entidades.Ventas
     Dim Funciones As New Funciones
+    Dim NegErrores As New Negocio.NegManejadorErrores
 
     Dim id_VentaDetalle As Integer = 0
     Dim MontoTotalDetalle As Double = 0
@@ -67,13 +68,12 @@
                 DG_Ventas.DataSource = dsVentas.Tables(0)
                 DG_Ventas.AutoGenerateColumns = False
                 DG_Ventas.ColumnHeadersVisible = True
-                DG_Ventas.Columns("id_Venta").Visible = False
                 DG_Ventas.Columns("Descuento").Visible = False
-                DG_Ventas.Columns("Empleado").DisplayIndex = 1
-                DG_Ventas.Columns("Cliente").DisplayIndex = 2
-                DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-                DG_Ventas.Columns("Fecha").DisplayIndex = 4
-                DG_Ventas.Columns("Anulado").DisplayIndex = 5
+                'DG_Ventas.Columns("Empleado").DisplayIndex = 1
+                'DG_Ventas.Columns("Cliente").DisplayIndex = 2
+                'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+                'DG_Ventas.Columns("Fecha").DisplayIndex = 4
+                'DG_Ventas.Columns("Anulado").DisplayIndex = 5
                 DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
                 DG_Ventas.Columns("NumFactura").DefaultCellStyle.Format = "D5"
@@ -105,16 +105,76 @@
             Dim dsVentas As New DataSet
             dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
             If dsVentas.Tables(0).Rows.Count > 0 Then
+
+                If Not String.IsNullOrEmpty(txtFacturaDesde.Text) Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) If(x("NumeroFactura") Is DBNull.Value, True, Integer.Parse(x("NumeroFactura")) < Integer.Parse(txtFacturaDesde.Text))).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not String.IsNullOrEmpty(txtFacturaHasta.Text) Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) If(x("NumeroFactura") Is DBNull.Value, True, Integer.Parse(x("NumeroFactura")) > Integer.Parse(txtFacturaHasta.Text))).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not String.IsNullOrEmpty(txtMontoDesde.Text) Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Double.Parse(x("MontoTotal")) < Double.Parse(txtMontoDesde.Text)).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not String.IsNullOrEmpty(txtMontoHasta.Text) Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Double.Parse(x("MontoTotal")) > Double.Parse(txtMontoHasta.Text)).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not ChkMarcaSinFacturar.Checked Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = -1).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not ChkMarcaTicket.Checked Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 0).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not ChkMarcaElectronica.Checked Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 2).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not ChkMarcaManual.Checked Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 1).ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not ChkAnuladoSi.Checked Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("Anulado") = "SI").ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
+                If Not ChkAnuladoNo.Checked Then
+                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("Anulado") = "NO").ToList()
+                        dsVentas.Tables(0).Rows.Remove(venta)
+                    Next
+                End If
+
                 DG_Ventas.DataSource = dsVentas.Tables(0)
                 DG_Ventas.AutoGenerateColumns = False
                 DG_Ventas.ColumnHeadersVisible = True
-                DG_Ventas.Columns("id_Venta").Visible = False
                 DG_Ventas.Columns("Descuento").Visible = False
-                DG_Ventas.Columns("Empleado").DisplayIndex = 1
-                DG_Ventas.Columns("Cliente").DisplayIndex = 2
-                DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-                DG_Ventas.Columns("Fecha").DisplayIndex = 4
-                DG_Ventas.Columns("Anulado").DisplayIndex = 5
+                'DG_Ventas.Columns("Empleado").DisplayIndex = 1
+                'DG_Ventas.Columns("Cliente").DisplayIndex = 2
+                'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+                'DG_Ventas.Columns("Fecha").DisplayIndex = 4
+                'DG_Ventas.Columns("Anulado").DisplayIndex = 5
                 DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
                 DG_Ventas.Refresh()
@@ -348,16 +408,77 @@
         dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
 
         If dsVentas.Tables(0).Rows.Count > 0 Then
+
+            If Not String.IsNullOrEmpty(txtFacturaDesde.Text) Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) If(x("NumeroFactura") Is DBNull.Value, True, Integer.Parse(x("NumeroFactura")) < Integer.Parse(txtFacturaDesde.Text))).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not String.IsNullOrEmpty(txtFacturaHasta.Text) Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) If(x("NumeroFactura") Is DBNull.Value, True, Integer.Parse(x("NumeroFactura")) > Integer.Parse(txtFacturaHasta.Text))).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not String.IsNullOrEmpty(txtMontoDesde.Text) Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Double.Parse(x("MontoTotal")) < Double.Parse(txtMontoDesde.Text)).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not String.IsNullOrEmpty(txtMontoHasta.Text) Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Double.Parse(x("MontoTotal")) > Double.Parse(txtMontoHasta.Text)).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not ChkMarcaSinFacturar.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = -1).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not ChkMarcaTicket.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 0).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not ChkMarcaElectronica.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 2).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not ChkMarcaManual.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 1).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not ChkAnuladoSi.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("Anulado") = "SI").ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not ChkAnuladoNo.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("Anulado") = "NO").ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
             DG_Ventas.DataSource = dsVentas.Tables(0)
             DG_Ventas.AutoGenerateColumns = False
             DG_Ventas.ColumnHeadersVisible = True
             DG_Ventas.Columns("id_Venta").Visible = False
             DG_Ventas.Columns("Descuento").Visible = False
-            DG_Ventas.Columns("Empleado").DisplayIndex = 1
-            DG_Ventas.Columns("Cliente").DisplayIndex = 2
-            DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-            DG_Ventas.Columns("Fecha").DisplayIndex = 4
-            DG_Ventas.Columns("Anulado").DisplayIndex = 5
+            'DG_Ventas.Columns("Empleado").DisplayIndex = 1
+            'DG_Ventas.Columns("Cliente").DisplayIndex = 2
+            'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+            'DG_Ventas.Columns("Fecha").DisplayIndex = 4
+            'DG_Ventas.Columns("Anulado").DisplayIndex = 5
             DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Ventas.Refresh()
@@ -390,6 +511,18 @@
         FDesde.Value = Now.Date.AddDays(-30)
         FHasta.Value = Now.Date
 
+        'Limpio los filtros
+        txtFacturaDesde.Clear()
+        txtFacturaHasta.Clear()
+        txtMontoDesde.Clear()
+        txtMontoHasta.Clear()
+        ChkAnuladoNo.Checked = True
+        ChkAnuladoSi.Checked = True
+        ChkMarcaElectronica.Checked = True
+        ChkMarcaManual.Checked = True
+        ChkMarcaSinFacturar.Checked = True
+        ChkMarcaTicket.Checked = True
+
         'Cargo el datagrid
         Dim dsVentas As New DataSet
         dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
@@ -400,11 +533,11 @@
             DG_Ventas.ColumnHeadersVisible = True
             DG_Ventas.Columns("id_Venta").Visible = False
             DG_Ventas.Columns("Descuento").Visible = False
-            DG_Ventas.Columns("Empleado").DisplayIndex = 1
-            DG_Ventas.Columns("Cliente").DisplayIndex = 2
-            DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-            DG_Ventas.Columns("Fecha").DisplayIndex = 4
-            DG_Ventas.Columns("Anulado").DisplayIndex = 5
+            'DG_Ventas.Columns("Empleado").DisplayIndex = 1
+            'DG_Ventas.Columns("Cliente").DisplayIndex = 2
+            'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
+            'DG_Ventas.Columns("Fecha").DisplayIndex = 4
+            'DG_Ventas.Columns("Anulado").DisplayIndex = 5
             DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Ventas.Refresh()
@@ -439,6 +572,22 @@
     Private Sub DG_Ventas_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Ventas.CellFormatting
         If (e.ColumnIndex = DG_Ventas.Columns("NumFactura").Index And Not e.Value Is DBNull.Value) Then
             e.Value = e.Value.ToString().PadLeft(10, "0")
+        End If
+    End Sub
+
+    Private Sub txtImporteDesde_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtFacturaDesde.KeyPress, txtFacturaHasta.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txtMontoHasta_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtMontoHasta.KeyPress, txtMontoDesde.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
         End If
     End Sub
 End Class

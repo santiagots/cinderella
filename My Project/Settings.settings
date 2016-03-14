@@ -41,8 +41,8 @@
     <Setting Name="TemporizadorInternet" Type="System.String" Scope="User">
       <Value Profile="(Default)">25000</Value>
     </Setting>
-    <Setting Name="TemporizadorNotificacion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">30000</Value>
+    <Setting Name="TemporizadorMensajes" Type="System.String" Scope="User">
+      <Value Profile="(Default)">300000</Value>
     </Setting>
     <Setting Name="Internet" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -80,6 +80,12 @@
     </Setting>
     <Setting Name="ConexionControladora" Type="System.String" Scope="User">
       <Value Profile="(Default)">USB</Value>
+    </Setting>
+    <Setting Name="TemporizadorMovimientos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">300000</Value>
+    </Setting>
+    <Setting Name="TemporizadorCheques" Type="System.String" Scope="User">
+      <Value Profile="(Default)">300000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

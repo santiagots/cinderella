@@ -11,6 +11,10 @@ Public Class MDIContenedor
     Dim negMovimiento As New Negocio.NegMovimientos
     Dim NegCaja As New Negocio.NegCajaInicial
 
+    Dim tiempoAcumuladoNotificaciones As Integer = 0
+    Dim tiempoAcumuladoMensajes As Integer = 0
+    Dim tiempoAcumuladoCheques As Integer = 0
+
     Private Sub MDIContenedor_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If VariablesGlobales.Notificaciones > 0 Then 'Si posee notificaciones pendientes.
             If MessageBox.Show("¿Posee " & VariablesGlobales.Notificaciones & " notificacion(es) pendiente(s). ¿Está seguro de que desea salir de la aplicación?", "Sistema de Gestión " & My.Settings("Empresa"), _
@@ -335,7 +339,6 @@ Public Class MDIContenedor
 
             'Seteo los temporizadores.
             Temporizador.Interval = My.Settings.TemporizadorInternet
-            TemporizadorActualizaciones.Interval = My.Settings.TemporizadorNotificacion
 
             'seteo el icono.
             Dim icono As System.Drawing.Icon
@@ -1007,8 +1010,34 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub TemporizadorActualizaciones_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TemporizadorActualizaciones.Tick
-        Funciones.ActualizarNotificaciones("Full")
-        Funciones.ActualizarMensajes()
+
+        'Acumulo el tiempo transcurrido
+        tiempoAcumuladoNotificaciones += TemporizadorActualizaciones.Interval
+        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de movimientos
+        If (tiempoAcumuladoNotificaciones >= Integer.Parse(My.Settings("TemporizadorMovimientos"))) Then
+            'Muestro la alerta de movimientos y reinicio el acumulador de tiempo
+            Funciones.ActualizarNotificaciones("Full")
+            tiempoAcumuladoNotificaciones = 0
+        End If
+
+        'Acumulo el tiempo transcurrido
+        tiempoAcumuladoMensajes += TemporizadorActualizaciones.Interval
+        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de mensajes
+        If (tiempoAcumuladoMensajes >= Integer.Parse(My.Settings("TemporizadorMensajes"))) Then
+            'Muestro la alerta de mensajes y reinicio el acumulador de tiempo
+            Funciones.ActualizarMensajes()
+            tiempoAcumuladoMensajes = 0
+        End If
+
+        'Acumulo el tiempo transcurrido
+        tiempoAcumuladoCheques += TemporizadorActualizaciones.Interval
+        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de cheques
+        If (tiempoAcumuladoCheques >= Integer.Parse(My.Settings("TemporizadorCheques"))) Then
+            'Muestro la alerta de cheques y reinicio el acumulador de tiempo
+            Funciones.ActualizarChequesVencer()
+            tiempoAcumuladoCheques = 0
+        End If
+
     End Sub
 
     Private Sub Menu_Movimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Menu_Movimientos.Click
@@ -1234,10 +1263,38 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AdministracionDevolucionesMenu_Click(sender As Object, e As EventArgs) Handles AdministracionDevolucionesMenu.Click
-        'para administrar ventas no es necesario esta online
-        Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmDevolucionesAdministracion).MdiParent = Me
-        Funciones.ControlInstancia(frmDevolucionesAdministracion).Show()
-        Me.Cursor = Cursors.Arrow
+        'para administrar devoluciones es necesario esta online
+        If (VariablesGlobales.HayConexion = False) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmDevolucionesAdministracion).MdiParent = Me
+            Funciones.ControlInstancia(frmDevolucionesAdministracion).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub AdministraciónToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles AdministraciónToolStripMenuItem2.Click, Menu_ChequesVencer.Click
+        'para administrar cheques es necesario esta online
+        If (VariablesGlobales.HayConexion = False) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmChequesAdministracion).MdiParent = Me
+            Funciones.ControlInstancia(frmChequesAdministracion).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub AltaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltaToolStripMenuItem.Click
+        'para agregar cheques es necesario esta online
+        If (VariablesGlobales.HayConexion = False) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmChequesAlta).MdiParent = Me
+            Funciones.ControlInstancia(frmChequesAlta).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
     End Sub
 End Class

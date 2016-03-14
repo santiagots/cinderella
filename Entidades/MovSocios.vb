@@ -72,4 +72,25 @@ Public Class MovSocios
             Fecha_ = value
         End Set
     End Property
+
+    Private _idTipoPago As String
+    Public Property IdTipoPago() As String
+        Get
+            Return _idTipoPago
+        End Get
+        Set(ByVal value As String)
+            _idTipoPago = value
+        End Set
+    End Property
+
+    Private _IdCheque As Integer
+    Public Property IdCheque() As Integer
+        Get
+            Return _IdCheque
+        End Get
+        Set(ByVal value As Integer)
+            _IdCheque = value
+        End Set
+    End Property
+
 End Class

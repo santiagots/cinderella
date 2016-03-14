@@ -1,6 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Net.Mail
 Imports System.Media
+Imports Entidades
 Public Class Funciones
 
     Public Property ControlInstancia(ByVal formulario As Form) As Form
@@ -123,6 +124,43 @@ Public Class Funciones
             MDIContenedor.Menu_Movimientos.ToolTipText = "No se pudo comprobar las Notificaciones."
             MDIContenedor.Menu_Movimientos.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
             VariablesGlobales.Notificaciones = 0
+        End If
+    End Sub
+
+    Sub ActualizarChequesVencer()
+        If My.Settings.Internet Then 'Internet Permitido.
+            'Si hay conexion compruebo los cheques
+            If VariablesGlobales.HayConexion Then
+                Dim ChequesVencer As List(Of Cheque) = Negocio.NegCheque.TraerCheques(My.Settings.Sucursal).Where(Function(x) x.Estado <> ChequeEstado.Salido AndAlso x.FechaVencimiento.Date >= Date.Now.Date AndAlso x.FechaVencimiento.Date < Date.Now.AddDays(7).Date).ToList()
+                If ChequesVencer.Count >= 1 Then
+                    MDIContenedor.Menu_ChequesVencer.Text = "(" & ChequesVencer.Count & ") Cheques por vencer"
+                    MDIContenedor.Menu_ChequesVencer.ToolTipText = "Hace click aquí si deseas ir al administrador de cheques."
+                    MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
+
+                    'Form Notify.
+                    ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
+                    frmNotificaciones.lblConexion.Text = "(" & ChequesVencer.Count & ") Cheques por vencer."
+                    frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Mi_Cuenta_Salir
+                    frmNotificaciones.Text = "(" & ChequesVencer.Count & ") Cheques por vencer en los proximos 7 días."
+
+                    ControlInstancia(frmNotificaciones).Show()
+
+                    'Sonidito.
+                    SystemSounds.Asterisk.Play()
+
+                Else
+                    MDIContenedor.Menu_ChequesVencer.Text = "(0) Cheques por vencer"
+                    MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
+                End If
+            Else 'Si no hay conexion no hago nada.
+                MDIContenedor.Menu_ChequesVencer.Text = "(-) Cheques por vencer"
+                MDIContenedor.Menu_ChequesVencer.ToolTipText = "No se pudo comprobar los Mensajes"
+                MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
+            End If
+        Else
+            MDIContenedor.Menu_Mensajes.Text = "(-) Cheques por vencer"
+            MDIContenedor.Menu_Mensajes.ToolTipText = "No se pudo comprobar los Mensajes"
+            MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
         End If
     End Sub
 
@@ -368,4 +406,5 @@ Public Class Funciones
         Next
         Return dt
     End Function
+
 End Class

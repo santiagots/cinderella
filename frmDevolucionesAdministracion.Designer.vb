@@ -24,9 +24,9 @@ Partial Class frmDevolucionesAdministracion
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDevolucionesAdministracion))
         Me.TabVentas = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -39,8 +39,17 @@ Partial Class frmDevolucionesAdministracion
         Me.FHasta = New System.Windows.Forms.DateTimePicker()
         Me.FDesde = New System.Windows.Forms.DateTimePicker()
         Me.DG_Devolucion = New System.Windows.Forms.DataGridView()
+        Me.id_Devolucion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoNotaCredito = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.NumeroNotaCredito = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TbDetalle = New System.Windows.Forms.TabPage()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
+        Me.BtnEmitirFactura = New System.Windows.Forms.Button()
         Me.lblEncargado = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.lblSubtotal = New System.Windows.Forms.Label()
@@ -78,15 +87,6 @@ Partial Class frmDevolucionesAdministracion
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.id_Devolucion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoNotaCredito = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.NumeroNotaCredito = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.BtnEmitirFactura = New System.Windows.Forms.Button()
         Me.TabVentas.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -151,7 +151,7 @@ Partial Class frmDevolucionesAdministracion
         Me.GroupBox1.Size = New System.Drawing.Size(782, 93)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Filtrar ventas por fecha."
+        Me.GroupBox1.Text = "Filtrar Devoluciones por fecha."
         '
         'btn_Restablecer
         '
@@ -241,6 +241,73 @@ Partial Class frmDevolucionesAdministracion
         Me.DG_Devolucion.Size = New System.Drawing.Size(782, 402)
         Me.DG_Devolucion.TabIndex = 0
         '
+        'id_Devolucion
+        '
+        Me.id_Devolucion.DataPropertyName = "id_Devolucion"
+        Me.id_Devolucion.FillWeight = 17.30346!
+        Me.id_Devolucion.HeaderText = "ID"
+        Me.id_Devolucion.MaxInputLength = 10
+        Me.id_Devolucion.Name = "id_Devolucion"
+        Me.id_Devolucion.ReadOnly = True
+        '
+        'Empleado
+        '
+        Me.Empleado.DataPropertyName = "Empleado"
+        Me.Empleado.FillWeight = 162.2804!
+        Me.Empleado.HeaderText = "Empleado"
+        Me.Empleado.Name = "Empleado"
+        Me.Empleado.ReadOnly = True
+        '
+        'Cliente
+        '
+        Me.Cliente.DataPropertyName = "Cliente"
+        Me.Cliente.FillWeight = 128.2283!
+        Me.Cliente.HeaderText = "Cliente"
+        Me.Cliente.Name = "Cliente"
+        Me.Cliente.ReadOnly = True
+        '
+        'MontoTotal
+        '
+        Me.MontoTotal.DataPropertyName = "MontoTotal"
+        Me.MontoTotal.FillWeight = 141.8023!
+        Me.MontoTotal.HeaderText = "Monto Total"
+        Me.MontoTotal.Name = "MontoTotal"
+        Me.MontoTotal.ReadOnly = True
+        '
+        'Anulado
+        '
+        Me.Anulado.DataPropertyName = "Anulado"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Anulado.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Anulado.FillWeight = 49.88074!
+        Me.Anulado.HeaderText = "Anulado"
+        Me.Anulado.MaxInputLength = 10
+        Me.Anulado.Name = "Anulado"
+        Me.Anulado.ReadOnly = True
+        '
+        'Fecha
+        '
+        Me.Fecha.DataPropertyName = "Fecha"
+        Me.Fecha.FillWeight = 129.4388!
+        Me.Fecha.HeaderText = "Fecha"
+        Me.Fecha.Name = "Fecha"
+        Me.Fecha.ReadOnly = True
+        '
+        'TipoNotaCredito
+        '
+        Me.TipoNotaCredito.DataPropertyName = "TipoRecibo"
+        Me.TipoNotaCredito.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
+        Me.TipoNotaCredito.HeaderText = "Nota Crédito"
+        Me.TipoNotaCredito.Name = "TipoNotaCredito"
+        Me.TipoNotaCredito.ReadOnly = True
+        '
+        'NumeroNotaCredito
+        '
+        Me.NumeroNotaCredito.DataPropertyName = "NumeroNotaCredito"
+        Me.NumeroNotaCredito.HeaderText = "Numero"
+        Me.NumeroNotaCredito.Name = "NumeroNotaCredito"
+        Me.NumeroNotaCredito.ReadOnly = True
+        '
         'TbDetalle
         '
         Me.TbDetalle.Controls.Add(Me.lblcontenedor)
@@ -292,6 +359,19 @@ Partial Class frmDevolucionesAdministracion
         Me.lblcontenedor.TabIndex = 0
         Me.lblcontenedor.TabStop = False
         Me.lblcontenedor.Text = "Información de la devolución realizada."
+        '
+        'BtnEmitirFactura
+        '
+        Me.BtnEmitirFactura.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnEmitirFactura.FlatAppearance.BorderSize = 0
+        Me.BtnEmitirFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnEmitirFactura.Image = Global.SistemaCinderella.My.Resources.Recursos.TicketPequeño
+        Me.BtnEmitirFactura.Location = New System.Drawing.Point(268, 363)
+        Me.BtnEmitirFactura.Name = "BtnEmitirFactura"
+        Me.BtnEmitirFactura.Size = New System.Drawing.Size(18, 18)
+        Me.BtnEmitirFactura.TabIndex = 38
+        Me.BtnEmitirFactura.Tag = "Ver Detalle"
+        Me.BtnEmitirFactura.UseVisualStyleBackColor = True
         '
         'lblEncargado
         '
@@ -685,86 +765,6 @@ Partial Class frmDevolucionesAdministracion
         Me.Label2.Size = New System.Drawing.Size(100, 15)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Tipo de Pago :"
-        '
-        'id_Devolucion
-        '
-        Me.id_Devolucion.DataPropertyName = "id_Devolucion"
-        Me.id_Devolucion.FillWeight = 17.30346!
-        Me.id_Devolucion.HeaderText = "ID"
-        Me.id_Devolucion.MaxInputLength = 10
-        Me.id_Devolucion.Name = "id_Devolucion"
-        Me.id_Devolucion.ReadOnly = True
-        '
-        'Empleado
-        '
-        Me.Empleado.DataPropertyName = "Empleado"
-        Me.Empleado.FillWeight = 162.2804!
-        Me.Empleado.HeaderText = "Empleado"
-        Me.Empleado.Name = "Empleado"
-        Me.Empleado.ReadOnly = True
-        '
-        'Cliente
-        '
-        Me.Cliente.DataPropertyName = "Cliente"
-        Me.Cliente.FillWeight = 128.2283!
-        Me.Cliente.HeaderText = "Cliente"
-        Me.Cliente.Name = "Cliente"
-        Me.Cliente.ReadOnly = True
-        '
-        'MontoTotal
-        '
-        Me.MontoTotal.DataPropertyName = "MontoTotal"
-        Me.MontoTotal.FillWeight = 141.8023!
-        Me.MontoTotal.HeaderText = "Monto Total"
-        Me.MontoTotal.Name = "MontoTotal"
-        Me.MontoTotal.ReadOnly = True
-        '
-        'Anulado
-        '
-        Me.Anulado.DataPropertyName = "Anulado"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Anulado.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Anulado.FillWeight = 49.88074!
-        Me.Anulado.HeaderText = "Anulado"
-        Me.Anulado.MaxInputLength = 10
-        Me.Anulado.Name = "Anulado"
-        Me.Anulado.ReadOnly = True
-        '
-        'Fecha
-        '
-        Me.Fecha.DataPropertyName = "Fecha"
-        Me.Fecha.FillWeight = 129.4388!
-        Me.Fecha.HeaderText = "Fecha"
-        Me.Fecha.Name = "Fecha"
-        Me.Fecha.ReadOnly = True
-        '
-        'TipoNotaCredito
-        '
-        Me.TipoNotaCredito.DataPropertyName = "TipoRecibo"
-        Me.TipoNotaCredito.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
-        Me.TipoNotaCredito.HeaderText = "Nota Crédito"
-        Me.TipoNotaCredito.Name = "TipoNotaCredito"
-        Me.TipoNotaCredito.ReadOnly = True
-        '
-        'NumeroNotaCredito
-        '
-        Me.NumeroNotaCredito.DataPropertyName = "NumeroNotaCredito"
-        Me.NumeroNotaCredito.HeaderText = "Numero"
-        Me.NumeroNotaCredito.Name = "NumeroNotaCredito"
-        Me.NumeroNotaCredito.ReadOnly = True
-        '
-        'BtnEmitirFactura
-        '
-        Me.BtnEmitirFactura.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnEmitirFactura.FlatAppearance.BorderSize = 0
-        Me.BtnEmitirFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnEmitirFactura.Image = Global.SistemaCinderella.My.Resources.Recursos.TicketPequeño
-        Me.BtnEmitirFactura.Location = New System.Drawing.Point(268, 363)
-        Me.BtnEmitirFactura.Name = "BtnEmitirFactura"
-        Me.BtnEmitirFactura.Size = New System.Drawing.Size(18, 18)
-        Me.BtnEmitirFactura.TabIndex = 38
-        Me.BtnEmitirFactura.Tag = "Ver Detalle"
-        Me.BtnEmitirFactura.UseVisualStyleBackColor = True
         '
         'frmDevolucionesAdministracion
         '
