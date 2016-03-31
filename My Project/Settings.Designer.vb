@@ -344,6 +344,30 @@ Namespace My
                 Me("TemporizadorCheques") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("8088")>  _
+        Public Property PuertoHost() As String
+            Get
+                Return CType(Me("PuertoHost"),String)
+            End Get
+            Set
+                Me("PuertoHost") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("127.0.0.1")>  _
+        Public Property IpHost() As String
+            Get
+                Return CType(Me("IpHost"),String)
+            End Get
+            Set
+                Me("IpHost") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

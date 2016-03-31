@@ -87,5 +87,11 @@
     <Setting Name="TemporizadorCheques" Type="System.String" Scope="User">
       <Value Profile="(Default)">300000</Value>
     </Setting>
+    <Setting Name="PuertoHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">8088</Value>
+    </Setting>
+    <Setting Name="IpHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

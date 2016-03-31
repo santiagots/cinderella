@@ -110,6 +110,7 @@
     <Compile Include="NegMercaderia.vb" />
     <Compile Include="NegMovimientos.vb" />
     <Compile Include="NegNotaCredito.vb" />
+    <Compile Include="NegNotaPedido.vb" />
     <Compile Include="NegPatentes.vb" />
     <Compile Include="NegPerfiles.vb" />
     <Compile Include="NegPlanillaSucursales.vb" />

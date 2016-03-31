@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Configuration
 Imports System.Resources
+Imports Servicios
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -331,6 +332,14 @@ Public Class MDIContenedor
             'Cursor
             Me.Cursor = Cursors.WaitCursor
 
+            Try
+                'Inicio los servicios WCF
+                Dim host As Host = New Host(My.Settings.IpHost, My.Settings.PuertoHost)
+                host.Start()
+            Catch ex As Exception
+                MessageBox.Show("Se produjo un error al iniciar el Host de servicios para los dispositivos móviles. Por favor, Comuníqueselo al administrador.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+            
             'Setea el nombre de la aplicacion.
             Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
 

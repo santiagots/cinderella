@@ -66,6 +66,10 @@ Public Class frmConfiguracion
             Rb2.Checked = False
         End If
 
+        'cargo los valoes del tab Host
+        txtIPHost.Text = My.Settings.IpHost
+        txtPuertoHost.Text = My.Settings.PuertoHost
+
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
     End Sub
@@ -273,6 +277,35 @@ Public Class frmConfiguracion
     End Sub
 
     Private Sub txt_PuntoVentaElectronica_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaElectronica.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub btnModificarHost_Click(sender As Object, e As EventArgs) Handles btnModificarHost.Click
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+
+        Try
+            If txtPuertoHost.Text <> "" And txtIPHost.Text <> "" Then
+                My.Settings.IpHost = Trim(txtIPHost.Text)
+                My.Settings.PuertoHost = Trim(txtPuertoHost.Text)
+                My.Settings.Save()
+                MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub txtPuertoHost_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtPuertoHost.KeyPress
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
         If KeyAscii = 0 Then

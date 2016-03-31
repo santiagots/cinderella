@@ -44,6 +44,45 @@ Public Class NegClientes
         Return entCliente
     End Function
 
+    Public Function TraerCliente(ByVal RazonSocial As String) As List(Of Entidades.Clientes)
+        Dim dsCliente As New DataSet
+        Dim clientes As List(Of Entidades.Clientes) = New List(Of Clientes)()
+
+        If (HayInternet) Then
+            dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_Razon_Social @RazonSocial='" & RazonSocial & "'")
+        Else
+            dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_Razon_Social @RazonSocial='" & RazonSocial & "'")
+        End If
+
+        'Lleno la Entidad Clientes.
+        If dsCliente.Tables(0).Rows.Count <> 0 Then
+            For Each cliente As DataRow In dsCliente.Tables(0).Rows
+                Dim entCliente As Entidades.Clientes = New Clientes()
+                entCliente.Codigo_Postal = cliente.Item("CodigoPostal").ToString
+                entCliente.Contacto = cliente.Item("Contacto").ToString
+                entCliente.Cuit = cliente.Item("Cuit").ToString
+                entCliente.Direccion = cliente.Item("Direccion").ToString
+                entCliente.Habilitado = cliente.Item("Habilitado").ToString
+                entCliente.id_Cliente = cliente.Item("id_Cliente").ToString
+                entCliente.id_CondicionIva = cliente.Item("id_CondicionIva").ToString
+                entCliente.id_Distrito = cliente.Item("id_Departamento").ToString
+                entCliente.id_Localidad = cliente.Item("id_Localidad").ToString
+                entCliente.id_Precio = cliente.Item("id_ListaPrecio").ToString
+                entCliente.id_Provincia = cliente.Item("id_Provincia").ToString
+                entCliente.Mail = cliente.Item("Mail").ToString
+                entCliente.Observaciones = cliente.Item("Observaciones").ToString
+                entCliente.RazonSocial = cliente.Item("RazonSocial").ToString
+                entCliente.Telefono = cliente.Item("Telefono").ToString
+                entCliente.Transporte = cliente.Item("Transporte").ToString
+
+                clientes.Add(entCliente)
+            Next
+        End If
+
+        'Retorno
+        Return clientes
+    End Function
+
     'Funcion para consultar un cliente reducido. Solo trae razon, cuit, condicion y lista de precio
     Public Function TraerClienteReducido(ByVal id_Cliente As Integer)
         Dim dsCliente As New DataSet
@@ -90,6 +129,36 @@ Public Class NegClientes
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+            respuesta.Direction = ParameterDirection.Output
+            cmd.Parameters.Add(respuesta)
+            cmd.ExecuteNonQuery()
+            'desconecto la bdd
+            clsDatos.ConectarRemoto()
+
+            'muestro el mensaje
+            Return respuesta.Value
+        Catch ex As Exception
+            Return ex.Message
+        End Try
+    End Function
+
+    'Funcion para insertar un cliente.
+    Function AltaClienteConsumidorFinal(ByVal ecliente As Entidades.ConsumidorFinal) As Integer
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As String = ""
+
+        Try
+            cmd.Connection = clsDatos.ConectarRemoto()
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
+            With cmd.Parameters
+                .AddWithValue("@nombre", ecliente.Nombre)
+                .AddWithValue("@apellido", ecliente.Apellido)
+                .AddWithValue("@email", ecliente.Email)
+            End With
+
+            Dim respuesta As New SqlParameter("@id", SqlDbType.Int, 255)
             respuesta.Direction = ParameterDirection.Output
             cmd.Parameters.Add(respuesta)
             cmd.ExecuteNonQuery()

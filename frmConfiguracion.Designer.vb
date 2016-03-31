@@ -72,6 +72,10 @@ Partial Class frmConfiguracion
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoComprobacionCheques = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoComprobacionMovimientos = New System.Windows.Forms.ComboBox()
         Me.BtnNotificaciones = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Cb_TiempoComprobacionMensajes = New System.Windows.Forms.ComboBox()
@@ -84,10 +88,13 @@ Partial Class frmConfiguracion
         Me.BtnInternet = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Cb_SegundosInternet = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Cb_TiempoComprobacionMovimientos = New System.Windows.Forms.ComboBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.Cb_TiempoComprobacionCheques = New System.Windows.Forms.ComboBox()
+        Me.Host = New System.Windows.Forms.TabPage()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.txtPuertoHost = New System.Windows.Forms.TextBox()
+        Me.txtIPHost = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.btnModificarHost = New System.Windows.Forms.Button()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -102,6 +109,8 @@ Partial Class frmConfiguracion
         Me.GroupBox5.SuspendLayout()
         Me.TabInternet.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
+        Me.Host.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
         Me.SuspendLayout()
         '
         'lbl_NombreSucursalActual
@@ -546,6 +555,7 @@ Partial Class frmConfiguracion
         Me.TabControl1.Controls.Add(Me.TabFacturacion)
         Me.TabControl1.Controls.Add(Me.TabNotificaciones)
         Me.TabControl1.Controls.Add(Me.TabInternet)
+        Me.TabControl1.Controls.Add(Me.Host)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -621,6 +631,44 @@ Partial Class frmConfiguracion
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Configuración de Alertas"
+        '
+        'Label18
+        '
+        Me.Label18.Location = New System.Drawing.Point(9, 112)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(261, 36)
+        Me.Label18.TabIndex = 7
+        Me.Label18.Text = "Período de comprobación de cheques por vencer (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Cb_TiempoComprobacionCheques
+        '
+        Me.Cb_TiempoComprobacionCheques.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionCheques.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionCheques.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionCheques.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionCheques.Location = New System.Drawing.Point(276, 119)
+        Me.Cb_TiempoComprobacionCheques.Name = "Cb_TiempoComprobacionCheques"
+        Me.Cb_TiempoComprobacionCheques.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionCheques.TabIndex = 8
+        '
+        'Label1
+        '
+        Me.Label1.Location = New System.Drawing.Point(8, 70)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(261, 36)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "Período de comprobación de movimientos entre sucursales (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Cb_TiempoComprobacionMovimientos
+        '
+        Me.Cb_TiempoComprobacionMovimientos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionMovimientos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionMovimientos.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionMovimientos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionMovimientos.Location = New System.Drawing.Point(275, 77)
+        Me.Cb_TiempoComprobacionMovimientos.Name = "Cb_TiempoComprobacionMovimientos"
+        Me.Cb_TiempoComprobacionMovimientos.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionMovimientos.TabIndex = 6
         '
         'BtnNotificaciones
         '
@@ -758,43 +806,77 @@ Partial Class frmConfiguracion
         Me.Cb_SegundosInternet.Size = New System.Drawing.Size(101, 23)
         Me.Cb_SegundosInternet.TabIndex = 3
         '
-        'Label1
+        'Host
         '
-        Me.Label1.Location = New System.Drawing.Point(8, 70)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(261, 36)
-        Me.Label1.TabIndex = 5
-        Me.Label1.Text = "Período de comprobación de movimientos entre sucursales (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Host.Controls.Add(Me.GroupBox8)
+        Me.Host.Location = New System.Drawing.Point(4, 24)
+        Me.Host.Name = "Host"
+        Me.Host.Padding = New System.Windows.Forms.Padding(3)
+        Me.Host.Size = New System.Drawing.Size(386, 323)
+        Me.Host.TabIndex = 6
+        Me.Host.Text = "Host"
+        Me.Host.UseVisualStyleBackColor = True
         '
-        'Cb_TiempoComprobacionMovimientos
+        'GroupBox8
         '
-        Me.Cb_TiempoComprobacionMovimientos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_TiempoComprobacionMovimientos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_TiempoComprobacionMovimientos.FormattingEnabled = True
-        Me.Cb_TiempoComprobacionMovimientos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_TiempoComprobacionMovimientos.Location = New System.Drawing.Point(275, 77)
-        Me.Cb_TiempoComprobacionMovimientos.Name = "Cb_TiempoComprobacionMovimientos"
-        Me.Cb_TiempoComprobacionMovimientos.Size = New System.Drawing.Size(101, 23)
-        Me.Cb_TiempoComprobacionMovimientos.TabIndex = 6
+        Me.GroupBox8.Controls.Add(Me.txtPuertoHost)
+        Me.GroupBox8.Controls.Add(Me.txtIPHost)
+        Me.GroupBox8.Controls.Add(Me.Label21)
+        Me.GroupBox8.Controls.Add(Me.btnModificarHost)
+        Me.GroupBox8.Controls.Add(Me.Label22)
+        Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox8.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(380, 317)
+        Me.GroupBox8.TabIndex = 8
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Configuración del Host de Servicios"
         '
-        'Label18
+        'txtPuertoHost
         '
-        Me.Label18.Location = New System.Drawing.Point(9, 112)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(261, 36)
-        Me.Label18.TabIndex = 7
-        Me.Label18.Text = "Período de comprobación de cheques por vencer (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.txtPuertoHost.Location = New System.Drawing.Point(140, 62)
+        Me.txtPuertoHost.Name = "txtPuertoHost"
+        Me.txtPuertoHost.Size = New System.Drawing.Size(168, 21)
+        Me.txtPuertoHost.TabIndex = 10
         '
-        'Cb_TiempoComprobacionCheques
+        'txtIPHost
         '
-        Me.Cb_TiempoComprobacionCheques.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_TiempoComprobacionCheques.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_TiempoComprobacionCheques.FormattingEnabled = True
-        Me.Cb_TiempoComprobacionCheques.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_TiempoComprobacionCheques.Location = New System.Drawing.Point(276, 119)
-        Me.Cb_TiempoComprobacionCheques.Name = "Cb_TiempoComprobacionCheques"
-        Me.Cb_TiempoComprobacionCheques.Size = New System.Drawing.Size(101, 23)
-        Me.Cb_TiempoComprobacionCheques.TabIndex = 8
+        Me.txtIPHost.Location = New System.Drawing.Point(140, 30)
+        Me.txtIPHost.Name = "txtIPHost"
+        Me.txtIPHost.Size = New System.Drawing.Size(168, 21)
+        Me.txtIPHost.TabIndex = 9
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(7, 33)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(127, 15)
+        Me.Label21.TabIndex = 1
+        Me.Label21.Text = "IP de la computadora:"
+        '
+        'btnModificarHost
+        '
+        Me.btnModificarHost.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnModificarHost.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnModificarHost.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.btnModificarHost.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnModificarHost.Location = New System.Drawing.Point(277, 274)
+        Me.btnModificarHost.Name = "btnModificarHost"
+        Me.btnModificarHost.Size = New System.Drawing.Size(100, 40)
+        Me.btnModificarHost.TabIndex = 4
+        Me.btnModificarHost.Text = "Modificar"
+        Me.btnModificarHost.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnModificarHost.UseVisualStyleBackColor = True
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(7, 68)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(46, 15)
+        Me.Label22.TabIndex = 3
+        Me.Label22.Text = "Puerto:"
         '
         'frmConfiguracion
         '
@@ -829,6 +911,9 @@ Partial Class frmConfiguracion
         Me.TabInternet.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
+        Me.Host.ResumeLayout(False)
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -897,4 +982,11 @@ Partial Class frmConfiguracion
     Friend WithEvents Cb_TiempoComprobacionCheques As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Cb_TiempoComprobacionMovimientos As System.Windows.Forms.ComboBox
+    Friend WithEvents Host As System.Windows.Forms.TabPage
+    Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
+    Friend WithEvents txtPuertoHost As System.Windows.Forms.TextBox
+    Friend WithEvents txtIPHost As System.Windows.Forms.TextBox
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents btnModificarHost As System.Windows.Forms.Button
+    Friend WithEvents Label22 As System.Windows.Forms.Label
 End Class

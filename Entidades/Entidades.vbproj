@@ -76,9 +76,11 @@
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />
     <Compile Include="Cheque.vb" />
+    <Compile Include="NotaPedido_Detalle.vb" />
     <Compile Include="Clientes.vb" />
     <Compile Include="Colores.vb" />
     <Compile Include="Comisiones.vb" />
+    <Compile Include="ConsumidorFinal.vb" />
     <Compile Include="ControladorFiscal.vb" />
     <Compile Include="Cuenta_Corriente.vb" />
     <Compile Include="Depositos.vb" />
@@ -101,6 +103,7 @@
     <Compile Include="MovImpuesto.vb" />
     <Compile Include="MovSocios.vb" />
     <Compile Include="NotaCredito.vb" />
+    <Compile Include="NotaPedido.vb" />
     <Compile Include="Patentes.vb" />
     <Compile Include="Perfiles.vb" />
     <Compile Include="Precios.vb" />
@@ -115,6 +118,7 @@
     <Compile Include="Stock.vb" />
     <Compile Include="Stock_Bitacora.vb" />
     <Compile Include="Sucursales.vb" />
+    <Compile Include="TipoPrecios.vb" />
     <Compile Include="Usuario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

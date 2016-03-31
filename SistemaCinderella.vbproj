@@ -37,8 +37,8 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>46</ApplicationRevision>
-    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -1340,6 +1340,10 @@
     <ProjectReference Include="Negocio\Negocio.vbproj">
       <Project>{D0101B76-7CE1-476B-84F3-9E99244C1E88}</Project>
       <Name>Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="Servicios\Servicios.vbproj">
+      <Project>{59afdba5-8c7e-4c73-8a37-a7aabd4fec7f}</Project>
+      <Name>Servicios</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

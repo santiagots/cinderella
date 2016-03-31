@@ -1,8 +1,16 @@
-﻿Public Class Productos
+﻿<Serializable()>
+Public Class Productos
+
     Private id_Producto_, id_Categoria_, id_Subcategoria_, id_Proveedor_, SubirWeb_, Novedad_, Habilitado_, id_Material_, id_Color_, id_Aroma_ As Integer
     Private Descripcion_, Nombre_, Origen_, Tamano_, Codigo_, Foto_, CodigoBarra_ As String
     Private Precio1_, Precio2_, Precio3_, Precio4_, Precio5_, Precio6_, Costo_ As Double
-    Private Materiales_, Aromas_, Colores_ As Object
+
+    <NonSerialized()>
+    Private Materiales_ As Object
+    <NonSerialized()>
+    Private Aromas_ As Object
+    <NonSerialized()>
+    Private Colores_ As Object
     Private EliminarFoto_ As Boolean
 
     Public Property id_Producto() As Integer
