@@ -17,40 +17,51 @@ Public Class Host
 
         Try
 
-            Dim smb As ServiceMetadataBehavior = New ServiceMetadataBehavior()
-            smb.HttpGetEnabled = True
-            smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15
-
 
             ' Create the ServiceHost.
             Dim hostListas As ServiceHost = New ServiceHost(GetType(Listas), New Uri(String.Format("http://{0}:{1}/Listas", IP, puerto)))
             hostListas.AddServiceEndpoint(GetType(Servicios.ILista), New BasicHttpBinding(), "")
             AddBehavior(hostListas)
-            hostListas.Description.Behaviors.Add(smb)
+            Dim smb1 As ServiceMetadataBehavior = New ServiceMetadataBehavior()
+            smb1.HttpGetEnabled = True
+            smb1.MetadataExporter.PolicyVersion = PolicyVersion.Policy15
+            hostListas.Description.Behaviors.Add(smb1)
             hostListas.Open()
 
             Dim hostCliente As ServiceHost = New ServiceHost(GetType(Cliente), New Uri(String.Format("http://{0}:{1}/Cliente", IP, puerto)))
             hostCliente.AddServiceEndpoint(GetType(Servicios.ICliente), New BasicHttpBinding(), "")
             AddBehavior(hostCliente)
-            hostCliente.Description.Behaviors.Add(smb)
+            Dim smb2 As ServiceMetadataBehavior = New ServiceMetadataBehavior()
+            smb2.HttpGetEnabled = True
+            smb2.MetadataExporter.PolicyVersion = PolicyVersion.Policy15
+            hostCliente.Description.Behaviors.Add(smb2)
             hostCliente.Open()
 
             Dim hostNotaPedido As ServiceHost = New ServiceHost(GetType(NotaPedido), New Uri(String.Format("http://{0}:{1}/NotaPedido", IP, puerto)))
             hostNotaPedido.AddServiceEndpoint(GetType(Servicios.INotaPedido), New BasicHttpBinding(), "")
             AddBehavior(hostNotaPedido)
-            hostNotaPedido.Description.Behaviors.Add(smb)
+            Dim smb3 As ServiceMetadataBehavior = New ServiceMetadataBehavior()
+            smb3.HttpGetEnabled = True
+            smb3.MetadataExporter.PolicyVersion = PolicyVersion.Policy15
+            hostNotaPedido.Description.Behaviors.Add(smb3)
             hostNotaPedido.Open()
 
             Dim hostProducto As ServiceHost = New ServiceHost(GetType(Producto), New Uri(String.Format("http://{0}:{1}/Producto", IP, puerto)))
             hostProducto.AddServiceEndpoint(GetType(Servicios.IProducto), New BasicHttpBinding(), "")
             AddBehavior(hostProducto)
-            hostProducto.Description.Behaviors.Add(smb)
+            Dim smb4 As ServiceMetadataBehavior = New ServiceMetadataBehavior()
+            smb4.HttpGetEnabled = True
+            smb4.MetadataExporter.PolicyVersion = PolicyVersion.Policy15
+            hostProducto.Description.Behaviors.Add(smb4)
             hostProducto.Open()
 
             Dim hostUsuario As ServiceHost = New ServiceHost(GetType(Usuario), New Uri(String.Format("http://{0}:{1}/Usuario", IP, puerto)))
             hostUsuario.AddServiceEndpoint(GetType(Servicios.IUsuario), New BasicHttpBinding(), "")
             AddBehavior(hostUsuario)
-            hostUsuario.Description.Behaviors.Add(smb)
+            Dim smb5 As ServiceMetadataBehavior = New ServiceMetadataBehavior()
+            smb5.HttpGetEnabled = True
+            smb5.MetadataExporter.PolicyVersion = PolicyVersion.Policy15
+            hostUsuario.Description.Behaviors.Add(smb5)
             hostUsuario.Open()
 
         Catch ex As Exception

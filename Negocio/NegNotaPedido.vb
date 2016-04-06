@@ -1,4 +1,6 @@
-﻿Imports System.Data.SqlClient
+﻿Imports Entidades
+Imports System.Data.SqlClient
+Imports Datos
 
 Public Class NegNotaPedido
 
@@ -39,6 +41,7 @@ Public Class NegNotaPedido
                 .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
                 .AddWithValue("@id_TipoPago", EntNotaPedido.id_TipoPago)
                 .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
+                .AddWithValue("@id_ListaPrecio", EntNotaPedido.id_ListaPrecio)
                 .AddWithValue("@id_ConsumidorFinal", EntNotaPedido.Id_ConsumidorFinal)
                 .AddWithValue("@PrecioTotal", EntNotaPedido.PrecioTotal)
                 .AddWithValue("@Vendida", If(EntNotaPedido.Vendida, 1, 0))
@@ -68,4 +71,120 @@ Public Class NegNotaPedido
             Return False
         End Try
     End Function
+
+    Public Function TraerNotas(ByVal SucursalId As Integer) As List(Of NotaPedido)
+        'Declaro variables
+        Dim cmd As SqlCommand = New SqlCommand()
+        Dim dsNotaPedidos As DataSet
+        Dim respuesta As List(Of NotaPedido) = New List(Of NotaPedido)()
+
+        'Conecto a la bdd.
+        If (HayInternet) Then
+            dsNotaPedidos = clsDatos.ConsultarBaseRemoto("execute sp_NotaPedido_Consulta_Sucursal @SucursalId=" & SucursalId)
+        Else
+            dsNotaPedidos = clsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Sucursal @SucursalId=" & SucursalId)
+        End If
+
+        If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
+            For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
+                respuesta.Add(GetNotaPedidoFromRow(row))
+            Next
+        End If
+
+        'retorno valor
+        Return respuesta
+    End Function
+
+    Public Function TraerDetalle(ByVal NotaPedidoId As Integer) As List(Of NotaPedido_Detalle)
+        'Declaro variables
+        Dim cmd As SqlCommand = New SqlCommand()
+        Dim dsNotaPedidos As DataSet
+        Dim respuesta As List(Of NotaPedido_Detalle) = New List(Of NotaPedido_Detalle)()
+
+        'Conecto a la bdd.
+        If (HayInternet) Then
+            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_NotaPedido_Consulta_Detalle @NotaPedidoId=" & NotaPedidoId)
+        Else
+            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Detalle @NotaPedidoId=" & NotaPedidoId)
+        End If
+
+        If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
+            For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
+                respuesta.Add(GetNotaPedidoDetalleFromRow(row))
+            Next
+        End If
+
+        'retorno valor
+        Return respuesta
+    End Function
+
+    Public Function BorrarNota(ByVal NotaPedidoId As Integer) As Boolean
+        'Declaro variables
+        Dim cmd As SqlCommand = New SqlCommand()
+
+        'Conecto a la bdd.
+        If HayInternet Then
+            cmd.Connection = ClsDatos.ConectarRemoto()
+        Else
+            cmd.Connection = ClsDatos.ConectarLocal()
+        End If
+
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_NotaPedido_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@NotaPedidoId", NotaPedidoId)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        'Desconecto la bdd.
+        If HayInternet Then
+            ClsDatos.DesconectarRemoto()
+        Else
+            ClsDatos.DesconectarLocal()
+        End If
+
+        Return respuesta.Value
+    End Function
+
+    Private Function GetNotaPedidoFromRow(row As DataRow) As NotaPedido
+        Dim notaPedido As NotaPedido = New NotaPedido()
+
+        notaPedido.ConsumidorFinalNombreYApellido = row.Item("ConsumidorFinalNombreYApellido").ToString
+        notaPedido.EmpleadoNombreyApellido = row.Item("EmpleadoNombreyApellido").ToString
+        notaPedido.Fecha = row.Item("Fecha").ToString
+        notaPedido.id_Cliente = If(row.Item("id_Cliente") Is DBNull.Value, 0, row.Item("id_Cliente"))
+        notaPedido.Id_ConsumidorFinal = If(row.Item("Id_ConsumidorFinal") Is DBNull.Value, 0, row.Item("Id_ConsumidorFinal"))
+        notaPedido.id_Empleado = If(row.Item("id_Empleado") Is DBNull.Value, 0, row.Item("id_Empleado"))
+        notaPedido.id_NotaPedido = If(row.Item("id_NotaPedido") Is DBNull.Value, 0, row.Item("id_NotaPedido"))
+        notaPedido.id_Sucursal = If(row.Item("id_Sucursal") Is DBNull.Value, 0, row.Item("id_Sucursal"))
+        notaPedido.id_TipoPago = If(row.Item("id_TipoPago") Is DBNull.Value, 0, row.Item("id_TipoPago"))
+        notaPedido.id_TipoVenta = If(row.Item("id_TipoVenta") Is DBNull.Value, 0, row.Item("id_TipoVenta"))
+        notaPedido.id_ListaPrecio = If(row.Item("id_ListaPrecio") Is DBNull.Value, 0, row.Item("id_ListaPrecio"))
+        notaPedido.PrecioTotal = row.Item("PrecioTotal").ToString
+        notaPedido.RazonSocialCliente = row.Item("RazonSocialCliente").ToString
+        notaPedido.Vendida = row.Item("Vendida").ToString
+        notaPedido.TipoVentaDescripcion = row.Item("TipoVentaDescripcion").ToString()
+        notaPedido.TipoPagoDescripcion = row.Item("TipoPagoDescripcion").ToString()
+
+        Return notaPedido
+    End Function
+
+    Private Function GetNotaPedidoDetalleFromRow(row As DataRow) As NotaPedido_Detalle
+        Dim notaPedidoDetalle As NotaPedido_Detalle = New NotaPedido_Detalle()
+
+        notaPedidoDetalle.Cantidad = row.Item("Cantidad")
+        notaPedidoDetalle.id_Detalle = row.Item("id_Detalle")
+        notaPedidoDetalle.id_Producto = row.Item("id_Producto")
+        notaPedidoDetalle.id_NotaPedido = row.Item("id_NotaPedido")
+        notaPedidoDetalle.Precio = row.Item("Precio")
+
+        Return notaPedidoDetalle
+    End Function
+
 End Class

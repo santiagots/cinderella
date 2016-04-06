@@ -1,4 +1,4 @@
-﻿Public Class NotaPedido_Detalle
+﻿Public Class EntidadNotaPedido_Detalle
     Private id_NotaPedido_, id_Detalle_, id_Producto_, Cantidad_ As Integer
     Dim Precio_ As Double
 

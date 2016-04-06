@@ -1,5 +1,7 @@
-﻿Imports System.Linq
+﻿Imports Entidades
+Imports System.Linq
 Imports System.Threading.Tasks
+Imports Negocio
 
 Public Class frmVentas
     'Instancias
@@ -22,6 +24,7 @@ Public Class frmVentas
     Dim id_Sucursal As Integer
     Dim Nombre_Sucursal As String
     Dim ProductoCantidadAnterior As Integer
+    Public NotaPedido As NotaPedido
 
 
 #Region "Region Funciones"
@@ -490,6 +493,142 @@ Public Class frmVentas
             Cb_ListaPrecio.ValueMember = "id_Lista"
             Cb_ListaPrecio.Refresh()
         End If
+
+        If (NotaPedido IsNot Nothing) Then
+            CargarNotaPedido()
+        End If
+    End Sub
+
+    'Carga la venta con la nota de pedido
+    Private Sub CargarNotaPedido()
+        Cb_Vendedores.SelectedValue = NotaPedido.id_Empleado
+
+        If NotaPedido.id_TipoVenta = 1 Then
+            cb_Tipo.SelectedValue = "Minorista"
+        Else
+            cb_Tipo.SelectedValue = "Mayorista"
+        End If
+
+        Cb_TipoPago.SelectedValue = NotaPedido.id_TipoPago
+
+        Cb_ListaPrecio.SelectedValue = NotaPedido.id_ListaPrecio
+
+        'si la nota de pedido tiene un cliente
+        If (NotaPedido.id_Cliente > 0) Then
+            'cargo la informacion del cliente
+            txt_id_Cliente.Text = NotaPedido.id_Cliente
+            txt_RazonSocial.Text = NotaPedido.RazonSocialCliente
+        End If
+
+        AgregarItemDesdeNotaPedido()
+
+    End Sub
+
+    Private Sub AgregarItemDesdeNotaPedido()
+
+        Dim negNotaPedido As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
+
+        Dim notaPedidoDetalles As List(Of NotaPedido_Detalle) = negNotaPedido.TraerDetalle(NotaPedido.id_NotaPedido)
+
+        Dim NumeroFila As Integer = 0
+
+        For Each detalle As NotaPedido_Detalle In notaPedidoDetalles
+
+            Dim entProducto As Entidades.Productos = NegProductos.TraerProducto(detalle.id_Producto)
+
+            NumeroFila += 1
+
+            'Creo la fila del producto.
+            Dim dgvRow As New DataGridViewRow
+            Dim dgvCell As DataGridViewCell
+
+            'Valor de la Columna Numero
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = NumeroFila
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Id
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = entProducto.id_Producto
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Codigo
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = entProducto.Codigo
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Nombre
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = entProducto.Nombre
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Descripcion
+            dgvCell = New DataGridViewTextBoxCell()
+            If entProducto.Descripcion <> "" Then
+                dgvCell.Value = entProducto.Descripcion
+            Else
+                dgvCell.Value = "- - -"
+            End If
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Cantidad
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = detalle.Cantidad
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = detalle.Precio
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Subtotal
+            dgvCell = New DataGridViewTextBoxCell()
+            dgvCell.Value = detalle.Precio * detalle.Cantidad
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Eliminar
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio1
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = entProducto.Precio1
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio2
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = entProducto.Precio2
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio3
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = entProducto.Precio3
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio4
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = entProducto.Precio4
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio5
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = entProducto.Precio5
+            dgvRow.Cells.Add(dgvCell)
+
+            'Valor de la Columna Precio6
+            dgvCell = New DataGridViewImageCell()
+            dgvCell.Value = entProducto.Precio6
+            dgvRow.Cells.Add(dgvCell)
+
+            dgvRow.DefaultCellStyle.BackColor = Color.White
+            dgvRow.Height = "30"
+
+            'Inserto la fila
+            DG_Productos.Rows.Add(dgvRow)
+        Next
+
+        CalcularPreciosDescuento()
     End Sub
 
     'Actualizo la hora que se muestra dentro del formulario.
@@ -764,6 +903,17 @@ Public Class frmVentas
 
                             'Muestro Mensaje.
                             MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
+
+                            If (NotaPedido IsNot Nothing) Then
+                                Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
+                                If (Not negNotaPedido.BorrarNota(NotaPedido.id_NotaPedido)) Then
+                                    MessageBox.Show("La note de pedido no se a podido eliminar de forma automática.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Else
+                                    Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
+                                    frmNotaPedido.RemoverNotaPedido(NotaPedido)
+                                End If
+
+                            End If
 
                             'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                             If Facturar Then

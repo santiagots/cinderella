@@ -5,6 +5,6 @@
 Public Interface INotaPedido
 
     <OperationContract()>
-    Function SetNevaNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle), ByVal EntConsumidorFinal As Entidades.ConsumidorFinal) As Boolean
+    Function SetNevaNotaPedido(ByVal EntNotaPedido As EntidadNotaPedido, EntDetalleNotaPedido As List(Of EntidadNotaPedido_Detalle), ByVal EntConsumidorFinal As EntidadConsumidorFinal) As Boolean
 
 End Interface

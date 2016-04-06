@@ -5,6 +5,6 @@
 Public Interface ICliente
 
     <OperationContract()>
-    Function GetClienteMayorista(ByVal RazonSocial As String) As List(Of Entidades.Clientes)
+    Function GetClienteMayorista(ByVal RazonSocial As String) As List(Of EntidadClientes)
 
 End Interface

@@ -368,6 +368,18 @@ Namespace My
                 Me("IpHost") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300000")>  _
+        Public Property TemporizadorNotasPedido() As String
+            Get
+                Return CType(Me("TemporizadorNotasPedido"),String)
+            End Get
+            Set
+                Me("TemporizadorNotasPedido") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

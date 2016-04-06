@@ -15,6 +15,7 @@ Public Class MDIContenedor
     Dim tiempoAcumuladoNotificaciones As Integer = 0
     Dim tiempoAcumuladoMensajes As Integer = 0
     Dim tiempoAcumuladoCheques As Integer = 0
+    Dim tiempoAcumuladoNotasPedidos As Integer = 0
 
     Private Sub MDIContenedor_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If VariablesGlobales.Notificaciones > 0 Then 'Si posee notificaciones pendientes.
@@ -1047,6 +1048,15 @@ Public Class MDIContenedor
             tiempoAcumuladoCheques = 0
         End If
 
+        'Acumulo el tiempo transcurrido
+        tiempoAcumuladoNotasPedidos += TemporizadorActualizaciones.Interval
+        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de notas de pedios
+        If (tiempoAcumuladoNotasPedidos >= Integer.Parse(My.Settings("TemporizadorNotasPedido"))) Then
+            'Muestro la alerta de cheques y reinicio el acumulador de tiempo
+            Funciones.ActualizarNotasPedidos()
+            tiempoAcumuladoNotasPedidos = 0
+        End If
+
     End Sub
 
     Private Sub Menu_Movimientos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Menu_Movimientos.Click
@@ -1303,6 +1313,30 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmChequesAlta).MdiParent = Me
             Funciones.ControlInstancia(frmChequesAlta).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub AdministracionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdministracionToolStripMenuItem.Click
+        'para agregar cheques es necesario esta online
+        If (VariablesGlobales.HayConexion = False) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmNotaPedidoAdministracion).MdiParent = Me
+            Funciones.ControlInstancia(frmNotaPedidoAdministracion).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub Menu_NotaPedido_Click(sender As Object, e As EventArgs) Handles Menu_NotaPedido.Click
+        'para administrar cheques es necesario esta online
+        If (VariablesGlobales.HayConexion = False) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmNotaPedidoAdministracion).MdiParent = Me
+            Funciones.ControlInstancia(frmNotaPedidoAdministracion).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

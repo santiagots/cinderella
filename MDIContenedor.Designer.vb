@@ -81,6 +81,8 @@ Partial Class MDIContenedor
         Me.ChequesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdministraciónToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AltaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NotaPedidoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AdministracionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PlanillasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.SucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -121,6 +123,7 @@ Partial Class MDIContenedor
         Me.Menu_Mensajes = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Menu_Movimientos = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Menu_ChequesVencer = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Menu_NotaPedido = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Conectado = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Btn_ResumenDiario = New System.Windows.Forms.Button()
@@ -209,7 +212,7 @@ Partial Class MDIContenedor
         '
         'ToolsMenu
         '
-        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_DevolucionesMenu, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem})
+        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_DevolucionesMenu, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem})
         Me.ToolsMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Menu
         Me.ToolsMenu.Name = "ToolsMenu"
         Me.ToolsMenu.Size = New System.Drawing.Size(116, 20)
@@ -572,6 +575,21 @@ Partial Class MDIContenedor
         Me.AltaToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.AltaToolStripMenuItem.Text = "Alta"
         '
+        'NotaPedidoToolStripMenuItem
+        '
+        Me.NotaPedidoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministracionToolStripMenuItem})
+        Me.NotaPedidoToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.not_pedido_32
+        Me.NotaPedidoToolStripMenuItem.Name = "NotaPedidoToolStripMenuItem"
+        Me.NotaPedidoToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
+        Me.NotaPedidoToolStripMenuItem.Text = "Nota Pedido"
+        '
+        'AdministracionToolStripMenuItem
+        '
+        Me.AdministracionToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
+        Me.AdministracionToolStripMenuItem.Name = "AdministracionToolStripMenuItem"
+        Me.AdministracionToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.AdministracionToolStripMenuItem.Text = "Administración"
+        '
         'Btn_PlanillasMenu
         '
         Me.Btn_PlanillasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SucursalesToolStripMenuItem, Me.MovEntreSucursalesToolStripMenuItem, Me.SueldosDeEmpleadosToolStripMenuItem, Me.ListasDePreciosToolStripMenuItem})
@@ -764,7 +782,7 @@ Partial Class MDIContenedor
         Me.MenuAccesos.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.ToolStripSeparator1, Me.PrintToolStripButton, Me.PrintPreviewToolStripButton, Me.ToolStripSeparator2, Me.HelpToolStripButton})
         Me.MenuAccesos.Location = New System.Drawing.Point(0, 24)
         Me.MenuAccesos.Name = "MenuAccesos"
-        Me.MenuAccesos.Size = New System.Drawing.Size(897, 25)
+        Me.MenuAccesos.Size = New System.Drawing.Size(794, 25)
         Me.MenuAccesos.TabIndex = 6
         Me.MenuAccesos.Text = "ToolStrip"
         Me.MenuAccesos.Visible = False
@@ -835,7 +853,7 @@ Partial Class MDIContenedor
         '
         'MenuInferior
         '
-        Me.MenuInferior.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Estado, Me.Usuario, Me.Menu_Mensajes, Me.Menu_Movimientos, Me.Menu_ChequesVencer, Me.Conectado})
+        Me.MenuInferior.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Estado, Me.Usuario, Me.Menu_Mensajes, Me.Menu_Movimientos, Me.Menu_ChequesVencer, Me.Menu_NotaPedido, Me.Conectado})
         Me.MenuInferior.Location = New System.Drawing.Point(0, 750)
         Me.MenuInferior.Name = "MenuInferior"
         Me.MenuInferior.Size = New System.Drawing.Size(794, 22)
@@ -879,13 +897,20 @@ Partial Class MDIContenedor
         Me.Menu_ChequesVencer.Size = New System.Drawing.Size(145, 17)
         Me.Menu_ChequesVencer.Text = "(0) Cheques por vencer"
         '
+        'Menu_NotaPedido
+        '
+        Me.Menu_NotaPedido.Image = Global.SistemaCinderella.My.Resources.Recursos.Nota_Pedido_2r
+        Me.Menu_NotaPedido.Name = "Menu_NotaPedido"
+        Me.Menu_NotaPedido.Size = New System.Drawing.Size(132, 17)
+        Me.Menu_NotaPedido.Text = "(0) Notas de pedidos"
+        '
         'Conectado
         '
         Me.Conectado.Image = Global.SistemaCinderella.My.Resources.Recursos.NoInternet_32
         Me.Conectado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Conectado.Name = "Conectado"
         Me.Conectado.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.Conectado.Size = New System.Drawing.Size(259, 17)
+        Me.Conectado.Size = New System.Drawing.Size(145, 16)
         Me.Conectado.Spring = True
         Me.Conectado.Text = "Sin Conexión a Internet"
         Me.Conectado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1288,5 +1313,8 @@ Partial Class MDIContenedor
     Friend WithEvents AdministraciónToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AltaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Menu_ChequesVencer As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents NotaPedidoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents AdministracionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Menu_NotaPedido As System.Windows.Forms.ToolStripStatusLabel
 
 End Class

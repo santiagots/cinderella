@@ -57,6 +57,8 @@ Public Class frmConfiguracion
         Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
         Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
         Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
+        Cb_TiempoComprobacionNotasPedidos.SelectedItem = CStr(CInt((My.Settings("TemporizadorNotasPedido") / 60000)))
+
 
         'Comprobacion de internet.
         Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
@@ -202,6 +204,7 @@ Public Class frmConfiguracion
                 My.Settings.TemporizadorMensajes = (Cb_TiempoComprobacionMensajes.SelectedItem * 60000)
                 My.Settings.TemporizadorMovimientos = (Cb_TiempoComprobacionMovimientos.SelectedItem * 60000)
                 My.Settings.TemporizadorCheques = (Cb_TiempoComprobacionCheques.SelectedItem * 60000)
+                My.Settings.TemporizadorNotasPedido = (Cb_TiempoComprobacionNotasPedidos.SelectedItem * 60000)
 
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -312,4 +315,5 @@ Public Class frmConfiguracion
             e.Handled = True
         End If
     End Sub
+
 End Class

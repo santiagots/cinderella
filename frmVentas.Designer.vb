@@ -256,7 +256,7 @@ Partial Class frmVentas
         '
         Me.Btn_Buscar.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
+        Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
         Me.Btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Btn_Buscar.Location = New System.Drawing.Point(459, 22)
         Me.Btn_Buscar.Name = "Btn_Buscar"

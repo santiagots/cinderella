@@ -23,15 +23,15 @@ Public Class Listas
         Return respuesta
     End Function
 
-    Public Function TiposPrecio() As List(Of TipoPrecios) Implements ILista.TiposPrecio
+    Public Function TiposPrecio() As List(Of EntidadTipoPrecios) Implements ILista.TiposPrecio
 
-        Dim respuesta As List(Of TipoPrecios) = New List(Of TipoPrecios)
+        Dim respuesta As List(Of EntidadTipoPrecios) = New List(Of EntidadTipoPrecios)
         Dim negrocioListaPago As Negocio.NegListasPrecio = New Negocio.NegListasPrecio()
 
         Dim dsListaPagos As DataSet = negrocioListaPago.ListadoListasPrecios()
 
         For Each dr As DataRow In dsListaPagos.Tables(0).Rows
-            Dim item As TipoPrecios = New TipoPrecios()
+            Dim item As EntidadTipoPrecios = New EntidadTipoPrecios()
             item.Id = dr("id_Lista")
             item.Descripcion = dr("ListaPrecio")
             item.Grupo = dr("id_ListaGrupo")

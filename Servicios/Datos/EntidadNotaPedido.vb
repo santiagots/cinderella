@@ -1,17 +1,8 @@
-﻿Public Class NotaPedido
+﻿Public Class EntidadNotaPedido
 
     Private id_NotaPedido_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_ As Integer
     Dim PrecioTotal_ As Double
     Dim Fecha_ As Date
-
-    Public Property id_NotaPedido() As Integer
-        Get
-            Return id_NotaPedido_
-        End Get
-        Set(ByVal value As Integer)
-            id_NotaPedido_ = value
-        End Set
-    End Property
 
     Public Property id_Sucursal() As Integer
         Get
@@ -40,17 +31,6 @@
         End Set
     End Property
 
-    Private empleadoNombreyApellido_ As String
-    Public Property EmpleadoNombreyApellido() As String
-        Get
-            Return empleadoNombreyApellido_
-        End Get
-        Set(ByVal value As String)
-            empleadoNombreyApellido_ = value
-        End Set
-    End Property
-
-
     Public Property id_TipoVenta() As Integer
         Get
             Return id_TipoVenta_
@@ -69,16 +49,15 @@
         End Set
     End Property
 
-    Private razonSocialCliente_ As String
-    Public Property RazonSocialCliente() As String
+    Private id_ConsumidorFinal_ As Integer
+    Public Property Id_ConsumidorFinal() As Integer
         Get
-            Return razonSocialCliente_
+            Return id_ConsumidorFinal_
         End Get
-        Set(ByVal value As String)
-            razonSocialCliente_ = value
+        Set(ByVal value As Integer)
+            id_ConsumidorFinal_ = value
         End Set
     End Property
-
 
     Public Property PrecioTotal() As Double
         Get
@@ -98,27 +77,6 @@
         End Set
     End Property
 
-    Private id_ConsumidorFinal_ As Integer
-    Public Property Id_ConsumidorFinal() As Integer
-        Get
-            Return id_ConsumidorFinal_
-        End Get
-        Set(ByVal value As Integer)
-            id_ConsumidorFinal_ = value
-        End Set
-    End Property
-
-    Private consumidorFinalNombreYApellido_ As String
-    Public Property ConsumidorFinalNombreYApellido() As String
-        Get
-            Return consumidorFinalNombreYApellido_
-        End Get
-        Set(ByVal value As String)
-            consumidorFinalNombreYApellido_ = value
-        End Set
-    End Property
-
-
     Private vendida_ As Boolean
     Public Property Vendida() As Boolean
         Get
@@ -126,27 +84,6 @@
         End Get
         Set(ByVal value As Boolean)
             vendida_ = value
-        End Set
-    End Property
-
-    Private TipoVentaDescripcion_ As String
-    Public Property TipoVentaDescripcion() As String
-        Get
-            Return TipoVentaDescripcion_
-        End Get
-        Set(ByVal value As String)
-            TipoVentaDescripcion_ = value
-        End Set
-    End Property
-
-
-    Private TipoPagoDescripcion_ As String
-    Public Property TipoPagoDescripcion() As String
-        Get
-            Return TipoPagoDescripcion_
-        End Get
-        Set(ByVal value As String)
-            TipoPagoDescripcion_ = value
         End Set
     End Property
 
@@ -164,3 +101,4 @@
 
 
 End Class
+

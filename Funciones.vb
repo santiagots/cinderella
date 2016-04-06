@@ -73,7 +73,7 @@ Public Class Funciones
                 Else
                     If TotalNotif > 0 Then 'Si hay notificaciones.
                         'Menu Bottom.
-                        MDIContenedor.Menu_Movimientos.Text = "(" & TotalNotif & ") Notificaciones"
+                        MDIContenedor.Menu_Movimientos.Text = "(" & TotalNotif & ") Notificaciones |"
                         MDIContenedor.Menu_Movimientos.ToolTipText = "Hace click aquí si deseas ver las Notificaciones pendientes."
                         MDIContenedor.Menu_Movimientos.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
                         VariablesGlobales.Notificaciones = TotalNotif
@@ -83,7 +83,7 @@ Public Class Funciones
                         End If
 
                         'Menu Top.
-                        MDIContenedor.Btn_NotificacionesMenu.Text = "(" & TotalNotif & ") Notificaciones"
+                        MDIContenedor.Btn_NotificacionesMenu.Text = "(" & TotalNotif & ") Notificaciones |"
 
                         If TypeFunction = "Full" Then
                             'Form Notify.
@@ -99,7 +99,7 @@ Public Class Funciones
                         MDIContenedor.Btn_NotificacionesMenu.Text = "Notificaciones"
 
                         'Menu Bottom.
-                        MDIContenedor.Menu_Movimientos.Text = "(0) Notificaciones"
+                        MDIContenedor.Menu_Movimientos.Text = "(0) Notificaciones |"
                         MDIContenedor.Menu_Movimientos.ToolTipText = "Sin Notificaciones."
                         MDIContenedor.Menu_Movimientos.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
                         VariablesGlobales.Notificaciones = 0
@@ -110,7 +110,7 @@ Public Class Funciones
                 MDIContenedor.Btn_NotificacionesMenu.Text = "Notificaciones"
 
                 'Menu Bottom.
-                MDIContenedor.Menu_Movimientos.Text = "(-) Notificaciones"
+                MDIContenedor.Menu_Movimientos.Text = "(-) Notificaciones |"
                 MDIContenedor.Menu_Movimientos.ToolTipText = "No se pudo comprobar las Notificaciones."
                 MDIContenedor.Menu_Movimientos.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
                 VariablesGlobales.Notificaciones = 0
@@ -120,7 +120,7 @@ Public Class Funciones
             MDIContenedor.Btn_NotificacionesMenu.Text = "Notificaciones"
 
             'Menu Bottom.
-            MDIContenedor.Menu_Movimientos.Text = "(-) Notificaciones"
+            MDIContenedor.Menu_Movimientos.Text = "(-) Notificaciones |"
             MDIContenedor.Menu_Movimientos.ToolTipText = "No se pudo comprobar las Notificaciones."
             MDIContenedor.Menu_Movimientos.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
             VariablesGlobales.Notificaciones = 0
@@ -133,7 +133,7 @@ Public Class Funciones
             If VariablesGlobales.HayConexion Then
                 Dim ChequesVencer As List(Of Cheque) = Negocio.NegCheque.TraerCheques(My.Settings.Sucursal).Where(Function(x) x.Estado <> ChequeEstado.Salido AndAlso x.FechaVencimiento.Date >= Date.Now.Date AndAlso x.FechaVencimiento.Date < Date.Now.AddDays(7).Date).ToList()
                 If ChequesVencer.Count >= 1 Then
-                    MDIContenedor.Menu_ChequesVencer.Text = "(" & ChequesVencer.Count & ") Cheques por vencer"
+                    MDIContenedor.Menu_ChequesVencer.Text = "(" & ChequesVencer.Count & ") Cheques por vencer |"
                     MDIContenedor.Menu_ChequesVencer.ToolTipText = "Hace click aquí si deseas ir al administrador de cheques."
                     MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
 
@@ -149,18 +149,56 @@ Public Class Funciones
                     SystemSounds.Asterisk.Play()
 
                 Else
-                    MDIContenedor.Menu_ChequesVencer.Text = "(0) Cheques por vencer"
+                    MDIContenedor.Menu_ChequesVencer.Text = "(0) Cheques por vencer |"
                     MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
                 End If
             Else 'Si no hay conexion no hago nada.
-                MDIContenedor.Menu_ChequesVencer.Text = "(-) Cheques por vencer"
+                MDIContenedor.Menu_ChequesVencer.Text = "(-) Cheques por vencer |"
                 MDIContenedor.Menu_ChequesVencer.ToolTipText = "No se pudo comprobar los Mensajes"
                 MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
             End If
         Else
-            MDIContenedor.Menu_Mensajes.Text = "(-) Cheques por vencer"
+            MDIContenedor.Menu_Mensajes.Text = "(-) Cheques por vencer |"
             MDIContenedor.Menu_Mensajes.ToolTipText = "No se pudo comprobar los Mensajes"
             MDIContenedor.Menu_ChequesVencer.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
+        End If
+    End Sub
+
+    Sub ActualizarNotasPedidos()
+        If My.Settings.Internet Then 'Internet Permitido.
+            'Si hay conexion compruebo los cheques
+            If VariablesGlobales.HayConexion Then
+                Dim negNotaPedido As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
+                Dim notaPedidos As List(Of NotaPedido) = negNotaPedido.TraerNotas(My.Settings.Sucursal)
+                If notaPedidos.Count >= 1 Then
+                    MDIContenedor.Menu_NotaPedido.Text = "(" & notaPedidos.Count & ") Notas de pedidos"
+                    MDIContenedor.Menu_NotaPedido.ToolTipText = "Hace click aquí si deseas ir al administrador de notas de pedidos."
+                    MDIContenedor.Menu_NotaPedido.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
+
+                    'Form Notify.
+                    ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
+                    frmNotificaciones.lblConexion.Text = "(" & notaPedidos.Count & ") Notas de pedidos pendientes."
+                    frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Mi_Cuenta_Salir
+                    frmNotificaciones.Text = "(" & notaPedidos.Count & ") Notas de pedidos."
+
+                    ControlInstancia(frmNotificaciones).Show()
+
+                    'Sonidito.
+                    SystemSounds.Asterisk.Play()
+
+                Else
+                    MDIContenedor.Menu_NotaPedido.Text = "(0) Notas de pedidos"
+                    MDIContenedor.Menu_NotaPedido.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
+                End If
+            Else 'Si no hay conexion no hago nada.
+                MDIContenedor.Menu_NotaPedido.Text = "(-) Notas de pedidos"
+                MDIContenedor.Menu_NotaPedido.ToolTipText = "No se pudo comprobar las notas de pedidos pendientes"
+                MDIContenedor.Menu_NotaPedido.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
+            End If
+        Else
+            MDIContenedor.Menu_NotaPedido.Text = "(-) Notas de pedidos"
+            MDIContenedor.Menu_NotaPedido.ToolTipText = "No se pudo comprobar las notas de pedidos pendientes"
+            MDIContenedor.Menu_NotaPedido.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
         End If
     End Sub
 

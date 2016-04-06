@@ -9,7 +9,7 @@ Public Interface ILista
     Function FormasPago() As List(Of KeyValuePair(Of Integer, String))
 
     <OperationContract()>
-    Function TiposPrecio() As List(Of TipoPrecios)
+    Function TiposPrecio() As List(Of EntidadTipoPrecios)
 
     <OperationContract()>
     Function GruposPrecio() As List(Of KeyValuePair(Of Integer, String))

@@ -64,6 +64,9 @@ Public Class frmLogin
                 'Obtengo los Cheuqes a Vencer notificaciones
                 Functions.ActualizarChequesVencer()
 
+                'Obtengo los Cheuqes a Vencer notificaciones
+                Functions.ActualizarNotasPedidos()
+
                 'Seteo a default el cursor.
                 Me.Cursor = Cursors.Default
 

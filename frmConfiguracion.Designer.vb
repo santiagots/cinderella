@@ -72,6 +72,8 @@ Partial Class frmConfiguracion
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoComprobacionNotasPedidos = New System.Windows.Forms.ComboBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Cb_TiempoComprobacionCheques = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -617,6 +619,8 @@ Partial Class frmConfiguracion
         '
         'GroupBox5
         '
+        Me.GroupBox5.Controls.Add(Me.Label19)
+        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionNotasPedidos)
         Me.GroupBox5.Controls.Add(Me.Label18)
         Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionCheques)
         Me.GroupBox5.Controls.Add(Me.Label1)
@@ -631,6 +635,25 @@ Partial Class frmConfiguracion
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Configuración de Alertas"
+        '
+        'Label19
+        '
+        Me.Label19.Location = New System.Drawing.Point(8, 156)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(261, 36)
+        Me.Label19.TabIndex = 9
+        Me.Label19.Text = "Período de comprobación de notas de pedidos pendientes (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Cb_TiempoComprobacionNotasPedidos
+        '
+        Me.Cb_TiempoComprobacionNotasPedidos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionNotasPedidos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionNotasPedidos.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionNotasPedidos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionNotasPedidos.Location = New System.Drawing.Point(275, 163)
+        Me.Cb_TiempoComprobacionNotasPedidos.Name = "Cb_TiempoComprobacionNotasPedidos"
+        Me.Cb_TiempoComprobacionNotasPedidos.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionNotasPedidos.TabIndex = 10
         '
         'Label18
         '
@@ -989,4 +1012,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents btnModificarHost As System.Windows.Forms.Button
     Friend WithEvents Label22 As System.Windows.Forms.Label
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents Cb_TiempoComprobacionNotasPedidos As System.Windows.Forms.ComboBox
 End Class

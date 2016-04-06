@@ -63,6 +63,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datos\EntidadCliente.vb" />
+    <Compile Include="Datos\EntidadConsumidorFinal.vb" />
+    <Compile Include="Datos\EntidadNotaPedido.vb" />
+    <Compile Include="Datos\EntidadNotaPedido_Detalle.vb" />
+    <Compile Include="Datos\EntidadProducto.vb" />
+    <Compile Include="Datos\EntidadTipoPrecios.vb" />
+    <Compile Include="Datos\EntidadUsuario.vb" />
     <Compile Include="Host.vb" />
     <Compile Include="Implementacion\Cliente.vb" />
     <Compile Include="Implementacion\Listas.vb" />

@@ -5,6 +5,6 @@
 Public Interface IUsuario
 
     <OperationContract()>
-    Function Login(ByVal Usuario As String, ByVal Password As String) As Entidades.Usuario
+    Function Login(ByVal Usuario As String, ByVal Password As String) As EntidadUsuario
 
 End Interface
