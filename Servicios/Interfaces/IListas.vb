@@ -6,6 +6,9 @@ Imports Entidades
 Public Interface ILista
 
     <OperationContract()>
+    Function Configuracion() As EntidadConfiguracion
+
+    <OperationContract()>
     Function FormasPago() As List(Of KeyValuePair(Of Integer, String))
 
     <OperationContract()>

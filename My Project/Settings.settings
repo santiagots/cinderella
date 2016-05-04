@@ -35,8 +35,8 @@
     <Setting Name="ControladorStatus" Type="System.String" Scope="User">
       <Value Profile="(Default)">SI</Value>
     </Setting>
-    <Setting Name="ControladorMontoTope" Type="System.String" Scope="User">
-      <Value Profile="(Default)">3000</Value>
+    <Setting Name="MontoTopeFaturacionTicket" Type="System.String" Scope="User">
+      <Value Profile="(Default)">25000</Value>
     </Setting>
     <Setting Name="TemporizadorInternet" Type="System.String" Scope="User">
       <Value Profile="(Default)">25000</Value>
@@ -95,6 +95,15 @@
     </Setting>
     <Setting Name="TemporizadorNotasPedido" Type="System.String" Scope="User">
       <Value Profile="(Default)">300000</Value>
+    </Setting>
+    <Setting Name="MontoTopeFacturacionManual" Type="System.String" Scope="User">
+      <Value Profile="(Default)">25000</Value>
+    </Setting>
+    <Setting Name="MontoTopeFacturacionElectronica" Type="System.String" Scope="User">
+      <Value Profile="(Default)">25000</Value>
+    </Setting>
+    <Setting Name="ControladorMontoTope" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

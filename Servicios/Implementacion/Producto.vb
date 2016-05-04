@@ -4,10 +4,10 @@
 Public Class Producto
     Implements IProducto
 
-    Public Function GetProducto(ByVal codigoProducto As String) As EntidadProducto Implements IProducto.GetProducto
+    Public Function GetProducto(ByVal IdProducto As Integer) As EntidadProducto Implements IProducto.GetProducto
         Dim productosNegocio As Negocio.NegProductos = New Negocio.NegProductos()
 
-        Dim producto As Entidades.Productos = productosNegocio.TraerProductoPorCodigo(codigoProducto)
+        Dim producto As Entidades.Productos = productosNegocio.TraerProducto(IdProducto)
 
         Dim entProducto As EntidadProducto = New EntidadProducto()
         entProducto.Codigo = producto.Codigo
@@ -21,6 +21,26 @@ Public Class Producto
         entProducto.Precio6 = producto.Precio6
 
         Return entProducto
+    End Function
+
+    Public Function GetLista() As List(Of EntidadProductoReducido) Implements IProducto.GetLista
+        Dim productosNegocio As Negocio.NegProductos = New Negocio.NegProductos()
+
+        Dim entidades As List(Of EntidadProductoReducido) = New List(Of EntidadProductoReducido)()
+
+        Dim dsProductos As DataSet = productosNegocio.ListadoProductosBuscadores()
+
+        For Each dr As DataRow In dsProductos.Tables(0).Rows
+
+            Dim entidad As EntidadProductoReducido = New EntidadProductoReducido()
+            entidad.Codigo = dr("Codigo")
+            entidad.Id = dr("id_Producto")
+            entidad.Nombre = dr("Nombre")
+
+            entidades.Add(entidad)
+        Next
+
+        Return entidades
     End Function
 
 End Class

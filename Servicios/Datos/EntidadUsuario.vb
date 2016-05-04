@@ -79,5 +79,5 @@
             Set(ByVal value As Integer)
                 Habilitado_fld = value
             End Set
-        End Property
-    End Class
+    End Property
+End Class

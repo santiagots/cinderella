@@ -39,17 +39,6 @@ Partial Class frmStock
         Me.rb_Opcion = New System.Windows.Forms.RadioButton()
         Me.txt_buscar = New System.Windows.Forms.TextBox()
         Me.DG_Stock = New System.Windows.Forms.DataGridView()
-        Me.id_Stock = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PRODUCTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Minimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Actual = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Optimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Modificado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.Cb_Sucursales = New System.Windows.Forms.ComboBox()
@@ -99,6 +88,17 @@ Partial Class frmStock
         Me.txt_Minimo_mod = New System.Windows.Forms.TextBox()
         Me.ErrorStock = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolStock = New System.Windows.Forms.ToolTip(Me.components)
+        Me.id_Stock = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRODUCTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Minimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Actual = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Optimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Modificado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabStock.SuspendLayout()
         Me.TabListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -152,7 +152,7 @@ Partial Class frmStock
         'GB_Buscar
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Buscar.Controls.Add(Me.Label5)
         Me.GB_Buscar.Controls.Add(Me.Cb_Sucursal)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
@@ -256,10 +256,10 @@ Partial Class frmStock
         Me.DG_Stock.AllowUserToDeleteRows = False
         Me.DG_Stock.AllowUserToResizeRows = False
         Me.DG_Stock.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Stock.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_Stock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Stock, Me.PRODUCTO, Me.Categoria, Me.Codigo, Me.Minimo, Me.Actual, Me.Optimo, Me.Sucursal, Me.Modificado, Me.Modificar, Me.Eliminar})
+        Me.DG_Stock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Stock, Me.Codigo, Me.PRODUCTO, Me.Categoria, Me.Minimo, Me.Actual, Me.Optimo, Me.Sucursal, Me.Modificado, Me.Modificar, Me.Eliminar})
         Me.DG_Stock.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Stock.Location = New System.Drawing.Point(8, 117)
         Me.DG_Stock.MultiSelect = False
@@ -269,113 +269,6 @@ Partial Class frmStock
         Me.DG_Stock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Stock.Size = New System.Drawing.Size(666, 314)
         Me.DG_Stock.TabIndex = 0
-        '
-        'id_Stock
-        '
-        Me.id_Stock.DataPropertyName = "id_Stock"
-        Me.id_Stock.FillWeight = 145.4872!
-        Me.id_Stock.HeaderText = "ID"
-        Me.id_Stock.Name = "id_Stock"
-        Me.id_Stock.ReadOnly = True
-        Me.id_Stock.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'PRODUCTO
-        '
-        Me.PRODUCTO.DataPropertyName = "Nombre"
-        Me.PRODUCTO.FillWeight = 145.4872!
-        Me.PRODUCTO.HeaderText = "Producto"
-        Me.PRODUCTO.Name = "PRODUCTO"
-        Me.PRODUCTO.ReadOnly = True
-        Me.PRODUCTO.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Categoria
-        '
-        Me.Categoria.DataPropertyName = "Cat"
-        Me.Categoria.FillWeight = 145.4872!
-        Me.Categoria.HeaderText = "Categoria"
-        Me.Categoria.Name = "Categoria"
-        Me.Categoria.ReadOnly = True
-        Me.Categoria.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Codigo
-        '
-        Me.Codigo.DataPropertyName = "Codigo"
-        Me.Codigo.FillWeight = 145.4872!
-        Me.Codigo.HeaderText = "Codigo"
-        Me.Codigo.Name = "Codigo"
-        Me.Codigo.ReadOnly = True
-        Me.Codigo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Minimo
-        '
-        Me.Minimo.DataPropertyName = "Stock_Minimo"
-        DataGridViewCellStyle1.Format = "N0"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.Minimo.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Minimo.FillWeight = 68.06424!
-        Me.Minimo.HeaderText = "Minimo"
-        Me.Minimo.Name = "Minimo"
-        Me.Minimo.ReadOnly = True
-        Me.Minimo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Actual
-        '
-        Me.Actual.DataPropertyName = "Stock_Actual"
-        DataGridViewCellStyle2.Format = "N0"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.Actual.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Actual.FillWeight = 66.77616!
-        Me.Actual.HeaderText = "Actual"
-        Me.Actual.Name = "Actual"
-        Me.Actual.ReadOnly = True
-        Me.Actual.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Optimo
-        '
-        Me.Optimo.DataPropertyName = "Stock_Optimo"
-        DataGridViewCellStyle3.Format = "N0"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.Optimo.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Optimo.FillWeight = 65.48048!
-        Me.Optimo.HeaderText = "Optimo"
-        Me.Optimo.Name = "Optimo"
-        Me.Optimo.ReadOnly = True
-        Me.Optimo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Sucursal
-        '
-        Me.Sucursal.DataPropertyName = "Sucursal"
-        Me.Sucursal.FillWeight = 105.0265!
-        Me.Sucursal.HeaderText = "Sucursal"
-        Me.Sucursal.Name = "Sucursal"
-        Me.Sucursal.ReadOnly = True
-        Me.Sucursal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Modificado
-        '
-        Me.Modificado.DataPropertyName = "Modificado"
-        Me.Modificado.HeaderText = "Modificado"
-        Me.Modificado.Name = "Modificado"
-        Me.Modificado.ReadOnly = True
-        Me.Modificado.Visible = False
-        '
-        'Modificar
-        '
-        Me.Modificar.FillWeight = 55.83759!
-        Me.Modificar.HeaderText = "Modificar"
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.ToolTipText = "Modificar"
-        '
-        'Eliminar
-        '
-        Me.Eliminar.FillWeight = 56.86678!
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        Me.Eliminar.ToolTipText = "Eliminar"
         '
         'TabAlta
         '
@@ -391,8 +284,8 @@ Partial Class frmStock
         'GB_Alta
         '
         Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Alta.Controls.Add(Me.Cb_Sucursales)
         Me.GB_Alta.Controls.Add(Me.Btn_BuscarCodigo)
         Me.GB_Alta.Controls.Add(Me.txt_Codigo)
@@ -559,8 +452,8 @@ Partial Class frmStock
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.GroupBox3)
         Me.GroupBox1.Controls.Add(Me.Gb_Mod)
         Me.GroupBox1.Controls.Add(Me.Cb_Sucursales_mod)
@@ -880,6 +773,117 @@ Partial Class frmStock
         Me.ToolStock.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolStock.ToolTipTitle = "Ayuda"
         '
+        'id_Stock
+        '
+        Me.id_Stock.DataPropertyName = "id_Stock"
+        Me.id_Stock.FillWeight = 145.4872!
+        Me.id_Stock.HeaderText = "ID"
+        Me.id_Stock.Name = "id_Stock"
+        Me.id_Stock.ReadOnly = True
+        Me.id_Stock.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Codigo
+        '
+        Me.Codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Codigo.DataPropertyName = "Codigo"
+        Me.Codigo.FillWeight = 145.4872!
+        Me.Codigo.HeaderText = "Codigo"
+        Me.Codigo.Name = "Codigo"
+        Me.Codigo.ReadOnly = True
+        Me.Codigo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Codigo.Width = 65
+        '
+        'PRODUCTO
+        '
+        Me.PRODUCTO.DataPropertyName = "Nombre"
+        Me.PRODUCTO.FillWeight = 145.4872!
+        Me.PRODUCTO.HeaderText = "Producto"
+        Me.PRODUCTO.Name = "PRODUCTO"
+        Me.PRODUCTO.ReadOnly = True
+        Me.PRODUCTO.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Categoria
+        '
+        Me.Categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Categoria.DataPropertyName = "Cat"
+        Me.Categoria.FillWeight = 145.4872!
+        Me.Categoria.HeaderText = "Categoria"
+        Me.Categoria.Name = "Categoria"
+        Me.Categoria.ReadOnly = True
+        Me.Categoria.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Categoria.Width = 84
+        '
+        'Minimo
+        '
+        Me.Minimo.DataPropertyName = "Stock_Minimo"
+        DataGridViewCellStyle1.Format = "N0"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.Minimo.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Minimo.FillWeight = 68.06424!
+        Me.Minimo.HeaderText = "Minimo"
+        Me.Minimo.Name = "Minimo"
+        Me.Minimo.ReadOnly = True
+        Me.Minimo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Actual
+        '
+        Me.Actual.DataPropertyName = "Stock_Actual"
+        DataGridViewCellStyle2.Format = "N0"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.Actual.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Actual.FillWeight = 66.77616!
+        Me.Actual.HeaderText = "Actual"
+        Me.Actual.Name = "Actual"
+        Me.Actual.ReadOnly = True
+        Me.Actual.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Optimo
+        '
+        Me.Optimo.DataPropertyName = "Stock_Optimo"
+        DataGridViewCellStyle3.Format = "N0"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.Optimo.DefaultCellStyle = DataGridViewCellStyle3
+        Me.Optimo.FillWeight = 65.48048!
+        Me.Optimo.HeaderText = "Optimo"
+        Me.Optimo.Name = "Optimo"
+        Me.Optimo.ReadOnly = True
+        Me.Optimo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Sucursal
+        '
+        Me.Sucursal.DataPropertyName = "Sucursal"
+        Me.Sucursal.FillWeight = 105.0265!
+        Me.Sucursal.HeaderText = "Sucursal"
+        Me.Sucursal.Name = "Sucursal"
+        Me.Sucursal.ReadOnly = True
+        Me.Sucursal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Modificado
+        '
+        Me.Modificado.DataPropertyName = "Modificado"
+        Me.Modificado.HeaderText = "Modificado"
+        Me.Modificado.Name = "Modificado"
+        Me.Modificado.ReadOnly = True
+        Me.Modificado.Visible = False
+        '
+        'Modificar
+        '
+        Me.Modificar.FillWeight = 55.83759!
+        Me.Modificar.HeaderText = "Modificar"
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.ToolTipText = "Modificar"
+        '
+        'Eliminar
+        '
+        Me.Eliminar.FillWeight = 56.86678!
+        Me.Eliminar.HeaderText = "Eliminar"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        Me.Eliminar.ToolTipText = "Eliminar"
+        '
         'frmStock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -975,9 +979,9 @@ Partial Class frmStock
     Friend WithEvents txt_Motivo As System.Windows.Forms.TextBox
     Friend WithEvents lbl_Motivo As System.Windows.Forms.Label
     Friend WithEvents id_Stock As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Codigo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents PRODUCTO As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Categoria As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Codigo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Minimo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Actual As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Optimo As System.Windows.Forms.DataGridViewTextBoxColumn

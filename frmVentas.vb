@@ -24,6 +24,7 @@ Public Class frmVentas
     Dim id_Sucursal As Integer
     Dim Nombre_Sucursal As String
     Dim ProductoCantidadAnterior As Integer
+    Dim dsProductos As DataSet
     Public NotaPedido As NotaPedido
 
 
@@ -47,6 +48,23 @@ Public Class frmVentas
 
     'Funcion que agrega un nuevo item al DATAGRID - Tipo: 1-ID | 2-CODIGO DE BARRA | 3-CODIGO - TipoAccion: 1-Venta | 2-Cambio
     Public Sub AgregarItem(ByVal Numero As String, ByVal Tipo As Integer, Optional ByVal TipoAccion As Integer = 1)
+
+        If Tipo = 1 Then 'Si manda el ID
+            Dim id_Producto = Numero
+            EntProducto = NegProductos.TraerProducto(id_Producto) 'Traigo el producto.      
+        ElseIf Tipo = 2 Then 'Si manda el CODIGO DE BARRA
+            Dim CodigoBarras = Numero
+            EntProducto = NegProductos.TraerProductoPorCodBarra(CodigoBarras) 'Traigo el producto.      
+        Else 'Si manda el CODIGO DE PRODUCTO
+            Dim CODIGO = Numero
+            EntProducto = NegProductos.TraerProductoPorCodigo(CODIGO) 'Traigo el producto.      
+        End If
+
+        AgregarItem(EntProducto, TipoAccion)
+
+    End Sub
+
+    Public Sub AgregarItem(ByVal EntProducto As Entidades.Productos, Optional ByVal TipoAccion As Integer = 1)
         Try
             'Seteo el cursor.
             Me.Cursor = Cursors.WaitCursor
@@ -58,21 +76,6 @@ Public Class frmVentas
             Dim cantidad As Integer = 1
             Dim subtotal As Double = 0
             Dim Repetido As Boolean = False
-            'Dim SinStock As Boolean = False
-            Dim CodigoBarras As String
-            Dim id_Producto As Integer
-            Dim Codigo As String = ""
-
-            If Tipo = 1 Then 'Si manda el ID
-                id_Producto = Numero
-                EntProducto = NegProductos.TraerProducto(id_Producto) 'Traigo el producto.      
-            ElseIf Tipo = 2 Then 'Si manda el CODIGO DE BARRA
-                CodigoBarras = Numero
-                EntProducto = NegProductos.TraerProductoPorCodBarra(CodigoBarras) 'Traigo el producto.      
-            Else 'Si manda el CODIGO DE PRODUCTO
-                Codigo = Numero
-                EntProducto = NegProductos.TraerProductoPorCodigo(Codigo) 'Traigo el producto.      
-            End If
 
             'Si no encuentra el producto, sale de la funcion.
             If EntProducto.id_Producto = 0 Then
@@ -371,13 +374,17 @@ Public Class frmVentas
     End Sub
 
     'Si desea buscar un producto, se visualiza el formulario.
-    Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar.Click
+    Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
         Me.Cursor = Cursors.WaitCursor
-        Dim frmBuscarProducto As frmBuscarProducto = New frmBuscarProducto()
-        frmBuscarProducto.ShowDialog()
-        If (Not String.IsNullOrEmpty(frmBuscarProducto.idProducto)) Then
-            AgregarItem(frmBuscarProducto.idProducto, 1)
+
+        Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper()).FirstOrDefault()
+        If (dr IsNot Nothing) Then
+            AgregarItem(dr(3), 1)
+        Else
+            MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+
+
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -459,6 +466,9 @@ Public Class frmVentas
         Dim DsVendedores As New DataSet
         DsVendedores = NegEmpleados.ListadoVendedoresSucursal(id_Sucursal)
 
+        'Agrego los Encagados a la lista de vendedores ya que un encargado puede participar de la venta como vendedor
+        DsVendedores.Tables(0).Merge(DsEncargados.Tables(0))
+
         If DsVendedores.Tables(0).Rows.Count > 0 Then
             Cb_Vendedores.DataSource = Nothing
             Cb_Vendedores.DataSource = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsVendedores, "Seleccione un vendedor...")
@@ -497,6 +507,18 @@ Public Class frmVentas
         If (NotaPedido IsNot Nothing) Then
             CargarNotaPedido()
         End If
+
+        'Obtengo el listado de productos
+        dsProductos = NegProductos.ListadoProductosBuscadores()
+
+        'Armo una lista que contiene los nombres y codigos de todos los producto
+        Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
+
+        listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Nombre").ToString).ToArray())
+        listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Codigo").ToString).ToArray())
+
+        txt_CodigoBarra.AutoCompleteCustomSource = listaNombreCodigoProductos
+
     End Sub
 
     'Carga la venta con la nota de pedido
@@ -785,15 +807,10 @@ Public Class frmVentas
                 Else
                     'Tiene asignado vendedor.
                     If MessageBox.Show("¿Ésta seguro que desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                        'Si el total es mayor que cero y el Monto excede el máximo permitido para facturar, aviso al usuario
-                        If MontoTotal > 0 And CDbl(MontoTotal) > CDbl(My.Settings("ControladorMontoTope")) Then
-                            MessageBox.Show("La venta excede el máximo permitido para facturación. El pedido no podrá ser facturado.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        If (MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                            Facturar = True
                         Else
-                            If (MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
-                                Facturar = True
-                            Else
-                                Facturar = False
-                            End If
+                            Facturar = False
                         End If
 
                         'Si el tipo de pago es cheque abro la ventana para cargar ingresar el cheque
@@ -910,9 +927,9 @@ Public Class frmVentas
                                     MessageBox.Show("La note de pedido no se a podido eliminar de forma automática.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                 Else
                                     Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
+                                    'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
                                     frmNotaPedido.RemoverNotaPedido(NotaPedido)
                                 End If
-
                             End If
 
                             'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
@@ -936,7 +953,7 @@ Public Class frmVentas
                             'Muestro Mensaje.
                             MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
-                    End If
+                End If
                 End If
             End If
         Catch ex As Exception

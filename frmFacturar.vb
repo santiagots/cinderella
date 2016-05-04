@@ -1,4 +1,7 @@
-﻿Public Class frmFacturar
+﻿Imports System.Linq
+
+
+Public Class frmFacturar
     Dim NegCondicionesIva As New Negocio.NegCondicionesIva
     Dim NegFacturacion As New Negocio.NegFacturacion
     Dim NegVentas As New Negocio.NegVentas
@@ -65,6 +68,7 @@
         lbl_Descuento.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
         lbl_Subtotal.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
         lbl_TipoPago.Text = TipoPago
+        Cb_TipoFacturacion.Items.Clear()
 
         'Default de Botonera.
         Cb_IVA.SelectedIndex = 1
@@ -106,6 +110,9 @@
             txt_Localidad.Text = If(localidad Is Nothing, "", localidad.ItemArray(2))
             txt_Cuit.Text = cliente.Cuit.Replace("-", "")
         End If
+
+        'verifico que el monto a facturar no supere los limites permitidos
+        ValidarMontoTopeFacturacion()
     End Sub
 
     'Click en Facturar!
@@ -314,6 +321,11 @@
         Else
             GB_FacturacionManual.Enabled = False
         End If
+
+        lblError.Enabled = True
+
+        'verifico que el monto a facturar no supere los limites permitidos
+        ValidarMontoTopeFacturacion()
     End Sub
 
     Private Sub txt_NumeroFacturaManual_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_NumeroFacturaManual.KeyPress
@@ -471,6 +483,31 @@
         NegControlador.CerrarPuerto()
         Return False
     End Function
+
+    Private Sub ValidarMontoTopeFacturacion()
+
+        'Si la pantalla esta en modo facturacion
+        If (Not NotaCredito) Then
+            Dim errorMontoTope As Boolean = False
+
+            If (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Manual And Monto > My.Settings.MontoTopeFacturacionManual) Then
+                errorMontoTope = True
+            ElseIf (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Electronica And Monto > My.Settings.MontoTopeFacturacionElectronica) Then
+                errorMontoTope = True
+            ElseIf (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Ticket And Monto > My.Settings.MontoTopeFaturacionTicket) Then
+                errorMontoTope = True
+            End If
+
+            If (errorMontoTope) Then
+                lblError.Visible = True
+                btnFacturar.Enabled = False
+            Else
+                lblError.Visible = False
+                btnFacturar.Enabled = True
+            End If
+        End If
+
+    End Sub
 
     Private Sub txt_Comprobante_Origen_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Comprobante_Origen.KeyPress
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))

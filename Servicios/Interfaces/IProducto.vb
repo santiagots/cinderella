@@ -5,6 +5,9 @@
 Public Interface IProducto
 
     <OperationContract()>
-    Function GetProducto(ByVal codigoProducto As String) As EntidadProducto
+    Function GetLista() As List(Of EntidadProductoReducido)
+
+    <OperationContract()>
+    Function GetProducto(ByVal IdProducto As Integer) As EntidadProducto
 
 End Interface

@@ -148,13 +148,13 @@
                 DG_Stock.AutoGenerateColumns = False
                 DG_Stock.ColumnHeadersVisible = True
                 DG_Stock.Columns("id_Stock").Visible = False
-                DG_Stock.Columns("Codigo").Visible = False
-                DG_Stock.Columns("Categoria").Visible = False
-                DG_Stock.Columns("Producto").DisplayIndex = 1
-                DG_Stock.Columns("Sucursal").DisplayIndex = 2
-                DG_Stock.Columns("Minimo").DisplayIndex = 3
-                DG_Stock.Columns("Actual").DisplayIndex = 4
-                DG_Stock.Columns("Optimo").DisplayIndex = 5
+                DG_Stock.Columns("Codigo").DisplayIndex = 1
+                DG_Stock.Columns("Categoria").DisplayIndex = 2
+                DG_Stock.Columns("Producto").DisplayIndex = 3
+                DG_Stock.Columns("Sucursal").DisplayIndex = 4
+                DG_Stock.Columns("Minimo").DisplayIndex = 5
+                DG_Stock.Columns("Actual").DisplayIndex = 6
+                DG_Stock.Columns("Optimo").DisplayIndex = 7
                 DG_Stock.Columns("Modificar").DisplayIndex = 9
                 DG_Stock.Columns("Eliminar").DisplayIndex = 9
                 DG_Stock.Refresh()
@@ -250,13 +250,13 @@
                 DG_Stock.AutoGenerateColumns = False
                 DG_Stock.ColumnHeadersVisible = True
                 DG_Stock.Columns("id_Stock").Visible = False
-                DG_Stock.Columns("Codigo").Visible = False
-                DG_Stock.Columns("Categoria").DisplayIndex = 1
-                DG_Stock.Columns("Producto").DisplayIndex = 2
-                DG_Stock.Columns("Sucursal").DisplayIndex = 3
-                DG_Stock.Columns("Minimo").DisplayIndex = 4
-                DG_Stock.Columns("Actual").DisplayIndex = 5
-                DG_Stock.Columns("Optimo").DisplayIndex = 6
+                DG_Stock.Columns("Codigo").DisplayIndex = 1
+                DG_Stock.Columns("Categoria").DisplayIndex = 2
+                DG_Stock.Columns("Producto").DisplayIndex = 3
+                DG_Stock.Columns("Sucursal").DisplayIndex = 4
+                DG_Stock.Columns("Minimo").DisplayIndex = 5
+                DG_Stock.Columns("Actual").DisplayIndex = 6
+                DG_Stock.Columns("Optimo").DisplayIndex = 7
                 DG_Stock.Columns("Modificar").DisplayIndex = 9
                 DG_Stock.Columns("Eliminar").DisplayIndex = 9
                 DG_Stock.Refresh()
@@ -378,13 +378,13 @@
                 DG_Stock.AutoGenerateColumns = False
                 DG_Stock.ColumnHeadersVisible = True
                 DG_Stock.Columns("id_Stock").Visible = False
-                DG_Stock.Columns("Codigo").Visible = False
-                DG_Stock.Columns("Categoria").DisplayIndex = 1
-                DG_Stock.Columns("Producto").DisplayIndex = 2
-                DG_Stock.Columns("Sucursal").DisplayIndex = 3
-                DG_Stock.Columns("Minimo").DisplayIndex = 4
-                DG_Stock.Columns("Actual").DisplayIndex = 5
-                DG_Stock.Columns("Optimo").DisplayIndex = 6
+                DG_Stock.Columns("Codigo").DisplayIndex = 1
+                DG_Stock.Columns("Categoria").DisplayIndex = 2
+                DG_Stock.Columns("Producto").DisplayIndex = 3
+                DG_Stock.Columns("Sucursal").DisplayIndex = 4
+                DG_Stock.Columns("Minimo").DisplayIndex = 5
+                DG_Stock.Columns("Actual").DisplayIndex = 6
+                DG_Stock.Columns("Optimo").DisplayIndex = 7
                 DG_Stock.Columns("Modificar").DisplayIndex = 9
                 DG_Stock.Columns("Eliminar").DisplayIndex = 9
                 DG_Stock.Refresh()

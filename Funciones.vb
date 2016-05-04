@@ -164,7 +164,7 @@ Public Class Funciones
         End If
     End Sub
 
-    Sub ActualizarNotasPedidos()
+    Sub ActualizarNotasPedidos(Optional ByVal mostrarAlerta As Boolean = True)
         If My.Settings.Internet Then 'Internet Permitido.
             'Si hay conexion compruebo los cheques
             If VariablesGlobales.HayConexion Then
@@ -175,17 +175,18 @@ Public Class Funciones
                     MDIContenedor.Menu_NotaPedido.ToolTipText = "Hace click aquí si deseas ir al administrador de notas de pedidos."
                     MDIContenedor.Menu_NotaPedido.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
 
-                    'Form Notify.
-                    ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
-                    frmNotificaciones.lblConexion.Text = "(" & notaPedidos.Count & ") Notas de pedidos pendientes."
-                    frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Mi_Cuenta_Salir
-                    frmNotificaciones.Text = "(" & notaPedidos.Count & ") Notas de pedidos."
+                    If (mostrarAlerta) Then
+                        'Form Notify.
+                        ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
+                        frmNotificaciones.lblConexion.Text = "(" & notaPedidos.Count & ") Notas de pedidos pendientes."
+                        frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Mi_Cuenta_Salir
+                        frmNotificaciones.Text = "(" & notaPedidos.Count & ") Notas de pedidos."
 
-                    ControlInstancia(frmNotificaciones).Show()
+                        ControlInstancia(frmNotificaciones).Show()
 
-                    'Sonidito.
-                    SystemSounds.Asterisk.Play()
-
+                        'Sonidito.
+                        SystemSounds.Asterisk.Play()
+                    End If
                 Else
                     MDIContenedor.Menu_NotaPedido.Text = "(0) Notas de pedidos"
                     MDIContenedor.Menu_NotaPedido.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
@@ -232,10 +233,10 @@ Public Class Funciones
                 MDIContenedor.Menu_Mensajes.Text = "(-) Mensajes |"
                 MDIContenedor.Menu_Mensajes.ToolTipText = "No se pudo comprobar los Mensajes"
             End If
-        Else             
+        Else
             MDIContenedor.Menu_Mensajes.Text = "(-) Mensajes |"
             MDIContenedor.Menu_Mensajes.ToolTipText = "No se pudo comprobar los Mensajes"
-        End If        
+        End If
     End Sub
 
     Public Function IsValidEmail(ByVal email As String) As Boolean

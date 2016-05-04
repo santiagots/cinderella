@@ -3,6 +3,10 @@
 <ServiceBehavior(IncludeExceptionDetailInFaults:=True)>
 Public Class NotaPedido
     Implements INotaPedido
+
+    Public Delegate Sub NevaNotaPedidoDelegate(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
+    Public Shared Event onNevaNotaPedidoCompleted As NevaNotaPedidoDelegate
+
     Function SetNevaNotaPedido(ByVal EntNotaPedido As EntidadNotaPedido, EntDetalleNotaPedido As List(Of EntidadNotaPedido_Detalle), ByVal EntConsumidorFinal As EntidadConsumidorFinal) As Boolean Implements INotaPedido.SetNevaNotaPedido
         Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
         Dim ClienteNegocio As Negocio.NegClientes = New Negocio.NegClientes()
@@ -44,9 +48,11 @@ Public Class NotaPedido
         notaPedido.PrecioTotal = EntNotaPedido.PrecioTotal
         notaPedido.Vendida = EntNotaPedido.Vendida
 
-
-
         Dim AltaOk As Boolean = NotaPedidoNegocio.NuevaNotaPedido(notaPedido, detalleNotaPedido)
+
+        If (AltaOk) Then
+            RaiseEvent onNevaNotaPedidoCompleted(notaPedido, consumidorFinal)
+        End If
 
         Return AltaOk
     End Function

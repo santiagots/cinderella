@@ -46,7 +46,10 @@ Public Class frmConfiguracion
             RContrNO.Checked = False
         End If
         Cb_ConexionControladora.SelectedItem = My.Settings("ConexionControladora").ToString()
-        txt_MontoControlador.Text = My.Settings("ControladorMontoTope")
+        txt_MontoTopeTicket.Text = My.Settings.MontoTopeFaturacionTicket
+        txt_MontoTopeManual.Text = My.Settings.MontoTopeFacturacionManual
+        txt_MontoTopeElectronico.Text = My.Settings.MontoTopeFacturacionElectronica
+
         txt_MontoMaximoNotaCredito.Text = My.Settings("MontoMaximoNotaCredito")
 
         txt_PuntoVentaElectronica.Text = My.Settings.PuntoVentaFacturacionElectronica
@@ -153,14 +156,16 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If (RContrSI.Checked Or RContrNO.Checked) And (txt_MontoControlador.Text <> "" And txt_PuntoVentaControladora.Text <> "" And txt_PuntoVentaElectronica.Text <> "" And txt_PuntoVentaManual.Text <> "") Then
+            If (RContrSI.Checked Or RContrNO.Checked) And (txt_MontoTopeTicket.Text <> "" And txt_MontoTopeManual.Text <> "" And txt_PuntoVentaElectronica.Text <> "" And txt_PuntoVentaControladora.Text <> "" And txt_PuntoVentaElectronica.Text <> "" And txt_PuntoVentaManual.Text <> "") Then
                 If RContrSI.Checked Then
                     My.Settings.ControladorStatus = "SI"
                 Else
                     My.Settings.ControladorStatus = "NO"
                 End If
                 My.Settings.ConexionControladora = Cb_ConexionControladora.SelectedItem
-                My.Settings.ControladorMontoTope = Trim(txt_MontoControlador.Text)
+                My.Settings.MontoTopeFaturacionTicket = Trim(txt_MontoTopeTicket.Text)
+                My.Settings.MontoTopeFacturacionManual = Trim(txt_MontoTopeManual.Text)
+                My.Settings.MontoTopeFacturacionElectronica = Trim(txt_MontoTopeElectronico.Text)
                 My.Settings.MontoMaximoNotaCredito = Trim(txt_MontoMaximoNotaCredito.Text)
                 My.Settings.PuntoVentaFacturacionElectronica = Integer.Parse(Trim(txt_PuntoVentaElectronica.Text))
                 My.Settings.PuntoVentaFacturacionTicket = Integer.Parse(Trim(txt_PuntoVentaControladora.Text))
@@ -316,4 +321,7 @@ Public Class frmConfiguracion
         End If
     End Sub
 
+    Private Sub GroupBox9_Enter(sender As Object, e As EventArgs) Handles GroupBox9.Enter
+
+    End Sub
 End Class

@@ -45,7 +45,7 @@ Partial Class frmVentas
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
-        Me.Btn_Buscar = New System.Windows.Forms.Button()
+        Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
         Me.lbl_DescrTot = New System.Windows.Forms.Label()
         Me.Gb_Producto = New System.Windows.Forms.GroupBox()
@@ -213,6 +213,8 @@ Partial Class frmVentas
         '
         'txt_CodigoBarra
         '
+        Me.txt_CodigoBarra.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txt_CodigoBarra.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_CodigoBarra.Location = New System.Drawing.Point(229, 66)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
@@ -252,20 +254,20 @@ Partial Class frmVentas
         Me.ToolProd.SetToolTip(Me.Btn_Cancelar, "Cancela la venta actual.")
         Me.Btn_Cancelar.UseVisualStyleBackColor = True
         '
-        'Btn_Buscar
+        'Btn_Agregar
         '
-        Me.Btn_Buscar.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.Btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
-        Me.Btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Buscar.Location = New System.Drawing.Point(459, 22)
-        Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(103, 44)
-        Me.Btn_Buscar.TabIndex = 8
-        Me.Btn_Buscar.Text = "Buscar"
-        Me.Btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.Btn_Buscar, "Permite buscar productos en el sistema por nombre / código.")
-        Me.Btn_Buscar.UseVisualStyleBackColor = True
+        Me.Btn_Agregar.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
+        Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Agregar.Location = New System.Drawing.Point(459, 22)
+        Me.Btn_Agregar.Name = "Btn_Agregar"
+        Me.Btn_Agregar.Size = New System.Drawing.Size(103, 44)
+        Me.Btn_Agregar.TabIndex = 8
+        Me.Btn_Agregar.Text = "Agregar"
+        Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.Btn_Agregar, "Permite buscar productos en el sistema por nombre / código.")
+        Me.Btn_Agregar.UseVisualStyleBackColor = True
         '
         'lbl_CodigoBarra
         '
@@ -273,9 +275,9 @@ Partial Class frmVentas
         Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_CodigoBarra.Location = New System.Drawing.Point(10, 69)
         Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
-        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(213, 15)
+        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(169, 15)
         Me.lbl_CodigoBarra.TabIndex = 7
-        Me.lbl_CodigoBarra.Text = "Código de Barra / Código de Producto"
+        Me.lbl_CodigoBarra.Text = "Nombre / Código de Producto"
         '
         'lbl_DescrTot
         '
@@ -294,7 +296,7 @@ Partial Class frmVentas
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Producto.Controls.Add(Me.Label13)
         Me.Gb_Producto.Controls.Add(Me.Btn_Cambiar)
-        Me.Gb_Producto.Controls.Add(Me.Btn_Buscar)
+        Me.Gb_Producto.Controls.Add(Me.Btn_Agregar)
         Me.Gb_Producto.Controls.Add(Me.txt_CodigoBarra)
         Me.Gb_Producto.Controls.Add(Me.lbl_CodigoBarra)
         Me.Gb_Producto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -789,7 +791,7 @@ Partial Class frmVentas
     Friend WithEvents txt_CodigoBarra As System.Windows.Forms.TextBox
     Friend WithEvents Btn_Finalizar As System.Windows.Forms.Button
     Friend WithEvents Btn_Cancelar As System.Windows.Forms.Button
-    Friend WithEvents Btn_Buscar As System.Windows.Forms.Button
+    Friend WithEvents Btn_Agregar As System.Windows.Forms.Button
     Friend WithEvents lbl_CodigoBarra As System.Windows.Forms.Label
     Friend WithEvents lbl_DescrTot As System.Windows.Forms.Label
     Friend WithEvents Gb_Producto As System.Windows.Forms.GroupBox

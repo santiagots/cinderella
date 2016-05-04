@@ -8,9 +8,15 @@ Public Class frmNotaPedidoAdministracion
     Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
     Dim negEmpleados As NegEmpleados = New NegEmpleados()
     Dim negTiposPagos As NegTipoPago = New NegTipoPago()
+    Dim negCliente As NegClientes = New NegClientes()
+
+    Dim DsTiposPagos As New DataSet
+    Dim DsVendedores As New DataSet
 
     Private Sub NotaPedidoAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+            'Actualizo la lista de notas de pedidos cada vez que se genere una nota de pedido desde el servicio wcf
+            AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf UpdateNotaPedido
 
             'seteo el font a 8px
             dgvNotaPedidos.AlternatingRowsDefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -24,7 +30,6 @@ Public Class frmNotaPedidoAdministracion
             cmbTipoVenta.SelectedIndex = 0
 
             'Cargo el Combo de vendedores
-            Dim DsVendedores As New DataSet
             DsVendedores = negEmpleados.ListadoVendedoresSucursal(My.Settings.Sucursal)
             If DsVendedores.Tables(0).Rows.Count > 0 Then
                 cmbVendedor.DataSource = Nothing
@@ -39,7 +44,6 @@ Public Class frmNotaPedidoAdministracion
             End If
 
             'Cargo el Combo de Tipos de Pago
-            Dim DsTiposPagos As New DataSet
             DsTiposPagos = negTiposPagos.ListadoTiposPagos()
 
             If DsTiposPagos.Tables(0).Rows.Count > 0 Then
@@ -173,6 +177,9 @@ Public Class frmNotaPedidoAdministracion
                         MessageBox.Show("La note de pedido no se a podido eliminar. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Administración de Notas de Pedido", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Else
                         NotaPedidoBindingSource.RemoveAt(e.RowIndex) 'Elimino el item de la grilla
+
+                        'Actualizo el contador de notas de pedidos al pie de la pantalla
+                        Funciones.ActualizarNotasPedidos(False)
                     End If
 
                     'refresco el datagrid
@@ -183,10 +190,51 @@ Public Class frmNotaPedidoAdministracion
     End Sub
 
     Public Sub RemoverNotaPedido(ByVal notaPedido As NotaPedido)
+
+        'Actualizo el contador de notas de pedidos al pie de la pantalla
+        Funciones.ActualizarNotasPedidos(False)
+
         If (NotaPedidoBindingSource.List.Count > 1) Then
             NotaPedidoBindingSource.List.Remove(notaPedido)
+            NotaPedidoBindingSource.ResetBindings(False)
+            dgvNotaPedidos.Refresh()
         Else
             NotaPedidoBindingSource.DataSource = Nothing
         End If
+    End Sub
+
+    Private Sub UpdateNotaPedido(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
+
+        'completo la informacion faltante de la entidad NotaPedido que viene del servicios WCF
+        EntNotaPedido.ConsumidorFinalNombreYApellido = EntConsumidorFinal.Apellido & ", " & EntConsumidorFinal.Nombre
+        Dim empleado As DataRow = DsVendedores.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_Empleado") = EntNotaPedido.id_Empleado).FirstOrDefault()
+        If (empleado IsNot Nothing) Then
+            EntNotaPedido.EmpleadoNombreyApellido = empleado.Item("NombreCompleto")
+        Else
+            EntNotaPedido.EmpleadoNombreyApellido = String.Empty
+        End If
+        EntNotaPedido.RazonSocialCliente = negCliente.TraerCliente(EntNotaPedido.id_Cliente).RazonSocial
+
+        Dim tipoPago As DataRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_TipoPago") = EntNotaPedido.id_TipoVenta).FirstOrDefault()
+        If (tipoPago IsNot Nothing) Then
+            EntNotaPedido.TipoPagoDescripcion = tipoPago.Item("Descripcion")
+        Else
+            EntNotaPedido.TipoPagoDescripcion = String.Empty
+        End If
+
+        EntNotaPedido.TipoVentaDescripcion = If(EntNotaPedido.id_TipoVenta = 1, "Minorista", "Mayorista")
+
+        'Cargo los combos de banco
+        NotaPedidoBindingSource.List.Add(EntNotaPedido)
+
+        NotaPedidoBindingSource.ResetBindings(False)
+
+        'refresco el datagrid
+        dgvNotaPedidos.Refresh()
+    End Sub
+
+    Private Sub frmNotaPedidoAdministracion_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        'Quito el handler del servicio
+        RemoveHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf UpdateNotaPedido
     End Sub
 End Class

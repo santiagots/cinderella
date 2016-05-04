@@ -85,4 +85,18 @@ Public Class Listas
 
         Return respuesta
     End Function
+
+    Public Function Configuracion() As EntidadConfiguracion Implements ILista.Configuracion
+
+        Dim entCofiguracion As EntidadConfiguracion = New EntidadConfiguracion()
+
+        entCofiguracion.NombreSucursal = Host.NombreSucursal
+        entCofiguracion.NombreGrupoPrecio = Host.NombreListaPrecio
+        entCofiguracion.Id_Sucursal = Host.Id_Sucursal
+        entCofiguracion.Id_GrupoPrecio = Host.Id_GrupoPrecio
+
+        Return entCofiguracion
+
+    End Function
+
 End Class

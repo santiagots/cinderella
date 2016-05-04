@@ -180,13 +180,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("3000")>  _
-        Public Property ControladorMontoTope() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("25000")>  _
+        Public Property MontoTopeFaturacionTicket() As String
             Get
-                Return CType(Me("ControladorMontoTope"),String)
+                Return CType(Me("MontoTopeFaturacionTicket"),String)
             End Get
             Set
-                Me("ControladorMontoTope") = value
+                Me("MontoTopeFaturacionTicket") = value
             End Set
         End Property
         
@@ -378,6 +378,42 @@ Namespace My
             End Get
             Set
                 Me("TemporizadorNotasPedido") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("25000")>  _
+        Public Property MontoTopeFacturacionManual() As String
+            Get
+                Return CType(Me("MontoTopeFacturacionManual"),String)
+            End Get
+            Set
+                Me("MontoTopeFacturacionManual") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("25000")>  _
+        Public Property MontoTopeFacturacionElectronica() As String
+            Get
+                Return CType(Me("MontoTopeFacturacionElectronica"),String)
+            End Get
+            Set
+                Me("MontoTopeFacturacionElectronica") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3000")>  _
+        Public Property ControladorMontoTope() As String
+            Get
+                Return CType(Me("ControladorMontoTope"),String)
+            End Get
+            Set
+                Me("ControladorMontoTope") = value
             End Set
         End Property
     End Class

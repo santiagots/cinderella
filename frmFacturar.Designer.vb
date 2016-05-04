@@ -24,6 +24,8 @@ Partial Class frmFacturar
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFacturar))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txt_Pago = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.txt_Comprobante_Origen = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.lbl_Subtotal = New System.Windows.Forms.Label()
@@ -61,8 +63,7 @@ Partial Class frmFacturar
         Me.txt_NumeroFacturaManual = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.btnNotaCredito = New System.Windows.Forms.Button()
-        Me.txt_Pago = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
+        Me.lblError = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -106,6 +107,22 @@ Partial Class frmFacturar
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Información"
+        '
+        'txt_Pago
+        '
+        Me.txt_Pago.Location = New System.Drawing.Point(140, 146)
+        Me.txt_Pago.Name = "txt_Pago"
+        Me.txt_Pago.Size = New System.Drawing.Size(219, 21)
+        Me.txt_Pago.TabIndex = 24
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(7, 148)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(36, 15)
+        Me.Label16.TabIndex = 25
+        Me.Label16.Text = "Pago"
         '
         'txt_Comprobante_Origen
         '
@@ -396,7 +413,7 @@ Partial Class frmFacturar
         Me.GB_FacturacionManual.Controls.Add(Me.Label8)
         Me.GB_FacturacionManual.Location = New System.Drawing.Point(388, 89)
         Me.GB_FacturacionManual.Name = "GB_FacturacionManual"
-        Me.GB_FacturacionManual.Size = New System.Drawing.Size(367, 319)
+        Me.GB_FacturacionManual.Size = New System.Drawing.Size(367, 214)
         Me.GB_FacturacionManual.TabIndex = 3
         Me.GB_FacturacionManual.TabStop = False
         Me.GB_FacturacionManual.Text = "Información Facturación Manual"
@@ -468,27 +485,23 @@ Partial Class frmFacturar
         Me.btnNotaCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnNotaCredito.UseVisualStyleBackColor = True
         '
-        'txt_Pago
+        'lblError
         '
-        Me.txt_Pago.Location = New System.Drawing.Point(140, 146)
-        Me.txt_Pago.Name = "txt_Pago"
-        Me.txt_Pago.Size = New System.Drawing.Size(219, 21)
-        Me.txt_Pago.TabIndex = 24
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(7, 148)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(36, 15)
-        Me.Label16.TabIndex = 25
-        Me.Label16.Text = "Pago"
+        Me.lblError.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblError.ForeColor = System.Drawing.Color.Red
+        Me.lblError.Location = New System.Drawing.Point(396, 313)
+        Me.lblError.Name = "lblError"
+        Me.lblError.Size = New System.Drawing.Size(350, 85)
+        Me.lblError.TabIndex = 12
+        Me.lblError.Text = "Se ha alcanzado el máximo permitido para realizar una factura con el tipo de fact" & _
+    "uración seleccionada. Por favor, seleccione otro tipo de facturación."
         '
         'frmFacturar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(766, 465)
+        Me.Controls.Add(Me.lblError)
         Me.Controls.Add(Me.btnNotaCredito)
         Me.Controls.Add(Me.GB_FacturacionManual)
         Me.Controls.Add(Me.GroupBox3)
@@ -554,4 +567,5 @@ Partial Class frmFacturar
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txt_Pago As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents lblError As System.Windows.Forms.Label
 End Class

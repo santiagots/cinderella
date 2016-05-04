@@ -335,11 +335,14 @@ Public Class MDIContenedor
 
             Try
                 'Inicio los servicios WCF
-                Dim host As Host = New Host(My.Settings.IpHost, My.Settings.PuertoHost)
+                Dim host As Host = New Host(My.Settings.IpHost, My.Settings.PuertoHost, My.Settings.NombreSucursal, My.Settings.NombreListaPrecio, My.Settings.Sucursal, My.Settings.ListaPrecio)
                 host.Start()
             Catch ex As Exception
                 MessageBox.Show("Se produjo un error al iniciar el Host de servicios para los dispositivos móviles. Por favor, Comuníqueselo al administrador.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
+
+            'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
+            AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
             
             'Setea el nombre de la aplicacion.
             Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
@@ -1339,5 +1342,13 @@ Public Class MDIContenedor
             Funciones.ControlInstancia(frmNotaPedidoAdministracion).Show()
             Me.Cursor = Cursors.Arrow
         End If
+    End Sub
+
+    Private Sub NuevaNotaPedido(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
+
+        'abro la pantalla de notas de pedido
+        Menu_NotaPedido_Click(Nothing, New EventArgs())
+
+        Funciones.ActualizarNotasPedidos(False)
     End Sub
 End Class
