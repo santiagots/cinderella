@@ -46,16 +46,8 @@
                 RecargarListadoEncargado()
             End If
 
-            'Chequeo la patente.
-            '300 Pagar cuentas corrientes.
-            Dim objusuario As New Negocio.Usuario        
-            If (objusuario.EsPatenteValida(300, VariablesGlobales.Patentes)) Then
-                Btn_Pagar.Visible = True
-            Else
-                Btn_Pagar.Visible = False
-            End If
+            EvaluarPermisos()
 
-            'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
@@ -112,7 +104,7 @@
                 Me.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabCuenta.SelectedIndex = 1
+                TabCuenta.SelectedTab = TabCuenta.TabPages("TabDetalle")
             End If
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
@@ -188,7 +180,7 @@
                         Me.Cursor = Cursors.Arrow
 
                         'hago foco en el tab_modificacion 
-                        TabCuenta.SelectedIndex = 1
+                        TabCuenta.SelectedTab = TabCuenta.TabPages("TabDetalle")
                     End If
                 End If
             End If
@@ -259,7 +251,7 @@
                 Me.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabCuenta.SelectedIndex = 2
+                TabCuenta.SelectedTab = TabCuenta.TabPages("TabMercaderia")
             End If
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
@@ -279,7 +271,7 @@
 
     'Solapas.
     Private Sub TabCuenta_Selected(ByVal sender As Object, ByVal e As System.Windows.Forms.TabControlEventArgs) Handles TabCuenta.Selected
-        If TabCuenta.SelectedIndex = 0 Then 'TAB LISTADO.
+        If TabCuenta.SelectedTab.Name = "TabListado" Then 'TAB LISTADO.
             'Cambio el cursor a "WAIT"
             Me.Cursor = Cursors.WaitCursor
 
@@ -302,18 +294,18 @@
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
-        ElseIf TabCuenta.SelectedIndex = 1 Then 'TAB DETALLE.
+        ElseIf TabCuenta.SelectedTab.Name = "TabDetalle" Then 'TAB DETALLE.
             id_Merca = 0
             If id_Prov > 0 Or id_Prov <> Nothing Then
             Else
                 MessageBox.Show("Debe seleccionar previamente un proveedor.", "Cuenta Corriente con Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabCuenta.SelectedIndex = 0
+                TabCuenta.SelectedTab = TabCuenta.TabPages("TabListado")
             End If
-        ElseIf TabCuenta.SelectedIndex = 2 Then 'TAB DETALLE.
+        ElseIf TabCuenta.SelectedTab.Name = "TabMercaderia" Then 'TAB DETALLE.
             If id_Merca > 0 Or id_Merca <> Nothing Then
             Else
                 MessageBox.Show("Debe seleccionar previamente un detalle.", "Cuenta Corriente con Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabCuenta.SelectedIndex = 1
+                TabCuenta.SelectedTab = TabCuenta.TabPages("TabDetalle")
             End If
         End If
 
@@ -593,5 +585,28 @@
     '    DG_Cuentas2.Columns(e.ColumnIndex).Selected = True
     'End Sub
 
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Detalle)) Then
+
+        Else
+            TabCuenta.TabPages.Remove(TabCuenta.TabPages("TabDetalle"))
+            RemoveHandler DG_Cuentas2.CellDoubleClick, AddressOf DG_Cuentas2_CellDoubleClick
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Mercadería)) Then
+
+        Else
+            TabCuenta.TabPages.Remove(TabCuenta.TabPages("TabMercaderia"))
+            RemoveHandler DG_Detalle.CellDoubleClick, AddressOf DG_Detalle_CellDoubleClick
+
+
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Pagar)) Then
+            Btn_Pagar.Enabled = True
+        Else
+            Btn_Pagar.Enabled = False
+        End If
+    End Sub
     
 End Class

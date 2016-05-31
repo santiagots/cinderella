@@ -47,27 +47,7 @@
             DG_Subcategorias.Refresh()
         End If
 
-        'agregado para probar el funcionamiento de patentes
-        Dim objusuario As New Negocio.Usuario
-        '215 visualiza categorias - si llego aca puede visualizarlos
-        '213 crea categorias
-        If (objusuario.EsPatenteValida(149, VariablesGlobales.Patentes)) Then
-        Else
-            TabSubcategorias.TabPages.Remove(Me.TbAlta)
-        End If
-        '214 modifica categorias
-        If (objusuario.EsPatenteValida(150, VariablesGlobales.Patentes)) Then
-        Else
-            TabSubcategorias.TabPages.Remove(Me.TbMod)
-            DG_Subcategorias.Columns(1).Visible = False
-        End If
-        '216 elimina categorias
-        If (objusuario.EsPatenteValida(152, VariablesGlobales.Patentes)) Then
-        Else
-            TabSubcategorias.TabPages.Remove(Me.TbMod)
-            DG_Subcategorias.Columns(0).Visible = False
-            DG_Buscador.Columns("Eliminar_bus").Visible = False
-        End If
+        EvaluarPermisos()
 
         'Cambio el cursor a NORMAL.
         TabSubcategorias.Cursor = Cursors.Arrow
@@ -79,7 +59,7 @@
         TabSubcategorias.Cursor = Cursors.WaitCursor
 
         'Actualizo el datagrid si se selecciona el tab del listado o el tab de modificacion
-        If TabSubcategorias.SelectedIndex = 0 Then 'LISTADO
+        If TabSubcategorias.SelectedTab.Name = "TbListado" Then 'LISTADO
             'Limpio el Formulario
             LimpiarForm()
             'Cargo el listado de Categorias
@@ -93,7 +73,7 @@
                 DG_Subcategorias.Columns("Eliminar").DisplayIndex = 4
                 DG_Subcategorias.Refresh()
             End If
-        ElseIf TabSubcategorias.SelectedIndex = 1 Then 'ALTA
+        ElseIf TabSubcategorias.SelectedTab.Name = "TbAlta" Then 'ALTA
             'Limpio el Formulario
             LimpiarForm()
             txt_descripcion.Focus()
@@ -106,7 +86,7 @@
                 Cb_Categorias.Refresh()
             End If
 
-        ElseIf TabSubcategorias.SelectedIndex = 2 Then 'MODIFICACION
+        ElseIf TabSubcategorias.SelectedTab.Name = "TbMod" Then 'MODIFICACION
             'Cargo el listado de subcategorias
             If (NSubcategorias.ListadoSubcategoriasCompleto().Tables.Count <> 0) Then
                 DG_Buscador.DataSource = NSubcategorias.ListadoSubcategoriasCompleto().Tables(0)
@@ -221,7 +201,7 @@
             End If
 
             'hago foco en el tab_modificacion 
-            TabSubcategorias.SelectedIndex = 2
+            TabSubcategorias.SelectedTab = TabSubcategorias.TabPages("TbMod")
         End If
     End Sub
 
@@ -255,9 +235,9 @@
                 End If
 
                 'hago foco en el tab_modificacion 
-                TabSubcategorias.SelectedIndex = 2
+                TabSubcategorias.SelectedTab = TabSubcategorias.TabPages("TbMod")
                 DG_Buscador.Rows(1).Cells(0).Selected = False
-                DG_Buscador.Rows(e.RowIndex).Cells(0).Selected = True
+                DG_Buscador.Rows(e.RowIndex).Selected = True
             End If
         End If
     End Sub
@@ -290,12 +270,12 @@
                 ESubcategorias.id_Categoria = categoria
                 ESubcategorias.Habilitado = hab
 
-                Try
-                    'ejecuto el sp_AltaCategorias.
-                    MessageBox.Show(NSubcategorias.ModificacionSubcategorias(ESubcategorias), "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Catch ex As Exception
-                    MessageBox.Show("Se ha producido un error al modificar la subcategoría. Por favor, intente más tarde.", "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
+                'Try
+                '    'ejecuto el sp_AltaCategorias.
+                '    MessageBox.Show(NSubcategorias.ModificacionSubcategorias(ESubcategorias), "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                'Catch ex As Exception
+                '    MessageBox.Show("Se ha producido un error al modificar la subcategoría. Por favor, intente más tarde.", "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                'End Try
 
                 'seteo los controles en cero.
                 chk_Habilitado_mod.Checked = False
@@ -399,7 +379,7 @@
                 End If
 
                 'hago foco en el tab_modificacion 
-                TabSubcategorias.SelectedIndex = 2
+                TabSubcategorias.SelectedTab = TabSubcategorias.TabPages("TbMod")
             End If
         End If
     End Sub
@@ -425,6 +405,30 @@
                     DG_Buscador.Refresh()
                 End If
             End If
+        End If
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Crear)) Then
+
+        Else
+            TabSubcategorias.TabPages.Remove(TabSubcategorias.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Eliminar)) Then
+            DG_Subcategorias.Columns("Eliminar").Visible = True
+            DG_Buscador.Columns("Eliminar_bus").Visible = True
+        Else
+            DG_Subcategorias.Columns("Eliminar").Visible = False
+            DG_Buscador.Columns("Eliminar_bus").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Modificar)) Then
+            DG_Subcategorias.Columns("Modificar").Visible = True
+        Else
+            TabSubcategorias.TabPages.Remove(TabSubcategorias.TabPages("TbMod"))
+            DG_Subcategorias.Columns("Modificar").Visible = False
+            RemoveHandler DG_Subcategorias.CellDoubleClick, AddressOf DG_Subcategorias_CellDoubleClick
         End If
     End Sub
 End Class

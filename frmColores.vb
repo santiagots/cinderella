@@ -79,23 +79,23 @@
         Dim objusuario As New Negocio.Usuario
         '151 visualiza colores - si llego aca puede visualizarlos
         '149 crea color
-        If (objusuario.EsPatenteValida(149, VariablesGlobales.Patentes)) Then
-        Else
-            TabColores.TabPages.Remove(Me.TbAlta)
-        End If
-        '150 modifica color
-        If (objusuario.EsPatenteValida(150, VariablesGlobales.Patentes)) Then
-        Else
-            TabColores.TabPages.Remove(Me.TbMod)
-            DG_Colores.Columns("Modificar").Visible = False
-        End If
-        '152 elimina color
-        If (objusuario.EsPatenteValida(152, VariablesGlobales.Patentes)) Then
-        Else
-            TabColores.TabPages.Remove(Me.TbMod)
-            DG_Colores.Columns("Eliminar").Visible = False
-            DG_Buscador.Columns("Eliminar_bus").Visible = False
-        End If
+        'If (objusuario.EsPatenteValida(149, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabColores.TabPages.Remove(Me.TbAlta)
+        'End If
+        ''150 modifica color
+        'If (objusuario.EsPatenteValida(150, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabColores.TabPages.Remove(Me.TbMod)
+        '    DG_Colores.Columns("Modificar").Visible = False
+        'End If
+        ''152 elimina color
+        'If (objusuario.EsPatenteValida(152, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabColores.TabPages.Remove(Me.TbMod)
+        '    DG_Colores.Columns("Eliminar").Visible = False
+        '    DG_Buscador.Columns("Eliminar_bus").Visible = False
+        'End If
 
         'Cambio el cursor a NORMAL.
         TabColores.Cursor = Cursors.Arrow

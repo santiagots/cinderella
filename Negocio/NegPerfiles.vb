@@ -9,10 +9,6 @@ Public Class NegPerfiles
         Return ClsDatos.ConsultarBaseRemoto("execute sp_Perfiles_ListadoCompleto")
     End Function
 
-    Function ConsultarPerfil(ByVal id_Perfil As Integer) As DataSet
-        Return ClsDatos.ConsultarBaseRemoto("execute sp_Perfiles_Obtener @id_Perfil=" & id_Perfil)
-    End Function
-
     Function UltimoPerfil() As Integer
         Dim ds As DataSet
         If (HayInternet) Then
@@ -28,129 +24,64 @@ Public Class NegPerfiles
         End If
     End Function
 
-    Function AltaPerfiles(ByVal eperfiles As Entidades.Perfiles) As String
+    'Funcion agrega un nuevo perfil con sus correspondientes termisos.
+    Public Function InsertarPerfil(EntPatente As List(Of Entidades.Patentes), ByVal Descripcion As String, ByVal Habilitado As Boolean) As String
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim id_Perfil As Integer
-        Dim id_Patente As Integer
         Dim msg As String = ""
-        Dim checked_items As System.Windows.Forms.ListBox
-        checked_items = eperfiles.Patentes
+        Dim dt As DataTable = New DataTable()
+
+        'Cargo la informacion de la relacion entre la patente el perfil y la sucursal para pasarla por un campo al SP
+        dt.Columns.Add("id_Perfil", Type.GetType("System.Int32"))
+        dt.Columns.Add("id_Patente", Type.GetType("System.Int32"))
+        dt.Columns.Add("id_Sucursal", Type.GetType("System.Int32"))
+
+        For Each item As Entidades.Patentes In EntPatente
+            If (item.id_Sucursal <> -1) Then
+                dt.Rows.Add(item.id_Perfil, item.id_Patente, item.id_Sucursal)
+            Else
+                dt.Rows.Add(item.id_Perfil, item.id_Patente, DBNull.Value)
+            End If
+        Next
 
         Try
-            'inserto el perfil
-            cmd.Connection = ClsDatos.ConectarRemoto()
+            'Conecto a la bdd.
+            If HayInternet Then
+                cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
+            End If
+
+            'Cargo y ejecuto el stored.
             cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_AltaPerfiles"
+            cmd.CommandText = "sp_Perfiles_Alta"
             With cmd.Parameters
-                .AddWithValue("@descrip", eperfiles.Descripcion)
-                .AddWithValue("@hab", eperfiles.Habilitado)
+                .AddWithValue("@descripcion", Descripcion)
+                .AddWithValue("@habilitado", If(Habilitado, 1, 0))
             End With
+
+            'Declaro el tipo de dato para los permisos
+            Dim param = cmd.Parameters.AddWithValue("@Permisos", dt)
+            param.SqlDbType = SqlDbType.Structured
+            param.TypeName = "dbo.PERFIL_PATENTE_TYPE"
+
+            'Respuesta del stored.
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
             respuesta.Direction = ParameterDirection.Output
             cmd.Parameters.Add(respuesta)
             cmd.ExecuteNonQuery()
-            'desconecto la bdd
-            ClsDatos.DesconectarRemoto()
 
-            'Consulto cual fue el ultimo id ingresado.
-            id_Perfil = UltimoPerfil()
-
-            'inserto las patentes para el perfil
-            For Each iten In eperfiles.Patentes.Items
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = ClsDatos.ConectarRemoto()
-                id_Patente = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_AltaPerfilesPatentes"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Perfil", id_Perfil)
-                    .AddWithValue("@id_Patente", id_Patente)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
+            'Desconecto la bdd.
+            If HayInternet Then
                 ClsDatos.DesconectarRemoto()
-            Next
+            Else
+                ClsDatos.DesconectarLocal()
+            End If
 
-            'muestro el mensaje
+            'retorno valor
             Return respuesta.Value
         Catch ex As Exception
-            Return ex.Message
-        End Try
-    End Function
-
-    Function ModificacionPerfiles(ByVal eperfiles As Entidades.Perfiles) As String
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim id_Perfil As Integer
-        Dim id_Patente As Integer
-        Dim msg As String = ""
-        Dim checked_items As System.Windows.Forms.ListBox
-        checked_items = eperfiles.Patentes
-
-        Try
-            'MODIFICA EL PERFIL
-            cmd.Connection = ClsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_ModificacionPerfiles"
-            With cmd.Parameters
-                .AddWithValue("@id_Perfil", eperfiles.id_Perfil)
-                .AddWithValue("@descrip", eperfiles.Descripcion)
-                .AddWithValue("@hab", eperfiles.Habilitado)
-            End With
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-            ClsDatos.DesconectarRemoto()
-
-            'ELIMINO TODOS LAS PATENTES DEL PERFIL
-            'conecto la bdd
-            Dim cmd3 As New SqlCommand
-            cmd3.Connection = ClsDatos.ConectarRemoto()
-            cmd3.CommandType = CommandType.StoredProcedure
-            cmd3.CommandText = "sp_EliminarPerfilesPatentes"
-            With cmd3.Parameters
-                .AddWithValue("@id_Perfil", eperfiles.id_Perfil)
-            End With
-            Dim respuesta3 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta3.Direction = ParameterDirection.Output
-            cmd3.Parameters.Add(respuesta3)
-            cmd3.ExecuteNonQuery()
-            'desconecto la bdd
-            ClsDatos.DesconectarRemoto()
-
-            id_Perfil = eperfiles.id_Perfil
-
-            'INSERTO TODAS LAS PATENTES NUEVAS DEL PERFIL
-            'inserto las patentes para el perfil
-            For Each iten In eperfiles.Patentes.Items
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = ClsDatos.ConectarRemoto()
-                id_Patente = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_AltaPerfilesPatentes"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Perfil", eperfiles.id_Perfil)
-                    .AddWithValue("@id_Patente", id_Patente)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                ClsDatos.DesconectarRemoto()
-            Next
-
-            'muestro el mensaje
-            Return respuesta.Value
-        Catch ex As Exception
-            Return ex.Message
+            Return False
         End Try
     End Function
 

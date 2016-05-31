@@ -118,6 +118,7 @@
     <Compile Include="Stock.vb" />
     <Compile Include="Stock_Bitacora.vb" />
     <Compile Include="Sucursales.vb" />
+    <Compile Include="TipoPatente.vb" />
     <Compile Include="TipoPrecios.vb" />
     <Compile Include="Usuario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

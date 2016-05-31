@@ -42,23 +42,23 @@
         Dim objusuario As New Negocio.Usuario
         '203 visualiza Material - si llego aca puede visualizarlos
         '201 crear Material
-        If (objusuario.EsPatenteValida(201, VariablesGlobales.Patentes)) Then
-        Else
-            TabMateriales.TabPages.Remove(Me.TbAlta)
-        End If
-        '202 modificar Material
-        If (objusuario.EsPatenteValida(202, VariablesGlobales.Patentes)) Then
-        Else
-            TabMateriales.TabPages.Remove(Me.TbMod)
-            DG_Materiales.Columns(1).Visible = False
-        End If
-        '201 eliminar Material
-        If (objusuario.EsPatenteValida(201, VariablesGlobales.Patentes)) Then
-        Else
-            TabMateriales.TabPages.Remove(Me.TbMod)
-            DG_Materiales.Columns(0).Visible = False
-            DG_Buscador.Columns("Eliminar_bus").Visible = False
-        End If
+        'If (objusuario.EsPatenteValida(201, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabMateriales.TabPages.Remove(Me.TbAlta)
+        'End If
+        ''202 modificar Material
+        'If (objusuario.EsPatenteValida(202, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabMateriales.TabPages.Remove(Me.TbMod)
+        '    DG_Materiales.Columns(1).Visible = False
+        'End If
+        ''201 eliminar Material
+        'If (objusuario.EsPatenteValida(201, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabMateriales.TabPages.Remove(Me.TbMod)
+        '    DG_Materiales.Columns(0).Visible = False
+        '    DG_Buscador.Columns("Eliminar_bus").Visible = False
+        'End If
 
         'Cambio el cursor a NORMAL.
         TabMateriales.Cursor = Cursors.Arrow

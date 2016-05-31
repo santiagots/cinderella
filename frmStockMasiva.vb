@@ -195,7 +195,7 @@
         'Cambio el cursor a "WAIT"
         TabStock.Cursor = Cursors.WaitCursor
 
-        If TabStock.SelectedIndex = 0 Then 'TAB LISTADO DE STOCK
+        If TabStock.SelectedTab.Name = "TabListado" Then 'TAB LISTADO DE STOCK
 
             Dim dsMercaderias As New DataSet
             dsMercaderias = NegMercaderia.ListadoMercaderia(id_Sucursal)
@@ -217,7 +217,7 @@
             'Seteo el id_Stock en cero
             EMercaderia.id_Mercaderia = 0
 
-        ElseIf TabStock.SelectedIndex = 1 Then 'TAB ALTA DE STOCK
+        ElseIf TabStock.SelectedTab.Name = "TabAlta" Then 'TAB ALTA DE STOCK
 
             'Limpio el formulario de alta.
             LimpiarFormAltaStock()
@@ -232,12 +232,12 @@
             DG_Mercaderia.Columns("Stock_Actual").Visible = False
             DG_Mercaderia.Columns("id_Producto_2").Visible = False
 
-        ElseIf TabStock.SelectedIndex = 2 Then 'TAB MODIFICACION DE STOCK
+        ElseIf TabStock.SelectedTab.Name = "TabDetalle" Then 'TAB MODIFICACION DE STOCK
 
             If EMercaderia.id_Mercaderia > 0 Or EMercaderia.id_Mercaderia <> Nothing Then
             Else
                 MessageBox.Show("Debe seleccionar previamente un pedido.", "Administración de Stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabStock.SelectedIndex = 0
+                TabStock.SelectedTab = TabStock.TabPages("TabListado")
             End If
 
         End If
@@ -325,6 +325,8 @@
                 DG_Stock.DataSource = Nothing
                 lbl_Msg.Visible = True
             End If
+
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             TabStock.Cursor = Cursors.Arrow
@@ -621,7 +623,7 @@
                     lbl_MontoTotal2.Text = Format(CType(PrecioTotal, Decimal), "###0.00")
 
                     'hago foco en el tabDetalle 
-                    TabStock.SelectedIndex = 2
+                    TabStock.SelectedTab = TabStock.TabPages("TabDetalle")
                 End If
             End If
 
@@ -631,6 +633,21 @@
             TabStock.Cursor = Cursors.Arrow
             MessageBox.Show("No se pudo recuperar el pedido seleccionado.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Ingreso)) Then
+
+        Else
+            TabStock.TabPages.Remove(TabStock.TabPages("TabAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Modificar)) Then
+
+        Else
+            TabStock.TabPages.Remove(TabStock.TabPages("TabDetalle"))
+            RemoveHandler DG_Stock.CellDoubleClick, AddressOf DG_Stock_CellDoubleClick
+        End If
     End Sub
 #End Region
 

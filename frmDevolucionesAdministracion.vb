@@ -85,6 +85,8 @@
                 lbl_Msg.Visible = True
             End If
 
+            EvaluarPermisos()
+
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
@@ -286,7 +288,7 @@
             Me.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabVentas.SelectedIndex = 1
+            TabVentas.SelectedTab = TabVentas.TabPages("TbDetalle")
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error al obtener la devolución.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -384,5 +386,32 @@
 
         'Seteo el cursor.
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Visualizar)) Then
+
+        Else
+            TabVentas.TabPages.Remove(TabVentas.TabPages("TbDetalle"))
+            RemoveHandler DG_Devolucion.CellDoubleClick, AddressOf DG_Ventas_CellDoubleClick
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Anular)) Then
+            BtnAnular.Enabled = True
+        Else
+            BtnAnular.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_NotaCrédito)) Then
+            BtnNotaCredito.Enabled = True
+        Else
+            BtnNotaCredito.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Facturar)) Then
+            BtnEmitirFactura.Enabled = True
+        Else
+            BtnEmitirFactura.Enabled = False
+        End If
     End Sub
 End Class

@@ -37,295 +37,508 @@ Public Class MDIContenedor
         End If
     End Sub
 
-    Sub SetearVisualesPatentes()
-        Try
-            'Cursor
-            Me.Cursor = Cursors.WaitCursor
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración)) Then
+            ToolsMenu.Visible = True
+        Else
+            ToolsMenu.Visible = False
+        End If
 
-            'Total de Patentes
-            Dim TotalPatentes As Integer = 25
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Modificar_Salida) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Visualizar_Exportar)) Then
+            AdministraciónToolStripMenuItem2.Visible = True
+        Else
+            AdministraciónToolStripMenuItem2.Visible = False
+        End If
 
-            'Muestro todas las barras
-            Me.MenuSuperior.Visible = True
-            Me.MenuInferior.Visible = True
-            Me.MenuAccesosRapidos.Visible = True
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Alta)) Then
+            AltaToolStripMenuItem.Visible = True
+        Else
+            AltaToolStripMenuItem.Visible = False
+        End If
 
-            'Muestro el form de espera..
-            frmCargadorAltaProductos.Show()
-            frmCargadorAltaProductos.Text = "Cargando Patentes del Usuario " & VariablesGlobales.objUsuario.Usuario & " ..."
-            frmCargadorAltaProductos.BarraProgreso.Minimum = 0
-            frmCargadorAltaProductos.BarraProgreso.Maximum = TotalPatentes
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Modificar_Salida) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Visualizar_Exportar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Alta)) Then
+            ChequesToolStripMenuItem.Visible = True
+            Menu_ChequesVencer.Visible = True
+        Else
+            ChequesToolStripMenuItem.Visible = False
+            Menu_ChequesVencer.Visible = False
+        End If
 
-            'Dependiendo de las patentes del usuario muestro u oculto los botones.
-            'AROMAS
-            If Not (objusuario.EsPatenteValida(207, VariablesGlobales.Patentes)) Then
-                Me.Btn_AromasMenu.Visible = False
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Eliminar)) Then
+            Btn_ClientesMenu.Visible = True
+        Else
+            Btn_ClientesMenu.Visible = False
+        End If
 
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Anular) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_NotaCrédito) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Facturar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Devolución)) Then
+            Btn_DevolucionesMenu.Visible = True
+        Else
+            Btn_DevolucionesMenu.Visible = False
+        End If
 
-            'RECIBOS DE SUELDO
-            If Not (objusuario.EsPatenteValida(232, VariablesGlobales.Patentes)) Then
-                Me.ReciboDeSueldoToolStripMenuItem.Visible = False
-            Else
-                Me.ReciboDeSueldoToolStripMenuItem.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Anular) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_NotaCrédito) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Facturar)) Then
+            AdministracionDevolucionesMenu.Visible = True
+        Else
+            AdministracionDevolucionesMenu.Visible = False
+        End If
 
-            'MOVIMIENTOS
-            If Not (objusuario.EsPatenteValida(233, VariablesGlobales.Patentes)) Then
-                Me.MovimientosToolStripMenuItem.Visible = False
-                Me.HistorialDeDifCajaToolStripMenuItem.Visible = False
-                Me.AccesoCajaFuerte.Visible = False
-                Me.AccesoGastos.Visible = False
-                Me.AccesoEgresos.Visible = False
-                Me.AccesoDiferencia.Visible = False
-                Me.AccesoImpuestos.Visible = False
-                Me.AccesoRetiro.Visible = False
-                Me.AccesoMovimientos.Visible = False
-            Else
-                Me.MovimientosToolStripMenuItem.Visible = True
-                Me.HistorialDeDifCajaToolStripMenuItem.Visible = True
-                Me.AccesoCajaFuerte.Visible = True
-                Me.AccesoGastos.Visible = True
-                Me.AccesoEgresos.Visible = True
-                Me.AccesoDiferencia.Visible = True
-                Me.AccesoImpuestos.Visible = True
-                Me.AccesoRetiro.Visible = True
-                Me.AccesoMovimientos.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Devolución)) Then
+            DevolucionesMenu.Visible = True
+            AccesoCambios.Visible = True
+        Else
+            DevolucionesMenu.Visible = False
+            AccesoCambios.Visible = False
+        End If
 
-            'REGISTROS DE EMPLEADOS
-            If Not (objusuario.EsPatenteValida(229, VariablesGlobales.Patentes)) Then
-                Me.RegistroDeEmpleadosToolStripMenuItem.Visible = False
-            Else
-                Me.RegistroDeEmpleadosToolStripMenuItem.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Modificar)) Then
+            AdmDeEmpleadosToolStripMenuItem.Visible = True
+        Else
+            AdmDeEmpleadosToolStripMenuItem.Visible = False
+        End If
 
-            'COLORES
-            If Not (objusuario.EsPatenteValida(151, VariablesGlobales.Patentes)) Then
-                Me.Btn_ColoresMenu.Visible = False
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_EstadoCuenta)) Then
+            VisualizaciónDeSaldoToolStripMenuItem.Visible = True
+        Else
+            VisualizaciónDeSaldoToolStripMenuItem.Visible = False
+        End If
 
-            'MATERIALES
-            If Not (objusuario.EsPatenteValida(203, VariablesGlobales.Patentes)) Then
-                Me.Btn_MaterialesMenu.Visible = False
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_PagoAdicionales)) Then
+            AdicionalesToolStripMenuItem.Visible = True
+        Else
+            AdicionalesToolStripMenuItem.Visible = False
+        End If
 
-            'PRODUCTOS
-            If Not (objusuario.EsPatenteValida(11, VariablesGlobales.Patentes)) Then
-                Me.Btn_ProductosSubM.Visible = False
-                Me.AccesosProductos.Visible = False
-            Else
-                Me.Btn_ProductosSubM.Visible = True
-                Me.AccesosProductos.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_SueldoVacacionesAguinaldo)) Then
+            ReciboDeSueldoToolStripMenuItem.Visible = True
+        Else
+            ReciboDeSueldoToolStripMenuItem.Visible = False
+        End If
 
-            'PLANILLAS
-            If Not (objusuario.EsPatenteValida(231, VariablesGlobales.Patentes)) Then
-                Me.Btn_PlanillasMenu.Visible = False
-            Else
-                Me.Btn_PlanillasMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Registro)) Then
+            RegistroDeEmpleadosToolStripMenuItem.Visible = True
+        Else
+            RegistroDeEmpleadosToolStripMenuItem.Visible = False
+        End If
 
-            'CAMBIOS Y DEVOLUCIONES
-            If Not (objusuario.EsPatenteValida(230, VariablesGlobales.Patentes)) Then
-                Me.Btn_DevolucionesMenu.Visible = False
-                Me.AccesoCambios.Visible = False
-            Else
-                Me.Btn_DevolucionesMenu.Visible = True
-                Me.AccesoCambios.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_EstadoCuenta) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_PagoAdicionales) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_SueldoVacacionesAguinaldo) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Registro)) Then
+            Btn_EmpleadosMenu.Visible = True
+        Else
+            Btn_EmpleadosMenu.Visible = False
+        End If
 
-            'PRODUCTOS - CATEGORIAS
-            If Not (objusuario.EsPatenteValida(211, VariablesGlobales.Patentes)) Then
-                Me.Btn_ProductosCatSubM.Visible = False
-            Else
-                Me.Btn_ProductosCatSubM.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Feriados)) Then
+            Btn_FeriadosMenu.Visible = True
+        Else
+            Btn_FeriadosMenu.Visible = False
+        End If
 
-            'PRODUCTOS - SUBCATEGORIAS
-            If Not (objusuario.EsPatenteValida(215, VariablesGlobales.Patentes)) Then
-                Me.Btn_ProductosSubcatSubM.Visible = False
-            Else
-                Me.Btn_ProductosSubcatSubM.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Etiquetas)) Then
+            Btn_EtiquetasMenu.Visible = True
+        Else
+            Btn_EtiquetasMenu.Visible = False
+        End If
 
-            'PRODUCTOS - ALTA MASIVA
-            If Not (objusuario.EsPatenteValida(222, VariablesGlobales.Patentes)) Then
-                Me.Btn_ProductosMasivosSubM.Visible = False
-                Me.AccesoMercaderias.Visible = False
-            Else
-                Me.Btn_ProductosMasivosSubM.Visible = True
-                Me.AccesoMercaderias.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_ListadodeMovimientos)) Then
+            ListadoDeMovimientosToolStripMenuItem.Visible = True
+            AccesoMovimientos.Visible = True
+        Else
+            ListadoDeMovimientosToolStripMenuItem.Visible = False
+            AccesoMovimientos.Visible = False
+        End If
 
-            'PROVEEDORES
-            If Not (objusuario.EsPatenteValida(218, VariablesGlobales.Patentes)) Then
-                Me.Btn_ProveedoresMenu.Visible = False
-            Else
-                Me.Btn_ProveedoresMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_Gastos)) Then
+            GastosToolStripMenuItem.Visible = True
+            AccesoGastos.Visible = True
+        Else
+            GastosToolStripMenuItem.Visible = False
+            AccesoGastos.Visible = False
+        End If
 
-            'PERFILES
-            If Not (objusuario.EsPatenteValida(155, VariablesGlobales.Patentes)) Then
-                Me.Btn_PerfilesMenu.Visible = False
-            Else
-                Me.Btn_PerfilesMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_EnvióOtrasSucursales)) Then
+            EgresosToolStripMenuItem.Visible = True
+            AccesoEgresos.Visible = True
+        Else
+            EgresosToolStripMenuItem.Visible = False
+            AccesoEgresos.Visible = False
+        End If
 
-            'CUENTAS CORRIENTES
-            If Not (objusuario.EsPatenteValida(299, VariablesGlobales.Patentes)) Then
-                Me.CuentaCorrienteToolStripMenuItem.Visible = False
-            Else
-                Me.CuentaCorrienteToolStripMenuItem.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_Impuestos)) Then
+            ImpuestosToolStripMenuItem.Visible = True
+            AccesoImpuestos.Visible = True
+        Else
+            ImpuestosToolStripMenuItem.Visible = False
+            AccesoImpuestos.Visible = False
+        End If
 
-            'USUARIOS
-            If Not (objusuario.EsPatenteValida(3, VariablesGlobales.Patentes)) Then
-                Me.Btn_UsuariosMenu.Visible = False
-            Else
-                Me.Btn_UsuariosMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_DiferenciaCaja)) Then
+            DifDeCajaToolStripMenuItem.Visible = True
+            AccesoDiferencia.Visible = True
+        Else
+            DifDeCajaToolStripMenuItem.Visible = False
+            AccesoDiferencia.Visible = False
+        End If
 
-            'RESUMEN DIARIO
-            If Not (objusuario.EsPatenteValida(298, VariablesGlobales.Patentes)) Then
-                Me.AccesoResumen.Visible = False
-            Else
-                Me.AccesoResumen.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_RetiroSocios)) Then
+            RetiroSociosToolStripMenuItem.Visible = True
+            AccesoRetiro.Visible = True
+        Else
+            RetiroSociosToolStripMenuItem.Visible = False
+            AccesoRetiro.Visible = False
+        End If
 
-            'SUCURSALES
-            If Not (objusuario.EsPatenteValida(225, VariablesGlobales.Patentes)) Then
-                Me.Btn_SucursalesMenu.Visible = False
-            Else
-                Me.Btn_SucursalesMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_CajaFuerte)) Then
+            CajaFuerteToolStripMenuItem.Visible = True
+            AccesoCajaFuerte.Visible = True
+        Else
+            CajaFuerteToolStripMenuItem.Visible = False
+            AccesoCajaFuerte.Visible = False
+        End If
 
-            'FERIADOS
-            If Not (objusuario.EsPatenteValida(227, VariablesGlobales.Patentes)) Then
-                Me.Btn_FeriadosMenu.Visible = False
-            Else
-                Me.Btn_FeriadosMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_ListadodeMovimientos) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_Gastos) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_EnvióOtrasSucursales) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_Impuestos) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_DiferenciaCaja) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_RetiroSocios) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_CajaFuerte)) Then
+            MovimientosToolStripMenuItem.Visible = True
+        Else
+            MovimientosToolStripMenuItem.Visible = False
+        End If
 
-            'CONFIGURACION DEL SISTEMA
-            If Not (objusuario.EsPatenteValida(217, VariablesGlobales.Patentes)) Then
-                Me.Btn_ConfiguracionMenu.Visible = False
-            Else
-                Me.Btn_ConfiguracionMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_NotaPedido_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_NotaPedido_Administración_Venta)) Then
+            NotaPedidoToolStripMenuItem.Visible = True
+            Menu_NotaPedido.Visible = True
+        Else
+            NotaPedidoToolStripMenuItem.Visible = False
+            Menu_NotaPedido.Visible = False
+        End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_AltaMasiva)) Then
+            Btn_ProductosMasivosSubM.Visible = True
+        Else
+            Btn_ProductosMasivosSubM.Visible = False
+        End If
 
-            'SINCRONIZACIÓN DE BDD
-            If Not (objusuario.EsPatenteValida(301, VariablesGlobales.Patentes)) Then
-                Me.Btn_SincronizaciónMenu.Visible = False
-            Else
-                Me.Btn_SincronizaciónMenu.Visible = True
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Exportar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Importar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Modificar)) Then
+            Btn_ProductosSubM.Visible = True
+            AccesosProductos.Visible = True
+        Else
+            Btn_ProductosSubM.Visible = False
+            AccesosProductos.Visible = False
+        End If
 
-            'STOCK
-            'Traigo todas las patentes dependiendo de la sucursal y el tipo
-            Dim Pat2 As DataSet = NegPatentes.ListadoPatentesPorTipo(2, 4, id_Sucursal)
-            If Pat2.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat2.Tables(0).Rows
-                    Dim id_Patente As Integer = CInt(p.item("id_Patente"))
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        Me.Btn_StockMenu.Visible = False
-                    Else
-                        Me.Btn_StockMenu.Visible = True
-                    End If
-                Next
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Precios)) Then
+            PreciosToolStripMenuItem.Visible = True
+        Else
+            PreciosToolStripMenuItem.Visible = False
+        End If
 
-            'EMPLEADOS
-            'Traigo todas las patentes dependiendo de la sucursal y el tipo
-            Dim Pat3 As DataSet = NegPatentes.ListadoPatentesPorTipo(3, 4, id_Sucursal)
-            If Pat3.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat3.Tables(0).Rows
-                    Dim id_Patente As Integer = CInt(p.item("id_Patente"))
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        Me.Btn_EmpleadosMenu.Visible = False
-                    Else
-                        Me.Btn_EmpleadosMenu.Visible = True
-                    End If
-                Next
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Modificar)) Then
+            Btn_ProductosCatSubM.Visible = True
+        Else
+            Btn_ProductosCatSubM.Visible = False
+        End If
 
-            'VENTAS
-            'Traigo todas las patentes dependiendo de la sucursal y el tipo
-            Dim Pat4 As DataSet = NegPatentes.ListadoPatentesPorTipo(4, 4, id_Sucursal)
-            If Pat4.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat4.Tables(0).Rows
-                    Dim id_Patente As Integer = CInt(p.item("id_Patente"))
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        Me.Btn_VentasMenu.Visible = False
-                        Me.AccesoVentas.Visible = False
-                    Else
-                        Me.Btn_VentasMenu.Visible = True
-                        Me.AccesoVentas.Visible = True
-                    End If
-                Next
-            End If
-            'Voy seteando la barra de progreso
-            frmCargadorAltaProductos.BarraProgreso.Value += 1
-            frmCargadorAltaProductos.Close()
-            frmCargadorAltaProductos.Dispose()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Modificar)) Then
+            Btn_ProductosSubcatSubM.Visible = True
+        Else
+            Btn_ProductosSubcatSubM.Visible = False
+        End If
 
-            'Cursor
-            Me.Cursor = Cursors.Arrow
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_AltaMasiva) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Exportar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Importar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Precios) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Subcategoría_Modificar)) Then
+            Btn_ProductosMenu.Visible = True
+        Else
+            Btn_ProductosMenu.Visible = False
+        End If
 
-        Catch ex As Exception
-            Me.Cursor = Cursors.Arrow
-            frmCargadorAltaProductos.Close()
-            frmCargadorAltaProductos.Dispose()
-        End Try
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Modificar)) Then
+            AdministraciónToolStripMenuItem1.Visible = True
+        Else
+            AdministraciónToolStripMenuItem1.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Detalle) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Mercadería) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Pagar)) Then
+            CuentaCorrienteToolStripMenuItem.Visible = True
+        Else
+            CuentaCorrienteToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Detalle) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Mercadería) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_CuentaCorriente_Pagar)) Then
+            Btn_ProveedoresMenu.Visible = True
+        Else
+            Btn_ProveedoresMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Modificar)) Then
+            AdmDeStockToolStripMenuItem.Visible = True
+        Else
+            AdmDeStockToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Bitácora)) Then
+            BitácoraToolStripMenuItem.Visible = True
+        Else
+            BitácoraToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Ingreso) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Modificar)) Then
+            AltaMasivaToolStripMenuItem.Visible = True
+            AccesoMercaderias.Visible = True
+        Else
+            AltaMasivaToolStripMenuItem.Visible = False
+            AccesoMercaderias.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Bitácora) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Ingreso) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_IngresoMercadería_Modificar)) Then
+            Btn_StockMenu.Visible = True
+        Else
+            Btn_StockMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Modificar)) Then
+            AdmDeSucursalesToolStripMenuItem.Visible = True
+        Else
+            AdmDeSucursalesToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_EstadoCuenta)) Then
+            EstadoDeCuentaToolStripMenuItem.Visible = True
+        Else
+            EstadoDeCuentaToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_HistorialDiferenciaCaja)) Then
+            HistorialDeDifCajaToolStripMenuItem.Visible = True
+        Else
+            HistorialDeDifCajaToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_EstadoCuenta) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_HistorialDiferenciaCaja)) Then
+            Btn_SucursalesMenu.Visible = True
+        Else
+            Btn_SucursalesMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Anular) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Facturar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_NotaCrédito) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Visualizar)) Then
+            AdministraciónToolStripMenuItem.Visible = True
+        Else
+            AdministraciónToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Venta)) Then
+            VentasToolStripMenuItem1.Visible = True
+            AccesoVentas.Visible = True
+        Else
+            VentasToolStripMenuItem1.Visible = False
+            AccesoVentas.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Anular) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Facturar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_NotaCrédito) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Venta)) Then
+            Btn_VentasMenu.Visible = True
+        Else
+            Btn_VentasMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_ResumenDiario)) Then
+            AccesoResumen.Visible = True
+        Else
+            AccesoResumen.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas)) Then
+            Btn_PlanillasMenu.Visible = True
+        Else
+            Btn_PlanillasMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_MovimientosSucursal_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_MovimientosSucursal_Exportar)
+            ) Then
+            SucursalesToolStripMenuItem.Visible = True
+        Else
+            SucursalesToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_MovimientosEntreSucursales)) Then
+            MovEntreSucursalesToolStripMenuItem.Visible = True
+        Else
+            MovEntreSucursalesToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_SueldoEmpleados_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_SueldoEmpleados_Exportar)) Then
+            SueldosDeEmpleadosToolStripMenuItem.Visible = True
+        Else
+            SueldosDeEmpleadosToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_Listasdeprecios)) Then
+            ListasDePreciosToolStripMenuItem.Visible = True
+        Else
+            ListasDePreciosToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad)) Then
+            SeguridadToolStripMenuItem.Visible = True
+        Else
+            SeguridadToolStripMenuItem.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Perfiles_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Perfiles_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Perfiles_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Perfiles_Eliminar)) Then
+            Btn_PerfilesMenu.Visible = True
+        Else
+            Btn_PerfilesMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Usuarios_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Usuarios_Eliminar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Usuarios_modificar)) Then
+            Btn_UsuariosMenu.Visible = True
+        Else
+            Btn_UsuariosMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.sistema)) Then
+            Btn_SincronizacionMenu.Visible = True
+        Else
+            Btn_SincronizacionMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Sincronización)) Then
+            Btn_SincronizaciónMenu.Visible = True
+        Else
+            Btn_SincronizaciónMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Alertas_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Alertas_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Facturación_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Facturación_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Host_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Host_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Internet_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Internet_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Mail_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Mail_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Precio_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Precio_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Sucursal_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Sucursal_Modificar)) Then
+            Btn_ConfiguracionMenu.Visible = True
+        Else
+            Btn_ConfiguracionMenu.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Notificación_Visualización) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Notificación_AceptarCancelar)) Then
+            Btn_NotificacionesMenu.Visible = True
+            Menu_Movimientos.Visible = True
+        Else
+            Btn_NotificacionesMenu.Visible = False
+            Menu_Movimientos.Visible = False
+        End If
     End Sub
 
     Private Sub MDIContenedor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -365,7 +578,7 @@ Public Class MDIContenedor
             NotifyIcon.Icon = icono
             NotifyIcon.Text = Me.Text
 
-            SetearVisualesPatentes()
+            EvaluarPermisos()
 
             'Cursor
             Me.Cursor = Cursors.Arrow
@@ -447,9 +660,6 @@ Public Class MDIContenedor
                 VariablesGlobales.CajaCerrada = 1
             Else
                 Me.MenuAccesosRapidos.Visible = True
-                Me.ToolsMenu.Visible = True
-                Me.SeguridadToolStripMenuItem.Visible = True
-                Me.Btn_SincronizacionMenu.Visible = True
                 Me.Btn_ResumenDiario.Visible = False
                 Me.BackgroundImageLayout = ImageLayout.Stretch
                 Me.Refresh()
@@ -1027,7 +1237,7 @@ Public Class MDIContenedor
         'Acumulo el tiempo transcurrido
         tiempoAcumuladoNotificaciones += TemporizadorActualizaciones.Interval
         'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de movimientos
-        If (tiempoAcumuladoNotificaciones >= Integer.Parse(My.Settings("TemporizadorMovimientos"))) Then
+        If (tiempoAcumuladoNotificaciones >= Integer.Parse(My.Settings("TemporizadorMovimientos")) AndAlso Menu_Movimientos.Visible) Then
             'Muestro la alerta de movimientos y reinicio el acumulador de tiempo
             Funciones.ActualizarNotificaciones("Full")
             tiempoAcumuladoNotificaciones = 0
@@ -1045,7 +1255,7 @@ Public Class MDIContenedor
         'Acumulo el tiempo transcurrido
         tiempoAcumuladoCheques += TemporizadorActualizaciones.Interval
         'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de cheques
-        If (tiempoAcumuladoCheques >= Integer.Parse(My.Settings("TemporizadorCheques"))) Then
+        If (tiempoAcumuladoCheques >= Integer.Parse(My.Settings("TemporizadorCheques")) AndAlso Menu_ChequesVencer.Visible) Then
             'Muestro la alerta de cheques y reinicio el acumulador de tiempo
             Funciones.ActualizarChequesVencer()
             tiempoAcumuladoCheques = 0
@@ -1054,7 +1264,7 @@ Public Class MDIContenedor
         'Acumulo el tiempo transcurrido
         tiempoAcumuladoNotasPedidos += TemporizadorActualizaciones.Interval
         'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de notas de pedios
-        If (tiempoAcumuladoNotasPedidos >= Integer.Parse(My.Settings("TemporizadorNotasPedido"))) Then
+        If (tiempoAcumuladoNotasPedidos >= Integer.Parse(My.Settings("TemporizadorNotasPedido")) AndAlso Menu_NotaPedido.Visible) Then
             'Muestro la alerta de cheques y reinicio el acumulador de tiempo
             Funciones.ActualizarNotasPedidos()
             tiempoAcumuladoNotasPedidos = 0

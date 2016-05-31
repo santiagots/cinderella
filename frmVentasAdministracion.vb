@@ -69,11 +69,6 @@
                 DG_Ventas.AutoGenerateColumns = False
                 DG_Ventas.ColumnHeadersVisible = True
                 DG_Ventas.Columns("Descuento").Visible = False
-                'DG_Ventas.Columns("Empleado").DisplayIndex = 1
-                'DG_Ventas.Columns("Cliente").DisplayIndex = 2
-                'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-                'DG_Ventas.Columns("Fecha").DisplayIndex = 4
-                'DG_Ventas.Columns("Anulado").DisplayIndex = 5
                 DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
                 DG_Ventas.Columns("NumFactura").DefaultCellStyle.Format = "D5"
@@ -82,10 +77,11 @@
                 lbl_Msg.Visible = False
             Else
                 DG_Ventas.DataSource = Nothing
-                DG_Ventas.ColumnHeadersVisible = False
                 DG_Ventas.Refresh()
                 lbl_Msg.Visible = True
             End If
+
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -170,18 +166,12 @@
                 DG_Ventas.AutoGenerateColumns = False
                 DG_Ventas.ColumnHeadersVisible = True
                 DG_Ventas.Columns("Descuento").Visible = False
-                'DG_Ventas.Columns("Empleado").DisplayIndex = 1
-                'DG_Ventas.Columns("Cliente").DisplayIndex = 2
-                'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-                'DG_Ventas.Columns("Fecha").DisplayIndex = 4
-                'DG_Ventas.Columns("Anulado").DisplayIndex = 5
                 DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
                 DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
                 DG_Ventas.Refresh()
                 lbl_Msg.Visible = False
             Else
                 DG_Ventas.DataSource = Nothing
-                DG_Ventas.ColumnHeadersVisible = False
                 DG_Ventas.Refresh()
                 lbl_Msg.Visible = True
             End If
@@ -324,7 +314,7 @@
             Me.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabVentas.SelectedIndex = 1
+            TabVentas.SelectedTab = TabVentas.TabPages("TbDetalle")
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error al obtener la venta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -474,18 +464,12 @@
             DG_Ventas.ColumnHeadersVisible = True
             DG_Ventas.Columns("id_Venta").Visible = False
             DG_Ventas.Columns("Descuento").Visible = False
-            'DG_Ventas.Columns("Empleado").DisplayIndex = 1
-            'DG_Ventas.Columns("Cliente").DisplayIndex = 2
-            'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-            'DG_Ventas.Columns("Fecha").DisplayIndex = 4
-            'DG_Ventas.Columns("Anulado").DisplayIndex = 5
             DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Ventas.Refresh()
             lbl_Msg.Visible = False
         Else
             DG_Ventas.DataSource = Nothing
-            DG_Ventas.ColumnHeadersVisible = False
             DG_Ventas.Refresh()
             lbl_Msg.Visible = True
         End If
@@ -533,18 +517,12 @@
             DG_Ventas.ColumnHeadersVisible = True
             DG_Ventas.Columns("id_Venta").Visible = False
             DG_Ventas.Columns("Descuento").Visible = False
-            'DG_Ventas.Columns("Empleado").DisplayIndex = 1
-            'DG_Ventas.Columns("Cliente").DisplayIndex = 2
-            'DG_Ventas.Columns("MontoTotal").DisplayIndex = 3
-            'DG_Ventas.Columns("Fecha").DisplayIndex = 4
-            'DG_Ventas.Columns("Anulado").DisplayIndex = 5
             DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
             DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
             DG_Ventas.Refresh()
             lbl_Msg.Visible = False
         Else
             DG_Ventas.DataSource = Nothing
-            DG_Ventas.ColumnHeadersVisible = False
             DG_Ventas.Refresh()
             lbl_Msg.Visible = True
         End If
@@ -588,6 +566,33 @@
         KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
         If KeyAscii = 0 Then
             e.Handled = True
+        End If
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Visualizar)) Then
+
+        Else
+            TabVentas.TabPages.Remove(TabVentas.TabPages("TbDetalle"))
+            RemoveHandler DG_Ventas.CellDoubleClick, AddressOf DG_Ventas_CellDoubleClick
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Anular)) Then
+            BtnAnular.Enabled = True
+        Else
+            BtnAnular.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Facturar)) Then
+            BtnFactura.Enabled = True
+        Else
+            BtnFactura.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_NotaCrédito)) Then
+            BtnEmitirFactura.Enabled = True
+        Else
+            BtnEmitirFactura.Enabled = False
         End If
     End Sub
 End Class

@@ -42,23 +42,23 @@
         Dim objusuario As New Negocio.Usuario
         '207 visualiza Aroma - si llego aca puede visualizarlos
         '205 crear Aroma
-        If (objusuario.EsPatenteValida(205, VariablesGlobales.Patentes)) Then
-        Else
-            TabAromas.TabPages.Remove(Me.TbAlta)
-        End If
-        '206 modificar Aroma
-        If (objusuario.EsPatenteValida(206, VariablesGlobales.Patentes)) Then
-        Else
-            TabAromas.TabPages.Remove(Me.TbMod)
-            DG_Aromas.Columns(1).Visible = False
-        End If
-        '208 eliminar Aroma
-        If (objusuario.EsPatenteValida(208, VariablesGlobales.Patentes)) Then
-        Else
-            TabAromas.TabPages.Remove(Me.TbMod)
-            DG_Aromas.Columns(0).Visible = False
-            DG_Buscador.Columns("Eliminar_bus").Visible = False
-        End If
+        'If (objusuario.EsPatenteValida(205, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabAromas.TabPages.Remove(Me.TbAlta)
+        'End If
+        ''206 modificar Aroma
+        'If (objusuario.EsPatenteValida(206, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabAromas.TabPages.Remove(Me.TbMod)
+        '    DG_Aromas.Columns(1).Visible = False
+        'End If
+        ''208 eliminar Aroma
+        'If (objusuario.EsPatenteValida(208, VariablesGlobales.Patentes)) Then
+        'Else
+        '    TabAromas.TabPages.Remove(Me.TbMod)
+        '    DG_Aromas.Columns(0).Visible = False
+        '    DG_Buscador.Columns("Eliminar_bus").Visible = False
+        'End If
 
         'Cambio el cursor a NORMAL.
         TabAromas.Cursor = Cursors.Arrow

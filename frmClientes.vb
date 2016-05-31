@@ -387,26 +387,7 @@
                 DG_Clientes.Refresh()
             End If
 
-            'agregado para el funcionamiento de patentes
-            Dim objusuario As New Negocio.Usuario
-            '19 visualiza clientes - si llego aca puede visualizarlos
-            '17 crea cliente
-            If (objusuario.EsPatenteValida(17, VariablesGlobales.Patentes)) Then
-            Else
-                TabClientes.TabPages.Remove(Me.TbAlta)
-            End If
-            '18 modifica cliente
-            If (objusuario.EsPatenteValida(18, VariablesGlobales.Patentes)) Then
-            Else
-                TabClientes.TabPages.Remove(Me.TbMod)
-                DG_Clientes.Columns("Modificar").Visible = False
-            End If
-            '20 elimina cliente
-            If (objusuario.EsPatenteValida(20, VariablesGlobales.Patentes)) Then
-            Else
-                TabClientes.TabPages.Remove(Me.TbMod)
-                DG_Clientes.Columns("Eliminar").Visible = False
-            End If
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -418,7 +399,7 @@
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
         'Redirecciono al listado
-        TabClientes.SelectedIndex = 0
+        TabClientes.SelectedTab = TabClientes.TabPages("TbListado")
     End Sub
 
     'Solapas.
@@ -426,7 +407,7 @@
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
-        If TabClientes.SelectedIndex = 0 Then 'TAB LISTADO DE CLIENTE
+        If TabClientes.SelectedTab.Name = "TbListado" Then 'TAB LISTADO DE CLIENTE
             'Actualizo el datagrid si se selecciona el tab del listado
             Dim dsClientes As New DataSet
             dsClientes = NegClientes.ListadoClientesCompleto()
@@ -452,19 +433,19 @@
             'Seteo el id_CLiente en cero
             EClientes.id_Cliente = 0
 
-        ElseIf TabClientes.SelectedIndex = 1 Then 'TAB ALTA DE CLIENTE
+        ElseIf TabClientes.SelectedTab.Name = "TbAlta" Then 'TAB ALTA DE CLIENTE
             'Limpio el formulario de alta.
             LimpiarFormAltaClientes()
 
             'Seteo el id_CLiente en cero
             EClientes.id_Cliente = 0
 
-        ElseIf TabClientes.SelectedIndex = 2 Then 'TAB MODIFICACION DE CLIENTE
+        ElseIf TabClientes.SelectedTab.Name = "TbMod" Then 'TAB MODIFICACION DE CLIENTE
             If EClientes.id_Cliente > 0 Or EClientes.id_Cliente <> Nothing Then
 
             Else
                 MessageBox.Show("Debe seleccionar previamente un cliente.", "Administración de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabClientes.SelectedIndex = 0
+                TabClientes.SelectedTab = TabClientes.TabPages("TbListado")
             End If
         End If
 
@@ -655,7 +636,7 @@
                 Me.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabClientes.SelectedIndex = 2
+                TabClientes.SelectedTab = TabClientes.TabPages("TbMod")
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
                 MessageBox.Show("Se ha producido un error al cargar el cliente seleccionado.", "Administración de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -727,7 +708,7 @@
             LimpiarFormModificacionClientes()
 
             'Redirecciono al listado.
-            TabClientes.SelectedIndex = 0
+            TabClientes.SelectedTab = TabClientes.TabPages("TbListado")
         End If
     End Sub
 
@@ -849,7 +830,7 @@
             Me.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabClientes.SelectedIndex = 2
+            TabClientes.SelectedTab = TabClientes.TabPages("TbMod")
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error al cargar el cliente seleccionado.", "Administración de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -889,7 +870,7 @@
                 End If
 
                 'hago foco en el tab_listado 
-                TabClientes.SelectedIndex = 0
+                TabClientes.SelectedTab = TabClientes.TabPages("TbListado")
 
             End If
         End If
@@ -929,6 +910,30 @@
             MessageBox.Show("Se ha encontrado un error al restablecer el listado.", "Administración de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Crear)) Then
+
+        Else
+            TabClientes.TabPages.Remove(TabClientes.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Eliminar)) Then
+            Btn_Eliminar.Visible = True
+            DG_Clientes.Columns("Eliminar").Visible = True
+        Else
+            Btn_Eliminar.Visible = False
+            DG_Clientes.Columns("Eliminar").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Modificar)) Then
+            DG_Clientes.Columns("Modificar").Visible = True
+        Else
+            TabClientes.TabPages.Remove(TabClientes.TabPages("TbMod"))
+            DG_Clientes.Columns("Modificar").Visible = False
+            RemoveHandler DG_Clientes.CellDoubleClick, AddressOf DG_Clientes_CellDoubleClick
+        End If
     End Sub
 
 #End Region

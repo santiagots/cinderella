@@ -1,7 +1,6 @@
 ﻿Public Class Patentes
-    Private id_Patente_, Habilitado_ As Integer
-    Private Descripcion_ As String
 
+    Private id_Patente_ As Integer
     Public Property id_Patente() As Integer
         Get
             Return id_Patente_
@@ -11,21 +10,24 @@
         End Set
     End Property
 
-    Public Property Descripcion() As String
+    Private id_Sucursal_ As Integer
+    Public Property id_Sucursal() As Integer
         Get
-            Return Descripcion_
+            Return id_Sucursal_
         End Get
-        Set(ByVal value As String)
-            Descripcion_ = value
+        Set(ByVal value As Integer)
+            id_Sucursal_ = value
         End Set
     End Property
 
-    Public Property Habilitado() As Integer
+    Private id_Perfil_ As Integer
+    Public Property id_Perfil() As Integer
         Get
-            Return Habilitado_
+            Return id_Perfil_
         End Get
         Set(ByVal value As Integer)
-            Habilitado_ = value
+            id_Perfil_ = value
         End Set
     End Property
+
 End Class

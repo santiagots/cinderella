@@ -179,48 +179,9 @@
 
             'AGREGADO PARA EL FUNCIONAMIENTO CORRECTO DEPENDIENDO DE LAS PATENTES.
             Dim objusuario As New Negocio.Usuario
-            Dim NegPatentes As New Negocio.NegPatentes
+            'Dim NegPatentes As New Negocio.NegPatentes
 
-            'ALTA
-            Dim Pat3 As New DataSet
-            Pat3 = NegPatentes.ListadoPatentesPorTipo(2, 1, My.Settings("Sucursal"))
-            If Pat3.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat3.Tables(0).Rows
-                    Dim id_Patente As Integer = p.item("id_Patente").ToString()
-
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        TabStock.TabPages.Remove(Me.TabAlta)
-                    End If
-                Next
-            End If
-
-            'BAJA
-            Dim Pat4 As New DataSet
-            Pat4 = NegPatentes.ListadoPatentesPorTipo(2, 2, My.Settings("Sucursal"))
-            If Pat4.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat4.Tables(0).Rows
-                    Dim id_Patente As Integer = p.item("id_Patente").ToString()
-
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        TabStock.TabPages.Remove(Me.TabModificacion)
-                        DG_Stock.Columns("Modificar").Visible = False
-                    End If
-                Next
-            End If
-
-            'MODIFICACION
-            Dim Pat5 As New DataSet
-            Pat5 = NegPatentes.ListadoPatentesPorTipo(2, 3, My.Settings("Sucursal"))
-            If Pat5.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat5.Tables(0).Rows
-                    Dim id_Patente As Integer = p.item("id_Patente").ToString()
-
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        TabStock.TabPages.Remove(Me.TabModificacion)
-                        DG_Stock.Columns("Eliminar").Visible = False
-                    End If
-                Next
-            End If
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -369,7 +330,7 @@
         'Cambio el cursor a "WAIT"
         TabStock.Cursor = Cursors.WaitCursor
 
-        If TabStock.SelectedIndex = 0 Then 'TAB LISTADO DE STOCK
+        If TabStock.SelectedTab.Name = "TabListado" Then 'TAB LISTADO DE STOCK
 
             Dim dsStock As New DataSet
             dsStock = NegStock.ListadoStockSucursal(Cb_Sucursal.SelectedValue)
@@ -401,7 +362,7 @@
             'Seteo el id_CLiente en cero
             EStock.id_Stock = 0
 
-        ElseIf TabStock.SelectedIndex = 1 Then 'TAB ALTA DE STOCK
+        ElseIf TabStock.SelectedTab.Name = "TabAlta" Then 'TAB ALTA DE STOCK
             'Limpio el formulario de alta.
             LimpiarFormAltaStock()
 
@@ -419,11 +380,11 @@
             'Seteo el id_CLiente en cero
             EStock.id_Stock = 0
 
-        ElseIf TabStock.SelectedIndex = 2 Then 'TAB MODIFICACION DE STOCK
+        ElseIf TabStock.SelectedTab.Name = "TabModificacion" Then 'TAB MODIFICACION DE STOCK
             If EStock.id_Stock > 0 Or EStock.id_Stock <> Nothing Then
             Else
                 MessageBox.Show("Debe seleccionar previamente un stock.", "Administración de Stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabStock.SelectedIndex = 0
+                TabStock.SelectedTab = TabStock.TabPages("TabListado")
             End If
         End If
 
@@ -547,7 +508,7 @@
             TabStock.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabStock.SelectedIndex = 2
+            TabStock.SelectedTab = TabStock.TabPages("TabModificacion")
         End If
     End Sub
 
@@ -613,7 +574,7 @@
             LimpiarFormModificacionStock()
 
             'Redirecciono al listado
-            TabStock.SelectedIndex = 0
+            TabStock.SelectedTab = TabStock.TabPages("TabListado")
         End If
     End Sub
 
@@ -667,7 +628,7 @@
                 TabStock.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabStock.SelectedIndex = 2
+                TabStock.SelectedTab = TabStock.TabPages("TabModificacion")
             End If
         End If
     End Sub
@@ -718,6 +679,30 @@
     'Hago foco en la caja de busqueda.
     Private Sub rb_Opcion_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rb_Opcion.CheckedChanged
         txt_buscar.Focus()
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Crear)) Then
+
+        Else
+            TabStock.TabPages.Remove(TabStock.TabPages("TabAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Eliminar)) Then
+            DG_Stock.Columns("Eliminar").Visible = True
+            Btn_Eliminar.Enabled = True
+        Else
+            DG_Stock.Columns("Eliminar").Visible = False
+            Btn_Eliminar.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Stock_Administración_Modificar)) Then
+            DG_Stock.Columns("Modificar").Visible = True
+        Else
+            TabStock.TabPages.Remove(TabStock.TabPages("TabModificacion"))
+            DG_Stock.Columns("Modificar").Visible = False
+            RemoveHandler DG_Stock.CellDoubleClick, AddressOf DG_Stock_CellDoubleClick
+        End If
     End Sub
 #End Region
 

@@ -228,27 +228,7 @@
                 lbl_Msg.visible = True
             End If
 
-            'agregado para probar el funcionamiento de patentes
-            Dim objusuario As New Negocio.Usuario
-            '3 visualiza usuarios - si llego aca puede visualizarlos
-            '1 crea usuario
-            If (objusuario.EsPatenteValida(1, VariablesGlobales.Patentes)) Then
-            Else
-                TabUsuarios.TabPages.Remove(Me.TbAlta)
-            End If
-            '2 modifica usuario
-            If (objusuario.EsPatenteValida(2, VariablesGlobales.Patentes)) Then
-            Else
-                TabUsuarios.TabPages.Remove(Me.TbMod)
-                DG_Usuarios.Columns(1).Visible = False
-            End If
-            '4 elimina usuario
-            If (objusuario.EsPatenteValida(4, VariablesGlobales.Patentes)) Then
-            Else
-                TabUsuarios.TabPages.Remove(Me.TbMod)
-                DG_Usuarios.Columns(0).Visible = False
-                DG_Buscador.Columns("Eliminar_bus").Visible = False
-            End If
+            EvaluarPermisos()
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
@@ -727,6 +707,28 @@
             ErrorUsuarios.SetError(txt_apellido_mod, "Debe completar el Apellido.")
         Else
             ErrorUsuarios.SetError(txt_apellido_mod, Nothing)
+        End If
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Usuarios_Crear)) Then
+
+        Else
+            TabUsuarios.TabPages.Remove(TabUsuarios.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Usuarios_Eliminar)) Then
+            DG_Usuarios.Columns("Eliminar").Visible = True
+        Else
+            DG_Usuarios.Columns("Eliminar").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Seguridad_Usuarios_modificar)) Then
+            DG_Usuarios.Columns("Modificar").Visible = True
+        Else
+            TabUsuarios.TabPages.Remove(TabUsuarios.TabPages("TbMod"))
+            DG_Usuarios.Columns("Modificar").Visible = False
+            RemoveHandler DG_Usuarios.CellDoubleClick, AddressOf DG_Usuarios_CellDoubleClick
         End If
     End Sub
 #End Region

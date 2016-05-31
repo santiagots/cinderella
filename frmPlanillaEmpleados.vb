@@ -123,6 +123,8 @@ Public Class frmPlanillaEmpleados
             'Maximizo el form.
             Me.WindowState = 2
 
+            EvaluarPermisos()
+
         Catch ex As Exception
             GB_Controles.Enabled = True
             frmCargadorDeEspera.Close()
@@ -621,6 +623,14 @@ Public Class frmPlanillaEmpleados
         DG_Planilla.Rows.Clear()
         lbl_TotComisiones.Text = "$     -"
         lbl_TotSueldos.Text = "$     -"
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_MovimientosSucursal_Exportar)) Then
+            Btn_Excel.Enabled = True
+        Else
+            Btn_Excel.Enabled = False
+        End If
     End Sub
 #End Region
 

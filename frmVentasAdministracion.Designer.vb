@@ -25,9 +25,9 @@ Partial Class frmVentasAdministracion
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVentasAdministracion))
         Me.TabVentas = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -56,6 +56,15 @@ Partial Class frmVentasAdministracion
         Me.txtFacturaDesde = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.DG_Ventas = New System.Windows.Forms.DataGridView()
+        Me.id_Venta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NumeroVenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoFactura = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.NumFactura = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TbDetalle = New System.Windows.Forms.TabPage()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
         Me.BtnEmitirFactura = New System.Windows.Forms.Button()
@@ -98,15 +107,6 @@ Partial Class frmVentasAdministracion
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolVentas = New System.Windows.Forms.ToolTip(Me.components)
-        Me.id_Venta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NumeroVenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoFactura = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.NumFactura = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabVentas.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -152,7 +152,7 @@ Partial Class frmVentasAdministracion
         Me.lbl_Msg.AutoSize = True
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(44, 290)
+        Me.lbl_Msg.Location = New System.Drawing.Point(82, 366)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(710, 25)
         Me.lbl_Msg.TabIndex = 2
@@ -447,6 +447,91 @@ Partial Class frmVentasAdministracion
         Me.DG_Ventas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Ventas.Size = New System.Drawing.Size(860, 362)
         Me.DG_Ventas.TabIndex = 0
+        '
+        'id_Venta
+        '
+        Me.id_Venta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
+        Me.id_Venta.DataPropertyName = "id_Venta"
+        Me.id_Venta.HeaderText = "id_Venta"
+        Me.id_Venta.MaxInputLength = 10
+        Me.id_Venta.Name = "id_Venta"
+        Me.id_Venta.ReadOnly = True
+        Me.id_Venta.Visible = False
+        '
+        'NumeroVenta
+        '
+        Me.NumeroVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
+        Me.NumeroVenta.DataPropertyName = "NumeroVenta"
+        Me.NumeroVenta.HeaderText = "N° Venta"
+        Me.NumeroVenta.Name = "NumeroVenta"
+        Me.NumeroVenta.ReadOnly = True
+        Me.NumeroVenta.Width = 5
+        '
+        'Empleado
+        '
+        Me.Empleado.DataPropertyName = "Empleado"
+        Me.Empleado.FillWeight = 146.539!
+        Me.Empleado.HeaderText = "Empleado"
+        Me.Empleado.Name = "Empleado"
+        Me.Empleado.ReadOnly = True
+        '
+        'Cliente
+        '
+        Me.Cliente.DataPropertyName = "Cliente"
+        Me.Cliente.FillWeight = 115.79!
+        Me.Cliente.HeaderText = "Cliente"
+        Me.Cliente.Name = "Cliente"
+        Me.Cliente.ReadOnly = True
+        '
+        'MontoTotal
+        '
+        Me.MontoTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
+        Me.MontoTotal.DataPropertyName = "MontoTotal"
+        Me.MontoTotal.FillWeight = 128.0473!
+        Me.MontoTotal.HeaderText = "Monto Total"
+        Me.MontoTotal.Name = "MontoTotal"
+        Me.MontoTotal.ReadOnly = True
+        Me.MontoTotal.Width = 5
+        '
+        'Fecha
+        '
+        Me.Fecha.DataPropertyName = "Fecha"
+        Me.Fecha.FillWeight = 116.8831!
+        Me.Fecha.HeaderText = "Fecha"
+        Me.Fecha.Name = "Fecha"
+        Me.Fecha.ReadOnly = True
+        '
+        'Anulado
+        '
+        Me.Anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.Anulado.DataPropertyName = "Anulado"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Anulado.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Anulado.FillWeight = 55.0!
+        Me.Anulado.HeaderText = "Anulado"
+        Me.Anulado.MaxInputLength = 10
+        Me.Anulado.Name = "Anulado"
+        Me.Anulado.ReadOnly = True
+        Me.Anulado.Width = 93
+        '
+        'TipoFactura
+        '
+        Me.TipoFactura.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader
+        Me.TipoFactura.DataPropertyName = "TipoRecibo"
+        Me.TipoFactura.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
+        Me.TipoFactura.HeaderText = "Facturado"
+        Me.TipoFactura.Name = "TipoFactura"
+        Me.TipoFactura.ReadOnly = True
+        Me.TipoFactura.Width = 5
+        '
+        'NumFactura
+        '
+        Me.NumFactura.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
+        Me.NumFactura.DataPropertyName = "NumeroFactura"
+        Me.NumFactura.HeaderText = "N° Factura"
+        Me.NumFactura.Name = "NumFactura"
+        Me.NumFactura.ReadOnly = True
+        Me.NumFactura.Width = 5
         '
         'TbDetalle
         '
@@ -927,92 +1012,6 @@ Partial Class frmVentasAdministracion
         Me.ToolVentas.IsBalloon = True
         Me.ToolVentas.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolVentas.ToolTipTitle = "Ayuda."
-        '
-        'id_Venta
-        '
-        Me.id_Venta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
-        Me.id_Venta.DataPropertyName = "id_Venta"
-        Me.id_Venta.HeaderText = "id_Venta"
-        Me.id_Venta.MaxInputLength = 10
-        Me.id_Venta.Name = "id_Venta"
-        Me.id_Venta.ReadOnly = True
-        Me.id_Venta.Visible = False
-        Me.id_Venta.Width = 5
-        '
-        'NumeroVenta
-        '
-        Me.NumeroVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
-        Me.NumeroVenta.DataPropertyName = "NumeroVenta"
-        Me.NumeroVenta.HeaderText = "N° Venta"
-        Me.NumeroVenta.Name = "NumeroVenta"
-        Me.NumeroVenta.ReadOnly = True
-        Me.NumeroVenta.Width = 5
-        '
-        'Empleado
-        '
-        Me.Empleado.DataPropertyName = "Empleado"
-        Me.Empleado.FillWeight = 146.539!
-        Me.Empleado.HeaderText = "Empleado"
-        Me.Empleado.Name = "Empleado"
-        Me.Empleado.ReadOnly = True
-        '
-        'Cliente
-        '
-        Me.Cliente.DataPropertyName = "Cliente"
-        Me.Cliente.FillWeight = 115.79!
-        Me.Cliente.HeaderText = "Cliente"
-        Me.Cliente.Name = "Cliente"
-        Me.Cliente.ReadOnly = True
-        '
-        'MontoTotal
-        '
-        Me.MontoTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
-        Me.MontoTotal.DataPropertyName = "MontoTotal"
-        Me.MontoTotal.FillWeight = 128.0473!
-        Me.MontoTotal.HeaderText = "Monto Total"
-        Me.MontoTotal.Name = "MontoTotal"
-        Me.MontoTotal.ReadOnly = True
-        Me.MontoTotal.Width = 5
-        '
-        'Fecha
-        '
-        Me.Fecha.DataPropertyName = "Fecha"
-        Me.Fecha.FillWeight = 116.8831!
-        Me.Fecha.HeaderText = "Fecha"
-        Me.Fecha.Name = "Fecha"
-        Me.Fecha.ReadOnly = True
-        '
-        'Anulado
-        '
-        Me.Anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.Anulado.DataPropertyName = "Anulado"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Anulado.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Anulado.FillWeight = 55.0!
-        Me.Anulado.HeaderText = "Anulado"
-        Me.Anulado.MaxInputLength = 10
-        Me.Anulado.Name = "Anulado"
-        Me.Anulado.ReadOnly = True
-        Me.Anulado.Width = 93
-        '
-        'TipoFactura
-        '
-        Me.TipoFactura.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader
-        Me.TipoFactura.DataPropertyName = "TipoRecibo"
-        Me.TipoFactura.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
-        Me.TipoFactura.HeaderText = "Facturado"
-        Me.TipoFactura.Name = "TipoFactura"
-        Me.TipoFactura.ReadOnly = True
-        Me.TipoFactura.Width = 5
-        '
-        'NumFactura
-        '
-        Me.NumFactura.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader
-        Me.NumFactura.DataPropertyName = "NumeroFactura"
-        Me.NumFactura.HeaderText = "N° Factura"
-        Me.NumFactura.Name = "NumFactura"
-        Me.NumFactura.ReadOnly = True
-        Me.NumFactura.Width = 5
         '
         'frmVentasAdministracion
         '

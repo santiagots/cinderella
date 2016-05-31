@@ -7,6 +7,7 @@ Public Class frmLogin
     Dim encripta As New ClsEncriptacion
     Dim entUsuario As New Entidades.Usuario
     Dim objUsuario As New Negocio.Usuario
+    Dim patentes As New Negocio.NegPatentes
     Dim negFunciones As New Negocio.Funciones
     Dim Functions As New Funciones
 
@@ -50,7 +51,7 @@ Public Class frmLogin
                 MDIContenedor.Usuario.Text = entUsuario.Nombre & " " & entUsuario.Apellido & " |"
 
                 'Almaceno las patentes.
-                VariablesGlobales.Patentes = objUsuario.CargarPatentes(entUsuario.id_Usuario, Sucursal)
+                VariablesGlobales.Patentes = patentes.ObtenerPatentes(entUsuario.id_Usuario, Sucursal)
 
                 'Almaceno el usuario logueado.
                 VariablesGlobales.objUsuario = entUsuario

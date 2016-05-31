@@ -55,6 +55,8 @@ Public Class frmNotaPedidoAdministracion
                 cmbTiposPago.Refresh()
             End If
 
+            EvaluarPermisos()
+
         Catch ex As Exception
 
             MessageBox.Show("Se ha encontrado un error al recuperar las notas de pedido. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Administración de Notas de Pedido", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -236,5 +238,19 @@ Public Class frmNotaPedidoAdministracion
     Private Sub frmNotaPedidoAdministracion_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         'Quito el handler del servicio
         RemoveHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf UpdateNotaPedido
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_NotaPedido_Administración_Venta)) Then
+
+        Else
+            RemoveHandler dgvNotaPedidos.DoubleClick, AddressOf dgvNotaPedidos_DoubleClick
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_NotaPedido_Administración_Eliminar)) Then
+            dgvNotaPedidos.Columns("Eliminar").Visible = True
+        Else
+            dgvNotaPedidos.Columns("Eliminar").Visible = False
+        End If
     End Sub
 End Class

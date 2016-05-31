@@ -9,6 +9,44 @@ Public Class NegSucursales
         Return ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Listado")
     End Function
 
+    Function ListadoSucursalesEntidad() As List(Of Entidades.Sucursales)
+
+        Dim Sucursales As List(Of Entidades.Sucursales) = New List(Of Entidades.Sucursales)
+
+        Dim dsSucursales As DataSet = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Listado")
+
+
+        If dsSucursales.Tables(0).Rows.Count <> 0 Then
+            For Each row As DataRow In dsSucursales.Tables(0).Rows
+                Dim Sucursal As Entidades.Sucursales = New Entidades.Sucursales()
+
+                Sucursal.id_Sucursal = row.Item("id_Sucursal").ToString
+                Sucursal.Nombre = row.Item("Nombre").ToString
+                Sucursal.Direccion = row.Item("Direccion").ToString
+                Sucursal.Codigo_Postal = CInt(row.Item("Codigo_Postal"))
+                Sucursal.Telefono = row.Item("Telefono").ToString
+                Sucursal.Habilitado = row.Item("Habilitado").ToString
+                Sucursal.id_Provincia = row.Item("id_Provincia").ToString
+                Sucursal.id_Localidad = row.Item("id_Localidad").ToString
+                Sucursal.id_Distrito = row.Item("id_Departamento").ToString
+                Sucursal.id_ListaGrupoPrecio = row.Item("id_ListaGrupoPrecio").ToString
+                Sucursal.ComisionEncargado = CDbl(row.Item("Comision_Encargado"))
+                Sucursal.ComisionVendedor = CDbl(row.Item("Comision_Vendedor"))
+                Sucursal.ComisionEncargadoFeriado = CDbl(row.Item("Comision_Encargado_Feriado"))
+                Sucursal.ComisionVendedorFeriado = CDbl(row.Item("Comision_Vendedor_Feriado"))
+                Sucursal.ComisionEncargadoMayor = CDbl(row.Item("Comision_Encargado_Mayor"))
+                Sucursal.ComisionVendedorMayor = CDbl(row.Item("Comision_Vendedor_Mayor"))
+                Sucursal.CodigoVenta = row.Item("Codigo_Venta").ToString
+
+                Sucursales.Add(Sucursal)
+            Next
+        End If
+
+        Return Sucursales
+
+    End Function
+
+
     'Funcion para consultar una sucursal determinada.
     Public Function TraerSucursal(ByVal id_Sucursal As Integer)
         Dim dsSucursal As New DataSet

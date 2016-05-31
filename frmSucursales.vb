@@ -453,26 +453,7 @@
                 DG_Sucursales.Refresh()
             End If
 
-            'agregado para el funcionamiento de patentes
-            Dim objusuario As New Negocio.Usuario
-            '225 visualiza sucursal - si llego aca puede visualizarlos
-            '223 crea sucursal
-            If (objusuario.EsPatenteValida(223, VariablesGlobales.Patentes)) Then
-            Else
-                TabSucursales.TabPages.Remove(Me.TbAlta)
-            End If
-            '224 modifica sucursal
-            If (objusuario.EsPatenteValida(224, VariablesGlobales.Patentes)) Then
-            Else
-                TabSucursales.TabPages.Remove(Me.TbMod)
-                DG_Sucursales.Columns("Modificar").Visible = False
-            End If
-            '226 elimina sucursal
-            If (objusuario.EsPatenteValida(226, VariablesGlobales.Patentes)) Then
-            Else
-                TabSucursales.TabPages.Remove(Me.TbMod)
-                DG_Sucursales.Columns("Eliminar").Visible = False
-            End If
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             TabSucursales.Cursor = Cursors.Arrow
@@ -511,16 +492,16 @@
             'Seteo el id_CLiente en cero
             ESucursales.id_Sucursal = 0
 
-        ElseIf TabSucursales.SelectedIndex = 1 Then 'TAB ALTA
+        ElseIf TabSucursales.SelectedTab.Name = "TbAlta" Then 'TAB ALTA
             'Limpio el formulario de alta.
             LimpiarFormAltaSucursales()
 
-        ElseIf TabSucursales.SelectedIndex = 2 Then 'TAB MODIFICACION
+        ElseIf TabSucursales.SelectedTab.Name = "TbMod" Then 'TAB MODIFICACION
             If ESucursales.id_Sucursal > 0 Or ESucursales.id_Sucursal <> Nothing Then
 
             Else
                 MessageBox.Show("Debe seleccionar previamente una sucursal.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabSucursales.SelectedIndex = 0
+                TabSucursales.SelectedTab = TabSucursales.TabPages("TbListado")
             End If
         End If
 
@@ -599,7 +580,7 @@
             TabSucursales.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabSucursales.SelectedIndex = 2
+            TabSucursales.SelectedTab = TabSucursales.TabPages("TbMod")
         Catch ex As Exception
             TabSucursales.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error al recuperar la información acerca de la sucursal.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -723,7 +704,7 @@
                 TabSucursales.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabSucursales.SelectedIndex = 2
+                TabSucursales.SelectedTab = TabSucursales.TabPages("TbMod")
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
                 MessageBox.Show("Se ha producido un error al recuperar la información acerca de la sucursal.", "Administración de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -820,7 +801,7 @@
                     End If
 
                     'hago foco en el tab_listado 
-                    TabSucursales.SelectedIndex = 0
+                    TabSucursales.SelectedTab = TabSucursales.TabPages("TbListado")
                 End If
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
@@ -874,7 +855,7 @@
             End Try
 
             'Redirecciono al listado
-            TabSucursales.SelectedIndex = 0
+            TabSucursales.SelectedTab = TabSucursales.TabPages("TbListado")
         End If
     End Sub
 
@@ -1008,6 +989,30 @@
         cb_Localidad_mod.SelectedItem = Nothing
         cb_Distrito_mod.SelectedItem = Nothing
         chk_Habilitado_mod.Checked = True
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Crear)) Then
+
+        Else
+            TabSucursales.TabPages.Remove(TabSucursales.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Eliminar)) Then
+            Btn_Eliminar.Enabled = True
+            DG_Sucursales.Columns("Eliminar").Visible = True
+        Else
+            Btn_Eliminar.Enabled = False
+            DG_Sucursales.Columns("Eliminar").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Modificar)) Then
+            DG_Sucursales.Columns("Modificar").Visible = True
+        Else
+            TabSucursales.TabPages.Remove(TabSucursales.TabPages("TbMod"))
+            DG_Sucursales.Columns("Modificar").Visible = False
+            RemoveHandler DG_Sucursales.CellDoubleClick, AddressOf DG_Sucursales_CellDoubleClick
+        End If
     End Sub
 #End Region
 

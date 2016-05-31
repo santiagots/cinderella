@@ -41,27 +41,7 @@
             DG_Categorias.Refresh()
         End If
 
-        'agregado para probar el funcionamiento de patentes
-        Dim objusuario As New Negocio.Usuario
-        '211 visualiza categorias - si llego aca puede visualizarlos
-        '209 crea categorias
-        If (objusuario.EsPatenteValida(149, VariablesGlobales.Patentes)) Then
-        Else
-            TabCategorias.TabPages.Remove(Me.TbAlta)
-        End If
-        '210 modifica categorias
-        If (objusuario.EsPatenteValida(150, VariablesGlobales.Patentes)) Then
-        Else
-            TabCategorias.TabPages.Remove(Me.TbMod)
-            DG_Categorias.Columns(1).Visible = False
-        End If
-        '212 elimina categorias
-        If (objusuario.EsPatenteValida(152, VariablesGlobales.Patentes)) Then
-        Else
-            TabCategorias.TabPages.Remove(Me.TbMod)
-            DG_Categorias.Columns(0).Visible = False
-            DG_Buscador.Columns("Eliminar_bus").Visible = False
-        End If
+        EvaluarPermisos()
 
         'Cambio el cursor a NORMAL.
         TabCategorias.Cursor = Cursors.Arrow
@@ -109,7 +89,7 @@
                 End If
 
                 'hago foco en el tab_modificacion 
-                TabCategorias.SelectedIndex = 2
+                TabCategorias.SelectedTab = TabCategorias.TabPages("TbMod")
                 DG_Buscador.Rows(1).Cells(0).Selected = False
                 DG_Buscador.Rows(e.RowIndex).Cells(0).Selected = True
             End If
@@ -204,7 +184,7 @@
                 End If
 
                 'hago foco en el tab_modificacion 
-                TabCategorias.SelectedIndex = 2
+                TabCategorias.SelectedTab = TabCategorias.TabPages("TbMod")
             End If
         End If
     End Sub
@@ -273,7 +253,7 @@
             End If
 
             'hago foco en el tab_modificacion 
-            TabCategorias.SelectedIndex = 2
+            TabCategorias.SelectedTab = TabCategorias.TabPages("TbMod")
         End If
 
     End Sub
@@ -344,7 +324,7 @@
         TabCategorias.Cursor = Cursors.WaitCursor
 
         'Actualizo el datagrid si se selecciona el tab del listado o el tab de modificacion
-        If TabCategorias.SelectedIndex = 0 Then 'LISTADO
+        If TabCategorias.SelectedTab.Name = "TbListado" Then 'LISTADO
             'Limpio el Formulario
             LimpiarForm()
             'Cargo el listado de Categorias
@@ -353,11 +333,11 @@
                 DG_Categorias.Columns("id_Categoria").Visible = False
                 DG_Categorias.Refresh()
             End If
-        ElseIf TabCategorias.SelectedIndex = 1 Then 'ALTA
+        ElseIf TabCategorias.SelectedTab.Name = "TbAlta" Then 'ALTA
             'Limpio el Formulario
             LimpiarForm()
             txt_descripcion.Focus()
-        ElseIf TabCategorias.SelectedIndex = 2 Then 'MODIFICACION
+        ElseIf TabCategorias.SelectedTab.Name = "TbMod" Then 'MODIFICACION
             'Cargo el listado de Categorias
             If (NCategorias.ListadoCategoriasCompleto().Tables.Count <> 0) Then
                 DG_Buscador.DataSource = NCategorias.ListadoCategoriasCompleto().Tables(0)
@@ -376,6 +356,28 @@
             ErrorCategorias.SetError(txt_Descripcion_Bus, "Debe completar la descripcion de la categoría.")
         Else
             ErrorCategorias.SetError(txt_Descripcion_Bus, Nothing)
+        End If
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Crear)) Then
+
+        Else
+            TabCategorias.TabPages.Remove(TabCategorias.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Eliminar)) Then
+            DG_Categorias.Columns("Eliminar").Visible = True
+        Else
+            DG_Categorias.Columns("Eliminar").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Modificar)) Then
+            DG_Categorias.Columns("Modificar").Visible = True
+        Else
+            TabCategorias.TabPages.Remove(TabCategorias.TabPages("TbMod"))
+            DG_Categorias.Columns("Modificar").Visible = False
+            RemoveHandler DG_Categorias.CellDoubleClick, AddressOf DG_Categorias_CellDoubleClick
         End If
     End Sub
 End Class

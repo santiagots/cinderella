@@ -377,27 +377,7 @@ Public Class frmProductos
             lbl_Msg.Visible = True
         End If
 
-        'agregado para el funcionamiento de patentes
-        Dim objusuario As New Negocio.Usuario
-        '11 visualiza productos - si llego aca puede visualizarlos
-        '9 crea productos
-        If (objusuario.EsPatenteValida(9, VariablesGlobales.Patentes)) Then
-        Else
-            TabProductos.TabPages.Remove(Me.TbAlta)
-        End If
-        '10 modifica productos
-        If (objusuario.EsPatenteValida(10, VariablesGlobales.Patentes)) Then
-        Else
-            TabProductos.TabPages.Remove(Me.TbMod)
-            DG_Productos.Columns("Modificar").Visible = False
-        End If
-        '16 elimina productos
-        If (objusuario.EsPatenteValida(16, VariablesGlobales.Patentes)) Then
-        Else
-            TabProductos.TabPages.Remove(Me.TbMod)
-            DG_Productos.Columns("Eliminar").Visible = False
-        End If
-
+        EvaluarPermisos()
 
         If (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")) Then
             Me.ToolProd.SetToolTip(Me.btn_Restore, String.Format("Haz click aquí para restaurar la informacion del los productos con la ultima copia de seguridad con fecha {0}", System.IO.File.GetCreationTime(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml").ToString("dd/MM/yyyy hh:mm:ss")))
@@ -410,7 +390,7 @@ Public Class frmProductos
     End Sub
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
-        TabProductos.SelectedIndex = 0
+        TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
     End Sub
 
     'Cargo el cambo con las categorias.
@@ -600,7 +580,7 @@ Public Class frmProductos
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
-        If TabProductos.SelectedIndex = 0 Then 'TAB LISTADO DE PRODUCTOS
+        If TabProductos.SelectedTab.Name = "TbListado" Then 'TAB LISTADO DE PRODUCTOS
             'Actualizo el datagrid si se selecciona el tab del listado
             'Cargo el datagrid de productos
             Dim dsProductos As New DataSet
@@ -635,7 +615,7 @@ Public Class frmProductos
             'Seteo el id_Producto en cero
             EProductos.id_Producto = 0
 
-        ElseIf TabProductos.SelectedIndex = 1 Then 'TAB ALTA DE PRODUCTOS
+        ElseIf TabProductos.SelectedTab.Name = "TbAlta" Then 'TAB ALTA DE PRODUCTOS
             'Limpio el formulario de alta.
             LimpiarFormAltaProductos()
             txt_buscar.Clear()
@@ -673,12 +653,12 @@ Public Class frmProductos
             'Seteo el id_Producto en cero
             EProductos.id_Producto = 0
 
-        ElseIf TabProductos.SelectedIndex = 2 Then 'TAB MODIFICACION DE PRODUCTOS
+        ElseIf TabProductos.SelectedTab.Name = "TbMod" Then 'TAB MODIFICACION DE PRODUCTOS
             If EProductos.id_Producto > 0 Or EProductos.id_Producto <> Nothing Then
                 txt_buscar.Clear()
             Else
                 MessageBox.Show("Debe seleccionar previamente un producto.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabProductos.SelectedIndex = 0
+                TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
             End If
         End If
 
@@ -926,7 +906,7 @@ Public Class frmProductos
             Me.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabProductos.SelectedIndex = 2
+            TabProductos.SelectedTab = TabProductos.TabPages("TbMod")
         End If
     End Sub
 
@@ -1123,7 +1103,7 @@ Public Class frmProductos
                 TabProductos.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabProductos.SelectedIndex = 2
+                TabProductos.SelectedTab = TabProductos.TabPages("TbMod")
             End If
         End If
 
@@ -1192,7 +1172,7 @@ Public Class frmProductos
                 Me.Cursor = Cursors.Arrow
 
                 'Redirecciono al listado
-                TabProductos.SelectedIndex = 0
+                TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
 
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
@@ -1370,7 +1350,7 @@ Public Class frmProductos
             Me.Cursor = Cursors.Arrow
 
             'Redirecciono al listado
-            TabProductos.SelectedIndex = 0
+            TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
         End If
     End Sub
 
@@ -1530,6 +1510,41 @@ Public Class frmProductos
         frmCargadorDeEspera.Refresh()
     End Sub
 
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Crear)) Then
+
+        Else
+            TabProductos.TabPages.Remove(TabProductos.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Exportar)) Then
+            btn_Exportar.Enabled = True
+        Else
+            btn_Exportar.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Importar)) Then
+            btn_Importar.Enabled = True
+        Else
+            btn_Importar.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Eliminar)) Then
+            Btn_Eliminar.Enabled = True
+            DG_Productos.Columns("Eliminar").Visible = True
+        Else
+            Btn_Eliminar.Enabled = False
+            DG_Productos.Columns("Eliminar").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_Modificar)) Then
+            DG_Productos.Columns("Modificar").Visible = True
+        Else
+            TabProductos.TabPages.Remove(TabProductos.TabPages("TbMod"))
+            DG_Productos.Columns("Modificar").Visible = False
+            RemoveHandler DG_Productos.CellDoubleClick, AddressOf DG_Productos_CellDoubleClick
+        End If
+    End Sub
 
 #End Region
 

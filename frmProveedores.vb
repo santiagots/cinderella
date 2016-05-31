@@ -161,27 +161,7 @@
                 lbl_Msg.Visible = True
             End If
 
-            'agregado para el funcionamiento de patentes
-            Dim objusuario As New Negocio.Usuario
-
-            '220 visualiza Proveedores - si llego aca puede visualizarlos
-            '218 crea Proveedor
-            If (objusuario.EsPatenteValida(218, VariablesGlobales.Patentes)) Then
-            Else
-                TabProveedores.TabPages.Remove(Me.TbAlta)
-            End If
-            '219 modifica Proveedor
-            If (objusuario.EsPatenteValida(219, VariablesGlobales.Patentes)) Then
-            Else
-                TabProveedores.TabPages.Remove(Me.TbMod)
-                DG_Proveedores.Columns("Modificar").Visible = False
-            End If
-            '221 elimina Proveedor
-            If (objusuario.EsPatenteValida(221, VariablesGlobales.Patentes)) Then
-            Else
-                TabProveedores.TabPages.Remove(Me.TbMod)
-                DG_Proveedores.Columns("Eliminar").Visible = False
-            End If
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -260,7 +240,7 @@
             Me.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabProveedores.SelectedIndex = 2
+            TabProveedores.SelectedTab = TabProveedores.TabPages("TbMod")
         End If
     End Sub
 
@@ -269,7 +249,7 @@
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
-        If TabProveedores.SelectedIndex = 0 Then 'TAB LISTADO
+        If TabProveedores.SelectedTab.Name = "TbListado" Then 'TAB LISTADO
 
             'Cargo el datagrid
             Dim dsProveedores As New DataSet
@@ -298,7 +278,7 @@
             'Seteo el id_Proveedor en cero
             EProveedor.id_Proveedor = 0
 
-        ElseIf TabProveedores.SelectedIndex = 1 Then 'TAB ALTA
+        ElseIf TabProveedores.SelectedTab.Name = "TbAlta" Then 'TAB ALTA
 
             'Cargo el combo de Condiciones de IVA
             Dim dsCondiciones As New DataSet
@@ -317,10 +297,10 @@
             'Seteo el id_Proveedor en cero
             EProveedor.id_Proveedor = 0
 
-        ElseIf TabProveedores.SelectedIndex = 2 Then 'TAB MODIFICACION
+        ElseIf TabProveedores.SelectedTab.Name = "TbMod" Then 'TAB MODIFICACION
             If EProveedor.id_Proveedor <= 0 Or EProveedor.id_Proveedor = Nothing Then
                 MessageBox.Show("Debe seleccionar previamente un proveedor.", "Administración de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabProveedores.SelectedIndex = 0
+                TabProveedores.SelectedTab = TabProveedores.TabPages("TbListado")
             End If
         End If
 
@@ -379,7 +359,7 @@
                 MessageBox.Show(Negproveedores.EliminarProveedor(id_Proveedor), "Administración de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 'redirecciona al tab_listado
-                TabProveedores.SelectedIndex = 0
+                TabProveedores.SelectedTab = TabProveedores.TabPages("TbListado")
             End If
 
             'Cambio el cursor a NORMAL.
@@ -419,7 +399,7 @@
                 LimpiarFormModificacionProveedores()
 
                 'Redirecciono al listado
-                TabProveedores.SelectedIndex = 0
+                TabProveedores.SelectedTab = TabProveedores.TabPages("TbListado")
 
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
@@ -547,13 +527,37 @@
                 Me.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabProveedores.SelectedIndex = 2
+                TabProveedores.SelectedTab = TabProveedores.TabPages("TbMod")
             End If
         End If
     End Sub
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
-        TabProveedores.SelectedIndex = 0
+        TabProveedores.SelectedTab = TabProveedores.TabPages("TbListado")
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Crear)) Then
+
+        Else
+            TabProveedores.TabPages.Remove(TabProveedores.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Eliminar)) Then
+            DG_Proveedores.Columns("Eliminar").Visible = True
+            Btn_Eliminar.Enabled = True
+        Else
+            DG_Proveedores.Columns("Eliminar").Visible = False
+            Btn_Eliminar.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Proveedores_Administración_Modificar)) Then
+            DG_Proveedores.Columns("Modificar").Visible = True
+        Else
+            TabProveedores.TabPages.Remove(TabProveedores.TabPages("TbMod"))
+            DG_Proveedores.Columns("Modificar").Visible = False
+            RemoveHandler DG_Proveedores.CellDoubleClick, AddressOf DG_Proveedores_CellDoubleClick
+        End If
     End Sub
 #End Region
 

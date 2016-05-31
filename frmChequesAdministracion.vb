@@ -58,9 +58,12 @@ Public Class frmChequesAdministracion
         End If
 
         ActualizarTotalesCartera(cheques)
+
         ActualizarPantallaCartera()
 
         CargarDetalleCheque()
+
+        EvaluarPermisos()
     End Sub
 
     Private Sub ActualizarTotalesCartera(ByRef cheques As List(Of Cheque))
@@ -651,6 +654,26 @@ Public Class frmChequesAdministracion
             End If
         Next
 
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Modificar)) Then
+            btn_Modificar.Enabled = True
+        Else
+            btn_Modificar.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Modificar_Salida)) Then
+            Btn_Salida.Enabled = True
+        Else
+            Btn_Salida.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cheques_Administración_Visualizar_Exportar)) Then
+            btn_Exportar.Enabled = True
+        Else
+            btn_Exportar.Enabled = False
+        End If
     End Sub
 
 End Class

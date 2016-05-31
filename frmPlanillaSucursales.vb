@@ -45,6 +45,8 @@ Public Class frmPlanillaSucursales
             'Maximizo el form.
             Me.WindowState = 2
 
+            EvaluarPermisos()
+
         Catch ex As Exception
             GB_Controles.Enabled = True
             frmCargadorDeEspera.Close()
@@ -434,6 +436,14 @@ Public Class frmPlanillaSucursales
                 Me.Cursor = Cursors.Default
                 MessageBox.Show("Se ha encontrado un error al generar la grilla de detalles. Por favor, vuelva a intentar más tarde o contáctese con el Administrador", "Planilla de Movimientos de Sucursales", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
+        End If
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_MovimientosSucursal_Exportar)) Then
+            Btn_Excel.Enabled = True
+        Else
+            Btn_Excel.Enabled = False
         End If
     End Sub
 End Class

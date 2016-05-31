@@ -23,6 +23,8 @@
             'Cargo el datagrid de movimientos
             CargarPlanilla()
 
+            EvaluarPermisos()
+
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
@@ -289,6 +291,16 @@
 
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Notificación_AceptarCancelar)) Then
+            DG_Notificaciones.Columns("Aceptar").Visible = True
+            DG_Notificaciones.Columns("Eliminar").Visible = True
+        Else
+            DG_Notificaciones.Columns("Aceptar").Visible = False
+            DG_Notificaciones.Columns("Eliminar").Visible = False
+        End If
     End Sub
 #End Region
 

@@ -153,48 +153,9 @@ Public Class frmEmpleados
 
             'AGREGADO PARA EL FUNCIONAMIENTO CORRECTO DEPENDIENDO DE LAS PATENTES.
             Dim objusuario As New Negocio.Usuario
-            Dim NegPatentes As New Negocio.NegPatentes
+            'Dim NegPatentes As New Negocio.NegPatentes
 
-            'ALTA
-            Dim Pat3 As New DataSet
-            Pat3 = NegPatentes.ListadoPatentesPorTipo(3, 1, My.Settings("Sucursal"))
-            If Pat3.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat3.Tables(0).Rows
-                    Dim id_Patente As Integer = p.item("id_Patente").ToString()
-
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        TabEmpleados.TabPages.Remove(Me.TbAlta)
-                    End If
-                Next
-            End If
-
-            'BAJA
-            Dim Pat4 As New DataSet
-            Pat4 = NegPatentes.ListadoPatentesPorTipo(3, 2, My.Settings("Sucursal"))
-            If Pat4.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat4.Tables(0).Rows
-                    Dim id_Patente As Integer = p.item("id_Patente").ToString()
-
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        TabEmpleados.TabPages.Remove(Me.TbMod)
-                        DG_Empleados.Columns("Modificar").Visible = False
-                    End If
-                Next
-            End If
-
-            'MODIFICACION
-            Dim Pat5 As New DataSet
-            Pat5 = NegPatentes.ListadoPatentesPorTipo(3, 3, My.Settings("Sucursal"))
-            If Pat5.Tables(0).Rows.Count > 0 Then
-                For Each p In Pat5.Tables(0).Rows
-                    Dim id_Patente As Integer = p.item("id_Patente").ToString()
-
-                    If Not (objusuario.EsPatenteValida(id_Patente, VariablesGlobales.Patentes)) Then
-                        TabEmpleados.TabPages.Remove(Me.TbMod)
-                        DG_Empleados.Columns("Eliminar").Visible = False
-                    End If
-                Next
-            End If
+            EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -207,7 +168,7 @@ Public Class frmEmpleados
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
         'Redirecciono al listado
-        TabEmpleados.SelectedIndex = 0
+        TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbListado")
     End Sub
 
     'Boton Agregar Empleado.
@@ -329,7 +290,7 @@ Public Class frmEmpleados
             End Try
 
             'Redirecciono al listado
-            TabEmpleados.SelectedIndex = 0
+            TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbListado")
         End If
     End Sub
 
@@ -381,7 +342,7 @@ Public Class frmEmpleados
         'Cambio el cursor a "WAIT"
         TabEmpleados.Cursor = Cursors.WaitCursor
 
-        If TabEmpleados.SelectedIndex = 0 Then 'TAB LISTADO DE EMPLEADO
+        If TabEmpleados.SelectedTab.Name = "TbListado" Then 'TAB LISTADO DE EMPLEADO
             'Actualizo el datagrid si se selecciona el tab del listado
             If VariablesGlobales.objUsuario.id_Perfil = 1 Then
                 Dim DsEmpleados As New DataSet
@@ -437,7 +398,7 @@ Public Class frmEmpleados
             'Seteo el id_Empleado en cero
             EEmpleados.id_Empleado = 0
 
-        ElseIf TabEmpleados.SelectedIndex = 1 Then 'TAB ALTA DE EMPLEADO
+        ElseIf TabEmpleados.SelectedTab.Name = "TbAlta" Then 'TAB ALTA DE EMPLEADO
 
             'Cargo el combo de sucursales
             If VariablesGlobales.objUsuario.id_Perfil = 1 Then
@@ -467,12 +428,12 @@ Public Class frmEmpleados
             'Seteo el id_Empleado en cero
             EEmpleados.id_Empleado = 0
 
-        ElseIf TabEmpleados.SelectedIndex = 2 Then 'TAB MODIFICACION DE EMPLEADO
+        ElseIf TabEmpleados.SelectedTab.Name = "TbMod" Then 'TAB MODIFICACION DE EMPLEADO
             If EEmpleados.id_Empleado > 0 Or EEmpleados.id_Empleado <> Nothing Then
 
             Else
                 MessageBox.Show("Debe seleccionar previamente un empleado.", "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                TabEmpleados.SelectedIndex = 0
+                TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbListado")
             End If
         End If
 
@@ -621,7 +582,7 @@ Public Class frmEmpleados
             TabEmpleados.Cursor = Cursors.Arrow
 
             'hago foco en el tab_modificacion 
-            TabEmpleados.SelectedIndex = 2
+            TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbMod")
         End If
     End Sub
 
@@ -644,7 +605,7 @@ Public Class frmEmpleados
                 MessageBox.Show(NegEmpleados.EliminarEmpleado(id_Empleado), "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 'redirecciona al tab_listado
-                TabEmpleados.SelectedIndex = 0
+                TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbListado")
             End If
 
             'Cambio el cursor a NORMAL.
@@ -835,7 +796,7 @@ Public Class frmEmpleados
                 TabEmpleados.Cursor = Cursors.Arrow
 
                 'hago foco en el tab_modificacion 
-                TabEmpleados.SelectedIndex = 2
+                TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbMod")
             End If
         End If
     End Sub
@@ -1180,6 +1141,30 @@ Public Class frmEmpleados
             ErrorEmpleados.SetError(txt_SueldoPresente_mod, "Debe ingresar el sueldo en el formato permitido. Ejemplo: 725,50")
         Else
             ErrorEmpleados.SetError(txt_SueldoPresente_mod, Nothing)
+        End If
+    End Sub
+
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Crear)) Then
+
+        Else
+            TabEmpleados.TabPages.Remove(TabEmpleados.TabPages("TbAlta"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Eliminar)) Then
+            Btn_Eliminar.Visible = True
+            DG_Empleados.Columns("Eliminar").Visible = True
+        Else
+            Btn_Eliminar.Visible = False
+            DG_Empleados.Columns("Eliminar").Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Modificar)) Then
+            DG_Empleados.Columns("Modificar").Visible = True
+        Else
+            TabEmpleados.TabPages.Remove(TabEmpleados.TabPages("TbMod"))
+            DG_Empleados.Columns("Modificar").Visible = False
+            RemoveHandler DG_Empleados.CellDoubleClick, AddressOf DG_Empleados_CellDoubleClick
         End If
     End Sub
 #End Region

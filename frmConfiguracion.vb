@@ -75,6 +75,8 @@ Public Class frmConfiguracion
         txtIPHost.Text = My.Settings.IpHost
         txtPuertoHost.Text = My.Settings.PuertoHost
 
+        EvaluarPermisos()
+
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
     End Sub
@@ -321,7 +323,89 @@ Public Class frmConfiguracion
         End If
     End Sub
 
-    Private Sub GroupBox9_Enter(sender As Object, e As EventArgs) Handles GroupBox9.Enter
+    Sub EvaluarPermisos()
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Sucursal_Visualizar)) Then
 
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("TabSucursal"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Sucursal_Modificar)) Then
+            Btn_Actualizar.Enabled = True
+        Else
+            Btn_Actualizar.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Precio_Visualizar)) Then
+
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("TabPrecios"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Precio_Modificar)) Then
+            Btn_Precios.Enabled = True
+        Else
+            Btn_Precios.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Mail_Visualizar)) Then
+
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("TabMail"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Mail_Modificar)) Then
+            BtnMailing.Enabled = True
+        Else
+            BtnMailing.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Facturación_Visualizar)) Then
+
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("TabFacturacion"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Facturación_Modificar)) Then
+            Btn_Controlador.Enabled = True
+        Else
+            Btn_Controlador.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Alertas_Visualizar)) Then
+
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("TabNotificaciones"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Alertas_Modificar)) Then
+            BtnNotificaciones.Enabled = True
+        Else
+            BtnNotificaciones.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Internet_Visualizar)) Then
+
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("TabInternet"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Internet_Modificar)) Then
+            BtnInternet.Enabled = True
+        Else
+            BtnInternet.Enabled = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Host_Visualizar)) Then
+
+        Else
+            TabControl1.TabPages.Remove(TabControl1.TabPages("Host"))
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Configuración_Host_Modificar)) Then
+            btnModificarHost.Enabled = True
+        Else
+            btnModificarHost.Enabled = False
+        End If
     End Sub
 End Class

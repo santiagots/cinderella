@@ -2,7 +2,7 @@
 
     Private id_Perfil_, Habilitado_ As Integer
     Private Descripcion_ As String
-    Private Patentes_ As Object
+    Private Patentes_ As List(Of Patentes)
 
     Public Property id_Perfil() As Integer
         Get
@@ -31,12 +31,11 @@
         End Set
     End Property
 
-    Public Property Patentes() As System.Windows.Forms.ListBox
-
+    Public Property Patentes() As List(Of Patentes)
         Get
             Return Patentes_
         End Get
-        Set(ByVal value As System.Windows.Forms.ListBox)
+        Set(ByVal value As List(Of Patentes))
             Patentes_ = value
         End Set
     End Property

@@ -71,13 +71,13 @@ Public Class Usuario
         Dim ArrPatentes As New ArrayList
         Dim HayInternet As Boolean = negFunciones.GotInternet
 
-        If HayInternet Then
-            'cargo las patentes de la base remota
-            dsPatentes = negPatentes.CargarPatentesPorUsuario(id_Usuario, id_Sucursal)
-        Else
-            'cargo las patentes de la base local
-            dsPatentes = negPatentes.CargarPatentesPorUsuarioLocal(id_Usuario, id_Sucursal)
-        End If
+        'If HayInternet Then
+        '    'cargo las patentes de la base remota
+        '    dsPatentes = negPatentes.CargarPatentesPorUsuario(id_Usuario, id_Sucursal)
+        'Else
+        '    'cargo las patentes de la base local
+        '    dsPatentes = negPatentes.CargarPatentesPorUsuarioLocal(id_Usuario, id_Sucursal)
+        'End If
 
         For Each drPatente In dsPatentes.Tables(0).Rows
             ArrPatentes.Add(drPatente.item("id_Patente"))
