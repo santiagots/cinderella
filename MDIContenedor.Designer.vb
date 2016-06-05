@@ -149,6 +149,7 @@ Partial Class MDIContenedor
         Me.NuevoMensajeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DatosPersonalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TemporizadorActualizaciones = New System.Windows.Forms.Timer(Me.components)
+        Me.ControladoraToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSuperior.SuspendLayout()
         Me.MenuAccesos.SuspendLayout()
         Me.MenuInferior.SuspendLayout()
@@ -654,7 +655,7 @@ Partial Class MDIContenedor
         '
         'Btn_SincronizacionMenu
         '
-        Me.Btn_SincronizacionMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_SincronizaciónMenu, Me.Btn_ConfiguracionMenu, Me.Btn_NotificacionesMenu})
+        Me.Btn_SincronizacionMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_SincronizaciónMenu, Me.Btn_ConfiguracionMenu, Me.Btn_NotificacionesMenu, Me.ControladoraToolStripMenuItem})
         Me.Btn_SincronizacionMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Sistema_32
         Me.Btn_SincronizacionMenu.Name = "Btn_SincronizacionMenu"
         Me.Btn_SincronizacionMenu.Size = New System.Drawing.Size(76, 20)
@@ -1161,6 +1162,13 @@ Partial Class MDIContenedor
         Me.TemporizadorActualizaciones.Enabled = True
         Me.TemporizadorActualizaciones.Interval = 300000
         '
+        'ControladoraToolStripMenuItem
+        '
+        Me.ControladoraToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Caja_32
+        Me.ControladoraToolStripMenuItem.Name = "ControladoraToolStripMenuItem"
+        Me.ControladoraToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
+        Me.ControladoraToolStripMenuItem.Text = "Controlador Fiscal"
+        '
         'MDIContenedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1316,5 +1324,6 @@ Partial Class MDIContenedor
     Friend WithEvents NotaPedidoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AdministracionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Menu_NotaPedido As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ControladoraToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

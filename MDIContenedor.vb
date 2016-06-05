@@ -138,8 +138,10 @@ Public Class MDIContenedor
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Registro)) Then
             RegistroDeEmpleadosToolStripMenuItem.Visible = True
+            RegistroDeEmpleadosToolStripMenuItem.Enabled = True
         Else
             RegistroDeEmpleadosToolStripMenuItem.Visible = False
+            RegistroDeEmpleadosToolStripMenuItem.Enabled = False
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Visualizar) Or
@@ -163,8 +165,10 @@ Public Class MDIContenedor
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Etiquetas)) Then
             Btn_EtiquetasMenu.Visible = True
+            Btn_EtiquetasMenu.Enabled = True
         Else
             Btn_EtiquetasMenu.Visible = False
+            Btn_EtiquetasMenu.Enabled = False
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Movimientos_ListadodeMovimientos)) Then
@@ -420,9 +424,11 @@ Public Class MDIContenedor
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Venta)) Then
+            VentasToolStripMenuItem1.Enabled = True
             VentasToolStripMenuItem1.Visible = True
             AccesoVentas.Visible = True
         Else
+            VentasToolStripMenuItem1.Enabled = False
             VentasToolStripMenuItem1.Visible = False
             AccesoVentas.Visible = False
         End If
@@ -539,6 +545,15 @@ Public Class MDIContenedor
             Btn_NotificacionesMenu.Visible = False
             Menu_Movimientos.Visible = False
         End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_EmitirCierreZdía) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_EmitirCierreZRangoFechas) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_BuscarTickets) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_ExportarTickets)) Then
+            ControladoraToolStripMenuItem.Visible = True
+        Else
+            ControladoraToolStripMenuItem.Visible = False
+        End If
     End Sub
 
     Private Sub MDIContenedor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -556,7 +571,7 @@ Public Class MDIContenedor
 
             'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
             AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
-            
+
             'Setea el nombre de la aplicacion.
             Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
 
@@ -892,14 +907,16 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub Btn_EtiquetasMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_EtiquetasMenu.Click
-        'para administrar feriados es necesario esta online
-        If (VariablesGlobales.HayConexion = False) Then
-            dialogoConexion.ShowDialog()
-        Else
-            Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmEtiquetas).MdiParent = Me
-            Funciones.ControlInstancia(frmEtiquetas).Show()
-            Me.Cursor = Cursors.Arrow
+        If Btn_EtiquetasMenu.Enabled Then
+            'para administrar feriados es necesario esta online
+            If (VariablesGlobales.HayConexion = False) Then
+                dialogoConexion.ShowDialog()
+            Else
+                Me.Cursor = Cursors.WaitCursor
+                Funciones.ControlInstancia(frmEtiquetas).MdiParent = Me
+                Funciones.ControlInstancia(frmEtiquetas).Show()
+                Me.Cursor = Cursors.Arrow
+            End If
         End If
     End Sub
 
@@ -916,14 +933,16 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub RegistroDeEmpleadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RegistroDeEmpleadosToolStripMenuItem.Click
-        'para administrar empelados es necesario esta online
-        If (VariablesGlobales.HayConexion = False) Then
-            dialogoConexion.ShowDialog()
-        Else
-            Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmEmpleadosRegistro).MdiParent = Me
-            Funciones.ControlInstancia(frmEmpleadosRegistro).Show()
-            Me.Cursor = Cursors.Arrow
+        If RegistroDeEmpleadosToolStripMenuItem.Enabled Then
+            'para administrar empelados es necesario esta online
+            If (VariablesGlobales.HayConexion = False) Then
+                dialogoConexion.ShowDialog()
+            Else
+                Me.Cursor = Cursors.WaitCursor
+                Funciones.ControlInstancia(frmEmpleadosRegistro).MdiParent = Me
+                Funciones.ControlInstancia(frmEmpleadosRegistro).Show()
+                Me.Cursor = Cursors.Arrow
+            End If
         End If
     End Sub
 
@@ -964,12 +983,14 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub VentasToolStripMenuItem1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VentasToolStripMenuItem1.Click
-        'para administrar ventas no es necesario esta online
-        Me.Cursor = Cursors.WaitCursor
-        Dim frmVentas As frmVentas = New frmVentas()
-        frmVentas.MdiParent = Me
-        frmVentas.Show()
-        Me.Cursor = Cursors.Arrow
+        If VentasToolStripMenuItem1.Enabled Then
+            'para administrar ventas no es necesario esta online
+            Me.Cursor = Cursors.WaitCursor
+            Dim frmVentas As frmVentas = New frmVentas()
+            frmVentas.MdiParent = Me
+            frmVentas.Show()
+            Me.Cursor = Cursors.Arrow
+        End If
     End Sub
 
     Private Sub AdministraciónToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdministraciónToolStripMenuItem.Click
@@ -1303,6 +1324,13 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.Arrow
     End Sub
 
+    Private Sub ControladoraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ControladoraToolStripMenuItem.Click
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmControladorFiscal).MdiParent = Me
+        Funciones.ControlInstancia(frmControladorFiscal).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
     Private Sub NotificacionesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_NotificacionesMenu.Click
         'para administrar ésta seccion es necesario esta online
         If (VariablesGlobales.HayConexion = False) Then
@@ -1561,4 +1589,6 @@ Public Class MDIContenedor
 
         Funciones.ActualizarNotasPedidos(False)
     End Sub
+
+
 End Class

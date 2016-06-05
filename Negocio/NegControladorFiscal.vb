@@ -100,7 +100,6 @@ Public Class NegControladorFiscal
         Else
             Return oEpsonFP.GetExtraField(1)
         End If
-
     End Function
 
     'Funcion que obtiene el subtotal de un Tique.
@@ -212,6 +211,42 @@ Public Class NegControladorFiscal
         FPDelay()
         Return bAnswer
     End Function
+
+    'Funcion que emite el Cierre X en la controladora
+    Public Sub CierreX()
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H2))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+    End Sub
+
+    'Funcion que emite el Cierre Z en la controladora
+    Public Sub CierreZ()
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&HC) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+    End Sub
+
+    Public Sub CierreZPorRangoDeFecha(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H10))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaDesde.ToString("ddMMyy"))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand
+        FPDelay()
+    End Sub
+
+    Public Sub Informacionjornada()
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H3))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&HC) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+    End Sub
 
     'Funcion que abre los puertos de la impresora.
     Public Function AbrirPuerto() As Boolean

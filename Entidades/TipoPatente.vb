@@ -98,7 +98,7 @@
     Seguridad_Usuarios_Visualizar = 100
     Seguridad_Usuarios_modificar = 102
     Seguridad_Usuarios_Eliminar = 103
-    sistema = 104
+    Sistema = 104
     Sistema_Sincronización = 105
     Sistema_Configuración_Sucursal_Visualizar = 106
     Sistema_Configuración_Sucursal_Modificar = 107
@@ -116,4 +116,8 @@
     Sistema_Configuración_Host_Modificar = 119
     Sistema_Notificación_Visualización = 120
     Sistema_Notificación_AceptarCancelar = 121
+    Sistema_Controlador_Fiscal_EmitirCierreZdía = 612
+    Sistema_Controlador_Fiscal_EmitirCierreZRangoFechas = 613
+    Sistema_Controlador_Fiscal_BuscarTickets = 614
+    Sistema_Controlador_Fiscal_ExportarTickets = 615
 End Enum

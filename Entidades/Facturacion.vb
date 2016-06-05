@@ -137,5 +137,27 @@ Public Class Facturacion
         End Set
     End Property
 
+    Private _IVA As Double
+    Public Property IVA() As Double
+        Get
+            Return _IVA
+        End Get
+        Set(ByVal value As Double)
+            _IVA = value
+        End Set
+    End Property
+
+    Private _SubTotal As Double
+    Public Property SubTotal() As Double
+        Get
+            Return _SubTotal
+        End Get
+        Set(ByVal value As Double)
+            _SubTotal = value
+        End Set
+    End Property
+
+
+
 
 End Class

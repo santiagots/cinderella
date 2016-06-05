@@ -147,6 +147,30 @@ Public Class NegFacturacion
         End Try
     End Function
 
+    'Funcion que retorna el ultimo numero utilizado en una factura 
+    Public Function ListadoTicketControladorFiscal(ByVal tipoFactura As String, ByVal idSucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As List(Of Entidades.Facturacion)
+        'Declaro variables
+        Dim dsFacturas As New DataSet
+        Dim facturas As List(Of Entidades.Facturacion) = New List(Of Entidades.Facturacion)()
+        'Conecto a la bdd.
+
+        Try
+            If (HayInternet) Then
+                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            Else
+                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            End If
+
+            For Each factura As DataRow In dsFacturas.Tables(0).Rows
+                facturas.Add(ObtenerEntidadFactura(factura))
+            Next
+            'retorno valor
+            Return facturas
+        Catch ex As Exception
+            Return facturas
+        End Try
+    End Function
+
     'Funcion para consultar una factura.
     Public Function TraerFacturacion(ByVal id_Venta As Integer)
         Dim dsFactura As New DataSet
@@ -159,21 +183,34 @@ Public Class NegFacturacion
         End If
 
         If dsFactura.Tables(0).Rows.Count <> 0 Then
-            entFactura.id_Facturacion = dsFactura.Tables(0).Rows(0).Item("id_Facturacion").ToString
-            entFactura.id_Venta = dsFactura.Tables(0).Rows(0).Item("id_Venta").ToString
-            entFactura.NumeroFactura = dsFactura.Tables(0).Rows(0).Item("NumeroFactura").ToString
-            entFactura.Monto = dsFactura.Tables(0).Rows(0).Item("Monto").ToString
-            entFactura.TipoFactura = dsFactura.Tables(0).Rows(0).Item("TipoFactura").ToString
-            entFactura.Nombre = dsFactura.Tables(0).Rows(0).Item("Nombre").ToString
-            entFactura.Direccion = dsFactura.Tables(0).Rows(0).Item("Direccion").ToString
-            entFactura.Localidad = dsFactura.Tables(0).Rows(0).Item("Localidad").ToString
-            entFactura.Cuit = dsFactura.Tables(0).Rows(0).Item("Cuit").ToString
-            entFactura.Fecha = dsFactura.Tables(0).Rows(0).Item("Fecha").ToString
-            entFactura.PuntoVenta = dsFactura.Tables(0).Rows(0).Item("PuntoVenta").ToString
-            entFactura.TipoRecibo = Integer.Parse(dsFactura.Tables(0).Rows(0).Item("TipoRecibo").ToString)
-            entFactura.IdSucursal = dsFactura.Tables(0).Rows(0).Item("Id_Sucursal").ToString
-
+            entFactura = ObtenerEntidadFactura(dsFactura.Tables(0).Rows(0))
         End If
+
         Return entFactura
     End Function
+
+    Private Function ObtenerEntidadFactura(ByVal dr As DataRow) As Entidades.Facturacion
+
+        Dim entFactura As New Entidades.Facturacion
+
+        entFactura.id_Facturacion = dr.Item("id_Facturacion").ToString
+        entFactura.id_Venta = dr.Item("id_Venta").ToString
+        entFactura.NumeroFactura = dr.Item("NumeroFactura").ToString
+        entFactura.Monto = dr.Item("Monto").ToString
+        entFactura.TipoFactura = dr.Item("TipoFactura").ToString
+        entFactura.Nombre = dr.Item("Nombre").ToString
+        entFactura.Direccion = dr.Item("Direccion").ToString
+        entFactura.Localidad = dr.Item("Localidad").ToString
+        entFactura.Cuit = dr.Item("Cuit").ToString
+        entFactura.Fecha = dr.Item("Fecha").ToString
+        entFactura.PuntoVenta = dr.Item("PuntoVenta").ToString
+        entFactura.TipoRecibo = Integer.Parse(dr.Item("TipoRecibo").ToString)
+        entFactura.IdSucursal = dr.Item("Id_Sucursal").ToString
+        entFactura.IVA = Double.Parse(dr.Item("Monto").ToString) * 0.21
+        entFactura.SubTotal = Double.Parse(dr.Item("Monto").ToString) * 0.79
+
+        Return entFactura
+    End Function
+
+
 End Class

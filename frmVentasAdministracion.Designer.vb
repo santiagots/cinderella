@@ -152,11 +152,11 @@ Partial Class frmVentasAdministracion
         Me.lbl_Msg.AutoSize = True
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(82, 366)
+        Me.lbl_Msg.Location = New System.Drawing.Point(278, 362)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(710, 25)
+        Me.lbl_Msg.Size = New System.Drawing.Size(328, 25)
         Me.lbl_Msg.TabIndex = 2
-        Me.lbl_Msg.Text = "No se han encontrado ventas en el rango de fechas seleccionado."
+        Me.lbl_Msg.Text = "No se han encontrado ventas."
         '
         'GroupBox1
         '
@@ -190,7 +190,7 @@ Partial Class frmVentasAdministracion
         Me.GroupBox1.Size = New System.Drawing.Size(860, 188)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Filtrar ventas por fecha."
+        Me.GroupBox1.Text = "Filtrar ventas."
         '
         'ChkAnuladoNo
         '
