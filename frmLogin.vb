@@ -1,7 +1,4 @@
-﻿Imports Entidades
-Imports Negocio
-Imports System.Configuration
-Imports System.Resources
+﻿Imports Negocio
 
 Public Class frmLogin
     Dim encripta As New ClsEncriptacion

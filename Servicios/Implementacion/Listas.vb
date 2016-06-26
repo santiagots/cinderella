@@ -1,6 +1,4 @@
-﻿Imports Negocio
-Imports Entidades
-Imports System.ServiceModel
+﻿Imports System.ServiceModel
 
 <ServiceBehavior(IncludeExceptionDetailInFaults:=True)>
 Public Class Listas

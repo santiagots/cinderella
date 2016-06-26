@@ -1,5 +1,4 @@
 ﻿Imports System.ServiceModel
-Imports Entidades
 
 ' NOTE: You can use the "Rename" command on the context menu to change the interface name "IListas" in both code and config file together.
 <ServiceContract()>

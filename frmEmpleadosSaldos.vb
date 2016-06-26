@@ -68,7 +68,7 @@ Public Class frmEmpleadosSaldos
 
             'Obtengo los datos.
             id_Empleado = CbEmpleados.SelectedValue
-            eEmpleados = NegEmpleados.TraerEmpleado(id_Empleado)
+            eEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
 
             FDesde = New DateTime(txtDate.Value.Year, txtDate.Value.Month, 1).ToString("yyyy/MM/dd")
             FHasta = New DateTime(txtDate.Value.Year, txtDate.Value.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy/MM/dd")

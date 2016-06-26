@@ -28,7 +28,7 @@
             End If
 
             'Empleado
-            eEmpleado = NegEmpleados.TraerEmpleado(id_Empleado)
+            eEmpleado = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
             Me.Text = "Comisiones de " & eEmpleado.Apellido.ToUpper & " " & eEmpleado.Nombre.ToUpper
             Gb_Comisiones.Text = "Comisiones registradas entre el " & FDesde & " hasta el " & FHasta
 

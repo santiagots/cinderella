@@ -1,6 +1,5 @@
 ﻿Imports Entidades
 Imports System.Data.SqlClient
-Imports Datos
 
 Public Class NegEmpleados
     Dim objEmpleado As Entidades.Empleados
@@ -9,7 +8,7 @@ Public Class NegEmpleados
     Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para consultar un empleado.
-    Public Function TraerEmpleado(ByVal id_Empleado As Integer)
+    Public Function TraerEmpleadoPorIdEmpleado(ByVal id_Empleado As Integer)
         Dim dsEmpleado As New DataSet
         Dim entEmpleado As New Entidades.Empleados
 
@@ -20,28 +19,23 @@ Public Class NegEmpleados
         End If
 
         If dsEmpleado.Tables(0).Rows.Count <> 0 Then
-            entEmpleado.id_Empleado = dsEmpleado.Tables(0).Rows(0).Item("id_Empleado").ToString
-            entEmpleado.id_TipoEmpleado = dsEmpleado.Tables(0).Rows(0).Item("id_TipoEmpleado").ToString
-            entEmpleado.id_Sucursal = dsEmpleado.Tables(0).Rows(0).Item("id_Sucursal").ToString
-            entEmpleado.Nombre = dsEmpleado.Tables(0).Rows(0).Item("Nombre").ToString
-            entEmpleado.Apellido = dsEmpleado.Tables(0).Rows(0).Item("Apellido").ToString
-            entEmpleado.SueldoNormal = dsEmpleado.Tables(0).Rows(0).Item("SueldoNormal").ToString
-            entEmpleado.SueldoFeriado = dsEmpleado.Tables(0).Rows(0).Item("SueldoFeriado").ToString
-            entEmpleado.SueldoPresentismo = dsEmpleado.Tables(0).Rows(0).Item("SueldoPresentismo").ToString
-            entEmpleado.Direccion = dsEmpleado.Tables(0).Rows(0).Item("Direccion").ToString
-            entEmpleado.Codigo_Postal = dsEmpleado.Tables(0).Rows(0).Item("Codigo_Postal").ToString
-            entEmpleado.Cuil = dsEmpleado.Tables(0).Rows(0).Item("Cuil").ToString
-            entEmpleado.id_Provincia = dsEmpleado.Tables(0).Rows(0).Item("id_Provincia").ToString
-            entEmpleado.id_Localidad = dsEmpleado.Tables(0).Rows(0).Item("id_Localidad").ToString
-            entEmpleado.id_Distrito = dsEmpleado.Tables(0).Rows(0).Item("id_Departamento").ToString
-            entEmpleado.Observaciones = dsEmpleado.Tables(0).Rows(0).Item("Observaciones").ToString
-            entEmpleado.Telefono = dsEmpleado.Tables(0).Rows(0).Item("Telefono").ToString
-            entEmpleado.Telefono2 = dsEmpleado.Tables(0).Rows(0).Item("Telefono2").ToString
-            entEmpleado.Mail = dsEmpleado.Tables(0).Rows(0).Item("Mail").ToString
-            entEmpleado.Habilitado = dsEmpleado.Tables(0).Rows(0).Item("Habilitado").ToString
-            entEmpleado.Fecha = dsEmpleado.Tables(0).Rows(0).Item("Fecha").ToString
-            entEmpleado.FechaNacimiento = dsEmpleado.Tables(0).Rows(0).Item("FechaNacimiento").ToString
-            entEmpleado.FechaIngreso = dsEmpleado.Tables(0).Rows(0).Item("FechaIngreso").ToString
+            entEmpleado = ObtenerEmpleadoFromDataRow(dsEmpleado)
+        End If
+        Return entEmpleado
+    End Function
+
+    Public Function TraerEmpleadoPorIdUsuario(ByVal id_Usuario As Integer)
+        Dim dsEmpleado As New DataSet
+        Dim entEmpleado As New Entidades.Empleados
+
+        If (HayInternet) Then
+            dsEmpleado = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
+        Else
+            dsEmpleado = clsDatos.ConsultarBaseLocal("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
+        End If
+
+        If dsEmpleado.Tables(0).Rows.Count <> 0 Then
+            entEmpleado = ObtenerEmpleadoFromDataRow(dsEmpleado)
         End If
         Return entEmpleado
     End Function
@@ -99,6 +93,7 @@ Public Class NegEmpleados
                 .AddWithValue("@FechaIngreso", eempleados.FechaIngreso)
                 .AddWithValue("@Observaciones", eempleados.Observaciones)
                 .AddWithValue("@Habilitado", eempleados.Habilitado)
+                .AddWithValue("@id_Usuario", eempleados.id_Usuario)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -205,6 +200,7 @@ Public Class NegEmpleados
                 .AddWithValue("@FechaIngreso", eempleados.FechaIngreso)
                 .AddWithValue("@Observaciones", eempleados.Observaciones)
                 .AddWithValue("@Habilitado", eempleados.Habilitado)
+                .AddWithValue("@id_Usuario", eempleados.id_Usuario)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
             respuesta.Direction = ParameterDirection.Output
@@ -674,6 +670,36 @@ Public Class NegEmpleados
         Else
             Return fecha.Value
         End If
+    End Function
+
+    Private Shared Function ObtenerEmpleadoFromDataRow(dsEmpleado As DataSet) As Empleados
+
+        Dim entEmpleado As New Entidades.Empleados
+
+        entEmpleado.id_Empleado = dsEmpleado.Tables(0).Rows(0).Item("id_Empleado").ToString
+        entEmpleado.id_TipoEmpleado = dsEmpleado.Tables(0).Rows(0).Item("id_TipoEmpleado").ToString
+        entEmpleado.id_Sucursal = dsEmpleado.Tables(0).Rows(0).Item("id_Sucursal").ToString
+        entEmpleado.Nombre = dsEmpleado.Tables(0).Rows(0).Item("Nombre").ToString
+        entEmpleado.Apellido = dsEmpleado.Tables(0).Rows(0).Item("Apellido").ToString
+        entEmpleado.SueldoNormal = dsEmpleado.Tables(0).Rows(0).Item("SueldoNormal").ToString
+        entEmpleado.SueldoFeriado = dsEmpleado.Tables(0).Rows(0).Item("SueldoFeriado").ToString
+        entEmpleado.SueldoPresentismo = dsEmpleado.Tables(0).Rows(0).Item("SueldoPresentismo").ToString
+        entEmpleado.Direccion = dsEmpleado.Tables(0).Rows(0).Item("Direccion").ToString
+        entEmpleado.Codigo_Postal = dsEmpleado.Tables(0).Rows(0).Item("Codigo_Postal").ToString
+        entEmpleado.Cuil = dsEmpleado.Tables(0).Rows(0).Item("Cuil").ToString
+        entEmpleado.id_Provincia = dsEmpleado.Tables(0).Rows(0).Item("id_Provincia").ToString
+        entEmpleado.id_Localidad = dsEmpleado.Tables(0).Rows(0).Item("id_Localidad").ToString
+        entEmpleado.id_Distrito = dsEmpleado.Tables(0).Rows(0).Item("id_Departamento").ToString
+        entEmpleado.Observaciones = dsEmpleado.Tables(0).Rows(0).Item("Observaciones").ToString
+        entEmpleado.Telefono = dsEmpleado.Tables(0).Rows(0).Item("Telefono").ToString
+        entEmpleado.Telefono2 = dsEmpleado.Tables(0).Rows(0).Item("Telefono2").ToString
+        entEmpleado.Mail = dsEmpleado.Tables(0).Rows(0).Item("Mail").ToString
+        entEmpleado.Habilitado = dsEmpleado.Tables(0).Rows(0).Item("Habilitado").ToString
+        entEmpleado.Fecha = dsEmpleado.Tables(0).Rows(0).Item("Fecha").ToString
+        entEmpleado.FechaNacimiento = dsEmpleado.Tables(0).Rows(0).Item("FechaNacimiento").ToString
+        entEmpleado.FechaIngreso = dsEmpleado.Tables(0).Rows(0).Item("FechaIngreso").ToString
+        entEmpleado.id_Usuario = If(dsEmpleado.Tables(0).Rows(0).Item("id_Usuario") Is DBNull.Value, 0, dsEmpleado.Tables(0).Rows(0).Item("id_Usuario"))
+        Return entEmpleado
     End Function
 
 End Class

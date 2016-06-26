@@ -28,7 +28,7 @@
             End If
 
             'Empleado
-            eEmpleado = NegEmpleados.TraerEmpleado(id_Empleado)
+            eEmpleado = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
             Me.Text = "Pago de Vacaciones de " & eEmpleado.Apellido.ToUpper & " " & eEmpleado.Nombre.ToUpper
             Gb_Comisiones.Text = "Vacaciones registradas entre el " & FDesde & " hasta el " & FHasta
 

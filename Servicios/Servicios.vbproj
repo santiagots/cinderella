@@ -67,6 +67,7 @@
     <Compile Include="Datos\EntidadCliente.vb" />
     <Compile Include="Datos\EntidadConfiguracion.vb" />
     <Compile Include="Datos\EntidadConsumidorFinal.vb" />
+    <Compile Include="Datos\EntidadEmpleado.vb" />
     <Compile Include="Datos\EntidadNotaPedido.vb" />
     <Compile Include="Datos\EntidadNotaPedido_Detalle.vb" />
     <Compile Include="Datos\EntidadProducto.vb" />
@@ -75,11 +76,13 @@
     <Compile Include="Datos\EntidadUsuario.vb" />
     <Compile Include="Host.vb" />
     <Compile Include="Implementacion\Cliente.vb" />
+    <Compile Include="Implementacion\Empleado.vb" />
     <Compile Include="Implementacion\Listas.vb" />
     <Compile Include="Implementacion\NotaPedido.vb" />
     <Compile Include="Implementacion\Producto.vb" />
     <Compile Include="Implementacion\Usuario.vb" />
     <Compile Include="Interfaces\ICliente.vb" />
+    <Compile Include="Interfaces\IEmpleado.vb" />
     <Compile Include="Interfaces\IListas.vb" />
     <Compile Include="Interfaces\INotaPedido.vb" />
     <Compile Include="Interfaces\IProducto.vb" />

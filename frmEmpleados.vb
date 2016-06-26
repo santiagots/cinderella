@@ -10,10 +10,12 @@ Public Class frmEmpleados
     Dim NegSucursal As New Negocio.NegSucursales
     Dim NegTiposComision As New Negocio.NegTipoComision
     Dim NegTiposEmpleado As New Negocio.NegTipoEmpleado
+    Dim NegUsuarios As New Negocio.Usuario
     Dim EEmpleados As New Entidades.Empleados
     Dim ESucursal As New Entidades.Sucursales
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
+    Dim Usuarios As DataSet
 
 #Region "Región de Funciones"
     'Limpia el formulario de Alta.
@@ -37,6 +39,7 @@ Public Class frmEmpleados
         cb_TipoEmpleado.SelectedItem = Nothing
         cb_Localidad.SelectedItem = Nothing
         cb_Distrito.SelectedItem = Nothing
+        cb_Usuario.SelectedItem = Nothing
         chk_Habilitado.Checked = True
     End Sub
 
@@ -61,6 +64,7 @@ Public Class frmEmpleados
         cb_TipoEmpleado_mod.SelectedItem = Nothing
         cb_Localidad_mod.SelectedItem = Nothing
         cb_Distrito_mod.SelectedItem = Nothing
+        cb_Usuario_Mod.SelectedItem = Nothing
         chk_Habilitado_mod.Checked = True
     End Sub
 #End Region
@@ -164,6 +168,7 @@ Public Class frmEmpleados
             Me.Cursor = Cursors.Arrow
             MessageBox.Show(ex.Message.ToString)
         End Try
+
     End Sub
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
@@ -173,7 +178,7 @@ Public Class frmEmpleados
 
     'Boton Agregar Empleado.
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
-        If txt_SueldoFeriado.Text = "" Or txt_SueldoNormal.Text = "" Or txt_SueldoPresente.Text = "" Or txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Apellido.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or cb_TipoEmpleado.SelectedItem Is Nothing Or CheckSucursales.SelectedItems.Count <= 0 Then
+        If txt_SueldoFeriado.Text = "" Or txt_SueldoNormal.Text = "" Or txt_SueldoPresente.Text = "" Or txt_Direccion.Text = "" Or txt_CodigoPostal.Text = "" Or txt_Apellido.Text = "" Or txt_Nombre.Text = "" Or cb_Provincia.SelectedItem Is Nothing Or cb_Distrito.SelectedItem Is Nothing Or cb_Localidad.SelectedItem Is Nothing Or cb_Usuario.SelectedItem Is Nothing Or cb_TipoEmpleado.SelectedItem Is Nothing Or CheckSucursales.SelectedItems.Count <= 0 Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -203,6 +208,7 @@ Public Class frmEmpleados
                 EEmpleados.id_Distrito = cb_Distrito.SelectedValue
                 EEmpleados.FechaIngreso = FechaIngreso.Value
                 EEmpleados.FechaNacimiento = FechaNacimiento.Value
+                EEmpleados.id_Usuario = cb_Usuario.SelectedValue
                 If VariablesGlobales.objUsuario.id_Perfil = 1 Then 'si es administrador
                     EEmpleados.Sucursales = CheckSucursales
                 Else
@@ -263,6 +269,7 @@ Public Class frmEmpleados
                 EEmpleados.id_Distrito = cb_Distrito_mod.SelectedValue
                 EEmpleados.FechaIngreso = FechaIngreso_mod.Value
                 EEmpleados.FechaNacimiento = FechaNacimiento_mod.Value
+                EEmpleados.id_Usuario = cb_Usuario_Mod.SelectedValue
                 If VariablesGlobales.objUsuario.id_Perfil = 1 Then 'si es administrador
                     EEmpleados.Sucursales = CheckSucursales_mod
                 Else
@@ -477,7 +484,7 @@ Public Class frmEmpleados
             EEmpleados.id_Empleado = id_Empleado
 
             'lleno la entidad empleado
-            EEmpleados = NegEmpleados.TraerEmpleado(id_Empleado)
+            EEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
 
             'lleno los controls del tab_modificacion
             txt_Nombre_mod.Text = EEmpleados.Nombre
@@ -545,6 +552,17 @@ Public Class frmEmpleados
                 cb_TipoEmpleado_mod.ValueMember = "id_TipoEmpleado"
                 cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_TipoEmpleado
                 cb_TipoEmpleado_mod.Refresh()
+            End If
+
+            'Cargo el combo de Usuarios.
+            Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Usuario)
+            If (Usuarios.Tables(0).Rows.Count > 0) Then
+                cb_Usuario_Mod.DataSource = Nothing
+                cb_Usuario_Mod.DataSource = Usuarios.Tables(0)
+                cb_Usuario_Mod.DisplayMember = "Usuario"
+                cb_Usuario_Mod.ValueMember = "id_Usuario"
+                cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_Usuario
+                cb_Usuario_Mod.Refresh()
             End If
 
             'Cargo el combo de sucursales
@@ -690,7 +708,7 @@ Public Class frmEmpleados
                 EEmpleados.id_Empleado = id_Empleado
 
                 'lleno la entidad empleado
-                EEmpleados = NegEmpleados.TraerEmpleado(id_Empleado)
+                EEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
 
                 'lleno los controls del tab_modificacion
                 txt_Nombre_mod.Text = EEmpleados.Nombre
@@ -760,6 +778,17 @@ Public Class frmEmpleados
                     cb_TipoEmpleado_mod.Refresh()
                 End If
 
+                'Cargo el combo de Usuarios.
+                Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Empleado)
+                If (Usuarios.Tables(0).Rows.Count > 0) Then
+                    cb_Usuario_Mod.DataSource = Nothing
+                    cb_Usuario_Mod.DataSource = Usuarios.Tables(0)
+                    cb_Usuario_Mod.DisplayMember = "Usuario"
+                    cb_Usuario_Mod.ValueMember = "id_Usuario"
+                    cb_Usuario_Mod.SelectedValue = EEmpleados.id_Usuario
+                    cb_Usuario_Mod.Refresh()
+                End If
+
                 'Cargo el combo de sucursales
                 If VariablesGlobales.objUsuario.id_Perfil = 1 Then
                     Dim DsSucursales As New DataSet
@@ -807,7 +836,7 @@ Public Class frmEmpleados
     Private Sub cb_Provincia_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Provincia.GotFocus
         Dim dsProvincias As New DataSet
         dsProvincias = NegProvincias.ListadoProvincias()
-        If dsProvincias.Tables(0).Rows.Count > 0 Then
+        If dsProvincias.Tables(0).Rows.Count > 0 AndAlso cb_Provincia.Items.Count = 0 Then
             cb_Provincia.DataSource = Nothing
             cb_Provincia.DataSource = dsProvincias.Tables(0)
             cb_Provincia.DisplayMember = "Descripcion"
@@ -842,7 +871,7 @@ Public Class frmEmpleados
                 cb_Localidad.DataSource = Nothing
                 cb_Localidad.DataSource = dsLocalidades.Tables(0)
                 cb_Localidad.DisplayMember = "Descripcion"
-                cb_Localidad.ValueMember = "id_Localidad"                
+                cb_Localidad.ValueMember = "id_Localidad"
                 cb_Localidad.Refresh()
             End If
         End If
@@ -852,7 +881,7 @@ Public Class frmEmpleados
     Private Sub cb_TipoComision_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_TipoEmpleado.GotFocus
         Dim dsTipos As New DataSet
         dsTipos = NegTiposEmpleado.ListadoTipos()
-        If dsTipos.Tables(0).Rows.Count > 0 Then
+        If dsTipos.Tables(0).Rows.Count > 0 AndAlso cb_TipoEmpleado.Items.Count = 0 Then
             cb_TipoEmpleado.DataSource = Nothing
             cb_TipoEmpleado.DataSource = dsTipos.Tables(0)
             cb_TipoEmpleado.DisplayMember = "TipoEmpleado"
@@ -861,11 +890,39 @@ Public Class frmEmpleados
         End If
     End Sub
 
+    'Cargo el combo de Usuarios.
+    Private Sub cb_Usuario_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Usuario.GotFocus
+
+        Dim combo As System.Windows.Forms.ComboBox = sender
+        Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(-1)
+        If (Usuarios.Tables(0).Rows.Count > 0 AndAlso combo.Items.Count = 0) Then
+            combo.DataSource = Nothing
+            combo.DataSource = Usuarios.Tables(0)
+            combo.DisplayMember = "Usuario"
+            combo.ValueMember = "id_Usuario"
+            combo.Refresh()
+        End If
+    End Sub
+
+    'Cargo el combo de Usuarios.
+    Private Sub cb_Usuario_Mod_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Usuario_Mod.GotFocus
+
+        Dim combo As System.Windows.Forms.ComboBox = sender
+        Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Empleado)
+        If (Usuarios.Tables(0).Rows.Count > 0 AndAlso combo.Items.Count = 0) Then
+            combo.DataSource = Nothing
+            combo.DataSource = Usuarios.Tables(0)
+            combo.DisplayMember = "Usuario"
+            combo.ValueMember = "id_Usuario"
+            combo.Refresh()
+        End If
+    End Sub
+
     'Cargo el combo de Provincias.
     Private Sub cb_Provincia_mod_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Provincia_mod.GotFocus
         Dim dsProvincias As New DataSet
         dsProvincias = NegProvincias.ListadoProvincias()
-        If dsProvincias.Tables(0).Rows.Count > 0 Then
+        If dsProvincias.Tables(0).Rows.Count > 0 AndAlso cb_Provincia_mod.Items.Count = 0 Then
             cb_Provincia_mod.DataSource = Nothing
             cb_Provincia_mod.DataSource = dsProvincias.Tables(0)
             cb_Provincia_mod.DisplayMember = "Descripcion"
@@ -1169,5 +1226,5 @@ Public Class frmEmpleados
     End Sub
 #End Region
 
- 
+
 End Class

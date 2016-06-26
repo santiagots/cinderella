@@ -23,7 +23,7 @@
             End If
 
             'Empleado
-            eEmpleado = NegEmpleados.TraerEmpleado(id_Empleado)
+            eEmpleado = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
             Me.Text = "Adicionales de " & eEmpleado.Apellido.ToUpper & " " & eEmpleado.Nombre.ToUpper
             Gb_Comisiones.Text = "Adicionales registrados entre el " & FDesde & " hasta el " & FHasta
 

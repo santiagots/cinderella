@@ -214,4 +214,15 @@
         End Set
     End Property
 
+    Private id_Usuario_ As Integer
+    Public Property id_Usuario() As Integer
+        Get
+            Return id_Usuario_
+        End Get
+        Set(ByVal value As Integer)
+            id_Usuario_ = value
+        End Set
+    End Property
+
+
 End Class

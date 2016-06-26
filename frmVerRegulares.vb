@@ -22,7 +22,7 @@
             End If
 
             'Empleado
-            eEmpleado = NegEmpleados.TraerEmpleado(id_Empleado)
+            eEmpleado = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
             Me.Text = "Días trabajados Regulares " & eEmpleado.Apellido.ToUpper & " " & eEmpleado.Nombre.ToUpper
             Gb_Comisiones.Text = "Días trabajados entre el " & FDesde & " hasta el " & FHasta
 

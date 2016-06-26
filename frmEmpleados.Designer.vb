@@ -29,16 +29,6 @@ Partial Class frmEmpleados
         Me.TbListado = New System.Windows.Forms.TabPage()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.DG_Empleados = New System.Windows.Forms.DataGridView()
-        Me.id_Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Apellido = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Cuil = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoEmpleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.btn_Buscar = New System.Windows.Forms.Button()
@@ -46,6 +36,8 @@ Partial Class frmEmpleados
         Me.lbl_descripcion_bus = New System.Windows.Forms.Label()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.Group = New System.Windows.Forms.GroupBox()
+        Me.cb_Usuario = New System.Windows.Forms.ComboBox()
+        Me.Label27 = New System.Windows.Forms.Label()
         Me.txt_SueldoPresente = New System.Windows.Forms.TextBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.txt_Cuil = New System.Windows.Forms.MaskedTextBox()
@@ -90,6 +82,8 @@ Partial Class frmEmpleados
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.cb_Usuario_Mod = New System.Windows.Forms.ComboBox()
+        Me.Label26 = New System.Windows.Forms.Label()
         Me.txt_SueldoPresente_mod = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txt_Cuil_mod = New System.Windows.Forms.MaskedTextBox()
@@ -136,6 +130,17 @@ Partial Class frmEmpleados
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErrorEmpleados = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolEmpl = New System.Windows.Forms.ToolTip(Me.components)
+        Me.id_Empleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Apellido = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cuil = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoEmpleado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Usuario = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabEmpleados.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Empleados, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -157,7 +162,7 @@ Partial Class frmEmpleados
         Me.TabEmpleados.Location = New System.Drawing.Point(0, 0)
         Me.TabEmpleados.Name = "TabEmpleados"
         Me.TabEmpleados.SelectedIndex = 0
-        Me.TabEmpleados.Size = New System.Drawing.Size(794, 522)
+        Me.TabEmpleados.Size = New System.Drawing.Size(794, 549)
         Me.TabEmpleados.TabIndex = 2
         '
         'TbListado
@@ -168,7 +173,7 @@ Partial Class frmEmpleados
         Me.TbListado.Location = New System.Drawing.Point(4, 29)
         Me.TbListado.Name = "TbListado"
         Me.TbListado.Padding = New System.Windows.Forms.Padding(3)
-        Me.TbListado.Size = New System.Drawing.Size(786, 489)
+        Me.TbListado.Size = New System.Drawing.Size(786, 516)
         Me.TbListado.TabIndex = 0
         Me.TbListado.Text = "Empleados"
         Me.TbListado.UseVisualStyleBackColor = True
@@ -194,7 +199,7 @@ Partial Class frmEmpleados
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Empleados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_Empleados.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Empleado, Me.Nombre, Me.Apellido, Me.Cuil, Me.Telefono, Me.Sucursal, Me.TipoEmpleado, Me.Habilitado, Me.Modificar, Me.Eliminar})
+        Me.DG_Empleados.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Empleado, Me.Nombre, Me.Apellido, Me.Cuil, Me.Telefono, Me.Sucursal, Me.TipoEmpleado, Me.Usuario, Me.Habilitado, Me.Modificar, Me.Eliminar})
         Me.DG_Empleados.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Empleados.Location = New System.Drawing.Point(8, 85)
         Me.DG_Empleados.MultiSelect = False
@@ -204,90 +209,6 @@ Partial Class frmEmpleados
         Me.DG_Empleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Empleados.Size = New System.Drawing.Size(770, 398)
         Me.DG_Empleados.TabIndex = 4
-        '
-        'id_Empleado
-        '
-        Me.id_Empleado.DataPropertyName = "id_Empleado"
-        Me.id_Empleado.FillWeight = 118.6591!
-        Me.id_Empleado.HeaderText = "ID"
-        Me.id_Empleado.Name = "id_Empleado"
-        Me.id_Empleado.ReadOnly = True
-        '
-        'Nombre
-        '
-        Me.Nombre.DataPropertyName = "Nombre"
-        Me.Nombre.FillWeight = 118.6591!
-        Me.Nombre.HeaderText = "Nombre"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'Apellido
-        '
-        Me.Apellido.DataPropertyName = "Apellido"
-        Me.Apellido.FillWeight = 118.6591!
-        Me.Apellido.HeaderText = "Apellido"
-        Me.Apellido.Name = "Apellido"
-        Me.Apellido.ReadOnly = True
-        '
-        'Cuil
-        '
-        Me.Cuil.DataPropertyName = "Cuil"
-        Me.Cuil.FillWeight = 118.6591!
-        Me.Cuil.HeaderText = "Cuil"
-        Me.Cuil.Name = "Cuil"
-        Me.Cuil.ReadOnly = True
-        '
-        'Telefono
-        '
-        Me.Telefono.DataPropertyName = "Telefono"
-        Me.Telefono.FillWeight = 118.6591!
-        Me.Telefono.HeaderText = "Telefono"
-        Me.Telefono.Name = "Telefono"
-        Me.Telefono.ReadOnly = True
-        '
-        'Sucursal
-        '
-        Me.Sucursal.DataPropertyName = "Sucursal"
-        Me.Sucursal.FillWeight = 118.6591!
-        Me.Sucursal.HeaderText = "Sucursal"
-        Me.Sucursal.Name = "Sucursal"
-        Me.Sucursal.ReadOnly = True
-        '
-        'TipoEmpleado
-        '
-        Me.TipoEmpleado.DataPropertyName = "TipoEmpleado"
-        Me.TipoEmpleado.FillWeight = 118.6591!
-        Me.TipoEmpleado.HeaderText = "Tipo de Empleado"
-        Me.TipoEmpleado.Name = "TipoEmpleado"
-        Me.TipoEmpleado.ReadOnly = True
-        '
-        'Habilitado
-        '
-        Me.Habilitado.DataPropertyName = "Habilitado"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Habilitado.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Habilitado.FillWeight = 57.03627!
-        Me.Habilitado.HeaderText = "Habilitado"
-        Me.Habilitado.Name = "Habilitado"
-        Me.Habilitado.ReadOnly = True
-        '
-        'Modificar
-        '
-        Me.Modificar.FillWeight = 55.8376!
-        Me.Modificar.HeaderText = "Modificar"
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Modificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'Eliminar
-        '
-        Me.Eliminar.FillWeight = 56.5132!
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
         '
         'GB_Buscar
         '
@@ -358,7 +279,7 @@ Partial Class frmEmpleados
         Me.TbAlta.Location = New System.Drawing.Point(4, 29)
         Me.TbAlta.Name = "TbAlta"
         Me.TbAlta.Padding = New System.Windows.Forms.Padding(3)
-        Me.TbAlta.Size = New System.Drawing.Size(786, 489)
+        Me.TbAlta.Size = New System.Drawing.Size(786, 516)
         Me.TbAlta.TabIndex = 1
         Me.TbAlta.Text = "Alta de Empleado"
         Me.TbAlta.UseVisualStyleBackColor = True
@@ -368,6 +289,8 @@ Partial Class frmEmpleados
         Me.Group.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Group.Controls.Add(Me.cb_Usuario)
+        Me.Group.Controls.Add(Me.Label27)
         Me.Group.Controls.Add(Me.txt_SueldoPresente)
         Me.Group.Controls.Add(Me.Label25)
         Me.Group.Controls.Add(Me.txt_Cuil)
@@ -413,10 +336,30 @@ Partial Class frmEmpleados
         Me.Group.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Group.Location = New System.Drawing.Point(10, 6)
         Me.Group.Name = "Group"
-        Me.Group.Size = New System.Drawing.Size(768, 475)
+        Me.Group.Size = New System.Drawing.Size(768, 502)
         Me.Group.TabIndex = 0
         Me.Group.TabStop = False
         Me.Group.Text = "Formulario de Alta"
+        '
+        'cb_Usuario
+        '
+        Me.cb_Usuario.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Usuario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Usuario.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Usuario.FormattingEnabled = True
+        Me.cb_Usuario.Location = New System.Drawing.Point(542, 383)
+        Me.cb_Usuario.Name = "cb_Usuario"
+        Me.cb_Usuario.Size = New System.Drawing.Size(198, 23)
+        Me.cb_Usuario.TabIndex = 85
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(391, 389)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(66, 15)
+        Me.Label27.TabIndex = 86
+        Me.Label27.Text = "Usuario (*)"
         '
         'txt_SueldoPresente
         '
@@ -525,7 +468,7 @@ Partial Class frmEmpleados
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(6, 439)
+        Me.Label14.Location = New System.Drawing.Point(6, 420)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(117, 13)
         Me.Label14.TabIndex = 67
@@ -752,7 +695,7 @@ Partial Class frmEmpleados
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(542, 388)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(542, 421)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado.TabIndex = 20
@@ -769,7 +712,7 @@ Partial Class frmEmpleados
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(389, 387)
+        Me.Label2.Location = New System.Drawing.Point(389, 420)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(63, 15)
         Me.Label2.TabIndex = 2
@@ -791,7 +734,7 @@ Partial Class frmEmpleados
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(639, 412)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(639, 444)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 21
@@ -805,7 +748,7 @@ Partial Class frmEmpleados
         Me.TbMod.Controls.Add(Me.GB_Modificacion)
         Me.TbMod.Location = New System.Drawing.Point(4, 29)
         Me.TbMod.Name = "TbMod"
-        Me.TbMod.Size = New System.Drawing.Size(786, 489)
+        Me.TbMod.Size = New System.Drawing.Size(786, 516)
         Me.TbMod.TabIndex = 2
         Me.TbMod.Text = "Modificación de Empleado"
         Me.TbMod.UseVisualStyleBackColor = True
@@ -815,6 +758,8 @@ Partial Class frmEmpleados
         Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Modificacion.Controls.Add(Me.cb_Usuario_Mod)
+        Me.GB_Modificacion.Controls.Add(Me.Label26)
         Me.GB_Modificacion.Controls.Add(Me.txt_SueldoPresente_mod)
         Me.GB_Modificacion.Controls.Add(Me.Label24)
         Me.GB_Modificacion.Controls.Add(Me.txt_Cuil_mod)
@@ -862,10 +807,30 @@ Partial Class frmEmpleados
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(10, 6)
         Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(770, 475)
+        Me.GB_Modificacion.Size = New System.Drawing.Size(770, 502)
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
+        '
+        'cb_Usuario_Mod
+        '
+        Me.cb_Usuario_Mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Usuario_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Usuario_Mod.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Usuario_Mod.FormattingEnabled = True
+        Me.cb_Usuario_Mod.Location = New System.Drawing.Point(541, 383)
+        Me.cb_Usuario_Mod.Name = "cb_Usuario_Mod"
+        Me.cb_Usuario_Mod.Size = New System.Drawing.Size(198, 23)
+        Me.cb_Usuario_Mod.TabIndex = 83
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(390, 389)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(66, 15)
+        Me.Label26.TabIndex = 84
+        Me.Label26.Text = "Usuario (*)"
         '
         'txt_SueldoPresente_mod
         '
@@ -897,7 +862,7 @@ Partial Class frmEmpleados
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(427, 412)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(427, 444)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 21
@@ -988,7 +953,7 @@ Partial Class frmEmpleados
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(6, 439)
+        Me.Label13.Location = New System.Drawing.Point(6, 420)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(117, 13)
         Me.Label13.TabIndex = 66
@@ -1032,7 +997,7 @@ Partial Class frmEmpleados
         Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
         Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(533, 412)
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(533, 444)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Eliminar.TabIndex = 22
@@ -1230,7 +1195,7 @@ Partial Class frmEmpleados
         Me.chk_Habilitado_mod.AutoSize = True
         Me.chk_Habilitado_mod.Checked = True
         Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(542, 388)
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(543, 419)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
         Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado_mod.TabIndex = 20
@@ -1247,7 +1212,7 @@ Partial Class frmEmpleados
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(389, 387)
+        Me.Label15.Location = New System.Drawing.Point(390, 418)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(63, 15)
         Me.Label15.TabIndex = 31
@@ -1269,7 +1234,7 @@ Partial Class frmEmpleados
         Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(639, 412)
+        Me.Btn_Modificar.Location = New System.Drawing.Point(639, 444)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Modificar.TabIndex = 23
@@ -1289,11 +1254,102 @@ Partial Class frmEmpleados
         Me.ToolEmpl.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolEmpl.ToolTipTitle = "Ayuda"
         '
+        'id_Empleado
+        '
+        Me.id_Empleado.DataPropertyName = "id_Empleado"
+        Me.id_Empleado.FillWeight = 118.6591!
+        Me.id_Empleado.HeaderText = "ID"
+        Me.id_Empleado.Name = "id_Empleado"
+        Me.id_Empleado.ReadOnly = True
+        '
+        'Nombre
+        '
+        Me.Nombre.DataPropertyName = "Nombre"
+        Me.Nombre.FillWeight = 118.6591!
+        Me.Nombre.HeaderText = "Nombre"
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        '
+        'Apellido
+        '
+        Me.Apellido.DataPropertyName = "Apellido"
+        Me.Apellido.FillWeight = 118.6591!
+        Me.Apellido.HeaderText = "Apellido"
+        Me.Apellido.Name = "Apellido"
+        Me.Apellido.ReadOnly = True
+        '
+        'Cuil
+        '
+        Me.Cuil.DataPropertyName = "Cuil"
+        Me.Cuil.FillWeight = 118.6591!
+        Me.Cuil.HeaderText = "Cuil"
+        Me.Cuil.Name = "Cuil"
+        Me.Cuil.ReadOnly = True
+        '
+        'Telefono
+        '
+        Me.Telefono.DataPropertyName = "Telefono"
+        Me.Telefono.FillWeight = 118.6591!
+        Me.Telefono.HeaderText = "Telefono"
+        Me.Telefono.Name = "Telefono"
+        Me.Telefono.ReadOnly = True
+        '
+        'Sucursal
+        '
+        Me.Sucursal.DataPropertyName = "Sucursal"
+        Me.Sucursal.FillWeight = 118.6591!
+        Me.Sucursal.HeaderText = "Sucursal"
+        Me.Sucursal.Name = "Sucursal"
+        Me.Sucursal.ReadOnly = True
+        '
+        'TipoEmpleado
+        '
+        Me.TipoEmpleado.DataPropertyName = "TipoEmpleado"
+        Me.TipoEmpleado.FillWeight = 118.6591!
+        Me.TipoEmpleado.HeaderText = "Tipo de Empleado"
+        Me.TipoEmpleado.Name = "TipoEmpleado"
+        Me.TipoEmpleado.ReadOnly = True
+        '
+        'Usuario
+        '
+        Me.Usuario.DataPropertyName = "Usuario"
+        Me.Usuario.HeaderText = "Usuario"
+        Me.Usuario.Name = "Usuario"
+        Me.Usuario.ReadOnly = True
+        '
+        'Habilitado
+        '
+        Me.Habilitado.DataPropertyName = "Habilitado"
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Habilitado.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Habilitado.FillWeight = 57.03627!
+        Me.Habilitado.HeaderText = "Habilitado"
+        Me.Habilitado.Name = "Habilitado"
+        Me.Habilitado.ReadOnly = True
+        '
+        'Modificar
+        '
+        Me.Modificar.FillWeight = 55.8376!
+        Me.Modificar.HeaderText = "Modificar"
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Modificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'Eliminar
+        '
+        Me.Eliminar.FillWeight = 56.5132!
+        Me.Eliminar.HeaderText = "Eliminar"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        '
         'frmEmpleados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(794, 522)
+        Me.ClientSize = New System.Drawing.Size(794, 549)
         Me.Controls.Add(Me.TabEmpleados)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -1402,16 +1458,6 @@ Partial Class frmEmpleados
     Friend WithEvents CheckSucursales As System.Windows.Forms.CheckedListBox
     Friend WithEvents CheckSucursales_mod As System.Windows.Forms.CheckedListBox
     Friend WithEvents lbl_Msg As System.Windows.Forms.Label
-    Friend WithEvents id_Empleado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Nombre As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Apellido As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Cuil As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Telefono As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents TipoEmpleado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Habilitado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents FechaNacimiento As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label20 As System.Windows.Forms.Label
@@ -1427,4 +1473,19 @@ Partial Class frmEmpleados
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents txt_SueldoPresente As System.Windows.Forms.TextBox
     Friend WithEvents Label25 As System.Windows.Forms.Label
+    Friend WithEvents cb_Usuario_Mod As System.Windows.Forms.ComboBox
+    Friend WithEvents Label26 As System.Windows.Forms.Label
+    Friend WithEvents cb_Usuario As System.Windows.Forms.ComboBox
+    Friend WithEvents Label27 As System.Windows.Forms.Label
+    Friend WithEvents id_Empleado As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Nombre As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Apellido As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Cuil As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Telefono As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents TipoEmpleado As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Usuario As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Habilitado As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
 End Class
