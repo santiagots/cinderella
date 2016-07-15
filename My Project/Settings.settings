@@ -105,5 +105,8 @@
     <Setting Name="ControladorMontoTope" Type="System.String" Scope="User">
       <Value Profile="(Default)">3000</Value>
     </Setting>
+    <Setting Name="HabilitarExentoSinIVA" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NO</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

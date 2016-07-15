@@ -25,23 +25,10 @@ Partial Class frmVentas
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVentas))
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
-        Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DESCRIPCION = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ELIMINAR = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
@@ -86,6 +73,23 @@ Partial Class frmVentas
         Me.GB_ListaPrecio = New System.Windows.Forms.GroupBox()
         Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
         Me.Label14 = New System.Windows.Forms.Label()
+        Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DESCRIPCION = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ELIMINAR = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Gb_Producto.SuspendLayout()
         Me.Gb_Cliente.SuspendLayout()
@@ -108,7 +112,7 @@ Partial Class frmVentas
         Me.DG_Productos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Productos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NUMERO, Me.ID, Me.CODIGO, Me.NOMBRE, Me.DESCRIPCION, Me.CANTIDAD, Me.PRECIO, Me.SUBTOTAL, Me.ELIMINAR, Me.Precio1, Me.Precio2, Me.Precio3, Me.Precio4, Me.Precio5, Me.Precio6})
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NUMERO, Me.ID, Me.CODIGO, Me.NOMBRE, Me.DESCRIPCION, Me.CANTIDAD, Me.PRECIO, Me.IVA, Me.MONTO, Me.SUBTOTAL, Me.ELIMINAR, Me.Precio1, Me.Precio2, Me.Precio3, Me.Precio4, Me.Precio5, Me.Precio6})
         Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Productos.Location = New System.Drawing.Point(17, 326)
         Me.DG_Productos.Name = "DG_Productos"
@@ -116,100 +120,6 @@ Partial Class frmVentas
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(922, 249)
         Me.DG_Productos.TabIndex = 12
-        '
-        'NUMERO
-        '
-        Me.NUMERO.HeaderText = "NUMERO"
-        Me.NUMERO.Name = "NUMERO"
-        Me.NUMERO.ReadOnly = True
-        '
-        'ID
-        '
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        '
-        'CODIGO
-        '
-        Me.CODIGO.HeaderText = "CODIGO"
-        Me.CODIGO.Name = "CODIGO"
-        Me.CODIGO.ReadOnly = True
-        '
-        'NOMBRE
-        '
-        Me.NOMBRE.HeaderText = "NOMBRE"
-        Me.NOMBRE.Name = "NOMBRE"
-        Me.NOMBRE.ReadOnly = True
-        '
-        'DESCRIPCION
-        '
-        Me.DESCRIPCION.HeaderText = "DESCRIPCION"
-        Me.DESCRIPCION.Name = "DESCRIPCION"
-        Me.DESCRIPCION.ReadOnly = True
-        '
-        'CANTIDAD
-        '
-        Me.CANTIDAD.HeaderText = "CANTIDAD"
-        Me.CANTIDAD.Name = "CANTIDAD"
-        '
-        'PRECIO
-        '
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle1
-        Me.PRECIO.HeaderText = "PRECIO"
-        Me.PRECIO.Name = "PRECIO"
-        '
-        'SUBTOTAL
-        '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle2
-        Me.SUBTOTAL.HeaderText = "SUBTOTAL"
-        Me.SUBTOTAL.Name = "SUBTOTAL"
-        Me.SUBTOTAL.ReadOnly = True
-        '
-        'ELIMINAR
-        '
-        Me.ELIMINAR.HeaderText = "ELIMINAR"
-        Me.ELIMINAR.Name = "ELIMINAR"
-        Me.ELIMINAR.ReadOnly = True
-        '
-        'Precio1
-        '
-        Me.Precio1.HeaderText = "Precio1"
-        Me.Precio1.Name = "Precio1"
-        Me.Precio1.Visible = False
-        '
-        'Precio2
-        '
-        Me.Precio2.HeaderText = "Precio2"
-        Me.Precio2.Name = "Precio2"
-        Me.Precio2.Visible = False
-        '
-        'Precio3
-        '
-        Me.Precio3.HeaderText = "Precio3"
-        Me.Precio3.Name = "Precio3"
-        Me.Precio3.Visible = False
-        '
-        'Precio4
-        '
-        Me.Precio4.HeaderText = "Precio4"
-        Me.Precio4.Name = "Precio4"
-        Me.Precio4.Visible = False
-        '
-        'Precio5
-        '
-        Me.Precio5.HeaderText = "Precio5"
-        Me.Precio5.Name = "Precio5"
-        Me.Precio5.Visible = False
-        '
-        'Precio6
-        '
-        Me.Precio6.HeaderText = "Precio6"
-        Me.Precio6.Name = "Precio6"
-        Me.Precio6.Visible = False
         '
         'txt_CodigoBarra
         '
@@ -618,7 +528,7 @@ Partial Class frmVentas
         Me.txt_Descuento.TabIndex = 13
         Me.txt_Descuento.Text = "0,00"
         Me.txt_Descuento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.ToolProd.SetToolTip(Me.txt_Descuento, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" & _
+        Me.ToolProd.SetToolTip(Me.txt_Descuento, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
         "o.")
         '
         'lbl_DesTot
@@ -741,6 +651,119 @@ Partial Class frmVentas
         Me.Label14.TabIndex = 1
         Me.Label14.Text = "Lista de Precios"
         '
+        'NUMERO
+        '
+        Me.NUMERO.HeaderText = "NUMERO"
+        Me.NUMERO.Name = "NUMERO"
+        Me.NUMERO.ReadOnly = True
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        '
+        'CODIGO
+        '
+        Me.CODIGO.HeaderText = "CODIGO"
+        Me.CODIGO.Name = "CODIGO"
+        Me.CODIGO.ReadOnly = True
+        '
+        'NOMBRE
+        '
+        Me.NOMBRE.HeaderText = "NOMBRE"
+        Me.NOMBRE.Name = "NOMBRE"
+        Me.NOMBRE.ReadOnly = True
+        '
+        'DESCRIPCION
+        '
+        Me.DESCRIPCION.HeaderText = "DESCRIPCION"
+        Me.DESCRIPCION.Name = "DESCRIPCION"
+        Me.DESCRIPCION.ReadOnly = True
+        '
+        'CANTIDAD
+        '
+        Me.CANTIDAD.HeaderText = "CANTIDAD"
+        Me.CANTIDAD.Name = "CANTIDAD"
+        '
+        'PRECIO
+        '
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle1
+        Me.PRECIO.HeaderText = "PRECIO"
+        Me.PRECIO.Name = "PRECIO"
+        Me.PRECIO.ReadOnly = True
+        '
+        'IVA
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.IVA.DefaultCellStyle = DataGridViewCellStyle2
+        Me.IVA.HeaderText = "IVA"
+        Me.IVA.Name = "IVA"
+        Me.IVA.ReadOnly = True
+        '
+        'MONTO
+        '
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle3
+        Me.MONTO.HeaderText = "MONTO"
+        Me.MONTO.Name = "MONTO"
+        Me.MONTO.ReadOnly = True
+        '
+        'SUBTOTAL
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = "0"
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle4
+        Me.SUBTOTAL.HeaderText = "SUBTOTAL"
+        Me.SUBTOTAL.Name = "SUBTOTAL"
+        Me.SUBTOTAL.ReadOnly = True
+        '
+        'ELIMINAR
+        '
+        Me.ELIMINAR.HeaderText = "ELIMINAR"
+        Me.ELIMINAR.Name = "ELIMINAR"
+        Me.ELIMINAR.ReadOnly = True
+        '
+        'Precio1
+        '
+        Me.Precio1.HeaderText = "Precio1"
+        Me.Precio1.Name = "Precio1"
+        Me.Precio1.Visible = False
+        '
+        'Precio2
+        '
+        Me.Precio2.HeaderText = "Precio2"
+        Me.Precio2.Name = "Precio2"
+        Me.Precio2.Visible = False
+        '
+        'Precio3
+        '
+        Me.Precio3.HeaderText = "Precio3"
+        Me.Precio3.Name = "Precio3"
+        Me.Precio3.Visible = False
+        '
+        'Precio4
+        '
+        Me.Precio4.HeaderText = "Precio4"
+        Me.Precio4.Name = "Precio4"
+        Me.Precio4.Visible = False
+        '
+        'Precio5
+        '
+        Me.Precio5.HeaderText = "Precio5"
+        Me.Precio5.Name = "Precio5"
+        Me.Precio5.Visible = False
+        '
+        'Precio6
+        '
+        Me.Precio6.HeaderText = "Precio6"
+        Me.Precio6.Name = "Precio6"
+        Me.Precio6.Visible = False
+        '
         'frmVentas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -832,19 +855,21 @@ Partial Class frmVentas
     Friend WithEvents GB_ListaPrecio As System.Windows.Forms.GroupBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents Cb_ListaPrecio As System.Windows.Forms.ComboBox
-    Friend WithEvents NUMERO As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ID As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CODIGO As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NOMBRE As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DESCRIPCION As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CANTIDAD As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents PRECIO As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents SUBTOTAL As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ELIMINAR As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents Precio1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Precio2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Precio3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Precio4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Precio5 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Precio6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents NUMERO As DataGridViewTextBoxColumn
+    Friend WithEvents ID As DataGridViewTextBoxColumn
+    Friend WithEvents CODIGO As DataGridViewTextBoxColumn
+    Friend WithEvents NOMBRE As DataGridViewTextBoxColumn
+    Friend WithEvents DESCRIPCION As DataGridViewTextBoxColumn
+    Friend WithEvents CANTIDAD As DataGridViewTextBoxColumn
+    Friend WithEvents PRECIO As DataGridViewTextBoxColumn
+    Friend WithEvents IVA As DataGridViewTextBoxColumn
+    Friend WithEvents MONTO As DataGridViewTextBoxColumn
+    Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
+    Friend WithEvents ELIMINAR As DataGridViewImageColumn
+    Friend WithEvents Precio1 As DataGridViewTextBoxColumn
+    Friend WithEvents Precio2 As DataGridViewTextBoxColumn
+    Friend WithEvents Precio3 As DataGridViewTextBoxColumn
+    Friend WithEvents Precio4 As DataGridViewTextBoxColumn
+    Friend WithEvents Precio5 As DataGridViewTextBoxColumn
+    Friend WithEvents Precio6 As DataGridViewTextBoxColumn
 End Class

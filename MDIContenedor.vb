@@ -2,6 +2,8 @@
 Imports System.Configuration
 Imports System.Resources
 Imports Servicios
+Imports System.Threading
+Imports System.Threading.Tasks
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -19,16 +21,16 @@ Public Class MDIContenedor
 
     Private Sub MDIContenedor_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If VariablesGlobales.Notificaciones > 0 Then 'Si posee notificaciones pendientes.
-            If MessageBox.Show("¿Posee " & VariablesGlobales.Notificaciones & " notificacion(es) pendiente(s). ¿Está seguro de que desea salir de la aplicación?", "Sistema de Gestión " & My.Settings("Empresa"), _
-    MessageBoxButtons.YesNo, MessageBoxIcon.Question, _
+            If MessageBox.Show("¿Posee " & VariablesGlobales.Notificaciones & " notificacion(es) pendiente(s). ¿Está seguro de que desea salir de la aplicación?", "Sistema de Gestión " & My.Settings("Empresa"),
+    MessageBoxButtons.YesNo, MessageBoxIcon.Question,
     MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.No Then
                 e.Cancel = True
             Else
                 frmLogin.Close()
             End If
         Else 'si no posee notificaciones pendientes.
-            If MessageBox.Show("¿Está seguro de que desea salir de la aplicación?", "Sistema de Gestión " & My.Settings("Empresa"), _
-    MessageBoxButtons.YesNo, MessageBoxIcon.Question, _
+            If MessageBox.Show("¿Está seguro de que desea salir de la aplicación?", "Sistema de Gestión " & My.Settings("Empresa"),
+    MessageBoxButtons.YesNo, MessageBoxIcon.Question,
     MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.No Then
                 e.Cancel = True
             Else
@@ -506,7 +508,7 @@ Public Class MDIContenedor
             Btn_UsuariosMenu.Visible = False
         End If
 
-        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.sistema)) Then
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema)) Then
             Btn_SincronizacionMenu.Visible = True
         Else
             Btn_SincronizacionMenu.Visible = False
@@ -561,6 +563,9 @@ Public Class MDIContenedor
             'Cursor
             Me.Cursor = Cursors.WaitCursor
 
+            'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
+            AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
+
             Try
                 'Inicio los servicios WCF
                 Dim host As Host = New Host(My.Settings.IpHost, My.Settings.PuertoHost, My.Settings.NombreSucursal, My.Settings.NombreListaPrecio, My.Settings.Sucursal, My.Settings.ListaPrecio)
@@ -568,9 +573,6 @@ Public Class MDIContenedor
             Catch ex As Exception
                 MessageBox.Show("Se produjo un error al iniciar el Host de servicios para los dispositivos móviles. Por favor, Comuníqueselo al administrador.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
-
-            'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
-            AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
 
             'Setea el nombre de la aplicacion.
             Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
@@ -1584,11 +1586,19 @@ Public Class MDIContenedor
 
     Private Sub NuevaNotaPedido(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
 
-        'abro la pantalla de notas de pedido
-        Menu_NotaPedido_Click(Nothing, New EventArgs())
+        'abro la pantalla de notas de pedido, la ejecuta de esta forma para que no detenga la ejecucion del metodo
+        Task.Run(Sub() SetMidParent())
 
-        Funciones.ActualizarNotasPedidos(False)
     End Sub
 
+    'Invoca el emtodo Menu_NotaPedido_Click y ActualizarNotasPedidos a travez de un delegado para que el hilo de la intefraz tenga acceso a sus propiedades
+    Private Sub SetMidParent()
+        If Me.InvokeRequired Then
+            Me.Invoke(New Action(AddressOf SetMidParent))
+            Return
+        End If
+        Menu_NotaPedido_Click(Nothing, Nothing)
+        Funciones.ActualizarNotasPedidos(False)
+    End Sub
 
 End Class

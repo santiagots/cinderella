@@ -1,7 +1,7 @@
 ﻿Imports Negocio
 Imports System.ServiceModel
 
-<ServiceBehavior(IncludeExceptionDetailInFaults:=True)>
+<ServiceBehavior(IncludeExceptionDetailInFaults:=True, UseSynchronizationContext:=False)>
 Public Class Usuario
     Implements IUsuario
 

@@ -43,8 +43,15 @@ Public Class frmConfiguracion
         If My.Settings("ControladorStatus") = "SI" Then
             RContrSI.Checked = True
         Else
-            RContrNO.Checked = False
+            RContrNO.Checked = True
         End If
+
+        If My.Settings("HabilitarExentoSinIVA") = "SI" Then
+            RExentoSinIvaSI.Checked = True
+        Else
+            RExentoSinIvaNo.Checked = True
+        End If
+
         Cb_ConexionControladora.SelectedItem = My.Settings("ConexionControladora").ToString()
         txt_MontoTopeTicket.Text = My.Settings.MontoTopeFaturacionTicket
         txt_MontoTopeManual.Text = My.Settings.MontoTopeFacturacionManual
@@ -164,6 +171,11 @@ Public Class frmConfiguracion
                 Else
                     My.Settings.ControladorStatus = "NO"
                 End If
+                If RExentoSinIvaSI.Checked Then
+                    My.Settings.HabilitarExentoSinIVA = "SI"
+                Else
+                    My.Settings.HabilitarExentoSinIVA = "NO"
+                End If
                 My.Settings.ConexionControladora = Cb_ConexionControladora.SelectedItem
                 My.Settings.MontoTopeFaturacionTicket = Trim(txt_MontoTopeTicket.Text)
                 My.Settings.MontoTopeFacturacionManual = Trim(txt_MontoTopeManual.Text)
@@ -185,21 +197,7 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub RContrSI_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RContrSI.CheckedChanged
-        If RContrSI.Checked = True Then
-            RContrNO.Checked = False
-        Else
-            RContrNO.Checked = True
-        End If
-    End Sub
 
-    Private Sub RContrNO_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RContrNO.CheckedChanged
-        If RContrNO.Checked = True Then
-            RContrSI.Checked = False
-        Else
-            RContrSI.Checked = True
-        End If
-    End Sub
 
     'Actualizo el periodo de comprobacion de notificaciones
     Private Sub BtnNotificaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnNotificaciones.Click
@@ -408,4 +406,5 @@ Public Class frmConfiguracion
             btnModificarHost.Enabled = False
         End If
     End Sub
+
 End Class

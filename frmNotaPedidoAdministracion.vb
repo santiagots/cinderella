@@ -15,6 +15,7 @@ Public Class frmNotaPedidoAdministracion
 
     Private Sub NotaPedidoAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+            Control.CheckForIllegalCrossThreadCalls = False
             'Actualizo la lista de notas de pedidos cada vez que se genere una nota de pedido desde el servicio wcf
             AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf UpdateNotaPedido
 

@@ -1,5 +1,5 @@
 ﻿Imports System.Linq
-
+Imports Entidades.Clientes
 
 Public Class frmFacturar
     Dim NegCondicionesIva As New Negocio.NegCondicionesIva
@@ -24,6 +24,7 @@ Public Class frmFacturar
     Public Descuento As Double
     Public MontoSinDescuento As Double
     Public id_Cliente As Integer
+    Public TipoCliente As Tipo
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
@@ -32,29 +33,28 @@ Public Class frmFacturar
 
     'Cambia de categoria de IVA.
     Private Sub Cb_IVA_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cb_IVA.SelectedIndexChanged
-        If Cb_IVA.SelectedItem = "Consumidor Final" Then
-            txt_Cuit.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-            txt_Direccion.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-            txt_Localidad.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-            txt_Nombre.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-            txt_Cuit.ReadOnly = Not NotaCredito
-            txt_Direccion.ReadOnly = Not NotaCredito
-            txt_Localidad.ReadOnly = Not NotaCredito
-            txt_Nombre.ReadOnly = Not NotaCredito
-            TipoFactura = "B"
-            Label3.Text = "DNI"
-        Else
-            txt_Cuit.Clear()
-            txt_Direccion.Clear()
-            txt_Localidad.Clear()
-            txt_Nombre.Clear()
-            txt_Cuit.ReadOnly = False
-            txt_Direccion.ReadOnly = False
-            txt_Localidad.ReadOnly = False
-            txt_Nombre.ReadOnly = False
-            TipoFactura = "A"
-            Label3.Text = "CUIT (sólo numeros)"
-        End If
+        Select Case (Cb_IVA.SelectedItem)
+            Case "Consumidor Final"
+                DesHabilitarInformacionTicket("B")
+                Cb_TipoFacturacion.Enabled = True
+                Cb_TipoFacturacion.SelectedIndex = 0
+            Case "Responsable Inscripto"
+                HabilitarInformacionTicket("A")
+                Cb_TipoFacturacion.Enabled = True
+                Cb_TipoFacturacion.SelectedIndex = 0
+            Case "Exento sin IVA"
+                HabilitarInformacionTicket("A")
+                Cb_TipoFacturacion.Enabled = False
+                Cb_TipoFacturacion.SelectedIndex = 1
+            Case "Monotributo"
+                HabilitarInformacionTicket("B")
+                Cb_TipoFacturacion.Enabled = True
+                Cb_TipoFacturacion.SelectedIndex = 0
+            Case "Exento"
+                HabilitarInformacionTicket("B")
+                Cb_TipoFacturacion.Enabled = True
+                Cb_TipoFacturacion.SelectedIndex = 0
+        End Select
 
         txt_NumeroFacturaManual.Text = Integer.Parse(NegFacturacion.ObtenerUltimoNumeroFactura(Entidades.TipoFactura.Manual, PuntoVentaFacturacionManual, IdSucursal, TipoFactura)) + 1
         FacturasList.Items.Clear()
@@ -69,9 +69,6 @@ Public Class frmFacturar
         lbl_Subtotal.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
         lbl_TipoPago.Text = TipoPago
         Cb_TipoFacturacion.Items.Clear()
-
-        'Default de Botonera.
-        Cb_IVA.SelectedIndex = 1
 
         For Each tipo As Entidades.TipoFactura In [Enum].GetValues(GetType(Entidades.TipoFactura))
             If (tipo = Entidades.TipoFactura.Ticket) Then
@@ -111,6 +108,19 @@ Public Class frmFacturar
             txt_Cuit.Text = cliente.Cuit.Replace("-", "")
         End If
 
+        'Si el cliente es mayorista elimino la condicion de iva consumidor final
+        If (TipoCliente = Tipo.Mayorista) Then
+            Cb_IVA.Items.Remove("Consumidor Final")
+            Cb_IVA.SelectedIndex = 0
+        Else
+            Cb_IVA.SelectedIndex = 1
+        End If
+
+        'Si no se tiene habilitada la opcion de Excento sin IVA quito la opcion
+        If (My.Settings.HabilitarExentoSinIVA = "NO") Then
+            Cb_IVA.Items.Remove("Exento sin IVA")
+        End If
+
         'verifico que el monto a facturar no supere los limites permitidos
         ValidarMontoTopeFacturacion()
     End Sub
@@ -126,7 +136,7 @@ Public Class frmFacturar
             Return
         End If
 
-        If (Cb_IVA.SelectedItem = "Responsable Inscripto" And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
+        If ((Cb_IVA.SelectedItem = "Responsable Inscripto" Or Cb_IVA.SelectedItem = "Monotributo" Or Cb_IVA.SelectedItem = "Exento" Or Cb_IVA.SelectedItem = "Exento sin IVA") And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
             MessageBox.Show("El CUIL ingresado es incorrecto.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -200,7 +210,6 @@ Public Class frmFacturar
         EntControlador.DE2 = ""
         EntControlador.DE3 = ""
         EntControlador.DE4 = ""
-        EntControlador.TIVA = "2100"
         EntControlador.IIF = "0"
         EntControlador.IIP = "0"
         EntControlador.COLAR1 = "Gracias por su compra."
@@ -210,24 +219,58 @@ Public Class frmFacturar
         EntControlador.LREMITO2 = ""
 
         'Acepto.
-        If Cb_IVA.SelectedItem = "Consumidor Final" Then
-            EntControlador.NCOMP1 = ""
-            EntControlador.NCOMP2 = ""
-            EntControlador.NCUIT = ""
-            EntControlador.DCOMP1 = ""
-            EntControlador.DCOMP2 = ""
-            EntControlador.DCOMP3 = ""
-            EntControlador.RI = "F"
-        Else
-            EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-            EntControlador.NCOMP2 = ""
-            EntControlador.CUIT = "T"
-            EntControlador.NCUIT = txt_Cuit.Text.Trim
-            EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-            EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-            EntControlador.DCOMP3 = ""
-            EntControlador.RI = "I"
-        End If
+        Select Case (Cb_IVA.SelectedItem)
+            Case "Consumidor Final"
+                EntControlador.NCOMP1 = ""
+                EntControlador.NCOMP2 = ""
+                EntControlador.NCUIT = ""
+                EntControlador.DCOMP1 = ""
+                EntControlador.DCOMP2 = ""
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "F"
+                EntControlador.TIVA = "2100"
+            Case "Responsable Inscripto"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "I"
+                EntControlador.TIVA = "2100"
+            Case "Monotributo"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "M"
+                EntControlador.TIVA = "2100"
+            Case "Exento"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "E"
+                EntControlador.TIVA = "2100"
+            Case "Exento sin IVA"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "E"
+                EntControlador.TIVA = "0000"
+        End Select
+
 
         Dim NegControlador As New Negocio.NegControladorFiscal(My.Settings("ConexionControladora").ToString())
 
@@ -523,5 +566,31 @@ Public Class frmFacturar
         If KeyAscii = 0 Then
             e.Handled = True
         End If
+    End Sub
+
+    Private Sub DesHabilitarInformacionTicket(factura As String)
+        txt_Cuit.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
+        txt_Direccion.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
+        txt_Localidad.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
+        txt_Nombre.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
+        txt_Cuit.ReadOnly = Not NotaCredito
+        txt_Direccion.ReadOnly = Not NotaCredito
+        txt_Localidad.ReadOnly = Not NotaCredito
+        txt_Nombre.ReadOnly = Not NotaCredito
+        TipoFactura = factura
+        Label3.Text = "DNI"
+    End Sub
+
+    Private Sub HabilitarInformacionTicket(factura As String)
+        txt_Cuit.Clear()
+        txt_Direccion.Clear()
+        txt_Localidad.Clear()
+        txt_Nombre.Clear()
+        txt_Cuit.ReadOnly = False
+        txt_Direccion.ReadOnly = False
+        txt_Localidad.ReadOnly = False
+        txt_Nombre.ReadOnly = False
+        TipoFactura = factura
+        Label3.Text = "CUIT (sólo numeros)"
     End Sub
 End Class

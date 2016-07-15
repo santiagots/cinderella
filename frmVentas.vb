@@ -2,6 +2,7 @@
 Imports System.Linq
 Imports System.Threading.Tasks
 Imports Negocio
+Imports Entidades.Clientes
 
 Public Class frmVentas
     'Instancias
@@ -161,107 +162,8 @@ Public Class frmVentas
                 End Select
                 Precio = Format(CType(Precio, Decimal), "###0.00")
 
-                'Creo la fila del producto.
-                Dim dgvRow As New DataGridViewRow
-                Dim dgvCell As DataGridViewCell
+                AgregarItemAGrilla(EntProducto, TipoAccion, NumeroFila, cantidad, Precio)
 
-                'Valor de la Columna Numero
-                dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = NumeroFila
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Id
-                dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = EntProducto.id_Producto
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Codigo
-                dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = EntProducto.Codigo
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Nombre
-                dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = EntProducto.Nombre
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Descripcion
-                dgvCell = New DataGridViewTextBoxCell()
-                If EntProducto.Descripcion <> "" Then
-                    dgvCell.Value = EntProducto.Descripcion
-                Else
-                    dgvCell.Value = "- - -"
-                End If
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Cantidad
-                dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = cantidad.ToString()
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio
-                dgvCell = New DataGridViewTextBoxCell()
-                If TipoAccion = 2 Then
-                    dgvCell.Value = (Precio * -1)
-                Else
-                    dgvCell.Value = Precio
-                End If
-
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Subtotal
-                dgvCell = New DataGridViewTextBoxCell()
-                If TipoAccion = 2 Then
-                    dgvCell.Value = (Precio * -1)
-                Else
-                    dgvCell.Value = Precio * cantidad
-                End If
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Eliminar
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio1
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = EntProducto.Precio1
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio2
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = EntProducto.Precio2
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio3
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = EntProducto.Precio3
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio4
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = EntProducto.Precio4
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio5
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = EntProducto.Precio5
-                dgvRow.Cells.Add(dgvCell)
-
-                'Valor de la Columna Precio6
-                dgvCell = New DataGridViewImageCell()
-                dgvCell.Value = EntProducto.Precio6
-                dgvRow.Cells.Add(dgvCell)
-
-                If TipoAccion = 2 Then
-                    dgvRow.DefaultCellStyle.BackColor = Color.Silver
-                Else
-                    dgvRow.DefaultCellStyle.BackColor = Color.White
-                End If
-                dgvRow.Height = "30"
-
-                'Inserto la fila
-                DG_Productos.Rows.Add(dgvRow)
             End If
 
             'Lo muestro en el label
@@ -279,11 +181,268 @@ Public Class frmVentas
         End Try
     End Sub
 
+    Private Sub AgregarItemAGrilla(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double)
+
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            AgregarFilaMinorista(EntProducto, TipoAccion, NumeroFila, cantidad, Precio)
+        Else
+            AgregarFilaMayorista(EntProducto, TipoAccion, NumeroFila, cantidad, Precio)
+        End If
+    End Sub
+
+    Private Sub AgregarFilaMinorista(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double)
+        'Creo la fila del producto.
+        Dim dgvRow As New DataGridViewRow
+        Dim dgvCell As DataGridViewCell
+
+        'Valor de la Columna Numero
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = NumeroFila
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Id
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.id_Producto
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Codigo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.Codigo
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Nombre
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.Nombre
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Descripcion
+        dgvCell = New DataGridViewTextBoxCell()
+        If EntProducto.Descripcion <> "" Then
+            dgvCell.Value = EntProducto.Descripcion
+        Else
+            dgvCell.Value = "- - -"
+        End If
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Cantidad
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = cantidad.ToString()
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = 0
+        Else
+            dgvCell.Value = 0
+        End If
+
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna IVA
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = 0
+        Else
+            dgvCell.Value = 0
+        End If
+
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna MONTO
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = (Precio * -1)
+        Else
+            dgvCell.Value = Precio
+        End If
+
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Subtotal
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = (Precio * -1)
+        Else
+            dgvCell.Value = Precio * cantidad
+        End If
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Eliminar
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio1
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio1
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio2
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio2
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio3
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio3
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio4
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio4
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio5
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio5
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio6
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio6
+        dgvRow.Cells.Add(dgvCell)
+
+        If TipoAccion = 2 Then
+            dgvRow.DefaultCellStyle.BackColor = Color.Silver
+        Else
+            dgvRow.DefaultCellStyle.BackColor = Color.White
+        End If
+        dgvRow.Height = "30"
+
+        'Inserto la fila
+        DG_Productos.Rows.Add(dgvRow)
+    End Sub
+
+    Private Sub AgregarFilaMayorista(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double)
+        'Creo la fila del producto.
+        Dim dgvRow As New DataGridViewRow
+        Dim dgvCell As DataGridViewCell
+
+        'Valor de la Columna Numero
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = NumeroFila
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Id
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.id_Producto
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Codigo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.Codigo
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Nombre
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.Nombre
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Descripcion
+        dgvCell = New DataGridViewTextBoxCell()
+        If EntProducto.Descripcion <> "" Then
+            dgvCell.Value = EntProducto.Descripcion
+        Else
+            dgvCell.Value = "- - -"
+        End If
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Cantidad
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = cantidad.ToString()
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = (Precio * -1) / 1.21
+        Else
+            dgvCell.Value = Precio / 1.21
+        End If
+
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna IVA
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = ((Precio * -1) / 1.21) * 0.21
+        Else
+            dgvCell.Value = (Precio / 1.21) * 0.21
+        End If
+
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna MONTO
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = (Precio * -1)
+        Else
+            dgvCell.Value = Precio
+        End If
+
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Subtotal
+        dgvCell = New DataGridViewTextBoxCell()
+        If TipoAccion = 2 Then
+            dgvCell.Value = (Precio * -1)
+        Else
+            dgvCell.Value = Precio * cantidad
+        End If
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Eliminar
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio1
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio1
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio2
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio2
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio3
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio3
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio4
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio4
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio5
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio5
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio6
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio6
+        dgvRow.Cells.Add(dgvCell)
+
+        If TipoAccion = 2 Then
+            dgvRow.DefaultCellStyle.BackColor = Color.Silver
+        Else
+            dgvRow.DefaultCellStyle.BackColor = Color.White
+        End If
+        dgvRow.Height = "30"
+
+        'Inserto la fila
+        DG_Productos.Rows.Add(dgvRow)
+    End Sub
+
     'Funcion que calcula el total en pesos del DATAGRID
     Function CalcularPrecioTotal()
         Dim subtotal As Double
         For i = 0 To (DG_Productos.Rows.Count - 1)
-            subtotal += (DG_Productos.Rows(i).Cells.Item("PRECIO").Value * DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
+            subtotal += DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value
         Next
         Return subtotal
     End Function
@@ -560,94 +719,7 @@ Public Class frmVentas
 
             NumeroFila += 1
 
-            'Creo la fila del producto.
-            Dim dgvRow As New DataGridViewRow
-            Dim dgvCell As DataGridViewCell
-
-            'Valor de la Columna Numero
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = NumeroFila
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Id
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = entProducto.id_Producto
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Codigo
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = entProducto.Codigo
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Nombre
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = entProducto.Nombre
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Descripcion
-            dgvCell = New DataGridViewTextBoxCell()
-            If entProducto.Descripcion <> "" Then
-                dgvCell.Value = entProducto.Descripcion
-            Else
-                dgvCell.Value = "- - -"
-            End If
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Cantidad
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = detalle.Cantidad
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = detalle.Precio
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Subtotal
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = detalle.Precio * detalle.Cantidad
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Eliminar
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio1
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = entProducto.Precio1
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio2
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = entProducto.Precio2
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio3
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = entProducto.Precio3
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio4
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = entProducto.Precio4
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio5
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = entProducto.Precio5
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio6
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = entProducto.Precio6
-            dgvRow.Cells.Add(dgvCell)
-
-            dgvRow.DefaultCellStyle.BackColor = Color.White
-            dgvRow.Height = "30"
-
-            'Inserto la fila
-            DG_Productos.Rows.Add(dgvRow)
+            AgregarItemAGrilla(entProducto, 1, NumeroFila, detalle.Cantidad, detalle.Precio)
         Next
 
         CalcularPreciosDescuento()
@@ -667,6 +739,10 @@ Public Class frmVentas
             Gb_Cliente.Enabled = True
             'Cargo la lista de precios con las opciones mayoristas
             dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
+            DG_Productos.Columns("MONTO").ReadOnly = True
+            DG_Productos.Columns("PRECIO").ReadOnly = False
+            DG_Productos.Columns("PRECIO").Visible = True
+            DG_Productos.Columns("IVA").Visible = True
         Else
             'Minorista
             Gb_Cliente.Enabled = False
@@ -674,6 +750,10 @@ Public Class frmVentas
             txt_id_Cliente.Clear()
             'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
             dsListas = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
+            DG_Productos.Columns("MONTO").ReadOnly = False
+            DG_Productos.Columns("PRECIO").ReadOnly = True
+            DG_Productos.Columns("PRECIO").Visible = False
+            DG_Productos.Columns("IVA").Visible = False
         End If
 
         If dsListas.Tables(0).Rows.Count > 0 Then
@@ -692,7 +772,7 @@ Public Class frmVentas
     Private Sub DG_Productos_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Productos.CellEndEdit
         If DG_Productos.Columns(e.ColumnIndex).Name = "CANTIDAD" Then 'Si se modifica la cantidad de un producto
             'Verifico si hay stock disponible de la cantidad ingresada del producto
-            If (DG_Productos("PRECIO", e.RowIndex).Value > 0 And Not NegStock.ComprobarStock(DG_Productos("ID", e.RowIndex).Value, DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString(), id_Sucursal)) Then
+            If (Not NegStock.ComprobarStock(DG_Productos("ID", e.RowIndex).Value, DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString(), id_Sucursal)) Then
                 'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
                 Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(DG_Productos("ID", e.RowIndex).Value, DG_Productos("CODIGO", e.RowIndex).Value, id_Sucursal, DG_Productos(e.ColumnIndex, e.RowIndex).Value)
                 'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
@@ -703,8 +783,12 @@ Public Class frmVentas
                     Return
                 End If
             End If
-            'Actualizo el campo SUBTOTAL del producto.
-            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+            'Actualizo el campo SUBTOTAL del producto segun el tipo de cliente
+            If cb_Tipo.SelectedItem = "Minorista" Then
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("MONTO", e.RowIndex).Value.ToString()
+            Else
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+            End If
             'Recalculo el Total y lo muestro en el label
             CalcularPreciosDescuento()
 
@@ -714,7 +798,9 @@ Public Class frmVentas
             If DG_Productos(e.ColumnIndex, e.RowIndex).Value >= 0 Then
                 'Actualizo el campo SUBTOTAL del producto.
                 DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal), "###0.00")
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("CANTIDAD", e.RowIndex).Value.ToString()
+                DG_Productos("IVA", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value * 0.21
+                DG_Productos("MONTO", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value * 1.21
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
                 'Recalculo el Total, descuento y subtotal: lo muestro en el label
                 CalcularPreciosDescuento()
             Else
@@ -724,6 +810,19 @@ Public Class frmVentas
             Dim newStyle As New DataGridViewCellStyle
             newStyle.Format = "C"
             DG_Productos.Item(e.ColumnIndex, e.RowIndex).Style.ApplyStyle(newStyle)
+
+        ElseIf DG_Productos.Columns(e.ColumnIndex).Name = "MONTO" Then
+
+            'Si el monto ingresado es mayor que cero.
+            If DG_Productos(e.ColumnIndex, e.RowIndex).Value >= 0 Then
+                'Actualizo el campo SUBTOTAL del producto.
+                DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal), "###0.00")
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
+                'Recalculo el Total, descuento y subtotal: lo muestro en el label
+                CalcularPreciosDescuento()
+            Else
+                DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType((DG_Productos("SUBTOTAL", e.RowIndex).Value / DG_Productos("CANTIDAD", e.RowIndex).Value), Decimal), "###0.00")
+            End If
         End If
     End Sub
 
@@ -911,10 +1010,6 @@ Public Class frmVentas
                             'Agrego la Comision
                             NegComisiones.AgregarComision(EntComisiones2)
 
-                            'Fin de la venta.
-                            'Limpio el Formulario.
-                            LimpiarFormVentas()
-
                             'Seteo el cursor.
                             Me.Cursor = Cursors.Arrow
 
@@ -938,22 +1033,29 @@ Public Class frmVentas
                                 Me.Cursor = Cursors.WaitCursor
 
                                 'Abro el form de datos de facturacion.
+                                Dim frmFacturar As frmFacturar = New frmFacturar()
                                 frmFacturar.id_Venta = id_Venta
                                 frmFacturar.id_Cliente = id_Cliente
                                 frmFacturar.Monto = MontoTotal
                                 frmFacturar.Descuento = Descuento
                                 frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
                                 frmFacturar.TipoPago = TipoPagoControlador
-                                Funciones.ControlInstancia(frmFacturar).ShowDialog()
+                                frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", Tipo.Minorista, Tipo.Mayorista)
+                                frmFacturar.ShowDialog()
+
 
                                 'Seteo el cursor.
                                 Me.Cursor = Cursors.Arrow
                             End If
+
+                            'Fin de la venta.
+                            'Limpio el Formulario.
+                            LimpiarFormVentas()
                         Else
                             'Muestro Mensaje.
                             MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
-                End If
+                    End If
                 End If
             End If
         Catch ex As Exception
@@ -1067,19 +1169,68 @@ Public Class frmVentas
                     Precio = CDbl(row.Cells("Precio6").Value)
             End Select
 
-            Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
-            If esDevolucion Then
-                row.Cells("PRECIO").Value = Precio * -1
-            Else
-                row.Cells("PRECIO").Value = Precio
-            End If
-
-            row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+            ActualizarMontosProductos(Precio, row)
         Next
         'Actualizo los totales
         CalcularPreciosDescuento()
 
     End Sub
+
+    Private Sub ActualizarMontosProductos(Precio As Double, row As DataGridViewRow)
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            ActualizarMontosProductosMinoristas(Precio, row)
+        Else
+            ActualizarMontosProductosMayoristas(Precio, row)
+        End If
+    End Sub
+
+    Private Shared Function ActualizarMontosProductosMayoristas(Precio As Double, row As DataGridViewRow)
+        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+        If esDevolucion Then
+            row.Cells("PRECIO").Value = (Precio * -1) / 1.21
+        Else
+            row.Cells("PRECIO").Value = Precio / 1.21
+        End If
+
+        If esDevolucion Then
+            row.Cells("IVA").Value = ((Precio * -1) / 1.21) * 0.21
+        Else
+            row.Cells("IVA").Value = (Precio / 1.21) * 0.21
+        End If
+
+        If esDevolucion Then
+            row.Cells("MONTO").Value = (Precio * -1)
+        Else
+            row.Cells("MONTO").Value = Precio
+        End If
+
+        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Return row
+    End Function
+
+    Private Shared Function ActualizarMontosProductosMinoristas(Precio As Double, row As DataGridViewRow)
+        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+        If esDevolucion Then
+            row.Cells("PRECIO").Value = 0
+        Else
+            row.Cells("PRECIO").Value = 0
+        End If
+
+        If esDevolucion Then
+            row.Cells("IVA").Value = 0
+        Else
+            row.Cells("IVA").Value = 0
+        End If
+
+        If esDevolucion Then
+            row.Cells("MONTO").Value = (Precio * -1)
+        Else
+            row.Cells("MONTO").Value = Precio
+        End If
+
+        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Return row
+    End Function
 
     Private Sub Cb_TipoPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoPago.SelectedIndexChanged
         PosicionarListaPreciosSegunFormaDePago()
