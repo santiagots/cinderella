@@ -30,6 +30,7 @@ Public Class frmFacturar
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
     Private PuntoVentaFacturacionElectronica As Integer = My.Settings("PuntoVentaFacturacionElectronica")
     Private ControladoraFiscal As Boolean = My.Settings("ControladorStatus") = "SI" 'Variable de configuración que indica si la sucursal puede facturar o no.
+    Public IvaTotal As Double
 
     'Cambia de categoria de IVA.
     Private Sub Cb_IVA_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cb_IVA.SelectedIndexChanged
@@ -64,9 +65,6 @@ Public Class frmFacturar
     'Load del Formulario
     Private Sub frmFacturar_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lbl_Fecha.Text = Now.Date.ToString("d MMM yyyy")
-        lbl_Total.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
-        lbl_Descuento.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
-        lbl_Subtotal.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
         lbl_TipoPago.Text = TipoPago
         Cb_TipoFacturacion.Items.Clear()
 
@@ -110,10 +108,9 @@ Public Class frmFacturar
 
         'Si el cliente es mayorista elimino la condicion de iva consumidor final
         If (TipoCliente = Tipo.Mayorista) Then
-            Cb_IVA.Items.Remove("Consumidor Final")
-            Cb_IVA.SelectedIndex = 0
+            ConfigurarMayorista()
         Else
-            Cb_IVA.SelectedIndex = 1
+            ConfigurarMinorista()
         End If
 
         'Si no se tiene habilitada la opcion de Excento sin IVA quito la opcion
@@ -123,6 +120,30 @@ Public Class frmFacturar
 
         'verifico que el monto a facturar no supere los limites permitidos
         ValidarMontoTopeFacturacion()
+    End Sub
+
+    Private Sub ConfigurarMinorista()
+        PanelTotalMayorista.Visible = False
+        PanelTotalMinorista.Visible = True
+        Cb_IVA.SelectedIndex = 1
+
+        lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+        lbl_DescuentoMinorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
+        lbl_SubtotalMinorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+    End Sub
+
+    Private Sub ConfigurarMayorista()
+        PanelTotalMayorista.Visible = True
+        PanelTotalMinorista.Visible = False
+
+        PanelTotalMayorista.Location = PanelTotalMinorista.Location
+        Cb_IVA.Items.Remove("Consumidor Final")
+        Cb_IVA.SelectedIndex = 0
+
+        lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+        lbl_DescuentoMayorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
+        lbl_SubtotalMayorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+        lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
     End Sub
 
     'Click en Facturar!
@@ -294,8 +315,8 @@ Public Class frmFacturar
                 End If
 
                 'Si hay descuentos, los agrego al ticket
-                If Descuento < 0 Then
-                    NegControlador.DescuentosTicket(Func.ReemplazarCaracteres("Descuento"), (Func.FormatearPrecio(Descuento, 2) * -1))
+                If Descuento > 0 Then
+                    NegControlador.DescuentosTicket(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
                 Else
                     'Subtotal y pago.
                     Dim sSubtotal As String = NegControlador.SubtotalTicket()

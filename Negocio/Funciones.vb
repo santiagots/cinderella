@@ -10,7 +10,7 @@
             peticion = System.Net.WebRequest.Create(Url)
 
             'POnemos un tiempo limite
-            peticion.Timeout = 5000
+            peticion.Timeout = 15000
 
             'ejecutamos la peticion
             respuesta = peticion.GetResponse

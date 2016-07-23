@@ -1,4 +1,6 @@
-﻿Public Class frmVentasAdministracion
+﻿Imports Entidades
+
+Public Class frmVentasAdministracion
     Dim NegVentas As New Negocio.NegVentas
     Dim NegStock As New Negocio.NegStock
     Dim NegComisiones As New Negocio.NegComisiones
@@ -212,17 +214,17 @@
             'Cargo los labels de la venta.
             If dsVentas.Tables(0).Rows.Count <> 0 Then
                 lblCantidad.Text = dsVentas.Tables(0).Rows(0).Item("Cantidad_Total").ToString
-                MontoTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
-                lblMonto.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
                 lblFecha.Text = dsVentas.Tables(0).Rows(0).Item("Fecha").ToString
                 lblSucursal.Text = dsVentas.Tables(0).Rows(0).Item("Sucursal").ToString
-                SubTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
-                lblSubtotal.Text = "$ " & Format(SubTotalDetalle, "###0.00")
-                DescuentoDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
-                lblDescuento.Text = "$ " & Format(DescuentoDetalle, "###0.00")
                 lblVenta.Text = dsVentas.Tables(0).Rows(0).Item("TiposVenta").ToString
                 TipoPagoDetalle = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString
                 lblPago.Text = TipoPagoDetalle
+
+                MontoTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
+                DescuentoDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
+                SubTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
+
+                CargarTotales(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
 
                 If dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString
@@ -268,45 +270,7 @@
                 'Detalle de la venta.
                 dsVentasDetalle = NegVentas.TraerVentaDetalle(id_VentaDetalle)
                 For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
-
-                    'Creo la fila del producto.
-                    Dim dgvRow As New DataGridViewRow
-                    Dim dgvCell As DataGridViewCell
-
-                    'Valor de la Columna Numero
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = DG_Productos.Rows.Count + 1
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Codigo
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Codigo").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Nombre
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Nombre").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Cantidad
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Cantidad").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Precio
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Subtotal
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    dgvRow.Height = "20"
-
-                    'Inserto la fila
-                    DG_Productos.Rows.Add(dgvRow)
+                    AgregarProducto(ventaDetalle)
                 Next
             End If
 
@@ -319,6 +283,143 @@
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error al obtener la venta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+        If TipoVenta() = Clientes.Tipo.Minorista Then
+            CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+            PanelTotalMayorista.Visible = False
+            PanelTotalMinorista.Visible = True
+        Else
+            CargarTotalesMayorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+            PanelTotalMayorista.Visible = True
+            PanelTotalMinorista.Visible = False
+            PanelTotalMayorista.Location = PanelTotalMinorista.Location
+        End If
+    End Sub
+
+    Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+        lblMontoMinorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
+        lblDescuentoMinorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
+        lblSubtotalMinorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+    End Sub
+
+    Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+        lblDescuentoMayorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
+        lblSubtotalMayorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+        lblIVAMayorista.Text = "$ " & Format(SubTotalDetalle * 0.21, "###0.00")
+        lblMontoMayorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
+    End Sub
+
+    Private Sub AgregarProducto(ventaDetalle As Object)
+        If TipoVenta() = Clientes.Tipo.Minorista Then
+            AgregarProductoMayorista(ventaDetalle)
+        Else
+            AgregarProductoMayorista(ventaDetalle)
+        End If
+
+    End Sub
+
+    Private Sub AgregarProductoMayorista(ventaDetalle As Object)
+        'Creo la fila del producto.
+        Dim dgvRow As New DataGridViewRow
+        Dim dgvCell As DataGridViewCell
+
+        'Valor de la Columna Numero
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = DG_Productos.Rows.Count + 1
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Codigo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Codigo").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Nombre
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Nombre").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Cantidad
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Cantidad").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal) / 1.21, "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna IVA
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format((CType(ventaDetalle.item("Precio").ToString, Decimal) / 1.21) * 0.21, "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Monto
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Subtotal
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        dgvRow.Height = "20"
+
+        'Inserto la fila
+        DG_Productos.Rows.Add(dgvRow)
+    End Sub
+
+    Private Sub AgregarProductoMinorista(ventaDetalle As Object)
+        'Creo la fila del producto.
+        Dim dgvRow As New DataGridViewRow
+        Dim dgvCell As DataGridViewCell
+
+        'Valor de la Columna Numero
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = DG_Productos.Rows.Count + 1
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Codigo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Codigo").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Nombre
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Nombre").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Cantidad
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Cantidad").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(0, "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna IVA
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(0, "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Monto
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Subtotal
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        dgvRow.Height = "20"
+
+        'Inserto la fila
+        DG_Productos.Rows.Add(dgvRow)
     End Sub
 
     'Cuando realiza click en anular venta.
@@ -375,7 +476,7 @@
     Sub LimpiarFormulario()
         DG_Productos.Rows.Clear()
         lblCantidad.Text = "- - - - -"
-        lblMonto.Text = "- - - - -"
+        lblMontoMinorista.Text = "- - - - -"
         lblFecha.Text = "- - - - -"
         lblSucursal.Text = "- - - - -"
         lblVendedor.Text = "- - - - -"
@@ -595,4 +696,13 @@
             BtnEmitirFactura.Enabled = False
         End If
     End Sub
+
+    Private Function TipoVenta() As Clientes.Tipo
+        If (lblVenta.Text = "Minorista") Then
+            Return Clientes.Tipo.Minorista
+        Else
+            Return Clientes.Tipo.Mayorista
+        End If
+    End Function
+
 End Class

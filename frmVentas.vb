@@ -33,9 +33,13 @@ Public Class frmVentas
     'Limpiar Formulario
     Public Sub LimpiarFormVentas()
         DG_Productos.Rows.Clear()
-        txt_Total.Text = "0,00"
-        txt_Subtotal.Text = "0,00"
-        txt_Descuento.Text = "0,00"
+        txt_TotalMinorista.Text = "0,00"
+        txt_SubtotalMinorista.Text = "0,00"
+        txt_DescuentoMinorista.Text = "0,00"
+        txt_TotalMayorista.Text = "0,00"
+        txt_SubtotalMayorista.Text = "0,00"
+        txt_DescuentoMayorista.Text = "0,00"
+        txt_ivaTotalMayorista.Text = "0,00"
         txt_CodigoBarra.Clear()
         txt_RazonSocial.Clear()
         txt_id_Cliente.Clear()
@@ -215,15 +219,6 @@ Public Class frmVentas
         dgvCell.Value = EntProducto.Nombre
         dgvRow.Cells.Add(dgvCell)
 
-        'Valor de la Columna Descripcion
-        dgvCell = New DataGridViewTextBoxCell()
-        If EntProducto.Descripcion <> "" Then
-            dgvCell.Value = EntProducto.Descripcion
-        Else
-            dgvCell.Value = "- - -"
-        End If
-        dgvRow.Cells.Add(dgvCell)
-
         'Valor de la Columna Cantidad
         dgvCell = New DataGridViewTextBoxCell()
         dgvCell.Value = cantidad.ToString()
@@ -339,15 +334,6 @@ Public Class frmVentas
         dgvCell.Value = EntProducto.Nombre
         dgvRow.Cells.Add(dgvCell)
 
-        'Valor de la Columna Descripcion
-        dgvCell = New DataGridViewTextBoxCell()
-        If EntProducto.Descripcion <> "" Then
-            dgvCell.Value = EntProducto.Descripcion
-        Else
-            dgvCell.Value = "- - -"
-        End If
-        dgvRow.Cells.Add(dgvCell)
-
         'Valor de la Columna Cantidad
         dgvCell = New DataGridViewTextBoxCell()
         dgvCell.Value = cantidad.ToString()
@@ -441,9 +427,17 @@ Public Class frmVentas
     'Funcion que calcula el total en pesos del DATAGRID
     Function CalcularPrecioTotal()
         Dim subtotal As Double
-        For i = 0 To (DG_Productos.Rows.Count - 1)
-            subtotal += DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value
-        Next
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            For i = 0 To (DG_Productos.Rows.Count - 1)
+                subtotal += DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value
+            Next
+        Else
+            For i = 0 To (DG_Productos.Rows.Count - 1)
+                subtotal += DG_Productos.Rows(i).Cells.Item("PRECIO").Value * DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value
+            Next
+        End If
+
+
         Return subtotal
     End Function
 
@@ -460,32 +454,37 @@ Public Class frmVentas
 
     'Funcion que calcula el total con descuento
     Sub CalcularPreciosDescuento()
-        Dim total As Double = CalcularPrecioTotal()
-        Dim total2 As Double = 0
+        Dim subtotal As Double = CalcularPrecioTotal()
         Dim descuento As Double = 0
+        Dim ivaSubTotal As Double = 0
 
-        If CDbl(txt_Descuento.Text) < total Then
-            If txt_Descuento.Text.Trim <> "" And txt_Descuento.Text.Trim <> "0,00" Then
-                If txt_Descuento.Text < 0 Then
-                    descuento = txt_Descuento.Text
-                Else
-                    descuento = txt_Descuento.Text * -1
-                End If
-                txt_Descuento.Text = Format(CType(descuento, Decimal), "###0.00")
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            ivaSubTotal = 0
+            If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
+                descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+                txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
             Else
-                txt_Descuento.Text = Format(CType(descuento, Decimal), "###0.00")
+                txt_TotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
             End If
-            txt_Subtotal.Text = Format(CType(total, Decimal), "###0.00")
-            total2 = total + CDbl(txt_Descuento.Text.Trim)
-            txt_Total.Text = Format(CType(total2, Decimal), "###0.00")
+            txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+            txt_SubtotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
         Else
-            txt_Descuento.Text = Format(CType(descuento, Decimal), "###0.00")
-            txt_Subtotal.Text = Format(CType(total, Decimal), "###0.00")
-            txt_Total.Text = Format(CType(total, Decimal), "###0.00")
-            'MessageBox.Show("No puede aplicar un descuento mayor o igual que el total de la compra.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
+                descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+                subtotal = subtotal - descuento
+                ivaSubTotal = subtotal * 0.21
+
+                txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+            Else
+                ivaSubTotal = subtotal * 0.21
+                txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+            End If
+            txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
+            txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+            txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
         End If
 
-        If total <= 0 Then
+        If subtotal <= 0 Then
             Btn_Finalizar.Visible = False
         Else
             Btn_Finalizar.Visible = True
@@ -535,15 +534,7 @@ Public Class frmVentas
     'Si desea buscar un producto, se visualiza el formulario.
     Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
         Me.Cursor = Cursors.WaitCursor
-
-        Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper()).FirstOrDefault()
-        If (dr IsNot Nothing) Then
-            AgregarItem(dr(3), 1)
-        Else
-            MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-
-
+        BuscarProducto()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -678,6 +669,7 @@ Public Class frmVentas
 
         txt_CodigoBarra.AutoCompleteCustomSource = listaNombreCodigoProductos
 
+        PanelTotalMayorista.Location = PanelTotalMinorista.Location
     End Sub
 
     'Carga la venta con la nota de pedido
@@ -743,6 +735,8 @@ Public Class frmVentas
             DG_Productos.Columns("PRECIO").ReadOnly = False
             DG_Productos.Columns("PRECIO").Visible = True
             DG_Productos.Columns("IVA").Visible = True
+            PanelTotalMayorista.Visible = True
+            PanelTotalMinorista.Visible = False
         Else
             'Minorista
             Gb_Cliente.Enabled = False
@@ -754,6 +748,8 @@ Public Class frmVentas
             DG_Productos.Columns("PRECIO").ReadOnly = True
             DG_Productos.Columns("PRECIO").Visible = False
             DG_Productos.Columns("IVA").Visible = False
+            PanelTotalMayorista.Visible = False
+            PanelTotalMinorista.Visible = True
         End If
 
         If dsListas.Tables(0).Rows.Count > 0 Then
@@ -854,13 +850,14 @@ Public Class frmVentas
             Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
             Dim id_Cliente As Integer = 0 'ID de Cliente.
             Dim Facturar As Boolean = False 'Variable que indica si la venta ´facturará o no.
-            Dim Descuento As Double = txt_Descuento.Text.Trim 'Descuento ingresado.
-            Dim MontoTotalSinDescuento As Double = CalcularPrecioTotal() 'Monto total de la venta.
-            Dim MontoTotal As Double = MontoTotalSinDescuento + Descuento  'Monto total de la venta menos el descuento.
+            Dim Descuento As Double = 0 'Descuento ingresado.
+            Dim MontoTotalSinDescuento As Double = 0 'Monto total de la venta.
+            Dim MontoTotal As Double = 0 'Monto total de la venta menos el descuento.
             Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
             Dim Monto As Double = 0 'Será el monto que le corresponda al empleado dependiendo de la comision y el MontoTotal.
             Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
             Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
+            Dim IvaTotal As Double = 0 'Iva total de la vental
 
             'Seteo Tipo de Pago para la controladora fiscal
             If TipoPago = 1 Then
@@ -876,8 +873,15 @@ Public Class frmVentas
             'Seteo TipoVenta
             If cb_Tipo.SelectedItem = "Minorista" Then
                 TipoVenta = 1
+                MontoTotalSinDescuento = CType(txt_SubtotalMinorista.Text, Decimal)
+                Descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+                MontoTotal = CType(txt_TotalMinorista.Text, Decimal)
             Else
                 TipoVenta = 2
+                Descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+                MontoTotalSinDescuento = CType(txt_SubtotalMayorista.Text, Decimal)
+                IvaTotal = CType(txt_ivaTotalMayorista.Text, Decimal)
+                MontoTotal = CType(txt_TotalMayorista.Text, Decimal)
             End If
 
             'Seteo ID Cliente
@@ -953,7 +957,7 @@ Public Class frmVentas
                                 Dim EntVentasDetalle As New Entidades.Ventas_Detalle
                                 EntVentasDetalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
                                 EntVentasDetalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
-                                EntVentasDetalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                                EntVentasDetalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
                                 DetalleVenta.Add(EntVentasDetalle)
 
                                 'Descuento el stock de los productos si el precio es positivo, y agrego el stock si el precio es negativo ( será un cambio ).
@@ -1038,6 +1042,7 @@ Public Class frmVentas
                                 frmFacturar.id_Cliente = id_Cliente
                                 frmFacturar.Monto = MontoTotal
                                 frmFacturar.Descuento = Descuento
+                                frmFacturar.IvaTotal = IvaTotal
                                 frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
                                 frmFacturar.TipoPago = TipoPagoControlador
                                 frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", Tipo.Minorista, Tipo.Mayorista)
@@ -1066,24 +1071,11 @@ Public Class frmVentas
         End Try
     End Sub
 
-    'Evento lanzado cuando escriben en el textbox de codigo.
-    Private Sub txt_CodigoBarra_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_CodigoBarra.KeyPress
-        If e.KeyChar = ChrW(Keys.Enter) Then
-            Dim CodigoBarra As String = Trim(txt_CodigoBarra.Text)
-            If CodigoBarra <> "" Then 'Si el campo no está vacio.
-                If CodigoBarra.Length > 1 And CodigoBarra.Length < 13 Then 'Si es codigo de producto.
-                    AgregarItem(CodigoBarra, 3)
-                ElseIf CodigoBarra.Length >= 13 And IsNumeric(CodigoBarra) Then 'Si es codigo de barra.
-                    AgregarItem(CodigoBarra, 2)
-                ElseIf CodigoBarra.Length >= 13 Then 'Si es codigo de barra.
-                    txt_CodigoBarra.Clear()
-                    txt_CodigoBarra.Focus()
-                End If
-
-            Else 'si el campo está vacio.
-                txt_CodigoBarra.Focus()
-                MessageBox.Show("Ingrese un código de barra o un código de producto.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            End If
+    Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown
+        If e.KeyData = Keys.Enter Then
+            Me.Cursor = Cursors.WaitCursor
+            BuscarProducto()
+            Me.Cursor = Cursors.Arrow
         End If
     End Sub
 
@@ -1112,11 +1104,15 @@ Public Class frmVentas
         End With
     End Sub
 
-    Private Sub txt_Descuento_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Descuento.GotFocus
-        txt_Descuento.Clear()
+    Private Sub txt_Descuento_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMinorista.GotFocus
+        txt_DescuentoMinorista.Clear()
     End Sub
 
-    Private Sub txt_Descuento_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_Descuento.KeyPress
+    Private Sub txt_DescuentoMayorista_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMayorista.GotFocus
+        txt_DescuentoMayorista.Clear()
+    End Sub
+
+    Private Sub txt_Descuento_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_DescuentoMinorista.KeyPress
         If e.KeyChar = ChrW(Keys.Enter) Then
             e.Handled = True
             Btn_Finalizar.Focus()
@@ -1130,12 +1126,33 @@ Public Class frmVentas
 
     End Sub
 
-    Private Sub txt_Descuento_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Descuento.LostFocus
-        If txt_Descuento.Text.Trim = "" Then
-            txt_Descuento.Text = "0,00"
-        Else
-            CalcularPreciosDescuento()
+    Private Sub txt_DescuentoMayorista_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_DescuentoMayorista.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            Btn_Finalizar.Focus()
         End If
+
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub txt_Descuento_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMinorista.LostFocus
+        If txt_DescuentoMinorista.Text.Trim = "" Then
+            txt_DescuentoMinorista.Text = "0,00"
+        End If
+        CalcularPreciosDescuento()
+
+    End Sub
+
+    Private Sub txt_DescuentoMayorista_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMayorista.LostFocus
+        If txt_DescuentoMayorista.Text.Trim = "" Then
+            txt_DescuentoMayorista.Text = "0,00"
+        End If
+        CalcularPreciosDescuento()
     End Sub
 
     Private Sub Btn_Cambiar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar.Click
@@ -1236,4 +1253,12 @@ Public Class frmVentas
         PosicionarListaPreciosSegunFormaDePago()
     End Sub
 
+    Private Sub BuscarProducto()
+        Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper()).FirstOrDefault()
+        If (dr IsNot Nothing) Then
+            AgregarItem(dr(3), 1)
+        Else
+            MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
 End Class
