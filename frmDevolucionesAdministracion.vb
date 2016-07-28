@@ -243,46 +243,9 @@ Public Class frmDevolucionesAdministracion
 
                 'Detalle de la venta.
                 dsDevolucionDetalle = NegDevolucion.TraerDevolucionDetalle(id_DevolucionDetalle)
-                For Each ventaDetalle In dsDevolucionDetalle.Tables(0).Rows
-
-                    'Creo la fila del producto.
-                    Dim dgvRow As New DataGridViewRow
-                    Dim dgvCell As DataGridViewCell
-
-                    'Valor de la Columna Numero
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = DG_Productos.Rows.Count + 1
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Codigo
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Codigo").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Nombre
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Nombre").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Cantidad
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Cantidad").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Precio
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
-                    dgvRow.Cells.Add(dgvCell)
-
-                    'Valor de la Columna Subtotal
-                    dgvCell = New DataGridViewTextBoxCell()
-                    dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
-                    dgvRow.Cells.Add(dgvCell)
-
-                    dgvRow.Height = "20"
-
+                For Each devolucionDetalle In dsDevolucionDetalle.Tables(0).Rows
                     'Inserto la fila
-                    DG_Productos.Rows.Add(dgvRow)
+                    AgregarProducto(devolucionDetalle)
                 Next
             End If
 
@@ -308,6 +271,71 @@ Public Class frmDevolucionesAdministracion
             PanelTotalMinorista.Visible = False
             PanelTotalMayorista.Location = PanelTotalMinorista.Location
         End If
+    End Sub
+
+    Private Sub AgregarProducto(ventaDetalle As Object)
+        Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
+
+        If TipoDevolucion() = Clientes.Tipo.Minorista Then
+            AgregarProducto(ventaDetalle, 0, 0, precio)
+        Else
+            AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
+        End If
+
+    End Sub
+
+    Private Sub AgregarProducto(ventaDetalle As Object, precio As Decimal, iva As Decimal, monto As Decimal)
+        'Creo la fila del producto.
+        Dim dgvRow As New DataGridViewRow
+        Dim dgvCell As DataGridViewCell
+
+        'Valor de la Columna Numero
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = DG_Productos.Rows.Count + 1
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Codigo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Codigo").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Nombre
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Nombre").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Cantidad
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.item("Cantidad").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(precio, "###0.00")
+        'dgvCell.Value = Format(0, "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna IVA
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(iva, "###0.00")
+        'dgvCell.Value = Format(0, "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Monto
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Format(monto, "###0.00")
+        'dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Subtotal
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = monto * ventaDetalle.item("Cantidad").ToString
+        dgvRow.Cells.Add(dgvCell)
+
+        dgvRow.Height = "20"
+
+        'Inserto la fila
+        DG_Productos.Rows.Add(dgvRow)
     End Sub
 
     Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)

@@ -312,15 +312,17 @@ Public Class frmVentasAdministracion
     End Sub
 
     Private Sub AgregarProducto(ventaDetalle As Object)
+        Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
+
         If TipoVenta() = Clientes.Tipo.Minorista Then
-            AgregarProductoMayorista(ventaDetalle)
+            AgregarProducto(ventaDetalle, 0, 0, precio)
         Else
-            AgregarProductoMayorista(ventaDetalle)
+            AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
         End If
 
     End Sub
 
-    Private Sub AgregarProductoMayorista(ventaDetalle As Object)
+    Private Sub AgregarProducto(ventaDetalle As Object, precio As Decimal, iva As Decimal, monto As Decimal)
         'Creo la fila del producto.
         Dim dgvRow As New DataGridViewRow
         Dim dgvCell As DataGridViewCell
@@ -347,73 +349,25 @@ Public Class frmVentasAdministracion
 
         'Valor de la Columna Precio
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal) / 1.21, "###0.00")
+        dgvCell.Value = Format(precio, "###0.00")
+        'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna IVA
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format((CType(ventaDetalle.item("Precio").ToString, Decimal) / 1.21) * 0.21, "###0.00")
+        dgvCell.Value = Format(iva, "###0.00")
+        'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Monto
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
+        dgvCell.Value = Format(monto, "###0.00")
+        'dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Subtotal
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
-        dgvRow.Cells.Add(dgvCell)
-
-        dgvRow.Height = "20"
-
-        'Inserto la fila
-        DG_Productos.Rows.Add(dgvRow)
-    End Sub
-
-    Private Sub AgregarProductoMinorista(ventaDetalle As Object)
-        'Creo la fila del producto.
-        Dim dgvRow As New DataGridViewRow
-        Dim dgvCell As DataGridViewCell
-
-        'Valor de la Columna Numero
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = DG_Productos.Rows.Count + 1
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Codigo
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Codigo").ToString
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Nombre
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Nombre").ToString
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Cantidad
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Cantidad").ToString
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(0, "###0.00")
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna IVA
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(0, "###0.00")
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Monto
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Subtotal
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Precio").ToString * ventaDetalle.item("Cantidad").ToString
+        dgvCell.Value = monto * ventaDetalle.item("Cantidad").ToString
         dgvRow.Cells.Add(dgvCell)
 
         dgvRow.Height = "20"
