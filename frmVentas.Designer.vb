@@ -29,6 +29,22 @@ Partial Class frmVentas
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVentas))
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ELIMINAR = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
@@ -63,6 +79,7 @@ Partial Class frmVentas
         Me.Label6 = New System.Windows.Forms.Label()
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.txt_DescuentoMinorista = New System.Windows.Forms.TextBox()
+        Me.txt_DescuentoMayorista = New System.Windows.Forms.TextBox()
         Me.lbl_DesTot = New System.Windows.Forms.Label()
         Me.txt_TotalMinorista = New System.Windows.Forms.TextBox()
         Me.txt_SubtotalMinorista = New System.Windows.Forms.TextBox()
@@ -77,29 +94,12 @@ Partial Class frmVentas
         Me.txt_ivaTotalMayorista = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.PanelTotalMayorista = New System.Windows.Forms.Panel()
-        Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ELIMINAR = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.txt_SubtotalMayorista = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.txt_TotalMayorista = New System.Windows.Forms.TextBox()
-        Me.txt_DescuentoMayorista = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PanelTotalMinorista = New System.Windows.Forms.Panel()
@@ -135,6 +135,113 @@ Partial Class frmVentas
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(922, 264)
         Me.DG_Productos.TabIndex = 12
+        '
+        'NUMERO
+        '
+        Me.NUMERO.HeaderText = "NUMERO"
+        Me.NUMERO.Name = "NUMERO"
+        Me.NUMERO.ReadOnly = True
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        '
+        'CODIGO
+        '
+        Me.CODIGO.HeaderText = "CODIGO"
+        Me.CODIGO.Name = "CODIGO"
+        Me.CODIGO.ReadOnly = True
+        '
+        'NOMBRE
+        '
+        Me.NOMBRE.HeaderText = "NOMBRE"
+        Me.NOMBRE.Name = "NOMBRE"
+        Me.NOMBRE.ReadOnly = True
+        '
+        'CANTIDAD
+        '
+        Me.CANTIDAD.HeaderText = "CANTIDAD"
+        Me.CANTIDAD.Name = "CANTIDAD"
+        '
+        'PRECIO
+        '
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle1
+        Me.PRECIO.HeaderText = "PRECIO"
+        Me.PRECIO.Name = "PRECIO"
+        Me.PRECIO.ReadOnly = True
+        '
+        'IVA
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.IVA.DefaultCellStyle = DataGridViewCellStyle2
+        Me.IVA.HeaderText = "IVA"
+        Me.IVA.Name = "IVA"
+        Me.IVA.ReadOnly = True
+        '
+        'MONTO
+        '
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle3
+        Me.MONTO.HeaderText = "MONTO"
+        Me.MONTO.Name = "MONTO"
+        Me.MONTO.ReadOnly = True
+        '
+        'SUBTOTAL
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = "0"
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle4
+        Me.SUBTOTAL.HeaderText = "SUBTOTAL"
+        Me.SUBTOTAL.Name = "SUBTOTAL"
+        Me.SUBTOTAL.ReadOnly = True
+        '
+        'ELIMINAR
+        '
+        Me.ELIMINAR.HeaderText = "ELIMINAR"
+        Me.ELIMINAR.Name = "ELIMINAR"
+        Me.ELIMINAR.ReadOnly = True
+        '
+        'Precio1
+        '
+        Me.Precio1.HeaderText = "Precio1"
+        Me.Precio1.Name = "Precio1"
+        Me.Precio1.Visible = False
+        '
+        'Precio2
+        '
+        Me.Precio2.HeaderText = "Precio2"
+        Me.Precio2.Name = "Precio2"
+        Me.Precio2.Visible = False
+        '
+        'Precio3
+        '
+        Me.Precio3.HeaderText = "Precio3"
+        Me.Precio3.Name = "Precio3"
+        Me.Precio3.Visible = False
+        '
+        'Precio4
+        '
+        Me.Precio4.HeaderText = "Precio4"
+        Me.Precio4.Name = "Precio4"
+        Me.Precio4.Visible = False
+        '
+        'Precio5
+        '
+        Me.Precio5.HeaderText = "Precio5"
+        Me.Precio5.Name = "Precio5"
+        Me.Precio5.Visible = False
+        '
+        'Precio6
+        '
+        Me.Precio6.HeaderText = "Precio6"
+        Me.Precio6.Name = "Precio6"
+        Me.Precio6.Visible = False
         '
         'txt_CodigoBarra
         '
@@ -209,7 +316,7 @@ Partial Class frmVentas
         Me.lbl_DescrTot.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_DescrTot.AutoSize = True
         Me.lbl_DescrTot.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DescrTot.Location = New System.Drawing.Point(89, 131)
+        Me.lbl_DescrTot.Location = New System.Drawing.Point(3, 130)
         Me.lbl_DescrTot.Name = "lbl_DescrTot"
         Me.lbl_DescrTot.Size = New System.Drawing.Size(98, 29)
         Me.lbl_DescrTot.TabIndex = 9
@@ -546,6 +653,19 @@ Partial Class frmVentas
         Me.ToolProd.SetToolTip(Me.txt_DescuentoMinorista, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
         "o.")
         '
+        'txt_DescuentoMayorista
+        '
+        Me.txt_DescuentoMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_DescuentoMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_DescuentoMayorista.Location = New System.Drawing.Point(258, 1)
+        Me.txt_DescuentoMayorista.Name = "txt_DescuentoMayorista"
+        Me.txt_DescuentoMayorista.Size = New System.Drawing.Size(139, 35)
+        Me.txt_DescuentoMayorista.TabIndex = 27
+        Me.txt_DescuentoMayorista.Text = "0,00"
+        Me.txt_DescuentoMayorista.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolProd.SetToolTip(Me.txt_DescuentoMayorista, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
+        "o.")
+        '
         'lbl_DesTot
         '
         Me.lbl_DesTot.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -703,6 +823,7 @@ Partial Class frmVentas
         '
         'PanelTotalMayorista
         '
+        Me.PanelTotalMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PanelTotalMayorista.Controls.Add(Me.Label8)
         Me.PanelTotalMayorista.Controls.Add(Me.Label17)
         Me.PanelTotalMayorista.Controls.Add(Me.Label18)
@@ -719,113 +840,6 @@ Partial Class frmVentas
         Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
         Me.PanelTotalMayorista.Size = New System.Drawing.Size(399, 164)
         Me.PanelTotalMayorista.TabIndex = 26
-        '
-        'NUMERO
-        '
-        Me.NUMERO.HeaderText = "NUMERO"
-        Me.NUMERO.Name = "NUMERO"
-        Me.NUMERO.ReadOnly = True
-        '
-        'ID
-        '
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        '
-        'CODIGO
-        '
-        Me.CODIGO.HeaderText = "CODIGO"
-        Me.CODIGO.Name = "CODIGO"
-        Me.CODIGO.ReadOnly = True
-        '
-        'NOMBRE
-        '
-        Me.NOMBRE.HeaderText = "NOMBRE"
-        Me.NOMBRE.Name = "NOMBRE"
-        Me.NOMBRE.ReadOnly = True
-        '
-        'CANTIDAD
-        '
-        Me.CANTIDAD.HeaderText = "CANTIDAD"
-        Me.CANTIDAD.Name = "CANTIDAD"
-        '
-        'PRECIO
-        '
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle1
-        Me.PRECIO.HeaderText = "PRECIO"
-        Me.PRECIO.Name = "PRECIO"
-        Me.PRECIO.ReadOnly = True
-        '
-        'IVA
-        '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.IVA.DefaultCellStyle = DataGridViewCellStyle2
-        Me.IVA.HeaderText = "IVA"
-        Me.IVA.Name = "IVA"
-        Me.IVA.ReadOnly = True
-        '
-        'MONTO
-        '
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle3
-        Me.MONTO.HeaderText = "MONTO"
-        Me.MONTO.Name = "MONTO"
-        Me.MONTO.ReadOnly = True
-        '
-        'SUBTOTAL
-        '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle4
-        Me.SUBTOTAL.HeaderText = "SUBTOTAL"
-        Me.SUBTOTAL.Name = "SUBTOTAL"
-        Me.SUBTOTAL.ReadOnly = True
-        '
-        'ELIMINAR
-        '
-        Me.ELIMINAR.HeaderText = "ELIMINAR"
-        Me.ELIMINAR.Name = "ELIMINAR"
-        Me.ELIMINAR.ReadOnly = True
-        '
-        'Precio1
-        '
-        Me.Precio1.HeaderText = "Precio1"
-        Me.Precio1.Name = "Precio1"
-        Me.Precio1.Visible = False
-        '
-        'Precio2
-        '
-        Me.Precio2.HeaderText = "Precio2"
-        Me.Precio2.Name = "Precio2"
-        Me.Precio2.Visible = False
-        '
-        'Precio3
-        '
-        Me.Precio3.HeaderText = "Precio3"
-        Me.Precio3.Name = "Precio3"
-        Me.Precio3.Visible = False
-        '
-        'Precio4
-        '
-        Me.Precio4.HeaderText = "Precio4"
-        Me.Precio4.Name = "Precio4"
-        Me.Precio4.Visible = False
-        '
-        'Precio5
-        '
-        Me.Precio5.HeaderText = "Precio5"
-        Me.Precio5.Name = "Precio5"
-        Me.Precio5.Visible = False
-        '
-        'Precio6
-        '
-        Me.Precio6.HeaderText = "Precio6"
-        Me.Precio6.Name = "Precio6"
-        Me.Precio6.Visible = False
         '
         'Label8
         '
@@ -898,19 +912,6 @@ Partial Class frmVentas
         Me.txt_TotalMayorista.Text = "0,00"
         Me.txt_TotalMayorista.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'txt_DescuentoMayorista
-        '
-        Me.txt_DescuentoMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_DescuentoMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_DescuentoMayorista.Location = New System.Drawing.Point(258, 1)
-        Me.txt_DescuentoMayorista.Name = "txt_DescuentoMayorista"
-        Me.txt_DescuentoMayorista.Size = New System.Drawing.Size(139, 35)
-        Me.txt_DescuentoMayorista.TabIndex = 27
-        Me.txt_DescuentoMayorista.Text = "0,00"
-        Me.txt_DescuentoMayorista.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.ToolProd.SetToolTip(Me.txt_DescuentoMayorista, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
-        "o.")
-        '
         'Label20
         '
         Me.Label20.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -935,6 +936,7 @@ Partial Class frmVentas
         '
         'PanelTotalMinorista
         '
+        Me.PanelTotalMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PanelTotalMinorista.Controls.Add(Me.lbl_DesTot)
         Me.PanelTotalMinorista.Controls.Add(Me.lbl_DescrTot)
         Me.PanelTotalMinorista.Controls.Add(Me.Label11)

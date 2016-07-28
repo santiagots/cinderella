@@ -1,4 +1,6 @@
-﻿Public Class frmDevolucionesAdministracion
+﻿Imports Entidades
+
+Public Class frmDevolucionesAdministracion
     Dim NegDevolucion As New Negocio.NegDevolucion
     Dim NegStock As New Negocio.NegStock
     Dim NegComisiones As New Negocio.NegComisiones
@@ -186,17 +188,17 @@
             'Cargo los labels de la venta.
             If dsDevolucion.Tables(0).Rows.Count <> 0 Then
                 lblCantidad.Text = dsDevolucion.Tables(0).Rows(0).Item("Cantidad_Total").ToString
-                MontoTotalDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
-                lblMonto.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
                 lblFecha.Text = dsDevolucion.Tables(0).Rows(0).Item("Fecha").ToString
                 lblSucursal.Text = dsDevolucion.Tables(0).Rows(0).Item("Sucursal").ToString
-                SubTotalDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
-                lblSubtotal.Text = "$ " & Format(SubTotalDetalle, "###0.00")
-                DescuentoDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
-                lblDescuento.Text = "$ " & Format(DescuentoDetalle, "###0.00")
-                lblVenta.Text = dsDevolucion.Tables(0).Rows(0).Item("TiposDevolucion").ToString
+                lblDevolucion.Text = dsDevolucion.Tables(0).Rows(0).Item("TiposDevolucion").ToString
                 TipoPagoDetalle = dsDevolucion.Tables(0).Rows(0).Item("TiposPago").ToString
                 lblPago.Text = TipoPagoDetalle
+
+                MontoTotalDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
+                DescuentoDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
+                SubTotalDetalle = CType(dsDevolucion.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
+
+                CargarTotales(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
 
                 If dsDevolucion.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsDevolucion.Tables(0).Rows(0).Item("RazonSocial").ToString
@@ -295,6 +297,32 @@
         End Try
     End Sub
 
+    Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+        If TipoDevolucion() = Clientes.Tipo.Minorista Then
+            CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+            PanelTotalMayorista.Visible = False
+            PanelTotalMinorista.Visible = True
+        Else
+            CargarTotalesMayorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+            PanelTotalMayorista.Visible = True
+            PanelTotalMinorista.Visible = False
+            PanelTotalMayorista.Location = PanelTotalMinorista.Location
+        End If
+    End Sub
+
+    Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+        lblMontoMinorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
+        lblDescuentoMinorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
+        lblSubtotalMinorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+    End Sub
+
+    Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+        lblDescuentoMayorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
+        lblSubtotalMayorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+        lblIVAMayorista.Text = "$ " & Format(SubTotalDetalle * 0.21, "###0.00")
+        lblMontoMayorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
+    End Sub
+
     Private Sub BtnAnular_Click(sender As Object, e As EventArgs) Handles BtnAnular.Click
         Dim Result As DialogResult
         Dim ResultadoAnulado As Integer
@@ -345,11 +373,11 @@
     Sub LimpiarFormulario()
         DG_Productos.Rows.Clear()
         lblCantidad.Text = "- - - - -"
-        lblMonto.Text = "- - - - -"
+        lblMontoMayorista.Text = "- - - - -"
         lblFecha.Text = "- - - - -"
         lblSucursal.Text = "- - - - -"
         lblVendedor.Text = "- - - - -"
-        lblVenta.Text = "- - - - -"
+        lblDevolucion.Text = "- - - - -"
         lblPago.Text = "- - - - -"
         lblNotaCredito.Text = "- - - - -"
         lblCliente.Text = "- - - - -"
@@ -414,4 +442,12 @@
             BtnEmitirFactura.Enabled = False
         End If
     End Sub
+
+    Private Function TipoDevolucion() As Clientes.Tipo
+        If (lblDevolucion.Text = "Minorista") Then
+            Return Clientes.Tipo.Minorista
+        Else
+            Return Clientes.Tipo.Mayorista
+        End If
+    End Function
 End Class

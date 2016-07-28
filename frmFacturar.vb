@@ -483,25 +483,53 @@ Public Class frmFacturar
         EntControlador.COMPROBANTEORIGEN = txt_Comprobante_Origen.Text
 
         'Acepto.
-        If Cb_IVA.SelectedItem = "Consumidor Final" Then
-            EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-            EntControlador.NCOMP2 = ""
-            EntControlador.CUIT = "D"
-            EntControlador.NCUIT = txt_Cuit.Text.Trim
-            EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-            EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-            EntControlador.DCOMP3 = ""
-            EntControlador.RI = "F"
-        Else
-            EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-            EntControlador.NCOMP2 = ""
-            EntControlador.CUIT = "T"
-            EntControlador.NCUIT = txt_Cuit.Text.Trim
-            EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-            EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-            EntControlador.DCOMP3 = ""
-            EntControlador.RI = "I"
-        End If
+        Select Case (Cb_IVA.SelectedItem)
+            Case "Consumidor Final"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "D"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "F"
+            Case "Responsable Inscripto"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "I"
+            Case "Monotributo"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "M"
+            Case "Exento"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "E"
+            Case "Exento sin IVA"
+                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
+                EntControlador.NCOMP2 = ""
+                EntControlador.CUIT = "T"
+                EntControlador.NCUIT = txt_Cuit.Text.Trim
+                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
+                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
+                EntControlador.DCOMP3 = ""
+                EntControlador.RI = "E"
+        End Select
 
         Dim NegControlador As New Negocio.NegControladorFiscal(My.Settings("ConexionControladora").ToString())
 
@@ -524,8 +552,8 @@ Public Class frmFacturar
                 End If
 
                 'Si hay descuentos, los agrego al ticket
-                If Descuento < 0 Then
-                    NegControlador.DescuentosNotaCredito(Func.ReemplazarCaracteres("Descuento"), (Func.FormatearPrecio(Descuento, 2) * -1))
+                If Descuento > 0 Then
+                    NegControlador.DescuentosNotaCredito(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
                 Else
                     'Subtotal y pago.
                     Dim sSubtotal As String = NegControlador.SubtotalNotaCredito()
@@ -569,6 +597,8 @@ Public Class frmFacturar
                 lblError.Visible = False
                 btnFacturar.Enabled = True
             End If
+        Else
+            lblError.Visible = False
         End If
 
     End Sub

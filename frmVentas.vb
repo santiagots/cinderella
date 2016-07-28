@@ -188,13 +188,17 @@ Public Class frmVentas
     Private Sub AgregarItemAGrilla(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double)
 
         If cb_Tipo.SelectedItem = "Minorista" Then
-            AgregarFilaMinorista(EntProducto, TipoAccion, NumeroFila, cantidad, Precio)
+            AgregarFila(EntProducto, TipoAccion, NumeroFila, cantidad, 0, 0, Precio)
         Else
-            AgregarFilaMayorista(EntProducto, TipoAccion, NumeroFila, cantidad, Precio)
+            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+                AgregarFila(EntProducto, TipoAccion, NumeroFila, cantidad, Precio, 0, Precio)
+            Else
+                AgregarFila(EntProducto, TipoAccion, NumeroFila, cantidad, Precio / 1.21, (Precio / 1.21) * 0.21, Precio)
+            End If
         End If
     End Sub
 
-    Private Sub AgregarFilaMinorista(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double)
+    Private Sub AgregarFila(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double, Iva As Double, Monto As Double)
         'Creo la fila del producto.
         Dim dgvRow As New DataGridViewRow
         Dim dgvCell As DataGridViewCell
@@ -227,26 +231,6 @@ Public Class frmVentas
         'Valor de la Columna Precio
         dgvCell = New DataGridViewTextBoxCell()
         If TipoAccion = 2 Then
-            dgvCell.Value = 0
-        Else
-            dgvCell.Value = 0
-        End If
-
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna IVA
-        dgvCell = New DataGridViewTextBoxCell()
-        If TipoAccion = 2 Then
-            dgvCell.Value = 0
-        Else
-            dgvCell.Value = 0
-        End If
-
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna MONTO
-        dgvCell = New DataGridViewTextBoxCell()
-        If TipoAccion = 2 Then
             dgvCell.Value = (Precio * -1)
         Else
             dgvCell.Value = Precio
@@ -254,107 +238,12 @@ Public Class frmVentas
 
         dgvRow.Cells.Add(dgvCell)
 
-        'Valor de la Columna Subtotal
-        dgvCell = New DataGridViewTextBoxCell()
-        If TipoAccion = 2 Then
-            dgvCell.Value = (Precio * -1)
-        Else
-            dgvCell.Value = Precio * cantidad
-        End If
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Eliminar
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio1
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = EntProducto.Precio1
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio2
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = EntProducto.Precio2
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio3
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = EntProducto.Precio3
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio4
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = EntProducto.Precio4
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio5
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = EntProducto.Precio5
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio6
-        dgvCell = New DataGridViewImageCell()
-        dgvCell.Value = EntProducto.Precio6
-        dgvRow.Cells.Add(dgvCell)
-
-        If TipoAccion = 2 Then
-            dgvRow.DefaultCellStyle.BackColor = Color.Silver
-        Else
-            dgvRow.DefaultCellStyle.BackColor = Color.White
-        End If
-        dgvRow.Height = "30"
-
-        'Inserto la fila
-        DG_Productos.Rows.Add(dgvRow)
-    End Sub
-
-    Private Sub AgregarFilaMayorista(EntProducto As Productos, TipoAccion As Integer, NumeroFila As Integer, cantidad As Integer, Precio As Double)
-        'Creo la fila del producto.
-        Dim dgvRow As New DataGridViewRow
-        Dim dgvCell As DataGridViewCell
-
-        'Valor de la Columna Numero
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = NumeroFila
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Id
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = EntProducto.id_Producto
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Codigo
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = EntProducto.Codigo
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Nombre
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = EntProducto.Nombre
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Cantidad
-        dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = cantidad.ToString()
-        dgvRow.Cells.Add(dgvCell)
-
-        'Valor de la Columna Precio
-        dgvCell = New DataGridViewTextBoxCell()
-        If TipoAccion = 2 Then
-            dgvCell.Value = (Precio * -1) / 1.21
-        Else
-            dgvCell.Value = Precio / 1.21
-        End If
-
-        dgvRow.Cells.Add(dgvCell)
-
         'Valor de la Columna IVA
         dgvCell = New DataGridViewTextBoxCell()
         If TipoAccion = 2 Then
-            dgvCell.Value = ((Precio * -1) / 1.21) * 0.21
+            dgvCell.Value = (Iva * -1)
         Else
-            dgvCell.Value = (Precio / 1.21) * 0.21
+            dgvCell.Value = Iva
         End If
 
         dgvRow.Cells.Add(dgvCell)
@@ -362,9 +251,9 @@ Public Class frmVentas
         'Valor de la Columna MONTO
         dgvCell = New DataGridViewTextBoxCell()
         If TipoAccion = 2 Then
-            dgvCell.Value = (Precio * -1)
+            dgvCell.Value = (Monto * -1)
         Else
-            dgvCell.Value = Precio
+            dgvCell.Value = Monto
         End If
 
         dgvRow.Cells.Add(dgvCell)
@@ -372,9 +261,9 @@ Public Class frmVentas
         'Valor de la Columna Subtotal
         dgvCell = New DataGridViewTextBoxCell()
         If TipoAccion = 2 Then
-            dgvCell.Value = (Precio * -1)
+            dgvCell.Value = (Monto * -1) * cantidad
         Else
-            dgvCell.Value = Precio * cantidad
+            dgvCell.Value = Monto * cantidad
         End If
         dgvRow.Cells.Add(dgvCell)
 
@@ -437,7 +326,6 @@ Public Class frmVentas
             Next
         End If
 
-
         Return subtotal
     End Function
 
@@ -459,29 +347,13 @@ Public Class frmVentas
         Dim ivaSubTotal As Double = 0
 
         If cb_Tipo.SelectedItem = "Minorista" Then
-            ivaSubTotal = 0
-            If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
-                descuento = CType(txt_DescuentoMinorista.Text, Decimal)
-                txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
-            Else
-                txt_TotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
-            End If
-            txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
-            txt_SubtotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+            CaluclarPrecioDescuentoMinorista(subtotal)
         Else
-            If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
-                descuento = CType(txt_DescuentoMayorista.Text, Decimal)
-                subtotal = subtotal - descuento
-                ivaSubTotal = subtotal * 0.21
-
-                txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+                CalcularPrecioDescuentoMayoristaSinFactura(subtotal)
             Else
-                ivaSubTotal = subtotal * 0.21
-                txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+                CalcularPrecioDescuentoMayoristaConFactura(subtotal)
             End If
-            txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
-            txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
-            txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
         End If
 
         If subtotal <= 0 Then
@@ -489,6 +361,57 @@ Public Class frmVentas
         Else
             Btn_Finalizar.Visible = True
         End If
+    End Sub
+
+    Private Sub CalcularPrecioDescuentoMayoristaConFactura(ByRef subtotal As Double)
+        Dim descuento As Double = 0
+        Dim ivaSubTotal As Double = 0
+
+        If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
+            descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+            subtotal = subtotal - descuento
+            ivaSubTotal = subtotal * 0.21
+
+            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+        Else
+            ivaSubTotal = subtotal * 0.21
+            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+        End If
+
+        txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
+        txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
+    End Sub
+
+    Private Sub CalcularPrecioDescuentoMayoristaSinFactura(ByRef subtotal As Double)
+        Dim descuento As Double = 0
+        Dim ivaSubTotal As Double = 0
+
+        If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
+            descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+            subtotal = subtotal - descuento
+
+            txt_TotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        Else
+            txt_TotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        End If
+
+        txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
+        txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
+    End Sub
+
+    Private Sub CaluclarPrecioDescuentoMinorista(subtotal As Double)
+        Dim descuento As Double = 0
+
+        If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
+            descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+            txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
+        Else
+            txt_TotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        End If
+        txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+        txt_SubtotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
     End Sub
 
     Private Sub PosicionarListaPreciosSegunFormaDePago()
@@ -794,9 +717,7 @@ Public Class frmVentas
             If DG_Productos(e.ColumnIndex, e.RowIndex).Value >= 0 Then
                 'Actualizo el campo SUBTOTAL del producto.
                 DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal), "###0.00")
-                DG_Productos("IVA", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value * 0.21
-                DG_Productos("MONTO", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value * 1.21
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
+                ActualizarColumnaIvaMonto(e, CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal))
                 'Recalculo el Total, descuento y subtotal: lo muestro en el label
                 CalcularPreciosDescuento()
             Else
@@ -819,6 +740,18 @@ Public Class frmVentas
             Else
                 DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType((DG_Productos("SUBTOTAL", e.RowIndex).Value / DG_Productos("CANTIDAD", e.RowIndex).Value), Decimal), "###0.00")
             End If
+        End If
+    End Sub
+
+    Private Sub ActualizarColumnaIvaMonto(e As DataGridViewCellEventArgs, precio As Double)
+        If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+            DG_Productos("IVA", e.RowIndex).Value = 0
+            DG_Productos("MONTO", e.RowIndex).Value = precio
+            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
+        Else
+            DG_Productos("IVA", e.RowIndex).Value = precio * 0.21
+            DG_Productos("MONTO", e.RowIndex).Value = precio * 1.21
+            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
         End If
     End Sub
 
@@ -1197,11 +1130,15 @@ Public Class frmVentas
         If cb_Tipo.SelectedItem = "Minorista" Then
             ActualizarMontosProductosMinoristas(Precio, row)
         Else
-            ActualizarMontosProductosMayoristas(Precio, row)
+            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+                ActualizarMontosProductosMayoristasSinFactura(Precio, row)
+            Else
+                ActualizarMontosProductosMayoristasConFactura(Precio, row)
+            End If
         End If
     End Sub
 
-    Private Shared Function ActualizarMontosProductosMayoristas(Precio As Double, row As DataGridViewRow)
+    Private Shared Function ActualizarMontosProductosMayoristasConFactura(Precio As Double, row As DataGridViewRow)
         Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
         If esDevolucion Then
             row.Cells("PRECIO").Value = (Precio * -1) / 1.21
@@ -1213,6 +1150,30 @@ Public Class frmVentas
             row.Cells("IVA").Value = ((Precio * -1) / 1.21) * 0.21
         Else
             row.Cells("IVA").Value = (Precio / 1.21) * 0.21
+        End If
+
+        If esDevolucion Then
+            row.Cells("MONTO").Value = (Precio * -1)
+        Else
+            row.Cells("MONTO").Value = Precio
+        End If
+
+        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Return row
+    End Function
+
+    Private Shared Function ActualizarMontosProductosMayoristasSinFactura(Precio As Double, row As DataGridViewRow)
+        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+        If esDevolucion Then
+            row.Cells("PRECIO").Value = (Precio * -1)
+        Else
+            row.Cells("PRECIO").Value = Precio
+        End If
+
+        If esDevolucion Then
+            row.Cells("IVA").Value = 0
+        Else
+            row.Cells("IVA").Value = 0
         End If
 
         If esDevolucion Then

@@ -1,4 +1,7 @@
-﻿Public Class frmDevoluciones
+﻿Imports Entidades
+Imports Entidades.Clientes
+
+Public Class frmDevoluciones
     'Instancias
     Dim NegProductos As New Negocio.NegProductos
     Dim NegEmpleados As New Negocio.NegEmpleados
@@ -16,6 +19,7 @@
     Dim EMovEgreso As New Entidades.MovEgreso
     Dim NegMovimientos As New Negocio.NegMovimientos
     Dim id_Sucursal As Integer
+    Dim dsProductos As DataSet
     Dim Nombre_Sucursal As String
 
 #Region "Eventos del formulario"
@@ -62,6 +66,9 @@
         Dim DsVendedores As New DataSet
         DsVendedores = NegEmpleados.ListadoVendedoresSucursal(id_Sucursal)
 
+        'Agrego los Encagados a la lista de vendedores ya que un encargado puede participar de la venta como vendedor
+        DsVendedores.Tables(0).Merge(DsEncargados.Tables(0))
+
         If DsVendedores.Tables(0).Rows.Count > 0 Then
             Cb_Vendedores.DataSource = Nothing
             Cb_Vendedores.DataSource = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsVendedores, "Seleccione un vendedor...")
@@ -101,29 +108,21 @@
         txt_CodigoBarra.Clear()
         txt_CodigoBarra.Focus()
 
+        'Obtengo el listado de productos
+        dsProductos = NegProductos.ListadoProductosBuscadores()
+
+        'Armo una lista que contiene los nombres y codigos de todos los producto
+        Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
+
+        listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Nombre").ToString).ToArray())
+        listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Codigo").ToString).ToArray())
+
+        txt_CodigoBarra.AutoCompleteCustomSource = listaNombreCodigoProductos
+
+        PanelTotalMayorista.Location = PanelTotalMinorista.Location
+
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
-    End Sub
-
-    'Evento que se ejecuta al ingresar valores en el textbox de codigo de barra.
-    Private Sub txt_CodigoBarra_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_CodigoBarra.KeyPress
-        If e.KeyChar = ChrW(Keys.Enter) Then
-            Dim CodigoBarra As String = Trim(txt_CodigoBarra.Text)
-            If CodigoBarra <> "" Then 'Si el campo no está vacio.
-                If CodigoBarra.Length > 1 And CodigoBarra.Length < 13 Then 'Si es codigo de producto.
-                    AgregarItem(CodigoBarra, 3)
-                ElseIf CodigoBarra.Length >= 13 And IsNumeric(CodigoBarra) Then 'Si es codigo de barra.
-                    AgregarItem(CodigoBarra, 2)
-                ElseIf CodigoBarra.Length >= 13 Then 'Si es codigo de barra.
-                    txt_CodigoBarra.Clear()
-                    txt_CodigoBarra.Focus()
-                End If
-
-            Else 'si el campo está vacio.
-                txt_CodigoBarra.Focus()
-                MessageBox.Show("Ingrese un código de barra o un código de producto.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            End If
-        End If
     End Sub
 
     'Evento que se ejecuta cuando finaliza la devolucion.
@@ -139,13 +138,14 @@
         Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
         Dim id_Cliente As Integer = 0 'ID de Cliente.
         Dim Facturar As Boolean = False 'Variable que indica si la venta ´facturará o no.
-        Dim Descuento As Double = txt_Descuento.Text.Trim 'Descuento ingresado.
-        Dim MontoTotalSinDescuento As Double = CalcularPrecioTotal() 'Monto total de la venta.
-        Dim MontoTotal As Double = MontoTotalSinDescuento + Descuento  'Monto total de la venta menos el descuento.
+        Dim Descuento As Double = 0 'Descuento ingresado.
+        Dim MontoTotalSinDescuento As Double = 0 'Monto total de la venta.
+        Dim MontoTotal As Double = 0 'Monto total de la venta menos el descuento.
         Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
         Dim Monto As Double = 0 'Será el monto que le corresponda al empleado dependiendo de la comision y el MontoTotal.
         Dim Comision As Double = 0 'Será la comision del empleado, determinada por la sucursal y el dia de la semana.
         Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
+        Dim IvaTotal As Double = 0 'Iva total de la vental
 
         'Chequeo que haya al menos un producto cargado.
         If TotalProductos <= 0 Then
@@ -190,8 +190,15 @@
                         'Seteo TipoVenta
                         If cb_Tipo.SelectedItem = "Minorista" Then
                             TipoVenta = 1
+                            MontoTotalSinDescuento = CType(txt_SubtotalMinorista.Text, Decimal)
+                            Descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+                            MontoTotal = CType(txt_TotalMinorista.Text, Decimal)
                         Else
                             TipoVenta = 2
+                            Descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+                            MontoTotalSinDescuento = CType(txt_SubtotalMayorista.Text, Decimal)
+                            IvaTotal = CType(txt_ivaTotalMayorista.Text, Decimal)
+                            MontoTotal = CType(txt_TotalMayorista.Text, Decimal)
                         End If
 
                         'Seteo ID Cliente
@@ -221,7 +228,7 @@
                             EntDevolucionDetalle.id_Detalle = 0
                             EntDevolucionDetalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
                             EntDevolucionDetalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
-                            EntDevolucionDetalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                            EntDevolucionDetalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
                             EntDevolucion.Detalle.Add(EntDevolucionDetalle)
                         Next
 
@@ -231,9 +238,6 @@
                             MessageBox.Show("Se ha producido un error al registrar la devolución. Por favor, Comuniquese con el administrador.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Return
                         End If
-
-                        'Limpio el form
-                        LimpiarFormDevoluciones()
 
                         'cursor..
                         Me.Cursor = Cursors.Arrow
@@ -251,19 +255,22 @@
 
                             'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                             If Facturar Then
-                                If (MessageBox.Show("¿Generar nota de crédito Nº " & idDevolucion & "?", "Administración de Devoluciones", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                                If (MessageBox.Show("¿Desea generar nota de crédito?", "Administración de Devoluciones", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
 
                                     'Seteo el cursor.
                                     Me.Cursor = Cursors.WaitCursor
 
                                     'Abro el form de datos de facturacion.
+                                    Dim frmFacturar As frmFacturar = New frmFacturar()
                                     frmFacturar.NotaCredito = True
                                     frmFacturar.id_Devolucion = Integer.Parse(idDevolucion)
                                     frmFacturar.Monto = MontoTotal
                                     frmFacturar.Descuento = Descuento
+                                    frmFacturar.IvaTotal = IvaTotal
                                     frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
                                     frmFacturar.TipoPago = TipoPagoControlador
-                                    Funciones.ControlInstancia(frmFacturar).Show()
+                                    frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", Tipo.Minorista, Tipo.Mayorista)
+                                    frmFacturar.ShowDialog()
 
                                     'Seteo el cursor.
                                     Me.Cursor = Cursors.Arrow
@@ -330,8 +337,12 @@
     'Programo para cuando modifica la cantidad de un producto se actualice el grid.
     Private Sub DG_Productos_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Productos.CellEndEdit
         If DG_Productos.Columns(e.ColumnIndex).Name = "CANTIDAD" Then 'Si se modifica la cantidad de un producto
-            'Actualizo el campo SUBTOTAL del producto.
-            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+            'Actualizo el campo SUBTOTAL del producto segun el tipo de cliente
+            If cb_Tipo.SelectedItem = "Minorista" Then
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("MONTO", e.RowIndex).Value.ToString()
+            Else
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+            End If
             'Recalculo el Total y lo muestro en el label
             CalcularPreciosDescuento()
 
@@ -341,7 +352,7 @@
             If DG_Productos(e.ColumnIndex, e.RowIndex).Value >= 0 Then
                 'Actualizo el campo SUBTOTAL del producto.
                 DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal), "###0.00")
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("CANTIDAD", e.RowIndex).Value.ToString()
+                ActualizarColumnaIvaMonto(e, CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal))
                 'Recalculo el Total, descuento y subtotal: lo muestro en el label
                 CalcularPreciosDescuento()
             Else
@@ -351,8 +362,34 @@
             Dim newStyle As New DataGridViewCellStyle
             newStyle.Format = "C"
             DG_Productos.Item(e.ColumnIndex, e.RowIndex).Style.ApplyStyle(newStyle)
+
+        ElseIf DG_Productos.Columns(e.ColumnIndex).Name = "MONTO" Then
+
+            'Si el monto ingresado es mayor que cero.
+            If DG_Productos(e.ColumnIndex, e.RowIndex).Value >= 0 Then
+                'Actualizo el campo SUBTOTAL del producto.
+                DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType(DG_Productos(e.ColumnIndex, e.RowIndex).Value, Decimal), "###0.00")
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
+                'Recalculo el Total, descuento y subtotal: lo muestro en el label
+                CalcularPreciosDescuento()
+            Else
+                DG_Productos(e.ColumnIndex, e.RowIndex).Value = Format(CType((DG_Productos("SUBTOTAL", e.RowIndex).Value / DG_Productos("CANTIDAD", e.RowIndex).Value), Decimal), "###0.00")
+            End If
         End If
     End Sub
+
+    Private Sub ActualizarColumnaIvaMonto(e As DataGridViewCellEventArgs, precio As Double)
+        If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+            DG_Productos("IVA", e.RowIndex).Value = 0
+            DG_Productos("MONTO", e.RowIndex).Value = precio
+            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
+        Else
+            DG_Productos("IVA", e.RowIndex).Value = precio * 0.21
+            DG_Productos("MONTO", e.RowIndex).Value = precio * 1.21
+            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
+        End If
+    End Sub
+
 
     Private Sub DG_Productos_CellFormatting(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles DG_Productos.CellFormatting
         If Not IsNothing(e.Value) Then
@@ -380,10 +417,9 @@
     End Sub
 
     'Abre la ventana de busqueda de productos.
-    Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar.Click
+    Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmBuscarProducto).Show()
-        frmBuscarProducto.TipoForm = 2
+        BuscarProducto()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -405,11 +441,18 @@
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub txt_Descuento_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Descuento.GotFocus
-        txt_Descuento.Clear()
+    Private Sub txt_Descuento_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMinorista.GotFocus
+        txt_DescuentoMinorista.Clear()
     End Sub
 
-    Private Sub txt_Descuento_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_Descuento.KeyPress
+    Private Sub txt_Descuento_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMinorista.LostFocus
+        If txt_DescuentoMinorista.Text.Trim = "" Then
+            txt_DescuentoMinorista.Text = "0,00"
+        End If
+        CalcularPreciosDescuento()
+    End Sub
+
+    Private Sub txt_Descuento_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_DescuentoMinorista.KeyPress
         If e.KeyChar = ChrW(Keys.Enter) Then
             e.Handled = True
             Btn_Finalizar.Focus()
@@ -423,11 +466,27 @@
 
     End Sub
 
-    Private Sub txt_Descuento_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Descuento.LostFocus
-        If txt_Descuento.Text.Trim = "" Then
-            txt_Descuento.Text = "0,00"
-        Else
-            CalcularPreciosDescuento()
+    Private Sub txt_DescuentoMayorista_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMayorista.GotFocus
+        txt_DescuentoMayorista.Clear()
+    End Sub
+
+    Private Sub txt_DescuentoMayorista_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMayorista.LostFocus
+        If txt_DescuentoMayorista.Text.Trim = "" Then
+            txt_DescuentoMayorista.Text = "0,00"
+        End If
+        CalcularPreciosDescuento()
+    End Sub
+
+    Private Sub txt_DescuentoMayorista_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_DescuentoMayorista.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            Btn_Finalizar.Focus()
+        End If
+
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
         End If
     End Sub
 
@@ -508,93 +567,7 @@
             'Si no estaba agregado y hay stock inserto una nueva fila.
             'NumeroFila = DG_Productos.Rows.Count + 1
 
-            'Creo la fila del producto.
-            Dim dgvRow As New DataGridViewRow
-            Dim dgvCell As DataGridViewCell
-
-            'Valor de la Columna Numero
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = NumeroFila
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Id
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = EntProducto.id_Producto
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Codigo
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = EntProducto.Codigo
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Nombre
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = EntProducto.Nombre
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Descripcion
-            dgvCell = New DataGridViewTextBoxCell()
-            If EntProducto.Descripcion <> "" Then
-                dgvCell.Value = EntProducto.Descripcion
-            Else
-                dgvCell.Value = "- - -"
-            End If
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Cantidad
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = "1"
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = Precio
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Subtotal
-            dgvCell = New DataGridViewTextBoxCell()
-            dgvCell.Value = Precio
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Eliminar
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio1
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = EntProducto.Precio1
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio2
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = EntProducto.Precio2
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio3
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = EntProducto.Precio3
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio4
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = EntProducto.Precio4
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio5
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = EntProducto.Precio5
-            dgvRow.Cells.Add(dgvCell)
-
-            'Valor de la Columna Precio6
-            dgvCell = New DataGridViewImageCell()
-            dgvCell.Value = EntProducto.Precio6
-            dgvRow.Cells.Add(dgvCell)
-
-            dgvRow.Height = "30"
-
-            'Inserto la fila
-            DG_Productos.Rows.Add(dgvRow)
+            AgregarItemAGrilla(EntProducto, NumeroFila, 1, Precio)
 
             'Lo muestro en el label
             CalcularPreciosDescuento()
@@ -610,6 +583,113 @@
             MessageBox.Show("Se ha producido un error al agregar el producto.", "Administración de Devoluciones", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    Private Sub AgregarItemAGrilla(EntProducto As Productos, NumeroFila As Integer, cantidad As Integer, Precio As Double)
+
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            AgregarFila(EntProducto, NumeroFila, cantidad, 0, 0, Precio)
+        Else
+            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+                AgregarFila(EntProducto, NumeroFila, cantidad, Precio, 0, Precio)
+            Else
+                AgregarFila(EntProducto, NumeroFila, cantidad, Precio / 1.21, (Precio / 1.21) * 0.21, Precio)
+            End If
+        End If
+    End Sub
+
+    Private Sub AgregarFila(EntProducto As Productos, NumeroFila As Integer, cantidad As Integer, Precio As Double, Iva As Double, Monto As Double)
+        'Creo la fila del producto.
+        Dim dgvRow As New DataGridViewRow
+        Dim dgvCell As DataGridViewCell
+
+        'Valor de la Columna Numero
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = NumeroFila
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Id
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.id_Producto
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Codigo
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.Codigo
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Nombre
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = EntProducto.Nombre
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Cantidad
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = cantidad.ToString()
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Precio
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna IVA
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Iva
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna MONTO
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Monto
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Subtotal
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = Monto * cantidad
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Eliminar
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = My.Resources.Recursos.Boton_Eliminar
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio1
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio1
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio2
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio2
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio3
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio3
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio4
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio4
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio5
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio5
+        dgvRow.Cells.Add(dgvCell)
+
+        'Valor de la Columna Precio6
+        dgvCell = New DataGridViewImageCell()
+        dgvCell.Value = EntProducto.Precio6
+        dgvRow.Cells.Add(dgvCell)
+
+        dgvRow.DefaultCellStyle.BackColor = Color.White
+
+        dgvRow.Height = "30"
+
+        'Inserto la fila
+        DG_Productos.Rows.Add(dgvRow)
+    End Sub
+
     'Funcion que calcula la cantidad de productos del DATAGRID
     Function CalcularCantidadTotal()
         Dim cant As Integer
@@ -621,18 +701,29 @@
     'Funcion que calcula el total en pesos del DATAGRID
     Function CalcularPrecioTotal()
         Dim subtotal As Double
-        For i = 0 To (DG_Productos.Rows.Count - 1)
-            subtotal += (DG_Productos.Rows(i).Cells.Item("PRECIO").Value * DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
-        Next
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            For i = 0 To (DG_Productos.Rows.Count - 1)
+                subtotal += DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value
+            Next
+        Else
+            For i = 0 To (DG_Productos.Rows.Count - 1)
+                subtotal += DG_Productos.Rows(i).Cells.Item("PRECIO").Value * DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value
+            Next
+        End If
+
         Return subtotal
     End Function
 
     'Funcion empleada para limpiar el formulario de devoluciones.
     Sub LimpiarFormDevoluciones()
         DG_Productos.Rows.Clear()
-        txt_Total.Text = "0,00"
-        txt_Subtotal.Text = "0,00"
-        txt_Descuento.Text = "0,00"
+        txt_TotalMinorista.Text = "0,00"
+        txt_SubtotalMinorista.Text = "0,00"
+        txt_DescuentoMinorista.Text = "0,00"
+        txt_TotalMayorista.Text = "0,00"
+        txt_SubtotalMayorista.Text = "0,00"
+        txt_DescuentoMayorista.Text = "0,00"
+        txt_ivaTotalMayorista.Text = "0,00"
         txt_CodigoBarra.Clear()
         txt_RazonSocial.Clear()
         txt_id_Cliente.Clear()
@@ -647,9 +738,9 @@
     'Limpiar Formulario2
     Public Sub LimpiarFormDevolucion_2()
         DG_Productos.Rows.Clear()
-        txt_Total.Text = "0,00"
-        txt_Subtotal.Text = "0,00"
-        txt_Descuento.Text = "0,00"
+        txt_TotalMinorista.Text = "0,00"
+        txt_SubtotalMinorista.Text = "0,00"
+        txt_DescuentoMinorista.Text = "0,00"
         Cb_ListaPrecio.SelectedIndex = Nothing
         txt_CodigoBarra.Clear()
         txt_CodigoBarra.Focus()
@@ -664,6 +755,12 @@
             Gb_Cliente.Enabled = True
             'Cargo la lista de precios con las opciones mayoristas
             dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
+            DG_Productos.Columns("MONTO").ReadOnly = True
+            DG_Productos.Columns("PRECIO").ReadOnly = False
+            DG_Productos.Columns("PRECIO").Visible = True
+            DG_Productos.Columns("IVA").Visible = True
+            PanelTotalMayorista.Visible = True
+            PanelTotalMinorista.Visible = False
         Else
             'Minorista
             Gb_Cliente.Enabled = False
@@ -671,6 +768,12 @@
             txt_id_Cliente.Clear()
             'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
             dsListas = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
+            DG_Productos.Columns("MONTO").ReadOnly = False
+            DG_Productos.Columns("PRECIO").ReadOnly = True
+            DG_Productos.Columns("PRECIO").Visible = False
+            DG_Productos.Columns("IVA").Visible = False
+            PanelTotalMayorista.Visible = False
+            PanelTotalMinorista.Visible = True
         End If
 
         If dsListas.Tables(0).Rows.Count > 0 Then
@@ -681,9 +784,16 @@
             Cb_ListaPrecio.Refresh()
         End If
 
-        LimpiarFormDevolucion_2()
-
         PosicionarListaPreciosSegunFormaDePago()
+
+    End Sub
+
+    Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown
+        If e.KeyData = Keys.Enter Then
+            Me.Cursor = Cursors.WaitCursor
+            BuscarProducto()
+            Me.Cursor = Cursors.Arrow
+        End If
     End Sub
 
     Private Sub Cb_ListaPrecio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_ListaPrecio.SelectedIndexChanged
@@ -705,50 +815,168 @@
                     Precio = CDbl(row.Cells("Precio6").Value)
             End Select
 
-            Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
-            If esDevolucion Then
-                row.Cells("PRECIO").Value = Precio * -1
-            Else
-                row.Cells("PRECIO").Value = Precio
-            End If
-
-            row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+            ActualizarMontosProductos(Precio, row)
         Next
         'Actualizo los totales
         CalcularPreciosDescuento()
     End Sub
 
-    'Funcion que calcula el total con descuento
-    Sub CalcularPreciosDescuento()
-        Dim total As Double = CalcularPrecioTotal()
-        Dim total2 As Double = 0
-        Dim descuento As Double = 0
-
-        If CDbl(txt_Descuento.Text) < total Then
-            If txt_Descuento.Text.Trim <> "" And txt_Descuento.Text.Trim <> "0,00" Then
-                If txt_Descuento.Text < 0 Then
-                    descuento = txt_Descuento.Text
-                Else
-                    descuento = txt_Descuento.Text * -1
-                End If
-                txt_Descuento.Text = Format(CType(descuento, Decimal), "###0.00")
-            Else
-                txt_Descuento.Text = Format(CType(descuento, Decimal), "###0.00")
-            End If
-            txt_Subtotal.Text = Format(CType(total, Decimal), "###0.00")
-            total2 = total + CDbl(txt_Descuento.Text.Trim)
-            txt_Total.Text = Format(CType(total2, Decimal), "###0.00")
+    Private Sub ActualizarMontosProductos(Precio As Double, row As DataGridViewRow)
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            ActualizarMontosProductosMinoristas(Precio, row)
         Else
-            txt_Descuento.Text = Format(CType(descuento, Decimal), "###0.00")
-            txt_Subtotal.Text = Format(CType(total, Decimal), "###0.00")
-            txt_Total.Text = Format(CType(total, Decimal), "###0.00")
+            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+                ActualizarMontosProductosMayoristasSinFactura(Precio, row)
+            Else
+                ActualizarMontosProductosMayoristasConFactura(Precio, row)
+            End If
+        End If
+    End Sub
+
+    Private Shared Function ActualizarMontosProductosMayoristasConFactura(Precio As Double, row As DataGridViewRow)
+        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+        If esDevolucion Then
+            row.Cells("PRECIO").Value = (Precio * -1) / 1.21
+        Else
+            row.Cells("PRECIO").Value = Precio / 1.21
         End If
 
-        If total <= 0 Then
+        If esDevolucion Then
+            row.Cells("IVA").Value = ((Precio * -1) / 1.21) * 0.21
+        Else
+            row.Cells("IVA").Value = (Precio / 1.21) * 0.21
+        End If
+
+        If esDevolucion Then
+            row.Cells("MONTO").Value = (Precio * -1)
+        Else
+            row.Cells("MONTO").Value = Precio
+        End If
+
+        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Return row
+    End Function
+
+    Private Shared Function ActualizarMontosProductosMayoristasSinFactura(Precio As Double, row As DataGridViewRow)
+        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+        If esDevolucion Then
+            row.Cells("PRECIO").Value = (Precio * -1)
+        Else
+            row.Cells("PRECIO").Value = Precio
+        End If
+
+        If esDevolucion Then
+            row.Cells("IVA").Value = 0
+        Else
+            row.Cells("IVA").Value = 0
+        End If
+
+        If esDevolucion Then
+            row.Cells("MONTO").Value = (Precio * -1)
+        Else
+            row.Cells("MONTO").Value = Precio
+        End If
+
+        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Return row
+    End Function
+
+    Private Shared Function ActualizarMontosProductosMinoristas(Precio As Double, row As DataGridViewRow)
+        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
+        If esDevolucion Then
+            row.Cells("PRECIO").Value = 0
+        Else
+            row.Cells("PRECIO").Value = 0
+        End If
+
+        If esDevolucion Then
+            row.Cells("IVA").Value = 0
+        Else
+            row.Cells("IVA").Value = 0
+        End If
+
+        If esDevolucion Then
+            row.Cells("MONTO").Value = (Precio * -1)
+        Else
+            row.Cells("MONTO").Value = Precio
+        End If
+
+        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        Return row
+    End Function
+
+    'Funcion que calcula el total con descuento
+    Sub CalcularPreciosDescuento()
+        Dim subtotal As Double = CalcularPrecioTotal()
+        Dim descuento As Double = 0
+        Dim ivaSubTotal As Double = 0
+
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            CaluclarPrecioDescuentoMinorista(subtotal)
+        Else
+            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
+                CalcularPrecioDescuentoMayoristaSinFactura(subtotal)
+            Else
+                CalcularPrecioDescuentoMayoristaConFactura(subtotal)
+            End If
+        End If
+
+        If subtotal <= 0 Then
             Btn_Finalizar.Visible = False
         Else
             Btn_Finalizar.Visible = True
         End If
+    End Sub
+
+    Private Sub CalcularPrecioDescuentoMayoristaConFactura(ByRef subtotal As Double)
+        Dim descuento As Double = 0
+        Dim ivaSubTotal As Double = 0
+
+        If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
+            descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+            subtotal = subtotal - descuento
+            ivaSubTotal = subtotal * 0.21
+
+            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+        Else
+            ivaSubTotal = subtotal * 0.21
+            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+        End If
+
+        txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
+        txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
+    End Sub
+
+    Private Sub CalcularPrecioDescuentoMayoristaSinFactura(ByRef subtotal As Double)
+        Dim descuento As Double = 0
+        Dim ivaSubTotal As Double = 0
+
+        If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
+            descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+            subtotal = subtotal - descuento
+
+            txt_TotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        Else
+            txt_TotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        End If
+
+        txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
+        txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
+    End Sub
+
+    Private Sub CaluclarPrecioDescuentoMinorista(subtotal As Double)
+        Dim descuento As Double = 0
+
+        If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
+            descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+            txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
+        Else
+            txt_TotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+        End If
+        txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+        txt_SubtotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
     End Sub
 
     Private Sub PosicionarListaPreciosSegunFormaDePago()
@@ -760,6 +988,17 @@
             End If
         End If
     End Sub
+
+    Private Sub BuscarProducto()
+        Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_CodigoBarra.Text.ToUpper()).FirstOrDefault()
+        If (dr IsNot Nothing) Then
+            AgregarItem(dr(3), 1)
+        Else
+            MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
+
 
 #End Region
 End Class
