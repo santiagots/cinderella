@@ -4,12 +4,11 @@ Imports System.Linq
 Public Class NegMovimientos
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Obtener Ingresos
     Function ObtenerIngresos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Ingresos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Sucursales_Ingresos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -20,7 +19,7 @@ Public Class NegMovimientos
     'Obtener Egresos
     Function ObtenerEgresos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Egresos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Sucursales_Egresos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -31,7 +30,7 @@ Public Class NegMovimientos
     'Obtener Ingresos Listado
     Function ObtenerIngresosListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Sucursales_IngresosListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Sucursales_IngresosListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -42,7 +41,7 @@ Public Class NegMovimientos
     'Obtener Egresos Listado
     Function ObtenerEgresosListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Sucursales_EgresosListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Sucursales_EgresosListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -55,6 +54,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -93,7 +93,7 @@ Public Class NegMovimientos
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarMovimiento(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal id_Seccion As Integer, ByVal id_Tipo As Integer) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_Consultar @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Seccion='" & id_Seccion & "', @id_Tipo='" & id_Tipo & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_Consultar @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Seccion='" & id_Seccion & "', @id_Tipo='" & id_Tipo & "'")
@@ -109,7 +109,7 @@ Public Class NegMovimientos
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarTotalMovimiento(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal id_Seccion As Integer) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ConsultarTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Seccion='" & id_Seccion & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ConsultarTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Seccion='" & id_Seccion & "'")
@@ -125,7 +125,7 @@ Public Class NegMovimientos
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarTotalGastoMercaderia(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_MercaderiaTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_MercaderiaTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -141,7 +141,7 @@ Public Class NegMovimientos
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarTotalCajaFuerte(ByVal id_Sucursal As Integer, ByVal Fecha As String) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -157,7 +157,7 @@ Public Class NegMovimientos
     'Obtiene el monto de un tipo de movimiento de un determinado dia.
     Function ObtenerMovimiento(ByVal id_Sucursal As Integer, ByVal Fecha As String, ByVal id_Seccion As Integer, ByVal id_Tipo As Integer) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "', @id_Tipo='" & id_Tipo & "', @id_Seccion='" & id_Seccion & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "', @id_Tipo='" & id_Tipo & "', @id_Seccion='" & id_Seccion & "'")
@@ -172,7 +172,7 @@ Public Class NegMovimientos
 
     'Obtiene los tipos de movimientos dependiendo de la seccion enviada.
     Function ListadoTiposMov(ByVal id_Seccion As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ListadoTiposMov @id_Seccion = " & id_Seccion)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ListadoTiposMov @id_Seccion = " & id_Seccion)
@@ -181,7 +181,7 @@ Public Class NegMovimientos
 
     'Obtiene los subtipos de movimientos dependiendo de la seccion y el tipo enviado.
     Function ListadoSubtiposMov(ByVal id_Tipo As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ListadoSubtiposMov @id_Tipo=" & id_Tipo)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ListadoSubtiposMov @id_Tipo=" & id_Tipo)
@@ -193,6 +193,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -236,6 +237,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -281,6 +283,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -325,6 +328,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -372,6 +376,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -419,6 +424,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -464,6 +470,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -510,7 +517,8 @@ Public Class NegMovimientos
     'Obtener ID
     Function ObtenerID(ByVal Tabla As String)
         Dim ds As New DataSet
-        If HayInternet Then
+
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ObtenerID @Tabla=" & Tabla)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ObtenerID @Tabla=" & Tabla)
@@ -532,6 +540,7 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -670,7 +679,7 @@ Public Class NegMovimientos
     'Obtener un listado de Dif. de Caja.
     Function ObtenerMovCaja(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCaja_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovCaja_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -680,7 +689,7 @@ Public Class NegMovimientos
 
     Function ObtenerDifCaja(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovDiferencia_Obtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovDiferencia_Obtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -691,7 +700,7 @@ Public Class NegMovimientos
     'Obtener un listado de Caja Fuerte.
     Function ObtenerMovCajaFuerte(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -702,7 +711,7 @@ Public Class NegMovimientos
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovCaja(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As String) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCaja_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovCaja_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
@@ -718,7 +727,7 @@ Public Class NegMovimientos
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovCajaFuerte(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As Integer) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
@@ -734,7 +743,7 @@ Public Class NegMovimientos
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovEgreso(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As String) As Double
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
@@ -750,7 +759,7 @@ Public Class NegMovimientos
     'Obtener un listado de Gastos.
     Function ObtenerMovGasto(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovGasto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovGasto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -761,7 +770,7 @@ Public Class NegMovimientos
     'Obtener un listado de Impuestos.
     Function ObtenerMovImpuesto(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovImpuesto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovImpuesto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -772,7 +781,7 @@ Public Class NegMovimientos
     'Obtener un listado de Impuestos.
     Function ObtenerMovImpuestoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovImpuesto_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovImpuesto_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -783,7 +792,7 @@ Public Class NegMovimientos
     'Obtener un listado de Gastos por rango de fechas.
     Function ObtenerMovGastoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovGasto_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovGasto_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -794,7 +803,7 @@ Public Class NegMovimientos
     'Obtener un listado de Retiros de socios por rango de fechas.
     Function ObtenerMovRetiroFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovRetiro_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -805,7 +814,7 @@ Public Class NegMovimientos
     'Obtener un listado de Retiros de socios por rango de fechas.
     Function ObtenerMovAporteFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -816,7 +825,7 @@ Public Class NegMovimientos
     'Obtener un listado de diferencias de caja por rango de fechas.
     Function ObtenerMovCajaFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCaja_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'" & ", @Tipo=" & Tipo)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovCaja_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'" & ", @Tipo=" & Tipo)
@@ -827,7 +836,7 @@ Public Class NegMovimientos
     'Obtener un listado de efectivos por rango de fechas.
     Function ObtenerMovEgresoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'" & ", @Tipo=" & Tipo)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'" & ", @Tipo=" & Tipo)
@@ -838,7 +847,7 @@ Public Class NegMovimientos
     'Obtener un listado de Egresos.
     Function ObtenerMovEgreso(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -849,7 +858,7 @@ Public Class NegMovimientos
     'Obtener un listado de Egresos por sucursal.
     Function ObtenerMovEgresoPorSucursal(ByVal id_Sucursal As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerPorSucursal @id_Sucursal=" & id_Sucursal)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerPorSucursal @id_Sucursal=" & id_Sucursal)
@@ -860,7 +869,7 @@ Public Class NegMovimientos
     'Obtener un listado de Egresos por sucursal destino.
     Function ObtenerMovEgresoPorSucursalDestino(ByVal id_Sucursal As Integer, ByVal id_SucursalDestino As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerPorSucursalDestino @id_Sucursal=" & id_Sucursal & ", @id_SucursalDestino=" & id_SucursalDestino)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerPorSucursalDestino @id_Sucursal=" & id_Sucursal & ",  @id_SucursalDestino=" & id_SucursalDestino)
@@ -871,7 +880,7 @@ Public Class NegMovimientos
     'Obtener un listado de Retiro de Socio.
     Function ObtenerMovRetiro(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -882,7 +891,7 @@ Public Class NegMovimientos
     'Obtener un listado de Aporte de Socio.
     Function ObtenerMovAporte(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
@@ -893,7 +902,7 @@ Public Class NegMovimientos
     'Obtener un movimiento determinado.
     Function ObtenerMov(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal Tipo As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Mov_ObtenerDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Mov_ObtenerDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
@@ -903,7 +912,7 @@ Public Class NegMovimientos
 
     Function ObtenerMovDestino(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal Tipo As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Mov_ObtenerDestinoDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Mov_ObtenerDestinoDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
@@ -915,7 +924,7 @@ Public Class NegMovimientos
     'Obtener un movimiento determinado.
     Function ObtenerMovEgresoDetalle(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal id_sucursalDestino As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_Detalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @id_sucursalDestino=" & id_sucursalDestino)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_Detalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @id_sucursalDestino=" & id_sucursalDestino)
@@ -926,7 +935,7 @@ Public Class NegMovimientos
     'Obtiene los productos de un egreso tipo mercaderias.
     Function ObtenerMovEgresoMercaderias(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerMercaderia @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerMercaderia @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal)
@@ -937,7 +946,7 @@ Public Class NegMovimientos
     'Obtener notificaciones.
     Function ObtenerNotificaciones(ByVal id_Sucursal As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ObtenerNuevos @id_Sucursal=" & id_Sucursal)
             If ds.Tables(0).Rows.Count > 0 Then
                 If ds.Tables(0).Rows(0).Item("Total").ToString <> "" Then
@@ -956,7 +965,7 @@ Public Class NegMovimientos
     'Obtener listado de notificaciones.
     Function ObtenerListadoNotificaciones(ByVal id_Sucursal As Integer)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ObtenerListadoNuevos @id_Sucursal=" & id_Sucursal)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ObtenerListadoNuevos @id_Sucursal=" & id_Sucursal)
@@ -967,7 +976,7 @@ Public Class NegMovimientos
     'Obtener la relacion entre egresos y gastos
     Function ObtenerRelacionEgresosGastos() As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_Obtener_Relacion_Egresos_Gastos")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_Obtener_Relacion_Egresos_Gastos")
@@ -978,6 +987,7 @@ Public Class NegMovimientos
     'Acepta un movimiento determinado.
     Function AceptarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Subtipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer, Monto As Decimal)
         Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Try
             'Conecto a la bdd.
             If HayInternet Then
@@ -1087,6 +1097,8 @@ Public Class NegMovimientos
     'Rechaza un movimiento determinado.
     Function RechazarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer)
         Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If HayInternet Then

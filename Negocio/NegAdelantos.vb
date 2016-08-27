@@ -2,14 +2,13 @@
 
 Public Class NegAdelantos
     Dim clsDatos As New Datos.Conexion
-    Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para insertar un adelanto.
     Function AltaAdelanto(ByVal eAdelanto As Entidades.Adelantos) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -53,7 +52,7 @@ Public Class NegAdelantos
     Function ObtenerAdelantos(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adelantos_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adelantos_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -73,6 +72,8 @@ Public Class NegAdelantos
     'Funcion para obtener los adelantos de un empleado
     Function EliminarAdelanto(ByVal id_Adelanto As Integer, ByVal id_Sucursal As Integer)
         Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             If HayInternet Then
                 cmd.Connection = clsDatos.ConectarRemoto()
@@ -109,7 +110,7 @@ Public Class NegAdelantos
     Function ObtenerAdelanto(ByVal id_Adelanto As Integer, ByVal id_Sucursal As Integer)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adelantos_ObtenerAdelanto @id_Adelanto=" & id_Adelanto & ", @id_Sucursal=" & id_Sucursal)
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adelantos_ObtenerAdelanto @id_Adelanto=" & id_Adelanto & ", @id_Sucursal=" & id_Sucursal)
@@ -121,7 +122,7 @@ Public Class NegAdelantos
     Function ObtenerAdelantosSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adelantos_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adelantos_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -142,7 +143,7 @@ Public Class NegAdelantos
     Function ObtenerAdelantosSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adelantos_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adelantos_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -154,7 +155,7 @@ Public Class NegAdelantos
 
     'Funcion que lista las Adelantos de un empleado.
     Function ListarAdelantosEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Adelantos_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Adelantos_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")

@@ -4,7 +4,6 @@ Imports Datos
 Public Class NegFacturacion
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
     Dim con As New Conexion
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS_DETALLE.
@@ -12,6 +11,8 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If (HayInternet) Then
@@ -62,6 +63,7 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
         'Conecto a la bdd.
 
         Try
@@ -106,6 +108,7 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
 
@@ -152,10 +155,11 @@ Public Class NegFacturacion
         'Declaro variables
         Dim dsFacturas As New DataSet
         Dim facturas As List(Of Entidades.Facturacion) = New List(Of Entidades.Facturacion)()
+
         'Conecto a la bdd.
 
         Try
-            If (HayInternet) Then
+            If (Funciones.HayInternet) Then
                 dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
             Else
                 dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -176,7 +180,7 @@ Public Class NegFacturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsFactura = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)
         Else
             dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)

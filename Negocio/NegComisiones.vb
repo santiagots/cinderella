@@ -2,7 +2,7 @@
 Public Class NegComisiones
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
+    Dim HayInternet As Boolean = Funciones.HayInternet
 
     'Funcion que agrega una determinada comision a un determinado empleado.
     Function AgregarComision(ByVal ecomisiones As Entidades.Comisiones) As Boolean
@@ -11,6 +11,7 @@ Public Class NegComisiones
             'Declaro variables
             Dim cmd As New SqlCommand
             Dim msg As Boolean = False
+            Dim HayInternet As Boolean = Funciones.HayInternet
 
             'intento hacer la conexion al servidor remoto y luego al local.
             If (HayInternet) Then
@@ -55,7 +56,7 @@ Public Class NegComisiones
         Dim eComi As New Entidades.Comisiones
 
         'OBtengo la comision realizada
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsComi = clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_Detalle @id_Venta=" & id_Venta & ", @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal)
         Else
             dsComi = clsDatos.ConsultarBaseLocal("execute sp_Comisiones_Detalle @id_Venta=" & id_Venta & ", @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal)
@@ -85,7 +86,7 @@ Public Class NegComisiones
 
         Try
             'intento hacer la conexion al servidor remoto y luego al local.
-            If (HayInternet) Then
+            If (Funciones.HayInternet) Then
                 cmd.Connection = clsDatos.ConectarRemoto()
             Else
                 cmd.Connection = clsDatos.ConectarLocal()
@@ -190,7 +191,7 @@ Public Class NegComisiones
         Dim Comision As Double = 0
         Dim dsCom As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsCom = clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsCom = clsDatos.ConsultarBaseLocal("execute sp_Comisiones_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -212,7 +213,7 @@ Public Class NegComisiones
     Function ObtenerComisionPorFecha(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim dsCom As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsCom = clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_ObtenerPorFecha @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             dsCom = clsDatos.ConsultarBaseLocal("execute sp_Comisiones_ObtenerPorFecha @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -229,7 +230,7 @@ Public Class NegComisiones
     'Funcion para obtener el total de las comisiones de un empleado.
     Function ObtenerComisionPorPeriodo(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsCom As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsCom = clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_ObtenerPorPeriodo @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "'" & ", @FHasta='" & FHasta & "'")
         Else
             dsCom = clsDatos.ConsultarBaseLocal("execute sp_Comisiones_ObtenerPorPeriodo @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "'" & ", @FHasta='" & FHasta & "'")
@@ -239,7 +240,7 @@ Public Class NegComisiones
 
     'Funcion que lista las comisiones de un empleado.
     Function ListarComisionesEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Comisiones_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -250,7 +251,7 @@ Public Class NegComisiones
         Dim HayComision As Boolean = False
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_Consultar @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Empleado='" & id_Empleado & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Comisiones_Consultar @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Empleado='" & id_Empleado & "'")
@@ -268,7 +269,7 @@ Public Class NegComisiones
     Function ConsultarComisionesPorPeriodo(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Comisiones_Consultar @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Empleado='" & id_Empleado & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Comisiones_Consultar @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Empleado='" & id_Empleado & "'")

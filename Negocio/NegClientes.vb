@@ -7,14 +7,13 @@ Public Class NegClientes
     Dim clsDatos As New Datos.Conexion
     Dim con As New Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para consultar un cliente.
     Public Function TraerCliente(ByVal id_Cliente As Integer)
         Dim dsCliente As New DataSet
         Dim entCliente As New Entidades.Clientes
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_Detalle @id_Cliente=" & id_Cliente)
         Else
             dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_Detalle @id_Cliente=" & id_Cliente)
@@ -48,7 +47,7 @@ Public Class NegClientes
         Dim dsCliente As New DataSet
         Dim clientes As List(Of Entidades.Clientes) = New List(Of Clientes)()
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_Razon_Social @RazonSocial='" & RazonSocial & "'")
         Else
             dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_Razon_Social @RazonSocial='" & RazonSocial & "'")
@@ -87,7 +86,7 @@ Public Class NegClientes
     Public Function TraerClienteReducido(ByVal id_Cliente As Integer)
         Dim dsCliente As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_DetalleReducido @id_Cliente=" & id_Cliente)
         Else
             dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_DetalleReducido @id_Cliente=" & id_Cliente)
@@ -148,8 +147,14 @@ Public Class NegClientes
         Dim cmd As New SqlCommand
         Dim msg As String = ""
 
-        Try
+        If (Funciones.HayInternet) Then
             cmd.Connection = clsDatos.ConectarRemoto()
+        Else
+            cmd.Connection = clsDatos.ConectarLocal()
+        End If
+
+        Try
+
             cmd.CommandType = CommandType.StoredProcedure
             cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
             With cmd.Parameters
@@ -163,7 +168,11 @@ Public Class NegClientes
             cmd.Parameters.Add(respuesta)
             cmd.ExecuteNonQuery()
             'desconecto la bdd
-            clsDatos.ConectarRemoto()
+            If (Funciones.HayInternet) Then
+                clsDatos.ConectarRemoto()
+            Else
+                clsDatos.ConectarLocal()
+            End If
 
             'muestro el mensaje
             Return respuesta.Value
@@ -235,7 +244,7 @@ Public Class NegClientes
 
     'Funcion para listar todos los clientes activos.
     Function ListadoClientes() As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Clientes_Listado")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Clientes_Listado")
@@ -244,7 +253,7 @@ Public Class NegClientes
 
     'Funcion para listar todos los clientes.
     Function ListadoClientesCompleto() As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Clientes_ListadoCompleto")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Clientes_ListadoCompleto")

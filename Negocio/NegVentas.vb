@@ -2,7 +2,7 @@
 Public Class NegVentas
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
+
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
     Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas, EntDetalleVenta As List(Of Entidades.Ventas_Detalle)) As Boolean
@@ -10,6 +10,7 @@ Public Class NegVentas
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
@@ -76,7 +77,7 @@ Public Class NegVentas
     'Obtiene el ultimo ID de la tabla VENTAS.
     Public Function ObtenerID()
         Dim ds As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             ds = ClsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('VENTAS') as id_Venta")
         Else
             ds = ClsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('VENTAS')  as id_Venta")
@@ -91,7 +92,7 @@ Public Class NegVentas
 
     'Funcion para listar todas las ventas.
     Function ListadoVentasCompleto(ByVal id_Sucursal As Integer) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal)
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal)
@@ -100,7 +101,7 @@ Public Class NegVentas
 
     'Funcion para listar todas las ventas de un cliente.
     Function ListadoVentasCliente(ByVal id_Cliente As Integer) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCliente @id_Cliente=" & id_Cliente)
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCliente @id_Cliente=" & id_Cliente)
@@ -109,7 +110,7 @@ Public Class NegVentas
 
     'Funcion para listar todas las ventas por FECHA.
     Function ListadoVentasCompletoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -120,7 +121,7 @@ Public Class NegVentas
     Public Function TraerVenta(ByVal id_Venta As Integer)
         Dim dsVentas As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_Detalle @id_Venta=" & id_Venta)
         Else
             dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_Detalle @id_Venta=" & id_Venta)
@@ -133,7 +134,7 @@ Public Class NegVentas
     Public Function TraerVentaDetalle(ByVal id_Venta As Integer)
         Dim dsVentas As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_VentasDetalle_Listado @id_Venta=" & id_Venta)
         Else
             dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_VentasDetalle_Listado @id_Venta=" & id_Venta)
@@ -148,6 +149,8 @@ Public Class NegVentas
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If HayInternet Then
@@ -193,7 +196,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -215,7 +218,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalMinoristas(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerMinoristas @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -237,7 +240,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalMayoristas(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerMayoristas @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -259,7 +262,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalEfectivo(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerEfectivo @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -281,7 +284,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalFacturado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerFacturado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -303,7 +306,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalCheque(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerCheque @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -326,7 +329,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalCredito(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerCredito @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -349,7 +352,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalDebito(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerDebito @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -372,7 +375,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -384,6 +387,7 @@ Public Class NegVentas
     'Funcion que actualiza una venta como facturada o no facturada.
     Public Function FacturoVenta(ByVal Facturo As Boolean, ByVal id_Venta As Integer)
         Dim Facturado As Integer = 0
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         If Facturo Then
             Facturado = 1
@@ -434,7 +438,7 @@ Public Class NegVentas
     'Resumen Diario
     Public Function TotalVentasMinoristas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalMinorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalMinorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -449,7 +453,7 @@ Public Class NegVentas
 
     Public Function TotalVentasMayoristas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalMayorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalMayorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -464,7 +468,7 @@ Public Class NegVentas
 
     Public Function TotalVentasFacturado(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalFacturado @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalFacturado @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -479,7 +483,7 @@ Public Class NegVentas
 
     Public Function TotalVentas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -494,7 +498,7 @@ Public Class NegVentas
 
     Public Function TotalVentasTarjetas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentasTarjetas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentasTarjetas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -509,7 +513,7 @@ Public Class NegVentas
 
     Public Function TotalVentasEfectivo(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentasEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentasEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -524,7 +528,7 @@ Public Class NegVentas
 
     Public Function TotalVentasCheque(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentasCheque @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentasCheque @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")

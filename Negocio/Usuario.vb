@@ -5,17 +5,15 @@ Imports Datos
 Public Class Usuario
     Dim objUsuario As Entidades.Usuario
     Dim clsDatos As New Datos.Conexion
-    Dim negFunciones As New Negocio.Funciones
 
     'Funcion que realiza el login del Usuario.
     Public Function Login(ByVal usuario As String, ByVal pwd As String)
         Dim EUsuario As New Entidades.Usuario
         Dim dsLogin As DataSet
-        Dim HayInternet As Boolean = negFunciones.GotInternet
 
         Try
             'intento hacer la conexion al servidor remoto y luego al local.
-            If (HayInternet) Then
+            If (Funciones.HayInternet) Then
                 dsLogin = clsDatos.ConsultarBaseRemoto("execute sp_Usuario_Login @Usuario = '" & usuario & "',@PWD = '" & pwd & "'")
             Else
                 dsLogin = clsDatos.ConsultarBaseLocal("execute sp_Usuario_Login @Usuario = '" & usuario & "',@PWD='" & pwd & "'")
@@ -36,11 +34,10 @@ Public Class Usuario
     Public Function TraerUsuario(ByVal id_Usuario As Integer)
         Dim dsUsuario As New DataSet
         Dim entUsuario As New Entidades.Usuario
-        Dim HayInternet As Boolean = negFunciones.GotInternet
 
         Try
             'intento hacer la conexion al servidor remoto y luego al local.
-            If (HayInternet) Then
+            If (Funciones.HayInternet) Then
                 dsUsuario = clsDatos.ConsultarBaseRemoto("execute sp_Usuario_Detalle @id_Usuario = '" & id_Usuario & "'")
             Else
                 dsUsuario = clsDatos.ConsultarBaseLocal("execute sp_Usuario_Detalle @id_Usuario = '" & id_Usuario & "'")
@@ -69,9 +66,8 @@ Public Class Usuario
         Dim negPatentes As New NegPatentes
         Dim dsPatentes As New DataSet
         Dim ArrPatentes As New ArrayList
-        Dim HayInternet As Boolean = negFunciones.GotInternet
 
-        'If HayInternet Then
+        'If Funciones.HayInternet Then
         '    'cargo las patentes de la base remota
         '    dsPatentes = negPatentes.CargarPatentesPorUsuario(id_Usuario, id_Sucursal)
         'Else
@@ -106,8 +102,7 @@ Public Class Usuario
 
     'Funcion que lista SOLO los usuarios habilitados del sistema.
     Function ListadoUsuarios() As DataSet
-        Dim HayInternet As Boolean = negFunciones.GotInternet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("Select id_Usuario,Usuario from USUARIOS where (Habilitado=1) order by Usuario")
         Else
             Return clsDatos.ConsultarBaseLocal("Select id_Usuario,Usuario from USUARIOS where (Habilitado=1) order by Usuario")
@@ -115,8 +110,7 @@ Public Class Usuario
     End Function
 
     Function ListadoUsuariosSinEmpleados(ByVal idUsuario As Integer) As DataSet
-        Dim HayInternet As Boolean = negFunciones.GotInternet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("Select id_Usuario,Usuario from USUARIOS where  id_Usuario not in (SELECT case when id_Usuario IS NULL then 0 else id_Usuario end FROM [CINDERELLA].[dbo].[EMPLEADOS] where Id_Empleado !=" & idUsuario.ToString() & ") and (Habilitado=1) order by Usuario")
         Else
             Return clsDatos.ConsultarBaseLocal("Select id_Usuario,Usuario from USUARIOS where  id_Usuario not in (SELECT case when id_Usuario IS NULL then 0 else id_Usuario end FROM [CINDERELLA].[dbo].[EMPLEADOS] where Id_Empleado !=" & idUsuario.ToString() & ") and (Habilitado=1) order by Usuario")
@@ -125,8 +119,7 @@ Public Class Usuario
 
     'Funcion que lista todos los usuarios del sistema.
     Function ListadoUsuariosCompleto() As DataSet
-        Dim HayInternet As Boolean = negFunciones.GotInternet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("Select id_Usuario,Nombre,Apellido,Usuario,CASE WHEN(Habilitado=1) THEN 'SI' ELSE 'NO' END AS Habilitado from USUARIOS order by Usuario")
         Else
             Return clsDatos.ConsultarBaseLocal("Select id_Usuario,Nombre,Apellido,Usuario,CASE WHEN(Habilitado=1) THEN 'SI' ELSE 'NO' END AS Habilitado from USUARIOS order by Usuario")

@@ -6,6 +6,8 @@ Public Class Usuario
     Implements IUsuario
 
     Public Function Login(ByVal Usuario As String, ByVal Password As String) As EntidadUsuario Implements IUsuario.Login
+        Negocio.Funciones.HayConexionInternet()
+
         Dim UsuarioNegocio As Negocio.Usuario = New Negocio.Usuario()
         Dim patentes As New Negocio.NegPatentes
         Dim encripta As New ClsEncriptacion()

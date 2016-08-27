@@ -32,6 +32,8 @@
         'Copyright.Text = My.Application.Info.Copyright
         ApplicationTitle.Text = "Sistema de Gestión " & My.Settings("Empresa")
         Copyright.Text = "Copyright Morpheus Estudio"
+
+
     End Sub
 
 End Class

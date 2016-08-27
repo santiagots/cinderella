@@ -5,6 +5,8 @@ Public Class Producto
     Implements IProducto
 
     Public Function GetProducto(ByVal IdProducto As Integer) As EntidadProducto Implements IProducto.GetProducto
+        Negocio.Funciones.HayConexionInternet()
+
         Dim productosNegocio As Negocio.NegProductos = New Negocio.NegProductos()
 
         Dim producto As Entidades.Productos = productosNegocio.TraerProducto(IdProducto)
@@ -24,6 +26,8 @@ Public Class Producto
     End Function
 
     Public Function GetLista() As List(Of EntidadProductoReducido) Implements IProducto.GetLista
+        Negocio.Funciones.HayConexionInternet()
+
         Dim productosNegocio As Negocio.NegProductos = New Negocio.NegProductos()
 
         Dim entidades As List(Of EntidadProductoReducido) = New List(Of EntidadProductoReducido)()

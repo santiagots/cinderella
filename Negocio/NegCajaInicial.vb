@@ -2,14 +2,13 @@
 Public Class NegCajaInicial
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para obtener la caja de un terminado dia.
     Function ObtenerCaja(ByVal id_Sucursal As Integer, ByVal Fecha As String) As Entidades.CajaInicial
         Dim ds As New DataSet
         Dim entCaja As New Entidades.CajaInicial
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -35,7 +34,7 @@ Public Class NegCajaInicial
         Dim ds As New DataSet
         Dim entCaja As New Entidades.CajaInicial
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
@@ -61,6 +60,7 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Try
             'Conecto a la bdd.
             If HayInternet Then
@@ -107,6 +107,7 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Try
             'Conecto a la bdd.
             If HayInternet Then
@@ -148,6 +149,8 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If HayInternet Then

@@ -1,27 +1,41 @@
 ﻿Public Class NegListasPrecio
     Dim clsDatos As New Datos.Conexion
+    Dim ClsFunciones As New Funciones
 
-    Public Shared dsListaPrecios As DataSet
-    Public Shared dsGrupoPrecios As DataSet
 
     Function ListadoListasPrecios() As DataSet
-        If (dsListaPrecios Is Nothing) Then
+        Dim dsListaPrecios As DataSet
+
+        If (Funciones.HayInternet) Then
             dsListaPrecios = clsDatos.ConsultarBaseRemoto("execute sp_ListasPrecios_Listado")
+        Else
+            dsListaPrecios = clsDatos.ConsultarBaseLocal("execute sp_ListasPrecios_Listado")
         End If
+
         Return dsListaPrecios
     End Function
 
     Function ListadoGrupoPrecios() As DataSet
-        If (dsGrupoPrecios Is Nothing) Then
+        Dim dsGrupoPrecios As DataSet
+
+        If (Funciones.HayInternet) Then
             dsGrupoPrecios = clsDatos.ConsultarBaseRemoto("execute sp_GrupoPrecios_Listado")
+        Else
+            dsGrupoPrecios = clsDatos.ConsultarBaseLocal("execute sp_GrupoPrecios_Listado")
         End If
+
         Return dsGrupoPrecios
     End Function
 
     Function ListadoPreciosPorGrupo(GrupoPrecio As Integer) As DataSet
-        If (dsListaPrecios Is Nothing) Then
+        Dim dsListaPrecios As DataSet
+
+        If (Funciones.HayInternet) Then
             dsListaPrecios = clsDatos.ConsultarBaseRemoto("execute sp_ListasPrecios_Listado")
+        Else
+            dsListaPrecios = clsDatos.ConsultarBaseLocal("execute sp_ListasPrecios_Listado")
         End If
+
         Dim dv As DataView = dsListaPrecios.Tables(0).DefaultView
         dv.RowFilter = String.Format("Id_ListaGrupo = {0}", GrupoPrecio)
         Dim ds As DataSet = New DataSet()

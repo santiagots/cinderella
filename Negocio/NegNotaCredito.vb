@@ -4,13 +4,14 @@ Imports Datos
 Public Class NegNotaCredito
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
     Dim con As New Conexion
 
     Public Function NuevaNotaCredito(ByVal EntNotaCredito As Entidades.NotaCredito) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If (HayInternet) Then
@@ -60,7 +61,7 @@ Public Class NegNotaCredito
         Dim dsNotaCredito As New DataSet
         Dim entNotaCredito As New Entidades.NotaCredito
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCredito_Detalle @id_Devolucion=" & id_Devolucion)
         Else
             dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCredito_Detalle @id_Devolucion=" & id_Devolucion)

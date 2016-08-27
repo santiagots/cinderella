@@ -5,6 +5,8 @@ Public Class Listas
 
     Public Function FormasPago() As List(Of KeyValuePair(Of Integer, String)) Implements ILista.FormasPago
 
+        Negocio.Funciones.HayConexionInternet()
+
         Dim respuesta As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))
         Dim negocioTipoPago As Negocio.NegTipoPago = New Negocio.NegTipoPago()
 
@@ -21,6 +23,8 @@ Public Class Listas
     End Function
 
     Public Function TiposPrecio() As List(Of EntidadTipoPrecios) Implements ILista.TiposPrecio
+
+        Negocio.Funciones.HayConexionInternet()
 
         Dim respuesta As List(Of EntidadTipoPrecios) = New List(Of EntidadTipoPrecios)
         Dim negrocioListaPago As Negocio.NegListasPrecio = New Negocio.NegListasPrecio()
@@ -40,6 +44,8 @@ Public Class Listas
 
     Public Function GruposPrecio() As List(Of KeyValuePair(Of Integer, String)) Implements ILista.GruposPrecio
 
+        Negocio.Funciones.HayConexionInternet()
+
         Dim respuesta As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))
         Dim negrocioListaPago As Negocio.NegListasPrecio = New Negocio.NegListasPrecio()
 
@@ -54,6 +60,8 @@ Public Class Listas
     End Function
 
     Public Function Sucursales() As List(Of KeyValuePair(Of Integer, String)) Implements ILista.Sucursales
+
+        Negocio.Funciones.HayConexionInternet()
 
         Dim respuesta As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))
         Dim negrocioSucursales As Negocio.NegSucursales = New Negocio.NegSucursales()
@@ -70,6 +78,8 @@ Public Class Listas
 
     Public Function Vendedores(ByVal idSucursal As Integer) As List(Of KeyValuePair(Of Integer, String)) Implements ILista.Vendedores
 
+        Negocio.Funciones.HayConexionInternet()
+
         Dim respuesta As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))
         Dim negrocioEmpleados As Negocio.NegEmpleados = New Negocio.NegEmpleados()
 
@@ -84,6 +94,8 @@ Public Class Listas
     End Function
 
     Public Function Configuracion() As EntidadConfiguracion Implements ILista.Configuracion
+
+        Negocio.Funciones.HayConexionInternet()
 
         Dim entCofiguracion As EntidadConfiguracion = New EntidadConfiguracion()
 

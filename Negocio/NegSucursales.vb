@@ -2,11 +2,17 @@
 Public Class NegSucursales
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para listar todas las sucursales activas.
     Function ListadoSucursales() As DataSet
-        Return ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Listado")
+        Dim dsSucursales As DataSet
+
+        If Funciones.HayInternet Then
+            dsSucursales = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Listado")
+        Else
+            dsSucursales = ClsDatos.ConsultarBaseLocal("execute sp_Sucursales_Listado")
+        End If
+        Return dsSucursales
     End Function
 
     Function ListadoSucursalesEntidad() As List(Of Entidades.Sucursales)
@@ -14,10 +20,10 @@ Public Class NegSucursales
         Dim Sucursales As List(Of Entidades.Sucursales) = New List(Of Entidades.Sucursales)
         Dim dsSucursales As DataSet
 
-        If HayInternet Then
-            dsSucursales = ClsDatos.ConsultarBaseLocal("execute sp_Sucursales_Listado")
-        Else
+        If Funciones.HayInternet Then
             dsSucursales = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_Listado")
+        Else
+            dsSucursales = ClsDatos.ConsultarBaseLocal("execute sp_Sucursales_Listado")
         End If
 
         If dsSucursales.Tables(0).Rows.Count <> 0 Then
@@ -56,10 +62,10 @@ Public Class NegSucursales
         Dim dsSucursal As New DataSet
         Dim entSucursal As New Entidades.Sucursales
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsSucursal = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursal_Detalle @id_Sucursal=" & id_Sucursal)
         Else
-            dsSucursal = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursal_Detalle @id_Sucursal=" & id_Sucursal)
+            dsSucursal = ClsDatos.ConsultarBaseLocal("execute sp_Sucursal_Detalle @id_Sucursal=" & id_Sucursal)
         End If
 
         If dsSucursal.Tables(0).Rows.Count <> 0 Then
@@ -91,11 +97,10 @@ Public Class NegSucursales
         Dim msg As String = ""
 
         Try
-            If HayInternet Then
-                cmd.Connection = ClsDatos.ConectarLocal()
-
-            Else
+            If Funciones.HayInternet Then
                 cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
             End If
 
             cmd.CommandType = CommandType.StoredProcedure
@@ -145,11 +150,10 @@ Public Class NegSucursales
         Dim cmd As New SqlCommand
         Try
 
-            If HayInternet Then
-                cmd.Connection = ClsDatos.ConectarLocal()
-
-            Else
+            If Funciones.HayInternet Then
                 cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
             End If
 
             cmd.CommandType = CommandType.StoredProcedure
@@ -192,11 +196,10 @@ Public Class NegSucursales
         Dim cmd As New SqlCommand
         Try
 
-            If HayInternet Then
-                cmd.Connection = ClsDatos.ConectarLocal()
-
-            Else
+            If Funciones.HayInternet Then
                 cmd.Connection = ClsDatos.ConectarRemoto()
+            Else
+                cmd.Connection = ClsDatos.ConectarLocal()
             End If
 
             cmd.CommandType = CommandType.StoredProcedure
@@ -219,8 +222,8 @@ Public Class NegSucursales
 
     'Funcion para listar todas las sucursales.
     Function ListadoSucursalesCompleto() As DataSet
-        If HayInternet Then
-            Return ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_ListadoCompleto")
+        If Funciones.HayInternet Then
+            Return ClsDatos.ConsultarBaseLocal("execute sp_Sucursales_ListadoCompleto")
         Else
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_ListadoCompleto")
         End If
@@ -228,8 +231,8 @@ Public Class NegSucursales
 
     'Funcion para listar todas las sucursales de un determinado empleado.
     Function ListadoSucursalesEmpleado(ByVal id_Empleado As Integer) As DataSet
-        If HayInternet Then
-            Return ClsDatos.ConsultarBaseRemoto("execute sp_SucursalesEmpleado_Listado @id_Empleado=" & id_Empleado)
+        If Funciones.HayInternet Then
+            Return ClsDatos.ConsultarBaseLocal("execute sp_SucursalesEmpleado_Listado @id_Empleado=" & id_Empleado)
         Else
             Return ClsDatos.ConsultarBaseRemoto("execute sp_SucursalesEmpleado_Listado @id_Empleado=" & id_Empleado)
         End If
@@ -238,8 +241,8 @@ Public Class NegSucursales
     'Funcion que me trae el id de la ultima sucursal
     Function UltimaSucursal() As Integer
         Dim ds As DataSet
-        If (HayInternet) Then
-            ds = ClsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('SUCURSALES') as id_Sucursal")
+        If (Funciones.HayInternet) Then
+            ds = ClsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('SUCURSALES') as id_Sucursal")
         Else
             ds = ClsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('SUCURSALES')  as id_Sucursal")
         End If

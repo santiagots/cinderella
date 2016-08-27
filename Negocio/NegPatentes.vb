@@ -4,10 +4,9 @@ Imports System.Data.SqlClient
 Public Class NegPatentes
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     Function ListadoPatentes() As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("Select * from PATENTES order by Descripcion")
         Else
             Return ClsDatos.ConsultarBaseLocal("Select * from PATENTES order by Descripcion")
@@ -15,7 +14,7 @@ Public Class NegPatentes
     End Function
 
     Function ConsultarPatente(ByVal id_Patente As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("Select * from PATENTES where id_Patente='" & id_Patente & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("Select * from PATENTES where id_Patente='" & id_Patente & "'")
@@ -23,7 +22,7 @@ Public Class NegPatentes
     End Function
 
     Function ListadoPatentesPerfil(ByVal id_Perfil As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("Select PATENTES.id_Patente,PATENTES.Descripcion from PATENTES inner join REL_PERFILES_PATENTES on PATENTES.id_Patente=REL_PERFILES_PATENTES.id_Patente where id_Perfil='" & id_Perfil & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("Select PATENTES.id_Patente,PATENTES.Descripcion from PATENTES inner join REL_PERFILES_PATENTES on PATENTES.id_Patente=REL_PERFILES_PATENTES.id_Patente where id_Perfil='" & id_Perfil & "'")
@@ -31,7 +30,7 @@ Public Class NegPatentes
     End Function
 
     Function ListadoPatentesPorSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("Select * from PATENTES where id_Sucursal='" & id_Sucursal & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("Select * from PATENTES where id_Sucursal='" & id_Sucursal & "'")
@@ -39,7 +38,7 @@ Public Class NegPatentes
     End Function
 
     Function ListadoPatentesPorTipo(ByVal id_Tipo As Integer, ByVal id_Accion As Integer, ByVal id_Sucursal As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Patentes_ListadoPorTipo @id_Tipo = '" & id_Tipo & "',@id_Accion = '" & id_Accion & "',@id_Sucursal = '" & id_Sucursal & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Patentes_ListadoPorTipo @id_Tipo = '" & id_Tipo & "',@id_Accion = '" & id_Accion & "',@id_Sucursal = '" & id_Sucursal & "'")
@@ -47,7 +46,7 @@ Public Class NegPatentes
     End Function
 
     Function ListadoPatentesGenerales() As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("Select * from PATENTES where id_Sucursal='0'")
         Else
             Return ClsDatos.ConsultarBaseLocal("Select * from PATENTES where id_Sucursal='0'")
@@ -55,7 +54,7 @@ Public Class NegPatentes
     End Function
 
     Function CargarPatentesPorUsuario(ByVal id_Usuario As Integer, ByVal id_Sucursal As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return ClsDatos.ConsultarBaseRemoto("select PATENTES.id_Patente, PATENTES.Descripcion from PATENTES INNER JOIN REL_PERFILES_PATENTES ON PATENTES.id_Patente=REL_PERFILES_PATENTES.id_Patente INNER JOIN USUARIOS ON REL_PERFILES_PATENTES.id_Perfil=USUARIOS.id_Perfil WHERE id_Usuario='" & id_Usuario & "' and (PATENTES.id_Sucursal='0' or id_Sucursal='" & id_Sucursal & "') order by PATENTES.id_Patente ASC")
         Else
             Return ClsDatos.ConsultarBaseLocal("select PATENTES.id_Patente, PATENTES.Descripcion from PATENTES INNER JOIN REL_PERFILES_PATENTES ON PATENTES.id_Patente=REL_PERFILES_PATENTES.id_Patente INNER JOIN USUARIOS ON REL_PERFILES_PATENTES.id_Perfil=USUARIOS.id_Perfil WHERE id_Usuario='" & id_Usuario & "' and (PATENTES.id_Sucursal='0' or id_Sucursal='" & id_Sucursal & "') order by PATENTES.id_Patente ASC")
@@ -69,7 +68,7 @@ Public Class NegPatentes
     Function ObtenerListadoCompoletoPorPerfil(ByVal id_Perfil As Integer) As DataTable
         Dim dsPatentes As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsPatentes = ClsDatos.ConsultarBaseRemoto("execute sp_Patentes_ObtenerListadoCompletoPorPerfil @id_Perfil=" & id_Perfil)
         Else
             dsPatentes = ClsDatos.ConsultarBaseLocal("execute sp_Patentes_ObtenerListadoCompletoPorPerfil @id_Perfil=" & id_Perfil)
@@ -96,10 +95,10 @@ Public Class NegPatentes
     Function ObtenerPatentes(ByVal id_Usuario As Integer, ByVal id_Sucursal As Integer) As Dictionary(Of Integer, String)
         Dim dsPatentes As New DataSet
 
-        If HayInternet Then
-            dsPatentes = ClsDatos.ConsultarBaseRemoto("execute sp_Patentes_ObtenerPorUsuarioSucursal @id_Usuario=" & id_Usuario & ",@id_Sucursal=" & id_Usuario)
+        If Funciones.HayInternet Then
+            dsPatentes = ClsDatos.ConsultarBaseRemoto("execute sp_Patentes_ObtenerPorUsuarioSucursal @id_Usuario=" & id_Usuario & ",@id_Sucursal=" & id_Sucursal)
         Else
-            dsPatentes = ClsDatos.ConsultarBaseLocal("execute sp_Patentes_ObtenerPorUsuarioSucursal @id_Usuario=" & id_Usuario & ",@id_Sucursal=" & id_Usuario)
+            dsPatentes = ClsDatos.ConsultarBaseLocal("execute sp_Patentes_ObtenerPorUsuarioSucursal @id_Usuario=" & id_Usuario & ",@id_Sucursal=" & id_Sucursal)
         End If
 
         Dim patentes As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)()
@@ -115,7 +114,7 @@ Public Class NegPatentes
         Dim dsGrupos As New DataSet
         Dim respuesta As List(Of String) = New List(Of String)
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsGrupos = ClsDatos.ConsultarBaseRemoto("execute sp_Patentes_ObtenerGrupos")
         Else
             dsGrupos = ClsDatos.ConsultarBaseLocal("execute sp_Patentes_ObtenerGrupos")

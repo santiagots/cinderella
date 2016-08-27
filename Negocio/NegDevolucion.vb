@@ -3,13 +3,13 @@
 Public Class NegDevolucion
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     Public Function NuevaDevolucion(ByVal Devolucion As Entidades.Devolucion) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
@@ -77,7 +77,7 @@ Public Class NegDevolucion
     Public Function ObtenerDevolucionesSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devoluciones_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Devoluciones_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -90,7 +90,7 @@ Public Class NegDevolucion
     Public Function TraerDevolucionDetalle(ByVal id_Venta As Integer)
         Dim dsVentas As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Venta=" & id_Venta)
         Else
             dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Venta=" & id_Venta)
@@ -101,7 +101,7 @@ Public Class NegDevolucion
 
     'Funcion para listar todas las devoluciones por FECHA.
     Function ListadoDevolucionesCompletoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -112,7 +112,7 @@ Public Class NegDevolucion
     Public Function TraerDevolucion(ByVal id_Devolucion As Integer)
         Dim dsDevolucion As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsDevolucion = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
         Else
             dsDevolucion = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
@@ -125,6 +125,8 @@ Public Class NegDevolucion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If HayInternet Then
@@ -169,6 +171,7 @@ Public Class NegDevolucion
     'Funcion que actualiza una venta como facturada o no facturada.
     Public Function GeneracionNotaCredito(ByVal NotaCredito As Boolean, ByVal id_Devolucion As Integer)
         Dim GenerarNotaCredito As Integer = 0
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         If NotaCredito Then
             GenerarNotaCredito = 1
@@ -218,7 +221,7 @@ Public Class NegDevolucion
 
     Public Function TotalDevolucionesEfectivo(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devoluciones_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Devoluciones_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")

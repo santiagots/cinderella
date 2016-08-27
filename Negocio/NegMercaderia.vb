@@ -4,11 +4,10 @@ Imports Datos
 Public Class NegMercaderia
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para listar todos los productos.
     Function ListadoMercaderia(ByVal id_Sucursal As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
@@ -17,7 +16,7 @@ Public Class NegMercaderia
 
     'Funcion para consultar un detalle de pedido de mercadería.
     Function ObtenerDetalleMercaderia(ByVal id_Mercaderia As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
@@ -27,7 +26,7 @@ Public Class NegMercaderia
     'Funcion que me trae el id del ultimo producto.
     Function UltimaMercaderia() As Integer
         Dim ds As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('MERCADERIAS') as id_Mercaderia")
         Else
             ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('MERCADERIAS')  as id_Mercaderia")
@@ -43,7 +42,7 @@ Public Class NegMercaderia
     'Funcion para consultar un pedido de mercadería.
     Public Function TraerMercaderia(ByVal id_Mercaderia As Integer)
         Dim dsStock As New DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
         Else
             dsStock = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
@@ -117,7 +116,7 @@ Public Class NegMercaderia
 
     Public Function TotalMercaderia(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")

@@ -3,12 +3,11 @@
 Public Class NegPlanillaSucursales
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Obtener Ventas
     Function ObtenerVentas(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Ventas @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Ventas @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -22,7 +21,7 @@ Public Class NegPlanillaSucursales
     'Obtener Disponibilidades
     Function ObtenerDisponibilidades(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Disponibilidades @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Disponibilidades @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -35,7 +34,7 @@ Public Class NegPlanillaSucursales
     'Obtener Mercaderia
     Function ObtenerMercaderia(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Mercaderia @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Mercaderia @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -49,7 +48,7 @@ Public Class NegPlanillaSucursales
     'Obtener Mercaderia Detalle
     Function ObtenerMercaderiaDetalle(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Mercaderia_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Mercaderia_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -63,7 +62,7 @@ Public Class NegPlanillaSucursales
     'Obtener Sueldos
     Function ObtenerSueldos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Sueldos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Sueldos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -77,7 +76,7 @@ Public Class NegPlanillaSucursales
     'Obtener Sueldos Detalle
     Function ObtenerSueldosDetalle(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Sueldos_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Sueldos_Detalle @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -91,7 +90,7 @@ Public Class NegPlanillaSucursales
     'Obtener Caja
     Function ObtenerCaja(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Caja @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Caja @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -105,7 +104,7 @@ Public Class NegPlanillaSucursales
     'Obtener Movimiento Socios
     Function ObtenerMovimientoSocios(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Socios @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Socios @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -119,7 +118,7 @@ Public Class NegPlanillaSucursales
     'Obtener Movimientos Sucursales
     Function ObtenerMovimientosSucursales(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Movimientos_Sucursales @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Movimientos_Sucursales @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -133,7 +132,7 @@ Public Class NegPlanillaSucursales
     'Obtener Movimientos Sucursales Envios
     Function ObtenerMovimientosSucursalesEnvios(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Envios @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Envios @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -147,7 +146,7 @@ Public Class NegPlanillaSucursales
     'Obtener Movimientos Sucursales Recibos
     Function ObtenerMovimientosSucursalesRecibos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Recibos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Recibos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -161,7 +160,7 @@ Public Class NegPlanillaSucursales
     'Obtener Impuestos
     Function ObtenerImpuestos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Impuestos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Impuestos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -175,7 +174,7 @@ Public Class NegPlanillaSucursales
     'Obtener Gastos
     Function ObtenerGastos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Gastos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Gastos @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -189,7 +188,7 @@ Public Class NegPlanillaSucursales
     'Obtener Indice Sueldo
     Function ObtenerIndiceSueldo(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Indice_Sueldo @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Indice_Sueldo @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -203,7 +202,7 @@ Public Class NegPlanillaSucursales
     'Obtener Indice Mercaderia
     Function ObtenerIndiceMercaderia(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Indice_Mercaderia @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Indice_Mercaderia @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -217,7 +216,7 @@ Public Class NegPlanillaSucursales
     'Obtener Indice Alquiler
     Function ObtenerIndiceAlquiler(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimiento_Sucursales_Indice_Alquiler @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Movimiento_Sucursales_Indice_Alquiler @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")

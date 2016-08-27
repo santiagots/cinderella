@@ -192,7 +192,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("25000")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("30000")>  _
         Public Property TemporizadorInternet() As String
             Get
                 Return CType(Me("TemporizadorInternet"),String)

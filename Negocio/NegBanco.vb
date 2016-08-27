@@ -9,8 +9,8 @@ Public Class NegBanco
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
         Dim clsDatos As New Datos.Conexion
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim msg As String = ""
 
         Try
@@ -54,14 +54,13 @@ Public Class NegBanco
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsBancos As DataSet
         Dim respuesta As List(Of Banco) = New List(Of Banco)()
 
         'Conecto a la bdd.
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsBancos = clsDatos.ConsultarBaseRemoto("execute sp_Banco_Listado")
         Else
             dsBancos = clsDatos.ConsultarBaseLocal("execute sp_Banco_Listado")

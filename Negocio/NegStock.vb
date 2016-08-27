@@ -5,11 +5,11 @@ Imports Datos
 Public Class NegStock
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
+
 
     'Funcion para listar todos los productos.
     Function ListadoStockSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Stock_ListadoSucursal @id_Sucursal=" & id_Sucursal)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Stock_ListadoSucursal @id_Sucursal=" & id_Sucursal)
@@ -19,7 +19,7 @@ Public Class NegStock
     'Funcion que me trae el id del ultimo producto.
     Function UltimoStock() As Integer
         Dim ds As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('STOCK') as id_Stock")
         Else
             ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('STOCK')  as id_Stock")
@@ -37,7 +37,7 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim entStock As New Entidades.Stock
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_Detalle @id_Stock=" & id_Stock)
         Else
             dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Detalle @id_Stock=" & id_Stock)
@@ -66,7 +66,7 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim entStock As New Entidades.Stock
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_Producto_Detalle @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
         Else
             dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Producto_Detalle @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
@@ -90,6 +90,7 @@ Public Class NegStock
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto la bdd.
@@ -140,6 +141,8 @@ Public Class NegStock
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto la bdd.
             If HayInternet Then
@@ -189,6 +192,8 @@ Public Class NegStock
     'Funcion para eliminar un stock.
     Function EliminarStock(ByVal id_Stock As Integer) As String
         Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto la bdd.
             If HayInternet Then
@@ -227,7 +232,7 @@ Public Class NegStock
     'Funcion que comprueba el stock para una cantidad y producto determinado.
     Function ComprobarStock(ByVal id_Producto As Integer, ByVal Cantidad As Integer, ByVal id_Sucursal As Integer) As Boolean
         Dim dsStock As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_Disponibilidad @id_Producto=" & id_Producto & ", @Cantidad=" & Cantidad & ", @id_Sucursal=" & id_Sucursal)
         Else
             dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Disponibilidad @id_Producto=" & id_Producto & ", @Cantidad=" & Cantidad & ", @id_Sucursal=" & id_Sucursal)
@@ -246,6 +251,8 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim cmd As New SqlCommand
         Dim msg As Boolean = False
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
 
         Try
             eStock = TraerStockProducto(id_Producto, id_Sucursal)
@@ -303,6 +310,8 @@ Public Class NegStock
         Dim eStock As Entidades.Stock
         Dim Estado As Boolean = False
         eStock = TraerStockProducto(id_Producto, id_Sucursal)
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
 
         'Si no exite el producto en la sucursal
         If eStock.id_Stock <> 0 Then
@@ -372,7 +381,7 @@ Public Class NegStock
     'Funcion que comprueba si el producto posee mas stock que el minimo permitido.
     Function ComprobarStockMinimo(ByVal id_Producto As Integer, ByVal id_Sucursal As Integer) As Boolean
         Dim dsStock As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_DisponibilidadMinima @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
         Else
             dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_DisponibilidadMinima @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)

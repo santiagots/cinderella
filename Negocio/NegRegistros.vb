@@ -4,10 +4,11 @@ Imports System.Windows.Forms
 Public Class NegRegistros
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
+
 
     'Funcion para listar todos los empleados por sucursal determinada.
     Function ListadoRegistrosSucursal(ByVal id_Sucursal As Integer) As DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         If (HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Registros_ListadoSucursal @id_Sucursal=" & id_Sucursal)
         Else
@@ -17,6 +18,7 @@ Public Class NegRegistros
 
     'Funcion para listar todos los empleados por sucursal y fecha determinada.
     Function ListadoRegistrosFecha(ByVal id_Registro As Integer) As DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         If (HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_RegistrosFecha_Listado @id_Registro = " & id_Registro)
         Else
@@ -30,6 +32,7 @@ Public Class NegRegistros
         Dim cmd As New SqlCommand
         Dim id_Registro As Integer
         Dim NombreEmpleado As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Try
             'Conecto
             If (HayInternet) Then
@@ -75,6 +78,7 @@ Public Class NegRegistros
 
     'Funcion para modificar un registro.
     Function ModificacionRegistro(ByVal ERegistro As Entidades.Registros) As String
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Dim cmd As New SqlCommand
         Try
@@ -143,7 +147,7 @@ Public Class NegRegistros
     End Function
 
     Function InsertarRegistroEmpleados(ByVal CheckedListBoxEmpleados As CheckedListBox, ByVal id_Registro As Integer, ByVal Sp As String)
-
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'inserto los empleados presentes para el registro
         For Each iten In CheckedListBoxEmpleados.CheckedItems()
@@ -189,6 +193,8 @@ Public Class NegRegistros
 
     'Funcion que me trae el id del ultimo registro.
     Function UltimoRegistro() As Integer
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Dim ds As DataSet
         If (HayInternet) Then
             ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('EMPLEADOS_REGISTROS') as id_Registro")
@@ -205,6 +211,8 @@ Public Class NegRegistros
 
     'Funcion que me indica si x día es feriado o no.
     Function EsFeriado(ByVal Fecha As String)
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Dim EsFe As Boolean = False
         Dim dsFeriado As New DataSet
 
@@ -225,6 +233,8 @@ Public Class NegRegistros
 
     'Funcion que me indica si un empleado trabajo en x sucursal en x dia.
     Function AsistioEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Fecha As String)
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Dim Asistio As Boolean = False
         Dim dsAsistio As New DataSet
 
@@ -245,6 +255,8 @@ Public Class NegRegistros
 
     'Funcion para eliminar un registro.
     Function EliminarRegistro(ByVal id_Registro As Integer) As String
+
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
         Try
             'Conecto
@@ -279,6 +291,8 @@ Public Class NegRegistros
 
     'Funcion para consultar un registro.
     Public Function TraerRegistro(ByVal id_Registro As Integer)
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Dim dsRegistro As New DataSet
         Dim entRegistro As New Entidades.Registros
 
@@ -298,6 +312,8 @@ Public Class NegRegistros
 
     'Funcion para obtener los dias trabajados de un empleado
     Function ObtenerDias(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Dim dsDias As New DataSet
         If HayInternet Then
             dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -314,6 +330,7 @@ Public Class NegRegistros
 
     'Funcion para obtener los dias FERIADOS trabajados de un empleado
     Function ObtenerDiasFeriados(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
+            Dim HayInternet As Boolean = Funciones.HayInternet
         Dim dsDias As New DataSet
         If HayInternet Then
             dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -331,6 +348,8 @@ Public Class NegRegistros
     'Funcion para obtener los dias trabajados de un empleado
     Function ListarDiasRegularesEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsDias As New DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
 
         If HayInternet Then
             dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerDiasRegulares @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -345,6 +364,7 @@ Public Class NegRegistros
     'Funcion para obtener los dias trabajados FERIADOS de un empleado
     Function ListarDiasFeriadosEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsDias As New DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         If HayInternet Then
             dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerDiasFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -359,6 +379,8 @@ Public Class NegRegistros
     'Funcion para obtener los dias Ausentes de un empleado
     Function ObtenerDiasAusentes(id_Empleado As Integer, id_Sucursal As String, FDesde As String, FHasta As String) As Integer
         Dim dsDias As New DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         If HayInternet Then
             dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerAusentes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else

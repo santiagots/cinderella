@@ -26,9 +26,8 @@ Public Class frmLogin
 
             'Oculto los Controles.
             OcultarControlesLogin()
-
             'Actualizo el estado de la conexion.
-            Functions.ActualizarEstado()
+            Functions.ActualizarEstado(Negocio.Funciones.HayConexionInternet(), MDIContenedor)
 
             If Not (VariablesGlobales.HayConexion) Then
                 Me.Cursor = Cursors.Arrow

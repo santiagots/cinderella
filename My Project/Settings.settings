@@ -39,7 +39,7 @@
       <Value Profile="(Default)">25000</Value>
     </Setting>
     <Setting Name="TemporizadorInternet" Type="System.String" Scope="User">
-      <Value Profile="(Default)">25000</Value>
+      <Value Profile="(Default)">30000</Value>
     </Setting>
     <Setting Name="TemporizadorMensajes" Type="System.String" Scope="User">
       <Value Profile="(Default)">300000</Value>

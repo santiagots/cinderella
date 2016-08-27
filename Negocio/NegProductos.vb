@@ -25,7 +25,6 @@ Public Class NegProductos
     Dim clsDatos As New Datos.Conexion
     Dim con As New Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     Const MaxRowsData As Integer = 9999
     Const MinRowsData As Integer = 2
@@ -38,6 +37,7 @@ Public Class NegProductos
         Dim sqlcomando As New SqlCommand
         Dim entProducto As New Entidades.Productos
         Dim internet = False
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         sqlcomando.CommandText = ("select * from PRODUCTOS where id_Producto ='" & id_Producto & "'")
 
@@ -109,6 +109,7 @@ Public Class NegProductos
         Dim sqlcomando As New SqlCommand
         Dim entProducto As New Entidades.Productos
         Dim internet = False
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         sqlcomando.CommandText = ("select * from PRODUCTOS where (Codigo ='" & Codigo & "')")
 
@@ -179,6 +180,8 @@ Public Class NegProductos
         Dim dsProducto As New DataSet
         Dim sqlcomando As New SqlCommand
         Dim entProducto As New Entidades.Productos
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         sqlcomando.CommandText = ("select * from PRODUCTOS where CodigoBarra ='" & CodigoBarra & "'")
 
         If (HayInternet) Then
@@ -245,6 +248,8 @@ Public Class NegProductos
         Dim daProducto As New SqlDataAdapter
         Dim dsProducto As New DataSet
         Dim sqlcomando As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         sqlcomando.CommandText = ("select id_Producto from PRODUCTOS where Codigo ='" & Codigo & "'")
 
         If (HayInternet) Then
@@ -274,6 +279,8 @@ Public Class NegProductos
         Dim daProducto As New SqlDataAdapter
         Dim dsProducto As New DataSet
         Dim sqlcomando As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         sqlcomando.CommandText = ("select Codigo from PRODUCTOS where id_Producto ='" & id_Producto & "'")
 
         If (HayInternet) Then
@@ -300,6 +307,7 @@ Public Class NegProductos
 
     Public Function TraerPrecios(ByVal eproductos As Entidades.Productos)
         Dim dsProducto As New DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         If (HayInternet) Then
             dsProducto = clsDatos.ConsultarBaseRemoto("execute sp_ProductosPrecios_Listado @id_Producto = " & eproductos.id_Producto)
@@ -332,6 +340,7 @@ Public Class NegProductos
     Function TraerPrecio(ByVal Codigo As String, ByVal id_Lista As String)
         Dim Precio As String = ""
         Dim dsProducto As New DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         If (HayInternet) Then
             dsProducto = clsDatos.ConsultarBaseRemoto("execute sp_ProductosPrecios_Consultar @Codigo = " & Codigo & ", @id_Lista=" & id_Lista)
@@ -1028,7 +1037,8 @@ Public Class NegProductos
     'Funcion que me trae el id del ultimo producto.
     Function UltimoProducto() As Integer
         Dim ds As DataSet
-        If (HayInternet) Then
+
+        If (Funciones.HayInternet) Then
             ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('PRODUCTOS') as id_Producto")
         Else
             ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('PRODUCTOS')  as id_Producto")
@@ -1046,7 +1056,8 @@ Public Class NegProductos
 #Region "Funciones Listados"
     'Funcion para listar todos los productos.
     Function ListadoProductos() As DataSet
-        If (HayInternet) Then
+
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_Listado")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_Listado")
@@ -1055,7 +1066,7 @@ Public Class NegProductos
 
     'Funcion para listar todos los productos.
     Function ListadoProductosBuscadores() As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoBuscadores")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadores")
@@ -1064,7 +1075,7 @@ Public Class NegProductos
 
     'Funcion para listar todos los productos dependiendo de un proveedor.
     Function ListadoProductosPorProveedor(ByVal id_Proveedor As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoPorProveedor @id_Proveedor=" & id_Proveedor)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoPorProveedor @id_Proveedor=" & id_Proveedor)
@@ -1073,7 +1084,7 @@ Public Class NegProductos
 
     'Funcion para listar todos los productos dependiendo de un proveedor.
     Function ListadoProductosPorProveedores(ByVal where As String) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("SELECT Nombre + ' ('+ Codigo + ')' as Nombre,id_Producto,Codigo from Productos where (Habilitado=1) and (" & where & ") order by Nombre ASC")
         Else
             Return clsDatos.ConsultarBaseLocal("SELECT Nombre + ' ('+ Codigo + ')' as Nombre,id_Producto,Codigo from Productos where (Habilitado=1) and (" & where & ") order by Nombre ASC")
@@ -1082,7 +1093,7 @@ Public Class NegProductos
 
     'Funcion para listar todos los productos dependiendo de un producto.
     Function ListadoProductosPrecios(ByVal id_Producto As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoPrecios @id_Producto=" & id_Producto)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoPrecios @id_Producto=" & id_Producto)

@@ -8,6 +8,8 @@ Public Class NotaPedido
     Public Shared Event onNevaNotaPedidoCompleted As NevaNotaPedidoDelegate
 
     Function SetNevaNotaPedido(ByVal EntNotaPedido As EntidadNotaPedido, EntDetalleNotaPedido As List(Of EntidadNotaPedido_Detalle), ByVal EntConsumidorFinal As EntidadConsumidorFinal) As Boolean Implements INotaPedido.SetNevaNotaPedido
+        Negocio.Funciones.HayConexionInternet()
+
         Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
         Dim ClienteNegocio As Negocio.NegClientes = New Negocio.NegClientes()
 

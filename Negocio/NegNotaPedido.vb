@@ -6,7 +6,6 @@ Public Class NegNotaPedido
 
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
     Public Function NuevaNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle)) As Boolean
@@ -14,6 +13,7 @@ Public Class NegNotaPedido
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
@@ -77,6 +77,7 @@ Public Class NegNotaPedido
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of NotaPedido) = New List(Of NotaPedido)()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto a la bdd.
         If (HayInternet) Then
@@ -100,6 +101,7 @@ Public Class NegNotaPedido
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of NotaPedido_Detalle) = New List(Of NotaPedido_Detalle)()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto a la bdd.
         If (HayInternet) Then
@@ -121,6 +123,7 @@ Public Class NegNotaPedido
     Public Function BorrarNota(ByVal NotaPedidoId As Integer) As Boolean
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto a la bdd.
         If HayInternet Then

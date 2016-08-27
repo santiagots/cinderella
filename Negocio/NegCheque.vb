@@ -10,7 +10,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
@@ -134,7 +134,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
 
@@ -193,7 +193,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
 
@@ -237,7 +237,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
@@ -262,7 +262,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
@@ -289,7 +289,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
@@ -313,7 +313,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
@@ -340,7 +340,7 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = ClsFunciones.GotInternet
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet

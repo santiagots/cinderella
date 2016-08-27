@@ -3,13 +3,13 @@
 Public Class NegAdicionales
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para insertar un adelanto.
     Function AltaAdicional(ByVal eAdicional As Entidades.Adicionales) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             'Conecto
@@ -53,7 +53,7 @@ Public Class NegAdicionales
     Function ObtenerAdicionales(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -72,7 +72,7 @@ Public Class NegAdicionales
 
     'Funcion que lista las Adicionales de un empleado.
     Function ListarAdicionalesEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Adicionales_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -83,7 +83,7 @@ Public Class NegAdicionales
     Function ObtenerAdicionalesSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -104,7 +104,7 @@ Public Class NegAdicionales
     Function ObtenerAdicionalesSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")

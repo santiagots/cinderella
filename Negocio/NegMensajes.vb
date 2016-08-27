@@ -1,9 +1,13 @@
 ﻿Imports System.Data.SqlClient
 Public Class NegMensajes
     Dim ClsDatos As New Datos.Conexion
+    Dim ClsFunciones As New Funciones
 
     Public Function ComprobarMensajes(ByVal id_Usuario As Integer)
         Dim dsMensajes As New DataSet
+        If Not Funciones.HayInternet Then
+            Return 0
+        End If
         dsMensajes = ClsDatos.ConsultarBaseRemoto("execute sp_Mensajes_ConsultarNuevos @id_Usuario=" & id_Usuario)
 
         If dsMensajes.Tables(0).Rows.Count <> 0 Then
