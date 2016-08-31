@@ -223,18 +223,18 @@ Public Class NegSucursales
     'Funcion para listar todas las sucursales.
     Function ListadoSucursalesCompleto() As DataSet
         If Funciones.HayInternet Then
-            Return ClsDatos.ConsultarBaseLocal("execute sp_Sucursales_ListadoCompleto")
-        Else
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_ListadoCompleto")
+        Else
+            Return ClsDatos.ConsultarBaseLocal("execute sp_Sucursales_ListadoCompleto")
         End If
     End Function
 
     'Funcion para listar todas las sucursales de un determinado empleado.
     Function ListadoSucursalesEmpleado(ByVal id_Empleado As Integer) As DataSet
         If Funciones.HayInternet Then
-            Return ClsDatos.ConsultarBaseLocal("execute sp_SucursalesEmpleado_Listado @id_Empleado=" & id_Empleado)
-        Else
             Return ClsDatos.ConsultarBaseRemoto("execute sp_SucursalesEmpleado_Listado @id_Empleado=" & id_Empleado)
+        Else
+            Return ClsDatos.ConsultarBaseLocal("execute sp_SucursalesEmpleado_Listado @id_Empleado=" & id_Empleado)
         End If
     End Function
 
