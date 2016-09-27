@@ -13,41 +13,41 @@ Public Class NegComisiones
             Dim msg As Boolean = False
             Dim HayInternet As Boolean = Funciones.HayInternet
 
-            'intento hacer la conexion al servidor remoto y luego al local.
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AgregarComision(ecomisiones, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Comisiones_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Empleado", ecomisiones.id_Empleado)
-                .AddWithValue("@Monto", ecomisiones.Monto)
-                .AddWithValue("@Comision", ecomisiones.Comision)
-                .AddWithValue("@id_Venta", ecomisiones.id_Venta)
-                .AddWithValue("@id_Sucursal", ecomisiones.id_Sucursal)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If (HayInternet) Then
+                msg = AgregarComision(ecomisiones, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return False
         End Try
 
+    End Function
+
+    Private Shared Function AgregarComision(ecomisiones As Entidades.Comisiones, ByRef cmd As SqlCommand) As Boolean
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Comisiones_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Empleado", ecomisiones.id_Empleado)
+            .AddWithValue("@Monto", ecomisiones.Monto)
+            .AddWithValue("@Comision", ecomisiones.Comision)
+            .AddWithValue("@id_Venta", ecomisiones.id_Venta)
+            .AddWithValue("@id_Sucursal", ecomisiones.id_Sucursal)
+        End With
+
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion que anula la comision de un empleado de una determinada venta.
@@ -78,11 +78,6 @@ Public Class NegComisiones
     Function ObtenerComision(ByVal id_Sucursal As Integer, ByVal id_Cliente As Integer, ByRef Vendedor As Double, ByRef Encargado As Double)
         'Declaro variables.
         Dim cmd As New SqlCommand
-        'Dim Comision As Double = 0
-        'Dim dsEmpleado As DataSet
-        'Dim dsComision As DataSet
-        'Dim dsFeriado As DataSet
-        'Dim TipoEmpleado As Integer = 0
 
         Try
             'intento hacer la conexion al servidor remoto y luego al local.
@@ -124,62 +119,6 @@ Public Class NegComisiones
                 Encargado = ComisionEncargadoMayor.Value
             End If
 
-            'If (HayInternet) Then
-            '    'Averiguo primero que tipo de empleado es.
-            '    dsEmpleado = clsDatos.ConsultarBaseRemoto("SELECT id_TipoEmpleado from EMPLEADOS INNER JOIN REL_EMPLEADOS_SUCURSALES on EMPLEADOS.id_Empleado=REL_EMPLEADOS_SUCURSALES.id_Empleado where REL_EMPLEADOS_SUCURSALES.id_Sucursal=" & id_Sucursal & " AND EMPLEADOS.id_Empleado = " & id_Empleado)
-            '    TipoEmpleado = dsEmpleado.Tables(0).Rows(0).Item("id_TipoEmpleado").ToString
-
-            '    'Traigo las comisiones
-            '    dsComision = clsDatos.ConsultarBaseRemoto("SELECT Comision_Vendedor,Comision_Encargado,Comision_Vendedor_Feriado,Comision_Encargado_Feriado,Comision_Vendedor_Mayor,Comision_Encargado_Mayor from SUCURSALES where id_Sucursal=" & id_Sucursal)
-
-            '    'Me fijo si el dia de hoy está como feriado
-            '    dsFeriado = clsDatos.ConsultarBaseRemoto("SELECT count(*) from FERIADOS where FechaCorta='" & Date.Now.ToString("yyyy/MM/dd") & "'")
-
-            'Else
-            '    'Averiguo primero que tipo de empleado es.
-            '    dsEmpleado = clsDatos.ConsultarBaseLocal("SELECT id_TipoEmpleado from EMPLEADOS INNER JOIN REL_EMPLEADOS_SUCURSALES on EMPLEADOS.id_Empleado=REL_EMPLEADOS_SUCURSALES.id_Empleado where REL_EMPLEADOS_SUCURSALES.id_Sucursal=" & id_Sucursal & " AND EMPLEADOS.id_Empleado = " & id_Empleado)
-            '    TipoEmpleado = dsEmpleado.Tables(0).Rows(0).Item("id_TipoEmpleado").ToString
-
-            '    'Traigo las comisiones
-            '    dsComision = clsDatos.ConsultarBaseLocal("SELECT Comision_Vendedor,Comision_Encargado,Comision_Vendedor_Feriado,Comision_Encargado_Feriado,Comision_Vendedor_Mayor,Comision_Encargado_Mayor from SUCURSALES where id_Sucursal=" & id_Sucursal)
-
-            '    'Me fijo si el dia de hoy está como feriado
-            '    dsFeriado = clsDatos.ConsultarBaseLocal("SELECT count(*) from FERIADOS where FechaCorta='" & Date.Now.ToString("yyyy/MM/dd") & "'")
-            'End If
-
-
-
-            'Si se postea un cliente, tomo las comisiones mayoristas, sino tomo las minoristas. En ésto ultimo hay TODO un tema, dependiendo del dia vemos
-            'si aplicamos los montos correspondientes a feriados o no.
-            'If id_Cliente = 0 Then
-            '    If dsFeriado.Tables(0).Rows(0).Item(0).ToString <= 0 Then 'No es feriado.
-            '        If TipoEmpleado = 1 Then 'Si es Vendedor.
-            '            Comision = CDbl(dsComision.Tables(0).Rows(0).Item("Comision_Vendedor"))
-            '        ElseIf TipoEmpleado = 2 Then 'Si es Encargado.
-            '            Comision = CDbl(dsComision.Tables(0).Rows(0).Item("Comision_Encargado"))
-            '        Else 'Si es Supervisor.
-            '            Comision = 0
-            '        End If
-            '    Else 'Es feriado.
-            '        If TipoEmpleado = 1 Then 'Si es Vendedor.
-            '            Comision = CDbl(dsComision.Tables(0).Rows(0).Item("Comision_Vendedor_Feriado"))
-            '        ElseIf TipoEmpleado = 2 Then 'Si es Encargado.
-            '            Comision = CDbl(dsComision.Tables(0).Rows(0).Item("Comision_Encargado_Feriado"))
-            '        Else 'Si es Supervisor.
-            '            Comision = 0
-            '        End If
-            '    End If
-            'Else
-            '    If TipoEmpleado = 1 Then 'Si es Vendedor.
-            '        Comision = CDbl(dsComision.Tables(0).Rows(0).Item("Comision_Vendedor_Mayor"))
-            '    ElseIf TipoEmpleado = 2 Then 'Si es Encargado.
-            '        Comision = CDbl(dsComision.Tables(0).Rows(0).Item("Comision_Encargado_Mayor"))
-            '    Else 'Si es Supervisor.
-            '        Comision = 0
-            '    End If
-            'End If
-
-            'Retorno
             Return 1
         Catch ex As Exception
             Return 0

@@ -53,15 +53,9 @@ Public Class frmSincronizacion
             'limpio la lista
             ListaEstado.Items.Clear()
 
-            'Dim sincronizacion As New NegSincronizacion
-
             Dim actualizado As New ListViewItem
             btnSincronizar.Enabled = False
             Me.Cursor = Cursors.WaitCursor
-
-            'indico la cantidad de tablas para la barra de progreso
-            'Dim tablas() As String = {"REL_REGISTRO_EMPLEADOS", "REL_REGISTRO_EMPLEADOS_AUSENTES", "REL_USUARIOS_PERFILES", "STOCK", "ADELANTOS", "STOCK_BITACORA", "ADICIONALES", "SUCURSALES", "AROMAS", "SUELDOS", "BANCOS", "TIPOS_COMISIONES", "CAJA_INICIAL", "TIPOS_EGRESOS", "CHEQUE", "TIPOS_PAGO", "CLIENTES", "TIPOS_VENTAS", "COLORES", "USUARIOS", "COMISIONES", "USUARIOS_MENSAJES", "CONDICIONES_IVA", "VENTAS", "CONSUMIDORFINAL", "VENTAS_DETALLE", "CUENTA_CORRIENTE", "DEPARTAMENTOS", "DEUDA", "DEVOLUCIONES", "DEVOLUCIONES_DETALLE", "EMPLEADOS", "EMPLEADOS_DEPOSITOS", "EMPLEADOS_RECIBOS", "EMPLEADOS_REGISTROS", "EMPLEADOS_TIPOS", "FACTURACION", "FERIADOS", "LISTA_GRUPO", "LISTA_PRECIO", "LOCALIDADES", "MATERIALES", "MERCADERIAS", "MERCADERIAS_DETALLE", "MOVIMIENTOS", "MOVIMIENTOS_APORTE", "MOVIMIENTOS_CAJA", "MOVIMIENTOS_CAJA_FUERTE", "MOVIMIENTOS_EGRESOS", "MOVIMIENTOS_GASTOS", "MOVIMIENTOS_IMPUESTOS", "MOVIMIENTOS_MERCADERIAS", "MOVIMIENTOS_RETIROS", "MOVIMIENTOS_SECCIONES", "MOVIMIENTOS_SUBTIPOS", "MOVIMIENTOS_TIPOEGRESO_TIPOGASTO", "MOVIMIENTOS_TIPOS", "NOTACREDITO", "NOTAPEDIDO", "NOTAPEDIDO_DETALLE", "PATENTES", "PATENTES_GRUPO", "PERFILES", "PRECIOS", "PRECIOS_VIEJO", "PRODUCTOS", "PRODUCTOS_CATEGORIAS", "PRODUCTOS_CATEGORIAS_VIEJO", "PRODUCTOS_SUBCATEGORIAS", "PRODUCTOS_SUBCATEGORIAS_VIEJO", "PRODUCTOS_VIEJO", "PROVEEDORES", "PROVEEDORES_VIEJO", "PROVINCIAS", "REL_EMPLEADOS_SUCURSALES", "REL_PERFILES_PATENTES", "REL_PRODUCTOS_AROMAS", "REL_PRODUCTOS_COLORES", "REL_PRODUCTOS_MATERIALES"}
-            'Dim indicadorprogreso As Integer = Progreso.Maximum / (tablas.Length + 3)
 
             'inicio el proceso
             actualizado.Text = "Inicializacion de actualizacion"
@@ -69,25 +63,7 @@ Public Class frmSincronizacion
             actualizado.StateImageIndex = 2
             ListaEstado.Items.Add(actualizado)
 
-            ''deshabilito las Constraint de la base de datos por las relaciones de FK
-            'sincronizacion.DeshabilitarConstraint()
-
-            'RegistrarDatosARemota(sincronizacion, indicadorprogreso)
-
-            'Dim elementosSincronizados As Integer = RegistrarDatosALocal(sincronizacion, tablas, indicadorprogreso)
-
-            ''habilito las Constraint de la base de datos
-            'sincronizacion.HabilitarConstraint()
-
-            ''finalizacion de proceso
-            'Dim item As New ListViewItem
-            'item.Text = "Se sincronizaron " + elementosSincronizados.ToString + " de " + tablas.Length.ToString() + " tablas disponibles."
-            'item.SubItems.Add("FINALIZADO")
-            'item.StateImageIndex = 2
-            'ListaEstado.Items.Add(item)
-            'ListaEstado.Refresh()
-
-            Dim t As Task = Task.Run(Sub() A())
+            Dim t As Task = Task.Run(Sub() SincronizarDatos())
             t.Wait()
 
             Progreso.Value = 100
@@ -121,19 +97,20 @@ Public Class frmSincronizacion
         Return contador
     End Function
 
-    Private Sub RegistrarDatosARemota(sincronizacion As NegSincronizacion, indicadorprogreso As Integer)
-        sincronizacion.RegistrarVentasARemota(My.Settings.Sucursal)
-        AgregarItemListaEstado("Actualizacion ventas en SERVIDOR", 1)
-        Progreso.Increment(indicadorprogreso)
+    Private Function RegistrarDatosARemoto(sincronizacion As NegSincronizacion, TablasSincronizar As List(Of Tabla), indicadorprogreso As Integer) As Integer
+        Dim contador As Integer = 0
+        Dim estado As Integer = 0
 
-        sincronizacion.RegistrarDevolucionesARemota(My.Settings.Sucursal)
-        AgregarItemListaEstado("Actualizacion devoluciones en SERVIDOR", 1)
-        Progreso.Increment(indicadorprogreso)
+        For Each tabla As Tabla In TablasSincronizar
 
-        sincronizacion.RegistrarChequesARemota(My.Settings.Sucursal)
-        AgregarItemListaEstado("Actualizacion cheques en SERVIDOR", 1)
-        Progreso.Increment(indicadorprogreso)
-    End Sub
+            estado = sincronizacion.SincronizarLocalARemota(tabla, My.Settings.Sucursal.ToString())
+            AgregarItemListaEstado("Actualizacion de " & tabla.Nombre & " REMOTA", estado)
+            contador = contador + 1
+            Progreso.Increment(indicadorprogreso)
+        Next
+
+        Return contador
+    End Function
 
     Private Function AgregarItemListaEstado(itemDescripcion As String, estado As Integer) As Boolean
 
@@ -161,26 +138,26 @@ Public Class frmSincronizacion
         Me.Close()
     End Sub
 
-    Private Async Sub A()
+    Private Async Sub SincronizarDatos()
         Dim sincronizacion As New NegSincronizacion
-
+        Dim elementosSincronizados As Integer = 0
         'indico la cantidad de tablas para la barra de progreso
-        Dim tablas() As String = {"REL_REGISTRO_EMPLEADOS", "REL_REGISTRO_EMPLEADOS_AUSENTES", "REL_USUARIOS_PERFILES", "STOCK", "ADELANTOS", "STOCK_BITACORA", "ADICIONALES", "SUCURSALES", "AROMAS", "SUELDOS", "BANCOS", "TIPOS_COMISIONES", "CAJA_INICIAL", "TIPOS_EGRESOS", "CHEQUE", "TIPOS_PAGO", "CLIENTES", "TIPOS_VENTAS", "COLORES", "USUARIOS", "COMISIONES", "USUARIOS_MENSAJES", "CONDICIONES_IVA", "VENTAS", "CONSUMIDORFINAL", "VENTAS_DETALLE", "CUENTA_CORRIENTE", "DEPARTAMENTOS", "DEUDA", "DEVOLUCIONES", "DEVOLUCIONES_DETALLE", "EMPLEADOS", "EMPLEADOS_DEPOSITOS", "EMPLEADOS_RECIBOS", "EMPLEADOS_REGISTROS", "EMPLEADOS_TIPOS", "FACTURACION", "FERIADOS", "LISTA_GRUPO", "LISTA_PRECIO", "LOCALIDADES", "MATERIALES", "MERCADERIAS", "MERCADERIAS_DETALLE", "MOVIMIENTOS", "MOVIMIENTOS_APORTE", "MOVIMIENTOS_CAJA", "MOVIMIENTOS_CAJA_FUERTE", "MOVIMIENTOS_EGRESOS", "MOVIMIENTOS_GASTOS", "MOVIMIENTOS_IMPUESTOS", "MOVIMIENTOS_MERCADERIAS", "MOVIMIENTOS_RETIROS", "MOVIMIENTOS_SECCIONES", "MOVIMIENTOS_SUBTIPOS", "MOVIMIENTOS_TIPOEGRESO_TIPOGASTO", "MOVIMIENTOS_TIPOS", "NOTACREDITO", "NOTAPEDIDO", "NOTAPEDIDO_DETALLE", "PATENTES", "PATENTES_GRUPO", "PERFILES", "PRECIOS", "PRECIOS_VIEJO", "PRODUCTOS", "PRODUCTOS_CATEGORIAS", "PRODUCTOS_CATEGORIAS_VIEJO", "PRODUCTOS_SUBCATEGORIAS", "PRODUCTOS_SUBCATEGORIAS_VIEJO", "PRODUCTOS_VIEJO", "PROVEEDORES", "PROVEEDORES_VIEJO", "PROVINCIAS", "REL_EMPLEADOS_SUCURSALES", "REL_PERFILES_PATENTES", "REL_PRODUCTOS_AROMAS", "REL_PRODUCTOS_COLORES", "REL_PRODUCTOS_MATERIALES"}
-        Dim indicadorprogreso As Integer = Progreso.Maximum / (tablas.Length + 3)
+        Dim tablasRemotas() As String = {"REL_REGISTRO_EMPLEADOS", "REL_REGISTRO_EMPLEADOS_AUSENTES", "REL_USUARIOS_PERFILES", "STOCK", "ADELANTOS", "STOCK_BITACORA", "ADICIONALES", "SUCURSALES", "AROMAS", "SUELDOS", "BANCOS", "TIPOS_COMISIONES", "CAJA_INICIAL", "TIPOS_EGRESOS", "CHEQUE", "TIPOS_PAGO", "CLIENTES", "TIPOS_VENTAS", "COLORES", "USUARIOS", "COMISIONES", "USUARIOS_MENSAJES", "CONDICIONES_IVA", "VENTAS", "CONSUMIDORFINAL", "VENTAS_DETALLE", "CUENTA_CORRIENTE", "DEPARTAMENTOS", "DEUDA", "DEVOLUCIONES", "DEVOLUCIONES_DETALLE", "EMPLEADOS", "EMPLEADOS_DEPOSITOS", "EMPLEADOS_RECIBOS", "EMPLEADOS_REGISTROS", "EMPLEADOS_TIPOS", "FACTURACION", "FERIADOS", "LISTA_GRUPO", "LISTA_PRECIO", "LOCALIDADES", "MATERIALES", "MERCADERIAS", "MERCADERIAS_DETALLE", "MOVIMIENTOS", "MOVIMIENTOS_APORTE", "MOVIMIENTOS_CAJA", "MOVIMIENTOS_CAJA_FUERTE", "MOVIMIENTOS_EGRESOS", "MOVIMIENTOS_GASTOS", "MOVIMIENTOS_IMPUESTOS", "MOVIMIENTOS_MERCADERIAS", "MOVIMIENTOS_RETIROS", "MOVIMIENTOS_SECCIONES", "MOVIMIENTOS_SUBTIPOS", "MOVIMIENTOS_TIPOEGRESO_TIPOGASTO", "MOVIMIENTOS_TIPOS", "NOTACREDITO", "NOTAPEDIDO", "NOTAPEDIDO_DETALLE", "PATENTES", "PATENTES_GRUPO", "PERFILES", "PRECIOS", "PRECIOS_VIEJO", "PRODUCTOS", "PRODUCTOS_CATEGORIAS", "PRODUCTOS_CATEGORIAS_VIEJO", "PRODUCTOS_SUBCATEGORIAS", "PRODUCTOS_SUBCATEGORIAS_VIEJO", "PRODUCTOS_VIEJO", "PROVEEDORES", "PROVEEDORES_VIEJO", "PROVINCIAS", "REL_EMPLEADOS_SUCURSALES", "REL_PERFILES_PATENTES", "REL_PRODUCTOS_AROMAS", "REL_PRODUCTOS_COLORES", "REL_PRODUCTOS_MATERIALES", "SINCORNIZACION"}
+        Dim tablasLocales As List(Of Tabla) = sincronizacion.GetInformacionTablasLocales()
+        Dim indicadorprogreso As Integer = Progreso.Maximum / (tablasRemotas.Length + tablasLocales.Count)
 
         'deshabilito las Constraint de la base de datos por las relaciones de FK
         sincronizacion.DeshabilitarConstraint()
 
-        RegistrarDatosARemota(sincronizacion, indicadorprogreso)
-
-        Dim elementosSincronizados As Integer = RegistrarDatosALocal(sincronizacion, tablas, indicadorprogreso)
+        elementosSincronizados += RegistrarDatosARemoto(sincronizacion, tablasLocales, indicadorprogreso)
+        elementosSincronizados += RegistrarDatosALocal(sincronizacion, tablasRemotas, indicadorprogreso)
 
         'habilito las Constraint de la base de datos
         sincronizacion.HabilitarConstraint()
 
         'finalizacion de proceso
         Dim item As New ListViewItem
-        item.Text = "Se sincronizaron " + elementosSincronizados.ToString + " de " + tablas.Length.ToString() + " tablas disponibles."
+        item.Text = "Se sincronizaron " + elementosSincronizados.ToString + " de " + (tablasRemotas.Length + tablasLocales.Count).ToString() + " tablas disponibles."
         item.SubItems.Add("FINALIZADO")
         item.StateImageIndex = 2
         ListaEstado.Items.Add(item)

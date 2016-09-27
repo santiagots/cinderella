@@ -29,126 +29,131 @@ Public Class NegRegistros
     'Funcion que agrega un nuevo registro
     Function AgregarRegistro(ByVal Ereg As Entidades.Registros)
         'Declaro variables
-        Dim cmd As New SqlCommand
         Dim id_Registro As Integer
         Dim NombreEmpleado As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim respuesta As String
         Try
+
             'Conecto
-            If (HayInternet) Then
-                cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Registros_Alta"
-            With cmd.Parameters
-                .AddWithValue("@Fecha", Ereg.Fecha)
-                .AddWithValue("@id_Sucursal", Ereg.id_Sucursal)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
-                clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
-            End If
+            Dim cmd As New SqlCommand
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = AgregarRegistro(Ereg, cmd)
 
             'Consulto cual fue el ultimo id ingresado.
-            id_Registro = UltimoRegistro()
+            id_Registro = UltimoRegistro(False)
 
             'inserto los empleados presentes para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosPresente, id_Registro, "sp_RegistrosEmpleados_Alta")
+            InsertarRegistroEmpleados(Ereg.EmpleadosPresente, id_Registro, "sp_RegistrosEmpleados_Alta", False)
 
             'inserto los empleados ausentes para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosAusente, id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes")
+            InsertarRegistroEmpleados(Ereg.EmpleadosAusente, id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+            clsDatos.DesconectarLocal()
 
-            Return respuesta.Value
+            If (HayInternet) Then
+                cmd = New SqlCommand
+                cmd.Connection = clsDatos.ConectarRemoto()
+                respuesta = AgregarRegistro(Ereg, cmd)
+
+                'Consulto cual fue el ultimo id ingresado.
+                id_Registro = UltimoRegistro(True)
+
+                'inserto los empleados presentes para el registro
+                InsertarRegistroEmpleados(Ereg.EmpleadosPresente, id_Registro, "sp_RegistrosEmpleados_Alta", True)
+
+                'inserto los empleados ausentes para el registro
+                InsertarRegistroEmpleados(Ereg.EmpleadosAusente, id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", True)
+                clsDatos.DesconectarRemoto()
+            End If
+
+            Return respuesta
         Catch ex As Exception
             Return ex.Message
         End Try
 
+    End Function
+
+    Private Function AgregarRegistro(Ereg As Entidades.Registros, ByRef cmd As SqlCommand)
+        Dim respuesta As SqlParameter = New SqlParameter("@msg", SqlDbType.VarChar, 255)
+
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Registros_Alta"
+        With cmd.Parameters
+            .AddWithValue("@Fecha", Ereg.Fecha)
+            .AddWithValue("@id_Sucursal", Ereg.id_Sucursal)
+        End With
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
     End Function
 
     'Funcion para modificar un registro.
     Function ModificacionRegistro(ByVal ERegistro As Entidades.Registros) As String
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim respuesta As String
 
-        Dim cmd As New SqlCommand
         Try
             'Conecto
-            If (HayInternet) Then
-                cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Registros_Modificacion"
-            With cmd.Parameters
-                .AddWithValue("@id_Registro", ERegistro.id_Registro)
-                .AddWithValue("@id_Sucursal", ERegistro.id_Sucursal)
-                .AddWithValue("@Fecha", ERegistro.Fecha)
-            End With
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
-                clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
-            End If
-
-            'ELIMINO TODOS LOS MATERIALES DEL PRODUCTO
-            Dim cmd3 As New SqlCommand
-            'Conecto
-            If (HayInternet) Then
-                cmd3.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd3.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd3.CommandType = CommandType.StoredProcedure
-            cmd3.CommandText = "sp_RegistrosEmpleados_Eliminar"
-            With cmd3.Parameters
-                .AddWithValue("@id_Registro", ERegistro.id_Registro)
-            End With
-            Dim respuesta3 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta3.Direction = ParameterDirection.Output
-            cmd3.Parameters.Add(respuesta3)
-            cmd3.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
-                clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
-            End If
+            Dim cmd As New SqlCommand
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = ModificacionRegistro(ERegistro, cmd)
 
             'inserto los empleados presentes para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta")
+            InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta", False)
 
             'inserto los empleados ausentes para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes")
+            InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+            clsDatos.DesconectarLocal()
 
-            Return respuesta.Value
+            If (HayInternet) Then
+                cmd = New SqlCommand
+                cmd.Connection = clsDatos.ConectarRemoto()
+                respuesta = ModificacionRegistro(ERegistro, cmd)
+
+                'inserto los empleados presentes para el registro
+                InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta", True)
+
+                'inserto los empleados ausentes para el registro
+                InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", True)
+                clsDatos.DesconectarRemoto()
+            End If
+
+            Return respuesta
         Catch ex As Exception
             Return ex.Message
         End Try
     End Function
 
-    Function InsertarRegistroEmpleados(ByVal CheckedListBoxEmpleados As CheckedListBox, ByVal id_Registro As Integer, ByVal Sp As String)
-        Dim HayInternet As Boolean = Funciones.HayInternet
+    Private Function ModificacionRegistro(ERegistro As Entidades.Registros, ByRef cmd As SqlCommand)
+        Dim respuesta As SqlParameter = New SqlParameter("@msg", SqlDbType.VarChar, 255)
 
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Registros_Modificacion"
+        With cmd.Parameters
+            .AddWithValue("@id_Registro", ERegistro.id_Registro)
+            .AddWithValue("@id_Sucursal", ERegistro.id_Sucursal)
+            .AddWithValue("@Fecha", ERegistro.Fecha)
+        End With
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        cmd.Parameters.Clear()
+        cmd.CommandText = "sp_RegistrosEmpleados_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@id_Registro", ERegistro.id_Registro)
+        End With
+        Dim respuesta3 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta3.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta3)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
+    End Function
+
+    Function InsertarRegistroEmpleados(ByVal CheckedListBoxEmpleados As CheckedListBox, ByVal id_Registro As Integer, ByVal Sp As String, BaseRemota As Boolean)
         'inserto los empleados presentes para el registro
         For Each iten In CheckedListBoxEmpleados.CheckedItems()
 
@@ -160,7 +165,7 @@ Public Class NegRegistros
             'conecto la bdd
             Dim cmd2 As New SqlCommand
             'Conecto
-            If (HayInternet) Then
+            If (BaseRemota) Then
                 cmd2.Connection = clsDatos.ConectarRemoto()
             Else
                 cmd2.Connection = clsDatos.ConectarLocal()
@@ -180,7 +185,7 @@ Public Class NegRegistros
             cmd2.ExecuteNonQuery()
 
             'Desconecto
-            If (HayInternet) Then
+            If (BaseRemota) Then
                 clsDatos.DesconectarRemoto()
             Else
                 clsDatos.DesconectarLocal()
@@ -192,11 +197,10 @@ Public Class NegRegistros
 
 
     'Funcion que me trae el id del ultimo registro.
-    Function UltimoRegistro() As Integer
-        Dim HayInternet As Boolean = Funciones.HayInternet
+    Function UltimoRegistro(BaseRemota As Boolean) As Integer
 
         Dim ds As DataSet
-        If (HayInternet) Then
+        If (BaseRemota) Then
             ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('EMPLEADOS_REGISTROS') as id_Registro")
         Else
             ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('EMPLEADOS_REGISTROS')  as id_Registro")
@@ -258,35 +262,40 @@ Public Class NegRegistros
 
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
+        Dim respuesta As String
+
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = EliminarRegistro(id_Registro, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Registros_Eliminar"
-            With cmd.Parameters
-                .AddWithValue("@id_Registro", id_Registro)
-            End With
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                respuesta = EliminarRegistro(id_Registro, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
-            Return respuesta.Value
         Catch ex As Exception
             Return ex.Message
         End Try
+
+        Return respuesta
+    End Function
+
+    Private Shared Function EliminarRegistro(id_Registro As Integer, ByRef cmd As SqlCommand) As String
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Registros_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@id_Registro", id_Registro)
+        End With
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
     End Function
 
     'Funcion para consultar un registro.

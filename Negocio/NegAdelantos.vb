@@ -11,41 +11,41 @@ Public Class NegAdelantos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaAdelanto(eAdelanto, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Adelantos_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Adelanto", eAdelanto.id_Adelanto)
-                .AddWithValue("@id_Empleado", eAdelanto.id_Empleado)
-                .AddWithValue("@id_Sucursal", eAdelanto.id_Sucursal)
-                .AddWithValue("@Monto", eAdelanto.Monto)
-                .AddWithValue("@Fecha", eAdelanto.Fecha)
-                .AddWithValue("@Descripcion", eAdelanto.Descripcion)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaAdelanto(eAdelanto, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaAdelanto(eAdelanto As Entidades.Adelantos, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Adelantos_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Adelanto", eAdelanto.id_Adelanto)
+            .AddWithValue("@id_Empleado", eAdelanto.id_Empleado)
+            .AddWithValue("@id_Sucursal", eAdelanto.id_Sucursal)
+            .AddWithValue("@Monto", eAdelanto.Monto)
+            .AddWithValue("@Fecha", eAdelanto.Fecha)
+            .AddWithValue("@Descripcion", eAdelanto.Descripcion)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
     End Function
 
     'Funcion para obtener los adelantos de un empleado

@@ -5,10 +5,10 @@ Public Class NegVentas
 
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
-    Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas, EntDetalleVenta As List(Of Entidades.Ventas_Detalle)) As Boolean
+    Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas, EntDetalleVenta As List(Of Entidades.Ventas_Detalle), ByRef IdVenta As Integer) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Boolean
         Dim dt As DataTable = New DataTable()
         Dim HayInternet As Boolean = Funciones.HayInternet
 
@@ -22,62 +22,64 @@ Public Class NegVentas
         Next
 
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = NuevaVenta(EntVenta, cmd, dt)
+            ClsDatos.DesconectarLocal()
+            IdVenta = ObtenerID(False)
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Ventas_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Cliente", EntVenta.id_Cliente)
-                .AddWithValue("@id_Empleado", EntVenta.id_Empleado)
-                .AddWithValue("@id_Encargado", EntVenta.id_Encargado)
-                .AddWithValue("@id_Sucursal", EntVenta.id_Sucursal)
-                .AddWithValue("@id_TipoPago", EntVenta.id_TipoPago)
-                .AddWithValue("@id_TipoVenta", EntVenta.id_TipoVenta)
-                .AddWithValue("@PrecioTotal", EntVenta.PrecioTotal)
-                .AddWithValue("@Subtotal", EntVenta.SubTotal)
-                .AddWithValue("@CantidadTotal", EntVenta.CantidadTotal)
-                .AddWithValue("@Descuento", EntVenta.Descuento)
-                .AddWithValue("@Anulado", EntVenta.Anulado)
-                .AddWithValue("@Habilitado", EntVenta.Habilitado)
-                .AddWithValue("@Facturado", EntVenta.Facturado)
-                .AddWithValue("@DiferenciaPagoCheque", EntVenta.DiferenciaPagoCheque)
-            End With
-
-            'Declaro el tipo de dato para el detalle de la venta
-            Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
-            param.SqlDbType = SqlDbType.Structured
-            param.TypeName = "dbo.VENTA_DETALLE_TYPE"
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = NuevaVenta(EntVenta, cmd, dt)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
+                IdVenta = ObtenerID(True)
             End If
 
             'retorno valor
-            Return CBool(respuesta.Value)
+            Return msg
         Catch ex As Exception
             Return False
         End Try
     End Function
 
+    Private Shared Function NuevaVenta(EntVenta As Entidades.Ventas, ByRef cmd As SqlCommand, dt As DataTable) As Boolean
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Ventas_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Cliente", EntVenta.id_Cliente)
+            .AddWithValue("@id_Empleado", EntVenta.id_Empleado)
+            .AddWithValue("@id_Encargado", EntVenta.id_Encargado)
+            .AddWithValue("@id_Sucursal", EntVenta.id_Sucursal)
+            .AddWithValue("@id_TipoPago", EntVenta.id_TipoPago)
+            .AddWithValue("@id_TipoVenta", EntVenta.id_TipoVenta)
+            .AddWithValue("@PrecioTotal", EntVenta.PrecioTotal)
+            .AddWithValue("@Subtotal", EntVenta.SubTotal)
+            .AddWithValue("@CantidadTotal", EntVenta.CantidadTotal)
+            .AddWithValue("@Descuento", EntVenta.Descuento)
+            .AddWithValue("@Anulado", EntVenta.Anulado)
+            .AddWithValue("@Habilitado", EntVenta.Habilitado)
+            .AddWithValue("@Facturado", EntVenta.Facturado)
+            .AddWithValue("@DiferenciaPagoCheque", EntVenta.DiferenciaPagoCheque)
+        End With
+
+        'Declaro el tipo de dato para el detalle de la venta
+        Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
+        param.SqlDbType = SqlDbType.Structured
+        param.TypeName = "dbo.VENTA_DETALLE_TYPE"
+
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return CBool(respuesta.Value)
+    End Function
+
     'Obtiene el ultimo ID de la tabla VENTAS.
-    Public Function ObtenerID()
+    Public Function ObtenerID(HayInternet As Boolean)
         Dim ds As DataSet
-        If (Funciones.HayInternet) Then
+        If (HayInternet) Then
             ds = ClsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('VENTAS') as id_Venta")
         Else
             ds = ClsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('VENTAS')  as id_Venta")
@@ -388,6 +390,8 @@ Public Class NegVentas
     Public Function FacturoVenta(ByVal Facturo As Boolean, ByVal id_Venta As Integer)
         Dim Facturado As Integer = 0
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim msg As Boolean
+        Dim cmd As New SqlCommand
 
         If Facturo Then
             Facturado = 1
@@ -395,44 +399,42 @@ Public Class NegVentas
             Facturado = 0
         End If
 
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim msg As String = ""
         Try
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = FacturoVenta(id_Venta, Facturado, cmd)
+            ClsDatos.DesconectarLocal()
+
             'Conecto a la bdd.
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Ventas_Facturo"
-            With cmd.Parameters
-                .AddWithValue("@id_Venta", id_Venta)
-                .AddWithValue("@Facturado", Facturado)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = FacturoVenta(id_Venta, Facturado, cmd)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return 0
         End Try
 
+    End Function
+
+    Private Shared Function FacturoVenta(id_Venta As Integer, Facturado As Integer, ByRef cmd As SqlCommand) As Boolean
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Ventas_Facturo"
+        With cmd.Parameters
+            .AddWithValue("@id_Venta", id_Venta)
+            .AddWithValue("@Facturado", Facturado)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CBool(respuesta.Value)
     End Function
 
     'Resumen Diario

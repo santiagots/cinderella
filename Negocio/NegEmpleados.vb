@@ -461,42 +461,41 @@ Public Class NegEmpleados
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaDeposito(eDeposito, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Empleados_SueldoDepositadoAlta"
-            With cmd.Parameters
-                .AddWithValue("@id_Empleado", eDeposito.id_Empleado)
-                .AddWithValue("@id_Sucursal", eDeposito.id_Sucursal)
-                .AddWithValue("@Monto", eDeposito.Monto)
-                .AddWithValue("@Fecha", eDeposito.Fecha)
-                .AddWithValue("@Mes", eDeposito.Mes)
-                .AddWithValue("@Anio", eDeposito.Anio)
-                .AddWithValue("@Habilitado", eDeposito.Habilitado)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaDeposito(eDeposito, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaDeposito(eDeposito As Depositos, ByRef cmd As SqlCommand)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Empleados_SueldoDepositadoAlta"
+        With cmd.Parameters
+            .AddWithValue("@id_Empleado", eDeposito.id_Empleado)
+            .AddWithValue("@id_Sucursal", eDeposito.id_Sucursal)
+            .AddWithValue("@Monto", eDeposito.Monto)
+            .AddWithValue("@Fecha", eDeposito.Fecha)
+            .AddWithValue("@Mes", eDeposito.Mes)
+            .AddWithValue("@Anio", eDeposito.Anio)
+            .AddWithValue("@Habilitado", eDeposito.Habilitado)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar un adelanto.
@@ -507,39 +506,38 @@ Public Class NegEmpleados
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = ActualizarDeuda(id_Empleado, id_Sucursal, Monto, Fecha, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Deuda_Actualizar"
-            With cmd.Parameters
-                .AddWithValue("@id_Empleado", id_Empleado)
-                .AddWithValue("@id_Sucursal", id_Sucursal)
-                .AddWithValue("@Monto", Monto)
-                .AddWithValue("@Fecha", Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = ActualizarDeuda(id_Empleado, id_Sucursal, Monto, Fecha, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function ActualizarDeuda(id_Empleado As Integer, id_Sucursal As Integer, Monto As Double, Fecha As Date, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Deuda_Actualizar"
+        With cmd.Parameters
+            .AddWithValue("@id_Empleado", id_Empleado)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@Monto", Monto)
+            .AddWithValue("@Fecha", Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     Function ObtenerEstadoCuenta(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As EstadoCuenta

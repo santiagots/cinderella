@@ -196,86 +196,86 @@ Public Class NegMovimientos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMovImpuesto(eImpuesto, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovImpuestos_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eImpuesto.id_Movimiento)
-                .AddWithValue("@id_Tipo", eImpuesto.id_Tipo)
-                .AddWithValue("@id_Sucursal", eImpuesto.id_Sucursal)
-                .AddWithValue("@Monto", eImpuesto.Monto)
-                .AddWithValue("@Fecha", eImpuesto.Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaMovImpuesto(eImpuesto, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovImpuesto(eImpuesto As Entidades.MovImpuesto, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovImpuestos_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eImpuesto.id_Movimiento)
+            .AddWithValue("@id_Tipo", eImpuesto.id_Tipo)
+            .AddWithValue("@id_Sucursal", eImpuesto.id_Sucursal)
+            .AddWithValue("@Monto", eImpuesto.Monto)
+            .AddWithValue("@Fecha", eImpuesto.Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar una Dif. de Caja.
     Function AltaMovCaja(ByVal eCaja As Entidades.MovCaja) As String
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim respuesta As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = AltaMovCaja(eCaja, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovCaja_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eCaja.id_Movimiento)
-                .AddWithValue("@id_Usuario", eCaja.id_Usuario)
-                .AddWithValue("@id_Tipo", eCaja.id_Tipo)
-                .AddWithValue("@id_Sucursal", eCaja.id_Sucursal)
-                .AddWithValue("@Monto", eCaja.Monto)
-                .AddWithValue("@Descripcion", eCaja.Descripcion)
-                .AddWithValue("@Fecha", eCaja.Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                respuesta = AltaMovCaja(eCaja, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
+
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return respuesta
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovCaja(eCaja As Entidades.MovCaja, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovCaja_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eCaja.id_Movimiento)
+            .AddWithValue("@id_Usuario", eCaja.id_Usuario)
+            .AddWithValue("@id_Tipo", eCaja.id_Tipo)
+            .AddWithValue("@id_Sucursal", eCaja.id_Sucursal)
+            .AddWithValue("@Monto", eCaja.Monto)
+            .AddWithValue("@Descripcion", eCaja.Descripcion)
+            .AddWithValue("@Fecha", eCaja.Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar un mov de caja chica.
@@ -284,43 +284,44 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim respuesta As String
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = AltaMovCajaFuerte(eCaja, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovCajaFuerte_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eCaja.id_Movimiento)
-                .AddWithValue("@id_Tipo", eCaja.id_Tipo)
-                .AddWithValue("@id_Sucursal", eCaja.id_Sucursal)
-                .AddWithValue("@Monto", eCaja.Monto)
-                .AddWithValue("@Descripcion", eCaja.Descripcion)
-                .AddWithValue("@Fecha", eCaja.Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                respuesta = AltaMovCajaFuerte(eCaja, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return respuesta
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovCajaFuerte(eCaja As Entidades.MovCajaFuerte, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovCajaFuerte_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eCaja.id_Movimiento)
+            .AddWithValue("@id_Tipo", eCaja.id_Tipo)
+            .AddWithValue("@id_Sucursal", eCaja.id_Sucursal)
+            .AddWithValue("@Monto", eCaja.Monto)
+            .AddWithValue("@Descripcion", eCaja.Descripcion)
+            .AddWithValue("@Fecha", eCaja.Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar un retiro de socios.
@@ -331,44 +332,43 @@ Public Class NegMovimientos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMovRetiro(eRetiro, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovRetiro_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eRetiro.id_Movimiento)
-                .AddWithValue("@id_Sucursal", eRetiro.id_Sucursal)
-                .AddWithValue("@Monto", eRetiro.Monto)
-                .AddWithValue("@Descripcion", eRetiro.Descripcion)
-                .AddWithValue("@Encargado", eRetiro.Encargado)
-                .AddWithValue("@Persona", eRetiro.Persona)
-                .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
-                .AddWithValue("@id_Cheque", eRetiro.IdCheque)
-                .AddWithValue("@Fecha", eRetiro.Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaMovRetiro(eRetiro, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovRetiro(eRetiro As Entidades.MovSocios, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovRetiro_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eRetiro.id_Movimiento)
+            .AddWithValue("@id_Sucursal", eRetiro.id_Sucursal)
+            .AddWithValue("@Monto", eRetiro.Monto)
+            .AddWithValue("@Descripcion", eRetiro.Descripcion)
+            .AddWithValue("@Encargado", eRetiro.Encargado)
+            .AddWithValue("@Persona", eRetiro.Persona)
+            .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
+            .AddWithValue("@id_Cheque", eRetiro.IdCheque)
+            .AddWithValue("@Fecha", eRetiro.Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar un aporte de socios.
@@ -379,44 +379,43 @@ Public Class NegMovimientos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMovAporte(eRetiro, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovAporte_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eRetiro.id_Movimiento)
-                .AddWithValue("@id_Sucursal", eRetiro.id_Sucursal)
-                .AddWithValue("@Monto", eRetiro.Monto)
-                .AddWithValue("@Descripcion", eRetiro.Descripcion)
-                .AddWithValue("@Encargado", eRetiro.Encargado)
-                .AddWithValue("@Persona", eRetiro.Persona)
-                .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
-                .AddWithValue("@id_Cheque", eRetiro.IdCheque)
-                .AddWithValue("@Fecha", eRetiro.Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaMovAporte(eRetiro, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovAporte(eRetiro As Entidades.MovSocios, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovAporte_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eRetiro.id_Movimiento)
+            .AddWithValue("@id_Sucursal", eRetiro.id_Sucursal)
+            .AddWithValue("@Monto", eRetiro.Monto)
+            .AddWithValue("@Descripcion", eRetiro.Descripcion)
+            .AddWithValue("@Encargado", eRetiro.Encargado)
+            .AddWithValue("@Persona", eRetiro.Persona)
+            .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
+            .AddWithValue("@id_Cheque", eRetiro.IdCheque)
+            .AddWithValue("@Fecha", eRetiro.Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar un Gasto.
@@ -427,42 +426,41 @@ Public Class NegMovimientos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMovGasto(eGasto, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovGasto_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eGasto.id_Movimiento)
-                .AddWithValue("@id_Tipo", eGasto.id_Tipo)
-                .AddWithValue("@id_Sucursal", eGasto.id_Sucursal)
-                .AddWithValue("@id_Registro", eGasto.id_Registro)
-                .AddWithValue("@Monto", eGasto.Monto)
-                .AddWithValue("@Fecha", eGasto.Fecha)
-                .AddWithValue("@SoloLectura", eGasto.SoloLectura)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaMovGasto(eGasto, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovGasto(eGasto As Entidades.MovGasto, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovGasto_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eGasto.id_Movimiento)
+            .AddWithValue("@id_Tipo", eGasto.id_Tipo)
+            .AddWithValue("@id_Sucursal", eGasto.id_Sucursal)
+            .AddWithValue("@id_Registro", eGasto.id_Registro)
+            .AddWithValue("@Monto", eGasto.Monto)
+            .AddWithValue("@Fecha", eGasto.Fecha)
+            .AddWithValue("@SoloLectura", eGasto.SoloLectura)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para insertar un Egreso.
@@ -473,45 +471,44 @@ Public Class NegMovimientos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMovEgreso(eEgreso, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovEgreso_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eEgreso.id_Movimiento)
-                .AddWithValue("@id_MovimientoPadre", eEgreso.id_MovimientoPadre)
-                .AddWithValue("@id_Tipo", eEgreso.id_Tipo)
-                .AddWithValue("@id_Subtipo", eEgreso.id_Subtipo)
-                .AddWithValue("@id_Sucursal", eEgreso.id_Sucursal)
-                .AddWithValue("@id_SucursalDestino", eEgreso.id_SucursalDestino)
-                .AddWithValue("@Monto", eEgreso.Monto)
-                .AddWithValue("@Descripcion", eEgreso.Descripcion)
-                .AddWithValue("@Aceptado", eEgreso.Aceptado)
-                .AddWithValue("@Fecha", eEgreso.Fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaMovEgreso(eEgreso, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMovEgreso(eEgreso As Entidades.MovEgreso, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovEgreso_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eEgreso.id_Movimiento)
+            .AddWithValue("@id_MovimientoPadre", eEgreso.id_MovimientoPadre)
+            .AddWithValue("@id_Tipo", eEgreso.id_Tipo)
+            .AddWithValue("@id_Subtipo", eEgreso.id_Subtipo)
+            .AddWithValue("@id_Sucursal", eEgreso.id_Sucursal)
+            .AddWithValue("@id_SucursalDestino", eEgreso.id_SucursalDestino)
+            .AddWithValue("@Monto", eEgreso.Monto)
+            .AddWithValue("@Descripcion", eEgreso.Descripcion)
+            .AddWithValue("@Aceptado", eEgreso.Aceptado)
+            .AddWithValue("@Fecha", eEgreso.Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Obtener ID
@@ -541,75 +538,92 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
-
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMovEgresoMercaderia(eMerca, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovEgreso_AltaMercaderia"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", eMerca.id_Movimiento)
-                .AddWithValue("@id_Sucursal", eMerca.id_Sucursal)
-                .AddWithValue("@id_Producto", eMerca.id_Producto)
-                .AddWithValue("@Nombre", eMerca.Nombre)
-                .AddWithValue("@Codigo", eMerca.Codigo)
-                .AddWithValue("@Costo", eMerca.Costo)
-                .AddWithValue("@Cantidad", eMerca.Cantidad)
-                .AddWithValue("@Subtotal", eMerca.Subtotal)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
+                msg = AltaMovEgresoMercaderia(eMerca, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
-            'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
     End Function
 
+    Private Shared Function AltaMovEgresoMercaderia(eMerca As Entidades.MovEgresoMercaderia, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovEgreso_AltaMercaderia"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", eMerca.id_Movimiento)
+            .AddWithValue("@id_Sucursal", eMerca.id_Sucursal)
+            .AddWithValue("@id_Producto", eMerca.id_Producto)
+            .AddWithValue("@Nombre", eMerca.Nombre)
+            .AddWithValue("@Codigo", eMerca.Codigo)
+            .AddWithValue("@Costo", eMerca.Costo)
+            .AddWithValue("@Cantidad", eMerca.Cantidad)
+            .AddWithValue("@Subtotal", eMerca.Subtotal)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
+    End Function
+
     'Function para insertar una nueva mercaderia para el egreso "mercaderias"
     Function EliminarMovEgresoMercaderia(ByVal id_Movimiento As Integer, ByVal id_Sucursal As Integer)
         Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim msg As String = ""
+
         Try
-            cmd.Connection = clsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovEgreso_EliminarMercaderia"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", id_Movimiento)
-                .AddWithValue("@id_Sucursal", id_Sucursal)
-            End With
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
 
-            cmd.ExecuteNonQuery()
-            clsDatos.DesconectarRemoto()
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, cmd)
+            clsDatos.DesconectarLocal()
 
-            Return respuesta.Value
+            If (HayInternet) Then
+                cmd = New SqlCommand()
+                cmd.Connection = clsDatos.ConectarRemoto()
+                msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, cmd)
+                clsDatos.DesconectarRemoto()
+            End If
+
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function EliminarMovEgresoMercaderia(id_Movimiento As Integer, id_Sucursal As Integer, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MovEgreso_EliminarMercaderia"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", id_Movimiento)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Function para eliminar un movimiento del sistema.
     Function EliminarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Sucursal As Integer, ByVal Tipo As Integer, Optional ByVal id_Registro As Integer = 0)
         Try
             Dim EsMercaderia As Integer = 0
+            Dim HayInternet As Boolean = Funciones.HayInternet
+            Dim cmd As New SqlCommand
+            Dim msg As String = ""
 
             'Si es un egreso.
             If Tipo = 2 Then
@@ -651,29 +665,39 @@ Public Class NegMovimientos
                 End If
             End If
 
-            'Elimino el movimiento.
-            Dim cmd As New SqlCommand
-            cmd.Connection = clsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Movimientos_Eliminar"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", id_Movimiento)
-                .AddWithValue("@id_Registro", id_Registro)
-                .AddWithValue("@id_Sucursal", id_Sucursal)
-                .AddWithValue("@EsMercaderia", EsMercaderia)
-                .AddWithValue("@Tipo", Tipo)
-            End With
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
+            cmd = New SqlCommand()
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, cmd)
+            clsDatos.DesconectarLocal()
 
-            cmd.ExecuteNonQuery()
-            clsDatos.DesconectarRemoto()
+            If HayInternet Then
+                cmd = New SqlCommand()
+                cmd.Connection = clsDatos.ConectarRemoto()
+                msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, cmd)
+                clsDatos.DesconectarRemoto()
+            End If
 
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Function EliminarMovimiento(id_Movimiento As Integer, id_Sucursal As Integer, Tipo As Integer, id_Registro As Integer, EsMercaderia As Integer, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Movimientos_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", id_Movimiento)
+            .AddWithValue("@id_Registro", id_Registro)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@EsMercaderia", EsMercaderia)
+            .AddWithValue("@Tipo", Tipo)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Obtener un listado de Dif. de Caja.
@@ -985,36 +1009,20 @@ Public Class NegMovimientos
     End Function
 
     'Acepta un movimiento determinado.
-    Function AceptarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Subtipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer, Monto As Decimal)
+    Function AceptarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Subtipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer, Monto As Decimal) As Boolean
         Dim cmd As New SqlCommand
+        Dim msg As Boolean
         Dim HayInternet As Boolean = Funciones.HayInternet
         Try
-            'Conecto a la bdd.
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AceptarMovimineto(id_Movimiento, id_SucursalConect, cmd)
+            clsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Movimientos_AceptarNuevo"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", id_Movimiento)
-                .AddWithValue("@id_Sucursal", id_SucursalConect)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = AceptarMovimineto(id_Movimiento, id_SucursalConect, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'Si es mercadería la que envio manejo los stocks
@@ -1088,44 +1096,43 @@ Public Class NegMovimientos
                 AltaMovGasto(eGasto)
             End If
 
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return False
         End Try
     End Function
 
+    Private Shared Function AceptarMovimineto(id_Movimiento As Integer, id_SucursalConect As Integer, ByRef cmd As SqlCommand) As Boolean
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Movimientos_AceptarNuevo"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", id_Movimiento)
+            .AddWithValue("@id_Sucursal", id_SucursalConect)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CBool(respuesta.Value)
+    End Function
+
     'Rechaza un movimiento determinado.
-    Function RechazarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer)
+    Function RechazarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Tipo As Integer, ByVal id_Sucursal As Integer, ByVal id_SucursalConect As Integer) As Boolean
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
-
+        Dim msg As Boolean
         Try
-            'Conecto a la bdd.
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = RechazarMovimiento(id_Movimiento, id_Sucursal, id_SucursalConect, cmd)
+            clsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Movimientos_RechazarNuevo"
-            With cmd.Parameters
-                .AddWithValue("@id_Movimiento", id_Movimiento)
-                .AddWithValue("@id_Sucursal", id_Sucursal)
-                .AddWithValue("@id_SucursalDestino", id_SucursalConect)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
-                clsDatos.DesconectarRemoto()
-            Else
+                msg = RechazarMovimiento(id_Movimiento, id_Sucursal, id_SucursalConect, cmd)
                 clsDatos.DesconectarLocal()
             End If
 
@@ -1146,10 +1153,25 @@ Public Class NegMovimientos
                 End If
             End If
 
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return False
         End Try
     End Function
 
+    Private Shared Function RechazarMovimiento(id_Movimiento As Integer, id_Sucursal As Integer, id_SucursalConect As Integer, ByRef cmd As SqlCommand) As Boolean
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Movimientos_RechazarNuevo"
+        With cmd.Parameters
+            .AddWithValue("@id_Movimiento", id_Movimiento)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@id_SucursalDestino", id_SucursalConect)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CBool(respuesta.Value)
+    End Function
 End Class

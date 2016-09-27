@@ -12,7 +12,7 @@ Public Class NegCheque
         Dim ClsFunciones As New Funciones
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
-        Dim msg As String = ""
+        Dim idCheque As Integer
         Dim dsCheques As DataSet
         Dim Cheques As List(Of Cheque) = New List(Of Cheque)
 
@@ -37,96 +37,64 @@ Public Class NegCheque
                 'El cheque existe en la base entonces solo actualizo el estado a reingresado 
                 ChequeReingreso.Estado = ChequeEstado.Reingresado
 
-                'Conecto a la bdd.
+                cmd.Connection = clsDatos.ConectarLocal()
+                ModificarCheque(ChequeReingreso, cmd)
+                clsDatos.DesconectarLocal()
+
                 If HayInternet Then
+                    cmd = New SqlCommand()
                     cmd.Connection = clsDatos.ConectarRemoto()
-                Else
-                    cmd.Connection = clsDatos.ConectarLocal()
-                End If
-
-                'Cargo y ejecuto el stored.
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.CommandText = "sp_Cheques_Modificacion"
-                With cmd.Parameters
-                    .AddWithValue("@BancoEmisorId", ChequeReingreso.BancoEmisorId)
-                    .AddWithValue("@ClienteId", ChequeReingreso.ClienteId)
-                    .AddWithValue("@ClienteNombre", ChequeReingreso.ClienteNombre)
-                    .AddWithValue("@DetalleSalida", If(Cheque.DetalleSalida Is Nothing, DBNull.Value, Cheque.DetalleSalida))
-                    .AddWithValue("@FechaDesposito", ChequeReingreso.FechaDesposito)
-                    .AddWithValue("@FechaIngreso", ChequeReingreso.FechaIngreso)
-                    .AddWithValue("@FechaSalida", If(ChequeReingreso.FechaSalida.HasValue, ChequeReingreso.FechaSalida, DBNull.Value))
-                    .AddWithValue("@FechaVencimiento", ChequeReingreso.FechaVencimiento)
-                    .AddWithValue("@Importe", ChequeReingreso.Importe)
-                    .AddWithValue("@LibradorId", ChequeReingreso.LibradorId)
-                    .AddWithValue("@LibradorNombre", ChequeReingreso.LibradorNombre)
-                    .AddWithValue("@MarcaFacturado", ChequeReingreso.MarcaFacturado)
-                    .AddWithValue("@NumeroCheque", ChequeReingreso.NumeroCheque)
-                    .AddWithValue("@NumeroOrden", ChequeReingreso.NumeroOrden)
-                    .AddWithValue("@SucursalId", ChequeReingreso.SucursalId)
-                    .AddWithValue("@Estado", ChequeReingreso.Estado)
-                    .AddWithValue("@DestinoSalida", ChequeReingreso.DestinoSalida)
-                End With
-
-                'Respuesta del stored.
-                Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta.Direction = ParameterDirection.Output
-                cmd.Parameters.Add(respuesta)
-                cmd.ExecuteNonQuery()
-
-                'Desconecto la bdd.
-                If HayInternet Then
+                    ModificarCheque(ChequeReingreso, cmd)
                     clsDatos.DesconectarRemoto()
-                Else
-                    clsDatos.DesconectarLocal()
                 End If
-
+                Return ChequeReingreso.IdCheque
             Else
                 'El cheque no existe en la base entonces lo doy de alta en la base con estado ingresado 
-                'Conecto a la bdd.
+                cmd.Connection = clsDatos.ConectarLocal()
+                idCheque = AltaCheque(Cheque, cmd)
+                clsDatos.DesconectarLocal()
+
                 If HayInternet Then
+                    cmd = New SqlCommand()
                     cmd.Connection = clsDatos.ConectarRemoto()
-                Else
-                    cmd.Connection = clsDatos.ConectarLocal()
-                End If
-
-                'Cargo y ejecuto el stored.
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.CommandText = "sp_Cheques_Alta"
-                With cmd.Parameters
-                    .AddWithValue("@BancoEmisorId", Cheque.BancoEmisorId)
-                    .AddWithValue("@ClienteId", Cheque.ClienteId)
-                    .AddWithValue("@ClienteNombre", Cheque.ClienteNombre)
-                    .AddWithValue("@FechaDesposito", Cheque.FechaDesposito)
-                    .AddWithValue("@FechaIngreso", Cheque.FechaIngreso)
-                    .AddWithValue("@FechaVencimiento", Cheque.FechaVencimiento)
-                    .AddWithValue("@Importe", Cheque.Importe)
-                    .AddWithValue("@LibradorId", Cheque.LibradorId)
-                    .AddWithValue("@LibradorNombre", Cheque.LibradorNombre)
-                    .AddWithValue("@MarcaFacturado", Cheque.MarcaFacturado)
-                    .AddWithValue("@NumeroCheque", Cheque.NumeroCheque)
-                    .AddWithValue("@NumeroOrden", Cheque.NumeroOrden)
-                    .AddWithValue("@SucursalId", Cheque.SucursalId)
-                End With
-
-                'Respuesta del stored.
-                Dim respuesta As New SqlParameter("@IdCheque", SqlDbType.Int, 255)
-                respuesta.Direction = ParameterDirection.Output
-                cmd.Parameters.Add(respuesta)
-                cmd.ExecuteNonQuery()
-
-                'Desconecto la bdd.
-                If HayInternet Then
+                    idCheque = AltaCheque(Cheque, cmd)
                     clsDatos.DesconectarRemoto()
                 Else
-                    clsDatos.DesconectarLocal()
-                End If
 
+                End If
                 'retorno valor
-                Return respuesta.Value
+                Return idCheque
             End If
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function AltaCheque(Cheque As Cheque, ByRef cmd As SqlCommand)
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Cheques_Alta"
+        With cmd.Parameters
+            .AddWithValue("@BancoEmisorId", Cheque.BancoEmisorId)
+            .AddWithValue("@ClienteId", Cheque.ClienteId)
+            .AddWithValue("@ClienteNombre", Cheque.ClienteNombre)
+            .AddWithValue("@FechaDesposito", Cheque.FechaDesposito)
+            .AddWithValue("@FechaIngreso", Cheque.FechaIngreso)
+            .AddWithValue("@FechaVencimiento", Cheque.FechaVencimiento)
+            .AddWithValue("@Importe", Cheque.Importe)
+            .AddWithValue("@LibradorId", Cheque.LibradorId)
+            .AddWithValue("@LibradorNombre", Cheque.LibradorNombre)
+            .AddWithValue("@MarcaFacturado", Cheque.MarcaFacturado)
+            .AddWithValue("@NumeroCheque", Cheque.NumeroCheque)
+            .AddWithValue("@NumeroOrden", Cheque.NumeroOrden)
+            .AddWithValue("@SucursalId", Cheque.SucursalId)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@IdCheque", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
     End Function
 
     'Funcion que inserta un nuevo registro en la tabla CHEQUES.
@@ -139,54 +107,52 @@ Public Class NegCheque
         Dim msg As String = ""
 
         Try
-            'Conecto a la bdd.
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = ModificarCheque(Cheque, cmd)
+            clsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Cheques_Modificacion"
-            With cmd.Parameters
-                .AddWithValue("@BancoEmisorId", Cheque.BancoEmisorId)
-                .AddWithValue("@ClienteId", Cheque.ClienteId)
-                .AddWithValue("@ClienteNombre", Cheque.ClienteNombre)
-                .AddWithValue("@DetalleSalida", If(Cheque.DetalleSalida Is Nothing, DBNull.Value, Cheque.DetalleSalida))
-                .AddWithValue("@FechaDesposito", Cheque.FechaDesposito)
-                .AddWithValue("@FechaIngreso", Cheque.FechaIngreso)
-                .AddWithValue("@FechaSalida", If(Cheque.FechaSalida.HasValue, Cheque.FechaSalida, DBNull.Value))
-                .AddWithValue("@FechaVencimiento", Cheque.FechaVencimiento)
-                .AddWithValue("@Importe", Cheque.Importe)
-                .AddWithValue("@LibradorId", Cheque.LibradorId)
-                .AddWithValue("@LibradorNombre", Cheque.LibradorNombre)
-                .AddWithValue("@MarcaFacturado", Cheque.MarcaFacturado)
-                .AddWithValue("@NumeroCheque", Cheque.NumeroCheque)
-                .AddWithValue("@NumeroOrden", Cheque.NumeroOrden)
-                .AddWithValue("@SucursalId", Cheque.SucursalId)
-                .AddWithValue("@Estado", Cheque.Estado)
-                .AddWithValue("@DestinoSalida", Cheque.DestinoSalida)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = ModificarCheque(Cheque, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function ModificarCheque(Cheque As Cheque, ByRef cmd As SqlCommand) As String
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Cheques_Modificacion"
+        With cmd.Parameters
+            .AddWithValue("@BancoEmisorId", Cheque.BancoEmisorId)
+            .AddWithValue("@ClienteId", Cheque.ClienteId)
+            .AddWithValue("@ClienteNombre", Cheque.ClienteNombre)
+            .AddWithValue("@DetalleSalida", If(Cheque.DetalleSalida Is Nothing, DBNull.Value, Cheque.DetalleSalida))
+            .AddWithValue("@FechaDesposito", Cheque.FechaDesposito)
+            .AddWithValue("@FechaIngreso", Cheque.FechaIngreso)
+            .AddWithValue("@FechaSalida", If(Cheque.FechaSalida.HasValue, Cheque.FechaSalida, DBNull.Value))
+            .AddWithValue("@FechaVencimiento", Cheque.FechaVencimiento)
+            .AddWithValue("@Importe", Cheque.Importe)
+            .AddWithValue("@LibradorId", Cheque.LibradorId)
+            .AddWithValue("@LibradorNombre", Cheque.LibradorNombre)
+            .AddWithValue("@MarcaFacturado", Cheque.MarcaFacturado)
+            .AddWithValue("@NumeroCheque", Cheque.NumeroCheque)
+            .AddWithValue("@NumeroOrden", Cheque.NumeroOrden)
+            .AddWithValue("@SucursalId", Cheque.SucursalId)
+            .AddWithValue("@Estado", Cheque.Estado)
+            .AddWithValue("@DestinoSalida", Cheque.DestinoSalida)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     Public Shared Function EleminarCheque(ByVal idCheque As Integer) As String
@@ -198,40 +164,37 @@ Public Class NegCheque
         Dim msg As String = ""
 
         Try
-            'Conecto a la bdd.
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = EleminarCheque(idCheque, cmd)
+            clsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Cheques_Eliminar"
-            With cmd.Parameters
-                .AddWithValue("@IdCheque", idCheque)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = EleminarCheque(idCheque, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return False
         End Try
     End Function
 
+    Private Shared Function EleminarCheque(idCheque As Integer, ByRef cmd As SqlCommand) As String
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Cheques_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@IdCheque", idCheque)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
+    End Function
 
     Public Shared Function TraerCheque(ByVal NumeroOrden As Integer, ByVal SucursalId As Integer) As Cheque
         'Declaro variables

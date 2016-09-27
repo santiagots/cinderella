@@ -1,6 +1,9 @@
 ﻿Imports Entidades
 Imports System.Data.SqlClient
 Imports Datos
+Imports System.Linq
+Imports System.Collections.Generic
+
 Public Class NegSincronizacion
     Dim objUsuario As Entidades.Usuario
     Dim clsDatos As New Datos.Conexion
@@ -111,6 +114,13 @@ Public Class NegSincronizacion
         cmd.CommandText = "EXEC sp_MSforeachtable @command1=""ALTER TABLE ? NOCHECK CONSTRAINT ALL"""
         cmd.ExecuteNonQuery()
         clsDatos.DesconectarLocal()
+
+        cmd = New SqlCommand
+        cmd.Connection = clsDatos.ConectarRemoto()
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = "EXEC sp_MSforeachtable @command1=""ALTER TABLE ? NOCHECK CONSTRAINT ALL"""
+        cmd.ExecuteNonQuery()
+        clsDatos.ConectarRemoto()
     End Sub
 
     Public Sub HabilitarConstraint()
@@ -120,308 +130,677 @@ Public Class NegSincronizacion
         cmd.CommandText = "EXEC sp_MSforeachtable @command1=""ALTER TABLE ? CHECK CONSTRAINT ALL"""
         cmd.ExecuteNonQuery()
         clsDatos.DesconectarLocal()
-    End Sub
 
-    Public Sub RegistrarVentasARemota(ByVal idSucursal As Integer)
-
-        Using conn As SqlConnection = clsDatos.ConectarRemoto()
-            Using tran As SqlTransaction = conn.BeginTransaction()
-                Try
-                    'recupero todas las ventas locales de la sucursal
-                    Dim ventasLocales As DataTable = ObtenerVentasLocal(idSucursal)
-                    'recupero todas las ventas remotas de la sucursal
-                    Dim ventasRemotas As DataTable = ObtenerVentasRemota(idSucursal)
-                    'obtengo todas las ventas que solamente se encuentran de forma local
-                    Dim ventasSoloLocales As DataRow() = ventasLocales.Rows.Cast(Of DataRow).Where(Function(x) Not ventasRemotas.Rows.Cast(Of DataRow).Any(Function(y) x.Item("id_Venta") = y.Item("id_Venta"))).ToArray()
-
-                    Dim cmd As SqlCommand = New SqlCommand()
-                    cmd.Connection = conn
-                    cmd.Transaction = tran
-
-                    For Each ventaLocal In ventasSoloLocales
-                        'inserto la venta local en la base remota
-                        Dim idVentaremota As Integer = InsertaVentaRemota(ventaLocal, cmd)
-
-                        'Obtengo el detalle de las ventas que estan solo local
-                        Dim detalleVentasLocales As DataTable = ObtenerDetalleVentasLocal(ventaLocal.Item("id_Venta"))
-
-                        'inserto el detalle de las ventas local en la base remota
-                        For Each detalleVentasLocal In detalleVentasLocales.Rows.Cast(Of DataRow)
-                            detalleVentasLocal("id_venta") = idVentaremota
-                            InsertaDetalleVentasRemota(detalleVentasLocal, cmd)
-                            ActualizarStock(idSucursal, detalleVentasLocal("id_Producto"), detalleVentasLocal("Cantidad") * -1, cmd)
-                        Next
-
-                        'Obtengo las comisiones de las ventas que estan solo local
-                        Dim comisionesLocales As DataTable = ObtenerComisionesLocal(ventaLocal.Item("id_Venta"))
-
-                        'inserto las comisiones local en al en la base remota
-                        For Each comisionesLocal In comisionesLocales.Rows.Cast(Of DataRow)
-                            comisionesLocal("id_venta") = idVentaremota
-                            InsertaComisionesRemota(comisionesLocal, cmd)
-                        Next
-
-                        If (ventaLocal("Facturado") = 1) Then
-                            'Obtengo las facturas de las ventas que estan solo local
-                            Dim facturasLocales As DataTable = ObtenerFacturaLocal(ventaLocal.Item("id_Venta"))
-
-                            'inserto las facturas local en al en la base remota
-                            For Each facturaLocal In facturasLocales.Rows.Cast(Of DataRow)
-                                facturaLocal("id_venta") = idVentaremota
-                                InsertaFacturaRemota(facturaLocal, cmd)
-                            Next
-                        End If
-                    Next
-
-                    tran.Commit()
-                Catch ex As Exception
-                    tran.Rollback()
-                    Throw
-                End Try
-            End Using
-        End Using
-    End Sub
-
-
-    Public Sub RegistrarDevolucionesARemota(ByVal idSucursal As Integer)
-
-        Using conn As SqlConnection = clsDatos.ConectarRemoto()
-            Using tran As SqlTransaction = conn.BeginTransaction()
-                Try
-                    'recupero todas las ventas locales de la sucursal
-                    Dim devolucionLocales As DataTable = ObtenerDevolucionesLocal(idSucursal)
-                    'recupero todas las ventas remotas de la sucursal
-                    Dim devolucionRemotas As DataTable = ObtenerDevolucionesRemota(idSucursal)
-                    'obtengo todas las ventas que solamente se encuentran de forma local
-                    Dim devolucionSoloLocales As DataRow() = devolucionLocales.Rows.Cast(Of DataRow).Where(Function(x) Not devolucionRemotas.Rows.Cast(Of DataRow).Any(Function(y) x.Item("id_Devolucion") = y.Item("id_Devolucion"))).ToArray()
-
-                    Dim cmd As SqlCommand = New SqlCommand()
-                    cmd.Connection = conn
-                    cmd.Transaction = tran
-
-                    For Each devolucionLocal In devolucionSoloLocales
-                        'inserto la venta local en la base remota
-                        Dim idDevolucionRemota As Integer = InsertaDevolucionRemota(devolucionLocal, cmd)
-
-                        'Obtengo el detalle de las ventas que estan solo local
-                        Dim detalleDevolucionesLocales As DataTable = ObtenerDetalleDevolucionesLocal(devolucionLocal.Item("id_Devolucion"))
-
-                        'inserto el detalle de las ventas local en la base remota
-                        For Each detalleDevolucionLocal In detalleDevolucionesLocales.Rows.Cast(Of DataRow)
-                            detalleDevolucionLocal("id_Devolucion") = idDevolucionRemota
-                            InsertaDetalleDevolucionesRemota(detalleDevolucionLocal, cmd)
-                            ActualizarStock(idSucursal, detalleDevolucionLocal("id_Producto"), detalleDevolucionLocal("Cantidad"), cmd)
-                        Next
-
-                        If (devolucionLocal("NotaCredito") = 1) Then
-                            'Obtengo las facturas de las ventas que estan solo local
-                            Dim notaCreditoLocales As DataTable = ObtenerNotaCreditoLocal(devolucionLocal.Item("id_Devolucion"))
-
-                            'inserto las facturas local en al en la base remota
-                            For Each notaCreditoLocal In notaCreditoLocales.Rows.Cast(Of DataRow)
-                                notaCreditoLocal("id_Devolucion") = idDevolucionRemota
-                                InsertaNotaCreditoRemota(notaCreditoLocal, cmd)
-                            Next
-                        End If
-                    Next
-
-                    tran.Commit()
-                Catch ex As Exception
-                    tran.Rollback()
-                    Throw
-                End Try
-            End Using
-        End Using
-    End Sub
-
-    Public Sub RegistrarChequesARemota(ByVal idSucursal As Integer)
-
-        Using conn As SqlConnection = clsDatos.ConectarRemoto()
-            Using tran As SqlTransaction = conn.BeginTransaction()
-                Try
-                    Dim chequesLocales As DataTable = ObtenerChequesLocal(idSucursal)
-                    Dim chequesRemotas As DataTable = ObtenerChequesRemota(idSucursal)
-
-                    Dim chequesSoloLocales As DataRow() = chequesLocales.Rows.Cast(Of DataRow).Where(Function(x) Not chequesRemotas.Rows.Cast(Of DataRow).Any(Function(y) x.Item("id_Cheque") = y.Item("id_Cheque"))).ToArray()
-
-                    Dim cmd As SqlCommand = New SqlCommand()
-                    cmd.Connection = conn
-                    cmd.Transaction = tran
-
-                    For Each chequesLocale In chequesSoloLocales
-                        'inserto la venta local en la base remota
-                        InsertaChequesRemota(chequesLocale, cmd)
-                    Next
-                    tran.Commit()
-                Catch ex As Exception
-                    tran.Rollback()
-                    Throw
-                End Try
-            End Using
-        End Using
-    End Sub
-
-    Private Function ObtenerVentasLocal(ByVal IdSucursal As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from ventas where id_Sucursal = {0}", IdSucursal)), DataSet).Tables(0)
-    End Function
-
-    Private Function ObtenerDevolucionesLocal(ByVal IdSucursal As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from devoluciones where id_Sucursal = {0}", IdSucursal)), DataSet).Tables(0)
-    End Function
-
-    Private Function InsertaVentaRemota(ByVal venta As DataRow, ByVal cmd As SqlCommand) As Integer
-        Dim fecha As String = CType(venta("Fecha"), DateTime).ToString("yyyy-MM-dd HH:mm:ss")
-        Dim fechaAnulado As String = If(venta("FechaAnulado") Is DBNull.Value, Nothing, CType(venta("FechaAnulado"), DateTime).ToString("yyyy-MM-dd HH:mm:ss"))
-        Dim subTotal As String = CType(venta("Subtotal"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim precioTotal As String = CType(venta("Precio_Total"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim descuento As String = CType(venta("Descuento"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim diferenciaPagoCheque As String = CType(venta("Diferencia_Pago_Cheque"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-
-        Dim insert As String = String.Format("INSERT INTO [dbo].[VENTAS] ([id_Sucursal] ,[id_TipoPago] ,[id_Encargado] ,[id_Empleado] ,[id_TipoVenta] ,[id_Cliente] ,[Cantidad_Total] ,[Subtotal] ,[Precio_Total] ,[Descuento] ,[Fecha] ,[Habilitado] ,[Anulado] ,[Facturado] ,[DescripcionAnulado] ,[FechaAnulado] ,[Diferencia_Pago_Cheque] ,[Numero]) VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},'{10}',{11},{12},{13},'{14}','{15}',{16},'{17}')", venta("id_Sucursal"), venta("id_TipoPago"), venta("id_Encargado"), venta("id_Empleado"), venta("id_TipoVenta"), venta("id_Cliente"), venta("Cantidad_Total"), subTotal, precioTotal, descuento, fecha, venta("Habilitado"), venta("Anulado"), venta("Facturado"), venta("DescripcionAnulado"), venta("FechaAnulado"), diferenciaPagoCheque, venta("Numero"))
-
-        cmd.CommandText = insert
+        cmd = New SqlCommand
+        cmd.Connection = clsDatos.ConectarRemoto()
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = "EXEC sp_MSforeachtable @command1=""ALTER TABLE ? CHECK CONSTRAINT ALL"""
         cmd.ExecuteNonQuery()
+        clsDatos.ConectarRemoto()
+    End Sub
 
-        Dim ds As DataSet = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('VENTAS') as id_Venta")
+    Public Function SincronizarLocalARemota(ByRef Tabla As Tabla, valorBusqueda As String) As Integer
 
-        If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id_Venta")) > 0 Then
-            Return ds.Tables(0).Rows(0).Item("id_Venta").ToString
+        If (ActualizarClaves(Tabla, valorBusqueda)) Then
+            Return SincronizarARemota(Tabla, valorBusqueda)
+        End If
+
+        Return 2
+    End Function
+
+
+    Private Function ActualizarClaves(ByRef Tabla As Tabla, valorBusqueda As String) As Boolean
+        Dim Respuesta As IList(Of DataTable) = New List(Of DataTable)
+
+        'Selecciono todas las filas de la base local 
+        Dim tablaLocal As DataTable = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
+
+        'Selecciono todas las filas de la base remota
+        Dim tablaRemota As DataTable = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
+
+        Dim ClavePrimaria As String = Tabla.ClavePrimaria
+
+        'Obtengo un listado de todos los ID de la base remota
+        Dim ListaIdBaseRemota As List(Of Integer) = tablaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
+        Dim ListaIdBaseLocal As List(Of Integer) = tablaLocal.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
+
+        If (ListaIdBaseRemota.Count = 0 AndAlso ListaIdBaseLocal.Count = 0) Then
+            Return False
+        End If
+
+        'Obtengo el ultimo ID de la base remota
+        Dim ultimoValor As Integer = ObtenerUltimoIdBaseRemota(Tabla.Nombre)
+
+        'Recorro todas las rows de la base local
+        For Each rowLocal As DataRow In tablaLocal.Rows
+            'Si el ID de la base local no exite en la base remota quiere decir que esta row fue generada en modo offline
+            If Not ListaIdBaseRemota.Contains(rowLocal(Tabla.ClavePrimaria)) Then
+
+                Tabla.IdAcualizados.Add(New KeyValuePair(Of Integer, Integer)(rowLocal(Tabla.ClavePrimaria), ultimoValor))
+
+                'Por lo tanto tengo que actualizar su ID con el ultimo ID de la base remota
+                rowLocal(Tabla.ClavePrimaria) = ultimoValor
+                ultimoValor += 1
+            End If
+        Next
+
+        Tabla.TablaActualizada = tablaLocal
+
+        'Recorro todas las tablas relacionadas a la actualizada para actualizar sus IDs y claves foraneas
+        For Each tablaForanea As Tabla In Tabla.TablaRelacionada
+            ActualizarClavesForaneas(ListaIdBaseLocal, ListaIdBaseRemota, Tabla.IdAcualizados, tablaForanea)
+        Next
+
+        Return True
+
+    End Function
+
+    Private Sub ActualizarClavesForaneas(IdForaneosLocal As List(Of Integer), IdForaneosRemota As List(Of Integer), IdActualizados As IList(Of KeyValuePair(Of Integer, Integer)), ByRef TablaForanea As Tabla)
+
+        'Selecciono todas las filas de la base local 
+        Dim tablaForaneaLocal As DataTable
+        If (IdForaneosLocal.Count = 0) Then
+            tablaForaneaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0}", TablaForanea.Nombre)), DataSet).Tables(0)
+        Else
+            tablaForaneaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0} where {1} in ({2})", TablaForanea.Nombre, TablaForanea.ColumnaSeleccion, String.Join(",", IdForaneosLocal))), DataSet).Tables(0)
+        End If
+
+        'Selecciono todas las filas de la base remota
+        Dim tablaForaneaRemota As DataTable
+        If (IdForaneosRemota.Count = 0) Then
+            tablaForaneaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0}", TablaForanea.Nombre)), DataSet).Tables(0)
+        Else
+            tablaForaneaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} in ({2})", TablaForanea.Nombre, TablaForanea.ColumnaSeleccion, String.Join(",", IdForaneosRemota))), DataSet).Tables(0)
+        End If
+
+        Dim ClavePrimaria As String = TablaForanea.ClavePrimaria
+
+        'Obtengo un listado de todos los ID de la base remota
+        Dim tablaForaneaRemotaListaPrimariKey As List(Of Integer) = tablaForaneaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
+
+        'Obtengo el ultimo ID de la base remota
+        Dim ultimoValor As Integer = ObtenerUltimoIdBaseRemota(TablaForanea.Nombre)
+
+        'Recorro todas las rows de la base local
+        For Each rowLocal As DataRow In tablaForaneaLocal.Rows
+            'Si el ID de la base local no exite en la base remota quiere decir que esta row fue generada en modo offline
+            If Not tablaForaneaRemotaListaPrimariKey.Contains(rowLocal(TablaForanea.ClavePrimaria)) Then
+                TablaForanea.IdAcualizados.Add(New KeyValuePair(Of Integer, Integer)(rowLocal(TablaForanea.ClavePrimaria), ultimoValor))
+                'Por lo tanto tengo que actualizar su ID con el ultimo ID de la base remota
+                rowLocal(TablaForanea.ClavePrimaria) = ultimoValor
+                ultimoValor += 1
+            End If
+        Next
+
+        'Actualizo las claves foranesa de las rows
+        For Each IdForaneoActualizado As KeyValuePair(Of Integer, Integer) In IdActualizados
+            Dim rows As DataRow() = tablaForaneaLocal.Select(String.Format("{0} = {1}", TablaForanea.ClaveForanea, IdForaneoActualizado.Key))
+            For Each row As DataRow In rows
+                row(TablaForanea.ClaveForanea) = IdForaneoActualizado.Value
+            Next
+        Next
+        TablaForanea.TablaActualizada = tablaForaneaLocal
+
+    End Sub
+
+    Private Function SincronizarARemota(Tabla As Tabla, valorBusqueda As String) As Integer
+        Dim estado As Integer = 0
+
+        Try
+            'conexion remota
+            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+            miconexionRemoto = New SqlConnection
+            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
+            miconexionRemoto.Open()
+
+            Dim transaccion As SqlTransaction
+            transaccion = miconexionRemoto.BeginTransaction()
+
+            'Selecciono todas las filas de la base remota
+            Dim tablaRemota As DataTable = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
+
+            Dim ClavePrimaria As String = Tabla.ClavePrimaria
+            Dim ListaIdBaseRemota As List(Of Integer) = tablaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
+
+            Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda), miconexionRemoto, transaccion)
+            commandEliminoData.ExecuteNonQuery()
+
+            'copio los datos a base local
+            Dim BulkCopy As New SqlBulkCopy(miconexionRemoto, SqlBulkCopyOptions.KeepIdentity, transaccion)
+            BulkCopy.DestinationTableName = Tabla.Nombre
+
+            Try
+                BulkCopy.WriteToServer(Tabla.TablaActualizada)
+
+                'Recorro todas las tablas relacionadas para sincronizar
+                For Each tablaForanea As Tabla In Tabla.TablaRelacionada
+
+                    SincronizarForanea(tablaForanea, ListaIdBaseRemota, transaccion)
+                Next
+
+                transaccion.Commit()
+                BulkCopy.Close()
+                estado = 1
+            Catch ex As Exception
+                transaccion.Rollback()
+                BulkCopy.Close()
+            End Try
+
+        Catch ex As Exception
+            Windows.Forms.MessageBox.Show("Se produjo un error sincronizando los datos de " & Tabla.Nombre & ": " & ex.Message, "Actualizacion fallida")
+            miconexionRemoto.Dispose()
+
+        Finally
+            miconexionRemoto.Dispose()
+        End Try
+
+        Return estado
+    End Function
+
+    Private Sub SincronizarForanea(TablaForanea As Tabla, IdForaneosRemota As List(Of Integer), transaccion As SqlTransaction)
+        If (IdForaneosRemota.Count <> 0) Then
+            Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", TablaForanea.Nombre, TablaForanea.ClaveForanea, String.Join(",", IdForaneosRemota)), miconexionRemoto, transaccion)
+            commandEliminoData.ExecuteNonQuery()
+        End If
+
+        'copio los datos a base local
+        Using BulkCopy As New SqlBulkCopy(miconexionRemoto, SqlBulkCopyOptions.KeepIdentity, transaccion)
+            BulkCopy.DestinationTableName = TablaForanea.Nombre
+            BulkCopy.WriteToServer(TablaForanea.TablaActualizada)
+        End Using
+    End Sub
+
+    Function ObtenerUltimoIdBaseRemota(nombreTabla As String) As Integer
+        Dim ds As DataSet
+        ds = clsDatos.ConsultarBaseRemoto(String.Format("Select IDENT_CURRENT('{0}') as id", nombreTabla))
+
+        If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id")) > 0 Then
+            Return ds.Tables(0).Rows(0).Item("id") + 1
         Else
             Return 1
         End If
     End Function
 
-    Private Function InsertaDevolucionRemota(ByVal devolucion As DataRow, ByVal cmd As SqlCommand) As Integer
-        Dim fecha As String = CType(devolucion("Fecha"), DateTime).ToString("yyyy-MM-dd HH:mm:ss")
-        Dim fechaAnulado As String = If(devolucion("FechaAnulado") Is DBNull.Value, Nothing, CType(devolucion("FechaAnulado"), DateTime).ToString("yyyy-MM-dd HH:mm:ss"))
-        Dim subTotal As String = CType(devolucion("Subtotal"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim precioTotal As String = CType(devolucion("Precio_Total"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim descuento As String = CType(devolucion("Descuento"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
+    Sub AltaSincronizacion(ByVal idSucursal As Integer)
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        Dim insert As String = String.Format("INSERT INTO [dbo].[DEVOLUCIONES]([id_Sucursal],[id_TipoPago],[id_Encargado],[id_Empleado],[id_TipoDevolucion],[id_Cliente],[Cantidad_Total],[Subtotal],[Precio_Total],[Descuento],[Fecha],[Habilitado],[NotaCredito],[Anulado],[FechaAnulado],[DescripcionAnulado])VALUES({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},'{10}',{11},{12},{13},'{14}','{15}')", devolucion("id_Sucursal"), devolucion("id_TipoPago"), devolucion("id_Encargado"), devolucion("id_Empleado"), devolucion("id_TipoDevolucion"), devolucion("id_Cliente"), devolucion("Cantidad_Total"), subTotal, precioTotal, descuento, fecha, devolucion("Habilitado"), devolucion("NotaCredito"), devolucion("Anulado"), fechaAnulado, devolucion("DescripcionAnulado"))
+        cmd.Connection = clsDatos.ConectarLocal()
+        AltaSincronizacion(idSucursal, cmd)
+        clsDatos.DesconectarLocal()
 
-        cmd.CommandText = insert
+        If HayInternet Then
+            cmd = New SqlCommand()
+            cmd.Connection = clsDatos.ConectarRemoto()
+            AltaSincronizacion(idSucursal, cmd)
+            clsDatos.DesconectarRemoto()
+        End If
+    End Sub
+
+    Private Shared Sub AltaSincronizacion(ByVal idSucursal As Integer, ByRef cmd As SqlCommand)
+        'Ejecuto el Stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Sincronizacion_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Sucursal", idSucursal)
+        End With
+
+        cmd.ExecuteNonQuery()
+    End Sub
+
+    Function ObtenerUltimaSincronizacion(ByVal idSucursal As Integer) As Date
+        'Declaro variables
+        Dim fecha As Date
+        Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        If HayInternet Then
+            cmd.Connection = clsDatos.ConectarRemoto()
+            fecha = ObtenerUltimaSincronizacion(idSucursal, cmd)
+            clsDatos.DesconectarRemoto()
+        Else
+            cmd.Connection = clsDatos.ConectarLocal()
+            fecha = ObtenerUltimaSincronizacion(idSucursal, cmd)
+            clsDatos.DesconectarLocal()
+        End If
+
+        Return fecha
+    End Function
+
+    Private Shared Function ObtenerUltimaSincronizacion(ByVal idSucursal As Integer, ByRef cmd As SqlCommand) As Date
+        'Ejecuto el Stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Sincronizacion_Obtener_Ultima"
+        With cmd.Parameters
+            .AddWithValue("@id_Sucursal", idSucursal)
+        End With
+
+        'Respuesta del Stored.
+        Dim respuesta As New SqlParameter("@fecha", SqlDbType.Date, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
 
-        Dim ds As DataSet = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('DEVOLUCIONES') as id_Devolucion")
-
-        If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id_Devolucion")) > 0 Then
-            Return ds.Tables(0).Rows(0).Item("id_Devolucion").ToString
+        If (respuesta.Value Is DBNull.Value) Then
+            Return Date.MinValue
         Else
-            Return 1
+            Return respuesta.Value
         End If
     End Function
 
-    Private Function ObtenerVentasRemota(ByVal IdSucursal As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from ventas where id_Sucursal = {0}", IdSucursal)), DataSet).Tables(0)
+    Public Function GetInformacionTablasLocales() As List(Of Tabla)
+        Dim respuesta As List(Of Tabla) = New List(Of Tabla)
+
+        respuesta.Add(EmpleadosRegistros())
+        respuesta.Add(CajaInicial())
+        respuesta.Add(MovimientosCajas())
+        respuesta.Add(MovimientosCajaFuerte())
+        respuesta.Add(Adicionales())
+        respuesta.Add(EmpleadoRecibo())
+        respuesta.Add(MovimientoAporte())
+        respuesta.Add(EmpleadoDeposito())
+        respuesta.Add(Deuda())
+        respuesta.Add(Adelanto())
+        respuesta.Add(Stock())
+        respuesta.Add(StockBitacora())
+        respuesta.Add(MovimientoGastos())
+        respuesta.Add(CuentaCorriente())
+        respuesta.Add(Mercaderia())
+        respuesta.Add(Ventas())
+        respuesta.Add(Notapedido())
+        respuesta.Add(Facturacion())
+        respuesta.Add(Notacredito())
+        respuesta.Add(Devolucion())
+        respuesta.Add(MovimientoImpuesto())
+        respuesta.Add(Cheque())
+        respuesta.Add(MoviminetoRetiro())
+
+        Return respuesta
     End Function
 
-    Private Function ObtenerDevolucionesRemota(ByVal IdSucursal As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from devoluciones where id_Sucursal = {0}", IdSucursal)), DataSet).Tables(0)
+    Private Shared Function EmpleadosRegistros() As Tabla
+        Dim tablaRegistro As Tabla = New Tabla()
+        tablaRegistro.Nombre = "EMPLEADOS_REGISTROS"
+        tablaRegistro.ClavePrimaria = "id_Registro"
+        tablaRegistro.ColumnaSeleccion = "id_Sucursal"
+        tablaRegistro.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tablaRegistro.TablaRelacionada = New List(Of Tabla)
+
+        Dim tablaRelRegistroEmpleados As Tabla = New Tabla()
+        tablaRelRegistroEmpleados.Nombre = "REL_REGISTRO_EMPLEADOS"
+        tablaRelRegistroEmpleados.ClavePrimaria = "id_Auto"
+        tablaRelRegistroEmpleados.ColumnaSeleccion = "id_Registro"
+        tablaRelRegistroEmpleados.ClaveForanea = "id_Registro"
+        tablaRelRegistroEmpleados.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleados)
+
+        Dim tablaRelRegistroEmpleadosAusentes As Tabla = New Tabla()
+        tablaRelRegistroEmpleadosAusentes.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
+        tablaRelRegistroEmpleadosAusentes.ClavePrimaria = "id_Auto"
+        tablaRelRegistroEmpleadosAusentes.ColumnaSeleccion = "id_Registro"
+        tablaRelRegistroEmpleadosAusentes.ClaveForanea = "id_Registro"
+        tablaRelRegistroEmpleadosAusentes.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleadosAusentes)
+
+        Return tablaRegistro
     End Function
 
-    Private Function ObtenerDetalleDevolucionesLocal(ByVal idDevolucion As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from devoluciones_detalle where id_Devolucion = {0}", idDevolucion)), DataSet).Tables(0)
+    Private Shared Function CajaInicial() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "CAJA_INICIAL"
+        tabla.ClavePrimaria = "id_Caja"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
     End Function
 
-    Private Function ObtenerDetalleVentasLocal(ByVal idVentas As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from ventas_detalle where id_Venta = {0}", idVentas)), DataSet).Tables(0)
+    Private Shared Function MovimientosCajas() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MOVIMIENTOS_CAJA"
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
     End Function
 
-    Private Sub InsertaDetalleVentasRemota(ByVal detalleVenta As DataRow, ByVal cmd As SqlCommand)
+    Private Shared Function MovimientosCajaFuerte() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MOVIMIENTOS_CAJA_FUERTE"
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim precio As String = CType(detalleVenta("Precio"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-
-        Dim insert As String = String.Format("INSERT INTO [dbo].[VENTAS_DETALLE] ([id_Venta] ,[id_Producto] ,[Cantidad] ,[Precio]) VALUES ({0} ,{1} ,{2} ,{3})", detalleVenta("id_Venta"), detalleVenta("id_Producto"), detalleVenta("Cantidad"), precio)
-
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
-
-    Private Sub InsertaDetalleDevolucionesRemota(ByVal detalleDevolucion As DataRow, ByVal cmd As SqlCommand)
-
-        Dim precio As String = CType(detalleDevolucion("Precio"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-
-        Dim insert As String = String.Format("INSERT INTO [dbo].[DEVOLUCIONES_DETALLE] ([id_Devolucion] ,[id_Producto] ,[Cantidad] ,[Precio]) VALUES ({0} ,{1} ,{2} ,{3})", detalleDevolucion("id_Devolucion"), detalleDevolucion("id_Producto"), detalleDevolucion("Cantidad"), precio)
-
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
-
-    Private Sub ActualizarStock(ByVal idSucursal As Integer, ByVal idProducto As Integer, ByVal cantidad As Integer, ByVal cmd As SqlCommand)
-
-        Dim insert As String = String.Format("UPDATE [dbo].[STOCK] SET [Stock_Actual] = [Stock_Actual] + ({0}) where [id_Sucursal] = {1} and [id_Producto] = {2}", cantidad, idSucursal, idProducto)
-
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
-
-    Private Function ObtenerComisionesLocal(ByVal idVentas As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from comisiones where id_Venta  = {0}", idVentas)), DataSet).Tables(0)
+        Return tabla
     End Function
 
-    Private Sub InsertaComisionesRemota(ByVal comision As DataRow, ByVal cmd As SqlCommand)
+    Private Shared Function Adicionales() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "ADICIONALES"
+        tabla.ClavePrimaria = "id_Adicional"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim fecha As String = CType(comision("Fecha"), DateTime).ToString("yyyy-MM-dd HH:mm:ss")
-        Dim comisionMonto As String = CType(comision("Comision"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim monto As String = CType(comision("Monto"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-
-        Dim insert As String = String.Format("INSERT INTO [dbo].[COMISIONES] ([id_Empleado] ,[id_Venta] ,[id_Sucursal] ,[Comision] ,[Monto] ,[Fecha]) VALUES ({0},{1},{2},{3},{4},'{5}')", comision("id_Empleado"), comision("id_Venta"), comision("id_Sucursal"), comisionMonto, monto, fecha)
-
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
-
-    Private Function ObtenerChequesLocal(ByVal IdSucursal As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from cheque where SucursalId = {0}", IdSucursal)), DataSet).Tables(0)
+        Return tabla
     End Function
 
-    Private Function ObtenerChequesRemota(ByVal IdSucursal As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from cheque where SucursalId = {0}", IdSucursal)), DataSet).Tables(0)
+    Private Shared Function EmpleadoRecibo() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "EMPLEADOS_RECIBOS"
+        tabla.ClavePrimaria = "id_Recibo"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
     End Function
 
-    Private Sub InsertaChequesRemota(ByVal cheques As DataRow, ByVal cmd As SqlCommand)
+    Private Shared Function MovimientoAporte() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MOVIMIENTOS_APORTE"
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim fechaIngreso As String = If(cheques("FechaIngreso") Is DBNull.Value, Nothing, CType(cheques("FechaIngreso"), DateTime).ToString("yyyy-MM-dd HH:mm:ss"))
-        Dim fechaDesposito As String = If(cheques("FechaDesposito") Is DBNull.Value, Nothing, CType(cheques("FechaDesposito"), DateTime).ToString("yyyy-MM-dd HH:mm:ss"))
-        Dim fechaVencimiento As String = If(cheques("FechaVencimiento") Is DBNull.Value, Nothing, CType(cheques("FechaVencimiento"), DateTime).ToString("yyyy-MM-dd HH:mm:ss"))
-        Dim fechaSalida As String = If(cheques("FechaSalida") Is DBNull.Value, Nothing, CType(cheques("FechaSalida"), DateTime).ToString("yyyy-MM-dd HH:mm:ss"))
-        Dim importe As String = CType(cheques("Importe"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
-        Dim marcaFacturado As Integer = If(CType(cheques("MarcaFacturado"), Boolean), 1, 0)
-
-        Dim insert As String = String.Format("INSERT INTO [dbo].[CHEQUE]([SucursalId],[NumeroOrden],[NumeroCheque],[MarcaFacturado],[Importe],[BancoEmisorId],[ClienteId],[ClienteNombre],[LibradorId],[LibradorNombre],[FechaIngreso],[FechaDesposito],[FechaVencimiento],[FechaSalida],[DetalleSalida],[Estado],[DestinoSalida])     VALUES({0},{1},{2},{3},{4},{5},{6},'{7}',{8},'{9}','{10}','{11}','{12}','{13}','{14}',{15},{16})", cheques("SucursalId"), cheques("NumeroOrden"), cheques("NumeroCheque"), marcaFacturado, importe, cheques("BancoEmisorId"), cheques("ClienteId"), cheques("ClienteNombre"), cheques("LibradorId"), cheques("LibradorNombre"), fechaIngreso, fechaDesposito, fechaVencimiento, fechaSalida, cheques("DetalleSalida"), cheques("Estado"), cheques("DestinoSalida"))
-
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
-
-    Private Function ObtenerFacturaLocal(ByVal idVenta As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from facturacion where id_Venta = {0}", idVenta)), DataSet).Tables(0)
+        Return tabla
     End Function
 
-    Private Function ObtenerNotaCreditoLocal(ByVal idDevolucion As Integer) As DataTable
-        Return CType(clsDatos.ConsultarBaseLocal(String.Format("select * from notacredito where id_Devolucion = {0}", idDevolucion)), DataSet).Tables(0)
+    Private Shared Function EmpleadoDeposito() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "EMPLEADOS_DEPOSITOS"
+        tabla.ClavePrimaria = "id_Deposito"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
     End Function
 
-    Private Sub InsertaFacturaRemota(ByVal factura As DataRow, ByVal cmd As SqlCommand)
+    Private Shared Function Deuda() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "DEUDA"
+        tabla.ClavePrimaria = "id_Deuda"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim fecha As String = CType(factura("Fecha"), DateTime).ToString("yyyy-MM-dd HH:mm:ss")
-        Dim monto As String = CType(factura("Monto"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
+        Return tabla
+    End Function
 
-        Dim insert As String = String.Format("INSERT INTO [dbo].[FACTURACION]([id_Venta],[NumeroFactura],[Monto],[Fecha],[Nombre],[Cuit],[Direccion],[Localidad],[TipoFactura],[TipoRecibo],[PuntoVenta],[Id_Sucursal])VALUES({0},{1},{2},'{3}','{4}','{5}','{6}','{7}','{8}',{9},{10},{11})", factura("id_Venta"), factura("NumeroFactura"), monto, fecha, factura("Nombre"), factura("Cuit"), factura("Direccion"), factura("Localidad"), factura("TipoFactura"), factura("TipoRecibo"), factura("PuntoVenta"), factura("Id_Sucursal"))
+    Private Shared Function Adelanto() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "ADELANTOS"
+        tabla.ClavePrimaria = "id_Adelanto"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
+        Return tabla
+    End Function
 
-    Private Sub InsertaNotaCreditoRemota(ByVal factura As DataRow, ByVal cmd As SqlCommand)
+    Private Shared Function Stock() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "STOCK"
+        tabla.ClavePrimaria = "id_Stock"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim fecha As String = CType(factura("Fecha"), DateTime).ToString("yyyy-MM-dd HH:mm:ss")
-        Dim monto As String = CType(factura("Monto"), Double).ToString(System.Globalization.CultureInfo.InvariantCulture)
+        Return tabla
+    End Function
 
-        Dim insert As String = String.Format("INSERT INTO [dbo].[NOTACREDITO]([id_Devolucion],[NumeroNotaCredito],[Monto],[Fecha],[Nombre],[Cuit],[Direccion],[Localidad],[TipoFactura],[TipoRecibo],[PuntoVenta],[Id_Sucursal])VALUES({0},{1},{2},'{3}','{4}','{5}','{6}','{7}','{8}',{9},{10},{11})", factura("id_Devolucion"), factura("NumeroNotaCredito"), monto, fecha, factura("Nombre"), factura("Cuit"), factura("Direccion"), factura("Localidad"), factura("TipoFactura"), factura("TipoRecibo"), factura("PuntoVenta"), factura("Id_Sucursal"))
+    Private Shared Function StockBitacora() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "STOCK_BITACORA"
+        tabla.ClavePrimaria = "id_Bitacora"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
 
-        cmd.CommandText = insert
-        cmd.ExecuteNonQuery()
-    End Sub
+        Return tabla
+    End Function
+
+    Private Shared Function MovimientoGastos() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MOVIMIENTOS_GASTOS"
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function CuentaCorriente() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "CUENTA_CORRIENTE"
+        tabla.ClavePrimaria = "id_Registro"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function Mercaderia() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MERCADERIAS"
+        tabla.ClavePrimaria = "id_Mercaderia"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Dim tablaRelelacionada As Tabla = New Tabla()
+        tablaRelelacionada.Nombre = "MERCADERIAS_DETALLE"
+        tablaRelelacionada.ClavePrimaria = "id_Detalle"
+        tablaRelelacionada.ColumnaSeleccion = "id_Mercaderia"
+        tablaRelelacionada.ClaveForanea = "id_Mercaderia"
+        tablaRelelacionada.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada)
+        Return tabla
+    End Function
+
+    Private Shared Function Ventas() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "VENTAS"
+        tabla.ClavePrimaria = "id_Venta"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Dim tablaRelelacionada1 As Tabla = New Tabla()
+        tablaRelelacionada1.Nombre = "VENTAS_DETALLE"
+        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
+        tablaRelelacionada1.ColumnaSeleccion = "id_Venta"
+        tablaRelelacionada1.ClaveForanea = "id_Venta"
+        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada1)
+
+        Dim tablaRelelacionada2 As Tabla = New Tabla()
+        tablaRelelacionada2.Nombre = "COMISIONES"
+        tablaRelelacionada2.ClavePrimaria = "id_Comision"
+        tablaRelelacionada2.ColumnaSeleccion = "id_Venta"
+        tablaRelelacionada2.ClaveForanea = "id_Venta"
+        tablaRelelacionada2.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada2)
+        Return tabla
+    End Function
+
+    Private Shared Function Notapedido() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "NOTAPEDIDO"
+        tabla.ClavePrimaria = "id_NotaPedido"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Dim tablaRelelacionada1 As Tabla = New Tabla()
+        tablaRelelacionada1.Nombre = "NOTAPEDIDO_DETALLE"
+        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
+        tablaRelelacionada1.ColumnaSeleccion = "id_NotaPedido"
+        tablaRelelacionada1.ClaveForanea = "id_NotaPedido"
+        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada1)
+        Return tabla
+    End Function
+
+    Private Shared Function Facturacion() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "FACTURACION"
+        tabla.ClavePrimaria = "id_Facturacion"
+        tabla.ColumnaSeleccion = "Id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function Notacredito() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "NOTACREDITO"
+        tabla.ClavePrimaria = "id_NotaCredito"
+        tabla.ColumnaSeleccion = "Id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function Devolucion() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "DEVOLUCIONES"
+        tabla.ClavePrimaria = "id_Devolucion"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Dim tablaRelelacionada1 As Tabla = New Tabla()
+        tablaRelelacionada1.Nombre = "DEVOLUCIONES_DETALLE"
+        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
+        tablaRelelacionada1.ColumnaSeleccion = "id_Devolucion"
+        tablaRelelacionada1.ClaveForanea = "id_Devolucion"
+        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada1)
+        Return tabla
+    End Function
+
+    Private Shared Function MovimientoImpuesto() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MOVIMIENTOS_IMPUESTOS"
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function Cheque() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "CHEQUE"
+        tabla.ClavePrimaria = "id_Cheque"
+        tabla.ColumnaSeleccion = "SucursalId"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function MoviminetoRetiro() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "MOVIMIENTOS_RETIROS"
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+End Class
+
+Public Class Tabla
+    Private _Nombre As String
+    Public Property Nombre() As String
+        Get
+            Return _Nombre
+        End Get
+        Set(ByVal value As String)
+            _Nombre = value
+        End Set
+    End Property
+
+    Private _ColumnaSeleccion As String
+    Public Property ColumnaSeleccion() As String
+        Get
+            Return _ColumnaSeleccion
+        End Get
+        Set(ByVal value As String)
+            _ColumnaSeleccion = value
+        End Set
+    End Property
+
+    Private _ClavePrimaria As String
+    Public Property ClavePrimaria() As String
+        Get
+            Return _ClavePrimaria
+        End Get
+        Set(ByVal value As String)
+            _ClavePrimaria = value
+        End Set
+    End Property
+
+    Private _ClaveForanea As String
+    Public Property ClaveForanea() As String
+        Get
+            Return _ClaveForanea
+        End Get
+        Set(ByVal value As String)
+            _ClaveForanea = value
+        End Set
+    End Property
+
+    Private _IdActualizados As IList(Of KeyValuePair(Of Integer, Integer))
+    Public Property IdAcualizados() As IList(Of KeyValuePair(Of Integer, Integer))
+        Get
+            Return _IdActualizados
+        End Get
+        Set(ByVal value As IList(Of KeyValuePair(Of Integer, Integer)))
+            _IdActualizados = value
+        End Set
+    End Property
+
+    Private _TablaActualizada As DataTable
+    Public Property TablaActualizada() As DataTable
+        Get
+            Return _TablaActualizada
+        End Get
+        Set(ByVal value As DataTable)
+            _TablaActualizada = value
+        End Set
+    End Property
+
+    Private _TablaRelacionada As IList(Of Tabla)
+    Public Property TablaRelacionada() As IList(Of Tabla)
+        Get
+            Return _TablaRelacionada
+        End Get
+        Set(ByVal value As IList(Of Tabla))
+            _TablaRelacionada = value
+        End Set
+    End Property
 End Class

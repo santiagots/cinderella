@@ -451,7 +451,7 @@ Public Class frmFacturar
                     NegNotaCredito.NuevaNotaCredito(EntNotaCredito)
                 Next
 
-                'Actualizo la venta como DEVOLUCION.
+                'Actualizo la DEVOLUCION.
                 NegDevolucion.GeneracionNotaCredito(True, id_Devolucion)
 
                 MessageBox.Show("Se ha generado la nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)

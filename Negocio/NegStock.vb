@@ -93,47 +93,48 @@ Public Class NegStock
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto la bdd.
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaStock(estock, cmd)
+            clsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Ejecuto el Stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Stock_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Producto", estock.id_Producto)
-                .AddWithValue("@id_Sucursal", estock.id_Sucursal)
-                .AddWithValue("@Stock_Minimo", estock.Stock_Minimo)
-                .AddWithValue("@Stock_Actual", estock.Stock_Actual)
-                .AddWithValue("@Stock_Optimo", estock.Stock_Optimo)
-                .AddWithValue("@id_Usuario", estock.id_Usuario)
-                .AddWithValue("@Motivo_Mod", estock.Motivo)
-                .AddWithValue("@Modificado", estock.Modificado)
-                .AddWithValue("@Fecha_Mod", estock.Fecha_Mod)
-                .AddWithValue("@Habilitado", estock.Habilitado)
-            End With
-
-            'Respuesta del Stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = AltaStock(estock, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaStock(estock As Stock, ByRef cmd As SqlCommand) As String
+        'Ejecuto el Stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Stock_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Producto", estock.id_Producto)
+            .AddWithValue("@id_Sucursal", estock.id_Sucursal)
+            .AddWithValue("@Stock_Minimo", estock.Stock_Minimo)
+            .AddWithValue("@Stock_Actual", estock.Stock_Actual)
+            .AddWithValue("@Stock_Optimo", estock.Stock_Optimo)
+            .AddWithValue("@id_Usuario", estock.id_Usuario)
+            .AddWithValue("@Motivo_Mod", estock.Motivo)
+            .AddWithValue("@Modificado", estock.Modificado)
+            .AddWithValue("@Fecha_Mod", estock.Fecha_Mod)
+            .AddWithValue("@Habilitado", estock.Habilitado)
+        End With
+
+        'Respuesta del Stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
+
     End Function
 
     'Funcion para modificar un stock.
@@ -144,89 +145,89 @@ Public Class NegStock
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = ModificarStock(estock, cmd)
+            clsDatos.DesconectarLocal()
+
             'Conecto la bdd.
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Ejecuto el Stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Stock_Modificacion"
-            With cmd.Parameters
-                .AddWithValue("@id_Producto", estock.id_Producto)
-                .AddWithValue("@id_Stock", estock.id_Stock)
-                .AddWithValue("@id_Sucursal", estock.id_Sucursal)
-                .AddWithValue("@Stock_Minimo", estock.Stock_Minimo)
-                .AddWithValue("@Stock_Actual", estock.Stock_Actual)
-                .AddWithValue("@Stock_Optimo", estock.Stock_Optimo)
-                .AddWithValue("@Habilitado", estock.Habilitado)
-                .AddWithValue("@id_Usuario", estock.id_Usuario)
-                .AddWithValue("@Motivo_Mod", estock.Motivo)
-                .AddWithValue("@Modificado", estock.Modificado)
-                .AddWithValue("@Fecha_Mod", estock.Fecha_Mod)
-            End With
-
-            'Respuesta del Stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = ModificarStock(estock, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
 
     End Function
 
+    Private Shared Function ModificarStock(estock As Stock, ByRef cmd As SqlCommand) As String
+        'Ejecuto el Stored. 
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Stock_Modificacion"
+        With cmd.Parameters
+            .AddWithValue("@id_Producto", estock.id_Producto)
+            .AddWithValue("@id_Stock", estock.id_Stock)
+            .AddWithValue("@id_Sucursal", estock.id_Sucursal)
+            .AddWithValue("@Stock_Minimo", estock.Stock_Minimo)
+            .AddWithValue("@Stock_Actual", estock.Stock_Actual)
+            .AddWithValue("@Stock_Optimo", estock.Stock_Optimo)
+            .AddWithValue("@Habilitado", estock.Habilitado)
+            .AddWithValue("@id_Usuario", estock.id_Usuario)
+            .AddWithValue("@Motivo_Mod", estock.Motivo)
+            .AddWithValue("@Modificado", estock.Modificado)
+            .AddWithValue("@Fecha_Mod", estock.Fecha_Mod)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
+    End Function
+
     'Funcion para eliminar un stock.
     Function EliminarStock(ByVal id_Stock As Integer) As String
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
-
+        Dim msg As String = ""
         Try
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = EliminarStock(id_Stock, cmd)
+            clsDatos.DesconectarLocal()
+
             'Conecto la bdd.
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Ejecuto el Stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Stock_Eliminar"
-            With cmd.Parameters
-                .AddWithValue("@id_Stock", id_Stock)
-            End With
-
-            'Respuesta del Stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = EliminarStock(id_Stock, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
 
+    End Function
+
+    Private Shared Function EliminarStock(id_Stock As Integer, ByRef cmd As SqlCommand) As String
+        'Ejecuto el Stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Stock_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@id_Stock", id_Stock)
+        End With
+
+        'Respuesta del Stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion que comprueba el stock para una cantidad y producto determinado.
@@ -253,39 +254,20 @@ Public Class NegStock
         Dim msg As Boolean = False
         Dim HayInternet As Boolean = Funciones.HayInternet
 
-
         Try
             eStock = TraerStockProducto(id_Producto, id_Sucursal)
             'Si no existe el producto en la sucursal
             If eStock.id_Stock <> 0 Then
 
-                'Conecto la bdd
+                cmd.Connection = clsDatos.ConectarLocal()
+                DisminuirStock(id_Producto, Cantidad, id_Sucursal, cmd)
+                clsDatos.DesconectarLocal()
+
                 If HayInternet Then
+                    cmd = New SqlCommand()
                     cmd.Connection = clsDatos.ConectarRemoto()
-                Else
-                    cmd.Connection = clsDatos.ConectarLocal()
-                End If
-
-                'Ejecuto el Stored.
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.CommandText = "sp_Stock_Disminucion"
-                With cmd.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@cantidad", Cantidad)
-                    .AddWithValue("@id_Sucursal", id_Sucursal)
-                End With
-
-                'Respuesta del Stored.
-                Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta.Direction = ParameterDirection.Output
-                cmd.Parameters.Add(respuesta)
-                cmd.ExecuteNonQuery()
-
-                'Desconecto la bdd
-                If HayInternet Then
+                    DisminuirStock(id_Producto, Cantidad, id_Sucursal, cmd)
                     clsDatos.DesconectarRemoto()
-                Else
-                    clsDatos.DesconectarLocal()
                 End If
             Else
                 eStock.Habilitado = 1
@@ -305,6 +287,23 @@ Public Class NegStock
         Return True
     End Function
 
+    Private Shared Sub DisminuirStock(id_Producto As Integer, Cantidad As Integer, id_Sucursal As Integer, ByRef cmd As SqlCommand)
+        'Ejecuto el Stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Stock_Disminucion"
+        With cmd.Parameters
+            .AddWithValue("@id_Producto", id_Producto)
+            .AddWithValue("@cantidad", Cantidad)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+        End With
+
+        'Respuesta del Stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+    End Sub
+
     'Update Stock.
     Function AgregarStock(ByVal id_Producto As Integer, ByVal id_Sucursal As Integer, ByVal Stock As Integer)
         Dim eStock As Entidades.Stock
@@ -322,33 +321,16 @@ Public Class NegStock
                 Dim NuevoStock As Integer = 0
                 NuevoStock = eStock.Stock_Actual + Stock
 
+                cmd.Connection = clsDatos.ConectarLocal()
+                AgregarStock(eStock, cmd, NuevoStock)
+                clsDatos.DesconectarLocal()
+
                 'Conecto la bdd.
                 If HayInternet Then
+                    cmd = New SqlCommand()
                     cmd.Connection = clsDatos.ConectarRemoto()
-                Else
-                    cmd.Connection = clsDatos.ConectarLocal()
-                End If
-
-                'Ejecuto el Stored.
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.CommandText = "sp_Stock_Agregar"
-                With cmd.Parameters
-                    .AddWithValue("@id_Producto", eStock.id_Producto)
-                    .AddWithValue("@id_Sucursal", eStock.id_Sucursal)
-                    .AddWithValue("@NuevoStock", NuevoStock)
-                End With
-
-                'Respuesta del Stored.
-                Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta.Direction = ParameterDirection.Output
-                cmd.Parameters.Add(respuesta)
-                cmd.ExecuteNonQuery()
-
-                'Desconecto la bdd.
-                If HayInternet Then
+                    AgregarStock(eStock, cmd, NuevoStock)
                     clsDatos.DesconectarRemoto()
-                Else
-                    clsDatos.DesconectarLocal()
                 End If
 
                 'muestro el mensaje
@@ -377,6 +359,23 @@ Public Class NegStock
         Return Estado
 
     End Function
+
+    Private Shared Sub AgregarStock(eStock As Stock, ByRef cmd As SqlCommand, NuevoStock As Integer)
+        'Ejecuto el Stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Stock_Agregar"
+        With cmd.Parameters
+            .AddWithValue("@id_Producto", eStock.id_Producto)
+            .AddWithValue("@id_Sucursal", eStock.id_Sucursal)
+            .AddWithValue("@NuevoStock", NuevoStock)
+        End With
+
+        'Respuesta del Stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+    End Sub
 
     'Funcion que comprueba si el producto posee mas stock que el minimo permitido.
     Function ComprobarStockMinimo(ByVal id_Producto As Integer, ByVal id_Sucursal As Integer) As Boolean

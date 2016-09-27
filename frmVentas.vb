@@ -32,6 +32,9 @@ Public Class frmVentas
 #Region "Region Funciones"
     'Limpiar Formulario
     Public Sub LimpiarFormVentas()
+        'Verifico si hay conexion a internet
+        Negocio.Funciones.HayConexionInternet()
+
         DG_Productos.Rows.Clear()
         txt_TotalMinorista.Text = "0,00"
         txt_SubtotalMinorista.Text = "0,00"
@@ -904,10 +907,10 @@ Public Class frmVentas
                             End If
                         Next
 
-                        If NegVentas.NuevaVenta(EntVentas, DetalleVenta) Then
+                        'Numero de Venta.
+                        Dim id_Venta As Integer = 0
 
-                            'Numero de Venta.
-                            Dim id_Venta As Integer = NegVentas.ObtenerID()
+                        If NegVentas.NuevaVenta(EntVentas, DetalleVenta, id_Venta) Then
 
                             'Comisiones para el vendedor.
                             Dim EntComisiones As New Entidades.Comisiones

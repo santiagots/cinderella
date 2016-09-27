@@ -12,42 +12,41 @@ Public Class NegRecibos
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto
+            cmd.Connection = clsDatos.ConectarLocal()
+            AltaReciboSueldo(eRecibo, cmd)
+            clsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Recibos_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Empleado", eRecibo.id_Empleado)
-                .AddWithValue("@id_Sucursal", eRecibo.id_Sucursal)
-                .AddWithValue("@Monto", eRecibo.Monto)
-                .AddWithValue("@Vacaciones", eRecibo.Vacaciones)
-                .AddWithValue("@Aguinaldo", eRecibo.Aguinaldo)
-                .AddWithValue("@Mes", eRecibo.Mes)
-                .AddWithValue("@Anio", eRecibo.Anio)
-            End With
-
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (Funciones.HayInternet) Then
+                AltaReciboSueldo(eRecibo, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaReciboSueldo(eRecibo As Entidades.Recibos, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Recibos_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Empleado", eRecibo.id_Empleado)
+            .AddWithValue("@id_Sucursal", eRecibo.id_Sucursal)
+            .AddWithValue("@Monto", eRecibo.Monto)
+            .AddWithValue("@Vacaciones", eRecibo.Vacaciones)
+            .AddWithValue("@Aguinaldo", eRecibo.Aguinaldo)
+            .AddWithValue("@Mes", eRecibo.Mes)
+            .AddWithValue("@Anio", eRecibo.Anio)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para obtener los recibos de un empleado

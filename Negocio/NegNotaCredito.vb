@@ -9,52 +9,52 @@ Public Class NegNotaCredito
     Public Function NuevaNotaCredito(ByVal EntNotaCredito As Entidades.NotaCredito) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Boolean
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = NuevaNotaCredito(EntNotaCredito, cmd)
+            ClsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_NotaCredito_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Devolucion", EntNotaCredito.id_Devolucion)
-                .AddWithValue("@NumeroNotaCredito", EntNotaCredito.NumeroNotaCredito)
-                .AddWithValue("@Monto", EntNotaCredito.Monto)
-                .AddWithValue("@Nombre", EntNotaCredito.Nombre)
-                .AddWithValue("@Cuit", EntNotaCredito.Cuit)
-                .AddWithValue("@Direccion", EntNotaCredito.Direccion)
-                .AddWithValue("@Localidad", EntNotaCredito.Localidad)
-                .AddWithValue("@TipoFactura", EntNotaCredito.TipoFactura)
-                .AddWithValue("@PuntoVenta", EntNotaCredito.PuntoVenta)
-                .AddWithValue("@Id_Sucursal", EntNotaCredito.id_Sucursal)
-                .AddWithValue("@TipoRecibo", EntNotaCredito.TipoRecibo)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If (HayInternet) Then
+                msg = NuevaNotaCredito(EntNotaCredito, cmd)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return CBool(respuesta.Value)
+            Return msg
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function NuevaNotaCredito(EntNotaCredito As Entidades.NotaCredito, ByRef cmd As SqlCommand) As Boolean
+        'Ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_NotaCredito_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Devolucion", EntNotaCredito.id_Devolucion)
+            .AddWithValue("@NumeroNotaCredito", EntNotaCredito.NumeroNotaCredito)
+            .AddWithValue("@Monto", EntNotaCredito.Monto)
+            .AddWithValue("@Nombre", EntNotaCredito.Nombre)
+            .AddWithValue("@Cuit", EntNotaCredito.Cuit)
+            .AddWithValue("@Direccion", EntNotaCredito.Direccion)
+            .AddWithValue("@Localidad", EntNotaCredito.Localidad)
+            .AddWithValue("@TipoFactura", EntNotaCredito.TipoFactura)
+            .AddWithValue("@PuntoVenta", EntNotaCredito.PuntoVenta)
+            .AddWithValue("@Id_Sucursal", EntNotaCredito.id_Sucursal)
+            .AddWithValue("@TipoRecibo", EntNotaCredito.TipoRecibo)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CBool(respuesta.Value)
     End Function
 
     Function TraerNotaCredito(id_Devolucion As Integer) As Entidades.NotaCredito

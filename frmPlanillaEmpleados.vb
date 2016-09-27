@@ -117,6 +117,10 @@ Public Class frmPlanillaEmpleados
                 Cb_Sucursal.Refresh()
             End If
 
+            If (Not Negocio.Funciones.HayInternet) Then
+                Cb_Sucursal.Enabled = False
+            End If
+
             'Limpiar la grilla.
             LimpiarGrilla()
 

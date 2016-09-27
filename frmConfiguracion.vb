@@ -24,6 +24,10 @@ Public Class frmConfiguracion
             Cb_Sucursales.Refresh()
         End If
 
+        If (Not Negocio.Funciones.HayInternet) Then
+            Cb_Sucursales.Enabled = False
+        End If
+
         'Cargo el listado de Precios.
         If (NListas.ListadoGrupoPrecios().Tables.Count <> 0) Then
             cb_Precios.DataSource = NListas.ListadoGrupoPrecios().Tables(0)
