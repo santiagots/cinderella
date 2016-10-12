@@ -106,54 +106,7 @@ Public Class frmEmpleados
             'icono de edicion
             TbMod.ImageIndex = 2
 
-            'Cargo el datagrid | depende si es admin o no cargo todos o solo los especificos para la sucursal
-            If VariablesGlobales.objUsuario.id_Perfil = 1 Then
-                Dim dsEmp As New DataSet
-                dsEmp = NegEmpleados.ListadoEmpleados()
-
-                If (dsEmp.Tables(0).Rows.Count > 0) Then
-                    For Each emp In dsEmp.Tables(0).Rows
-                        emp.item("Sucursal") = NegEmpleados.TraerSucursalesEmpleado(emp.item("id_Empleado"))
-                    Next
-                    DG_Empleados.DataSource = dsEmp.Tables(0)
-                    DG_Empleados.AutoGenerateColumns = False
-                    DG_Empleados.ColumnHeadersVisible = True
-                    DG_Empleados.Columns("Telefono").Visible = False
-                    DG_Empleados.Columns("id_Empleado").Visible = False
-                    DG_Empleados.Columns("NombreCompleto").Visible = False
-                    DG_Empleados.Columns("SueldoFeriado").Visible = False
-                    DG_Empleados.Columns("SueldoNormal").Visible = False
-                    DG_Empleados.Columns("Modificar").DisplayIndex = 9
-                    DG_Empleados.Columns("Eliminar").DisplayIndex = 9
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Empleados.ColumnHeadersVisible = False
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = True
-                End If
-            Else
-                Dim dsEmp As New DataSet
-                dsEmp = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
-                If (dsEmp.Tables(0).Rows.Count > 0) Then
-                    DG_Empleados.DataSource = dsEmp.Tables(0)
-                    DG_Empleados.AutoGenerateColumns = False
-                    DG_Empleados.ColumnHeadersVisible = True
-                    DG_Empleados.Columns("Telefono").Visible = False
-                    DG_Empleados.Columns("id_Empleado").Visible = False
-                    DG_Empleados.Columns("NombreCompleto").Visible = False
-                    DG_Empleados.Columns("SueldoFeriado").Visible = False
-                    DG_Empleados.Columns("SueldoNormal").Visible = False
-                    DG_Empleados.Columns("Modificar").DisplayIndex = 9
-                    DG_Empleados.Columns("Eliminar").DisplayIndex = 9
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Empleados.ColumnHeadersVisible = False
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = True
-                End If
-            End If
+            CargarGrillaEmpleados()
 
             'AGREGADO PARA EL FUNCIONAMIENTO CORRECTO DEPENDIENDO DE LAS PATENTES.
             Dim objusuario As New Negocio.Usuario
@@ -351,52 +304,7 @@ Public Class frmEmpleados
 
         If TabEmpleados.SelectedTab.Name = "TbListado" Then 'TAB LISTADO DE EMPLEADO
             'Actualizo el datagrid si se selecciona el tab del listado
-            If VariablesGlobales.objUsuario.id_Perfil = 1 Then
-                Dim DsEmpleados As New DataSet
-                DsEmpleados = NegEmpleados.ListadoEmpleados()
-                If DsEmpleados.Tables(0).Rows.Count > 0 Then
-                    For Each emp In DsEmpleados.Tables(0).Rows
-                        emp.item("Sucursal") = NegEmpleados.TraerSucursalesEmpleado(emp.item("id_Empleado"))
-                    Next
-                    DG_Empleados.DataSource = DsEmpleados.Tables(0)
-                    DG_Empleados.AutoGenerateColumns = False
-                    DG_Empleados.ColumnHeadersVisible = True
-                    DG_Empleados.Columns("Telefono").Visible = False
-                    DG_Empleados.Columns("id_Empleado").Visible = False
-                    DG_Empleados.Columns("NombreCompleto").Visible = False
-                    DG_Empleados.Columns("SueldoFeriado").Visible = False
-                    DG_Empleados.Columns("SueldoNormal").Visible = False
-                    DG_Empleados.Columns("Modificar").DisplayIndex = 9
-                    DG_Empleados.Columns("Eliminar").DisplayIndex = 9
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Empleados.ColumnHeadersVisible = False
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = True
-                End If
-            Else
-                Dim DsEmpleados As New DataSet
-                DsEmpleados = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
-                If DsEmpleados.Tables(0).Rows.Count > 0 Then
-                    DG_Empleados.DataSource = DsEmpleados.Tables(0)
-                    DG_Empleados.AutoGenerateColumns = False
-                    DG_Empleados.ColumnHeadersVisible = True
-                    DG_Empleados.Columns("Telefono").Visible = False
-                    DG_Empleados.Columns("id_Empleado").Visible = False
-                    DG_Empleados.Columns("NombreCompleto").Visible = False
-                    DG_Empleados.Columns("SueldoFeriado").Visible = False
-                    DG_Empleados.Columns("SueldoNormal").Visible = False
-                    DG_Empleados.Columns("Modificar").DisplayIndex = 9
-                    DG_Empleados.Columns("Eliminar").DisplayIndex = 9
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Empleados.ColumnHeadersVisible = False
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = True
-                End If
-            End If
+            CargarGrillaEmpleados()
 
             'Limpio los formularios
             LimpiarFormAltaEmpleados()
@@ -450,6 +358,7 @@ Public Class frmEmpleados
 
     'Click en el listado de empleados.
     Private Sub DG_Empleados_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Empleados.CellContentClick
+
         If DG_Empleados.Columns(e.ColumnIndex).Name = "Eliminar" Then 'Si se hace click en el boton "eliminar" de la fila.
             Dim Result As DialogResult
             Result = MessageBox.Show("¿Está seguro que desea eliminar el empleado?", "Administración de Empleados", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
@@ -468,139 +377,142 @@ Public Class frmEmpleados
                     MessageBox.Show(NegEmpleados.EliminarEmpleado(id_Empleado), "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                     'refresco el datagrid
-                    DG_Empleados.DataSource = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal).Tables(0)
-                    DG_Empleados.Refresh()
+                    CargarGrillaEmpleados()
                 End If
 
                 'Cambio el cursor a NORMAL.
                 TabEmpleados.Cursor = Cursors.Arrow
             End If
         ElseIf DG_Empleados.Columns(e.ColumnIndex).Name = "Modificar" Then 'Si se hace click en el boton "modificar" de la fila.
+            Try
+                'Cambio el cursor a "WAIT"
+                TabEmpleados.Cursor = Cursors.WaitCursor
 
-            'Cambio el cursor a "WAIT"
-            TabEmpleados.Cursor = Cursors.WaitCursor
+                Dim id_Empleado As Integer = DG_Empleados.Rows(e.RowIndex).Cells("id_Empleado").Value()
+                EEmpleados.id_Empleado = id_Empleado
 
-            Dim id_Empleado As Integer = DG_Empleados.Rows(e.RowIndex).Cells("id_Empleado").Value()
-            EEmpleados.id_Empleado = id_Empleado
+                'lleno la entidad empleado
+                EEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
 
-            'lleno la entidad empleado
-            EEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
+                'lleno los controls del tab_modificacion
+                txt_Nombre_mod.Text = EEmpleados.Nombre
+                txt_Telefono_mod.Text = EEmpleados.Telefono
+                txt_Telefono2_mod.Text = EEmpleados.Telefono2
+                txt_Mail_mod.Text = EEmpleados.Mail
+                txt_Apellido_mod.Text = EEmpleados.Apellido
+                If EEmpleados.Observaciones <> "" Then
+                    txt_Observaciones_mod.Text = Replace(Trim(EEmpleados.Observaciones), "<br />", vbCrLf)
+                Else
+                    txt_Observaciones_mod.Text = ""
+                End If
+                txt_Cuil_mod.Text = EEmpleados.Cuil
+                txt_CodigoPostal_mod.Text = EEmpleados.Codigo_Postal
+                txt_Direccion_mod.Text = EEmpleados.Direccion
+                txt_SueldoFeriado_mod.Text = EEmpleados.SueldoFeriado
+                txt_SueldoNormal_mod.Text = EEmpleados.SueldoNormal
+                txt_SueldoPresente_mod.Text = EEmpleados.SueldoPresentismo
+                FechaNacimiento_mod.Value = EEmpleados.FechaNacimiento
+                FechaIngreso_mod.Value = EEmpleados.FechaIngreso
 
-            'lleno los controls del tab_modificacion
-            txt_Nombre_mod.Text = EEmpleados.Nombre
-            txt_Telefono_mod.Text = EEmpleados.Telefono
-            txt_Telefono2_mod.Text = EEmpleados.Telefono2
-            txt_Mail_mod.Text = EEmpleados.Mail
-            txt_Apellido_mod.Text = EEmpleados.Apellido
-            If EEmpleados.Observaciones <> "" Then
-                txt_Observaciones_mod.Text = Replace(Trim(EEmpleados.Observaciones), "<br />", vbCrLf)
-            Else
-                txt_Observaciones_mod.Text = ""
-            End If
-            txt_Cuil_mod.Text = EEmpleados.Cuil
-            txt_CodigoPostal_mod.Text = EEmpleados.Codigo_Postal
-            txt_Direccion_mod.Text = EEmpleados.Direccion
-            txt_SueldoFeriado_mod.Text = EEmpleados.SueldoFeriado
-            txt_SueldoNormal_mod.Text = EEmpleados.SueldoNormal
-            txt_SueldoPresente_mod.Text = EEmpleados.SueldoPresentismo
-            FechaNacimiento_mod.Value = EEmpleados.FechaNacimiento
-            FechaIngreso_mod.Value = EEmpleados.FechaIngreso
-
-            'Cargo el combo de Provincias
-            Dim DsProvincias As New DataSet
-            DsProvincias = NegProvincias.ListadoProvincias()
-            If (DsProvincias.Tables(0).Rows.Count > 0) Then
-                cb_Provincia_mod.DataSource = Nothing
-                cb_Provincia_mod.DataSource = DsProvincias.Tables(0)
-                cb_Provincia_mod.DisplayMember = "Descripcion"
-                cb_Provincia_mod.ValueMember = "id_Provincia"
-                cb_Provincia_mod.SelectedValue = EEmpleados.id_Provincia
-                cb_Provincia_mod.Refresh()
-            End If
-
-            'Cargo el combo de Distritos
-            Dim DsDistritos As New DataSet
-            DsDistritos = NegDistritos.ListadoDistritos(EEmpleados.id_Provincia)
-            If (DsDistritos.Tables(0).Rows.Count > 0) Then
-                cb_Distrito_mod.DataSource = Nothing
-                cb_Distrito_mod.DataSource = DsDistritos.Tables(0)
-                cb_Distrito_mod.DisplayMember = "Descripcion"
-                cb_Distrito_mod.ValueMember = "id_Departamento"
-                cb_Distrito_mod.SelectedValue = EEmpleados.id_Distrito
-                cb_Distrito_mod.Refresh()
-            End If
-
-            'Cargo el combo de Localidades
-            Dim DsLocalidades As New DataSet
-            DsLocalidades = NegLocalidades.ListadoLocalidades(EEmpleados.id_Distrito)
-            If DsLocalidades.Tables(0).Rows.Count > 0 Then
-                cb_Localidad_mod.DataSource = Nothing
-                cb_Localidad_mod.DataSource = DsLocalidades.Tables(0)
-                cb_Localidad_mod.DisplayMember = "Descripcion"
-                cb_Localidad_mod.ValueMember = "id_Localidad"
-                cb_Localidad_mod.SelectedValue = EEmpleados.id_Localidad
-                cb_Localidad_mod.Refresh()
-            End If
-
-            'Cargo el combo de Tipos de Empleado
-            Dim DsTiposEmpleados As New DataSet
-            DsTiposEmpleados = NegTiposEmpleado.ListadoTipos()
-            If (DsTiposEmpleados.Tables(0).Rows.Count > 0) Then
-                cb_TipoEmpleado_mod.DataSource = Nothing
-                cb_TipoEmpleado_mod.DataSource = DsTiposEmpleados.Tables(0)
-                cb_TipoEmpleado_mod.DisplayMember = "TipoEmpleado"
-                cb_TipoEmpleado_mod.ValueMember = "id_TipoEmpleado"
-                cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_TipoEmpleado
-                cb_TipoEmpleado_mod.Refresh()
-            End If
-
-            'Cargo el combo de Usuarios.
-            Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Usuario)
-            If (Usuarios.Tables(0).Rows.Count > 0) Then
-                cb_Usuario_Mod.DataSource = Nothing
-                cb_Usuario_Mod.DataSource = Usuarios.Tables(0)
-                cb_Usuario_Mod.DisplayMember = "Usuario"
-                cb_Usuario_Mod.ValueMember = "id_Usuario"
-                cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_Usuario
-                cb_Usuario_Mod.Refresh()
-            End If
-
-            'Cargo el combo de sucursales
-            If VariablesGlobales.objUsuario.id_Perfil = 1 Then
-                Dim DsSucursales As New DataSet
-                DsSucursales = NegSucursal.ListadoSucursales()
-                If DsSucursales.Tables(0).Rows.Count > 0 Then
-                    CheckSucursales_mod.DataSource = DsSucursales.Tables(0)
-                    CheckSucursales_mod.DisplayMember = "Nombre"
-                    CheckSucursales_mod.ValueMember = "id_Sucursal"
-                    CheckSucursales_mod.Refresh()
+                'Cargo el combo de Provincias
+                Dim DsProvincias As New DataSet
+                DsProvincias = NegProvincias.ListadoProvincias()
+                If (DsProvincias.Tables(0).Rows.Count > 0) Then
+                    cb_Provincia_mod.DataSource = Nothing
+                    cb_Provincia_mod.DataSource = DsProvincias.Tables(0)
+                    cb_Provincia_mod.DisplayMember = "Descripcion"
+                    cb_Provincia_mod.ValueMember = "id_Provincia"
+                    cb_Provincia_mod.SelectedValue = EEmpleados.id_Provincia
+                    cb_Provincia_mod.Refresh()
                 End If
 
-                If (NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables.Count <> 0) Then
-                    For i As Integer = 0 To CheckSucursales_mod.Items.Count - 1
-                        For Each DataRow In NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables(0).Rows
-                            If DirectCast(CheckSucursales_mod.Items(i), System.Data.DataRowView).Row.ItemArray(0) = DirectCast(DataRow, System.Data.DataRow).ItemArray(0) Then
-                                CheckSucursales_mod.SetItemChecked(i, True)
-                            End If
-                        Next
-                    Next i
+                'Cargo el combo de Distritos
+                Dim DsDistritos As New DataSet
+                DsDistritos = NegDistritos.ListadoDistritos(EEmpleados.id_Provincia)
+                If (DsDistritos.Tables(0).Rows.Count > 0) Then
+                    cb_Distrito_mod.DataSource = Nothing
+                    cb_Distrito_mod.DataSource = DsDistritos.Tables(0)
+                    cb_Distrito_mod.DisplayMember = "Descripcion"
+                    cb_Distrito_mod.ValueMember = "id_Departamento"
+                    cb_Distrito_mod.SelectedValue = EEmpleados.id_Distrito
+                    cb_Distrito_mod.Refresh()
                 End If
-            Else
-                CheckSucursales.Visible = False
-                lbl_Sucursal.Visible = False
-            End If
 
-            If EEmpleados.Habilitado = "1" Then
-                chk_Habilitado_mod.Checked = True
-            Else
-                chk_Habilitado_mod.Checked = False
-            End If
+                'Cargo el combo de Localidades
+                Dim DsLocalidades As New DataSet
+                DsLocalidades = NegLocalidades.ListadoLocalidades(EEmpleados.id_Distrito)
+                If DsLocalidades.Tables(0).Rows.Count > 0 Then
+                    cb_Localidad_mod.DataSource = Nothing
+                    cb_Localidad_mod.DataSource = DsLocalidades.Tables(0)
+                    cb_Localidad_mod.DisplayMember = "Descripcion"
+                    cb_Localidad_mod.ValueMember = "id_Localidad"
+                    cb_Localidad_mod.SelectedValue = EEmpleados.id_Localidad
+                    cb_Localidad_mod.Refresh()
+                End If
 
-            'Cambio el cursor a NORMAL.
-            TabEmpleados.Cursor = Cursors.Arrow
+                'Cargo el combo de Tipos de Empleado
+                Dim DsTiposEmpleados As New DataSet
+                DsTiposEmpleados = NegTiposEmpleado.ListadoTipos()
+                If (DsTiposEmpleados.Tables(0).Rows.Count > 0) Then
+                    cb_TipoEmpleado_mod.DataSource = Nothing
+                    cb_TipoEmpleado_mod.DataSource = DsTiposEmpleados.Tables(0)
+                    cb_TipoEmpleado_mod.DisplayMember = "TipoEmpleado"
+                    cb_TipoEmpleado_mod.ValueMember = "id_TipoEmpleado"
+                    cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_TipoEmpleado
+                    cb_TipoEmpleado_mod.Refresh()
+                End If
 
-            'hago foco en el tab_modificacion 
-            TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbMod")
+                'Cargo el combo de Usuarios.
+                Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Empleado)
+                If (Usuarios.Tables(0).Rows.Count > 0) Then
+                    cb_Usuario_Mod.DataSource = Nothing
+                    cb_Usuario_Mod.DataSource = Usuarios.Tables(0)
+                    cb_Usuario_Mod.DisplayMember = "Usuario"
+                    cb_Usuario_Mod.ValueMember = "id_Usuario"
+                    cb_Usuario_Mod.SelectedValue = EEmpleados.id_Usuario
+                    cb_Usuario_Mod.Refresh()
+                End If
+
+                'Cargo el combo de sucursales
+                If VariablesGlobales.objUsuario.id_Perfil = 1 Then
+                    Dim DsSucursales As New DataSet
+                    DsSucursales = NegSucursal.ListadoSucursales()
+                    If DsSucursales.Tables(0).Rows.Count > 0 Then
+                        CheckSucursales_mod.DataSource = DsSucursales.Tables(0)
+                        CheckSucursales_mod.DisplayMember = "Nombre"
+                        CheckSucursales_mod.ValueMember = "id_Sucursal"
+                        CheckSucursales_mod.Refresh()
+                    End If
+
+                    If (NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables.Count <> 0) Then
+                        For i As Integer = 0 To CheckSucursales_mod.Items.Count - 1
+                            For Each DataRow In NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables(0).Rows
+                                If DirectCast(CheckSucursales_mod.Items(i), System.Data.DataRowView).Row.ItemArray(0) = DirectCast(DataRow, System.Data.DataRow).ItemArray(0) Then
+                                    CheckSucursales_mod.SetItemChecked(i, True)
+                                End If
+                            Next
+                        Next i
+                    End If
+                Else
+                    CheckSucursales.Visible = False
+                    lbl_Sucursal.Visible = False
+                End If
+
+                If EEmpleados.Habilitado = "1" Then
+                    chk_Habilitado_mod.Checked = True
+                Else
+                    chk_Habilitado_mod.Checked = False
+                End If
+
+                'Cambio el cursor a NORMAL.
+                TabEmpleados.Cursor = Cursors.Arrow
+
+                'hago foco en el tab_modificacion 
+                TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbMod")
+            Catch ex As Exception
+                TabEmpleados.Cursor = Cursors.Arrow
+                MessageBox.Show("Se ha encontrado un error al iniciar al edición del empleado. Por favor, vuelva a intentar más tarde." + ex.ToString(), "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
 
@@ -637,53 +549,7 @@ Public Class frmEmpleados
             'Cambio el cursor a "WAIT"
             Me.Cursor = Cursors.WaitCursor
 
-            'Cargo el datagrid | depende si es admin o no cargo todos o solo los especificos para la sucursal
-            If VariablesGlobales.objUsuario.id_Perfil = 1 Then
-                Dim dsEmp As New DataSet
-                dsEmp = NegEmpleados.ListadoEmpleados()
-                If (dsEmp.Tables(0).Rows.Count > 0) Then
-                    For Each emp In dsEmp.Tables(0).Rows
-                        emp.item("Sucursal") = NegEmpleados.TraerSucursalesEmpleado(emp.item("id_Empleado"))
-                    Next
-                    DG_Empleados.DataSource = dsEmp.Tables(0)
-                    DG_Empleados.AutoGenerateColumns = False
-                    DG_Empleados.ColumnHeadersVisible = True
-                    DG_Empleados.Columns("Telefono").Visible = False
-                    DG_Empleados.Columns("id_Empleado").Visible = False
-                    DG_Empleados.Columns("NombreCompleto").Visible = False
-                    DG_Empleados.Columns("SueldoFeriado").Visible = False
-                    DG_Empleados.Columns("SueldoNormal").Visible = False
-                    DG_Empleados.Columns("Modificar").DisplayIndex = 9
-                    DG_Empleados.Columns("Eliminar").DisplayIndex = 9
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Empleados.ColumnHeadersVisible = False
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = True
-                End If
-            Else
-                Dim dsEmp As New DataSet
-                dsEmp = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
-                If (dsEmp.Tables(0).Rows.Count > 0) Then
-                    DG_Empleados.DataSource = dsEmp.Tables(0)
-                    DG_Empleados.AutoGenerateColumns = False
-                    DG_Empleados.ColumnHeadersVisible = True
-                    DG_Empleados.Columns("Telefono").Visible = False
-                    DG_Empleados.Columns("id_Empleado").Visible = False
-                    DG_Empleados.Columns("NombreCompleto").Visible = False
-                    DG_Empleados.Columns("SueldoFeriado").Visible = False
-                    DG_Empleados.Columns("SueldoNormal").Visible = False
-                    DG_Empleados.Columns("Modificar").DisplayIndex = 9
-                    DG_Empleados.Columns("Eliminar").DisplayIndex = 9
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Empleados.ColumnHeadersVisible = False
-                    DG_Empleados.Refresh()
-                    lbl_Msg.Visible = True
-                End If
-            End If
+            CargarGrillaEmpleados()
 
             txt_buscar.Clear()
             txt_buscar.Focus()
@@ -699,133 +565,190 @@ Public Class frmEmpleados
 
     'Doble click en el listado de empleados.
     Private Sub DG_Empleados_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Empleados.CellDoubleClick
-        If DG_Empleados.SelectedRows.Count > 0 Then
-            If e.RowIndex >= 0 Then
-                'Cambio el cursor a "WAIT"
-                TabEmpleados.Cursor = Cursors.WaitCursor
+        Try
+            If DG_Empleados.SelectedRows.Count > 0 Then
+                If e.RowIndex >= 0 Then
+                    'Cambio el cursor a "WAIT"
+                    TabEmpleados.Cursor = Cursors.WaitCursor
 
-                Dim id_Empleado As Integer = DG_Empleados.Rows(e.RowIndex).Cells("id_Empleado").Value()
-                EEmpleados.id_Empleado = id_Empleado
+                    Dim id_Empleado As Integer = DG_Empleados.Rows(e.RowIndex).Cells("id_Empleado").Value()
+                    EEmpleados.id_Empleado = id_Empleado
 
-                'lleno la entidad empleado
-                EEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
+                    'lleno la entidad empleado
+                    EEmpleados = NegEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
 
-                'lleno los controls del tab_modificacion
-                txt_Nombre_mod.Text = EEmpleados.Nombre
-                txt_Telefono_mod.Text = EEmpleados.Telefono
-                txt_Telefono2_mod.Text = EEmpleados.Telefono2
-                txt_Mail_mod.Text = EEmpleados.Mail
-                txt_Apellido_mod.Text = EEmpleados.Apellido
-                If EEmpleados.Observaciones <> "" Then
-                    txt_Observaciones_mod.Text = Replace(Trim(EEmpleados.Observaciones), "<br />", vbCrLf)
-                Else
-                    txt_Observaciones_mod.Text = ""
-                End If
-                txt_Cuil_mod.Text = EEmpleados.Cuil
-                txt_CodigoPostal_mod.Text = EEmpleados.Codigo_Postal
-                txt_Direccion_mod.Text = EEmpleados.Direccion
-                txt_SueldoFeriado_mod.Text = EEmpleados.SueldoFeriado
-                txt_SueldoNormal_mod.Text = EEmpleados.SueldoNormal
-                txt_SueldoPresente_mod.Text = EEmpleados.SueldoPresentismo
-                FechaNacimiento_mod.Value = EEmpleados.FechaNacimiento
-                FechaIngreso_mod.Value = EEmpleados.FechaIngreso
+                    'lleno los controls del tab_modificacion
+                    txt_Nombre_mod.Text = EEmpleados.Nombre
+                    txt_Telefono_mod.Text = EEmpleados.Telefono
+                    txt_Telefono2_mod.Text = EEmpleados.Telefono2
+                    txt_Mail_mod.Text = EEmpleados.Mail
+                    txt_Apellido_mod.Text = EEmpleados.Apellido
+                    If EEmpleados.Observaciones <> "" Then
+                        txt_Observaciones_mod.Text = Replace(Trim(EEmpleados.Observaciones), "<br />", vbCrLf)
+                    Else
+                        txt_Observaciones_mod.Text = ""
+                    End If
+                    txt_Cuil_mod.Text = EEmpleados.Cuil
+                    txt_CodigoPostal_mod.Text = EEmpleados.Codigo_Postal
+                    txt_Direccion_mod.Text = EEmpleados.Direccion
+                    txt_SueldoFeriado_mod.Text = EEmpleados.SueldoFeriado
+                    txt_SueldoNormal_mod.Text = EEmpleados.SueldoNormal
+                    txt_SueldoPresente_mod.Text = EEmpleados.SueldoPresentismo
+                    FechaNacimiento_mod.Value = EEmpleados.FechaNacimiento
+                    FechaIngreso_mod.Value = EEmpleados.FechaIngreso
 
-                'Cargo el combo de Provincias
-                Dim dsProvincias As New DataSet
-                dsProvincias = NegProvincias.ListadoProvincias()
-                If dsProvincias.Tables(0).Rows.Count > 0 Then
-                    cb_Provincia_mod.DataSource = Nothing
-                    cb_Provincia_mod.DataSource = dsProvincias.Tables(0)
-                    cb_Provincia_mod.DisplayMember = "Descripcion"
-                    cb_Provincia_mod.ValueMember = "id_Provincia"
-                    cb_Provincia_mod.SelectedValue = EEmpleados.id_Provincia
-                    cb_Provincia_mod.Refresh()
-                End If
-
-                'Cargo el combo de Distritos
-                Dim dsDistritos As New DataSet
-                dsDistritos = NegDistritos.ListadoDistritos(EEmpleados.id_Provincia)
-                If dsDistritos.Tables(0).Rows.Count > 0 Then
-                    cb_Distrito_mod.DataSource = Nothing
-                    cb_Distrito_mod.DataSource = dsDistritos.Tables(0)
-                    cb_Distrito_mod.DisplayMember = "Descripcion"
-                    cb_Distrito_mod.ValueMember = "id_Departamento"
-                    cb_Distrito_mod.SelectedValue = EEmpleados.id_Distrito
-                    cb_Distrito_mod.Refresh()
-                End If
-
-                'Cargo el combo de Localidades
-                Dim dsLocalidades As New DataSet
-                dsLocalidades = NegLocalidades.ListadoLocalidades(EEmpleados.id_Distrito)
-                If dsLocalidades.Tables(0).Rows.Count > 0 Then
-                    cb_Localidad_mod.DataSource = Nothing
-                    cb_Localidad_mod.DataSource = dsLocalidades.Tables(0)
-                    cb_Localidad_mod.DisplayMember = "Descripcion"
-                    cb_Localidad_mod.ValueMember = "id_Localidad"
-                    cb_Localidad_mod.SelectedValue = EEmpleados.id_Localidad
-                    cb_Localidad_mod.Refresh()
-                End If
-
-                'Cargo el combo de Tipos de Empleado
-                Dim dsTipos As New DataSet
-                dsTipos = NegTiposEmpleado.ListadoTipos()
-                If dsTipos.Tables(0).Rows.Count > 0 Then
-                    cb_TipoEmpleado_mod.DataSource = Nothing
-                    cb_TipoEmpleado_mod.DataSource = dsTipos.Tables(0)
-                    cb_TipoEmpleado_mod.DisplayMember = "TipoEmpleado"
-                    cb_TipoEmpleado_mod.ValueMember = "id_TipoEmpleado"
-                    cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_TipoEmpleado
-                    cb_TipoEmpleado_mod.Refresh()
-                End If
-
-                'Cargo el combo de Usuarios.
-                Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Empleado)
-                If (Usuarios.Tables(0).Rows.Count > 0) Then
-                    cb_Usuario_Mod.DataSource = Nothing
-                    cb_Usuario_Mod.DataSource = Usuarios.Tables(0)
-                    cb_Usuario_Mod.DisplayMember = "Usuario"
-                    cb_Usuario_Mod.ValueMember = "id_Usuario"
-                    cb_Usuario_Mod.SelectedValue = EEmpleados.id_Usuario
-                    cb_Usuario_Mod.Refresh()
-                End If
-
-                'Cargo el combo de sucursales
-                If VariablesGlobales.objUsuario.id_Perfil = 1 Then
-                    Dim DsSucursales As New DataSet
-                    DsSucursales = NegSucursal.ListadoSucursales()
-                    If DsSucursales.Tables(0).Rows.Count > 0 Then
-                        CheckSucursales_mod.DataSource = DsSucursales.Tables(0)
-                        CheckSucursales_mod.DisplayMember = "Nombre"
-                        CheckSucursales_mod.ValueMember = "id_Sucursal"
-                        CheckSucursales_mod.Refresh()
+                    'Cargo el combo de Provincias
+                    Dim dsProvincias As New DataSet
+                    dsProvincias = NegProvincias.ListadoProvincias()
+                    If dsProvincias.Tables(0).Rows.Count > 0 Then
+                        cb_Provincia_mod.DataSource = Nothing
+                        cb_Provincia_mod.DataSource = dsProvincias.Tables(0)
+                        cb_Provincia_mod.DisplayMember = "Descripcion"
+                        cb_Provincia_mod.ValueMember = "id_Provincia"
+                        cb_Provincia_mod.SelectedValue = EEmpleados.id_Provincia
+                        cb_Provincia_mod.Refresh()
                     End If
 
-                    'primero hay que ver si ese producto tiene algun aroma ya cargado sino no vale la pena entrar a ningun for
-                    If (NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables.Count <> 0) Then
-                        For i As Integer = 0 To CheckSucursales_mod.Items.Count - 1
-                            For Each DataRow In NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables(0).Rows
-                                If DirectCast(CheckSucursales_mod.Items(i), System.Data.DataRowView).Row.ItemArray(0) = DirectCast(DataRow, System.Data.DataRow).ItemArray(0) Then
-                                    CheckSucursales_mod.SetItemChecked(i, True)
-                                End If
-                            Next
-                        Next i
+                    'Cargo el combo de Distritos
+                    Dim dsDistritos As New DataSet
+                    dsDistritos = NegDistritos.ListadoDistritos(EEmpleados.id_Provincia)
+                    If dsDistritos.Tables(0).Rows.Count > 0 Then
+                        cb_Distrito_mod.DataSource = Nothing
+                        cb_Distrito_mod.DataSource = dsDistritos.Tables(0)
+                        cb_Distrito_mod.DisplayMember = "Descripcion"
+                        cb_Distrito_mod.ValueMember = "id_Departamento"
+                        cb_Distrito_mod.SelectedValue = EEmpleados.id_Distrito
+                        cb_Distrito_mod.Refresh()
                     End If
-                Else
-                    CheckSucursales.Visible = False
-                    lbl_Sucursal.Visible = False
+
+                    'Cargo el combo de Localidades
+                    Dim dsLocalidades As New DataSet
+                    dsLocalidades = NegLocalidades.ListadoLocalidades(EEmpleados.id_Distrito)
+                    If dsLocalidades.Tables(0).Rows.Count > 0 Then
+                        cb_Localidad_mod.DataSource = Nothing
+                        cb_Localidad_mod.DataSource = dsLocalidades.Tables(0)
+                        cb_Localidad_mod.DisplayMember = "Descripcion"
+                        cb_Localidad_mod.ValueMember = "id_Localidad"
+                        cb_Localidad_mod.SelectedValue = EEmpleados.id_Localidad
+                        cb_Localidad_mod.Refresh()
+                    End If
+
+                    'Cargo el combo de Tipos de Empleado
+                    Dim dsTipos As New DataSet
+                    dsTipos = NegTiposEmpleado.ListadoTipos()
+                    If dsTipos.Tables(0).Rows.Count > 0 Then
+                        cb_TipoEmpleado_mod.DataSource = Nothing
+                        cb_TipoEmpleado_mod.DataSource = dsTipos.Tables(0)
+                        cb_TipoEmpleado_mod.DisplayMember = "TipoEmpleado"
+                        cb_TipoEmpleado_mod.ValueMember = "id_TipoEmpleado"
+                        cb_TipoEmpleado_mod.SelectedValue = EEmpleados.id_TipoEmpleado
+                        cb_TipoEmpleado_mod.Refresh()
+                    End If
+
+                    'Cargo el combo de Usuarios.
+                    Dim Usuarios = NegUsuarios.ListadoUsuariosSinEmpleados(EEmpleados.id_Empleado)
+                    If (Usuarios.Tables(0).Rows.Count > 0) Then
+                        cb_Usuario_Mod.DataSource = Nothing
+                        cb_Usuario_Mod.DataSource = Usuarios.Tables(0)
+                        cb_Usuario_Mod.DisplayMember = "Usuario"
+                        cb_Usuario_Mod.ValueMember = "id_Usuario"
+                        cb_Usuario_Mod.SelectedValue = EEmpleados.id_Usuario
+                        cb_Usuario_Mod.Refresh()
+                    End If
+
+                    'Cargo el combo de sucursales
+                    If VariablesGlobales.objUsuario.id_Perfil = 1 Then
+                        Dim DsSucursales As New DataSet
+                        DsSucursales = NegSucursal.ListadoSucursales()
+                        If DsSucursales.Tables(0).Rows.Count > 0 Then
+                            CheckSucursales_mod.DataSource = Nothing
+                            CheckSucursales_mod.DataSource = DsSucursales.Tables(0)
+                            CheckSucursales_mod.DisplayMember = "Nombre"
+                            CheckSucursales_mod.ValueMember = "id_Sucursal"
+                            CheckSucursales_mod.Refresh()
+                        End If
+
+                        'primero hay que ver si ese producto tiene algun aroma ya cargado sino no vale la pena entrar a ningun for
+                        If (NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables.Count <> 0) Then
+                            For i As Integer = 0 To CheckSucursales_mod.Items.Count - 1
+                                For Each DataRow In NegSucursal.ListadoSucursalesEmpleado(id_Empleado).Tables(0).Rows
+                                    If DirectCast(CheckSucursales_mod.Items(i), System.Data.DataRowView).Row.ItemArray(0) = DirectCast(DataRow, System.Data.DataRow).ItemArray(0) Then
+                                        CheckSucursales_mod.SetItemChecked(i, True)
+                                    End If
+                                Next
+                            Next i
+                        End If
+                    Else
+                        CheckSucursales.Visible = False
+                        lbl_Sucursal.Visible = False
+                    End If
+
+                    If EEmpleados.Habilitado = "1" Then
+                        chk_Habilitado_mod.Checked = True
+                    Else
+                        chk_Habilitado_mod.Checked = False
+                    End If
+
+                    'Cambio el cursor a NORMAL.
+                    TabEmpleados.Cursor = Cursors.Arrow
+
+                    'hago foco en el tab_modificacion 
+                    TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbMod")
                 End If
+            End If
+        Catch ex As Exception
+            TabEmpleados.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al restablecer el listado. " + ex.ToString(), "Administración de Empleados", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
-                If EEmpleados.Habilitado = "1" Then
-                    chk_Habilitado_mod.Checked = True
-                Else
-                    chk_Habilitado_mod.Checked = False
-                End If
+    Private Sub CargarGrillaEmpleados()
+        'Cargo el datagrid | depende si es admin o no cargo todos o solo los especificos para la sucursal
+        If VariablesGlobales.objUsuario.id_Perfil = 1 Then
+            Dim dsEmp As New DataSet
+            dsEmp = NegEmpleados.ListadoEmpleados()
 
-                'Cambio el cursor a NORMAL.
-                TabEmpleados.Cursor = Cursors.Arrow
-
-                'hago foco en el tab_modificacion 
-                TabEmpleados.SelectedTab = TabEmpleados.TabPages("TbMod")
+            If (dsEmp.Tables(0).Rows.Count > 0) Then
+                For Each emp In dsEmp.Tables(0).Rows
+                    emp.item("Sucursal") = NegEmpleados.TraerSucursalesEmpleado(emp.item("id_Empleado"))
+                Next
+                DG_Empleados.DataSource = dsEmp.Tables(0)
+                DG_Empleados.AutoGenerateColumns = False
+                DG_Empleados.ColumnHeadersVisible = True
+                DG_Empleados.Columns("Telefono").Visible = False
+                DG_Empleados.Columns("id_Empleado").Visible = False
+                DG_Empleados.Columns("NombreCompleto").Visible = False
+                DG_Empleados.Columns("SueldoFeriado").Visible = False
+                DG_Empleados.Columns("SueldoNormal").Visible = False
+                DG_Empleados.Columns("Modificar").DisplayIndex = 9
+                DG_Empleados.Columns("Eliminar").DisplayIndex = 9
+                DG_Empleados.Refresh()
+                lbl_Msg.Visible = False
+            Else
+                DG_Empleados.ColumnHeadersVisible = False
+                DG_Empleados.Refresh()
+                lbl_Msg.Visible = True
+            End If
+        Else
+            Dim dsEmp As New DataSet
+            dsEmp = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
+            If (dsEmp.Tables(0).Rows.Count > 0) Then
+                DG_Empleados.DataSource = dsEmp.Tables(0)
+                DG_Empleados.AutoGenerateColumns = False
+                DG_Empleados.ColumnHeadersVisible = True
+                DG_Empleados.Columns("Telefono").Visible = False
+                DG_Empleados.Columns("id_Empleado").Visible = False
+                DG_Empleados.Columns("NombreCompleto").Visible = False
+                DG_Empleados.Columns("SueldoFeriado").Visible = False
+                DG_Empleados.Columns("SueldoNormal").Visible = False
+                DG_Empleados.Columns("Modificar").DisplayIndex = 9
+                DG_Empleados.Columns("Eliminar").DisplayIndex = 9
+                DG_Empleados.Refresh()
+                lbl_Msg.Visible = False
+            Else
+                DG_Empleados.ColumnHeadersVisible = False
+                DG_Empleados.Refresh()
+                lbl_Msg.Visible = True
             End If
         End If
     End Sub

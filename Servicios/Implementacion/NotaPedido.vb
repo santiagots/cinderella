@@ -50,13 +50,14 @@ Public Class NotaPedido
         notaPedido.PrecioTotal = EntNotaPedido.PrecioTotal
         notaPedido.Vendida = EntNotaPedido.Vendida
 
-        Dim AltaOk As Boolean = NotaPedidoNegocio.NuevaNotaPedido(notaPedido, detalleNotaPedido)
+        notaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(notaPedido, detalleNotaPedido)
 
-        If (AltaOk) Then
+        If (notaPedido.id_NotaPedido > 0) Then
             RaiseEvent onNevaNotaPedidoCompleted(notaPedido, consumidorFinal)
+            Return True
+        Else
+            Return False
         End If
-
-        Return AltaOk
     End Function
 
 End Class

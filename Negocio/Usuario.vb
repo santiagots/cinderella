@@ -1,6 +1,7 @@
 ﻿Imports Entidades
 Imports System.Data.SqlClient
 Imports Datos
+Imports System.Windows.Forms
 
 Public Class Usuario
     Dim objUsuario As Entidades.Usuario
@@ -111,9 +112,9 @@ Public Class Usuario
 
     Function ListadoUsuariosSinEmpleados(ByVal idUsuario As Integer) As DataSet
         If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("Select id_Usuario,Usuario from USUARIOS where  id_Usuario not in (SELECT case when id_Usuario IS NULL then 0 else id_Usuario end FROM [CINDERELLA].[dbo].[EMPLEADOS] where Id_Empleado !=" & idUsuario.ToString() & ") and (Habilitado=1) order by Usuario")
+            Return clsDatos.ConsultarBaseRemoto("Select id_Usuario,Usuario from USUARIOS where  id_Usuario not in (SELECT case when id_Usuario IS NULL then 0 else id_Usuario end FROM EMPLEADOS where Id_Empleado !=" & idUsuario.ToString() & ") and (Habilitado=1) order by Usuario")
         Else
-            Return clsDatos.ConsultarBaseLocal("Select id_Usuario,Usuario from USUARIOS where  id_Usuario not in (SELECT case when id_Usuario IS NULL then 0 else id_Usuario end FROM [CINDERELLA].[dbo].[EMPLEADOS] where Id_Empleado !=" & idUsuario.ToString() & ") and (Habilitado=1) order by Usuario")
+            Return clsDatos.ConsultarBaseLocal("Select id_Usuario,Usuario from USUARIOS where  id_Usuario not in (SELECT case when id_Usuario IS NULL then 0 else id_Usuario end FROM EMPLEADOS where Id_Empleado !=" & idUsuario.ToString() & ") and (Habilitado=1) order by Usuario")
         End If
     End Function
 

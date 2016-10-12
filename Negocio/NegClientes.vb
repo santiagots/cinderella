@@ -145,40 +145,41 @@ Public Class NegClientes
     Function AltaClienteConsumidorFinal(ByVal ecliente As Entidades.ConsumidorFinal) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
-
-        If (Funciones.HayInternet) Then
-            cmd.Connection = clsDatos.ConectarRemoto()
-        Else
-            cmd.Connection = clsDatos.ConectarLocal()
-        End If
-
+        Dim msg As Integer
         Try
 
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
-            With cmd.Parameters
-                .AddWithValue("@nombre", ecliente.Nombre)
-                .AddWithValue("@apellido", ecliente.Apellido)
-                .AddWithValue("@email", ecliente.Email)
-            End With
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaClienteConsumidorFinal(ecliente, cmd)
+            clsDatos.ConectarLocal()
 
-            Dim respuesta As New SqlParameter("@id", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-            'desconecto la bdd
             If (Funciones.HayInternet) Then
+                cmd = New SqlCommand()
+                cmd.Connection = clsDatos.ConectarRemoto()
+                msg = AltaClienteConsumidorFinal(ecliente, cmd)
                 clsDatos.ConectarRemoto()
-            Else
-                clsDatos.ConectarLocal()
             End If
 
-            'muestro el mensaje
-            Return respuesta.Value
+            Return msg
+
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaClienteConsumidorFinal(ecliente As ConsumidorFinal, ByRef cmd As SqlCommand) As Integer
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
+        With cmd.Parameters
+            .AddWithValue("@nombre", ecliente.Nombre)
+            .AddWithValue("@apellido", ecliente.Apellido)
+            .AddWithValue("@email", ecliente.Email)
+        End With
+
+        Dim respuesta As New SqlParameter("@id", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion para modificar un cliente.

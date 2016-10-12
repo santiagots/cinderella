@@ -1396,7 +1396,7 @@ Public Class frmProductos
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde. " + ex.ToString(), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

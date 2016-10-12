@@ -1152,7 +1152,7 @@ Public Class NegProductos
             xlWorkSheet.Range("A1").EntireColumn.Hidden = True
 
             RaiseEvent UpdateProgress(6, "Armando validaciones en Excel...")
-           
+
             '//Agrego la validacion de combos para el cargado de la categoria
             AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
 
@@ -1173,6 +1173,7 @@ Public Class NegProductos
             xlApp.Workbooks.Close()
             xlApp.Quit()
         Catch ex As Exception
+            MessageBox.Show(ex.ToString(), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return ex.Message
 
         Finally
@@ -1295,30 +1296,30 @@ Public Class NegProductos
 
             RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
 
-            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM [CINDERELLA].[dbo].[PRECIOS]", conn)
+            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM PRECIOS", conn)
             Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsBackUp, "[CINDERELLA].[dbo].[PRECIOS]")
+            adapter.Fill(dsBackUp, "PRECIOS")
 
-            cmd = New SqlCommand("SELECT * FROM  [CINDERELLA].[dbo].[STOCK]", conn)
+            cmd = New SqlCommand("SELECT * FROM  STOCK", conn)
             adapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsBackUp, "[CINDERELLA].[dbo].[STOCK]")
+            adapter.Fill(dsBackUp, "STOCK")
 
-            cmd = New SqlCommand("SELECT * FROM  [CINDERELLA].[dbo].[PRODUCTOS]", conn)
+            cmd = New SqlCommand("SELECT * FROM PRODUCTOS", conn)
             adapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsBackUp, "[CINDERELLA].[dbo].[PRODUCTOS]")
+            adapter.Fill(dsBackUp, "PRODUCTOS")
 
             'Guardo la informacion de la tabla antes de ser actualizada
             dsBackUp.WriteXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")
 
-            cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM [CINDERELLA].[dbo].[PRODUCTOS_CATEGORIAS]", conn)
+            cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM PRODUCTOS_CATEGORIAS", conn)
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsCategoria)
 
-            cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM [CINDERELLA].[dbo].[PRODUCTOS_SUBCATEGORIAS] ", conn)
+            cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM PRODUCTOS_SUBCATEGORIAS", conn)
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsSubCategoria)
 
-            cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM [CINDERELLA].[dbo].[PROVEEDORES]  ", conn)
+            cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM PROVEEDORES", conn)
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsProveedor)
 

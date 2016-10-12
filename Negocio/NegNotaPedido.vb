@@ -8,10 +8,10 @@ Public Class NegNotaPedido
     Dim ClsFunciones As New Funciones
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
-    Public Function NuevaNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle)) As Boolean
+    Public Function NuevaNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle)) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As Boolean
+        Dim msg As Integer
         Dim dt As DataTable = New DataTable()
         Dim HayInternet As Boolean = Funciones.HayInternet
 
@@ -31,7 +31,7 @@ Public Class NegNotaPedido
 
             If HayInternet Then
                 cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarLocal()
+                cmd.Connection = ClsDatos.ConectarRemoto()
                 msg = NuevaNotaPedido(EntNotaPedido, cmd, dt)
                 ClsDatos.DesconectarLocal()
             End If
@@ -42,7 +42,7 @@ Public Class NegNotaPedido
         End Try
     End Function
 
-    Private Shared Function NuevaNotaPedido(EntNotaPedido As NotaPedido, ByRef cmd As SqlCommand, dt As DataTable) As Boolean
+    Private Shared Function NuevaNotaPedido(EntNotaPedido As NotaPedido, ByRef cmd As SqlCommand, dt As DataTable) As Integer
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_NotaPedido_Alta"
