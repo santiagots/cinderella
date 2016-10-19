@@ -55,6 +55,7 @@ Public Class NegVentas
             .AddWithValue("@id_TipoVenta", EntVenta.id_TipoVenta)
             .AddWithValue("@PrecioTotal", EntVenta.PrecioTotal)
             .AddWithValue("@Subtotal", EntVenta.SubTotal)
+            .AddWithValue("@Senia", EntVenta.Senia)
             .AddWithValue("@CantidadTotal", EntVenta.CantidadTotal)
             .AddWithValue("@Descuento", EntVenta.Descuento)
             .AddWithValue("@Anulado", EntVenta.Anulado)

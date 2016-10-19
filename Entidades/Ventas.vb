@@ -148,4 +148,14 @@
         End Set
     End Property
 
+    Private Senia_ As Double
+    Public Property Senia() As Double
+        Get
+            Return Senia_
+        End Get
+        Set(ByVal value As Double)
+            Senia_ = value
+        End Set
+    End Property
+
 End Class

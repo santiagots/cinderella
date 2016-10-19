@@ -80,6 +80,8 @@ Partial Class frmVentas
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.txt_DescuentoMinorista = New System.Windows.Forms.TextBox()
         Me.txt_DescuentoMayorista = New System.Windows.Forms.TextBox()
+        Me.txt_Senia = New System.Windows.Forms.TextBox()
+        Me.BtnSenia = New System.Windows.Forms.Button()
         Me.lbl_DesTot = New System.Windows.Forms.Label()
         Me.txt_TotalMinorista = New System.Windows.Forms.TextBox()
         Me.txt_SubtotalMinorista = New System.Windows.Forms.TextBox()
@@ -103,6 +105,9 @@ Partial Class frmVentas
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.PanelTotalMinorista = New System.Windows.Forms.Panel()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Gb_Producto.SuspendLayout()
         Me.Gb_Cliente.SuspendLayout()
@@ -112,6 +117,7 @@ Partial Class frmVentas
         Me.GB_ListaPrecio.SuspendLayout()
         Me.PanelTotalMayorista.SuspendLayout()
         Me.PanelTotalMinorista.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'DG_Productos
@@ -666,6 +672,35 @@ Partial Class frmVentas
         Me.ToolProd.SetToolTip(Me.txt_DescuentoMayorista, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
         "o.")
         '
+        'txt_Senia
+        '
+        Me.txt_Senia.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Senia.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Senia.Location = New System.Drawing.Point(271, 25)
+        Me.txt_Senia.Name = "txt_Senia"
+        Me.txt_Senia.Size = New System.Drawing.Size(139, 35)
+        Me.txt_Senia.TabIndex = 20
+        Me.txt_Senia.Text = "0,00"
+        Me.txt_Senia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.ToolProd.SetToolTip(Me.txt_Senia, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
+        "o.")
+        '
+        'BtnSenia
+        '
+        Me.BtnSenia.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnSenia.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnSenia.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnSenia.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
+        Me.BtnSenia.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnSenia.Location = New System.Drawing.Point(310, 79)
+        Me.BtnSenia.Name = "BtnSenia"
+        Me.BtnSenia.Size = New System.Drawing.Size(100, 40)
+        Me.BtnSenia.TabIndex = 23
+        Me.BtnSenia.Text = "Señar"
+        Me.BtnSenia.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.BtnSenia, "Señar la venta actual. ")
+        Me.BtnSenia.UseVisualStyleBackColor = True
+        '
         'lbl_DesTot
         '
         Me.lbl_DesTot.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -836,7 +871,7 @@ Partial Class frmVentas
         Me.PanelTotalMayorista.Controls.Add(Me.txt_ivaTotalMayorista)
         Me.PanelTotalMayorista.Controls.Add(Me.Label15)
         Me.PanelTotalMayorista.Controls.Add(Me.Label16)
-        Me.PanelTotalMayorista.Location = New System.Drawing.Point(17, 596)
+        Me.PanelTotalMayorista.Location = New System.Drawing.Point(539, 426)
         Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
         Me.PanelTotalMayorista.Size = New System.Drawing.Size(399, 164)
         Me.PanelTotalMayorista.TabIndex = 26
@@ -951,11 +986,51 @@ Partial Class frmVentas
         Me.PanelTotalMinorista.Size = New System.Drawing.Size(399, 164)
         Me.PanelTotalMinorista.TabIndex = 27
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.BtnSenia)
+        Me.GroupBox1.Controls.Add(Me.Label22)
+        Me.GroupBox1.Controls.Add(Me.txt_Senia)
+        Me.GroupBox1.Controls.Add(Me.Label23)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(17, 602)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(416, 125)
+        Me.GroupBox1.TabIndex = 28
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "RECERVA VENTA"
+        '
+        'Label22
+        '
+        Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Location = New System.Drawing.Point(17, 28)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(86, 29)
+        Me.Label22.TabIndex = 21
+        Me.Label22.Text = "SEÑA:"
+        '
+        'Label23
+        '
+        Me.Label23.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.Location = New System.Drawing.Point(235, 28)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(26, 29)
+        Me.Label23.TabIndex = 22
+        Me.Label23.Text = "$"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'frmVentas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(954, 812)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.PanelTotalMayorista)
         Me.Controls.Add(Me.GB_ListaPrecio)
         Me.Controls.Add(Me.GB_TipoPago)
@@ -990,6 +1065,8 @@ Partial Class frmVentas
         Me.PanelTotalMayorista.PerformLayout()
         Me.PanelTotalMinorista.ResumeLayout(False)
         Me.PanelTotalMinorista.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1068,4 +1145,9 @@ Partial Class frmVentas
     Friend WithEvents Label20 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents PanelTotalMinorista As Panel
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents BtnSenia As Button
+    Friend WithEvents Label22 As Label
+    Friend WithEvents txt_Senia As TextBox
+    Friend WithEvents Label23 As Label
 End Class
