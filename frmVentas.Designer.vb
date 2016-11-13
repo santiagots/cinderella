@@ -674,7 +674,7 @@ Partial Class frmVentas
         '
         'txt_Senia
         '
-        Me.txt_Senia.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Senia.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Senia.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Senia.Location = New System.Drawing.Point(271, 25)
         Me.txt_Senia.Name = "txt_Senia"
@@ -682,8 +682,7 @@ Partial Class frmVentas
         Me.txt_Senia.TabIndex = 20
         Me.txt_Senia.Text = "0,00"
         Me.txt_Senia.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.ToolProd.SetToolTip(Me.txt_Senia, "Si desea agregar un descuento al pedido, sólo debe ingresar el monto en éste camp" &
-        "o.")
+        Me.ToolProd.SetToolTip(Me.txt_Senia, "Ingrese un monto en case de querer realizar una seña.")
         '
         'BtnSenia
         '
@@ -988,8 +987,7 @@ Partial Class frmVentas
         '
         'GroupBox1
         '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.BtnSenia)
         Me.GroupBox1.Controls.Add(Me.Label22)
         Me.GroupBox1.Controls.Add(Me.txt_Senia)
@@ -1004,7 +1002,6 @@ Partial Class frmVentas
         '
         'Label22
         '
-        Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.Location = New System.Drawing.Point(17, 28)

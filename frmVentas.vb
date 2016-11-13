@@ -27,6 +27,7 @@ Public Class frmVentas
     Dim ProductoCantidadAnterior As Integer
     Dim dsProductos As DataSet
     Public NotaPedido As NotaPedido
+    Public Senia As Senia
 
 
 #Region "Region Funciones"
@@ -370,16 +371,17 @@ Public Class frmVentas
     Private Sub CalcularPrecioDescuentoMayoristaConFactura(ByRef subtotal As Double)
         Dim descuento As Double = 0
         Dim ivaSubTotal As Double = 0
+        Dim senia As Double = CType(txt_Senia.Text, Decimal)
 
         If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMayorista.Text, Decimal)
             subtotal = subtotal - descuento
             ivaSubTotal = subtotal * 0.21
 
-            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal - senia, Decimal), "###0.00")
         Else
             ivaSubTotal = subtotal * 0.21
-            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal, Decimal), "###0.00")
+            txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal - senia, Decimal), "###0.00")
         End If
 
         txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
@@ -390,14 +392,15 @@ Public Class frmVentas
     Private Sub CalcularPrecioDescuentoMayoristaSinFactura(ByRef subtotal As Double)
         Dim descuento As Double = 0
         Dim ivaSubTotal As Double = 0
+        Dim senia As Double = CType(txt_Senia.Text, Decimal)
 
         If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMayorista.Text, Decimal)
             subtotal = subtotal - descuento
 
-            txt_TotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+            txt_TotalMayorista.Text = Format(CType(subtotal - senia, Decimal), "###0.00")
         Else
-            txt_TotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+            txt_TotalMayorista.Text = Format(CType(subtotal - senia, Decimal), "###0.00")
         End If
 
         txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
@@ -407,12 +410,13 @@ Public Class frmVentas
 
     Private Sub CaluclarPrecioDescuentoMinorista(subtotal As Double)
         Dim descuento As Double = 0
+        Dim senia As Double = CType(txt_Senia.Text, Decimal)
 
         If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMinorista.Text, Decimal)
-            txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
+            txt_TotalMinorista.Text = Format(CType(subtotal - descuento - senia, Decimal), "###0.00")
         Else
-            txt_TotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
+            txt_TotalMinorista.Text = Format(CType(subtotal - senia, Decimal), "###0.00")
         End If
         txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
         txt_SubtotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
@@ -585,6 +589,10 @@ Public Class frmVentas
             CargarNotaPedido()
         End If
 
+        If (Senia IsNot Nothing) Then
+            CargarSenia(DsTiposPagos, DsVendedores, DsEncargados)
+        End If
+
         'Obtengo el listado de productos
         dsProductos = NegProductos.ListadoProductosBuscadores()
 
@@ -642,6 +650,61 @@ Public Class frmVentas
         Next
 
         CalcularPreciosDescuento()
+    End Sub
+
+    Private Sub CargarSenia(DsTiposPagos As DataSet, DsVendedores As DataSet, DsEncargados As DataSet)
+        Dim dsVentas As DataSet = NegVentas.TraerVenta(Senia.Idventa)
+
+        Cb_Vendedores.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))
+        Cb_Encargados.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Encargado"))
+        Cb_ListaPrecio.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_ListaPrecio"))
+
+        Dim TipoPagoRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Descripcion") = dsVentas.Tables(0).Rows(0).Item("TiposPago")).FirstOrDefault()
+        If (TipoPagoRow IsNot Nothing) Then
+            Cb_TipoPago.SelectedValue = TipoPagoRow.Item("id_TipoPago")
+        End If
+
+        cb_Tipo.SelectedItem = dsVentas.Tables(0).Rows(0).Item("TiposVenta")
+
+        Dim Subtotal = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal"), Decimal)
+        Dim Descuento = CType(dsVentas.Tables(0).Rows(0).Item("Descuento"), Decimal)
+        Dim Total = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total"), Decimal)
+        Dim SeniaMonto = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia"), Decimal)
+
+        If (dsVentas.Tables(0).Rows(0).Item("TiposVenta") = "Minorista") Then
+            txt_SubtotalMinorista.Text = Format(Subtotal, "###0.00")
+            txt_DescuentoMinorista.Text = Format(Descuento, "###0.00")
+            txt_TotalMinorista.Text = Format(Total - SeniaMonto, "###0.00")
+        Else
+            txt_DescuentoMayorista.Text = Format(Descuento, "###0.00")
+            txt_SubtotalMayorista.Text = Format(Subtotal, "###0.00")
+            txt_ivaTotalMayorista.Text = Format(Subtotal * 0.21, "###0.00")
+            txt_TotalMayorista.Text = Format(Total - SeniaMonto, "###0.00")
+        End If
+
+        txt_Senia.Text = Format(SeniaMonto, "###0.00")
+        txt_Senia.Enabled = False
+
+        AgregarItemDesdeSenia()
+
+
+    End Sub
+
+    Private Sub AgregarItemDesdeSenia()
+        Dim NumeroFila As Integer = 0
+        Dim dsVentasDetalle = NegVentas.TraerVentaDetalle(Senia.Idventa)
+
+        For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
+
+            Dim entProducto As Entidades.Productos = NegProductos.TraerProducto(ventaDetalle.item("id_Producto"))
+
+            NumeroFila += 1
+            Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
+            Dim cantidad As Decimal = CType(ventaDetalle.item("Cantidad").ToString, Decimal)
+
+            AgregarItemAGrilla(entProducto, 1, NumeroFila, cantidad, precio)
+        Next
+
     End Sub
 
     'Actualizo la hora que se muestra dentro del formulario.
@@ -785,6 +848,7 @@ Public Class frmVentas
             Dim id_Empleado As Integer = Cb_Vendedores.SelectedValue 'ID de Vendedor.
             Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
             Dim id_Cliente As Integer = 0 'ID de Cliente.
+            Dim id_ListaPrecio As Integer = Cb_ListaPrecio.SelectedValue
             Dim Facturar As Boolean = False 'Variable que indica si la venta ´facturará o no.
             Dim Descuento As Double = 0 'Descuento ingresado.
             Dim MontoTotalSinDescuento As Double = 0 'Monto total de la venta.
@@ -837,7 +901,7 @@ Public Class frmVentas
                     End If
                 End If
 
-                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, 0)
+                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, 0)
 
                 If id_Venta > 0 Then
 
@@ -888,6 +952,7 @@ Public Class frmVentas
             Dim TipoPago As Integer = Cb_TipoPago.SelectedValue 'Tipo de Pago.
             Dim id_Empleado As Integer = Cb_Vendedores.SelectedValue 'ID de Vendedor.
             Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
+            Dim id_ListaPrecio As Integer = Cb_ListaPrecio.SelectedValue
             Dim id_Cliente As Integer = 0 'ID de Cliente.
             Dim Facturar As Boolean = False 'Variable que indica si la venta ´facturará o no.
             Dim Descuento As Double = 0 'Descuento ingresado.
@@ -934,6 +999,8 @@ Public Class frmVentas
                     id_Cliente = CInt(txt_id_Cliente.Text)
                 End If
 
+                Dim dtProductos As DataTable = ConvertirDataGridViewADataTable(DG_Productos)
+
                 'Si el tipo de pago es cheque abro la ventana para cargar ingresar el cheque
                 If TipoPago = 4 Then
                     'invoca la pantalla de carga de cheques y quedo a la espera del cierre
@@ -944,9 +1011,20 @@ Public Class frmVentas
                     End If
                 End If
 
-                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia)
+                Dim frmSeniaDatos As frmSeniaDatos = New frmSeniaDatos(If(TipoVenta = 1, Clientes.Tipo.Minorista, Clientes.Tipo.Mayorista), id_Empleado, id_Empleado, Cb_TipoPago.SelectedText, Facturar, id_Cliente, MontoTotalSinDescuento, Descuento, MontoSenia, MontoTotal, IvaTotal, dtProductos, Date.Now)
+                If (Not frmSeniaDatos.ShowDialog() = DialogResult.OK) Then
+                    Return
+                End If
+
+                Dim Senia As Entidades.Senia = frmSeniaDatos.Senia
+
+                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia)
 
                 If id_Venta > 0 Then
+
+                    Senia.Idventa = id_Venta
+                    Dim negSenia As NegSenia = New NegSenia()
+                    negSenia.CrearSenia(Senia)
 
                     RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoSenia, id_Venta)
 
@@ -954,18 +1032,7 @@ Public Class frmVentas
                     Me.Cursor = Cursors.Arrow
 
                     'Muestro Mensaje.
-                    MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
-
-                    If (NotaPedido IsNot Nothing) Then
-                        Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
-                        If (Not negNotaPedido.BorrarNota(NotaPedido.id_NotaPedido)) Then
-                            MessageBox.Show("La note de pedido no se a podido eliminar de forma automática.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Else
-                            Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
-                            'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
-                            frmNotaPedido.RemoverNotaPedido(NotaPedido)
-                        End If
-                    End If
+                    MessageBox.Show("La reserva ha sido generada correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
 
                     'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                     If Facturar Then
@@ -987,6 +1054,24 @@ Public Class frmVentas
             MessageBox.Show("Se ha producido un error al confirmar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    Private Function ConvertirDataGridViewADataTable(dataGridView As DataGridView) As DataTable
+        Dim dtProductos As New DataTable
+
+        For Each column As DataGridViewColumn In dataGridView.Columns
+            dtProductos.Columns.Add(column.Name)
+        Next
+
+        For Each row As DataGridViewRow In dataGridView.Rows
+            Dim dataRow As DataRow = dtProductos.NewRow()
+            For Each cell As DataGridViewCell In row.Cells
+                dataRow(cell.ColumnIndex) = cell.Value
+            Next
+            dtProductos.Rows.Add(dataRow)
+        Next
+
+        Return dtProductos
+    End Function
 
     Private Function VentaValida() As Boolean
         Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
@@ -1018,7 +1103,7 @@ Public Class frmVentas
         Return True
     End Function
 
-    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, Descuento As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, Senia As Double) As Integer
+    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, Descuento As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double) As Integer
 
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
@@ -1030,6 +1115,7 @@ Public Class frmVentas
         EntVentas.id_Sucursal = id_Sucursal
         EntVentas.id_TipoPago = TipoPago
         EntVentas.id_TipoVenta = TipoVenta
+        EntVentas.id_ListaPrecio = id_ListaPrecio
         EntVentas.CantidadTotal = CantidadTotal
         EntVentas.Descuento = Descuento
         EntVentas.SubTotal = MontoTotalSinDescuento
@@ -1038,7 +1124,8 @@ Public Class frmVentas
         EntVentas.Habilitado = 1
         EntVentas.Facturado = 0
         EntVentas.DiferenciaPagoCheque = DiferenciaPagoCheque
-        EntVentas.Senia = Senia
+        EntVentas.MontoSenia = MontoSenia
+        EntVentas.Senia = MontoSenia > 0
 
         Dim DetalleDevolucion As List(Of Entidades.Devolucion_Detalle) = New List(Of Entidades.Devolucion_Detalle)
         Dim DetalleVenta = New List(Of Entidades.Ventas_Detalle)
@@ -1217,12 +1304,36 @@ Public Class frmVentas
 
     End Sub
 
+    Private Sub txt_Senia_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Senia.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            BtnSenia.Focus()
+        End If
+
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txt_Senia_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Senia.GotFocus
+        txt_Senia.Clear()
+    End Sub
+
     Private Sub txt_Descuento_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMinorista.LostFocus
         If txt_DescuentoMinorista.Text.Trim = "" Then
             txt_DescuentoMinorista.Text = "0,00"
         End If
         CalcularPreciosDescuento()
 
+    End Sub
+
+    Private Sub txt_Senia_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Senia.LostFocus
+        If txt_Senia.Text.Trim = "" Then
+            txt_Senia.Text = "0,00"
+        End If
+        CalcularPreciosDescuento()
+        txt_Senia.Text = Format(CType(txt_Senia.Text, Decimal), "###0.00")
     End Sub
 
     Private Sub txt_DescuentoMayorista_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMayorista.LostFocus

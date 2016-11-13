@@ -452,6 +452,14 @@ Public Class MDIContenedor
             AccesoResumen.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Reservas_Administración_Reservas)) Then
+            btn_AdminReservas.Visible = True
+            Btn_Reservas.Visible = true
+        Else
+            btn_AdminReservas.Visible = False
+            Btn_Reservas.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas)) Then
             Btn_PlanillasMenu.Visible = True
         Else
@@ -1646,4 +1654,13 @@ Public Class MDIContenedor
         Funciones.ActualizarNotasPedidos(False)
     End Sub
 
+    Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmSeniaAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmSeniaAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
 End Class

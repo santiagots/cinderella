@@ -90,6 +90,7 @@
     <Compile Include="NegBanco.vb" />
     <Compile Include="NegCajaInicial.vb" />
     <Compile Include="NegCheque.vb" />
+    <Compile Include="NegClienteMinorista.vb" />
     <Compile Include="NegClientes.vb" />
     <Compile Include="NegColores.vb" />
     <Compile Include="NegComisiones.vb" />
@@ -121,6 +122,7 @@
     <Compile Include="NegProductosSubcategorias.vb" />
     <Compile Include="NegRecibos.vb" />
     <Compile Include="NegRegistros.vb" />
+    <Compile Include="NegSenia.vb" />
     <Compile Include="NegSincronizacion.vb" />
     <Compile Include="NegStock.vb" />
     <Compile Include="NegStockBitacora.vb" />

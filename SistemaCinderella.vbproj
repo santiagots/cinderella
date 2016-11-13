@@ -161,10 +161,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="ControlDeUsuario\ucDetalleCheque.Designer.vb">
-      <DependentUpon>ucDetalleCheque.vb</DependentUpon>
+    <Compile Include="ControlDeUsuario\ucDetalleSenia.Designer.vb">
+      <DependentUpon>ucDetalleSenia.vb</DependentUpon>
     </Compile>
-    <Compile Include="ControlDeUsuario\ucDetalleCheque.vb">
+    <Compile Include="ControlDeUsuario\ucDetalleSenia.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="db\DsDatos.Designer.vb">
@@ -215,6 +215,12 @@
       <DependentUpon>frmBrowser.vb</DependentUpon>
     </Compile>
     <Compile Include="frmBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBuscarClienteMinorista.Designer.vb">
+      <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmBuscarClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmBuscarClienteMayorista.Designer.vb">
@@ -607,6 +613,18 @@
     <Compile Include="frmResumenDiario.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmSeniaAdministracion.Designer.vb">
+      <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSeniaAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSeniaDatos.Designer.vb">
+      <DependentUpon>frmSeniaDatos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSeniaDatos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmSincronizacion.Designer.vb">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
     </Compile>
@@ -874,8 +892,8 @@
     <Compile Include="VariablesGlobales.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ControlDeUsuario\ucDetalleCheque.resx">
-      <DependentUpon>ucDetalleCheque.vb</DependentUpon>
+    <EmbeddedResource Include="ControlDeUsuario\ucDetalleSenia.resx">
+      <DependentUpon>ucDetalleSenia.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DialogIngresos.resx">
       <DependentUpon>DialogIngresos.vb</DependentUpon>
@@ -897,6 +915,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBrowser.resx">
       <DependentUpon>frmBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBuscarClienteMinorista.resx">
+      <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBuscarClienteMayorista.resx">
       <DependentUpon>frmBuscarClienteMayorista.vb</DependentUpon>
@@ -1096,6 +1117,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmResumenDiario.resx">
       <DependentUpon>frmResumenDiario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSeniaAdministracion.resx">
+      <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSeniaDatos.resx">
+      <DependentUpon>frmSeniaDatos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSincronizacion.resx">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
@@ -1301,6 +1328,7 @@
     <Content Include="Imagenes\ProductosMasivos_32.png" />
     <Content Include="Imagenes\Productos_32.png" />
     <Content Include="Imagenes\registracion.gif" />
+    <None Include="Imagenes\reloj.png" />
     <Content Include="Imagenes\saldos.png" />
     <None Include="Imagenes\TicketPequeño.png" />
     <Content Include="Imagenes\top_reporte.jpg" />
@@ -1346,8 +1374,10 @@
     </None>
     <None Include="My Project\DataSources\Entidades.Banco.datasource" />
     <None Include="My Project\DataSources\Entidades.Cheque.datasource" />
+    <None Include="My Project\DataSources\Entidades.ClienteMinorista.datasource" />
     <None Include="My Project\DataSources\Entidades.Facturacion.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaPedido.datasource" />
+    <None Include="My Project\DataSources\Entidades.Senia.datasource" />
     <None Include="My Project\DataSources\Permiso.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -120,4 +120,5 @@
     Sistema_Controlador_Fiscal_EmitirCierreZRangoFechas = 613
     Sistema_Controlador_Fiscal_BuscarTickets = 614
     Sistema_Controlador_Fiscal_ExportarTickets = 615
+    Administración_Reservas_Administración_Reservas = 616
 End Enum

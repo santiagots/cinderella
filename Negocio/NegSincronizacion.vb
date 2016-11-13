@@ -635,6 +635,15 @@ Public Class NegSincronizacion
         tablaRelelacionada2.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada2)
+
+        Dim tablaRelelacionada3 As Tabla = New Tabla()
+        tablaRelelacionada3.Nombre = "SENIA"
+        tablaRelelacionada3.ClavePrimaria = "id_Senia"
+        tablaRelelacionada3.ColumnaSeleccion = "id_Venta"
+        tablaRelelacionada3.ClaveForanea = "id_Venta"
+        tablaRelelacionada3.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada3)
         Return tabla
     End Function
 
@@ -730,7 +739,6 @@ Public Class NegSincronizacion
 
         Return tabla
     End Function
-
 End Class
 
 Public Class Tabla
