@@ -24,6 +24,8 @@ Partial Class frmControladorFiscal
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmControladorFiscal))
         Me.btnCierreZ = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -42,6 +44,9 @@ Partial Class frmControladorFiscal
         Me.FHasta = New System.Windows.Forms.DateTimePicker()
         Me.FDesde = New System.Windows.Forms.DateTimePicker()
         Me.dgTickets = New System.Windows.Forms.DataGridView()
+        Me.FacturacionBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.lbl_Msg = New System.Windows.Forms.Label()
+        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NumeroFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -51,9 +56,6 @@ Partial Class frmControladorFiscal
         Me.SubTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FacturacionBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.lbl_Msg = New System.Windows.Forms.Label()
-        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -257,6 +259,24 @@ Partial Class frmControladorFiscal
         Me.dgTickets.Size = New System.Drawing.Size(860, 523)
         Me.dgTickets.TabIndex = 4
         '
+        'FacturacionBindingSource
+        '
+        Me.FacturacionBindingSource.DataSource = GetType(Entidades.Facturacion)
+        '
+        'lbl_Msg
+        '
+        Me.lbl_Msg.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Msg.Location = New System.Drawing.Point(278, 420)
+        Me.lbl_Msg.Name = "lbl_Msg"
+        Me.lbl_Msg.Size = New System.Drawing.Size(327, 25)
+        Me.lbl_Msg.TabIndex = 5
+        Me.lbl_Msg.Text = "No se han encontrado tickets."
+        Me.lbl_Msg.Visible = False
+        '
         'FechaDataGridViewTextBoxColumn
         '
         Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
@@ -302,6 +322,8 @@ Partial Class frmControladorFiscal
         'SubTotal
         '
         Me.SubTotal.DataPropertyName = "SubTotal"
+        DataGridViewCellStyle1.Format = "C2"
+        Me.SubTotal.DefaultCellStyle = DataGridViewCellStyle1
         Me.SubTotal.HeaderText = "Sub Total"
         Me.SubTotal.Name = "SubTotal"
         Me.SubTotal.ReadOnly = True
@@ -309,6 +331,8 @@ Partial Class frmControladorFiscal
         'IVA
         '
         Me.IVA.DataPropertyName = "IVA"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.IVA.DefaultCellStyle = DataGridViewCellStyle2
         Me.IVA.HeaderText = "IVA"
         Me.IVA.Name = "IVA"
         Me.IVA.ReadOnly = True
@@ -316,29 +340,11 @@ Partial Class frmControladorFiscal
         'Monto
         '
         Me.Monto.DataPropertyName = "Monto"
-        DataGridViewCellStyle1.Format = "C2"
-        Me.Monto.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Format = "C2"
+        Me.Monto.DefaultCellStyle = DataGridViewCellStyle3
         Me.Monto.HeaderText = "Monto Total"
         Me.Monto.Name = "Monto"
         Me.Monto.ReadOnly = True
-        '
-        'FacturacionBindingSource
-        '
-        Me.FacturacionBindingSource.DataSource = GetType(Entidades.Facturacion)
-        '
-        'lbl_Msg
-        '
-        Me.lbl_Msg.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.AutoSize = True
-        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(278, 420)
-        Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(327, 25)
-        Me.lbl_Msg.TabIndex = 5
-        Me.lbl_Msg.Text = "No se han encontrado tickets."
-        Me.lbl_Msg.Visible = False
         '
         'frmControladorFiscal
         '
@@ -377,18 +383,18 @@ Partial Class frmControladorFiscal
     Friend WithEvents lbl_Msg As System.Windows.Forms.Label
     Friend WithEvents btn_Exportar As System.Windows.Forms.Button
     Friend WithEvents SaveFileDialog As System.Windows.Forms.SaveFileDialog
-    Friend WithEvents FechaDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NumeroFacturaDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NombreDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DireccionDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents LocalidadDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CuitDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents SubTotal As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents IVA As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Monto As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btnCierreZPorFecha As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents FHastaCierreZ As System.Windows.Forms.DateTimePicker
     Friend WithEvents FDesdeCierreZ As System.Windows.Forms.DateTimePicker
+    Friend WithEvents FechaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents NumeroFacturaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents DireccionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents LocalidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CuitDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents SubTotal As DataGridViewTextBoxColumn
+    Friend WithEvents IVA As DataGridViewTextBoxColumn
+    Friend WithEvents Monto As DataGridViewTextBoxColumn
 End Class

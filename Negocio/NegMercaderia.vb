@@ -4,11 +4,10 @@ Imports Datos
 Public Class NegMercaderia
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para listar todos los productos.
     Function ListadoMercaderia(ByVal id_Sucursal As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
@@ -17,7 +16,7 @@ Public Class NegMercaderia
 
     'Funcion para consultar un detalle de pedido de mercadería.
     Function ObtenerDetalleMercaderia(ByVal id_Mercaderia As Integer) As DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
@@ -25,7 +24,7 @@ Public Class NegMercaderia
     End Function
 
     'Funcion que me trae el id del ultimo producto.
-    Function UltimaMercaderia() As Integer
+    Function UltimaMercaderia(HayInternet As Boolean) As Integer
         Dim ds As DataSet
         If (HayInternet) Then
             ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('MERCADERIAS') as id_Mercaderia")
@@ -43,7 +42,7 @@ Public Class NegMercaderia
     'Funcion para consultar un pedido de mercadería.
     Public Function TraerMercaderia(ByVal id_Mercaderia As Integer)
         Dim dsStock As New DataSet
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
         Else
             dsStock = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
@@ -52,72 +51,96 @@ Public Class NegMercaderia
     End Function
 
     'Funcion para insertar una Mercaderia.
-    Function AltaMercaderia(ByVal EMercaderia As Entidades.Mercaderias) As String
+    Function AltaMercaderia(ByVal EMercaderia As Entidades.Mercaderias) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim id As Integer
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            cmd.Connection = clsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Mercaderia_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Sucursal", EMercaderia.id_Sucursal)
-                .AddWithValue("@id_Proveedor", EMercaderia.id_Proveedor)
-                .AddWithValue("@Fecha", EMercaderia.Fecha)
-                .AddWithValue("@CantidadTotal", EMercaderia.CantidadTotal)
-                .AddWithValue("@MontoTotal", EMercaderia.MontoTotal)
-                .AddWithValue("@Habilitado", EMercaderia.Habilitado)
-            End With
+            cmd.Connection = clsDatos.ConectarLocal()
+            AltaMercaderia(EMercaderia, cmd)
+            clsDatos.DesconectarLocal()
+            id = UltimaMercaderia(False)
 
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
+            If (HayInternet) Then
+                cmd = New SqlCommand()
+                cmd.Connection = clsDatos.ConectarRemoto()
+                AltaMercaderia(EMercaderia, cmd)
+                clsDatos.DesconectarRemoto()
+                id = UltimaMercaderia(True)
+            End If
 
             'muestro el mensaje
-            Return respuesta.Value
+            Return id
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
+
+    Private Shared Function AltaMercaderia(EMercaderia As Mercaderias, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Mercaderia_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Sucursal", EMercaderia.id_Sucursal)
+            .AddWithValue("@id_Proveedor", EMercaderia.id_Proveedor)
+            .AddWithValue("@Fecha", EMercaderia.Fecha)
+            .AddWithValue("@CantidadTotal", EMercaderia.CantidadTotal)
+            .AddWithValue("@MontoTotal", EMercaderia.MontoTotal)
+            .AddWithValue("@Habilitado", EMercaderia.Habilitado)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     Function AltaMercaderiaDetalle(ByVal EMercaderiaDetalle As Entidades.Mercaderias_Detalle) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            cmd.Connection = clsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MercaderiaDetalle_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Mercaderia", EMercaderiaDetalle.id_Mercaderia)
-                .AddWithValue("@id_Producto", EMercaderiaDetalle.id_Producto)
-                .AddWithValue("@Costo", EMercaderiaDetalle.Costo)
-                .AddWithValue("@Cantidad", EMercaderiaDetalle.Cantidad)
-                .AddWithValue("@Total", EMercaderiaDetalle.Total)
-            End With
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = AltaMercaderiaDetalle(EMercaderiaDetalle, cmd)
+            clsDatos.DesconectarLocal()
 
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
+            If (HayInternet) Then
+                cmd = New SqlCommand()
+                cmd.Connection = clsDatos.ConectarRemoto()
+                msg = AltaMercaderiaDetalle(EMercaderiaDetalle, cmd)
+                clsDatos.DesconectarRemoto()
+            End If
 
-            'muestro el mensaje
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
     End Function
 
+    Private Function AltaMercaderiaDetalle(EMercaderiaDetalle As Mercaderias_Detalle, ByRef cmd As SqlCommand) As String
+
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_MercaderiaDetalle_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Mercaderia", EMercaderiaDetalle.id_Mercaderia)
+            .AddWithValue("@id_Producto", EMercaderiaDetalle.id_Producto)
+            .AddWithValue("@Costo", EMercaderiaDetalle.Costo)
+            .AddWithValue("@Cantidad", EMercaderiaDetalle.Cantidad)
+            .AddWithValue("@Total", EMercaderiaDetalle.Total)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
+    End Function
+
     Public Function TotalMercaderia(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")

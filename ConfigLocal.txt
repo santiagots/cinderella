@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<configuration>
+  <configSections>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="SistemaCinderella.My.MySettings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+    <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="SistemaCinderella.My.MySettings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=TAMBOURS7;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="yC78dwbJx/9GTilE0S/KCsZ/diDH9bux/XsEjp/D7F14DVmYDWfkFjBvA3DDuMFgrMcWh3bwarkvbDN5wpaVVRQjWKX+kmpVEq5HYEpzVjc="
+      providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <system.diagnostics>
+    <sources>
+      <!-- En esta sección se define la configuración del registro para My.Application.Log -->
+      <source name="DefaultSource" switchName="DefaultSwitch">
+        <listeners>
+          <add name="FileLog" />
+          <!-- Quite los comentarios de la sección posterior para escribir en el registro de eventos de la aplicación -->
+          <!--<add name="EventLog"/>-->
+        </listeners>
+      </source>
+    </sources>
+    <switches>
+      <add name="DefaultSwitch" value="Information" />
+    </switches>
+    <sharedListeners>
+      <add name="FileLog" type="Microsoft.VisualBasic.Logging.FileLogTraceListener, Microsoft.VisualBasic, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" initializeData="FileLogWriter" />
+      <!-- Quite los comentarios de la sección posterior y reemplace APPLICATION_NAME con el nombre de su aplicación para escribir en el registro de eventos de la aplicación -->
+      <!--<add name="EventLog" type="System.Diagnostics.EventLogTraceListener" initializeData="APPLICATION_NAME"/> -->
+    </sharedListeners>
+  </system.diagnostics>
+  <appSettings>
+    <add key="ExportarExcelPlantilla" value="Plantilla\Template.xlsx" />
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+  </appSettings>
+  <applicationSettings>
+    <SistemaCinderella.My.MySettings>
+      <setting name="Empresa" serializeAs="String">
+        <value>Cinderella</value>
+      </setting>
+      <setting name="Setting" serializeAs="String">
+        <value>as</value>
+      </setting>
+      <setting name="Temporizador" serializeAs="String">
+        <value>300000</value>
+      </setting>
+    </SistemaCinderella.My.MySettings>
+  </applicationSettings>
+  <userSettings>
+    <SistemaCinderella.My.MySettings>
+      <setting name="Sucursal" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="NombreListaPrecio" serializeAs="String">
+        <value>Público Tigre</value>
+      </setting>
+      <setting name="ListaPrecio" serializeAs="String">
+        <value>1</value>
+      </setting>
+      <setting name="MailPort" serializeAs="String">
+        <value>25</value>
+      </setting>
+      <setting name="MailHost" serializeAs="String">
+        <value> 74.124.24.4</value>
+      </setting>
+      <setting name="MailUsuario" serializeAs="String">
+        <value>sistema@nodomain.com</value>
+      </setting>
+      <setting name="MailPassword" serializeAs="String">
+        <value>cinderellasist11</value>
+      </setting>
+      <setting name="ControladorStatus" serializeAs="String">
+        <value>SI</value>
+      </setting>
+      <setting name="MontoTopeFaturacionTicket" serializeAs="String">
+        <value>25000</value>
+      </setting>
+      <setting name="TemporizadorInternet" serializeAs="String">
+        <value>30000</value>
+      </setting>
+      <setting name="TemporizadorMensajes" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="Internet" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="NombreSucursal" serializeAs="String">
+        <value>Av. Corrientes</value>
+      </setting>
+      <setting name="PuntoVentaFacturacionManual" serializeAs="String">
+        <value>1</value>
+      </setting>
+      <setting name="PuntoVentaFacturacionTicket" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="PuntoVentaFacturacionElectronica" serializeAs="String">
+        <value>3</value>
+      </setting>
+      <setting name="MontoMaximoNotaCredito" serializeAs="String">
+        <value>3000</value>
+      </setting>
+      <setting name="ConexionControladora" serializeAs="String">
+        <value>USB</value>
+      </setting>
+      <setting name="TemporizadorMovimientos" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="TemporizadorCheques" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="PuertoHost" serializeAs="String">
+        <value>8088</value>
+      </setting>
+      <setting name="IpHost" serializeAs="String">
+        <value>127.0.0.1</value>
+      </setting>
+      <setting name="TemporizadorNotasPedido" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="MontoTopeFacturacionManual" serializeAs="String">
+        <value>25000</value>
+      </setting>
+      <setting name="MontoTopeFacturacionElectronica" serializeAs="String">
+        <value>25000</value>
+      </setting>
+      <setting name="ControladorMontoTope" serializeAs="String">
+        <value>3000</value>
+      </setting>
+      <setting name="HabilitarExentoSinIVA" serializeAs="String">
+        <value>NO</value>
+      </setting>
+    </SistemaCinderella.My.MySettings>
+  </userSettings>
+  <startup useLegacyV2RuntimeActivationPolicy="true">
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+  </startup>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
+      </providers>
+    </roleManager>
+  </system.web>
+</configuration>

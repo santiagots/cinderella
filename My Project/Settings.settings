@@ -11,9 +11,6 @@
     <Setting Name="Temporizador" Type="System.String" Scope="Application">
       <Value Profile="(Default)">300000</Value>
     </Setting>
-    <Setting Name="Sucursal" Roaming="true" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
-    </Setting>
     <Setting Name="NombreListaPrecio" Type="System.String" Scope="User">
       <Value Profile="(Default)">Público Tigre</Value>
     </Setting>
@@ -39,32 +36,13 @@
       <Value Profile="(Default)">25000</Value>
     </Setting>
     <Setting Name="TemporizadorInternet" Type="System.String" Scope="User">
-      <Value Profile="(Default)">25000</Value>
+      <Value Profile="(Default)">30000</Value>
     </Setting>
     <Setting Name="TemporizadorMensajes" Type="System.String" Scope="User">
       <Value Profile="(Default)">300000</Value>
     </Setting>
     <Setting Name="Internet" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="NombreSucursal" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Av. Corrientes</Value>
-    </Setting>
-    <Setting Name="Conexion" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA.mdf;Integrated Security=True;User Instance=True&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA.mdf;Integrated Security=True;User Instance=True</Value>
-    </Setting>
-    <Setting Name="ConexionRemoto" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;0Tvkneh8HcrERuMerFzACRwWiZZg35fXKOi3SK1IWATfrSUVr4B1vhig2+uF9RoZjAu0GhQjaJPS83vNW7a6BIgtE9hqLOwzZbQceOJchkSCCcO9DO6GIiUAGeBwHMwztfqBhcEHUcpKfiqT6sAg+Q==&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">0Tvkneh8HcrERuMerFzACRwWiZZg35fXKOi3SK1IWATfrSUVr4B1vhig2+uF9RoZjAu0GhQjaJPS83vNW7a6BIgtE9hqLOwzZbQceOJchkSCCcO9DO6GIiUAGeBwHMwztfqBhcEHUcpKfiqT6sAg+Q==</Value>
     </Setting>
     <Setting Name="PuntoVentaFacturacionManual" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -107,6 +85,28 @@
     </Setting>
     <Setting Name="HabilitarExentoSinIVA" Type="System.String" Scope="User">
       <Value Profile="(Default)">NO</Value>
+    </Setting>
+    <Setting Name="Conexion" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True</Value>
+    </Setting>
+    <Setting Name="ConexionRemoto" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60pKA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q==&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60pKA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q==</Value>
+    </Setting>
+    <Setting Name="Sucursal" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">34</Value>
+    </Setting>
+    <Setting Name="NombreSucursal" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Nueva Sucursal</Value>
     </Setting>
   </Settings>
 </SettingsFile>

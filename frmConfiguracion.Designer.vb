@@ -46,8 +46,6 @@ Partial Class frmConfiguracion
         Me.BtnMailing = New System.Windows.Forms.Button()
         Me.lblPort = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.RExentoSinIvaNo = New System.Windows.Forms.RadioButton()
-        Me.RExentoSinIvaSI = New System.Windows.Forms.RadioButton()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -68,12 +66,14 @@ Partial Class frmConfiguracion
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.RContrNO = New System.Windows.Forms.RadioButton()
-        Me.RContrSI = New System.Windows.Forms.RadioButton()
         Me.Btn_Controlador = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.RExentoSinIvaNo = New System.Windows.Forms.RadioButton()
+        Me.RExentoSinIvaSI = New System.Windows.Forms.RadioButton()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.RContrSI = New System.Windows.Forms.RadioButton()
+        Me.RContrNO = New System.Windows.Forms.RadioButton()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabSucursal = New System.Windows.Forms.TabPage()
         Me.TabPrecios = New System.Windows.Forms.TabPage()
@@ -382,30 +382,6 @@ Partial Class frmConfiguracion
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Configuración de Controlador Fiscal"
         '
-        'RExentoSinIvaNo
-        '
-        Me.RExentoSinIvaNo.AutoSize = True
-        Me.RExentoSinIvaNo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RExentoSinIvaNo.Location = New System.Drawing.Point(78, 3)
-        Me.RExentoSinIvaNo.Name = "RExentoSinIvaNo"
-        Me.RExentoSinIvaNo.Size = New System.Drawing.Size(43, 19)
-        Me.RExentoSinIvaNo.TabIndex = 26
-        Me.RExentoSinIvaNo.Tag = ""
-        Me.RExentoSinIvaNo.Text = "NO"
-        Me.RExentoSinIvaNo.UseVisualStyleBackColor = True
-        '
-        'RExentoSinIvaSI
-        '
-        Me.RExentoSinIvaSI.AutoSize = True
-        Me.RExentoSinIvaSI.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RExentoSinIvaSI.Location = New System.Drawing.Point(11, 3)
-        Me.RExentoSinIvaSI.Name = "RExentoSinIvaSI"
-        Me.RExentoSinIvaSI.Size = New System.Drawing.Size(36, 19)
-        Me.RExentoSinIvaSI.TabIndex = 25
-        Me.RExentoSinIvaSI.Tag = ""
-        Me.RExentoSinIvaSI.Text = "SI"
-        Me.RExentoSinIvaSI.UseVisualStyleBackColor = True
-        '
         'Label23
         '
         Me.Label23.AutoSize = True
@@ -586,30 +562,6 @@ Partial Class frmConfiguracion
         Me.Label12.TabIndex = 0
         Me.Label12.Text = "Controladora Fiscal:"
         '
-        'RContrNO
-        '
-        Me.RContrNO.AutoSize = True
-        Me.RContrNO.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RContrNO.Location = New System.Drawing.Point(78, 2)
-        Me.RContrNO.Name = "RContrNO"
-        Me.RContrNO.Size = New System.Drawing.Size(43, 19)
-        Me.RContrNO.TabIndex = 13
-        Me.RContrNO.Tag = ""
-        Me.RContrNO.Text = "NO"
-        Me.RContrNO.UseVisualStyleBackColor = True
-        '
-        'RContrSI
-        '
-        Me.RContrSI.AutoSize = True
-        Me.RContrSI.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RContrSI.Location = New System.Drawing.Point(10, 2)
-        Me.RContrSI.Name = "RContrSI"
-        Me.RContrSI.Size = New System.Drawing.Size(36, 19)
-        Me.RContrSI.TabIndex = 12
-        Me.RContrSI.Tag = ""
-        Me.RContrSI.Text = "SI"
-        Me.RContrSI.UseVisualStyleBackColor = True
-        '
         'Btn_Controlador
         '
         Me.Btn_Controlador.Cursor = System.Windows.Forms.Cursors.Hand
@@ -642,6 +594,30 @@ Partial Class frmConfiguracion
         Me.Panel1.Size = New System.Drawing.Size(136, 27)
         Me.Panel1.TabIndex = 27
         '
+        'RExentoSinIvaNo
+        '
+        Me.RExentoSinIvaNo.AutoSize = True
+        Me.RExentoSinIvaNo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RExentoSinIvaNo.Location = New System.Drawing.Point(78, 3)
+        Me.RExentoSinIvaNo.Name = "RExentoSinIvaNo"
+        Me.RExentoSinIvaNo.Size = New System.Drawing.Size(43, 19)
+        Me.RExentoSinIvaNo.TabIndex = 26
+        Me.RExentoSinIvaNo.Tag = ""
+        Me.RExentoSinIvaNo.Text = "NO"
+        Me.RExentoSinIvaNo.UseVisualStyleBackColor = True
+        '
+        'RExentoSinIvaSI
+        '
+        Me.RExentoSinIvaSI.AutoSize = True
+        Me.RExentoSinIvaSI.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RExentoSinIvaSI.Location = New System.Drawing.Point(11, 3)
+        Me.RExentoSinIvaSI.Name = "RExentoSinIvaSI"
+        Me.RExentoSinIvaSI.Size = New System.Drawing.Size(36, 19)
+        Me.RExentoSinIvaSI.TabIndex = 25
+        Me.RExentoSinIvaSI.Tag = ""
+        Me.RExentoSinIvaSI.Text = "SI"
+        Me.RExentoSinIvaSI.UseVisualStyleBackColor = True
+        '
         'Panel2
         '
         Me.Panel2.Controls.Add(Me.RContrSI)
@@ -650,6 +626,30 @@ Partial Class frmConfiguracion
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(136, 26)
         Me.Panel2.TabIndex = 28
+        '
+        'RContrSI
+        '
+        Me.RContrSI.AutoSize = True
+        Me.RContrSI.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RContrSI.Location = New System.Drawing.Point(10, 2)
+        Me.RContrSI.Name = "RContrSI"
+        Me.RContrSI.Size = New System.Drawing.Size(36, 19)
+        Me.RContrSI.TabIndex = 12
+        Me.RContrSI.Tag = ""
+        Me.RContrSI.Text = "SI"
+        Me.RContrSI.UseVisualStyleBackColor = True
+        '
+        'RContrNO
+        '
+        Me.RContrNO.AutoSize = True
+        Me.RContrNO.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RContrNO.Location = New System.Drawing.Point(78, 2)
+        Me.RContrNO.Name = "RContrNO"
+        Me.RContrNO.Size = New System.Drawing.Size(43, 19)
+        Me.RContrNO.TabIndex = 13
+        Me.RContrNO.Tag = ""
+        Me.RContrNO.Text = "NO"
+        Me.RContrNO.UseVisualStyleBackColor = True
         '
         'TabControl1
         '
@@ -925,7 +925,7 @@ Partial Class frmConfiguracion
         Me.Cb_SegundosInternet.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_SegundosInternet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_SegundosInternet.FormattingEnabled = True
-        Me.Cb_SegundosInternet.Items.AddRange(New Object() {"25", "30", "60", "120", "300"})
+        Me.Cb_SegundosInternet.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_SegundosInternet.Location = New System.Drawing.Point(236, 110)
         Me.Cb_SegundosInternet.Name = "Cb_SegundosInternet"
         Me.Cb_SegundosInternet.Size = New System.Drawing.Size(101, 23)

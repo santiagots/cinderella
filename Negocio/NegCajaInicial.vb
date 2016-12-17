@@ -2,14 +2,13 @@
 Public Class NegCajaInicial
     Dim clsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion para obtener la caja de un terminado dia.
     Function ObtenerCaja(ByVal id_Sucursal As Integer, ByVal Fecha As String) As Entidades.CajaInicial
         Dim ds As New DataSet
         Dim entCaja As New Entidades.CajaInicial
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -35,7 +34,7 @@ Public Class NegCajaInicial
         Dim ds As New DataSet
         Dim entCaja As New Entidades.CajaInicial
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
@@ -60,87 +59,90 @@ Public Class NegCajaInicial
     Public Function CerrarCaja(ByVal EntCaja As Entidades.CajaInicial) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim respuesta As Integer
+        Dim HayInternet As Boolean = Funciones.HayInternet
         Try
-            'Conecto a la bdd.
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = CerrarCaja(EntCaja, cmd)
+            clsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_CajaInicial_Alta"
-            With cmd.Parameters
-                .AddWithValue("@Abierta", EntCaja.Abierta)
-                .AddWithValue("@id_Empleado", EntCaja.id_Empleado)
-                .AddWithValue("@Empleado", EntCaja.Empleado)
-                .AddWithValue("@id_Sucursal", EntCaja.id_Sucursal)
-                .AddWithValue("@Monto", EntCaja.Monto)
-                .AddWithValue("@Fecha", EntCaja.Fecha)
-                .AddWithValue("@Hora", EntCaja.Hora)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                respuesta = CerrarCaja(EntCaja, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return CInt(respuesta.Value)
+            Return respuesta
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function CerrarCaja(EntCaja As Entidades.CajaInicial, ByRef cmd As SqlCommand) As Integer
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_CajaInicial_Alta"
+        With cmd.Parameters
+            .AddWithValue("@Abierta", EntCaja.Abierta)
+            .AddWithValue("@id_Empleado", EntCaja.id_Empleado)
+            .AddWithValue("@Empleado", EntCaja.Empleado)
+            .AddWithValue("@id_Sucursal", EntCaja.id_Sucursal)
+            .AddWithValue("@Monto", EntCaja.Monto)
+            .AddWithValue("@Fecha", EntCaja.Fecha)
+            .AddWithValue("@Hora", EntCaja.Hora)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CInt(respuesta.Value)
     End Function
 
     'Funcion que inserta un nuevo registro en la tabla CAJA_INICIAL.
     Public Function AbrirCaja(ByVal id_Sucursal As Integer, ByVal Fecha As String) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim respuesta As Integer
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
+
+            cmd.Connection = clsDatos.ConectarLocal()
+            respuesta = AbrirCaja(id_Sucursal, Fecha, cmd)
+            clsDatos.DesconectarLocal()
+
             'Conecto a la bdd.
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_CajaInicial_Baja"
-            With cmd.Parameters
-                .AddWithValue("@id_Sucursal", id_Sucursal)
-                .AddWithValue("@Fecha", Fecha)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                respuesta = AbrirCaja(id_Sucursal, Fecha, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return CInt(respuesta.Value)
+            Return respuesta
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function AbrirCaja(id_Sucursal As Integer, Fecha As String, ByRef cmd As SqlCommand) As Integer
+
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_CajaInicial_Baja"
+        With cmd.Parameters
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@Fecha", Fecha)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return CInt(respuesta.Value)
     End Function
 
     'Funcion que actualiza un registro en la tabla CAJA_INICIAL.
@@ -148,6 +150,8 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
             'Conecto a la bdd.
             If HayInternet Then

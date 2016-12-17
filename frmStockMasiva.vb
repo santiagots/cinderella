@@ -461,8 +461,7 @@
                     'cambio el cursor
                     Me.Cursor = Cursors.WaitCursor
 
-                    NegMercaderia.AltaMercaderia(EMercaderia)
-                    id_Mercaderia = NegMercaderia.UltimaMercaderia()
+                    id_Mercaderia = NegMercaderia.AltaMercaderia(EMercaderia)
 
                     'Ingreso el detalle de la Mercaderia.
                     'Recorro cada producto del grid.

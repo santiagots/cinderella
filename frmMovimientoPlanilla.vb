@@ -90,17 +90,24 @@
                 Funciones.ControlInstancia(frmMovimientoCajaFuerte).Show()
 
             ElseIf Tipo = "Env. otras Suc." Then
-                Me.WindowState = FormWindowState.Minimized
-                frmMovimientoEgreso.id_Movimiento = id_Mov
-                Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
-                Funciones.ControlInstancia(frmMovimientoEgreso).Show()
-
+                If (Negocio.Funciones.HayInternet) Then
+                    Me.WindowState = FormWindowState.Minimized
+                    frmMovimientoEgreso.id_Movimiento = id_Mov
+                    Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
+                    Funciones.ControlInstancia(frmMovimientoEgreso).Show()
+                Else
+                    MessageBox.Show("No puede ver el detalle del movimiento seleccionado porque no se cuenta con conexión a Internet. Por favor, vuelva a intentar cuando disponga de una conexión a Internet.", "Movimientos | Listado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
             ElseIf Tipo = "Rec.otras Suc." Then
-                Me.WindowState = FormWindowState.Minimized
-                frmMovimientoEgreso.id_Movimiento = id_Mov
-                frmMovimientoEgreso.Envio = False
-                Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
-                Funciones.ControlInstancia(frmMovimientoEgreso).Show()
+                If (Negocio.Funciones.HayInternet) Then
+                    Me.WindowState = FormWindowState.Minimized
+                    frmMovimientoEgreso.id_Movimiento = id_Mov
+                    frmMovimientoEgreso.Envio = False
+                    Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
+                    Funciones.ControlInstancia(frmMovimientoEgreso).Show()
+                Else
+                    MessageBox.Show("No puede ver el detalle del movimiento seleccionado porque no se cuenta con conexión a Internet. Por favor, vuelva a intentar cuando disponga de una conexión a Internet.", "Movimientos | Listado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
             End If
 
             'Cambio el cursor a NORMAL.
@@ -125,23 +132,29 @@
                     If Tipo = "Dif. de Caja" Then
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 1)
                     ElseIf Tipo = "Env. otras Suc." Then
-                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 2)
-                    ElseIf Tipo = "Gasto" Then
-                        Dim dsMov As New DataSet
-                        Dim id_Reg As Integer = 0
-                        dsMov = NegMovimiento.ObtenerMov(id_Mov, id_Sucursal, "Gasto")
-                        id_Reg = dsMov.Tables(0).Rows(0).Item("id_Registro").ToString
-                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 3, id_Reg)
-                    ElseIf Tipo = "Impuesto" Then
-                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 4)
-                    ElseIf Tipo = "Movimiento de Socio" Then
-                        If (Descripcion = "Retiro de socio") Then
-                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 5)
+                        If (Negocio.Funciones.HayInternet) Then
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 2)
                         Else
-                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 7)
+                            MessageBox.Show("El movimiento no puede ser eliminado porque no se cuenta con conexión a Internet. Por favor, vuelva a intentar cuando disponga de una conexión a Internet.", "Movimientos | Listado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            Me.Cursor = Cursors.Arrow
+                            Return
                         End If
-                    ElseIf Tipo = "Caja Fuerte" Then
-                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 6)
+                    ElseIf Tipo = "Gasto" Then
+                            Dim dsMov As New DataSet
+                            Dim id_Reg As Integer = 0
+                            dsMov = NegMovimiento.ObtenerMov(id_Mov, id_Sucursal, "Gasto")
+                            id_Reg = dsMov.Tables(0).Rows(0).Item("id_Registro").ToString
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 3, id_Reg)
+                        ElseIf Tipo = "Impuesto" Then
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 4)
+                        ElseIf Tipo = "Movimiento de Socio" Then
+                            If (Descripcion = "Retiro de socio") Then
+                                Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 5)
+                            Else
+                                Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 7)
+                            End If
+                        ElseIf Tipo = "Caja Fuerte" Then
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 6)
                     End If
 
                     MessageBox.Show(Estado, "Movimientos | Listado", MessageBoxButtons.OK, MessageBoxIcon.Information)

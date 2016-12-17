@@ -2,14 +2,15 @@
 Public Class NegVentas
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
+
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
-    Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas, EntDetalleVenta As List(Of Entidades.Ventas_Detalle)) As Boolean
+    Public Function NuevaVenta(ByVal EntVenta As Entidades.Ventas, EntDetalleVenta As List(Of Entidades.Ventas_Detalle), ByRef IdVenta As Integer) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Boolean
         Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
@@ -21,60 +22,65 @@ Public Class NegVentas
         Next
 
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = NuevaVenta(EntVenta, cmd, dt)
+            ClsDatos.DesconectarLocal()
+            IdVenta = ObtenerID(False)
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Ventas_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Cliente", EntVenta.id_Cliente)
-                .AddWithValue("@id_Empleado", EntVenta.id_Empleado)
-                .AddWithValue("@id_Encargado", EntVenta.id_Encargado)
-                .AddWithValue("@id_Sucursal", EntVenta.id_Sucursal)
-                .AddWithValue("@id_TipoPago", EntVenta.id_TipoPago)
-                .AddWithValue("@id_TipoVenta", EntVenta.id_TipoVenta)
-                .AddWithValue("@PrecioTotal", EntVenta.PrecioTotal)
-                .AddWithValue("@Subtotal", EntVenta.SubTotal)
-                .AddWithValue("@CantidadTotal", EntVenta.CantidadTotal)
-                .AddWithValue("@Descuento", EntVenta.Descuento)
-                .AddWithValue("@Anulado", EntVenta.Anulado)
-                .AddWithValue("@Habilitado", EntVenta.Habilitado)
-                .AddWithValue("@Facturado", EntVenta.Facturado)
-                .AddWithValue("@DiferenciaPagoCheque", EntVenta.DiferenciaPagoCheque)
-            End With
-
-            'Declaro el tipo de dato para el detalle de la venta
-            Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
-            param.SqlDbType = SqlDbType.Structured
-            param.TypeName = "dbo.VENTA_DETALLE_TYPE"
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = NuevaVenta(EntVenta, cmd, dt)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
+                IdVenta = ObtenerID(True)
             End If
 
             'retorno valor
-            Return CBool(respuesta.Value)
+            Return msg
         Catch ex As Exception
             Return False
         End Try
     End Function
 
+    Private Shared Function NuevaVenta(EntVenta As Entidades.Ventas, ByRef cmd As SqlCommand, dt As DataTable) As Boolean
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Ventas_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Cliente", EntVenta.id_Cliente)
+            .AddWithValue("@id_Empleado", EntVenta.id_Empleado)
+            .AddWithValue("@id_Encargado", EntVenta.id_Encargado)
+            .AddWithValue("@id_Sucursal", EntVenta.id_Sucursal)
+            .AddWithValue("@id_TipoPago", EntVenta.id_TipoPago)
+            .AddWithValue("@id_TipoVenta", EntVenta.id_TipoVenta)
+            .AddWithValue("@id_ListaPrecio", EntVenta.id_ListaPrecio)
+            .AddWithValue("@PrecioTotal", EntVenta.PrecioTotal)
+            .AddWithValue("@Subtotal", EntVenta.SubTotal)
+            .AddWithValue("@MontoSenia", EntVenta.MontoSenia)
+            .AddWithValue("@Senia ", EntVenta.Senia)
+            .AddWithValue("@CantidadTotal", EntVenta.CantidadTotal)
+            .AddWithValue("@Descuento", EntVenta.Descuento)
+            .AddWithValue("@Anulado", EntVenta.Anulado)
+            .AddWithValue("@Habilitado", EntVenta.Habilitado)
+            .AddWithValue("@Facturado", EntVenta.Facturado)
+            .AddWithValue("@DiferenciaPagoCheque", EntVenta.DiferenciaPagoCheque)
+        End With
+
+        'Declaro el tipo de dato para el detalle de la venta
+        Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
+        param.SqlDbType = SqlDbType.Structured
+        param.TypeName = "dbo.VENTA_DETALLE_TYPE"
+
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return CBool(respuesta.Value)
+    End Function
+
     'Obtiene el ultimo ID de la tabla VENTAS.
-    Public Function ObtenerID()
+    Public Function ObtenerID(HayInternet As Boolean)
         Dim ds As DataSet
         If (HayInternet) Then
             ds = ClsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('VENTAS') as id_Venta")
@@ -91,7 +97,7 @@ Public Class NegVentas
 
     'Funcion para listar todas las ventas.
     Function ListadoVentasCompleto(ByVal id_Sucursal As Integer) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal)
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal)
@@ -100,7 +106,7 @@ Public Class NegVentas
 
     'Funcion para listar todas las ventas de un cliente.
     Function ListadoVentasCliente(ByVal id_Cliente As Integer) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCliente @id_Cliente=" & id_Cliente)
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCliente @id_Cliente=" & id_Cliente)
@@ -109,7 +115,7 @@ Public Class NegVentas
 
     'Funcion para listar todas las ventas por FECHA.
     Function ListadoVentasCompletoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -120,7 +126,7 @@ Public Class NegVentas
     Public Function TraerVenta(ByVal id_Venta As Integer)
         Dim dsVentas As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_Detalle @id_Venta=" & id_Venta)
         Else
             dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_Detalle @id_Venta=" & id_Venta)
@@ -133,7 +139,7 @@ Public Class NegVentas
     Public Function TraerVentaDetalle(ByVal id_Venta As Integer)
         Dim dsVentas As New DataSet
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_VentasDetalle_Listado @id_Venta=" & id_Venta)
         Else
             dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_VentasDetalle_Listado @id_Venta=" & id_Venta)
@@ -147,53 +153,53 @@ Public Class NegVentas
 
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Integer
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        If (Texto = "") Then
+            Texto = "No se ingreso el motivo."
+        End If
+
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = AnularVenta(id_Venta, Texto, cmd)
+            ClsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            If (Texto = "") Then
-                Texto = "No se ingreso el motivo."
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Ventas_Anular"
-            With cmd.Parameters
-                .AddWithValue("@id_Venta", id_Venta)
-                .AddWithValue("@Texto", Texto)
-                .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = AnularVenta(id_Venta, Texto, cmd)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return 0
         End Try
+    End Function
+
+    Private Shared Function AnularVenta(id_Venta As Integer, Texto As String, ByRef cmd As SqlCommand) As Integer
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Ventas_Anular"
+        With cmd.Parameters
+            .AddWithValue("@id_Venta", id_Venta)
+            .AddWithValue("@Texto", Texto)
+            .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion que obtiene el total en ventas de una sucursal.
     Public Function ObtenerVentasSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -215,7 +221,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalMinoristas(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerMinoristas @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -237,7 +243,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalMayoristas(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerMayoristas @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -259,7 +265,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalEfectivo(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerEfectivo @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -281,7 +287,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalFacturado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerFacturado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -303,7 +309,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalCheque(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerCheque @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -326,7 +332,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalCredito(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerCredito @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -349,7 +355,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalDebito(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerDebito @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             'NO ANDA LOCALMENTE! COPIAR SP!!!
@@ -372,7 +378,7 @@ Public Class NegVentas
     Public Function ObtenerVentasSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim ds As New DataSet
 
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -384,6 +390,9 @@ Public Class NegVentas
     'Funcion que actualiza una venta como facturada o no facturada.
     Public Function FacturoVenta(ByVal Facturo As Boolean, ByVal id_Venta As Integer)
         Dim Facturado As Integer = 0
+        Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim msg As Boolean
+        Dim cmd As New SqlCommand
 
         If Facturo Then
             Facturado = 1
@@ -391,50 +400,48 @@ Public Class NegVentas
             Facturado = 0
         End If
 
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim msg As String = ""
         Try
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = FacturoVenta(id_Venta, Facturado, cmd)
+            ClsDatos.DesconectarLocal()
+
             'Conecto a la bdd.
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Ventas_Facturo"
-            With cmd.Parameters
-                .AddWithValue("@id_Venta", id_Venta)
-                .AddWithValue("@Facturado", Facturado)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = FacturoVenta(id_Venta, Facturado, cmd)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return 0
         End Try
 
     End Function
 
+    Private Shared Function FacturoVenta(id_Venta As Integer, Facturado As Integer, ByRef cmd As SqlCommand) As Boolean
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Ventas_Facturo"
+        With cmd.Parameters
+            .AddWithValue("@id_Venta", id_Venta)
+            .AddWithValue("@Facturado", Facturado)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CBool(respuesta.Value)
+    End Function
+
     'Resumen Diario
     Public Function TotalVentasMinoristas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalMinorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalMinorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -449,7 +456,7 @@ Public Class NegVentas
 
     Public Function TotalVentasMayoristas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalMayorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalMayorista @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -464,7 +471,7 @@ Public Class NegVentas
 
     Public Function TotalVentasFacturado(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalFacturado @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalFacturado @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -479,7 +486,7 @@ Public Class NegVentas
 
     Public Function TotalVentas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -494,7 +501,7 @@ Public Class NegVentas
 
     Public Function TotalVentasTarjetas(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentasTarjetas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentasTarjetas @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -509,7 +516,7 @@ Public Class NegVentas
 
     Public Function TotalVentasEfectivo(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentasEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentasEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
@@ -524,7 +531,7 @@ Public Class NegVentas
 
     Public Function TotalVentasCheque(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If HayInternet Then
+        If Funciones.HayInternet Then
             ds = ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_TotalVentasCheque @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
             ds = ClsDatos.ConsultarBaseLocal("execute sp_Ventas_TotalVentasCheque @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")

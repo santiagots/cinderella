@@ -4,57 +4,58 @@ Imports Datos
 Public Class NegFacturacion
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
     Dim con As New Conexion
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS_DETALLE.
     Public Function NuevaFacturacion(ByVal EntFacturacion As Entidades.Facturacion) As Boolean
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Boolean
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = NuevaFacturacion(EntFacturacion, cmd)
+            ClsDatos.DesconectarLocal()
+
             If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Facturacion_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Venta", EntFacturacion.id_Venta)
-                .AddWithValue("@NumeroFactura", EntFacturacion.NumeroFactura)
-                .AddWithValue("@Monto", EntFacturacion.Monto)
-                .AddWithValue("@Nombre", EntFacturacion.Nombre)
-                .AddWithValue("@Cuit", EntFacturacion.Cuit)
-                .AddWithValue("@Direccion", EntFacturacion.Direccion)
-                .AddWithValue("@Localidad", EntFacturacion.Localidad)
-                .AddWithValue("@TipoFactura", EntFacturacion.TipoFactura)
-                .AddWithValue("@PuntoVenta", EntFacturacion.PuntoVenta)
-                .AddWithValue("@Id_Sucursal", EntFacturacion.IdSucursal)
-                .AddWithValue("@TipoRecibo", EntFacturacion.TipoRecibo)
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If (HayInternet) Then
+                msg = NuevaFacturacion(EntFacturacion, cmd)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return CBool(respuesta.Value)
+            Return msg
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function NuevaFacturacion(EntFacturacion As Entidades.Facturacion, ByRef cmd As SqlCommand) As Boolean
+        'Ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Facturacion_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Venta", EntFacturacion.id_Venta)
+            .AddWithValue("@NumeroFactura", EntFacturacion.NumeroFactura)
+            .AddWithValue("@Monto", EntFacturacion.Monto)
+            .AddWithValue("@Nombre", EntFacturacion.Nombre)
+            .AddWithValue("@Cuit", EntFacturacion.Cuit)
+            .AddWithValue("@Direccion", EntFacturacion.Direccion)
+            .AddWithValue("@Localidad", EntFacturacion.Localidad)
+            .AddWithValue("@TipoFactura", EntFacturacion.TipoFactura)
+            .AddWithValue("@PuntoVenta", EntFacturacion.PuntoVenta)
+            .AddWithValue("@Id_Sucursal", EntFacturacion.IdSucursal)
+            .AddWithValue("@TipoRecibo", EntFacturacion.TipoRecibo)
+        End With
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return CBool(respuesta.Value)
     End Function
 
     'Funcion que retorna el ultimo numero utilizado en una factura 
@@ -62,6 +63,7 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
         'Conecto a la bdd.
 
         Try
@@ -106,6 +108,7 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
 
@@ -152,10 +155,11 @@ Public Class NegFacturacion
         'Declaro variables
         Dim dsFacturas As New DataSet
         Dim facturas As List(Of Entidades.Facturacion) = New List(Of Entidades.Facturacion)()
+
         'Conecto a la bdd.
 
         Try
-            If (HayInternet) Then
+            If (Funciones.HayInternet) Then
                 dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
             Else
                 dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
@@ -176,7 +180,7 @@ Public Class NegFacturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 
-        If (HayInternet) Then
+        If (Funciones.HayInternet) Then
             dsFactura = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)
         Else
             dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)
@@ -206,8 +210,11 @@ Public Class NegFacturacion
         entFactura.PuntoVenta = dr.Item("PuntoVenta").ToString
         entFactura.TipoRecibo = Integer.Parse(dr.Item("TipoRecibo").ToString)
         entFactura.IdSucursal = dr.Item("Id_Sucursal").ToString
-        entFactura.IVA = Double.Parse(dr.Item("Monto").ToString) * 0.21
-        entFactura.SubTotal = Double.Parse(dr.Item("Monto").ToString) * 0.79
+        'obtengo el valor sin el IVA
+        entFactura.SubTotal = entFactura.Monto / 1.21
+        'obtengo el valor IVA
+        entFactura.IVA = entFactura.SubTotal * 0.21
+
 
         Return entFactura
     End Function

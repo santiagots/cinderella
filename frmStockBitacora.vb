@@ -23,6 +23,10 @@
                 Cb_Sucursal.Refresh()
             End If
 
+            If Not Negocio.Funciones.HayInternet Then
+                Cb_Sucursal.Enabled = False
+            End If
+
             FechaDesde.Value = Now.Date.AddDays(-30)
             FechaHasta.Value = Now.Date
 

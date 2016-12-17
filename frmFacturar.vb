@@ -25,6 +25,7 @@ Public Class frmFacturar
     Public MontoSinDescuento As Double
     Public id_Cliente As Integer
     Public TipoCliente As Tipo
+    Public EsSenia As Boolean = False
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
@@ -127,9 +128,19 @@ Public Class frmFacturar
         PanelTotalMinorista.Visible = True
         Cb_IVA.SelectedIndex = 1
 
-        lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
-        lbl_DescuentoMinorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
-        lbl_SubtotalMinorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+        If (EsSenia) Then
+            Label1.Text = "Total Seña:"
+            lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+
+            Label12.Visible = False
+            Label11.Visible = False
+            lbl_DescuentoMinorista.Visible = False
+            lbl_SubtotalMinorista.Visible = False
+        Else
+            lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+            lbl_DescuentoMinorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
+            lbl_SubtotalMinorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+        End If
     End Sub
 
     Private Sub ConfigurarMayorista()
@@ -140,10 +151,22 @@ Public Class frmFacturar
         Cb_IVA.Items.Remove("Consumidor Final")
         Cb_IVA.SelectedIndex = 0
 
-        lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
-        lbl_DescuentoMayorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
-        lbl_SubtotalMayorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
-        lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
+        If (EsSenia) Then
+            Label23.Text = "Total Seña:"
+            lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+
+            Label17.Visible = False
+            Label21.Visible = False
+            Label18.Visible = False
+            lbl_DescuentoMayorista.Visible = False
+            lbl_SubtotalMayorista.Visible = False
+            lbl_IvaMayorista.Visible = False
+        Else
+            lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+            lbl_DescuentoMayorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
+            lbl_SubtotalMayorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+            lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
+        End If
     End Sub
 
     'Click en Facturar!
@@ -451,7 +474,7 @@ Public Class frmFacturar
                     NegNotaCredito.NuevaNotaCredito(EntNotaCredito)
                 Next
 
-                'Actualizo la venta como DEVOLUCION.
+                'Actualizo la DEVOLUCION.
                 NegDevolucion.GeneracionNotaCredito(True, id_Devolucion)
 
                 MessageBox.Show("Se ha generado la nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)

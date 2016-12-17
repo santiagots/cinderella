@@ -7,6 +7,8 @@ Public Class Cliente
     Public Function GetClienteMayorista(RazonSocial As String) As List(Of EntidadClientes) Implements ICliente.GetClienteMayorista
         Dim clientesNegocio As Negocio.NegClientes = New Negocio.NegClientes()
 
+        Negocio.Funciones.HayConexionInternet()
+
         Dim Respuesta As List(Of EntidadClientes) = New List(Of EntidadClientes)()
 
         For Each cli As Entidades.Clientes In clientesNegocio.TraerCliente(RazonSocial)

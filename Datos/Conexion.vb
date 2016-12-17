@@ -19,7 +19,7 @@ Public Class Conexion
             miconexion.ConnectionString = CadenaConexion
             miconexion.Open()
         Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos." & ex.Message)
+            Windows.Forms.MessageBox.Show("Error conectando con la base de datos local." & ex.ToString())
         End Try
         Return miconexion
     End Function
@@ -36,7 +36,7 @@ Public Class Conexion
             miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
             miconexionRemoto.Open()
         Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos." & ex.Message)
+            Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.ToString())
         End Try
         Return miconexionRemoto
     End Function

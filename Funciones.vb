@@ -19,44 +19,38 @@ Public Class Funciones
     End Property
 
     'Funcion que actualiza el estado de internet de la aplicacion.
-    Public Sub ActualizarEstado()
-        If My.Settings.Internet Then
-            Dim negFunciones As New Negocio.Funciones
-            Dim Internete As Boolean = negFunciones.GotInternet()
+    Public Sub ActualizarEstado(Internete As Boolean, MDIContenedor As MDIContenedor)
+        If Not VariablesGlobales.HayConexion = Internete Then
+            If Internete Then
+                MDIContenedor.Conectado.Text = "Conectado a Internet"
+                MDIContenedor.Conectado.Image = My.Resources.Recursos.Internet_32
+                VariablesGlobales.HayConexion = True
 
-            If VariablesGlobales.HayConexion = Internete Then
+                'Form Notify.
+                ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
+                frmNotificaciones.Text = "Conexión a Internet"
+                frmNotificaciones.lblConexion.Text = "Sistema con conexión a internet."
+                frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Internet_64
+                ControlInstancia(frmNotificaciones).Show()
+
+                'Sonidito.
+                SystemSounds.Asterisk.Play()
             Else
-                If Internete Then
-                    MDIContenedor.Conectado.Text = "Conectado a Internet"
-                    MDIContenedor.Conectado.Image = My.Resources.Recursos.Internet_32
-                    VariablesGlobales.HayConexion = True
+                MDIContenedor.Conectado.Text = "Sin Conexión a Internet"
+                MDIContenedor.Conectado.Image = My.Resources.Recursos.NoInternet_32
+                VariablesGlobales.HayConexion = False
 
-                    'Form Notify.
-                    ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
-                    frmNotificaciones.Text = "Conexión a Internet"
-                    frmNotificaciones.lblConexion.Text = "Sistema con conexión a internet."
-                    frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Internet_64
-                    ControlInstancia(frmNotificaciones).Show()
+                'Form Notify.
+                ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
+                frmNotificaciones.Text = "Sin Conexión a Internet"
+                frmNotificaciones.lblConexion.Text = "No se ha encontrado conexión a internet."
+                frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.NoInternet_64
+                ControlInstancia(frmNotificaciones).Show()
 
-                    'Sonidito.
-                    SystemSounds.Asterisk.Play()
-                Else
-                    MDIContenedor.Conectado.Text = "Sin Conexión a Internet"
-                    MDIContenedor.Conectado.Image = My.Resources.Recursos.NoInternet_32
-                    VariablesGlobales.HayConexion = False
-
-                    'Form Notify.
-                    ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
-                    frmNotificaciones.Text = "Sin Conexión a Internet"
-                    frmNotificaciones.lblConexion.Text = "No se ha encontrado conexión a internet."
-                    frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.NoInternet_64
-                    ControlInstancia(frmNotificaciones).Show()
-
-                    'Sonidito.
-                    SystemSounds.Exclamation.Play()
-                End If
-
+                'Sonidito.
+                SystemSounds.Exclamation.Play()
             End If
+
         End If
     End Sub
 

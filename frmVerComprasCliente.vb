@@ -132,13 +132,12 @@
                 lblVenta.Text = dsVentas.Tables(0).Rows(0).Item("TiposVenta").ToString
                 lblPago.Text = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString
 
-                If dsVentas.Tables(0).Rows(0).Item("Facturado").ToString = "1" Then
-                    lblFacturado.Text = "SI"
-                    BtnFactura.Visible = True
-                    frmVerFactura.id_Venta = id_Venta
+                Dim TipoFactura As Integer = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("TipoFactura").ToString)
+
+                If TipoFactura >= 0 Then
+                    lblFacturado.Text = [Enum].GetName(GetType(Entidades.TipoFactura), TipoFactura)
                 Else
                     lblFacturado.Text = "NO"
-                    BtnFactura.Visible = False
                 End If
 
                 If dsVentas.Tables(0).Rows(0).Item("Anulado").ToString = "1" Then

@@ -76,6 +76,7 @@
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />
     <Compile Include="Cheque.vb" />
+    <Compile Include="ClienteMinorista.vb" />
     <Compile Include="NotaPedido_Detalle.vb" />
     <Compile Include="Clientes.vb" />
     <Compile Include="Colores.vb" />
@@ -115,6 +116,7 @@
     <Compile Include="Provincias.vb" />
     <Compile Include="Recibos.vb" />
     <Compile Include="Registros.vb" />
+    <Compile Include="Senia.vb" />
     <Compile Include="Stock.vb" />
     <Compile Include="Stock_Bitacora.vb" />
     <Compile Include="Sucursales.vb" />

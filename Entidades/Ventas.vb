@@ -57,6 +57,16 @@
         End Set
     End Property
 
+    Private id_ListaPrecio_ As Integer
+    Public Property id_ListaPrecio() As Integer
+        Get
+            Return id_ListaPrecio_
+        End Get
+        Set(ByVal value As Integer)
+            id_ListaPrecio_ = value
+        End Set
+    End Property
+
     Public Property id_Cliente() As Integer
         Get
             Return id_Cliente_
@@ -145,6 +155,26 @@
         End Get
         Set(ByVal value As Double)
             DiferenciaPagoCheque_ = value
+        End Set
+    End Property
+
+    Private MontoSenia_ As Double
+    Public Property MontoSenia() As Double
+        Get
+            Return MontoSenia_
+        End Get
+        Set(ByVal value As Double)
+            MontoSenia_ = value
+        End Set
+    End Property
+
+    Private Senia_ As Boolean
+    Public Property Senia() As Boolean
+        Get
+            Return Senia_
+        End Get
+        Set(ByVal value As Boolean)
+            Senia_ = value
         End Set
     End Property
 

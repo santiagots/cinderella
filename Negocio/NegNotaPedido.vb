@@ -6,14 +6,14 @@ Public Class NegNotaPedido
 
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS.
-    Public Function NuevaNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle)) As Boolean
+    Public Function NuevaNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle)) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Integer
         Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
@@ -25,51 +25,50 @@ Public Class NegNotaPedido
         Next
 
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = NuevaNotaPedido(EntNotaPedido, cmd, dt)
+            ClsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_NotaPedido_Alta"
-            With cmd.Parameters
-                .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
-                .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
-                .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
-                .AddWithValue("@id_TipoPago", EntNotaPedido.id_TipoPago)
-                .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
-                .AddWithValue("@id_ListaPrecio", EntNotaPedido.id_ListaPrecio)
-                .AddWithValue("@id_ConsumidorFinal", EntNotaPedido.Id_ConsumidorFinal)
-                .AddWithValue("@PrecioTotal", EntNotaPedido.PrecioTotal)
-                .AddWithValue("@Vendida", If(EntNotaPedido.Vendida, 1, 0))
-            End With
-
-            'Declaro el tipo de dato para el detalle de la venta
-            Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
-            param.SqlDbType = SqlDbType.Structured
-            param.TypeName = "dbo.VENTA_DETALLE_TYPE"
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
-                ClsDatos.DesconectarRemoto()
-            Else
+                msg = NuevaNotaPedido(EntNotaPedido, cmd, dt)
                 ClsDatos.DesconectarLocal()
             End If
 
-            'retorno valor
-            Return CBool(respuesta.Value)
+            Return msg
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    Private Shared Function NuevaNotaPedido(EntNotaPedido As NotaPedido, ByRef cmd As SqlCommand, dt As DataTable) As Integer
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_NotaPedido_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
+            .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
+            .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
+            .AddWithValue("@id_TipoPago", EntNotaPedido.id_TipoPago)
+            .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
+            .AddWithValue("@id_ListaPrecio", EntNotaPedido.id_ListaPrecio)
+            .AddWithValue("@id_ConsumidorFinal", EntNotaPedido.Id_ConsumidorFinal)
+            .AddWithValue("@PrecioTotal", EntNotaPedido.PrecioTotal)
+            .AddWithValue("@Vendida", If(EntNotaPedido.Vendida, 1, 0))
+        End With
+
+        'Declaro el tipo de dato para el detalle de la venta
+        Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
+        param.SqlDbType = SqlDbType.Structured
+        param.TypeName = "dbo.VENTA_DETALLE_TYPE"
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     Public Function TraerNotas(ByVal SucursalId As Integer) As List(Of NotaPedido)
@@ -77,6 +76,7 @@ Public Class NegNotaPedido
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of NotaPedido) = New List(Of NotaPedido)()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto a la bdd.
         If (HayInternet) Then
@@ -100,6 +100,7 @@ Public Class NegNotaPedido
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of NotaPedido_Detalle) = New List(Of NotaPedido_Detalle)()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto a la bdd.
         If (HayInternet) Then
@@ -120,15 +121,25 @@ Public Class NegNotaPedido
 
     Public Function BorrarNota(ByVal NotaPedidoId As Integer) As Boolean
         'Declaro variables
+        Dim msg As Boolean
         Dim cmd As SqlCommand = New SqlCommand()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
+        cmd.Connection = ClsDatos.ConectarLocal()
+        msg = BorrarNota(NotaPedidoId, cmd)
+        ClsDatos.DesconectarLocal()
+
         If HayInternet Then
+            cmd = New SqlCommand()
             cmd.Connection = ClsDatos.ConectarRemoto()
-        Else
-            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = BorrarNota(NotaPedidoId, cmd)
+            ClsDatos.DesconectarRemoto()
         End If
 
+        Return msg
+    End Function
+
+    Private Shared Function BorrarNota(NotaPedidoId As Integer, ByRef cmd As SqlCommand) As Boolean
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_NotaPedido_Eliminar"
@@ -141,14 +152,6 @@ Public Class NegNotaPedido
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-
-        'Desconecto la bdd.
-        If HayInternet Then
-            ClsDatos.DesconectarRemoto()
-        Else
-            ClsDatos.DesconectarLocal()
-        End If
-
         Return respuesta.Value
     End Function
 

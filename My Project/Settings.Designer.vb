@@ -83,19 +83,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("2"),  _
-         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
-        Public Property Sucursal() As Integer
-            Get
-                Return CType(Me("Sucursal"),Integer)
-            End Get
-            Set
-                Me("Sucursal") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Público Tigre")>  _
         Public Property NombreListaPrecio() As String
             Get
@@ -192,7 +179,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("25000")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("30000")>  _
         Public Property TemporizadorInternet() As String
             Get
                 Return CType(Me("TemporizadorInternet"),String)
@@ -224,41 +211,6 @@ Namespace My
             Set
                 Me("Internet") = value
             End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Av. Corrientes"),  _
-         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
-        Public Property NombreSucursal() As String
-            Get
-                Return CType(Me("NombreSucursal"),String)
-            End Get
-            Set
-                Me("NombreSucursal") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA.mdf;Integ"& _ 
-            "rated Security=True;User Instance=True")>  _
-        Public ReadOnly Property Conexion() As String
-            Get
-                Return CType(Me("Conexion"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0Tvkneh8HcrERuMerFzACRwWiZZg35fXKOi3SK1IWATfrSUVr4B1vhig2+uF9RoZjAu0GhQjaJPS83vNW"& _ 
-            "7a6BIgtE9hqLOwzZbQceOJchkSCCcO9DO6GIiUAGeBwHMwztfqBhcEHUcpKfiqT6sAg+Q==")>  _
-        Public ReadOnly Property ConexionRemoto() As String
-            Get
-                Return CType(Me("ConexionRemoto"),String)
-            End Get
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
@@ -426,6 +378,55 @@ Namespace My
             End Get
             Set
                 Me("HabilitarExentoSinIVA") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf"& _ 
+            ";Integrated Security=True;User Instance=True")>  _
+        Public ReadOnly Property Conexion() As String
+            Get
+                Return CType(Me("Conexion"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60p"& _ 
+            "KA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv"& _ 
+            "+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q==")>  _
+        Public ReadOnly Property ConexionRemoto() As String
+            Get
+                Return CType(Me("ConexionRemoto"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("34"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
+        Public Property Sucursal() As Integer
+            Get
+                Return CType(Me("Sucursal"),Integer)
+            End Get
+            Set
+                Me("Sucursal") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Nueva Sucursal"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
+        Public Property NombreSucursal() As String
+            Get
+                Return CType(Me("NombreSucursal"),String)
+            End Get
+            Set
+                Me("NombreSucursal") = value
             End Set
         End Property
     End Class

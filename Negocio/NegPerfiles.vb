@@ -3,7 +3,6 @@
 Public Class NegPerfiles
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
-    Dim HayInternet As Boolean = ClsFunciones.GotInternet
 
     Function ListadoPerfiles() As DataSet
         Return ClsDatos.ConsultarBaseRemoto("execute sp_Perfiles_ListadoCompleto")
@@ -11,6 +10,8 @@ Public Class NegPerfiles
 
     Function UltimoPerfil() As Integer
         Dim ds As DataSet
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
         If (HayInternet) Then
             ds = ClsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('PERFILES') as id_Perfil")
         Else
@@ -30,6 +31,7 @@ Public Class NegPerfiles
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo la informacion de la relacion entre la patente el perfil y la sucursal para pasarla por un campo al SP
         dt.Columns.Add("id_Perfil", Type.GetType("System.Int32"))

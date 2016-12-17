@@ -31,7 +31,7 @@ Public Class frmEmpleadosSaldos
         'Cargo el checkboxlist
         Dim dsEmpleados As New DataSet
         'Si es admin, ve todos los empleados sino solo los de la sucursal.
-        If VariablesGlobales.objUsuario.id_Perfil = 1 Then
+        If VariablesGlobales.objUsuario.id_Perfil = 1 AndAlso Negocio.Funciones.HayInternet Then
             dsEmpleados = NegEmpleados.ListadoEmpleados()
         Else
             dsEmpleados = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
