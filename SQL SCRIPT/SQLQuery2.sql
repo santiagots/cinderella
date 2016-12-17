@@ -1,9 +1,3 @@
---Sincronizar tabla de clientes minoristas
---Sincronizar tabla de senias
-
-USE [CINDERELLA]
-GO
-
 SET ANSI_NULLS ON
 GO
 
@@ -15,13 +9,16 @@ GO
 
 ALTER TABLE [dbo].[VENTAS]
 ADD [MontoSenia] [float] Not Null DEFAULT(0)
+GO
+
+ALTER TABLE [dbo].[VENTAS]
 ADD [Senia] [bit] Not Null DEFAULT(0)
-ADD [id_ListaPrecio] [int] Not Null DEFAULT(0)
 GO
 
 ALTER TABLE [dbo].[VENTAS]
 ADD [id_ListaPrecio] [int] Not Null DEFAULT(0)
 GO
+
 
 ALTER PROCEDURE [dbo].[sp_Ventas_Alta]
     @id_Cliente AS INT,
@@ -179,7 +176,10 @@ BEGIN
 	SELECT VENTAS.id_Venta,
 		CLIENTES.RazonSocial as Cliente,
 		EMPLEADOS.Apellido + ', ' + EMPLEADOS.Nombre as Empleado,
-		VENTAS.Precio_Total + VENTAS.Diferencia_Pago_Cheque as MontoTotal,
+		CASE
+			WHEN Senia=0 THEN sum(ISNULL(Precio_Total,0)) + sum(ISNULL(Diferencia_Pago_Cheque,0))  
+			WHEN Senia=1 THEN sum(ISNULL(MontoSenia,0)) 
+		END as MontoTotal,
 		VENTAS.Descuento,
 		VENTAS.Fecha, 
 		CASE WHEN(Anulado=1) THEN 'SI' ELSE 'NO' END AS Anulado, 
@@ -191,7 +191,8 @@ BEGIN
 	LEFT JOIN CLIENTES ON VENTAS.id_Cliente = CLIENTES.id_Cliente  
 	INNER JOIN SUCURSALES ON VENTAS.id_Sucursal = SUCURSALES.id_Sucursal  
 	LEFT JOIN FACTURACION ON VENTAS.id_Venta = FACTURACION.id_Venta
-	where (VENTAS.id_Sucursal=@id_Sucursal) and (CAST(VENTAS.Fecha AS DATE) between @FDesde and @FHasta) AND (VENTAS.Senia = 0)
+	where (VENTAS.id_Sucursal=@id_Sucursal) and (CAST(VENTAS.Fecha AS DATE) between @FDesde and @FHasta)
+	group by VENTAS.id_Venta, CLIENTES.RazonSocial, EMPLEADOS.Apellido, EMPLEADOS.Nombre, VENTAS.Senia, VENTAS.Descuento, VENTAS.Fecha, Anulado, TipoRecibo, NumeroFactura, Numero
 	order by VENTAS.Fecha DESC
 END
 GO
@@ -868,11 +869,12 @@ CREATE TABLE [dbo].[SENIA](
 	[id_Sucursal] [int] NOT NULL,
 	[id_ClienteMinorista] [int] NOT NULL,
 	[id_ClienteMayorista] [int] NOT NULL,
-	[id_Venta] [int] NOT NULL,
+	[id_Venta_Senia] [int] NOT NULL,
+	[id_Venta_Retiro] [int] NOT NULL,
 	[FechaAlta] [date] NULL,
 	[FechaEstimadaRetiro] [date] NULL,
 	[FormaEntrega] [nvarchar] (255) NOT NULL,
-	[Observaciones] [nvarchar] (255)
+	[Observaciones] [nvarchar] (255),
 	[Entregada] [bit] Not Null DEFAULT(0)
  CONSTRAINT [PK_Senia] PRIMARY KEY CLUSTERED 
 (
@@ -935,6 +937,7 @@ BEGIN
 			S.FechaEstimadaRetiro,
 			S.FormaEntrega,
 			S.Observaciones,
+			S.Entregada,
 			v.Precio_Total,
 			v.MontoSenia
 	 from dbo.SENIA S left join CLIENTEMINORISTA CMIN on S.id_ClienteMinorista = CMIN.id_ClienteMinorista 
@@ -942,6 +945,7 @@ BEGIN
 			inner join VENTAS V on S.id_Venta = V.id_Venta
 	where s.id_Sucursal = @idSucursal
 END
+
 
 GO
 
@@ -979,7 +983,8 @@ CREATE PROCEDURE [dbo].[sp_ClienteMinorista_Alta]
 	@Telefono nvarchar (125),
 	@Email nvarchar (125),
 	@EnviarNovedades bit,
-	@Direccion nvarchar (125)
+	@Direccion nvarchar (125),
+	@id_ClienteMinorista int out
 AS
 	
 BEGIN
@@ -988,9 +993,12 @@ Begin Tran t_Alta
 
 		BEGIN
 
-			INSERT INTO dbo.CLIENTEMINORISTA(Apellido, Nombre, Telefono, Email, EnviarNovedades, Direccion) VALUES 
-			(@Apellido, @Nombre, @Telefono, @Email, @EnviarNovedades, @Direccion)
+			INSERT INTO dbo.CLIENTEMINORISTA(Apellido, Nombre, Telefono, Email, EnviarNovedades, Direccion) 
+			OUTPUT inserted.id_ClienteMinorista
+			VALUES (@Apellido, @Nombre, @Telefono, @Email, @EnviarNovedades, @Direccion)
 			COMMIT TRAN t_Alta
+
+			select @id_ClienteMinorista = IDENT_CURRENT('CLIENTEMINORISTA') 
 		END
 			
     End try
@@ -1053,11 +1061,13 @@ GO
 
 
 ------------------------------------------------------------
-
-INSERT INTO [dbo].[PATENTES] ([Descripcion] ,[Id_Grupo])
-     VALUES('Administración -> Reservas -> Administración Reservas', 1)
+SET IDENTITY_INSERT [dbo].[PATENTES] ON
+INSERT INTO [dbo].[PATENTES] ([id_Patente], [Descripcion] ,[Id_Grupo])
+     VALUES(616,'Administración -> Reservas -> Administración Reservas', 1)
+SET IDENTITY_INSERT [dbo].[PATENTES] OFF
 GO
 
 INSERT INTO [dbo].[REL_PERFILES_PATENTES] ([id_Perfil],[id_Patente])
      VALUES (1,616)
 GO
+

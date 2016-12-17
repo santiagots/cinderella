@@ -210,8 +210,11 @@ Public Class NegFacturacion
         entFactura.PuntoVenta = dr.Item("PuntoVenta").ToString
         entFactura.TipoRecibo = Integer.Parse(dr.Item("TipoRecibo").ToString)
         entFactura.IdSucursal = dr.Item("Id_Sucursal").ToString
-        entFactura.IVA = Double.Parse(dr.Item("Monto").ToString) * 0.21
-        entFactura.SubTotal = Double.Parse(dr.Item("Monto").ToString) * 0.79
+        'obtengo el valor sin el IVA
+        entFactura.SubTotal = entFactura.Monto / 1.21
+        'obtengo el valor IVA
+        entFactura.IVA = entFactura.SubTotal * 0.21
+
 
         Return entFactura
     End Function

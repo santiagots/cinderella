@@ -79,13 +79,24 @@
         End Set
     End Property
 
-    Private _Idventa As Integer
-    Public Property Idventa() As Integer
+    Private _idVentaSenia As Integer
+    Public Property IdVentaSenia() As Integer
         Get
-            Return _Idventa
+            Return _idVentaSenia
         End Get
         Set(ByVal value As Integer)
-            _Idventa = value
+            _idVentaSenia = value
+        End Set
+    End Property
+
+
+    Private _idVentaRetiro As Integer
+    Public Property IdVentaRetiro() As Integer
+        Get
+            Return _idVentaRetiro
+        End Get
+        Set(ByVal value As Integer)
+            _idVentaRetiro = value
         End Set
     End Property
 
@@ -136,6 +147,16 @@
         End Get
         Set(ByVal value As Boolean)
             _Entregada = value
+        End Set
+    End Property
+
+    Private _Anulada As Boolean
+    Public Property Anulada() As Boolean
+        Get
+            Return _Anulada
+        End Get
+        Set(ByVal value As Boolean)
+            _Anulada = value
         End Set
     End Property
 End Class

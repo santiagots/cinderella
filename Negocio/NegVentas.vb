@@ -153,48 +153,46 @@ Public Class NegVentas
 
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As String = ""
+        Dim msg As Integer
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        If (Texto = "") Then
+            Texto = "No se ingreso el motivo."
+        End If
+
         Try
-            'Conecto a la bdd.
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = AnularVenta(id_Venta, Texto, cmd)
+            ClsDatos.DesconectarLocal()
+
             If HayInternet Then
+                cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
-
-            If (Texto = "") Then
-                Texto = "No se ingreso el motivo."
-            End If
-
-            'Cargo y ejecuto el stored.
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Ventas_Anular"
-            With cmd.Parameters
-                .AddWithValue("@id_Venta", id_Venta)
-                .AddWithValue("@Texto", Texto)
-                .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
-            End With
-
-            'Respuesta del stored.
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto la bdd.
-            If HayInternet Then
+                msg = AnularVenta(id_Venta, Texto, cmd)
                 ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
             End If
 
             'retorno valor
-            Return respuesta.Value
+            Return msg
         Catch ex As Exception
             Return 0
         End Try
+    End Function
+
+    Private Shared Function AnularVenta(id_Venta As Integer, Texto As String, ByRef cmd As SqlCommand) As Integer
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Ventas_Anular"
+        With cmd.Parameters
+            .AddWithValue("@id_Venta", id_Venta)
+            .AddWithValue("@Texto", Texto)
+            .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
     End Function
 
     'Funcion que obtiene el total en ventas de una sucursal.

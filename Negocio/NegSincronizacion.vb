@@ -151,20 +151,33 @@ Public Class NegSincronizacion
 
     Private Function ActualizarClaves(ByRef Tabla As Tabla, valorBusqueda As String) As Boolean
         Dim Respuesta As IList(Of DataTable) = New List(Of DataTable)
+        Dim tablaLocal As DataTable
+        Dim tablaRemota As DataTable
 
-        'Selecciono todas las filas de la base local 
-        Dim tablaLocal As DataTable = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
+        If (Not String.IsNullOrEmpty(Tabla.ColumnaSeleccion)) Then
 
-        'Selecciono todas las filas de la base remota
-        Dim tablaRemota As DataTable = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
+            'Selecciono todas las filas de la base local 
+            tablaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
 
+            'Selecciono todas las filas de la base remota
+            tablaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
+        Else
+
+            'Selecciono todas las filas de la base local 
+            tablaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0}", Tabla.Nombre)), DataSet).Tables(0)
+
+            'Selecciono todas las filas de la base remota
+            tablaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0}", Tabla.Nombre)), DataSet).Tables(0)
+
+        End If
         Dim ClavePrimaria As String = Tabla.ClavePrimaria
 
         'Obtengo un listado de todos los ID de la base remota
         Dim ListaIdBaseRemota As List(Of Integer) = tablaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
         Dim ListaIdBaseLocal As List(Of Integer) = tablaLocal.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
 
-        If (ListaIdBaseRemota.Count = 0 AndAlso ListaIdBaseLocal.Count = 0) Then
+        'Si la base de datos remota tiene mas datos que la base de datos local no tengo que actualizar mis valores locales. Esta situacion solo se da cuando el sistema tiene datos remoto y por algun motivo la base de datos local esta bacia 
+        If (ListaIdBaseRemota.Count > ListaIdBaseLocal.Count Or ListaIdBaseLocal.Count = 0) Then
             Return False
         End If
 
@@ -233,10 +246,12 @@ Public Class NegSincronizacion
         Next
 
         'Actualizo las claves foranesa de las rows
-        For Each IdForaneoActualizado As KeyValuePair(Of Integer, Integer) In IdActualizados
-            Dim rows As DataRow() = tablaForaneaLocal.Select(String.Format("{0} = {1}", TablaForanea.ClaveForanea, IdForaneoActualizado.Key))
-            For Each row As DataRow In rows
-                row(TablaForanea.ClaveForanea) = IdForaneoActualizado.Value
+        For Each claveForanea As String In TablaForanea.ClaveForanea
+            For Each IdForaneoActualizado As KeyValuePair(Of Integer, Integer) In IdActualizados
+                Dim rows As DataRow() = tablaForaneaLocal.Select(String.Format("{0} = {1}", claveForanea, IdForaneoActualizado.Key))
+                For Each row As DataRow In rows
+                    row(claveForanea) = IdForaneoActualizado.Value
+                Next
             Next
         Next
         TablaForanea.TablaActualizada = tablaForaneaLocal
@@ -298,10 +313,12 @@ Public Class NegSincronizacion
     End Function
 
     Private Sub SincronizarForanea(TablaForanea As Tabla, IdForaneosRemota As List(Of Integer), transaccion As SqlTransaction)
-        If (IdForaneosRemota.Count <> 0) Then
-            Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", TablaForanea.Nombre, TablaForanea.ClaveForanea, String.Join(",", IdForaneosRemota)), miconexionRemoto, transaccion)
-            commandEliminoData.ExecuteNonQuery()
-        End If
+        For Each claveForanea As String In TablaForanea.ClaveForanea
+            If (IdForaneosRemota.Count <> 0) Then
+                Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", TablaForanea.Nombre, claveForanea, String.Join(",", IdForaneosRemota)), miconexionRemoto, transaccion)
+                commandEliminoData.ExecuteNonQuery()
+            End If
+        Next
 
         'copio los datos a base local
         Using BulkCopy As New SqlBulkCopy(miconexionRemoto, SqlBulkCopyOptions.KeepIdentity, transaccion)
@@ -415,6 +432,7 @@ Public Class NegSincronizacion
         respuesta.Add(MovimientoImpuesto())
         respuesta.Add(Cheque())
         respuesta.Add(MoviminetoRetiro())
+        respuesta.Add(Senia())
 
         Return respuesta
     End Function
@@ -431,7 +449,7 @@ Public Class NegSincronizacion
         tablaRelRegistroEmpleados.Nombre = "REL_REGISTRO_EMPLEADOS"
         tablaRelRegistroEmpleados.ClavePrimaria = "id_Auto"
         tablaRelRegistroEmpleados.ColumnaSeleccion = "id_Registro"
-        tablaRelRegistroEmpleados.ClaveForanea = "id_Registro"
+        tablaRelRegistroEmpleados.ClaveForanea = New String() {"id_Registro"}
         tablaRelRegistroEmpleados.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleados)
@@ -440,7 +458,7 @@ Public Class NegSincronizacion
         tablaRelRegistroEmpleadosAusentes.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
         tablaRelRegistroEmpleadosAusentes.ClavePrimaria = "id_Auto"
         tablaRelRegistroEmpleadosAusentes.ColumnaSeleccion = "id_Registro"
-        tablaRelRegistroEmpleadosAusentes.ClaveForanea = "id_Registro"
+        tablaRelRegistroEmpleadosAusentes.ClaveForanea = New String() {"id_Registro"}
         tablaRelRegistroEmpleadosAusentes.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleadosAusentes)
@@ -603,7 +621,7 @@ Public Class NegSincronizacion
         tablaRelelacionada.Nombre = "MERCADERIAS_DETALLE"
         tablaRelelacionada.ClavePrimaria = "id_Detalle"
         tablaRelelacionada.ColumnaSeleccion = "id_Mercaderia"
-        tablaRelelacionada.ClaveForanea = "id_Mercaderia"
+        tablaRelelacionada.ClaveForanea = New String() {"id_Mercaderia"}
         tablaRelelacionada.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada)
@@ -622,7 +640,7 @@ Public Class NegSincronizacion
         tablaRelelacionada1.Nombre = "VENTAS_DETALLE"
         tablaRelelacionada1.ClavePrimaria = "id_Detalle"
         tablaRelelacionada1.ColumnaSeleccion = "id_Venta"
-        tablaRelelacionada1.ClaveForanea = "id_Venta"
+        tablaRelelacionada1.ClaveForanea = New String() {"id_Venta"}
         tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada1)
@@ -631,7 +649,7 @@ Public Class NegSincronizacion
         tablaRelelacionada2.Nombre = "COMISIONES"
         tablaRelelacionada2.ClavePrimaria = "id_Comision"
         tablaRelelacionada2.ColumnaSeleccion = "id_Venta"
-        tablaRelelacionada2.ClaveForanea = "id_Venta"
+        tablaRelelacionada2.ClaveForanea = New String() {"id_Venta"}
         tablaRelelacionada2.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada2)
@@ -639,8 +657,8 @@ Public Class NegSincronizacion
         Dim tablaRelelacionada3 As Tabla = New Tabla()
         tablaRelelacionada3.Nombre = "SENIA"
         tablaRelelacionada3.ClavePrimaria = "id_Senia"
-        tablaRelelacionada3.ColumnaSeleccion = "id_Venta"
-        tablaRelelacionada3.ClaveForanea = "id_Venta"
+        tablaRelelacionada3.ColumnaSeleccion = "id_Venta_Senia"
+        tablaRelelacionada3.ClaveForanea = New String() {"id_Venta_Senia", "id_Venta_Retiro"}
         tablaRelelacionada3.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada3)
@@ -659,7 +677,7 @@ Public Class NegSincronizacion
         tablaRelelacionada1.Nombre = "NOTAPEDIDO_DETALLE"
         tablaRelelacionada1.ClavePrimaria = "id_Detalle"
         tablaRelelacionada1.ColumnaSeleccion = "id_NotaPedido"
-        tablaRelelacionada1.ClaveForanea = "id_NotaPedido"
+        tablaRelelacionada1.ClaveForanea = New String() {"id_NotaPedido"}
         tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada1)
@@ -700,7 +718,7 @@ Public Class NegSincronizacion
         tablaRelelacionada1.Nombre = "DEVOLUCIONES_DETALLE"
         tablaRelelacionada1.ClavePrimaria = "id_Detalle"
         tablaRelelacionada1.ColumnaSeleccion = "id_Devolucion"
-        tablaRelelacionada1.ClaveForanea = "id_Devolucion"
+        tablaRelelacionada1.ClaveForanea = New String() {"id_Devolucion"}
         tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada1)
@@ -733,6 +751,17 @@ Public Class NegSincronizacion
         Dim tabla As Tabla = New Tabla()
         tabla.Nombre = "MOVIMIENTOS_RETIROS"
         tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Return tabla
+    End Function
+
+    Private Shared Function Senia() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "SENIA"
+        tabla.ClavePrimaria = "id_Senia"
         tabla.ColumnaSeleccion = "id_Sucursal"
         tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
         tabla.TablaRelacionada = New List(Of Tabla)
@@ -772,12 +801,12 @@ Public Class Tabla
         End Set
     End Property
 
-    Private _ClaveForanea As String
-    Public Property ClaveForanea() As String
+    Private _ClaveForanea As String()
+    Public Property ClaveForanea() As String()
         Get
             Return _ClaveForanea
         End Get
-        Set(ByVal value As String)
+        Set(ByVal value As String())
             _ClaveForanea = value
         End Set
     End Property

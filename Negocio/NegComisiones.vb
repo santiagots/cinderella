@@ -74,6 +74,36 @@ Public Class NegComisiones
 
     End Sub
 
+    'Funcion que anula la comision de un empleado de una determinada venta.
+    Sub EliminarComisiones(ByVal id_Venta As Integer)
+
+        'Actualizo la base con el nuevo stock.
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        cmd.Connection = clsDatos.ConectarLocal()
+        EliminarComisiones(id_Venta, cmd)
+        clsDatos.DesconectarLocal()
+
+        If (HayInternet) Then
+            cmd = New SqlCommand()
+            cmd.Connection = clsDatos.ConectarRemoto()
+            EliminarComisiones(id_Venta, cmd)
+            clsDatos.DesconectarRemoto()
+        End If
+    End Sub
+
+    Sub EliminarComisiones(ByVal id_Venta As Integer, cmd As SqlCommand)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Comisiones_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@id_Venta", id_Venta)
+        End With
+
+        cmd.ExecuteNonQuery()
+    End Sub
+
     'Funcion que obtiene una comision de un determinado empleado.
     Function ObtenerComision(ByVal id_Sucursal As Integer, ByVal id_Cliente As Integer, ByRef Vendedor As Double, ByRef Encargado As Double)
         'Declaro variables.

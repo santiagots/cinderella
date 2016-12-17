@@ -16,6 +16,7 @@ Public Class frmVentas
     Dim NegComisiones As New Negocio.NegComisiones
     Dim NegMensajes As New Negocio.NegMensajes
     Dim NegErrores As New Negocio.NegManejadorErrores
+    Dim negSenia As NegSenia = New NegSenia
     Dim EntProducto As New Entidades.Productos
     Dim NegListasPrecio As New Negocio.NegListasPrecio
     Dim NegDevolucion As New Negocio.NegDevolucion
@@ -37,6 +38,8 @@ Public Class frmVentas
         Negocio.Funciones.HayConexionInternet()
 
         DG_Productos.Rows.Clear()
+        txt_SeniaMayorista.Text = "0,00"
+        txt_SeniaMinorista.Text = "0,00"
         txt_TotalMinorista.Text = "0,00"
         txt_SubtotalMinorista.Text = "0,00"
         txt_DescuentoMinorista.Text = "0,00"
@@ -348,8 +351,6 @@ Public Class frmVentas
     'Funcion que calcula el total con descuento
     Sub CalcularPreciosDescuento()
         Dim subtotal As Double = CalcularPrecioTotal()
-        Dim descuento As Double = 0
-        Dim ivaSubTotal As Double = 0
 
         If cb_Tipo.SelectedItem = "Minorista" Then
             CaluclarPrecioDescuentoMinorista(subtotal)
@@ -371,7 +372,7 @@ Public Class frmVentas
     Private Sub CalcularPrecioDescuentoMayoristaConFactura(ByRef subtotal As Double)
         Dim descuento As Double = 0
         Dim ivaSubTotal As Double = 0
-        Dim senia As Double = CType(txt_Senia.Text, Decimal)
+        Dim senia As Double = CDbl(txt_SeniaMayorista.Text)
 
         If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMayorista.Text, Decimal)
@@ -392,7 +393,7 @@ Public Class frmVentas
     Private Sub CalcularPrecioDescuentoMayoristaSinFactura(ByRef subtotal As Double)
         Dim descuento As Double = 0
         Dim ivaSubTotal As Double = 0
-        Dim senia As Double = CType(txt_Senia.Text, Decimal)
+        Dim senia As Double = CDbl(txt_SeniaMayorista.Text)
 
         If CDbl(txt_DescuentoMayorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMayorista.Text, Decimal)
@@ -410,7 +411,7 @@ Public Class frmVentas
 
     Private Sub CaluclarPrecioDescuentoMinorista(subtotal As Double)
         Dim descuento As Double = 0
-        Dim senia As Double = CType(txt_Senia.Text, Decimal)
+        Dim senia As Double = CDbl(txt_SeniaMinorista.Text)
 
         If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMinorista.Text, Decimal)
@@ -653,7 +654,7 @@ Public Class frmVentas
     End Sub
 
     Private Sub CargarSenia(DsTiposPagos As DataSet, DsVendedores As DataSet, DsEncargados As DataSet)
-        Dim dsVentas As DataSet = NegVentas.TraerVenta(Senia.Idventa)
+        Dim dsVentas As DataSet = NegVentas.TraerVenta(Senia.IdVentaSenia)
 
         Cb_Vendedores.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))
         Cb_Encargados.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Encargado"))
@@ -672,18 +673,29 @@ Public Class frmVentas
         Dim SeniaMonto = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia"), Decimal)
 
         If (dsVentas.Tables(0).Rows(0).Item("TiposVenta") = "Minorista") Then
+            txt_SeniaMinorista.Text = Format(SeniaMonto, "###0.00")
+            lblSeniaMinorista.Visible = True
+            lblSeniaMinoristaMoneda.Visible = True
+            txt_SeniaMinorista.Visible = True
             txt_SubtotalMinorista.Text = Format(Subtotal, "###0.00")
             txt_DescuentoMinorista.Text = Format(Descuento, "###0.00")
             txt_TotalMinorista.Text = Format(Total - SeniaMonto, "###0.00")
         Else
             txt_DescuentoMayorista.Text = Format(Descuento, "###0.00")
+            txt_SeniaMayorista.Text = Format(SeniaMonto, "###0.00")
+            lblSeniaMayorista.Visible = True
+            lblSeniaMayoristaMoneda.Visible = True
+            txt_SeniaMayorista.Visible = True
             txt_SubtotalMayorista.Text = Format(Subtotal, "###0.00")
             txt_ivaTotalMayorista.Text = Format(Subtotal * 0.21, "###0.00")
             txt_TotalMayorista.Text = Format(Total - SeniaMonto, "###0.00")
+
+            txt_id_Cliente.Text = Senia.IdClienteMayorista
+            txt_RazonSocial.Text = Senia.RazonSocial
         End If
 
-        txt_Senia.Text = Format(SeniaMonto, "###0.00")
-        txt_Senia.Enabled = False
+        Btn_Finalizar.Visible = True
+        GB_Reserva.Visible = False
 
         AgregarItemDesdeSenia()
 
@@ -692,7 +704,7 @@ Public Class frmVentas
 
     Private Sub AgregarItemDesdeSenia()
         Dim NumeroFila As Integer = 0
-        Dim dsVentasDetalle = NegVentas.TraerVentaDetalle(Senia.Idventa)
+        Dim dsVentasDetalle = NegVentas.TraerVentaDetalle(Senia.IdVentaSenia)
 
         For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
 
@@ -857,6 +869,7 @@ Public Class frmVentas
             Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
             Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
             Dim IvaTotal As Double = 0 'Iva total de la vental
+            Dim MontoSenia As Double = 0
 
             If (Not VentaValida()) Then
                 Return
@@ -876,12 +889,14 @@ Public Class frmVentas
                     MontoTotalSinDescuento = CType(txt_SubtotalMinorista.Text, Decimal)
                     Descuento = CType(txt_DescuentoMinorista.Text, Decimal)
                     MontoTotal = CType(txt_TotalMinorista.Text, Decimal)
+                    MontoSenia = CType(txt_SeniaMinorista.Text, Decimal)
                 Else
                     TipoVenta = 2
                     Descuento = CType(txt_DescuentoMayorista.Text, Decimal)
                     MontoTotalSinDescuento = CType(txt_SubtotalMayorista.Text, Decimal)
                     IvaTotal = CType(txt_ivaTotalMayorista.Text, Decimal)
                     MontoTotal = CType(txt_TotalMayorista.Text, Decimal)
+                    MontoSenia = CType(txt_SeniaMayorista.Text, Decimal)
                 End If
 
                 'Seteo ID Cliente
@@ -901,42 +916,60 @@ Public Class frmVentas
                     End If
                 End If
 
-                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, 0)
+                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, False)
+
+                'si esto realizando una venta a partir de una seña
+                If (Me.Senia IsNot Nothing) Then
+                    Senia.IdVentaRetiro = id_Venta
+                    Senia.Entregada = True
+                    negSenia.ActualizarSenia(Senia)
+
+                    ActualizarStockDesdeSenia()
+                Else
+                    ActualizarStock()
+                End If
 
                 If id_Venta > 0 Then
 
-                    RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoTotal, id_Venta)
+                        RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoTotal, id_Venta)
 
-                    'Seteo el cursor.
-                    Me.Cursor = Cursors.Arrow
+                        'Seteo el cursor.
+                        Me.Cursor = Cursors.Arrow
 
-                    'Muestro Mensaje.
-                    MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                        'Muestro Mensaje.
+                        MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
 
-                    If (NotaPedido IsNot Nothing) Then
-                        Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
-                        If (Not negNotaPedido.BorrarNota(NotaPedido.id_NotaPedido)) Then
-                            MessageBox.Show("La note de pedido no se a podido eliminar de forma automática.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Else
-                            Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
-                            'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
-                            frmNotaPedido.RemoverNotaPedido(NotaPedido)
+                        If (NotaPedido IsNot Nothing) Then
+                            Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
+                            If (Not negNotaPedido.BorrarNota(NotaPedido.id_NotaPedido)) Then
+                                MessageBox.Show("La note de pedido no se a podido eliminar de forma automática.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Else
+                                Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
+                                'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
+                                frmNotaPedido.RemoverNotaPedido(NotaPedido)
+                            End If
                         End If
-                    End If
 
-                    'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
-                    If Facturar Then
-                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, MontoTotalSinDescuento, MontoTotal, IvaTotal, id_Venta)
+                        'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
+                        If Facturar Then
+                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, MontoTotalSinDescuento, MontoTotal, IvaTotal, id_Venta, False)
                     End If
 
                     'Fin de la venta.
                     'Limpio el Formulario.
                     LimpiarFormVentas()
+
+                    'si esto realizando una venta a partir de una seña
+                    If (Me.Senia IsNot Nothing) Then
+                        Me.Close()
+                        Funciones.ControlInstancia(frmSeniaAdministracion).Close()
+                    End If
+
                 Else
-                    'Muestro Mensaje.
-                    MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        'Muestro Mensaje.
+                        MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
                 End If
-            End If
         Catch ex As Exception
             'Seteo el cursor.
             Me.Cursor = Cursors.Arrow
@@ -964,7 +997,7 @@ Public Class frmVentas
             Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
             Dim IvaTotal As Double = 0 'Iva total de la vental
 
-            If (Not VentaValida()) Then
+            If (Not VentaReserva()) Then
                 Return
             End If
 
@@ -1018,13 +1051,14 @@ Public Class frmVentas
 
                 Dim Senia As Entidades.Senia = frmSeniaDatos.Senia
 
-                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia)
+                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
+
+                ActualizarStock()
 
                 If id_Venta > 0 Then
 
-                    Senia.Idventa = id_Venta
-                    Dim negSenia As NegSenia = New NegSenia()
-                    negSenia.CrearSenia(Senia)
+                    Senia.IdVentaSenia = id_Venta
+                    NegSenia.CrearSenia(Senia)
 
                     RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoSenia, id_Venta)
 
@@ -1036,7 +1070,7 @@ Public Class frmVentas
 
                     'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                     If Facturar Then
-                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, MontoTotalSinDescuento, MontoSenia, MontoSenia * 0.21, id_Venta)
+                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, MontoTotalSinDescuento, MontoSenia, MontoSenia * 0.21, id_Venta, True)
                     End If
 
                     'Fin de la venta.
@@ -1073,6 +1107,56 @@ Public Class frmVentas
         Return dtProductos
     End Function
 
+    Private Function VentaReserva() As Boolean
+        Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
+
+        'Chequeo que haya al menos un producto cargado.
+        If TotalProductos <= 0 Then
+            'Muestro Mensaje.
+            MessageBox.Show("La reserva no puede efectuarse. No hay productos cargados !!", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+        'Tiene al menos un producto.
+        'Chequeo que haya asignado al menos un vendedor a la venta.
+        If Cb_Vendedores.SelectedValue <= 0 Then
+            'Muestro Mensaje.
+            MessageBox.Show("La reserva no puede efectuarse. Debe seleccionar un vendedor responsable de la venta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+        If Cb_Encargados.SelectedValue <= 0 Then
+            'Muestro Mensaje.
+            MessageBox.Show("La reserva no puede efectuarse. Debe seleccionar un encargado responsable de la venta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+        If Cb_TipoPago.SelectedValue <= 0 Then
+            'Muestro Mensaje.
+            MessageBox.Show("La reserva no puede efectuarse. Debe seleccionar un tipo de pago a la venta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+        'Chequeo que el monto de la seña sea mayor a 0
+        If CType(txt_Senia.Text, Decimal) = 0 Then
+            'Muestro Mensaje.
+            MessageBox.Show("La reserva no puede efectuarse. El monto de la seña debe ser mayor a cero.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        If (cb_Tipo.SelectedItem = "Minorista") Then
+            'Chequeo que el monto de la seña no supere el monto de la venta
+            If CType(txt_Senia.Text, Decimal) > CType(txt_TotalMinorista.Text, Decimal) Then
+                'Muestro Mensaje.
+                MessageBox.Show("La reserva no puede efectuarse. El monto de la seña debe ser menor al importe a abonar.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+        Else
+            If CType(txt_Senia.Text, Decimal) > CType(txt_TotalMayorista.Text, Decimal) Then
+                'Muestro Mensaje.
+                MessageBox.Show("La reserva no puede efectuarse. El monto de la seña debe ser menor al importe a abonar.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+        End If
+        Return True
+    End Function
+
     Private Function VentaValida() As Boolean
         Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
 
@@ -1103,7 +1187,7 @@ Public Class frmVentas
         Return True
     End Function
 
-    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, Descuento As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double) As Integer
+    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, Descuento As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Integer
 
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
@@ -1125,7 +1209,7 @@ Public Class frmVentas
         EntVentas.Facturado = 0
         EntVentas.DiferenciaPagoCheque = DiferenciaPagoCheque
         EntVentas.MontoSenia = MontoSenia
-        EntVentas.Senia = MontoSenia > 0
+        EntVentas.Senia = EsSenia
 
         Dim DetalleDevolucion As List(Of Entidades.Devolucion_Detalle) = New List(Of Entidades.Devolucion_Detalle)
         Dim DetalleVenta = New List(Of Entidades.Ventas_Detalle)
@@ -1141,15 +1225,6 @@ Public Class frmVentas
                 EntVentasDetalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
                 EntVentasDetalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
                 DetalleVenta.Add(EntVentasDetalle)
-
-                'Descuento el stock de los productos si el precio es positivo, y agrego el stock si el precio es negativo ( será un cambio ).
-                'EDIT: ¿DE QUE ESTÁS HABLANDO WILLIS?
-
-                If CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) < 0 Then
-                    NegStock.AgregarStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal, CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
-                Else
-                    NegStock.DisminuirStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value), id_Sucursal)
-                End If
             End If
         Next
 
@@ -1158,6 +1233,59 @@ Public Class frmVentas
         NegVentas.NuevaVenta(EntVentas, DetalleVenta, id_Venta)
         Return id_Venta
     End Function
+
+    Private Sub ActualizarStock()
+        For i = 0 To DG_Productos.Rows.Count - 1
+            'Descuento el stock de los productos si el precio es positivo, y agrego el stock si el precio es negativo ( será un cambio ).
+            If CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) < 0 Then
+                NegStock.AgregarStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal, CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
+            Else
+                NegStock.DisminuirStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value), id_Sucursal)
+            End If
+        Next
+    End Sub
+
+    Private Sub ActualizarStockDesdeSenia()
+        Dim SeniaDetalle As DataSet = NegVentas.TraerVentaDetalle(Me.Senia.IdVentaSenia)
+
+        'Controlo si se agrega un nuevo producto a los productos señados o si se modifica la cantidad para actualizar el stock
+        For i = 0 To DG_Productos.Rows.Count - 1
+
+            Dim ProductoSeniado As DataRow = SeniaDetalle.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_Producto") = DG_Productos.Rows(i).Cells.Item("ID").Value).FirstOrDefault()
+
+            'Si es un producto que no fue señado
+            If (ProductoSeniado Is Nothing) Then
+
+                'Descuento el stock de los productos si el precio es positivo, y agrego el stock si el precio es negativo ( será un cambio ).
+                If CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) < 0 Then
+                    NegStock.AgregarStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal, CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
+                Else
+                    NegStock.DisminuirStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value), id_Sucursal)
+                End If
+
+                'Si es un producto que fue señado
+            Else
+                'Verifico si hay alguna diferencia en las cantidades 
+                Dim diferenciaCantiadad As Integer = CInt(ProductoSeniado("Cantidad") - CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value))
+                'Si la diferencia es positiva aumento el stock
+                If (diferenciaCantiadad > 0) Then
+                    NegStock.AgregarStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), id_Sucursal, diferenciaCantiadad)
+                    'Si la diferencia es negativa disminuyo el stock
+                ElseIf (diferenciaCantiadad < 0) Then
+                    NegStock.DisminuirStock(CInt(DG_Productos.Rows(i).Cells.Item("ID").Value), Math.Abs(diferenciaCantiadad), id_Sucursal)
+                End If
+            End If
+        Next
+
+        'Controlo si un producto se quitaron a los productos señados para actualizar el stock
+        For i = 0 To SeniaDetalle.Tables(0).Rows.Count - 1
+            Dim idProductoSeniado As Integer = SeniaDetalle.Tables(0).Rows(i)("id_Producto")
+            'Si el producto señado fue quitado hay que incrementar su stock
+            If (Not DG_Productos.Rows.Cast(Of DataGridViewRow).Any(Function(x) CInt(x.Cells.Item("ID").Value) = idProductoSeniado)) Then
+                NegStock.AgregarStock(idProductoSeniado, id_Sucursal, CInt(SeniaDetalle.Tables(0).Rows(i)("Cantidad")))
+            End If
+        Next
+    End Sub
 
     Private Function RegistrarComisionesEncargadoEmpleado(id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, MontoTotal As Double, id_Venta As Integer) As Double
         Dim Monto As Double
@@ -1201,7 +1329,7 @@ Public Class frmVentas
         Return Monto
     End Function
 
-    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, IvaTotal As Double, id_Venta As Integer) As String
+    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, IvaTotal As Double, id_Venta As Integer, EsSenia As Boolean) As String
         Dim TipoPagoControlador As String
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
@@ -1227,6 +1355,7 @@ Public Class frmVentas
         frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
         frmFacturar.TipoPago = TipoPagoControlador
         frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", Tipo.Minorista, Tipo.Mayorista)
+        frmFacturar.EsSenia = EsSenia
         frmFacturar.ShowDialog()
 
 

@@ -4,6 +4,7 @@ Public Class frmVentasAdministracion
     Dim NegVentas As New Negocio.NegVentas
     Dim NegStock As New Negocio.NegStock
     Dim NegComisiones As New Negocio.NegComisiones
+    Dim NegSenia As New Negocio.NegSenia
     Dim id_Sucursal As String
     Dim eVentas As New Entidades.Ventas
     Dim Funciones As New Funciones
@@ -13,6 +14,8 @@ Public Class frmVentasAdministracion
     Dim MontoTotalDetalle As Double = 0
     Dim DescuentoDetalle As Double = 0
     Dim SubTotalDetalle As Double = 0
+    Dim MontoSenia As Double = 0
+    Dim VentaSeniada As Boolean
     Dim TipoPagoDetalle As String = String.Empty
 
     'Cuando carga el formulario.
@@ -223,8 +226,10 @@ Public Class frmVentasAdministracion
                 MontoTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
                 DescuentoDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
                 SubTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
+                MontoSenia = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Decimal)
+                VentaSeniada = CType(dsVentas.Tables(0).Rows(0).Item("Senia").ToString, Boolean)
 
-                CargarTotales(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+                CargarTotales(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, MontoSenia, VentaSeniada)
 
                 If dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString
@@ -285,36 +290,65 @@ Public Class frmVentasAdministracion
         End Try
     End Sub
 
-    Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
-        If TipoVenta() = Clientes.Tipo.Minorista Then
-            CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+    Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double, VentaSeniada As Boolean)
+        If TipoCliente() = Clientes.Tipo.Minorista Then
+            CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, Senia)
+            If (Not VentaSeniada) Then
+                Dim posiscion1 As Point = lblSeniaMinorista.Location
+                Dim posiscion2 As Point = lblSeniaMinoristaDescripcion.Location
+                lblSeniaMinorista.Location = lblMontoMinorista.Location
+                lblSeniaMinoristaDescripcion.Location = lblMontoMinoristaDescripcion.Location
+
+                lblMontoMinorista.Location = posiscion1
+                lblMontoMinoristaDescripcion.Location = posiscion2
+
+                lblPendienteAbonarMinoristaDescripcion.Visible = False
+                lblPendienteAbonarMinorista.Visible = False
+            End If
             PanelTotalMayorista.Visible = False
-            PanelTotalMinorista.Visible = True
+            PanelTotalMinoristaSenia.Visible = True
         Else
-            CargarTotalesMayorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
+            CargarTotalesMayorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, Senia)
+            If (Not VentaSeniada) Then
+                Dim posiscion1 As Point = lblSeniaMayorista.Location
+                Dim posiscion2 As Point = lblSeniaMayoristaDescripcion.Location
+                lblSeniaMayorista.Location = lblMontoMayorista.Location
+                lblSeniaMayoristaDescripcion.Location = lblMontoMayoristaDescripcion.Location
+
+                lblMontoMayorista.Location = posiscion1
+                lblMontoMayoristaDescripcion.Location = posiscion2
+
+                lblPendienteAbonarMayoristaDescripcion.Visible = False
+                lblPendienteAbonarMayorista.Visible = False
+            End If
+
             PanelTotalMayorista.Visible = True
-            PanelTotalMinorista.Visible = False
-            PanelTotalMayorista.Location = PanelTotalMinorista.Location
+            PanelTotalMinoristaSenia.Visible = False
+            PanelTotalMayorista.Location = PanelTotalMinoristaSenia.Location
         End If
     End Sub
 
-    Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+    Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double)
         lblMontoMinorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
         lblDescuentoMinorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
         lblSubtotalMinorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
+        lblSeniaMinorista.Text = "$ " & Format(Senia, "###0.00")
+        lblPendienteAbonarMinorista.Text = "$ " & Format(MontoTotalDetalle - Senia, "###0.00")
     End Sub
 
-    Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
+    Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double)
         lblDescuentoMayorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
         lblSubtotalMayorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
         lblIVAMayorista.Text = "$ " & Format(SubTotalDetalle * 0.21, "###0.00")
         lblMontoMayorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
+        lblSeniaMayorista.Text = "$ " & Format(Senia, "###0.00")
+        lblPendienteAbonarMayorista.Text = "$ " & Format(MontoTotalDetalle - Senia, "###0.00")
     End Sub
 
     Private Sub AgregarProducto(ventaDetalle As Object)
         Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
 
-        If TipoVenta() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = Clientes.Tipo.Minorista Then
             AgregarProducto(ventaDetalle, 0, 0, precio)
         Else
             AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
@@ -379,43 +413,20 @@ Public Class frmVentasAdministracion
     'Cuando realiza click en anular venta.
     Private Sub BtnAnular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAnular.Click
         Dim Result As DialogResult
-        Dim ResultadoAnulado As Integer
         Result = MessageBox.Show("¿Está seguro que desea anular la venta?", "Administración de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If Result = System.Windows.Forms.DialogResult.Yes Then 'Si acepta anular la venta
             'Cambio el cursor a "WAIT"
             TabVentas.Cursor = Cursors.WaitCursor
 
             Try
-                'Actualizo el Producto.
-                Dim TextoAnulado As String = Replace(Trim(txtDescripcionAnular.Text), vbCrLf, "<br />")
-                ResultadoAnulado = NegVentas.AnularVenta(eVentas.id_Venta, TextoAnulado)
+                Dim senia As Senia = NegSenia.ConsultarSeniaPorVenta(eVentas.id_Venta)
 
-                If ResultadoAnulado = 1 Then 'Se anulo la venta en productos correctamente.
-
-                    'Actualizo el Stock.
-                    Dim dsVentasDetalle As DataSet
-                    dsVentasDetalle = NegVentas.TraerVentaDetalle(eVentas.id_Venta)
-                    For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
-                        NegStock.AgregarStock(ventaDetalle.item("id_Producto").ToString(), eVentas.id_Sucursal, ventaDetalle.item("Cantidad").ToString())
-                    Next
-
-                    'Actualizo las comisiones.
-                    NegComisiones.AnularComisiones(eVentas.id_Empleado, eVentas.id_Sucursal, eVentas.id_Venta)
-
-                    'Limpio Formulario
-                    txtDescripcionAnular.Clear()
-                    Gb_Anulado.Visible = False
-                    lblAnulado.Visible = True
-                    lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", DateTime.Now)
-
-                    'Muestro el resultado
-                    MessageBox.Show("Se ha anulado la venta correctamente.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                'Si la venta esta relacionada a una senia
+                If (senia IsNot Nothing) Then
+                    AnularVentaSenia(senia)
                 Else
-
-                    'Muestro el resultado
-                    MessageBox.Show("No ha podido ser anulada la venta. Por favor, intente más tarde o contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    AnularVenta()
                 End If
-
             Catch ex As Exception
                 'Muestro el resultado
                 MessageBox.Show("Se ha encontrado un error al anular la venta. Por favor, contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -423,6 +434,153 @@ Public Class frmVentasAdministracion
 
             'Cambio el cursor a NORMAL.
             TabVentas.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub AnularVenta()
+        Dim ResultadoAnulado As Integer
+        Dim TextoAnulado As String = Replace(Trim(txtDescripcionAnular.Text), vbCrLf, "<br />")
+
+        ResultadoAnulado = NegVentas.AnularVenta(eVentas.id_Venta, TextoAnulado)
+
+        If ResultadoAnulado = 1 Then 'Se anulo la venta en productos correctamente.
+
+            'Actualizo el Stock.
+            AgregarStock(eVentas.id_Venta)
+
+            'Quito las comisiones
+            NegComisiones.EliminarComisiones(eVentas.id_Venta)
+
+            Dim dsVentas As DataSet = NegVentas.TraerVenta(eVentas.id_Venta)
+
+            Dim TipoFactura As Integer = CType(dsVentas.Tables(0).Rows(0).Item("TipoFactura").ToString, Integer)
+            Dim TipoPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
+            Dim Total As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
+            Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+            Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
+            Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
+            Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+
+            'Genero una nota de credito si la venta fue facturada
+            GenerarNotaCredito("La venta se encuentra facturada, desea realizar una nota de crédito?.", TipoFactura, eVentas.id_Venta, Total, Descuento, SubTotal * 0.21, SubTotal, TipoPago)
+
+            'Limpio Formulario
+            txtDescripcionAnular.Clear()
+            Gb_Anulado.Visible = False
+            lblAnulado.Visible = True
+            lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", DateTime.Now)
+
+            'Muestro el resultado
+            MessageBox.Show("Se ha anulado la venta correctamente.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+
+            'Muestro el resultado
+            MessageBox.Show("No ha podido ser anulada la venta. Por favor, intente más tarde o contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub AnularVentaSenia(senia As Senia)
+        Dim ResultadoAnulado As Integer
+        Dim TextoAnulado As String = Replace(Trim(txtDescripcionAnular.Text), vbCrLf, "<br />")
+
+        'Si la reserva tiene una seña anulo dicha venta 
+        If (senia.IdVentaSenia > 0) Then
+            ResultadoAnulado = NegVentas.AnularVenta(senia.IdVentaSenia, TextoAnulado)
+        End If
+
+        'Si la reserva tambien tiene su retiro anulo dicha venta
+        If (senia.IdVentaRetiro > 0) Then
+            ResultadoAnulado = NegVentas.AnularVenta(senia.IdVentaRetiro, TextoAnulado)
+        End If
+
+        If ResultadoAnulado = 1 Then 'Se anulo la venta en productos correctamente.
+            'Anulo la seña
+            senia.Anulada = True
+            NegSenia.ActualizarSenia(senia)
+
+            'Si la reserva se retiro, solo tengo que incrementar el stock de dicha venta. Si la venta todavia no se retiro tengo que incrementar el sotck de la reserva
+            If (senia.IdVentaRetiro > 0) Then
+                AgregarStock(senia.IdVentaRetiro)
+            ElseIf (senia.IdVentaSenia > 0) Then
+                AgregarStock(senia.IdVentaSenia)
+            End If
+
+            'Si la reserva se retiro, tengo que anular la comision por la reserva y venta. Si la venta todavia no se retiro tengo que anular la comision por la reserva solamante
+            If (senia.IdVentaRetiro > 0) Then
+                NegComisiones.EliminarComisiones(senia.IdVentaSenia)
+                NegComisiones.EliminarComisiones(senia.IdVentaRetiro)
+            ElseIf (senia.IdVentaSenia > 0) Then
+                NegComisiones.EliminarComisiones(senia.IdVentaSenia)
+            End If
+
+            If (senia.IdVentaSenia > 0) Then
+                Dim dsVentas As DataSet = NegVentas.TraerVenta(senia.IdVentaSenia)
+
+                Dim TipoFactura As Integer = CType(dsVentas.Tables(0).Rows(0).Item("TipoFactura").ToString, Integer)
+                Dim TipoPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
+                Dim Total As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
+                Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+                Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
+                Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
+                Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+
+                GenerarNotaCredito("La venta esta asociada a una reserva facturada, desea realizar una nota de crédito?", TipoFactura, eVentas.id_Venta, SeniaMonto, 0, 0, 0, TipoPago)
+
+            End If
+
+            If (senia.IdVentaRetiro > 0) Then
+                Dim dsVentas As DataSet = NegVentas.TraerVenta(senia.IdVentaRetiro)
+
+                Dim TipoFactura As Integer = CType(dsVentas.Tables(0).Rows(0).Item("TipoFactura").ToString, Integer)
+                Dim TipoPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
+                Dim Total As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
+                Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+                Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
+                Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
+                Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+
+                GenerarNotaCredito("La venta esta asociada a una reserva la cual a sido retirada y facturada, desea realizar una nota de crédito?", TipoFactura, eVentas.id_Venta, Total, Descuento, SubTotal * 0.21, SubTotal, TipoPago)
+            End If
+
+            'Limpio Formulario
+            txtDescripcionAnular.Clear()
+            Gb_Anulado.Visible = False
+            lblAnulado.Visible = True
+            lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", DateTime.Now)
+
+            'Muestro el resultado
+            MessageBox.Show("Se ha anulado la venta correctamente.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+
+            'Muestro el resultado
+            MessageBox.Show("No ha podido ser anulada la venta. Por favor, intente más tarde o contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
+    End Sub
+
+    Private Sub AgregarStock(IdVenta As Integer)
+        'Actualizo el Stock.
+        Dim dsVentasDetalle As DataSet = NegVentas.TraerVentaDetalle(IdVenta)
+        For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
+            NegStock.AgregarStock(ventaDetalle.item("id_Producto").ToString(), eVentas.id_Sucursal, ventaDetalle.item("Cantidad").ToString())
+        Next
+    End Sub
+
+    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Integer, Total As Double, Descuento As Double, IVA As Double, SubTotal As Double, TipoPago As String)
+        If (Tipofactura >= 0) Then
+            If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
+                'Abro el form de datos de facturacion.
+                Dim frmFacturar As frmFacturar = New frmFacturar()
+                frmFacturar.NotaCredito = True
+                frmFacturar.id_Devolucion = Integer.Parse(IdVenta)
+                frmFacturar.Monto = Total
+                frmFacturar.Descuento = Descuento
+                frmFacturar.IvaTotal = IVA
+                frmFacturar.MontoSinDescuento = SubTotal
+                frmFacturar.TipoPago = TipoPago
+                frmFacturar.TipoCliente = TipoCliente()
+                frmFacturar.ShowDialog()
+            End If
         End If
     End Sub
 
@@ -651,7 +809,7 @@ Public Class frmVentasAdministracion
         End If
     End Sub
 
-    Private Function TipoVenta() As Clientes.Tipo
+    Private Function TipoCliente() As Clientes.Tipo
         If (lblVenta.Text = "Minorista") Then
             Return Clientes.Tipo.Minorista
         Else

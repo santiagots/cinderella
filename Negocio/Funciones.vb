@@ -88,7 +88,7 @@ Public Class Funciones
             Dim myPing As Ping = New Ping()
             Dim host As String = "google.com"
             Dim buffer(23) As Byte
-            Dim timeout As Integer = 1000
+            Dim timeout As Integer = 2000
             Dim PingOptions As PingOptions = New PingOptions()
             Dim reply As PingReply = myPing.Send(host, timeout, buffer, PingOptions)
 

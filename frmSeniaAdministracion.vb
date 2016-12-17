@@ -2,6 +2,8 @@
 
 Public Class frmSeniaAdministracion
 
+    Private NegComisiones As New Negocio.NegComisiones
+    Private NegStock As New Negocio.NegStock
     Private NegSenia As New Negocio.NegSenia
     Private NegClienteMinorista As New Negocio.NegClienteMinorista
     Private NegClienteMayorista As New Negocio.NegClientes
@@ -78,11 +80,41 @@ Public Class frmSeniaAdministracion
                 Try
                     'Cambio el cursor a "WAIT"
                     Me.Cursor = Cursors.WaitCursor
-                    Dim senias As Entidades.Senia = dgSenia.CurrentRow.DataBoundItem
-                    NegSenia.EliminarSenia(senias.Id)
 
-                    'ejecuto el sp_EliminarColores.
+                    'Elimino la senia
+                    Dim senia As Entidades.Senia = dgSenia.CurrentRow.DataBoundItem
+                    NegSenia.EliminarSenia(senia.Id)
+
+                    'Agrego el stock del producto en la sucursal.
+                    Dim dsVentasDetalle = NegVentas.TraerVentaDetalle(senia.IdVentaSenia)
+                    For Each ventaDetalle As DataRow In dsVentasDetalle.Tables(0).Rows
+                        NegStock.AgregarStock(ventaDetalle("id_Producto"), My.Settings.Sucursal, ventaDetalle("CANTIDAD"))
+                    Next
+
+                    'Elimina las comisiones asociadas a la venta
+                    NegComisiones.EliminarComisiones(senia.IdVentaSenia)
+
                     MessageBox.Show("La reserva ha sido eliminada.", "Administración de Reservas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    Dim dsVentas As DataSet = NegVentas.TraerVenta(senia.IdVentaSenia)
+                    Dim TipoFactura As Integer = CType(dsVentas.Tables(0).Rows(0).Item("TipoFactura").ToString, Integer)
+                    Dim TiposPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
+
+                    If (TipoFactura >= 0) Then
+                        If (MessageBox.Show("La reserva se encuentra facturada, deseha realizar una nota de credito?.", "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
+                            'Abro el form de datos de facturacion.
+                            Dim frmFacturar As frmFacturar = New frmFacturar()
+                            frmFacturar.NotaCredito = True
+                            frmFacturar.id_Devolucion = Integer.Parse(senia.IdVentaSenia)
+                            frmFacturar.Monto = senia.MontoSenia
+                            frmFacturar.Descuento = 0
+                            frmFacturar.IvaTotal = 0
+                            frmFacturar.MontoSinDescuento = 0
+                            frmFacturar.TipoPago = TiposPago
+                            frmFacturar.TipoCliente = TipoCliente()
+                            frmFacturar.ShowDialog()
+                        End If
+                    End If
 
                     dgSenia.Rows.Remove(dgSenia.CurrentRow)
 
@@ -91,7 +123,7 @@ Public Class frmSeniaAdministracion
 
                 Catch ex As Exception
                     Me.Cursor = Cursors.Arrow
-                    MessageBox.Show("Se ha producido un error al eliminar el reserva. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Administración de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Se ha producido un error al eliminar el reserva. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Administración de Reservas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
         Else
@@ -110,12 +142,19 @@ Public Class frmSeniaAdministracion
 
         LimpiarDetalleSenia()
 
-        Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
+        If (dgSenia.CurrentRow Is Nothing) Then
+            tabDetalle.Enabled = False
+            Return
+        End If
+
+        tabDetalle.Enabled = True
+
+        Dim SeniaSeleccionada As Entidades.Senia = dgSenia.CurrentRow.DataBoundItem
         ddlEntrega.SelectedItem = SeniaSeleccionada.FormaEntrega
         txtObservaciones.Text = SeniaSeleccionada.Observaciones
         lblFechaSeña.Text = SeniaSeleccionada.FechaAlta
         Try
-            If (SeniaSeleccionada.IdClienteMayorista > 0) Then
+            If (TipoCliente() = Clientes.Tipo.Mayorista) Then
 
                 Dim ClienteMayorista As Entidades.Clientes = NegClienteMayorista.TraerCliente(SeniaSeleccionada.IdClienteMayorista)
 
@@ -142,9 +181,12 @@ Public Class frmSeniaAdministracion
                 txtTelefono.Text = ClienteMinorista.Telefono
                 rblEnvioPromocionesNo.Checked = Not ClienteMinorista.EnviarNovedades
                 rblEnvioPromocionesSi.Checked = ClienteMinorista.EnviarNovedades
+
+                DG_Productos.Columns("IVA").Visible = False
+                DG_Productos.Columns("PRECIO").Visible = False
             End If
 
-            Dim dsVentas As DataSet = NegVentas.TraerVenta(SeniaSeleccionada.Idventa)
+            Dim dsVentas As DataSet = NegVentas.TraerVenta(SeniaSeleccionada.IdVentaSenia)
 
             'Cargo los labels de la venta.
             If dsVentas.Tables(0).Rows.Count <> 0 Then
@@ -180,15 +222,19 @@ Public Class frmSeniaAdministracion
 
 
                 'Detalle de la venta.
-                Dim dsVentasDetalle = NegVentas.TraerVentaDetalle(SeniaSeleccionada.Idventa)
+                Dim dsVentasDetalle As DataSet = NegVentas.TraerVentaDetalle(SeniaSeleccionada.IdVentaSenia)
+
                 For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
                     AgregarProducto(ventaDetalle)
                 Next
+
+                lblCantidad.Text = dsVentasDetalle.Tables(0).Rows.Count
+
             End If
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error al eliminar el reserva. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Administración de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error al eliminar el reserva. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Administración de Reservas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -212,7 +258,7 @@ Public Class frmSeniaAdministracion
     Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
         Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
 
-        If TipoVenta() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = Clientes.Tipo.Minorista Then
             CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, SeniaSeleccionada.MontoSenia)
             PanelTotalMayorista.Visible = False
             PanelTotalMinorista.Visible = True
@@ -244,7 +290,7 @@ Public Class frmSeniaAdministracion
     Private Sub AgregarProducto(ventaDetalle As Object)
         Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
 
-        If TipoVenta() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = Clientes.Tipo.Minorista Then
             AgregarProducto(ventaDetalle, 0, 0, precio)
         Else
             AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
@@ -274,19 +320,19 @@ Public Class frmSeniaAdministracion
 
         'Valor de la Columna Precio
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(precio, "###0.00")
+        dgvCell.Value = precio
         'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna IVA
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(iva, "###0.00")
+        dgvCell.Value = iva
         'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Monto
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = Format(monto, "###0.00")
+        dgvCell.Value = monto
         'dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
@@ -302,7 +348,7 @@ Public Class frmSeniaAdministracion
     End Sub
 
 
-    Private Function TipoVenta() As Clientes.Tipo
+    Private Function TipoCliente() As Clientes.Tipo
         Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
 
         If (SeniaSeleccionada.IdClienteMinorista > 0) Then
@@ -317,6 +363,14 @@ Public Class frmSeniaAdministracion
         Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
 
         frmVentas.Senia = SeniaSeleccionada
+        frmVentas.MdiParent = Me.MdiParent
         frmVentas.Show()
+    End Sub
+
+    Private Sub tabAdministracionReservas_Selected(sender As Object, e As TabControlEventArgs) Handles tabAdministracionReservas.Selected
+        If tabAdministracionReservas.SelectedIndex = 1 AndAlso dgSenia.CurrentRow Is Nothing Then
+            MessageBox.Show("Debe seleccionar previamente una recerva.", "Administración de Reservas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            tabAdministracionReservas.SelectedIndex = 0
+        End If
     End Sub
 End Class

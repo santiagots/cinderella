@@ -109,6 +109,16 @@ Public Class frmSeniaDatos
             PanelTotalMayorista.Location = PanelTotalMinorista.Location
         End If
 
+        If (Not Negocio.Funciones.HayInternet) Then
+            txtApellido.Enabled = False
+            txtNombre.Enabled = False
+            txtMail.Enabled = False
+            txtDireccion.Enabled = False
+            txtTelefono.Enabled = False
+            rblEnvioPromocionesNo.Enabled = False
+            rblEnvioPromocionesSi.Enabled = False
+        End If
+
     End Sub
 
     Private Sub Btn_Finalizar_Click(sender As Object, e As EventArgs) Handles Btn_Finalizar.Click
