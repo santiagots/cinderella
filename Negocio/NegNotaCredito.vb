@@ -31,6 +31,30 @@ Public Class NegNotaCredito
         End Try
     End Function
 
+    Public Function ObtenerListado(idSucursal As Integer, FDesde As String, FHasta As String) As List(Of Entidades.NotaCredito)
+        'Declaro variables
+        Dim dsNotaCredito As New DataSet
+        Dim notaCreditos As List(Of Entidades.NotaCredito) = New List(Of Entidades.NotaCredito)()
+
+        'Conecto a la bdd.
+
+        Try
+            If (Funciones.HayInternet) Then
+                dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCretido_Listado @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            Else
+                dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCretido_Listado @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            End If
+
+            For Each motaCredito As DataRow In dsNotaCredito.Tables(0).Rows
+                notaCreditos.Add(ObtenerEntidadNotaCredito(motaCredito))
+            Next
+            'retorno valor
+            Return notaCreditos
+        Catch ex As Exception
+            Return notaCreditos
+        End Try
+    End Function
+
     Private Shared Function NuevaNotaCredito(EntNotaCredito As Entidades.NotaCredito, ByRef cmd As SqlCommand) As Boolean
         'Ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
@@ -47,6 +71,7 @@ Public Class NegNotaCredito
             .AddWithValue("@PuntoVenta", EntNotaCredito.PuntoVenta)
             .AddWithValue("@Id_Sucursal", EntNotaCredito.id_Sucursal)
             .AddWithValue("@TipoRecibo", EntNotaCredito.TipoRecibo)
+            .AddWithValue("@Id_Factura", EntNotaCredito.id_Factura)
         End With
 
         'Respuesta del stored.
@@ -57,7 +82,7 @@ Public Class NegNotaCredito
         Return CBool(respuesta.Value)
     End Function
 
-    Function TraerNotaCredito(id_Devolucion As Integer) As Entidades.NotaCredito
+    Function TraerNotaCreditoPorIDDevolucio(id_Devolucion As Integer) As Entidades.NotaCredito
         Dim dsNotaCredito As New DataSet
         Dim entNotaCredito As New Entidades.NotaCredito
 
@@ -68,22 +93,46 @@ Public Class NegNotaCredito
         End If
 
         If dsNotaCredito.Tables(0).Rows.Count <> 0 Then
-            entNotaCredito.id_NotaCredito = dsNotaCredito.Tables(0).Rows(0).Item("id_NotaCredito").ToString
-            entNotaCredito.id_Devolucion = dsNotaCredito.Tables(0).Rows(0).Item("id_Devolucion").ToString
-            entNotaCredito.NumeroNotaCredito = dsNotaCredito.Tables(0).Rows(0).Item("NumeroNotaCredito").ToString
-            entNotaCredito.Monto = dsNotaCredito.Tables(0).Rows(0).Item("Monto").ToString
-            entNotaCredito.TipoFactura = dsNotaCredito.Tables(0).Rows(0).Item("TipoFactura").ToString
-            entNotaCredito.Nombre = dsNotaCredito.Tables(0).Rows(0).Item("Nombre").ToString
-            entNotaCredito.Direccion = dsNotaCredito.Tables(0).Rows(0).Item("Direccion").ToString
-            entNotaCredito.Localidad = dsNotaCredito.Tables(0).Rows(0).Item("Localidad").ToString
-            entNotaCredito.Cuit = dsNotaCredito.Tables(0).Rows(0).Item("Cuit").ToString
-            entNotaCredito.Fecha = dsNotaCredito.Tables(0).Rows(0).Item("Fecha").ToString
-            entNotaCredito.PuntoVenta = dsNotaCredito.Tables(0).Rows(0).Item("PuntoVenta").ToString
-            entNotaCredito.TipoRecibo = Integer.Parse(dsNotaCredito.Tables(0).Rows(0).Item("TipoRecibo").ToString)
-            entNotaCredito.id_Sucursal = dsNotaCredito.Tables(0).Rows(0).Item("Id_Sucursal").ToString
+            entNotaCredito = ObtenerEntidadNotaCredito(dsNotaCredito.Tables(0).Rows(0))
 
         End If
         Return entNotaCredito
     End Function
 
+    Function TraerNotaCreditoPorID(id_NotaCredito As Integer) As Entidades.NotaCredito
+        Dim dsNotaCredito As New DataSet
+        Dim entNotaCredito As New Entidades.NotaCredito
+
+        If (Funciones.HayInternet) Then
+            dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCredito_Detalle_Por_Id @id_NotaCredito=" & id_NotaCredito)
+        Else
+            dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCredito_Detalle_Por_Id @id_NotaCredito=" & id_NotaCredito)
+        End If
+
+        If dsNotaCredito.Tables(0).Rows.Count <> 0 Then
+            entNotaCredito = ObtenerEntidadNotaCredito(dsNotaCredito.Tables(0).Rows(0))
+
+        End If
+        Return entNotaCredito
+    End Function
+
+    Private Shared Function ObtenerEntidadNotaCredito(drNotaCredito As DataRow) As Entidades.NotaCredito
+        Dim entNotaCredito As New Entidades.NotaCredito
+
+        entNotaCredito.id_NotaCredito = drNotaCredito.Item("id_NotaCredito").ToString
+        entNotaCredito.id_Devolucion = drNotaCredito.Item("id_Devolucion").ToString
+        entNotaCredito.NumeroNotaCredito = drNotaCredito.Item("NumeroNotaCredito").ToString
+        entNotaCredito.Monto = drNotaCredito.Item("Monto").ToString
+        entNotaCredito.TipoFactura = drNotaCredito.Item("TipoFactura").ToString
+        entNotaCredito.Nombre = drNotaCredito.Item("Nombre").ToString
+        entNotaCredito.Direccion = drNotaCredito.Item("Direccion").ToString
+        entNotaCredito.Localidad = drNotaCredito.Item("Localidad").ToString
+        entNotaCredito.Cuit = drNotaCredito.Item("Cuit").ToString
+        entNotaCredito.Fecha = drNotaCredito.Item("Fecha").ToString
+        entNotaCredito.PuntoVenta = drNotaCredito.Item("PuntoVenta").ToString
+        entNotaCredito.TipoRecibo = Integer.Parse(drNotaCredito.Item("TipoRecibo").ToString)
+        entNotaCredito.id_Sucursal = drNotaCredito.Item("Id_Sucursal").ToString
+        entNotaCredito.id_Factura = If(drNotaCredito.Item("Id_Factura") Is DBNull.Value, 0, Integer.Parse(drNotaCredito.Item("Id_Factura").ToString))
+        Return entNotaCredito
+    End Function
 End Class

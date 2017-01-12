@@ -24,14 +24,26 @@ Partial Class frmFacturar
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFacturar))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.PanelTotalMayorista = New System.Windows.Forms.Panel()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.lbl_TotalMayorista = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.lbl_IvaMayorista = New System.Windows.Forms.Label()
+        Me.lbl_DescuentoMayorista = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.lbl_SubtotalMayorista = New System.Windows.Forms.Label()
+        Me.PanelTotalMinorista = New System.Windows.Forms.Panel()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lbl_TotalMinorista = New System.Windows.Forms.Label()
+        Me.lbl_DescuentoMinorista = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.lbl_SubtotalMinorista = New System.Windows.Forms.Label()
         Me.txt_Pago = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.txt_Comprobante_Origen = New System.Windows.Forms.TextBox()
+        Me.txt_Factura_Origen = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.lbl_SubtotalMinorista = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.lbl_DescuentoMinorista = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.lbl_TipoPago = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.lbl_Fecha = New System.Windows.Forms.Label()
@@ -45,9 +57,7 @@ Partial Class frmFacturar
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.lbl_TotalMinorista = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.btnFacturar = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.lblEstado = New System.Windows.Forms.Label()
@@ -64,22 +74,12 @@ Partial Class frmFacturar
         Me.Label8 = New System.Windows.Forms.Label()
         Me.btnNotaCredito = New System.Windows.Forms.Button()
         Me.lblError = New System.Windows.Forms.Label()
-        Me.PanelTotalMinorista = New System.Windows.Forms.Panel()
-        Me.PanelTotalMayorista = New System.Windows.Forms.Panel()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.lbl_IvaMayorista = New System.Windows.Forms.Label()
-        Me.lbl_DescuentoMayorista = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.lbl_SubtotalMayorista = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.lbl_TotalMayorista = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
+        Me.PanelTotalMayorista.SuspendLayout()
+        Me.PanelTotalMinorista.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GB_FacturacionManual.SuspendLayout()
-        Me.PanelTotalMinorista.SuspendLayout()
-        Me.PanelTotalMayorista.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -91,7 +91,7 @@ Partial Class frmFacturar
         Me.GroupBox1.Controls.Add(Me.PanelTotalMinorista)
         Me.GroupBox1.Controls.Add(Me.txt_Pago)
         Me.GroupBox1.Controls.Add(Me.Label16)
-        Me.GroupBox1.Controls.Add(Me.txt_Comprobante_Origen)
+        Me.GroupBox1.Controls.Add(Me.txt_Factura_Origen)
         Me.GroupBox1.Controls.Add(Me.Label15)
         Me.GroupBox1.Controls.Add(Me.lbl_TipoPago)
         Me.GroupBox1.Controls.Add(Me.Label10)
@@ -116,6 +116,174 @@ Partial Class frmFacturar
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Información"
         '
+        'PanelTotalMayorista
+        '
+        Me.PanelTotalMayorista.Controls.Add(Me.Label23)
+        Me.PanelTotalMayorista.Controls.Add(Me.lbl_TotalMayorista)
+        Me.PanelTotalMayorista.Controls.Add(Me.Label17)
+        Me.PanelTotalMayorista.Controls.Add(Me.Label18)
+        Me.PanelTotalMayorista.Controls.Add(Me.lbl_IvaMayorista)
+        Me.PanelTotalMayorista.Controls.Add(Me.lbl_DescuentoMayorista)
+        Me.PanelTotalMayorista.Controls.Add(Me.Label21)
+        Me.PanelTotalMayorista.Controls.Add(Me.lbl_SubtotalMayorista)
+        Me.PanelTotalMayorista.Location = New System.Drawing.Point(212, 40)
+        Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
+        Me.PanelTotalMayorista.Size = New System.Drawing.Size(199, 105)
+        Me.PanelTotalMayorista.TabIndex = 27
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(-1, 83)
+        Me.Label23.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(34, 15)
+        Me.Label23.TabIndex = 22
+        Me.Label23.Text = "Total"
+        '
+        'lbl_TotalMayorista
+        '
+        Me.lbl_TotalMayorista.AutoSize = True
+        Me.lbl_TotalMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_TotalMayorista.Location = New System.Drawing.Point(130, 83)
+        Me.lbl_TotalMayorista.Name = "lbl_TotalMayorista"
+        Me.lbl_TotalMayorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_TotalMayorista.TabIndex = 23
+        Me.lbl_TotalMayorista.Text = "$ 120.00.-"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(-1, 7)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(66, 15)
+        Me.Label17.TabIndex = 18
+        Me.Label17.Text = "Descuento"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(-1, 57)
+        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(50, 15)
+        Me.Label18.TabIndex = 0
+        Me.Label18.Text = "Iva 21%"
+        '
+        'lbl_IvaMayorista
+        '
+        Me.lbl_IvaMayorista.AutoSize = True
+        Me.lbl_IvaMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_IvaMayorista.Location = New System.Drawing.Point(130, 57)
+        Me.lbl_IvaMayorista.Name = "lbl_IvaMayorista"
+        Me.lbl_IvaMayorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_IvaMayorista.TabIndex = 3
+        Me.lbl_IvaMayorista.Text = "$ 120.00.-"
+        '
+        'lbl_DescuentoMayorista
+        '
+        Me.lbl_DescuentoMayorista.AutoSize = True
+        Me.lbl_DescuentoMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_DescuentoMayorista.Location = New System.Drawing.Point(130, 7)
+        Me.lbl_DescuentoMayorista.Name = "lbl_DescuentoMayorista"
+        Me.lbl_DescuentoMayorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_DescuentoMayorista.TabIndex = 19
+        Me.lbl_DescuentoMayorista.Text = "$ 120.00.-"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(-1, 32)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(52, 15)
+        Me.Label21.TabIndex = 20
+        Me.Label21.Text = "Subtotal"
+        '
+        'lbl_SubtotalMayorista
+        '
+        Me.lbl_SubtotalMayorista.AutoSize = True
+        Me.lbl_SubtotalMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_SubtotalMayorista.Location = New System.Drawing.Point(130, 32)
+        Me.lbl_SubtotalMayorista.Name = "lbl_SubtotalMayorista"
+        Me.lbl_SubtotalMayorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_SubtotalMayorista.TabIndex = 21
+        Me.lbl_SubtotalMayorista.Text = "$ 120.00.-"
+        '
+        'PanelTotalMinorista
+        '
+        Me.PanelTotalMinorista.Controls.Add(Me.Label11)
+        Me.PanelTotalMinorista.Controls.Add(Me.Label1)
+        Me.PanelTotalMinorista.Controls.Add(Me.lbl_TotalMinorista)
+        Me.PanelTotalMinorista.Controls.Add(Me.lbl_DescuentoMinorista)
+        Me.PanelTotalMinorista.Controls.Add(Me.Label12)
+        Me.PanelTotalMinorista.Controls.Add(Me.lbl_SubtotalMinorista)
+        Me.PanelTotalMinorista.Location = New System.Drawing.Point(7, 40)
+        Me.PanelTotalMinorista.Name = "PanelTotalMinorista"
+        Me.PanelTotalMinorista.Size = New System.Drawing.Size(199, 105)
+        Me.PanelTotalMinorista.TabIndex = 26
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(-1, 31)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(66, 15)
+        Me.Label11.TabIndex = 18
+        Me.Label11.Text = "Descuento"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(-1, 81)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(34, 15)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Total"
+        '
+        'lbl_TotalMinorista
+        '
+        Me.lbl_TotalMinorista.AutoSize = True
+        Me.lbl_TotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_TotalMinorista.Location = New System.Drawing.Point(130, 81)
+        Me.lbl_TotalMinorista.Name = "lbl_TotalMinorista"
+        Me.lbl_TotalMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_TotalMinorista.TabIndex = 3
+        Me.lbl_TotalMinorista.Text = "$ 120.00.-"
+        '
+        'lbl_DescuentoMinorista
+        '
+        Me.lbl_DescuentoMinorista.AutoSize = True
+        Me.lbl_DescuentoMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_DescuentoMinorista.Location = New System.Drawing.Point(130, 31)
+        Me.lbl_DescuentoMinorista.Name = "lbl_DescuentoMinorista"
+        Me.lbl_DescuentoMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_DescuentoMinorista.TabIndex = 19
+        Me.lbl_DescuentoMinorista.Text = "$ 120.00.-"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(-1, 6)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(52, 15)
+        Me.Label12.TabIndex = 20
+        Me.Label12.Text = "Subtotal"
+        '
+        'lbl_SubtotalMinorista
+        '
+        Me.lbl_SubtotalMinorista.AutoSize = True
+        Me.lbl_SubtotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_SubtotalMinorista.Location = New System.Drawing.Point(130, 6)
+        Me.lbl_SubtotalMinorista.Name = "lbl_SubtotalMinorista"
+        Me.lbl_SubtotalMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_SubtotalMinorista.TabIndex = 21
+        Me.lbl_SubtotalMinorista.Text = "$ 120.00.-"
+        '
         'txt_Pago
         '
         Me.txt_Pago.Location = New System.Drawing.Point(140, 174)
@@ -132,61 +300,21 @@ Partial Class frmFacturar
         Me.Label16.TabIndex = 25
         Me.Label16.Text = "Pago"
         '
-        'txt_Comprobante_Origen
+        'txt_Factura_Origen
         '
-        Me.txt_Comprobante_Origen.Location = New System.Drawing.Point(140, 320)
-        Me.txt_Comprobante_Origen.Name = "txt_Comprobante_Origen"
-        Me.txt_Comprobante_Origen.Size = New System.Drawing.Size(219, 21)
-        Me.txt_Comprobante_Origen.TabIndex = 6
+        Me.txt_Factura_Origen.Location = New System.Drawing.Point(140, 320)
+        Me.txt_Factura_Origen.Name = "txt_Factura_Origen"
+        Me.txt_Factura_Origen.Size = New System.Drawing.Size(219, 21)
+        Me.txt_Factura_Origen.TabIndex = 6
         '
         'Label15
         '
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(7, 322)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(122, 15)
+        Me.Label15.Size = New System.Drawing.Size(88, 15)
         Me.Label15.TabIndex = 23
-        Me.Label15.Text = "Comprobante Origen"
-        '
-        'lbl_SubtotalMinorista
-        '
-        Me.lbl_SubtotalMinorista.AutoSize = True
-        Me.lbl_SubtotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_SubtotalMinorista.Location = New System.Drawing.Point(130, 6)
-        Me.lbl_SubtotalMinorista.Name = "lbl_SubtotalMinorista"
-        Me.lbl_SubtotalMinorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_SubtotalMinorista.TabIndex = 21
-        Me.lbl_SubtotalMinorista.Text = "$ 120.00.-"
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(-1, 6)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(52, 15)
-        Me.Label12.TabIndex = 20
-        Me.Label12.Text = "Subtotal"
-        '
-        'lbl_DescuentoMinorista
-        '
-        Me.lbl_DescuentoMinorista.AutoSize = True
-        Me.lbl_DescuentoMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DescuentoMinorista.Location = New System.Drawing.Point(130, 31)
-        Me.lbl_DescuentoMinorista.Name = "lbl_DescuentoMinorista"
-        Me.lbl_DescuentoMinorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_DescuentoMinorista.TabIndex = 19
-        Me.lbl_DescuentoMinorista.Text = "$ 120.00.-"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(-1, 31)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(66, 15)
-        Me.Label11.TabIndex = 18
-        Me.Label11.Text = "Descuento"
+        Me.Label15.Text = "Factura Origen"
         '
         'lbl_TipoPago
         '
@@ -303,16 +431,6 @@ Partial Class frmFacturar
         Me.Label5.TabIndex = 4
         Me.Label5.Text = "Nombre y Apellido"
         '
-        'lbl_TotalMinorista
-        '
-        Me.lbl_TotalMinorista.AutoSize = True
-        Me.lbl_TotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalMinorista.Location = New System.Drawing.Point(130, 81)
-        Me.lbl_TotalMinorista.Name = "lbl_TotalMinorista"
-        Me.lbl_TotalMinorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_TotalMinorista.TabIndex = 3
-        Me.lbl_TotalMinorista.Text = "$ 120.00.-"
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -322,16 +440,6 @@ Partial Class frmFacturar
         Me.Label2.Size = New System.Drawing.Size(99, 15)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Condición de IVA"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(-1, 81)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(34, 15)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Total"
         '
         'btnFacturar
         '
@@ -504,114 +612,6 @@ Partial Class frmFacturar
         Me.lblError.Text = "Se ha alcanzado el máximo permitido para realizar una factura con el tipo de fact" &
     "uración seleccionada. Por favor, seleccione otro tipo de facturación."
         '
-        'PanelTotalMinorista
-        '
-        Me.PanelTotalMinorista.Controls.Add(Me.Label11)
-        Me.PanelTotalMinorista.Controls.Add(Me.Label1)
-        Me.PanelTotalMinorista.Controls.Add(Me.lbl_TotalMinorista)
-        Me.PanelTotalMinorista.Controls.Add(Me.lbl_DescuentoMinorista)
-        Me.PanelTotalMinorista.Controls.Add(Me.Label12)
-        Me.PanelTotalMinorista.Controls.Add(Me.lbl_SubtotalMinorista)
-        Me.PanelTotalMinorista.Location = New System.Drawing.Point(7, 40)
-        Me.PanelTotalMinorista.Name = "PanelTotalMinorista"
-        Me.PanelTotalMinorista.Size = New System.Drawing.Size(199, 105)
-        Me.PanelTotalMinorista.TabIndex = 26
-        '
-        'PanelTotalMayorista
-        '
-        Me.PanelTotalMayorista.Controls.Add(Me.Label23)
-        Me.PanelTotalMayorista.Controls.Add(Me.lbl_TotalMayorista)
-        Me.PanelTotalMayorista.Controls.Add(Me.Label17)
-        Me.PanelTotalMayorista.Controls.Add(Me.Label18)
-        Me.PanelTotalMayorista.Controls.Add(Me.lbl_IvaMayorista)
-        Me.PanelTotalMayorista.Controls.Add(Me.lbl_DescuentoMayorista)
-        Me.PanelTotalMayorista.Controls.Add(Me.Label21)
-        Me.PanelTotalMayorista.Controls.Add(Me.lbl_SubtotalMayorista)
-        Me.PanelTotalMayorista.Location = New System.Drawing.Point(212, 40)
-        Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
-        Me.PanelTotalMayorista.Size = New System.Drawing.Size(199, 105)
-        Me.PanelTotalMayorista.TabIndex = 27
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(-1, 7)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(66, 15)
-        Me.Label17.TabIndex = 18
-        Me.Label17.Text = "Descuento"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(-1, 57)
-        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(50, 15)
-        Me.Label18.TabIndex = 0
-        Me.Label18.Text = "Iva 21%"
-        '
-        'lbl_IvaMayorista
-        '
-        Me.lbl_IvaMayorista.AutoSize = True
-        Me.lbl_IvaMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_IvaMayorista.Location = New System.Drawing.Point(130, 57)
-        Me.lbl_IvaMayorista.Name = "lbl_IvaMayorista"
-        Me.lbl_IvaMayorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_IvaMayorista.TabIndex = 3
-        Me.lbl_IvaMayorista.Text = "$ 120.00.-"
-        '
-        'lbl_DescuentoMayorista
-        '
-        Me.lbl_DescuentoMayorista.AutoSize = True
-        Me.lbl_DescuentoMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DescuentoMayorista.Location = New System.Drawing.Point(130, 7)
-        Me.lbl_DescuentoMayorista.Name = "lbl_DescuentoMayorista"
-        Me.lbl_DescuentoMayorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_DescuentoMayorista.TabIndex = 19
-        Me.lbl_DescuentoMayorista.Text = "$ 120.00.-"
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(-1, 32)
-        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(52, 15)
-        Me.Label21.TabIndex = 20
-        Me.Label21.Text = "Subtotal"
-        '
-        'lbl_SubtotalMayorista
-        '
-        Me.lbl_SubtotalMayorista.AutoSize = True
-        Me.lbl_SubtotalMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_SubtotalMayorista.Location = New System.Drawing.Point(130, 32)
-        Me.lbl_SubtotalMayorista.Name = "lbl_SubtotalMayorista"
-        Me.lbl_SubtotalMayorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_SubtotalMayorista.TabIndex = 21
-        Me.lbl_SubtotalMayorista.Text = "$ 120.00.-"
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(-1, 83)
-        Me.Label23.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(34, 15)
-        Me.Label23.TabIndex = 22
-        Me.Label23.Text = "Total"
-        '
-        'lbl_TotalMayorista
-        '
-        Me.lbl_TotalMayorista.AutoSize = True
-        Me.lbl_TotalMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalMayorista.Location = New System.Drawing.Point(130, 83)
-        Me.lbl_TotalMayorista.Name = "lbl_TotalMayorista"
-        Me.lbl_TotalMayorista.Size = New System.Drawing.Size(73, 16)
-        Me.lbl_TotalMayorista.TabIndex = 23
-        Me.lbl_TotalMayorista.Text = "$ 120.00.-"
-        '
         'frmFacturar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -634,16 +634,16 @@ Partial Class frmFacturar
         Me.Text = "Facturación de Venta"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.PanelTotalMayorista.ResumeLayout(False)
+        Me.PanelTotalMayorista.PerformLayout()
+        Me.PanelTotalMinorista.ResumeLayout(False)
+        Me.PanelTotalMinorista.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GB_FacturacionManual.ResumeLayout(False)
         Me.GB_FacturacionManual.PerformLayout()
-        Me.PanelTotalMinorista.ResumeLayout(False)
-        Me.PanelTotalMinorista.PerformLayout()
-        Me.PanelTotalMayorista.ResumeLayout(False)
-        Me.PanelTotalMayorista.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -683,7 +683,7 @@ Partial Class frmFacturar
     Friend WithEvents txt_NumeroFacturaManual As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents btnNotaCredito As System.Windows.Forms.Button
-    Friend WithEvents txt_Comprobante_Origen As System.Windows.Forms.TextBox
+    Friend WithEvents txt_Factura_Origen As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txt_Pago As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label

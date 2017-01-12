@@ -175,8 +175,32 @@ Public Class NegFacturacion
         End Try
     End Function
 
+    Public Function ObtenerListado(ByVal idSucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As List(Of Entidades.Facturacion)
+        'Declaro variables
+        Dim dsFacturas As New DataSet
+        Dim facturas As List(Of Entidades.Facturacion) = New List(Of Entidades.Facturacion)()
+
+        'Conecto a la bdd.
+
+        Try
+            If (Funciones.HayInternet) Then
+                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_sucursal @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            Else
+                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_sucursal @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            End If
+
+            For Each factura As DataRow In dsFacturas.Tables(0).Rows
+                facturas.Add(ObtenerEntidadFactura(factura))
+            Next
+            'retorno valor
+            Return facturas
+        Catch ex As Exception
+            Return facturas
+        End Try
+    End Function
+
     'Funcion para consultar una factura.
-    Public Function TraerFacturacion(ByVal id_Venta As Integer)
+    Public Function TraerFacturacionPorIdVenta(ByVal id_Venta As Integer) As Entidades.Facturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 
@@ -192,6 +216,26 @@ Public Class NegFacturacion
 
         Return entFactura
     End Function
+
+    'Funcion para consultar una factura.
+    Public Function TraerFacturacionPorId(ByVal Id_Factura As Integer) As Entidades.Facturacion
+        Dim dsFactura As New DataSet
+        Dim entFactura As New Entidades.Facturacion
+
+        If (Funciones.HayInternet) Then
+            dsFactura = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Detalle_Por_Id @Id_Factura=" & Id_Factura)
+        Else
+            dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle_Por_Id @Id_Factura=" & Id_Factura)
+        End If
+
+        If dsFactura.Tables(0).Rows.Count <> 0 Then
+            entFactura = ObtenerEntidadFactura(dsFactura.Tables(0).Rows(0))
+        End If
+
+        Return entFactura
+    End Function
+
+
 
     Private Function ObtenerEntidadFactura(ByVal dr As DataRow) As Entidades.Facturacion
 
@@ -210,6 +254,7 @@ Public Class NegFacturacion
         entFactura.PuntoVenta = dr.Item("PuntoVenta").ToString
         entFactura.TipoRecibo = Integer.Parse(dr.Item("TipoRecibo").ToString)
         entFactura.IdSucursal = dr.Item("Id_Sucursal").ToString
+        entFactura.id_NotaCredito = If(dr.Item("id_NotaCredito") Is DBNull.Value, 0, dr.Item("id_NotaCredito").ToString)
         'obtengo el valor sin el IVA
         entFactura.SubTotal = entFactura.Monto / 1.21
         'obtengo el valor IVA

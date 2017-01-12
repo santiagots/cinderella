@@ -67,6 +67,7 @@ Partial Class MDIContenedor
         Me.Btn_VentasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdministraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VentasToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Btn_Facturas = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_DevolucionesMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdministracionDevolucionesMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.DevolucionesMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -85,6 +86,7 @@ Partial Class MDIContenedor
         Me.AdministracionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_Reservas = New System.Windows.Forms.ToolStripMenuItem()
         Me.btn_AdminReservas = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Btn_NotaCredito = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PlanillasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.SucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -215,7 +217,7 @@ Partial Class MDIContenedor
         '
         'ToolsMenu
         '
-        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_DevolucionesMenu, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas})
+        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas})
         Me.ToolsMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Menu
         Me.ToolsMenu.Name = "ToolsMenu"
         Me.ToolsMenu.Size = New System.Drawing.Size(116, 20)
@@ -476,6 +478,13 @@ Partial Class MDIContenedor
         Me.VentasToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
         Me.VentasToolStripMenuItem1.Text = "Ventas"
         '
+        'Btn_Facturas
+        '
+        Me.Btn_Facturas.Image = Global.SistemaCinderella.My.Resources.Recursos.TicketPequeño
+        Me.Btn_Facturas.Name = "Btn_Facturas"
+        Me.Btn_Facturas.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_Facturas.Text = "Facturas"
+        '
         'Btn_DevolucionesMenu
         '
         Me.Btn_DevolucionesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministracionDevolucionesMenu, Me.DevolucionesMenu})
@@ -607,6 +616,13 @@ Partial Class MDIContenedor
         Me.btn_AdminReservas.Name = "btn_AdminReservas"
         Me.btn_AdminReservas.Size = New System.Drawing.Size(155, 22)
         Me.btn_AdminReservas.Text = "Administración"
+        '
+        'Btn_NotaCredito
+        '
+        Me.Btn_NotaCredito.Image = Global.SistemaCinderella.My.Resources.Recursos.nota_credito
+        Me.Btn_NotaCredito.Name = "Btn_NotaCredito"
+        Me.Btn_NotaCredito.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_NotaCredito.Text = "Nota Crédito"
         '
         'Btn_PlanillasMenu
         '
@@ -1344,4 +1360,6 @@ Partial Class MDIContenedor
     Friend WithEvents ControladoraToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Btn_Reservas As ToolStripMenuItem
     Friend WithEvents btn_AdminReservas As ToolStripMenuItem
+    Friend WithEvents Btn_Facturas As ToolStripMenuItem
+    Friend WithEvents Btn_NotaCredito As ToolStripMenuItem
 End Class

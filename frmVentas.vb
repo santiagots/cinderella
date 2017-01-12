@@ -896,7 +896,7 @@ Public Class frmVentas
                     MontoTotalSinDescuento = CType(txt_SubtotalMayorista.Text, Decimal)
                     IvaTotal = CType(txt_ivaTotalMayorista.Text, Decimal)
                     MontoTotal = CType(txt_TotalMayorista.Text, Decimal)
-                    MontoSenia = CType(txt_SeniaMayorista.Text, Decimal)
+                    MontoSenia = Math.Round(CType(txt_SeniaMayorista.Text, Decimal) / 1.21, 2) 'le quito el iva a la seña porque el controlador fiscal se lo agrega
                 End If
 
                 'Seteo ID Cliente
@@ -952,7 +952,7 @@ Public Class frmVentas
 
                         'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                         If Facturar Then
-                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, MontoTotalSinDescuento, MontoTotal, IvaTotal, id_Venta, False)
+                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento + MontoSenia, MontoTotalSinDescuento, MontoTotal, IvaTotal, id_Venta, False)
                     End If
 
                     'Fin de la venta.

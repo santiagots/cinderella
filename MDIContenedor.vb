@@ -1663,4 +1663,24 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmSeniaAdministracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
+
+    Private Sub Btn_Facturas_Click(sender As Object, e As EventArgs) Handles Btn_Facturas.Click
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmFacturaAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmFacturaAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub Btn_NotaCredito_Click(sender As Object, e As EventArgs) Handles Btn_NotaCredito.Click
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmNotaCreditoAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmNotaCreditoAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
 End Class

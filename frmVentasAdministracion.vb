@@ -459,10 +459,10 @@ Public Class frmVentasAdministracion
             Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
             Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
             Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
-            Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+            Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
             'Genero una nota de credito si la venta fue facturada
-            GenerarNotaCredito("La venta se encuentra facturada, desea realizar una nota de crédito?.", TipoFactura, eVentas.id_Venta, Total, Descuento, SubTotal * 0.21, SubTotal, TipoPago)
+            GenerarNotaCredito("La venta se encuentra facturada, desea realizar una nota de crédito?.", TipoFactura, eVentas.id_Venta, Total, Descuento, SubTotal * 0.21, SubTotal, TipoPago, id_Cliente, False)
 
             'Limpio Formulario
             txtDescripcionAnular.Clear()
@@ -523,8 +523,9 @@ Public Class frmVentasAdministracion
                 Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
                 Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
                 Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+                Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
-                GenerarNotaCredito("La venta esta asociada a una reserva facturada, desea realizar una nota de crédito?", TipoFactura, eVentas.id_Venta, SeniaMonto, 0, 0, 0, TipoPago)
+                GenerarNotaCredito("La venta esta asociada a una reserva facturada, desea realizar una nota de crédito?", TipoFactura, id_Venta, SeniaMonto, 0, 0, 0, TipoPago, id_Cliente, True)
 
             End If
 
@@ -538,8 +539,9 @@ Public Class frmVentasAdministracion
                 Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
                 Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
                 Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+                Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
-                GenerarNotaCredito("La venta esta asociada a una reserva la cual a sido retirada y facturada, desea realizar una nota de crédito?", TipoFactura, eVentas.id_Venta, Total, Descuento, SubTotal * 0.21, SubTotal, TipoPago)
+                GenerarNotaCredito("La venta esta asociada a una reserva la cual a sido retirada y facturada, desea realizar una nota de crédito?", TipoFactura, id_Venta, Total, Descuento + SeniaMonto, SubTotal * 0.21, SubTotal, TipoPago, id_Cliente, False)
             End If
 
             'Limpio Formulario
@@ -566,19 +568,21 @@ Public Class frmVentasAdministracion
         Next
     End Sub
 
-    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Integer, Total As Double, Descuento As Double, IVA As Double, SubTotal As Double, TipoPago As String)
+    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Integer, Total As Double, Descuento As Double, IVA As Double, SubTotal As Double, TipoPago As String, id_Cliente As Integer, esSenia As Boolean)
         If (Tipofactura >= 0) Then
             If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
                 'Abro el form de datos de facturacion.
                 Dim frmFacturar As frmFacturar = New frmFacturar()
                 frmFacturar.NotaCredito = True
-                frmFacturar.id_Devolucion = Integer.Parse(IdVenta)
+                frmFacturar.id_Venta = Integer.Parse(IdVenta)
                 frmFacturar.Monto = Total
                 frmFacturar.Descuento = Descuento
                 frmFacturar.IvaTotal = IVA
                 frmFacturar.MontoSinDescuento = SubTotal
                 frmFacturar.TipoPago = TipoPago
                 frmFacturar.TipoCliente = TipoCliente()
+                frmFacturar.id_Cliente = id_Cliente
+                frmFacturar.EsSenia = esSenia
                 frmFacturar.ShowDialog()
             End If
         End If

@@ -27,6 +27,17 @@ Public Class Facturacion
             id_Venta_ = value
         End Set
     End Property
+
+    Private id_NotaCredito_ As Integer
+    Public Property id_NotaCredito() As Integer
+        Get
+            Return id_NotaCredito_
+        End Get
+        Set(ByVal value As Integer)
+            id_NotaCredito_ = value
+        End Set
+    End Property
+
     Public Property NumeroFactura() As String
         Get
             Return NumeroFactura_

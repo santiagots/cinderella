@@ -1,5 +1,6 @@
 ﻿Public Class frmVerFactura
     Public id_Venta As Integer
+    Public id_Factura As Integer
     Dim NegFacturacion As New Negocio.NegFacturacion
     Dim entFacturacion As New Entidades.Facturacion
 
@@ -15,7 +16,11 @@
             lbl_NumeroFactura.Text = ""
 
             'Cargo los datos de la factura.
-            entFacturacion = NegFacturacion.TraerFacturacion(id_Venta)
+            If (id_Factura > 0) Then
+                entFacturacion = NegFacturacion.TraerFacturacionPorId(id_Factura)
+            Else
+                entFacturacion = NegFacturacion.TraerFacturacionPorIdVenta(id_Venta)
+            End If
             lbl_Cuit.Text = entFacturacion.Cuit
             lbl_Nombre.Text = entFacturacion.Nombre
             lbl_Direccion.Text = entFacturacion.Direccion

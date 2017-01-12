@@ -248,6 +248,7 @@ Partial Class FrmVerNotaCredito
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FrmVerNotaCredito"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Detalle de Nota Crédito N° 15"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

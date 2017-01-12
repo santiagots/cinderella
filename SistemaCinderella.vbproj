@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>64</ApplicationRevision>
+    <ApplicationRevision>68</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -373,6 +373,12 @@
     <Compile Include="frmEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmFacturaAdministracion.Designer.vb">
+      <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmFacturaAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmFacturar.Designer.vb">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </Compile>
@@ -425,6 +431,12 @@
       <DependentUpon>frmMovimientoCajaFuerte.vb</DependentUpon>
     </Compile>
     <Compile Include="frmMovimientoCajaFuerte.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNotaCreditoAdministracion.Designer.vb">
+      <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmNotaCreditoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmNotificaciones.Designer.vb">
@@ -994,6 +1006,9 @@
     <EmbeddedResource Include="frmEtiquetasMasivas.resx">
       <DependentUpon>frmEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmFacturaAdministracion.resx">
+      <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmFacturar.resx">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </EmbeddedResource>
@@ -1020,6 +1035,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMovimientoCajaFuerte.resx">
       <DependentUpon>frmMovimientoCajaFuerte.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNotaCreditoAdministracion.resx">
+      <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmNotificaciones.af-ZA.resx">
       <DependentUpon>frmNotificaciones.vb</DependentUpon>
@@ -1243,6 +1261,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="bin\dlls\Interop.EpsonFPHostControlX.dll" />
     <Content Include="bin\dlls\itextsharp.dll" />
@@ -1316,6 +1335,7 @@
     <None Include="Imagenes\export_excel.png" />
     <Content Include="Imagenes\Etiqueta_Imprimir.jpg" />
     <Content Include="Imagenes\Etiqueta_Vacia.jpg" />
+    <None Include="Imagenes\factura.png" />
     <Content Include="Imagenes\flecha_der.png" />
     <Content Include="Imagenes\flecha_izq.png" />
     <Content Include="Imagenes\fondo_central.jpg" />
@@ -1376,6 +1396,7 @@
     <None Include="My Project\DataSources\Entidades.Cheque.datasource" />
     <None Include="My Project\DataSources\Entidades.ClienteMinorista.datasource" />
     <None Include="My Project\DataSources\Entidades.Facturacion.datasource" />
+    <None Include="My Project\DataSources\Entidades.NotaCredito.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaPedido.datasource" />
     <None Include="My Project\DataSources\Entidades.Senia.datasource" />
     <None Include="My Project\DataSources\Permiso.datasource" />

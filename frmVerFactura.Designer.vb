@@ -248,6 +248,7 @@ Partial Class frmVerFactura
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "frmVerFactura"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Detalle de Factura Nº 15"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

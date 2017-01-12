@@ -1,5 +1,6 @@
 ﻿Public Class FrmVerNotaCredito
     Public id_Devolucion As Integer
+    Public id_NotaCreadito As Integer
     Dim NegNotaCredito As New Negocio.NegNotaCredito
     Dim EntNotaCredito As New Entidades.NotaCredito
 
@@ -15,7 +16,12 @@
             lbl_NumeroNota.Text = ""
 
             'Cargo los datos de la factura.
-            EntNotaCredito = NegNotaCredito.TraerNotaCredito(id_Devolucion)
+            If (id_NotaCreadito > 0) Then
+                EntNotaCredito = NegNotaCredito.TraerNotaCreditoPorID(id_NotaCreadito)
+            Else
+                EntNotaCredito = NegNotaCredito.TraerNotaCreditoPorIDDevolucio(id_Devolucion)
+            End If
+
             lbl_Cuit.Text = EntNotaCredito.Cuit
             lbl_Nombre.Text = EntNotaCredito.Nombre
             lbl_Direccion.Text = EntNotaCredito.Direccion

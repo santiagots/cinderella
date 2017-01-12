@@ -438,6 +438,7 @@ Public Class frmDevolucionesAdministracion
         frmFacturar.MontoSinDescuento = SubTotalDetalle
         frmFacturar.TipoPago = TipoPagoDetalle
         frmFacturar.NotaCredito = True
+        frmFacturar.TipoCliente = TipoDevolucion()
         Funciones.ControlInstancia(frmFacturar).Show()
 
         'Seteo el cursor.

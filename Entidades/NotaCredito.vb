@@ -19,6 +19,16 @@
         End Set
     End Property
 
+    Private id_Factura_ As Integer
+    Public Property id_Factura() As Integer
+        Get
+            Return id_Factura_
+        End Get
+        Set(ByVal value As Integer)
+            id_Factura_ = value
+        End Set
+    End Property
+
     Private NumeroNotaCredito_ As String
     Public Property NumeroNotaCredito() As String
         Get
@@ -99,12 +109,12 @@
         End Set
     End Property
 
-    Private TipoRecibo_ As String
-    Public Property TipoRecibo() As String
+    Private TipoRecibo_ As TipoFactura
+    Public Property TipoRecibo() As TipoFactura
         Get
             Return TipoRecibo_
         End Get
-        Set(ByVal value As String)
+        Set(ByVal value As TipoFactura)
             TipoRecibo_ = value
         End Set
     End Property

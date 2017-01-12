@@ -68,6 +68,10 @@ Partial Class frmVentasAdministracion
         Me.TbDetalle = New System.Windows.Forms.TabPage()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
         Me.PanelTotalMinoristaSenia = New System.Windows.Forms.Panel()
+        Me.lblPendienteAbonarMinorista = New System.Windows.Forms.Label()
+        Me.lblPendienteAbonarMinoristaDescripcion = New System.Windows.Forms.Label()
+        Me.lblSeniaMinorista = New System.Windows.Forms.Label()
+        Me.lblSeniaMinoristaDescripcion = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.lblMontoMinoristaDescripcion = New System.Windows.Forms.Label()
         Me.lblMontoMinorista = New System.Windows.Forms.Label()
@@ -75,6 +79,10 @@ Partial Class frmVentasAdministracion
         Me.Label15 = New System.Windows.Forms.Label()
         Me.lblSubtotalMinorista = New System.Windows.Forms.Label()
         Me.PanelTotalMayorista = New System.Windows.Forms.Panel()
+        Me.lblPendienteAbonarMayorista = New System.Windows.Forms.Label()
+        Me.lblPendienteAbonarMayoristaDescripcion = New System.Windows.Forms.Label()
+        Me.lblSeniaMayorista = New System.Windows.Forms.Label()
+        Me.lblSeniaMayoristaDescripcion = New System.Windows.Forms.Label()
         Me.lblIVAMayorista = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.lblSubtotalMayorista = New System.Windows.Forms.Label()
@@ -120,14 +128,6 @@ Partial Class frmVentasAdministracion
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolVentas = New System.Windows.Forms.ToolTip(Me.components)
-        Me.lblPendienteAbonarMinorista = New System.Windows.Forms.Label()
-        Me.lblPendienteAbonarMinoristaDescripcion = New System.Windows.Forms.Label()
-        Me.lblSeniaMinorista = New System.Windows.Forms.Label()
-        Me.lblSeniaMinoristaDescripcion = New System.Windows.Forms.Label()
-        Me.lblPendienteAbonarMayorista = New System.Windows.Forms.Label()
-        Me.lblPendienteAbonarMayoristaDescripcion = New System.Windows.Forms.Label()
-        Me.lblSeniaMayorista = New System.Windows.Forms.Label()
-        Me.lblSeniaMayoristaDescripcion = New System.Windows.Forms.Label()
         Me.TabVentas.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -607,6 +607,7 @@ Partial Class frmVentasAdministracion
         '
         'PanelTotalMinoristaSenia
         '
+        Me.PanelTotalMinoristaSenia.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.PanelTotalMinoristaSenia.Controls.Add(Me.lblPendienteAbonarMinorista)
         Me.PanelTotalMinoristaSenia.Controls.Add(Me.lblPendienteAbonarMinoristaDescripcion)
         Me.PanelTotalMinoristaSenia.Controls.Add(Me.lblSeniaMinorista)
@@ -621,6 +622,50 @@ Partial Class frmVentasAdministracion
         Me.PanelTotalMinoristaSenia.Name = "PanelTotalMinoristaSenia"
         Me.PanelTotalMinoristaSenia.Size = New System.Drawing.Size(258, 141)
         Me.PanelTotalMinoristaSenia.TabIndex = 40
+        '
+        'lblPendienteAbonarMinorista
+        '
+        Me.lblPendienteAbonarMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblPendienteAbonarMinorista.AutoSize = True
+        Me.lblPendienteAbonarMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPendienteAbonarMinorista.Location = New System.Drawing.Point(193, 119)
+        Me.lblPendienteAbonarMinorista.Name = "lblPendienteAbonarMinorista"
+        Me.lblPendienteAbonarMinorista.Size = New System.Drawing.Size(42, 15)
+        Me.lblPendienteAbonarMinorista.TabIndex = 52
+        Me.lblPendienteAbonarMinorista.Text = "- - - - - "
+        '
+        'lblPendienteAbonarMinoristaDescripcion
+        '
+        Me.lblPendienteAbonarMinoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblPendienteAbonarMinoristaDescripcion.AutoSize = True
+        Me.lblPendienteAbonarMinoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lblPendienteAbonarMinoristaDescripcion.Location = New System.Drawing.Point(3, 119)
+        Me.lblPendienteAbonarMinoristaDescripcion.Name = "lblPendienteAbonarMinoristaDescripcion"
+        Me.lblPendienteAbonarMinoristaDescripcion.Size = New System.Drawing.Size(141, 15)
+        Me.lblPendienteAbonarMinoristaDescripcion.TabIndex = 51
+        Me.lblPendienteAbonarMinoristaDescripcion.Text = "Pendiente a Abonar :"
+        '
+        'lblSeniaMinorista
+        '
+        Me.lblSeniaMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblSeniaMinorista.AutoSize = True
+        Me.lblSeniaMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSeniaMinorista.Location = New System.Drawing.Point(193, 94)
+        Me.lblSeniaMinorista.Name = "lblSeniaMinorista"
+        Me.lblSeniaMinorista.Size = New System.Drawing.Size(42, 15)
+        Me.lblSeniaMinorista.TabIndex = 50
+        Me.lblSeniaMinorista.Text = "- - - - - "
+        '
+        'lblSeniaMinoristaDescripcion
+        '
+        Me.lblSeniaMinoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblSeniaMinoristaDescripcion.AutoSize = True
+        Me.lblSeniaMinoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lblSeniaMinoristaDescripcion.Location = New System.Drawing.Point(3, 94)
+        Me.lblSeniaMinoristaDescripcion.Name = "lblSeniaMinoristaDescripcion"
+        Me.lblSeniaMinoristaDescripcion.Size = New System.Drawing.Size(48, 15)
+        Me.lblSeniaMinoristaDescripcion.TabIndex = 49
+        Me.lblSeniaMinoristaDescripcion.Text = "Seña :"
         '
         'Label14
         '
@@ -707,6 +752,50 @@ Partial Class frmVentasAdministracion
         Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
         Me.PanelTotalMayorista.Size = New System.Drawing.Size(251, 140)
         Me.PanelTotalMayorista.TabIndex = 39
+        '
+        'lblPendienteAbonarMayorista
+        '
+        Me.lblPendienteAbonarMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblPendienteAbonarMayorista.AutoSize = True
+        Me.lblPendienteAbonarMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPendienteAbonarMayorista.Location = New System.Drawing.Point(193, 119)
+        Me.lblPendienteAbonarMayorista.Name = "lblPendienteAbonarMayorista"
+        Me.lblPendienteAbonarMayorista.Size = New System.Drawing.Size(42, 15)
+        Me.lblPendienteAbonarMayorista.TabIndex = 56
+        Me.lblPendienteAbonarMayorista.Text = "- - - - - "
+        '
+        'lblPendienteAbonarMayoristaDescripcion
+        '
+        Me.lblPendienteAbonarMayoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblPendienteAbonarMayoristaDescripcion.AutoSize = True
+        Me.lblPendienteAbonarMayoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lblPendienteAbonarMayoristaDescripcion.Location = New System.Drawing.Point(3, 119)
+        Me.lblPendienteAbonarMayoristaDescripcion.Name = "lblPendienteAbonarMayoristaDescripcion"
+        Me.lblPendienteAbonarMayoristaDescripcion.Size = New System.Drawing.Size(141, 15)
+        Me.lblPendienteAbonarMayoristaDescripcion.TabIndex = 55
+        Me.lblPendienteAbonarMayoristaDescripcion.Text = "Pendiente a Abonar :"
+        '
+        'lblSeniaMayorista
+        '
+        Me.lblSeniaMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblSeniaMayorista.AutoSize = True
+        Me.lblSeniaMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSeniaMayorista.Location = New System.Drawing.Point(193, 97)
+        Me.lblSeniaMayorista.Name = "lblSeniaMayorista"
+        Me.lblSeniaMayorista.Size = New System.Drawing.Size(42, 15)
+        Me.lblSeniaMayorista.TabIndex = 54
+        Me.lblSeniaMayorista.Text = "- - - - - "
+        '
+        'lblSeniaMayoristaDescripcion
+        '
+        Me.lblSeniaMayoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblSeniaMayoristaDescripcion.AutoSize = True
+        Me.lblSeniaMayoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lblSeniaMayoristaDescripcion.Location = New System.Drawing.Point(3, 97)
+        Me.lblSeniaMayoristaDescripcion.Name = "lblSeniaMayoristaDescripcion"
+        Me.lblSeniaMayoristaDescripcion.Size = New System.Drawing.Size(48, 15)
+        Me.lblSeniaMayoristaDescripcion.TabIndex = 53
+        Me.lblSeniaMayoristaDescripcion.Text = "Seña :"
         '
         'lblIVAMayorista
         '
@@ -1176,94 +1265,6 @@ Partial Class frmVentasAdministracion
         Me.ToolVentas.IsBalloon = True
         Me.ToolVentas.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolVentas.ToolTipTitle = "Ayuda."
-        '
-        'lblPendienteAbonarMinorista
-        '
-        Me.lblPendienteAbonarMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblPendienteAbonarMinorista.AutoSize = True
-        Me.lblPendienteAbonarMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPendienteAbonarMinorista.Location = New System.Drawing.Point(193, 119)
-        Me.lblPendienteAbonarMinorista.Name = "lblPendienteAbonarMinorista"
-        Me.lblPendienteAbonarMinorista.Size = New System.Drawing.Size(42, 15)
-        Me.lblPendienteAbonarMinorista.TabIndex = 52
-        Me.lblPendienteAbonarMinorista.Text = "- - - - - "
-        '
-        'lblPendienteAbonarMinoristaDescripcion
-        '
-        Me.lblPendienteAbonarMinoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblPendienteAbonarMinoristaDescripcion.AutoSize = True
-        Me.lblPendienteAbonarMinoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.lblPendienteAbonarMinoristaDescripcion.Location = New System.Drawing.Point(3, 119)
-        Me.lblPendienteAbonarMinoristaDescripcion.Name = "lblPendienteAbonarMinoristaDescripcion"
-        Me.lblPendienteAbonarMinoristaDescripcion.Size = New System.Drawing.Size(141, 15)
-        Me.lblPendienteAbonarMinoristaDescripcion.TabIndex = 51
-        Me.lblPendienteAbonarMinoristaDescripcion.Text = "Pendiente a Abonar :"
-        '
-        'lblSeniaMinorista
-        '
-        Me.lblSeniaMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblSeniaMinorista.AutoSize = True
-        Me.lblSeniaMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSeniaMinorista.Location = New System.Drawing.Point(193, 94)
-        Me.lblSeniaMinorista.Name = "lblSeniaMinorista"
-        Me.lblSeniaMinorista.Size = New System.Drawing.Size(42, 15)
-        Me.lblSeniaMinorista.TabIndex = 50
-        Me.lblSeniaMinorista.Text = "- - - - - "
-        '
-        'lblSeniaMinoristaDescripcion
-        '
-        Me.lblSeniaMinoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblSeniaMinoristaDescripcion.AutoSize = True
-        Me.lblSeniaMinoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.lblSeniaMinoristaDescripcion.Location = New System.Drawing.Point(3, 94)
-        Me.lblSeniaMinoristaDescripcion.Name = "lblSeniaMinoristaDescripcion"
-        Me.lblSeniaMinoristaDescripcion.Size = New System.Drawing.Size(48, 15)
-        Me.lblSeniaMinoristaDescripcion.TabIndex = 49
-        Me.lblSeniaMinoristaDescripcion.Text = "Seña :"
-        '
-        'lblPendienteAbonarMayorista
-        '
-        Me.lblPendienteAbonarMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblPendienteAbonarMayorista.AutoSize = True
-        Me.lblPendienteAbonarMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPendienteAbonarMayorista.Location = New System.Drawing.Point(193, 119)
-        Me.lblPendienteAbonarMayorista.Name = "lblPendienteAbonarMayorista"
-        Me.lblPendienteAbonarMayorista.Size = New System.Drawing.Size(42, 15)
-        Me.lblPendienteAbonarMayorista.TabIndex = 56
-        Me.lblPendienteAbonarMayorista.Text = "- - - - - "
-        '
-        'lblPendienteAbonarMayoristaDescripcion
-        '
-        Me.lblPendienteAbonarMayoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblPendienteAbonarMayoristaDescripcion.AutoSize = True
-        Me.lblPendienteAbonarMayoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.lblPendienteAbonarMayoristaDescripcion.Location = New System.Drawing.Point(3, 119)
-        Me.lblPendienteAbonarMayoristaDescripcion.Name = "lblPendienteAbonarMayoristaDescripcion"
-        Me.lblPendienteAbonarMayoristaDescripcion.Size = New System.Drawing.Size(141, 15)
-        Me.lblPendienteAbonarMayoristaDescripcion.TabIndex = 55
-        Me.lblPendienteAbonarMayoristaDescripcion.Text = "Pendiente a Abonar :"
-        '
-        'lblSeniaMayorista
-        '
-        Me.lblSeniaMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblSeniaMayorista.AutoSize = True
-        Me.lblSeniaMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSeniaMayorista.Location = New System.Drawing.Point(193, 97)
-        Me.lblSeniaMayorista.Name = "lblSeniaMayorista"
-        Me.lblSeniaMayorista.Size = New System.Drawing.Size(42, 15)
-        Me.lblSeniaMayorista.TabIndex = 54
-        Me.lblSeniaMayorista.Text = "- - - - - "
-        '
-        'lblSeniaMayoristaDescripcion
-        '
-        Me.lblSeniaMayoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblSeniaMayoristaDescripcion.AutoSize = True
-        Me.lblSeniaMayoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.lblSeniaMayoristaDescripcion.Location = New System.Drawing.Point(3, 97)
-        Me.lblSeniaMayoristaDescripcion.Name = "lblSeniaMayoristaDescripcion"
-        Me.lblSeniaMayoristaDescripcion.Size = New System.Drawing.Size(48, 15)
-        Me.lblSeniaMayoristaDescripcion.TabIndex = 53
-        Me.lblSeniaMayoristaDescripcion.Text = "Seña :"
         '
         'frmVentasAdministracion
         '
