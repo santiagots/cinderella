@@ -1,6 +1,6 @@
 ﻿Public Class NotaPedido
 
-    Private id_NotaPedido_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_ As Integer
+    Private id_NotaPedido_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_, id_Encargado_ As Integer
     Dim PrecioTotal_ As Double
     Dim Fecha_ As Date
 
@@ -28,6 +28,15 @@
         End Get
         Set(ByVal value As Integer)
             id_TipoPago_ = value
+        End Set
+    End Property
+
+    Public Property id_Encargado() As Integer
+        Get
+            Return id_Encargado_
+        End Get
+        Set(ByVal value As Integer)
+            id_Encargado_ = value
         End Set
     End Property
 

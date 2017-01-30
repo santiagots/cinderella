@@ -84,6 +84,7 @@ Partial Class frmVentas
         Me.BtnSenia = New System.Windows.Forms.Button()
         Me.txt_SeniaMinorista = New System.Windows.Forms.TextBox()
         Me.txt_SeniaMayorista = New System.Windows.Forms.TextBox()
+        Me.Btn_NotaPedido = New System.Windows.Forms.Button()
         Me.lbl_DesTot = New System.Windows.Forms.Label()
         Me.txt_TotalMinorista = New System.Windows.Forms.TextBox()
         Me.txt_SubtotalMinorista = New System.Windows.Forms.TextBox()
@@ -257,6 +258,8 @@ Partial Class frmVentas
         '
         'txt_CodigoBarra
         '
+        Me.txt_CodigoBarra.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_CodigoBarra.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.txt_CodigoBarra.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -408,6 +411,8 @@ Partial Class frmVentas
         '
         'txt_RazonSocial
         '
+        Me.txt_RazonSocial.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_RazonSocial.BackColor = System.Drawing.SystemColors.Window
         Me.txt_RazonSocial.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_RazonSocial.Location = New System.Drawing.Point(315, 24)
@@ -733,6 +738,23 @@ Partial Class frmVentas
         Me.txt_SeniaMayorista.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ToolProd.SetToolTip(Me.txt_SeniaMayorista, "Ingrese un monto en case de querer realizar una seña.")
         Me.txt_SeniaMayorista.Visible = False
+        '
+        'Btn_NotaPedido
+        '
+        Me.Btn_NotaPedido.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_NotaPedido.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_NotaPedido.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_NotaPedido.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
+        Me.Btn_NotaPedido.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_NotaPedido.Location = New System.Drawing.Point(711, 770)
+        Me.Btn_NotaPedido.Name = "Btn_NotaPedido"
+        Me.Btn_NotaPedido.Size = New System.Drawing.Size(122, 40)
+        Me.Btn_NotaPedido.TabIndex = 29
+        Me.Btn_NotaPedido.Text = "Nota Pedido"
+        Me.Btn_NotaPedido.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.Btn_NotaPedido, "Crear nota de pedido. ")
+        Me.Btn_NotaPedido.UseVisualStyleBackColor = True
+        Me.Btn_NotaPedido.Visible = False
         '
         'lbl_DesTot
         '
@@ -1115,6 +1137,7 @@ Partial Class frmVentas
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(954, 812)
+        Me.Controls.Add(Me.Btn_NotaPedido)
         Me.Controls.Add(Me.GB_Reserva)
         Me.Controls.Add(Me.PanelTotalMayorista)
         Me.Controls.Add(Me.GB_ListaPrecio)
@@ -1241,4 +1264,5 @@ Partial Class frmVentas
     Friend WithEvents lblSeniaMinorista As Label
     Friend WithEvents txt_SeniaMinorista As TextBox
     Friend WithEvents lblSeniaMinoristaMoneda As Label
+    Friend WithEvents Btn_NotaPedido As Button
 End Class

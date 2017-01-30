@@ -332,7 +332,7 @@ Public Class frmFacturar
                 'Si es una seña
                 If (EsSenia) Then
                     'Agrego al ticket un item de seña por el valor señado
-                    EntControlador.DPPAL = "Seña"
+                    EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
                     EntControlador.CANTIDAD = Func.FormatearCantidad("1")
                     EntControlador.PUNITARIO = Func.FormatearPrecio(Monto)
                     NegControlador.AgregarItemTicket(EntControlador)
@@ -580,7 +580,7 @@ Public Class frmFacturar
                 'Si es una seña
                 If (EsSenia) Then
                     'Agrego al ticket un item de seña por el valor señado
-                    EntControlador.DPPAL = "Seña"
+                    EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
                     EntControlador.CANTIDAD = Func.FormatearCantidad("1")
                     EntControlador.PUNITARIO = Func.FormatearPrecio(Monto)
                     NegControlador.AgregarItemNotaCredito(EntControlador)

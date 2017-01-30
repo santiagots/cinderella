@@ -182,6 +182,26 @@ Public Class NegClientes
         Return respuesta.Value
     End Function
 
+    Public Function ConsultaClienteConsumidorFinal(ByVal id_Cliente As Integer) As ConsumidorFinal
+        Dim dsCliente As New DataSet
+
+        If (Funciones.HayInternet) Then
+            dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_ConsumidorFinal_Consulta @id_Cliente=" & id_Cliente)
+        Else
+            dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_ConsumidorFinal_Consulta @id_Cliente=" & id_Cliente)
+        End If
+
+        Dim clienteMinorista As ConsumidorFinal = New ConsumidorFinal()
+
+        If dsCliente.Tables(0).Rows.Count > 0 Then
+            clienteMinorista.Apellido = dsCliente.Tables(0).Rows(0)("Apellido")
+            clienteMinorista.Nombre = dsCliente.Tables(0).Rows(0)("Nombre")
+            clienteMinorista.Email = dsCliente.Tables(0).Rows(0)("Email")
+        End If
+
+        Return clienteMinorista
+    End Function
+
     'Funcion para modificar un cliente.
     Function ModificacionCliente(ByVal eclientes As Entidades.Clientes) As String
         Dim cmd As New SqlCommand

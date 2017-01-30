@@ -364,8 +364,10 @@ Public Class frmVentas
 
         If subtotal <= 0 Then
             Btn_Finalizar.Visible = False
+            Btn_NotaPedido.Visible = False
         Else
             Btn_Finalizar.Visible = True
+            Btn_NotaPedido.Visible = True
         End If
     End Sub
 
@@ -611,11 +613,12 @@ Public Class frmVentas
     'Carga la venta con la nota de pedido
     Private Sub CargarNotaPedido()
         Cb_Vendedores.SelectedValue = NotaPedido.id_Empleado
+        Cb_Encargados.SelectedValue = NotaPedido.id_Encargado
 
         If NotaPedido.id_TipoVenta = 1 Then
-            cb_Tipo.SelectedValue = "Minorista"
+            cb_Tipo.SelectedItem = "Minorista"
         Else
-            cb_Tipo.SelectedValue = "Mayorista"
+            cb_Tipo.SelectedItem = "Mayorista"
         End If
 
         Cb_TipoPago.SelectedValue = NotaPedido.id_TipoPago
@@ -695,6 +698,7 @@ Public Class frmVentas
         End If
 
         Btn_Finalizar.Visible = True
+        Btn_NotaPedido.Visible = True
         GB_Reserva.Visible = False
 
         AgregarItemDesdeSenia()
@@ -871,7 +875,7 @@ Public Class frmVentas
             Dim IvaTotal As Double = 0 'Iva total de la vental
             Dim MontoSenia As Double = 0
 
-            If (Not VentaValida()) Then
+            If (Not VentaValida("venta")) Then
                 Return
             End If
 
@@ -940,15 +944,19 @@ Public Class frmVentas
                         MessageBox.Show("La venta ha sido finalizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
 
                         If (NotaPedido IsNot Nothing) Then
-                            Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
-                            If (Not negNotaPedido.BorrarNota(NotaPedido.id_NotaPedido)) Then
-                                MessageBox.Show("La note de pedido no se a podido eliminar de forma automática.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Else
-                                Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
-                                'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
-                                frmNotaPedido.RemoverNotaPedido(NotaPedido)
-                            End If
+                        Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
+                        NotaPedido.Vendida = True
+                        NotaPedido.id_Cliente = id_Cliente
+                        NotaPedido.id_Empleado = id_Empleado
+                        NotaPedido.id_Encargado = id_Encargado
+                        If (negNotaPedido.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido()) = 0) Then
+                            MessageBox.Show("La note de pedido no se a podido cerrar. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Else
+                            Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
+                            'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
+                            frmNotaPedido.RemoverNotaPedido(NotaPedido)
                         End If
+                    End If
 
                         'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                         If Facturar Then
@@ -977,6 +985,154 @@ Public Class frmVentas
             MessageBox.Show("Se ha producido un error al confirmar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btn_NotaPedido.Click
+        Try
+            If (Not VentaValida("nota de pedido")) Then
+                Return
+            End If
+
+            If (NotaPedido IsNot Nothing) Then
+                ActualizarNotaPedido()
+            Else
+                CrearNuevaNotaPedido()
+            End If
+
+        Catch ex As Exception
+            'Seteo el cursor.
+            Me.Cursor = Cursors.Arrow
+            'Muestro Mensaje.
+            MessageBox.Show("Se ha producido un error al generado la nota de pedido. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub CrearNuevaNotaPedido()
+        Dim TipoPago As Integer = Cb_TipoPago.SelectedValue 'Tipo de Pago.
+        Dim id_Empleado As Integer = Cb_Vendedores.SelectedValue 'ID de Vendedor.
+        Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
+        Dim id_ListaPrecio As Integer = Cb_ListaPrecio.SelectedValue
+        Dim ConsumidorFinal As ConsumidorFinal = New ConsumidorFinal()
+        Dim ClienteNegocio As NegClientes = New NegClientes()
+        Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
+        Dim NotaPedido As NotaPedido = New NotaPedido()
+
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            Dim frmDatosClienteMinorista As frmDatosClienteMinorista = New frmDatosClienteMinorista()
+            If frmDatosClienteMinorista.ShowDialog() = DialogResult.Cancel Then
+                Return
+            End If
+
+            ConsumidorFinal.Apellido = frmDatosClienteMinorista.txt_Apellido.Text
+            ConsumidorFinal.Email = String.Empty
+            ConsumidorFinal.Nombre = frmDatosClienteMinorista.txt_Nombre.Text
+
+            NotaPedido.Id_ConsumidorFinal = ClienteNegocio.AltaClienteConsumidorFinal(ConsumidorFinal)
+            NotaPedido.id_TipoVenta = 1
+            NotaPedido.PrecioTotal = CType(txt_TotalMinorista.Text, Decimal)
+            NotaPedido.id_Cliente = 0
+            NotaPedido.RazonSocialCliente = String.Empty
+            NotaPedido.ConsumidorFinalNombreYApellido = ConsumidorFinal.Apellido + ", " + ConsumidorFinal.Nombre
+        Else
+            NotaPedido.id_TipoVenta = 2
+            NotaPedido.PrecioTotal = CType(txt_TotalMayorista.Text, Decimal)
+            NotaPedido.id_Cliente = CInt(txt_id_Cliente.Text)
+            NotaPedido.RazonSocialCliente = txt_RazonSocial.Text
+            NotaPedido.Id_ConsumidorFinal = 0
+            NotaPedido.ConsumidorFinalNombreYApellido = String.Empty
+        End If
+
+        NotaPedido.id_Empleado = id_Empleado
+        NotaPedido.id_Encargado = id_Encargado
+        NotaPedido.id_ListaPrecio = id_ListaPrecio
+        NotaPedido.id_Sucursal = id_Sucursal
+        NotaPedido.id_TipoPago = TipoPago
+        NotaPedido.Vendida = False
+
+        NotaPedido.Fecha = DateTime.Now
+        NotaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(NotaPedido, ObtenerDetalleNotaPedido())
+        Me.Cursor = Cursors.Arrow
+        MessageBox.Show("Se ha generado la nota de pedido correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        LimpiarFormVentas()
+
+    End Sub
+
+    Private Sub ActualizarNotaPedido()
+        Dim TipoPago As Integer = Cb_TipoPago.SelectedValue 'Tipo de Pago.
+        Dim id_Empleado As Integer = Cb_Vendedores.SelectedValue 'ID de Vendedor.
+        Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
+        Dim id_ListaPrecio As Integer = Cb_ListaPrecio.SelectedValue
+        Dim ConsumidorFinal As ConsumidorFinal = New ConsumidorFinal()
+        Dim ClienteNegocio As NegClientes = New NegClientes()
+        Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
+
+        If cb_Tipo.SelectedItem = "Minorista" Then
+            ConsumidorFinal = ClienteNegocio.ConsultaClienteConsumidorFinal(NotaPedido.Id_ConsumidorFinal)
+            Dim frmDatosClienteMinorista As frmDatosClienteMinorista = New frmDatosClienteMinorista()
+            frmDatosClienteMinorista.txt_Apellido.Text = ConsumidorFinal.Apellido
+            frmDatosClienteMinorista.txt_Nombre.Text = ConsumidorFinal.Nombre
+
+
+            If frmDatosClienteMinorista.ShowDialog() = DialogResult.Cancel Then
+                Return
+            End If
+
+            If (ConsumidorFinal.Apellido <> frmDatosClienteMinorista.txt_Apellido.Text Or ConsumidorFinal.Nombre <> frmDatosClienteMinorista.txt_Nombre.Text) Then
+                ConsumidorFinal.Apellido = frmDatosClienteMinorista.txt_Apellido.Text
+                ConsumidorFinal.Email = String.Empty
+                ConsumidorFinal.Nombre = frmDatosClienteMinorista.txt_Nombre.Text
+
+                NotaPedido.Id_ConsumidorFinal = ClienteNegocio.AltaClienteConsumidorFinal(ConsumidorFinal)
+            End If
+
+            NotaPedido.id_TipoVenta = 1
+            NotaPedido.PrecioTotal = CType(txt_TotalMinorista.Text, Decimal)
+            NotaPedido.id_Cliente = 0
+            NotaPedido.RazonSocialCliente = String.Empty
+            NotaPedido.ConsumidorFinalNombreYApellido = ConsumidorFinal.Apellido + ", " + ConsumidorFinal.Nombre
+        Else
+            NotaPedido.id_TipoVenta = 2
+            NotaPedido.PrecioTotal = CType(txt_TotalMayorista.Text, Decimal)
+            NotaPedido.id_Cliente = CInt(txt_id_Cliente.Text)
+            NotaPedido.RazonSocialCliente = txt_RazonSocial.Text
+            NotaPedido.Id_ConsumidorFinal = 0
+            NotaPedido.ConsumidorFinalNombreYApellido = String.Empty
+        End If
+
+        NotaPedido.EmpleadoNombreyApellido = Cb_Vendedores.Text
+        NotaPedido.id_Empleado = id_Empleado
+        NotaPedido.id_Encargado = id_Encargado
+        NotaPedido.id_ListaPrecio = id_ListaPrecio
+        NotaPedido.id_Sucursal = id_Sucursal
+        NotaPedido.id_TipoPago = TipoPago
+        NotaPedido.Vendida = False
+
+        NotaPedidoNegocio.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido())
+        Me.Cursor = Cursors.Arrow
+        MessageBox.Show("Se ha actualizado la nota de pedido correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Dim form As Form = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
+        If (form IsNot Nothing) Then
+            form.Refresh()
+            form.Show()
+        End If
+        Close()
+    End Sub
+
+    Private Function ObtenerDetalleNotaPedido() As List(Of NotaPedido_Detalle)
+        Dim detalleNotaPedido As List(Of Entidades.NotaPedido_Detalle) = New List(Of Entidades.NotaPedido_Detalle)()
+
+        For i = 0 To DG_Productos.Rows.Count - 1
+            If CInt(DG_Productos.Rows(i).Cells.Item("ID").Value) > 0 And CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value) > 0 Then
+                Dim detalle As Entidades.NotaPedido_Detalle = New Entidades.NotaPedido_Detalle()
+                detalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
+                detalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
+                detalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
+
+                detalleNotaPedido.Add(detalle)
+            End If
+        Next
+
+        Return detalleNotaPedido
+    End Function
 
     Private Async Sub BtnSenia_Click(sender As Object, e As EventArgs) Handles BtnSenia.Click
         Try
@@ -1058,7 +1214,7 @@ Public Class frmVentas
                 If id_Venta > 0 Then
 
                     Senia.IdVentaSenia = id_Venta
-                    NegSenia.CrearSenia(Senia)
+                    negSenia.CrearSenia(Senia)
 
                     RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoSenia, id_Venta)
 
@@ -1157,30 +1313,36 @@ Public Class frmVentas
         Return True
     End Function
 
-    Private Function VentaValida() As Boolean
+    Private Function VentaValida(accion As String) As Boolean
         Dim TotalProductos As Integer = DG_Productos.Rows.Count 'Total de productos cargados.
 
         'Chequeo que haya al menos un producto cargado.
         If TotalProductos <= 0 Then
             'Muestro Mensaje.
-            MessageBox.Show("La venta no puede efectuarse. No hay productos cargados !!", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show(String.Format("La {0} no puede efectuarse. No hay productos cargados !!", accion), "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return False
         End If
         'Tiene al menos un producto.
         'Chequeo que haya asignado al menos un vendedor a la venta.
         If Cb_Vendedores.SelectedValue <= 0 Then
             'Muestro Mensaje.
-            MessageBox.Show("La venta no puede efectuarse. Debe seleccionar un vendedor responsable de la venta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show(String.Format("La {0} no puede efectuarse. Debe seleccionar un vendedor responsable de la {0}.", accion), "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return False
         End If
         If Cb_Encargados.SelectedValue <= 0 Then
             'Muestro Mensaje.
-            MessageBox.Show("La venta no puede efectuarse. Debe seleccionar un encargado responsable de la venta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show(String.Format("La {0} no puede efectuarse. Debe seleccionar un encargado responsable de la {0}.", accion), "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return False
         End If
         If Cb_TipoPago.SelectedValue <= 0 Then
             'Muestro Mensaje.
-            MessageBox.Show("La venta no puede efectuarse. Debe seleccionar un tipo de pago a la venta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show(String.Format("La {0} no puede efectuarse. Debe seleccionar un tipo de pago a la {0}.", accion), "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        If cb_Tipo.SelectedItem = "Mayorista" AndAlso txt_id_Cliente.Text = "" Then
+            'Muestro Mensaje.
+            MessageBox.Show(String.Format("La {0} no puede efectuarse. Debe seleccionar un cliente a la {0}.", accion), "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return False
         End If
 
@@ -1606,5 +1768,4 @@ Public Class frmVentas
             MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
-
 End Class

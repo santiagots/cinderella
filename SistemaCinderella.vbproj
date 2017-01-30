@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>SistemaCinderella.My.MyApplication</StartupObject>
     <RootNamespace>SistemaCinderella</RootNamespace>
-    <AssemblyName>SistemaCinderella</AssemblyName>
+    <AssemblyName>SistemaCinderellaDesarrollo</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -21,7 +21,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>ftp://santiagots-001%40ftp.Smarterasp.net/Cinderella/</PublishUrl>
+    <PublishUrl>ftp://santiagots-001%40ftp.Smarterasp.net/cinderelladesa/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -31,13 +31,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://santiagots-001-site4.htempurl.com/</InstallUrl>
-    <ProductName>Sistema Cinderella</ProductName>
+    <InstallUrl>http://santiagots-001-site2.htempurl.com/</InstallUrl>
+    <ProductName>Sistema Cinderella Desarrollo</ProductName>
     <PublisherName>Morpheus</PublisherName>
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>68</ApplicationRevision>
+    <ApplicationRevision>78</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -51,7 +51,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -62,7 +62,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -98,7 +98,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -108,7 +108,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -293,6 +293,12 @@
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </Compile>
     <Compile Include="frmControladorFiscal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDatosClienteMinorista.Designer.vb">
+      <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDatosClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDevoluciones.Designer.vb">
@@ -607,6 +613,12 @@
     <Compile Include="frmReporteEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmReporteNotaPedido.Designer.vb">
+      <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteNotaPedido.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmReportePrecios.Designer.vb">
       <DependentUpon>frmReportePrecios.vb</DependentUpon>
     </Compile>
@@ -874,6 +886,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\ReporteNotaPedidoMinorista.vb">
+      <DependentUpon>ReporteNotaPedidoMinorista.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reportes\ReporteNotaPedidoMayorista.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteNotaPedidoMayorista.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\ReportePrecios2.vb">
       <DependentUpon>ReportePrecios2.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -966,6 +990,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmControladorFiscal.resx">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDatosClienteMinorista.resx">
+      <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDevoluciones.resx">
       <DependentUpon>frmDevoluciones.vb</DependentUpon>
@@ -1126,6 +1153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmReporteEtiquetasMasivas.resx">
       <DependentUpon>frmReporteEtiquetasMasivas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReporteNotaPedido.resx">
+      <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReportePrecios.resx">
       <DependentUpon>frmReportePrecios.vb</DependentUpon>
@@ -1341,6 +1371,7 @@
     <Content Include="Imagenes\fondo_central.jpg" />
     <None Include="Imagenes\Import-Excel.png" />
     <Content Include="Imagenes\icono_buscar_48.png" />
+    <None Include="Imagenes\icono_imprimir.gif" />
     <Content Include="Imagenes\movimientos.png" />
     <None Include="Imagenes\nota_credito.png" />
     <None Include="Imagenes\not_pedido_32.png" />
@@ -1358,6 +1389,14 @@
       <LastGenOutput>CrystalReport2.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Reportes\ReporteNotaPedidoMinorista.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteNotaPedidoMinorista.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReporteNotaPedidoMayorista.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteNotaPedidoMayorista.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReportePrecios2.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReportePrecios2.vb</LastGenOutput>

@@ -13,15 +13,15 @@ Public Class NotaPedido
         Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
         Dim ClienteNegocio As Negocio.NegClientes = New Negocio.NegClientes()
 
-        Dim consumidorFinal As Entidades.ConsumidorFinal = New Entidades.ConsumidorFinal()
-        consumidorFinal.Apellido = EntConsumidorFinal.Apellido
-        consumidorFinal.Email = EntConsumidorFinal.Email
-        consumidorFinal.Nombre = EntConsumidorFinal.Nombre
-
         'Doy de alta el consumidor final y lo relaciono a la nota de pedido
-        If (EntConsumidorFinal IsNot Nothing) Then
-            Dim id_ConsumidorFinal As Integer = ClienteNegocio.AltaClienteConsumidorFinal(consumidorFinal)
+        Dim consumidorFinal As Entidades.ConsumidorFinal = New Entidades.ConsumidorFinal()
 
+        If (EntConsumidorFinal IsNot Nothing) Then
+            consumidorFinal.Apellido = EntConsumidorFinal.Apellido
+            consumidorFinal.Email = EntConsumidorFinal.Email
+            consumidorFinal.Nombre = EntConsumidorFinal.Nombre
+
+            Dim id_ConsumidorFinal As Integer = ClienteNegocio.AltaClienteConsumidorFinal(consumidorFinal)
             EntNotaPedido.Id_ConsumidorFinal = id_ConsumidorFinal
         End If
 

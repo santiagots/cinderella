@@ -25,9 +25,6 @@ Public Class frmNotaPedidoAdministracion
             dgvNotaPedidos.RowHeadersDefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             dgvNotaPedidos.ColumnHeadersDefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 
-            'Cargo los combos de banco
-            NotaPedidoBindingSource.DataSource = negNotaPedido.TraerNotas(My.Settings.Sucursal)
-
             cmbTipoVenta.SelectedIndex = 0
 
             'Cargo el Combo de vendedores
@@ -56,6 +53,12 @@ Public Class frmNotaPedidoAdministracion
                 cmbTiposPago.Refresh()
             End If
 
+            dtFechaAltaDesde.MaxDate = dtFechaAltaHasta.Value
+            dtFechaAltaHasta.MinDate = dtFechaAltaDesde.Value
+
+            'Cargo los combos de banco
+            BuscarNotasPedido()
+
             EvaluarPermisos()
 
         Catch ex As Exception
@@ -76,15 +79,45 @@ Public Class frmNotaPedidoAdministracion
 
             End If
         End If
+
+        If (dgvNotaPedidos.Columns(e.ColumnIndex).Name = "Estado" And NotaPedidoBindingSource.List.Count > e.RowIndex) Then
+            Dim notaPedido As NotaPedido = NotaPedidoBindingSource.List(e.RowIndex)
+            If (notaPedido.Vendida) Then
+                e.Value = "Cerrada"
+            Else
+                e.Value = "Abierta"
+            End If
+        End If
     End Sub
 
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click
+        BuscarNotasPedido()
+    End Sub
+
+    Private Sub BuscarNotasPedido()
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
         Try
             'recupero las notas de pedido de la base para la sucursal correspondinte
             Dim notaPedido As List(Of NotaPedido) = negNotaPedido.TraerNotas(My.Settings.Sucursal)
+
+            'filtro por estado abierto
+            Dim filtroAbiertas As List(Of NotaPedido) = New List(Of NotaPedido)
+            If ChkAbiertas.Checked Then
+                filtroAbiertas = notaPedido.Where(Function(x) x.Vendida = False).ToList()
+            End If
+
+            'filtro por estado cerrado
+            Dim filtroCerradas As List(Of NotaPedido) = New List(Of NotaPedido)
+            If ChkCerradas.Checked Then
+                filtroCerradas = notaPedido.Where(Function(x) x.Vendida = True).ToList()
+            End If
+
+            notaPedido.Clear()
+            notaPedido.AddRange(filtroAbiertas)
+            notaPedido.AddRange(filtroCerradas)
+
 
             'filtro por cliente mayorista
             Dim filtroCLienteMayorista As List(Of NotaPedido) = New List(Of NotaPedido)
@@ -101,10 +134,10 @@ Public Class frmNotaPedidoAdministracion
 
             If (filtroCLienteMayorista.Count > 0 Or filtroCLienteConsumidorFinal.Count > 0) Then
                 notaPedido.Clear()
+                notaPedido.AddRange(filtroCLienteMayorista)
+                notaPedido.AddRange(filtroCLienteConsumidorFinal)
             End If
 
-            notaPedido.AddRange(filtroCLienteMayorista)
-            notaPedido.AddRange(filtroCLienteConsumidorFinal)
 
             'filtro por tipo de venta
             If (cmbTipoVenta.SelectedItem.ToString <> "Seleccione un tipo de venta...") Then
@@ -121,6 +154,14 @@ Public Class frmNotaPedidoAdministracion
                 notaPedido = notaPedido.Where(Function(x) x.id_Empleado = cmbVendedor.SelectedValue).ToList()
             End If
 
+
+            If (ChkFiltroFecha.Checked) Then
+                'filtro por fecha desde
+                notaPedido = notaPedido.Where(Function(x) dtFechaAltaDesde.Value.Date <= x.Fecha.Date).ToList()
+                'filtro por fecha hasta
+                notaPedido = notaPedido.Where(Function(x) dtFechaAltaHasta.Value.Date >= x.Fecha.Date).ToList()
+            End If
+
             NotaPedidoBindingSource.DataSource = notaPedido
 
         Catch ex As Exception
@@ -135,13 +176,16 @@ Public Class frmNotaPedidoAdministracion
 
     Private Sub btn_Restablecer_Click(sender As Object, e As EventArgs) Handles btn_Restablecer.Click
 
-        'Cargo los combos de banco
-        NotaPedidoBindingSource.DataSource = negNotaPedido.TraerNotas(My.Settings.Sucursal)
-
+        ChkFiltroFecha.Checked = False
+        ChkAbiertas.Checked = True
+        ChkCerradas.Checked = False
         cmbTiposPago.SelectedIndex = 0
         cmbTipoVenta.SelectedIndex = 0
         cmbVendedor.SelectedIndex = 0
         txtNombreCliente.Clear()
+
+        'Cargo los combos de banco
+        BuscarNotasPedido()
 
     End Sub
 
@@ -189,6 +233,17 @@ Public Class frmNotaPedidoAdministracion
                     dgvNotaPedidos.Refresh()
                 End If
             End If
+        End If
+
+        If dgvNotaPedidos.Columns(e.ColumnIndex).Name.ToUpper() = "IMPRIMIR" Then 'Si se hace click en el boton "imprimir" de la fila.
+            'Cambio el cursor a "WAIT".
+            Me.Cursor = Cursors.WaitCursor
+            Dim frmReporteNotaPedido As frmReporteNotaPedido = New frmReporteNotaPedido()
+            frmReporteNotaPedido.MdiParent = Me.MdiParent
+            frmReporteNotaPedido.notaPedido = NotaPedidoBindingSource.List(e.RowIndex)
+            frmReporteNotaPedido.Show()
+            'Cambio el cursor a NORMAL.
+            Me.Cursor = Cursors.Arrow
         End If
     End Sub
 
@@ -253,5 +308,35 @@ Public Class frmNotaPedidoAdministracion
         Else
             dgvNotaPedidos.Columns("Eliminar").Visible = False
         End If
+    End Sub
+
+    Private Sub dgvNotaPedidos_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvNotaPedidos.DataBindingComplete
+        lbl_Msg.Visible = dgvNotaPedidos.Rows.Count = 0
+
+
+        Dim totalSinIva As Double = 0
+        Dim total As Double = 0
+
+        For Each row As DataGridViewRow In dgvNotaPedidos.Rows
+            total += CType(row.Cells("PrecioTotalDataGridViewTextBoxColumn").Value, Double)
+            totalSinIva += CType(row.Cells("PrecioTotalDataGridViewTextBoxColumn").Value, Double) / 1.21
+        Next
+
+        txtTotalSinIVA.Text = totalSinIva.ToString("C2")
+        txtTotal.Text = total.ToString("C2")
+        If (total > 0) Then
+            txtValorPromedio.Text = (total / dgvNotaPedidos.Rows.Count).ToString("C2")
+        Else
+            txtValorPromedio.Text = total.ToString("C2")
+        End If
+        txtCantidad.Text = dgvNotaPedidos.Rows.Count
+    End Sub
+
+    Private Sub dtFechaAltaHasta_ValueChanged(sender As Object, e As EventArgs) Handles dtFechaAltaHasta.ValueChanged
+        dtFechaAltaDesde.MaxDate = dtFechaAltaHasta.Value
+    End Sub
+
+    Private Sub dtFechaAltaDesde_ValueChanged(sender As Object, e As EventArgs) Handles dtFechaAltaDesde.ValueChanged
+        dtFechaAltaHasta.MinDate = dtFechaAltaDesde.Value
     End Sub
 End Class

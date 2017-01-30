@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Entidades
+
 Public Class NegVentas
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones

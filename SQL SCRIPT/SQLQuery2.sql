@@ -1,2 +1,2 @@
-ALTER TABLE NOTACREDITO
-ADD id_Factura integer
+[dbo].[SISFAM_SP_TRABAJADORES_LIQUIDAR] -liquidar y programa
+SP_CONDICION_BFN

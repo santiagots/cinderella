@@ -49,6 +49,72 @@ Public Class NegNotaPedido
         With cmd.Parameters
             .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
             .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
+            .AddWithValue("@id_Encargado", EntNotaPedido.id_Encargado)
+            .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
+            .AddWithValue("@id_TipoPago", EntNotaPedido.id_TipoPago)
+            .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
+            .AddWithValue("@id_ListaPrecio", EntNotaPedido.id_ListaPrecio)
+            .AddWithValue("@id_ConsumidorFinal", EntNotaPedido.Id_ConsumidorFinal)
+            .AddWithValue("@PrecioTotal", EntNotaPedido.PrecioTotal)
+            .AddWithValue("@Vendida", If(EntNotaPedido.Vendida, 1, 0))
+        End With
+
+        'Declaro el tipo de dato para el detalle de la venta
+        Dim param = cmd.Parameters.AddWithValue("@Detalle", dt)
+        param.SqlDbType = SqlDbType.Structured
+        param.TypeName = "dbo.VENTA_DETALLE_TYPE"
+
+        'Respuesta del stored.
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+        Return respuesta.Value
+    End Function
+
+    Public Function ActualizarNotaPedido(ByVal EntNotaPedido As Entidades.NotaPedido, EntDetalleNotaPedido As List(Of Entidades.NotaPedido_Detalle)) As Integer
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim msg As Integer
+        Dim dt As DataTable = New DataTable()
+        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
+        dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
+        dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
+        dt.Columns.Add("Precio", Type.GetType("System.Double"))
+
+        For Each item As Entidades.NotaPedido_Detalle In EntDetalleNotaPedido
+            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio)
+        Next
+
+        Try
+            cmd.Connection = ClsDatos.ConectarLocal()
+            msg = ActualizarNotaPedido(EntNotaPedido, cmd, dt)
+            ClsDatos.DesconectarLocal()
+
+            If HayInternet Then
+                cmd = New SqlCommand()
+                cmd.Connection = ClsDatos.ConectarRemoto()
+                msg = ActualizarNotaPedido(EntNotaPedido, cmd, dt)
+                ClsDatos.DesconectarLocal()
+            End If
+
+            Return msg
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Shared Function ActualizarNotaPedido(EntNotaPedido As NotaPedido, ByRef cmd As SqlCommand, dt As DataTable) As Integer
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_NotaPedido_Actualizar"
+        With cmd.Parameters
+            .AddWithValue("@id_NotaPedido", EntNotaPedido.id_NotaPedido)
+            .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
+            .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
+            .AddWithValue("@id_Encargado", EntNotaPedido.id_Encargado)
             .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
             .AddWithValue("@id_TipoPago", EntNotaPedido.id_TipoPago)
             .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
@@ -164,6 +230,7 @@ Public Class NegNotaPedido
         notaPedido.id_Cliente = If(row.Item("id_Cliente") Is DBNull.Value, 0, row.Item("id_Cliente"))
         notaPedido.Id_ConsumidorFinal = If(row.Item("Id_ConsumidorFinal") Is DBNull.Value, 0, row.Item("Id_ConsumidorFinal"))
         notaPedido.id_Empleado = If(row.Item("id_Empleado") Is DBNull.Value, 0, row.Item("id_Empleado"))
+        notaPedido.id_Encargado = If(row.Item("id_Encargado") Is DBNull.Value, 0, row.Item("id_Encargado"))
         notaPedido.id_NotaPedido = If(row.Item("id_NotaPedido") Is DBNull.Value, 0, row.Item("id_NotaPedido"))
         notaPedido.id_Sucursal = If(row.Item("id_Sucursal") Is DBNull.Value, 0, row.Item("id_Sucursal"))
         notaPedido.id_TipoPago = If(row.Item("id_TipoPago") Is DBNull.Value, 0, row.Item("id_TipoPago"))
