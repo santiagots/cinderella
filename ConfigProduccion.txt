@@ -9,18 +9,16 @@
     </sectionGroup>
   </configSections>
   <connectionStrings>
-    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=False"
-      providerName="System.Data.SqlClient" />
-    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60pKA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q=="
-      providerName="System.Data.SqlClient" />
+    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True" providerName="System.Data.SqlClient" />
+    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="0Tvkneh8HcrERuMerFzACRwWiZZg35fXKOi3SK1IWATfrSUVr4B1vhig2+uF9RoZjAu0GhQjaJPS83vNW7a6BIgtE9hqLOwzZbQceOJchkSCCcO9DO6GIiUAGeBwHMwztfqBhcEHUcpKfiqT6sAg+Q==" providerName="System.Data.SqlClient"/>
   </connectionStrings>
   <system.diagnostics>
     <sources>
-      <!-- En esta secci贸n se define la configuraci贸n del registro para My.Application.Log -->
+      <!-- En esta secci髇 se define la configuraci髇 del registro para My.Application.Log -->
       <source name="DefaultSource" switchName="DefaultSwitch">
         <listeners>
           <add name="FileLog" />
-          <!-- Quite los comentarios de la secci贸n posterior para escribir en el registro de eventos de la aplicaci贸n -->
+          <!-- Quite los comentarios de la secci髇 posterior para escribir en el registro de eventos de la aplicaci髇 -->
           <!--<add name="EventLog"/>-->
         </listeners>
       </source>
@@ -30,7 +28,7 @@
     </switches>
     <sharedListeners>
       <add name="FileLog" type="Microsoft.VisualBasic.Logging.FileLogTraceListener, Microsoft.VisualBasic, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" initializeData="FileLogWriter" />
-      <!-- Quite los comentarios de la secci贸n posterior y reemplace APPLICATION_NAME con el nombre de su aplicaci贸n para escribir en el registro de eventos de la aplicaci贸n -->
+      <!-- Quite los comentarios de la secci髇 posterior y reemplace APPLICATION_NAME con el nombre de su aplicaci髇 para escribir en el registro de eventos de la aplicaci髇 -->
       <!--<add name="EventLog" type="System.Diagnostics.EventLogTraceListener" initializeData="APPLICATION_NAME"/> -->
     </sharedListeners>
   </system.diagnostics>
@@ -54,7 +52,7 @@
   <userSettings>
     <SistemaCinderella.My.MySettings>
       <setting name="NombreListaPrecio" serializeAs="String">
-        <value>P煤blico Tigre</value>
+        <value>P鷅lico Tigre</value>
       </setting>
       <setting name="ListaPrecio" serializeAs="String">
         <value>1</value>

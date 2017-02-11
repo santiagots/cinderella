@@ -286,11 +286,11 @@ Public Class frmPlanillaPrecios
                 dt.Columns.Add("Precio4", Type.GetType("System.Double"))
                 dt.Columns("Precio4").DefaultValue = 0
 
-            ElseIf item2 = "Mayorista SF" Then
+            ElseIf item2 = "Mayorista" Then
                 dt.Columns.Add("Precio5", Type.GetType("System.Double"))
                 dt.Columns("Precio5").DefaultValue = 0
 
-            ElseIf item2 = "Mayorista CF" Then
+            ElseIf item2 = "Alternativa" Then
                 dt.Columns.Add("Precio6", Type.GetType("System.Double"))
                 dt.Columns("Precio6").DefaultValue = 0
             End If
@@ -362,9 +362,9 @@ Public Class frmPlanillaPrecios
                             dr(i) = EProductos.Precio3
                         ElseIf chk_Precios.CheckedItems(i - 3) = "Tarjeta Capital" Then
                             dr(i) = EProductos.Precio4
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista SF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista" Then
                             dr(i) = EProductos.Precio5
-                        ElseIf chk_Precios.CheckedItems(i - 3) = "Mayorista CF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 3) = "Alternativa" Then
                             dr(i) = EProductos.Precio6
                         End If
                     Next
@@ -385,9 +385,9 @@ Public Class frmPlanillaPrecios
                             dr(i) = EProductos.Precio3
                         ElseIf chk_Precios.CheckedItems(i - 2) = "Tarjeta Capital" Then
                             dr(i) = EProductos.Precio4
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista SF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista" Then
                             dr(i) = EProductos.Precio5
-                        ElseIf chk_Precios.CheckedItems(i - 2) = "Mayorista CF" Then
+                        ElseIf chk_Precios.CheckedItems(i - 2) = "Alternativa" Then
                             dr(i) = EProductos.Precio6
                         End If
                     Next
@@ -473,10 +473,10 @@ Public Class frmPlanillaPrecios
                         PdfPCell = New PdfPCell(New Phrase(New Chunk("Efect. Capital", fontHead)))
                     ElseIf item2 = "Tarjeta Capital" Then
                         PdfPCell = New PdfPCell(New Phrase(New Chunk("Tarj. Capital", fontHead)))
-                    ElseIf item2 = "Mayorista SF" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Mayorista SF", fontHead)))
-                    ElseIf item2 = "Mayorista CF" Then
-                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Mayorista CF", fontHead)))
+                    ElseIf item2 = "Mayorista" Then
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Mayorista", fontHead)))
+                    ElseIf item2 = "Alternativa" Then
+                        PdfPCell = New PdfPCell(New Phrase(New Chunk("Alternativa", fontHead)))
                     End If
                     PdfPCell.HorizontalAlignment = Element.ALIGN_CENTER
                     PdfTable.AddCell(PdfPCell)

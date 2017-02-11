@@ -355,11 +355,7 @@ Public Class frmVentas
         If cb_Tipo.SelectedItem = "Minorista" Then
             CaluclarPrecioDescuentoMinorista(subtotal)
         Else
-            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
-                CalcularPrecioDescuentoMayoristaSinFactura(subtotal)
-            Else
-                CalcularPrecioDescuentoMayoristaConFactura(subtotal)
-            End If
+            CalcularPrecioDescuentoMayorista(subtotal)
         End If
 
         If subtotal <= 0 Then
@@ -371,7 +367,7 @@ Public Class frmVentas
         End If
     End Sub
 
-    Private Sub CalcularPrecioDescuentoMayoristaConFactura(ByRef subtotal As Double)
+    Private Sub CalcularPrecioDescuentoMayorista(ByRef subtotal As Double)
         Dim descuento As Double = 0
         Dim ivaSubTotal As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMayorista.Text)
@@ -789,7 +785,7 @@ Public Class frmVentas
             If cb_Tipo.SelectedItem = "Minorista" Then
                 DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("MONTO", e.RowIndex).Value.ToString()
             Else
-                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString()
+                DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString() * DG_Productos("PRECIO", e.RowIndex).Value.ToString() * 1.21
             End If
             'Recalculo el Total y lo muestro en el label
             CalcularPreciosDescuento()
@@ -827,15 +823,9 @@ Public Class frmVentas
     End Sub
 
     Private Sub ActualizarColumnaIvaMonto(e As DataGridViewCellEventArgs, precio As Double)
-        If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
-            DG_Productos("IVA", e.RowIndex).Value = 0
-            DG_Productos("MONTO", e.RowIndex).Value = precio
-            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
-        Else
-            DG_Productos("IVA", e.RowIndex).Value = precio * 0.21
-            DG_Productos("MONTO", e.RowIndex).Value = precio * 1.21
-            DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
-        End If
+        DG_Productos("IVA", e.RowIndex).Value = precio * 0.21
+        DG_Productos("MONTO", e.RowIndex).Value = precio * 1.21
+        DG_Productos("SUBTOTAL", e.RowIndex).Value = DG_Productos("MONTO", e.RowIndex).Value * DG_Productos("CANTIDAD", e.RowIndex).Value
     End Sub
 
     'Si desea buscar un cliente mayorista se visualiza el formulario.
@@ -1676,59 +1666,30 @@ Public Class frmVentas
         If cb_Tipo.SelectedItem = "Minorista" Then
             ActualizarMontosProductosMinoristas(Precio, row)
         Else
-            If (Cb_ListaPrecio.SelectedValue = 5) Then 'MayoristaSinFactura
-                ActualizarMontosProductosMayoristasSinFactura(Precio, row)
-            Else
-                ActualizarMontosProductosMayoristasConFactura(Precio, row)
-            End If
+            ActualizarMontosProductosMayoristas(Precio, row)
         End If
     End Sub
 
-    Private Shared Function ActualizarMontosProductosMayoristasConFactura(Precio As Double, row As DataGridViewRow)
+    Private Shared Function ActualizarMontosProductosMayoristas(Precio As Double, row As DataGridViewRow)
         Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
         If esDevolucion Then
-            row.Cells("PRECIO").Value = (Precio * -1) / 1.21
-        Else
-            row.Cells("PRECIO").Value = Precio / 1.21
-        End If
-
-        If esDevolucion Then
-            row.Cells("IVA").Value = ((Precio * -1) / 1.21) * 0.21
-        Else
-            row.Cells("IVA").Value = (Precio / 1.21) * 0.21
-        End If
-
-        If esDevolucion Then
-            row.Cells("MONTO").Value = (Precio * -1)
-        Else
-            row.Cells("MONTO").Value = Precio
-        End If
-
-        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
-        Return row
-    End Function
-
-    Private Shared Function ActualizarMontosProductosMayoristasSinFactura(Precio As Double, row As DataGridViewRow)
-        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
-        If esDevolucion Then
-            row.Cells("PRECIO").Value = (Precio * -1)
+            row.Cells("PRECIO").Value = -Precio
         Else
             row.Cells("PRECIO").Value = Precio
         End If
-
         If esDevolucion Then
-            row.Cells("IVA").Value = 0
+            row.Cells("IVA").Value = (Precio * -1) * 0.21
         Else
-            row.Cells("IVA").Value = 0
+            row.Cells("IVA").Value = Precio * 0.21
         End If
 
         If esDevolucion Then
-            row.Cells("MONTO").Value = (Precio * -1)
+            row.Cells("MONTO").Value = (Precio * -1.21)
         Else
-            row.Cells("MONTO").Value = Precio
+            row.Cells("MONTO").Value = (Precio * 1.21)
         End If
 
-        row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
+        row.Cells("SUBTOTAL").Value = row.Cells("MONTO").Value * CDbl(row.Cells("CANTIDAD").Value)
         Return row
     End Function
 

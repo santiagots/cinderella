@@ -306,7 +306,7 @@ Partial Class frmProductos
         Me.btn_Buscar.TabIndex = 5
         Me.btn_Buscar.Text = "Buscar"
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.btn_Buscar, "Haz click aquí para buscar productos con los criterios de busqueda seleccionados." & _
+        Me.ToolProd.SetToolTip(Me.btn_Buscar, "Haz click aquí para buscar productos con los criterios de busqueda seleccionados." &
         "")
         Me.btn_Buscar.UseVisualStyleBackColor = True
         '
@@ -585,9 +585,9 @@ Partial Class frmProductos
         Me.lbl_Precio6.AutoSize = True
         Me.lbl_Precio6.Location = New System.Drawing.Point(6, 197)
         Me.lbl_Precio6.Name = "lbl_Precio6"
-        Me.lbl_Precio6.Size = New System.Drawing.Size(78, 15)
+        Me.lbl_Precio6.Size = New System.Drawing.Size(63, 15)
         Me.lbl_Precio6.TabIndex = 53
-        Me.lbl_Precio6.Text = "Mayorista CF"
+        Me.lbl_Precio6.Text = "Alternativa"
         '
         'txt_Precio6
         '
@@ -601,9 +601,9 @@ Partial Class frmProductos
         Me.lbl_Precio5.AutoSize = True
         Me.lbl_Precio5.Location = New System.Drawing.Point(6, 166)
         Me.lbl_Precio5.Name = "lbl_Precio5"
-        Me.lbl_Precio5.Size = New System.Drawing.Size(78, 15)
+        Me.lbl_Precio5.Size = New System.Drawing.Size(60, 15)
         Me.lbl_Precio5.TabIndex = 50
-        Me.lbl_Precio5.Text = "Mayorista SF"
+        Me.lbl_Precio5.Text = "Mayorista"
         '
         'txt_Precio4
         '
@@ -1188,9 +1188,9 @@ Partial Class frmProductos
         Me.Label22.AutoSize = True
         Me.Label22.Location = New System.Drawing.Point(6, 194)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(78, 15)
+        Me.Label22.Size = New System.Drawing.Size(63, 15)
         Me.Label22.TabIndex = 53
-        Me.Label22.Text = "Mayorista CF"
+        Me.Label22.Text = "Alternativa"
         '
         'txt_Precio6_mod
         '
@@ -1204,9 +1204,9 @@ Partial Class frmProductos
         Me.Label17.AutoSize = True
         Me.Label17.Location = New System.Drawing.Point(6, 166)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(78, 15)
+        Me.Label17.Size = New System.Drawing.Size(60, 15)
         Me.Label17.TabIndex = 50
-        Me.Label17.Text = "Mayorista SF"
+        Me.Label17.Text = "Mayorista"
         '
         'txt_Precio4_mod
         '

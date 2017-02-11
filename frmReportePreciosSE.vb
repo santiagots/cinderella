@@ -79,9 +79,9 @@ Public Class frmReportePreciosSE
                                 dr(5) = EProductos.Precio3
                             ElseIf item2 = "Tarjeta Capital" Then
                                 dr(6) = EProductos.Precio4
-                            ElseIf item2 = "Mayorista SF" Then
+                            ElseIf item2 = "Mayorista" Then
                                 dr(7) = EProductos.Precio5
-                            ElseIf item2 = "Mayorista CF" Then
+                            ElseIf item2 = "Alternativa" Then
                                 dr(8) = EProductos.Precio6
                             End If
                         Next

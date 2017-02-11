@@ -178,13 +178,13 @@ Partial Class frmProductosMasiva
         '
         'Precio5
         '
-        Me.Precio5.HeaderText = "Mayorista SF"
+        Me.Precio5.HeaderText = "Mayorista"
         Me.Precio5.Name = "Precio5"
         Me.Precio5.Width = 60
         '
         'Precio6
         '
-        Me.Precio6.HeaderText = "Mayorista CF"
+        Me.Precio6.HeaderText = "Alternativa"
         Me.Precio6.Name = "Precio6"
         Me.Precio6.Width = 60
         '

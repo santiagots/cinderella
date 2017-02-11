@@ -140,7 +140,7 @@ Partial Class frmPlanillaPrecios
         Me.Btn_Agregar.TabIndex = 22
         Me.Btn_Agregar.Text = "Agregar"
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.ToolPrecios.SetToolTip(Me.Btn_Agregar, "Haz click aquí para agregar los productos tildados a la lista final de productos " & _
+        Me.ToolPrecios.SetToolTip(Me.Btn_Agregar, "Haz click aquí para agregar los productos tildados a la lista final de productos " &
         "seleccionados.")
         Me.Btn_Agregar.UseVisualStyleBackColor = True
         '
@@ -248,7 +248,7 @@ Partial Class frmPlanillaPrecios
         Me.Button1.Text = "Filtrar"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.ToolPrecios.SetToolTip(Me.Button1, "Haz click aquí para filtrar los productos del sistema teniendo en cuenta los sigu" & _
+        Me.ToolPrecios.SetToolTip(Me.Button1, "Haz click aquí para filtrar los productos del sistema teniendo en cuenta los sigu" &
         "ientes parámetros: Proveedores, Categorías y Subcategorías seleccionadas.")
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -269,8 +269,8 @@ Partial Class frmPlanillaPrecios
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(596, 32)
         Me.Label4.TabIndex = 9
-        Me.Label4.Text = "Seleccione los filtros que desee para generar la lista de precios que mejor se aj" & _
-    "uste a sus requerimientos. Recuerde que dicho proceso puede tardar algunos minut" & _
+        Me.Label4.Text = "Seleccione los filtros que desee para generar la lista de precios que mejor se aj" &
+    "uste a sus requerimientos. Recuerde que dicho proceso puede tardar algunos minut" &
     "os."
         '
         'btn_Restablecer
@@ -302,7 +302,7 @@ Partial Class frmPlanillaPrecios
         Me.btn_Buscar.TabIndex = 5
         Me.btn_Buscar.Text = "Ejecutar"
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolPrecios.SetToolTip(Me.btn_Buscar, "Haz click aquí para confeccionar el listado de precios según los criterios selecc" & _
+        Me.ToolPrecios.SetToolTip(Me.btn_Buscar, "Haz click aquí para confeccionar el listado de precios según los criterios selecc" &
         "ionados.")
         Me.btn_Buscar.UseVisualStyleBackColor = True
         '
@@ -363,7 +363,7 @@ Partial Class frmPlanillaPrecios
         Me.chk_Precios.CheckOnClick = True
         Me.chk_Precios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.chk_Precios.FormattingEnabled = True
-        Me.chk_Precios.Items.AddRange(New Object() {"Costo", "Efectivo Tigre", "Tarjeta Tigre", "Efectivo Capital", "Tarjeta Capital", "Mayorista SF", "Mayorista CF"})
+        Me.chk_Precios.Items.AddRange(New Object() {"Costo", "Efectivo Tigre", "Tarjeta Tigre", "Efectivo Capital", "Tarjeta Capital", "Mayorista", "Alternativa"})
         Me.chk_Precios.Location = New System.Drawing.Point(9, 428)
         Me.chk_Precios.Name = "chk_Precios"
         Me.chk_Precios.Size = New System.Drawing.Size(228, 116)

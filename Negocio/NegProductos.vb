@@ -1492,7 +1492,7 @@ Public Class NegProductos
             datos.Columns(8).ColumnName <> "Costo" Or datos.Columns(9).ColumnName <> "CodigoBarra" Or
             datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Tarjeta_Tigre" Or
             datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Tarjeta_Capital" Or
-            datos.Columns(14).ColumnName <> "Mayor_SF" Or datos.Columns(15).ColumnName <> "Mayor_CF" Or
+            datos.Columns(14).ColumnName <> "Mayorista" Or datos.Columns(15).ColumnName <> "Alternativa" Or
             datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Then
             Return False
         End If

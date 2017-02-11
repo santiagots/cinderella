@@ -862,7 +862,6 @@ Partial Class frmVentas
         Me.Cb_ListaPrecio.Location = New System.Drawing.Point(119, 22)
         Me.Cb_ListaPrecio.Name = "Cb_ListaPrecio"
         Me.Cb_ListaPrecio.Size = New System.Drawing.Size(221, 23)
-        Me.Cb_ListaPrecio.Sorted = True
         Me.Cb_ListaPrecio.TabIndex = 11
         '
         'Label14

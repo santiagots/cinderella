@@ -171,16 +171,16 @@ Partial Class frmProductosPrecios
         'Precio5
         '
         Me.Precio5.FillWeight = 71.22996!
-        Me.Precio5.HeaderText = "Mayorista SF"
+        Me.Precio5.HeaderText = "Mayorista"
         Me.Precio5.Name = "Precio5"
-        Me.Precio5.ToolTipText = "Mayorista SF"
+        Me.Precio5.ToolTipText = "Mayorista"
         '
         'Precio6
         '
         Me.Precio6.FillWeight = 71.22996!
-        Me.Precio6.HeaderText = "Mayorista CF"
+        Me.Precio6.HeaderText = "Alternativa"
         Me.Precio6.Name = "Precio6"
-        Me.Precio6.ToolTipText = "Mayorista CF"
+        Me.Precio6.ToolTipText = "Alternativa"
         '
         'Btn_Finalizar
         '
