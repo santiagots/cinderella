@@ -1,2 +1,0 @@
-[dbo].[SISFAM_SP_TRABAJADORES_LIQUIDAR] -liquidar y programa
-SP_CONDICION_BFN

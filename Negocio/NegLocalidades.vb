@@ -11,4 +11,13 @@
         End If
     End Function
 
+    'Lista todas las localidades.
+    Function ListadoLocalidades() As DataSet
+        If Funciones.HayInternet Then
+            Return clsDatos.ConsultarBaseRemoto("execute sp_Localidades_Listado_Completo")
+        Else
+            Return clsDatos.ConsultarBaseLocal("execute sp_Localidades_Listado_Completo")
+        End If
+    End Function
+
 End Class

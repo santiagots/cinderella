@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>81</ApplicationRevision>
+    <ApplicationRevision>84</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -161,12 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="ControlDeUsuario\ucDetalleSenia.Designer.vb">
-      <DependentUpon>ucDetalleSenia.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ControlDeUsuario\ucDetalleSenia.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="db\DsDatos.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -313,10 +307,10 @@
     <Compile Include="frmCargadorAltaProductos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmClientes.Designer.vb">
-      <DependentUpon>frmClientes.vb</DependentUpon>
+    <Compile Include="frmClienteMayorista.Designer.vb">
+      <DependentUpon>frmClienteMayorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmClientes.vb">
+    <Compile Include="frmClienteMayorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="dialogoConexion.Designer.vb">
@@ -928,9 +922,6 @@
     <Compile Include="VariablesGlobales.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ControlDeUsuario\ucDetalleSenia.resx">
-      <DependentUpon>ucDetalleSenia.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DialogIngresos.resx">
       <DependentUpon>DialogIngresos.vb</DependentUpon>
     </EmbeddedResource>
@@ -1000,8 +991,8 @@
     <EmbeddedResource Include="frmCargadorAltaProductos.resx">
       <DependentUpon>frmCargadorAltaProductos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmClientes.resx">
-      <DependentUpon>frmClientes.vb</DependentUpon>
+    <EmbeddedResource Include="frmClienteMayorista.resx">
+      <DependentUpon>frmClienteMayorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dialogoConexion.resx">
       <DependentUpon>dialogoConexion.vb</DependentUpon>
@@ -1433,7 +1424,10 @@
     </None>
     <None Include="My Project\DataSources\Entidades.Banco.datasource" />
     <None Include="My Project\DataSources\Entidades.Cheque.datasource" />
+    <None Include="My Project\DataSources\Entidades.ClienteMayorista.datasource" />
     <None Include="My Project\DataSources\Entidades.ClienteMinorista.datasource" />
+    <None Include="My Project\DataSources\Entidades.ClientesMayorista.datasource" />
+    <None Include="My Project\DataSources\Entidades.Direccion.datasource" />
     <None Include="My Project\DataSources\Entidades.Facturacion.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaCredito.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaPedido.datasource" />

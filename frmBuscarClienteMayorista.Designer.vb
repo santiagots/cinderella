@@ -25,23 +25,21 @@ Partial Class frmBuscarClienteMayorista
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmBuscarClienteMayorista))
         Me.GB_Clientes = New System.Windows.Forms.GroupBox()
+        Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.Btn_Limpiar = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lbl_informacion = New System.Windows.Forms.Label()
         Me.DG_Clientes = New System.Windows.Forms.DataGridView()
-        Me.id_Cliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RazonSocial = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Mail = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RazonSocialDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CuitDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClienteMayoristaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btn_Buscar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txt_Buscar = New System.Windows.Forms.TextBox()
-        Me.ErroresClie = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolCliente = New System.Windows.Forms.ToolTip(Me.components)
-        Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.GB_Clientes.SuspendLayout()
         CType(Me.DG_Clientes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ErroresClie, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ClienteMayoristaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GB_Clientes
@@ -62,6 +60,17 @@ Partial Class frmBuscarClienteMayorista
         Me.GB_Clientes.TabStop = False
         Me.GB_Clientes.Text = "Buscar Cliente"
         '
+        'lbl_Msg
+        '
+        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Msg.Location = New System.Drawing.Point(99, 207)
+        Me.lbl_Msg.Name = "lbl_Msg"
+        Me.lbl_Msg.Size = New System.Drawing.Size(374, 29)
+        Me.lbl_Msg.TabIndex = 13
+        Me.lbl_Msg.Text = "No se han encontrado clientes."
+        '
         'Btn_Limpiar
         '
         Me.Btn_Limpiar.Cursor = System.Windows.Forms.Cursors.Hand
@@ -74,8 +83,8 @@ Partial Class frmBuscarClienteMayorista
         Me.Btn_Limpiar.TabIndex = 10
         Me.Btn_Limpiar.Text = "Limpiar"
         Me.Btn_Limpiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolCliente.SetToolTip(Me.Btn_Limpiar, "Limpia la grilla y los criterios de busqueda. Se vuelven a visualizar todos los c" & _
-                "lientes.")
+        Me.ToolCliente.SetToolTip(Me.Btn_Limpiar, "Limpia la grilla y los criterios de busqueda. Se vuelven a visualizar todos los c" &
+        "lientes.")
         Me.Btn_Limpiar.UseVisualStyleBackColor = True
         '
         'Label2
@@ -94,8 +103,8 @@ Partial Class frmBuscarClienteMayorista
         Me.lbl_informacion.Name = "lbl_informacion"
         Me.lbl_informacion.Size = New System.Drawing.Size(528, 15)
         Me.lbl_informacion.TabIndex = 6
-        Me.lbl_informacion.Text = "Por favor, complete el siguiente campo con la razon social del cliente y luego pr" & _
-            "esione ""Buscar""."
+        Me.lbl_informacion.Text = "Por favor, complete el siguiente campo con la razon social del cliente y luego pr" &
+    "esione ""Buscar""."
         '
         'DG_Clientes
         '
@@ -103,10 +112,12 @@ Partial Class frmBuscarClienteMayorista
         Me.DG_Clientes.AllowUserToDeleteRows = False
         Me.DG_Clientes.AllowUserToResizeColumns = False
         Me.DG_Clientes.AllowUserToResizeRows = False
+        Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Cliente, Me.RazonSocial, Me.Mail, Me.Telefono})
+        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.DG_Clientes.DataSource = Me.ClienteMayoristaBindingSource
         Me.DG_Clientes.Location = New System.Drawing.Point(9, 111)
         Me.DG_Clientes.MultiSelect = False
         Me.DG_Clientes.Name = "DG_Clientes"
@@ -115,37 +126,23 @@ Partial Class frmBuscarClienteMayorista
         Me.DG_Clientes.Size = New System.Drawing.Size(555, 221)
         Me.DG_Clientes.TabIndex = 3
         '
-        'id_Cliente
+        'RazonSocialDataGridViewTextBoxColumn
         '
-        Me.id_Cliente.DataPropertyName = "id_Cliente"
-        Me.id_Cliente.FillWeight = 12.22914!
-        Me.id_Cliente.HeaderText = "ID"
-        Me.id_Cliente.Name = "id_Cliente"
-        Me.id_Cliente.ReadOnly = True
+        Me.RazonSocialDataGridViewTextBoxColumn.DataPropertyName = "RazonSocial"
+        Me.RazonSocialDataGridViewTextBoxColumn.HeaderText = "Razon Social"
+        Me.RazonSocialDataGridViewTextBoxColumn.Name = "RazonSocialDataGridViewTextBoxColumn"
+        Me.RazonSocialDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'RazonSocial
+        'CuitDataGridViewTextBoxColumn
         '
-        Me.RazonSocial.DataPropertyName = "RazonSocial"
-        Me.RazonSocial.FillWeight = 151.6849!
-        Me.RazonSocial.HeaderText = "Razon Social"
-        Me.RazonSocial.Name = "RazonSocial"
-        Me.RazonSocial.ReadOnly = True
+        Me.CuitDataGridViewTextBoxColumn.DataPropertyName = "Cuit"
+        Me.CuitDataGridViewTextBoxColumn.HeaderText = "Cuit"
+        Me.CuitDataGridViewTextBoxColumn.Name = "CuitDataGridViewTextBoxColumn"
+        Me.CuitDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'Mail
+        'ClienteMayoristaBindingSource
         '
-        Me.Mail.DataPropertyName = "Mail"
-        Me.Mail.FillWeight = 121.8274!
-        Me.Mail.HeaderText = "Mail"
-        Me.Mail.Name = "Mail"
-        Me.Mail.ReadOnly = True
-        '
-        'Telefono
-        '
-        Me.Telefono.DataPropertyName = "Telefono"
-        Me.Telefono.FillWeight = 114.2586!
-        Me.Telefono.HeaderText = "Telefono"
-        Me.Telefono.Name = "Telefono"
-        Me.Telefono.ReadOnly = True
+        Me.ClienteMayoristaBindingSource.DataSource = GetType(Entidades.ClienteMayorista)
         '
         'btn_Buscar
         '
@@ -178,27 +175,11 @@ Partial Class frmBuscarClienteMayorista
         Me.txt_Buscar.TabIndex = 1
         Me.ToolCliente.SetToolTip(Me.txt_Buscar, "Usted puede realizar una busqueda por palabra completa  o parte de ella.")
         '
-        'ErroresClie
-        '
-        Me.ErroresClie.BlinkRate = 200
-        Me.ErroresClie.ContainerControl = Me
-        '
         'ToolCliente
         '
         Me.ToolCliente.IsBalloon = True
         Me.ToolCliente.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCliente.ToolTipTitle = "Ayuda"
-        '
-        'lbl_Msg
-        '
-        Me.lbl_Msg.AutoSize = True
-        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(98, 209)
-        Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(374, 29)
-        Me.lbl_Msg.TabIndex = 13
-        Me.lbl_Msg.Text = "No se han encontrado clientes."
         '
         'frmBuscarClienteMayorista
         '
@@ -214,7 +195,7 @@ Partial Class frmBuscarClienteMayorista
         Me.GB_Clientes.ResumeLayout(False)
         Me.GB_Clientes.PerformLayout()
         CType(Me.DG_Clientes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ErroresClie, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ClienteMayoristaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -223,14 +204,12 @@ Partial Class frmBuscarClienteMayorista
     Friend WithEvents btn_Buscar As System.Windows.Forms.Button
     Friend WithEvents txt_Buscar As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ErroresClie As System.Windows.Forms.ErrorProvider
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents lbl_informacion As System.Windows.Forms.Label
     Friend WithEvents ToolCliente As System.Windows.Forms.ToolTip
-    Friend WithEvents id_Cliente As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents RazonSocial As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Mail As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Telefono As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Btn_Limpiar As System.Windows.Forms.Button
     Friend WithEvents lbl_Msg As System.Windows.Forms.Label
+    Friend WithEvents ClienteMayoristaBindingSource As BindingSource
+    Friend WithEvents RazonSocialDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CuitDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
 End Class

@@ -291,7 +291,7 @@ Public Class frmVentasAdministracion
     End Sub
 
     Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double, VentaSeniada As Boolean)
-        If TipoCliente() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = TipoCliente.Minorista Then
             CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, Senia)
             If (Not VentaSeniada) Then
                 Dim posiscion1 As Point = lblSeniaMinorista.Location
@@ -348,7 +348,7 @@ Public Class frmVentasAdministracion
     Private Sub AgregarProducto(ventaDetalle As Object)
         Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
 
-        If TipoCliente() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = TipoCliente.Minorista Then
             AgregarProducto(ventaDetalle, 0, 0, precio)
         Else
             AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
@@ -813,11 +813,11 @@ Public Class frmVentasAdministracion
         End If
     End Sub
 
-    Private Function TipoCliente() As Clientes.Tipo
+    Private Function TipoCliente() As TipoCliente
         If (lblVenta.Text = "Minorista") Then
-            Return Clientes.Tipo.Minorista
+            Return TipoCliente.Minorista
         Else
-            Return Clientes.Tipo.Mayorista
+            Return TipoCliente.Mayorista
         End If
     End Function
 

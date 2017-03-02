@@ -77,8 +77,10 @@
     <Compile Include="CajaInicial.vb" />
     <Compile Include="Cheque.vb" />
     <Compile Include="ClienteMinorista.vb" />
+    <Compile Include="Direccion.vb" />
+    <Compile Include="Enum\TipoCliente.vb" />
     <Compile Include="NotaPedido_Detalle.vb" />
-    <Compile Include="Clientes.vb" />
+    <Compile Include="ClienteMayorista.vb" />
     <Compile Include="Colores.vb" />
     <Compile Include="Comisiones.vb" />
     <Compile Include="ConsumidorFinal.vb" />
@@ -120,7 +122,7 @@
     <Compile Include="Stock.vb" />
     <Compile Include="Stock_Bitacora.vb" />
     <Compile Include="Sucursales.vb" />
-    <Compile Include="TipoPatente.vb" />
+    <Compile Include="Enum\TipoPatente.vb" />
     <Compile Include="TipoPrecios.vb" />
     <Compile Include="Usuario.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

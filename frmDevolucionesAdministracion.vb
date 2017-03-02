@@ -261,7 +261,7 @@ Public Class frmDevolucionesAdministracion
     End Sub
 
     Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
-        If TipoDevolucion() = Clientes.Tipo.Minorista Then
+        If TipoDevolucion() = TipoCliente.Minorista Then
             CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle)
             PanelTotalMayorista.Visible = False
             PanelTotalMinorista.Visible = True
@@ -276,7 +276,7 @@ Public Class frmDevolucionesAdministracion
     Private Sub AgregarProducto(ventaDetalle As Object)
         Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
 
-        If TipoDevolucion() = Clientes.Tipo.Minorista Then
+        If TipoDevolucion() = TipoCliente.Minorista Then
             AgregarProducto(ventaDetalle, 0, 0, precio)
         Else
             AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
@@ -472,11 +472,11 @@ Public Class frmDevolucionesAdministracion
         End If
     End Sub
 
-    Private Function TipoDevolucion() As Clientes.Tipo
+    Private Function TipoDevolucion() As TipoCliente
         If (lblDevolucion.Text = "Minorista") Then
-            Return Clientes.Tipo.Minorista
+            Return TipoCliente.Minorista
         Else
-            Return Clientes.Tipo.Mayorista
+            Return TipoCliente.Mayorista
         End If
     End Function
 End Class

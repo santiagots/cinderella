@@ -6,7 +6,8 @@ Public Class frmSeniaAdministracion
     Private NegStock As New Negocio.NegStock
     Private NegSenia As New Negocio.NegSenia
     Private NegClienteMinorista As New Negocio.NegClienteMinorista
-    Private NegClienteMayorista As New Negocio.NegClientes
+    Private NegClienteMayorista As New Negocio.NegClienteMayorista
+    Private negDireccion As New Negocio.NegDireccion
     Private NegVentas As New Negocio.NegVentas
     Private Sub frmSeniaAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Cursor = Cursors.WaitCursor
@@ -154,9 +155,10 @@ Public Class frmSeniaAdministracion
         txtObservaciones.Text = SeniaSeleccionada.Observaciones
         lblFechaSeña.Text = SeniaSeleccionada.FechaAlta
         Try
-            If (TipoCliente() = Clientes.Tipo.Mayorista) Then
+            If (TipoCliente() = TipoCliente.Mayorista) Then
 
-                Dim ClienteMayorista As Entidades.Clientes = NegClienteMayorista.TraerCliente(SeniaSeleccionada.IdClienteMayorista)
+                Dim ClienteMayorista As Entidades.ClienteMayorista = NegClienteMayorista.TraerCliente(SeniaSeleccionada.IdClienteMayorista)
+                Dim direccion As Direccion = negDireccion.Consulta(ClienteMayorista.IdDireccionFacturacion)
 
                 Btn_BuscarConsumidorFinal.Visible = False
                 txtApellido.Visible = False
@@ -165,11 +167,11 @@ Public Class frmSeniaAdministracion
                 txtNombre.Enabled = False
                 txtNombre.Text = ClienteMayorista.RazonSocial
                 txtMail.Enabled = False
-                txtMail.Text = ClienteMayorista.Mail
+                txtMail.Text = direccion.Email
                 txtDireccion.Enabled = False
-                txtDireccion.Text = ClienteMayorista.Direccion
+                txtDireccion.Text = direccion.Direccion
                 txtTelefono.Enabled = False
-                txtTelefono.Text = ClienteMayorista.Telefono
+                txtTelefono.Text = direccion.Telefono
                 rblEnvioPromocionesNo.Enabled = False
                 rblEnvioPromocionesSi.Enabled = False
             Else
@@ -258,7 +260,7 @@ Public Class frmSeniaAdministracion
     Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double)
         Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
 
-        If TipoCliente() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = TipoCliente.Minorista Then
             CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, SeniaSeleccionada.MontoSenia)
             PanelTotalMayorista.Visible = False
             PanelTotalMinorista.Visible = True
@@ -290,7 +292,7 @@ Public Class frmSeniaAdministracion
     Private Sub AgregarProducto(ventaDetalle As Object)
         Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
 
-        If TipoCliente() = Clientes.Tipo.Minorista Then
+        If TipoCliente() = TipoCliente.Minorista Then
             AgregarProducto(ventaDetalle, 0, 0, precio)
         Else
             AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
@@ -348,13 +350,13 @@ Public Class frmSeniaAdministracion
     End Sub
 
 
-    Private Function TipoCliente() As Clientes.Tipo
+    Private Function TipoCliente() As TipoCliente
         Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
 
         If (SeniaSeleccionada.IdClienteMinorista > 0) Then
-            Return Clientes.Tipo.Minorista
+            Return TipoCliente.Minorista
         Else
-            Return Clientes.Tipo.Mayorista
+            Return TipoCliente.Mayorista
         End If
     End Function
 

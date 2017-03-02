@@ -1,0 +1,63 @@
+USE [CINDERELLA]
+GO
+
+/****** Object:  Table [dbo].[CLIENTEMAYORISTA]    Script Date: 12/02/2017 03:57:54 p.m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[CLIENTEMAYORISTA](
+	[id_Cliente] [int] IDENTITY(1,1) NOT NULL,
+	[RazonSocial] [varchar](255) NOT NULL,
+	[Nombre] [varchar](255) NOT NULL,
+	[Cuit] [varchar](255) NOT NULL,
+	[id_CondicionIva] [int] NOT NULL,
+	[Id_Corredor] [int] NULL,
+	[Comision] [int] NOT NULL,
+	[Transporte] [varchar](255) NULL,
+	[Bonificacion] [int] NOT NULL,
+	[Lista] [int] NOT NULL,
+	[CondicionPago] [text] NULL,
+	[id_Empresa] [int] NULL,
+	[id_ListaPrecio] [int] NOT NULL,
+	[Observaciones] [text] NULL,
+	[id_DireccionFacturacion] [int] NULL,
+	[id_DireccionEntrega] [int] NULL,
+	[Habilitado] [smallint] NOT NULL,
+ CONSTRAINT [PK_CLIENTES] PRIMARY KEY CLUSTERED 
+(
+	[id_Cliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[CLIENTEMAYORISTA]  WITH NOCHECK ADD  CONSTRAINT [FK_CLIENTES_CONDICIONES_IVA] FOREIGN KEY([id_CondicionIva])
+REFERENCES [dbo].[CONDICIONES_IVA] ([id_CondicionIva])
+GO
+
+ALTER TABLE [dbo].[CLIENTEMAYORISTA] CHECK CONSTRAINT [FK_CLIENTES_CONDICIONES_IVA]
+GO
+
+ALTER TABLE [dbo].[CLIENTEMAYORISTA]  WITH CHECK ADD  CONSTRAINT [FK_CLIENTESMAYORISTA_Direccion] FOREIGN KEY([id_DireccionFacturacion])
+REFERENCES [dbo].[DIRECCION] ([id_Direccion])
+GO
+
+ALTER TABLE [dbo].[CLIENTEMAYORISTA] CHECK CONSTRAINT [FK_CLIENTESMAYORISTA_Direccion]
+GO
+
+ALTER TABLE [dbo].[CLIENTEMAYORISTA]  WITH CHECK ADD  CONSTRAINT [FK_CLIENTESMAYORISTA_Direccion1] FOREIGN KEY([id_DireccionEntrega])
+REFERENCES [dbo].[DIRECCION] ([id_Direccion])
+GO
+
+ALTER TABLE [dbo].[CLIENTEMAYORISTA] CHECK CONSTRAINT [FK_CLIENTESMAYORISTA_Direccion1]
+GO
+

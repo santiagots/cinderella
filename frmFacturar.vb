@@ -1,5 +1,6 @@
 ﻿Imports System.Linq
-Imports Entidades.Clientes
+Imports Entidades
+Imports Negocio
 
 Public Class frmFacturar
     Dim NegCondicionesIva As New Negocio.NegCondicionesIva
@@ -8,7 +9,8 @@ Public Class frmFacturar
     Dim NegNotaCredito As New Negocio.NegNotaCredito
     Dim NegDevolucion As New Negocio.NegDevolucion
     Dim NegErrores As New Negocio.NegManejadorErrores
-    Dim NegClientes As New Negocio.NegClientes
+    Dim NegCliente As New Negocio.NegClienteMayorista
+    Dim NegDireccion As New Negocio.NegDireccion
     Dim NegLocalidades As New Negocio.NegLocalidades
     Dim Func As New Funciones
     Dim EntFacturacion As New Entidades.Facturacion
@@ -24,7 +26,7 @@ Public Class frmFacturar
     Public Descuento As Double
     Public MontoSinDescuento As Double
     Public id_Cliente As Integer
-    Public TipoCliente As Tipo
+    Public TipoCliente As TipoCliente
     Public EsSenia As Boolean = False
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
@@ -35,7 +37,7 @@ Public Class frmFacturar
 
     'Cambia de categoria de IVA.
     Private Sub Cb_IVA_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cb_IVA.SelectedIndexChanged
-        Select Case (Cb_IVA.SelectedItem)
+        Select Case (Cb_IVA.Text)
             Case "Consumidor Final"
                 DesHabilitarInformacionTicket("B")
                 Cb_TipoFacturacion.Enabled = True
@@ -79,21 +81,32 @@ Public Class frmFacturar
             End If
         Next
 
+        Dim NegCondicionesIva As NegCondicionesIva = New NegCondicionesIva()
+        Dim dsCondiciones As New DataSet
+        dsCondiciones = NegCondicionesIva.ListadoCondiciones()
+
+        'Si no se tiene habilitada la opcion de Excento sin IVA quito la opcion
+        If (My.Settings.HabilitarExentoSinIVA = "SI") Then
+            Dim dr As DataRow = dsCondiciones.Tables(0).NewRow
+            dr("Descripcion") = "Exento sin IVA"
+            dr("id_CondicionIva") = 99
+            dsCondiciones.Tables(0).Rows.Add(dr)
+        End If
+
+        Cb_IVA.DataSource = dsCondiciones.Tables(0)
+        Cb_IVA.DisplayMember = "Descripcion"
+        Cb_IVA.ValueMember = "id_CondicionIva"
+
         Cb_TipoFacturacion.SelectedIndex = 0
 
         btnFacturar.Enabled = Not NotaCredito
         btnNotaCredito.Enabled = NotaCredito
 
         'Si el cliente es mayorista elimino la condicion de iva consumidor final
-        If (TipoCliente = Tipo.Mayorista) Then
+        If (TipoCliente = TipoCliente.Mayorista) Then
             ConfigurarMayorista()
         Else
             ConfigurarMinorista()
-        End If
-
-        'Si no se tiene habilitada la opcion de Excento sin IVA quito la opcion
-        If (My.Settings.HabilitarExentoSinIVA = "NO") Then
-            Cb_IVA.Items.Remove("Exento sin IVA")
         End If
 
         If (NotaCredito) Then
@@ -113,14 +126,15 @@ Public Class frmFacturar
         'Si la facturacion es para un cliente 
         If (id_Cliente <> 0) Then
             'cargo de forma automatica la infomacion del cliente
-            Dim cliente As Entidades.Clientes = NegClientes.TraerCliente(id_Cliente)
+            Dim cliente As ClienteMayorista = NegCliente.TraerCliente(id_Cliente)
+            Dim direccion As Direccion = NegDireccion.Consulta(cliente.IdDireccionFacturacion)
             'Si el cliente es "responsable inscripto" selecciono dicha opcion en caso contrario selecciono "consumidor final"
-            Cb_IVA.SelectedIndex = If(cliente.id_CondicionIva = 3, 0, 1)
+            Cb_IVA.SelectedValue = cliente.IdCondicionIva
             txt_Nombre.Text = cliente.RazonSocial
-            txt_Direccion.Text = cliente.Direccion
-            Dim localidad As DataRow = NegLocalidades.ListadoLocalidades(cliente.id_Distrito).Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.ItemArray(0) = cliente.id_Localidad).FirstOrDefault()
+            txt_Direccion.Text = direccion.Direccion
+            Dim localidad As DataRow = NegLocalidades.ListadoLocalidades(direccion.IdDistito).Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.ItemArray(0) = direccion.IdLocalidad).FirstOrDefault()
             txt_Localidad.Text = If(localidad Is Nothing, "", localidad.ItemArray(2))
-            txt_Cuit.Text = cliente.Cuit.Replace("-", "")
+            txt_Cuit.Text = cliente.Cuit
         End If
 
         'verifico que el monto a facturar no supere los limites permitidos
@@ -130,7 +144,7 @@ Public Class frmFacturar
     Private Sub ConfigurarMinorista()
         PanelTotalMayorista.Visible = False
         PanelTotalMinorista.Visible = True
-        Cb_IVA.SelectedIndex = 1
+        Cb_IVA.SelectedIndex = 0
 
         If (EsSenia) Then
             Label1.Text = "Total Seña:"
@@ -184,7 +198,7 @@ Public Class frmFacturar
             Return
         End If
 
-        If ((Cb_IVA.SelectedItem = "Responsable Inscripto" Or Cb_IVA.SelectedItem = "Monotributo" Or Cb_IVA.SelectedItem = "Exento" Or Cb_IVA.SelectedItem = "Exento sin IVA") And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
+        If ((Cb_IVA.Text = "Responsable Inscripto" Or Cb_IVA.Text = "Monotributo" Or Cb_IVA.Text = "Exento" Or Cb_IVA.Text = "Exento sin IVA") And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
             MessageBox.Show("El CUIL ingresado es incorrecto.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -217,7 +231,7 @@ Public Class frmFacturar
                     EntFacturacion.id_Venta = id_Venta
                     EntFacturacion.Monto = Monto
                     EntFacturacion.NumeroFactura = numero
-                    EntFacturacion.CondicionIva = Cb_IVA.SelectedItem
+                    EntFacturacion.CondicionIva = Cb_IVA.Text
                     EntFacturacion.Nombre = Trim(txt_Nombre.Text)
                     EntFacturacion.Cuit = Trim(txt_Cuit.Text)
                     EntFacturacion.Direccion = Trim(txt_Direccion.Text)
@@ -267,7 +281,7 @@ Public Class frmFacturar
         EntControlador.LREMITO2 = ""
 
         'Acepto.
-        Select Case (Cb_IVA.SelectedItem)
+        Select Case (Cb_IVA.Text)
             Case "Consumidor Final"
                 EntControlador.NCOMP1 = ""
                 EntControlador.NCOMP2 = ""
@@ -448,7 +462,7 @@ Public Class frmFacturar
             Return
         End If
 
-        If (Cb_IVA.SelectedItem = "Responsable Inscripto" And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
+        If (Cb_IVA.Text = "Responsable Inscripto" And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
             MessageBox.Show("El CUIL ingresado es incorrecto.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -521,7 +535,7 @@ Public Class frmFacturar
         EntControlador.COMPROBANTEORIGEN = txt_Factura_Origen.Text
 
         'Acepto.
-        Select Case (Cb_IVA.SelectedItem)
+        Select Case (Cb_IVA.Text)
             Case "Consumidor Final"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""

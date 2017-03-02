@@ -12,7 +12,7 @@ Public Class frmSeniaDatos
         End Set
     End Property
 
-    Private TipoVenta As Clientes.Tipo
+    Private TipoVenta As TipoCliente
     Private Vendedor As Entidades.Empleados
     Private Encargado As Entidades.Empleados
     Private TipoPago As String
@@ -25,13 +25,14 @@ Public Class frmSeniaDatos
     Private Productos As DataTable
     Private FechaSeña As DateTime
     Private ClienteMinorista As Entidades.ClienteMinorista
-    Private ClienteMayorista As Entidades.Clientes
+    Private ClienteMayorista As Entidades.ClienteMayorista
 
     Private negClienteMinorista As Negocio.NegClienteMinorista = New Negocio.NegClienteMinorista()
-    Private negClienteMayorista As Negocio.NegClientes = New Negocio.NegClientes()
+    Private negClienteMayorista As Negocio.NegClienteMayorista = New Negocio.NegClienteMayorista()
+    Private negDireccion As Negocio.NegDireccion = New Negocio.NegDireccion()
     Private negSenia As Negocio.NegSenia = New Negocio.NegSenia()
 
-    Sub New(tipoVenta As Clientes.Tipo, vendedor As String, encargado As String, tipoPago As String, facturado As Boolean, idClienteMayorista As Integer, subTotal As Decimal, descuento As Decimal, senia As Decimal, montoTotal As Decimal, IVA As Decimal, Productos As DataTable, FechaSeña As DateTime)
+    Sub New(tipoVenta As TipoCliente, vendedor As String, encargado As String, tipoPago As String, facturado As Boolean, idClienteMayorista As Integer, subTotal As Decimal, descuento As Decimal, senia As Decimal, montoTotal As Decimal, IVA As Decimal, Productos As DataTable, FechaSeña As DateTime)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -56,7 +57,7 @@ Public Class frmSeniaDatos
 
     Private Sub frmSeniaDatos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        lblTipoVenta.Text = If(TipoVenta = Clientes.Tipo.Mayorista, "Mayorista", "Minorista")
+        lblTipoVenta.Text = If(TipoVenta = TipoCliente.Mayorista, "Mayorista", "Minorista")
         lblPago.Text = TipoPago
         lblFacturado.Text = If(Facturado, "Si", "No")
         lblFechaSeña.Text = FechaSeña.ToString("dd-MM-yyyy")
@@ -71,7 +72,7 @@ Public Class frmSeniaDatos
         DG_Productos.DataSource = Productos
         lblCantidad.Text = Productos.Rows.Count
 
-        If (TipoVenta = Clientes.Tipo.Minorista) Then
+        If (TipoVenta = TipoCliente.Minorista) Then
             DG_Productos.Columns("PRECIO").Visible = False
             DG_Productos.Columns("IVA").Visible = False
 
@@ -83,6 +84,8 @@ Public Class frmSeniaDatos
 
             PanelTotalMayorista.Visible = False
         Else
+            Dim direccion As Direccion = negDireccion.Consulta(ClienteMayorista.IdDireccionFacturacion)
+
             Btn_BuscarConsumidorFinal.Visible = False
             txtApellido.Visible = False
             lblApellido.Visible = False
@@ -90,11 +93,11 @@ Public Class frmSeniaDatos
             txtNombre.Enabled = False
             txtNombre.Text = ClienteMayorista.RazonSocial
             txtMail.Enabled = False
-            txtMail.Text = ClienteMayorista.Mail
+            txtMail.Text = direccion.Email
             txtDireccion.Enabled = False
-            txtDireccion.Text = ClienteMayorista.Direccion
+            txtDireccion.Text = direccion.Direccion
             txtTelefono.Enabled = False
-            txtTelefono.Text = ClienteMayorista.Telefono
+            txtTelefono.Text = direccion.Telefono
             rblEnvioPromocionesNo.Enabled = False
             rblEnvioPromocionesSi.Enabled = False
 
@@ -122,17 +125,17 @@ Public Class frmSeniaDatos
     End Sub
 
     Private Sub Btn_Finalizar_Click(sender As Object, e As EventArgs) Handles Btn_Finalizar.Click
-        If TipoVenta = Clientes.Tipo.Minorista AndAlso (txtApellido.Text = "" Or (txtDireccion.Visible AndAlso txtDireccion.Text = "") Or txtMail.Text = "" Or txtNombre.Text = "" Or txtTelefono.Text = "" Or cmbModoEntrega.SelectedIndex = 0) Then
+        If TipoVenta = TipoCliente.Minorista AndAlso (txtApellido.Text = "" Or (txtDireccion.Visible AndAlso txtDireccion.Text = "") Or txtMail.Text = "" Or txtNombre.Text = "" Or txtTelefono.Text = "" Or cmbModoEntrega.SelectedIndex = 0) Then
             MessageBox.Show("Debe completar los campos requeridos.", "Información de la seña", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return
         End If
 
-        If TipoVenta = Clientes.Tipo.Mayorista AndAlso cmbModoEntrega.SelectedIndex = 0 Then
+        If TipoVenta = TipoCliente.Mayorista AndAlso cmbModoEntrega.SelectedIndex = 0 Then
             MessageBox.Show("Debe completar los campos requeridos.", "Información de la seña", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return
         End If
 
-        If (TipoVenta = Clientes.Tipo.Minorista) Then
+        If (TipoVenta = TipoCliente.Minorista) Then
             GuardarCliente()
         End If
 
@@ -143,10 +146,10 @@ Public Class frmSeniaDatos
             .IdSucursal = My.Settings.Sucursal
             .Observaciones = txtObservaciones.Text
             .FormaEntrega = cmbModoEntrega.SelectedItem
-            If (TipoVenta = Clientes.Tipo.Minorista) Then
+            If (TipoVenta = TipoCliente.Minorista) Then
                 .IdClienteMinorista = ClienteMinorista.Id
             Else
-                .IdClienteMayorista = ClienteMayorista.id_Cliente
+                .IdClienteMayorista = ClienteMayorista.Id
             End If
         End With
 

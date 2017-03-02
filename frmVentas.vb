@@ -2,7 +2,7 @@
 Imports System.Linq
 Imports System.Threading.Tasks
 Imports Negocio
-Imports Entidades.Clientes
+Imports Entidades.ClienteMayorista
 
 Public Class frmVentas
     'Instancias
@@ -1002,7 +1002,7 @@ Public Class frmVentas
         Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
         Dim id_ListaPrecio As Integer = Cb_ListaPrecio.SelectedValue
         Dim ConsumidorFinal As ConsumidorFinal = New ConsumidorFinal()
-        Dim ClienteNegocio As NegClientes = New NegClientes()
+        Dim ClienteNegocio As NegClienteMayorista = New NegClienteMayorista()
         Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
         Dim NotaPedido As NotaPedido = New NotaPedido()
 
@@ -1052,7 +1052,7 @@ Public Class frmVentas
         Dim id_Encargado As Integer = Cb_Encargados.SelectedValue 'ID de Encargado.
         Dim id_ListaPrecio As Integer = Cb_ListaPrecio.SelectedValue
         Dim ConsumidorFinal As ConsumidorFinal = New ConsumidorFinal()
-        Dim ClienteNegocio As NegClientes = New NegClientes()
+        Dim ClienteNegocio As NegClienteMayorista = New NegClienteMayorista()
         Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
 
         If cb_Tipo.SelectedItem = "Minorista" Then
@@ -1190,7 +1190,7 @@ Public Class frmVentas
                     End If
                 End If
 
-                Dim frmSeniaDatos As frmSeniaDatos = New frmSeniaDatos(If(TipoVenta = 1, Clientes.Tipo.Minorista, Clientes.Tipo.Mayorista), id_Empleado, id_Empleado, Cb_TipoPago.SelectedText, Facturar, id_Cliente, MontoTotalSinDescuento, Descuento, MontoSenia, MontoTotal, IvaTotal, dtProductos, Date.Now)
+                Dim frmSeniaDatos As frmSeniaDatos = New frmSeniaDatos(If(TipoVenta = 1, TipoCliente.Minorista, TipoCliente.Mayorista), id_Empleado, id_Empleado, Cb_TipoPago.SelectedText, Facturar, id_Cliente, MontoTotalSinDescuento, Descuento, MontoSenia, MontoTotal, IvaTotal, dtProductos, Date.Now)
                 If (Not frmSeniaDatos.ShowDialog() = DialogResult.OK) Then
                     Return
                 End If
@@ -1506,7 +1506,7 @@ Public Class frmVentas
         frmFacturar.IvaTotal = IvaTotal
         frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
         frmFacturar.TipoPago = TipoPagoControlador
-        frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", Tipo.Minorista, Tipo.Mayorista)
+        frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", TipoCliente.Minorista, TipoCliente.Mayorista)
         frmFacturar.EsSenia = EsSenia
         frmFacturar.ShowDialog()
 

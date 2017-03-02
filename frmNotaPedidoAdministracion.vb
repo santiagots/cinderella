@@ -8,7 +8,7 @@ Public Class frmNotaPedidoAdministracion
     Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
     Dim negEmpleados As NegEmpleados = New NegEmpleados()
     Dim negTiposPagos As NegTipoPago = New NegTipoPago()
-    Dim negCliente As NegClientes = New NegClientes()
+    Dim negCliente As NegClienteMayorista = New NegClienteMayorista()
 
     Dim DsTiposPagos As New DataSet
     Dim DsVendedores As New DataSet

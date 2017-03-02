@@ -398,7 +398,6 @@ Partial Class frmFacturar
         Me.Cb_IVA.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_IVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_IVA.FormattingEnabled = True
-        Me.Cb_IVA.Items.AddRange(New Object() {"Responsable Inscripto", "Consumidor Final", "Monotributo", "Exento", "Exento sin IVA"})
         Me.Cb_IVA.Location = New System.Drawing.Point(140, 198)
         Me.Cb_IVA.Name = "Cb_IVA"
         Me.Cb_IVA.Size = New System.Drawing.Size(219, 23)

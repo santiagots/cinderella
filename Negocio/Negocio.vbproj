@@ -91,7 +91,7 @@
     <Compile Include="NegCajaInicial.vb" />
     <Compile Include="NegCheque.vb" />
     <Compile Include="NegClienteMinorista.vb" />
-    <Compile Include="NegClientes.vb" />
+    <Compile Include="NegClienteMayorista.vb" />
     <Compile Include="NegColores.vb" />
     <Compile Include="NegComisiones.vb" />
     <Compile Include="NegCondicionesIva.vb" />
@@ -99,6 +99,7 @@
     <Compile Include="NegControladorFiscal.vb" />
     <Compile Include="NegCuentaCorriente.vb" />
     <Compile Include="NegDevolucion.vb" />
+    <Compile Include="NegDireccion.vb" />
     <Compile Include="NegDistritos.vb" />
     <Compile Include="NegEmpleados.vb" />
     <Compile Include="NegFacturacion.vb" />

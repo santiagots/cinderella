@@ -1,5 +1,5 @@
 ﻿Imports Entidades
-Imports Entidades.Clientes
+Imports Entidades.ClienteMayorista
 
 Public Class frmDevoluciones
     'Instancias
@@ -269,7 +269,7 @@ Public Class frmDevoluciones
                                     frmFacturar.IvaTotal = IvaTotal
                                     frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
                                     frmFacturar.TipoPago = TipoPagoControlador
-                                    frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", Tipo.Minorista, Tipo.Mayorista)
+                                    frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", TipoCliente.Minorista, TipoCliente.Mayorista)
                                     frmFacturar.ShowDialog()
 
                                     'Seteo el cursor.

@@ -73,13 +73,13 @@ Public Class MDIContenedor
             Menu_ChequesVencer.Visible = False
         End If
 
-        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Visualizar) Or
-            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Crear) Or
-            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Modificar) Or
-            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Eliminar)) Then
-            Btn_ClientesMenu.Visible = True
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Crear) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Modificar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Eliminar)) Then
+            ClienteMayoristaToolStripMenuItem.Visible = True
         Else
-            Btn_ClientesMenu.Visible = False
+            ClienteMayoristaToolStripMenuItem.Visible = False
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Visualizar) Or
@@ -756,18 +756,6 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmColores).MdiParent = Me
             Funciones.ControlInstancia(frmColores).Show()
-            Me.Cursor = Cursors.Arrow
-        End If
-    End Sub
-
-    Private Sub Btn_ClientesMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ClientesMenu.Click
-        'para administrar clientes es necesario esta online
-        If (Not Negocio.Funciones.HayConexionInternet) Then
-            dialogoConexion.ShowDialog()
-        Else
-            Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmClientes).MdiParent = Me
-            Funciones.ControlInstancia(frmClientes).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub
@@ -1682,5 +1670,17 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmNotaCreditoAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmNotaCreditoAdministracion).Show()
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub ClienteMayoristaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClienteMayoristaToolStripMenuItem.Click
+        'para administrar clientes es necesario esta online
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmClienteMayorista).MdiParent = Me
+            Funciones.ControlInstancia(frmClienteMayorista).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
     End Sub
 End Class

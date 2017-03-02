@@ -1,15 +1,19 @@
-﻿Public Class frmVerComprasCliente
+﻿Imports Entidades
+Imports Negocio
+
+Public Class frmVerComprasCliente
     Public id_Cliente As Integer
-    Dim NegClientes As New Negocio.NegClientes
+    Dim NegClientes As New Negocio.NegClienteMayorista
     Dim NegVentas As New Negocio.NegVentas
     Dim eVentas As New Entidades.Ventas
     Dim eVentasDetalle As New Entidades.Ventas_Detalle
 
     'Al cerrar el formulario me fijo si está abierto el form de listados, si lo está, hago foco.
     Private Sub frmVerComprasCliente_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        If frmClientes.Visible Then
-            frmClientes.EClientes.id_Cliente = 0
-            frmClientes.WindowState = FormWindowState.Normal
+        If frmClienteMayorista.Visible Then
+            'TODO:Actualizar funcion
+            'frmClientes.EClientes.id_Cliente = 0
+            frmClienteMayorista.WindowState = FormWindowState.Normal
         End If
     End Sub
 
@@ -32,16 +36,21 @@
             TabListado.ImageIndex = 0
             TabDetalle.ImageIndex = 1
 
-            'Informacion del cliente
-            Dim dsCliente As New DataSet
-            dsCliente = NegClientes.TraerClienteReducido(id_Cliente)
-            If dsCliente.Tables(0).Rows.Count > 0 Then
-                lblCuit.Text = dsCliente.Tables(0).Rows(0).Item("Cuit").ToString
-                lblRazon.Text = dsCliente.Tables(0).Rows(0).Item("RazonSocial").ToString
-                lblCondicion.Text = dsCliente.Tables(0).Rows(0).Item("Condicion").ToString
-                lblPrecios.Text = dsCliente.Tables(0).Rows(0).Item("ListaPrecio").ToString
-                Me.Text = "Compras realizadas por " & dsCliente.Tables(0).Rows(0).Item("RazonSocial").ToString
-            End If
+            Dim NegListasPrecio As NegListasPrecio = New NegListasPrecio()
+            Dim dsListas As DataSet = NegListasPrecio.ListadoListasPrecios()
+            cmb_ListaPrecio.DataSource = dsListas.Tables(0)
+            cmb_ListaPrecio.DisplayMember = "ListaPrecio"
+            cmb_ListaPrecio.ValueMember = "id_Lista"
+
+            Dim NegCondicionesIva As NegCondicionesIva = New NegCondicionesIva()
+            Dim dsCondiciones As New DataSet
+            dsCondiciones = NegCondicionesIva.ListadoCondiciones()
+            cmb_CondicionIVA.DataSource = dsCondiciones.Tables(0)
+            cmb_CondicionIVA.DisplayMember = "Descripcion"
+            cmb_CondicionIVA.ValueMember = "id_CondicionIva"
+
+            Dim cliente As ClienteMayorista = NegClientes.TraerCliente(id_Cliente)
+            ClienteMayoristaBindingSource.DataSource = cliente
 
             'Me fijo si tiene compras realizadas.
             Dim dsCompras As New DataSet
@@ -210,5 +219,4 @@
     Private Sub Btn_Cerrar2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cerrar2.Click
         Me.Close()
     End Sub
-
 End Class

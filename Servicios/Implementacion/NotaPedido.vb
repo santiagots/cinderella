@@ -11,7 +11,7 @@ Public Class NotaPedido
         Negocio.Funciones.HayConexionInternet()
 
         Dim NotaPedidoNegocio As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
-        Dim ClienteNegocio As Negocio.NegClientes = New Negocio.NegClientes()
+        Dim ClienteNegocio As Negocio.NegClienteMayorista = New Negocio.NegClienteMayorista()
 
         'Doy de alta el consumidor final y lo relaciono a la nota de pedido
         Dim consumidorFinal As Entidades.ConsumidorFinal = New Entidades.ConsumidorFinal()

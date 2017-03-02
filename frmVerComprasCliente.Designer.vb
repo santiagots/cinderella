@@ -41,16 +41,21 @@ Partial Class frmVerComprasCliente
         Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Btn_Cerrar = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.lblRazon = New System.Windows.Forms.Label()
-        Me.lblCuit = New System.Windows.Forms.Label()
-        Me.lblPrecios = New System.Windows.Forms.Label()
-        Me.lblCondicion = New System.Windows.Forms.Label()
-        Me.lbl_CondicionIva = New System.Windows.Forms.Label()
-        Me.lbl_ListaPrecio = New System.Windows.Forms.Label()
-        Me.lbl_Cuit = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.lbl_RazonSocial = New System.Windows.Forms.Label()
+        Me.lbl_CondicionIva = New System.Windows.Forms.Label()
+        Me.cmb_CondicionIVA = New System.Windows.Forms.ComboBox()
+        Me.ClienteMayoristaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.lbl_Cuit = New System.Windows.Forms.Label()
+        Me.cmb_ListaPrecio = New System.Windows.Forms.ComboBox()
+        Me.lbl_ListaPrecio = New System.Windows.Forms.Label()
+        Me.txt_Cuit = New System.Windows.Forms.TextBox()
+        Me.txt_RazonSocial = New System.Windows.Forms.TextBox()
         Me.TabDetalle = New System.Windows.Forms.TabPage()
+        Me.Btn_Cerrar2 = New System.Windows.Forms.Button()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
+        Me.lblAnulado = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.lblEncargado = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.lblSubtotal = New System.Windows.Forms.Label()
@@ -70,6 +75,12 @@ Partial Class frmVerComprasCliente
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -77,20 +88,13 @@ Partial Class frmVerComprasCliente
         Me.Label11 = New System.Windows.Forms.Label()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolCompras = New System.Windows.Forms.ToolTip(Me.components)
-        Me.lblAnulado = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Btn_Cerrar2 = New System.Windows.Forms.Button()
-        Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabCompras.SuspendLayout()
         Me.TabListado.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.DG_Compras, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.ClienteMayoristaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabDetalle.SuspendLayout()
         Me.lblcontenedor.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -139,13 +143,13 @@ Partial Class frmVerComprasCliente
         'GroupBox2
         '
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.lblMsg)
         Me.GroupBox2.Controls.Add(Me.DG_Compras)
-        Me.GroupBox2.Location = New System.Drawing.Point(10, 141)
+        Me.GroupBox2.Location = New System.Drawing.Point(10, 151)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(518, 296)
+        Me.GroupBox2.Size = New System.Drawing.Size(518, 286)
         Me.GroupBox2.TabIndex = 18
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Compras realizadas por el cliente hasta la fecha"
@@ -168,19 +172,19 @@ Partial Class frmVerComprasCliente
         Me.DG_Compras.AllowUserToDeleteRows = False
         Me.DG_Compras.AllowUserToResizeRows = False
         Me.DG_Compras.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Compras.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Compras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Compras.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Venta, Me.Fecha, Me.Importe, Me.Sucursal})
         Me.DG_Compras.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.DG_Compras.Location = New System.Drawing.Point(9, 21)
+        Me.DG_Compras.Location = New System.Drawing.Point(9, 20)
         Me.DG_Compras.MultiSelect = False
         Me.DG_Compras.Name = "DG_Compras"
         Me.DG_Compras.ReadOnly = True
         Me.DG_Compras.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Compras.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Compras.Size = New System.Drawing.Size(500, 265)
+        Me.DG_Compras.Size = New System.Drawing.Size(500, 256)
         Me.DG_Compras.TabIndex = 0
         Me.ToolCompras.SetToolTip(Me.DG_Compras, "Puede acceder al detalle de la compra haciendo doble click!")
         '
@@ -238,101 +242,129 @@ Partial Class frmVerComprasCliente
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.lblRazon)
-        Me.GroupBox1.Controls.Add(Me.lblCuit)
-        Me.GroupBox1.Controls.Add(Me.lblPrecios)
-        Me.GroupBox1.Controls.Add(Me.lblCondicion)
-        Me.GroupBox1.Controls.Add(Me.lbl_CondicionIva)
-        Me.GroupBox1.Controls.Add(Me.lbl_ListaPrecio)
-        Me.GroupBox1.Controls.Add(Me.lbl_Cuit)
-        Me.GroupBox1.Controls.Add(Me.lbl_RazonSocial)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox1.Location = New System.Drawing.Point(10, 6)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(518, 131)
+        Me.GroupBox1.Size = New System.Drawing.Size(518, 145)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Ficha del cliente"
         '
-        'lblRazon
+        'TableLayoutPanel1
         '
-        Me.lblRazon.AutoSize = True
-        Me.lblRazon.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRazon.Location = New System.Drawing.Point(139, 31)
-        Me.lblRazon.Name = "lblRazon"
-        Me.lblRazon.Size = New System.Drawing.Size(39, 15)
-        Me.lblRazon.TabIndex = 1
-        Me.lblRazon.Text = "- - - - -"
-        '
-        'lblCuit
-        '
-        Me.lblCuit.AutoSize = True
-        Me.lblCuit.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCuit.Location = New System.Drawing.Point(139, 53)
-        Me.lblCuit.Name = "lblCuit"
-        Me.lblCuit.Size = New System.Drawing.Size(39, 15)
-        Me.lblCuit.TabIndex = 2
-        Me.lblCuit.Text = "- - - - -"
-        '
-        'lblPrecios
-        '
-        Me.lblPrecios.AutoSize = True
-        Me.lblPrecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPrecios.Location = New System.Drawing.Point(139, 75)
-        Me.lblPrecios.Name = "lblPrecios"
-        Me.lblPrecios.Size = New System.Drawing.Size(39, 15)
-        Me.lblPrecios.TabIndex = 3
-        Me.lblPrecios.Text = "- - - - -"
-        '
-        'lblCondicion
-        '
-        Me.lblCondicion.AutoSize = True
-        Me.lblCondicion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCondicion.Location = New System.Drawing.Point(139, 97)
-        Me.lblCondicion.Name = "lblCondicion"
-        Me.lblCondicion.Size = New System.Drawing.Size(39, 15)
-        Me.lblCondicion.TabIndex = 4
-        Me.lblCondicion.Text = "- - - - -"
-        '
-        'lbl_CondicionIva
-        '
-        Me.lbl_CondicionIva.AutoSize = True
-        Me.lbl_CondicionIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CondicionIva.Location = New System.Drawing.Point(6, 97)
-        Me.lbl_CondicionIva.Name = "lbl_CondicionIva"
-        Me.lbl_CondicionIva.Size = New System.Drawing.Size(123, 15)
-        Me.lbl_CondicionIva.TabIndex = 24
-        Me.lbl_CondicionIva.Text = "Condición de IVA :"
-        '
-        'lbl_ListaPrecio
-        '
-        Me.lbl_ListaPrecio.AutoSize = True
-        Me.lbl_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_ListaPrecio.Location = New System.Drawing.Point(6, 75)
-        Me.lbl_ListaPrecio.Name = "lbl_ListaPrecio"
-        Me.lbl_ListaPrecio.Size = New System.Drawing.Size(118, 15)
-        Me.lbl_ListaPrecio.TabIndex = 23
-        Me.lbl_ListaPrecio.Text = "Lista de Precios :"
-        '
-        'lbl_Cuit
-        '
-        Me.lbl_Cuit.AutoSize = True
-        Me.lbl_Cuit.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Cuit.Location = New System.Drawing.Point(6, 53)
-        Me.lbl_Cuit.Name = "lbl_Cuit"
-        Me.lbl_Cuit.Size = New System.Drawing.Size(40, 15)
-        Me.lbl_Cuit.TabIndex = 9
-        Me.lbl_Cuit.Text = "Cuit :"
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_RazonSocial, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_CondicionIva, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.cmb_CondicionIVA, 1, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Cuit, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.cmb_ListaPrecio, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_ListaPrecio, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Cuit, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_RazonSocial, 1, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 4
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(357, 119)
+        Me.TableLayoutPanel1.TabIndex = 29
         '
         'lbl_RazonSocial
         '
+        Me.lbl_RazonSocial.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_RazonSocial.AutoSize = True
         Me.lbl_RazonSocial.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RazonSocial.Location = New System.Drawing.Point(6, 31)
+        Me.lbl_RazonSocial.Location = New System.Drawing.Point(3, 7)
         Me.lbl_RazonSocial.Name = "lbl_RazonSocial"
-        Me.lbl_RazonSocial.Size = New System.Drawing.Size(100, 15)
+        Me.lbl_RazonSocial.Size = New System.Drawing.Size(134, 15)
         Me.lbl_RazonSocial.TabIndex = 8
         Me.lbl_RazonSocial.Text = "Razon Social :"
+        '
+        'lbl_CondicionIva
+        '
+        Me.lbl_CondicionIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_CondicionIva.AutoSize = True
+        Me.lbl_CondicionIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_CondicionIva.Location = New System.Drawing.Point(3, 97)
+        Me.lbl_CondicionIva.Name = "lbl_CondicionIva"
+        Me.lbl_CondicionIva.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_CondicionIva.TabIndex = 24
+        Me.lbl_CondicionIva.Text = "Condición de IVA :"
+        '
+        'cmb_CondicionIVA
+        '
+        Me.cmb_CondicionIVA.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmb_CondicionIVA.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ClienteMayoristaBindingSource, "IdCondicionIva", True))
+        Me.cmb_CondicionIVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_CondicionIVA.Enabled = False
+        Me.cmb_CondicionIVA.FormattingEnabled = True
+        Me.cmb_CondicionIVA.Location = New System.Drawing.Point(143, 94)
+        Me.cmb_CondicionIVA.Name = "cmb_CondicionIVA"
+        Me.cmb_CondicionIVA.Size = New System.Drawing.Size(211, 23)
+        Me.cmb_CondicionIVA.TabIndex = 28
+        '
+        'ClienteMayoristaBindingSource
+        '
+        Me.ClienteMayoristaBindingSource.DataSource = GetType(Entidades.ClienteMayorista)
+        '
+        'lbl_Cuit
+        '
+        Me.lbl_Cuit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Cuit.AutoSize = True
+        Me.lbl_Cuit.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Cuit.Location = New System.Drawing.Point(3, 37)
+        Me.lbl_Cuit.Name = "lbl_Cuit"
+        Me.lbl_Cuit.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Cuit.TabIndex = 9
+        Me.lbl_Cuit.Text = "Cuit :"
+        '
+        'cmb_ListaPrecio
+        '
+        Me.cmb_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmb_ListaPrecio.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ClienteMayoristaBindingSource, "IdListaPrecio", True))
+        Me.cmb_ListaPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_ListaPrecio.Enabled = False
+        Me.cmb_ListaPrecio.FormattingEnabled = True
+        Me.cmb_ListaPrecio.Location = New System.Drawing.Point(143, 64)
+        Me.cmb_ListaPrecio.Name = "cmb_ListaPrecio"
+        Me.cmb_ListaPrecio.Size = New System.Drawing.Size(211, 23)
+        Me.cmb_ListaPrecio.TabIndex = 27
+        '
+        'lbl_ListaPrecio
+        '
+        Me.lbl_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_ListaPrecio.AutoSize = True
+        Me.lbl_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_ListaPrecio.Location = New System.Drawing.Point(3, 67)
+        Me.lbl_ListaPrecio.Name = "lbl_ListaPrecio"
+        Me.lbl_ListaPrecio.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_ListaPrecio.TabIndex = 23
+        Me.lbl_ListaPrecio.Text = "Lista de Precios :"
+        '
+        'txt_Cuit
+        '
+        Me.txt_Cuit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ClienteMayoristaBindingSource, "Cuit", True))
+        Me.txt_Cuit.Enabled = False
+        Me.txt_Cuit.Location = New System.Drawing.Point(143, 34)
+        Me.txt_Cuit.Name = "txt_Cuit"
+        Me.txt_Cuit.Size = New System.Drawing.Size(211, 21)
+        Me.txt_Cuit.TabIndex = 26
+        '
+        'txt_RazonSocial
+        '
+        Me.txt_RazonSocial.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_RazonSocial.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ClienteMayoristaBindingSource, "RazonSocial", True))
+        Me.txt_RazonSocial.Enabled = False
+        Me.txt_RazonSocial.Location = New System.Drawing.Point(143, 4)
+        Me.txt_RazonSocial.Name = "txt_RazonSocial"
+        Me.txt_RazonSocial.Size = New System.Drawing.Size(211, 21)
+        Me.txt_RazonSocial.TabIndex = 25
         '
         'TabDetalle
         '
@@ -346,11 +378,27 @@ Partial Class frmVerComprasCliente
         Me.TabDetalle.Text = "Detalle"
         Me.TabDetalle.UseVisualStyleBackColor = True
         '
+        'Btn_Cerrar2
+        '
+        Me.Btn_Cerrar2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Cerrar2.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Cerrar2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Cerrar2.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.Btn_Cerrar2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Cerrar2.Location = New System.Drawing.Point(428, 443)
+        Me.Btn_Cerrar2.Name = "Btn_Cerrar2"
+        Me.Btn_Cerrar2.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Cerrar2.TabIndex = 18
+        Me.Btn_Cerrar2.Text = "Cerrar"
+        Me.Btn_Cerrar2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolCompras.SetToolTip(Me.Btn_Cerrar2, "Presione aquí para cerrar el formulario.")
+        Me.Btn_Cerrar2.UseVisualStyleBackColor = True
+        '
         'lblcontenedor
         '
         Me.lblcontenedor.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblcontenedor.Controls.Add(Me.lblAnulado)
         Me.lblcontenedor.Controls.Add(Me.Label10)
         Me.lblcontenedor.Controls.Add(Me.lblEncargado)
@@ -384,6 +432,28 @@ Partial Class frmVerComprasCliente
         Me.lblcontenedor.TabIndex = 1
         Me.lblcontenedor.TabStop = False
         Me.lblcontenedor.Text = "Información de la venta realizada."
+        '
+        'lblAnulado
+        '
+        Me.lblAnulado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblAnulado.AutoSize = True
+        Me.lblAnulado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAnulado.Location = New System.Drawing.Point(146, 405)
+        Me.lblAnulado.Name = "lblAnulado"
+        Me.lblAnulado.Size = New System.Drawing.Size(42, 15)
+        Me.lblAnulado.TabIndex = 38
+        Me.lblAnulado.Text = "- - - - - "
+        '
+        'Label10
+        '
+        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(6, 405)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(67, 15)
+        Me.Label10.TabIndex = 37
+        Me.Label10.Text = "Anulada :"
         '
         'lblEncargado
         '
@@ -586,8 +656,8 @@ Partial Class frmVerComprasCliente
         Me.DG_Productos.AllowUserToDeleteRows = False
         Me.DG_Productos.AllowUserToResizeRows = False
         Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Productos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Productos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
@@ -602,6 +672,60 @@ Partial Class frmVerComprasCliente
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(506, 205)
         Me.DG_Productos.TabIndex = 11
+        '
+        'NUMERO
+        '
+        Me.NUMERO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.NUMERO.FillWeight = 68.49864!
+        Me.NUMERO.HeaderText = "N"
+        Me.NUMERO.Name = "NUMERO"
+        Me.NUMERO.ReadOnly = True
+        Me.NUMERO.Width = 41
+        '
+        'CODIGO
+        '
+        Me.CODIGO.FillWeight = 107.5103!
+        Me.CODIGO.HeaderText = "Código"
+        Me.CODIGO.Name = "CODIGO"
+        Me.CODIGO.ReadOnly = True
+        '
+        'NOMBRE
+        '
+        Me.NOMBRE.FillWeight = 177.4346!
+        Me.NOMBRE.HeaderText = "Nombre"
+        Me.NOMBRE.Name = "NOMBRE"
+        Me.NOMBRE.ReadOnly = True
+        '
+        'CANTIDAD
+        '
+        Me.CANTIDAD.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CANTIDAD.DefaultCellStyle = DataGridViewCellStyle3
+        Me.CANTIDAD.FillWeight = 73.49158!
+        Me.CANTIDAD.HeaderText = "Cant."
+        Me.CANTIDAD.Name = "CANTIDAD"
+        Me.CANTIDAD.ReadOnly = True
+        Me.CANTIDAD.Width = 60
+        '
+        'PRECIO
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle4
+        Me.PRECIO.FillWeight = 81.69429!
+        Me.PRECIO.HeaderText = "Precio"
+        Me.PRECIO.Name = "PRECIO"
+        Me.PRECIO.ReadOnly = True
+        '
+        'SUBTOTAL
+        '
+        DataGridViewCellStyle5.Format = "C2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle5
+        Me.SUBTOTAL.FillWeight = 91.37056!
+        Me.SUBTOTAL.HeaderText = "Subtotal"
+        Me.SUBTOTAL.Name = "SUBTOTAL"
+        Me.SUBTOTAL.ReadOnly = True
         '
         'Label6
         '
@@ -664,98 +788,6 @@ Partial Class frmVerComprasCliente
         Me.ToolCompras.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCompras.ToolTipTitle = "Ayuda"
         '
-        'lblAnulado
-        '
-        Me.lblAnulado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblAnulado.AutoSize = True
-        Me.lblAnulado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAnulado.Location = New System.Drawing.Point(146, 405)
-        Me.lblAnulado.Name = "lblAnulado"
-        Me.lblAnulado.Size = New System.Drawing.Size(42, 15)
-        Me.lblAnulado.TabIndex = 38
-        Me.lblAnulado.Text = "- - - - - "
-        '
-        'Label10
-        '
-        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(6, 405)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(67, 15)
-        Me.Label10.TabIndex = 37
-        Me.Label10.Text = "Anulada :"
-        '
-        'Btn_Cerrar2
-        '
-        Me.Btn_Cerrar2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Cerrar2.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Cerrar2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Cerrar2.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.Btn_Cerrar2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cerrar2.Location = New System.Drawing.Point(428, 443)
-        Me.Btn_Cerrar2.Name = "Btn_Cerrar2"
-        Me.Btn_Cerrar2.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Cerrar2.TabIndex = 18
-        Me.Btn_Cerrar2.Text = "Cerrar"
-        Me.Btn_Cerrar2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolCompras.SetToolTip(Me.Btn_Cerrar2, "Presione aquí para cerrar el formulario.")
-        Me.Btn_Cerrar2.UseVisualStyleBackColor = True
-        '
-        'NUMERO
-        '
-        Me.NUMERO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.NUMERO.FillWeight = 68.49864!
-        Me.NUMERO.HeaderText = "N"
-        Me.NUMERO.Name = "NUMERO"
-        Me.NUMERO.ReadOnly = True
-        Me.NUMERO.Width = 41
-        '
-        'CODIGO
-        '
-        Me.CODIGO.FillWeight = 107.5103!
-        Me.CODIGO.HeaderText = "Código"
-        Me.CODIGO.Name = "CODIGO"
-        Me.CODIGO.ReadOnly = True
-        '
-        'NOMBRE
-        '
-        Me.NOMBRE.FillWeight = 177.4346!
-        Me.NOMBRE.HeaderText = "Nombre"
-        Me.NOMBRE.Name = "NOMBRE"
-        Me.NOMBRE.ReadOnly = True
-        '
-        'CANTIDAD
-        '
-        Me.CANTIDAD.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CANTIDAD.DefaultCellStyle = DataGridViewCellStyle3
-        Me.CANTIDAD.FillWeight = 73.49158!
-        Me.CANTIDAD.HeaderText = "Cant."
-        Me.CANTIDAD.Name = "CANTIDAD"
-        Me.CANTIDAD.ReadOnly = True
-        Me.CANTIDAD.Width = 60
-        '
-        'PRECIO
-        '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle4
-        Me.PRECIO.FillWeight = 81.69429!
-        Me.PRECIO.HeaderText = "Precio"
-        Me.PRECIO.Name = "PRECIO"
-        Me.PRECIO.ReadOnly = True
-        '
-        'SUBTOTAL
-        '
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle5
-        Me.SUBTOTAL.FillWeight = 91.37056!
-        Me.SUBTOTAL.HeaderText = "Subtotal"
-        Me.SUBTOTAL.Name = "SUBTOTAL"
-        Me.SUBTOTAL.ReadOnly = True
-        '
         'frmVerComprasCliente
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -776,7 +808,9 @@ Partial Class frmVerComprasCliente
         Me.GroupBox2.PerformLayout()
         CType(Me.DG_Compras, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        CType(Me.ClienteMayoristaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabDetalle.ResumeLayout(False)
         Me.lblcontenedor.ResumeLayout(False)
         Me.lblcontenedor.PerformLayout()
@@ -798,10 +832,6 @@ Partial Class frmVerComprasCliente
     Friend WithEvents lbl_RazonSocial As System.Windows.Forms.Label
     Friend WithEvents lbl_CondicionIva As System.Windows.Forms.Label
     Friend WithEvents lbl_ListaPrecio As System.Windows.Forms.Label
-    Friend WithEvents lblRazon As System.Windows.Forms.Label
-    Friend WithEvents lblCuit As System.Windows.Forms.Label
-    Friend WithEvents lblPrecios As System.Windows.Forms.Label
-    Friend WithEvents lblCondicion As System.Windows.Forms.Label
     Friend WithEvents lblMsg As System.Windows.Forms.Label
     Friend WithEvents id_Venta As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -842,4 +872,10 @@ Partial Class frmVerComprasCliente
     Friend WithEvents CANTIDAD As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents PRECIO As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents SUBTOTAL As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ClienteMayoristaBindingSource As BindingSource
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents cmb_CondicionIVA As ComboBox
+    Friend WithEvents cmb_ListaPrecio As ComboBox
+    Friend WithEvents txt_Cuit As TextBox
+    Friend WithEvents txt_RazonSocial As TextBox
 End Class

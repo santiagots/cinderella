@@ -12,6 +12,18 @@ Public Class NegManejadorErrores
 
         End Select
     End Function
+    Function SoloNumerosConEspacio(ByVal Keyascii As Integer) As Integer
+        If InStr("1234567890 ", Chr(Keyascii)) = 0 Then
+            SoloNumerosConEspacio = 0
+        Else
+            SoloNumerosConEspacio = Keyascii
+        End If
+        Select Case Keyascii
+            Case 8
+                SoloNumerosConEspacio = Keyascii
+
+        End Select
+    End Function
     Function SoloLetras(ByVal KeyAscii As Integer) As Integer
         KeyAscii = Asc(UCase(Chr(KeyAscii))) 'Transformar letras minusculas a Mayúsculas
         ' Intercepta un código ASCII recibido admitiendo solamente

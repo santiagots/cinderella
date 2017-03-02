@@ -11,4 +11,11 @@
         End If
     End Function
 
+    Public Function ListadoDistritos() As DataSet
+        If Funciones.HayInternet Then
+            Return clsDatos.ConsultarBaseRemoto("execute sp_Distritos_Listado_Completo")
+        Else
+            Return clsDatos.ConsultarBaseLocal("execute sp_Distritos_Listado_Completo")
+        End If
+    End Function
 End Class
