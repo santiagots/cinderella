@@ -24,10 +24,12 @@ Public Class frmFacturar
     Public id_Venta As Integer
     Public id_Devolucion As Integer
     Public Descuento As Double
-    Public MontoSinDescuento As Double
+    Public SubTotal As Double
+    Public MontoSenia As Double
     Public id_Cliente As Integer
     Public TipoCliente As TipoCliente
     Public EsSenia As Boolean = False
+    Public PorcentajeFacturacion As Double
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
@@ -148,7 +150,7 @@ Public Class frmFacturar
 
         If (EsSenia) Then
             Label1.Text = "Total Seña:"
-            lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+            lbl_TotalMinorista.Text = "$ " & Format(CType(MontoSenia, Decimal), "###0.00") & ".-"
 
             Label12.Visible = False
             Label11.Visible = False
@@ -157,7 +159,7 @@ Public Class frmFacturar
         Else
             lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
             lbl_DescuentoMinorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
-            lbl_SubtotalMinorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+            lbl_SubtotalMinorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
         End If
     End Sub
 
@@ -171,7 +173,7 @@ Public Class frmFacturar
 
         If (EsSenia) Then
             Label23.Text = "Total Seña:"
-            lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
+            lbl_TotalMayorista.Text = "$ " & Format(CType(MontoSenia, Decimal), "###0.00") & ".-"
 
             Label17.Visible = False
             Label21.Visible = False
@@ -182,7 +184,7 @@ Public Class frmFacturar
         Else
             lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
             lbl_DescuentoMayorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
-            lbl_SubtotalMayorista.Text = "$ " & Format(CType(MontoSinDescuento, Decimal), "###0.00") & ".-"
+            lbl_SubtotalMayorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
             lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
         End If
     End Sub
@@ -348,7 +350,7 @@ Public Class frmFacturar
                     'Agrego al ticket un item de seña por el valor señado
                     EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
                     EntControlador.CANTIDAD = Func.FormatearCantidad("1")
-                    EntControlador.PUNITARIO = Func.FormatearPrecio(Monto)
+                    EntControlador.PUNITARIO = Func.FormatearPrecio(MontoSenia)
                     NegControlador.AgregarItemTicket(EntControlador)
                 Else
                     'Agrego items al ticket
@@ -358,7 +360,11 @@ Public Class frmFacturar
                             'Seteo la entidad para cada Item.
                             EntControlador.DPPAL = Func.ReemplazarCaracteres(prod.Item("Nombre").ToString)
                             EntControlador.CANTIDAD = Func.FormatearCantidad(prod.Item("Cantidad"))
-                            EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio"))
+                            If (TipoCliente = TipoCliente.Mayorista) Then
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio") * PorcentajeFacturacion * 1.21)
+                            Else
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Monto"))
+                            End If
                             NegControlador.AgregarItemTicket(EntControlador)
                         Next
                     End If
@@ -596,7 +602,7 @@ Public Class frmFacturar
                     'Agrego al ticket un item de seña por el valor señado
                     EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
                     EntControlador.CANTIDAD = Func.FormatearCantidad("1")
-                    EntControlador.PUNITARIO = Func.FormatearPrecio(Monto)
+                    EntControlador.PUNITARIO = Func.FormatearPrecio(MontoSenia)
                     NegControlador.AgregarItemNotaCredito(EntControlador)
                 Else
                     'Agrego items al ticket

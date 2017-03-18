@@ -170,6 +170,16 @@
         End Set
     End Property
 
+    Private SaldoNotaPedido_ As Decimal
+    Public Property SaldoNotaPedido() As Decimal
+        Get
+            Return SaldoNotaPedido_
+        End Get
+        Set(ByVal value As Decimal)
+            SaldoNotaPedido_ = value
+        End Set
+    End Property
+
     Private SaldoCuentaCorriente_ As Decimal
     Public Property SaldoCuentaCorriente() As Decimal
         Get
@@ -198,6 +208,8 @@
         IdDireccionFacturacion_ = 0
         IdDireccionEntrega_ = 0
         Habilitado_ = False
+        SaldoNotaPedido_ = 0
+        SaldoCuentaCorriente_ = 0
     End Sub
 
 End Class

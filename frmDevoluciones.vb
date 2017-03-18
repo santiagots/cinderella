@@ -267,7 +267,7 @@ Public Class frmDevoluciones
                                     frmFacturar.Monto = MontoTotal
                                     frmFacturar.Descuento = Descuento
                                     frmFacturar.IvaTotal = IvaTotal
-                                    frmFacturar.MontoSinDescuento = MontoTotalSinDescuento
+                                    frmFacturar.SubTotal = MontoTotalSinDescuento
                                     frmFacturar.TipoPago = TipoPagoControlador
                                     frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", TipoCliente.Minorista, TipoCliente.Mayorista)
                                     frmFacturar.ShowDialog()
@@ -430,13 +430,13 @@ Public Class frmDevoluciones
         frmBuscarClienteMayorista.ShowDialog()
 
 
-        If frmBuscarClienteMayorista.idCliente <> "" And frmBuscarClienteMayorista.razonSocialCliente <> "" Then
+        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
             txt_id_Cliente.Clear()
             txt_RazonSocial.Clear()
             LimpiarFormDevolucion_2()
-            txt_id_Cliente.Text = frmBuscarClienteMayorista.idCliente
-            txt_RazonSocial.Text = frmBuscarClienteMayorista.razonSocialCliente
-            Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.idListaPrecio
+            txt_id_Cliente.Text = frmBuscarClienteMayorista.clienteMayorista.Id
+            txt_RazonSocial.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
+            Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.clienteMayorista.IdListaPrecio
         End If
         Me.Cursor = Cursors.Arrow
     End Sub

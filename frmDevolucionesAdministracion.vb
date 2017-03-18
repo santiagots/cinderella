@@ -435,7 +435,7 @@ Public Class frmDevolucionesAdministracion
         frmFacturar.id_Devolucion = id_DevolucionDetalle
         frmFacturar.Monto = MontoTotalDetalle
         frmFacturar.Descuento = DescuentoDetalle
-        frmFacturar.MontoSinDescuento = SubTotalDetalle
+        frmFacturar.SubTotal = SubTotalDetalle
         frmFacturar.TipoPago = TipoPagoDetalle
         frmFacturar.NotaCredito = True
         frmFacturar.TipoCliente = TipoDevolucion()

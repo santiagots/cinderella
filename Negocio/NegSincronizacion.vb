@@ -425,6 +425,7 @@ Public Class NegSincronizacion
         respuesta.Add(CuentaCorriente())
         respuesta.Add(Mercaderia())
         respuesta.Add(Ventas())
+        respuesta.Add(Presupuesto())
         respuesta.Add(Notapedido())
         respuesta.Add(Facturacion())
         respuesta.Add(Notacredito())
@@ -662,6 +663,25 @@ Public Class NegSincronizacion
         tablaRelelacionada3.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
 
         tabla.TablaRelacionada.Add(tablaRelelacionada3)
+        Return tabla
+    End Function
+
+    Private Shared Function Presupuesto() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.Nombre = "PRESUPUESTO"
+        tabla.ClavePrimaria = "id_Presupuesto"
+        tabla.ColumnaSeleccion = "id_Sucursal"
+        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.TablaRelacionada = New List(Of Tabla)
+
+        Dim tablaRelelacionada1 As Tabla = New Tabla()
+        tablaRelelacionada1.Nombre = "PRESUPUESTO_DETALLE"
+        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
+        tablaRelelacionada1.ColumnaSeleccion = "id_Presupuesto"
+        tablaRelelacionada1.ClaveForanea = New String() {"id_Presupuesto"}
+        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tabla.TablaRelacionada.Add(tablaRelelacionada1)
         Return tabla
     End Function
 

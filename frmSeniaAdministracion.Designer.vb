@@ -24,12 +24,12 @@ Partial Class frmSeniaAdministracion
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSeniaAdministracion))
         Me.tabAdministracionReservas = New System.Windows.Forms.TabControl()
         Me.TabReservas = New System.Windows.Forms.TabPage()
@@ -48,6 +48,13 @@ Partial Class frmSeniaAdministracion
         Me.Label12 = New System.Windows.Forms.Label()
         Me.dpkAlta = New System.Windows.Forms.DateTimePicker()
         Me.dgSenia = New System.Windows.Forms.DataGridView()
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoSeniaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaAltaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FormaEntregaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.SeniaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.tabDetalle = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -111,8 +118,6 @@ Partial Class frmSeniaAdministracion
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
-        Me.Btn_Finalizar = New System.Windows.Forms.Button()
-        Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -120,13 +125,11 @@ Partial Class frmSeniaAdministracion
         Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoSeniaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaAltaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FormaEntregaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Btn_Finalizar = New System.Windows.Forms.Button()
+        Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.lblPorcentajeFacturacion = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.tabAdministracionReservas.SuspendLayout()
         Me.TabReservas.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -139,6 +142,7 @@ Partial Class frmSeniaAdministracion
         Me.PanelTotalMayorista.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'tabAdministracionReservas
@@ -348,6 +352,58 @@ Partial Class frmSeniaAdministracion
         Me.dgSenia.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgSenia.Size = New System.Drawing.Size(860, 538)
         Me.dgSenia.TabIndex = 0
+        '
+        'Nombre
+        '
+        Me.Nombre.HeaderText = "Nombre/R. Social"
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        '
+        'MontoTotalDataGridViewTextBoxColumn
+        '
+        Me.MontoTotalDataGridViewTextBoxColumn.DataPropertyName = "MontoTotal"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.MontoTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        Me.MontoTotalDataGridViewTextBoxColumn.HeaderText = "Monto Total"
+        Me.MontoTotalDataGridViewTextBoxColumn.Name = "MontoTotalDataGridViewTextBoxColumn"
+        Me.MontoTotalDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'MontoSeniaDataGridViewTextBoxColumn
+        '
+        Me.MontoSeniaDataGridViewTextBoxColumn.DataPropertyName = "MontoSenia"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.MontoSeniaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        Me.MontoSeniaDataGridViewTextBoxColumn.HeaderText = "Monto Seña"
+        Me.MontoSeniaDataGridViewTextBoxColumn.Name = "MontoSeniaDataGridViewTextBoxColumn"
+        Me.MontoSeniaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FechaAltaDataGridViewTextBoxColumn
+        '
+        Me.FechaAltaDataGridViewTextBoxColumn.DataPropertyName = "FechaAlta"
+        Me.FechaAltaDataGridViewTextBoxColumn.HeaderText = "Fecha Alta"
+        Me.FechaAltaDataGridViewTextBoxColumn.Name = "FechaAltaDataGridViewTextBoxColumn"
+        Me.FechaAltaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FechaEstimadaRetiroDataGridViewTextBoxColumn
+        '
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.DataPropertyName = "FechaEstimadaRetiro"
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.HeaderText = "Fecha Estimada Retiro"
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.Name = "FechaEstimadaRetiroDataGridViewTextBoxColumn"
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FormaEntregaDataGridViewTextBoxColumn
+        '
+        Me.FormaEntregaDataGridViewTextBoxColumn.DataPropertyName = "FormaEntrega"
+        Me.FormaEntregaDataGridViewTextBoxColumn.HeaderText = "Forma Entrega"
+        Me.FormaEntregaDataGridViewTextBoxColumn.Name = "FormaEntregaDataGridViewTextBoxColumn"
+        Me.FormaEntregaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'Eliminar
+        '
+        Me.Eliminar.HeaderText = "Eliminar"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
         '
         'SeniaBindingSource
         '
@@ -600,6 +656,7 @@ Partial Class frmSeniaAdministracion
         Me.GroupBox3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox3.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox3.Controls.Add(Me.PanelTotalMinorista)
         Me.GroupBox3.Controls.Add(Me.PanelTotalMayorista)
         Me.GroupBox3.Controls.Add(Me.lblFacturado)
@@ -608,14 +665,6 @@ Partial Class frmSeniaAdministracion
         Me.GroupBox3.Controls.Add(Me.lblPago)
         Me.GroupBox3.Controls.Add(Me.Label4)
         Me.GroupBox3.Controls.Add(Me.Label5)
-        Me.GroupBox3.Controls.Add(Me.lblEncargado)
-        Me.GroupBox3.Controls.Add(Me.Label6)
-        Me.GroupBox3.Controls.Add(Me.lblTipoVenta)
-        Me.GroupBox3.Controls.Add(Me.lblVendedor)
-        Me.GroupBox3.Controls.Add(Me.lblFechaSeña)
-        Me.GroupBox3.Controls.Add(Me.Label15)
-        Me.GroupBox3.Controls.Add(Me.Label17)
-        Me.GroupBox3.Controls.Add(Me.Label18)
         Me.GroupBox3.Controls.Add(Me.DG_Productos)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
         Me.GroupBox3.Location = New System.Drawing.Point(11, 200)
@@ -973,81 +1022,89 @@ Partial Class frmSeniaAdministracion
         '
         'lblEncargado
         '
+        Me.lblEncargado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblEncargado.AutoSize = True
         Me.lblEncargado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEncargado.Location = New System.Drawing.Point(417, 53)
+        Me.lblEncargado.Location = New System.Drawing.Point(425, 37)
         Me.lblEncargado.Name = "lblEncargado"
-        Me.lblEncargado.Size = New System.Drawing.Size(42, 15)
+        Me.lblEncargado.Size = New System.Drawing.Size(104, 15)
         Me.lblEncargado.TabIndex = 60
         Me.lblEncargado.Text = "- - - - - "
         '
         'Label6
         '
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(325, 53)
+        Me.Label6.Location = New System.Drawing.Point(315, 37)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 15)
+        Me.Label6.Size = New System.Drawing.Size(104, 15)
         Me.Label6.TabIndex = 59
         Me.Label6.Text = "Encargado :"
         '
         'lblTipoVenta
         '
+        Me.lblTipoVenta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblTipoVenta.AutoSize = True
         Me.lblTipoVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTipoVenta.Location = New System.Drawing.Point(109, 26)
+        Me.lblTipoVenta.Location = New System.Drawing.Point(113, 7)
         Me.lblTipoVenta.Name = "lblTipoVenta"
-        Me.lblTipoVenta.Size = New System.Drawing.Size(42, 15)
+        Me.lblTipoVenta.Size = New System.Drawing.Size(104, 15)
         Me.lblTipoVenta.TabIndex = 56
         Me.lblTipoVenta.Text = "- - - - - "
         '
         'lblVendedor
         '
+        Me.lblVendedor.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblVendedor.AutoSize = True
         Me.lblVendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblVendedor.Location = New System.Drawing.Point(108, 53)
+        Me.lblVendedor.Location = New System.Drawing.Point(113, 37)
         Me.lblVendedor.Name = "lblVendedor"
-        Me.lblVendedor.Size = New System.Drawing.Size(42, 15)
+        Me.lblVendedor.Size = New System.Drawing.Size(104, 15)
         Me.lblVendedor.TabIndex = 55
         Me.lblVendedor.Text = "- - - - - "
         '
         'lblFechaSeña
         '
+        Me.lblFechaSeña.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblFechaSeña.AutoSize = True
         Me.lblFechaSeña.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblFechaSeña.Location = New System.Drawing.Point(418, 26)
+        Me.lblFechaSeña.Location = New System.Drawing.Point(425, 7)
         Me.lblFechaSeña.Name = "lblFechaSeña"
-        Me.lblFechaSeña.Size = New System.Drawing.Size(42, 15)
+        Me.lblFechaSeña.Size = New System.Drawing.Size(104, 15)
         Me.lblFechaSeña.TabIndex = 53
         Me.lblFechaSeña.Text = "- - - - - "
         '
         'Label15
         '
+        Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(325, 26)
+        Me.Label15.Location = New System.Drawing.Point(315, 7)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(79, 15)
+        Me.Label15.Size = New System.Drawing.Size(104, 15)
         Me.Label15.TabIndex = 51
         Me.Label15.Text = "Fecha Seña :"
         '
         'Label17
         '
+        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(6, 26)
+        Me.Label17.Location = New System.Drawing.Point(3, 7)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(88, 15)
+        Me.Label17.Size = New System.Drawing.Size(104, 15)
         Me.Label17.TabIndex = 50
         Me.Label17.Text = "Tipo de Venta :"
         '
         'Label18
         '
+        Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(6, 53)
+        Me.Label18.Location = New System.Drawing.Point(3, 37)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(66, 15)
+        Me.Label18.Size = New System.Drawing.Size(104, 15)
         Me.Label18.TabIndex = 49
         Me.Label18.Text = "Vendedor :"
         '
@@ -1073,25 +1130,6 @@ Partial Class frmSeniaAdministracion
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(854, 215)
         Me.DG_Productos.TabIndex = 12
-        '
-        'Btn_Finalizar
-        '
-        Me.Btn_Finalizar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Finalizar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Finalizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Finalizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
-        Me.Btn_Finalizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Finalizar.Location = New System.Drawing.Point(784, 646)
-        Me.Btn_Finalizar.Name = "Btn_Finalizar"
-        Me.Btn_Finalizar.Size = New System.Drawing.Size(84, 40)
-        Me.Btn_Finalizar.TabIndex = 23
-        Me.Btn_Finalizar.Text = "Retirar"
-        Me.Btn_Finalizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Finalizar.UseVisualStyleBackColor = True
-        '
-        'ErrorProvider
-        '
-        Me.ErrorProvider.ContainerControl = Me
         '
         'CODIGO
         '
@@ -1157,57 +1195,76 @@ Partial Class frmSeniaAdministracion
         Me.SUBTOTAL.Name = "SUBTOTAL"
         Me.SUBTOTAL.ReadOnly = True
         '
-        'Nombre
+        'Btn_Finalizar
         '
-        Me.Nombre.HeaderText = "Nombre/R. Social"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
+        Me.Btn_Finalizar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Finalizar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Finalizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Finalizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
+        Me.Btn_Finalizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Finalizar.Location = New System.Drawing.Point(784, 646)
+        Me.Btn_Finalizar.Name = "Btn_Finalizar"
+        Me.Btn_Finalizar.Size = New System.Drawing.Size(84, 40)
+        Me.Btn_Finalizar.TabIndex = 23
+        Me.Btn_Finalizar.Text = "Retirar"
+        Me.Btn_Finalizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Finalizar.UseVisualStyleBackColor = True
         '
-        'MontoTotalDataGridViewTextBoxColumn
+        'ErrorProvider
         '
-        Me.MontoTotalDataGridViewTextBoxColumn.DataPropertyName = "MontoTotal"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.MontoTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.MontoTotalDataGridViewTextBoxColumn.HeaderText = "Monto Total"
-        Me.MontoTotalDataGridViewTextBoxColumn.Name = "MontoTotalDataGridViewTextBoxColumn"
-        Me.MontoTotalDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ErrorProvider.ContainerControl = Me
         '
-        'MontoSeniaDataGridViewTextBoxColumn
+        'lblPorcentajeFacturacion
         '
-        Me.MontoSeniaDataGridViewTextBoxColumn.DataPropertyName = "MontoSenia"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.MontoSeniaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
-        Me.MontoSeniaDataGridViewTextBoxColumn.HeaderText = "Monto Seña"
-        Me.MontoSeniaDataGridViewTextBoxColumn.Name = "MontoSeniaDataGridViewTextBoxColumn"
-        Me.MontoSeniaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.lblPorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblPorcentajeFacturacion.AutoSize = True
+        Me.lblPorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPorcentajeFacturacion.Location = New System.Drawing.Point(737, 7)
+        Me.lblPorcentajeFacturacion.Name = "lblPorcentajeFacturacion"
+        Me.lblPorcentajeFacturacion.Size = New System.Drawing.Size(104, 15)
+        Me.lblPorcentajeFacturacion.TabIndex = 70
+        Me.lblPorcentajeFacturacion.Text = "- - - - - "
         '
-        'FechaAltaDataGridViewTextBoxColumn
+        'Label14
         '
-        Me.FechaAltaDataGridViewTextBoxColumn.DataPropertyName = "FechaAlta"
-        Me.FechaAltaDataGridViewTextBoxColumn.HeaderText = "Fecha Alta"
-        Me.FechaAltaDataGridViewTextBoxColumn.Name = "FechaAltaDataGridViewTextBoxColumn"
-        Me.FechaAltaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(627, 0)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(104, 30)
+        Me.Label14.TabIndex = 69
+        Me.Label14.Text = "Porcentaje Facturación :"
         '
-        'FechaEstimadaRetiroDataGridViewTextBoxColumn
+        'TableLayoutPanel1
         '
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.DataPropertyName = "FechaEstimadaRetiro"
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.HeaderText = "Fecha Estimada Retiro"
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.Name = "FechaEstimadaRetiroDataGridViewTextBoxColumn"
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'FormaEntregaDataGridViewTextBoxColumn
-        '
-        Me.FormaEntregaDataGridViewTextBoxColumn.DataPropertyName = "FormaEntrega"
-        Me.FormaEntregaDataGridViewTextBoxColumn.HeaderText = "Forma Entrega"
-        Me.FormaEntregaDataGridViewTextBoxColumn.Name = "FormaEntregaDataGridViewTextBoxColumn"
-        Me.FormaEntregaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'Eliminar
-        '
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
+        Me.TableLayoutPanel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 8
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label17, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblPorcentajeFacturacion, 7, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblTipoVenta, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label14, 6, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label18, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblVendedor, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label15, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblFechaSeña, 4, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label6, 3, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblEncargado, 4, 1)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(10, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(844, 60)
+        Me.TableLayoutPanel1.TabIndex = 71
         '
         'frmSeniaAdministracion
         '
@@ -1237,6 +1294,8 @@ Partial Class frmSeniaAdministracion
         Me.PanelTotalMayorista.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1337,4 +1396,7 @@ Partial Class frmSeniaAdministracion
     Friend WithEvents IVA As DataGridViewTextBoxColumn
     Friend WithEvents MONTO As DataGridViewTextBoxColumn
     Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
+    Friend WithEvents lblPorcentajeFacturacion As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
 End Class

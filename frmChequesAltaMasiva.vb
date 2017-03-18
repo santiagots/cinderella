@@ -66,11 +66,11 @@ Public Class frmChequesAltaMasiva
         Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
         frmBuscarClienteMayorista.ShowDialog()
 
-        If frmBuscarClienteMayorista.idCliente <> "" And frmBuscarClienteMayorista.razonSocialCliente <> "" Then
+        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
             ClienteID.Clear()
             ClienteNombre.Clear()
-            ClienteID.Text = frmBuscarClienteMayorista.idCliente
-            ClienteNombre.Text = frmBuscarClienteMayorista.razonSocialCliente
+            ClienteID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
+            ClienteNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
         End If
         Me.Cursor = Cursors.Arrow
     End Sub
@@ -80,11 +80,11 @@ Public Class frmChequesAltaMasiva
         Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
         frmBuscarClienteMayorista.ShowDialog()
 
-        If frmBuscarClienteMayorista.idCliente <> "" And frmBuscarClienteMayorista.razonSocialCliente <> "" Then
+        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
             LibradorID.Clear()
             LibradorNombre.Clear()
-            LibradorID.Text = frmBuscarClienteMayorista.idCliente
-            LibradorNombre.Text = frmBuscarClienteMayorista.razonSocialCliente
+            ClienteID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
+            ClienteNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
         End If
         Me.Cursor = Cursors.Arrow
     End Sub

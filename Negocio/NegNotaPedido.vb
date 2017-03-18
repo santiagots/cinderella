@@ -19,9 +19,11 @@ Public Class NegNotaPedido
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
         dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
         dt.Columns.Add("Precio", Type.GetType("System.Double"))
+        dt.Columns.Add("Iva", Type.GetType("System.Double"))
+        dt.Columns.Add("Monto", Type.GetType("System.Double"))
 
         For Each item As Entidades.NotaPedido_Detalle In EntDetalleNotaPedido
-            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio)
+            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio, item.Iva, item.Monto)
         Next
 
         Try
@@ -48,6 +50,7 @@ Public Class NegNotaPedido
         cmd.CommandText = "sp_NotaPedido_Alta"
         With cmd.Parameters
             .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
+            .AddWithValue("@PorcentajeFacturacion", EntNotaPedido.PorcentajeFacturacion)
             .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
             .AddWithValue("@id_Encargado", EntNotaPedido.id_Encargado)
             .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
@@ -113,6 +116,7 @@ Public Class NegNotaPedido
         With cmd.Parameters
             .AddWithValue("@id_NotaPedido", EntNotaPedido.id_NotaPedido)
             .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
+            .AddWithValue("@PorcentajeFacturacion", EntNotaPedido.PorcentajeFacturacion)
             .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
             .AddWithValue("@id_Encargado", EntNotaPedido.id_Encargado)
             .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
@@ -228,6 +232,7 @@ Public Class NegNotaPedido
         notaPedido.EmpleadoNombreyApellido = row.Item("EmpleadoNombreyApellido").ToString
         notaPedido.Fecha = row.Item("Fecha").ToString
         notaPedido.id_Cliente = If(row.Item("id_Cliente") Is DBNull.Value, 0, row.Item("id_Cliente"))
+        notaPedido.PorcentajeFacturacion = If(row.Item("PorcentajeFacturacion") Is DBNull.Value, 0, row.Item("PorcentajeFacturacion"))
         notaPedido.Id_ConsumidorFinal = If(row.Item("Id_ConsumidorFinal") Is DBNull.Value, 0, row.Item("Id_ConsumidorFinal"))
         notaPedido.id_Empleado = If(row.Item("id_Empleado") Is DBNull.Value, 0, row.Item("id_Empleado"))
         notaPedido.id_Encargado = If(row.Item("id_Encargado") Is DBNull.Value, 0, row.Item("id_Encargado"))
@@ -253,6 +258,8 @@ Public Class NegNotaPedido
         notaPedidoDetalle.id_Producto = row.Item("id_Producto")
         notaPedidoDetalle.id_NotaPedido = row.Item("id_NotaPedido")
         notaPedidoDetalle.Precio = row.Item("Precio")
+        notaPedidoDetalle.Iva = row.Item("Iva")
+        notaPedidoDetalle.Monto = row.Item("Monto")
 
         Return notaPedidoDetalle
     End Function

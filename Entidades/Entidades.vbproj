@@ -76,6 +76,7 @@
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />
     <Compile Include="Cheque.vb" />
+    <Compile Include="Presupuesto.vb" />
     <Compile Include="ClienteMinorista.vb" />
     <Compile Include="Direccion.vb" />
     <Compile Include="Enum\TipoCliente.vb" />
@@ -111,6 +112,7 @@
     <Compile Include="Perfiles.vb" />
     <Compile Include="Precios.vb" />
     <Compile Include="Precios_Categorias.vb" />
+    <Compile Include="Presupuesto_Detalle.vb" />
     <Compile Include="Productos.vb" />
     <Compile Include="Productos_Categorias.vb" />
     <Compile Include="Productos_Subcategorias.vb" />

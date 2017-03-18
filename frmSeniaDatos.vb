@@ -22,6 +22,7 @@ Public Class frmSeniaDatos
     Private MontoSenia As Decimal
     Private MontoTotal As Decimal
     Private IVATotal As Decimal
+    Private PorcentajeFacturacion As Decimal
     Private Productos As DataTable
     Private FechaSeña As DateTime
     Private ClienteMinorista As Entidades.ClienteMinorista
@@ -32,7 +33,7 @@ Public Class frmSeniaDatos
     Private negDireccion As Negocio.NegDireccion = New Negocio.NegDireccion()
     Private negSenia As Negocio.NegSenia = New Negocio.NegSenia()
 
-    Sub New(tipoVenta As TipoCliente, vendedor As String, encargado As String, tipoPago As String, facturado As Boolean, idClienteMayorista As Integer, subTotal As Decimal, descuento As Decimal, senia As Decimal, montoTotal As Decimal, IVA As Decimal, Productos As DataTable, FechaSeña As DateTime)
+    Sub New(tipoVenta As TipoCliente, vendedor As String, encargado As String, tipoPago As String, facturado As Boolean, idClienteMayorista As Integer, subTotal As Decimal, descuento As Decimal, senia As Decimal, montoTotal As Decimal, IVA As Decimal, PorcentajeFacturacion As Decimal, Productos As DataTable, FechaSeña As DateTime)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -52,6 +53,7 @@ Public Class frmSeniaDatos
         Me.IVATotal = IVA
         Me.Productos = Productos
         Me.FechaSeña = FechaSeña
+        Me.PorcentajeFacturacion = PorcentajeFacturacion
         Me.ClienteMayorista = negClienteMayorista.TraerCliente(idClienteMayorista)
     End Sub
 
@@ -61,6 +63,7 @@ Public Class frmSeniaDatos
         lblPago.Text = TipoPago
         lblFacturado.Text = If(Facturado, "Si", "No")
         lblFechaSeña.Text = FechaSeña.ToString("dd-MM-yyyy")
+        lblPorcentajeFacturacion.Text = PorcentajeFacturacion
         cmbModoEntrega.SelectedIndex = 0
         dpkFechaRetiro.MinDate = DateTime.Now.AddDays(1).Date
 

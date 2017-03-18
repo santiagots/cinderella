@@ -116,6 +116,7 @@
     <Compile Include="NegPatentes.vb" />
     <Compile Include="NegPerfiles.vb" />
     <Compile Include="NegPlanillaSucursales.vb" />
+    <Compile Include="NegPresupuesto.vb" />
     <Compile Include="NegProductos.vb" />
     <Compile Include="NegProductosCategorias.vb" />
     <Compile Include="NegProveedores.vb" />

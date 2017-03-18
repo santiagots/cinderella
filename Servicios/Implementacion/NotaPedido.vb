@@ -33,7 +33,9 @@ Public Class NotaPedido
             detalle.id_Detalle = det.id_Detalle
             detalle.id_NotaPedido = det.id_NotaPedido
             detalle.id_Producto = det.id_Producto
-            detalle.Precio = det.Precio
+            detalle.Precio = 0
+            detalle.Iva = 0
+            detalle.Monto = det.Precio
 
             detalleNotaPedido.Add(detalle)
         Next

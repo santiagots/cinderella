@@ -76,6 +76,16 @@
         End Set
     End Property
 
+    Private PorcentajeFacturacion_ As Double
+    Public Property PorcentajeFacturacion() As Double
+        Get
+            Return PorcentajeFacturacion_
+        End Get
+        Set(ByVal value As Double)
+            PorcentajeFacturacion_ = value
+        End Set
+    End Property
+
     Public Property Anulado() As Integer
         Get
             Return Anulado_

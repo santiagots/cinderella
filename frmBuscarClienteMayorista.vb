@@ -4,9 +4,7 @@ Public Class frmBuscarClienteMayorista
     Dim NegClientes As New Negocio.NegClienteMayorista
     Dim dsClientes As DataSet
 
-    Public idCliente As String
-    Public razonSocialCliente As String
-    Public idListaPrecio As String
+    Public clienteMayorista As ClienteMayorista
 
     'Click en Buscar cliente!.
     Private Sub btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_Buscar.Click
@@ -46,10 +44,7 @@ Public Class frmBuscarClienteMayorista
 
             If DG_Clientes.SelectedRows.Count > 0 Then
                 If e.RowIndex >= 0 Then
-                    Dim clienteMayorista As ClienteMayorista = DG_Clientes.CurrentRow.DataBoundItem
-                    idCliente = clienteMayorista.Id
-                    razonSocialCliente = clienteMayorista.RazonSocial
-                    idListaPrecio = clienteMayorista.IdListaPrecio
+                    clienteMayorista = DG_Clientes.CurrentRow.DataBoundItem
                     Me.Close()
                 End If
             End If

@@ -578,7 +578,7 @@ Public Class frmVentasAdministracion
                 frmFacturar.Monto = Total
                 frmFacturar.Descuento = Descuento
                 frmFacturar.IvaTotal = IVA
-                frmFacturar.MontoSinDescuento = SubTotal
+                frmFacturar.SubTotal = SubTotal
                 frmFacturar.TipoPago = TipoPago
                 frmFacturar.TipoCliente = TipoCliente()
                 frmFacturar.id_Cliente = id_Cliente
@@ -756,7 +756,7 @@ Public Class frmVentasAdministracion
         frmFacturar.id_Venta = id_VentaDetalle
         frmFacturar.Monto = MontoTotalDetalle
         frmFacturar.Descuento = DescuentoDetalle
-        frmFacturar.MontoSinDescuento = SubTotalDetalle
+        frmFacturar.SubTotal = SubTotalDetalle
         frmFacturar.TipoPago = TipoPagoDetalle
         Funciones.ControlInstancia(frmFacturar).Show()
 

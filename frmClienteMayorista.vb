@@ -72,6 +72,19 @@ Public Class frmClienteMayorista
         End If
     End Sub
 
+    Private Sub Validacion_CUIT(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles txt_Cuit.Validating, txt_Cuit_Mod.Validating
+        If CType(sender, MaskedTextBox).MaskFull Then
+            Dim NegErrores As NegManejadorErrores = New NegManejadorErrores()
+            If Not NegErrores.ValidarCuit(CType(sender, MaskedTextBox).Text) Then
+                ErrorCliente.SetError(sender, "El CUIL ingresado es incorrecto")
+                e.Cancel = True
+            Else
+                ErrorCliente.SetError(sender, String.Empty)
+                e.Cancel = False
+            End If
+        End If
+    End Sub
+
     Private Sub ComboBox_Validacion_Requerido(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles cb_Provincia_Facturacion.Validating, cb_Localidad_Facturacion.Validating, cb_Distrito_Facturacion.Validating, cb_CondicionIva.Validating, cb_ListaPrecios.Validating, cb_CondicionIva_Mod.Validating, cb_Provincia_Facturacion_Mod.Validating, cb_Localidad_Facturacion_Mod.Validating, cb_ListaPrecios_Mod.Validating, cb_Distrito_Facturacion_Mod.Validating
         If (Not ValidarRequerido(CType(CType(sender, ComboBox).SelectedValue, Integer), sender)) Then
             e.Cancel = True

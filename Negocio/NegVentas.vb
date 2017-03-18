@@ -18,9 +18,11 @@ Public Class NegVentas
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
         dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
         dt.Columns.Add("Precio", Type.GetType("System.Double"))
+        dt.Columns.Add("Iva", Type.GetType("System.Double"))
+        dt.Columns.Add("Monto", Type.GetType("System.Double"))
 
         For Each item As Entidades.Ventas_Detalle In EntDetalleVenta
-            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio)
+            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio, item.Iva, item.Monto)
         Next
 
         Try
@@ -50,6 +52,7 @@ Public Class NegVentas
         cmd.CommandText = "sp_Ventas_Alta"
         With cmd.Parameters
             .AddWithValue("@id_Cliente", EntVenta.id_Cliente)
+            .AddWithValue("@PorcentajeFacturacion", EntVenta.PorcentajeFacturacion)
             .AddWithValue("@id_Empleado", EntVenta.id_Empleado)
             .AddWithValue("@id_Encargado", EntVenta.id_Encargado)
             .AddWithValue("@id_Sucursal", EntVenta.id_Sucursal)

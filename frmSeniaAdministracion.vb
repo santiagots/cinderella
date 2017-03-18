@@ -110,7 +110,7 @@ Public Class frmSeniaAdministracion
                             frmFacturar.Monto = senia.MontoSenia
                             frmFacturar.Descuento = 0
                             frmFacturar.IvaTotal = 0
-                            frmFacturar.MontoSinDescuento = 0
+                            frmFacturar.SubTotal = 0
                             frmFacturar.TipoPago = TiposPago
                             frmFacturar.TipoCliente = TipoCliente()
                             frmFacturar.ShowDialog()
@@ -195,6 +195,7 @@ Public Class frmSeniaAdministracion
                 lblCantidad.Text = dsVentas.Tables(0).Rows(0).Item("Cantidad_Total").ToString
                 lblTipoVenta.Text = dsVentas.Tables(0).Rows(0).Item("TiposVenta").ToString
                 lblPago.Text = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString
+                lblPorcentajeFacturacion.Text = dsVentas.Tables(0).Rows(0).Item("PorcentajeFacturacion").ToString
 
                 Dim MontoTotalDetalle As Decimal = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
                 Dim DescuentoDetalle As Decimal = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
@@ -226,7 +227,7 @@ Public Class frmSeniaAdministracion
                 'Detalle de la venta.
                 Dim dsVentasDetalle As DataSet = NegVentas.TraerVentaDetalle(SeniaSeleccionada.IdVentaSenia)
 
-                For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
+                For Each ventaDetalle As DataRow In dsVentasDetalle.Tables(0).Rows
                     AgregarProducto(ventaDetalle)
                 Next
 
@@ -281,66 +282,56 @@ Public Class frmSeniaAdministracion
     End Sub
 
     Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double)
+        Dim PorcentajeFacturacion As Double = Double.Parse(lblPorcentajeFacturacion.Text) / 100
         lblDescuentoMayorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
         lblSubtotalMayorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
-        lblIVAMayorista.Text = "$ " & Format(SubTotalDetalle * 0.21, "###0.00")
+        lblIVAMayorista.Text = "$ " & Format(SubTotalDetalle * 0.21 * PorcentajeFacturacion, "###0.00")
         lblMontoMayorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
         lblSeniaMayorista.Text = "$ " & Format(Senia, "###0.00")
         lblImporteSaldarMayorista.Text = "$ " & Format(MontoTotalDetalle - Senia, "###0.00")
     End Sub
 
-    Private Sub AgregarProducto(ventaDetalle As Object)
-        Dim precio As Decimal = CType(ventaDetalle.item("Precio").ToString, Decimal)
-
-        If TipoCliente() = TipoCliente.Minorista Then
-            AgregarProducto(ventaDetalle, 0, 0, precio)
-        Else
-            AgregarProducto(ventaDetalle, precio / 1.21, (precio / 1.21) * 0.21, precio)
-        End If
-
-    End Sub
-
-    Private Sub AgregarProducto(ventaDetalle As Object, precio As Decimal, iva As Decimal, monto As Decimal)
+    Private Sub AgregarProducto(ventaDetalle As DataRow)
         'Creo la fila del producto.
         Dim dgvRow As New DataGridViewRow
         Dim dgvCell As DataGridViewCell
 
         'Valor de la Columna Codigo
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Codigo").ToString
+        dgvCell.Value = ventaDetalle.Item("Codigo").ToString
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Nombre
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Nombre").ToString
+        dgvCell.Value = ventaDetalle.Item("Nombre").ToString
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Cantidad
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.item("Cantidad").ToString
+        dgvCell.Value = ventaDetalle.Item("Cantidad").ToString
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Precio
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = precio
+        dgvCell.Value = ventaDetalle.Item("Precio").ToString
         'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna IVA
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = iva
+        dgvCell.Value = ventaDetalle.Item("Iva").ToString
         'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Monto
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = monto
+        dgvCell.Value = ventaDetalle.Item("Monto").ToString
         'dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Subtotal
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = monto * ventaDetalle.item("Cantidad").ToString
+        dgvCell.Value = ventaDetalle.Item("Monto") * ventaDetalle.Item("Cantidad")
         dgvRow.Cells.Add(dgvCell)
 
         dgvRow.Height = "20"

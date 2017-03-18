@@ -228,6 +228,7 @@ Public Class NegClienteMayorista
             .Observaciones = row("Observaciones")
             .RazonSocial = row("RazonSocial")
             .SaldoCuentaCorriente = 0
+            .SaldoNotaPedido = row("SaldoNotaPedido")
             .Transporte = row("Transporte")
         End With
         Return cliente

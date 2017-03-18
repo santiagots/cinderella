@@ -1,6 +1,6 @@
 ﻿Public Class NotaPedido_Detalle
     Private id_NotaPedido_, id_Detalle_, id_Producto_, Cantidad_ As Integer
-    Dim Precio_ As Double
+    Dim Precio_, Iva_, Monto_ As Double
 
     Public Property id_NotaPedido() As Integer
         Get
@@ -44,6 +44,24 @@
         End Get
         Set(ByVal value As Double)
             Precio_ = value
+        End Set
+    End Property
+
+    Public Property Iva() As Double
+        Get
+            Return Iva_
+        End Get
+        Set(ByVal value As Double)
+            Iva_ = value
+        End Set
+    End Property
+
+    Public Property Monto() As Double
+        Get
+            Return Monto_
+        End Get
+        Set(ByVal value As Double)
+            Monto_ = value
         End Set
     End Property
 End Class
