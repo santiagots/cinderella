@@ -446,6 +446,13 @@ Public Class MDIContenedor
             Btn_VentasMenu.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Presupuesto_Administración_Visualizar) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Presupuesto_Administración_Detalle_Anular)) Then
+            PresupuestoToolStripMenuItem.Visible = True
+        Else
+            PresupuestoToolStripMenuItem.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_ResumenDiario)) Then
             AccesoResumen.Visible = True
         Else
@@ -595,19 +602,19 @@ Public Class MDIContenedor
         End Try
 
         Try
-            'Cierro las cajas Antiguas que no esten cerradas
-            CerrarCajasAntiguas()
-        Catch ex As Exception
-            Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha encontrado un error al calcular las cajas pendientes. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-
-        Try
             'Sincornizo las bases de datos local y remotas.
             SincornizarBasesDatos()
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error al sincronizar las bases de datos. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Try
+            'Cierro las cajas Antiguas que no esten cerradas
+            CerrarCajasAntiguas()
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al calcular las cajas pendientes. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
         Try
@@ -1682,5 +1689,15 @@ Public Class MDIContenedor
             Funciones.ControlInstancia(frmClienteMayorista).Show()
             Me.Cursor = Cursors.Arrow
         End If
+    End Sub
+
+    Private Sub AdministracionToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AdministracionToolStripMenuItem1.Click
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmPresupuestoAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmPresupuestoAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
     End Sub
 End Class

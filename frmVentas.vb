@@ -124,9 +124,12 @@ Public Class frmVentas
                             End If
                         End If
 
-                        DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value += 1
-                        DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value = (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value * DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
-                        CalcularPreciosDescuento()
+                        Dim frmStockIngreso As frmStockIngreso = New frmStockIngreso(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value + 1)
+                        If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                            DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value = frmStockIngreso.stockCargado
+                            DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value = (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value * DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                            CalcularPreciosDescuento()
+                        End If
                     Else
                         Me.Cursor = Cursors.Arrow
                         MessageBox.Show("El producto seleccionado ya se encuentra ingresado.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -151,9 +154,16 @@ Public Class frmVentas
                     Else
                         Return
                     End If
+                Else
+                    Dim frmStockIngreso As frmStockIngreso = New frmStockIngreso(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, 1)
+                    If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                        cantidad = frmStockIngreso.stockCargado
+                    Else
+                        Return
+                    End If
                 End If
 
-                NumeroFila = DG_Productos.Rows.Count + 1
+                    NumeroFila = DG_Productos.Rows.Count + 1
 
                 'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
                 Dim Precio As Double = 0
@@ -173,9 +183,13 @@ Public Class frmVentas
                     Case Else
                         Precio = 0
                 End Select
-                Precio = Format(CType(Precio, Decimal), "###0.00")
 
-                AgregarItemAGrilla(EntProducto, TipoAccion, NumeroFila, cantidad, Precio / 1.21, Precio * 0.21, Precio)
+                Dim PorcentajeFacturacion As Double = CType(txt_PorcentajeFacturacion.Value, Double) / 100
+                Dim PrecioSinIVA As Double = Precio / (1 + 0.21 * PorcentajeFacturacion)
+                Dim IVA As Double = PrecioSinIVA * 0.21 * PorcentajeFacturacion
+                Dim Monto As Double = PrecioSinIVA + IVA
+
+                AgregarItemAGrilla(EntProducto, TipoAccion, NumeroFila, cantidad, PrecioSinIVA, IVA, Monto)
 
             End If
 
@@ -729,13 +743,11 @@ Public Class frmVentas
             DG_Productos.Columns("IVA").Visible = True
             PanelTotalMayorista.Visible = True
             PanelTotalMinorista.Visible = False
-            txt_PorcentajeFacturacion.Text = 100
         Else
             'Minorista
             Gb_Cliente.Enabled = False
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
-            txt_PorcentajeFacturacion.Text = 0
             'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
             dsListas = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
             DG_Productos.Columns("MONTO").ReadOnly = False
@@ -745,6 +757,8 @@ Public Class frmVentas
             PanelTotalMayorista.Visible = False
             PanelTotalMinorista.Visible = True
         End If
+
+        txt_PorcentajeFacturacion.Text = 100
 
         If dsListas.Tables(0).Rows.Count > 0 Then
             Cb_ListaPrecio.DataSource = Nothing
@@ -875,30 +889,30 @@ Public Class frmVentas
                 Return
             End If
 
+            'Seteo TipoVenta
+            If cb_Tipo.SelectedItem = "Minorista" Then
+                TipoVenta = 1
+                PorcentajeFacturacion = 1
+                SubTotal = CType(txt_SubtotalMinorista.Text, Decimal)
+                Descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+                MontoTotal = CType(txt_TotalMinorista.Text, Decimal)
+                MontoSenia = CType(txt_SeniaMinorista.Text, Decimal)
+            Else
+                TipoVenta = 2
+                PorcentajeFacturacion = CType(txt_PorcentajeFacturacion.Text, Decimal) / 100
+                Descuento = CType(txt_DescuentoMayorista.Text, Decimal)
+                SubTotal = CType(txt_SubtotalMayorista.Text, Decimal)
+                IvaTotal = CType(txt_ivaTotalMayorista.Text, Decimal)
+                MontoTotal = CType(txt_TotalMayorista.Text, Decimal)
+                MontoSenia = CType(txt_SeniaMayorista.Text, Decimal)
+            End If
+
             'Tiene asignado vendedor.
             If MessageBox.Show("¿Ésta seguro que desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                If (MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                If (PorcentajeFacturacion > 0 AndAlso MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
                     Facturar = True
                 Else
                     Facturar = False
-                End If
-
-                'Seteo TipoVenta
-                If cb_Tipo.SelectedItem = "Minorista" Then
-                    TipoVenta = 1
-                    PorcentajeFacturacion = 1
-                    SubTotal = CType(txt_SubtotalMinorista.Text, Decimal)
-                    Descuento = CType(txt_DescuentoMinorista.Text, Decimal)
-                    MontoTotal = CType(txt_TotalMinorista.Text, Decimal)
-                    MontoSenia = CType(txt_SeniaMinorista.Text, Decimal)
-                Else
-                    TipoVenta = 2
-                    PorcentajeFacturacion = CType(txt_PorcentajeFacturacion.Text, Decimal) / 100
-                    Descuento = CType(txt_DescuentoMayorista.Text, Decimal)
-                    SubTotal = CType(txt_SubtotalMayorista.Text, Decimal)
-                    IvaTotal = CType(txt_ivaTotalMayorista.Text, Decimal)
-                    MontoTotal = CType(txt_TotalMayorista.Text, Decimal)
-                    MontoSenia = CType(txt_SeniaMayorista.Text, Decimal)
                 End If
 
                 'Seteo ID Cliente
@@ -948,7 +962,7 @@ Public Class frmVentas
                         NotaPedido.id_Empleado = id_Empleado
                         NotaPedido.id_Encargado = id_Encargado
                         If (negNotaPedido.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido()) = 0) Then
-                            MessageBox.Show("La note de pedido no se a podido cerrar. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("La nota de pedido no se a podido cerrar. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Else
                             Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
                             'Elimino la nota de pedido del la grilla de Administracion Notas Pedido
@@ -959,10 +973,11 @@ Public Class frmVentas
                     'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
                     If Facturar Then
                         TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, SubTotal, MontoTotal, IvaTotal, MontoSenia, id_Venta, PorcentajeFacturacion)
-                        'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
-                        If PorcentajeFacturacion < 1 And MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-                            AltaPresupuesto(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, SubTotal, MontoTotal, PorcentajeFacturacion, MontoSenia)
-                        End If
+                    End If
+
+                    'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
+                    If PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                        AltaPresupuesto(id_Venta, TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Descuento, SubTotal, MontoTotal, PorcentajeFacturacion, MontoSenia)
                     End If
 
 
@@ -990,12 +1005,13 @@ Public Class frmVentas
         End Try
     End Sub
 
-    Private Sub AltaPresupuesto(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, Descuento As Double, SubTotal As Double, MontoTotal As Double, PorcentajeFacturacion As Double, MontoSenia As Double)
+    Private Sub AltaPresupuesto(id_Venta As Integer, TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, Descuento As Double, SubTotal As Double, MontoTotal As Double, PorcentajeFacturacion As Double, MontoSenia As Double)
         Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
         Dim DescuentoTotal As Double = Descuento + MontoSeñaSinIva
 
         Dim Presupuesto As Presupuesto = New Presupuesto()
         Presupuesto.Fecha = Date.Now
+        Presupuesto.id_Venta = id_Venta
         Presupuesto.id_ClienteMayorista = id_Cliente
         Presupuesto.id_Empleado = id_Empleado
         Presupuesto.id_Encargado = id_Encargado
@@ -1006,7 +1022,7 @@ Public Class frmVentas
         Presupuesto.Total = Math.Round((CalcularPrecioTotal() - DescuentoTotal) * (1 - PorcentajeFacturacion), 2)
         Presupuesto.SubTotal = Math.Round((CalcularPrecioTotal()) * (1 - PorcentajeFacturacion), 2)
         Presupuesto.Descuento = Math.Round(DescuentoTotal * (1 - PorcentajeFacturacion), 2)
-        Presupuesto.EmpleadoNombreyApellido = Cb_Vendedores.Text
+        Presupuesto.VendedorNombreyApellido = Cb_Vendedores.Text
         Presupuesto.RazonSocialClienteMayorista = txt_RazonSocial.Text
 
         Dim NegPresupuesto As NegPresupuesto = New NegPresupuesto()
@@ -1015,13 +1031,15 @@ Public Class frmVentas
 
         Dim frmReportePresupuesto As frmReportePresupuesto = New frmReportePresupuesto()
         frmReportePresupuesto.presupuesto = Presupuesto
+        frmReportePresupuesto.MdiParent = Funciones.ControlInstancia(MDIContenedor)
         frmReportePresupuesto.ShowDialog()
     End Sub
 
-    Private Sub AltaPresupuestoSenia(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, PorcentajeFacturacion As Double, MontoSenia As Double)
+    Private Sub AltaPresupuestoSenia(id_Venta As Integer, TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, PorcentajeFacturacion As Double, MontoSenia As Double)
         Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
 
         Dim Presupuesto As Presupuesto = New Presupuesto()
+        Presupuesto.id_Venta = id_Venta
         Presupuesto.Fecha = Date.Now
         Presupuesto.id_ClienteMayorista = id_Cliente
         Presupuesto.id_Empleado = id_Empleado
@@ -1033,7 +1051,7 @@ Public Class frmVentas
         Presupuesto.Total = Math.Round(MontoSeñaSinIva * (1 - PorcentajeFacturacion), 2)
         Presupuesto.SubTotal = 0
         Presupuesto.Descuento = 0
-        Presupuesto.EmpleadoNombreyApellido = Cb_Vendedores.Text
+        Presupuesto.VendedorNombreyApellido = Cb_Vendedores.Text
         Presupuesto.RazonSocialClienteMayorista = txt_RazonSocial.Text
 
         Dim NegPresupuesto As NegPresupuesto = New NegPresupuesto()
@@ -1044,6 +1062,7 @@ Public Class frmVentas
 
         Dim frmReportePresupuesto As frmReportePresupuesto = New frmReportePresupuesto()
         frmReportePresupuesto.presupuesto = Presupuesto
+        frmReportePresupuesto.MdiParent = Funciones.ControlInstancia(MDIContenedor)
         frmReportePresupuesto.ShowDialog()
     End Sub
 
@@ -1054,9 +1073,16 @@ Public Class frmVentas
             End If
 
             If (NotaPedido IsNot Nothing) Then
-                ActualizarNotaPedido()
+                If MessageBox.Show("¿Ésta seguro que desea actualizar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+                    ActualizarNotaPedido()
+
+                    Funciones.ControlInstancia(frmNotaPedidoAdministracion).MdiParent = Funciones.ControlInstancia(MDIContenedor)
+                    Funciones.ControlInstancia(frmNotaPedidoAdministracion).Show()
+                End If
             Else
-                CrearNuevaNotaPedido()
+                If MessageBox.Show("¿Ésta seguro que desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+                    CrearNuevaNotaPedido()
+                End If
             End If
 
         Catch ex As Exception
@@ -1210,8 +1236,8 @@ Public Class frmVentas
                 detalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
                 detalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
                 detalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) * porcentaje
-                detalle.Iva = CDbl(DG_Productos.Rows(i).Cells.Item("IVA").Value)
-                detalle.Monto = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value) * porcentaje
+                detalle.Iva = 0
+                detalle.Monto = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) * porcentaje
 
                 detalleNotaPedido.Add(detalle)
             End If
@@ -1317,8 +1343,8 @@ Public Class frmVentas
                     If Facturar Then
                         TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, MontoSenia, id_Venta, PorcentajeFacturacion)
                         'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
-                        If PorcentajeFacturacion < 1 And MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-                            AltaPresupuestoSenia(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia)
+                        If PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                            AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia)
                         End If
                     End If
 
@@ -1609,8 +1635,7 @@ Public Class frmVentas
             frmFacturar.id_Venta = id_Venta
             frmFacturar.id_Cliente = id_Cliente
             frmFacturar.Monto = MontoTotal
-            frmFacturar.Descuento = Descuento - MontoSenia
-            frmFacturar.IvaTotal = IvaTotal
+            frmFacturar.Descuento = Descuento + MontoSenia
             frmFacturar.SubTotal = SubTotal
             frmFacturar.TipoPago = TipoPagoControlador
             frmFacturar.TipoCliente = TipoCliente.Minorista
@@ -1756,6 +1781,13 @@ Public Class frmVentas
             e.Handled = True
         End If
 
+    End Sub
+
+    Private Sub txt_PorcentajeFacturacion_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_PorcentajeFacturacion.KeyDown
+        If (e.KeyCode = Keys.Enter) Then
+            e.SuppressKeyPress = True
+            txt_CodigoBarra.Focus()
+        End If
     End Sub
 
     Private Sub txt_Senia_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Senia.KeyPress

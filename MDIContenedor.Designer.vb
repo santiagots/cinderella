@@ -88,6 +88,8 @@ Partial Class MDIContenedor
         Me.AdministracionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_Reservas = New System.Windows.Forms.ToolStripMenuItem()
         Me.btn_AdminReservas = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PresupuestoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AdministracionToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PlanillasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.SucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -218,7 +220,7 @@ Partial Class MDIContenedor
         '
         'ToolsMenu
         '
-        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas})
+        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas, Me.PresupuestoToolStripMenuItem})
         Me.ToolsMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Menu
         Me.ToolsMenu.Name = "ToolsMenu"
         Me.ToolsMenu.Size = New System.Drawing.Size(116, 20)
@@ -254,7 +256,7 @@ Partial Class MDIContenedor
         '
         Me.ClienteMayoristaToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Sucursal
         Me.ClienteMayoristaToolStripMenuItem.Name = "ClienteMayoristaToolStripMenuItem"
-        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.ClienteMayoristaToolStripMenuItem.Text = "Mayorista"
         '
         'Btn_EmpleadosMenu
@@ -632,6 +634,21 @@ Partial Class MDIContenedor
         Me.btn_AdminReservas.Name = "btn_AdminReservas"
         Me.btn_AdminReservas.Size = New System.Drawing.Size(155, 22)
         Me.btn_AdminReservas.Text = "Administración"
+        '
+        'PresupuestoToolStripMenuItem
+        '
+        Me.PresupuestoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministracionToolStripMenuItem1})
+        Me.PresupuestoToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Recibo_32
+        Me.PresupuestoToolStripMenuItem.Name = "PresupuestoToolStripMenuItem"
+        Me.PresupuestoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PresupuestoToolStripMenuItem.Text = "Presupuesto"
+        '
+        'AdministracionToolStripMenuItem1
+        '
+        Me.AdministracionToolStripMenuItem1.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
+        Me.AdministracionToolStripMenuItem1.Name = "AdministracionToolStripMenuItem1"
+        Me.AdministracionToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
+        Me.AdministracionToolStripMenuItem1.Text = "Administración"
         '
         'Btn_PlanillasMenu
         '
@@ -1372,4 +1389,6 @@ Partial Class MDIContenedor
     Friend WithEvents Btn_Facturas As ToolStripMenuItem
     Friend WithEvents Btn_NotaCredito As ToolStripMenuItem
     Friend WithEvents ClienteMayoristaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PresupuestoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AdministracionToolStripMenuItem1 As ToolStripMenuItem
 End Class

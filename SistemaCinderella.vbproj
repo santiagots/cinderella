@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>84</ApplicationRevision>
+    <ApplicationRevision>93</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -667,6 +667,12 @@
     <Compile Include="frmStockBitacora.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmStockIngreso.Designer.vb">
+      <DependentUpon>frmStockIngreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStockIngreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmStockFaltante.Designer.vb">
       <DependentUpon>frmStockFaltante.vb</DependentUpon>
     </Compile>
@@ -879,6 +885,12 @@
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </Compile>
     <Compile Include="frmNotaPedidoAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPresupuestoAdministracion.Designer.vb">
+      <DependentUpon>frmPresupuestoAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPresupuestoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Recursos.Designer.vb">
@@ -1187,6 +1199,9 @@
     <EmbeddedResource Include="frmStockBitacora.resx">
       <DependentUpon>frmStockBitacora.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmStockIngreso.resx">
+      <DependentUpon>frmStockIngreso.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmStockFaltante.resx">
       <DependentUpon>frmStockFaltante.vb</DependentUpon>
     </EmbeddedResource>
@@ -1292,6 +1307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmNotaPedidoAdministracion.resx">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPresupuestoAdministracion.resx">
+      <DependentUpon>frmPresupuestoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Recursos.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -1450,6 +1468,8 @@
     <None Include="My Project\DataSources\Entidades.Facturacion.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaCredito.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaPedido.datasource" />
+    <None Include="My Project\DataSources\Entidades.Presupuesto.datasource" />
+    <None Include="My Project\DataSources\Entidades.Presupuesto_Detalle.datasource" />
     <None Include="My Project\DataSources\Entidades.Senia.datasource" />
     <None Include="My Project\DataSources\Permiso.datasource" />
     <None Include="My Project\Settings.settings">

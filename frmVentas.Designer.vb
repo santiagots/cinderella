@@ -1272,7 +1272,7 @@ Partial Class frmVentas
         Me.GB_Reserva.Size = New System.Drawing.Size(416, 125)
         Me.GB_Reserva.TabIndex = 28
         Me.GB_Reserva.TabStop = False
-        Me.GB_Reserva.Text = "RECERVA VENTA"
+        Me.GB_Reserva.Text = "RESERVA VENTA"
         '
         'Label22
         '

@@ -39,6 +39,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.NombreCliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.IMPRIMIR = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.PorcentajeFacturacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NotaPedidoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label12 = New System.Windows.Forms.Label()
         Me.BtnFiltrar = New System.Windows.Forms.Button()
@@ -102,7 +103,7 @@ Partial Class frmNotaPedidoAdministracion
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgvNotaPedidos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgvNotaPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvNotaPedidos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Numero, Me.Estado, Me.IdTipoVentaDataGridViewTextBoxColumn, Me.IdTipoPagoDataGridViewTextBoxColumn, Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn, Me.PrecioTotalDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.NombreCliente, Me.Eliminar, Me.IMPRIMIR})
+        Me.dgvNotaPedidos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Numero, Me.Estado, Me.IdTipoVentaDataGridViewTextBoxColumn, Me.IdTipoPagoDataGridViewTextBoxColumn, Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn, Me.PrecioTotalDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.NombreCliente, Me.Eliminar, Me.IMPRIMIR, Me.PorcentajeFacturacion})
         Me.dgvNotaPedidos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dgvNotaPedidos.DataSource = Me.NotaPedidoBindingSource
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -198,6 +199,14 @@ Partial Class frmNotaPedidoAdministracion
         Me.IMPRIMIR.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
         Me.IMPRIMIR.Name = "IMPRIMIR"
         Me.IMPRIMIR.ReadOnly = True
+        '
+        'PorcentajeFacturacion
+        '
+        Me.PorcentajeFacturacion.DataPropertyName = "PorcentajeFacturacion"
+        Me.PorcentajeFacturacion.HeaderText = "PorcentajeFacturacion"
+        Me.PorcentajeFacturacion.Name = "PorcentajeFacturacion"
+        Me.PorcentajeFacturacion.ReadOnly = True
+        Me.PorcentajeFacturacion.Visible = False
         '
         'NotaPedidoBindingSource
         '
@@ -673,4 +682,5 @@ Partial Class frmNotaPedidoAdministracion
     Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents IMPRIMIR As DataGridViewImageColumn
     Friend WithEvents ChkFiltroFecha As CheckBox
+    Friend WithEvents PorcentajeFacturacion As DataGridViewTextBoxColumn
 End Class

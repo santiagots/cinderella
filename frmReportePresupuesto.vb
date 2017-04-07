@@ -45,7 +45,7 @@ Public Class frmReportePresupuesto
         rpt.SetDataSource(ds.Tables("Presupuesto"))
 
         CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings("NombreSucursal")
-        CType(rpt.ReportDefinition.ReportObjects("txtNombreVendedor"), TextObject).Text = presupuesto.EmpleadoNombreyApellido
+        CType(rpt.ReportDefinition.ReportObjects("txtNombreVendedor"), TextObject).Text = presupuesto.VendedorNombreyApellido
         CType(rpt.ReportDefinition.ReportObjects("txtNombreCliente"), TextObject).Text = presupuesto.RazonSocialClienteMayorista
         CType(rpt.ReportDefinition.ReportObjects("txtTipoVenta"), TextObject).Text = If(presupuesto.id_TipoVenta = 1, "Minorista", "Mayorista")
         CType(rpt.ReportDefinition.ReportObjects("txtNumero"), TextObject).Text = presupuesto.id_Presupuesto
@@ -53,6 +53,11 @@ Public Class frmReportePresupuesto
         CType(rpt.ReportDefinition.ReportObjects("TxtSubTotal"), TextObject).Text = presupuesto.SubTotal.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtDescuento"), TextObject).Text = presupuesto.Descuento.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtTotal"), TextObject).Text = presupuesto.Total.ToString("C2")
+
+        If (presupuesto.Anulado) Then
+            CType(rpt.ReportDefinition.ReportObjects("TxtDescipcionAnulado"), TextObject).Text = String.Format("PRESUPUESTO ANULADO{0}MOTIVO: {1}{0}FECHA: {2}", Environment.NewLine, presupuesto.DescripcionAnulado, presupuesto.FechaAnulado)
+        End If
+
 
         CrViewer.ReportSource = rpt
         CrViewer.Refresh()

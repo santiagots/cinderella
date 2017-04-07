@@ -22,6 +22,7 @@
         eStock = NegStock.TraerStockProducto(idProducto, idSucursal)
         lblMensaje.Text = String.Format(lblMensaje.Text, codigoProducto, eStock.Stock_Actual)
         txtStock.Text = stockCargado
+        Me.ActiveControl = txtStock
     End Sub
 
 

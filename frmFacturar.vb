@@ -231,7 +231,7 @@ Public Class frmFacturar
                     'MAGIC MOMENT: FACTURA MACHINE !
                     'Completo la entidad de Facturacion.
                     EntFacturacion.id_Venta = id_Venta
-                    EntFacturacion.Monto = Monto
+                    EntFacturacion.Monto = If(EsSenia, MontoSenia, Monto)
                     EntFacturacion.NumeroFactura = numero
                     EntFacturacion.CondicionIva = Cb_IVA.Text
                     EntFacturacion.Nombre = Trim(txt_Nombre.Text)
@@ -493,7 +493,7 @@ Public Class frmFacturar
                     'MAGIC MOMENT: FACTURA MACHINE !
                     'Completo la entidad de Facturacion.
                     EntNotaCredito.id_Devolucion = id_Devolucion
-                    EntNotaCredito.Monto = Monto
+                    EntNotaCredito.Monto = If(EsSenia, MontoSenia, Monto)
                     EntNotaCredito.NumeroNotaCredito = numero
                     EntNotaCredito.Nombre = Trim(txt_Nombre.Text)
                     EntNotaCredito.Cuit = Trim(txt_Cuit.Text)
@@ -616,7 +616,11 @@ Public Class frmFacturar
                             'Seteo la entidad para cada Item.
                             EntControlador.DPPAL = Func.ReemplazarCaracteres(prod.Item("Nombre").ToString)
                             EntControlador.CANTIDAD = Func.FormatearCantidad(prod.Item("Cantidad"))
-                            EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio"))
+                            If (TipoCliente = TipoCliente.Mayorista) Then
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio") * PorcentajeFacturacion * 1.21)
+                            Else
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Monto"))
+                            End If
                             NegControlador.AgregarItemNotaCredito(EntControlador)
                         Next
                     End If

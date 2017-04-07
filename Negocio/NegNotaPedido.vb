@@ -86,9 +86,11 @@ Public Class NegNotaPedido
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
         dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
         dt.Columns.Add("Precio", Type.GetType("System.Double"))
+        dt.Columns.Add("Iva", Type.GetType("System.Double"))
+        dt.Columns.Add("Monto", Type.GetType("System.Double"))
 
         For Each item As Entidades.NotaPedido_Detalle In EntDetalleNotaPedido
-            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio)
+            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio, item.Iva, item.Monto)
         Next
 
         Try

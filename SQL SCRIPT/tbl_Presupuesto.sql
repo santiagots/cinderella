@@ -1,7 +1,7 @@
 USE [CINDERELLA]
 GO
 
-/****** Object:  Table [dbo].[PRESUPUESTO]    Script Date: 16/03/2017 07:25:24 p.m. ******/
+/****** Object:  Table [dbo].[PRESUPUESTO]    Script Date: 24/03/2017 05:34:49 p.m. ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,6 +13,7 @@ GO
 
 CREATE TABLE [dbo].[PRESUPUESTO](
 	[id_Presupuesto] [int] IDENTITY(1,1) NOT NULL,
+	[id_Venta] [int] NULL,
 	[id_Sucursal] [int] NOT NULL,
 	[id_TipoPago] [int] NOT NULL,
 	[id_Encargado] [int] NOT NULL,
@@ -38,5 +39,3 @@ GO
 
 SET ANSI_PADDING OFF
 GO
-
-

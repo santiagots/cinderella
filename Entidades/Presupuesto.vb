@@ -1,8 +1,9 @@
 ﻿Public Class Presupuesto
-    Private id_Presupuesto_, id_Encargado_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_ClienteMayorista_, id_ClienteMinorista_, CantidadTotal_, Anulado_, Habilitado_, Facturado_ As Integer
+    Private id_venta_, id_Presupuesto_, id_Encargado_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_ClienteMayorista_, id_ClienteMinorista_, CantidadTotal_, Habilitado_, Facturado_ As Integer
     Dim total_, Descuento_, Subtotal_ As Double
-    Dim Fecha_ As Date
-    Dim DescripcionAnulado_ As String
+    Dim Fecha_, FechaAnulado_ As Date
+    Dim DescripcionAnulado_, NombreSucursal_, descripcionTipoPago_ As String
+    Dim Anulado_ As Boolean
 
     Public Property id_Presupuesto() As Integer
         Get
@@ -22,12 +23,30 @@
         End Set
     End Property
 
+    Public Property NombreSucursal() As String
+        Get
+            Return NombreSucursal_
+        End Get
+        Set(ByVal value As String)
+            NombreSucursal_ = value
+        End Set
+    End Property
+
     Public Property id_TipoPago() As Integer
         Get
             Return id_TipoPago_
         End Get
         Set(ByVal value As Integer)
             id_TipoPago_ = value
+        End Set
+    End Property
+
+    Public Property DescripcionTipoPago() As String
+        Get
+            Return descripcionTipoPago_
+        End Get
+        Set(ByVal value As String)
+            descripcionTipoPago_ = value
         End Set
     End Property
 
@@ -40,13 +59,13 @@
         End Set
     End Property
 
-    Private empleadoNombreyApellido_ As String
-    Public Property EmpleadoNombreyApellido() As String
+    Private vendedorNombreyApellido_ As String
+    Public Property VendedorNombreyApellido() As String
         Get
-            Return empleadoNombreyApellido_
+            Return vendedorNombreyApellido_
         End Get
         Set(ByVal value As String)
-            empleadoNombreyApellido_ = value
+            vendedorNombreyApellido_ = value
         End Set
     End Property
 
@@ -56,6 +75,15 @@
         End Get
         Set(ByVal value As Integer)
             id_Encargado_ = value
+        End Set
+    End Property
+
+    Public Property id_Venta() As Integer
+        Get
+            Return id_venta_
+        End Get
+        Set(ByVal value As Integer)
+            id_venta_ = value
         End Set
     End Property
 
@@ -117,20 +145,20 @@
         End Set
     End Property
 
-    Public Property Anulado() As Integer
+    Public Property Anulado() As Boolean
         Get
             Return Anulado_
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As Boolean)
             Anulado_ = value
         End Set
     End Property
 
-    Public Property DescripcionAnulado() As Integer
+    Public Property DescripcionAnulado() As String
         Get
             Return DescripcionAnulado_
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As String)
             DescripcionAnulado_ = value
         End Set
     End Property
@@ -168,6 +196,15 @@
         End Get
         Set(ByVal value As Date)
             Fecha_ = value
+        End Set
+    End Property
+
+    Public Property FechaAnulado() As Date
+        Get
+            Return FechaAnulado_
+        End Get
+        Set(ByVal value As Date)
+            FechaAnulado_ = value
         End Set
     End Property
 

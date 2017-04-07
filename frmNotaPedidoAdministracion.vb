@@ -206,6 +206,8 @@ Public Class frmNotaPedidoAdministracion
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
 
+        Me.Close()
+
     End Sub
 
     'Cuando realiza un click dentro del datagrid de productos.
@@ -313,13 +315,18 @@ Public Class frmNotaPedidoAdministracion
     Private Sub dgvNotaPedidos_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvNotaPedidos.DataBindingComplete
         lbl_Msg.Visible = dgvNotaPedidos.Rows.Count = 0
 
+        CalcularTotales()
+    End Sub
 
+    Private Sub CalcularTotales()
         Dim totalSinIva As Double = 0
         Dim total As Double = 0
+        Dim porcentajeFacturacion As Double = 0
 
         For Each row As DataGridViewRow In dgvNotaPedidos.Rows
             total += CType(row.Cells("PrecioTotalDataGridViewTextBoxColumn").Value, Double)
-            totalSinIva += CType(row.Cells("PrecioTotalDataGridViewTextBoxColumn").Value, Double) / 1.21
+            porcentajeFacturacion = CType(row.Cells("porcentajeFacturacion").Value, Double) / 100
+            totalSinIva += CType(row.Cells("PrecioTotalDataGridViewTextBoxColumn").Value, Double) / (1 + 0.21 * porcentajeFacturacion)
         Next
 
         txtTotalSinIVA.Text = totalSinIva.ToString("C2")

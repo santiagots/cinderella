@@ -1,6 +1,7 @@
 ﻿Public Class Presupuesto_Detalle
     Private id_Presupuesto_, id_Detalle_, id_Producto_, Cantidad_ As Integer
     Dim Precio_, Iva_, Monto_ As Double
+    Dim nombreProducto_, CodigoProducto_ As String
 
     Public Property id_Presupuesto() As Integer
         Get
@@ -26,6 +27,24 @@
         End Get
         Set(ByVal value As Integer)
             id_Producto_ = value
+        End Set
+    End Property
+
+    Public Property CodigoProducto() As String
+        Get
+            Return CodigoProducto_
+        End Get
+        Set(ByVal value As String)
+            CodigoProducto_ = value
+        End Set
+    End Property
+
+    Public Property NombreProducto() As String
+        Get
+            Return nombreProducto_
+        End Get
+        Set(ByVal value As String)
+            nombreProducto_ = value
         End Set
     End Property
 
