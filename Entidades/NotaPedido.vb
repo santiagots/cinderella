@@ -1,6 +1,6 @@
 ﻿Public Class NotaPedido
 
-    Private id_NotaPedido_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_, id_Encargado_ As Integer
+    Private id_NotaPedido_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_, id_Encargado_, id_Tarjeta_, CantidadCuotas_ As Integer
     Dim PrecioTotal_ As Double
     Dim Fecha_ As Date
 
@@ -66,6 +66,24 @@
         End Get
         Set(ByVal value As Integer)
             id_TipoVenta_ = value
+        End Set
+    End Property
+
+    Public Property Id_Tarjeta() As Integer
+        Get
+            Return id_Tarjeta_
+        End Get
+        Set(ByVal value As Integer)
+            id_Tarjeta_ = value
+        End Set
+    End Property
+
+    Public Property CantidadCuotas() As Integer
+        Get
+            Return CantidadCuotas_
+        End Get
+        Set(ByVal value As Integer)
+            CantidadCuotas_ = value
         End Set
     End Property
 

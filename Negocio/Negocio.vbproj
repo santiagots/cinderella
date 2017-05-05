@@ -129,6 +129,7 @@
     <Compile Include="NegStock.vb" />
     <Compile Include="NegStockBitacora.vb" />
     <Compile Include="NegSucursales.vb" />
+    <Compile Include="NegTarjeta.vb" />
     <Compile Include="NegTipoComision.vb" />
     <Compile Include="NegTipoPago.vb" />
     <Compile Include="NegTipoEmpleado.vb" />

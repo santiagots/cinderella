@@ -73,9 +73,11 @@
     <Compile Include="Adelantos.vb" />
     <Compile Include="Adicionales.vb" />
     <Compile Include="Aromas.vb" />
+    <Compile Include="Tarjeta.vb" />
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />
     <Compile Include="Cheque.vb" />
+    <Compile Include="CostoFinanciero.vb" />
     <Compile Include="Presupuesto.vb" />
     <Compile Include="ClienteMinorista.vb" />
     <Compile Include="Direccion.vb" />

@@ -123,4 +123,5 @@
     Administración_Reservas_Administración_Reservas = 616
     Administración_Presupuesto_Administración_Visualizar = 617
     Administración_Presupuesto_Administración_Detalle_Anular = 618
+    Administración_CostoFinanciero_Administración = 619
 End Enum

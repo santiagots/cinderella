@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>93</ApplicationRevision>
+    <ApplicationRevision>100</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -82,10 +82,10 @@
     <ApplicationIcon>Imagenes\cinderella.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D83621D72125C550EF3105F4681158B2F36EEECD</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8CE00DBBDAD2D54A9DCD679953DFA95BAB3B56AD</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SistemaCinderella_5_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SistemaCinderella_6_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -161,6 +161,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="frmCostoFinancieroAdministracion.Designer.vb">
+      <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCostoFinancieroAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="db\DsDatos.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -946,6 +952,9 @@
     <Compile Include="VariablesGlobales.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmCostoFinancieroAdministracion.resx">
+      <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DialogIngresos.resx">
       <DependentUpon>DialogIngresos.vb</DependentUpon>
     </EmbeddedResource>
@@ -1406,6 +1415,7 @@
     <None Include="Imagenes\reloj.png" />
     <Content Include="Imagenes\saldos.png" />
     <None Include="Imagenes\TicketPequeño.png" />
+    <None Include="Imagenes\tarjeta.png" />
     <Content Include="Imagenes\top_reporte.jpg" />
     <Content Include="Imagenes\ventas_admin.png" />
     <Content Include="Reportes\CrystalReport2.rpt">
@@ -1464,6 +1474,7 @@
     <None Include="My Project\DataSources\Entidades.ClienteMayorista.datasource" />
     <None Include="My Project\DataSources\Entidades.ClienteMinorista.datasource" />
     <None Include="My Project\DataSources\Entidades.ClientesMayorista.datasource" />
+    <None Include="My Project\DataSources\Entidades.CostoFinanciero.datasource" />
     <None Include="My Project\DataSources\Entidades.Direccion.datasource" />
     <None Include="My Project\DataSources\Entidades.Facturacion.datasource" />
     <None Include="My Project\DataSources\Entidades.NotaCredito.datasource" />
@@ -1471,6 +1482,7 @@
     <None Include="My Project\DataSources\Entidades.Presupuesto.datasource" />
     <None Include="My Project\DataSources\Entidades.Presupuesto_Detalle.datasource" />
     <None Include="My Project\DataSources\Entidades.Senia.datasource" />
+    <None Include="My Project\DataSources\Entidades.Tarjeta.datasource" />
     <None Include="My Project\DataSources\Permiso.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1485,6 +1497,7 @@
     <None Include="SistemaCinderella_3_TemporaryKey.pfx" />
     <None Include="SistemaCinderella_4_TemporaryKey.pfx" />
     <None Include="SistemaCinderella_5_TemporaryKey.pfx" />
+    <None Include="SistemaCinderella_6_TemporaryKey.pfx" />
     <None Include="SistemaCinderella_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

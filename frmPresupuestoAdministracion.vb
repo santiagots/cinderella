@@ -58,9 +58,10 @@ Public Class frmPresupuestoAdministracion
             lblEncargado.Text = presupuestoSeleccionado.EncargadoNombreyApellido
             lblPago.Text = presupuestoSeleccionado.DescripcionTipoPago
             lblCantidad.Text = detallePresupuestoSeleccionado.Count
-            lblDescuento.Text = presupuestoSeleccionado.Descuento
-            lblSubtotal.Text = presupuestoSeleccionado.SubTotal
-            lblMonto.Text = presupuestoSeleccionado.Total
+            lblDescuento.Text = "$ " & Format(presupuestoSeleccionado.Descuento, "###0.00")
+            lblCostoFinanciero.Text = "$ " & Format(presupuestoSeleccionado.CostoFinanciero, "###0.00")
+            lblSubtotal.Text = "$ " & Format(presupuestoSeleccionado.SubTotal, "###0.00")
+            lblMonto.Text = "$ " & Format(presupuestoSeleccionado.Total, "###0.00")
 
             If (presupuestoSeleccionado.Anulado) Then
                 lblAnulado.Visible = True

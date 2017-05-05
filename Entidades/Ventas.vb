@@ -1,6 +1,6 @@
 ﻿Public Class Ventas
-    Private id_Venta_, id_Encargado_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_, CantidadTotal_, Anulado_, Habilitado_, Facturado_ As Integer
-    Dim PrecioTotal_, Descuento_, Subtotal_ As Double
+    Private id_Venta_, id_Encargado_, id_Sucursal_, id_TipoPago_, id_Empleado_, id_TipoVenta_, id_Cliente_, id_Trajeta_, CantidadTotal_, Anulado_, Habilitado_, Facturado_, CantidadCuotas_ As Integer
+    Dim PrecioTotal_, Descuento_, Subtotal_, CostoFinanciero_ As Double
     Dim Fecha_ As Date
 
     Public Property id_Venta() As Integer
@@ -76,6 +76,24 @@
         End Set
     End Property
 
+    Public Property id_Tarjeta() As Integer
+        Get
+            Return id_Trajeta_
+        End Get
+        Set(ByVal value As Integer)
+            id_Trajeta_ = value
+        End Set
+    End Property
+
+    Public Property CantidadCuotas() As Integer
+        Get
+            Return CantidadCuotas_
+        End Get
+        Set(ByVal value As Integer)
+            CantidadCuotas_ = value
+        End Set
+    End Property
+
     Private PorcentajeFacturacion_ As Double
     Public Property PorcentajeFacturacion() As Double
         Get
@@ -137,6 +155,15 @@
         End Get
         Set(ByVal value As Double)
             Descuento_ = value
+        End Set
+    End Property
+
+    Public Property CostoFinanciero() As Double
+        Get
+            Return CostoFinanciero_
+        End Get
+        Set(ByVal value As Double)
+            CostoFinanciero_ = value
         End Set
     End Property
 

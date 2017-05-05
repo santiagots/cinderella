@@ -696,7 +696,7 @@ Partial Class frmChequesAdministracion
         '
         'BancoBindingSource
         '
-        Me.BancoBindingSource.DataSource = GetType(Entidades.Banco)
+        Me.BancoBindingSource.DataSource = GetType(Entidades.Tarjeta)
         '
         'txtLibradorNombre
         '
@@ -1156,7 +1156,7 @@ Partial Class frmChequesAdministracion
         '
         'DetalleBancoBindingSource
         '
-        Me.DetalleBancoBindingSource.DataSource = GetType(Entidades.Banco)
+        Me.DetalleBancoBindingSource.DataSource = GetType(Entidades.Tarjeta)
         '
         'Label30
         '

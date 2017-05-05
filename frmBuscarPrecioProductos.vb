@@ -29,7 +29,7 @@
                         lblPrecio.Text = "No disponible."
                     End If
                 Catch ex As Exception
-                    MessageBox.Show("Se ha encontrado un error al consultar el precio del producto.", "Consultar Precio de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Se ha encontrado un error al consultar el precio del producto. Por favor, vuelva a intentar más tarde o contáctese con el Administrador", "Consultar Precio de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             'Seteo los controles.

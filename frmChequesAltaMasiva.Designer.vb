@@ -329,7 +329,7 @@ Partial Class frmChequesAltaMasiva
         '
         'BancoBindingSource
         '
-        Me.BancoBindingSource.DataSource = GetType(Entidades.Banco)
+        Me.BancoBindingSource.DataSource = GetType(Entidades.Tarjeta)
         '
         'Label4
         '

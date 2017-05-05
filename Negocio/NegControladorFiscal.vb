@@ -145,12 +145,38 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
+    'Funcion que Agrega descuentos.
+    Public Function RecargosTicket(ByVal descrip As String, ByVal descuento As String)
+        Dim bAnswer As Boolean = False
+
+        bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H4))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(descrip)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(descuento)
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
     'Funcion que Agrega descuentos a la nota de credito.
     Public Function DescuentosNotaCredito(ByVal descrip As String, ByVal descuento As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(descrip)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(descuento)
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    'Funcion que Agrega descuentos.
+    Public Function RecargosNotaCredito(ByVal descrip As String, ByVal descuento As String)
+        Dim bAnswer As Boolean = False
+
+        bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(descrip)
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(descuento)
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()

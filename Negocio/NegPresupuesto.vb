@@ -57,9 +57,12 @@ Public Class NegPresupuesto
             .AddWithValue("@id_TipoPago", Presupuesto.id_TipoPago)
             .AddWithValue("@id_TipoVenta", Presupuesto.id_TipoVenta)
             .AddWithValue("@id_ListaPrecio", Presupuesto.id_ListaPrecio)
+            .AddWithValue("@id_Tarjeta", Presupuesto.id_Tarjeta)
+            .AddWithValue("@CantidadCuotas", Presupuesto.CantidadCuotas)
             .AddWithValue("@PrecioTotal", Presupuesto.Total)
             .AddWithValue("@Subtotal", Presupuesto.SubTotal)
             .AddWithValue("@Descuento", Presupuesto.Descuento)
+            .AddWithValue("@CostoFinanciero", Presupuesto.CostoFinanciero)
         End With
 
         'Declaro el tipo de dato para el detalle de la venta
@@ -85,9 +88,9 @@ Public Class NegPresupuesto
 
         'Conecto a la bdd.
         If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Prespuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
+            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
         Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Detalle @PresupuestoId=" & presupuestoID)
+            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
         End If
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
@@ -109,9 +112,9 @@ Public Class NegPresupuesto
 
         'Conecto a la bdd.
         If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Prespuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
+            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
         Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Prespuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
+            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
         End If
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
@@ -164,6 +167,7 @@ Public Class NegPresupuesto
         presupesuto.Anulado = If(row.Item("Anulado") Is DBNull.Value, False, row.Item("Anulado"))
         presupesuto.DescripcionAnulado = If(row.Item("DescripcionAnulado") Is DBNull.Value, String.Empty, row.Item("DescripcionAnulado"))
         presupesuto.Descuento = If(row.Item("Descuento") Is DBNull.Value, 0, row.Item("Descuento"))
+        presupesuto.CostoFinanciero = If(row.Item("CostoFinanciero") Is DBNull.Value, 0, row.Item("CostoFinanciero"))
         presupesuto.VendedorNombreyApellido = If(row.Item("EmpleadoNombreyApellido") Is DBNull.Value, String.Empty, row.Item("EmpleadoNombreyApellido"))
         presupesuto.EncargadoNombreyApellido = If(row.Item("EncargadoNombreyApellido") Is DBNull.Value, String.Empty, row.Item("EncargadoNombreyApellido"))
         presupesuto.Fecha = If(row.Item("Fecha") Is DBNull.Value, Date.MinValue, row.Item("Fecha"))
@@ -175,6 +179,8 @@ Public Class NegPresupuesto
         presupesuto.id_ListaPrecio = If(row.Item("id_ListaPrecio") Is DBNull.Value, 0, row.Item("id_ListaPrecio"))
         presupesuto.id_Presupuesto = If(row.Item("id_Presupuesto") Is DBNull.Value, 0, row.Item("id_Presupuesto"))
         presupesuto.id_Sucursal = If(row.Item("id_Sucursal") Is DBNull.Value, 0, row.Item("id_Sucursal"))
+        presupesuto.id_Tarjeta = If(row.Item("id_Tarjeta") Is DBNull.Value, 0, row.Item("id_Tarjeta"))
+        presupesuto.CantidadCuotas = If(row.Item("Cantidad_Cuotas") Is DBNull.Value, 0, row.Item("Cantidad_Cuotas"))
         presupesuto.NombreSucursal = If(row.Item("NombreSucursal") Is DBNull.Value, String.Empty, row.Item("NombreSucursal"))
         presupesuto.id_TipoPago = If(row.Item("id_TipoVenta") Is DBNull.Value, 0, row.Item("id_TipoVenta"))
         presupesuto.DescripcionTipoPago = If(row.Item("DescripcionTipoPago") Is DBNull.Value, String.Empty, row.Item("DescripcionTipoPago"))
@@ -211,9 +217,9 @@ Public Class NegPresupuesto
 
         'Conecto a la bdd.
         If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Prespuesto_Consulta_venta @VentaId=" & idVenta)
+            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
         Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Prespuesto_Consulta_venta @VentaId=" & idVenta)
+            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
         End If
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then

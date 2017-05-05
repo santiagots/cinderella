@@ -154,3 +154,13 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/SQL SCRIPT/nuevos/Update_Ventas.sql
+/SQL SCRIPT/nuevos/Update_Presupuestos.sql
+/SQL SCRIPT/nuevos/TBL_Ventas.sql
+/SQL SCRIPT/nuevos/TBL_TAJETAS.sql
+/SQL SCRIPT/nuevos/TBL_CostosFinancieros.sql
+/SQL SCRIPT/nuevos/sp.sql
+/SQL SCRIPT/nuevos/NOTAPEDIDO.sql
+/SQL SCRIPT/nuevos/inserts Patentes.sql
+/SQL SCRIPT/nuevos/DROP_SP.sql
+/SQL SCRIPT/nuevos/COSTO_FINANCIERO_TYPE.sql

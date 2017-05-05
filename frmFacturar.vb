@@ -24,6 +24,7 @@ Public Class frmFacturar
     Public id_Venta As Integer
     Public id_Devolucion As Integer
     Public Descuento As Double
+    Public CostoFinanciero As Double
     Public SubTotal As Double
     Public MontoSenia As Double
     Public id_Cliente As Integer
@@ -149,16 +150,17 @@ Public Class frmFacturar
         Cb_IVA.SelectedIndex = 0
 
         If (EsSenia) Then
+            lbl_SubtotalMinorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
+            lbl_CostoFinancieroMinorista.Text = "$ " & Format(CType(CostoFinanciero, Decimal), "###0.00") & ".-"
             Label1.Text = "Total Seña:"
-            lbl_TotalMinorista.Text = "$ " & Format(CType(MontoSenia, Decimal), "###0.00") & ".-"
+            lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
 
-            Label12.Visible = False
             Label11.Visible = False
             lbl_DescuentoMinorista.Visible = False
-            lbl_SubtotalMinorista.Visible = False
         Else
             lbl_TotalMinorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
             lbl_DescuentoMinorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
+            lbl_CostoFinancieroMinorista.Text = "$ " & Format(CType(CostoFinanciero, Decimal), "###0.00") & ".-"
             lbl_SubtotalMinorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
         End If
     End Sub
@@ -172,18 +174,22 @@ Public Class frmFacturar
         Cb_IVA.SelectedIndex = 0
 
         If (EsSenia) Then
-            Label23.Text = "Total Seña:"
-            lbl_TotalMayorista.Text = "$ " & Format(CType(MontoSenia, Decimal), "###0.00") & ".-"
+            If (CostoFinanciero > 0) Then
+                lbl_CostoFinancieroMayorista.Text = "$ " & Format(CType(CostoFinanciero, Decimal), "###0.00") & ".-"
+            Else
+                Label20.Visible = False
+                lbl_CostoFinancieroMayorista.Visible = False
+            End If
+            lbl_SubtotalMayorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
+            lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
+            lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
 
             Label17.Visible = False
-            Label21.Visible = False
-            Label18.Visible = False
             lbl_DescuentoMayorista.Visible = False
-            lbl_SubtotalMayorista.Visible = False
-            lbl_IvaMayorista.Visible = False
         Else
             lbl_TotalMayorista.Text = "$ " & Format(CType(Monto, Decimal), "###0.00") & ".-"
             lbl_DescuentoMayorista.Text = "$ " & Format(CType(Descuento, Decimal), "###0.00") & ".-"
+            lbl_CostoFinancieroMayorista.Text = "$ " & Format(CType(CostoFinanciero, Decimal), "###0.00") & ".-"
             lbl_SubtotalMayorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
             lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
         End If
@@ -372,12 +378,17 @@ Public Class frmFacturar
                 'Si hay descuentos, los agrego al ticket
                 If Descuento > 0 Then
                     NegControlador.DescuentosTicket(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
-                Else
-                    'Subtotal y pago.
-                    Dim sSubtotal As String = NegControlador.SubtotalTicket()
                 End If
 
+                'Si hay Costo Financiero, los agrego al ticket
+                If CostoFinanciero > 0 Then
+                    NegControlador.RecargosTicket(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2))
+                End If
 
+                'Subtotal y pago.
+                If Descuento = 0 AndAlso CostoFinanciero = 0 Then
+                    Dim sSubtotal As String = NegControlador.SubtotalTicket()
+                End If
 
                 NegControlador.PagarTicket(lbl_TipoPago.Text, Func.FormatearPrecio(txt_Pago.Text, 2))
 
@@ -625,11 +636,19 @@ Public Class frmFacturar
                         Next
                     End If
                 End If
+
                 'Si hay descuentos, los agrego al ticket
                 If Descuento > 0 Then
                     NegControlador.DescuentosNotaCredito(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
-                Else
-                    'Subtotal y pago.
+                End If
+
+                'Si hay Costo Financiero, los agrego al ticket
+                If CostoFinanciero > 0 Then
+                    NegControlador.RecargosNotaCredito(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2))
+                End If
+
+                'Subtotal y pago.
+                If Descuento = 0 AndAlso CostoFinanciero = 0 Then
                     Dim sSubtotal As String = NegControlador.SubtotalNotaCredito()
                 End If
 

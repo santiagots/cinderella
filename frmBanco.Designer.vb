@@ -160,7 +160,7 @@ Partial Class frmBanco
         '
         'BancoBindingSource
         '
-        Me.BancoBindingSource.DataSource = GetType(Entidades.Banco)
+        Me.BancoBindingSource.DataSource = GetType(Entidades.Tarjeta)
         '
         'GroupBox2
         '

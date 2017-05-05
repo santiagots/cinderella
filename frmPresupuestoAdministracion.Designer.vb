@@ -32,7 +32,13 @@ Partial Class frmPresupuestoAdministracion
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPresupuestoAdministracion))
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.dgPresupuesto = New System.Windows.Forms.DataGridView()
+        Me.IdPresupuestoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AnuladoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Imprimir = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.PresupuestoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -65,8 +71,8 @@ Partial Class frmPresupuestoAdministracion
         Me.lblCantidad = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.lblDescuento = New System.Windows.Forms.Label()
-        Me.lblMontoMayoristaDescripcion = New System.Windows.Forms.Label()
         Me.lblMonto = New System.Windows.Forms.Label()
+        Me.lblMontoMayoristaDescripcion = New System.Windows.Forms.Label()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.lblSucursal = New System.Windows.Forms.Label()
@@ -86,13 +92,6 @@ Partial Class frmPresupuestoAdministracion
         Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
         Me.BtnAnular = New System.Windows.Forms.Button()
         Me.dgPresupuestoDetalle = New System.Windows.Forms.DataGridView()
-        Me.IdPresupuestoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.AnuladoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PresupuestoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.PresupuestoDetalleBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Numero = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.IdProductoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -101,7 +100,11 @@ Partial Class frmPresupuestoAdministracion
         Me.IvaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Subtotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PresupuestoDetalleBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.lblCostoFinanciero = New System.Windows.Forms.Label()
         CType(Me.dgPresupuesto, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PresupuestoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -113,7 +116,6 @@ Partial Class frmPresupuestoAdministracion
         Me.TableLayoutPanel4.SuspendLayout()
         Me.Gb_Anulado.SuspendLayout()
         CType(Me.dgPresupuestoDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PresupuestoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PresupuestoDetalleBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -156,12 +158,53 @@ Partial Class frmPresupuestoAdministracion
         Me.dgPresupuesto.Size = New System.Drawing.Size(861, 431)
         Me.dgPresupuesto.TabIndex = 4
         '
+        'IdPresupuestoDataGridViewTextBoxColumn
+        '
+        Me.IdPresupuestoDataGridViewTextBoxColumn.DataPropertyName = "id_Presupuesto"
+        Me.IdPresupuestoDataGridViewTextBoxColumn.HeaderText = "Numero"
+        Me.IdPresupuestoDataGridViewTextBoxColumn.Name = "IdPresupuestoDataGridViewTextBoxColumn"
+        Me.IdPresupuestoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'RazonSocialClienteMayoristaDataGridViewTextBoxColumn
+        '
+        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.DataPropertyName = "RazonSocialClienteMayorista"
+        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.HeaderText = "Cliente"
+        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.Name = "RazonSocialClienteMayoristaDataGridViewTextBoxColumn"
+        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'TotalDataGridViewTextBoxColumn
+        '
+        Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
+        Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
+        Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'AnuladoDataGridViewTextBoxColumn
+        '
+        Me.AnuladoDataGridViewTextBoxColumn.DataPropertyName = "Anulado"
+        Me.AnuladoDataGridViewTextBoxColumn.HeaderText = "Anulado"
+        Me.AnuladoDataGridViewTextBoxColumn.Name = "AnuladoDataGridViewTextBoxColumn"
+        Me.AnuladoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FechaDataGridViewTextBoxColumn
+        '
+        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
+        Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
+        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
+        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
+        '
         'Imprimir
         '
         Me.Imprimir.HeaderText = "Imprimir"
         Me.Imprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
         Me.Imprimir.Name = "Imprimir"
         Me.Imprimir.ReadOnly = True
+        '
+        'PresupuestoBindingSource
+        '
+        Me.PresupuestoBindingSource.DataSource = GetType(Entidades.Presupuesto)
         '
         'TableLayoutPanel1
         '
@@ -452,6 +495,8 @@ Partial Class frmPresupuestoAdministracion
         Me.TableLayoutPanel5.ColumnCount = 2
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.lblCostoFinanciero, 1, 4)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label8, 0, 4)
         Me.TableLayoutPanel5.Controls.Add(Me.Label17, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.lblPago, 1, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.Label11, 0, 1)
@@ -459,18 +504,19 @@ Partial Class frmPresupuestoAdministracion
         Me.TableLayoutPanel5.Controls.Add(Me.Label22, 0, 2)
         Me.TableLayoutPanel5.Controls.Add(Me.lblCantidad, 1, 1)
         Me.TableLayoutPanel5.Controls.Add(Me.Label24, 0, 3)
+        Me.TableLayoutPanel5.Controls.Add(Me.lblMontoMayoristaDescripcion, 0, 5)
+        Me.TableLayoutPanel5.Controls.Add(Me.lblMonto, 1, 5)
         Me.TableLayoutPanel5.Controls.Add(Me.lblDescuento, 1, 3)
-        Me.TableLayoutPanel5.Controls.Add(Me.lblMontoMayoristaDescripcion, 0, 4)
-        Me.TableLayoutPanel5.Controls.Add(Me.lblMonto, 1, 4)
         Me.TableLayoutPanel5.Location = New System.Drawing.Point(6, 410)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
-        Me.TableLayoutPanel5.RowCount = 5
+        Me.TableLayoutPanel5.RowCount = 6
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(295, 125)
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(295, 150)
         Me.TableLayoutPanel5.TabIndex = 73
         '
         'Label17
@@ -561,27 +607,27 @@ Partial Class frmPresupuestoAdministracion
         Me.lblDescuento.TabIndex = 38
         Me.lblDescuento.Text = "- - - - - "
         '
-        'lblMontoMayoristaDescripcion
-        '
-        Me.lblMontoMayoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblMontoMayoristaDescripcion.AutoSize = True
-        Me.lblMontoMayoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMontoMayoristaDescripcion.Location = New System.Drawing.Point(3, 110)
-        Me.lblMontoMayoristaDescripcion.Name = "lblMontoMayoristaDescripcion"
-        Me.lblMontoMayoristaDescripcion.Size = New System.Drawing.Size(87, 15)
-        Me.lblMontoMayoristaDescripcion.TabIndex = 35
-        Me.lblMontoMayoristaDescripcion.Text = "Monto total :"
-        '
         'lblMonto
         '
         Me.lblMonto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblMonto.AutoSize = True
         Me.lblMonto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMonto.Location = New System.Drawing.Point(150, 110)
+        Me.lblMonto.Location = New System.Drawing.Point(150, 135)
         Me.lblMonto.Name = "lblMonto"
         Me.lblMonto.Size = New System.Drawing.Size(42, 15)
         Me.lblMonto.TabIndex = 36
         Me.lblMonto.Text = "- - - - - "
+        '
+        'lblMontoMayoristaDescripcion
+        '
+        Me.lblMontoMayoristaDescripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblMontoMayoristaDescripcion.AutoSize = True
+        Me.lblMontoMayoristaDescripcion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMontoMayoristaDescripcion.Location = New System.Drawing.Point(3, 135)
+        Me.lblMontoMayoristaDescripcion.Name = "lblMontoMayoristaDescripcion"
+        Me.lblMontoMayoristaDescripcion.Size = New System.Drawing.Size(87, 15)
+        Me.lblMontoMayoristaDescripcion.TabIndex = 35
+        Me.lblMontoMayoristaDescripcion.Text = "Monto total :"
         '
         'TableLayoutPanel4
         '
@@ -756,9 +802,9 @@ Partial Class frmPresupuestoAdministracion
         Me.lblAnulado.ForeColor = System.Drawing.Color.Red
         Me.lblAnulado.Location = New System.Drawing.Point(307, 410)
         Me.lblAnulado.Name = "lblAnulado"
-        Me.lblAnulado.Size = New System.Drawing.Size(279, 125)
+        Me.lblAnulado.Size = New System.Drawing.Size(279, 143)
         Me.lblAnulado.TabIndex = 28
-        Me.lblAnulado.Text = "VENTA ANULADA."
+        Me.lblAnulado.Text = "PRESUPUESTO ANULADO."
         Me.lblAnulado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Gb_Anulado
@@ -772,7 +818,7 @@ Partial Class frmPresupuestoAdministracion
         Me.Gb_Anulado.Size = New System.Drawing.Size(262, 149)
         Me.Gb_Anulado.TabIndex = 16
         Me.Gb_Anulado.TabStop = False
-        Me.Gb_Anulado.Text = "Anular Venta"
+        Me.Gb_Anulado.Text = "Anular Presupuesto"
         '
         'Label9
         '
@@ -833,51 +879,6 @@ Partial Class frmPresupuestoAdministracion
         Me.dgPresupuestoDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgPresupuestoDetalle.Size = New System.Drawing.Size(848, 311)
         Me.dgPresupuestoDetalle.TabIndex = 11
-        '
-        'IdPresupuestoDataGridViewTextBoxColumn
-        '
-        Me.IdPresupuestoDataGridViewTextBoxColumn.DataPropertyName = "id_Presupuesto"
-        Me.IdPresupuestoDataGridViewTextBoxColumn.HeaderText = "Numero"
-        Me.IdPresupuestoDataGridViewTextBoxColumn.Name = "IdPresupuestoDataGridViewTextBoxColumn"
-        Me.IdPresupuestoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'RazonSocialClienteMayoristaDataGridViewTextBoxColumn
-        '
-        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.DataPropertyName = "RazonSocialClienteMayorista"
-        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.HeaderText = "Cliente"
-        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.Name = "RazonSocialClienteMayoristaDataGridViewTextBoxColumn"
-        Me.RazonSocialClienteMayoristaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'TotalDataGridViewTextBoxColumn
-        '
-        Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
-        Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
-        Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'AnuladoDataGridViewTextBoxColumn
-        '
-        Me.AnuladoDataGridViewTextBoxColumn.DataPropertyName = "Anulado"
-        Me.AnuladoDataGridViewTextBoxColumn.HeaderText = "Anulado"
-        Me.AnuladoDataGridViewTextBoxColumn.Name = "AnuladoDataGridViewTextBoxColumn"
-        Me.AnuladoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'FechaDataGridViewTextBoxColumn
-        '
-        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
-        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'PresupuestoBindingSource
-        '
-        Me.PresupuestoBindingSource.DataSource = GetType(Entidades.Presupuesto)
-        '
-        'PresupuestoDetalleBindingSource
-        '
-        Me.PresupuestoDetalleBindingSource.DataSource = GetType(Entidades.Presupuesto_Detalle)
         '
         'Numero
         '
@@ -941,6 +942,32 @@ Partial Class frmPresupuestoAdministracion
         Me.Subtotal.Name = "Subtotal"
         Me.Subtotal.ReadOnly = True
         '
+        'PresupuestoDetalleBindingSource
+        '
+        Me.PresupuestoDetalleBindingSource.DataSource = GetType(Entidades.Presupuesto_Detalle)
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(3, 110)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(123, 15)
+        Me.Label8.TabIndex = 74
+        Me.Label8.Text = "Costo Financiero :"
+        '
+        'lblCostoFinanciero
+        '
+        Me.lblCostoFinanciero.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblCostoFinanciero.AutoSize = True
+        Me.lblCostoFinanciero.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCostoFinanciero.Location = New System.Drawing.Point(150, 110)
+        Me.lblCostoFinanciero.Name = "lblCostoFinanciero"
+        Me.lblCostoFinanciero.Size = New System.Drawing.Size(42, 15)
+        Me.lblCostoFinanciero.TabIndex = 74
+        Me.lblCostoFinanciero.Text = "- - - - - "
+        '
         'frmPresupuestoAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -951,6 +978,7 @@ Partial Class frmPresupuestoAdministracion
         Me.Name = "frmPresupuestoAdministracion"
         Me.Text = "Presupuesto Administración"
         CType(Me.dgPresupuesto, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PresupuestoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.TableLayoutPanel2.ResumeLayout(False)
@@ -969,7 +997,6 @@ Partial Class frmPresupuestoAdministracion
         Me.Gb_Anulado.ResumeLayout(False)
         Me.Gb_Anulado.PerformLayout()
         CType(Me.dgPresupuestoDetalle, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PresupuestoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PresupuestoDetalleBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -1046,4 +1073,6 @@ Partial Class frmPresupuestoAdministracion
     Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Subtotal As DataGridViewTextBoxColumn
+    Friend WithEvents lblCostoFinanciero As Label
+    Friend WithEvents Label8 As Label
 End Class

@@ -50,8 +50,10 @@ Public Class frmReportePresupuesto
         CType(rpt.ReportDefinition.ReportObjects("txtTipoVenta"), TextObject).Text = If(presupuesto.id_TipoVenta = 1, "Minorista", "Mayorista")
         CType(rpt.ReportDefinition.ReportObjects("txtNumero"), TextObject).Text = presupuesto.id_Presupuesto
         CType(rpt.ReportDefinition.ReportObjects("txtFecha"), TextObject).Text = presupuesto.Fecha
+        CType(rpt.ReportDefinition.ReportObjects("txtFormaPago"), TextObject).Text = presupuesto.DescripcionTipoPago
         CType(rpt.ReportDefinition.ReportObjects("TxtSubTotal"), TextObject).Text = presupuesto.SubTotal.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtDescuento"), TextObject).Text = presupuesto.Descuento.ToString("C2")
+        CType(rpt.ReportDefinition.ReportObjects("TxtCostoFinanciero"), TextObject).Text = presupuesto.CostoFinanciero.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtTotal"), TextObject).Text = presupuesto.Total.ToString("C2")
 
         If (presupuesto.Anulado) Then

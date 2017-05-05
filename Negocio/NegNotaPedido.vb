@@ -58,6 +58,8 @@ Public Class NegNotaPedido
             .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
             .AddWithValue("@id_ListaPrecio", EntNotaPedido.id_ListaPrecio)
             .AddWithValue("@id_ConsumidorFinal", EntNotaPedido.Id_ConsumidorFinal)
+            .AddWithValue("@id_tarjeta", EntNotaPedido.Id_Tarjeta)
+            .AddWithValue("@CantidadCuotas", EntNotaPedido.CantidadCuotas)
             .AddWithValue("@PrecioTotal", EntNotaPedido.PrecioTotal)
             .AddWithValue("@Vendida", If(EntNotaPedido.Vendida, 1, 0))
         End With
@@ -126,6 +128,8 @@ Public Class NegNotaPedido
             .AddWithValue("@id_TipoVenta", EntNotaPedido.id_TipoVenta)
             .AddWithValue("@id_ListaPrecio", EntNotaPedido.id_ListaPrecio)
             .AddWithValue("@id_ConsumidorFinal", EntNotaPedido.Id_ConsumidorFinal)
+            .AddWithValue("@id_tarjeta", EntNotaPedido.Id_Tarjeta)
+            .AddWithValue("@CantidadCuotas", EntNotaPedido.CantidadCuotas)
             .AddWithValue("@PrecioTotal", EntNotaPedido.PrecioTotal)
             .AddWithValue("@Vendida", If(EntNotaPedido.Vendida, 1, 0))
         End With
@@ -243,6 +247,8 @@ Public Class NegNotaPedido
         notaPedido.id_TipoPago = If(row.Item("id_TipoPago") Is DBNull.Value, 0, row.Item("id_TipoPago"))
         notaPedido.id_TipoVenta = If(row.Item("id_TipoVenta") Is DBNull.Value, 0, row.Item("id_TipoVenta"))
         notaPedido.id_ListaPrecio = If(row.Item("id_ListaPrecio") Is DBNull.Value, 0, row.Item("id_ListaPrecio"))
+        notaPedido.Id_Tarjeta = If(row.Item("id_Tarjeta") Is DBNull.Value, 0, row.Item("id_Tarjeta"))
+        notaPedido.CantidadCuotas = If(row.Item("CantidadCuotas") Is DBNull.Value, 0, row.Item("CantidadCuotas"))
         notaPedido.PrecioTotal = row.Item("PrecioTotal").ToString
         notaPedido.RazonSocialCliente = row.Item("RazonSocialCliente").ToString
         notaPedido.Vendida = row.Item("Vendida").ToString

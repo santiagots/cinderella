@@ -83,5 +83,4 @@ Public Class NegBanco
         banco.Nombre = row.Item("Nombre").ToString
         Return banco
     End Function
-
 End Class

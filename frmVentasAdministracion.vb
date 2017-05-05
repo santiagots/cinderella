@@ -13,6 +13,7 @@ Public Class frmVentasAdministracion
     Dim id_VentaDetalle As Integer = 0
     Dim MontoTotalDetalle As Double = 0
     Dim DescuentoDetalle As Double = 0
+    Dim CostoFinancieroDetalle As Double = 0
     Dim SubTotalDetalle As Double = 0
     Dim MontoSenia As Double = 0
     Dim porcentajeFacturacion As Double = 0
@@ -228,13 +229,14 @@ Public Class frmVentasAdministracion
 
                 MontoTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Decimal)
                 DescuentoDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Decimal)
+                CostoFinancieroDetalle = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Decimal)
                 SubTotalDetalle = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Decimal)
                 MontoSenia = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Decimal)
                 PorcentajeFacturacion = CType(dsVentas.Tables(0).Rows(0).Item("PorcentajeFacturacion").ToString, Decimal) / 100
                 VentaSeniada = CType(dsVentas.Tables(0).Rows(0).Item("Senia").ToString, Boolean)
                 id_Cliente = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
-                CargarTotales(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, MontoSenia, porcentajeFacturacion, VentaSeniada)
+                CargarTotales(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, CostoFinancieroDetalle, MontoSenia, porcentajeFacturacion, VentaSeniada)
 
                 If dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString
@@ -295,9 +297,9 @@ Public Class frmVentasAdministracion
         End Try
     End Sub
 
-    Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double, PorcentajeFacturacion As Double, VentaSeniada As Boolean)
+    Private Sub CargarTotales(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, CostoFinancieroDetalle As Double, Senia As Double, PorcentajeFacturacion As Double, VentaSeniada As Boolean)
         If TipoCliente() = TipoCliente.Minorista Then
-            CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, Senia)
+            CargarTotalesMinorista(MontoTotalDetalle, DescuentoDetalle, CostoFinancieroDetalle, SubTotalDetalle, Senia)
             If (Not VentaSeniada) Then
                 Dim posiscion1 As Point = lblSeniaMinorista.Location
                 Dim posiscion2 As Point = lblSeniaMinoristaDescripcion.Location
@@ -313,7 +315,7 @@ Public Class frmVentasAdministracion
             PanelTotalMayorista.Visible = False
             PanelTotalMinoristaSenia.Visible = True
         Else
-            CargarTotalesMayorista(MontoTotalDetalle, DescuentoDetalle, SubTotalDetalle, Senia, PorcentajeFacturacion)
+            CargarTotalesMayorista(MontoTotalDetalle, DescuentoDetalle, CostoFinancieroDetalle, SubTotalDetalle, Senia, PorcentajeFacturacion)
             If (Not VentaSeniada) Then
                 Dim posiscion1 As Point = lblSeniaMayorista.Location
                 Dim posiscion2 As Point = lblSeniaMayoristaDescripcion.Location
@@ -333,16 +335,18 @@ Public Class frmVentasAdministracion
         End If
     End Sub
 
-    Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double)
+    Private Sub CargarTotalesMinorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, CostoFinancieroDetalle As Double, SubTotalDetalle As Double, Senia As Double)
         lblMontoMinorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
         lblDescuentoMinorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
+        lblCostoFinancieroMinorista.Text = "$ " & Format(CostoFinancieroDetalle, "###0.00")
         lblSubtotalMinorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
         lblSeniaMinorista.Text = "$ " & Format(Senia, "###0.00")
         lblPendienteAbonarMinorista.Text = "$ " & Format(MontoTotalDetalle - Senia, "###0.00")
     End Sub
 
-    Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, SubTotalDetalle As Double, Senia As Double, PorcentajeFacturacion As Double)
+    Private Sub CargarTotalesMayorista(MontoTotalDetalle As Double, DescuentoDetalle As Double, CostoFinancieroDetalle As Double, SubTotalDetalle As Double, Senia As Double, PorcentajeFacturacion As Double)
         lblDescuentoMayorista.Text = "$ " & Format(DescuentoDetalle, "###0.00")
+        lblCostoFinancieroMayorista.Text = "$ " & Format(CostoFinancieroDetalle, "###0.00")
         lblSubtotalMayorista.Text = "$ " & Format(SubTotalDetalle, "###0.00")
         lblIVAMayorista.Text = "$ " & Format(SubTotalDetalle * 0.21 * PorcentajeFacturacion, "###0.00")
         lblMontoMayorista.Text = "$ " & Format(MontoTotalDetalle, "###0.00")
@@ -362,7 +366,7 @@ Public Class frmVentasAdministracion
 
         'Valor de la Columna Codigo
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.Item("Codigo").ToString
+        dgvCell.Value = ventaDetalle.Item("Codigo")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Nombre
@@ -372,24 +376,24 @@ Public Class frmVentasAdministracion
 
         'Valor de la Columna Cantidad
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.Item("Cantidad").ToString
+        dgvCell.Value = ventaDetalle.Item("Cantidad")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Precio
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.Item("Precio").ToString
+        dgvCell.Value = ventaDetalle.Item("Precio")
         'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna IVA
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.Item("Iva").ToString
+        dgvCell.Value = ventaDetalle.Item("Iva")
         'dgvCell.Value = Format(0, "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Monto
         dgvCell = New DataGridViewTextBoxCell()
-        dgvCell.Value = ventaDetalle.Item("Monto").ToString
+        dgvCell.Value = ventaDetalle.Item("Monto")
         'dgvCell.Value = Format(CType(ventaDetalle.item("Precio").ToString, Decimal), "###0.00")
         dgvRow.Cells.Add(dgvCell)
 
@@ -452,12 +456,13 @@ Public Class frmVentasAdministracion
             Dim TipoPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
             Dim Total As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
             Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+            Dim CostoFinanciero As Double = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Double)
             Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
             Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
             Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
             'Genero una nota de credito si la venta fue facturada
-            GenerarNotaCredito("La venta se encuentra facturada, desea realizar una nota de crédito?.", TipoFactura, eVentas.id_Venta, Total, Descuento, SeniaMonto, SubTotal * 0.21, SubTotal, porcentajeFacturacion, TipoPago, id_Cliente, False)
+            GenerarNotaCredito("La venta se encuentra facturada, desea realizar una nota de crédito?.", TipoFactura, eVentas.id_Venta, Total, Descuento, CostoFinanciero, SeniaMonto, SubTotal * 0.21, SubTotal, PorcentajeFacturacion, TipoPago, id_Cliente)
 
             AnularPresupuesto(eVentas.id_Venta, "La venta se encuentra presupuestada, desea anular el presupuesto.")
 
@@ -524,16 +529,16 @@ Public Class frmVentasAdministracion
 
             'Limpio Formulario
             txtDescripcionAnular.Clear()
-                Gb_Anulado.Visible = False
-                lblAnulado.Visible = True
-                lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", DateTime.Now)
+            Gb_Anulado.Visible = False
+            lblAnulado.Visible = True
+            lblAnulado.Text = "VENTA ANULADA EL " & String.Format("{0:d}", DateTime.Now)
 
-                'Muestro el resultado
-                MessageBox.Show("Se ha anulado la venta correctamente.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
+            'Muestro el resultado
+            MessageBox.Show("Se ha anulado la venta correctamente.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
 
-                'Muestro el resultado
-                MessageBox.Show("No ha podido ser anulada la venta. Por favor, intente más tarde o contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            'Muestro el resultado
+            MessageBox.Show("No ha podido ser anulada la venta. Por favor, intente más tarde o contactese con el administrador.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
 
     End Sub
@@ -546,12 +551,13 @@ Public Class frmVentasAdministracion
             Dim TipoPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
             Dim Total As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
             Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+            Dim CostoFinanciero As Double = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Double)
             Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
             Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
             Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
             Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
-            GenerarNotaCredito("La venta esta asociada a una reserva la cual a sido retirada y facturada, desea realizar una nota de crédito?", TipoFactura, id_Venta, Total, Descuento, SeniaMonto, SubTotal * 0.21, SubTotal, porcentajeFacturacion, TipoPago, id_Cliente, False)
+            GenerarNotaCredito("La venta esta asociada a una reserva la cual a sido retirada y facturada, desea realizar una nota de crédito?", TipoFactura, id_Venta, Total, Descuento, CostoFinanciero, SeniaMonto, SubTotal * 0.21, SubTotal, porcentajeFacturacion, TipoPago, id_Cliente)
         End If
     End Sub
 
@@ -564,12 +570,13 @@ Public Class frmVentasAdministracion
             Dim TipoPago As String = dsVentas.Tables(0).Rows(0).Item("TiposPago").ToString()
             Dim Total As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
             Dim Descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+            Dim CostoFinanciero As Double = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Double)
             Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
             Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
             Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
             Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
-            GenerarNotaCredito("La venta esta asociada a una reserva facturada, desea realizar una nota de crédito?", TipoFactura, id_Venta, 0, 0, SeniaMonto, 0, 0, PorcentajeFacturacion, TipoPago, id_Cliente, True)
+            GenerarNotaCreditoSenia("La venta esta asociada a una reserva facturada, desea realizar una nota de crédito?", TipoFactura, id_Cliente, SeniaMonto, CostoFinanciero, id_Venta, TipoPago, PorcentajeFacturacion)
         End If
     End Sub
 
@@ -598,7 +605,7 @@ Public Class frmVentasAdministracion
         Next
     End Sub
 
-    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Integer, Total As Double, Descuento As Double, SeniaMonto As Double, IVA As Double, SubTotal As Double, PorcentajeFacturacion As Double, TipoPago As String, id_Cliente As Integer, esSenia As Boolean)
+    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Integer, Total As Double, Descuento As Double, CostoFinanciero As Double, SeniaMonto As Double, IVA As Double, SubTotal As Double, PorcentajeFacturacion As Double, TipoPago As String, id_Cliente As Integer)
         If (Tipofactura >= 0) Then
             If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
                 If (TipoCliente() = Entidades.TipoCliente.Minorista) Then
@@ -607,15 +614,15 @@ Public Class frmVentasAdministracion
                     frmFacturar.id_Venta = IdVenta
                     frmFacturar.Monto = Total
                     frmFacturar.Descuento = Descuento + SeniaMonto
+                    frmFacturar.CostoFinanciero = CostoFinanciero
                     frmFacturar.SubTotal = SubTotal
                     frmFacturar.TipoPago = TipoPago
                     frmFacturar.TipoCliente = TipoCliente.Minorista
-                    frmFacturar.EsSenia = esSenia
+                    frmFacturar.EsSenia = False
                     frmFacturar.NotaCredito = True
                     frmFacturar.PorcentajeFacturacion = 1
                     frmFacturar.ShowDialog()
                 Else
-
                     Dim MontoSeñaSinIva As Double = SeniaMonto / ((0.21 * PorcentajeFacturacion) + 1)
                     Dim DescuentoTotal As Double = Descuento + MontoSeñaSinIva
                     'Abro el form de datos de facturacion.
@@ -623,13 +630,57 @@ Public Class frmVentasAdministracion
                     frmFacturar.id_Venta = id_VentaDetalle
                     frmFacturar.id_Cliente = id_Cliente
                     frmFacturar.Descuento = Math.Round(DescuentoTotal * PorcentajeFacturacion, 2)
+                    frmFacturar.CostoFinanciero = Math.Round(CostoFinanciero * PorcentajeFacturacion, 2)
                     frmFacturar.SubTotal = Math.Round((SubTotal - MontoSeñaSinIva) * PorcentajeFacturacion, 2)
                     frmFacturar.IvaTotal = Math.Round(frmFacturar.SubTotal * 0.21, 2)
                     frmFacturar.Monto = Math.Round(frmFacturar.SubTotal + frmFacturar.IvaTotal, 2)
                     frmFacturar.MontoSenia = Math.Round(MontoSeñaSinIva * PorcentajeFacturacion * 1.21, 2)
                     frmFacturar.TipoPago = TipoPago
                     frmFacturar.TipoCliente = TipoCliente.Mayorista
-                    frmFacturar.EsSenia = esSenia
+                    frmFacturar.EsSenia = False
+                    frmFacturar.NotaCredito = True
+                    frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
+                    frmFacturar.ShowDialog()
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub GenerarNotaCreditoSenia(mensaje As String, Tipofactura As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, id_Venta As Integer, TipoPago As String, PorcentajeFacturacion As Double)
+        If (Tipofactura >= 0) Then
+            If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
+                If (TipoCliente() = Entidades.TipoCliente.Minorista) Then
+                    'Abro el form de datos de facturacion.
+                    Dim frmFacturar As frmFacturar = New frmFacturar()
+                    frmFacturar.id_Venta = id_Venta
+                    frmFacturar.id_Cliente = id_Cliente
+                    frmFacturar.TipoPago = TipoPago
+                    frmFacturar.TipoCliente = TipoCliente.Minorista
+                    frmFacturar.CostoFinanciero = CostoFinanciero
+                    frmFacturar.SubTotal = MontoSenia
+                    frmFacturar.Monto = MontoSenia + CostoFinanciero
+                    frmFacturar.MontoSenia = MontoSenia
+                    frmFacturar.EsSenia = True
+                    frmFacturar.NotaCredito = True
+                    frmFacturar.PorcentajeFacturacion = 1
+                    frmFacturar.ShowDialog()
+                Else
+
+                    Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
+                    Dim CostoFinancieroSinIva As Double = CostoFinanciero / ((0.21 * PorcentajeFacturacion) + 1)
+
+                    'Abro el form de datos de facturacion.
+                    Dim frmFacturar As frmFacturar = New frmFacturar()
+                    frmFacturar.id_Venta = id_Venta
+                    frmFacturar.id_Cliente = id_Cliente
+                    frmFacturar.TipoPago = TipoPago
+                    frmFacturar.TipoCliente = TipoCliente.Mayorista
+                    frmFacturar.CostoFinanciero = Math.Round(CostoFinancieroSinIva, 2)
+                    frmFacturar.SubTotal = Math.Round((MontoSeñaSinIva + CostoFinancieroSinIva) * PorcentajeFacturacion, 2)
+                    frmFacturar.IvaTotal = Math.Round(frmFacturar.SubTotal * 0.21, 2)
+                    frmFacturar.Monto = Math.Round(frmFacturar.SubTotal + frmFacturar.IvaTotal, 2)
+                    frmFacturar.MontoSenia = Math.Round(MontoSeñaSinIva * PorcentajeFacturacion * 1.21, 2)
+                    frmFacturar.EsSenia = True
                     frmFacturar.NotaCredito = True
                     frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
                     frmFacturar.ShowDialog()

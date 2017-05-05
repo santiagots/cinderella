@@ -571,6 +571,14 @@ Public Class MDIContenedor
         Else
             ControladoraToolStripMenuItem.Visible = False
         End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_CostoFinanciero_Administración)) Then
+            CostoFinancieroToolStripMenuItem.Visible = True
+        Else
+            CostoFinancieroToolStripMenuItem.Visible = False
+        End If
+
+
     End Sub
 
     Private Sub MDIContenedor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -1698,6 +1706,13 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmPresupuestoAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmPresupuestoAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub CostoFinancieroToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CostoFinancieroToolStripMenuItem.Click
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmCostoFinancieroAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmCostoFinancieroAdministracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 End Class

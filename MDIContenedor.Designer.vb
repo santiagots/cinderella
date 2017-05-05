@@ -90,6 +90,7 @@ Partial Class MDIContenedor
         Me.btn_AdminReservas = New System.Windows.Forms.ToolStripMenuItem()
         Me.PresupuestoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdministracionToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CostoFinancieroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PlanillasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.SucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -220,7 +221,7 @@ Partial Class MDIContenedor
         '
         'ToolsMenu
         '
-        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas, Me.PresupuestoToolStripMenuItem})
+        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas, Me.PresupuestoToolStripMenuItem, Me.CostoFinancieroToolStripMenuItem})
         Me.ToolsMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Menu
         Me.ToolsMenu.Name = "ToolsMenu"
         Me.ToolsMenu.Size = New System.Drawing.Size(116, 20)
@@ -230,7 +231,7 @@ Partial Class MDIContenedor
         'Btn_AromasMenu
         '
         Me.Btn_AromasMenu.Name = "Btn_AromasMenu"
-        Me.Btn_AromasMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_AromasMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_AromasMenu.Text = "&Aromas"
         Me.Btn_AromasMenu.Visible = False
         '
@@ -238,7 +239,7 @@ Partial Class MDIContenedor
         '
         Me.Btn_ColoresMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Colores
         Me.Btn_ColoresMenu.Name = "Btn_ColoresMenu"
-        Me.Btn_ColoresMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_ColoresMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_ColoresMenu.Text = "&Colores"
         Me.Btn_ColoresMenu.ToolTipText = "Permite la administración de los colores."
         Me.Btn_ColoresMenu.Visible = False
@@ -248,7 +249,7 @@ Partial Class MDIContenedor
         Me.Btn_ClientesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClienteMayoristaToolStripMenuItem})
         Me.Btn_ClientesMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Clientes
         Me.Btn_ClientesMenu.Name = "Btn_ClientesMenu"
-        Me.Btn_ClientesMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_ClientesMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_ClientesMenu.Text = "C&lientes"
         Me.Btn_ClientesMenu.ToolTipText = "Permite la administración de los clientes."
         '
@@ -264,7 +265,7 @@ Partial Class MDIContenedor
         Me.Btn_EmpleadosMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeEmpleadosToolStripMenuItem, Me.VisualizaciónDeSaldoToolStripMenuItem, Me.ToolStripSeparator5, Me.AdicionalesToolStripMenuItem, Me.ReciboDeSueldoToolStripMenuItem, Me.RegistroDeEmpleadosToolStripMenuItem})
         Me.Btn_EmpleadosMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Empleado
         Me.Btn_EmpleadosMenu.Name = "Btn_EmpleadosMenu"
-        Me.Btn_EmpleadosMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_EmpleadosMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_EmpleadosMenu.Text = "&Empleados"
         '
         'AdmDeEmpleadosToolStripMenuItem
@@ -313,14 +314,14 @@ Partial Class MDIContenedor
         Me.Btn_EtiquetasMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Codigobarras
         Me.Btn_EtiquetasMenu.Name = "Btn_EtiquetasMenu"
         Me.Btn_EtiquetasMenu.ShortcutKeys = System.Windows.Forms.Keys.F3
-        Me.Btn_EtiquetasMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_EtiquetasMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_EtiquetasMenu.Text = "Etiquetas"
         '
         'Btn_FeriadosMenu
         '
         Me.Btn_FeriadosMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Calendario
         Me.Btn_FeriadosMenu.Name = "Btn_FeriadosMenu"
-        Me.Btn_FeriadosMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_FeriadosMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_FeriadosMenu.Text = "Feriados"
         Me.Btn_FeriadosMenu.ToolTipText = "Permite la Administración de Feriados"
         '
@@ -328,7 +329,7 @@ Partial Class MDIContenedor
         '
         Me.Btn_MaterialesMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Materiales
         Me.Btn_MaterialesMenu.Name = "Btn_MaterialesMenu"
-        Me.Btn_MaterialesMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_MaterialesMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_MaterialesMenu.Text = "&Materiales"
         Me.Btn_MaterialesMenu.Visible = False
         '
@@ -337,7 +338,7 @@ Partial Class MDIContenedor
         Me.Btn_ProductosMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_ProductosMasivosSubM, Me.Btn_ProductosSubM, Me.PreciosToolStripMenuItem, Me.ToolStripSeparator4, Me.Btn_ProductosCatSubM, Me.Btn_ProductosSubcatSubM})
         Me.Btn_ProductosMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos
         Me.Btn_ProductosMenu.Name = "Btn_ProductosMenu"
-        Me.Btn_ProductosMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_ProductosMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_ProductosMenu.Text = "&Productos"
         Me.Btn_ProductosMenu.ToolTipText = "Permite la adminsitración de los productos."
         '
@@ -388,7 +389,7 @@ Partial Class MDIContenedor
         Me.Btn_ProveedoresMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministraciónToolStripMenuItem1, Me.CuentaCorrienteToolStripMenuItem})
         Me.Btn_ProveedoresMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Proveedores_2
         Me.Btn_ProveedoresMenu.Name = "Btn_ProveedoresMenu"
-        Me.Btn_ProveedoresMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_ProveedoresMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_ProveedoresMenu.Text = "Proveedores"
         '
         'AdministraciónToolStripMenuItem1
@@ -410,7 +411,7 @@ Partial Class MDIContenedor
         Me.Btn_StockMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeStockToolStripMenuItem, Me.BitácoraToolStripMenuItem, Me.AltaMasivaToolStripMenuItem})
         Me.Btn_StockMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Stock
         Me.Btn_StockMenu.Name = "Btn_StockMenu"
-        Me.Btn_StockMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_StockMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_StockMenu.Text = "&Stock"
         Me.Btn_StockMenu.ToolTipText = "Permite la administración de stock."
         '
@@ -440,7 +441,7 @@ Partial Class MDIContenedor
         Me.Btn_SucursalesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeSucursalesToolStripMenuItem, Me.EstadoDeCuentaToolStripMenuItem, Me.HistorialDeDifCajaToolStripMenuItem})
         Me.Btn_SucursalesMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Sucursal
         Me.Btn_SucursalesMenu.Name = "Btn_SucursalesMenu"
-        Me.Btn_SucursalesMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_SucursalesMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_SucursalesMenu.Text = "Sucursales"
         Me.Btn_SucursalesMenu.ToolTipText = "Permite la administración de Sucursales"
         '
@@ -470,7 +471,7 @@ Partial Class MDIContenedor
         Me.Btn_VentasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministraciónToolStripMenuItem, Me.VentasToolStripMenuItem1})
         Me.Btn_VentasMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas
         Me.Btn_VentasMenu.Name = "Btn_VentasMenu"
-        Me.Btn_VentasMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_VentasMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_VentasMenu.Text = "Ventas"
         Me.Btn_VentasMenu.ToolTipText = "Permite la administración de Ventas."
         '
@@ -493,7 +494,7 @@ Partial Class MDIContenedor
         '
         Me.Btn_Facturas.Image = Global.SistemaCinderella.My.Resources.Recursos.TicketPequeño
         Me.Btn_Facturas.Name = "Btn_Facturas"
-        Me.Btn_Facturas.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_Facturas.Size = New System.Drawing.Size(163, 22)
         Me.Btn_Facturas.Text = "Facturas"
         '
         'Btn_DevolucionesMenu
@@ -501,7 +502,7 @@ Partial Class MDIContenedor
         Me.Btn_DevolucionesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministracionDevolucionesMenu, Me.DevolucionesMenu})
         Me.Btn_DevolucionesMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Cambios_32
         Me.Btn_DevolucionesMenu.Name = "Btn_DevolucionesMenu"
-        Me.Btn_DevolucionesMenu.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_DevolucionesMenu.Size = New System.Drawing.Size(163, 22)
         Me.Btn_DevolucionesMenu.Text = "Devoluciones"
         '
         'AdministracionDevolucionesMenu
@@ -522,7 +523,7 @@ Partial Class MDIContenedor
         '
         Me.Btn_NotaCredito.Image = Global.SistemaCinderella.My.Resources.Recursos.nota_credito
         Me.Btn_NotaCredito.Name = "Btn_NotaCredito"
-        Me.Btn_NotaCredito.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_NotaCredito.Size = New System.Drawing.Size(163, 22)
         Me.Btn_NotaCredito.Text = "Nota Crédito"
         '
         'MovimientosToolStripMenuItem
@@ -530,7 +531,7 @@ Partial Class MDIContenedor
         Me.MovimientosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ListadoDeMovimientosToolStripMenuItem, Me.GastosToolStripMenuItem, Me.EgresosToolStripMenuItem, Me.ImpuestosToolStripMenuItem, Me.DifDeCajaToolStripMenuItem, Me.RetiroSociosToolStripMenuItem, Me.CajaFuerteToolStripMenuItem})
         Me.MovimientosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Movimientos_32
         Me.MovimientosToolStripMenuItem.Name = "MovimientosToolStripMenuItem"
-        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.MovimientosToolStripMenuItem.Text = "Movimientos"
         Me.MovimientosToolStripMenuItem.ToolTipText = "Permite la administración de Movimientos del sistema."
         '
@@ -588,7 +589,7 @@ Partial Class MDIContenedor
         Me.ChequesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministraciónToolStripMenuItem2, Me.AltaToolStripMenuItem})
         Me.ChequesToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.cehque_32
         Me.ChequesToolStripMenuItem.Name = "ChequesToolStripMenuItem"
-        Me.ChequesToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ChequesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.ChequesToolStripMenuItem.Text = "Cheques"
         '
         'AdministraciónToolStripMenuItem2
@@ -610,7 +611,7 @@ Partial Class MDIContenedor
         Me.NotaPedidoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministracionToolStripMenuItem})
         Me.NotaPedidoToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.not_pedido_32
         Me.NotaPedidoToolStripMenuItem.Name = "NotaPedidoToolStripMenuItem"
-        Me.NotaPedidoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.NotaPedidoToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.NotaPedidoToolStripMenuItem.Text = "Nota Pedido"
         '
         'AdministracionToolStripMenuItem
@@ -625,7 +626,7 @@ Partial Class MDIContenedor
         Me.Btn_Reservas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_AdminReservas})
         Me.Btn_Reservas.Image = Global.SistemaCinderella.My.Resources.Recursos.reloj
         Me.Btn_Reservas.Name = "Btn_Reservas"
-        Me.Btn_Reservas.Size = New System.Drawing.Size(152, 22)
+        Me.Btn_Reservas.Size = New System.Drawing.Size(163, 22)
         Me.Btn_Reservas.Text = "Reservas"
         '
         'btn_AdminReservas
@@ -640,7 +641,7 @@ Partial Class MDIContenedor
         Me.PresupuestoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdministracionToolStripMenuItem1})
         Me.PresupuestoToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Recibo_32
         Me.PresupuestoToolStripMenuItem.Name = "PresupuestoToolStripMenuItem"
-        Me.PresupuestoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PresupuestoToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
         Me.PresupuestoToolStripMenuItem.Text = "Presupuesto"
         '
         'AdministracionToolStripMenuItem1
@@ -649,6 +650,13 @@ Partial Class MDIContenedor
         Me.AdministracionToolStripMenuItem1.Name = "AdministracionToolStripMenuItem1"
         Me.AdministracionToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
         Me.AdministracionToolStripMenuItem1.Text = "Administración"
+        '
+        'CostoFinancieroToolStripMenuItem
+        '
+        Me.CostoFinancieroToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.tarjeta
+        Me.CostoFinancieroToolStripMenuItem.Name = "CostoFinancieroToolStripMenuItem"
+        Me.CostoFinancieroToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.CostoFinancieroToolStripMenuItem.Text = "Costo Financiero"
         '
         'Btn_PlanillasMenu
         '
@@ -1391,4 +1399,5 @@ Partial Class MDIContenedor
     Friend WithEvents ClienteMayoristaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PresupuestoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AdministracionToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents CostoFinancieroToolStripMenuItem As ToolStripMenuItem
 End Class
