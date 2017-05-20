@@ -220,7 +220,7 @@ Public Class frmFacturar
         If MessageBox.Show("¿Ésta seguro que los datos ingresados son correctos?. No podrá modificarlos más adelante.", "Facturación de Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
             Select Case Cb_TipoFacturacion.SelectedItem
                 Case Entidades.TipoFactura.Ticket
-                    Facturo = FacturacionTicket(NumeroFactura)
+                    Facturo = FacturacionTicket(NumeroFactura, Descuento, CostoFinanciero)
                     PuntoVenta = PuntoVentaFacturacionTicket
                 Case Entidades.TipoFactura.Manual
                     Facturo = FacturacionManual(NumeroFactura)
@@ -274,7 +274,7 @@ Public Class frmFacturar
         End If
     End Sub
 
-    Private Function FacturacionTicket(ByRef Numero As IList(Of Integer)) As Boolean
+    Private Function FacturacionTicket(ByRef Numero As IList(Of Integer), Descuento As Double, CostoFinanciero As Double) As Boolean
         'Valores de la entidad "Controlador" fijos.
         EntControlador.DE1 = ""
         EntControlador.DE2 = ""
@@ -299,6 +299,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "F"
                 EntControlador.TIVA = "2100"
+
+                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
+                'le tengo que agregar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Mayorista) Then
+                    Descuento = Math.Round(Descuento * 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
+                End If
+
             Case "Responsable Inscripto"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -309,6 +317,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "I"
                 EntControlador.TIVA = "2100"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
+
             Case "Monotributo"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -319,6 +335,13 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "M"
                 EntControlador.TIVA = "2100"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
             Case "Exento"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -329,6 +352,13 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
                 EntControlador.TIVA = "2100"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
             Case "Exento sin IVA"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -339,6 +369,13 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
                 EntControlador.TIVA = "0000"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
         End Select
 
 
@@ -487,7 +524,7 @@ Public Class frmFacturar
         If MessageBox.Show("¿Ésta seguro que los datos ingresados son correctos?. No podrá modificarlos más adelante.", "Nota de crédito", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
             Select Case Cb_TipoFacturacion.SelectedItem
                 Case Entidades.TipoFactura.Ticket
-                    GeneracionNotaCredito = GenerarNotaCredito(NumeroComprobante)
+                    GeneracionNotaCredito = GenerarNotaCredito(NumeroComprobante, Descuento, CostoFinanciero)
                     PuntoVenta = PuntoVentaFacturacionTicket
                 Case Entidades.TipoFactura.Manual
                     GeneracionNotaCredito = FacturacionManual(NumeroComprobante)
@@ -534,7 +571,7 @@ Public Class frmFacturar
 
     End Sub
 
-    Private Function GenerarNotaCredito(NumeroComprobante As IList(Of Integer)) As Boolean
+    Private Function GenerarNotaCredito(NumeroComprobante As IList(Of Integer), Descuento As Double, CostoFinanciero As Double) As Boolean
         Dim dsDevoluciones As DataSet
         'Valores de la entidad "Controlador" fijos.
         EntControlador.DE1 = ""
@@ -562,6 +599,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "F"
+
+                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
+                'le tengo que agregar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Mayorista) Then
+                    Descuento = Math.Round(Descuento * 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
+                End If
+
             Case "Responsable Inscripto"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -571,6 +616,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "I"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
+
             Case "Monotributo"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -580,6 +633,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "M"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
+
             Case "Exento"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -589,6 +650,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
+
             Case "Exento sin IVA"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
                 EntControlador.NCOMP2 = ""
@@ -598,6 +667,14 @@ Public Class frmFacturar
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
+
+                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
+                'le tengo que quitar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Minorista) Then
+                    Descuento = Math.Round(Descuento / 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                End If
+
         End Select
 
         Dim NegControlador As New Negocio.NegControladorFiscal(My.Settings("ConexionControladora").ToString())

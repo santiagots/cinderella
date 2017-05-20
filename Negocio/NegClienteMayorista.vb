@@ -146,29 +146,29 @@ Public Class NegClienteMayorista
     Sub ModificacionCliente(ByVal cliente As Entidades.ClienteMayorista)
         Dim cmd As New SqlCommand
         cmd.Connection = clsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_ClienteMayorista_Modificacion"
-            With cmd.Parameters
-                .AddWithValue("@id_Cliente", cliente.Id)
-                .AddWithValue("@RazonSocial", cliente.RazonSocial)
-                .AddWithValue("@Nombre", cliente.Nombre)
-                .AddWithValue("@Cuit", cliente.Cuit)
-                .AddWithValue("@IdCondicionIva", cliente.IdCondicionIva)
-                .AddWithValue("@IdCorredor", cliente.IdCorredor)
-                .AddWithValue("@Comision", cliente.Comision)
-                .AddWithValue("@Transporte", cliente.Transporte)
-                .AddWithValue("@Bonificacion", cliente.Bonificacion)
-                .AddWithValue("@Lista", cliente.Lista)
-                .AddWithValue("@CondicionPago", cliente.CondicionPago)
-                .AddWithValue("@IdEmpresa", cliente.IdEmpresa)
-                .AddWithValue("@IdListaPrecio", cliente.IdListaPrecio)
-                .AddWithValue("@IdDireccionFacturacion", cliente.IdDireccionFacturacion)
-                .AddWithValue("@IdDireccionEntrega", cliente.IdDireccionEntrega)
-                .AddWithValue("@Observaciones", cliente.Observaciones)
-                .AddWithValue("@Habilitado", cliente.Habilitado)
-            End With
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_ClienteMayorista_Modificacion"
+        With cmd.Parameters
+            .AddWithValue("@id_Cliente", cliente.Id)
+            .AddWithValue("@RazonSocial", cliente.RazonSocial)
+            .AddWithValue("@Nombre", cliente.Nombre)
+            .AddWithValue("@Cuit", cliente.Cuit)
+            .AddWithValue("@IdCondicionIva", cliente.IdCondicionIva)
+            .AddWithValue("@IdCorredor", cliente.IdCorredor)
+            .AddWithValue("@Comision", cliente.Comision)
+            .AddWithValue("@Transporte", cliente.Transporte)
+            .AddWithValue("@Bonificacion", cliente.Bonificacion)
+            .AddWithValue("@Lista", cliente.Lista)
+            .AddWithValue("@CondicionPago", cliente.CondicionPago)
+            .AddWithValue("@IdEmpresa", cliente.IdEmpresa)
+            .AddWithValue("@IdListaPrecio", cliente.IdListaPrecio)
+            .AddWithValue("@IdDireccionFacturacion", cliente.IdDireccionFacturacion)
+            .AddWithValue("@IdDireccionEntrega", If(cliente.IdDireccionEntrega = 0, DBNull.Value, cliente.IdDireccionEntrega))
+            .AddWithValue("@Observaciones", cliente.Observaciones)
+            .AddWithValue("@Habilitado", cliente.Habilitado)
+        End With
 
-            cmd.ExecuteNonQuery()
+        cmd.ExecuteNonQuery()
             clsDatos.DesconectarRemoto()
     End Sub
 

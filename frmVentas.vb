@@ -394,21 +394,26 @@ Public Class frmVentas
         Dim descuento As Double = subtotal * PorcentajeDescuento
         Dim ivaSubTotal As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMayorista.Text)
-        Dim costoFinanciero As Double = ObtenerCostoFinanciero() * subtotal
+        Dim seniaSinIva As Double = Math.Round(CDbl(txt_SeniaMayorista.Text) / 1.21, 2)
+        Dim costoFinanciero As Double = 0
 
         txt_DescuentoMayorista.Text = Math.Round(descuento, 2)
 
         If descuento < subtotal Then
+            costoFinanciero = (subtotal - descuento - seniaSinIva) * ObtenerCostoFinanciero()
             subtotal = subtotal - descuento + costoFinanciero
             ivaSubTotal = subtotal * (0.21 * PorcentajeFacturacion)
 
             txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal - senia, Decimal), "###0.00")
         Else
+            descuento = subtotal
+            costoFinanciero = (subtotal - descuento - seniaSinIva) * ObtenerCostoFinanciero()
             subtotal = subtotal + costoFinanciero
             ivaSubTotal = subtotal * (0.21 * PorcentajeFacturacion)
             txt_TotalMayorista.Text = Format(CType(subtotal + ivaSubTotal - senia, Decimal), "###0.00")
         End If
 
+        txt_DescuentoMayorista.Text = Format(descuento, "###0.00")
         txt_SubtotalMayorista.Text = Format(CType(subtotal, Decimal), "###0.00")
         txt_CFTMayorista.Text = Format(CType(costoFinanciero, Decimal), "###0.00")
         txt_ivaTotalMayorista.Text = Format(CType(ivaSubTotal, Decimal), "###0.00")
@@ -416,13 +421,16 @@ Public Class frmVentas
 
     Private Sub CaluclarPrecioMinorista(subtotal As Double)
         Dim descuento As Double = 0
-        Dim costoFinanciero As Double = ObtenerCostoFinanciero() * subtotal
+        Dim costoFinanciero As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMinorista.Text)
 
         If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
             descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+            costoFinanciero = (subtotal - descuento - senia) * ObtenerCostoFinanciero()
             txt_TotalMinorista.Text = Format(CType(subtotal - descuento + costoFinanciero - senia, Decimal), "###0.00")
         Else
+            descuento = subtotal
+            costoFinanciero = (subtotal - descuento - senia) * ObtenerCostoFinanciero()
             txt_TotalMinorista.Text = Format(CType(subtotal + costoFinanciero - senia, Decimal), "###0.00")
         End If
         txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
@@ -2030,15 +2038,15 @@ Public Class frmVentas
     Private Function ActualizarMontosProductosMinoristas(Precio As Double, row As DataGridViewRow)
         Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
         If esDevolucion Then
-            row.Cells("PRECIO").Value = 0
+            row.Cells("PRECIO").Value = Precio * -1
         Else
-            row.Cells("PRECIO").Value = 0
+            row.Cells("PRECIO").Value = Precio
         End If
 
         If esDevolucion Then
-            row.Cells("IVA").Value = 0
+            row.Cells("IVA").Value = Precio * -0.21
         Else
-            row.Cells("IVA").Value = 0
+            row.Cells("IVA").Value = Precio * 0.21
         End If
 
         If esDevolucion Then
@@ -2075,7 +2083,7 @@ Public Class frmVentas
             txt_CostoFinanciero.Text = Format(0, "P")
         End If
 
-        If (DG_Productos.Rows.Count > 0) Then
+        If (DG_Productos.Rows.Count > 0 AndAlso cb_Tipo.SelectedItem = "Mayorista") Then
             ActualizarMontosGrillaYTotales()
         End If
     End Sub
