@@ -336,11 +336,11 @@ Public Class frmFacturar
                 EntControlador.RI = "M"
                 EntControlador.TIVA = "2100"
 
-                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
-                'le tengo que quitar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Minorista) Then
-                    Descuento = Math.Round(Descuento / 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
+                'le tengo que agregar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Mayorista) Then
+                    Descuento = Math.Round(Descuento * 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
                 End If
             Case "Exento"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
@@ -353,11 +353,11 @@ Public Class frmFacturar
                 EntControlador.RI = "E"
                 EntControlador.TIVA = "2100"
 
-                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
-                'le tengo que quitar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Minorista) Then
-                    Descuento = Math.Round(Descuento / 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
+                'le tengo que agregar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Mayorista) Then
+                    Descuento = Math.Round(Descuento * 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
                 End If
             Case "Exento sin IVA"
                 EntControlador.NCOMP1 = txt_Nombre.Text.Trim
@@ -634,11 +634,11 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "M"
 
-                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
-                'le tengo que quitar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Minorista) Then
-                    Descuento = Math.Round(Descuento / 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
+                'le tengo que agregar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Mayorista) Then
+                    Descuento = Math.Round(Descuento * 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
                 End If
 
             Case "Exento"
@@ -651,11 +651,11 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
 
-                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
-                'le tengo que quitar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Minorista) Then
-                    Descuento = Math.Round(Descuento / 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
+                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
+                'le tengo que agregar el IVA al Decuento y al Costo Financiero
+                If (TipoCliente = TipoCliente.Mayorista) Then
+                    Descuento = Math.Round(Descuento * 1.21, 2)
+                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
                 End If
 
             Case "Exento sin IVA"

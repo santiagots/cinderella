@@ -13,6 +13,7 @@ Public Class frmPlanillaPrecios
     Dim fuc As New Funciones
     Dim StringProveedores As String = ""
     Dim dsProductosFiltrados As New DataSet
+    Dim ProductosSeleccionados As DataTable
 
     'Load de form.
     Private Sub frmPlanillaPrecios_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -43,9 +44,14 @@ Public Class frmPlanillaPrecios
             cb_Subcategoria.SelectedItem = "Todas las subcategorías."
             cb_Subcategoria.Refresh()
 
-            'Selecciono todos los precios por default.
-            fuc.SetearCheckboxlist(chk_Precios, True)
+            CheckEtiquetas.Checked = True
+
             ContarCheckes()
+
+            ProductosSeleccionados = New DataTable()
+            ProductosSeleccionados.Columns.Add(New DataColumn("id_Producto", GetType(Integer)))
+            ProductosSeleccionados.Columns.Add(New DataColumn("Nombre", GetType(String)))
+            ProductosSeleccionados.Columns.Add(New DataColumn("Codigo", GetType(String)))
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -77,8 +83,9 @@ Public Class frmPlanillaPrecios
                 'obtengo la categoria.
                 If cb_Categoria.SelectedValue > 0 Then
                     StringProveedores &= ") and (id_Categoria=" & cb_Categoria.SelectedValue
-                ElseIf cb_Categoria.SelectedValue > 0 And cb_Subcategoria.SelectedValue > 0 Then
-                    StringProveedores &= ") and (id_Categoria=" & cb_Categoria.SelectedValue & ") and (id_Subcategoria=" & cb_Subcategoria.SelectedValue
+                    If cb_Subcategoria.SelectedValue > 0 Then
+                        StringProveedores &= ") and (id_Subcategoria=" & cb_Subcategoria.SelectedValue
+                    End If
                 End If
 
                 'Cargo el combo con los productos.
@@ -154,7 +161,7 @@ Public Class frmPlanillaPrecios
         'Limpiar controles.
         fuc.SetearCheckboxlist(chk_Proveedores, False)
         fuc.SetearCheckboxlist(Chk_Productos, False)
-        fuc.SetearCheckboxlist(chk_Precios, True)
+        fuc.SetearCheckboxlist(chk_Precios, False)
         chk_Proveedores.ClearSelected()
         Chk_Productos.ClearSelected()
         chk_Precios.ClearSelected()
@@ -162,13 +169,14 @@ Public Class frmPlanillaPrecios
         lbl_Msg.Text = "Sin productos disponibles."
         lbl_Msg.Visible = True
         Ckb.Checked = False
-        CheckEtiquetas.Checked = False
+        CheckEtiquetas.Checked = True
         cb_Categoria.SelectedItem = Nothing
         cb_Subcategoria.SelectedItem = Nothing
         cb_Subcategoria.DataSource = Nothing
         ContarCheckes()
         lbl_Contador2.Text = "( 0 )"
         LsProductos.DataSource = Nothing
+        ProductosSeleccionados.Clear()
     End Sub
 
     'Restablecer filtros.
@@ -629,46 +637,22 @@ Public Class frmPlanillaPrecios
         If Chk_Productos.CheckedItems.Count > 0 Then
             Me.Cursor = Cursors.WaitCursor
 
-            'Creo la tabla temporal.
-            Dim myTable As New DataTable()
-            myTable.Columns.Add(New DataColumn("id_Producto", GetType(Integer)))
-            myTable.Columns.Add(New DataColumn("Nombre", GetType(String)))
-            myTable.Constraints.Add("id_Producto", myTable.Columns(0), True)
-
             'Agrego todos los productos tildados.
             For Each item In Chk_Productos.CheckedItems
-                myTable.Rows.Add(item.row.ItemArray(1), item.row.ItemArray(0))
-            Next
-
-            'Agrego todos los productos que se encuentran en el listbox. ( sin repetidos )
-            For Each item In LsProductos.Items            
-                If myTable.Rows.Find(item.row.ItemArray(0)) Is Nothing Then
-                    myTable.Rows.Add(item.row.ItemArray(0), item.row.ItemArray(1))
+                If Not ProductosSeleccionados.Rows.Cast(Of DataRow).Any(Function(x) x.ItemArray(0) = item.row.ItemArray(1)) Then
+                    ProductosSeleccionados.Rows.Add(item.row.ItemArray(1), item.row.ItemArray(0), item.row.ItemArray(2))
                 End If
             Next
 
             'Reseteo Contadores
-            lbl_Contador2.Text = "( " & myTable.Rows.Count & " )"
+            lbl_Contador2.Text = "( " & ProductosSeleccionados.Rows.Count & " )"
             lbl_Contador.Text = "Productos tildados ( 0 )"
 
-            'Destildo los productos agregados.
-            fuc.SetearCheckboxlist(chk_Proveedores, False)
-            Chk_Productos.DataSource = Nothing
-            chk_Proveedores.ClearSelected()
-            lbl_Msg.Text = "Por favor, seleccione al menos un proveedor y presione 'filtrar'."
-            lbl_Msg.Visible = True
-
             'Actualizo el listbox de los productos seleccionados.
-            LsProductos.DataSource = Nothing
+            LsProductos.DataSource = ProductosSeleccionados
             LsProductos.DisplayMember = "Nombre"
             LsProductos.ValueMember = "id_Producto"
-            LsProductos.DataSource = myTable
             LsProductos.Refresh()
-
-            'reseteo variables.
-            StringProveedores = ""
-            dsProductosFiltrados = Nothing
-
 
             Me.Cursor = Cursors.Arrow
         Else
@@ -709,5 +693,15 @@ Public Class frmPlanillaPrecios
         End If
         'Cursor.
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub Btn_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Quitar.Click
+
+        Dim elementosEliminar As List(Of DataRowView) = New List(Of DataRowView)()
+        elementosEliminar.AddRange(LsProductos.CheckedItems.Cast(Of DataRowView))
+
+        For Each item As DataRowView In elementosEliminar
+            ProductosSeleccionados.Rows.Remove(item.Row)
+        Next
     End Sub
 End Class

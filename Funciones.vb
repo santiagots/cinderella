@@ -164,6 +164,9 @@ Public Class Funciones
             If VariablesGlobales.HayConexion Then
                 Dim negNotaPedido As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
                 Dim notaPedidos As List(Of NotaPedido) = negNotaPedido.TraerNotas(My.Settings.Sucursal)
+
+                notaPedidos = notaPedidos.Where(Function(x) x.Vendida = False).ToList()
+
                 If notaPedidos.Count >= 1 Then
                     MDIContenedor.Menu_NotaPedido.Text = "(" & notaPedidos.Count & ") Notas de pedidos"
                     MDIContenedor.Menu_NotaPedido.ToolTipText = "Hace click aquí si deseas ir al administrador de notas de pedidos."

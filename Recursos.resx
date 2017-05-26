@@ -139,11 +139,14 @@
   <data name="Comentario_add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Comentario_add_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Productos_Masivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\ProductosMasivos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Socios_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\bt_Socios_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Cancelar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\Cancelar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Cinderella" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\cinderella.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="registracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\registracion.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,17 +163,8 @@
   <data name="MosHorizontal_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_MosHorizontal_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ProductosMasivos_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\ProductosMasivos_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bt_Egresos_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\bt_Egresos2_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Login_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Btn_login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Conectado_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\conectado_32.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Codigobarras" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\codigobarras.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -193,6 +187,12 @@
   <data name="Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IconoBuscar32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\icono_buscar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoxLogin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\box_login.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Comentario_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Comentario_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -202,11 +202,8 @@
   <data name="Mail_Inbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Mail_Inbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Agregar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\btn_Agregar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="reloj" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\reloj.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="banco" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\banco.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Empleado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\empleado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,17 +211,26 @@
   <data name="Boton_Eliminar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_eliminar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Perfil" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\perfil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="not_pedido_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\not_pedido_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Ver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_ojo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Internet_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Internet_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mensaje" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\mensaje.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Materiales" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\materiales.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Agregar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_Agregar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="adelantos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\adelantos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,17 +241,14 @@
   <data name="Gastos_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\bt_Gastos_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icono_imprimir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\icono_imprimir.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CableRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\cable_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="movimientos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\movimientos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Productos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Productos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CerrarCaja_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\btn_CerrarCaja_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Exclamacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Exclamacion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -256,14 +259,14 @@
   <data name="Lapiz" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\lapiz.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Mail_Nuevo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Mail_Nuevo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bt_Impuestos_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\bt_Impuestos2_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Seguridad" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\Seguridad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Ingreso_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Ingreso_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -274,23 +277,29 @@
   <data name="Ventana_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Ventana_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Lupa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Btn_Lupa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="nota_credito" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\nota_credito.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Agregar2_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_agregar2_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Comentario_delete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\btn_Comentario_delete_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ProductosMasivos_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\ProductosMasivos_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PCS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\pcs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="banco" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\banco.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Comentario_delete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_Comentario_delete_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="IconoADD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\icono_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Boton_Ventas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Boton_Ventas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Mi_Cuenta_CerrarSesion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\usuario_cerrar_sesion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -303,9 +312,6 @@
   </data>
   <data name="Detalle_Pequeno" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Detalle_Pequeno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CajaChica_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\btn_CajaChica_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Ayuda_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Ayuda_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -361,26 +367,23 @@
   <data name="Filtrar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_filtrar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="flecha_izq" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\flecha_izq.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Proveedores_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Proveedores_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Boton_Ventas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\Boton_Ventas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Cancelar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Cancelar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Stock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Stock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Cinderella" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\cinderella.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="reloj" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\reloj.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Planilla" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Planilla.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Internet_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\btn_Internet_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Resumen_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\btn_resumen_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Mi_Cuenta_Salir" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\usuario_salir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -388,14 +391,14 @@
   <data name="MosVertical_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_MosVertical_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CableRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\cable_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Resumen_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_resumen_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Update_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Update_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Lupa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\Btn_Lupa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CerrarCaja_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_CerrarCaja_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Standby_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_standby_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -430,11 +433,11 @@
   <data name="Enproceso" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\enproceso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="flecha_izq" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\flecha_izq.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Internet_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_Internet_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Perfil" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\perfil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CajaChica_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_CajaChica_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="desconectado_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\desconectado_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -448,26 +451,26 @@
   <data name="flecha_der" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\flecha_der.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Productos_Masivos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\ProductosMasivos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icono_imprimir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\icono_imprimir.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IconoBuscar32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\icono_buscar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="bt_Egresos_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\bt_Egresos2_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Software_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mail_Nuevo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\Mail_Nuevo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Mensaje" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\mensaje.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Login" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BoxLogin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\box_login.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Seguridad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Seguridad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="not_pedido_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\not_pedido_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Conectado_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\conectado_32.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Desconectado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\desconectado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -499,7 +502,7 @@
   <data name="export_excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\export_excel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tarjeta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\tarjeta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_quitar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\btn_quitar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

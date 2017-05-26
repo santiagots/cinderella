@@ -25,12 +25,13 @@ Partial Class frmPlanillaPrecios
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPlanillaPrecios))
         Me.Gb_Filtros = New System.Windows.Forms.GroupBox()
+        Me.LsProductos = New System.Windows.Forms.CheckedListBox()
+        Me.Btn_Quitar = New System.Windows.Forms.Button()
         Me.txt_Busqueda = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lbl_Contador2 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
-        Me.LsProductos = New System.Windows.Forms.ListBox()
         Me.cb_Subcategoria = New System.Windows.Forms.ComboBox()
         Me.cb_Categoria = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -58,12 +59,13 @@ Partial Class frmPlanillaPrecios
         Me.Gb_Filtros.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Gb_Filtros.Controls.Add(Me.LsProductos)
+        Me.Gb_Filtros.Controls.Add(Me.Btn_Quitar)
         Me.Gb_Filtros.Controls.Add(Me.txt_Busqueda)
         Me.Gb_Filtros.Controls.Add(Me.Label7)
         Me.Gb_Filtros.Controls.Add(Me.lbl_Contador2)
         Me.Gb_Filtros.Controls.Add(Me.Label6)
         Me.Gb_Filtros.Controls.Add(Me.Btn_Agregar)
-        Me.Gb_Filtros.Controls.Add(Me.LsProductos)
         Me.Gb_Filtros.Controls.Add(Me.cb_Subcategoria)
         Me.Gb_Filtros.Controls.Add(Me.cb_Categoria)
         Me.Gb_Filtros.Controls.Add(Me.Label5)
@@ -88,6 +90,33 @@ Partial Class frmPlanillaPrecios
         Me.Gb_Filtros.TabIndex = 0
         Me.Gb_Filtros.TabStop = False
         Me.Gb_Filtros.Text = "Generar listados de precios de productos"
+        '
+        'LsProductos
+        '
+        Me.LsProductos.CheckOnClick = True
+        Me.LsProductos.FormattingEnabled = True
+        Me.LsProductos.Location = New System.Drawing.Point(332, 385)
+        Me.LsProductos.Name = "LsProductos"
+        Me.LsProductos.Size = New System.Drawing.Size(382, 164)
+        Me.LsProductos.TabIndex = 28
+        '
+        'Btn_Quitar
+        '
+        Me.Btn_Quitar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Quitar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Quitar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Quitar.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_quitar_32
+        Me.Btn_Quitar.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Btn_Quitar.Location = New System.Drawing.Point(252, 381)
+        Me.Btn_Quitar.Name = "Btn_Quitar"
+        Me.Btn_Quitar.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Btn_Quitar.Size = New System.Drawing.Size(65, 60)
+        Me.Btn_Quitar.TabIndex = 27
+        Me.Btn_Quitar.Text = "Quitar"
+        Me.Btn_Quitar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.ToolPrecios.SetToolTip(Me.Btn_Quitar, "Haz click aquí para agregar los productos tildados a la lista final de productos " &
+        "seleccionados.")
+        Me.Btn_Quitar.UseVisualStyleBackColor = True
         '
         'txt_Busqueda
         '
@@ -143,15 +172,6 @@ Partial Class frmPlanillaPrecios
         Me.ToolPrecios.SetToolTip(Me.Btn_Agregar, "Haz click aquí para agregar los productos tildados a la lista final de productos " &
         "seleccionados.")
         Me.Btn_Agregar.UseVisualStyleBackColor = True
-        '
-        'LsProductos
-        '
-        Me.LsProductos.FormattingEnabled = True
-        Me.LsProductos.ItemHeight = 15
-        Me.LsProductos.Location = New System.Drawing.Point(332, 388)
-        Me.LsProductos.Name = "LsProductos"
-        Me.LsProductos.Size = New System.Drawing.Size(382, 169)
-        Me.LsProductos.TabIndex = 21
         '
         'cb_Subcategoria
         '
@@ -413,10 +433,11 @@ Partial Class frmPlanillaPrecios
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents cb_Subcategoria As System.Windows.Forms.ComboBox
     Friend WithEvents cb_Categoria As System.Windows.Forms.ComboBox
-    Friend WithEvents LsProductos As System.Windows.Forms.ListBox
     Friend WithEvents Btn_Agregar As System.Windows.Forms.Button
     Friend WithEvents lbl_Contador2 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents txt_Busqueda As System.Windows.Forms.TextBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents Btn_Quitar As Button
+    Friend WithEvents LsProductos As CheckedListBox
 End Class
