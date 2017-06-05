@@ -11,7 +11,7 @@
     Dim EStock As New Entidades.Stock
     Dim Funciones As New Funciones
     Dim NegErrores As New Negocio.NegManejadorErrores
-    Public idProducto As Integer = 0
+    Dim dtProductos As DataTable
 
 #Region "Región de Validaciones."
 
@@ -36,13 +36,6 @@
         KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
         If KeyAscii = 0 Then
             e.Handled = True
-        End If
-    End Sub
-
-    'Aumento el stock actual dependiendo de la cantidad ingresada.
-    Private Sub txt_Cantidad_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Cantidad.LostFocus
-        If txt_Cantidad.Text <> "" Then
-            txt_Actual.Text = CInt(txt_Actual.Text) + CInt(txt_Cantidad.Text)
         End If
     End Sub
 
@@ -99,6 +92,7 @@
         lbl_MontoTotal.Text = "$ 0"
         lbl_Totales_Prod.Text = "0"
         Gb_Stock.Visible = False
+        Gb_Producto.Visible = False
         FechaIngreso.ResetText()
         Cb_Proveedor.SelectedItem = Nothing
         DG_Mercaderia.Rows.Clear()
@@ -114,61 +108,35 @@
         txt_Cantidad.Clear()
         txt_Costo.Clear()
         lbl_ProductoNombre.Text = "- - -"
-        Gb_Stock.Visible = False
         txt_Codigo.Focus()
     End Sub
 
     'Obtiene el stock del producto buscado.
-    Sub ObtenerProducto()
-        If txt_Codigo.Text <> "" Then
-            Try
-                If idProducto <> 0 Then
-                    'Busco informacion del producto seleccionado.
-                    EProducto = NegProducto.TraerProducto(idProducto)
+    Sub ObtenerProducto(idProducto As Integer)
+        Try
+            If idProducto <> 0 Then
+                'Busco informacion del producto seleccionado.
+                EProducto = NegProducto.TraerProducto(idProducto)
 
-                    'Busco informacion de stock del producto seleccionado.
-                    EStock = NegStock.TraerStockProducto(idProducto, id_Sucursal)
+                'Busco informacion de stock del producto seleccionado.
+                EStock = NegStock.TraerStockProducto(idProducto, id_Sucursal)
 
-                    'Nombre del producto
-                    lbl_ProductoNombre.Text = EProducto.Nombre
+                'Nombre del producto
+                lbl_ProductoNombre.Text = EProducto.Nombre
 
-                    'Cargo los valores del producto ingresado.
-                    If EProducto.Costo <> 0 Then
-                        txt_Costo.Text = EProducto.Costo
-                    Else
-                        txt_Costo.Text = "0"
-                    End If
+                'Cargo los valores del producto ingresado.
+                txt_Costo.Text = EProducto.Costo
+                txt_Minimo.Text = EStock.Stock_Minimo
+                txt_Optimo.Text = EStock.Stock_Optimo
+                txt_Actual.Text = EStock.Stock_Actual
 
-                    If EStock.Stock_Minimo <> 0 Then
-                        txt_Minimo.Text = EStock.Stock_Minimo
-                    Else
-                        txt_Minimo.Text = "0"
-                    End If
-
-                    If EStock.Stock_Optimo <> 0 Then
-                        txt_Optimo.Text = EStock.Stock_Optimo
-                    Else
-                        txt_Optimo.Text = "0"
-                    End If
-
-                    If EStock.Stock_Actual <> 0 Then
-                        txt_Actual.Text = EStock.Stock_Actual
-                        Gb_Stock.Visible = False
-                    Else
-                        txt_Actual.Text = "0"
-                        Gb_Stock.Visible = True
-                    End If
-
-                    txt_Cantidad.Focus()
-                Else
-                    MessageBox.Show("No se encontró el producto con el código ingresado.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                End If
-            Catch ex As Exception
-                MessageBox.Show(ex.Message.ToString, "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                txt_Cantidad.Focus()
+            Else
+                MessageBox.Show("No se encontró el producto con el código ingresado.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString, "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
-        Else
-            MessageBox.Show("Debe ingresar un código de producto.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End If
     End Sub
 
     'Funcion que calcula el total en pesos del DATAGRID
@@ -185,8 +153,9 @@
     'Al hacer click para buscar un producto.
     Private Sub Btn_BuscarCodigo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_BuscarCodigo.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmBuscarCodigoProducto).Show()
         frmBuscarCodigoProducto.TipoForm = 4
+        frmBuscarCodigoProducto.IdProveedor = Cb_Proveedor.SelectedValue
+        Funciones.ControlInstancia(frmBuscarCodigoProducto).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -227,9 +196,6 @@
             EMercaderia.id_Mercaderia = 0
 
             'Oculto Columnas en el DG_Productos
-            DG_Mercaderia.Columns("Stock_Minimo").Visible = False
-            DG_Mercaderia.Columns("Stock_Optimo").Visible = False
-            DG_Mercaderia.Columns("Stock_Actual").Visible = False
             DG_Mercaderia.Columns("id_Producto_2").Visible = False
 
         ElseIf TabStock.SelectedTab.Name = "TabDetalle" Then 'TAB MODIFICACION DE STOCK
@@ -244,40 +210,6 @@
 
         'Cambio el cursor a NORMAL.
         TabStock.Cursor = Cursors.Arrow
-    End Sub
-
-    'Cargo el combo con los proveedores.
-    Private Sub Cb_Proveedor_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles Cb_Proveedor.GotFocus
-        Me.Cursor = Cursors.WaitCursor
-        Dim dsProveedor As New DataSet
-        dsProveedor = NegProveedor.ListadoProveedores()
-        If (dsProveedor.Tables(0).Rows.Count > 0) Then
-            Cb_Proveedor.DataSource = Nothing
-            Cb_Proveedor.DataSource = dsProveedor.Tables(0)
-            Cb_Proveedor.DisplayMember = "RazonSocial"
-            Cb_Proveedor.ValueMember = "id_Proveedor"
-            Cb_Proveedor.Refresh()
-        End If
-        Me.Cursor = Cursors.Arrow
-    End Sub
-
-    'Al perder el foco el txt_codigo busco el codigo ingresado.
-    Private Sub txt_Codigo_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Codigo.LostFocus
-        If txt_Codigo.Text <> "" Then
-            'cambio el cursor.
-            Me.Cursor = Cursors.WaitCursor
-
-            idProducto = NegProducto.TraerID(Trim(txt_Codigo.Text))
-
-            'Obtengo el producto
-            ObtenerProducto()
-
-            'cambio el cursor.
-            Me.Cursor = Cursors.Arrow
-        Else
-            Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Debe ingresar un código de producto.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End If
     End Sub
 
     'Cuando Carga el formulario.
@@ -326,7 +258,14 @@
                 lbl_Msg.Visible = True
             End If
 
-            EvaluarPermisos()
+            Dim dsProveedor As DataSet = NegProveedor.ListadoProveedores()
+            If (dsProveedor.Tables(0).Rows.Count > 0) Then
+                Cb_Proveedor.DataSource = dsProveedor.Tables(0)
+                Cb_Proveedor.DisplayMember = "RazonSocial"
+                Cb_Proveedor.ValueMember = "id_Proveedor"
+                Cb_Proveedor.Refresh()
+            End If
+            Me.Cursor = Cursors.Arrow
 
             'Cambio el cursor a NORMAL.
             TabStock.Cursor = Cursors.Arrow
@@ -338,14 +277,24 @@
 
     'Agregar Producto al Datagrid.
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
+        AgregarProducto()
+    End Sub
+
+    Private Sub AgregarProducto()
         Try
             'Declaro Variables.
             Dim Costo, Cantidad, producto, Codigo, Stock_Minimo, Stock_Actual, Stock_Optimo As String
 
             'Si completo todos los campos agrego la fila.
-            If txt_Costo.Text <> "" And txt_Cantidad.Text <> "" And txt_Codigo.Text <> "" And txt_Actual.Text <> "" And txt_Minimo.Text <> "" And txt_Optimo.Text <> "" Then
+            If txt_Cantidad.Text <> "" And txt_Codigo.Text <> "" Then
                 'Cambio el cursor.
                 Me.Cursor = Cursors.WaitCursor
+
+                Dim idProducto As Integer = BuscarProducto()
+
+                If (idProducto = 0) Then
+                    Return
+                End If
 
                 'Seteo Variables.
                 Costo = Trim(txt_Costo.Text)
@@ -353,7 +302,7 @@
                 Codigo = Trim(txt_Codigo.Text)
                 producto = lbl_ProductoNombre.Text
                 Stock_Minimo = Trim(txt_Minimo.Text)
-                Stock_Actual = Trim(txt_Actual.Text)
+                Stock_Actual = Trim(CType(txt_Actual.Text, Integer) + CType(txt_Cantidad.Text, Integer))
                 Stock_Optimo = Trim(txt_Optimo.Text)
 
                 'Inserto en el Grid.
@@ -550,7 +499,7 @@
                 Me.Cursor = Cursors.Arrow
                 MessageBox.Show("Se ha producido un error al ingresar la mercadería.", "Ingreso de Mercaderia", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
-            
+
         End If
     End Sub
 
@@ -646,6 +595,65 @@
         Else
             TabStock.TabPages.Remove(TabStock.TabPages("TabDetalle"))
             RemoveHandler DG_Stock.CellDoubleClick, AddressOf DG_Stock_CellDoubleClick
+        End If
+    End Sub
+
+    Private Sub txt_Cantidad_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_Cantidad.KeyDown
+        If e.KeyData = Keys.Enter Then
+            AgregarProducto()
+        End If
+    End Sub
+
+    Private Sub txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_Codigo.KeyDown
+        If e.KeyData = Keys.Enter Then
+            Me.Cursor = Cursors.WaitCursor
+            BuscarProducto()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Function BuscarProducto() As Integer
+        Dim dr As DataRow = dtProductos.Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_Codigo.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_Codigo.Text.ToUpper()).FirstOrDefault()
+        If (dr IsNot Nothing) Then
+            'Obtengo el producto
+            ObtenerProducto(dr("Id_Producto"))
+            Return dr("Id_Producto")
+        Else
+            MessageBox.Show("El código o nombre del producto no existe.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return 0
+        End If
+    End Function
+
+    Private Sub Cb_Proveedor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_Proveedor.SelectedIndexChanged
+        If (Cb_Proveedor.SelectedValue > 0) Then
+            If (DG_Mercaderia.RowCount > 0 AndAlso MessageBox.Show("Se encuentran registros de mercaderías pendientes por ser finalizados. En caso de cambiar de proveedor los registros actuales se perderá. ¿Desea cambiar de proveedor y perder los registros?", "Ingreso de Mercadería", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes) Then
+                LimpiarFormAgregarStock()
+                DG_Mercaderia.Rows.Clear()
+                DG_Mercaderia.Update()
+            End If
+
+            Me.Cursor = Cursors.WaitCursor
+
+            Gb_Producto.Visible = True
+            Gb_Stock.Visible = True
+
+            If (Cb_Proveedor.SelectedIndex = 0) Then
+                'Obtengo el listado de productos
+                dtProductos = NegProducto.ListadoProductosBuscadores().Tables(0)
+            Else
+                'Obtengo el listado de productos segun el proveedor
+                dtProductos = NegProducto.ListadoProductosPorProveedor(Cb_Proveedor.SelectedValue).Tables(0)
+            End If
+
+            'Armo una lista que contiene los nombres y codigos de todos los producto
+            Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
+
+            listaNombreCodigoProductos.AddRange(dtProductos.Rows.Cast(Of DataRow).Select(Function(x) x.Item("Nombre").ToString).ToArray())
+            listaNombreCodigoProductos.AddRange(dtProductos.Rows.Cast(Of DataRow).Select(Function(x) x.Item("Codigo").ToString).ToArray())
+
+            txt_Codigo.AutoCompleteCustomSource = listaNombreCodigoProductos
+
+            Me.Cursor = Cursors.Arrow
         End If
     End Sub
 #End Region

@@ -1115,7 +1115,7 @@ Public Class frmVentas
         frmReportePresupuesto.Show()
     End Sub
 
-    Private Sub AltaPresupuestoSenia(id_Venta As Integer, TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, PorcentajeFacturacion As Double, MontoSenia As Double)
+    Private Sub AltaPresupuestoSenia(id_Venta As Integer, TipoVenta As Integer, TipoPago As Integer, DescripcionTipoPago As String, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, PorcentajeFacturacion As Double, MontoSenia As Double, id_Banco As Integer, CantidadCuotas As Integer, CostoFinanciero As Double)
         Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
 
         Dim Presupuesto As Presupuesto = New Presupuesto()
@@ -1133,6 +1133,11 @@ Public Class frmVentas
         Presupuesto.Descuento = 0
         Presupuesto.VendedorNombreyApellido = Cb_Vendedores.Text
         Presupuesto.RazonSocialClienteMayorista = txt_RazonSocial.Text
+        Presupuesto.DescripcionTipoPago = DescripcionTipoPago
+        Presupuesto.id_Tarjeta = id_Banco
+        Presupuesto.CantidadCuotas = CantidadCuotas
+        Presupuesto.CostoFinanciero = CostoFinanciero
+
 
         Dim NegPresupuesto As NegPresupuesto = New NegPresupuesto()
 
@@ -1143,7 +1148,7 @@ Public Class frmVentas
         Dim frmReportePresupuesto As frmReportePresupuesto = New frmReportePresupuesto()
         frmReportePresupuesto.presupuesto = Presupuesto
         frmReportePresupuesto.MdiParent = Funciones.ControlInstancia(MDIContenedor)
-        frmReportePresupuesto.ShowDialog()
+        frmReportePresupuesto.Show()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btn_NotaPedido.Click
@@ -1449,7 +1454,7 @@ Public Class frmVentas
                         TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, MontoSenia, CostoFinanciero, id_Venta, PorcentajeFacturacion)
                         'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
                         If PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-                            AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia)
+                            AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, Cb_TipoPago.Text, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia, Id_Tarjeta, NumerCuotas, CostoFinanciero)
                         End If
                     End If
 

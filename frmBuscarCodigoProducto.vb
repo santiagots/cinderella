@@ -2,6 +2,7 @@
     Dim NegProductos As New Negocio.NegProductos
     Dim dsProductos As DataSet
     Public TipoForm As Integer
+    Public IdProveedor As Integer
 
     'Load del Formulario.
     Private Sub frmBuscarCodigoProducto_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -10,7 +11,13 @@
             Me.Cursor = Cursors.WaitCursor
 
             'Cargo el datagrid
-            dsProductos = NegProductos.ListadoProductosBuscadores()
+            If (IdProveedor > 0) Then
+                dsProductos = NegProductos.ListadoProductosBuscadoresPorProveedor(IdProveedor)
+            Else
+                dsProductos = NegProductos.ListadoProductosBuscadores()
+            End If
+
+
             If dsProductos IsNot Nothing Then
                 If (dsProductos.Tables(0).Rows.Count > 0) Then
                     DG_Productos.DataSource = dsProductos.Tables(0)
@@ -101,8 +108,7 @@
                     ElseIf TipoForm = 4 Then 'FORM INGRESO DE MERCADERIA.
                         frmStockMasiva.txt_Codigo.Clear()
                         frmStockMasiva.txt_Codigo.Text = Codigo
-                        frmStockMasiva.idProducto = id_Producto
-                        frmStockMasiva.ObtenerProducto()
+                        frmStockMasiva.ObtenerProducto(id_Producto)
                     End If
                     Me.Close()
                 End If
