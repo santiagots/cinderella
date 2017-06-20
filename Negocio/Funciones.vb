@@ -84,20 +84,43 @@ Public Class Funciones
     End Function
 
     Private Shared Function CheckForInternetConnection() As Boolean
+        Dim sw As Stopwatch = New Stopwatch()
+        sw.Start()
         Try
             Dim myPing As Ping = New Ping()
-            Dim host As String = "google.com"
+            Dim host As String = "8.8.8.8"
             Dim buffer(23) As Byte
             Dim timeout As Integer = 2000
             Dim PingOptions As PingOptions = New PingOptions()
             Dim reply As PingReply = myPing.Send(host, timeout, buffer, PingOptions)
-
+            sw.Stop()
+            Debug.WriteLine("Hay internet " + sw.ElapsedMilliseconds.ToString())
             Return (reply.Status = IPStatus.Success)
 
         Catch ex As Exception
+            sw.Stop()
+            Debug.WriteLine("NO Hay internet " + sw.ElapsedMilliseconds.ToString())
             Return False
         End Try
     End Function
+
+    'Private Shared Function CheckForInternetConnection() As Boolean
+    '    Dim sw As Stopwatch = New Stopwatch()
+    '    sw.Start()
+    '    Try
+    '        Using client = New WebClient()
+    '            Using stream = client.OpenRead("http://www.google.com")
+    '                sw.Stop()
+    '                Debug.WriteLine("Hay internet " + sw.ElapsedMilliseconds.ToString())
+    '                Return True
+    '            End Using
+    '        End Using
+    '    Catch
+    '        sw.Stop()
+    '        Debug.WriteLine("NO Hay internet " + sw.ElapsedMilliseconds.ToString())
+    '        Return False
+    '    End Try
+    'End Function
 
 End Class
 

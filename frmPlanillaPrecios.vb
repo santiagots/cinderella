@@ -106,6 +106,8 @@ Public Class frmPlanillaPrecios
                 Ckb.Checked = False
                 ContarCheckes()
 
+                txt_Busqueda.Clear()
+
                 'Cambio el cursor a NORMAL.
                 Me.Cursor = Cursors.Arrow
             Else
@@ -662,6 +664,11 @@ Public Class frmPlanillaPrecios
 
     'Textbox que busca dentro de los productos filtrados
     Private Sub txt_Busqueda_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txt_Busqueda.TextChanged
+        'Controlo que se encuentre producto para aplicar el filtro 
+        If (dsProductosFiltrados.Tables.Count = 0) Then
+            Return
+        End If
+
         'Cursor.
         Me.Cursor = Cursors.WaitCursor
 

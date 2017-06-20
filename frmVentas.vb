@@ -543,41 +543,6 @@ Public Class frmVentas
         DG_Productos.Columns("Numero").Visible = False
         DG_Productos.Columns("ID").Visible = False
 
-        'Cargo el Combo de Encargados
-        Dim DsEncargados As New DataSet
-        DsEncargados = NegEmpleados.ListadoEncargadosSucursal(id_Sucursal)
-
-        If DsEncargados.Tables(0).Rows.Count > 0 Then
-            Cb_Encargados.DataSource = Nothing
-            Cb_Encargados.DataSource = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsEncargados, "Seleccione un encargado...")
-            Cb_Encargados.DisplayMember = "NombreCompleto"
-            Cb_Encargados.ValueMember = "id_Empleado"
-            Cb_Encargados.SelectedValue = 0
-            Cb_Encargados.Refresh()
-        Else
-            Cb_Encargados.Items.Add("No hay encargados disponibles.")
-            Cb_Encargados.SelectedItem = "No hay encargados disponibles."
-        End If
-
-        'Cargo el Combo de vendedores
-        Dim DsVendedores As New DataSet
-        DsVendedores = NegEmpleados.ListadoVendedoresSucursal(id_Sucursal)
-
-        'Agrego los Encagados a la lista de vendedores ya que un encargado puede participar de la venta como vendedor
-        DsVendedores.Tables(0).Merge(DsEncargados.Tables(0))
-
-        If DsVendedores.Tables(0).Rows.Count > 0 Then
-            Cb_Vendedores.DataSource = Nothing
-            Cb_Vendedores.DataSource = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsVendedores, "Seleccione un vendedor...")
-            Cb_Vendedores.DisplayMember = "NombreCompleto"
-            Cb_Vendedores.ValueMember = "id_Empleado"
-            Cb_Vendedores.SelectedValue = 0
-            Cb_Vendedores.Refresh()
-        Else
-            Cb_Vendedores.Items.Add("No hay vendedores disponibles.")
-            Cb_Vendedores.SelectedItem = "No hay vendedores disponibles."
-        End If
-
         'Cargo el Combo de Tipos de Pago
         Dim DsTiposPagos As New DataSet
         DsTiposPagos = NegTiposPagos.ListadoTiposPagos
@@ -590,6 +555,12 @@ Public Class frmVentas
             Cb_TipoPago.SelectedValue = 0
             Cb_TipoPago.Refresh()
         End If
+
+        'Cargo el Combo de Encargados
+        Dim DsEncargados As DataSet = CargarComboEncargados()
+
+        'Cargo el Combo de vendedores
+        Dim DsVendedores As DataSet = CargarComboVendedores(DsEncargados)
 
         'Cargo el Combo de Bancos
         Dim Tarjetas As List(Of Tarjeta) = NegTarjeta.TraerTarjetas().Where(Function(x) x.Habilitado).ToList()
@@ -633,10 +604,112 @@ Public Class frmVentas
         PanelTotalMayorista.Location = PanelTotalMinorista.Location
     End Sub
 
+    Private Function CargarComboVendedores(DsEncargados As DataSet) As DataSet
+
+        'busco los vendedores que asistieron hoy
+        Dim DsVendedores = NegEmpleados.ListadoVendedoresSucursalAsistencia(id_Sucursal)
+
+        'si no recupero ningun registro
+        If DsEncargados.Tables(0).Rows.Count = 0 Then
+            'busco los vendedores que pretenecen a la sucursal
+            DsVendedores = NegEmpleados.ListadoVendedoresSucursal(id_Sucursal)
+        End If
+
+        'Agrego los Encagados a la lista de vendedores ya que un encargado puede participar de la venta como vendedor
+        DsVendedores.Tables(0).Merge(DsEncargados.Tables(0))
+
+        Dim dtOpciones As DataTable = New DataTable()
+        Dim SelectedValue As Integer = 0
+
+        If DsVendedores.Tables(0).Rows.Count = 1 Then
+            dtOpciones = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsVendedores, "", False)
+            SelectedValue = If(DsVendedores.Tables(0).Rows.Count > 0, DsVendedores.Tables(0).Rows(0)("id_Empleado"), 0)
+        ElseIf DsVendedores.Tables(0).Rows.Count > 1 Then
+            dtOpciones = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsVendedores, "Seleccione un vendedor...")
+        End If
+
+        If DsVendedores.Tables(0).Rows.Count > 0 Then
+            Cb_Vendedores.DataSource = Nothing
+            Cb_Vendedores.DataSource = dtOpciones
+            Cb_Vendedores.DisplayMember = "NombreCompleto"
+            Cb_Vendedores.ValueMember = "id_Empleado"
+            Cb_Vendedores.SelectedValue = SelectedValue
+            Cb_Vendedores.Refresh()
+        Else
+            Cb_Vendedores.Items.Add("No hay vendedores disponibles.")
+            Cb_Vendedores.SelectedItem = "No hay vendedores disponibles."
+        End If
+
+        Return DsVendedores
+    End Function
+
+    Private Function CargarComboEncargados() As DataSet
+
+        'busco los encargados que asistieron hoy
+        Dim DsEncargados = NegEmpleados.ListadoEncargadosSucursalAsistencia(id_Sucursal)
+
+        'si no recupero ningun registro
+        If DsEncargados.Tables(0).Rows.Count = 0 Then
+            'busco los encargados que pretenecen a la sucursal
+            DsEncargados = NegEmpleados.ListadoEncargadosSucursal(id_Sucursal)
+        End If
+
+        Dim dtOpciones As DataTable = New DataTable()
+        Dim SelectedValue As Integer = 0
+
+        If DsEncargados.Tables(0).Rows.Count = 1 Then
+            dtOpciones = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsEncargados, "", False)
+            SelectedValue = If(DsEncargados.Tables(0).Rows.Count > 0, DsEncargados.Tables(0).Rows(0)("id_Empleado"), 0)
+        ElseIf DsEncargados.Tables(0).Rows.Count > 1 Then
+            dtOpciones = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", DsEncargados, "Seleccione un encargado...")
+        End If
+
+        If DsEncargados.Tables(0).Rows.Count > 0 Then
+            Cb_Encargados.DataSource = Nothing
+            Cb_Encargados.DataSource = dtOpciones
+            Cb_Encargados.DisplayMember = "NombreCompleto"
+            Cb_Encargados.ValueMember = "id_Empleado"
+            Cb_Encargados.SelectedValue = SelectedValue
+            Cb_Encargados.Refresh()
+        Else
+            Cb_Encargados.Items.Add("No hay encargados disponibles.")
+            Cb_Encargados.SelectedItem = "No hay encargados disponibles."
+        End If
+
+        Return DsEncargados
+    End Function
+
     'Carga la venta con la nota de pedido
     Private Sub CargarNotaPedido()
-        Cb_Vendedores.SelectedValue = NotaPedido.id_Empleado
-        Cb_Encargados.SelectedValue = NotaPedido.id_Encargado
+        Dim ds As DataSet = NegEmpleados.ListadoEmpleados()
+
+        If Cb_Vendedores.Items.Contains(NotaPedido.id_Empleado) Then
+            Cb_Vendedores.SelectedValue = NotaPedido.id_Empleado
+        Else
+            Dim drEmpleado As DataRow = ds.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_empleado") = NotaPedido.id_Empleado).FirstOrDefault()
+            If (drEmpleado IsNot Nothing) Then
+                Dim tb As DataTable = Cb_Vendedores.DataSource
+                Dim row As DataRow = tb.NewRow()
+                row.Item("id_Empleado") = drEmpleado("id_empleado")
+                row.Item("NombreCompleto") = String.Format("{0}, {1}", drEmpleado("apellido"), drEmpleado("nombre"))
+                tb.Rows.Add(row)
+                Cb_Vendedores.SelectedValue = drEmpleado("id_empleado")
+            End If
+        End If
+
+        If Cb_Encargados.Items.Contains(NotaPedido.id_Encargado) Then
+            Cb_Encargados.SelectedValue = NotaPedido.id_Encargado
+        Else
+            Dim drEmpleado As DataRow = ds.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_empleado") = NotaPedido.id_Encargado).FirstOrDefault()
+            If (drEmpleado IsNot Nothing) Then
+                Dim tb As DataTable = Cb_Encargados.DataSource
+                Dim row As DataRow = tb.NewRow()
+                row.Item("id_Empleado") = drEmpleado("id_empleado")
+                row.Item("NombreCompleto") = String.Format("{0}, {1}", drEmpleado("apellido"), drEmpleado("nombre"))
+                tb.Rows.Add(row)
+                Cb_Encargados.SelectedValue = drEmpleado("id_empleado")
+            End If
+        End If
 
         If NotaPedido.id_TipoVenta = 1 Then
             cb_Tipo.SelectedItem = "Minorista"
@@ -696,8 +769,29 @@ Public Class frmVentas
     Private Sub CargarSenia(DsTiposPagos As DataSet, DsVendedores As DataSet, DsEncargados As DataSet)
         Dim dsVentas As DataSet = NegVentas.TraerVenta(Senia.IdVentaSenia)
 
-        Cb_Vendedores.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))
+        If Cb_Vendedores.Items.Contains(Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))) Then
+            Cb_Vendedores.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))
+        Else
+            Dim tb As DataTable = Cb_Vendedores.DataSource
+            Dim row As DataRow = tb.NewRow()
+            row.Item("id_Empleado") = dsVentas.Tables(0).Rows(0).Item("id_Empleado")
+            row.Item("NombreCompleto") = dsVentas.Tables(0).Rows(0).Item("Empleado")
+            tb.Rows.Add(row)
+            Cb_Vendedores.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))
+        End If
+
         Cb_Encargados.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Encargado"))
+        If Cb_Encargados.Items.Contains(Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Encargado"))) Then
+            Cb_Encargados.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Encargado"))
+        Else
+            Dim tb As DataTable = Cb_Encargados.DataSource
+            Dim row As DataRow = tb.NewRow()
+            row.Item("id_Empleado") = dsVentas.Tables(0).Rows(0).Item("id_Encargado")
+            row.Item("NombreCompleto") = dsVentas.Tables(0).Rows(0).Item("Encargado")
+            tb.Rows.Add(row)
+            Cb_Encargados.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Encargado"))
+        End If
+
         Cb_ListaPrecio.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_ListaPrecio"))
 
         Dim TipoPagoRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Descripcion") = dsVentas.Tables(0).Rows(0).Item("TiposPago")).FirstOrDefault()

@@ -410,7 +410,7 @@ Public Class Funciones
     End Sub
 
     'Funcion que crea un datatable dependiendo del dataset enviado.
-    Function CrearDataTable(ByVal NameID As String, ByVal NameDescr As String, ByVal Datos As DataSet, Optional ByVal Item As String = "Seleccione una opción") As DataTable
+    Function CrearDataTable(ByVal NameID As String, ByVal NameDescr As String, ByVal Datos As DataSet, Optional ByVal Item As String = "Seleccione una opción", Optional ItemDefault As Boolean = True) As DataTable
         Dim dt As New DataTable
 
         'Creo La columna de Identificacion
@@ -425,12 +425,14 @@ Public Class Funciones
         column2.ColumnName = NameDescr
         dt.Columns.Add(column2)
 
-        'Fila default.
-        Dim rowdefault As Data.DataRow
-        rowdefault = dt.NewRow
-        rowdefault.Item(NameID) = "0"
-        rowdefault.Item(NameDescr) = Item
-        dt.Rows.Add(rowdefault)
+        If ItemDefault Then
+            'Fila default.
+            Dim rowdefault As Data.DataRow
+            rowdefault = dt.NewRow
+            rowdefault.Item(NameID) = "0"
+            rowdefault.Item(NameDescr) = Item
+            dt.Rows.Add(rowdefault)
+        End If
 
         'Inserto las filas
         For Each filas In Datos.Tables(0).Rows
@@ -441,6 +443,34 @@ Public Class Funciones
             dt.Rows.Add(row)
         Next
         Return dt
+    End Function
+
+    'Funcion que crea un datatable dependiendo del dataset enviado.
+    Function CrearDataRow(ByVal NameID As String, ByVal NameDescr As String, ByVal Clave As String, ByVal Valor As String) As DataRow
+
+        Dim dt As New DataTable
+
+        'Creo La columna de Identificacion
+        Dim column As New Data.DataColumn
+        column.DataType = Type.GetType("System.String")
+        column.ColumnName = NameID
+        dt.Columns.Add(column)
+
+        'Creo la columna de Descripcion
+        Dim column2 As New Data.DataColumn
+        column2.DataType = Type.GetType("System.String")
+        column2.ColumnName = NameDescr
+        dt.Columns.Add(column2)
+
+
+        'Inserto la fila
+        Dim row As Data.DataRow
+        row = dt.NewRow
+        row.Item(NameID) = Clave
+        row.Item(NameDescr) = Valor
+
+        Return row
+
     End Function
 
 End Class
