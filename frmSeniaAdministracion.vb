@@ -160,22 +160,17 @@ Public Class frmSeniaAdministracion
                 Dim ClienteMayorista As Entidades.ClienteMayorista = NegClienteMayorista.TraerCliente(SeniaSeleccionada.IdClienteMayorista)
                 Dim direccion As Direccion = negDireccion.Consulta(ClienteMayorista.IdDireccionFacturacion)
 
-                Btn_BuscarConsumidorFinal.Visible = False
                 txtApellido.Visible = False
                 lblApellido.Visible = False
                 lblNombre.Text = "Razón Social"
-                txtNombre.Enabled = False
                 txtNombre.Text = ClienteMayorista.RazonSocial
-                txtMail.Enabled = False
                 txtMail.Text = direccion.Email
-                txtDireccion.Enabled = False
                 txtDireccion.Text = direccion.Direccion
-                txtTelefono.Enabled = False
                 txtTelefono.Text = direccion.Telefono
-                rblEnvioPromocionesNo.Enabled = False
-                rblEnvioPromocionesSi.Enabled = False
             Else
                 Dim ClienteMinorista As Entidades.ClienteMinorista = NegClienteMinorista.TraerCliente(SeniaSeleccionada.IdClienteMinorista)
+                txtApellido.Visible = True
+                lblApellido.Visible = True
                 txtApellido.Text = ClienteMinorista.Apellido
                 txtNombre.Text = ClienteMinorista.Nombre
                 txtMail.Text = ClienteMinorista.Email

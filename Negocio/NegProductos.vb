@@ -8,6 +8,7 @@ Imports System.Text
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Linq
+Imports System.Threading
 
 Public Enum Fortmats
     Texto
@@ -1112,83 +1113,97 @@ Public Class NegProductos
 #End Region
 
 #Region "Funciones Exportar Excel"
-    Function ExportarExcel(nombreArchivo As String, nombrePlantilla As String) As Integer
+    Sub ExportarExcel(nombreArchivo As String, nombrePlantilla As String)
         Dim cmd As New SqlCommand
         Dim adapter As New SqlDataAdapter
         Dim dsProductos As DataSet = New DataSet()
         Dim dsCategoria As DataSet = New DataSet()
         Dim dsSubCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
-        Try
-            cmd.Connection = clsDatos.ConectarRemoto()
-            cmd.CommandType = CommandType.StoredProcedure
 
-            RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
-            cmd.CommandText = "sp_Productos_ListadoExcel"
-            adapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsProductos)
+        cmd.Connection = clsDatos.ConectarRemoto()
+        cmd.CommandType = CommandType.StoredProcedure
 
-            RaiseEvent UpdateProgress(2, "Obteniendo Categorias...")
-            cmd.CommandText = "sp_ProductosCategorias_Listado"
-            adapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsCategoria)
+        RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
+        cmd.CommandText = "sp_Productos_ListadoExcel"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsProductos)
 
-            RaiseEvent UpdateProgress(3, "Obteniendo Subcategorias...")
-            cmd.CommandText = "sp_ProductosSubcategorias_ListadoCompletoExcel"
-            adapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsSubCategoria)
+        RaiseEvent UpdateProgress(2, "Obteniendo Categorias...")
+        cmd.CommandText = "sp_ProductosCategorias_Listado"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsCategoria)
 
-            RaiseEvent UpdateProgress(4, "Obteniendo Proveedores...")
-            cmd.CommandText = "sp_Proveedores_Listado"
-            adapter = New SqlDataAdapter(cmd)
-            adapter.Fill(dsProveedor)
+        RaiseEvent UpdateProgress(3, "Obteniendo Subcategorias...")
+        cmd.CommandText = "sp_ProductosSubcategorias_ListadoCompletoExcel"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsSubCategoria)
 
-            Dim xlApp As Excel.Application
-            Dim xlWorkBook As Excel.Workbook
-            Dim xlWorkSheet As Excel.Worksheet
-            Dim misValue As Object = System.Reflection.Missing.Value
+        RaiseEvent UpdateProgress(4, "Obteniendo Proveedores...")
+        cmd.CommandText = "sp_Proveedores_Listado"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsProveedor)
 
-            xlApp = New Excel.Application()
-            xlWorkBook = xlApp.Workbooks.Add(System.IO.Path.GetFullPath(nombrePlantilla))
-            xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
+        Dim xlApp As Excel.Application
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet As Excel.Worksheet
+        Dim misValue As Object = System.Reflection.Missing.Value
+        Dim generoArchivo As Boolean = False
 
-            xlWorkSheet.Name = "Productos"
+        For reintentos = 1 To 10
+            Try
+                generoArchivo = CrearExcel(nombreArchivo, nombrePlantilla, dsProductos, dsCategoria, dsSubCategoria, dsProveedor, xlApp, xlWorkBook, xlWorkSheet, misValue)
+                Exit For
+            Catch ex As System.Runtime.InteropServices.COMException
+                Dim result As UInt32
+                If UInt32.TryParse(ex.ErrorCode, result) AndAlso result = &H80010001UI Then
+                    reintentos += 1
+                    System.Threading.Thread.Sleep(1000)
+                End If
+            End Try
+        Next
 
-            RaiseEvent UpdateProgress(5, "Cargando datos en Excel...")
-            AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
+        If Not generoArchivo Then
+            Throw New Exception("Se realizaron 10 intentos de generación del Excel sin éxito.")
+        End If
 
-            '//Oculto la primera columan ya que en esta se eunetra el ID del producto y no debe ser modificado
-            xlWorkSheet.Range("A1").EntireColumn.Hidden = True
+        RaiseEvent UpdateProgress(5, "Guardando Excel...")
+        xlApp.DisplayAlerts = False
+        xlWorkBook.SaveAs(nombreArchivo, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, False, False, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, True, misValue, misValue, misValue)
+        xlApp.DisplayAlerts = True
+        xlWorkBook.Close(0)
+        xlApp.Workbooks.Close()
+        xlApp.Quit()
 
-            RaiseEvent UpdateProgress(6, "Armando validaciones en Excel...")
+        KillExcel()
 
-            '//Agrego la validacion de combos para el cargado de la categoria
-            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
+    End Sub
 
-            '//Agrego la validacion de combos anidados para el cargado de la SubCategoria
-            AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D2")
+    Private Function CrearExcel(nombreArchivo As String, nombrePlantilla As String, dsProductos As DataSet, dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, ByRef xlApp As Excel.Application, ByRef xlWorkBook As Excel.Workbook, ByRef xlWorkSheet As Excel.Worksheet, misValue As Object) As Boolean
+        xlApp = New Excel.Application()
+        xlWorkBook = xlApp.Workbooks.Add(System.IO.Path.GetFullPath(nombrePlantilla))
+        xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
 
-            '//Agrego la validacion de combos para el cargado de los porveedores
-            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F")
+        xlWorkSheet.Name = "Productos"
 
-            '//Agrego la validacion de combos para el cargado de Habilitado
-            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R")
+        AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
 
-            RaiseEvent UpdateProgress(7, "Guardando Excel...")
-            xlApp.DisplayAlerts = False
-            xlWorkBook.SaveAs(nombreArchivo, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, False, False, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, True, misValue, misValue, misValue)
-            xlApp.DisplayAlerts = True
-            xlWorkBook.Close(0)
-            xlApp.Workbooks.Close()
-            xlApp.Quit()
-        Catch ex As Exception
-            MessageBox.Show(ex.ToString(), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return ex.Message
+        '//Oculto la primera columan ya que en esta se eunetra el ID del producto y no debe ser modificado
+        xlWorkSheet.Range("A1").EntireColumn.Hidden = True
 
-        Finally
-            KillExcel()
-        End Try
-        Return 1
+        '//Agrego la validacion de combos para el cargado de la categoria
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
+
+        '//Agrego la validacion de combos anidados para el cargado de la SubCategoria
+        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D2")
+
+        '//Agrego la validacion de combos para el cargado de los porveedores
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F")
+
+        '//Agrego la validacion de combos para el cargado de Habilitado
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R")
+
+        Return True
     End Function
 
     Private Sub AddDataSetToWorkSheet(dsProductos As DataSet, xlWorkSheet As Excel.Worksheet)
@@ -1591,25 +1606,25 @@ Public Class NegProductos
 
     Function obtenerFilasModificadas(dsProductos As DataSet, sourceData As DataTable) As List(Of DataRow)
         Return (From product In dsProductos.Tables(0).AsEnumerable()
-                                 Join d In sourceData.AsEnumerable() On product(0).ToString() Equals d(0).ToString()
-                                 Where (product(1).ToString() <> d(1).ToString() Or
-                                       product(2).ToString() <> d(2).ToString() Or
-                                       product(3).ToString() <> d(3).ToString() Or
-                                       product(4).ToString() <> d(4).ToString() Or
-                                       product(5).ToString() <> d(5).ToString() Or
-                                       product(6).ToString() <> d(6).ToString() Or
-                                       product(7).ToString() <> d(7).ToString() Or
-                                       Decimal.Parse(If(product(8).ToString() = "", "0", product(8).ToString())) <> Decimal.Parse(If(d(8).ToString() = "", "0", d(8).ToString())) Or
-                                       product(9).ToString() <> d(9).ToString() Or
-                                       Decimal.Parse(If(product(10).ToString() = "", "0", product(10).ToString())) <> Decimal.Parse(If(d(10).ToString() = "", "0", d(10).ToString())) Or
-                                       Decimal.Parse(If(product(11).ToString() = "", "0", product(11).ToString())) <> Decimal.Parse(If(d(11).ToString() = "", "0", d(11).ToString())) Or
-                                       Decimal.Parse(If(product(12).ToString() = "", "0", product(12).ToString())) <> Decimal.Parse(If(d(12).ToString() = "", "0", d(12).ToString())) Or
-                                       Decimal.Parse(If(product(13).ToString() = "", "0", product(13).ToString())) <> Decimal.Parse(If(d(13).ToString() = "", "0", d(13).ToString())) Or
-                                       Decimal.Parse(If(product(14).ToString() = "", "0", product(14).ToString())) <> Decimal.Parse(If(d(14).ToString() = "", "0", d(14).ToString())) Or
-                                       Decimal.Parse(If(product(15).ToString() = "", "0", product(15).ToString())) <> Decimal.Parse(If(d(15).ToString() = "", "0", d(15).ToString())) Or
-                                       product(16).ToString() <> d(16).ToString() Or
-                                       product(17).ToString() <> d(17).ToString())
-                                Select d).ToList()
+                Join d In sourceData.AsEnumerable() On product(0).ToString() Equals d(0).ToString()
+                Where (product(1).ToString() <> d(1).ToString() Or
+                      product(2).ToString() <> d(2).ToString() Or
+                      product(3).ToString() <> d(3).ToString() Or
+                      product(4).ToString() <> d(4).ToString() Or
+                      product(5).ToString() <> d(5).ToString() Or
+                      product(6).ToString() <> d(6).ToString() Or
+                      product(7).ToString() <> d(7).ToString() Or
+                      Decimal.Parse(If(product(8).ToString() = "", "0", product(8).ToString())) <> Decimal.Parse(If(d(8).ToString() = "", "0", d(8).ToString())) Or
+                      product(9).ToString() <> d(9).ToString() Or
+                      Decimal.Parse(If(product(10).ToString() = "", "0", product(10).ToString())) <> Decimal.Parse(If(d(10).ToString() = "", "0", d(10).ToString())) Or
+                      Decimal.Parse(If(product(11).ToString() = "", "0", product(11).ToString())) <> Decimal.Parse(If(d(11).ToString() = "", "0", d(11).ToString())) Or
+                      Decimal.Parse(If(product(12).ToString() = "", "0", product(12).ToString())) <> Decimal.Parse(If(d(12).ToString() = "", "0", d(12).ToString())) Or
+                      Decimal.Parse(If(product(13).ToString() = "", "0", product(13).ToString())) <> Decimal.Parse(If(d(13).ToString() = "", "0", d(13).ToString())) Or
+                      Decimal.Parse(If(product(14).ToString() = "", "0", product(14).ToString())) <> Decimal.Parse(If(d(14).ToString() = "", "0", d(14).ToString())) Or
+                      Decimal.Parse(If(product(15).ToString() = "", "0", product(15).ToString())) <> Decimal.Parse(If(d(15).ToString() = "", "0", d(15).ToString())) Or
+                      product(16).ToString() <> d(16).ToString() Or
+                      product(17).ToString() <> d(17).ToString())
+                Select d).ToList()
     End Function
 
     Function ValidarDatosVacios(datos As List(Of DataRow), ByRef DatosConError As DataTable) As List(Of DataRow)

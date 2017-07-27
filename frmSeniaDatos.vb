@@ -128,12 +128,7 @@ Public Class frmSeniaDatos
     End Sub
 
     Private Sub Btn_Finalizar_Click(sender As Object, e As EventArgs) Handles Btn_Finalizar.Click
-        If TipoVenta = TipoCliente.Minorista AndAlso (txtApellido.Text = "" Or (txtDireccion.Visible AndAlso txtDireccion.Text = "") Or txtMail.Text = "" Or txtNombre.Text = "" Or txtTelefono.Text = "" Or cmbModoEntrega.SelectedIndex = 0) Then
-            MessageBox.Show("Debe completar los campos requeridos.", "Información de la seña", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            Return
-        End If
-
-        If TipoVenta = TipoCliente.Mayorista AndAlso cmbModoEntrega.SelectedIndex = 0 Then
+        If TipoVenta = TipoCliente.Minorista AndAlso (txtApellido.Text = "" Or txtNombre.Text = "" Or (txtDireccion.Visible AndAlso txtDireccion.Text = "") Or txtTelefono.Text = "") Then
             MessageBox.Show("Debe completar los campos requeridos.", "Información de la seña", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return
         End If

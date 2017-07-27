@@ -8,6 +8,8 @@
     Private Sub frmAdelantoListado_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         If frmAdelantoEfectivo.Visible Then
             frmAdelantoEfectivo.WindowState = FormWindowState.Normal
+            frmAdelantoEfectivo.id_Adelanto = 0
+            frmAdelantoEfectivo.RellenarFormulario()
         End If
     End Sub
 
@@ -20,22 +22,7 @@
             id_Sucursal = My.Settings("Sucursal")
             Nombre_Sucursal = My.Settings("NombreSucursal")
 
-            Dim ds As New DataSet
-            ds = NegAdelantos.ObtenerAdelantosSucursalListado(id_Sucursal, Now.Date.ToString("yyyy/MM/d"), Now.Date.ToString("yyyy/MM/d"))
-            If (ds.Tables(0).Rows.Count > 0) Then
-                DG_Adelantos.DataSource = ds.Tables(0)
-                DG_Adelantos.AutoGenerateColumns = False
-                DG_Adelantos.ColumnHeadersVisible = True
-                DG_Adelantos.Columns("id_Adelanto").Visible = False
-                DG_Adelantos.Columns("Fecha").Visible = False
-                DG_Adelantos.Columns("Modificar").DisplayIndex = 5
-                DG_Adelantos.Columns("Eliminar").DisplayIndex = 5
-                DG_Adelantos.Refresh()
-                lbl_Msg.Visible = False
-            Else
-                DG_Adelantos.ColumnHeadersVisible = False
-                lbl_Msg.Visible = True
-            End If
+            MostrarAdelantos()
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -52,19 +39,7 @@
             'Cambio el cursor a "WAIT"
             Me.Cursor = Cursors.WaitCursor
 
-            'Seteo las variables
-            Dim id_Adelanto As Integer = DG_Adelantos.Rows(e.RowIndex).Cells("id_Adelanto").Value()
-
-            If id_Adelanto <> 0 Then
-                Me.Close()
-                frmAdelantoEfectivo.id_Adelanto = id_Adelanto
-                frmAdelantoEfectivo.RellenarFormulario()
-                Funciones.ControlInstancia(frmAdelantoEfectivo).MdiParent = MDIContenedor
-                Funciones.ControlInstancia(frmAdelantoEfectivo).Show()
-                frmAdelantoEfectivo.WindowState = FormWindowState.Normal
-            Else
-                MessageBox.Show("No se puede eliminar el adelanto.", "Listado de Adelantos del día", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            End If
+            EditarAdelanto(e.RowIndex)
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
@@ -88,24 +63,7 @@
 
                     MessageBox.Show(NegAdelantos.EliminarAdelanto(id_Adelanto, id_Sucursal), "Listado de Adelantos del día", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                    Dim ds As New DataSet
-                    ds = NegAdelantos.ObtenerAdelantosSucursalListado(id_Sucursal, Now.Date.ToString("yyyy/MM/d"), Now.Date.ToString("yyyy/MM/d"))
-                    If (ds.Tables(0).Rows.Count > 0) Then
-                        DG_Adelantos.DataSource = ds.Tables(0)
-                        DG_Adelantos.AutoGenerateColumns = False
-                        DG_Adelantos.ColumnHeadersVisible = True
-                        DG_Adelantos.Columns("id_Adelanto").Visible = False
-                        DG_Adelantos.Columns("Fecha").Visible = False
-                        DG_Adelantos.Columns("Modificar").DisplayIndex = 5
-                        DG_Adelantos.Columns("Eliminar").DisplayIndex = 5
-                        DG_Adelantos.Refresh()
-                        lbl_Msg.Visible = False
-                    Else
-                        DG_Adelantos.ColumnHeadersVisible = False
-                        DG_Adelantos.DataSource = Nothing
-                        DG_Adelantos.Refresh()
-                        lbl_Msg.Visible = True
-                    End If
+                    MostrarAdelantos()
                 End If
 
             End If
@@ -113,6 +71,65 @@
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
 
-            End If
+        End If
+    End Sub
+
+    Private Sub MostrarAdelantos()
+        Dim primerDiaMes As DateTime = New DateTime(Now.Date.Year, Now.Date.Month, 1)
+        Dim ultimoDiaMes As DateTime = primerDiaMes.AddMonths(1).AddDays(-1)
+
+        Dim ds As New DataSet
+        ds = NegAdelantos.ObtenerAdelantosSucursalListado(id_Sucursal, primerDiaMes.ToString("yyyy/MM/d"), ultimoDiaMes.ToString("yyyy/MM/d"))
+        If (ds.Tables(0).Rows.Count > 0) Then
+            DG_Adelantos.AutoGenerateColumns = False
+            DG_Adelantos.DataSource = ds.Tables(0)
+            DG_Adelantos.ColumnHeadersVisible = True
+            DG_Adelantos.Refresh()
+            lbl_Msg.Visible = False
+        Else
+            DG_Adelantos.ColumnHeadersVisible = False
+            DG_Adelantos.DataSource = Nothing
+            DG_Adelantos.Refresh()
+            lbl_Msg.Visible = True
+        End If
+    End Sub
+
+    Private Sub EditarAdelanto(rowIndex As Integer)
+        'Seteo las variables
+        Dim id_Adelanto As Integer = DG_Adelantos.Rows(rowIndex).Cells("id_Adelanto").Value()
+
+        If id_Adelanto <> 0 Then
+            Me.Close()
+            frmAdelantoEfectivo.id_Adelanto = id_Adelanto
+            frmAdelantoEfectivo.RellenarFormulario()
+            Funciones.ControlInstancia(frmAdelantoEfectivo).MdiParent = MDIContenedor
+            Funciones.ControlInstancia(frmAdelantoEfectivo).Show()
+            frmAdelantoEfectivo.WindowState = FormWindowState.Normal
+        Else
+            MessageBox.Show("No se puede eliminar el adelanto.", "Listado de Adelantos del día", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub DG_Adelantos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Adelantos.CellDoubleClick
+        'Solo se pueden modificar o eliminar adelanto de la fecha en curso
+        If Date.Parse(DG_Adelantos.Rows(e.RowIndex).Cells("Fecha").Value()).Date <> DateTime.Now.Date Then
+            Return
+        End If
+
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+
+        EditarAdelanto(e.RowIndex)
+
+        'Cambio el cursor a "NORMAL"
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub DG_Adelantos_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Adelantos.CellFormatting
+        'Oculto los botones para que solo puedan ser modificados o eliminados los adelantos de la fecha en curso
+        If DG_Adelantos.Columns(e.ColumnIndex).Name = "Fecha" AndAlso Date.Parse(e.Value).Date <> DateTime.Now.Date Then
+            CType(DG_Adelantos.Rows(e.RowIndex).Cells("Eliminar"), DataGridViewImageCell).Value = New Bitmap(1, 1)
+            CType(DG_Adelantos.Rows(e.RowIndex).Cells("Modificar"), DataGridViewImageCell).Value = New Bitmap(1, 1)
+        End If
     End Sub
 End Class

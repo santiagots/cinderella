@@ -132,6 +132,12 @@ Public Class MDIContenedor
             AdicionalesToolStripMenuItem.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_PagoAdelantos)) Then
+            AdelantoEfectivoToolStripMenuItem.Visible = True
+        Else
+            AdelantoEfectivoToolStripMenuItem.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_SueldoVacacionesAguinaldo)) Then
             ReciboDeSueldoToolStripMenuItem.Visible = True
         Else
@@ -152,6 +158,7 @@ Public Class MDIContenedor
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Administración_Modificar) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_EstadoCuenta) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_PagoAdicionales) Or
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_PagoAdelantos) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_SueldoVacacionesAguinaldo) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Empleados_Registro)) Then
             Btn_EmpleadosMenu.Visible = True
@@ -986,6 +993,7 @@ Public Class MDIContenedor
     Private Sub AdmDeEmpleadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdmDeEmpleadosToolStripMenuItem.Click
         'para administrar empelados es necesario esta online
         If (Not Negocio.Funciones.HayConexionInternet) Then
+
             dialogoConexion.ShowDialog()
         Else
             Me.Cursor = Cursors.WaitCursor
@@ -1007,11 +1015,11 @@ Public Class MDIContenedor
         End If
     End Sub
 
-    Private Sub AdelantoDeEfectivoAEmpleadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        'para administrar empelados es necesario esta online
-        If (Not Negocio.Funciones.HayConexionInternet) Then
-            dialogoConexion.ShowDialog()
-        Else
+    Private Sub AdelantoEfectivoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdelantoEfectivoToolStripMenuItem.Click
+        If AdelantoEfectivoToolStripMenuItem.Enabled Then
+            'Compruevo el acceso a internet para actualizar el MIDContenedor
+            Negocio.Funciones.HayConexionInternet()
+
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmAdelantoEfectivo).MdiParent = Me
             Funciones.ControlInstancia(frmAdelantoEfectivo).Show()

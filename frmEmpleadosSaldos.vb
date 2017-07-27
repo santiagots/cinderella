@@ -105,11 +105,11 @@ Public Class frmEmpleadosSaldos
 
             MostrarBotonesDetalle()
 
-            SueldoNormal = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoNormal
+            SueldoNormal = (estadoCuenta.CantidadDiasNormales + estadoCuenta.CantidadDiasTarde) * eEmpleados.SueldoNormal
             SueldoFeriado = estadoCuenta.CantidadDiasFeriados * eEmpleados.SueldoFeriado
 
-            If estadoCuenta.CantidadDiasAusente = 0 Then
-                SueldoPresentismo = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoPresentismo
+            If estadoCuenta.CantidadDiasAusente = 0 AndAlso estadoCuenta.CantidadDiasTarde = 0 Then
+                SueldoPresentismo = (estadoCuenta.CantidadDiasNormales + estadoCuenta.CantidadDiasFeriados) * eEmpleados.SueldoPresentismo
             End If
 
             SubTotalTrabajado = (estadoCuenta.Comisiones + SueldoNormal + SueldoFeriado + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + SueldoPresentismo)
@@ -249,12 +249,12 @@ Public Class frmEmpleadosSaldos
             Deuda = estadoCuenta.Deuda.Value
         End If
 
-        If estadoCuenta.CantidadDiasAusente = 0 Then
+        If estadoCuenta.CantidadDiasAusente = 0 AndAlso estadoCuenta.CantidadDiasTarde = 0 Then
             SueldoPresentismo = estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoPresentismo
         End If
 
         'Calculo el total trabajado y el total abonado
-        Dim SubTotalTrabajado As Double = (estadoCuenta.Comisiones + estadoCuenta.CantidadDiasNormales * eEmpleados.SueldoNormal + estadoCuenta.CantidadDiasFeriados * eEmpleados.SueldoFeriado + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + SueldoPresentismo)
+        Dim SubTotalTrabajado As Double = (estadoCuenta.Comisiones + (estadoCuenta.CantidadDiasNormales + estadoCuenta.CantidadDiasTarde) * eEmpleados.SueldoNormal + estadoCuenta.CantidadDiasFeriados * eEmpleados.SueldoFeriado + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + SueldoPresentismo)
         Dim SubTotalAbonado As Double = estadoCuenta.Adelantos + estadoCuenta.SueldoPago + Deuda
 
         Deuda = -(SubTotalTrabajado - SubTotalAbonado)

@@ -586,6 +586,10 @@ Public Class NegEmpleados
         DiasNormales.Direction = ParameterDirection.Output
         cmd.Parameters.Add(DiasNormales)
 
+        Dim DiasTarde As New SqlParameter("@DiasTarde", SqlDbType.Int)
+        DiasTarde.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(DiasTarde)
+
         Dim DiasAusente As New SqlParameter("@DiasAusente", SqlDbType.Int)
         DiasAusente.Direction = ParameterDirection.Output
         cmd.Parameters.Add(DiasAusente)
@@ -637,6 +641,7 @@ Public Class NegEmpleados
         estadoCuenta.Adelantos = Adelantos.Value
         estadoCuenta.Comisiones = Comisiones.Value
         estadoCuenta.CantidadDiasAusente = DiasAusente.Value
+        estadoCuenta.CantidadDiasTarde = DiasTarde.Value
         estadoCuenta.CantidadDiasFeriados = DiasFeriados.Value
         estadoCuenta.CantidadDiasNormales = DiasNormales.Value
         estadoCuenta.RecivoSueldo = RecivoSueldo.Value
@@ -651,6 +656,32 @@ Public Class NegEmpleados
         End If
 
         Return estadoCuenta
+    End Function
+
+    'Funcion que returna el detalle de las comisiones diferenciada por dia
+    Function ComisionPorDia(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As DataSet
+        Dim ds As DataSet
+
+        If (Funciones.HayInternet) Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleado_Obtener_Comisiones_Dia @id_Empleado=" & id_Empleado & ", @id_Sucursal='" & id_Sucursal & "', @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleado_Obtener_Comisiones_Dia @id_Empleado=" & id_Empleado & ", @id_Sucursal='" & id_Sucursal & "', @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
+        End If
+
+        Return ds
+    End Function
+
+    'Funcion que returna el detalle de sueldo diferenciada por dia
+    Function SueldoPorDia(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As DataSet
+        Dim ds As DataSet
+
+        If (Funciones.HayInternet) Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleado_Obtener_Sueldo_Dia @id_Empleado=" & id_Empleado & ", @id_Sucursal='" & id_Sucursal & "', @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleado_Obtener_Sueldo_Dia @id_Empleado=" & id_Empleado & ", @id_Sucursal='" & id_Sucursal & "', @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
+        End If
+
+        Return ds
     End Function
 
     Function UltimaDeuda(id_Empleado As Integer, id_Sucursal As Integer, fechaDesde As DateTime) As DateTime?

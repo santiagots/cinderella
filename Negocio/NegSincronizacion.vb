@@ -464,6 +464,15 @@ Public Class NegSincronizacion
 
         tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleadosAusentes)
 
+        Dim tablaRelRegistroEmpleadosTarde As Tabla = New Tabla()
+        tablaRelRegistroEmpleadosTarde.Nombre = "REL_REGISTRO_EMPLEADOS_TARDE"
+        tablaRelRegistroEmpleadosTarde.ClavePrimaria = "id_Auto"
+        tablaRelRegistroEmpleadosTarde.ColumnaSeleccion = "id_Registro"
+        tablaRelRegistroEmpleadosTarde.ClaveForanea = New String() {"id_Registro"}
+        tablaRelRegistroEmpleadosTarde.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+
+        tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleadosTarde)
+
         Return tablaRegistro
     End Function
 

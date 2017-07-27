@@ -25,6 +25,27 @@ Public Class Producto
         Return entProducto
     End Function
 
+    Public Function GetProductoPorCodigoBarras(ByVal codigoBarras As String) As EntidadProducto Implements IProducto.GetProductoPorCodigoBarras
+        Negocio.Funciones.HayConexionInternet()
+
+        Dim productosNegocio As Negocio.NegProductos = New Negocio.NegProductos()
+
+        Dim producto As Entidades.Productos = productosNegocio.TraerProductoPorCodBarra(codigoBarras)
+
+        Dim entProducto As EntidadProducto = New EntidadProducto()
+        entProducto.Codigo = producto.Codigo
+        entProducto.id_Producto = producto.id_Producto
+        entProducto.Nombre = producto.Nombre
+        entProducto.Precio1 = producto.Precio1
+        entProducto.Precio2 = producto.Precio2
+        entProducto.Precio3 = producto.Precio3
+        entProducto.Precio4 = producto.Precio4
+        entProducto.Precio5 = producto.Precio5
+        entProducto.Precio6 = producto.Precio6
+
+        Return entProducto
+    End Function
+
     Public Function GetLista() As List(Of EntidadProductoReducido) Implements IProducto.GetLista
         Negocio.Funciones.HayConexionInternet()
 

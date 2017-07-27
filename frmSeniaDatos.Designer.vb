@@ -53,6 +53,13 @@ Partial Class frmSeniaDatos
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
         Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.lblPago = New System.Windows.Forms.Label()
@@ -95,13 +102,6 @@ Partial Class frmSeniaDatos
         Me.lblFechaSeña = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lblEncargado = New System.Windows.Forms.Label()
-        Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CANTIDAD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PRECIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -197,9 +197,9 @@ Partial Class frmSeniaDatos
         Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label33.Location = New System.Drawing.Point(3, 112)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(130, 15)
+        Me.Label33.Size = New System.Drawing.Size(114, 15)
         Me.Label33.TabIndex = 18
-        Me.Label33.Text = "Metodo de entrega (*):"
+        Me.Label33.Text = "Metodo de entrega:"
         '
         'rblEnvioPromocionesSi
         '
@@ -270,9 +270,9 @@ Partial Class frmSeniaDatos
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label30.Location = New System.Drawing.Point(6, 87)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(58, 15)
+        Me.Label30.Size = New System.Drawing.Size(42, 15)
         Me.Label30.TabIndex = 10
-        Me.Label30.Text = "Email (*):"
+        Me.Label30.Text = "Email:"
         '
         'txtTelefono
         '
@@ -396,6 +396,70 @@ Partial Class frmSeniaDatos
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(854, 215)
         Me.DG_Productos.TabIndex = 12
+        '
+        'CODIGO
+        '
+        Me.CODIGO.DataPropertyName = "CODIGO"
+        Me.CODIGO.FillWeight = 107.5103!
+        Me.CODIGO.HeaderText = "Código"
+        Me.CODIGO.Name = "CODIGO"
+        Me.CODIGO.ReadOnly = True
+        '
+        'NOMBRE
+        '
+        Me.NOMBRE.DataPropertyName = "NOMBRE"
+        Me.NOMBRE.FillWeight = 177.4346!
+        Me.NOMBRE.HeaderText = "Nombre"
+        Me.NOMBRE.Name = "NOMBRE"
+        Me.NOMBRE.ReadOnly = True
+        '
+        'CANTIDAD
+        '
+        Me.CANTIDAD.DataPropertyName = "CANTIDAD"
+        Me.CANTIDAD.FillWeight = 73.49158!
+        Me.CANTIDAD.HeaderText = "Cantidad"
+        Me.CANTIDAD.Name = "CANTIDAD"
+        Me.CANTIDAD.ReadOnly = True
+        '
+        'PRECIO
+        '
+        Me.PRECIO.DataPropertyName = "PRECIO"
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle1
+        Me.PRECIO.FillWeight = 81.69429!
+        Me.PRECIO.HeaderText = "Precio"
+        Me.PRECIO.Name = "PRECIO"
+        Me.PRECIO.ReadOnly = True
+        '
+        'IVA
+        '
+        Me.IVA.DataPropertyName = "IVA"
+        DataGridViewCellStyle2.Format = "2C"
+        Me.IVA.DefaultCellStyle = DataGridViewCellStyle2
+        Me.IVA.HeaderText = "Iva"
+        Me.IVA.Name = "IVA"
+        Me.IVA.ReadOnly = True
+        '
+        'MONTO
+        '
+        Me.MONTO.DataPropertyName = "MONTO"
+        DataGridViewCellStyle3.Format = "2C"
+        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle3
+        Me.MONTO.HeaderText = "Monto"
+        Me.MONTO.Name = "MONTO"
+        Me.MONTO.ReadOnly = True
+        '
+        'SUBTOTAL
+        '
+        Me.SUBTOTAL.DataPropertyName = "SUBTOTAL"
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle4
+        Me.SUBTOTAL.FillWeight = 91.37056!
+        Me.SUBTOTAL.HeaderText = "Subtotal"
+        Me.SUBTOTAL.Name = "SUBTOTAL"
+        Me.SUBTOTAL.ReadOnly = True
         '
         'Label5
         '
@@ -905,70 +969,6 @@ Partial Class frmSeniaDatos
         Me.lblEncargado.Size = New System.Drawing.Size(104, 15)
         Me.lblEncargado.TabIndex = 60
         Me.lblEncargado.Text = "- - - - - "
-        '
-        'CODIGO
-        '
-        Me.CODIGO.DataPropertyName = "CODIGO"
-        Me.CODIGO.FillWeight = 107.5103!
-        Me.CODIGO.HeaderText = "Código"
-        Me.CODIGO.Name = "CODIGO"
-        Me.CODIGO.ReadOnly = True
-        '
-        'NOMBRE
-        '
-        Me.NOMBRE.DataPropertyName = "NOMBRE"
-        Me.NOMBRE.FillWeight = 177.4346!
-        Me.NOMBRE.HeaderText = "Nombre"
-        Me.NOMBRE.Name = "NOMBRE"
-        Me.NOMBRE.ReadOnly = True
-        '
-        'CANTIDAD
-        '
-        Me.CANTIDAD.DataPropertyName = "CANTIDAD"
-        Me.CANTIDAD.FillWeight = 73.49158!
-        Me.CANTIDAD.HeaderText = "Cantidad"
-        Me.CANTIDAD.Name = "CANTIDAD"
-        Me.CANTIDAD.ReadOnly = True
-        '
-        'PRECIO
-        '
-        Me.PRECIO.DataPropertyName = "PRECIO"
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle1
-        Me.PRECIO.FillWeight = 81.69429!
-        Me.PRECIO.HeaderText = "Precio"
-        Me.PRECIO.Name = "PRECIO"
-        Me.PRECIO.ReadOnly = True
-        '
-        'IVA
-        '
-        Me.IVA.DataPropertyName = "IVA"
-        DataGridViewCellStyle2.Format = "2C"
-        Me.IVA.DefaultCellStyle = DataGridViewCellStyle2
-        Me.IVA.HeaderText = "Iva"
-        Me.IVA.Name = "IVA"
-        Me.IVA.ReadOnly = True
-        '
-        'MONTO
-        '
-        Me.MONTO.DataPropertyName = "MONTO"
-        DataGridViewCellStyle3.Format = "2C"
-        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle3
-        Me.MONTO.HeaderText = "Monto"
-        Me.MONTO.Name = "MONTO"
-        Me.MONTO.ReadOnly = True
-        '
-        'SUBTOTAL
-        '
-        Me.SUBTOTAL.DataPropertyName = "SUBTOTAL"
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle4
-        Me.SUBTOTAL.FillWeight = 91.37056!
-        Me.SUBTOTAL.HeaderText = "Subtotal"
-        Me.SUBTOTAL.Name = "SUBTOTAL"
-        Me.SUBTOTAL.ReadOnly = True
         '
         'frmSeniaDatos
         '

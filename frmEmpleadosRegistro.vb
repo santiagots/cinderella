@@ -41,6 +41,14 @@
             CheckListEmpleadosPresentes.Refresh()
         End If
 
+        'Cargo el CheckListEmpleadosTarde
+        If (DsEmpleados.Tables(0).Rows.Count > 0) Then
+            CheckListEmpleadosTarde.DataSource = DsEmpleados.Tables(0)
+            CheckListEmpleadosTarde.DisplayMember = "Apellido"
+            CheckListEmpleadosTarde.ValueMember = "id_Empleado"
+            CheckListEmpleadosTarde.Refresh()
+        End If
+
         'Cargo el checkboxlistEmpleadosAusentes
         If (DsEmpleados.Tables(0).Rows.Count > 0) Then
             CheckListEmpleadosAusentes.DataSource = DsEmpleados.Tables(0)
@@ -55,6 +63,14 @@
             CheckListEmpleadosPresentesEdit.DisplayMember = "Apellido"
             CheckListEmpleadosPresentesEdit.ValueMember = "id_Empleado"
             CheckListEmpleadosPresentesEdit.Refresh()
+        End If
+
+        'Cargo el CheckListEmpleadosTardeEdit
+        If (DsEmpleados.Tables(0).Rows.Count > 0) Then
+            CheckListEmpleadosTardeEdit.DataSource = DsEmpleados.Tables(0)
+            CheckListEmpleadosTardeEdit.DisplayMember = "Apellido"
+            CheckListEmpleadosTardeEdit.ValueMember = "id_Empleado"
+            CheckListEmpleadosTardeEdit.Refresh()
         End If
 
         'Cargo el checkboxlistEditEmpleadosAusentes
@@ -77,13 +93,17 @@
 
         'Seteo en Cero los checkboxs
         fuc.SetearCheckboxlist(CheckListEmpleadosPresentes, False)
+        fuc.SetearCheckboxlist(CheckListEmpleadosTarde, False)
         fuc.SetearCheckboxlist(CheckListEmpleadosAusentes, False)
         fuc.SetearCheckboxlist(CheckListEmpleadosPresentesEdit, False)
+        fuc.SetearCheckboxlist(CheckListEmpleadosTardeEdit, False)
         fuc.SetearCheckboxlist(CheckListEmpleadosAusentesEdit, False)
         LstFechas.SelectedIndex = -1
         CheckListEmpleadosPresentes.SelectedIndex = -1
+        CheckListEmpleadosTarde.SelectedIndex = -1
         CheckListEmpleadosAusentes.SelectedIndex = -1
         CheckListEmpleadosPresentesEdit.SelectedIndex = -1
+        CheckListEmpleadosTardeEdit.SelectedIndex = -1
         CheckListEmpleadosAusentesEdit.SelectedIndex = -1
 
         'Seteo el ID a 0.
@@ -105,6 +125,7 @@
                 ERegistros.id_Sucursal = id_Sucursal
                 ERegistros.Fecha = DT_Fecha.Value.ToString("yyyy/MM/dd")
                 ERegistros.EmpleadosPresente = CheckListEmpleadosPresentes
+                ERegistros.EmpleadosTarde = CheckListEmpleadosTarde
                 ERegistros.EmpleadosAusente = CheckListEmpleadosAusentes
 
                 'Ejecuto el sp_Registros_Alta
@@ -140,6 +161,7 @@
 
         If LstFechas.SelectedValue <> 0 And LstFechas.SelectedValue <> Nothing Then
             fuc.SetearCheckboxlist(CheckListEmpleadosPresentesEdit, False)
+            fuc.SetearCheckboxlist(CheckListEmpleadosTardeEdit, False)
             fuc.SetearCheckboxlist(CheckListEmpleadosAusentesEdit, False)
 
             Dim dsRegistro As DataSet = NegRegistros.ListadoRegistrosFecha(LstFechas.SelectedValue)
@@ -159,6 +181,13 @@
                         If DirectCast(CheckListEmpleadosPresentesEdit.Items(i), System.Data.DataRowView).Row.ItemArray(0) = dsRegistro.Tables(0).Rows(j).Item("id_Empleado") Then
                             If dsRegistro.Tables(0).Rows(j).Item("Presente") Then
                                 CheckListEmpleadosPresentesEdit.SetItemChecked(i, True)
+                            End If
+                        End If
+
+                        'Marco los empleados tarde
+                        If DirectCast(CheckListEmpleadosTardeEdit.Items(i), System.Data.DataRowView).Row.ItemArray(0) = dsRegistro.Tables(0).Rows(j).Item("id_Empleado") Then
+                            If dsRegistro.Tables(0).Rows(j).Item("Tarde") Then
+                                CheckListEmpleadosTardeEdit.SetItemChecked(i, True)
                             End If
                         End If
 
@@ -238,13 +267,17 @@
 
         'Seteo en Cero los checkboxs
         fuc.SetearCheckboxlist(CheckListEmpleadosPresentes, False)
+        fuc.SetearCheckboxlist(CheckListEmpleadosTarde, False)
         fuc.SetearCheckboxlist(CheckListEmpleadosAusentes, False)
         fuc.SetearCheckboxlist(CheckListEmpleadosPresentesEdit, False)
+        fuc.SetearCheckboxlist(CheckListEmpleadosTardeEdit, False)
         fuc.SetearCheckboxlist(CheckListEmpleadosAusentesEdit, False)
         LstFechas.SelectedIndex = -1
         CheckListEmpleadosPresentes.SelectedIndex = -1
+        CheckListEmpleadosTarde.SelectedIndex = -1
         CheckListEmpleadosAusentes.SelectedIndex = -1
         CheckListEmpleadosPresentesEdit.SelectedIndex = -1
+        CheckListEmpleadosTardeEdit.SelectedIndex = -1
         CheckListEmpleadosAusentesEdit.SelectedIndex = -1
     End Sub
 
@@ -260,6 +293,7 @@
                 ERegistros.id_Sucursal = id_Sucursal
                 ERegistros.Fecha = DT_FechaEdit.Value.ToString("yyyy/MM/dd")
                 ERegistros.EmpleadosPresente = CheckListEmpleadosPresentesEdit
+                ERegistros.EmpleadosTarde = CheckListEmpleadosTardeEdit
                 ERegistros.EmpleadosAusente = CheckListEmpleadosAusentesEdit
 
                 'Ejecuto el sp_Registros_Alta
@@ -303,11 +337,13 @@
             End If
 
             If (CheckListEmpleadosPresentes.GetItemCheckState(e.Index) <> CheckState.Checked) Then
-                'Cuando se selecciona a un empleado como presente, deshabilito ese empleado de la lista de ausentes
+                'Cuando se selecciona a un empleado como presente, deshabilito ese empleado de la lista de ausentes y tardes
                 CheckListEmpleadosAusentes.SetItemCheckState(e.Index, CheckState.Indeterminate)
+                CheckListEmpleadosTarde.SetItemCheckState(e.Index, CheckState.Indeterminate)
             Else
-                'Cuando se desselecciono a un empleado como presente, deshabilito ese empleado de la lista de ausentes
+                'Cuando se desselecciono a un empleado como presente, deshabilito ese empleado de la lista de ausentes y tardes
                 CheckListEmpleadosAusentes.SetItemCheckState(e.Index, CheckState.Unchecked)
+                CheckListEmpleadosTarde.SetItemCheckState(e.Index, CheckState.Unchecked)
             End If
             sincroniza = True
         End If
@@ -327,11 +363,39 @@
             End If
 
             If (CheckListEmpleadosAusentes.GetItemCheckState(e.Index) <> CheckState.Checked) Then
-                'Cuando se selecciona a un empleado como ausente, deshabilito ese empleado de la lista de presente
+                'Cuando se selecciona a un empleado como ausente, deshabilito ese empleado de la lista de presente y tardes
                 CheckListEmpleadosPresentes.SetItemCheckState(e.Index, CheckState.Indeterminate)
+                CheckListEmpleadosTarde.SetItemCheckState(e.Index, CheckState.Indeterminate)
             Else
-                'Cuando se desselecciono a un empleado como ausente, deshabilito ese empleado de la lista de presente
+                'Cuando se desselecciono a un empleado como ausente, deshabilito ese empleado de la lista de presente y tardes
                 CheckListEmpleadosPresentes.SetItemCheckState(e.Index, CheckState.Unchecked)
+                CheckListEmpleadosTarde.SetItemCheckState(e.Index, CheckState.Unchecked)
+            End If
+            sincroniza = True
+        End If
+    End Sub
+
+    Private Sub CheckListEmpleadosTarde_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckListEmpleadosTarde.ItemCheck
+
+        'utilizo la valirable sincroniza para que no se genere un bucle infinito entre los 2 eventos CheckListEmpleadosPresentes_ItemCheck y CheckListEmpleadosAusentes_ItemCheck porque el metodo SetItemCheckState llama al evento ItemCheck
+        If (sincroniza) Then
+            sincroniza = False
+
+            'Si el check que se esta seleccionado esta en un estado intermedio se tiene que mantener dicho valor
+            If (CheckListEmpleadosTarde.GetItemCheckState(e.Index) = CheckState.Indeterminate) Then
+                e.NewValue = CheckState.Indeterminate
+                sincroniza = True
+                Return
+            End If
+
+            If (CheckListEmpleadosTarde.GetItemCheckState(e.Index) <> CheckState.Checked) Then
+                'Cuando se selecciona a un empleado como ausente, deshabilito ese empleado de la lista de presente y ausente
+                CheckListEmpleadosPresentes.SetItemCheckState(e.Index, CheckState.Indeterminate)
+                CheckListEmpleadosAusentes.SetItemCheckState(e.Index, CheckState.Indeterminate)
+            Else
+                'Cuando se desselecciono a un empleado como ausente, deshabilito ese empleado de la lista de presente y ausente
+                CheckListEmpleadosPresentes.SetItemCheckState(e.Index, CheckState.Unchecked)
+                CheckListEmpleadosAusentes.SetItemCheckState(e.Index, CheckState.Unchecked)
             End If
             sincroniza = True
         End If
@@ -351,11 +415,13 @@
             End If
 
             If (CheckListEmpleadosPresentesEdit.GetItemCheckState(e.Index) <> CheckState.Checked) Then
-                'Cuando se selecciona a un empleado como presente, deshabilito ese empleado de la lista de ausentes
+                'Cuando se selecciona a un empleado como presente, deshabilito ese empleado de la lista de ausentes y tardes
                 CheckListEmpleadosAusentesEdit.SetItemCheckState(e.Index, CheckState.Indeterminate)
+                CheckListEmpleadosTardeEdit.SetItemCheckState(e.Index, CheckState.Indeterminate)
             Else
-                'Cuando se desselecciono a un empleado como presente, deshabilito ese empleado de la lista de ausentes
+                'Cuando se desselecciono a un empleado como presente, deshabilito ese empleado de la lista de ausentes y tardes
                 CheckListEmpleadosAusentesEdit.SetItemCheckState(e.Index, CheckState.Unchecked)
+                CheckListEmpleadosTardeEdit.SetItemCheckState(e.Index, CheckState.Unchecked)
             End If
             sincronizaEdit = True
         End If
@@ -375,11 +441,39 @@
             End If
 
             If (CheckListEmpleadosAusentesEdit.GetItemCheckState(e.Index) <> CheckState.Checked) Then
-                'Cuando se selecciona a un empleado como ausente, deshabilito ese empleado de la lista de presente
+                'Cuando se selecciona a un empleado como ausente, deshabilito ese empleado de la lista de presente y tardes
                 CheckListEmpleadosPresentesEdit.SetItemCheckState(e.Index, CheckState.Indeterminate)
+                CheckListEmpleadosTardeEdit.SetItemCheckState(e.Index, CheckState.Indeterminate)
             Else
-                'Cuando se desselecciono a un empleado como ausente, deshabilito ese empleado de la lista de presente
+                'Cuando se desselecciono a un empleado como ausente, deshabilito ese empleado de la lista de presente y tardes
                 CheckListEmpleadosPresentesEdit.SetItemCheckState(e.Index, CheckState.Unchecked)
+                CheckListEmpleadosTardeEdit.SetItemCheckState(e.Index, CheckState.Unchecked)
+            End If
+            sincronizaEdit = True
+        End If
+    End Sub
+
+    Private Sub CheckListEmpleadosTardeEdit_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckListEmpleadosTardeEdit.ItemCheck
+
+        'utilizo la valirable sincroniza para que no se genere un bucle infinito entre los 2 eventos CheckListEmpleadosPresentes_ItemCheck y CheckListEmpleadosAusentes_ItemCheck porque el metodo SetItemCheckState llama al evento ItemCheck
+        If (sincronizaEdit) Then
+            sincronizaEdit = False
+
+            'Si el check que se esta seleccionado esta en un estado intermedio se tiene que mantener dicho valor
+            If (CheckListEmpleadosTardeEdit.GetItemCheckState(e.Index) = CheckState.Indeterminate) Then
+                e.NewValue = CheckState.Indeterminate
+                sincronizaEdit = True
+                Return
+            End If
+
+            If (CheckListEmpleadosTardeEdit.GetItemCheckState(e.Index) <> CheckState.Checked) Then
+                'Cuando se selecciona a un empleado como tarde, deshabilito ese empleado de la lista de presente y ausentes
+                CheckListEmpleadosPresentesEdit.SetItemCheckState(e.Index, CheckState.Indeterminate)
+                CheckListEmpleadosAusentesEdit.SetItemCheckState(e.Index, CheckState.Indeterminate)
+            Else
+                'Cuando se desselecciono a un empleado como tarde, deshabilito ese empleado de la lista de presente y ausentes
+                CheckListEmpleadosPresentesEdit.SetItemCheckState(e.Index, CheckState.Unchecked)
+                CheckListEmpleadosAusentesEdit.SetItemCheckState(e.Index, CheckState.Unchecked)
             End If
             sincronizaEdit = True
         End If

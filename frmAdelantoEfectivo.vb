@@ -15,24 +15,6 @@
             'Cambio el cursor a "WAIT"
             Me.Cursor = Cursors.WaitCursor
 
-            'Sucursal default
-            id_Sucursal = My.Settings("Sucursal")
-            Nombre_Sucursal = My.Settings("NombreSucursal")
-
-            'Cargo el cbEmpleado
-            Dim dsEmpleados As New DataSet
-            dsEmpleados = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
-            If (dsEmpleados.Tables(0).Rows.Count > 0) Then
-                cbEmpleado.DataSource = Nothing
-                cbEmpleado.DataSource = dsEmpleados.Tables(0)
-                cbEmpleado.DisplayMember = "NombreCompleto"
-                cbEmpleado.ValueMember = "id_Empleado"                
-                cbEmpleado.Refresh()
-            Else
-                cbEmpleado.Items.Add("No hay empleados disponibles.")
-                cbEmpleado.SelectedItem = "No hay empleados disponibles."
-            End If
-
             'si se le pasa un id_adeanto..
             RellenarFormulario()
 
@@ -81,6 +63,12 @@
 
                 'Ejecuto el sp_Adelantos_Alta.
                 MessageBox.Show(NegAdelantos.AltaAdelanto(EAdelanto), "Adelanto de Efectivo a Empleados", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                'Si es un mov ya cargado vuelvo a la pantalla de listado de adelantos
+                If id_Adelanto <> 0 Then
+                    AbrirHistoricoAdelantos()
+                End If
+
             Catch ex As Exception
                 Me.Cursor = Cursors.Arrow
                 MessageBox.Show("Se ha producido un error al registrar el adelanto. Por favor, intente más tarde.", "Adelanto de Efectivo a Empleados", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -92,24 +80,64 @@
     Sub LimpiarFormulario()
         txtDescripcion.Clear()
         txtMonto.Clear()
-        cbEmpleado.SelectedItem = Nothing
+        cbEmpleado.SelectedValue = 0
         txtDate.Value = Date.Now
-        txtDate.Enabled = True
     End Sub
 
     Sub RellenarFormulario()
+
         LimpiarFormulario()
+
+        'Sucursal default
+        id_Sucursal = My.Settings("Sucursal")
+        Nombre_Sucursal = My.Settings("NombreSucursal")
+
         If id_Adelanto <> 0 Then
+
+            'Cargo el cbEmpleado
+            Dim dsEmpleados As New DataSet
+            dsEmpleados = NegEmpleados.ListadoEmpleados()
+            If (dsEmpleados.Tables(0).Rows.Count > 0) Then
+                cbEmpleado.DataSource = Nothing
+                cbEmpleado.DataSource = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", dsEmpleados, "Seleccione un empleado...")
+                cbEmpleado.DisplayMember = "NombreCompleto"
+                cbEmpleado.ValueMember = "id_Empleado"
+                cbEmpleado.Refresh()
+            Else
+                cbEmpleado.Items.Add("No se encontro el empleado.")
+                cbEmpleado.SelectedItem = "No se encontro el empleado."
+            End If
+            cbEmpleado.Enabled = False
+
             Dim dsAdelanto As New DataSet
             dsAdelanto = NegAdelantos.ObtenerAdelanto(id_Adelanto, id_Sucursal)
             txtMonto.Text = dsAdelanto.Tables(0).Rows(0).Item("Monto").ToString
             txtDescripcion.Text = Replace(dsAdelanto.Tables(0).Rows(0).Item("Descripcion").ToString, "<br />", vbCrLf)
             txtDate.Value = dsAdelanto.Tables(0).Rows(0).Item("Fecha").ToString
             cbEmpleado.SelectedValue = dsAdelanto.Tables(0).Rows(0).Item("id_Empleado").ToString
-            txtDate.Enabled = False
+            btnHistoricoAdelantos.Visible = False
             btnAceptar.Text = "Modificar"
             ToolAdelantos.SetToolTip(btnAceptar, "Al aceptar el formulario se modificará en el sistema el adelanto al empleado seleccionado.")
         Else
+
+            'Cargo el cbEmpleado
+            Dim dsEmpleados As New DataSet
+            dsEmpleados = NegEmpleados.ListadoEmpleadosSucursal(id_Sucursal)
+            If (dsEmpleados.Tables(0).Rows.Count > 0) Then
+                cbEmpleado.DataSource = Nothing
+                cbEmpleado.DataSource = Funciones.CrearDataTable("id_Empleado", "NombreCompleto", dsEmpleados, "Seleccione un empleado...")
+                cbEmpleado.DisplayMember = "NombreCompleto"
+                cbEmpleado.ValueMember = "id_Empleado"
+                cbEmpleado.Refresh()
+            Else
+                cbEmpleado.Items.Add("No hay empleados disponibles.")
+                cbEmpleado.SelectedItem = "No hay empleados disponibles."
+            End If
+            cbEmpleado.Enabled = True
+
+            Dim primerDiaMes As DateTime = New DateTime(Now.Date.Year, Now.Date.Month, 1)
+            Dim ultimoDiaMes As DateTime = primerDiaMes.AddMonths(1).AddDays(-1)
+            btnHistoricoAdelantos.Visible = True
             btnAceptar.Text = "Aceptar"
             ToolAdelantos.SetToolTip(btnAceptar, "Al aceptar el formulario se registrará en el sistema el adelanto al empleado seleccionado.")
         End If
@@ -117,7 +145,12 @@
 
     'Cuando hace click en Cancelar.
     Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
-        LimpiarFormulario()
+        'Si es un mov ya cargado vuelvo a la pantalla de listado de adelantos
+        If id_Adelanto <> 0 Then
+            AbrirHistoricoAdelantos()
+        Else
+            Me.Close()
+        End If
     End Sub
 
     'Valida solo moneda.
@@ -139,12 +172,15 @@
         txtMonto.Focus()
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHistoricoAdelantos.Click
+        AbrirHistoricoAdelantos()
+    End Sub
+
+    Private Sub AbrirHistoricoAdelantos()
         Me.Cursor = Cursors.WaitCursor
         Me.WindowState = FormWindowState.Minimized
         Funciones.ControlInstancia(frmAdelantoListado).MdiParent = MDIContenedor
         Funciones.ControlInstancia(frmAdelantoListado).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
-
 End Class

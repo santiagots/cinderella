@@ -20,6 +20,16 @@
         End Set
     End Property
 
+    Private CantidadDiasTarde_ As Integer
+    Public Property CantidadDiasTarde() As Integer
+        Get
+            Return CantidadDiasTarde_
+        End Get
+        Set(ByVal value As Integer)
+            CantidadDiasTarde_ = value
+        End Set
+    End Property
+
     Private CantidadDiasNormales_ As Integer
     Public Property CantidadDiasNormales() As Integer
         Get

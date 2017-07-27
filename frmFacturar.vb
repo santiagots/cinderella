@@ -102,6 +102,7 @@ Public Class frmFacturar
 
         Cb_TipoFacturacion.SelectedIndex = 0
 
+        btnCancelar.Visible = Not NotaCredito
         btnFacturar.Enabled = Not NotaCredito
         btnNotaCredito.Enabled = NotaCredito
 
@@ -257,6 +258,7 @@ Public Class frmFacturar
                 NegVentas.FacturoVenta(True, id_Venta)
 
                 MessageBox.Show(String.Format("Se ha generado la factura correctamente.{0}El vuelto es: {1}", Environment.NewLine, Double.Parse(txt_Pago.Text) - Monto), "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Me.DialogResult = DialogResult.OK
                 Me.Close()
             Else
                 MessageBox.Show("No se ha generado la factura correctamente.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -814,5 +816,9 @@ Public Class frmFacturar
         txt_Nombre.ReadOnly = False
         TipoFactura = factura
         Label3.Text = "CUIT (sólo numeros)"
+    End Sub
+
+    Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = DialogResult.Cancel
     End Sub
 End Class

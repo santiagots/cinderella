@@ -48,6 +48,10 @@ Public Class NegRegistros
 
             'inserto los empleados ausentes para el registro
             InsertarRegistroEmpleados(Ereg.EmpleadosAusente, id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+
+            'inserto los empleados tardios para el registro
+            InsertarRegistroEmpleados(Ereg.EmpleadosTarde, id_Registro, "sp_RegistrosEmpleados_Alta_Tarde", False)
+
             clsDatos.DesconectarLocal()
 
             If (HayInternet) Then
@@ -63,6 +67,10 @@ Public Class NegRegistros
 
                 'inserto los empleados ausentes para el registro
                 InsertarRegistroEmpleados(Ereg.EmpleadosAusente, id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", True)
+
+                'inserto los empleados tardios para el registro
+                InsertarRegistroEmpleados(Ereg.EmpleadosTarde, id_Registro, "sp_RegistrosEmpleados_Alta_Tarde", True)
+
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -103,6 +111,9 @@ Public Class NegRegistros
             'inserto los empleados presentes para el registro
             InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta", False)
 
+            'inserto los empleados tardios para el registro
+            InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Tarde", False)
+
             'inserto los empleados ausentes para el registro
             InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", False)
             clsDatos.DesconectarLocal()
@@ -114,6 +125,9 @@ Public Class NegRegistros
 
                 'inserto los empleados presentes para el registro
                 InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta", True)
+
+                'inserto los empleados tardios para el registro
+                InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Tarde", True)
 
                 'inserto los empleados ausentes para el registro
                 InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, "sp_RegistrosEmpleados_Alta_Ausentes", True)

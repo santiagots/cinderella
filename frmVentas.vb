@@ -1041,7 +1041,6 @@ Public Class frmVentas
             Dim SubTotal As Double = 0 'Monto total de la venta.
             Dim MontoTotal As Double = 0 'Monto total de la venta menos el descuento.
             Dim CantidadTotal As Integer = CalcularCantidadTotal() 'Cantidad total de articulos.
-            Dim TipoPagoControlador As String = "" 'Variable que se imprime en el tique fiscal.
             Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
             Dim PorcentajeFacturacion As Double = 0
             Dim IvaTotal As Double = 0 'Iva total de la vental
@@ -1106,18 +1105,28 @@ Public Class frmVentas
 
                 Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, SubTotal, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, False)
 
-                'si esto realizando una venta a partir de una seña
-                If (Me.Senia IsNot Nothing) Then
-                    Senia.IdVentaRetiro = id_Venta
-                    Senia.Entregada = True
-                    negSenia.ActualizarSenia(Senia)
-
-                    ActualizarStockDesdeSenia()
-                Else
-                    ActualizarStock()
-                End If
-
                 If id_Venta > 0 Then
+
+                    'Si hay que facturar abro el form.
+                    If Facturar Then
+                        Dim resultado = FacturarVenta(TipoPago, id_Cliente, Descuento, CostoFinanciero, SubTotal, MontoTotal, IvaTotal, MontoSenia, id_Venta, PorcentajeFacturacion)
+                        'Si cacelo la factura se tiene que eliminar la venta y frenar el proceso de venta.
+                        If resultado = DialogResult.Cancel Then
+                            NegVentas.Eliminar(id_Venta)
+                            Return
+                        End If
+                    End If
+
+                    'si esto realizando una venta a partir de una seña
+                    If (Me.Senia IsNot Nothing) Then
+                        Senia.IdVentaRetiro = id_Venta
+                        Senia.Entregada = True
+                        negSenia.ActualizarSenia(Senia)
+
+                        ActualizarStockDesdeSenia()
+                    Else
+                        ActualizarStock()
+                    End If
 
                     RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoTotal, id_Venta)
 
@@ -1142,13 +1151,8 @@ Public Class frmVentas
                         End If
                     End If
 
-                    'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
-                    If Facturar Then
-                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, Descuento, CostoFinanciero, SubTotal, MontoTotal, IvaTotal, MontoSenia, id_Venta, PorcentajeFacturacion)
-                    End If
-
                     'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
-                    If PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                    If Facturar AndAlso PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
                         AltaPresupuesto(id_Venta, TipoVenta, TipoPago, Cb_TipoPago.Text, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, Id_Tarjeta, NumerCuotas, Descuento, CostoFinanciero, SubTotal, MontoTotal, PorcentajeFacturacion, MontoSenia)
                     End If
 
@@ -1527,10 +1531,19 @@ Public Class frmVentas
                 Dim Senia As Entidades.Senia = frmSeniaDatos.Senia
 
                 Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
-
-                ActualizarStock()
-
                 If id_Venta > 0 Then
+
+                    'Si hay que facturar abro el form.
+                    If Facturar Then
+                        Dim resultado = FacturarVenta(TipoPago, id_Cliente, MontoSenia, CostoFinanciero, id_Venta, PorcentajeFacturacion)
+                        'Si cacelo la factura se tiene que eliminar la venta y frenar el proceso de venta.
+                        If resultado = DialogResult.Cancel Then
+                            NegVentas.Eliminar(id_Venta)
+                            Return
+                        End If
+                    End If
+
+                    ActualizarStock()
 
                     Senia.IdVentaSenia = id_Venta
                     negSenia.CrearSenia(Senia)
@@ -1543,13 +1556,9 @@ Public Class frmVentas
                     'Muestro Mensaje.
                     MessageBox.Show("La reserva ha sido generada correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
 
-                    'Si hay que facturar, muestro  un mensaje que se va a llevar a cabo dicha factura y abro el form.
-                    If Facturar Then
-                        TipoPagoControlador = FacturarVenta(TipoPago, id_Cliente, MontoSenia, CostoFinanciero, id_Venta, PorcentajeFacturacion)
-                        'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
-                        If PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-                            AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, Cb_TipoPago.Text, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia, Id_Tarjeta, NumerCuotas, CostoFinanciero)
-                        End If
+                    'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
+                    If Facturar AndAlso PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                        AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, Cb_TipoPago.Text, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia, Id_Tarjeta, NumerCuotas, CostoFinanciero)
                     End If
 
                     'Fin de la venta.
@@ -1729,6 +1738,8 @@ Public Class frmVentas
         'Numero de Venta.
         Dim id_Venta As Integer = 0
         NegVentas.NuevaVenta(EntVentas, DetalleVenta, id_Venta)
+        Me.Cursor = Cursors.Arrow
+
         Return id_Venta
     End Function
 
@@ -1827,10 +1838,8 @@ Public Class frmVentas
         Return Monto
     End Function
 
-    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, IvaTotal As Double, MontoSenia As Double, id_Venta As Integer, PorcentajeFacturacion As Double) As String
+    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, IvaTotal As Double, MontoSenia As Double, id_Venta As Integer, PorcentajeFacturacion As Double) As DialogResult
         Dim TipoPagoControlador As String
-        'Seteo el cursor.
-        Me.Cursor = Cursors.WaitCursor
 
         'Seteo Tipo de Pago para la controladora fiscal
         If TipoPago = 1 Then
@@ -1843,9 +1852,9 @@ Public Class frmVentas
             TipoPagoControlador = "CHEQUE"
         End If
 
+        Dim frmFacturar As frmFacturar = New frmFacturar()
+
         If (cb_Tipo.SelectedItem = "Minorista") Then
-            'Abro el form de datos de facturacion.
-            Dim frmFacturar As frmFacturar = New frmFacturar()
             frmFacturar.id_Venta = id_Venta
             frmFacturar.id_Cliente = id_Cliente
             frmFacturar.Monto = MontoTotal
@@ -1856,13 +1865,10 @@ Public Class frmVentas
             frmFacturar.TipoCliente = TipoCliente.Minorista
             frmFacturar.EsSenia = False
             frmFacturar.PorcentajeFacturacion = 1
-            frmFacturar.ShowDialog()
         Else
 
             Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
             Dim DescuentoTotal As Double = Descuento + MontoSeñaSinIva
-            'Abro el form de datos de facturacion.
-            Dim frmFacturar As frmFacturar = New frmFacturar()
             frmFacturar.id_Venta = id_Venta
             frmFacturar.id_Cliente = id_Cliente
             frmFacturar.Descuento = Math.Round(DescuentoTotal * PorcentajeFacturacion, 2)
@@ -1874,18 +1880,13 @@ Public Class frmVentas
             frmFacturar.TipoCliente = TipoCliente.Mayorista
             frmFacturar.EsSenia = False
             frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
-            frmFacturar.ShowDialog()
         End If
 
-        'Seteo el cursor.
-        Me.Cursor = Cursors.Arrow
-        Return TipoPagoControlador
+        Return frmFacturar.ShowDialog()
     End Function
 
     Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, id_Venta As Integer, PorcentajeFacturacion As Double) As String
         Dim TipoPagoControlador As String
-        'Seteo el cursor.
-        Me.Cursor = Cursors.WaitCursor
 
         'Seteo Tipo de Pago para la controladora fiscal
         If TipoPago = 1 Then
@@ -1898,9 +1899,9 @@ Public Class frmVentas
             TipoPagoControlador = "CHEQUE"
         End If
 
+        Dim frmFacturar As frmFacturar = New frmFacturar()
+
         If (cb_Tipo.SelectedItem = "Minorista") Then
-            'Abro el form de datos de facturacion.
-            Dim frmFacturar As frmFacturar = New frmFacturar()
             frmFacturar.id_Venta = id_Venta
             frmFacturar.id_Cliente = id_Cliente
             frmFacturar.TipoPago = TipoPagoControlador
@@ -1911,14 +1912,10 @@ Public Class frmVentas
             frmFacturar.MontoSenia = MontoSenia
             frmFacturar.EsSenia = True
             frmFacturar.PorcentajeFacturacion = 1
-            frmFacturar.ShowDialog()
         Else
 
             Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
             Dim CostoFinancieroSinIva As Double = CostoFinanciero / ((0.21 * PorcentajeFacturacion) + 1)
-
-            'Abro el form de datos de facturacion.
-            Dim frmFacturar As frmFacturar = New frmFacturar()
             frmFacturar.id_Venta = id_Venta
             frmFacturar.id_Cliente = id_Cliente
             frmFacturar.TipoPago = TipoPagoControlador
@@ -1930,12 +1927,9 @@ Public Class frmVentas
             frmFacturar.MontoSenia = Math.Round(MontoSeñaSinIva * PorcentajeFacturacion * 1.21, 2)
             frmFacturar.EsSenia = True
             frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
-            frmFacturar.ShowDialog()
         End If
 
-        'Seteo el cursor.
-        Me.Cursor = Cursors.Arrow
-        Return TipoPagoControlador
+        Return frmFacturar.ShowDialog()
     End Function
 
     Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown

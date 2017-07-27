@@ -1,6 +1,8 @@
 ﻿Imports System.Data.OleDb
 Imports Microsoft.Office.Interop
 Imports System.Globalization
+Imports Entidades
+
 Public Class frmPlanillaEmpleados
     Dim Funciones As New Funciones
     Dim NegSucursal As New Negocio.NegSucursales
@@ -150,6 +152,7 @@ Public Class frmPlanillaEmpleados
         Dim InicioPeriodo As Integer
         Dim inicio As Integer = 0
         Dim id_Sucursal As Integer = Cb_Sucursal.SelectedValue
+        Dim TotalPresentismo As Double = 0
         Dim TotalComisiones As Double = 0
         Dim TotalSueldos As Double = 0
         Dim TotalVacaciones As Double = 0
@@ -273,26 +276,28 @@ Public Class frmPlanillaEmpleados
             xlWorkSheet.Cells((inicio + 2), 1) = i & "º " & dateValue.ToString("dddd", New CultureInfo("es-ES"))
             xlWorkSheet.Cells((inicio + 2), 1).style = "EstiloEncabezado"
         Next
-        xlWorkSheet.Cells((FinPeriodo + 3), 1) = "TOTAL MENSUAL"
+        xlWorkSheet.Cells((FinPeriodo + 3), 1) = "PRESENTISMO"
         xlWorkSheet.Cells((FinPeriodo + 3), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 5), 1) = "TOTAL UNIFICADO"
-        xlWorkSheet.Cells((FinPeriodo + 5), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 6), 1) = "ADELANTOS OBTENIDOS"
+        xlWorkSheet.Cells((FinPeriodo + 4), 1) = "TOTAL MENSUAL"
+        xlWorkSheet.Cells((FinPeriodo + 4), 1).style = "EstiloEncabezado"
+        xlWorkSheet.Cells((FinPeriodo + 6), 1) = "TOTAL UNIFICADO"
         xlWorkSheet.Cells((FinPeriodo + 6), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 7), 1) = "ADICIONALES OBTENIDOS"
+        xlWorkSheet.Cells((FinPeriodo + 7), 1) = "ADELANTOS OBTENIDOS"
         xlWorkSheet.Cells((FinPeriodo + 7), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 8), 1) = "RECIBO DE SUELDO"
+        xlWorkSheet.Cells((FinPeriodo + 8), 1) = "ADICIONALES OBTENIDOS"
         xlWorkSheet.Cells((FinPeriodo + 8), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 9), 1) = "VACACIONES"
+        xlWorkSheet.Cells((FinPeriodo + 9), 1) = "RECIBO DE SUELDO"
         xlWorkSheet.Cells((FinPeriodo + 9), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 10), 1) = "AGUINALDO"
+        xlWorkSheet.Cells((FinPeriodo + 10), 1) = "VACACIONES"
         xlWorkSheet.Cells((FinPeriodo + 10), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 11), 1) = "SALDO A PAGAR EN MANO"
+        xlWorkSheet.Cells((FinPeriodo + 11), 1) = "AGUINALDO"
         xlWorkSheet.Cells((FinPeriodo + 11), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 12), 1) = "SALDO A DEPOSITAR"
+        xlWorkSheet.Cells((FinPeriodo + 12), 1) = "SALDO A PAGAR EN MANO"
         xlWorkSheet.Cells((FinPeriodo + 12), 1).style = "EstiloEncabezado"
-        xlWorkSheet.Cells((FinPeriodo + 13), 1) = "DEUDA ACUMULADA"
+        xlWorkSheet.Cells((FinPeriodo + 13), 1) = "SALDO A DEPOSITAR"
         xlWorkSheet.Cells((FinPeriodo + 13), 1).style = "EstiloEncabezado"
+        xlWorkSheet.Cells((FinPeriodo + 14), 1) = "DEUDA ACUMULADA"
+        xlWorkSheet.Cells((FinPeriodo + 14), 1).style = "EstiloEncabezado"
         '----------------------------------------------------------------------------------------------------------------------'
 
         'CUERPO CON LOS DATOS DE LOS EMPLEADOS.
@@ -313,104 +318,68 @@ Public Class frmPlanillaEmpleados
             frmCargadorDeEspera.Refresh()
 
             'Pregunto primero si en el rango de fechas tiene comisiones cargadas.
-            Dim FDesde As String = mes & "/" & InicioPeriodo & "/" & anio
-            Dim FHasta As String = mes & "/" & FinPeriodo & "/" & anio
+            Dim FDesde As String = anio & "/" & mes & "/" & InicioPeriodo
+            Dim FHasta As String = anio & "/" & mes & "/" & FinPeriodo
             Dim id_Empleado As Integer = CInt(dsEmpleados.Tables(0).Rows(wds).Item("id_Empleado"))
-            Dim HayComisiones As Boolean = NegComision.ConsultarComisionesPeriodo(id_Empleado, id_Sucursal, FDesde, FHasta)
 
-            Dim Comision As Double = 0
-            Dim Sueldo As Double = 0
-            Dim Dias As Integer = 0
-            Dim DiasFeriados As Integer = 0
-            Dim SueldoNormal As Double = 0
-            Dim SueldoFeriado As Double = 0
+            Dim dsComisiones As DataSet = NegEmpleado.ComisionPorDia(id_Empleado, id_Sucursal, FDesde, FHasta)
+            Dim dsSueldo As DataSet = NegEmpleado.SueldoPorDia(id_Empleado, id_Sucursal, FDesde, FHasta)
+
+            'obtengo el estado de cuenta del mes en curso
+            Dim estadoCuenta As EstadoCuenta = NegEmpleado.ObtenerEstadoCuenta(id_Empleado, id_Sucursal, FDesde, FHasta)
+
             Dim TotalComisionesEmp As Double = 0
             Dim TotalSueldosEmp As Double = 0
 
-            Dias = NegRegistros.ObtenerDias(id_Empleado, id_Sucursal, FDesde, FHasta)
-            DiasFeriados = NegRegistros.ObtenerDiasFeriados(id_Empleado, id_Sucursal, FDesde, FHasta)
-            SueldoNormal = CDbl(dsEmpleados.Tables(0).Rows(wds).Item("SueldoNormal"))
-            SueldoFeriado = CDbl(dsEmpleados.Tables(0).Rows(wds).Item("SueldoFeriado"))
-
             For i = InicioPeriodo To FinPeriodo
                 inicio = (i - InicioPeriodo) + 1
-                Dim Fecha As String = mes & "/" & i & "/" & anio
-                If (Dias + DiasFeriados) > 0 Then
-                    If NegRegistros.AsistioEmpleado(id_Empleado, id_Sucursal, Fecha) Then
-                        If NegRegistros.EsFeriado(Fecha) Then 'SI ES FERIADO
-                            Sueldo = SueldoFeriado
-                        Else
-                            Sueldo = SueldoNormal
-                        End If
+                Dim Fecha As Date = New Date(anio, mes, i)
 
-                        If Sueldo > 0 Then
-                            xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr).value = "$ " & Format(CType(Sueldo, Decimal), "###0.00") 'SUELDO
-                        Else
-                            xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr).value = "-" 'SUELDO
-                        End If
-
-                    Else
-                        Sueldo = 0
-                        xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr).value = "-" 'SUELDO
-                    End If
+                Dim Sueldo As DataRow = dsSueldo.Tables(0).Rows.Cast(Of DataRow).FirstOrDefault(Function(x) Date.Parse(x("Fecha")).Date = Fecha)
+                If Not Sueldo Is Nothing Then
+                    xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr).value = "$ " & Format(CType(Sueldo("Monto"), Decimal), "###0.00") 'SUELDO
+                    TotalSueldosEmp += Sueldo("Monto")
                 Else
-                    Sueldo = 0
-                    'xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr).value = "$ " & Format(CType(Sueldo, Decimal), "###0.00") 'SUELDO
                     xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr).value = "-" 'SUELDO
                 End If
 
-                If HayComisiones Then
-                    Comision = NegComision.ObtenerComisionPorFecha(id_Empleado, id_Sucursal, Fecha)
-                    If Comision > 0 Then
-                        xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr + 1).value = "$ " & Format(CType(Comision, Decimal), "###0.00") 'COMISION
-                    Else
-                        xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr + 1).value = "-" 'COMISION
-                    End If
+                Dim Comision As DataRow = dsComisiones.Tables(0).Rows.Cast(Of DataRow).FirstOrDefault(Function(x) Date.Parse(x("Fecha")).Date = Fecha)
+                If Not Comision Is Nothing Then
+                    xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr + 1).value = "$ " & Format(CType(Comision("Monto"), Decimal), "###0.00") 'COMISION
+                    TotalComisionesEmp += Comision("Monto")
                 Else
-                    Comision = 0
-                    ' xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr + 1).value = "$ " & Format(CType(Comision, Decimal), "###0.00") 'COMISION
                     xlWorkSheet.Cells((inicio + 2), ComienzoIngreso + wmr + 1).value = "-" 'COMISION
                 End If
-
-                'Acumulo los totales del empleado.
-                TotalComisionesEmp += Comision
-                TotalSueldosEmp += Sueldo
             Next
 
             'Acumulo los totales.
             TotalComisiones += TotalComisionesEmp
             TotalSueldos += TotalSueldosEmp
 
-            'TOTALES MENSUALES DEL EMPLEADO.
-            If TotalSueldosEmp > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 3), ComienzoIngreso + wmr).value = "$ " & Format(CType(TotalSueldosEmp, Decimal), "###0.00") 'SUELDO
+            'PRESENTISMO.
+            If estadoCuenta.CantidadDiasAusente = 0 AndAlso estadoCuenta.CantidadDiasTarde = 0 Then
+                TotalPresentismo = (estadoCuenta.CantidadDiasNormales + estadoCuenta.CantidadDiasFeriados) * CType(dsEmpleados.Tables(0).Rows(wds).Item("SueldoPresentismo"), Double)
+                xlWorkSheet.Cells((FinPeriodo + 3), ComienzoIngreso + wmr).value = "$ " & Format(CType(TotalPresentismo, Decimal), "###0.00") 'SUELDO
             Else
                 xlWorkSheet.Cells((FinPeriodo + 3), ComienzoIngreso + wmr).value = "-"
             End If
 
-            If TotalComisionesEmp > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 3), ComienzoIngreso + wmr + 1).value = "$ " & Format(CType(TotalComisionesEmp, Decimal), "###0.00") 'COMISION
+            'TOTALES MENSUALES DEL EMPLEADO.
+            If TotalSueldosEmp > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 4), ComienzoIngreso + wmr).value = "$ " & Format(CType(TotalSueldosEmp, Decimal), "###0.00") 'SUELDO
             Else
-                xlWorkSheet.Cells((FinPeriodo + 3), ComienzoIngreso + wmr + 1).value = "-"
+                xlWorkSheet.Cells((FinPeriodo + 4), ComienzoIngreso + wmr).value = "-"
+            End If
+
+            If TotalComisionesEmp > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 4), ComienzoIngreso + wmr + 1).value = "$ " & Format(CType(TotalComisionesEmp, Decimal), "###0.00") 'COMISION
+            Else
+                xlWorkSheet.Cells((FinPeriodo + 4), ComienzoIngreso + wmr + 1).value = "-"
             End If
 
             'TOTAL MENSUAL DEL EMPLEADO (SALDO+COMISION)
             If (TotalSueldosEmp + TotalComisionesEmp) > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 5), ComienzoIngreso + wmr).value = "$ " & Format(CType(TotalSueldosEmp + TotalComisionesEmp, Decimal), "###0.00") 'SUELDO+COMISION
-            Else
-                xlWorkSheet.Cells((FinPeriodo + 5), ComienzoIngreso + wmr).value = "-"
-            End If
-            xlWorkSheet.Cells((FinPeriodo + 5), ComienzoIngreso + wmr + 1).value = "" 'CELDA VACIA.
-
-            ' Seleccionas el rango y la combino.
-            xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 5), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 5), ComienzoIngreso + wmr + 1)).Select()
-            xlApp.Selection.MergeCells = True
-
-            'TOTAL DE ADELANTOS OTORGADOS AL EMPLEADO
-            Dim Adelantos As Double = 0
-            Adelantos = NegAdelanto.ObtenerAdelantos(id_Empleado, id_Sucursal, FDesde, FHasta)
-            If Adelantos > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 6), ComienzoIngreso + wmr).value = "$ " & Format(CType(Adelantos, Decimal), "###0.00")
+                xlWorkSheet.Cells((FinPeriodo + 6), ComienzoIngreso + wmr).value = "$ " & Format(CType(TotalSueldosEmp + TotalComisionesEmp + TotalPresentismo, Decimal), "###0.00") 'SUELDO+COMISION
             Else
                 xlWorkSheet.Cells((FinPeriodo + 6), ComienzoIngreso + wmr).value = "-"
             End If
@@ -420,11 +389,9 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 6), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 6), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            'TOTAL DE ADICIONALES OTORGADOS AL EMPLEADO
-            Dim Adicionales As Double = 0
-            Adicionales = NegAdicionales.ObtenerAdicionales(id_Empleado, id_Sucursal, FDesde, FHasta)
-            If Adicionales > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 7), ComienzoIngreso + wmr).value = "$ " & Format(CType(Adicionales, Decimal), "###0.00")
+            'TOTAL DE ADELANTOS OTORGADOS AL EMPLEADO
+            If estadoCuenta.Adelantos > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 7), ComienzoIngreso + wmr).value = "$ " & Format(CType(estadoCuenta.Adelantos, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 7), ComienzoIngreso + wmr).value = "-"
             End If
@@ -434,12 +401,9 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 7), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 7), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-
-            'RECIBO DE SUELDO
-            Dim ReciboSueldo As Double = 0
-            ReciboSueldo = NegRecibo.ObtenerRecibo(id_Empleado, id_Sucursal, Cb_Meses.SelectedItem, anio)
-            If ReciboSueldo > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 8), ComienzoIngreso + wmr).value = "$ " & Format(CType(ReciboSueldo, Decimal), "###0.00")
+            'TOTAL DE ADICIONALES OTORGADOS AL EMPLEADO
+            If estadoCuenta.Adicionales > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 8), ComienzoIngreso + wmr).value = "$ " & Format(CType(estadoCuenta.Adicionales, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 8), ComienzoIngreso + wmr).value = "-"
             End If
@@ -449,11 +413,10 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 8), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 8), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            'VACACIONES
-            Dim Vacaciones As Double = 0
-            Vacaciones = NegRecibo.ObtenerVacacionesMes(id_Empleado, id_Sucursal, Cb_Meses.SelectedItem, anio)
-            If Vacaciones > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 9), ComienzoIngreso + wmr).value = "$ " & Format(CType(Vacaciones, Decimal), "###0.00")
+
+            'RECIBO DE SUELDO
+            If estadoCuenta.RecivoSueldo > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 9), ComienzoIngreso + wmr).value = "$ " & Format(CType(estadoCuenta.RecivoSueldo, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 9), ComienzoIngreso + wmr).value = "-"
             End If
@@ -463,11 +426,9 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 9), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 9), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            'AGUINALDO
-            Dim Aguinaldo As Double = 0
-            Aguinaldo = NegRecibo.ObtenerAguinaldoMes(id_Empleado, id_Sucursal, Cb_Meses.SelectedItem, anio)
-            If Aguinaldo > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 10), ComienzoIngreso + wmr).value = "$ " & Format(CType(Aguinaldo, Decimal), "###0.00")
+            'VACACIONES
+            If estadoCuenta.Vacaciones > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 10), ComienzoIngreso + wmr).value = "$ " & Format(CType(estadoCuenta.Vacaciones, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 10), ComienzoIngreso + wmr).value = "-"
             End If
@@ -477,26 +438,9 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 10), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 10), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            'SALDO A PAGAR EN MANO | SALDO A DEPOSITAR
-            Dim SaldoEnMano As Double = 0
-            Dim SaldoADepositar As Double = 0
-            Dim DeudaAcumulada As Double = 0
-
-            If Adelantos > TotalSueldosEmp Then
-                DeudaAcumulada = Adelantos - TotalSueldosEmp
-            End If
-
-            If ReciboSueldo > (TotalSueldosEmp + TotalComisionesEmp + Aguinaldo + Vacaciones + Adicionales - Adelantos) Then
-                SaldoEnMano = 0
-                SaldoADepositar = TotalSueldosEmp + TotalComisionesEmp + Aguinaldo + Vacaciones + Adicionales - Adelantos
-            Else
-                SaldoEnMano = (TotalSueldosEmp + TotalComisionesEmp + Aguinaldo + Vacaciones + Adicionales - Adelantos) - ReciboSueldo
-                SaldoADepositar = ReciboSueldo
-            End If
-
-            'SALDO A PAGAR EN MANO
-            If SaldoEnMano > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 11), ComienzoIngreso + wmr).value = "$ " & Format(CType(SaldoEnMano, Decimal), "###0.00")
+            'AGUINALDO
+            If estadoCuenta.Aguinaldo > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 11), ComienzoIngreso + wmr).value = "$ " & Format(CType(estadoCuenta.Aguinaldo, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 11), ComienzoIngreso + wmr).value = "-"
             End If
@@ -506,9 +450,27 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 11), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 11), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            'SALDO A DEPOSITAR
-            If SaldoADepositar > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 12), ComienzoIngreso + wmr).value = "$ " & Format(CType(SaldoADepositar, Decimal), "###0.00")
+            Dim SaldoEnMano As Double
+            Dim SaldoADepositar As Double
+            Dim Deuda As Double
+            Dim DiferenciaMeses As Integer = (mes - DateTime.Now.Month) + 12 * (anio - DateTime.Now.Year)
+
+            'si la deuda del mes seleccionado no tiene valor 
+            If (Not estadoCuenta.Deuda.HasValue) Then
+                'y si el mes seleccionado no es un mes futuro
+                If (DiferenciaMeses < 1) Then
+                    'Calcula la deuda que le corresponde a este mes
+                    Deuda = CalcularDeudaMesVencidos(id_Empleado, id_Sucursal, FDesde, FHasta, dsEmpleados.Tables(0).Rows(wds), False)
+                End If
+            Else
+                Deuda = estadoCuenta.Deuda.Value
+            End If
+
+            CalcularSueldos(TotalSueldosEmp, TotalPresentismo, Deuda, estadoCuenta, SaldoADepositar, SaldoEnMano)
+
+            'SALDO A PAGAR EN MANO
+            If SaldoEnMano > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 12), ComienzoIngreso + wmr).value = "$ " & Format(CType(SaldoEnMano, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 12), ComienzoIngreso + wmr).value = "-"
             End If
@@ -518,9 +480,9 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 12), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 12), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            'DEUDA ACUMULADA
-            If DeudaAcumulada > 0 Then
-                xlWorkSheet.Cells((FinPeriodo + 13), ComienzoIngreso + wmr).value = "$ " & Format(CType(DeudaAcumulada, Decimal), "###0.00")
+            'SALDO A DEPOSITAR
+            If SaldoADepositar > 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 13), ComienzoIngreso + wmr).value = "$ " & Format(CType(SaldoADepositar, Decimal), "###0.00")
             Else
                 xlWorkSheet.Cells((FinPeriodo + 13), ComienzoIngreso + wmr).value = "-"
             End If
@@ -530,8 +492,20 @@ Public Class frmPlanillaEmpleados
             xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 13), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 13), ComienzoIngreso + wmr + 1)).Select()
             xlApp.Selection.MergeCells = True
 
-            TotalVacaciones += Vacaciones
-            TotalAguinaldos += Aguinaldo
+            'DEUDA ACUMULADA
+            If Deuda <> 0 Then
+                xlWorkSheet.Cells((FinPeriodo + 14), ComienzoIngreso + wmr).value = "$ " & Format(CType(Deuda, Decimal), "###0.00")
+            Else
+                xlWorkSheet.Cells((FinPeriodo + 14), ComienzoIngreso + wmr).value = "-"
+            End If
+            xlWorkSheet.Cells((FinPeriodo + 14), ComienzoIngreso + wmr + 1).value = "" 'CELDA VACIA.
+
+            ' Seleccionas el rango y la combino.
+            xlApp.Range(xlWorkSheet.Cells((FinPeriodo + 14), ComienzoIngreso + wmr), xlWorkSheet.Cells((FinPeriodo + 14), ComienzoIngreso + wmr + 1)).Select()
+            xlApp.Selection.MergeCells = True
+
+            TotalVacaciones += estadoCuenta.Vacaciones
+            TotalAguinaldos += estadoCuenta.Aguinaldo
         Next
         '------------------------------------------------------------------------------------------------------------------'
 
@@ -568,6 +542,74 @@ Public Class frmPlanillaEmpleados
         'bloqueo los controles
         GB_Controles.Enabled = True
 
+    End Sub
+
+    'Funcion para obtener la deuda 
+    Private Function CalcularDeudaMesVencidos(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As DateTime, ByVal FechaHasta As DateTime, ByVal drEmpleado As DataRow, ByVal TuvoDeuda As Boolean) As Double
+        Dim SueldoPresentismo As Double = 0
+        Dim Deuda As Double = 0
+
+        'Obtengo es tada del cuanta del mes anterior
+        Dim estadoCuenta = NegEmpleado.ObtenerEstadoCuenta(id_Empleado, id_Sucursal, FechaDesde.AddMonths(-1).ToString("yyyy/MM/dd"), FechaDesde.AddDays(-1).ToString("yyyy/MM/dd"))
+
+        'En caso que la deuda no tenga valor es porque no se tiene deuda registrada para este mes, por lo que calculo la deuda
+        If (Not estadoCuenta.Deuda.HasValue) Then
+            'Antes de entrar al proceso recirsivo verifico que el empleado halla tenido algun registro de deuda para tener un corte de la recursividad
+            If (TuvoDeuda Or NegEmpleado.UltimaDeuda(id_Empleado, id_Sucursal, FechaDesde) = DateTime.MinValue).HasValue Then
+                'Calcula la deuda que le corresponde a este mes
+                Deuda = CalcularDeudaMesVencidos(id_Empleado, id_Sucursal, FechaDesde.AddMonths(-1).ToString("yyyy/MM/dd"), FechaDesde.AddDays(-1).ToString("yyyy/MM/dd"), drEmpleado, True)
+            End If
+        Else
+            Deuda = estadoCuenta.Deuda.Value
+        End If
+
+        If estadoCuenta.CantidadDiasAusente = 0 AndAlso estadoCuenta.CantidadDiasTarde = 0 Then
+            SueldoPresentismo = estadoCuenta.CantidadDiasNormales * CType(drEmpleado("SueldoPresentismo"), Double)
+        End If
+
+        'Calculo el total trabajado y el total abonado
+        Dim SubTotalTrabajado As Double = (estadoCuenta.Comisiones + (estadoCuenta.CantidadDiasNormales + estadoCuenta.CantidadDiasTarde) * CType(drEmpleado("SueldoNormal"), Double) + estadoCuenta.CantidadDiasFeriados * CType(drEmpleado("SueldoFeriado"), Double) + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + SueldoPresentismo)
+        Dim SubTotalAbonado As Double = estadoCuenta.Adelantos + estadoCuenta.SueldoPago + Deuda
+
+        Deuda = -(SubTotalTrabajado - SubTotalAbonado)
+        'Registro la deuda
+        NegEmpleado.ActualizarDeuda(id_Empleado, id_Sucursal, Deuda, FechaDesde)
+        Return Deuda
+    End Function
+
+    Sub CalcularSueldos(ByVal SueldoNormal As Double, ByVal Presentismo As Double, ByVal Deuda As Double, estadoCuenta As EstadoCuenta, ByRef SueldoPorDepositar As Double, ByRef SueldoPorPagarEnMano As Double)
+
+        Dim SubTotalTrabajado As Double = (estadoCuenta.Comisiones + SueldoNormal + estadoCuenta.Aguinaldo + estadoCuenta.Vacaciones + estadoCuenta.Adicionales + Presentismo)
+
+        Dim SubTotalAbonado As Double = estadoCuenta.Adelantos + estadoCuenta.SueldoPago + Deuda
+
+        If (SubTotalTrabajado - SubTotalAbonado < 0) Then
+            SueldoPorDepositar = 0
+            SueldoPorPagarEnMano = SubTotalTrabajado - SubTotalAbonado
+        Else
+            If ((estadoCuenta.RecivoSueldo - estadoCuenta.SueldoPago) = 0) Then
+                SueldoPorDepositar = 0
+                SueldoPorPagarEnMano = SubTotalTrabajado - SubTotalAbonado
+
+                'Si al total trabajado menos la deuda del mes pasado no llega a cubrir el recivo de sueldo
+            ElseIf (SubTotalTrabajado - Deuda < estadoCuenta.RecivoSueldo) Then
+                'Defino el monto posible a pagar como esa diferencia menos lo que ya se le pudo haber pagado del recivo
+                SueldoPorDepositar = SubTotalTrabajado - Deuda - estadoCuenta.SueldoPago
+                SueldoPorPagarEnMano = 0
+            ElseIf (Deuda >= 0) Then
+                SueldoPorDepositar = estadoCuenta.RecivoSueldo - Deuda - estadoCuenta.SueldoPago
+                If (SueldoPorDepositar < 0) Then
+                    SueldoPorDepositar = 0
+                End If
+                SueldoPorPagarEnMano = SubTotalTrabajado - SubTotalAbonado - SueldoPorDepositar
+            Else
+                SueldoPorDepositar = estadoCuenta.RecivoSueldo - estadoCuenta.SueldoPago
+                If (SueldoPorDepositar < 0) Then
+                    SueldoPorDepositar = 0
+                End If
+                SueldoPorPagarEnMano = SubTotalTrabajado - SubTotalAbonado - SueldoPorDepositar
+            End If
+        End If
     End Sub
 
     Private Sub RecuperarExcel()

@@ -1,6 +1,16 @@
 ﻿Public Class Ventas_Detalle
+    Private nombre_ As String
     Private id_Venta_, id_Detalle_, id_Producto_, Cantidad_ As Integer
     Dim Precio_, Iva_, Monto_ As Double
+
+    Public Property Nombre() As Integer
+        Get
+            Return nombre_
+        End Get
+        Set(ByVal value As Integer)
+            nombre_ = value
+        End Set
+    End Property
 
     Public Property id_Venta() As Integer
         Get

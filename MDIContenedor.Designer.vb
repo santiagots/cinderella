@@ -44,6 +44,7 @@ Partial Class MDIContenedor
         Me.AdicionalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReciboDeSueldoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegistroDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AdelantoEfectivoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_EtiquetasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_FeriadosMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_MaterialesMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -262,7 +263,7 @@ Partial Class MDIContenedor
         '
         'Btn_EmpleadosMenu
         '
-        Me.Btn_EmpleadosMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeEmpleadosToolStripMenuItem, Me.VisualizaciónDeSaldoToolStripMenuItem, Me.ToolStripSeparator5, Me.AdicionalesToolStripMenuItem, Me.ReciboDeSueldoToolStripMenuItem, Me.RegistroDeEmpleadosToolStripMenuItem})
+        Me.Btn_EmpleadosMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AdmDeEmpleadosToolStripMenuItem, Me.VisualizaciónDeSaldoToolStripMenuItem, Me.ToolStripSeparator5, Me.AdicionalesToolStripMenuItem, Me.ReciboDeSueldoToolStripMenuItem, Me.RegistroDeEmpleadosToolStripMenuItem, Me.AdelantoEfectivoToolStripMenuItem})
         Me.Btn_EmpleadosMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Empleado
         Me.Btn_EmpleadosMenu.Name = "Btn_EmpleadosMenu"
         Me.Btn_EmpleadosMenu.Size = New System.Drawing.Size(163, 22)
@@ -308,6 +309,13 @@ Partial Class MDIContenedor
         Me.RegistroDeEmpleadosToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
         Me.RegistroDeEmpleadosToolStripMenuItem.Size = New System.Drawing.Size(246, 22)
         Me.RegistroDeEmpleadosToolStripMenuItem.Text = "Registro"
+        '
+        'AdelantoEfectivoToolStripMenuItem
+        '
+        Me.AdelantoEfectivoToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.adelantos
+        Me.AdelantoEfectivoToolStripMenuItem.Name = "AdelantoEfectivoToolStripMenuItem"
+        Me.AdelantoEfectivoToolStripMenuItem.Size = New System.Drawing.Size(246, 22)
+        Me.AdelantoEfectivoToolStripMenuItem.Text = "Adelanto Efectivo"
         '
         'Btn_EtiquetasMenu
         '
@@ -1400,4 +1408,5 @@ Partial Class MDIContenedor
     Friend WithEvents PresupuestoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AdministracionToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents CostoFinancieroToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AdelantoEfectivoToolStripMenuItem As ToolStripMenuItem
 End Class

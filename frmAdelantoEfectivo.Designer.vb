@@ -38,7 +38,7 @@ Partial Class frmAdelantoEfectivo
         Me.Label5 = New System.Windows.Forms.Label()
         Me.ToolAdelantos = New System.Windows.Forms.ToolTip(Me.components)
         Me.ErrorAdelantos = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnHistoricoAdelantos = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.ErrorAdelantos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -46,8 +46,8 @@ Partial Class frmAdelantoEfectivo
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.txtDate)
         Me.GroupBox1.Controls.Add(Me.txtMonto)
         Me.GroupBox1.Controls.Add(Me.cbEmpleado)
@@ -67,6 +67,7 @@ Partial Class frmAdelantoEfectivo
         'txtDate
         '
         Me.txtDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtDate.Enabled = False
         Me.txtDate.Location = New System.Drawing.Point(115, 103)
         Me.txtDate.Name = "txtDate"
         Me.txtDate.Size = New System.Drawing.Size(312, 21)
@@ -148,8 +149,8 @@ Partial Class frmAdelantoEfectivo
         Me.btnAceptar.TabIndex = 5
         Me.btnAceptar.Text = "Aceptar"
         Me.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolAdelantos.SetToolTip(Me.btnAceptar, "Al aceptar el formulario se registrará en el sistema el adelanto al empleado sele" & _
-                "ccionado.")
+        Me.ToolAdelantos.SetToolTip(Me.btnAceptar, "Al aceptar el formulario se registrará en el sistema el adelanto al empleado sele" &
+        "ccionado.")
         Me.btnAceptar.UseVisualStyleBackColor = True
         '
         'btnCancelar
@@ -187,26 +188,26 @@ Partial Class frmAdelantoEfectivo
         Me.ErrorAdelantos.BlinkRate = 200
         Me.ErrorAdelantos.ContainerControl = Me
         '
-        'Button1
+        'btnHistoricoAdelantos
         '
-        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.Calendario
-        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button1.Location = New System.Drawing.Point(14, 357)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(163, 40)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "Adelantos del Día"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnHistoricoAdelantos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnHistoricoAdelantos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnHistoricoAdelantos.Image = Global.SistemaCinderella.My.Resources.Recursos.Calendario
+        Me.btnHistoricoAdelantos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnHistoricoAdelantos.Location = New System.Drawing.Point(14, 357)
+        Me.btnHistoricoAdelantos.Name = "btnHistoricoAdelantos"
+        Me.btnHistoricoAdelantos.Size = New System.Drawing.Size(163, 40)
+        Me.btnHistoricoAdelantos.TabIndex = 6
+        Me.btnHistoricoAdelantos.Text = "Adelantos del Mes"
+        Me.btnHistoricoAdelantos.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnHistoricoAdelantos.UseVisualStyleBackColor = True
         '
         'frmAdelantoEfectivo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(460, 406)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnHistoricoAdelantos)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btnCancelar)
         Me.Controls.Add(Me.btnAceptar)
@@ -239,5 +240,5 @@ Partial Class frmAdelantoEfectivo
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents ToolAdelantos As System.Windows.Forms.ToolTip
     Friend WithEvents ErrorAdelantos As System.Windows.Forms.ErrorProvider
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btnHistoricoAdelantos As System.Windows.Forms.Button
 End Class

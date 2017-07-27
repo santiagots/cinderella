@@ -81,6 +81,7 @@ Partial Class frmFacturar
         Me.Label8 = New System.Windows.Forms.Label()
         Me.btnNotaCredito = New System.Windows.Forms.Button()
         Me.lblError = New System.Windows.Forms.Label()
+        Me.btnCancelar = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.PanelTotalMayorista.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
@@ -754,11 +755,27 @@ Partial Class frmFacturar
         Me.lblError.Text = "Se ha alcanzado el máximo permitido para realizar una factura con el tipo de fact" &
     "uración seleccionada. Por favor, seleccione otro tipo de facturación."
         '
+        'btnCancelar
+        '
+        Me.btnCancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCancelar.Location = New System.Drawing.Point(443, 446)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(100, 40)
+        Me.btnCancelar.TabIndex = 14
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCancelar.UseVisualStyleBackColor = True
+        '
         'frmFacturar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(766, 497)
+        Me.Controls.Add(Me.btnCancelar)
         Me.Controls.Add(Me.lblError)
         Me.Controls.Add(Me.btnNotaCredito)
         Me.Controls.Add(Me.GB_FacturacionManual)
@@ -851,4 +868,5 @@ Partial Class frmFacturar
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents lbl_CostoFinancieroMinorista As Label
     Friend WithEvents Label22 As Label
+    Friend WithEvents btnCancelar As Button
 End Class

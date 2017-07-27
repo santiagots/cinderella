@@ -1369,7 +1369,7 @@ Public Class frmProductos
                 frmCargadorDeEspera.Text = "Generando Exportación a Excel "
                 frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
                 frmCargadorDeEspera.BarraProgreso.Minimum = 0
-                frmCargadorDeEspera.BarraProgreso.Maximum = 7
+                frmCargadorDeEspera.BarraProgreso.Maximum = 5
                 frmCargadorDeEspera.BarraProgreso.Value = 1
                 frmCargadorDeEspera.Refresh()
 
@@ -1396,7 +1396,7 @@ Public Class frmProductos
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde. " + ex.ToString(), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde." + Environment.NewLine + Environment.NewLine + " Error Técnico:" + ex.ToString(), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

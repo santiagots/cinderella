@@ -10,4 +10,7 @@ Public Interface IProducto
     <OperationContract()>
     Function GetProducto(ByVal IdProducto As Integer) As EntidadProducto
 
+    <OperationContract()>
+    Function GetProductoPorCodigoBarras(ByVal codigoBarras As String) As EntidadProducto
+
 End Interface

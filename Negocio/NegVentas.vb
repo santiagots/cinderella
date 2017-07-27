@@ -87,6 +87,16 @@ Public Class NegVentas
         Return CBool(respuesta.Value)
     End Function
 
+    'elimina la venta por ID
+    Public Sub Eliminar(IDVenta As Integer)
+        ClsDatos.ConsultarBaseLocal("DELETE FROM VENTAS WHERE id_Venta = " + IDVenta.ToString())
+        ClsDatos.ConsultarBaseRemoto("DELETE FROM Ventas_Detalle WHERE id_Venta = " + IDVenta.ToString())
+        If (Funciones.HayInternet) Then
+            ClsDatos.ConsultarBaseRemoto("DELETE FROM VENTAS WHERE id_Venta = " + IDVenta.ToString())
+            ClsDatos.ConsultarBaseRemoto("DELETE FROM Ventas_Detalle WHERE id_Venta = " + IDVenta.ToString())
+        End If
+    End Sub
+
     'Obtiene el ultimo ID de la tabla VENTAS.
     Public Function ObtenerID(HayInternet As Boolean)
         Dim ds As DataSet

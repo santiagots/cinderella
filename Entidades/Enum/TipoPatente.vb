@@ -10,6 +10,7 @@
     Administración_Empleados_Administración_Eliminar = 9
     Administración_Empleados_EstadoCuenta = 10
     Administración_Empleados_PagoAdicionales = 11
+    Administración_Empleados_PagoAdelantos = 620
     Administración_Empleados_SueldoVacacionesAguinaldo = 12
     Administración_Empleados_Registro = 13
     Administración_Etiquetas = 14
