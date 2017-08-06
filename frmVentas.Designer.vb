@@ -633,7 +633,7 @@ Partial Class frmVentas
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(917, 30)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(912, 30)
         Me.TableLayoutPanel2.TabIndex = 30
         '
         'Cb_Vendedores
@@ -644,9 +644,9 @@ Partial Class frmVentas
         Me.Cb_Vendedores.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Cb_Vendedores.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Cb_Vendedores.FormattingEnabled = True
-        Me.Cb_Vendedores.Location = New System.Drawing.Point(751, 3)
+        Me.Cb_Vendedores.Location = New System.Drawing.Point(747, 3)
         Me.Cb_Vendedores.Name = "Cb_Vendedores"
-        Me.Cb_Vendedores.Size = New System.Drawing.Size(163, 23)
+        Me.Cb_Vendedores.Size = New System.Drawing.Size(162, 23)
         Me.Cb_Vendedores.TabIndex = 3
         '
         'Cb_Encargados
@@ -657,9 +657,9 @@ Partial Class frmVentas
         Me.Cb_Encargados.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Cb_Encargados.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Cb_Encargados.FormattingEnabled = True
-        Me.Cb_Encargados.Location = New System.Drawing.Point(422, 3)
+        Me.Cb_Encargados.Location = New System.Drawing.Point(420, 3)
         Me.Cb_Encargados.Name = "Cb_Encargados"
-        Me.Cb_Encargados.Size = New System.Drawing.Size(163, 23)
+        Me.Cb_Encargados.Size = New System.Drawing.Size(161, 23)
         Me.Cb_Encargados.TabIndex = 2
         '
         'Label1
@@ -667,7 +667,7 @@ Partial Class frmVentas
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(661, 7)
+        Me.Label1.Location = New System.Drawing.Point(657, 7)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(84, 15)
         Me.Label1.TabIndex = 0
@@ -689,7 +689,7 @@ Partial Class frmVentas
         Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(332, 7)
+        Me.Label12.Location = New System.Drawing.Point(330, 7)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(84, 15)
         Me.Label12.TabIndex = 3
@@ -706,7 +706,7 @@ Partial Class frmVentas
         Me.cb_Tipo.Items.AddRange(New Object() {"Minorista", "Mayorista"})
         Me.cb_Tipo.Location = New System.Drawing.Point(93, 3)
         Me.cb_Tipo.Name = "cb_Tipo"
-        Me.cb_Tipo.Size = New System.Drawing.Size(163, 23)
+        Me.cb_Tipo.Size = New System.Drawing.Size(161, 23)
         Me.cb_Tipo.TabIndex = 1
         '
         'Label4

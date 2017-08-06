@@ -37,6 +37,8 @@ Public Class frmConfiguracion
             cb_Precios.Refresh()
         End If
 
+        txt_descuentoMinorista.Text = My.Settings("DescuentoMinorista")
+
         'Cargo los valores de Mailing.
         txtPort.Text = My.Settings("MailPort")
         txtSmtp.Text = My.Settings("MailHost")
@@ -122,15 +124,15 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If cb_Precios.SelectedValue <> 0 Then
+            If cb_Precios.SelectedValue <> 0 And Not String.IsNullOrEmpty(txt_descuentoMinorista.Text) Then
                 My.Settings.ListaPrecio = cb_Precios.SelectedValue
                 My.Settings.NombreListaPrecio = cb_Precios.SelectedItem("ListaPrecio").ToString
+                My.Settings.DescuentoMinorista = txt_descuentoMinorista.Text
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MessageBox.Show("Debe seleccionar una lista de precios.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
-
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try

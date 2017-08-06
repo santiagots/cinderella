@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>SistemaCinderella.My.MyApplication</StartupObject>
     <RootNamespace>SistemaCinderella</RootNamespace>
-    <AssemblyName>SistemaCinderellaDesarrollo</AssemblyName>
+    <AssemblyName>SistemaCinderella</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -31,13 +31,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://santiagots-001-site2.htempurl.com/</InstallUrl>
-    <ProductName>Sistema Cinderella Desarrollo</ProductName>
+    <InstallUrl>http://santiagots-001-site4.htempurl.com/</InstallUrl>
+    <ProductName>Sistema Cinderella</ProductName>
     <PublisherName>Morpheus</PublisherName>
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>131</ApplicationRevision>
+    <ApplicationRevision>136</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -51,7 +51,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -62,7 +62,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -98,7 +98,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -108,7 +108,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderella.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>

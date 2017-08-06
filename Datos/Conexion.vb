@@ -31,7 +31,7 @@ Public Class Conexion
 
     Public Function ConectarRemoto()
         Try
-            .CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
             miconexionRemoto = New SqlConnection
             miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
             miconexionRemoto.Open()

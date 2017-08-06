@@ -204,8 +204,6 @@ Public Class frmVentas
             'Lo muestro en el label
             CalcularTotales()
 
-            txt_DescuentoMayorista.Text = Math.Round(CType(txt_PorcentajeBonificacion.Text, Double) / 100 * CalcularPrecioTotal(), 2)
-
             'Borro el textbox
             txt_CodigoBarra.Clear()
             txt_CodigoBarra.Focus()
@@ -391,13 +389,11 @@ Public Class frmVentas
     Private Sub CalcularPrecioMayorista(ByRef subtotal As Double)
         Dim PorcentajeFacturacion As Double = Double.Parse(txt_PorcentajeFacturacion.Text) / 100
 
-        Dim descuento As Double = subtotal * PorcentajeDescuento
+        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim ivaSubTotal As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMayorista.Text)
         Dim seniaSinIva As Double = Math.Round(CDbl(txt_SeniaMayorista.Text) / 1.21, 2)
         Dim costoFinanciero As Double = 0
-
-        txt_DescuentoMayorista.Text = Math.Round(descuento, 2)
 
         If descuento < subtotal Then
             costoFinanciero = (subtotal - descuento - seniaSinIva) * ObtenerCostoFinanciero()
@@ -420,12 +416,11 @@ Public Class frmVentas
     End Sub
 
     Private Sub CaluclarPrecioMinorista(subtotal As Double)
-        Dim descuento As Double = 0
+        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim costoFinanciero As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMinorista.Text)
 
-        If CDbl(txt_DescuentoMinorista.Text) < subtotal Then
-            descuento = CType(txt_DescuentoMinorista.Text, Decimal)
+        If CDbl(descuento) < subtotal Then
             costoFinanciero = (subtotal - descuento - senia) * ObtenerCostoFinanciero()
             txt_TotalMinorista.Text = Format(CType(subtotal - descuento + costoFinanciero - senia, Decimal), "###0.00")
         Else
@@ -527,7 +522,7 @@ Public Class frmVentas
 
         'Pongo el combo en minorista y deshabilito la opcion de clientes.
         cb_Tipo.SelectedIndex = 0
-        Gb_Cliente.Enabled = False
+        enableAllControls(Gb_Cliente, False)
 
         'Sucursal default
         id_Sucursal = My.Settings("Sucursal")
@@ -817,6 +812,7 @@ Public Class frmVentas
             txt_SubtotalMinorista.Text = Format(Subtotal, "###0.00")
             txt_DescuentoMinorista.Text = Format(Descuento, "###0.00")
             txt_TotalMinorista.Text = Format(Total - SeniaMonto, "###0.00")
+            txt_PorcentajeBonificacion.Text = Math.Round((CType(txt_DescuentoMinorista.Text, Double) / CalcularPrecioTotal()) * 100, 0, MidpointRounding.ToEven)
         Else
             txt_DescuentoMayorista.Text = Format(Descuento, "###0.00")
             txt_SeniaMayorista.Text = Format(SeniaMonto, "###0.00")
@@ -831,7 +827,7 @@ Public Class frmVentas
             txt_RazonSocial.Text = Senia.RazonSocial
             PorcentajeFacturacionIngresado = PorcentajeFacturacion
             txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
-            txt_PorcentajeBonificacion.Text = (CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()) * 100
+            txt_PorcentajeBonificacion.Text = Math.Round((CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()) * 100, 0, MidpointRounding.ToEven)
         End If
 
         cb_Tipo.Enabled = False
@@ -876,7 +872,7 @@ Public Class frmVentas
         Dim dsListas As DataSet
         'Mayorista
         If cb_Tipo.SelectedIndex = 1 Then
-            Gb_Cliente.Enabled = True
+            enableAllControls(Gb_Cliente, True)
             'Cargo la lista de precios con las opciones mayoristas
             dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
             DG_Productos.Columns("MONTO").ReadOnly = True
@@ -893,7 +889,7 @@ Public Class frmVentas
 
         Else
             'Minorista
-            Gb_Cliente.Enabled = False
+            enableAllControls(Gb_Cliente, False)
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
             'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
@@ -908,6 +904,8 @@ Public Class frmVentas
 
         txt_PorcentajeFacturacion.Text = 100
         txt_PorcentajeBonificacion.Text = 0
+        txt_DescuentoMinorista.Text = "0,00"
+        txt_DescuentoMayorista.Text = "0,00"
 
         If dsListas.Tables(0).Rows.Count > 0 Then
             Cb_ListaPrecio.DataSource = Nothing
@@ -1016,7 +1014,9 @@ Public Class frmVentas
     Private Sub ActualizarMontosGrillaYTotales()
         'actualizo los montos de la grilla
         For Each row As DataGridViewRow In DG_Productos.Rows
-            ActualizarColumnaIvaMonto(row.Index, row.Cells.Item("PRECIO").Value)
+            If (row.Cells.Item("PRECIO").Value > 0) Then
+                ActualizarColumnaIvaMonto(row.Index, row.Cells.Item("PRECIO").Value)
+            End If
         Next
 
         'actualizo los montos de los totales
@@ -2035,6 +2035,10 @@ Public Class frmVentas
         If txt_DescuentoMinorista.Text.Trim = "" Then
             txt_DescuentoMinorista.Text = "0,00"
         End If
+
+        PorcentajeDescuento = CType(txt_DescuentoMinorista.Text, Double) / CalcularPrecioTotal()
+        txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 0, MidpointRounding.ToEven)
+
         CalcularTotales()
 
     End Sub
@@ -2052,8 +2056,8 @@ Public Class frmVentas
             txt_DescuentoMayorista.Text = "0,00"
         End If
 
-        PorcentajeDescuento = (CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal())
-        txt_PorcentajeBonificacion.Text = PorcentajeDescuento * 100
+        PorcentajeDescuento = CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()
+        txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 0, MidpointRounding.ToEven)
 
         CalcularTotales()
     End Sub
@@ -2155,12 +2159,31 @@ Public Class frmVentas
     Private Sub Cb_TipoPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoPago.SelectedIndexChanged
         PosicionarListaPreciosSegunFormaDePago()
 
-        If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
-            txt_PorcentajeFacturacion.Enabled = True
-            txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
+        'Es MAYORISTA
+        If (cb_Tipo.SelectedIndex = 1) Then
+            'Es EFECTIVO
+            If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
+                'habilito el porcentaje de facturacion
+                txt_PorcentajeFacturacion.Enabled = True
+                txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
+            Else
+                'deshabilito el porcentaje de facturacion
+                txt_PorcentajeFacturacion.Text = "100"
+                txt_PorcentajeFacturacion.Enabled = False
+            End If
+            'Es MINORISTA
         Else
-            txt_PorcentajeFacturacion.Text = "100"
-            txt_PorcentajeFacturacion.Enabled = False
+            'Es EFECTIVO
+            If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
+                Label33.Enabled = True
+                txt_PorcentajeBonificacion.Enabled = True
+                txt_PorcentajeBonificacion.Value = My.Settings.DescuentoMinorista
+                PorcentajeDescuento = My.Settings.DescuentoMinorista / 100
+            Else
+                Label33.Enabled = False
+                txt_PorcentajeBonificacion.Enabled = False
+                txt_PorcentajeBonificacion.Value = 0
+            End If
         End If
 
         If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 2) Then
@@ -2176,7 +2199,7 @@ Public Class frmVentas
             txt_CostoFinanciero.Text = Format(0, "P")
         End If
 
-        If (DG_Productos.Rows.Count > 0 AndAlso cb_Tipo.SelectedItem = "Mayorista") Then
+        If (DG_Productos.Rows.Count > 0) Then
             ActualizarMontosGrillaYTotales()
         End If
     End Sub
@@ -2247,4 +2270,15 @@ Public Class frmVentas
         txt_SeniaCostoFinanciero.Text = Format((ObtenerCostoFinanciero() * Decimal.Parse(txt_Senia.Text)), "###0.00")
     End Sub
 
+    Private Sub enableAllControls(con As Control, enable As Boolean)
+
+        For Each c As Control In con.Controls
+            enableAllControls(c, enable)
+        Next
+
+        If TypeOf con IsNot TableLayoutPanel And TypeOf con IsNot GroupBox And Not String.IsNullOrEmpty(con.Name) Then
+            con.Enabled = enable
+        End If
+
+    End Sub
 End Class

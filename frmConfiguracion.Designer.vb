@@ -106,6 +106,8 @@ Partial Class frmConfiguracion
         Me.Label21 = New System.Windows.Forms.Label()
         Me.btnModificarHost = New System.Windows.Forms.Button()
         Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.txt_descuentoMinorista = New System.Windows.Forms.NumericUpDown()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -125,6 +127,7 @@ Partial Class frmConfiguracion
         Me.GroupBox6.SuspendLayout()
         Me.Host.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
+        CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbl_NombreSucursalActual
@@ -197,6 +200,8 @@ Partial Class frmConfiguracion
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.txt_descuentoMinorista)
+        Me.GroupBox2.Controls.Add(Me.Label24)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.lbl_NombreListaActual)
         Me.GroupBox2.Controls.Add(Me.Btn_Precios)
@@ -223,7 +228,7 @@ Partial Class frmConfiguracion
         '
         Me.lbl_NombreListaActual.AutoSize = True
         Me.lbl_NombreListaActual.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_NombreListaActual.Location = New System.Drawing.Point(153, 34)
+        Me.lbl_NombreListaActual.Location = New System.Drawing.Point(182, 34)
         Me.lbl_NombreListaActual.Name = "lbl_NombreListaActual"
         Me.lbl_NombreListaActual.Size = New System.Drawing.Size(30, 13)
         Me.lbl_NombreListaActual.TabIndex = 2
@@ -258,9 +263,9 @@ Partial Class frmConfiguracion
         Me.cb_Precios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_Precios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Precios.FormattingEnabled = True
-        Me.cb_Precios.Location = New System.Drawing.Point(156, 68)
+        Me.cb_Precios.Location = New System.Drawing.Point(185, 68)
         Me.cb_Precios.Name = "cb_Precios"
-        Me.cb_Precios.Size = New System.Drawing.Size(189, 23)
+        Me.cb_Precios.Size = New System.Drawing.Size(160, 23)
         Me.cb_Precios.TabIndex = 3
         '
         'GroupBox3
@@ -1003,6 +1008,21 @@ Partial Class frmConfiguracion
         Me.Label22.TabIndex = 3
         Me.Label22.Text = "Puerto:"
         '
+        'Label24
+        '
+        Me.Label24.Location = New System.Drawing.Point(9, 107)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(158, 35)
+        Me.Label24.TabIndex = 10
+        Me.Label24.Text = "Bonificación % pago en efectivo minorista:"
+        '
+        'txt_descuentoMinorista
+        '
+        Me.txt_descuentoMinorista.Location = New System.Drawing.Point(185, 114)
+        Me.txt_descuentoMinorista.Name = "txt_descuentoMinorista"
+        Me.txt_descuentoMinorista.Size = New System.Drawing.Size(160, 21)
+        Me.txt_descuentoMinorista.TabIndex = 12
+        '
         'frmConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1045,6 +1065,7 @@ Partial Class frmConfiguracion
         Me.Host.ResumeLayout(False)
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox8.PerformLayout()
+        CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1131,4 +1152,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label23 As Label
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
+    Friend WithEvents Label24 As Label
+    Friend WithEvents txt_descuentoMinorista As NumericUpDown
 End Class
