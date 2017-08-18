@@ -98,6 +98,7 @@
     <Compile Include="NegConexionFtp.vb" />
     <Compile Include="NegControladorFiscal.vb" />
     <Compile Include="NegCuentaCorriente.vb" />
+    <Compile Include="NegCuentaCorrienteClientesMayoristas.vb" />
     <Compile Include="NegDevolucion.vb" />
     <Compile Include="NegDireccion.vb" />
     <Compile Include="NegDistritos.vb" />
@@ -131,6 +132,7 @@
     <Compile Include="NegSucursales.vb" />
     <Compile Include="NegTarjeta.vb" />
     <Compile Include="NegTipoComision.vb" />
+    <Compile Include="NegCuentaCorrienteTipoMovimiento.vb" />
     <Compile Include="NegTipoPago.vb" />
     <Compile Include="NegTipoEmpleado.vb" />
     <Compile Include="NegVentas.vb" />

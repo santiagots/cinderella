@@ -231,6 +231,7 @@ Public Class frmFacturar
                     Return
             End Select
 
+            Dim idFactura As Integer = 0
 
             'Se facturo correctamente, se almacena en la BDD.
             If Facturo Then
@@ -251,8 +252,32 @@ Public Class frmFacturar
                     EntFacturacion.TipoRecibo = Cb_TipoFacturacion.SelectedItem
 
                     'Inserto la nueva factura.
-                    NegFacturacion.NuevaFacturacion(EntFacturacion)
+                    idFactura = NegFacturacion.NuevaFacturacion(EntFacturacion)
                 Next
+
+                'Si se le factua a un cliente
+                If (id_Cliente <> 0) Then
+                    'Agrego la factura a la cuenta corriente del cliente
+                    Dim NegCuentaCorrienteClientesMayoristas As NegCuentaCorrienteClientesMayoristas = New NegCuentaCorrienteClientesMayoristas()
+                    NegCuentaCorrienteClientesMayoristas.NuevaFactura(idFactura, id_Cliente)
+
+                    'Si el pago es distinto a cuenta corriente 
+                    If (lbl_TipoPago.Text <> "CUENTA CORRIENTE") Then
+                        'Agrego el pago a la cuenta del cliente
+                        Dim pagoCuentaCorrienteClienteMayorista As PagoCuentaCorrienteClienteMayorista = New PagoCuentaCorrienteClienteMayorista()
+                        With pagoCuentaCorrienteClienteMayorista
+                            .id_Cheque = 0
+                            .id_Empresa = 0
+                            .Monto = EntFacturacion.Monto
+                            .FormaPago = "Pago con " + lbl_TipoPago.Text
+                            .Fecha = DateTime.Now
+                            .Comprobante = EntFacturacion.NumeroFactura
+                        End With
+
+                        Dim negCuentaCorrienteMovimiento As NegCuentaCorrienteClientesMayoristas = New NegCuentaCorrienteClientesMayoristas()
+                        negCuentaCorrienteMovimiento.NuevoPago(pagoCuentaCorrienteClienteMayorista, id_Cliente)
+                    End If
+                End If
 
                 'Actualizo la venta como Facturada.
                 NegVentas.FacturoVenta(True, id_Venta)
@@ -536,6 +561,7 @@ Public Class frmFacturar
                     Return
             End Select
 
+            Dim idNotaCreadito As Integer = 0
 
             'Se facturo correctamente, se almacena en la BDD.
             If GeneracionNotaCredito Then
@@ -556,11 +582,18 @@ Public Class frmFacturar
                     EntNotaCredito.id_Factura = CType(EntFacturacion.id_Facturacion, Integer)
 
                     'Inserto la nueva NotaCredito.
-                    NegNotaCredito.NuevaNotaCredito(EntNotaCredito)
+                    idNotaCreadito = NegNotaCredito.NuevaNotaCredito(EntNotaCredito)
                 Next
 
                 'Actualizo la DEVOLUCION.
                 NegDevolucion.GeneracionNotaCredito(True, id_Devolucion)
+
+                'Si se le nota de credito es a un cliente
+                If (id_Cliente <> 0) Then
+                    'Doy de alta la nota de credito en la cuenta del cliente
+                    Dim NegCuentaCorrienteClientesMayoristas As NegCuentaCorrienteClientesMayoristas = New NegCuentaCorrienteClientesMayoristas()
+                    NegCuentaCorrienteClientesMayoristas.NuevaNotaCredito(idNotaCreadito, id_Cliente)
+                End If
 
                 MessageBox.Show("Se ha generado la nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Me.Close()

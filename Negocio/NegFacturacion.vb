@@ -7,7 +7,7 @@ Public Class NegFacturacion
     Dim con As New Conexion
 
     'Funcion que inserta un nuevo registro en la tabla VENTAS_DETALLE.
-    Public Function NuevaFacturacion(ByVal EntFacturacion As Entidades.Facturacion) As Boolean
+    Public Function NuevaFacturacion(ByVal EntFacturacion As Entidades.Facturacion) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As Boolean
@@ -28,11 +28,11 @@ Public Class NegFacturacion
             'retorno valor
             Return msg
         Catch ex As Exception
-            Return False
+            Return -1
         End Try
     End Function
 
-    Private Shared Function NuevaFacturacion(EntFacturacion As Entidades.Facturacion, ByRef cmd As SqlCommand) As Boolean
+    Private Shared Function NuevaFacturacion(EntFacturacion As Entidades.Facturacion, ByRef cmd As SqlCommand) As Integer
         'Ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Facturacion_Alta"
@@ -55,7 +55,7 @@ Public Class NegFacturacion
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-        Return CBool(respuesta.Value)
+        Return respuesta.Value
     End Function
 
     'Funcion que retorna el ultimo numero utilizado en una factura 

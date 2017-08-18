@@ -73,6 +73,8 @@
     <Compile Include="Adelantos.vb" />
     <Compile Include="Adicionales.vb" />
     <Compile Include="Aromas.vb" />
+    <Compile Include="MovimientoCuentaCorrienteClienteMayorista.vb" />
+    <Compile Include="PagoCuentaCorrienteClienteMayorista.vb" />
     <Compile Include="Tarjeta.vb" />
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />

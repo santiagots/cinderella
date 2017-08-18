@@ -1723,4 +1723,11 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmCostoFinancieroAdministracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
+
+    Private Sub CuentaCorrienteToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CuentaCorrienteToolStripMenuItem1.Click
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmClienteMayoristaCuentaCorriente).MdiParent = Me
+        Funciones.ControlInstancia(frmClienteMayoristaCuentaCorriente).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
 End Class

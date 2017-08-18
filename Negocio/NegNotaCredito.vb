@@ -6,10 +6,10 @@ Public Class NegNotaCredito
     Dim ClsFunciones As New Funciones
     Dim con As New Conexion
 
-    Public Function NuevaNotaCredito(ByVal EntNotaCredito As Entidades.NotaCredito) As Boolean
+    Public Function NuevaNotaCredito(ByVal EntNotaCredito As Entidades.NotaCredito) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As Boolean
+        Dim msg As Integer
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
@@ -27,7 +27,7 @@ Public Class NegNotaCredito
             'retorno valor
             Return msg
         Catch ex As Exception
-            Return False
+            Return -1
         End Try
     End Function
 
@@ -55,7 +55,7 @@ Public Class NegNotaCredito
         End Try
     End Function
 
-    Private Shared Function NuevaNotaCredito(EntNotaCredito As Entidades.NotaCredito, ByRef cmd As SqlCommand) As Boolean
+    Private Shared Function NuevaNotaCredito(EntNotaCredito As Entidades.NotaCredito, ByRef cmd As SqlCommand) As Integer
         'Ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_NotaCredito_Alta"
@@ -79,7 +79,7 @@ Public Class NegNotaCredito
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-        Return CBool(respuesta.Value)
+        Return respuesta.Value
     End Function
 
     Function TraerNotaCreditoPorIDDevolucio(id_Devolucion As Integer) As Entidades.NotaCredito

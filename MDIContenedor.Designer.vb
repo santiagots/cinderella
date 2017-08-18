@@ -159,6 +159,7 @@ Partial Class MDIContenedor
         Me.NuevoMensajeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DatosPersonalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TemporizadorActualizaciones = New System.Windows.Forms.Timer(Me.components)
+        Me.CuentaCorrienteToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSuperior.SuspendLayout()
         Me.MenuAccesos.SuspendLayout()
         Me.MenuInferior.SuspendLayout()
@@ -247,7 +248,7 @@ Partial Class MDIContenedor
         '
         'Btn_ClientesMenu
         '
-        Me.Btn_ClientesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClienteMayoristaToolStripMenuItem})
+        Me.Btn_ClientesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClienteMayoristaToolStripMenuItem, Me.CuentaCorrienteToolStripMenuItem1})
         Me.Btn_ClientesMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Clientes
         Me.Btn_ClientesMenu.Name = "Btn_ClientesMenu"
         Me.Btn_ClientesMenu.Size = New System.Drawing.Size(163, 22)
@@ -258,7 +259,7 @@ Partial Class MDIContenedor
         '
         Me.ClienteMayoristaToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Sucursal
         Me.ClienteMayoristaToolStripMenuItem.Name = "ClienteMayoristaToolStripMenuItem"
-        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
         Me.ClienteMayoristaToolStripMenuItem.Text = "Mayorista"
         '
         'Btn_EmpleadosMenu
@@ -1244,6 +1245,12 @@ Partial Class MDIContenedor
         Me.TemporizadorActualizaciones.Enabled = True
         Me.TemporizadorActualizaciones.Interval = 300000
         '
+        'CuentaCorrienteToolStripMenuItem1
+        '
+        Me.CuentaCorrienteToolStripMenuItem1.Name = "CuentaCorrienteToolStripMenuItem1"
+        Me.CuentaCorrienteToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.CuentaCorrienteToolStripMenuItem1.Text = "Cuenta Corriente"
+        '
         'MDIContenedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1409,4 +1416,5 @@ Partial Class MDIContenedor
     Friend WithEvents AdministracionToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents CostoFinancieroToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AdelantoEfectivoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CuentaCorrienteToolStripMenuItem1 As ToolStripMenuItem
 End Class

@@ -81,67 +81,6 @@ Public Class NegClienteMayorista
         clsDatos.DesconectarRemoto()
     End Sub
 
-    'Funcion para insertar un cliente.
-    Function AltaClienteConsumidorFinal(ByVal ecliente As Entidades.ConsumidorFinal) As Integer
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim msg As Integer
-        Try
-
-            cmd.Connection = clsDatos.ConectarLocal()
-            msg = AltaClienteConsumidorFinal(ecliente, cmd)
-            clsDatos.ConectarLocal()
-
-            If (Funciones.HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaClienteConsumidorFinal(ecliente, cmd)
-                clsDatos.ConectarRemoto()
-            End If
-
-            Return msg
-
-        Catch ex As Exception
-            Return ex.Message
-        End Try
-    End Function
-
-    Private Shared Function AltaClienteConsumidorFinal(ecliente As ConsumidorFinal, ByRef cmd As SqlCommand) As Integer
-        cmd.CommandType = CommandType.StoredProcedure
-        cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
-        With cmd.Parameters
-            .AddWithValue("@nombre", ecliente.Nombre)
-            .AddWithValue("@apellido", ecliente.Apellido)
-            .AddWithValue("@email", ecliente.Email)
-        End With
-
-        Dim respuesta As New SqlParameter("@id", SqlDbType.Int, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
-        cmd.ExecuteNonQuery()
-        Return respuesta.Value
-    End Function
-
-    Public Function ConsultaClienteConsumidorFinal(ByVal id_Cliente As Integer) As ConsumidorFinal
-        Dim dsCliente As New DataSet
-
-        If (Funciones.HayInternet) Then
-            dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_ConsumidorFinal_Consulta @id_Cliente=" & id_Cliente)
-        Else
-            dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_ConsumidorFinal_Consulta @id_Cliente=" & id_Cliente)
-        End If
-
-        Dim clienteMinorista As ConsumidorFinal = New ConsumidorFinal()
-
-        If dsCliente.Tables(0).Rows.Count > 0 Then
-            clienteMinorista.Apellido = dsCliente.Tables(0).Rows(0)("Apellido")
-            clienteMinorista.Nombre = dsCliente.Tables(0).Rows(0)("Nombre")
-            clienteMinorista.Email = dsCliente.Tables(0).Rows(0)("Email")
-        End If
-
-        Return clienteMinorista
-    End Function
-
     'Funcion para modificar un cliente.
     Sub ModificacionCliente(ByVal cliente As Entidades.ClienteMayorista)
         Dim cmd As New SqlCommand
@@ -227,7 +166,7 @@ Public Class NegClienteMayorista
             .Nombre = row("Nombre")
             .Observaciones = row("Observaciones")
             .RazonSocial = row("RazonSocial")
-            .SaldoCuentaCorriente = 0
+            .SaldoCuentaCorriente = row("SaldoCuentaCorriente")
             .SaldoNotaPedido = row("SaldoNotaPedido")
             .Transporte = row("Transporte")
         End With

@@ -24,10 +24,9 @@ Partial Class frmClienteMayorista
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmClienteMayorista))
         Me.tabControl = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -78,6 +77,13 @@ Partial Class frmClienteMayorista
         Me.Label55 = New System.Windows.Forms.Label()
         Me.cmb_Empresa_Filtro = New System.Windows.Forms.ComboBox()
         Me.DG_Clientes = New System.Windows.Forms.DataGridView()
+        Me.Id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RazonSocialDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CuitDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SaldoNotaPedido = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SaldoCuentaCorriente = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.ClienteMayoristaGrillaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
@@ -219,13 +225,6 @@ Partial Class frmClienteMayorista
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.ErrorCliente = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolCliente = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RazonSocialDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CuitDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SaldoNotaPedido = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SaldoCuentaCorriente = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.tabControl.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -547,7 +546,7 @@ Partial Class frmClienteMayorista
         Me.cmb_ListaPrecio_Buscar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_ListaPrecio_Buscar.Enabled = False
         Me.cmb_ListaPrecio_Buscar.FormattingEnabled = True
-        Me.cmb_ListaPrecio_Buscar.Location = New System.Drawing.Point(143, 64)
+        Me.cmb_ListaPrecio_Buscar.Location = New System.Drawing.Point(143, 63)
         Me.cmb_ListaPrecio_Buscar.Name = "cmb_ListaPrecio_Buscar"
         Me.cmb_ListaPrecio_Buscar.Size = New System.Drawing.Size(211, 23)
         Me.cmb_ListaPrecio_Buscar.TabIndex = 93
@@ -560,7 +559,7 @@ Partial Class frmClienteMayorista
         Me.cmb_CondicionIVA_Buscar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_CondicionIVA_Buscar.Enabled = False
         Me.cmb_CondicionIVA_Buscar.FormattingEnabled = True
-        Me.cmb_CondicionIVA_Buscar.Location = New System.Drawing.Point(540, 64)
+        Me.cmb_CondicionIVA_Buscar.Location = New System.Drawing.Point(540, 63)
         Me.cmb_CondicionIVA_Buscar.Name = "cmb_CondicionIVA_Buscar"
         Me.cmb_CondicionIVA_Buscar.Size = New System.Drawing.Size(211, 23)
         Me.cmb_CondicionIVA_Buscar.TabIndex = 94
@@ -573,7 +572,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Corredor_Buscar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Corredor_Buscar.Enabled = False
         Me.cmb_Corredor_Buscar.FormattingEnabled = True
-        Me.cmb_Corredor_Buscar.Location = New System.Drawing.Point(143, 4)
+        Me.cmb_Corredor_Buscar.Location = New System.Drawing.Point(143, 3)
         Me.cmb_Corredor_Buscar.Name = "cmb_Corredor_Buscar"
         Me.cmb_Corredor_Buscar.Size = New System.Drawing.Size(211, 23)
         Me.cmb_Corredor_Buscar.TabIndex = 95
@@ -721,7 +720,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Corredor_Filtro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Corredor_Filtro.FormattingEnabled = True
         Me.cmb_Corredor_Filtro.Items.AddRange(New Object() {"Opciones no disponibles"})
-        Me.cmb_Corredor_Filtro.Location = New System.Drawing.Point(565, 4)
+        Me.cmb_Corredor_Filtro.Location = New System.Drawing.Point(565, 3)
         Me.cmb_Corredor_Filtro.Name = "cmb_Corredor_Filtro"
         Me.cmb_Corredor_Filtro.Size = New System.Drawing.Size(194, 23)
         Me.cmb_Corredor_Filtro.TabIndex = 7
@@ -742,7 +741,7 @@ Partial Class frmClienteMayorista
         Me.cmb_CondicionIVA_Filtro.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cmb_CondicionIVA_Filtro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_CondicionIVA_Filtro.FormattingEnabled = True
-        Me.cmb_CondicionIVA_Filtro.Location = New System.Drawing.Point(565, 34)
+        Me.cmb_CondicionIVA_Filtro.Location = New System.Drawing.Point(565, 33)
         Me.cmb_CondicionIVA_Filtro.Name = "cmb_CondicionIVA_Filtro"
         Me.cmb_CondicionIVA_Filtro.Size = New System.Drawing.Size(194, 23)
         Me.cmb_CondicionIVA_Filtro.TabIndex = 24
@@ -763,7 +762,7 @@ Partial Class frmClienteMayorista
         Me.cmb_ListaPrecios_Filtro.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cmb_ListaPrecios_Filtro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_ListaPrecios_Filtro.FormattingEnabled = True
-        Me.cmb_ListaPrecios_Filtro.Location = New System.Drawing.Point(565, 64)
+        Me.cmb_ListaPrecios_Filtro.Location = New System.Drawing.Point(565, 63)
         Me.cmb_ListaPrecios_Filtro.Name = "cmb_ListaPrecios_Filtro"
         Me.cmb_ListaPrecios_Filtro.Size = New System.Drawing.Size(194, 23)
         Me.cmb_ListaPrecios_Filtro.TabIndex = 26
@@ -843,7 +842,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Empresa_Filtro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Empresa_Filtro.FormattingEnabled = True
         Me.cmb_Empresa_Filtro.Items.AddRange(New Object() {"Opciones no disponibles"})
-        Me.cmb_Empresa_Filtro.Location = New System.Drawing.Point(143, 64)
+        Me.cmb_Empresa_Filtro.Location = New System.Drawing.Point(143, 63)
         Me.cmb_Empresa_Filtro.Name = "cmb_Empresa_Filtro"
         Me.cmb_Empresa_Filtro.Size = New System.Drawing.Size(194, 23)
         Me.cmb_Empresa_Filtro.TabIndex = 28
@@ -860,14 +859,6 @@ Partial Class frmClienteMayorista
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DG_Clientes.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DG_Clientes.ColumnHeadersHeight = 30
         Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Id, Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn, Me.SaldoNotaPedido, Me.SaldoCuentaCorriente, Me.Eliminar, Me.Modificar})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
@@ -877,12 +868,80 @@ Partial Class frmClienteMayorista
         Me.DG_Clientes.Name = "DG_Clientes"
         Me.DG_Clientes.ReadOnly = True
         Me.DG_Clientes.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DG_Clientes.RowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DG_Clientes.RowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DG_Clientes.RowTemplate.Height = 30
         Me.DG_Clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Clientes.Size = New System.Drawing.Size(774, 321)
         Me.DG_Clientes.TabIndex = 0
+        '
+        'Id
+        '
+        Me.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Id.DataPropertyName = "Id"
+        Me.Id.FillWeight = 294.7368!
+        Me.Id.HeaderText = "Código"
+        Me.Id.Name = "Id"
+        Me.Id.ReadOnly = True
+        Me.Id.Width = 80
+        '
+        'RazonSocialDataGridViewTextBoxColumn
+        '
+        Me.RazonSocialDataGridViewTextBoxColumn.DataPropertyName = "RazonSocial"
+        Me.RazonSocialDataGridViewTextBoxColumn.FillWeight = 35.08772!
+        Me.RazonSocialDataGridViewTextBoxColumn.HeaderText = "Razon Social"
+        Me.RazonSocialDataGridViewTextBoxColumn.Name = "RazonSocialDataGridViewTextBoxColumn"
+        Me.RazonSocialDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CuitDataGridViewTextBoxColumn
+        '
+        Me.CuitDataGridViewTextBoxColumn.DataPropertyName = "Cuit"
+        Me.CuitDataGridViewTextBoxColumn.FillWeight = 35.08772!
+        Me.CuitDataGridViewTextBoxColumn.HeaderText = "Cuit"
+        Me.CuitDataGridViewTextBoxColumn.Name = "CuitDataGridViewTextBoxColumn"
+        Me.CuitDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'SaldoNotaPedido
+        '
+        Me.SaldoNotaPedido.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.SaldoNotaPedido.DataPropertyName = "SaldoNotaPedido"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.SaldoNotaPedido.DefaultCellStyle = DataGridViewCellStyle2
+        Me.SaldoNotaPedido.FillWeight = 35.08772!
+        Me.SaldoNotaPedido.HeaderText = "N. Pedido"
+        Me.SaldoNotaPedido.Name = "SaldoNotaPedido"
+        Me.SaldoNotaPedido.ReadOnly = True
+        Me.SaldoNotaPedido.Width = 120
+        '
+        'SaldoCuentaCorriente
+        '
+        Me.SaldoCuentaCorriente.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.SaldoCuentaCorriente.DataPropertyName = "SaldoCuentaCorriente"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.SaldoCuentaCorriente.DefaultCellStyle = DataGridViewCellStyle3
+        Me.SaldoCuentaCorriente.FillWeight = 35.08772!
+        Me.SaldoCuentaCorriente.HeaderText = "Cta. Cte."
+        Me.SaldoCuentaCorriente.Name = "SaldoCuentaCorriente"
+        Me.SaldoCuentaCorriente.ReadOnly = True
+        Me.SaldoCuentaCorriente.Width = 120
+        '
+        'Eliminar
+        '
+        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Eliminar.HeaderText = "Eliminar"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        Me.Eliminar.Width = 70
+        '
+        'Modificar
+        '
+        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Modificar.HeaderText = "Modificar"
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.Width = 70
         '
         'ClienteMayoristaGrillaBindingSource
         '
@@ -997,7 +1056,7 @@ Partial Class frmClienteMayorista
         Me.cb_Localidad_Entrega.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionEntregaAltaBindingSource, "IdLocalidad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.cb_Localidad_Entrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Localidad_Entrega.FormattingEnabled = True
-        Me.cb_Localidad_Entrega.Location = New System.Drawing.Point(143, 94)
+        Me.cb_Localidad_Entrega.Location = New System.Drawing.Point(143, 93)
         Me.cb_Localidad_Entrega.Name = "cb_Localidad_Entrega"
         Me.cb_Localidad_Entrega.Size = New System.Drawing.Size(214, 23)
         Me.cb_Localidad_Entrega.TabIndex = 23
@@ -1024,7 +1083,7 @@ Partial Class frmClienteMayorista
         Me.cb_Distrito_Entrega.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionEntregaAltaBindingSource, "IdDistito", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.cb_Distrito_Entrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Distrito_Entrega.FormattingEnabled = True
-        Me.cb_Distrito_Entrega.Location = New System.Drawing.Point(143, 64)
+        Me.cb_Distrito_Entrega.Location = New System.Drawing.Point(143, 63)
         Me.cb_Distrito_Entrega.Name = "cb_Distrito_Entrega"
         Me.cb_Distrito_Entrega.Size = New System.Drawing.Size(214, 23)
         Me.cb_Distrito_Entrega.TabIndex = 22
@@ -1037,7 +1096,7 @@ Partial Class frmClienteMayorista
         Me.cb_Provincia_Entrega.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionEntregaAltaBindingSource, "IdProvincia", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.cb_Provincia_Entrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Provincia_Entrega.FormattingEnabled = True
-        Me.cb_Provincia_Entrega.Location = New System.Drawing.Point(143, 34)
+        Me.cb_Provincia_Entrega.Location = New System.Drawing.Point(143, 33)
         Me.cb_Provincia_Entrega.Name = "cb_Provincia_Entrega"
         Me.cb_Provincia_Entrega.Size = New System.Drawing.Size(214, 23)
         Me.cb_Provincia_Entrega.TabIndex = 21
@@ -1174,7 +1233,7 @@ Partial Class frmClienteMayorista
         Me.cb_Localidad_Facturacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Localidad_Facturacion.FormattingEnabled = True
         Me.cb_Localidad_Facturacion.ItemHeight = 15
-        Me.cb_Localidad_Facturacion.Location = New System.Drawing.Point(143, 94)
+        Me.cb_Localidad_Facturacion.Location = New System.Drawing.Point(143, 93)
         Me.cb_Localidad_Facturacion.Name = "cb_Localidad_Facturacion"
         Me.cb_Localidad_Facturacion.Size = New System.Drawing.Size(214, 23)
         Me.cb_Localidad_Facturacion.TabIndex = 16
@@ -1197,7 +1256,7 @@ Partial Class frmClienteMayorista
         Me.cb_Distrito_Facturacion.DisplayMember = "-1"
         Me.cb_Distrito_Facturacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Distrito_Facturacion.FormattingEnabled = True
-        Me.cb_Distrito_Facturacion.Location = New System.Drawing.Point(143, 64)
+        Me.cb_Distrito_Facturacion.Location = New System.Drawing.Point(143, 63)
         Me.cb_Distrito_Facturacion.Name = "cb_Distrito_Facturacion"
         Me.cb_Distrito_Facturacion.Size = New System.Drawing.Size(214, 23)
         Me.cb_Distrito_Facturacion.TabIndex = 15
@@ -1211,7 +1270,7 @@ Partial Class frmClienteMayorista
         Me.cb_Provincia_Facturacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Provincia_Facturacion.FormattingEnabled = True
         Me.cb_Provincia_Facturacion.ItemHeight = 15
-        Me.cb_Provincia_Facturacion.Location = New System.Drawing.Point(143, 34)
+        Me.cb_Provincia_Facturacion.Location = New System.Drawing.Point(143, 33)
         Me.cb_Provincia_Facturacion.Name = "cb_Provincia_Facturacion"
         Me.cb_Provincia_Facturacion.Size = New System.Drawing.Size(214, 23)
         Me.cb_Provincia_Facturacion.TabIndex = 14
@@ -1375,7 +1434,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Empresa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Empresa.FormattingEnabled = True
         Me.cmb_Empresa.Items.AddRange(New Object() {"Opciones no disponibles"})
-        Me.cmb_Empresa.Location = New System.Drawing.Point(143, 9)
+        Me.cmb_Empresa.Location = New System.Drawing.Point(143, 8)
         Me.cmb_Empresa.Name = "cmb_Empresa"
         Me.cmb_Empresa.Size = New System.Drawing.Size(212, 23)
         Me.cmb_Empresa.TabIndex = 11
@@ -1397,7 +1456,7 @@ Partial Class frmClienteMayorista
         Me.cb_ListaPrecios.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ClientesMayoristaAltaBindingSource, "IdListaPrecio", True))
         Me.cb_ListaPrecios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_ListaPrecios.FormattingEnabled = True
-        Me.cb_ListaPrecios.Location = New System.Drawing.Point(541, 9)
+        Me.cb_ListaPrecios.Location = New System.Drawing.Point(541, 8)
         Me.cb_ListaPrecios.Name = "cb_ListaPrecios"
         Me.cb_ListaPrecios.Size = New System.Drawing.Size(212, 23)
         Me.cb_ListaPrecios.TabIndex = 12
@@ -1569,7 +1628,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Corredor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Corredor.FormattingEnabled = True
         Me.cmb_Corredor.Items.AddRange(New Object() {"Opciones no disponibles"})
-        Me.cmb_Corredor.Location = New System.Drawing.Point(143, 64)
+        Me.cmb_Corredor.Location = New System.Drawing.Point(143, 63)
         Me.cmb_Corredor.Name = "cmb_Corredor"
         Me.cmb_Corredor.Size = New System.Drawing.Size(212, 23)
         Me.cmb_Corredor.TabIndex = 5
@@ -1621,7 +1680,7 @@ Partial Class frmClienteMayorista
         Me.cb_CondicionIva.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ClientesMayoristaAltaBindingSource, "IdCondicionIva", True))
         Me.cb_CondicionIva.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_CondicionIva.FormattingEnabled = True
-        Me.cb_CondicionIva.Location = New System.Drawing.Point(541, 34)
+        Me.cb_CondicionIva.Location = New System.Drawing.Point(541, 33)
         Me.cb_CondicionIva.Name = "cb_CondicionIva"
         Me.cb_CondicionIva.Size = New System.Drawing.Size(212, 23)
         Me.cb_CondicionIva.TabIndex = 4
@@ -1847,7 +1906,7 @@ Partial Class frmClienteMayorista
         Me.cb_Localidad_Entrega_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionEntregaModificacionBindingSource, "IdLocalidad", True))
         Me.cb_Localidad_Entrega_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Localidad_Entrega_Mod.FormattingEnabled = True
-        Me.cb_Localidad_Entrega_Mod.Location = New System.Drawing.Point(143, 94)
+        Me.cb_Localidad_Entrega_Mod.Location = New System.Drawing.Point(143, 93)
         Me.cb_Localidad_Entrega_Mod.Name = "cb_Localidad_Entrega_Mod"
         Me.cb_Localidad_Entrega_Mod.Size = New System.Drawing.Size(214, 23)
         Me.cb_Localidad_Entrega_Mod.TabIndex = 122
@@ -1873,7 +1932,7 @@ Partial Class frmClienteMayorista
         Me.cb_Distrito_Entrega_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionEntregaModificacionBindingSource, "IdDistito", True))
         Me.cb_Distrito_Entrega_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Distrito_Entrega_Mod.FormattingEnabled = True
-        Me.cb_Distrito_Entrega_Mod.Location = New System.Drawing.Point(143, 64)
+        Me.cb_Distrito_Entrega_Mod.Location = New System.Drawing.Point(143, 63)
         Me.cb_Distrito_Entrega_Mod.Name = "cb_Distrito_Entrega_Mod"
         Me.cb_Distrito_Entrega_Mod.Size = New System.Drawing.Size(214, 23)
         Me.cb_Distrito_Entrega_Mod.TabIndex = 121
@@ -1885,7 +1944,7 @@ Partial Class frmClienteMayorista
         Me.cb_Provincia_Entrega_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionEntregaModificacionBindingSource, "IdProvincia", True))
         Me.cb_Provincia_Entrega_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Provincia_Entrega_Mod.FormattingEnabled = True
-        Me.cb_Provincia_Entrega_Mod.Location = New System.Drawing.Point(143, 34)
+        Me.cb_Provincia_Entrega_Mod.Location = New System.Drawing.Point(143, 33)
         Me.cb_Provincia_Entrega_Mod.Name = "cb_Provincia_Entrega_Mod"
         Me.cb_Provincia_Entrega_Mod.Size = New System.Drawing.Size(214, 23)
         Me.cb_Provincia_Entrega_Mod.TabIndex = 120
@@ -2017,7 +2076,7 @@ Partial Class frmClienteMayorista
         Me.cb_Localidad_Facturacion_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionFacturacionModificacionBindingSource, "IdLocalidad", True))
         Me.cb_Localidad_Facturacion_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Localidad_Facturacion_Mod.FormattingEnabled = True
-        Me.cb_Localidad_Facturacion_Mod.Location = New System.Drawing.Point(143, 94)
+        Me.cb_Localidad_Facturacion_Mod.Location = New System.Drawing.Point(143, 93)
         Me.cb_Localidad_Facturacion_Mod.Name = "cb_Localidad_Facturacion_Mod"
         Me.cb_Localidad_Facturacion_Mod.Size = New System.Drawing.Size(214, 23)
         Me.cb_Localidad_Facturacion_Mod.TabIndex = 115
@@ -2039,7 +2098,7 @@ Partial Class frmClienteMayorista
         Me.cb_Distrito_Facturacion_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionFacturacionModificacionBindingSource, "IdDistito", True))
         Me.cb_Distrito_Facturacion_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Distrito_Facturacion_Mod.FormattingEnabled = True
-        Me.cb_Distrito_Facturacion_Mod.Location = New System.Drawing.Point(143, 64)
+        Me.cb_Distrito_Facturacion_Mod.Location = New System.Drawing.Point(143, 63)
         Me.cb_Distrito_Facturacion_Mod.Name = "cb_Distrito_Facturacion_Mod"
         Me.cb_Distrito_Facturacion_Mod.Size = New System.Drawing.Size(214, 23)
         Me.cb_Distrito_Facturacion_Mod.TabIndex = 114
@@ -2051,7 +2110,7 @@ Partial Class frmClienteMayorista
         Me.cb_Provincia_Facturacion_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.DireccionFacturacionModificacionBindingSource, "IdProvincia", True))
         Me.cb_Provincia_Facturacion_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Provincia_Facturacion_Mod.FormattingEnabled = True
-        Me.cb_Provincia_Facturacion_Mod.Location = New System.Drawing.Point(143, 34)
+        Me.cb_Provincia_Facturacion_Mod.Location = New System.Drawing.Point(143, 33)
         Me.cb_Provincia_Facturacion_Mod.Name = "cb_Provincia_Facturacion_Mod"
         Me.cb_Provincia_Facturacion_Mod.Size = New System.Drawing.Size(214, 23)
         Me.cb_Provincia_Facturacion_Mod.TabIndex = 113
@@ -2211,7 +2270,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Empresa_Mod.FormattingEnabled = True
         Me.cmb_Empresa_Mod.ItemHeight = 15
         Me.cmb_Empresa_Mod.Items.AddRange(New Object() {"Opciones no disponibles"})
-        Me.cmb_Empresa_Mod.Location = New System.Drawing.Point(143, 9)
+        Me.cmb_Empresa_Mod.Location = New System.Drawing.Point(143, 8)
         Me.cmb_Empresa_Mod.Name = "cmb_Empresa_Mod"
         Me.cmb_Empresa_Mod.Size = New System.Drawing.Size(212, 23)
         Me.cmb_Empresa_Mod.TabIndex = 19
@@ -2234,7 +2293,7 @@ Partial Class frmClienteMayorista
         Me.cb_ListaPrecios_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_ListaPrecios_Mod.FormattingEnabled = True
         Me.cb_ListaPrecios_Mod.ItemHeight = 15
-        Me.cb_ListaPrecios_Mod.Location = New System.Drawing.Point(541, 9)
+        Me.cb_ListaPrecios_Mod.Location = New System.Drawing.Point(541, 8)
         Me.cb_ListaPrecios_Mod.Name = "cb_ListaPrecios_Mod"
         Me.cb_ListaPrecios_Mod.Size = New System.Drawing.Size(212, 23)
         Me.cb_ListaPrecios_Mod.TabIndex = 12
@@ -2407,7 +2466,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Corredor_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Corredor_Mod.FormattingEnabled = True
         Me.cmb_Corredor_Mod.Items.AddRange(New Object() {"Opciones no disponibles"})
-        Me.cmb_Corredor_Mod.Location = New System.Drawing.Point(143, 64)
+        Me.cmb_Corredor_Mod.Location = New System.Drawing.Point(143, 63)
         Me.cmb_Corredor_Mod.Name = "cmb_Corredor_Mod"
         Me.cmb_Corredor_Mod.Size = New System.Drawing.Size(212, 23)
         Me.cmb_Corredor_Mod.TabIndex = 104
@@ -2459,7 +2518,7 @@ Partial Class frmClienteMayorista
         Me.cb_CondicionIva_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ClienteMayoristaModificacionBindingSource, "IdCondicionIva", True))
         Me.cb_CondicionIva_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_CondicionIva_Mod.FormattingEnabled = True
-        Me.cb_CondicionIva_Mod.Location = New System.Drawing.Point(541, 34)
+        Me.cb_CondicionIva_Mod.Location = New System.Drawing.Point(541, 33)
         Me.cb_CondicionIva_Mod.Name = "cb_CondicionIva_Mod"
         Me.cb_CondicionIva_Mod.Size = New System.Drawing.Size(212, 23)
         Me.cb_CondicionIva_Mod.TabIndex = 103
@@ -2595,74 +2654,6 @@ Partial Class frmClienteMayorista
         Me.ToolCliente.IsBalloon = True
         Me.ToolCliente.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCliente.ToolTipTitle = "Ayuda."
-        '
-        'Id
-        '
-        Me.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Id.DataPropertyName = "Id"
-        Me.Id.FillWeight = 294.7368!
-        Me.Id.HeaderText = "Código"
-        Me.Id.Name = "Id"
-        Me.Id.ReadOnly = True
-        Me.Id.Width = 80
-        '
-        'RazonSocialDataGridViewTextBoxColumn
-        '
-        Me.RazonSocialDataGridViewTextBoxColumn.DataPropertyName = "RazonSocial"
-        Me.RazonSocialDataGridViewTextBoxColumn.FillWeight = 35.08772!
-        Me.RazonSocialDataGridViewTextBoxColumn.HeaderText = "Razon Social"
-        Me.RazonSocialDataGridViewTextBoxColumn.Name = "RazonSocialDataGridViewTextBoxColumn"
-        Me.RazonSocialDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CuitDataGridViewTextBoxColumn
-        '
-        Me.CuitDataGridViewTextBoxColumn.DataPropertyName = "Cuit"
-        Me.CuitDataGridViewTextBoxColumn.FillWeight = 35.08772!
-        Me.CuitDataGridViewTextBoxColumn.HeaderText = "Cuit"
-        Me.CuitDataGridViewTextBoxColumn.Name = "CuitDataGridViewTextBoxColumn"
-        Me.CuitDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'SaldoNotaPedido
-        '
-        Me.SaldoNotaPedido.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.SaldoNotaPedido.DataPropertyName = "SaldoNotaPedido"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.SaldoNotaPedido.DefaultCellStyle = DataGridViewCellStyle3
-        Me.SaldoNotaPedido.FillWeight = 35.08772!
-        Me.SaldoNotaPedido.HeaderText = "N. Pedido"
-        Me.SaldoNotaPedido.Name = "SaldoNotaPedido"
-        Me.SaldoNotaPedido.ReadOnly = True
-        Me.SaldoNotaPedido.Width = 120
-        '
-        'SaldoCuentaCorriente
-        '
-        Me.SaldoCuentaCorriente.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.SaldoCuentaCorriente.DataPropertyName = "SaldoCuentaCorriente"
-        DataGridViewCellStyle4.Format = "C2"
-        Me.SaldoCuentaCorriente.DefaultCellStyle = DataGridViewCellStyle4
-        Me.SaldoCuentaCorriente.FillWeight = 35.08772!
-        Me.SaldoCuentaCorriente.HeaderText = "Cta. Cte."
-        Me.SaldoCuentaCorriente.Name = "SaldoCuentaCorriente"
-        Me.SaldoCuentaCorriente.ReadOnly = True
-        Me.SaldoCuentaCorriente.Width = 120
-        '
-        'Eliminar
-        '
-        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        Me.Eliminar.Width = 70
-        '
-        'Modificar
-        '
-        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Modificar.HeaderText = "Modificar"
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.Width = 70
         '
         'frmClienteMayorista
         '
