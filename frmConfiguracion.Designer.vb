@@ -29,7 +29,11 @@ Partial Class frmConfiguracion
         Me.lbl_NuevaSucursal = New System.Windows.Forms.Label()
         Me.Btn_Actualizar = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoActualizacionMemoriaChace = New System.Windows.Forms.ComboBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.txt_descuentoMinorista = New System.Windows.Forms.NumericUpDown()
+        Me.Label24 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lbl_NombreListaActual = New System.Windows.Forms.Label()
         Me.Btn_Precios = New System.Windows.Forms.Button()
@@ -106,10 +110,15 @@ Partial Class frmConfiguracion
         Me.Label21 = New System.Windows.Forms.Label()
         Me.btnModificarHost = New System.Windows.Forms.Button()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.txt_descuentoMinorista = New System.Windows.Forms.NumericUpDown()
+        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.RUsoMemoriaChaceNo = New System.Windows.Forms.RadioButton()
+        Me.RUsoMemoriaChaceSi = New System.Windows.Forms.RadioButton()
+        Me.btn_ActualizarListaProductos = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
@@ -127,14 +136,15 @@ Partial Class frmConfiguracion
         Me.GroupBox6.SuspendLayout()
         Me.Host.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
-        CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox10.SuspendLayout()
+        Me.Panel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'lbl_NombreSucursalActual
         '
         Me.lbl_NombreSucursalActual.AutoSize = True
         Me.lbl_NombreSucursalActual.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_NombreSucursalActual.Location = New System.Drawing.Point(115, 32)
+        Me.lbl_NombreSucursalActual.Location = New System.Drawing.Point(225, 32)
         Me.lbl_NombreSucursalActual.Name = "lbl_NombreSucursalActual"
         Me.lbl_NombreSucursalActual.Size = New System.Drawing.Size(54, 13)
         Me.lbl_NombreSucursalActual.TabIndex = 2
@@ -154,9 +164,9 @@ Partial Class frmConfiguracion
         Me.Cb_Sucursales.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Sucursales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursales.FormattingEnabled = True
-        Me.Cb_Sucursales.Location = New System.Drawing.Point(119, 68)
+        Me.Cb_Sucursales.Location = New System.Drawing.Point(228, 70)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
-        Me.Cb_Sucursales.Size = New System.Drawing.Size(189, 23)
+        Me.Cb_Sucursales.Size = New System.Drawing.Size(147, 23)
         Me.Cb_Sucursales.TabIndex = 3
         '
         'lbl_NuevaSucursal
@@ -185,6 +195,7 @@ Partial Class frmConfiguracion
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.GroupBox10)
         Me.GroupBox1.Controls.Add(Me.lbl_SucursalActual)
         Me.GroupBox1.Controls.Add(Me.lbl_NombreSucursalActual)
         Me.GroupBox1.Controls.Add(Me.Btn_Actualizar)
@@ -197,6 +208,25 @@ Partial Class frmConfiguracion
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuración de Sucursal"
+        '
+        'Label25
+        '
+        Me.Label25.Location = New System.Drawing.Point(6, 66)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(215, 35)
+        Me.Label25.TabIndex = 5
+        Me.Label25.Text = "Período de actualización memoria Cache (Minutos)"
+        '
+        'Cb_TiempoActualizacionMemoriaChace
+        '
+        Me.Cb_TiempoActualizacionMemoriaChace.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoActualizacionMemoriaChace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoActualizacionMemoriaChace.FormattingEnabled = True
+        Me.Cb_TiempoActualizacionMemoriaChace.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoActualizacionMemoriaChace.Location = New System.Drawing.Point(226, 70)
+        Me.Cb_TiempoActualizacionMemoriaChace.Name = "Cb_TiempoActualizacionMemoriaChace"
+        Me.Cb_TiempoActualizacionMemoriaChace.Size = New System.Drawing.Size(142, 23)
+        Me.Cb_TiempoActualizacionMemoriaChace.TabIndex = 6
         '
         'GroupBox2
         '
@@ -214,6 +244,21 @@ Partial Class frmConfiguracion
         Me.GroupBox2.TabIndex = 6
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Configuración de Precios"
+        '
+        'txt_descuentoMinorista
+        '
+        Me.txt_descuentoMinorista.Location = New System.Drawing.Point(185, 114)
+        Me.txt_descuentoMinorista.Name = "txt_descuentoMinorista"
+        Me.txt_descuentoMinorista.Size = New System.Drawing.Size(160, 21)
+        Me.txt_descuentoMinorista.TabIndex = 12
+        '
+        'Label24
+        '
+        Me.Label24.Location = New System.Drawing.Point(9, 107)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(158, 35)
+        Me.Label24.TabIndex = 10
+        Me.Label24.Text = "Bonificación % pago en efectivo minorista:"
         '
         'Label2
         '
@@ -1008,20 +1053,75 @@ Partial Class frmConfiguracion
         Me.Label22.TabIndex = 3
         Me.Label22.Text = "Puerto:"
         '
-        'Label24
+        'GroupBox10
         '
-        Me.Label24.Location = New System.Drawing.Point(9, 107)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(158, 35)
-        Me.Label24.TabIndex = 10
-        Me.Label24.Text = "Bonificación % pago en efectivo minorista:"
+        Me.GroupBox10.Controls.Add(Me.btn_ActualizarListaProductos)
+        Me.GroupBox10.Controls.Add(Me.Label26)
+        Me.GroupBox10.Controls.Add(Me.Label25)
+        Me.GroupBox10.Controls.Add(Me.Cb_TiempoActualizacionMemoriaChace)
+        Me.GroupBox10.Controls.Add(Me.Panel3)
+        Me.GroupBox10.Location = New System.Drawing.Point(6, 111)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(371, 140)
+        Me.GroupBox10.TabIndex = 7
+        Me.GroupBox10.TabStop = False
+        Me.GroupBox10.Text = "Optimización de carga"
         '
-        'txt_descuentoMinorista
+        'Label26
         '
-        Me.txt_descuentoMinorista.Location = New System.Drawing.Point(185, 114)
-        Me.txt_descuentoMinorista.Name = "txt_descuentoMinorista"
-        Me.txt_descuentoMinorista.Size = New System.Drawing.Size(160, 21)
-        Me.txt_descuentoMinorista.TabIndex = 12
+        Me.Label26.Location = New System.Drawing.Point(6, 24)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(202, 32)
+        Me.Label26.TabIndex = 28
+        Me.Label26.Text = "Uso de momería cache para optimización de cargado "
+        '
+        'Panel3
+        '
+        Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceNo)
+        Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceSi)
+        Me.Panel3.Location = New System.Drawing.Point(222, 24)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(146, 27)
+        Me.Panel3.TabIndex = 29
+        '
+        'RUsoMemoriaChaceNo
+        '
+        Me.RUsoMemoriaChaceNo.AutoSize = True
+        Me.RUsoMemoriaChaceNo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RUsoMemoriaChaceNo.Location = New System.Drawing.Point(99, 3)
+        Me.RUsoMemoriaChaceNo.Name = "RUsoMemoriaChaceNo"
+        Me.RUsoMemoriaChaceNo.Size = New System.Drawing.Size(43, 19)
+        Me.RUsoMemoriaChaceNo.TabIndex = 26
+        Me.RUsoMemoriaChaceNo.Tag = ""
+        Me.RUsoMemoriaChaceNo.Text = "NO"
+        Me.RUsoMemoriaChaceNo.UseVisualStyleBackColor = True
+        '
+        'RUsoMemoriaChaceSi
+        '
+        Me.RUsoMemoriaChaceSi.AutoSize = True
+        Me.RUsoMemoriaChaceSi.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RUsoMemoriaChaceSi.Location = New System.Drawing.Point(11, 3)
+        Me.RUsoMemoriaChaceSi.Name = "RUsoMemoriaChaceSi"
+        Me.RUsoMemoriaChaceSi.Size = New System.Drawing.Size(36, 19)
+        Me.RUsoMemoriaChaceSi.TabIndex = 25
+        Me.RUsoMemoriaChaceSi.Tag = ""
+        Me.RUsoMemoriaChaceSi.Text = "SI"
+        Me.RUsoMemoriaChaceSi.UseVisualStyleBackColor = True
+        '
+        'btn_ActualizarListaProductos
+        '
+        Me.btn_ActualizarListaProductos.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_ActualizarListaProductos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_ActualizarListaProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_ActualizarListaProductos.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
+        Me.btn_ActualizarListaProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_ActualizarListaProductos.Location = New System.Drawing.Point(222, 100)
+        Me.btn_ActualizarListaProductos.Name = "btn_ActualizarListaProductos"
+        Me.btn_ActualizarListaProductos.Size = New System.Drawing.Size(146, 34)
+        Me.btn_ActualizarListaProductos.TabIndex = 11
+        Me.btn_ActualizarListaProductos.Text = "Actualizar Cache"
+        Me.btn_ActualizarListaProductos.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_ActualizarListaProductos.UseVisualStyleBackColor = True
         '
         'frmConfiguracion
         '
@@ -1040,6 +1140,7 @@ Partial Class frmConfiguracion
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -1065,7 +1166,9 @@ Partial Class frmConfiguracion
         Me.Host.ResumeLayout(False)
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox8.PerformLayout()
-        CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox10.ResumeLayout(False)
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1154,4 +1257,12 @@ Partial Class frmConfiguracion
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label24 As Label
     Friend WithEvents txt_descuentoMinorista As NumericUpDown
+    Friend WithEvents Label25 As Label
+    Friend WithEvents Cb_TiempoActualizacionMemoriaChace As ComboBox
+    Friend WithEvents GroupBox10 As GroupBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents RUsoMemoriaChaceNo As RadioButton
+    Friend WithEvents RUsoMemoriaChaceSi As RadioButton
+    Friend WithEvents btn_ActualizarListaProductos As Button
 End Class

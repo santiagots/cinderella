@@ -111,5 +111,11 @@
     <Setting Name="NombreSucursal" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)">Nueva Sucursal</Value>
     </Setting>
+    <Setting Name="TemporizadorActualizacionMemoriaCache" Type="System.String" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="UsarMemoriaCache" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

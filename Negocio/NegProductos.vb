@@ -30,6 +30,8 @@ Public Class NegProductos
     Const MaxRowsData As Integer = 9999
     Const MinRowsData As Integer = 2
 
+    Private Shared ListaProductosCache As DataSet
+
 #Region "Funciones de Seleccion"
     'Funcion para consultar un producto.
     Public Function TraerProducto(ByVal id_Producto As Integer)
@@ -1072,6 +1074,17 @@ Public Class NegProductos
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadores")
         End If
+    End Function
+
+    'Funcion para listar todos los productos utlizando una memoria cache para optimizar tiempos de respuesta
+    Function ListadoProductosCache(UsarCahce As Boolean) As DataSet
+
+        If (ListaProductosCache Is Nothing OrElse Not UsarCahce) Then
+            ListaProductosCache = ListadoProductosBuscadores()
+        End If
+
+        Return ListaProductosCache
+
     End Function
 
     'Funcion para listar todos los productos dependiendo de un proveedor.

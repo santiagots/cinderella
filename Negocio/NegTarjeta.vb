@@ -4,6 +4,8 @@ Imports Datos
 
 Public Class NegTarjeta
 
+    Private Shared ListaTarjetasCache As List(Of Tarjeta)
+
     Public Shared Function TraerTarjetas() As List(Of Tarjeta)
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
@@ -28,6 +30,14 @@ Public Class NegTarjeta
 
         'retorno valor
         Return respuesta
+    End Function
+
+    Public Shared Function TraerTarjetasCache(usarCache As Boolean) As List(Of Tarjeta)
+        If (ListaTarjetasCache Is Nothing OrElse Not usarCache) Then
+            ListaTarjetasCache = TraerTarjetas()
+        End If
+        'retorno valor
+        Return ListaTarjetasCache
     End Function
 
     Public Shared Function TarearCostoFinanciero() As DataTable

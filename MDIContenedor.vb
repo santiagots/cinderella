@@ -4,6 +4,7 @@ Imports System.Resources
 Imports Servicios
 Imports System.Threading
 Imports System.Threading.Tasks
+Imports Negocio
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -18,6 +19,8 @@ Public Class MDIContenedor
     Dim tiempoAcumuladoMensajes As Integer = 0
     Dim tiempoAcumuladoCheques As Integer = 0
     Dim tiempoAcumuladoNotasPedidos As Integer = 0
+
+    Dim actualizarMemoriaCaheTimer As Threading.Timer
 
     Private Sub MDIContenedor_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If VariablesGlobales.Notificaciones > 0 Then 'Si posee notificaciones pendientes.
@@ -468,7 +471,7 @@ Public Class MDIContenedor
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Reservas_Administración_Reservas)) Then
             btn_AdminReservas.Visible = True
-            Btn_Reservas.Visible = true
+            Btn_Reservas.Visible = True
         Else
             btn_AdminReservas.Visible = False
             Btn_Reservas.Visible = False
@@ -639,6 +642,8 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error obtener el estado de la caja diaria. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
+        actualizarMemoriaCaheTimer = New System.Threading.Timer(AddressOf ActualizarMemoriaCache, Nothing, TimeSpan.Zero, TimeSpan.FromMinutes(My.Settings.TemporizadorActualizacionMemoriaCache))
 
         'Setea el nombre de la aplicacion.
         Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
@@ -1722,5 +1727,21 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmCostoFinancieroAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmCostoFinancieroAdministracion).Show()
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    'funcion encargada de actualizar las memorias cache que utiliza el sistema para mejorar los tiempos de carga
+    Private Sub ActualizarMemoriaCache()
+        If (My.Settings.UsarMemoriaCache) Then
+            Dim negTipoPago As NegTipoPago = New NegTipoPago()
+            negTipoPago.ListadoTiposPagosCache(False)
+
+            NegTarjeta.TraerTarjetasCache(False)
+
+            Dim negProductos As NegProductos = New NegProductos()
+            negProductos.ListadoProductosCache(False)
+
+            Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
+            negListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), False)
+        End If
     End Sub
 End Class
