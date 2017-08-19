@@ -525,7 +525,6 @@ Public Class frmVentas
 
     'Cuando Carga el formulario de ventas.
     Private Sub frmVentas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
         'Seteo la fecha
         lbl_Fecha.Text = Now.Date.ToString("d MMM yyyy")
 
@@ -533,12 +532,11 @@ Public Class frmVentas
         cb_Tipo.SelectedIndex = 0
         enableAllControls(Gb_Cliente, False)
 
+        btn_ActualizarListaProductos.Enabled = My.Settings.UsarMemoriaCache
+
         'Sucursal default
         id_Sucursal = My.Settings("Sucursal")
         Nombre_Sucursal = My.Settings("NombreSucursal")
-
-        'lleno la entidad sucursales
-        EntSucursal = NegSucursal.TraerSucursal(id_Sucursal)
 
         'Seteo el nombre de la sucursal
         lbl_Sucursal.Text = Nombre_Sucursal
@@ -549,7 +547,7 @@ Public Class frmVentas
 
         'Cargo el Combo de Tipos de Pago
         Dim DsTiposPagos As New DataSet
-        DsTiposPagos = NegTiposPagos.ListadoTiposPagos
+        DsTiposPagos = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
 
         If DsTiposPagos.Tables(0).Rows.Count > 0 Then
             Cb_TipoPago.DataSource = Nothing
@@ -567,7 +565,7 @@ Public Class frmVentas
         Dim DsVendedores As DataSet = CargarComboVendedores(DsEncargados)
 
         'Cargo el Combo de Bancos
-        Dim Tarjetas As List(Of Tarjeta) = NegTarjeta.TraerTarjetas().Where(Function(x) x.Habilitado).ToList()
+        Dim Tarjetas As List(Of Tarjeta) = NegTarjeta.TraerTarjetasCache(My.Settings.UsarMemoriaCache).Where(Function(x) x.Habilitado).ToList()
         Tarjetas.Insert(0, New Tarjeta() With {.TarjetaId = 0, .Nombre = "Seleccione una Tarjeta..."})
         TrajetaBindingSource.DataSource = Tarjetas
 
@@ -577,7 +575,7 @@ Public Class frmVentas
         CostoFinancieroBindingSource.DataSource = CostosFinancieros
 
         'Cargo el combo de Lista de precios para un cliente minorista
-        Dim dsListaPrecio As DataSet = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
+        Dim dsListaPrecio As DataSet = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
         If dsListaPrecio.Tables(0).Rows.Count > 0 Then
             Cb_ListaPrecio.DataSource = Nothing
             Cb_ListaPrecio.DataSource = dsListaPrecio.Tables(0)
@@ -594,8 +592,12 @@ Public Class frmVentas
             CargarSenia(DsTiposPagos, DsVendedores, DsEncargados)
         End If
 
-        'Obtengo el listado de productos
-        dsProductos = NegProductos.ListadoProductosBuscadores()
+        CargraListaProductos(My.Settings.UsarMemoriaCache)
+    End Sub
+
+    Private Sub CargraListaProductos(usarCache)
+        'Obtengo el listado de productos guardados en cache
+        dsProductos = NegProductos.ListadoProductosCache(usarCache)
 
         'Armo una lista que contiene los nombres y codigos de todos los producto
         Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
@@ -883,7 +885,7 @@ Public Class frmVentas
         If cb_Tipo.SelectedIndex = 1 Then
             enableAllControls(Gb_Cliente, True)
             'Cargo la lista de precios con las opciones mayoristas
-            dsListas = NegListasPrecio.ListadoPreciosPorGrupo(3)
+            dsListas = NegListasPrecio.ListadoPreciosPorGrupoCache(3, My.Settings.UsarMemoriaCache)
             DG_Productos.Columns("MONTO").ReadOnly = True
             DG_Productos.Columns("PRECIO").ReadOnly = False
             DG_Productos.Columns("PRECIO").Visible = True
@@ -902,7 +904,7 @@ Public Class frmVentas
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
             'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
-            dsListas = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
+            dsListas = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
             DG_Productos.Columns("MONTO").ReadOnly = False
             DG_Productos.Columns("PRECIO").ReadOnly = True
             DG_Productos.Columns("PRECIO").Visible = False
@@ -2335,5 +2337,12 @@ Public Class frmVentas
             con.Enabled = enable
         End If
 
+    End Sub
+
+    Private Sub btn_ActualizarListaProductos_Click(sender As Object, e As EventArgs) Handles btn_ActualizarListaProductos.Click
+        Me.Cursor = Cursors.WaitCursor
+        CargraListaProductos(False)
+        MessageBox.Show("El listado de productos se ha actualizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Cursor = Cursors.Arrow
     End Sub
 End Class

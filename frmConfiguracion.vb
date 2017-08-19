@@ -1,4 +1,6 @@
 ﻿Imports System.Configuration
+Imports Negocio
+
 Public Class frmConfiguracion
     Dim NSucursales As New Negocio.NegSucursales
     Dim NListas As New Negocio.NegListasPrecio
@@ -14,6 +16,15 @@ Public Class frmConfiguracion
 
         'Lista de Precios cargada en el app.config.
         lbl_NombreListaActual.Text = My.Settings("NombreListaPrecio")
+
+        'Periodo de tiempo para la actualizacion de la memoria Cache
+        Cb_TiempoActualizacionMemoriaChace.SelectedItem = My.Settings.TemporizadorActualizacionMemoriaCache.ToString()
+
+        If My.Settings.UsarMemoriaCache Then
+            RUsoMemoriaChaceSi.Checked = True
+        Else
+            RUsoMemoriaChaceNo.Checked = True
+        End If
 
         'Cargo el listado de sucursales.
         If (NSucursales.ListadoSucursales().Tables.Count <> 0) Then
@@ -104,6 +115,8 @@ Public Class frmConfiguracion
 
                 My.Settings.Sucursal = Cb_Sucursales.SelectedValue
                 My.Settings.NombreSucursal = Cb_Sucursales.SelectedItem("Nombre").ToString
+                My.Settings.TemporizadorActualizacionMemoriaCache = Cb_TiempoActualizacionMemoriaChace.SelectedItem
+                My.Settings.UsarMemoriaCache = If(RUsoMemoriaChaceSi.Checked, True, False)
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -413,4 +426,29 @@ Public Class frmConfiguracion
         End If
     End Sub
 
+    Private Sub btn_ActualizarListaProductos_Click(sender As Object, e As EventArgs) Handles btn_ActualizarListaProductos.Click
+        Me.Cursor = Cursors.WaitCursor
+        Dim negTipoPago As NegTipoPago = New NegTipoPago()
+        negTipoPago.ListadoTiposPagosCache(False)
+
+        NegTarjeta.TraerTarjetasCache(False)
+
+        Dim negProductos As NegProductos = New NegProductos()
+        negProductos.ListadoProductosCache(False)
+
+        Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
+        negListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), False)
+        MessageBox.Show("La memoria cache se ha actualizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub RUsoMemoriaChaceNo_CheckedChanged(sender As Object, e As EventArgs) Handles RUsoMemoriaChaceNo.CheckedChanged
+        Cb_TiempoActualizacionMemoriaChace.Enabled = False
+        btn_ActualizarListaProductos.Enabled = False
+    End Sub
+
+    Private Sub RUsoMemoriaChaceSi_CheckedChanged(sender As Object, e As EventArgs) Handles RUsoMemoriaChaceSi.CheckedChanged
+        Cb_TiempoActualizacionMemoriaChace.Enabled = True
+        btn_ActualizarListaProductos.Enabled = True
+    End Sub
 End Class

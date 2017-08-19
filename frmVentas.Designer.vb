@@ -55,6 +55,7 @@ Partial Class frmVentas
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Btn_Cambiar = New System.Windows.Forms.Button()
+        Me.btn_ActualizarListaProductos = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Gb_Cliente = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
@@ -421,12 +422,14 @@ Partial Class frmVentas
         'TableLayoutPanel5
         '
         Me.TableLayoutPanel5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel5.ColumnCount = 3
+        Me.TableLayoutPanel5.ColumnCount = 4
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117.0!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel5.Controls.Add(Me.Btn_Cambiar, 2, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Btn_Agregar, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Btn_Cambiar, 3, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Btn_Agregar, 2, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.btn_ActualizarListaProductos, 1, 0)
         Me.TableLayoutPanel5.Location = New System.Drawing.Point(203, 34)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
@@ -448,6 +451,21 @@ Partial Class frmVentas
         Me.Btn_Cambiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.Btn_Cambiar, "Permite agregar productos que ingresan a la sucursal.")
         Me.Btn_Cambiar.UseVisualStyleBackColor = True
+        '
+        'btn_ActualizarListaProductos
+        '
+        Me.btn_ActualizarListaProductos.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_ActualizarListaProductos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_ActualizarListaProductos.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
+        Me.btn_ActualizarListaProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_ActualizarListaProductos.Location = New System.Drawing.Point(41, 3)
+        Me.btn_ActualizarListaProductos.Name = "btn_ActualizarListaProductos"
+        Me.btn_ActualizarListaProductos.Size = New System.Drawing.Size(110, 34)
+        Me.btn_ActualizarListaProductos.TabIndex = 10
+        Me.btn_ActualizarListaProductos.Text = "Actualizar"
+        Me.btn_ActualizarListaProductos.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btn_ActualizarListaProductos, "Permite actualizar el listado de productos almacenados en momería.")
+        Me.btn_ActualizarListaProductos.UseVisualStyleBackColor = True
         '
         'Label13
         '
@@ -1811,4 +1829,5 @@ Partial Class frmVentas
     Friend WithEvents txt_PorcentajeBonificacion As NumericUpDown
     Friend WithEvents Label33 As Label
     Friend WithEvents ColorDialog1 As ColorDialog
+    Friend WithEvents btn_ActualizarListaProductos As Button
 End Class
