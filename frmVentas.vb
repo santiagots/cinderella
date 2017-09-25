@@ -34,39 +34,6 @@ Public Class frmVentas
 
 
 #Region "Region Funciones"
-    'Limpiar Formulario
-    Public Sub LimpiarFormVentas()
-        'Verifico si hay conexion a internet
-        Negocio.Funciones.HayConexionInternet()
-
-        txt_SeniaMayorista.Text = "0,00"
-        txt_SeniaMinorista.Text = "0,00"
-        txt_TotalMinorista.Text = "0,00"
-        txt_SubtotalMinorista.Text = "0,00"
-        txt_DescuentoMinorista.Text = "0,00"
-        txt_CFTMinorista.Text = "0,00"
-        txt_TotalMayorista.Text = "0,00"
-        txt_SubtotalMayorista.Text = "0,00"
-        txt_DescuentoMayorista.Text = "0,00"
-        txt_CFTMayorista.Text = "0,00"
-        txt_ivaTotalMayorista.Text = "0,00"
-        txt_Senia.Text = "0,00"
-        txt_SeniaCostoFinanciero.Text = "0,00"
-        txt_PorcentajeFacturacion.Text = "100"
-        txt_CodigoBarra.Clear()
-        txt_RazonSocial.Clear()
-        txt_id_Cliente.Clear()
-        'cb_Tipo.SelectedIndex = 0
-        Cb_TipoPago.SelectedItem = "Seleccione un tipo de pago..."
-        Cb_Encargados.SelectedItem = "Seleccione un encargado..."
-        Cb_Vendedores.SelectedItem = "Seleccione un vendedor..."
-        Cb_ListaPrecio.SelectedIndex = 0
-        Cb_Tarjeta.SelectedIndex = 0
-        Cb_NumeroCuota.SelectedIndex = 0
-        Cb_ListaPrecio.SelectedIndex = 0
-        DG_Productos.Rows.Clear()
-        txt_CodigoBarra.Focus()
-    End Sub
 
     'Funcion que agrega un nuevo item al DATAGRID - Tipo: 1-ID | 2-CODIGO DE BARRA | 3-CODIGO - TipoAccion: 1-Venta | 2-Cambio
     Public Sub AgregarItem(ByVal Numero As String, ByVal Tipo As Integer, Optional ByVal TipoAccion As Integer = 1)
@@ -477,8 +444,7 @@ Public Class frmVentas
     'Cancela la venta, setea variables por default.
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
         If MessageBox.Show("Ésta seguro que desea cancelar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-            'Limpio el Formulario.
-            LimpiarFormVentas()
+            Me.Close()
         End If
     End Sub
 
@@ -1153,7 +1119,7 @@ Public Class frmVentas
                         NotaPedido.id_Cliente = id_Cliente
                         NotaPedido.id_Empleado = id_Empleado
                         NotaPedido.id_Encargado = id_Encargado
-                        If (negNotaPedido.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido()) = 0) Then
+                        If Not negNotaPedido.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido(), id_Sucursal) Then
                             MessageBox.Show("La nota de pedido no se a podido cerrar. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Else
                             Dim frmNotaPedido As frmNotaPedidoAdministracion = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
@@ -1168,8 +1134,7 @@ Public Class frmVentas
                     End If
 
                     'Fin de la venta.
-                    'Limpio el Formulario.
-                    LimpiarFormVentas()
+                    Me.Close()
 
                     'si esto realizando una venta a partir de una seña
                     If (Me.Senia IsNot Nothing) Then
@@ -1340,10 +1305,10 @@ Public Class frmVentas
         End If
 
         NotaPedido.Fecha = DateTime.Now
-        NotaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(NotaPedido, ObtenerDetalleNotaPedido())
+        NotaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(NotaPedido, ObtenerDetalleNotaPedido(), id_Sucursal)
         Me.Cursor = Cursors.Arrow
         MessageBox.Show("Se ha generado la nota de pedido correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        LimpiarFormVentas()
+        Me.Close()
 
     End Sub
 
@@ -1406,7 +1371,7 @@ Public Class frmVentas
         NotaPedido.id_TipoPago = TipoPago
         NotaPedido.Vendida = False
 
-        NotaPedidoNegocio.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido())
+        NotaPedidoNegocio.ActualizarNotaPedido(NotaPedido, ObtenerDetalleNotaPedido(), id_Sucursal)
         Me.Cursor = Cursors.Arrow
         MessageBox.Show("Se ha actualizado la nota de pedido correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Dim form As Form = Funciones.ControlInstancia(frmNotaPedidoAdministracion)
@@ -1573,8 +1538,7 @@ Public Class frmVentas
                     End If
 
                     'Fin de la venta.
-                    'Limpio el Formulario.
-                    LimpiarFormVentas()
+                    Me.Close()
                 Else
                     'Muestro Mensaje.
                     MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)

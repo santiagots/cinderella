@@ -214,7 +214,7 @@ Public Class NegMovimientos
         End Try
     End Function
 
-    Private Shared Function AltaMovImpuesto(eImpuesto As Entidades.MovImpuesto, ByRef cmd As SqlCommand) As String
+    Private Shared Function AltaMovImpuesto(eImpuesto As Entidades.MovImpuesto, ByRef cmd As SqlCommand) As Boolean
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_MovImpuestos_Alta"
         With cmd.Parameters
@@ -224,57 +224,10 @@ Public Class NegMovimientos
             .AddWithValue("@Monto", eImpuesto.Monto)
             .AddWithValue("@Fecha", eImpuesto.Fecha)
         End With
-        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-        Return respuesta.Value
-    End Function
-
-    'Funcion para insertar una Dif. de Caja.
-    Function AltaMovCaja(ByVal eCaja As Entidades.MovCaja) As String
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim respuesta As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
-        Try
-            cmd.Connection = clsDatos.ConectarLocal()
-            respuesta = AltaMovCaja(eCaja, cmd)
-            clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = AltaMovCaja(eCaja, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
-
-
-            'muestro el mensaje
-            Return respuesta
-        Catch ex As Exception
-            Return ex.Message
-        End Try
-    End Function
-
-    Private Shared Function AltaMovCaja(eCaja As Entidades.MovCaja, ByRef cmd As SqlCommand) As String
-        cmd.CommandType = CommandType.StoredProcedure
-        cmd.CommandText = "sp_MovCaja_Alta"
-        With cmd.Parameters
-            .AddWithValue("@id_Movimiento", eCaja.id_Movimiento)
-            .AddWithValue("@id_Usuario", eCaja.id_Usuario)
-            .AddWithValue("@id_Tipo", eCaja.id_Tipo)
-            .AddWithValue("@id_Sucursal", eCaja.id_Sucursal)
-            .AddWithValue("@Monto", eCaja.Monto)
-            .AddWithValue("@Descripcion", eCaja.Descripcion)
-            .AddWithValue("@Fecha", eCaja.Fecha)
-        End With
-        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
-        cmd.ExecuteNonQuery()
-
         Return respuesta.Value
     End Function
 

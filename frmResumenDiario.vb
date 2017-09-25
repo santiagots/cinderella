@@ -11,6 +11,8 @@
     Dim NegAdel As New Negocio.NegAdelantos
     Dim NegAdic As New Negocio.NegAdicionales
     Dim NegErrores As New Negocio.NegManejadorErrores
+    Dim entCaja As New Entidades.CajaInicial
+    Dim entCajaAyer As New Entidades.CajaInicial
 
     'Load del formulario.
     Private Sub frmResumenDiario_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -85,12 +87,10 @@
                 FechaAyer = txt_Fecha.Value.AddDays(-1).ToString("yyyy/MM/dd")
             End If
 
-            Dim entCaja As New Entidades.CajaInicial
-            Dim entCaja2 As New Entidades.CajaInicial
             entCaja = NegCaja.ObtenerCaja(id_Sucursal, Fecha)
-            entCaja2 = NegCaja.ObtenerCaja(id_Sucursal, FechaAyer)
+            entCajaAyer = NegCaja.ObtenerCaja(id_Sucursal, FechaAyer)
 
-            txt_CajaInicial.Text = "$ " & Format(CType((entCaja2.Monto), Decimal), "###0.00") & ".-"
+            txt_CajaInicial.Text = "$ " & Format(CType((entCajaAyer.Monto), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo caja inicial..."
@@ -427,6 +427,7 @@
 
                                 'Acepto la diferencia.
                                 Dim Diferencia As Double = 0
+                                Dim idMovimiento As Int64 = 0
 
                                 If Saldo < 0 Then
                                     Diferencia = (Saldo * -1) + MontoFisico
@@ -439,7 +440,7 @@
                                         eCaja.Descripcion = "Sobrante de dinero en el cierre de caja."
                                         eCaja.Fecha = Now
                                         eCaja.Monto = Diferencia
-                                        NegMov.AltaMovCaja(eCaja)
+                                        idMovimiento = NegCaja.AltaMovCaja(eCaja, id_Sucursal)
                                     Else 'faltante.
                                         Dim eCaja As New Entidades.MovCaja
                                         eCaja.id_Movimiento = 0
@@ -449,7 +450,7 @@
                                         eCaja.Descripcion = "Faltante de dinero en el cierre de caja."
                                         eCaja.Fecha = Now
                                         eCaja.Monto = Diferencia
-                                        NegMov.AltaMovCaja(eCaja)
+                                        idMovimiento = NegCaja.AltaMovCaja(eCaja, id_Sucursal)
                                     End If
 
                                 Else
@@ -463,7 +464,7 @@
                                         eCaja.Descripcion = "Sobrante de dinero en el cierre de caja."
                                         eCaja.Fecha = Now
                                         eCaja.Monto = (Diferencia * -1)
-                                        NegMov.AltaMovCaja(eCaja)
+                                        idMovimiento = NegCaja.AltaMovCaja(eCaja, id_Sucursal)
                                     Else 'faltante.
                                         Dim eCaja As New Entidades.MovCaja
                                         eCaja.id_Movimiento = 0
@@ -473,7 +474,7 @@
                                         eCaja.Descripcion = "Faltante de dinero en el cierre de caja."
                                         eCaja.Fecha = Now
                                         eCaja.Monto = Diferencia
-                                        NegMov.AltaMovCaja(eCaja)
+                                        idMovimiento = NegCaja.AltaMovCaja(eCaja, id_Sucursal)
                                     End If
                                 End If
 
@@ -481,19 +482,17 @@
                                 ObtenerDatos("SI")
 
                                 'Completo la clase de la caja.
-                                Dim entCajaCerrada As New Entidades.CajaInicial
-                                entCajaCerrada.id_Empleado = VariablesGlobales.objUsuario.id_Usuario
-                                entCajaCerrada.id_Sucursal = id_Sucursal
-                                entCajaCerrada.Abierta = VariablesGlobales.CajaCerrada
-                                entCajaCerrada.Empleado = VariablesGlobales.objUsuario.Usuario
-                                entCajaCerrada.Monto = Saldo
-                                entCajaCerrada.Fecha = Now.Date
-                                entCajaCerrada.Hora = Now.Date
+                                entCaja.id_Movimiento = idMovimiento
+                                entCaja.id_Empleado = VariablesGlobales.objUsuario.id_Usuario
+                                entCaja.id_Sucursal = id_Sucursal
+                                entCaja.Abierta = VariablesGlobales.CajaCerrada
+                                entCaja.Empleado = VariablesGlobales.objUsuario.Usuario
+                                entCaja.Monto = Saldo
+                                entCaja.Fecha = Now.Date
+                                entCaja.Hora = Now.Date
 
                                 'Cierro la caja.
-                                Dim Resultado As Integer = 0
-                                Resultado = NegCaja.CerrarCaja(entCajaCerrada)
-                                If Resultado = 1 Then
+                                If NegCaja.CerrarCaja(entCaja, id_Sucursal) Then
                                     Me.Cursor = Cursors.Arrow
 
                                     'Oculto Botones.
@@ -540,9 +539,6 @@
                                     txtMonto.Clear()
 
                                     MessageBox.Show("La caja diaria ha sido cerrada correctamente.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                                ElseIf Resultado = 3 Then
-                                    Me.Cursor = Cursors.Arrow
-                                    MessageBox.Show("Ya existe un cierre de caja para la fecha de hoy.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                 Else
                                     Me.Cursor = Cursors.Arrow
                                     Btn_Abrir.Enabled = False
@@ -554,18 +550,17 @@
                         Else 'No hay diferencias.
                             'Completo la clase de la caja.
                             Dim entCajaCerrada As New Entidades.CajaInicial
-                            entCajaCerrada.id_Empleado = VariablesGlobales.objUsuario.id_Usuario
-                            entCajaCerrada.id_Sucursal = id_Sucursal
-                            entCajaCerrada.Abierta = VariablesGlobales.CajaCerrada
-                            entCajaCerrada.Empleado = VariablesGlobales.objUsuario.Usuario
-                            entCajaCerrada.Monto = Saldo
-                            entCajaCerrada.Fecha = Now.Date
-                            entCajaCerrada.Hora = Now.Date
+                            entCaja.id_Movimiento = 0
+                            entCaja.id_Empleado = VariablesGlobales.objUsuario.id_Usuario
+                            entCaja.id_Sucursal = id_Sucursal
+                            entCaja.Abierta = VariablesGlobales.CajaCerrada
+                            entCaja.Empleado = VariablesGlobales.objUsuario.Usuario
+                            entCaja.Monto = Saldo
+                            entCaja.Fecha = Now.Date
+                            entCaja.Hora = Now.Date
 
                             'Cierro la caja.
-                            Dim Resultado As Integer = 0
-                            Resultado = NegCaja.CerrarCaja(entCajaCerrada)
-                            If Resultado = 1 Then
+                            If NegCaja.CerrarCaja(entCaja, id_Sucursal) Then
                                 Me.Cursor = Cursors.Arrow
 
                                 'Oculto Botones.
@@ -609,9 +604,6 @@
                                 Me.Cursor = Cursors.Arrow
 
                                 MessageBox.Show("La caja diaria ha sido cerrada correctamente.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                            ElseIf Resultado = 3 Then
-                                Me.Cursor = Cursors.Arrow
-                                MessageBox.Show("Ya existe un cierre de caja para la fecha de hoy.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Else
                                 Me.Cursor = Cursors.Arrow
                                 Btn_Abrir.Enabled = False
@@ -635,10 +627,11 @@
                 Try
                     Me.Cursor = Cursors.WaitCursor
 
-                    Dim Resultado As Integer = 0
-                    Resultado = NegCaja.AbrirCaja(id_Sucursal, Now.Date.ToString("yyyy/MM/dd"))
-                    If Resultado = 1 Then
-                        Me.Cursor = Cursors.Arrow
+                    'Si se pudo abrir la caja
+                    If NegCaja.AbrirCaja(id_Sucursal, Now.Date.ToString("yyyy/MM/dd")) Then
+
+                        'doy de baja el movimiento relacionado a la caja
+                        NegCaja.BajaMovCaja(entCaja.id_Movimiento)
 
                         'Muestro los menus.
                         MDIContenedor.MenuAccesosRapidos.Visible = True
@@ -650,6 +643,7 @@
                         MDIContenedor.Refresh()
 
                         MessageBox.Show("La caja diaria ha sido abierta correctamente.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Me.Cursor = Cursors.Arrow
                     Else
                         Me.Cursor = Cursors.Arrow
                         MessageBox.Show("No ha podido ser abierta la caja diaria.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)

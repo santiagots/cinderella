@@ -29,17 +29,6 @@ Partial Class frmNotaPedidoAdministracion
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNotaPedidoAdministracion))
         Me.dgvNotaPedidos = New System.Windows.Forms.DataGridView()
-        Me.Numero = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IdTipoVentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IdTipoPagoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PrecioTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreCliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.IMPRIMIR = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.PorcentajeFacturacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NotaPedidoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label12 = New System.Windows.Forms.Label()
         Me.BtnFiltrar = New System.Windows.Forms.Button()
@@ -76,6 +65,17 @@ Partial Class frmNotaPedidoAdministracion
         Me.txtCantidad = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.lbl_Msg = New System.Windows.Forms.Label()
+        Me.Numero = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IdTipoVentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IdTipoPagoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PrecioTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreCliente = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.IMPRIMIR = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.PorcentajeFacturacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgvNotaPedidos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NotaPedidoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -129,84 +129,6 @@ Partial Class frmNotaPedidoAdministracion
         Me.dgvNotaPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvNotaPedidos.Size = New System.Drawing.Size(910, 522)
         Me.dgvNotaPedidos.TabIndex = 0
-        '
-        'Numero
-        '
-        Me.Numero.DataPropertyName = "id_NotaPedido"
-        Me.Numero.HeaderText = "NRO"
-        Me.Numero.Name = "Numero"
-        Me.Numero.ReadOnly = True
-        '
-        'Estado
-        '
-        Me.Estado.HeaderText = "ESTADO"
-        Me.Estado.Name = "Estado"
-        Me.Estado.ReadOnly = True
-        '
-        'IdTipoVentaDataGridViewTextBoxColumn
-        '
-        Me.IdTipoVentaDataGridViewTextBoxColumn.DataPropertyName = "TipoVentaDescripcion"
-        Me.IdTipoVentaDataGridViewTextBoxColumn.HeaderText = "TIPO VENTA"
-        Me.IdTipoVentaDataGridViewTextBoxColumn.Name = "IdTipoVentaDataGridViewTextBoxColumn"
-        Me.IdTipoVentaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'IdTipoPagoDataGridViewTextBoxColumn
-        '
-        Me.IdTipoPagoDataGridViewTextBoxColumn.DataPropertyName = "TipoPagoDescripcion"
-        Me.IdTipoPagoDataGridViewTextBoxColumn.HeaderText = "TIPO PAGO"
-        Me.IdTipoPagoDataGridViewTextBoxColumn.Name = "IdTipoPagoDataGridViewTextBoxColumn"
-        Me.IdTipoPagoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'EmpleadoNombreyApellidoDataGridViewTextBoxColumn
-        '
-        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.DataPropertyName = "EmpleadoNombreyApellido"
-        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.HeaderText = "VENDEDOR"
-        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.Name = "EmpleadoNombreyApellidoDataGridViewTextBoxColumn"
-        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'PrecioTotalDataGridViewTextBoxColumn
-        '
-        Me.PrecioTotalDataGridViewTextBoxColumn.DataPropertyName = "PrecioTotal"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.PrecioTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.PrecioTotalDataGridViewTextBoxColumn.HeaderText = "PRECIO TOTAL"
-        Me.PrecioTotalDataGridViewTextBoxColumn.Name = "PrecioTotalDataGridViewTextBoxColumn"
-        Me.PrecioTotalDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'FechaDataGridViewTextBoxColumn
-        '
-        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.HeaderText = "FECHA"
-        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
-        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'NombreCliente
-        '
-        Me.NombreCliente.HeaderText = "NOMBRE CLIENTE"
-        Me.NombreCliente.Name = "NombreCliente"
-        Me.NombreCliente.ReadOnly = True
-        '
-        'Eliminar
-        '
-        Me.Eliminar.HeaderText = "ELIMINAR"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        '
-        'IMPRIMIR
-        '
-        Me.IMPRIMIR.HeaderText = "IMPRIMIR"
-        Me.IMPRIMIR.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
-        Me.IMPRIMIR.Name = "IMPRIMIR"
-        Me.IMPRIMIR.ReadOnly = True
-        '
-        'PorcentajeFacturacion
-        '
-        Me.PorcentajeFacturacion.DataPropertyName = "PorcentajeFacturacion"
-        Me.PorcentajeFacturacion.HeaderText = "PorcentajeFacturacion"
-        Me.PorcentajeFacturacion.Name = "PorcentajeFacturacion"
-        Me.PorcentajeFacturacion.ReadOnly = True
-        Me.PorcentajeFacturacion.Visible = False
         '
         'NotaPedidoBindingSource
         '
@@ -505,7 +427,7 @@ Partial Class frmNotaPedidoAdministracion
         '
         'GroupBox2
         '
-        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.txtTotal)
         Me.GroupBox2.Controls.Add(Me.Label6)
@@ -604,7 +526,6 @@ Partial Class frmNotaPedidoAdministracion
         Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.AutoSize = True
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(231, 396)
@@ -612,6 +533,85 @@ Partial Class frmNotaPedidoAdministracion
         Me.lbl_Msg.Size = New System.Drawing.Size(472, 29)
         Me.lbl_Msg.TabIndex = 20
         Me.lbl_Msg.Text = "No se han encontrado notas de pedido."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Numero
+        '
+        Me.Numero.DataPropertyName = "Numero"
+        Me.Numero.HeaderText = "NRO"
+        Me.Numero.Name = "Numero"
+        Me.Numero.ReadOnly = True
+        '
+        'Estado
+        '
+        Me.Estado.HeaderText = "ESTADO"
+        Me.Estado.Name = "Estado"
+        Me.Estado.ReadOnly = True
+        '
+        'IdTipoVentaDataGridViewTextBoxColumn
+        '
+        Me.IdTipoVentaDataGridViewTextBoxColumn.DataPropertyName = "TipoVentaDescripcion"
+        Me.IdTipoVentaDataGridViewTextBoxColumn.HeaderText = "TIPO VENTA"
+        Me.IdTipoVentaDataGridViewTextBoxColumn.Name = "IdTipoVentaDataGridViewTextBoxColumn"
+        Me.IdTipoVentaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'IdTipoPagoDataGridViewTextBoxColumn
+        '
+        Me.IdTipoPagoDataGridViewTextBoxColumn.DataPropertyName = "TipoPagoDescripcion"
+        Me.IdTipoPagoDataGridViewTextBoxColumn.HeaderText = "TIPO PAGO"
+        Me.IdTipoPagoDataGridViewTextBoxColumn.Name = "IdTipoPagoDataGridViewTextBoxColumn"
+        Me.IdTipoPagoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'EmpleadoNombreyApellidoDataGridViewTextBoxColumn
+        '
+        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.DataPropertyName = "EmpleadoNombreyApellido"
+        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.HeaderText = "VENDEDOR"
+        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.Name = "EmpleadoNombreyApellidoDataGridViewTextBoxColumn"
+        Me.EmpleadoNombreyApellidoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PrecioTotalDataGridViewTextBoxColumn
+        '
+        Me.PrecioTotalDataGridViewTextBoxColumn.DataPropertyName = "PrecioTotal"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.PrecioTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        Me.PrecioTotalDataGridViewTextBoxColumn.HeaderText = "PRECIO TOTAL"
+        Me.PrecioTotalDataGridViewTextBoxColumn.Name = "PrecioTotalDataGridViewTextBoxColumn"
+        Me.PrecioTotalDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FechaDataGridViewTextBoxColumn
+        '
+        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
+        Me.FechaDataGridViewTextBoxColumn.HeaderText = "FECHA"
+        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
+        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'NombreCliente
+        '
+        Me.NombreCliente.HeaderText = "NOMBRE CLIENTE"
+        Me.NombreCliente.Name = "NombreCliente"
+        Me.NombreCliente.ReadOnly = True
+        '
+        'Eliminar
+        '
+        Me.Eliminar.HeaderText = "ELIMINAR"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        '
+        'IMPRIMIR
+        '
+        Me.IMPRIMIR.HeaderText = "IMPRIMIR"
+        Me.IMPRIMIR.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
+        Me.IMPRIMIR.Name = "IMPRIMIR"
+        Me.IMPRIMIR.ReadOnly = True
+        '
+        'PorcentajeFacturacion
+        '
+        Me.PorcentajeFacturacion.DataPropertyName = "PorcentajeFacturacion"
+        Me.PorcentajeFacturacion.HeaderText = "PorcentajeFacturacion"
+        Me.PorcentajeFacturacion.Name = "PorcentajeFacturacion"
+        Me.PorcentajeFacturacion.ReadOnly = True
+        Me.PorcentajeFacturacion.Visible = False
         '
         'frmNotaPedidoAdministracion
         '
@@ -632,7 +632,6 @@ Partial Class frmNotaPedidoAdministracion
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents dgvNotaPedidos As System.Windows.Forms.DataGridView
@@ -671,6 +670,7 @@ Partial Class frmNotaPedidoAdministracion
     Friend WithEvents lbl_Msg As Label
     Friend WithEvents ChkCerradas As CheckBox
     Friend WithEvents ChkAbiertas As CheckBox
+    Friend WithEvents ChkFiltroFecha As CheckBox
     Friend WithEvents Numero As DataGridViewTextBoxColumn
     Friend WithEvents Estado As DataGridViewTextBoxColumn
     Friend WithEvents IdTipoVentaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -681,6 +681,5 @@ Partial Class frmNotaPedidoAdministracion
     Friend WithEvents NombreCliente As DataGridViewTextBoxColumn
     Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents IMPRIMIR As DataGridViewImageColumn
-    Friend WithEvents ChkFiltroFecha As CheckBox
     Friend WithEvents PorcentajeFacturacion As DataGridViewTextBoxColumn
 End Class

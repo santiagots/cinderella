@@ -31,7 +31,6 @@ Public Class NotaPedido
             Dim detalle As Entidades.NotaPedido_Detalle = New Entidades.NotaPedido_Detalle()
             detalle.Cantidad = det.Cantidad
             detalle.id_Detalle = det.id_Detalle
-            detalle.id_NotaPedido = det.id_NotaPedido
             detalle.id_Producto = det.id_Producto
             detalle.Precio = 0
             detalle.Iva = 0
@@ -52,7 +51,7 @@ Public Class NotaPedido
         notaPedido.PrecioTotal = EntNotaPedido.PrecioTotal
         notaPedido.Vendida = EntNotaPedido.Vendida
 
-        notaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(notaPedido, detalleNotaPedido)
+        notaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(notaPedido, detalleNotaPedido, EntNotaPedido.id_Sucursal)
 
         If (notaPedido.id_NotaPedido > 0) Then
             RaiseEvent onNevaNotaPedidoCompleted(notaPedido, consumidorFinal)

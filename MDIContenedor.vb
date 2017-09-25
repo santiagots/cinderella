@@ -755,13 +755,14 @@ Public Class MDIContenedor
 
                     'Calculo la caja para la fecha dada.
                     entCajaCerrada.id_Empleado = VariablesGlobales.objUsuario.id_Usuario
+                    entCajaCerrada.id_Movimiento = 0
                     entCajaCerrada.id_Sucursal = id_Sucursal
                     entCajaCerrada.Abierta = 0
                     entCajaCerrada.Empleado = VariablesGlobales.objUsuario.Usuario
                     entCajaCerrada.Monto = NegCaja.ObtenerSaldo(id_Sucursal, FechaAnterior)
                     entCajaCerrada.Fecha = FechaAnterior
                     entCajaCerrada.Hora = Now
-                    NegCaja.CerrarCaja(entCajaCerrada)
+                    NegCaja.CerrarCaja(entCajaCerrada, id_Sucursal)
                 Next
 
                 'Voy seteando la barra de progreso
@@ -1523,15 +1524,13 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ResumenDiario.Click
-        'para administrar ésta seccion es necesario esta online
-        If (Not Negocio.Funciones.HayConexionInternet) Then
-            dialogoConexion.ShowDialog()
-        Else
-            Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmResumenDiario).MdiParent = Me
-            Funciones.ControlInstancia(frmResumenDiario).Show()
-            Me.Cursor = Cursors.Arrow
-        End If
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmResumenDiario).MdiParent = Me
+        Funciones.ControlInstancia(frmResumenDiario).Show()
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub CajaFuerteToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CajaFuerteToolStripMenuItem.Click

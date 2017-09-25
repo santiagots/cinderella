@@ -1,6 +1,7 @@
 ﻿Public Class frmMovimientoCaja
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim NegMovimiento As New Negocio.NegMovimientos
+    Dim NegCajaInicial As New Negocio.NegCajaInicial
     Dim eCaja As New Entidades.MovCaja
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
@@ -128,7 +129,7 @@
                 Me.Cursor = Cursors.Arrow
 
                 'Ejecuto el sp.
-                If (MessageBox.Show(NegMovimiento.AltaMovCaja(eCaja), "Movimientos | Diferencia de Caja", MessageBoxButtons.OK, MessageBoxIcon.Information) = vbOK) Then
+                If (MessageBox.Show(NegCajaInicial.AltaMovCaja(eCaja, id_Sucursal), "Movimientos | Diferencia de Caja", MessageBoxButtons.OK, MessageBoxIcon.Information) = vbOK) Then
                     'Cierro el form
                     Me.Close()
                     Me.Dispose()

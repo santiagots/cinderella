@@ -88,6 +88,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Sincronizar\Implementacion\ClaveRepetidaSincronizar.vb" />
+    <Compile Include="Sincronizar\Implementacion\ClaveUnicaSincronizar.vb" />
+    <Compile Include="Sincronizar\Interfaces\Sincronizar.vb" />
+    <Compile Include="Tabla.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -108,6 +112,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
