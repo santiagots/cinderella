@@ -11,6 +11,11 @@ Public Class NegAdicionales
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        If (eAdicional.id_Adicional > 0) Then
+            eAdicional.id_Adicional = clsDatos.ObtenerCalveUnica(eAdicional.id_Sucursal)
+        End If
+        eAdicional.FechaEdicion = DateTime.Now
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaAdicional(eAdicional, cmd)
@@ -40,6 +45,7 @@ Public Class NegAdicionales
             .AddWithValue("@Monto", eAdicional.Monto)
             .AddWithValue("@Fecha", eAdicional.Fecha)
             .AddWithValue("@Descripcion", eAdicional.Descripcion)
+            .AddWithValue("@FechaEdicion", eAdicional.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output

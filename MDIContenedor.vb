@@ -598,6 +598,7 @@ Public Class MDIContenedor
 
         'Seteo la cultura del proyecto.
         System.Threading.Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("es-AR")
+        System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
 
         'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
         AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido

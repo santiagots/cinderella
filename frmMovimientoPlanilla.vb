@@ -49,7 +49,7 @@
             'Seteo las variables
             Dim Tipo As String = DG_Movimientos.Rows(e.RowIndex).Cells("Tipo").Value()
             Dim Descripcion As String = DG_Movimientos.Rows(e.RowIndex).Cells("Descripcion").Value()
-            Dim id_Mov As Integer = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
+            Dim id_Mov As Int64 = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
 
             'Dependiendo del tipo abro un form u otro.
             If Tipo = "Dif. de Caja" Then
@@ -124,7 +124,7 @@
                     'Seteo las variables
                     Dim Tipo As String = DG_Movimientos.Rows(e.RowIndex).Cells("Tipo").Value()
                     Dim Descripcion As String = DG_Movimientos.Rows(e.RowIndex).Cells("Descripcion").Value()
-                    Dim id_Mov As Integer = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
+                    Dim id_Mov As Int64 = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
 
                     'Dependiendo del tipo abro un form u otro.
                     Dim Estado As String = ""
@@ -140,21 +140,21 @@
                             Return
                         End If
                     ElseIf Tipo = "Gasto" Then
-                            Dim dsMov As New DataSet
-                            Dim id_Reg As Integer = 0
-                            dsMov = NegMovimiento.ObtenerMov(id_Mov, id_Sucursal, "Gasto")
-                            id_Reg = dsMov.Tables(0).Rows(0).Item("id_Registro").ToString
-                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 3, id_Reg)
-                        ElseIf Tipo = "Impuesto" Then
-                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 4)
-                        ElseIf Tipo = "Movimiento de Socio" Then
-                            If (Descripcion = "Retiro de socio") Then
-                                Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 5)
-                            Else
-                                Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 7)
-                            End If
-                        ElseIf Tipo = "Caja Fuerte" Then
-                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 6)
+                        Dim dsMov As New DataSet
+                        Dim id_Reg As Int64 = 0
+                        dsMov = NegMovimiento.ObtenerMov(id_Mov, id_Sucursal, "Gasto")
+                        id_Reg = dsMov.Tables(0).Rows(0).Item("id_Registro").ToString
+                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 3, id_Reg)
+                    ElseIf Tipo = "Impuesto" Then
+                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 4)
+                    ElseIf Tipo = "Movimiento de Socio" Then
+                        If (Descripcion = "Retiro de socio") Then
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 5)
+                        Else
+                            Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 7)
+                        End If
+                    ElseIf Tipo = "Caja Fuerte" Then
+                        Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 6)
                     End If
 
                     MessageBox.Show(Estado, "Movimientos | Listado", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -196,7 +196,7 @@
 
 #Region "Region de Funciones"
     'Funcion que agrega un movimiento al Grid.
-    Sub AgregarMovimiento(ByVal id_Movimiento As Integer, ByVal Fecha As String, ByVal Descripcion As String, ByVal Monto As Double, ByVal Tipo As String, Optional ByVal Destino As Boolean = False, Optional ByVal Aceptado As Integer = 0)
+    Sub AgregarMovimiento(ByVal id_Movimiento As Int64, ByVal Fecha As String, ByVal Descripcion As String, ByVal Monto As Double, ByVal Tipo As String, Optional ByVal Destino As Boolean = False, Optional ByVal Aceptado As Integer = 0)
 
         'Creo la fila del producto.
         Dim dgvRow As New DataGridViewRow

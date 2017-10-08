@@ -53,7 +53,7 @@ Public Class Producto
 
         Dim entidades As List(Of EntidadProductoReducido) = New List(Of EntidadProductoReducido)()
 
-        Dim dsProductos As DataSet = productosNegocio.ListadoProductosBuscadores()
+        Dim dsProductos As DataSet = productosNegocio.ListadoProductosCache(True)
 
         For Each dr As DataRow In dsProductos.Tables(0).Rows
 

@@ -20,6 +20,9 @@ Public Class NegStockBitacora
         Dim msg As Integer
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        estock.id_Bitacora = clsDatos.ObtenerCalveUnica(estock.id_Sucursal)
+        estock.FechaEdicion = DateTime.Now
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaStockBitacora(estock, cmd)
@@ -44,6 +47,7 @@ Public Class NegStockBitacora
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_StockBitacora_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Bitacora", estock.id_Bitacora)
             .AddWithValue("@id_Producto", estock.id_Producto)
             .AddWithValue("@id_Stock", estock.id_Stock)
             .AddWithValue("@id_Sucursal", estock.id_Sucursal)
@@ -59,6 +63,7 @@ Public Class NegStockBitacora
             .AddWithValue("@Accion", estock.Accion)
             .AddWithValue("@Fecha", estock.Fecha)
             .AddWithValue("@Habilitado", estock.Habilitado)
+            .AddWithValue("@FechaEdicion", estock.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 255)
         respuesta.Direction = ParameterDirection.Output

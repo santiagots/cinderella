@@ -30,7 +30,7 @@
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = txt_Fecha.Value
                 eGasto.Monto = Trim(txt_Monto.Text)
-                eGasto.id_Registro = NegCuenta.ObtenerUltimoID()
+                eGasto.id_Registro = ECuenta.id_Registro
                 eGasto.SoloLectura = False
 
                 NegMov.AltaMovGasto(eGasto)

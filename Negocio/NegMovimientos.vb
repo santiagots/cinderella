@@ -195,6 +195,12 @@ Public Class NegMovimientos
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eImpuesto.id_Movimiento = 0) Then
+            eImpuesto.id_Movimiento = clsDatos.ObtenerCalveUnica(eImpuesto.id_Sucursal)
+        End If
+        eImpuesto.FechaEdicion = DateTime.Now
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaMovImpuesto(eImpuesto, cmd)
@@ -214,7 +220,7 @@ Public Class NegMovimientos
         End Try
     End Function
 
-    Private Shared Function AltaMovImpuesto(eImpuesto As Entidades.MovImpuesto, ByRef cmd As SqlCommand) As Boolean
+    Private Shared Function AltaMovImpuesto(eImpuesto As Entidades.MovImpuesto, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_MovImpuestos_Alta"
         With cmd.Parameters
@@ -223,8 +229,9 @@ Public Class NegMovimientos
             .AddWithValue("@id_Sucursal", eImpuesto.id_Sucursal)
             .AddWithValue("@Monto", eImpuesto.Monto)
             .AddWithValue("@Fecha", eImpuesto.Fecha)
+            .AddWithValue("@FechaEdicion", eImpuesto.FechaEdicion)
         End With
-        Dim respuesta As New SqlParameter("@msg", SqlDbType.Bit, 1)
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
@@ -238,6 +245,12 @@ Public Class NegMovimientos
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim respuesta As String
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eCaja.id_Movimiento = 0) Then
+            eCaja.id_Movimiento = clsDatos.ObtenerCalveUnica(eCaja.id_Sucursal)
+        End If
+        eCaja.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -268,6 +281,7 @@ Public Class NegMovimientos
             .AddWithValue("@Monto", eCaja.Monto)
             .AddWithValue("@Descripcion", eCaja.Descripcion)
             .AddWithValue("@Fecha", eCaja.Fecha)
+            .AddWithValue("@FechaEdicion", eCaja.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -283,6 +297,12 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eRetiro.id_Movimiento = 0) Then
+            eRetiro.id_Movimiento = clsDatos.ObtenerCalveUnica(eRetiro.id_Sucursal)
+        End If
+        eRetiro.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -316,6 +336,7 @@ Public Class NegMovimientos
             .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
             .AddWithValue("@id_Cheque", eRetiro.IdCheque)
             .AddWithValue("@Fecha", eRetiro.Fecha)
+            .AddWithValue("@FechaEdicion", eRetiro.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -330,6 +351,12 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eRetiro.id_Movimiento = 0) Then
+            eRetiro.id_Movimiento = clsDatos.ObtenerCalveUnica(eRetiro.id_Sucursal)
+        End If
+        eRetiro.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -363,6 +390,7 @@ Public Class NegMovimientos
             .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
             .AddWithValue("@id_Cheque", eRetiro.IdCheque)
             .AddWithValue("@Fecha", eRetiro.Fecha)
+            .AddWithValue("@FechaEdicion", eRetiro.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -377,6 +405,18 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eGasto.id_Movimiento = 0) Then
+            eGasto.id_Movimiento = clsDatos.ObtenerCalveUnica(eGasto.id_Sucursal)
+        End If
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eGasto.id_Registro = 0) Then
+            eGasto.id_Registro = clsDatos.ObtenerCalveUnica(eGasto.id_Registro)
+        End If
+
+        eGasto.FechaEdicion = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -408,6 +448,7 @@ Public Class NegMovimientos
             .AddWithValue("@Monto", eGasto.Monto)
             .AddWithValue("@Fecha", eGasto.Fecha)
             .AddWithValue("@SoloLectura", eGasto.SoloLectura)
+            .AddWithValue("@FechaEdicion", eGasto.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -535,17 +576,17 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim msg As String = ""
+        Dim fechaEdicion As DateTime = DateTime.Now()
 
         Try
-
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, cmd)
+            msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
 
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, cmd)
+                msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, fechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -555,12 +596,13 @@ Public Class NegMovimientos
         End Try
     End Function
 
-    Private Shared Function EliminarMovEgresoMercaderia(id_Movimiento As Integer, id_Sucursal As Integer, ByRef cmd As SqlCommand) As String
+    Private Shared Function EliminarMovEgresoMercaderia(id_Movimiento As Integer, id_Sucursal As Integer, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_MovEgreso_EliminarMercaderia"
         With cmd.Parameters
             .AddWithValue("@id_Movimiento", id_Movimiento)
             .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -571,12 +613,13 @@ Public Class NegMovimientos
     End Function
 
     'Function para eliminar un movimiento del sistema.
-    Function EliminarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Sucursal As Integer, ByVal Tipo As Integer, Optional ByVal id_Registro As Integer = 0)
+    Function EliminarMovimiento(ByVal id_Movimiento As Int64, ByVal id_Sucursal As Integer, ByVal Tipo As Integer, Optional ByVal id_Registro As Int64 = 0)
         Try
             Dim EsMercaderia As Integer = 0
             Dim HayInternet As Boolean = Funciones.HayInternet
             Dim cmd As New SqlCommand
             Dim msg As String = ""
+            Dim fechaEdicion As DateTime = DateTime.Now()
 
             'Si es un egreso.
             If Tipo = 2 Then
@@ -620,13 +663,13 @@ Public Class NegMovimientos
 
             cmd = New SqlCommand()
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, cmd)
+            msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
 
             If HayInternet Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, cmd)
+                msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, fechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -636,7 +679,7 @@ Public Class NegMovimientos
         End Try
     End Function
 
-    Private Function EliminarMovimiento(id_Movimiento As Integer, id_Sucursal As Integer, Tipo As Integer, id_Registro As Integer, EsMercaderia As Integer, ByRef cmd As SqlCommand) As String
+    Private Function EliminarMovimiento(id_Movimiento As Int64, id_Sucursal As Integer, Tipo As Integer, id_Registro As Int64, EsMercaderia As Integer, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Movimientos_Eliminar"
         With cmd.Parameters
@@ -645,6 +688,7 @@ Public Class NegMovimientos
             .AddWithValue("@id_Sucursal", id_Sucursal)
             .AddWithValue("@EsMercaderia", EsMercaderia)
             .AddWithValue("@Tipo", Tipo)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -877,7 +921,7 @@ Public Class NegMovimientos
     End Function
 
     'Obtener un movimiento determinado.
-    Function ObtenerMov(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal Tipo As String)
+    Function ObtenerMov(ByVal id_Movimiento As Int64, ByVal id_sucursal As Integer, ByVal Tipo As String)
         Dim ds As New DataSet
         If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Mov_ObtenerDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)

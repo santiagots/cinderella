@@ -11,15 +11,18 @@ Public Class NegRecibos
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        eRecibo.id_Recibo = clsDatos.ObtenerCalveUnica(eRecibo.id_Sucursal)
+        eRecibo.Fecha_Edicion = DateTime.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
-            AltaReciboSueldo(eRecibo, cmd)
+            msg = AltaReciboSueldo(eRecibo, cmd)
             clsDatos.DesconectarLocal()
 
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                AltaReciboSueldo(eRecibo, cmd)
+                msg = AltaReciboSueldo(eRecibo, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -34,6 +37,7 @@ Public Class NegRecibos
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Recibos_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Recibo", eRecibo.id_Recibo)
             .AddWithValue("@id_Empleado", eRecibo.id_Empleado)
             .AddWithValue("@id_Sucursal", eRecibo.id_Sucursal)
             .AddWithValue("@Monto", eRecibo.Monto)
@@ -41,6 +45,7 @@ Public Class NegRecibos
             .AddWithValue("@Aguinaldo", eRecibo.Aguinaldo)
             .AddWithValue("@Mes", eRecibo.Mes)
             .AddWithValue("@Anio", eRecibo.Anio)
+            .AddWithValue("@FechaEdicion", eRecibo.Fecha_Edicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output

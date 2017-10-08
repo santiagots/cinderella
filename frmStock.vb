@@ -447,7 +447,7 @@
                 'Cambio el cursor a "WAIT"
                 TabStock.Cursor = Cursors.WaitCursor
 
-                Dim id_Stock As Integer = DG_Stock.Rows(e.RowIndex).Cells("id_Stock").Value
+                Dim id_Stock As Int64 = DG_Stock.Rows(e.RowIndex).Cells("id_Stock").Value
                 If id_Stock = 0 Then
                     'si no completo la descripcion, muestro un msg de error.
                     MessageBox.Show("No se puede eliminar el stock.", "Administración de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -464,7 +464,7 @@
 
             End If
         ElseIf DG_Stock.Columns(e.ColumnIndex).Name = "Modificar" Then 'Si se hace click en el boton "modificar" de la fila.
-            Dim id_Stock As Integer = DG_Stock.Rows(e.RowIndex).Cells("id_Stock").Value()
+            Dim id_Stock As Int64 = DG_Stock.Rows(e.RowIndex).Cells("id_Stock").Value()
 
             'Cambio el cursor a "WAIT"
             TabStock.Cursor = Cursors.WaitCursor
@@ -584,7 +584,7 @@
     Private Sub DG_Stock_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Stock.CellDoubleClick
         If DG_Stock.SelectedRows.Count > 0 Then
             If e.RowIndex >= 0 Then
-                Dim id_Stock As Integer = DG_Stock.Rows(e.RowIndex).Cells("id_Stock").Value()
+                Dim id_Stock As Int64 = DG_Stock.Rows(e.RowIndex).Cells("id_Stock").Value()
 
                 'Cambio el cursor a "WAIT"
                 TabStock.Cursor = Cursors.WaitCursor
@@ -655,7 +655,7 @@
             'Cambio el cursor a "WAIT"
             TabStock.Cursor = Cursors.WaitCursor
 
-            Dim id_Stock As Integer = EStock.id_Stock
+            Dim id_Stock As Int64 = EStock.id_Stock
             If id_Stock = 0 Then
                 'si no completo la descripcion, muestro un msg de error.
                 MessageBox.Show("No se puede eliminar el stock.", "Administración de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)

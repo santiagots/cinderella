@@ -50,7 +50,7 @@
             Me.Cursor = Cursors.WaitCursor
 
             'Seteo las variables
-            Dim id_Adelanto As Integer = DG_Adelantos.Rows(e.RowIndex).Cells("id_Adelanto").Value()
+            Dim id_Adelanto As Int64 = DG_Adelantos.Rows(e.RowIndex).Cells("id_Adelanto").Value()
 
             If id_Adelanto = 0 Then
                 MessageBox.Show("No se puede eliminar el empleado.", "Listado de Adelantos del día", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -96,7 +96,7 @@
 
     Private Sub EditarAdelanto(rowIndex As Integer)
         'Seteo las variables
-        Dim id_Adelanto As Integer = DG_Adelantos.Rows(rowIndex).Cells("id_Adelanto").Value()
+        Dim id_Adelanto As Int64 = DG_Adelantos.Rows(rowIndex).Cells("id_Adelanto").Value()
 
         If id_Adelanto <> 0 Then
             Me.Close()

@@ -409,17 +409,6 @@ Public Class frmEmpleadosSaldos
 
                 Dim sueldoDepositado As Double = CDbl(txt_Saldo.Text)
 
-                ''Agrego el gasto del sueldo a depositar.
-                'Dim NegMovimiento As New Negocio.NegMovimientos
-                'Dim eGasto As New Entidades.MovGasto
-                'eGasto.id_Movimiento = 0
-                'eGasto.id_Registro = 0
-                'eGasto.id_Sucursal = id_Sucursal
-                'eGasto.id_Tipo = 42 'tipo sueldo a depositar
-                'eGasto.Fecha = Now
-                'eGasto.Monto = sueldoDepositado
-                'NegMovimiento.AltaMovGasto(eGasto)
-
                 'Agrego el retiro de socios en forma negativa.
                 Dim NegMovimiento As New Negocio.NegMovimientos
                 Dim eRetiro As New Entidades.MovSocios
@@ -427,6 +416,7 @@ Public Class frmEmpleadosSaldos
                 eRetiro.id_Sucursal = id_Sucursal
                 eRetiro.Monto = sueldoDepositado
                 eRetiro.Fecha = Now
+                eRetiro.IdTipoPago = 1 'Efectivo
                 eRetiro.Encargado = "Cinderella"
                 eRetiro.Persona = "Cinderella"
                 eRetiro.Descripcion = "Aporte por pago de sueldo a empleado"

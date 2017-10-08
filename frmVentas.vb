@@ -28,7 +28,6 @@ Public Class frmVentas
     Dim ProductoCantidadAnterior As Integer
     Dim dsProductos As DataSet
     Dim PorcentajeFacturacionIngresado As Double = 100
-    Dim PorcentajeDescuento As Double = 0
     Public NotaPedido As NotaPedido
     Public Senia As Senia
 
@@ -364,6 +363,7 @@ Public Class frmVentas
 
     Private Sub CalcularPrecioMayorista(ByRef subtotal As Double)
         Dim PorcentajeFacturacion As Double = Double.Parse(txt_PorcentajeFacturacion.Text) / 100
+        Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
 
         Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim ivaSubTotal As Double = 0
@@ -392,6 +392,7 @@ Public Class frmVentas
     End Sub
 
     Private Sub CaluclarPrecioMinorista(subtotal As Double)
+        Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
         Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim costoFinanciero As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMinorista.Text)
@@ -846,6 +847,8 @@ Public Class frmVentas
     'Dependiendo para que tipo de cliente es la venta, muestro o oculto el panel de clientes.
     Private Sub cb_Tipo_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Tipo.SelectedIndexChanged
 
+        Cb_TipoPago.SelectedValue = 0
+
         Dim dsListas As DataSet
         'Mayorista
         If cb_Tipo.SelectedIndex = 1 Then
@@ -858,11 +861,11 @@ Public Class frmVentas
             DG_Productos.Columns("IVA").Visible = True
             PanelTotalMayorista.Visible = True
             PanelTotalMinorista.Visible = False
-            If Cb_TipoPago.SelectedValue = 1 Then
-                txt_PorcentajeFacturacion.Enabled = True
-            Else
-                txt_PorcentajeFacturacion.Enabled = False
-            End If
+            'If Cb_TipoPago.SelectedValue = 1 Then
+            '    txt_PorcentajeFacturacion.Enabled = True
+            'Else
+            '    txt_PorcentajeFacturacion.Enabled = False
+            'End If
 
         Else
             'Minorista
@@ -957,8 +960,14 @@ Public Class frmVentas
 
     Private Sub ActualizarColumnaIvaMonto(index As Integer, precio As Double)
         Dim PorcentajeFacturacion As Double = Double.Parse(txt_PorcentajeFacturacion.Text) / 100
-        DG_Productos("IVA", index).Value = precio * (0.21 * PorcentajeFacturacion)
-        DG_Productos("MONTO", index).Value = precio * (1 + 0.21 * PorcentajeFacturacion)
+        'Es MAYORISTA
+        If (cb_Tipo.SelectedIndex = 1) Then
+            DG_Productos("IVA", index).Value = precio * (0.21 * PorcentajeFacturacion)
+            DG_Productos("MONTO", index).Value = precio * (1 + 0.21 * PorcentajeFacturacion)
+        Else
+            DG_Productos("IVA", index).Value = 0
+            DG_Productos("MONTO", index).Value = precio
+        End If
         DG_Productos("SUBTOTAL", index).Value = DG_Productos("MONTO", index).Value * DG_Productos("CANTIDAD", index).Value
     End Sub
 
@@ -976,7 +985,7 @@ Public Class frmVentas
             txt_RazonSocial.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
             Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.clienteMayorista.IdListaPrecio
             txt_PorcentajeBonificacion.Text = frmBuscarClienteMayorista.clienteMayorista.Bonificacion
-            PorcentajeDescuento = frmBuscarClienteMayorista.clienteMayorista.Bonificacion / 100
+
             PorcentajeFacturacionIngresado = If(frmBuscarClienteMayorista.clienteMayorista.Lista = 0, 100, frmBuscarClienteMayorista.clienteMayorista.Lista)
             If Cb_TipoPago.SelectedValue = 1 Then
                 txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
@@ -2011,7 +2020,7 @@ Public Class frmVentas
             txt_DescuentoMinorista.Text = "0,00"
         End If
 
-        PorcentajeDescuento = CType(txt_DescuentoMinorista.Text, Double) / CalcularPrecioTotal()
+        Dim PorcentajeDescuento As Double = CType(txt_DescuentoMinorista.Text, Double) / CalcularPrecioTotal()
         txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 0, MidpointRounding.ToEven)
 
         CalcularTotales()
@@ -2031,7 +2040,7 @@ Public Class frmVentas
             txt_DescuentoMayorista.Text = "0,00"
         End If
 
-        PorcentajeDescuento = CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()
+        Dim PorcentajeDescuento As Double = CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()
         txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 0, MidpointRounding.ToEven)
 
         CalcularTotales()
@@ -2153,7 +2162,6 @@ Public Class frmVentas
                 Label33.Enabled = True
                 txt_PorcentajeBonificacion.Enabled = True
                 txt_PorcentajeBonificacion.Value = My.Settings.DescuentoMinorista
-                PorcentajeDescuento = My.Settings.DescuentoMinorista / 100
             Else
                 Label33.Enabled = False
                 txt_PorcentajeBonificacion.Enabled = False
@@ -2210,8 +2218,6 @@ Public Class frmVentas
         If txt_PorcentajeBonificacion.Text.Trim = "" Then
             txt_PorcentajeBonificacion.Text = "0"
         End If
-
-        PorcentajeDescuento = CType(txt_PorcentajeBonificacion.Text, Double) / 100
 
         If (DG_Productos.Rows.Count > 0) Then
             CalcularTotales()

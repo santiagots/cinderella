@@ -169,13 +169,13 @@ Public Class ClaveRepetidaSincronizar
         End If
     End Function
 
-    Public Sub sincronizarALocal(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaction As SqlTransaction) Implements Sincronizar.sincronizarALocal
+    Public Sub sincronizarALocal(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.sincronizarALocal
 
     End Sub
 
-    Public Sub sincronizarARemota(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaction As SqlTransaction) Implements Sincronizar.sincronizarARemota
+    Public Sub sincronizarARemota(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.sincronizarARemota
         If (tabla.Sincronizar.ObtenerDatosLocales(tabla, valorBusqueda)) Then
-            tabla.Sincronizar.GuardarDatos(tabla, conexionRemota, transaction)
+            tabla.Sincronizar.GuardarDatos(tabla, conexionRemota, transaccionRemota)
         End If
     End Sub
 End Class

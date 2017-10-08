@@ -182,7 +182,7 @@ Public Class NegCajaInicial
                 .AddWithValue("@Empleado", EntCaja.Empleado)
                 .AddWithValue("@id_Sucursal", EntCaja.id_Sucursal)
                 .AddWithValue("@Monto", EntCaja.Monto)
-                .AddWithValue("@FechaEdicion", EntCaja.Monto)
+                .AddWithValue("@FechaEdicion", EntCaja.FechaEdicion)
             End With
 
             'Respuesta del stored.
@@ -463,7 +463,7 @@ Public Class NegCajaInicial
 
     Private Shared Function ObtenerCajaFromDataRow(dr As DataRow, entCaja As Entidades.CajaInicial) As Entidades.CajaInicial
         entCaja.id_Caja = dr.Item("id_Caja").ToString
-        entCaja.id_Movimiento = dr.Item("id_Movimiento").ToString
+        entCaja.id_Movimiento = If(dr.Item("id_Movimiento").ToString = "", 0, dr.Item("id_Movimiento").ToString)
         entCaja.id_Empleado = dr.Item("id_Empleado").ToString
         entCaja.Empleado = dr.Item("Empleado").ToString
         entCaja.id_Sucursal = dr.Item("id_Sucursal").ToString

@@ -10,6 +10,12 @@ Public Class NegAdelantos
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        'Si el adelanto no tiene ID se trata de un alta y le tengo que generar el ID
+        If (eAdelanto.id_Adelanto = 0) Then
+            eAdelanto.id_Adelanto = clsDatos.ObtenerCalveUnica(eAdelanto.id_Sucursal)
+        End If
+        eAdelanto.FechaEdicion = DateTime.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaAdelanto(eAdelanto, cmd)
@@ -39,6 +45,7 @@ Public Class NegAdelantos
             .AddWithValue("@Monto", eAdelanto.Monto)
             .AddWithValue("@Fecha", eAdelanto.Fecha)
             .AddWithValue("@Descripcion", eAdelanto.Descripcion)
+            .AddWithValue("@FechaEdicion", eAdelanto.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -70,44 +77,49 @@ Public Class NegAdelantos
     End Function
 
     'Funcion para obtener los adelantos de un empleado
-    Function EliminarAdelanto(ByVal id_Adelanto As Integer, ByVal id_Sucursal As Integer)
+    Function EliminarAdelanto(ByVal id_Adelanto As Int64, ByVal id_Sucursal As Integer)
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim msg As String
+        Dim FechaEdicion As DateTime = DateTime.Now
 
         Try
-            If HayInternet Then
+            cmd.Connection = clsDatos.ConectarLocal()
+            msg = EliminarAdelanto(id_Adelanto, id_Sucursal, FechaEdicion, cmd)
+            clsDatos.DesconectarLocal()
+
+            If (HayInternet) Then
+                cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_Adelantos_Eliminar"
-            With cmd.Parameters
-                .AddWithValue("@id_Adelanto", id_Adelanto)
-                .AddWithValue("@id_Sucursal", id_Sucursal)
-            End With
-            Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-
-            cmd.ExecuteNonQuery()
-
-            If HayInternet Then
+                msg = EliminarAdelanto(id_Adelanto, id_Sucursal, FechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
             End If
 
-            Return respuesta.Value
+            'muestro el mensaje
+            Return msg
         Catch ex As Exception
             Return ex.Message
         End Try
+    End Function
 
+    Private Shared Function EliminarAdelanto(id_Adelanto As Int64, id_Sucursal As Integer, FechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Adelantos_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@id_Adelanto", id_Adelanto)
+            .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@FechaEdicion", FechaEdicion)
+        End With
+        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
+        respuesta.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(respuesta)
+        cmd.ExecuteNonQuery()
+
+        Return respuesta.Value
     End Function
 
     'Funcion para obtener los adelantos de un empleado
-    Function ObtenerAdelanto(ByVal id_Adelanto As Integer, ByVal id_Sucursal As Integer)
+    Function ObtenerAdelanto(ByVal id_Adelanto As Int64, ByVal id_Sucursal As Integer)
         Dim dsAdel As New DataSet
 
         If Funciones.HayInternet Then
@@ -115,7 +127,7 @@ Public Class NegAdelantos
         Else
             dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adelantos_ObtenerAdelanto @id_Adelanto=" & id_Adelanto & ", @id_Sucursal=" & id_Sucursal)
         End If
-            Return dsAdel
+        Return dsAdel
     End Function
 
     'Funcion para obtener los adelantos de una sucursal

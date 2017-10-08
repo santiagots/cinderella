@@ -1,7 +1,7 @@
 ﻿Public Class frmStockMotivo
     Dim EStockBitacora As New Entidades.Stock_Bitacora
     Dim id_Sucursal As Integer
-    Public id_Stock As Integer
+    Public id_Stock As Int64
     Dim NegStock As New Negocio.NegStock
     Dim NegStockBitacora As New Negocio.NegStockBitacora
 

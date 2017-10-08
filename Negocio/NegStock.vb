@@ -33,7 +33,7 @@ Public Class NegStock
     End Function
 
     'Funcion para consultar un stock determinado.
-    Public Function TraerStock(ByVal id_Stock As Integer)
+    Public Function TraerStock(ByVal id_Stock As Int64)
         Dim dsStock As New DataSet
         Dim entStock As New Entidades.Stock
 
@@ -92,6 +92,9 @@ Public Class NegStock
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        estock.id_Stock = clsDatos.ObtenerCalveUnica(estock.id_Sucursal)
+        estock.FechaEdicion = DateTime.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaStock(estock, cmd)
@@ -116,6 +119,7 @@ Public Class NegStock
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Stock_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Sotck", estock.id_Stock)
             .AddWithValue("@id_Producto", estock.id_Producto)
             .AddWithValue("@id_Sucursal", estock.id_Sucursal)
             .AddWithValue("@Stock_Minimo", estock.Stock_Minimo)
@@ -126,6 +130,7 @@ Public Class NegStock
             .AddWithValue("@Modificado", estock.Modificado)
             .AddWithValue("@Fecha_Mod", estock.Fecha_Mod)
             .AddWithValue("@Habilitado", estock.Habilitado)
+            .AddWithValue("@FechaEdicion", estock.FechaEdicion)
         End With
 
         'Respuesta del Stored.
@@ -143,6 +148,8 @@ Public Class NegStock
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+
+        estock.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -181,6 +188,7 @@ Public Class NegStock
             .AddWithValue("@Motivo_Mod", estock.Motivo)
             .AddWithValue("@Modificado", estock.Modificado)
             .AddWithValue("@Fecha_Mod", estock.Fecha_Mod)
+            .AddWithValue("@FechaEdicion", estock.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -190,20 +198,22 @@ Public Class NegStock
     End Function
 
     'Funcion para eliminar un stock.
-    Function EliminarStock(ByVal id_Stock As Integer) As String
+    Function EliminarStock(ByVal id_Stock As Int64) As String
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim msg As String = ""
+        Dim fechaEdicion As DateTime = DateTime.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EliminarStock(id_Stock, cmd)
+            msg = EliminarStock(id_Stock, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
 
             'Conecto la bdd.
             If HayInternet Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EliminarStock(id_Stock, cmd)
+                msg = EliminarStock(id_Stock, fechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -214,12 +224,13 @@ Public Class NegStock
 
     End Function
 
-    Private Shared Function EliminarStock(id_Stock As Integer, ByRef cmd As SqlCommand) As String
+    Private Shared Function EliminarStock(id_Stock As Integer, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         'Ejecuto el Stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Stock_Eliminar"
         With cmd.Parameters
             .AddWithValue("@id_Stock", id_Stock)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
 
         'Respuesta del Stored.
@@ -311,7 +322,6 @@ Public Class NegStock
         eStock = TraerStockProducto(id_Producto, id_Sucursal)
         Dim HayInternet As Boolean = Funciones.HayInternet
 
-
         'Si no exite el producto en la sucursal
         If eStock.id_Stock <> 0 Then
             Try
@@ -320,6 +330,8 @@ Public Class NegStock
                 Dim msg As String = ""
                 Dim NuevoStock As Integer = 0
                 NuevoStock = eStock.Stock_Actual + Stock
+
+                eStock.FechaEdicion = DateTime.Now()
 
                 cmd.Connection = clsDatos.ConectarLocal()
                 AgregarStock(eStock, cmd, NuevoStock)
@@ -368,6 +380,7 @@ Public Class NegStock
             .AddWithValue("@id_Producto", eStock.id_Producto)
             .AddWithValue("@id_Sucursal", eStock.id_Sucursal)
             .AddWithValue("@NuevoStock", NuevoStock)
+            .AddWithValue("@FechaEdicion", eStock.FechaEdicion)
         End With
 
         'Respuesta del Stored.

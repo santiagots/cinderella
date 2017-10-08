@@ -1,51 +1,9 @@
 ﻿Public Class MovImpuesto
-    Private id_Movimiento_, id_Tipo_, id_Sucursal_ As Integer
-    Private Monto_ As Double
-    Dim Fecha_ As Date
-
-    Public Property id_Movimiento() As Integer
-        Get
-            Return id_Movimiento_
-        End Get
-        Set(ByVal value As Integer)
-            id_Movimiento_ = value
-        End Set
-    End Property
-
-    Public Property id_Tipo() As Integer
-        Get
-            Return id_Tipo_
-        End Get
-        Set(ByVal value As Integer)
-            id_Tipo_ = value
-        End Set
-    End Property
-
-    Public Property id_Sucursal() As Integer
-        Get
-            Return id_Sucursal_
-        End Get
-        Set(ByVal value As Integer)
-            id_Sucursal_ = value
-        End Set
-    End Property
-
-    Public Property Monto() As Double
-        Get
-            Return Monto_
-        End Get
-        Set(ByVal value As Double)
-            Monto_ = value
-        End Set
-    End Property
-
-    Public Property Fecha() As Date
-        Get
-            Return Fecha_
-        End Get
-        Set(ByVal value As Date)
-            Fecha_ = value
-        End Set
-    End Property
-
+    Public Property id_Movimiento As Int64
+    Public Property id_Tipo As Integer
+    Public Property id_Sucursal As Integer
+    Public Property Monto As Double
+    Public Property Fecha As Date
+    Public Property Borrado As Boolean
+    Public Property FechaEdicion As DateTime
 End Class

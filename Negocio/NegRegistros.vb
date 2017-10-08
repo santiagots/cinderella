@@ -17,7 +17,7 @@ Public Class NegRegistros
     End Function
 
     'Funcion para listar todos los empleados por sucursal y fecha determinada.
-    Function ListadoRegistrosFecha(ByVal id_Registro As Integer) As DataSet
+    Function ListadoRegistrosFecha(ByVal id_Registro As Int64) As DataSet
         Dim HayInternet As Boolean = Funciones.HayInternet
         If (HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_RegistrosFecha_Listado @id_Registro = " & id_Registro)
@@ -46,10 +46,10 @@ Public Class NegRegistros
             InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta", False)
 
             'inserto los empleados ausentes para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+            InsertarRegistroEmpleados(Ereg.EmpleadosAusente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", False)
 
             'inserto los empleados tardios para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", False)
+            InsertarRegistroEmpleados(Ereg.EmpleadosTarde, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", False)
 
             clsDatos.DesconectarLocal()
 
@@ -62,10 +62,10 @@ Public Class NegRegistros
                 InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta", True)
 
                 'inserto los empleados ausentes para el registro
-                InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", True)
+                InsertarRegistroEmpleados(Ereg.EmpleadosAusente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", True)
 
                 'inserto los empleados tardios para el registro
-                InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", True)
+                InsertarRegistroEmpleados(Ereg.EmpleadosTarde, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", True)
 
                 clsDatos.DesconectarRemoto()
             End If
@@ -100,41 +100,53 @@ Public Class NegRegistros
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim respuesta As String
 
+        Dim RegistroEliminar = ERegistro.id_Registro
+
         ERegistro.FechaEdicion = DateTime.Now
+        ERegistro.id_Registro = clsDatos.ObtenerCalveUnica(ERegistro.id_Sucursal)
 
         Try
             'Conecto
             Dim cmd As New SqlCommand
             cmd.Connection = clsDatos.ConectarLocal()
-            respuesta = ModificacionRegistro(ERegistro, cmd)
+            respuesta = EliminarRegistro(RegistroEliminar, ERegistro.FechaEdicion, cmd)
+
+            cmd = New SqlCommand
+            cmd.Connection = clsDatos.ConectarLocal()
+
+            respuesta = AgregarRegistro(ERegistro, cmd)
 
             'inserto los empleados presentes para el registro
             InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta", False)
 
             'inserto los empleados tardios para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", False)
+            InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", False)
 
             'inserto los empleados ausentes para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+            InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", False)
             clsDatos.DesconectarLocal()
 
             If (HayInternet) Then
                 cmd = New SqlCommand
                 cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = ModificacionRegistro(ERegistro, cmd)
+                respuesta = EliminarRegistro(RegistroEliminar, ERegistro.FechaEdicion, cmd)
+
+                cmd = New SqlCommand
+                cmd.Connection = clsDatos.ConectarRemoto()
+                respuesta = AgregarRegistro(ERegistro, cmd)
 
                 'inserto los empleados presentes para el registro
                 InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta", True)
 
                 'inserto los empleados tardios para el registro
-                InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", True)
+                InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", True)
 
                 'inserto los empleados ausentes para el registro
-                InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", True)
+                InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", True)
                 clsDatos.DesconectarRemoto()
             End If
 
-            Return respuesta
+            Return "El Registro se ha modificado correctamente."
         Catch ex As Exception
             Return ex.Message
         End Try
@@ -169,7 +181,7 @@ Public Class NegRegistros
         Return respuesta.Value
     End Function
 
-    Function InsertarRegistroEmpleados(CheckedListBoxEmpleados As CheckedListBox, id_Registro As Integer, id_Sucursal As Integer, FechaEdicion As DateTime, Sp As String, BaseRemota As Boolean)
+    Function InsertarRegistroEmpleados(CheckedListBoxEmpleados As CheckedListBox, id_Registro As Int64, id_Sucursal As Integer, FechaEdicion As DateTime, Sp As String, BaseRemota As Boolean)
         'inserto los empleados presentes para el registro
         For Each iten In CheckedListBoxEmpleados.CheckedItems()
 
@@ -258,7 +270,7 @@ Public Class NegRegistros
     End Function
 
     'Funcion para eliminar un registro.
-    Function EliminarRegistro(ByVal id_Registro As Integer) As String
+    Function EliminarRegistro(ByVal id_Registro As Int64) As String
 
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
@@ -284,7 +296,7 @@ Public Class NegRegistros
         Return respuesta
     End Function
 
-    Private Shared Function EliminarRegistro(id_Registro As Integer, FechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
+    Private Shared Function EliminarRegistro(id_Registro As Int64, FechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
 
         cmd.CommandType = CommandType.StoredProcedure
@@ -301,7 +313,7 @@ Public Class NegRegistros
     End Function
 
     'Funcion para consultar un registro.
-    Public Function TraerRegistro(ByVal id_Registro As Integer)
+    Public Function TraerRegistro(ByVal id_Registro As Int64)
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         Dim dsRegistro As New DataSet
@@ -317,7 +329,6 @@ Public Class NegRegistros
             entRegistro.id_Registro = dsRegistro.Tables(0).Rows(0).Item("id_Registro").ToString
             entRegistro.id_Sucursal = dsRegistro.Tables(0).Rows(0).Item("id_Sucursal").ToString
             entRegistro.Fecha = dsRegistro.Tables(0).Rows(0).Item("Fecha").ToString
-            entRegistro.FechaEdicion = dsRegistro.Tables(0).Rows(0).Item("Fecha_Edicion").ToString
         End If
         Return entRegistro
     End Function

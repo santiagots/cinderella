@@ -5,7 +5,7 @@
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
     Dim dsMovimiento As New DataSet
-    Public id_Movimiento As Integer = 0
+    Public id_Movimiento As Int64 = 0
     Dim Funciones As New Funciones
     Dim SoloLectura As Boolean = False
 

@@ -1008,6 +1008,7 @@ Public Class NegProductos
     'Funcion para eliminar un producto.
     Function EliminarProducto(ByVal id_Producto As Integer) As String
         Dim cmd As New SqlCommand
+        Dim fechaEdicion As DateTime = DateTime.Now()
 
         'Traigo el producto para utilizar su codigo asi se obtiene la foto a eliminar.
         objProducto = TraerProducto(id_Producto)
@@ -1018,6 +1019,7 @@ Public Class NegProductos
             cmd.CommandText = "sp_Productos_Eliminar"
             With cmd.Parameters
                 .AddWithValue("@id_Producto", id_Producto)
+                .AddWithValue("@FechaEdicion", fechaEdicion)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
             respuesta.Direction = ParameterDirection.Output

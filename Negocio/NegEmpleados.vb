@@ -478,6 +478,9 @@ Public Class NegEmpleados
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        eDeposito.id_Deposito = clsDatos.ObtenerCalveUnica(eDeposito.id_Sucursal)
+        eDeposito.FechaEdicion = DateTime.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaDeposito(eDeposito, cmd)
@@ -501,6 +504,7 @@ Public Class NegEmpleados
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Empleados_SueldoDepositadoAlta"
         With cmd.Parameters
+            .AddWithValue("@id_Deposito", eDeposito.id_Deposito)
             .AddWithValue("@id_Empleado", eDeposito.id_Empleado)
             .AddWithValue("@id_Sucursal", eDeposito.id_Sucursal)
             .AddWithValue("@Monto", eDeposito.Monto)
@@ -508,6 +512,7 @@ Public Class NegEmpleados
             .AddWithValue("@Mes", eDeposito.Mes)
             .AddWithValue("@Anio", eDeposito.Anio)
             .AddWithValue("@Habilitado", eDeposito.Habilitado)
+            .AddWithValue("@FechaEdicion", eDeposito.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -522,16 +527,18 @@ Public Class NegEmpleados
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim Id_Deuda As Int64 = clsDatos.ObtenerCalveUnica(id_Sucursal)
+        Dim Fecha_Edicion As DateTime = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = ActualizarDeuda(id_Empleado, id_Sucursal, Monto, Fecha, cmd)
+            msg = ActualizarDeuda(Id_Deuda, id_Empleado, id_Sucursal, Monto, Fecha, Fecha_Edicion, cmd)
             clsDatos.DesconectarLocal()
 
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = ActualizarDeuda(id_Empleado, id_Sucursal, Monto, Fecha, cmd)
+                msg = ActualizarDeuda(Id_Deuda, id_Empleado, id_Sucursal, Monto, Fecha, Fecha_Edicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -542,14 +549,16 @@ Public Class NegEmpleados
         End Try
     End Function
 
-    Private Shared Function ActualizarDeuda(id_Empleado As Integer, id_Sucursal As Integer, Monto As Double, Fecha As Date, ByRef cmd As SqlCommand) As String
+    Private Shared Function ActualizarDeuda(id_Deuda As Int64, id_Empleado As Integer, id_Sucursal As Integer, Monto As Double, Fecha As Date, FechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Deuda_Actualizar"
         With cmd.Parameters
+            .AddWithValue("@id_Deuda", id_Deuda)
             .AddWithValue("@id_Empleado", id_Empleado)
             .AddWithValue("@id_Sucursal", id_Sucursal)
             .AddWithValue("@Monto", Monto)
             .AddWithValue("@Fecha", Fecha)
+            .AddWithValue("@FechaEdicion", FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output

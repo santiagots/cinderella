@@ -10,7 +10,7 @@ Public Class frmMovimientoSocios
     Dim cmbAccionindex As Integer
     Dim cmbTipoPagoindex As Integer
     Dim dsMovimiento As New DataSet
-    Public id_Movimiento As Integer = 0
+    Public id_Movimiento As Int64 = 0
     Public Accion As Integer = 0
     Public Cheque As Entidades.Cheque = Nothing
 

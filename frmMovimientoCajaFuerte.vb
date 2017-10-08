@@ -5,7 +5,7 @@
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
     Dim dsMovimiento As New DataSet
-    Public id_Movimiento As Integer = 0
+    Public id_Movimiento As Int64 = 0
 
     'Al cerrar el formulario me fijo si está abierto el form de listados, si lo está, hago foco.
     Private Sub frmMovimientoCaja_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed

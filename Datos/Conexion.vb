@@ -79,7 +79,7 @@ Public Class Conexion
     End Function
 
     Public Function ObtenerCalveUnica(idSucursal As Integer) As Int64
-        'Duerno la ejecucion 10 ms para asegurarme que no se generen claes duplicadas
+        'Duerno la ejecucion 10 ms para asegurarme que no se generen claves duplicadas
         Thread.Sleep(10)
         Return Int64.Parse(String.Format("{0}{1}", idSucursal.ToString(), DateTime.Now.ToString("yyyMMddhhmmssfff")))
     End Function

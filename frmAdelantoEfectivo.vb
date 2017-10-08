@@ -7,7 +7,7 @@
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
     Dim Funciones As New Funciones
-    Public id_Adelanto As Integer = 0
+    Public id_Adelanto As Int64 = 0
 
     'Cuando carga el formulario.
     Private Sub frmAdelantoEfectivo_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
