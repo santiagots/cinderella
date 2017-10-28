@@ -1,6 +1,6 @@
 ﻿Public Class frmPagarMercaderia
     Public ArrayProductos As New Collection
-    Public id_Mercaderia As Integer = 0
+    Public id_Mercaderia As Int64 = 0
     Dim id_Sucursal As Integer = My.Settings("Sucursal")
     Dim Funciones As New Funciones
     Dim NegMerca As New Negocio.NegMercaderia

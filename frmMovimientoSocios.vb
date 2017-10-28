@@ -84,7 +84,7 @@ Public Class frmMovimientoSocios
                 'Si el movimiento tiene forma de pago en cheque
                 If (dsMovimiento.Tables(0).Rows(0).Item("id_Tipo_Pago") = 4) Then
                     cmbTipoPago.SelectedItem = "Cheque"
-                    Cheque = NegCheque.TraerCheque(Integer.Parse(dsMovimiento.Tables(0).Rows(0).Item("id_Cheque").ToString()))
+                    Cheque = NegCheque.TraerCheque(Int64.Parse(dsMovimiento.Tables(0).Rows(0).Item("id_Cheque").ToString()))
                 End If
 
                 btnAceptar.Text = "Modificar"
@@ -186,7 +186,7 @@ Public Class frmMovimientoSocios
                     If (cmbTipoPago.Text = "Cheque") Then
                         If id_Movimiento <> 0 Then
                             'Si el ID_MOVIMIENTO es distinto a 0 se esta editando un movimiento
-                            Dim ChequeAnterior As Cheque = NegCheque.TraerCheque(Integer.Parse(dsMovimiento.Tables(0).Rows(0).Item("id_Cheque").ToString()))
+                            Dim ChequeAnterior As Cheque = NegCheque.TraerCheque(Int64.Parse(dsMovimiento.Tables(0).Rows(0).Item("id_Cheque").ToString()))
                             ChequeAnterior.Estado = Entidades.ChequeEstado.Ingresado
                             ChequeAnterior.FechaSalida = Nothing
                             ChequeAnterior.DestinoSalida = Entidades.ChequeDestinoSalida.SinSalida

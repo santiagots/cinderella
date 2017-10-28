@@ -1,6 +1,6 @@
 ﻿Public Class DialogIngresos
     Public ArrayProductos As New Collection
-    Public id_Mercaderia As Integer = 0
+    Public id_Mercaderia As Int64 = 0
     Dim Funciones As New Funciones
 
     Private Sub DialogIngresos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load

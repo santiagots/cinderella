@@ -1,6 +1,6 @@
 ﻿Public Class FrmVerNotaCredito
-    Public id_Devolucion As Integer
-    Public id_NotaCreadito As Integer
+    Public id_Devolucion As Int64
+    Public id_NotaCreadito As Int64
     Dim NegNotaCredito As New Negocio.NegNotaCredito
     Dim EntNotaCredito As New Entidades.NotaCredito
 

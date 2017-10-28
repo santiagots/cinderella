@@ -390,7 +390,7 @@
             MessageBox.Show("Debe seleccionar un proveedor.", "Ingreso de Mercadería", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         Else
             Try
-                Dim id_Mercaderia As Integer = 0 'Variable que indica el ingreso de la nueva mercaderia.
+                Dim id_Mercaderia As Int64 = 0 'Variable que indica el ingreso de la nueva mercaderia.
                 Dim id_Proveedor As Integer = Cb_Proveedor.SelectedValue 'Variable que indica el proveedor seleccionado
                 Dim Nombre_Proveedor As String = DirectCast(DirectCast(Cb_Proveedor.SelectedItem, System.Data.DataRowView).Row.ItemArray(1), String)
                 Dim Fecha As Date = FechaIngreso.Value
@@ -465,7 +465,7 @@
                         EMercaDetalle.Costo = Costo
                         EMercaDetalle.Cantidad = Cantidad
                         EMercaDetalle.Total = Total
-                        NegMercaderia.AltaMercaderiaDetalle(EMercaDetalle)
+                        NegMercaderia.AltaMercaderiaDetalle(EMercaDetalle, id_Sucursal)
                     Next
 
                     'Ingreso la deuda en la cuenta corriente
@@ -531,7 +531,7 @@
 
     Private Sub DG_Stock_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DG_Stock.CellDoubleClick
         Try
-            Dim id_Mercaderia As Integer = 0
+            Dim id_Mercaderia As Int64 = 0
             Dim PrecioTotal As Double = 0
             Dim dsMercaderia As New DataSet
             Dim dsMercaderiaDetalle As New DataSet

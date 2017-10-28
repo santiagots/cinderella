@@ -47,7 +47,6 @@ Public Class frmPresupuestoAdministracion
         Dim presupuestoSeleccionado As Presupuesto = dgPresupuesto.CurrentRow.DataBoundItem
 
         Try
-            Dim detallePresupuestoSeleccionado As List(Of Presupuesto_Detalle) = NegPresupuesto.TraerDetalle(presupuestoSeleccionado.id_Presupuesto)
             PresupuestoDetalleBindingSource.DataSource = NegPresupuesto.TraerDetalle(presupuestoSeleccionado.id_Presupuesto)
 
             lblSucursal.Text = presupuestoSeleccionado.NombreSucursal
@@ -57,7 +56,7 @@ Public Class frmPresupuestoAdministracion
             lblCliente.Text = presupuestoSeleccionado.RazonSocialClienteMayorista
             lblEncargado.Text = presupuestoSeleccionado.EncargadoNombreyApellido
             lblPago.Text = presupuestoSeleccionado.DescripcionTipoPago
-            lblCantidad.Text = detallePresupuestoSeleccionado.Count
+            lblCantidad.Text = PresupuestoDetalleBindingSource.Count
             lblDescuento.Text = "$ " & Format(presupuestoSeleccionado.Descuento, "###0.00")
             lblCostoFinanciero.Text = "$ " & Format(presupuestoSeleccionado.CostoFinanciero, "###0.00")
             lblSubtotal.Text = "$ " & Format(presupuestoSeleccionado.SubTotal, "###0.00")

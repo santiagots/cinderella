@@ -1089,7 +1089,7 @@ Public Class frmVentas
                     End If
                 End If
 
-                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, SubTotal, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, False)
+                Dim id_Venta As Int64 = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, SubTotal, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, False)
 
                 If id_Venta > 0 Then
 
@@ -1164,7 +1164,7 @@ Public Class frmVentas
         End Try
     End Sub
 
-    Private Sub AltaPresupuesto(id_Venta As Integer, TipoVenta As Integer, TipoPago As Integer, DescripcionTipoPago As String, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, id_Banco As Integer, CantidadCuotas As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, PorcentajeFacturacion As Double, MontoSenia As Double)
+    Private Sub AltaPresupuesto(id_Venta As Int64, TipoVenta As Integer, TipoPago As Integer, DescripcionTipoPago As String, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, id_Banco As Integer, CantidadCuotas As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, PorcentajeFacturacion As Double, MontoSenia As Double)
         Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
         Dim DescuentoTotal As Double = Descuento + MontoSeñaSinIva
 
@@ -1198,7 +1198,7 @@ Public Class frmVentas
         frmReportePresupuesto.Show()
     End Sub
 
-    Private Sub AltaPresupuestoSenia(id_Venta As Integer, TipoVenta As Integer, TipoPago As Integer, DescripcionTipoPago As String, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, PorcentajeFacturacion As Double, MontoSenia As Double, id_Banco As Integer, CantidadCuotas As Integer, CostoFinanciero As Double)
+    Private Sub AltaPresupuestoSenia(id_Venta As Int64, TipoVenta As Integer, TipoPago As Integer, DescripcionTipoPago As String, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ListaPrecio As Integer, PorcentajeFacturacion As Double, MontoSenia As Double, id_Banco As Integer, CantidadCuotas As Integer, CostoFinanciero As Double)
         Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
 
         Dim Presupuesto As Presupuesto = New Presupuesto()
@@ -1515,7 +1515,7 @@ Public Class frmVentas
 
                 Dim Senia As Entidades.Senia = frmSeniaDatos.Senia
 
-                Dim id_Venta As Integer = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
+                Dim id_Venta As Int64 = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
                 If id_Venta > 0 Then
 
                     'Si hay que facturar abro el form.
@@ -1672,7 +1672,7 @@ Public Class frmVentas
         Return True
     End Function
 
-    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, Id_Tarjeta As Integer, CantidadCuotas As Integer, PorcentajeFacturacion As Double, id_ListaPrecio As Integer, Descuento As Double, CostoFinanciero As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Integer
+    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, Id_Tarjeta As Integer, CantidadCuotas As Integer, PorcentajeFacturacion As Double, id_ListaPrecio As Integer, Descuento As Double, CostoFinanciero As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Int64
 
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
@@ -1720,8 +1720,8 @@ Public Class frmVentas
         Next
 
         'Numero de Venta.
-        Dim id_Venta As Integer = 0
-        NegVentas.NuevaVenta(EntVentas, DetalleVenta, id_Venta)
+        Dim id_Venta As Int64 = NegVentas.NuevaVenta(EntVentas, DetalleVenta)
+
         Me.Cursor = Cursors.Arrow
 
         Return id_Venta
@@ -1780,7 +1780,7 @@ Public Class frmVentas
         Next
     End Sub
 
-    Private Function RegistrarComisionesEncargadoEmpleado(id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, MontoTotal As Double, id_Venta As Integer) As Double
+    Private Function RegistrarComisionesEncargadoEmpleado(id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, MontoTotal As Double, id_Venta As Int64) As Double
         Dim Monto As Double
         'Comisiones para el vendedor.
         Dim EntComisiones As New Entidades.Comisiones
@@ -1822,7 +1822,7 @@ Public Class frmVentas
         Return Monto
     End Function
 
-    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, IvaTotal As Double, MontoSenia As Double, id_Venta As Integer, PorcentajeFacturacion As Double) As DialogResult
+    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, IvaTotal As Double, MontoSenia As Double, id_Venta As Int64, PorcentajeFacturacion As Double) As DialogResult
         Dim TipoPagoControlador As String
 
         'Seteo Tipo de Pago para la controladora fiscal
@@ -1869,7 +1869,7 @@ Public Class frmVentas
         Return frmFacturar.ShowDialog()
     End Function
 
-    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, id_Venta As Integer, PorcentajeFacturacion As Double) As String
+    Private Function FacturarVenta(TipoPago As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, id_Venta As Int64, PorcentajeFacturacion As Double) As String
         Dim TipoPagoControlador As String
 
         'Seteo Tipo de Pago para la controladora fiscal

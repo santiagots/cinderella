@@ -123,7 +123,7 @@ Public Class frmVerComprasCliente
             'Limpio el form
             LimpiarFormulario()
 
-            Dim id_Venta As Integer = DG_Compras.Rows(e.RowIndex).Cells("id_Venta").Value()
+            Dim id_Venta As Int64 = DG_Compras.Rows(e.RowIndex).Cells("id_Venta").Value()
             Dim dsVentasDetalle, dsVentas As New DataSet
             dsVentas = NegVentas.TraerVenta(id_Venta)
             eVentas.id_Venta = id_Venta

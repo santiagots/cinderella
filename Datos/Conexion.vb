@@ -16,7 +16,6 @@ Public Class Conexion
         Try
             CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
             miconexion = New SqlConnection
-            'miconexion.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
             miconexion.ConnectionString = CadenaConexion
             miconexion.Open()
         Catch ex As Exception

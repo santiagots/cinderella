@@ -10,12 +10,17 @@ Public Class ClaveUnicaSincronizar
     Dim clsDatos As New Datos.Conexion
     Dim encripta As New ClsEncriptacion
 
-    Public Sub sincronizarALocal(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.sincronizarALocal
+    Public Sub procesar(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.procesar
+        sincronizarARemota(tabla, valorBusqueda, conexionLocal, conexionRemota, transaccionRemota, transaccionLocal)
+        sincronizarALocal(tabla, valorBusqueda, conexionLocal, conexionRemota, transaccionRemota, transaccionLocal)
+    End Sub
+
+    Public Sub sincronizarALocal(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
 
         Dim DatosSincronizar As DataTable = New DataTable()
 
         'Verifico que exista una ultima sincornizacion
-        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionLocal, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", tabla.valorBusqueda), transaccionLocal).Tables(0)
+        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionLocal, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionLocal).Tables(0)
         Dim DatosLocal As DataTable
         Dim DatosRemoto As DataTable
 
@@ -28,8 +33,8 @@ Public Class ClaveUnicaSincronizar
             'obtengo todos los registros que fueron agregados o modificados
             DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
         Else
-            'Selecciono todas las filas de la base remota
-            DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0}", tabla.Nombre), transaccionRemota).Tables(0)
+            'Selecciono todas las filas de lo sultimos 3 meses la base remota
+            DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= CONVERT(DATETIME,'{2}',103)", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3)), transaccionRemota).Tables(0)
         End If
 
         If DatosSincronizar.Rows.Count > 0 Then
@@ -48,12 +53,12 @@ Public Class ClaveUnicaSincronizar
 
     End Sub
 
-    Public Sub sincronizarARemota(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.sincronizarARemota
+    Public Sub sincronizarARemota(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
 
         Dim DatosSincronizar As DataTable = New DataTable()
 
         'Verifico que exista una ultima sincornizacion
-        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionRemota, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", tabla.valorBusqueda), transaccionRemota).Tables(0)
+        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionRemota, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionRemota).Tables(0)
         Dim DatosLocal As DataTable
         Dim DatosRemoto As DataTable
 
@@ -97,19 +102,6 @@ Public Class ClaveUnicaSincronizar
         Return ds
     End Function
 
-
-    Public Function ObtenerDatosLocales(ByRef Tabla As Tabla, valorBusqueda As String) As Boolean Implements Sincronizar.ObtenerDatosLocales
-
-        'Selecciono todas las filas de la base local y remota
-        Dim DatosLocal As DataTable = CType(clsDatos.ConsultarBaseLocal(String.Format(Tabla.SQLObtenerDatosLocal, valorBusqueda)), DataSet).Tables(0)
-        Dim DatosRemoto As DataTable = CType(clsDatos.ConsultarBaseRemoto(String.Format(Tabla.SQLObtenerDatosLocal, valorBusqueda)), DataSet).Tables(0)
-
-        'obtengo todos los registros que fueron agregados o modificados
-        Tabla.DatosSincronizar = ObtenerDatos(DatosLocal, DatosRemoto, Tabla.ClavePrimaria, Tabla.ClaveSincronizacion)
-
-        Return Tabla.DatosSincronizar.Rows.Count > 0
-    End Function
-
     Private Function ObtenerDatos(DatosLocal As DataTable, DatosRemoto As DataTable, ClavePrimaria As String, ColumnaUltimaModificacion As String) As DataTable
 
         Dim tablaDiferencias As DataTable = DatosLocal.Clone()
@@ -126,12 +118,4 @@ Public Class ClaveUnicaSincronizar
 
         Return tablaDiferencias
     End Function
-
-    Public Sub GuardarDatos(Tabla As Tabla, conexion As SqlConnection, transaction As SqlTransaction) Implements Sincronizar.GuardarDatos
-        Dim BulkCopy As New SqlBulkCopy(conexion, SqlBulkCopyOptions.Default, transaction)
-        BulkCopy.DestinationTableName = Tabla.Nombre
-        BulkCopy.WriteToServer(Tabla.DatosSincronizar)
-        BulkCopy.Close()
-    End Sub
-
 End Class

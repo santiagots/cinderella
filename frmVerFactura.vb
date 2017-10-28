@@ -1,6 +1,6 @@
 ﻿Public Class frmVerFactura
-    Public id_Venta As Integer
-    Public id_Factura As Integer
+    Public id_Venta As Int64
+    Public id_Factura As Int64
     Dim NegFacturacion As New Negocio.NegFacturacion
     Dim entFacturacion As New Entidades.Facturacion
 

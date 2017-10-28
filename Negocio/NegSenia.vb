@@ -8,6 +8,9 @@ Public Class NegSenia
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        senia.Id = clsDatos.ObtenerCalveUnica(senia.IdSucursal)
+        senia.FechaEdicion = DateTime.Now
+
         cmd.Connection = ClsDatos.ConectarLocal()
         CrearSenia(senia, cmd)
         ClsDatos.DesconectarLocal()
@@ -25,6 +28,7 @@ Public Class NegSenia
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Senia_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Senia", senia.Id)
             .AddWithValue("@id_Sucursal", senia.IdSucursal)
             .AddWithValue("@id_ClienteMinorista", senia.IdClienteMinorista)
             .AddWithValue("@id_ClienteMayorista", senia.IdClienteMayorista)
@@ -34,6 +38,7 @@ Public Class NegSenia
             .AddWithValue("@FormaEntrega", senia.FormaEntrega)
             .AddWithValue("@Observaciones", senia.Observaciones)
             .AddWithValue("@Entregada", senia.Entregada)
+            .AddWithValue("@FechaEdicion", senia.FechaEdicion)
         End With
 
         cmd.ExecuteNonQuery()
@@ -43,6 +48,8 @@ Public Class NegSenia
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
+
+        senia.FechaEdicion = DateTime.Now()
 
         cmd.Connection = clsDatos.ConectarLocal()
         ActualizarSenia(senia, cmd)
@@ -73,6 +80,7 @@ Public Class NegSenia
             .AddWithValue("@Observaciones", senia.Observaciones)
             .AddWithValue("@Entregada", senia.Entregada)
             .AddWithValue("@Anulada", senia.Anulada)
+            .AddWithValue("@FechaEdicion", senia.FechaEdicion)
         End With
 
         cmd.ExecuteNonQuery()
@@ -108,7 +116,7 @@ Public Class NegSenia
         Return Senias.Where(Function(x) Not x.Entregada AndAlso Not x.Anulada).ToList()
     End Function
 
-    Public Function ConsultarSeniaPorVenta(idVenta As Integer) As Entidades.Senia
+    Public Function ConsultarSeniaPorVenta(idVenta As Int64) As Entidades.Senia
         Dim dsStock As New DataSet
         Dim Senias As List(Of Entidades.Senia) = New List(Of Entidades.Senia)()
 

@@ -13,7 +13,7 @@ Public Class frmFacturaAdministracion
     Dim Funciones As New Funciones
     Dim NegErrores As New Negocio.NegManejadorErrores
 
-    Dim id_VentaDetalle As Double = 0
+    Dim id_VentaDetalle As Int64 = 0
     Dim MontoTotalDetalle As Double = 0
     Dim DescuentoDetalle As Double = 0
     Dim SubTotalDetalle As Double = 0

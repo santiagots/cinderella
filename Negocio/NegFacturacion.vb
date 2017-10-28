@@ -13,6 +13,8 @@ Public Class NegFacturacion
         Dim msg As Boolean
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        EntFacturacion.id_Facturacion = ClsDatos.ObtenerCalveUnica(EntFacturacion.IdSucursal)
+
         Try
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = NuevaFacturacion(EntFacturacion, cmd)
@@ -37,6 +39,7 @@ Public Class NegFacturacion
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Facturacion_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Facturacion", EntFacturacion.id_Facturacion)
             .AddWithValue("@id_Venta", EntFacturacion.id_Venta)
             .AddWithValue("@NumeroFactura", EntFacturacion.NumeroFactura)
             .AddWithValue("@Monto", EntFacturacion.Monto)
@@ -200,7 +203,7 @@ Public Class NegFacturacion
     End Function
 
     'Funcion para consultar una factura.
-    Public Function TraerFacturacionPorIdVenta(ByVal id_Venta As Integer) As Entidades.Facturacion
+    Public Function TraerFacturacionPorIdVenta(ByVal id_Venta As Int64) As Entidades.Facturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 
@@ -218,7 +221,7 @@ Public Class NegFacturacion
     End Function
 
     'Funcion para consultar una factura.
-    Public Function TraerFacturacionPorId(ByVal Id_Factura As Integer) As Entidades.Facturacion
+    Public Function TraerFacturacionPorId(ByVal Id_Factura As Int64) As Entidades.Facturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 

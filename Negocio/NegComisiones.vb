@@ -13,6 +13,9 @@ Public Class NegComisiones
             Dim msg As Boolean = False
             Dim HayInternet As Boolean = Funciones.HayInternet
 
+            ecomisiones.id_Comision = clsDatos.ObtenerCalveUnica(ecomisiones.id_Sucursal)
+            ecomisiones.FechaEdicion = DateTime.Now()
+
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AgregarComision(ecomisiones, cmd)
             clsDatos.DesconectarLocal()
@@ -36,11 +39,13 @@ Public Class NegComisiones
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Comisiones_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Comision", ecomisiones.id_Comision)
             .AddWithValue("@id_Empleado", ecomisiones.id_Empleado)
             .AddWithValue("@Monto", ecomisiones.Monto)
             .AddWithValue("@Comision", ecomisiones.Comision)
             .AddWithValue("@id_Venta", ecomisiones.id_Venta)
             .AddWithValue("@id_Sucursal", ecomisiones.id_Sucursal)
+            .AddWithValue("@FechaEdicion", ecomisiones.FechaEdicion)
         End With
 
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -51,7 +56,7 @@ Public Class NegComisiones
     End Function
 
     'Funcion que anula la comision de un empleado de una determinada venta.
-    Sub AnularComisiones(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal id_Venta As Integer)
+    Sub AnularComisiones(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal id_Venta As Int64)
         Dim dsComi As New DataSet
         Dim eComi As New Entidades.Comisiones
 
@@ -75,30 +80,32 @@ Public Class NegComisiones
     End Sub
 
     'Funcion que anula la comision de un empleado de una determinada venta.
-    Sub EliminarComisiones(ByVal id_Venta As Integer)
+    Sub EliminarComisiones(ByVal id_Venta As Int64)
 
         'Actualizo la base con el nuevo stock.
         'Declaro variables
         Dim cmd As New SqlCommand
+        Dim FechaEdicion As DateTime = DateTime.Now
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         cmd.Connection = clsDatos.ConectarLocal()
-        EliminarComisiones(id_Venta, cmd)
+        EliminarComisiones(id_Venta, FechaEdicion, cmd)
         clsDatos.DesconectarLocal()
 
         If (HayInternet) Then
             cmd = New SqlCommand()
             cmd.Connection = clsDatos.ConectarRemoto()
-            EliminarComisiones(id_Venta, cmd)
+            EliminarComisiones(id_Venta, FechaEdicion, cmd)
             clsDatos.DesconectarRemoto()
         End If
     End Sub
 
-    Sub EliminarComisiones(ByVal id_Venta As Integer, cmd As SqlCommand)
+    Sub EliminarComisiones(ByVal id_Venta As Int64, FechaEdicion As DateTime, cmd As SqlCommand)
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Comisiones_Eliminar"
         With cmd.Parameters
             .AddWithValue("@id_Venta", id_Venta)
+            .AddWithValue("@FechaEdicion", FechaEdicion)
         End With
 
         cmd.ExecuteNonQuery()

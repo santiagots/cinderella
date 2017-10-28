@@ -44,9 +44,10 @@ Public Class NegDevolucion
     Private Shared Function NuevaDevolucion(Devolucion As Entidades.Devolucion, ByRef cmd As SqlCommand, dt As DataTable) As String
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
-        cmd.CommandText = "sp_Devoluion_Alta"
+        cmd.CommandText = "sp_Devolucion_Alta"
 
         With cmd.Parameters
+            .AddWithValue("@id_Devolucion", Devolucion.id_Devolucion)
             .AddWithValue("@id_Cliente", Devolucion.id_Cliente)
             .AddWithValue("@id_Empleado", Devolucion.id_Empleado)
             .AddWithValue("@id_Encargado", Devolucion.id_Encargado)
@@ -59,6 +60,7 @@ Public Class NegDevolucion
             .AddWithValue("@Descuento", Devolucion.Descuento)
             .AddWithValue("@Habilitado", Devolucion.Habilitado)
             .AddWithValue("@NotaCredito", Devolucion.NotaCredito)
+            .AddWithValue("@FechaEdicion", Devolucion.FechaEdicion)
         End With
 
         'Declaro el tipo de dato para el detalle de la devolucion
@@ -79,22 +81,22 @@ Public Class NegDevolucion
         Dim ds As New DataSet
 
         If Funciones.HayInternet Then
-            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devoluciones_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         Else
-            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devoluciones_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
         End If
 
         Return ds
     End Function
 
     'Funcion para consultar un detalle de laa venta.
-    Public Function TraerDevolucionDetalle(ByVal id_Venta As Integer)
+    Public Function TraerDevolucionDetalle(ByVal id_Devolucion As Int64)
         Dim dsVentas As New DataSet
 
         If (Funciones.HayInternet) Then
-            dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Venta=" & id_Venta)
+            dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
         Else
-            dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Venta=" & id_Venta)
+            dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
         End If
 
         Return dsVentas
@@ -110,7 +112,7 @@ Public Class NegDevolucion
     End Function
 
     'Funcion para consultar una devolucion.
-    Public Function TraerDevolucion(ByVal id_Devolucion As Integer)
+    Public Function TraerDevolucion(ByVal id_Devolucion As Int64)
         Dim dsDevolucion As New DataSet
 
         If (Funciones.HayInternet) Then
@@ -122,10 +124,11 @@ Public Class NegDevolucion
         Return dsDevolucion
     End Function
 
-    Function AnularDevolucion(id_Devolucion As Integer, Texto As String) As Integer
+    Function AnularDevolucion(id_Devolucion As Int64, Texto As String) As Integer
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As Integer
+        Dim FechaEdicion As DateTime = DateTime.Now()
         Dim HayInternet As Boolean = Funciones.HayInternet
 
 
@@ -135,14 +138,14 @@ Public Class NegDevolucion
 
         Try
             cmd.Connection = ClsDatos.ConectarLocal()
-            msg = AnularDevolucion(id_Devolucion, Texto, cmd)
+            msg = AnularDevolucion(id_Devolucion, Texto, FechaEdicion, cmd)
             ClsDatos.DesconectarLocal()
 
             'Conecto a la bdd.
             If HayInternet Then
                 cmd = New SqlCommand()
                 cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = AnularDevolucion(id_Devolucion, Texto, cmd)
+                msg = AnularDevolucion(id_Devolucion, Texto, FechaEdicion, cmd)
                 ClsDatos.DesconectarRemoto()
             End If
 
@@ -153,7 +156,7 @@ Public Class NegDevolucion
         End Try
     End Function
 
-    Private Shared Function AnularDevolucion(id_Devolucion As Integer, Texto As String, ByRef cmd As SqlCommand) As Integer
+    Private Shared Function AnularDevolucion(id_Devolucion As Int64, Texto As String, FechaEdicion As DateTime, ByRef cmd As SqlCommand) As Integer
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Devolucion_Anular"
@@ -161,6 +164,7 @@ Public Class NegDevolucion
             .AddWithValue("@id_Devolucion", id_Devolucion)
             .AddWithValue("@Texto", Texto)
             .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
+            .AddWithValue("@Fecha_Edicion", FechaEdicion)
         End With
 
         'Respuesta del stored.
@@ -173,11 +177,12 @@ Public Class NegDevolucion
     End Function
 
     'Funcion que actualiza una venta como facturada o no facturada.
-    Public Function GeneracionNotaCredito(ByVal credito As Boolean, ByVal id_Devolucion As Integer)
+    Public Function GeneracionNotaCredito(ByVal credito As Boolean, ByVal id_Devolucion As Int64)
         Dim notaCredito As Integer = 0
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
         Dim msg As Boolean
+        Dim fechaEdicion As DateTime = DateTime.Now
 
         If credito Then
             notaCredito = 1
@@ -187,14 +192,14 @@ Public Class NegDevolucion
 
         Try
             cmd.Connection = ClsDatos.ConectarLocal()
-            msg = GenerarNotaCredito(id_Devolucion, notaCredito, cmd)
+            msg = GenerarNotaCredito(id_Devolucion, notaCredito, fechaEdicion, cmd)
             ClsDatos.DesconectarLocal()
 
             'Conecto a la bdd.
             If HayInternet Then
                 cmd = New SqlCommand
                 cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = GenerarNotaCredito(id_Devolucion, notaCredito, cmd)
+                msg = GenerarNotaCredito(id_Devolucion, notaCredito, fechaEdicion, cmd)
                 ClsDatos.DesconectarRemoto()
             End If
 
@@ -206,13 +211,14 @@ Public Class NegDevolucion
 
     End Function
 
-    Private Shared Function GenerarNotaCredito(id_Devolucion As Integer, notaCredito As Integer, ByRef cmd As SqlCommand) As Boolean
+    Private Shared Function GenerarNotaCredito(id_Devolucion As Int64, notaCredito As Integer, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As Boolean
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Devolucion_GeneracionNotaCredito"
         With cmd.Parameters
             .AddWithValue("@id_Devolucion", id_Devolucion)
             .AddWithValue("@NotaCredito", notaCredito)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
 
         'Respuesta del stored.
@@ -226,9 +232,9 @@ Public Class NegDevolucion
     Public Function TotalDevolucionesEfectivo(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
         If Funciones.HayInternet Then
-            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devoluciones_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
+            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         Else
-            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devoluciones_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
+            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
         End If
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("DevolucionesTotales").ToString <> "" Then

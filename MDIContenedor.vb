@@ -683,7 +683,6 @@ Public Class MDIContenedor
                 frmSincronizacion.Refresh()
                 frmSincronizacion.btnSincronizar.PerformClick()
                 frmSincronizacion.Close()
-                NegSincronizacion.AltaSincronizacion(id_Sucursal)
             Else
                 If (Not frmSincronizacion.conexionLocal) Then
                     MessageBox.Show("No se ha podido conectar a la base de datos Local el proceso de sincronización se ha cancelo. Por favor, reintente más tarde desde el menú de sincronización  ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)

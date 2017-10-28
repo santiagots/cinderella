@@ -8,7 +8,7 @@ Public Class frmDevolucionesAdministracion
     Dim eDevolucion As New Entidades.Devolucion
     Dim Funciones As New Funciones
 
-    Dim id_DevolucionDetalle As Integer = 0
+    Dim id_DevolucionDetalle As Int64 = 0
     Dim MontoTotalDetalle As Double = 0
     Dim DescuentoDetalle As Double = 0
     Dim SubTotalDetalle As Double = 0

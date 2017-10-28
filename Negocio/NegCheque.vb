@@ -6,13 +6,12 @@ Public Class NegCheque
 
 
     'Funcion que inserta un nuevo registro en la tabla CHEQUES.
-    Public Shared Function AltaCheque(ByVal Cheque As Entidades.Cheque) As Integer
+    Public Shared Function AltaCheque(ByVal Cheque As Entidades.Cheque) As Int64
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
-        Dim idCheque As Integer
         Dim dsCheques As DataSet
         Dim Cheques As List(Of Cheque) = New List(Of Cheque)
 
@@ -36,6 +35,7 @@ Public Class NegCheque
 
                 'El cheque existe en la base entonces solo actualizo el estado a reingresado 
                 ChequeReingreso.Estado = ChequeEstado.Reingresado
+                ChequeReingreso.FechaEdicion = DateTime.Now
 
                 cmd.Connection = clsDatos.ConectarLocal()
                 ModificarCheque(ChequeReingreso, cmd)
@@ -50,31 +50,35 @@ Public Class NegCheque
                 Return ChequeReingreso.IdCheque
             Else
                 'El cheque no existe en la base entonces lo doy de alta en la base con estado ingresado 
+                Cheque.IdCheque = clsDatos.ObtenerCalveUnica(Cheque.SucursalId)
+                Cheque.FechaEdicion = DateTime.Now
+
                 cmd.Connection = clsDatos.ConectarLocal()
-                idCheque = AltaCheque(Cheque, cmd)
+                AltaCheque(Cheque, cmd)
                 clsDatos.DesconectarLocal()
 
                 If HayInternet Then
                     cmd = New SqlCommand()
                     cmd.Connection = clsDatos.ConectarRemoto()
-                    idCheque = AltaCheque(Cheque, cmd)
+                    AltaCheque(Cheque, cmd)
                     clsDatos.DesconectarRemoto()
                 Else
 
                 End If
                 'retorno valor
-                Return idCheque
+                Return Cheque.IdCheque
             End If
         Catch ex As Exception
             Return False
         End Try
     End Function
 
-    Private Shared Function AltaCheque(Cheque As Cheque, ByRef cmd As SqlCommand)
+    Private Shared Sub AltaCheque(Cheque As Cheque, ByRef cmd As SqlCommand)
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Cheques_Alta"
         With cmd.Parameters
+            .AddWithValue("@idCheque", Cheque.IdCheque)
             .AddWithValue("@BancoEmisorId", Cheque.BancoEmisorId)
             .AddWithValue("@ClienteId", Cheque.ClienteId)
             .AddWithValue("@ClienteNombre", Cheque.ClienteNombre)
@@ -88,14 +92,11 @@ Public Class NegCheque
             .AddWithValue("@NumeroCheque", Cheque.NumeroCheque)
             .AddWithValue("@NumeroOrden", Cheque.NumeroOrden)
             .AddWithValue("@SucursalId", Cheque.SucursalId)
+            .AddWithValue("@Fecha_Edicion", Cheque.FechaEdicion)
         End With
 
-        'Respuesta del stored.
-        Dim respuesta As New SqlParameter("@IdCheque", SqlDbType.Int, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-    End Function
+    End Sub
 
     'Funcion que inserta un nuevo registro en la tabla CHEQUES.
     Public Shared Function ModificacionCheque(ByVal Cheque As Entidades.Cheque) As String
@@ -105,6 +106,8 @@ Public Class NegCheque
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
+
+        Cheque.FechaEdicion = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -147,6 +150,7 @@ Public Class NegCheque
             .AddWithValue("@SucursalId", Cheque.SucursalId)
             .AddWithValue("@Estado", Cheque.Estado)
             .AddWithValue("@DestinoSalida", Cheque.DestinoSalida)
+            .AddWithValue("@FechaEdicion", Cheque.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -155,23 +159,24 @@ Public Class NegCheque
         Return respuesta.Value
     End Function
 
-    Public Shared Function EleminarCheque(ByVal idCheque As Integer) As String
+    Public Shared Function EleminarCheque(ByVal idCheque As Int64) As String
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
+        Dim fechaEdicion As DateTime = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EleminarCheque(idCheque, cmd)
+            msg = EleminarCheque(idCheque, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
 
             If HayInternet Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EleminarCheque(idCheque, cmd)
+                msg = EleminarCheque(idCheque, fechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -182,12 +187,13 @@ Public Class NegCheque
         End Try
     End Function
 
-    Private Shared Function EleminarCheque(idCheque As Integer, ByRef cmd As SqlCommand) As String
+    Private Shared Function EleminarCheque(idCheque As Int64, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Cheques_Eliminar"
         With cmd.Parameters
             .AddWithValue("@IdCheque", idCheque)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -248,7 +254,7 @@ Public Class NegCheque
         Return respuesta
     End Function
 
-    Public Shared Function TraerCheque(ByVal ChequeId As Integer) As Cheque
+    Public Shared Function TraerCheque(ByVal ChequeId As Int64) As Cheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones

@@ -15,7 +15,7 @@ Public Class NegMercaderia
     End Function
 
     'Funcion para consultar un detalle de pedido de mercadería.
-    Function ObtenerDetalleMercaderia(ByVal id_Mercaderia As Integer) As DataSet
+    Function ObtenerDetalleMercaderia(ByVal id_Mercaderia As Int64) As DataSet
         If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
         Else
@@ -23,24 +23,8 @@ Public Class NegMercaderia
         End If
     End Function
 
-    'Funcion que me trae el id del ultimo producto.
-    Function UltimaMercaderia(HayInternet As Boolean) As Integer
-        Dim ds As DataSet
-        If (HayInternet) Then
-            ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('MERCADERIAS') as id_Mercaderia")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('MERCADERIAS')  as id_Mercaderia")
-        End If
-
-        If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id_Mercaderia")) > 0 Then
-            Return ds.Tables(0).Rows(0).Item("id_Mercaderia").ToString
-        Else
-            Return 1
-        End If
-    End Function
-
     'Funcion para consultar un pedido de mercadería.
-    Public Function TraerMercaderia(ByVal id_Mercaderia As Integer)
+    Public Function TraerMercaderia(ByVal id_Mercaderia As Int64)
         Dim dsStock As New DataSet
         If (Funciones.HayInternet) Then
             dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
@@ -51,28 +35,29 @@ Public Class NegMercaderia
     End Function
 
     'Funcion para insertar una Mercaderia.
-    Function AltaMercaderia(ByVal EMercaderia As Entidades.Mercaderias) As Integer
+    Function AltaMercaderia(ByVal EMercaderia As Entidades.Mercaderias) As Int64
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim id As Integer
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        EMercaderia.id_Mercaderia = clsDatos.ObtenerCalveUnica(EMercaderia.id_Sucursal)
+        EMercaderia.FechaEdicion = Date.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             AltaMercaderia(EMercaderia, cmd)
             clsDatos.DesconectarLocal()
-            id = UltimaMercaderia(False)
 
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
                 AltaMercaderia(EMercaderia, cmd)
                 clsDatos.DesconectarRemoto()
-                id = UltimaMercaderia(True)
             End If
 
             'muestro el mensaje
-            Return id
+            Return EMercaderia.id_Mercaderia
         Catch ex As Exception
             Return ex.Message
         End Try
@@ -82,11 +67,13 @@ Public Class NegMercaderia
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Mercaderia_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Mercaderia", EMercaderia.id_Mercaderia)
             .AddWithValue("@id_Sucursal", EMercaderia.id_Sucursal)
             .AddWithValue("@id_Proveedor", EMercaderia.id_Proveedor)
             .AddWithValue("@Fecha", EMercaderia.Fecha)
             .AddWithValue("@CantidadTotal", EMercaderia.CantidadTotal)
             .AddWithValue("@MontoTotal", EMercaderia.MontoTotal)
+            .AddWithValue("@FechaEdicion", EMercaderia.FechaEdicion)
             .AddWithValue("@Habilitado", EMercaderia.Habilitado)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -96,11 +83,14 @@ Public Class NegMercaderia
         Return respuesta.Value
     End Function
 
-    Function AltaMercaderiaDetalle(ByVal EMercaderiaDetalle As Entidades.Mercaderias_Detalle) As String
+    Function AltaMercaderiaDetalle(ByVal EMercaderiaDetalle As Entidades.Mercaderias_Detalle, idSucursal As Integer) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
+
+        EMercaderiaDetalle.id_Detalle = clsDatos.ObtenerCalveUnica(idSucursal)
+        EMercaderiaDetalle.FechaEdicion = Date.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
@@ -125,11 +115,13 @@ Public Class NegMercaderia
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_MercaderiaDetalle_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Detalle", EMercaderiaDetalle.id_Detalle)
             .AddWithValue("@id_Mercaderia", EMercaderiaDetalle.id_Mercaderia)
             .AddWithValue("@id_Producto", EMercaderiaDetalle.id_Producto)
             .AddWithValue("@Costo", EMercaderiaDetalle.Costo)
             .AddWithValue("@Cantidad", EMercaderiaDetalle.Cantidad)
             .AddWithValue("@Total", EMercaderiaDetalle.Total)
+            .AddWithValue("@FechaEdicion", EMercaderiaDetalle.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output

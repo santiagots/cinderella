@@ -12,6 +12,8 @@ Public Class NegNotaCredito
         Dim msg As Boolean
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        EntNotaCredito.id_NotaCredito = ClsDatos.ObtenerCalveUnica(EntNotaCredito.id_Sucursal)
+
         Try
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = NuevaNotaCredito(EntNotaCredito, cmd)
@@ -60,6 +62,7 @@ Public Class NegNotaCredito
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_NotaCredito_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_NotaCredito", EntNotaCredito.id_NotaCredito)
             .AddWithValue("@id_Devolucion", EntNotaCredito.id_Devolucion)
             .AddWithValue("@NumeroNotaCredito", EntNotaCredito.NumeroNotaCredito)
             .AddWithValue("@Monto", EntNotaCredito.Monto)
@@ -82,7 +85,7 @@ Public Class NegNotaCredito
         Return CBool(respuesta.Value)
     End Function
 
-    Function TraerNotaCreditoPorIDDevolucio(id_Devolucion As Integer) As Entidades.NotaCredito
+    Function TraerNotaCreditoPorIDDevolucio(id_Devolucion As Int64) As Entidades.NotaCredito
         Dim dsNotaCredito As New DataSet
         Dim entNotaCredito As New Entidades.NotaCredito
 
@@ -99,7 +102,7 @@ Public Class NegNotaCredito
         Return entNotaCredito
     End Function
 
-    Function TraerNotaCreditoPorID(id_NotaCredito As Integer) As Entidades.NotaCredito
+    Function TraerNotaCreditoPorID(id_NotaCredito As Int64) As Entidades.NotaCredito
         Dim dsNotaCredito As New DataSet
         Dim entNotaCredito As New Entidades.NotaCredito
 

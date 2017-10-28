@@ -22,7 +22,7 @@ Public Class NegCuentaCorriente
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                AltaCuentaCorriente(ECuenta, cmd)
+                msg = AltaCuentaCorriente(ECuenta, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 

@@ -7,7 +7,7 @@
     Dim NegSucursal As New Negocio.NegSucursales
     Dim Funciones As New Funciones
     Dim id_Prov As Integer = 0
-    Dim id_Merca As Integer = 0
+    Dim id_Merca As Int64 = 0
 
 #Region "Región Eventos"
     'Load del formulario.

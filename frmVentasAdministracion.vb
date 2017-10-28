@@ -10,7 +10,7 @@ Public Class frmVentasAdministracion
     Dim Funciones As New Funciones
     Dim NegErrores As New Negocio.NegManejadorErrores
 
-    Dim id_VentaDetalle As Integer = 0
+    Dim id_VentaDetalle As Int64 = 0
     Dim MontoTotalDetalle As Double = 0
     Dim DescuentoDetalle As Double = 0
     Dim CostoFinancieroDetalle As Double = 0
@@ -554,7 +554,7 @@ Public Class frmVentasAdministracion
             Dim CostoFinanciero As Double = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Double)
             Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
             Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
-            Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+            Dim id_Venta As Int64 = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Int64)
             Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
             GenerarNotaCredito("La venta esta asociada a una reserva la cual a sido retirada y facturada, desea realizar una nota de crédito?", TipoFactura, id_Venta, Total, Descuento, CostoFinanciero, SeniaMonto, SubTotal * 0.21, SubTotal, porcentajeFacturacion, TipoPago, id_Cliente)
@@ -573,7 +573,7 @@ Public Class frmVentasAdministracion
             Dim CostoFinanciero As Double = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Double)
             Dim SubTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
             Dim SeniaMonto As Double = CType(dsVentas.Tables(0).Rows(0).Item("MontoSenia").ToString, Double)
-            Dim id_Venta As Integer = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Integer)
+            Dim id_Venta As Int64 = CType(dsVentas.Tables(0).Rows(0).Item("id_Venta").ToString, Int64)
             Dim id_Cliente As Integer = If(dsVentas.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsVentas.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
 
             GenerarNotaCreditoSenia("La venta esta asociada a una reserva facturada, desea realizar una nota de crédito?", TipoFactura, id_Cliente, SeniaMonto, CostoFinanciero, id_Venta, TipoPago, PorcentajeFacturacion)
@@ -581,7 +581,7 @@ Public Class frmVentasAdministracion
     End Sub
 
 
-    Private Sub AnularPresupuesto(idventa As Integer, MensajeConsuta As String)
+    Private Sub AnularPresupuesto(idventa As Int64, MensajeConsuta As String)
         Dim NegPresupuesto As Negocio.NegPresupuesto = New Negocio.NegPresupuesto()
         Dim presupuesto As Presupuesto = NegPresupuesto.TraerPresupuestoPorVenta(idventa)
 
@@ -597,7 +597,7 @@ Public Class frmVentasAdministracion
         End If
     End Sub
 
-    Private Sub AgregarStock(IdVenta As Integer)
+    Private Sub AgregarStock(IdVenta As Int64)
         'Actualizo el Stock.
         Dim dsVentasDetalle As DataSet = NegVentas.TraerVentaDetalle(IdVenta)
         For Each ventaDetalle In dsVentasDetalle.Tables(0).Rows
@@ -605,7 +605,7 @@ Public Class frmVentasAdministracion
         Next
     End Sub
 
-    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Integer, Total As Double, Descuento As Double, CostoFinanciero As Double, SeniaMonto As Double, IVA As Double, SubTotal As Double, PorcentajeFacturacion As Double, TipoPago As String, id_Cliente As Integer)
+    Private Sub GenerarNotaCredito(mensaje As String, Tipofactura As Integer, IdVenta As Int64, Total As Double, Descuento As Double, CostoFinanciero As Double, SeniaMonto As Double, IVA As Double, SubTotal As Double, PorcentajeFacturacion As Double, TipoPago As String, id_Cliente As Integer)
         If (Tipofactura >= 0) Then
             If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
                 If (TipoCliente() = Entidades.TipoCliente.Minorista) Then
@@ -646,7 +646,7 @@ Public Class frmVentasAdministracion
         End If
     End Sub
 
-    Private Sub GenerarNotaCreditoSenia(mensaje As String, Tipofactura As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, id_Venta As Integer, TipoPago As String, PorcentajeFacturacion As Double)
+    Private Sub GenerarNotaCreditoSenia(mensaje As String, Tipofactura As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, id_Venta As Int64, TipoPago As String, PorcentajeFacturacion As Double)
         If (Tipofactura >= 0) Then
             If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
                 If (TipoCliente() = Entidades.TipoCliente.Minorista) Then

@@ -21,8 +21,8 @@ Public Class frmFacturar
     Dim TipoFactura As String = ""
     Public Monto As Double
     Public TipoPago As String
-    Public id_Venta As Integer
-    Public id_Devolucion As Integer
+    Public id_Venta As Int64
+    Public id_Devolucion As Int64
     Public Descuento As Double
     Public CostoFinanciero As Double
     Public SubTotal As Double
@@ -553,7 +553,7 @@ Public Class frmFacturar
                     EntNotaCredito.PuntoVenta = PuntoVenta
                     EntNotaCredito.id_Sucursal = IdSucursal
                     EntNotaCredito.TipoRecibo = Cb_TipoFacturacion.SelectedItem
-                    EntNotaCredito.id_Factura = CType(EntFacturacion.id_Facturacion, Integer)
+                    EntNotaCredito.id_Factura = CType(EntFacturacion.id_Facturacion, Int64)
 
                     'Inserto la nueva NotaCredito.
                     NegNotaCredito.NuevaNotaCredito(EntNotaCredito)

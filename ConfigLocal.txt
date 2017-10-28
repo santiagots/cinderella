@@ -9,9 +9,9 @@
     </sectionGroup>
   </configSections>
   <connectionStrings>
-    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=TAMBOURS7;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
+    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=VABTCAXLEQ;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
       providerName="System.Data.SqlClient" />
-    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="yC78dwbJx/9GTilE0S/KCsZ/diDH9bux/XsEjp/D7F14DVmYDWfkFjBvA3DDuMFgrMcWh3bwarkvbDN5wpaVVRQjWKX+kmpVEq5HYEpzVjc="
+    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="B7E7+nLwqZPecJUp9Zi1pkWXOxTJKqyv6QdQUfImMT6FCMZ0DXQ/xswd0eCuas+jIf2KPaONTah1e6KvcU1py5i4tH5CWzTIDL3D6XkxTY0="
       providerName="System.Data.SqlClient" />
   </connectionStrings>
   <system.diagnostics>

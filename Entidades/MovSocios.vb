@@ -13,6 +13,6 @@ Public Class MovSocios
     Public Property Persona As String
     Public Property Fecha As Date
     Public Property IdTipoPago As String
-    Public Property IdCheque As Integer
+    Public Property IdCheque As Int64
     Public Property FechaEdicion As DateTime
 End Class
