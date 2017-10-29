@@ -512,19 +512,6 @@ Public Class frmVentas
         DG_Productos.Columns("Numero").Visible = False
         DG_Productos.Columns("ID").Visible = False
 
-        'Cargo el Combo de Tipos de Pago
-        Dim DsTiposPagos As New DataSet
-        DsTiposPagos = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
-
-        If DsTiposPagos.Tables(0).Rows.Count > 0 Then
-            Cb_TipoPago.DataSource = Nothing
-            Cb_TipoPago.DataSource = Funciones.CrearDataTable("id_TipoPago", "Descripcion", DsTiposPagos, "Seleccione un tipo de pago...")
-            Cb_TipoPago.DisplayMember = "Descripcion"
-            Cb_TipoPago.ValueMember = "id_TipoPago"
-            Cb_TipoPago.SelectedValue = 0
-            Cb_TipoPago.Refresh()
-        End If
-
         'Cargo el Combo de Encargados
         Dim DsEncargados As DataSet = CargarComboEncargados()
 
@@ -541,8 +528,26 @@ Public Class frmVentas
         CostosFinancieros.Add(New CostoFinanciero() With {.Tarjeta = 0, .CostoFinancieroId = 0, .NumeroCuotas = 0, .PorcentajeRecargo = 0})
         CostoFinancieroBindingSource.DataSource = CostosFinancieros
 
-        'Cargo el combo de Lista de precios para un cliente minorista
-        Dim dsListaPrecio As DataSet = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
+        If (NotaPedido IsNot Nothing) Then
+            CargarNotaPedido()
+        End If
+
+        If (Senia IsNot Nothing) Then
+            CargarSenia(DsVendedores, DsEncargados)
+        End If
+
+        CargraListaProductos(My.Settings.UsarMemoriaCache)
+    End Sub
+
+    Private Sub CargarComboListaPrecios(tipoCliente As TipoCliente)
+        Dim dsListaPrecio As DataSet
+
+        If tipoCliente = TipoCliente.Mayorista Then
+            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupoCache(3, My.Settings.UsarMemoriaCache)
+        Else
+            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
+        End If
+
         If dsListaPrecio.Tables(0).Rows.Count > 0 Then
             Cb_ListaPrecio.DataSource = Nothing
             Cb_ListaPrecio.DataSource = dsListaPrecio.Tables(0)
@@ -550,17 +555,31 @@ Public Class frmVentas
             Cb_ListaPrecio.ValueMember = "id_Lista"
             Cb_ListaPrecio.Refresh()
         End If
-
-        If (NotaPedido IsNot Nothing) Then
-            CargarNotaPedido()
-        End If
-
-        If (Senia IsNot Nothing) Then
-            CargarSenia(DsTiposPagos, DsVendedores, DsEncargados)
-        End If
-
-        CargraListaProductos(My.Settings.UsarMemoriaCache)
     End Sub
+
+    Private Function CargarComboTiposPagos(tipoCliente As TipoCliente) As DataSet
+        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
+
+        'Elimino la forma de pago Cheque
+        If tipoCliente = TipoCliente.Minorista Then
+            Dim dv As DataView = DsTiposPagos.Tables(0).DefaultView
+            dv.RowFilter = "id_TipoPago <> 4"
+            DsTiposPagos = New DataSet()
+            Dim dt As DataTable = dv.ToTable()
+            DsTiposPagos.Tables.Add(dt)
+        End If
+
+        If DsTiposPagos.Tables(0).Rows.Count > 0 Then
+            Cb_TipoPago.DataSource = Nothing
+            Cb_TipoPago.DataSource = Funciones.CrearDataTable("id_TipoPago", "Descripcion", DsTiposPagos, "Seleccione un tipo de pago...")
+            Cb_TipoPago.DisplayMember = "Descripcion"
+            Cb_TipoPago.ValueMember = "id_TipoPago"
+            Cb_TipoPago.SelectedValue = 0
+            Cb_TipoPago.Refresh()
+        End If
+
+        Return DsTiposPagos
+    End Function
 
     Private Sub CargraListaProductos(usarCache)
         'Obtengo el listado de productos guardados en cache
@@ -739,7 +758,7 @@ Public Class frmVentas
         CalcularTotales()
     End Sub
 
-    Private Sub CargarSenia(DsTiposPagos As DataSet, DsVendedores As DataSet, DsEncargados As DataSet)
+    Private Sub CargarSenia(DsVendedores As DataSet, DsEncargados As DataSet)
         Dim dsVentas As DataSet = NegVentas.TraerVenta(Senia.IdVentaSenia)
 
         If Cb_Vendedores.Items.Contains(Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_Empleado"))) Then
@@ -767,6 +786,7 @@ Public Class frmVentas
 
         Cb_ListaPrecio.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_ListaPrecio"))
 
+        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
         Dim TipoPagoRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Descripcion") = dsVentas.Tables(0).Rows(0).Item("TiposPago")).FirstOrDefault()
         If (TipoPagoRow IsNot Nothing) Then
             Cb_TipoPago.SelectedValue = TipoPagoRow.Item("id_TipoPago")
@@ -849,31 +869,21 @@ Public Class frmVentas
 
         Cb_TipoPago.SelectedValue = 0
 
-        Dim dsListas As DataSet
         'Mayorista
         If cb_Tipo.SelectedIndex = 1 Then
             enableAllControls(Gb_Cliente, True)
-            'Cargo la lista de precios con las opciones mayoristas
-            dsListas = NegListasPrecio.ListadoPreciosPorGrupoCache(3, My.Settings.UsarMemoriaCache)
             DG_Productos.Columns("MONTO").ReadOnly = True
             DG_Productos.Columns("PRECIO").ReadOnly = False
             DG_Productos.Columns("PRECIO").Visible = True
             DG_Productos.Columns("IVA").Visible = True
             PanelTotalMayorista.Visible = True
             PanelTotalMinorista.Visible = False
-            'If Cb_TipoPago.SelectedValue = 1 Then
-            '    txt_PorcentajeFacturacion.Enabled = True
-            'Else
-            '    txt_PorcentajeFacturacion.Enabled = False
-            'End If
 
         Else
             'Minorista
             enableAllControls(Gb_Cliente, False)
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
-            'Cargo la lista de precios con las opciones minoristas configuradas para la sucursal
-            dsListas = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
             DG_Productos.Columns("MONTO").ReadOnly = False
             DG_Productos.Columns("PRECIO").ReadOnly = True
             DG_Productos.Columns("PRECIO").Visible = False
@@ -882,18 +892,13 @@ Public Class frmVentas
             PanelTotalMinorista.Visible = True
         End If
 
+        CargarComboListaPrecios(If(cb_Tipo.SelectedIndex = 1, TipoCliente.Mayorista, TipoCliente.Minorista))
+        CargarComboTiposPagos(If(cb_Tipo.SelectedIndex = 1, TipoCliente.Mayorista, TipoCliente.Minorista))
+
         txt_PorcentajeFacturacion.Text = 100
         txt_PorcentajeBonificacion.Text = 0
         txt_DescuentoMinorista.Text = "0,00"
         txt_DescuentoMayorista.Text = "0,00"
-
-        If dsListas.Tables(0).Rows.Count > 0 Then
-            Cb_ListaPrecio.DataSource = Nothing
-            Cb_ListaPrecio.DataSource = dsListas.Tables(0)
-            Cb_ListaPrecio.DisplayMember = "ListaPrecio"
-            Cb_ListaPrecio.ValueMember = "id_Lista"
-            Cb_ListaPrecio.Refresh()
-        End If
 
         PosicionarListaPreciosSegunFormaDePago()
 

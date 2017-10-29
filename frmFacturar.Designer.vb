@@ -759,6 +759,7 @@ Partial Class frmFacturar
         '
         Me.btnCancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -774,6 +775,7 @@ Partial Class frmFacturar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.btnCancelar
         Me.ClientSize = New System.Drawing.Size(766, 497)
         Me.Controls.Add(Me.btnCancelar)
         Me.Controls.Add(Me.lblError)

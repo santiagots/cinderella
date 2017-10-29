@@ -27,7 +27,7 @@ Public Class NegProductos
     Dim con As New Conexion
     Dim ClsFunciones As New Funciones
 
-    Const MaxRowsData As Integer = 9999
+    Const NewRowsData As Integer = 500
     Const MinRowsData As Integer = 2
 
     Private Shared ListaProductosCache As DataSet
@@ -1203,20 +1203,24 @@ Public Class NegProductos
 
         AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
 
+        Dim MaxRowsData = dsProductos.Tables(0).Rows.Count + NewRowsData
+
+        AgregarEstilo(xlWorkSheet, MaxRowsData)
+
         '//Oculto la primera columan ya que en esta se eunetra el ID del producto y no debe ser modificado
         xlWorkSheet.Range("A1").EntireColumn.Hidden = True
 
         '//Agrego la validacion de combos para el cargado de la categoria
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D", MaxRowsData)
 
         '//Agrego la validacion de combos anidados para el cargado de la SubCategoria
-        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D2")
+        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D", MaxRowsData)
 
         '//Agrego la validacion de combos para el cargado de los porveedores
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F")
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F", MaxRowsData)
 
         '//Agrego la validacion de combos para el cargado de Habilitado
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R")
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R", MaxRowsData)
 
         Return True
     End Function
@@ -1239,7 +1243,6 @@ Public Class NegProductos
         Next
 
 
-
         Dim startCell As Excel.Range = CType(xlWorkSheet.Cells(1, 1), Excel.Range)
         Dim endCell As Excel.Range = CType(xlWorkSheet.Cells(dsProductos.Tables(0).Rows.Count + 1, dsProductos.Tables(0).Columns.Count), Excel.Range)
         Dim writeRange As Excel.Range = xlWorkSheet.Range(startCell, endCell)
@@ -1247,7 +1250,15 @@ Public Class NegProductos
         writeRange.Columns.AutoFit()
     End Sub
 
-    Private Sub AgregarValidacionPorCombo(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, options As String(), Name As String, Column As String)
+    Private Sub AgregarEstilo(xlWorkSheet As Excel.Worksheet, RowCount As Integer)
+        Dim Range As Excel.Range = xlWorkSheet.Range("2:3")
+        Range.Copy(Type.Missing)
+
+        Dim Range2 As Excel.Range = xlWorkSheet.Range(String.Format("2:{0}", RowCount.ToString()))
+        Range2.PasteSpecial(Excel.XlPasteType.xlPasteFormats, Excel.XlPasteSpecialOperation.xlPasteSpecialOperationNone, False, False)
+    End Sub
+
+    Private Sub AgregarValidacionPorCombo(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, options As String(), Name As String, Column As String, RowCount As Integer)
 
         Dim sheetValidation = xlWorkBook.Sheets.Add()
         sheetValidation.Name = Name
@@ -1261,7 +1272,7 @@ Public Class NegProductos
 
         xlWorkBook.Names.Add(Name.Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(1), options.Length)))
 
-        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
+        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
         Dim lookupValues = String.Format("={0}", Name)
 
         validatingCellsRange.Validation.Delete()
@@ -1269,9 +1280,9 @@ Public Class NegProductos
         validatingCellsRange.Validation.InCellDropdown = True
     End Sub
 
-    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String)
-
+    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String, RowCount As Integer)
         Dim sheetValidation = xlWorkBook.Sheets.Add()
+
         sheetValidation.Name = Name
         sheetValidation.Visible = False
 
@@ -1290,6 +1301,15 @@ Public Class NegProductos
             Next
             xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
         Next
+
+        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
+        Dim lookupValues = String.Format("=INDIRECT(SUBSTITUTE(VLOOKUP({0}{1};{0}:{0};1;FALSE);"" "";""_""))", Relacionado, MinRowsData)
+
+        validatingCellsRange.Validation.Delete()
+        validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)
+        validatingCellsRange.Validation.InCellDropdown = True
+
+
     End Sub
 
     Private Function IntToLetters(value As Integer) As String
@@ -1315,7 +1335,6 @@ Public Class NegProductos
 
     End Sub
 #End Region
-
 
 #Region "Funciones Importar Excel"
     Function ImportarExcel(fileName As String, ByRef DatosConError As DataTable) As String

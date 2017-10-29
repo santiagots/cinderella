@@ -1,4 +1,6 @@
-﻿Public Class frmResumenDiario
+﻿Imports Negocio
+
+Public Class frmResumenDiario
     Dim id_Sucursal As String
     Dim Fecha As String = ""
     Dim FechaAyer As String = ""
@@ -32,7 +34,7 @@
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error al cargar el formulario.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
- 
+
     End Sub
 
     'Funcion que limpia el formulario.
@@ -539,6 +541,18 @@
                                     txtMonto.Clear()
 
                                     MessageBox.Show("La caja diaria ha sido cerrada correctamente.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                    If MessageBox.Show("Desea imprimir la Z Diaria?", "Resumen Diario", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                                        Try
+                                            Dim cFiscal As NegControladorFiscal = New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
+                                            cFiscal.AbrirPuerto()
+                                            cFiscal.CierreZ()
+                                            cFiscal.CerrarPuerto()
+                                        Catch ex As Exception
+                                            MessageBox.Show("Se ha producido un error al imprimir el cierre Z. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                            Me.Cursor = Cursors.Arrow
+                                        End Try
+                                    End If
                                 Else
                                     Me.Cursor = Cursors.Arrow
                                     Btn_Abrir.Enabled = False

@@ -114,6 +114,7 @@ Public Class frmFacturar
         End If
 
         If (NotaCredito) Then
+            Me.AcceptButton = btnNotaCredito
             Me.Text = "Nota de Crédito"
             txt_Pago.Text = "No Requerido."
             txt_Pago.ReadOnly = True
@@ -122,6 +123,7 @@ Public Class frmFacturar
                 txt_Factura_Origen.Text = EntFacturacion.NumeroFactura
             End If
         Else
+            Me.AcceptButton = btnFacturar
             txt_Pago.Text = CType(Monto, Decimal)
             txt_Factura_Origen.Text = "No Requerido."
             txt_Factura_Origen.ReadOnly = True
