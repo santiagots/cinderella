@@ -44,26 +44,39 @@ Partial Class frmUsuarios
         Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
-        Me.Label25 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.lbl_Perfil = New System.Windows.Forms.Label()
         Me.cb_Perfiles = New System.Windows.Forms.ComboBox()
-        Me.lbl_Usuario = New System.Windows.Forms.Label()
-        Me.lbl_mail = New System.Windows.Forms.Label()
-        Me.lbl_apellido = New System.Windows.Forms.Label()
-        Me.lbl_pass = New System.Windows.Forms.Label()
-        Me.lbl_pass2 = New System.Windows.Forms.Label()
-        Me.txt_pass = New System.Windows.Forms.TextBox()
-        Me.txt_nombre = New System.Windows.Forms.TextBox()
-        Me.txt_mail = New System.Windows.Forms.TextBox()
-        Me.txt_apellido = New System.Windows.Forms.TextBox()
-        Me.txt_pass2 = New System.Windows.Forms.TextBox()
         Me.chk_Habilitado = New System.Windows.Forms.CheckBox()
-        Me.txt_usuario = New System.Windows.Forms.TextBox()
+        Me.txt_pass2 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.lbl_pass2 = New System.Windows.Forms.Label()
+        Me.lbl_pass = New System.Windows.Forms.Label()
+        Me.txt_pass = New System.Windows.Forms.TextBox()
+        Me.lbl_mail = New System.Windows.Forms.Label()
+        Me.lbl_Usuario = New System.Windows.Forms.Label()
+        Me.lbl_apellido = New System.Windows.Forms.Label()
+        Me.txt_mail = New System.Windows.Forms.TextBox()
+        Me.txt_usuario = New System.Windows.Forms.TextBox()
         Me.lbl_nombre = New System.Windows.Forms.Label()
+        Me.txt_nombre = New System.Windows.Forms.TextBox()
+        Me.txt_apellido = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.lbl_descripcion_mod = New System.Windows.Forms.Label()
+        Me.txt_nombre_mod = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txt_apellido_mod = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txt_usuario_mod = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
+        Me.txt_mail_mod = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.lbl_Msg2 = New System.Windows.Forms.Label()
         Me.DG_Buscador = New System.Windows.Forms.DataGridView()
@@ -82,18 +95,7 @@ Partial Class frmUsuarios
         Me.Cb_Perfiles_mod = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txt_pass2_mod = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.txt_pass_mod = New System.Windows.Forms.TextBox()
-        Me.txt_nombre_mod = New System.Windows.Forms.TextBox()
-        Me.txt_apellido_mod = New System.Windows.Forms.TextBox()
-        Me.txt_usuario_mod = New System.Windows.Forms.TextBox()
-        Me.txt_mail_mod = New System.Windows.Forms.TextBox()
-        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.lbl_descripcion_mod = New System.Windows.Forms.Label()
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErrorUsuarios = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolUsuarios = New System.Windows.Forms.ToolTip(Me.components)
@@ -102,8 +104,10 @@ Partial Class frmUsuarios
         CType(Me.DG_Usuarios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbAlta.SuspendLayout()
         Me.GB_Alta.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.TbMod.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.DG_Buscador, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Modificacion.SuspendLayout()
         CType(Me.ErrorUsuarios, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,7 +141,9 @@ Partial Class frmUsuarios
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(152, 255)
@@ -145,6 +151,7 @@ Partial Class frmUsuarios
         Me.lbl_Msg.Size = New System.Drawing.Size(382, 29)
         Me.lbl_Msg.TabIndex = 1
         Me.lbl_Msg.Text = "No se han encontrado usuarios."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'DG_Usuarios
         '
@@ -152,9 +159,6 @@ Partial Class frmUsuarios
         Me.DG_Usuarios.AllowUserToDeleteRows = False
         Me.DG_Usuarios.AllowUserToResizeColumns = False
         Me.DG_Usuarios.AllowUserToResizeRows = False
-        Me.DG_Usuarios.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Usuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
@@ -174,7 +178,8 @@ Partial Class frmUsuarios
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DG_Usuarios.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DG_Usuarios.Location = New System.Drawing.Point(10, 6)
+        Me.DG_Usuarios.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DG_Usuarios.Location = New System.Drawing.Point(3, 3)
         Me.DG_Usuarios.MultiSelect = False
         Me.DG_Usuarios.Name = "DG_Usuarios"
         Me.DG_Usuarios.ReadOnly = True
@@ -189,7 +194,7 @@ Partial Class frmUsuarios
         Me.DG_Usuarios.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.DG_Usuarios.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.DG_Usuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Usuarios.Size = New System.Drawing.Size(668, 505)
+        Me.DG_Usuarios.Size = New System.Drawing.Size(680, 513)
         Me.DG_Usuarios.TabIndex = 0
         '
         'id_Usuario
@@ -275,182 +280,218 @@ Partial Class frmUsuarios
         '
         'GB_Alta
         '
-        Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Alta.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Alta.Controls.Add(Me.TableLayoutPanel1)
         Me.GB_Alta.Controls.Add(Me.Label25)
-        Me.GB_Alta.Controls.Add(Me.lbl_Perfil)
-        Me.GB_Alta.Controls.Add(Me.cb_Perfiles)
-        Me.GB_Alta.Controls.Add(Me.lbl_Usuario)
-        Me.GB_Alta.Controls.Add(Me.lbl_mail)
-        Me.GB_Alta.Controls.Add(Me.lbl_apellido)
-        Me.GB_Alta.Controls.Add(Me.lbl_pass)
-        Me.GB_Alta.Controls.Add(Me.lbl_pass2)
-        Me.GB_Alta.Controls.Add(Me.txt_pass)
-        Me.GB_Alta.Controls.Add(Me.txt_nombre)
-        Me.GB_Alta.Controls.Add(Me.txt_mail)
-        Me.GB_Alta.Controls.Add(Me.txt_apellido)
-        Me.GB_Alta.Controls.Add(Me.txt_pass2)
-        Me.GB_Alta.Controls.Add(Me.chk_Habilitado)
-        Me.GB_Alta.Controls.Add(Me.txt_usuario)
-        Me.GB_Alta.Controls.Add(Me.Label2)
-        Me.GB_Alta.Controls.Add(Me.lbl_nombre)
         Me.GB_Alta.Controls.Add(Me.Btn_Agregar)
         Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Alta.Location = New System.Drawing.Point(10, 6)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(668, 495)
+        Me.GB_Alta.Size = New System.Drawing.Size(668, 317)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de Alta"
         '
-        'Label25
+        'TableLayoutPanel1
         '
-        Me.Label25.AutoSize = True
-        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(7, 463)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(185, 13)
-        Me.Label25.TabIndex = 68
-        Me.Label25.Text = "(*) Todos los campos son obligatorios."
+        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Perfil, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.cb_Perfiles, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.chk_Habilitado, 1, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_pass2, 1, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_pass2, 0, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_pass, 0, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_pass, 1, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_mail, 0, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Usuario, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_apellido, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_mail, 1, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_usuario, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_nombre, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_nombre, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_apellido, 1, 3)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 8
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(656, 240)
+        Me.TableLayoutPanel1.TabIndex = 69
         '
         'lbl_Perfil
         '
+        Me.lbl_Perfil.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Perfil.AutoSize = True
-        Me.lbl_Perfil.Location = New System.Drawing.Point(7, 42)
+        Me.lbl_Perfil.Location = New System.Drawing.Point(3, 7)
         Me.lbl_Perfil.Name = "lbl_Perfil"
-        Me.lbl_Perfil.Size = New System.Drawing.Size(35, 15)
+        Me.lbl_Perfil.Size = New System.Drawing.Size(194, 15)
         Me.lbl_Perfil.TabIndex = 15
         Me.lbl_Perfil.Text = "Perfil"
         '
         'cb_Perfiles
         '
+        Me.cb_Perfiles.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Perfiles.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_Perfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Perfiles.FormattingEnabled = True
-        Me.cb_Perfiles.Location = New System.Drawing.Point(139, 39)
+        Me.cb_Perfiles.Location = New System.Drawing.Point(203, 4)
         Me.cb_Perfiles.Name = "cb_Perfiles"
-        Me.cb_Perfiles.Size = New System.Drawing.Size(191, 23)
+        Me.cb_Perfiles.Size = New System.Drawing.Size(450, 23)
         Me.cb_Perfiles.TabIndex = 1
-        '
-        'lbl_Usuario
-        '
-        Me.lbl_Usuario.AutoSize = True
-        Me.lbl_Usuario.Location = New System.Drawing.Point(7, 84)
-        Me.lbl_Usuario.Name = "lbl_Usuario"
-        Me.lbl_Usuario.Size = New System.Drawing.Size(50, 15)
-        Me.lbl_Usuario.TabIndex = 13
-        Me.lbl_Usuario.Text = "Usuario"
-        '
-        'lbl_mail
-        '
-        Me.lbl_mail.AutoSize = True
-        Me.lbl_mail.Location = New System.Drawing.Point(7, 227)
-        Me.lbl_mail.Name = "lbl_mail"
-        Me.lbl_mail.Size = New System.Drawing.Size(31, 15)
-        Me.lbl_mail.TabIndex = 12
-        Me.lbl_mail.Text = "Mail"
-        '
-        'lbl_apellido
-        '
-        Me.lbl_apellido.AutoSize = True
-        Me.lbl_apellido.Location = New System.Drawing.Point(7, 181)
-        Me.lbl_apellido.Name = "lbl_apellido"
-        Me.lbl_apellido.Size = New System.Drawing.Size(51, 15)
-        Me.lbl_apellido.TabIndex = 11
-        Me.lbl_apellido.Text = "Apellido"
-        '
-        'lbl_pass
-        '
-        Me.lbl_pass.AutoSize = True
-        Me.lbl_pass.Location = New System.Drawing.Point(7, 278)
-        Me.lbl_pass.Name = "lbl_pass"
-        Me.lbl_pass.Size = New System.Drawing.Size(61, 15)
-        Me.lbl_pass.TabIndex = 10
-        Me.lbl_pass.Text = "Password"
-        '
-        'lbl_pass2
-        '
-        Me.lbl_pass2.AutoSize = True
-        Me.lbl_pass2.Location = New System.Drawing.Point(7, 320)
-        Me.lbl_pass2.Name = "lbl_pass2"
-        Me.lbl_pass2.Size = New System.Drawing.Size(104, 15)
-        Me.lbl_pass2.TabIndex = 9
-        Me.lbl_pass2.Text = "Repetir Password"
-        '
-        'txt_pass
-        '
-        Me.txt_pass.Location = New System.Drawing.Point(139, 270)
-        Me.txt_pass.Name = "txt_pass"
-        Me.txt_pass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txt_pass.Size = New System.Drawing.Size(191, 21)
-        Me.txt_pass.TabIndex = 6
-        '
-        'txt_nombre
-        '
-        Me.txt_nombre.Location = New System.Drawing.Point(139, 128)
-        Me.txt_nombre.Name = "txt_nombre"
-        Me.txt_nombre.Size = New System.Drawing.Size(191, 21)
-        Me.txt_nombre.TabIndex = 3
-        '
-        'txt_mail
-        '
-        Me.txt_mail.Location = New System.Drawing.Point(139, 219)
-        Me.txt_mail.Name = "txt_mail"
-        Me.txt_mail.Size = New System.Drawing.Size(191, 21)
-        Me.txt_mail.TabIndex = 5
-        '
-        'txt_apellido
-        '
-        Me.txt_apellido.Location = New System.Drawing.Point(139, 173)
-        Me.txt_apellido.Name = "txt_apellido"
-        Me.txt_apellido.Size = New System.Drawing.Size(191, 21)
-        Me.txt_apellido.TabIndex = 4
-        '
-        'txt_pass2
-        '
-        Me.txt_pass2.Location = New System.Drawing.Point(139, 312)
-        Me.txt_pass2.Name = "txt_pass2"
-        Me.txt_pass2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txt_pass2.Size = New System.Drawing.Size(191, 21)
-        Me.txt_pass2.TabIndex = 7
         '
         'chk_Habilitado
         '
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(139, 352)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(203, 213)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado.TabIndex = 8
         Me.chk_Habilitado.UseVisualStyleBackColor = True
         '
-        'txt_usuario
+        'txt_pass2
         '
-        Me.txt_usuario.Location = New System.Drawing.Point(139, 81)
-        Me.txt_usuario.MaxLength = 255
-        Me.txt_usuario.Name = "txt_usuario"
-        Me.txt_usuario.Size = New System.Drawing.Size(191, 21)
-        Me.txt_usuario.TabIndex = 2
+        Me.txt_pass2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_pass2.Location = New System.Drawing.Point(203, 184)
+        Me.txt_pass2.Name = "txt_pass2"
+        Me.txt_pass2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txt_pass2.Size = New System.Drawing.Size(450, 21)
+        Me.txt_pass2.TabIndex = 7
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 353)
+        Me.Label2.Location = New System.Drawing.Point(3, 217)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(63, 15)
+        Me.Label2.Size = New System.Drawing.Size(194, 15)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Habilitado"
         '
+        'lbl_pass2
+        '
+        Me.lbl_pass2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_pass2.AutoSize = True
+        Me.lbl_pass2.Location = New System.Drawing.Point(3, 187)
+        Me.lbl_pass2.Name = "lbl_pass2"
+        Me.lbl_pass2.Size = New System.Drawing.Size(194, 15)
+        Me.lbl_pass2.TabIndex = 9
+        Me.lbl_pass2.Text = "Repetir Password"
+        '
+        'lbl_pass
+        '
+        Me.lbl_pass.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_pass.AutoSize = True
+        Me.lbl_pass.Location = New System.Drawing.Point(3, 157)
+        Me.lbl_pass.Name = "lbl_pass"
+        Me.lbl_pass.Size = New System.Drawing.Size(194, 15)
+        Me.lbl_pass.TabIndex = 10
+        Me.lbl_pass.Text = "Password"
+        '
+        'txt_pass
+        '
+        Me.txt_pass.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_pass.Location = New System.Drawing.Point(203, 154)
+        Me.txt_pass.Name = "txt_pass"
+        Me.txt_pass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txt_pass.Size = New System.Drawing.Size(450, 21)
+        Me.txt_pass.TabIndex = 6
+        '
+        'lbl_mail
+        '
+        Me.lbl_mail.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_mail.AutoSize = True
+        Me.lbl_mail.Location = New System.Drawing.Point(3, 127)
+        Me.lbl_mail.Name = "lbl_mail"
+        Me.lbl_mail.Size = New System.Drawing.Size(194, 15)
+        Me.lbl_mail.TabIndex = 12
+        Me.lbl_mail.Text = "Mail"
+        '
+        'lbl_Usuario
+        '
+        Me.lbl_Usuario.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Usuario.AutoSize = True
+        Me.lbl_Usuario.Location = New System.Drawing.Point(3, 37)
+        Me.lbl_Usuario.Name = "lbl_Usuario"
+        Me.lbl_Usuario.Size = New System.Drawing.Size(194, 15)
+        Me.lbl_Usuario.TabIndex = 13
+        Me.lbl_Usuario.Text = "Usuario"
+        '
+        'lbl_apellido
+        '
+        Me.lbl_apellido.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_apellido.AutoSize = True
+        Me.lbl_apellido.Location = New System.Drawing.Point(3, 97)
+        Me.lbl_apellido.Name = "lbl_apellido"
+        Me.lbl_apellido.Size = New System.Drawing.Size(194, 15)
+        Me.lbl_apellido.TabIndex = 11
+        Me.lbl_apellido.Text = "Apellido"
+        '
+        'txt_mail
+        '
+        Me.txt_mail.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_mail.Location = New System.Drawing.Point(203, 124)
+        Me.txt_mail.Name = "txt_mail"
+        Me.txt_mail.Size = New System.Drawing.Size(450, 21)
+        Me.txt_mail.TabIndex = 5
+        '
+        'txt_usuario
+        '
+        Me.txt_usuario.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_usuario.Location = New System.Drawing.Point(203, 34)
+        Me.txt_usuario.MaxLength = 255
+        Me.txt_usuario.Name = "txt_usuario"
+        Me.txt_usuario.Size = New System.Drawing.Size(450, 21)
+        Me.txt_usuario.TabIndex = 2
+        '
         'lbl_nombre
         '
+        Me.lbl_nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_nombre.AutoSize = True
-        Me.lbl_nombre.Location = New System.Drawing.Point(6, 134)
+        Me.lbl_nombre.Location = New System.Drawing.Point(3, 67)
         Me.lbl_nombre.Name = "lbl_nombre"
-        Me.lbl_nombre.Size = New System.Drawing.Size(52, 15)
+        Me.lbl_nombre.Size = New System.Drawing.Size(194, 15)
         Me.lbl_nombre.TabIndex = 1
         Me.lbl_nombre.Text = "Nombre"
+        '
+        'txt_nombre
+        '
+        Me.txt_nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_nombre.Location = New System.Drawing.Point(203, 64)
+        Me.txt_nombre.Name = "txt_nombre"
+        Me.txt_nombre.Size = New System.Drawing.Size(450, 21)
+        Me.txt_nombre.TabIndex = 3
+        '
+        'txt_apellido
+        '
+        Me.txt_apellido.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_apellido.Location = New System.Drawing.Point(203, 94)
+        Me.txt_apellido.Name = "txt_apellido"
+        Me.txt_apellido.Size = New System.Drawing.Size(450, 21)
+        Me.txt_apellido.TabIndex = 4
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(6, 272)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(185, 13)
+        Me.Label25.TabIndex = 68
+        Me.Label25.Text = "(*) Todos los campos son obligatorios."
         '
         'Btn_Agregar
         '
@@ -461,7 +502,7 @@ Partial Class frmUsuarios
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(553, 438)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(562, 267)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 9
@@ -483,6 +524,9 @@ Partial Class frmUsuarios
         '
         'GB_Buscar
         '
+        Me.GB_Buscar.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
         Me.GB_Buscar.Controls.Add(Me.lbl_Msg2)
         Me.GB_Buscar.Controls.Add(Me.DG_Buscador)
@@ -496,6 +540,155 @@ Partial Class frmUsuarios
         Me.GB_Buscar.TabIndex = 0
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Usuario"
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 5
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.lbl_descripcion_mod, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Cb_Perfiles_mod, 4, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label8, 3, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_pass2_mod, 4, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_nombre_mod, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_pass_mod, 4, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label1, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label7, 3, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_apellido_mod, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label4, 0, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label6, 3, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_usuario_mod, 1, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label5, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.chk_Habilitado_mod, 1, 4)
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_mail_mod, 1, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label3, 0, 4)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 5
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(656, 150)
+        Me.TableLayoutPanel2.TabIndex = 5
+        '
+        'lbl_descripcion_mod
+        '
+        Me.lbl_descripcion_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_descripcion_mod.AutoSize = True
+        Me.lbl_descripcion_mod.Location = New System.Drawing.Point(3, 7)
+        Me.lbl_descripcion_mod.Name = "lbl_descripcion_mod"
+        Me.lbl_descripcion_mod.Size = New System.Drawing.Size(94, 15)
+        Me.lbl_descripcion_mod.TabIndex = 1
+        Me.lbl_descripcion_mod.Tag = " "
+        Me.lbl_descripcion_mod.Text = "Nombre"
+        '
+        'txt_nombre_mod
+        '
+        Me.txt_nombre_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_nombre_mod.Location = New System.Drawing.Point(103, 4)
+        Me.txt_nombre_mod.Name = "txt_nombre_mod"
+        Me.txt_nombre_mod.Size = New System.Drawing.Size(192, 21)
+        Me.txt_nombre_mod.TabIndex = 6
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 37)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(94, 15)
+        Me.Label1.TabIndex = 11
+        Me.Label1.Tag = " "
+        Me.Label1.Text = "Apellido"
+        '
+        'txt_apellido_mod
+        '
+        Me.txt_apellido_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_apellido_mod.Location = New System.Drawing.Point(103, 34)
+        Me.txt_apellido_mod.Name = "txt_apellido_mod"
+        Me.txt_apellido_mod.Size = New System.Drawing.Size(192, 21)
+        Me.txt_apellido_mod.TabIndex = 7
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(3, 67)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(94, 15)
+        Me.Label4.TabIndex = 12
+        Me.Label4.Tag = " "
+        Me.Label4.Text = "Usuario"
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(361, 7)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(94, 15)
+        Me.Label6.TabIndex = 14
+        Me.Label6.Tag = " "
+        Me.Label6.Text = "Password"
+        '
+        'txt_usuario_mod
+        '
+        Me.txt_usuario_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_usuario_mod.Location = New System.Drawing.Point(103, 64)
+        Me.txt_usuario_mod.Name = "txt_usuario_mod"
+        Me.txt_usuario_mod.ReadOnly = True
+        Me.txt_usuario_mod.Size = New System.Drawing.Size(192, 21)
+        Me.txt_usuario_mod.TabIndex = 8
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(3, 97)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(94, 15)
+        Me.Label5.TabIndex = 13
+        Me.Label5.Tag = " "
+        Me.Label5.Text = "Mail"
+        '
+        'chk_Habilitado_mod
+        '
+        Me.chk_Habilitado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Habilitado_mod.AutoSize = True
+        Me.chk_Habilitado_mod.Checked = True
+        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(103, 128)
+        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
+        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(192, 14)
+        Me.chk_Habilitado_mod.TabIndex = 10
+        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
+        '
+        'txt_mail_mod
+        '
+        Me.txt_mail_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_mail_mod.Location = New System.Drawing.Point(103, 94)
+        Me.txt_mail_mod.Name = "txt_mail_mod"
+        Me.txt_mail_mod.Size = New System.Drawing.Size(192, 21)
+        Me.txt_mail_mod.TabIndex = 9
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(3, 127)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(94, 15)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "Habilitado"
         '
         'btn_Restablecer
         '
@@ -512,7 +705,9 @@ Partial Class frmUsuarios
         '
         'lbl_Msg2
         '
-        Me.lbl_Msg2.AutoSize = True
+        Me.lbl_Msg2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg2.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg2.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg2.Location = New System.Drawing.Point(180, 174)
@@ -520,6 +715,7 @@ Partial Class frmUsuarios
         Me.lbl_Msg2.Size = New System.Drawing.Size(309, 24)
         Me.lbl_Msg2.TabIndex = 4
         Me.lbl_Msg2.Text = "No se han encontrado usuarios."
+        Me.lbl_Msg2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'DG_Buscador
         '
@@ -530,8 +726,8 @@ Partial Class frmUsuarios
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DG_Buscador.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.DG_Buscador.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Buscador.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Buscador.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Usuario_Bus, Me.Usuario_Bus, Me.Nombre_Bus, Me.Apellido_Bus, Me.Habilitado_Bus, Me.Eliminar_bus})
         Me.DG_Buscador.Cursor = System.Windows.Forms.Cursors.Hand
@@ -607,13 +803,16 @@ Partial Class frmUsuarios
         '
         'txt_buscar
         '
+        Me.txt_buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_buscar.Location = New System.Drawing.Point(90, 30)
         Me.txt_buscar.Name = "txt_buscar"
-        Me.txt_buscar.Size = New System.Drawing.Size(293, 21)
+        Me.txt_buscar.Size = New System.Drawing.Size(360, 21)
         Me.txt_buscar.TabIndex = 1
         '
         'Btn_Buscar
         '
+        Me.Btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
@@ -638,24 +837,11 @@ Partial Class frmUsuarios
         '
         'GB_Modificacion
         '
-        Me.GB_Modificacion.Controls.Add(Me.Label9)
-        Me.GB_Modificacion.Controls.Add(Me.Label8)
-        Me.GB_Modificacion.Controls.Add(Me.Cb_Perfiles_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label7)
-        Me.GB_Modificacion.Controls.Add(Me.txt_pass2_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label6)
-        Me.GB_Modificacion.Controls.Add(Me.Label5)
-        Me.GB_Modificacion.Controls.Add(Me.Label4)
-        Me.GB_Modificacion.Controls.Add(Me.Label1)
-        Me.GB_Modificacion.Controls.Add(Me.txt_pass_mod)
-        Me.GB_Modificacion.Controls.Add(Me.txt_nombre_mod)
-        Me.GB_Modificacion.Controls.Add(Me.txt_apellido_mod)
-        Me.GB_Modificacion.Controls.Add(Me.txt_usuario_mod)
-        Me.GB_Modificacion.Controls.Add(Me.txt_mail_mod)
-        Me.GB_Modificacion.Controls.Add(Me.chk_Habilitado_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label3)
-        Me.GB_Modificacion.Controls.Add(Me.lbl_descripcion_mod)
+        Me.GB_Modificacion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Modificar)
+        Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel2)
+        Me.GB_Modificacion.Controls.Add(Me.Label9)
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(10, 304)
         Me.GB_Modificacion.Name = "GB_Modificacion"
@@ -668,7 +854,7 @@ Partial Class frmUsuarios
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(330, 166)
+        Me.Label9.Location = New System.Drawing.Point(6, 181)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(185, 13)
         Me.Label9.TabIndex = 68
@@ -676,147 +862,53 @@ Partial Class frmUsuarios
         '
         'Label8
         '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(330, 97)
+        Me.Label8.Location = New System.Drawing.Point(361, 67)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(35, 15)
+        Me.Label8.Size = New System.Drawing.Size(94, 15)
         Me.Label8.TabIndex = 18
         Me.Label8.Text = "Perfil"
         '
         'Cb_Perfiles_mod
         '
+        Me.Cb_Perfiles_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_Perfiles_mod.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Perfiles_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Perfiles_mod.FormattingEnabled = True
-        Me.Cb_Perfiles_mod.Location = New System.Drawing.Point(458, 94)
+        Me.Cb_Perfiles_mod.Location = New System.Drawing.Point(461, 63)
         Me.Cb_Perfiles_mod.Name = "Cb_Perfiles_mod"
-        Me.Cb_Perfiles_mod.Size = New System.Drawing.Size(189, 23)
+        Me.Cb_Perfiles_mod.Size = New System.Drawing.Size(192, 23)
         Me.Cb_Perfiles_mod.TabIndex = 13
         '
         'Label7
         '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(330, 64)
+        Me.Label7.Location = New System.Drawing.Point(361, 30)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(104, 15)
+        Me.Label7.Size = New System.Drawing.Size(94, 30)
         Me.Label7.TabIndex = 16
         Me.Label7.Tag = " "
         Me.Label7.Text = "Repetir Password"
         '
         'txt_pass2_mod
         '
-        Me.txt_pass2_mod.Location = New System.Drawing.Point(458, 61)
+        Me.txt_pass2_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_pass2_mod.Location = New System.Drawing.Point(461, 34)
         Me.txt_pass2_mod.Name = "txt_pass2_mod"
         Me.txt_pass2_mod.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txt_pass2_mod.Size = New System.Drawing.Size(189, 21)
+        Me.txt_pass2_mod.Size = New System.Drawing.Size(192, 21)
         Me.txt_pass2_mod.TabIndex = 12
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(330, 31)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(61, 15)
-        Me.Label6.TabIndex = 14
-        Me.Label6.Tag = " "
-        Me.Label6.Text = "Password"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(16, 130)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(31, 15)
-        Me.Label5.TabIndex = 13
-        Me.Label5.Tag = " "
-        Me.Label5.Text = "Mail"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(16, 97)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(50, 15)
-        Me.Label4.TabIndex = 12
-        Me.Label4.Tag = " "
-        Me.Label4.Text = "Usuario"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(16, 64)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(51, 15)
-        Me.Label1.TabIndex = 11
-        Me.Label1.Tag = " "
-        Me.Label1.Text = "Apellido"
         '
         'txt_pass_mod
         '
-        Me.txt_pass_mod.Location = New System.Drawing.Point(458, 25)
+        Me.txt_pass_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_pass_mod.Location = New System.Drawing.Point(461, 4)
         Me.txt_pass_mod.Name = "txt_pass_mod"
         Me.txt_pass_mod.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txt_pass_mod.Size = New System.Drawing.Size(189, 21)
+        Me.txt_pass_mod.Size = New System.Drawing.Size(192, 21)
         Me.txt_pass_mod.TabIndex = 11
-        '
-        'txt_nombre_mod
-        '
-        Me.txt_nombre_mod.Location = New System.Drawing.Point(90, 25)
-        Me.txt_nombre_mod.Name = "txt_nombre_mod"
-        Me.txt_nombre_mod.Size = New System.Drawing.Size(193, 21)
-        Me.txt_nombre_mod.TabIndex = 6
-        '
-        'txt_apellido_mod
-        '
-        Me.txt_apellido_mod.Location = New System.Drawing.Point(90, 58)
-        Me.txt_apellido_mod.Name = "txt_apellido_mod"
-        Me.txt_apellido_mod.Size = New System.Drawing.Size(193, 21)
-        Me.txt_apellido_mod.TabIndex = 7
-        '
-        'txt_usuario_mod
-        '
-        Me.txt_usuario_mod.Location = New System.Drawing.Point(90, 91)
-        Me.txt_usuario_mod.Name = "txt_usuario_mod"
-        Me.txt_usuario_mod.ReadOnly = True
-        Me.txt_usuario_mod.Size = New System.Drawing.Size(193, 21)
-        Me.txt_usuario_mod.TabIndex = 8
-        '
-        'txt_mail_mod
-        '
-        Me.txt_mail_mod.Location = New System.Drawing.Point(90, 124)
-        Me.txt_mail_mod.Name = "txt_mail_mod"
-        Me.txt_mail_mod.Size = New System.Drawing.Size(193, 21)
-        Me.txt_mail_mod.TabIndex = 9
-        '
-        'chk_Habilitado_mod
-        '
-        Me.chk_Habilitado_mod.AutoSize = True
-        Me.chk_Habilitado_mod.Checked = True
-        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(90, 165)
-        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
-        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado_mod.TabIndex = 10
-        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(16, 163)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(63, 15)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Habilitado"
-        '
-        'lbl_descripcion_mod
-        '
-        Me.lbl_descripcion_mod.AutoSize = True
-        Me.lbl_descripcion_mod.Location = New System.Drawing.Point(16, 31)
-        Me.lbl_descripcion_mod.Name = "lbl_descripcion_mod"
-        Me.lbl_descripcion_mod.Size = New System.Drawing.Size(52, 15)
-        Me.lbl_descripcion_mod.TabIndex = 1
-        Me.lbl_descripcion_mod.Tag = " "
-        Me.lbl_descripcion_mod.Text = "Nombre"
         '
         'Btn_Modificar
         '
@@ -827,7 +919,7 @@ Partial Class frmUsuarios
         Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(547, 140)
+        Me.Btn_Modificar.Location = New System.Drawing.Point(562, 148)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Modificar.TabIndex = 14
@@ -853,22 +945,23 @@ Partial Class frmUsuarios
         Me.ClientSize = New System.Drawing.Size(694, 552)
         Me.Controls.Add(Me.TabUsuarios)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmUsuarios"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administración de Usuarios"
         Me.TabUsuarios.ResumeLayout(False)
         Me.TbListado.ResumeLayout(False)
-        Me.TbListado.PerformLayout()
         CType(Me.DG_Usuarios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbAlta.ResumeLayout(False)
         Me.GB_Alta.ResumeLayout(False)
         Me.GB_Alta.PerformLayout()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.TbMod.ResumeLayout(False)
         Me.GB_Buscar.ResumeLayout(False)
         Me.GB_Buscar.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
         CType(Me.DG_Buscador, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Modificacion.ResumeLayout(False)
         Me.GB_Modificacion.PerformLayout()
@@ -942,4 +1035,6 @@ Partial Class frmUsuarios
     Friend WithEvents Eliminar_bus As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents Label25 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
 End Class

@@ -32,7 +32,6 @@ Partial Class frmBanco
         Me.BtnActualizar = New System.Windows.Forms.Button()
         Me.btnAgregar = New System.Windows.Forms.Button()
         Me.dgvBancos = New System.Windows.Forms.DataGridView()
-        Me.BancoIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.BancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -46,6 +45,8 @@ Partial Class frmBanco
         '
         'txtNombre
         '
+        Me.txtNombre.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtNombre.Location = New System.Drawing.Point(112, 23)
         Me.txtNombre.Name = "txtNombre"
         Me.txtNombre.Size = New System.Drawing.Size(200, 20)
@@ -62,6 +63,8 @@ Partial Class frmBanco
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.chkHabilitado)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.BtnActualizar)
@@ -95,6 +98,7 @@ Partial Class frmBanco
         '
         'BtnActualizar
         '
+        Me.BtnActualizar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnActualizar.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
         Me.BtnActualizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.BtnActualizar.Location = New System.Drawing.Point(147, 77)
@@ -107,6 +111,7 @@ Partial Class frmBanco
         '
         'btnAgregar
         '
+        Me.btnAgregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnAgregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.btnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnAgregar.Location = New System.Drawing.Point(237, 77)
@@ -124,7 +129,7 @@ Partial Class frmBanco
         Me.dgvBancos.AutoGenerateColumns = False
         Me.dgvBancos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvBancos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvBancos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.BancoIdDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.HabilitadoDataGridViewCheckBoxColumn})
+        Me.dgvBancos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NombreDataGridViewTextBoxColumn, Me.HabilitadoDataGridViewCheckBoxColumn})
         Me.dgvBancos.DataSource = Me.BancoBindingSource
         Me.dgvBancos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvBancos.Location = New System.Drawing.Point(3, 16)
@@ -133,14 +138,6 @@ Partial Class frmBanco
         Me.dgvBancos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvBancos.Size = New System.Drawing.Size(318, 165)
         Me.dgvBancos.TabIndex = 3
-        '
-        'BancoIdDataGridViewTextBoxColumn
-        '
-        Me.BancoIdDataGridViewTextBoxColumn.DataPropertyName = "BancoId"
-        Me.BancoIdDataGridViewTextBoxColumn.HeaderText = "BancoId"
-        Me.BancoIdDataGridViewTextBoxColumn.Name = "BancoIdDataGridViewTextBoxColumn"
-        Me.BancoIdDataGridViewTextBoxColumn.ReadOnly = True
-        Me.BancoIdDataGridViewTextBoxColumn.Visible = False
         '
         'NombreDataGridViewTextBoxColumn
         '
@@ -164,6 +161,9 @@ Partial Class frmBanco
         '
         'GroupBox2
         '
+        Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.dgvBancos)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 136)
         Me.GroupBox2.Name = "GroupBox2"
@@ -196,7 +196,6 @@ Partial Class frmBanco
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmBanco"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administració de Bancos"

@@ -46,6 +46,9 @@ Partial Class frmBuscarProducto
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.lbl_Msg)
         Me.GroupBox1.Controls.Add(Me.rb_Opcion2)
         Me.GroupBox1.Controls.Add(Me.rb_Opcion)
@@ -65,7 +68,9 @@ Partial Class frmBuscarProducto
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(86, 212)
@@ -73,6 +78,7 @@ Partial Class frmBuscarProducto
         Me.lbl_Msg.Size = New System.Drawing.Size(399, 29)
         Me.lbl_Msg.TabIndex = 11
         Me.lbl_Msg.Text = "No se han encontrado productos."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'rb_Opcion2
         '
@@ -102,6 +108,7 @@ Partial Class frmBuscarProducto
         '
         'Btn_Limpiar
         '
+        Me.Btn_Limpiar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Limpiar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
@@ -112,8 +119,8 @@ Partial Class frmBuscarProducto
         Me.Btn_Limpiar.TabIndex = 8
         Me.Btn_Limpiar.Text = "Limpiar"
         Me.Btn_Limpiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolBusqueda.SetToolTip(Me.Btn_Limpiar, "Limpia la grilla y los criterios de busqueda. Se vuelven a visualizar todos los p" & _
-                "roductos.")
+        Me.ToolBusqueda.SetToolTip(Me.Btn_Limpiar, "Limpia la grilla y los criterios de busqueda. Se vuelven a visualizar todos los p" &
+        "roductos.")
         Me.Btn_Limpiar.UseVisualStyleBackColor = True
         '
         'Label2
@@ -132,8 +139,8 @@ Partial Class frmBuscarProducto
         Me.lbl_informacion.Name = "lbl_informacion"
         Me.lbl_informacion.Size = New System.Drawing.Size(560, 15)
         Me.lbl_informacion.TabIndex = 6
-        Me.lbl_informacion.Text = "Por favor, complete el siguiente campo con el nombre / código de producto y luego" & _
-            " presione ""Buscar""."
+        Me.lbl_informacion.Text = "Por favor, complete el siguiente campo con el nombre / código de producto y luego" &
+    " presione ""Buscar""."
         '
         'DG_Productos
         '
@@ -141,6 +148,9 @@ Partial Class frmBuscarProducto
         Me.DG_Productos.AllowUserToDeleteRows = False
         Me.DG_Productos.AllowUserToResizeColumns = False
         Me.DG_Productos.AllowUserToResizeRows = False
+        Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Producto, Me.Nombre, Me.Codigo})
@@ -179,6 +189,7 @@ Partial Class frmBuscarProducto
         '
         'btn_Buscar
         '
+        Me.btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
@@ -194,9 +205,11 @@ Partial Class frmBuscarProducto
         '
         'txt_Buscar
         '
+        Me.txt_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Buscar.Location = New System.Drawing.Point(153, 76)
         Me.txt_Buscar.Name = "txt_Buscar"
-        Me.txt_Buscar.Size = New System.Drawing.Size(229, 21)
+        Me.txt_Buscar.Size = New System.Drawing.Size(199, 21)
         Me.txt_Buscar.TabIndex = 1
         Me.ToolBusqueda.SetToolTip(Me.txt_Buscar, "Usted puede realizar una busqueda por palabra completa  o parte de ella.")
         '
@@ -218,9 +231,7 @@ Partial Class frmBuscarProducto
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(594, 372)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmBuscarProducto"
         Me.Text = "Buscar Producto"
         Me.GroupBox1.ResumeLayout(False)

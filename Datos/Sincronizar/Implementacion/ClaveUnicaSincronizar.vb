@@ -16,79 +16,88 @@ Public Class ClaveUnicaSincronizar
     End Sub
 
     Public Sub sincronizarALocal(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
+        Dim UltimaFechasSincronizacion As DataTable
+        Dim fecha As Date
+        Try
+            Dim DatosSincronizar As DataTable = New DataTable()
 
-        Dim DatosSincronizar As DataTable = New DataTable()
+            'Verifico que exista una ultima sincornizacion
+            UltimaFechasSincronizacion = ejecutarSQL(conexionLocal, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionLocal).Tables(0)
+            Dim DatosLocal As DataTable
+            Dim DatosRemoto As DataTable
 
-        'Verifico que exista una ultima sincornizacion
-        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionLocal, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionLocal).Tables(0)
-        Dim DatosLocal As DataTable
-        Dim DatosRemoto As DataTable
+            If (UltimaFechasSincronizacion.Rows.Count > 0) Then
+                'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
+                fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
+                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionLocal).Tables(0)
+                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionRemota).Tables(0)
 
-        If (UltimaFechasSincronizacion.Rows.Count > 0) Then
-            'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
-            Dim fecha As String = UltimaFechasSincronizacion.Rows(0)("FECHA")
-            DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosRemoto, fecha, valorBusqueda), transaccionLocal).Tables(0)
-            DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosRemoto, fecha, valorBusqueda), transaccionRemota).Tables(0)
+                'obtengo todos los registros que fueron agregados o modificados
+                DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
+            Else
+                'Selecciono todas las filas de lo sultimos 3 meses la base remota
+                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= CONVERT(DATETIME,'{2}',103)", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3)), transaccionRemota).Tables(0)
+            End If
 
-            'obtengo todos los registros que fueron agregados o modificados
-            DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
-        Else
-            'Selecciono todas las filas de lo sultimos 3 meses la base remota
-            DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= CONVERT(DATETIME,'{2}',103)", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3)), transaccionRemota).Tables(0)
-        End If
+            If DatosSincronizar.Rows.Count > 0 Then
 
-        If DatosSincronizar.Rows.Count > 0 Then
+                Dim listaId As String = String.Join(",", DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
 
-            Dim listaId As String = String.Join(",", DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
+                Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, listaId), conexionLocal, transaccionLocal)
+                commandEliminoData.ExecuteNonQuery()
 
-            Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, listaId), conexionLocal, transaccionLocal)
-            commandEliminoData.ExecuteNonQuery()
-
-            'subo los valores a la base remota
-            Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.Default, transaccionLocal)
-            BulkCopy.DestinationTableName = tabla.Nombre
-            BulkCopy.WriteToServer(DatosSincronizar)
-            BulkCopy.Close()
-        End If
+                'subo los valores a la base remota
+                Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.Default, transaccionLocal)
+                BulkCopy.DestinationTableName = tabla.Nombre
+                BulkCopy.WriteToServer(DatosSincronizar)
+                BulkCopy.Close()
+            End If
+        Catch ex As Exception
+            Throw New Exception(String.Format("DATOS UltimaFechasSincronizacion {0}  fecha {1}", UltimaFechasSincronizacion.Rows.Count.ToString(), fecha), ex)
+        End Try
 
     End Sub
 
     Public Sub sincronizarARemota(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
+        Dim UltimaFechasSincronizacion As DataTable
+        Dim fecha As Date
+        Try
+            Dim DatosSincronizar As DataTable = New DataTable()
 
-        Dim DatosSincronizar As DataTable = New DataTable()
+            'Verifico que exista una ultima sincornizacion
+            UltimaFechasSincronizacion = ejecutarSQL(conexionRemota, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionRemota).Tables(0)
+            Dim DatosLocal As DataTable
+            Dim DatosRemoto As DataTable
 
-        'Verifico que exista una ultima sincornizacion
-        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionRemota, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionRemota).Tables(0)
-        Dim DatosLocal As DataTable
-        Dim DatosRemoto As DataTable
+            If (UltimaFechasSincronizacion.Rows.Count > 0) Then
+                'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
+                fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
+                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionLocal).Tables(0)
+                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionRemota).Tables(0)
 
-        If (UltimaFechasSincronizacion.Rows.Count > 0) Then
-            'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
-            Dim fecha As String = UltimaFechasSincronizacion.Rows(0)("FECHA")
-            DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, fecha, valorBusqueda), transaccionLocal).Tables(0)
-            DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosLocal, fecha, valorBusqueda), transaccionRemota).Tables(0)
+                'obtengo todos los registros que fueron agregados o modificados
+                DatosSincronizar = ObtenerDatos(DatosLocal, DatosRemoto, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
+            Else
+                'Selecciono todas las filas de la base local
+                DatosSincronizar = ejecutarSQL(conexionLocal, String.Format("SELECT * FROM {0}", tabla.Nombre), transaccionLocal).Tables(0)
+            End If
 
-            'obtengo todos los registros que fueron agregados o modificados
-            DatosSincronizar = ObtenerDatos(DatosLocal, DatosRemoto, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
-        Else
-            'Selecciono todas las filas de la base local
-            DatosSincronizar = ejecutarSQL(conexionLocal, String.Format("SELECT * FROM {0}", tabla.Nombre), transaccionLocal).Tables(0)
-        End If
+            If DatosSincronizar.Rows.Count > 0 Then
 
-        If DatosSincronizar.Rows.Count > 0 Then
+                Dim listaId As String = String.Join(",", DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
 
-            Dim listaId As String = String.Join(",", DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
+                Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, listaId), conexionRemota, transaccionRemota)
+                commandEliminoData.ExecuteNonQuery()
 
-            Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, listaId), conexionRemota, transaccionRemota)
-            commandEliminoData.ExecuteNonQuery()
-
-            'subo los valores a la base remota
-            Dim BulkCopy As New SqlBulkCopy(conexionRemota, SqlBulkCopyOptions.Default, transaccionRemota)
-            BulkCopy.DestinationTableName = tabla.Nombre
-            BulkCopy.WriteToServer(DatosSincronizar)
-            BulkCopy.Close()
-        End If
-
+                'subo los valores a la base remota
+                Dim BulkCopy As New SqlBulkCopy(conexionRemota, SqlBulkCopyOptions.Default, transaccionRemota)
+                BulkCopy.DestinationTableName = tabla.Nombre
+                BulkCopy.WriteToServer(DatosSincronizar)
+                BulkCopy.Close()
+            End If
+        Catch ex As Exception
+            Throw New Exception(String.Format("DATOS UltimaFechasSincronizacion {0}  fecha {1}", UltimaFechasSincronizacion.Rows.Count.ToString(), fecha), ex)
+        End Try
     End Sub
 
     Private Function ejecutarSQL(conexion As SqlConnection, consulta As String, transaction As SqlTransaction) As DataSet

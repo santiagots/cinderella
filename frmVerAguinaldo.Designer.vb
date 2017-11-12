@@ -40,7 +40,7 @@ Partial Class frmVerAguinaldo
         Me.Gb_Comisiones.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Gb_Comisiones.Location = New System.Drawing.Point(0, 0)
         Me.Gb_Comisiones.Name = "Gb_Comisiones"
-        Me.Gb_Comisiones.Size = New System.Drawing.Size(344, 372)
+        Me.Gb_Comisiones.Size = New System.Drawing.Size(494, 422)
         Me.Gb_Comisiones.TabIndex = 1
         Me.Gb_Comisiones.TabStop = False
         Me.Gb_Comisiones.Text = "Comisiones registradas"
@@ -52,7 +52,7 @@ Partial Class frmVerAguinaldo
         Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancelar.Location = New System.Drawing.Point(236, 322)
+        Me.btnCancelar.Location = New System.Drawing.Point(386, 372)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(100, 40)
         Me.btnCancelar.TabIndex = 5
@@ -66,8 +66,8 @@ Partial Class frmVerAguinaldo
         Me.DG_Comisiones.AllowUserToDeleteRows = False
         Me.DG_Comisiones.AllowUserToResizeRows = False
         Me.DG_Comisiones.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Comisiones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Comisiones.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Comisiones.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
@@ -78,7 +78,7 @@ Partial Class frmVerAguinaldo
         Me.DG_Comisiones.Name = "DG_Comisiones"
         Me.DG_Comisiones.ReadOnly = True
         Me.DG_Comisiones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Comisiones.Size = New System.Drawing.Size(328, 289)
+        Me.DG_Comisiones.Size = New System.Drawing.Size(478, 339)
         Me.DG_Comisiones.TabIndex = 0
         '
         'Fecha
@@ -101,13 +101,10 @@ Partial Class frmVerAguinaldo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(344, 372)
+        Me.ClientSize = New System.Drawing.Size(494, 422)
         Me.Controls.Add(Me.Gb_Comisiones)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "frmVerAguinaldo"
         Me.Text = "frmVerAguinaldo"
         Me.Gb_Comisiones.ResumeLayout(False)

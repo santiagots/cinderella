@@ -44,9 +44,6 @@ Partial Class frmControladorFiscal
         Me.FHasta = New System.Windows.Forms.DateTimePicker()
         Me.FDesde = New System.Windows.Forms.DateTimePicker()
         Me.dgTickets = New System.Windows.Forms.DataGridView()
-        Me.FacturacionBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.lbl_Msg = New System.Windows.Forms.Label()
-        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NumeroFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -56,10 +53,17 @@ Partial Class frmControladorFiscal
         Me.SubTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FacturacionBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.lbl_Msg = New System.Windows.Forms.Label()
+        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnCierreZ
@@ -77,14 +81,9 @@ Partial Class frmControladorFiscal
         '
         Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox2.Controls.Add(Me.btnCierreZPorFecha)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.FHastaCierreZ)
-        Me.GroupBox2.Controls.Add(Me.FDesdeCierreZ)
         Me.GroupBox2.Controls.Add(Me.btnCierreZ)
-        Me.GroupBox2.Controls.Add(Me.lblEstado)
-        Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(860, 120)
@@ -97,7 +96,7 @@ Partial Class frmControladorFiscal
         Me.btnCierreZPorFecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnCierreZPorFecha.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnCierreZPorFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCierreZPorFecha.Location = New System.Drawing.Point(733, 65)
+        Me.btnCierreZPorFecha.Location = New System.Drawing.Point(733, 70)
         Me.btnCierreZPorFecha.Name = "btnCierreZPorFecha"
         Me.btnCierreZPorFecha.Size = New System.Drawing.Size(121, 40)
         Me.btnCierreZPorFecha.TabIndex = 12
@@ -106,54 +105,61 @@ Partial Class frmControladorFiscal
         '
         'Label1
         '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(6, 64)
+        Me.Label1.Location = New System.Drawing.Point(3, 37)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(99, 16)
+        Me.Label1.Size = New System.Drawing.Size(194, 16)
         Me.Label1.TabIndex = 11
         Me.Label1.Text = "Fecha desde"
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(6, 96)
+        Me.Label2.Location = New System.Drawing.Point(3, 67)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(93, 16)
+        Me.Label2.Size = New System.Drawing.Size(194, 16)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Fecha hasta"
         '
         'FHastaCierreZ
         '
-        Me.FHastaCierreZ.Location = New System.Drawing.Point(126, 91)
+        Me.FHastaCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FHastaCierreZ.Location = New System.Drawing.Point(203, 65)
         Me.FHastaCierreZ.Name = "FHastaCierreZ"
-        Me.FHastaCierreZ.Size = New System.Drawing.Size(212, 20)
+        Me.FHastaCierreZ.Size = New System.Drawing.Size(515, 20)
         Me.FHastaCierreZ.TabIndex = 9
         '
         'FDesdeCierreZ
         '
-        Me.FDesdeCierreZ.Location = New System.Drawing.Point(126, 59)
+        Me.FDesdeCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FDesdeCierreZ.Location = New System.Drawing.Point(203, 35)
         Me.FDesdeCierreZ.Name = "FDesdeCierreZ"
-        Me.FDesdeCierreZ.Size = New System.Drawing.Size(212, 20)
+        Me.FDesdeCierreZ.Size = New System.Drawing.Size(515, 20)
         Me.FDesdeCierreZ.TabIndex = 8
         '
         'lblEstado
         '
+        Me.lblEstado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblEstado.AutoSize = True
         Me.lblEstado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEstado.Location = New System.Drawing.Point(123, 31)
+        Me.lblEstado.Location = New System.Drawing.Point(203, 7)
         Me.lblEstado.Name = "lblEstado"
-        Me.lblEstado.Size = New System.Drawing.Size(39, 15)
+        Me.lblEstado.Size = New System.Drawing.Size(515, 15)
         Me.lblEstado.TabIndex = 1
         Me.lblEstado.Text = "- - - -"
         '
         'Label4
         '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(7, 34)
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold)
+        Me.Label4.Location = New System.Drawing.Point(3, 7)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(40, 13)
+        Me.Label4.Size = New System.Drawing.Size(194, 16)
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "Estado"
         '
@@ -161,12 +167,9 @@ Partial Class frmControladorFiscal
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupBox1.Controls.Add(Me.btn_Exportar)
         Me.GroupBox1.Controls.Add(Me.BtnFiltrar)
-        Me.GroupBox1.Controls.Add(Me.Label12)
-        Me.GroupBox1.Controls.Add(Me.Label11)
-        Me.GroupBox1.Controls.Add(Me.FHasta)
-        Me.GroupBox1.Controls.Add(Me.FDesde)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 138)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(860, 83)
@@ -181,7 +184,7 @@ Partial Class frmControladorFiscal
         Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
         Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Exportar.Location = New System.Drawing.Point(606, 23)
+        Me.btn_Exportar.Location = New System.Drawing.Point(606, 26)
         Me.btn_Exportar.Name = "btn_Exportar"
         Me.btn_Exportar.Size = New System.Drawing.Size(121, 40)
         Me.btn_Exportar.TabIndex = 12
@@ -197,7 +200,7 @@ Partial Class frmControladorFiscal
         Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnFiltrar.Location = New System.Drawing.Point(733, 24)
+        Me.BtnFiltrar.Location = New System.Drawing.Point(733, 26)
         Me.BtnFiltrar.Name = "BtnFiltrar"
         Me.BtnFiltrar.Size = New System.Drawing.Size(121, 40)
         Me.BtnFiltrar.TabIndex = 10
@@ -207,36 +210,40 @@ Partial Class frmControladorFiscal
         '
         'Label12
         '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(13, 24)
+        Me.Label12.Location = New System.Drawing.Point(3, 7)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(99, 16)
+        Me.Label12.Size = New System.Drawing.Size(194, 16)
         Me.Label12.TabIndex = 7
         Me.Label12.Text = "Fecha desde"
         '
         'Label11
         '
+        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(13, 56)
+        Me.Label11.Location = New System.Drawing.Point(3, 37)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(93, 16)
+        Me.Label11.Size = New System.Drawing.Size(194, 16)
         Me.Label11.TabIndex = 6
         Me.Label11.Text = "Fecha hasta"
         '
         'FHasta
         '
-        Me.FHasta.Location = New System.Drawing.Point(133, 51)
+        Me.FHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FHasta.Location = New System.Drawing.Point(203, 35)
         Me.FHasta.Name = "FHasta"
-        Me.FHasta.Size = New System.Drawing.Size(212, 20)
+        Me.FHasta.Size = New System.Drawing.Size(388, 20)
         Me.FHasta.TabIndex = 5
         '
         'FDesde
         '
-        Me.FDesde.Location = New System.Drawing.Point(133, 19)
+        Me.FDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FDesde.Location = New System.Drawing.Point(203, 5)
         Me.FDesde.Name = "FDesde"
-        Me.FDesde.Size = New System.Drawing.Size(212, 20)
+        Me.FDesde.Size = New System.Drawing.Size(388, 20)
         Me.FDesde.TabIndex = 4
         '
         'dgTickets
@@ -258,24 +265,6 @@ Partial Class frmControladorFiscal
         Me.dgTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgTickets.Size = New System.Drawing.Size(860, 523)
         Me.dgTickets.TabIndex = 4
-        '
-        'FacturacionBindingSource
-        '
-        Me.FacturacionBindingSource.DataSource = GetType(Entidades.Facturacion)
-        '
-        'lbl_Msg
-        '
-        Me.lbl_Msg.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.AutoSize = True
-        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(278, 420)
-        Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(327, 25)
-        Me.lbl_Msg.TabIndex = 5
-        Me.lbl_Msg.Text = "No se han encontrado tickets."
-        Me.lbl_Msg.Visible = False
         '
         'FechaDataGridViewTextBoxColumn
         '
@@ -346,6 +335,66 @@ Partial Class frmControladorFiscal
         Me.Monto.Name = "Monto"
         Me.Monto.ReadOnly = True
         '
+        'FacturacionBindingSource
+        '
+        Me.FacturacionBindingSource.DataSource = GetType(Entidades.Facturacion)
+        '
+        'lbl_Msg
+        '
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Msg.Location = New System.Drawing.Point(279, 476)
+        Me.lbl_Msg.Name = "lbl_Msg"
+        Me.lbl_Msg.Size = New System.Drawing.Size(327, 25)
+        Me.lbl_Msg.TabIndex = 5
+        Me.lbl_Msg.Text = "No se han encontrado tickets."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lbl_Msg.Visible = False
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.FHastaCierreZ, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.FDesdeCierreZ, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblEstado, 1, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 3
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(721, 90)
+        Me.TableLayoutPanel1.TabIndex = 6
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FHasta, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FDesde, 1, 0)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 17)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 2
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(594, 60)
+        Me.TableLayoutPanel2.TabIndex = 6
+        '
         'frmControladorFiscal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -359,13 +408,14 @@ Partial Class frmControladorFiscal
         Me.Name = "frmControladorFiscal"
         Me.Text = "Controlador Fiscal"
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents btnCierreZ As System.Windows.Forms.Button
@@ -397,4 +447,6 @@ Partial Class frmControladorFiscal
     Friend WithEvents SubTotal As DataGridViewTextBoxColumn
     Friend WithEvents IVA As DataGridViewTextBoxColumn
     Friend WithEvents Monto As DataGridViewTextBoxColumn
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
 End Class

@@ -24,11 +24,11 @@ Partial Class frmStockMasiva
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmStockMasiva))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TabAlta = New System.Windows.Forms.TabPage()
         Me.Gb_Stock = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -55,6 +55,15 @@ Partial Class frmStockMasiva
         Me.lbl_MontoTotal = New System.Windows.Forms.Label()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.DG_Mercaderia = New System.Windows.Forms.DataGridView()
+        Me.id_Producto_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Producto_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Costo_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cantidad_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Subtotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Stock_Minimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Stock_Optimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Stock_Actual = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Eliminar_2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.lbl_Monto = New System.Windows.Forms.Label()
         Me.Btn_Ingreso = New System.Windows.Forms.Button()
         Me.lbl_Totales_Prod = New System.Windows.Forms.Label()
@@ -97,15 +106,6 @@ Partial Class frmStockMasiva
         Me.Label9 = New System.Windows.Forms.Label()
         Me.lbl_SucursalD = New System.Windows.Forms.Label()
         Me.ErrorStock = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.id_Producto_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Producto_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Costo_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Cantidad_2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Subtotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Stock_Minimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Stock_Optimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Stock_Actual = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Eliminar_2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabAlta.SuspendLayout()
         Me.Gb_Stock.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -178,7 +178,7 @@ Partial Class frmStockMasiva
         '
         Me.lbl_Minimo.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_Minimo.AutoSize = True
-        Me.lbl_Minimo.Location = New System.Drawing.Point(3, 24)
+        Me.lbl_Minimo.Location = New System.Drawing.Point(3, 25)
         Me.lbl_Minimo.Name = "lbl_Minimo"
         Me.lbl_Minimo.Size = New System.Drawing.Size(82, 15)
         Me.lbl_Minimo.TabIndex = 7
@@ -187,7 +187,7 @@ Partial Class frmStockMasiva
         'txt_Actual
         '
         Me.txt_Actual.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Actual.Location = New System.Drawing.Point(153, 151)
+        Me.txt_Actual.Location = New System.Drawing.Point(153, 152)
         Me.txt_Actual.Name = "txt_Actual"
         Me.txt_Actual.ReadOnly = True
         Me.txt_Actual.Size = New System.Drawing.Size(145, 21)
@@ -196,7 +196,7 @@ Partial Class frmStockMasiva
         'txt_Minimo
         '
         Me.txt_Minimo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Minimo.Location = New System.Drawing.Point(153, 21)
+        Me.txt_Minimo.Location = New System.Drawing.Point(153, 22)
         Me.txt_Minimo.Name = "txt_Minimo"
         Me.txt_Minimo.ReadOnly = True
         Me.txt_Minimo.Size = New System.Drawing.Size(145, 21)
@@ -206,7 +206,7 @@ Partial Class frmStockMasiva
         '
         Me.lbl_Actual.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_Actual.AutoSize = True
-        Me.lbl_Actual.Location = New System.Drawing.Point(3, 154)
+        Me.lbl_Actual.Location = New System.Drawing.Point(3, 155)
         Me.lbl_Actual.Name = "lbl_Actual"
         Me.lbl_Actual.Size = New System.Drawing.Size(73, 15)
         Me.lbl_Actual.TabIndex = 8
@@ -215,7 +215,7 @@ Partial Class frmStockMasiva
         'txt_Optimo
         '
         Me.txt_Optimo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Optimo.Location = New System.Drawing.Point(153, 85)
+        Me.txt_Optimo.Location = New System.Drawing.Point(153, 87)
         Me.txt_Optimo.Name = "txt_Optimo"
         Me.txt_Optimo.ReadOnly = True
         Me.txt_Optimo.Size = New System.Drawing.Size(145, 21)
@@ -225,7 +225,7 @@ Partial Class frmStockMasiva
         '
         Me.lbl_Optimo.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_Optimo.AutoSize = True
-        Me.lbl_Optimo.Location = New System.Drawing.Point(3, 88)
+        Me.lbl_Optimo.Location = New System.Drawing.Point(3, 90)
         Me.lbl_Optimo.Name = "lbl_Optimo"
         Me.lbl_Optimo.Size = New System.Drawing.Size(80, 15)
         Me.lbl_Optimo.TabIndex = 9
@@ -461,6 +461,77 @@ Partial Class frmStockMasiva
         Me.DG_Mercaderia.Size = New System.Drawing.Size(762, 245)
         Me.DG_Mercaderia.TabIndex = 15
         '
+        'id_Producto_2
+        '
+        Me.id_Producto_2.FillWeight = 116.9243!
+        Me.id_Producto_2.HeaderText = "id_Producto"
+        Me.id_Producto_2.Name = "id_Producto_2"
+        Me.id_Producto_2.ReadOnly = True
+        '
+        'Producto_2
+        '
+        Me.Producto_2.FillWeight = 159.8985!
+        Me.Producto_2.HeaderText = "Producto"
+        Me.Producto_2.Name = "Producto_2"
+        Me.Producto_2.ReadOnly = True
+        '
+        'Costo_2
+        '
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.Costo_2.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Costo_2.FillWeight = 67.53368!
+        Me.Costo_2.HeaderText = "Costo"
+        Me.Costo_2.Name = "Costo_2"
+        Me.Costo_2.ReadOnly = True
+        '
+        'Cantidad_2
+        '
+        Me.Cantidad_2.FillWeight = 67.84171!
+        Me.Cantidad_2.HeaderText = "Cantidad"
+        Me.Cantidad_2.Name = "Cantidad_2"
+        Me.Cantidad_2.ReadOnly = True
+        '
+        'Subtotal
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.Subtotal.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Subtotal.FillWeight = 87.00771!
+        Me.Subtotal.HeaderText = "Subtotal"
+        Me.Subtotal.Name = "Subtotal"
+        Me.Subtotal.ReadOnly = True
+        '
+        'Stock_Minimo
+        '
+        Me.Stock_Minimo.FillWeight = 116.9243!
+        Me.Stock_Minimo.HeaderText = "S. Minimo"
+        Me.Stock_Minimo.Name = "Stock_Minimo"
+        Me.Stock_Minimo.ReadOnly = True
+        '
+        'Stock_Optimo
+        '
+        Me.Stock_Optimo.FillWeight = 116.9243!
+        Me.Stock_Optimo.HeaderText = "S. Optimo"
+        Me.Stock_Optimo.Name = "Stock_Optimo"
+        Me.Stock_Optimo.ReadOnly = True
+        '
+        'Stock_Actual
+        '
+        Me.Stock_Actual.FillWeight = 116.9243!
+        Me.Stock_Actual.HeaderText = "S. Actual"
+        Me.Stock_Actual.Name = "Stock_Actual"
+        Me.Stock_Actual.ReadOnly = True
+        '
+        'Eliminar_2
+        '
+        Me.Eliminar_2.FillWeight = 50.02111!
+        Me.Eliminar_2.HeaderText = "Eliminar"
+        Me.Eliminar_2.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar_2.Name = "Eliminar_2"
+        Me.Eliminar_2.ReadOnly = True
+        Me.Eliminar_2.ToolTipText = "Eliminar Producto"
+        '
         'lbl_Monto
         '
         Me.lbl_Monto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -552,7 +623,7 @@ Partial Class frmStockMasiva
         Me.Cb_Proveedor.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Proveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Proveedor.FormattingEnabled = True
-        Me.Cb_Proveedor.Location = New System.Drawing.Point(593, 34)
+        Me.Cb_Proveedor.Location = New System.Drawing.Point(593, 33)
         Me.Cb_Proveedor.Name = "Cb_Proveedor"
         Me.Cb_Proveedor.Size = New System.Drawing.Size(163, 23)
         Me.Cb_Proveedor.TabIndex = 2
@@ -626,7 +697,7 @@ Partial Class frmStockMasiva
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(113, 255)
+        Me.lbl_Msg.Location = New System.Drawing.Point(112, 305)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(560, 29)
         Me.lbl_Msg.TabIndex = 5
@@ -953,77 +1024,6 @@ Partial Class frmStockMasiva
         Me.ErrorStock.BlinkRate = 200
         Me.ErrorStock.ContainerControl = Me
         '
-        'id_Producto_2
-        '
-        Me.id_Producto_2.FillWeight = 116.9243!
-        Me.id_Producto_2.HeaderText = "id_Producto"
-        Me.id_Producto_2.Name = "id_Producto_2"
-        Me.id_Producto_2.ReadOnly = True
-        '
-        'Producto_2
-        '
-        Me.Producto_2.FillWeight = 159.8985!
-        Me.Producto_2.HeaderText = "Producto"
-        Me.Producto_2.Name = "Producto_2"
-        Me.Producto_2.ReadOnly = True
-        '
-        'Costo_2
-        '
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.Costo_2.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Costo_2.FillWeight = 67.53368!
-        Me.Costo_2.HeaderText = "Costo"
-        Me.Costo_2.Name = "Costo_2"
-        Me.Costo_2.ReadOnly = True
-        '
-        'Cantidad_2
-        '
-        Me.Cantidad_2.FillWeight = 67.84171!
-        Me.Cantidad_2.HeaderText = "Cantidad"
-        Me.Cantidad_2.Name = "Cantidad_2"
-        Me.Cantidad_2.ReadOnly = True
-        '
-        'Subtotal
-        '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.Subtotal.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Subtotal.FillWeight = 87.00771!
-        Me.Subtotal.HeaderText = "Subtotal"
-        Me.Subtotal.Name = "Subtotal"
-        Me.Subtotal.ReadOnly = True
-        '
-        'Stock_Minimo
-        '
-        Me.Stock_Minimo.FillWeight = 116.9243!
-        Me.Stock_Minimo.HeaderText = "S. Minimo"
-        Me.Stock_Minimo.Name = "Stock_Minimo"
-        Me.Stock_Minimo.ReadOnly = True
-        '
-        'Stock_Optimo
-        '
-        Me.Stock_Optimo.FillWeight = 116.9243!
-        Me.Stock_Optimo.HeaderText = "S. Optimo"
-        Me.Stock_Optimo.Name = "Stock_Optimo"
-        Me.Stock_Optimo.ReadOnly = True
-        '
-        'Stock_Actual
-        '
-        Me.Stock_Actual.FillWeight = 116.9243!
-        Me.Stock_Actual.HeaderText = "S. Actual"
-        Me.Stock_Actual.Name = "Stock_Actual"
-        Me.Stock_Actual.ReadOnly = True
-        '
-        'Eliminar_2
-        '
-        Me.Eliminar_2.FillWeight = 50.02111!
-        Me.Eliminar_2.HeaderText = "Eliminar"
-        Me.Eliminar_2.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar_2.Name = "Eliminar_2"
-        Me.Eliminar_2.ReadOnly = True
-        Me.Eliminar_2.ToolTipText = "Eliminar Producto"
-        '
         'frmStockMasiva
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1031,7 +1031,6 @@ Partial Class frmStockMasiva
         Me.ClientSize = New System.Drawing.Size(794, 672)
         Me.Controls.Add(Me.TabStock)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmStockMasiva"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

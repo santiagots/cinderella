@@ -731,6 +731,7 @@
             RemoveHandler DG_Usuarios.CellDoubleClick, AddressOf DG_Usuarios_CellDoubleClick
         End If
     End Sub
+
 #End Region
 
 End Class

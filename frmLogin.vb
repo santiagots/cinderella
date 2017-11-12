@@ -12,6 +12,7 @@ Public Class frmLogin
     Private Sub OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK.Click
         Try
             'Seteo el cursor
+
             Me.Cursor = Cursors.WaitCursor
 
             'Declaracion de Variables.

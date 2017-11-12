@@ -69,8 +69,8 @@ Partial Class frmProductosMasiva
         'dgProductos
         '
         Me.dgProductos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgProductos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgProductos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.dgProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -230,7 +230,6 @@ Partial Class frmProductosMasiva
         Me.Controls.Add(Me.Btn_Limpiar)
         Me.Controls.Add(Me.Btn_Procesar)
         Me.Controls.Add(Me.dgProductos)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmProductosMasiva"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

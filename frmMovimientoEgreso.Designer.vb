@@ -28,6 +28,7 @@ Partial Class frmMovimientoEgreso
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnAceptar = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Btn_Salir = New System.Windows.Forms.Button()
         Me.lblMercaderias = New System.Windows.Forms.Label()
         Me.Btn_CargarMercaderia = New System.Windows.Forms.Button()
         Me.CbSucursal = New System.Windows.Forms.ComboBox()
@@ -46,13 +47,13 @@ Partial Class frmMovimientoEgreso
         Me.lbl_Sucursal = New System.Windows.Forms.Label()
         Me.ErrorEgresos = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolEgresos = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Btn_Salir = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.ErrorEgresos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label5
         '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(229, 336)
         Me.Label5.Name = "Label5"
@@ -78,7 +79,7 @@ Partial Class frmMovimientoEgreso
         '
         'btnAceptar
         '
-        Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnAceptar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAceptar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
@@ -94,6 +95,9 @@ Partial Class frmMovimientoEgreso
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.Btn_Salir)
         Me.GroupBox1.Controls.Add(Me.btnCancelar)
         Me.GroupBox1.Controls.Add(Me.Label5)
@@ -122,6 +126,22 @@ Partial Class frmMovimientoEgreso
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Alta de movimientos de ""Egresos"" en la sucursal."
         '
+        'Btn_Salir
+        '
+        Me.Btn_Salir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Salir.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Salir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Salir.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.Btn_Salir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Salir.Location = New System.Drawing.Point(13, 358)
+        Me.Btn_Salir.Name = "Btn_Salir"
+        Me.Btn_Salir.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Salir.TabIndex = 23
+        Me.Btn_Salir.Text = "Salir"
+        Me.Btn_Salir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolEgresos.SetToolTip(Me.Btn_Salir, "Al cancelar el formulario se restablecerán todas las opciones del formulario.")
+        Me.Btn_Salir.UseVisualStyleBackColor = True
+        '
         'lblMercaderias
         '
         Me.lblMercaderias.AutoSize = True
@@ -135,6 +155,7 @@ Partial Class frmMovimientoEgreso
         '
         'Btn_CargarMercaderia
         '
+        Me.Btn_CargarMercaderia.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_CargarMercaderia.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_CargarMercaderia.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_CargarMercaderia.Image = Global.SistemaCinderella.My.Resources.Recursos.Proveedores_2
@@ -145,13 +166,15 @@ Partial Class frmMovimientoEgreso
         Me.Btn_CargarMercaderia.TabIndex = 10
         Me.Btn_CargarMercaderia.Text = "Cargar Mercadería"
         Me.Btn_CargarMercaderia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ToolEgresos.SetToolTip(Me.Btn_CargarMercaderia, "Al hacer click aquí accederá al formulario para la carga de mercadería a enviar a" & _
-                " la sucursal destino.")
+        Me.ToolEgresos.SetToolTip(Me.Btn_CargarMercaderia, "Al hacer click aquí accederá al formulario para la carga de mercadería a enviar a" &
+        " la sucursal destino.")
         Me.Btn_CargarMercaderia.UseVisualStyleBackColor = True
         Me.Btn_CargarMercaderia.Visible = False
         '
         'CbSucursal
         '
+        Me.CbSucursal.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CbSucursal.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbSucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbSucursal.FormattingEnabled = True
@@ -172,6 +195,8 @@ Partial Class frmMovimientoEgreso
         '
         'CbSubtipo
         '
+        Me.CbSubtipo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CbSubtipo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbSubtipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbSubtipo.Enabled = False
@@ -193,6 +218,8 @@ Partial Class frmMovimientoEgreso
         '
         'CbTipo
         '
+        Me.CbTipo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CbTipo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbTipo.FormattingEnabled = True
@@ -213,6 +240,9 @@ Partial Class frmMovimientoEgreso
         '
         'txtDescripcion
         '
+        Me.txtDescripcion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtDescripcion.Location = New System.Drawing.Point(13, 241)
         Me.txtDescripcion.Multiline = True
         Me.txtDescripcion.Name = "txtDescripcion"
@@ -221,6 +251,8 @@ Partial Class frmMovimientoEgreso
         '
         'txtMonto
         '
+        Me.txtMonto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMonto.Location = New System.Drawing.Point(146, 163)
         Me.txtMonto.Name = "txtMonto"
         Me.txtMonto.Size = New System.Drawing.Size(101, 21)
@@ -228,6 +260,8 @@ Partial Class frmMovimientoEgreso
         '
         'txtDate
         '
+        Me.txtDate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtDate.Location = New System.Drawing.Point(146, 82)
         Me.txtDate.Name = "txtDate"
         Me.txtDate.Size = New System.Drawing.Size(210, 21)
@@ -289,22 +323,6 @@ Partial Class frmMovimientoEgreso
         Me.ToolEgresos.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolEgresos.ToolTipTitle = "Ayuda"
         '
-        'Btn_Salir
-        '
-        Me.Btn_Salir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Salir.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Salir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Salir.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.Btn_Salir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Salir.Location = New System.Drawing.Point(13, 358)
-        Me.Btn_Salir.Name = "Btn_Salir"
-        Me.Btn_Salir.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Salir.TabIndex = 23
-        Me.Btn_Salir.Text = "Salir"
-        Me.Btn_Salir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolEgresos.SetToolTip(Me.Btn_Salir, "Al cancelar el formulario se restablecerán todas las opciones del formulario.")
-        Me.Btn_Salir.UseVisualStyleBackColor = True
-        '
         'frmMovimientoEgreso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -312,9 +330,7 @@ Partial Class frmMovimientoEgreso
         Me.ClientSize = New System.Drawing.Size(394, 422)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmMovimientoEgreso"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Movimientos | Envió a Otras Sucursales"

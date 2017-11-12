@@ -48,7 +48,6 @@ Partial Class frmReporteEtiquetasMasivas
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(794, 572)
         Me.Controls.Add(Me.CrViewer)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmReporteEtiquetasMasivas"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

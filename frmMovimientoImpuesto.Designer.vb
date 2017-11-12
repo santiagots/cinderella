@@ -128,7 +128,7 @@ Partial Class frmMovimientoImpuesto
         '
         Me.txtMonto.Location = New System.Drawing.Point(127, 111)
         Me.txtMonto.Name = "txtMonto"
-        Me.txtMonto.Size = New System.Drawing.Size(120, 21)
+        Me.txtMonto.Size = New System.Drawing.Size(229, 21)
         Me.txtMonto.TabIndex = 4
         '
         'txtDate

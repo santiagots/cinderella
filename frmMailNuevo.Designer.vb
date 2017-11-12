@@ -40,6 +40,9 @@ Partial Class frmMailNuevo
         '
         'txt_Mensaje
         '
+        Me.txt_Mensaje.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Mensaje.Location = New System.Drawing.Point(120, 106)
         Me.txt_Mensaje.Multiline = True
         Me.txt_Mensaje.Name = "txt_Mensaje"
@@ -48,9 +51,11 @@ Partial Class frmMailNuevo
         '
         'txt_Asunto
         '
+        Me.txt_Asunto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Asunto.Location = New System.Drawing.Point(120, 76)
         Me.txt_Asunto.Name = "txt_Asunto"
-        Me.txt_Asunto.Size = New System.Drawing.Size(360, 21)
+        Me.txt_Asunto.Size = New System.Drawing.Size(460, 21)
         Me.txt_Asunto.TabIndex = 2
         '
         'Btn_Cancelar
@@ -60,7 +65,7 @@ Partial Class frmMailNuevo
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(326, 322)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(344, 322)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 4
@@ -115,12 +120,14 @@ Partial Class frmMailNuevo
         '
         'cb_Usuarios
         '
+        Me.cb_Usuarios.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Usuarios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_Usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Usuarios.FormattingEnabled = True
         Me.cb_Usuarios.Location = New System.Drawing.Point(120, 45)
         Me.cb_Usuarios.Name = "cb_Usuarios"
-        Me.cb_Usuarios.Size = New System.Drawing.Size(221, 23)
+        Me.cb_Usuarios.Size = New System.Drawing.Size(460, 23)
         Me.cb_Usuarios.TabIndex = 1
         '
         'Gb_Mail
@@ -154,9 +161,7 @@ Partial Class frmMailNuevo
         Me.ClientSize = New System.Drawing.Size(594, 372)
         Me.Controls.Add(Me.Gb_Mail)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmMailNuevo"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Centro de Mensajes | Nuevo Mensaje"

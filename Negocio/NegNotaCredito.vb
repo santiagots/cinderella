@@ -135,7 +135,7 @@ Public Class NegNotaCredito
         entNotaCredito.PuntoVenta = drNotaCredito.Item("PuntoVenta").ToString
         entNotaCredito.TipoRecibo = Integer.Parse(drNotaCredito.Item("TipoRecibo").ToString)
         entNotaCredito.id_Sucursal = drNotaCredito.Item("Id_Sucursal").ToString
-        entNotaCredito.id_Factura = If(drNotaCredito.Item("Id_Factura") Is DBNull.Value, 0, Integer.Parse(drNotaCredito.Item("Id_Factura").ToString))
+        entNotaCredito.id_Factura = If(drNotaCredito.Item("Id_Factura") Is DBNull.Value, 0, Long.Parse(drNotaCredito.Item("Id_Factura").ToString))
         Return entNotaCredito
     End Function
 End Class

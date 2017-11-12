@@ -43,20 +43,18 @@ Partial Class frmAdelantoListado
         Me.DG_Adelantos.AllowUserToAddRows = False
         Me.DG_Adelantos.AllowUserToDeleteRows = False
         Me.DG_Adelantos.AllowUserToResizeRows = False
-        Me.DG_Adelantos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Adelantos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Adelantos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Adelantos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Adelanto, Me.Empleado, Me.Fecha, Me.Descripcion, Me.Monto, Me.Modificar, Me.Eliminar})
         Me.DG_Adelantos.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.DG_Adelantos.Location = New System.Drawing.Point(6, 20)
+        Me.DG_Adelantos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DG_Adelantos.Location = New System.Drawing.Point(3, 17)
         Me.DG_Adelantos.MultiSelect = False
         Me.DG_Adelantos.Name = "DG_Adelantos"
         Me.DG_Adelantos.ReadOnly = True
         Me.DG_Adelantos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Adelantos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Adelantos.Size = New System.Drawing.Size(582, 339)
+        Me.DG_Adelantos.Size = New System.Drawing.Size(588, 352)
         Me.DG_Adelantos.TabIndex = 3
         '
         'id_Adelanto
@@ -134,7 +132,9 @@ Partial Class frmAdelantoListado
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(91, 172)
@@ -142,6 +142,7 @@ Partial Class frmAdelantoListado
         Me.lbl_Msg.Size = New System.Drawing.Size(397, 29)
         Me.lbl_Msg.TabIndex = 5
         Me.lbl_Msg.Text = "No se han encontrado adelantos."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'frmAdelantoListado
         '
@@ -150,14 +151,12 @@ Partial Class frmAdelantoListado
         Me.ClientSize = New System.Drawing.Size(594, 372)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmAdelantoListado"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Listado de Adelantos del día"
         CType(Me.DG_Adelantos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

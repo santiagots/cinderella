@@ -48,6 +48,9 @@ Partial Class frmBuscarClienteMinorista
         '
         'GB_Clientes
         '
+        Me.GB_Clientes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Clientes.Controls.Add(Me.Label2)
         Me.GB_Clientes.Controls.Add(Me.txtNombre)
         Me.GB_Clientes.Controls.Add(Me.lbl_Msg)
@@ -76,30 +79,36 @@ Partial Class frmBuscarClienteMinorista
         '
         'txtNombre
         '
+        Me.txtNombre.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtNombre.Location = New System.Drawing.Point(91, 102)
         Me.txtNombre.Name = "txtNombre"
-        Me.txtNombre.Size = New System.Drawing.Size(244, 21)
+        Me.txtNombre.Size = New System.Drawing.Size(291, 21)
         Me.txtNombre.TabIndex = 15
         Me.ToolCliente.SetToolTip(Me.txtNombre, "Usted puede realizar una busqueda por palabra completa  o parte de ella.")
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(99, 259)
+        Me.lbl_Msg.Location = New System.Drawing.Point(99, 240)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(374, 29)
         Me.lbl_Msg.TabIndex = 13
         Me.lbl_Msg.Text = "No se han encontrado clientes."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Btn_Limpiar
         '
+        Me.Btn_Limpiar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Limpiar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Limpiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Limpiar.Location = New System.Drawing.Point(388, 75)
+        Me.Btn_Limpiar.Location = New System.Drawing.Point(388, 79)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Size = New System.Drawing.Size(85, 40)
         Me.Btn_Limpiar.TabIndex = 10
@@ -111,6 +120,8 @@ Partial Class frmBuscarClienteMinorista
         '
         'lbl_informacion
         '
+        Me.lbl_informacion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_informacion.Location = New System.Drawing.Point(8, 27)
         Me.lbl_informacion.Name = "lbl_informacion"
         Me.lbl_informacion.Size = New System.Drawing.Size(556, 35)
@@ -124,6 +135,9 @@ Partial Class frmBuscarClienteMinorista
         Me.DG_Clientes.AllowUserToDeleteRows = False
         Me.DG_Clientes.AllowUserToResizeColumns = False
         Me.DG_Clientes.AllowUserToResizeRows = False
+        Me.DG_Clientes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -180,11 +194,12 @@ Partial Class frmBuscarClienteMinorista
         '
         'btn_Buscar
         '
+        Me.btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Buscar.Location = New System.Drawing.Point(479, 75)
+        Me.btn_Buscar.Location = New System.Drawing.Point(479, 79)
         Me.btn_Buscar.Name = "btn_Buscar"
         Me.btn_Buscar.Size = New System.Drawing.Size(85, 40)
         Me.btn_Buscar.TabIndex = 2
@@ -203,9 +218,11 @@ Partial Class frmBuscarClienteMinorista
         '
         'txtApellido
         '
+        Me.txtApellido.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtApellido.Location = New System.Drawing.Point(91, 75)
         Me.txtApellido.Name = "txtApellido"
-        Me.txtApellido.Size = New System.Drawing.Size(244, 21)
+        Me.txtApellido.Size = New System.Drawing.Size(291, 21)
         Me.txtApellido.TabIndex = 1
         Me.ToolCliente.SetToolTip(Me.txtApellido, "Usted puede realizar una busqueda por palabra completa  o parte de ella.")
         '
@@ -221,9 +238,7 @@ Partial Class frmBuscarClienteMinorista
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(594, 410)
         Me.Controls.Add(Me.GB_Clientes)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmBuscarClienteMinorista"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Buscar Cliente"

@@ -55,7 +55,7 @@ Partial Class frmMovimientoSocios
         '
         'btnCancelar
         '
-        Me.btnCancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
@@ -71,7 +71,7 @@ Partial Class frmMovimientoSocios
         '
         'btnAceptar
         '
-        Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnAceptar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnAceptar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAceptar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
@@ -82,12 +82,15 @@ Partial Class frmMovimientoSocios
         Me.btnAceptar.TabIndex = 8
         Me.btnAceptar.Text = "Aceptar"
         Me.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolRetiros.SetToolTip(Me.btnAceptar, "Al aceptar el formulario se registrará en el sistema el retiro de dinero del soci" & _
+        Me.ToolRetiros.SetToolTip(Me.btnAceptar, "Al aceptar el formulario se registrará en el sistema el retiro de dinero del soci" &
         "o.")
         Me.btnAceptar.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.cmbDestinoSalida)
         Me.GroupBox1.Controls.Add(Me.Label16)
         Me.GroupBox1.Controls.Add(Me.btn_Cheque)
@@ -120,6 +123,8 @@ Partial Class frmMovimientoSocios
         '
         'cmbDestinoSalida
         '
+        Me.cmbDestinoSalida.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbDestinoSalida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbDestinoSalida.FormattingEnabled = True
         Me.cmbDestinoSalida.Location = New System.Drawing.Point(153, 129)
@@ -138,7 +143,7 @@ Partial Class frmMovimientoSocios
         '
         'btn_Cheque
         '
-        Me.btn_Cheque.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btn_Cheque.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Cheque.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Cheque.Enabled = False
         Me.btn_Cheque.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -150,12 +155,14 @@ Partial Class frmMovimientoSocios
         Me.btn_Cheque.TabIndex = 22
         Me.btn_Cheque.Text = "Cheque"
         Me.btn_Cheque.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolRetiros.SetToolTip(Me.btn_Cheque, "Al aceptar el formulario se registrará en el sistema el retiro de dinero del soci" & _
+        Me.ToolRetiros.SetToolTip(Me.btn_Cheque, "Al aceptar el formulario se registrará en el sistema el retiro de dinero del soci" &
         "o.")
         Me.btn_Cheque.UseVisualStyleBackColor = True
         '
         'cmbTipoPago
         '
+        Me.cmbTipoPago.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbTipoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbTipoPago.FormattingEnabled = True
         Me.cmbTipoPago.Items.AddRange(New Object() {"Efectivo", "Cheque"})
@@ -175,6 +182,8 @@ Partial Class frmMovimientoSocios
         '
         'cmbAccion
         '
+        Me.cmbAccion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbAccion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbAccion.FormattingEnabled = True
         Me.cmbAccion.Items.AddRange(New Object() {"Retiro", "Aporte"})
@@ -194,6 +203,7 @@ Partial Class frmMovimientoSocios
         '
         'Label5
         '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(251, 391)
         Me.Label5.Name = "Label5"
@@ -203,6 +213,8 @@ Partial Class frmMovimientoSocios
         '
         'txtEncargado
         '
+        Me.txtEncargado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtEncargado.Location = New System.Drawing.Point(153, 185)
         Me.txtEncargado.Name = "txtEncargado"
         Me.txtEncargado.Size = New System.Drawing.Size(226, 21)
@@ -210,6 +222,8 @@ Partial Class frmMovimientoSocios
         '
         'txtPersona
         '
+        Me.txtPersona.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtPersona.Location = New System.Drawing.Point(153, 212)
         Me.txtPersona.Name = "txtPersona"
         Me.txtPersona.Size = New System.Drawing.Size(226, 21)
@@ -226,6 +240,9 @@ Partial Class frmMovimientoSocios
         '
         'txtDescripcion
         '
+        Me.txtDescripcion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtDescripcion.Location = New System.Drawing.Point(14, 289)
         Me.txtDescripcion.Multiline = True
         Me.txtDescripcion.Name = "txtDescripcion"
@@ -234,6 +251,8 @@ Partial Class frmMovimientoSocios
         '
         'txtMonto
         '
+        Me.txtMonto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMonto.Location = New System.Drawing.Point(153, 239)
         Me.txtMonto.Name = "txtMonto"
         Me.txtMonto.Size = New System.Drawing.Size(226, 21)
@@ -241,6 +260,8 @@ Partial Class frmMovimientoSocios
         '
         'txtDate
         '
+        Me.txtDate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtDate.Location = New System.Drawing.Point(153, 158)
         Me.txtDate.Name = "txtDate"
         Me.txtDate.Size = New System.Drawing.Size(226, 21)
@@ -318,9 +339,7 @@ Partial Class frmMovimientoSocios
         Me.ClientSize = New System.Drawing.Size(407, 477)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmMovimientoSocios"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Movimientos | Socios"

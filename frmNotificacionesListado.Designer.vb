@@ -44,7 +44,6 @@ Partial Class frmNotificacionesListado
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.DG_Notificaciones = New System.Windows.Forms.DataGridView()
-        Me.ToolNotif = New System.Windows.Forms.ToolTip(Me.components)
         Me.id_Movimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id_Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id_Subtipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -59,6 +58,7 @@ Partial Class frmNotificacionesListado
         Me.Comentario = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Aceptar = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ToolNotif = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.Gb_Detalle.SuspendLayout()
         CType(Me.DG_Notificaciones, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -77,13 +77,14 @@ Partial Class frmNotificacionesListado
         Me.GroupBox1.Size = New System.Drawing.Size(620, 505)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Debajo se listarán todas las notificaciones. Generalmente serán movimientos que l" & _
-    "levaron a cabo otras sucursales con ésta sucursal. Deberán ser ""aceptadas"" para " & _
+        Me.GroupBox1.Text = "Debajo se listarán todas las notificaciones. Generalmente serán movimientos que l" &
+    "levaron a cabo otras sucursales con ésta sucursal. Deberán ser ""aceptadas"" para " &
     "que surjan efecto."
         '
         'Gb_Detalle
         '
-        Me.Gb_Detalle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Gb_Detalle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Detalle.Controls.Add(Me.lblAceptado)
         Me.Gb_Detalle.Controls.Add(Me.lblMonto)
         Me.Gb_Detalle.Controls.Add(Me.Label7)
@@ -146,6 +147,7 @@ Partial Class frmNotificacionesListado
         '
         'Label4
         '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(279, 24)
@@ -156,6 +158,7 @@ Partial Class frmNotificacionesListado
         '
         'lblComentarios
         '
+        Me.lblComentarios.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblComentarios.Location = New System.Drawing.Point(279, 39)
         Me.lblComentarios.MaximumSize = New System.Drawing.Size(200, 80)
         Me.lblComentarios.Name = "lblComentarios"
@@ -246,7 +249,7 @@ Partial Class frmNotificacionesListado
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(510, 415)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(510, 458)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 16
@@ -274,12 +277,6 @@ Partial Class frmNotificacionesListado
         Me.DG_Notificaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Notificaciones.Size = New System.Drawing.Size(600, 325)
         Me.DG_Notificaciones.TabIndex = 0
-        '
-        'ToolNotif
-        '
-        Me.ToolNotif.IsBalloon = True
-        Me.ToolNotif.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolNotif.ToolTipTitle = "Ayuda"
         '
         'id_Movimiento
         '
@@ -385,6 +382,12 @@ Partial Class frmNotificacionesListado
         Me.Eliminar.Name = "Eliminar"
         Me.Eliminar.ReadOnly = True
         '
+        'ToolNotif
+        '
+        Me.ToolNotif.IsBalloon = True
+        Me.ToolNotif.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolNotif.ToolTipTitle = "Ayuda"
+        '
         'frmNotificacionesListado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -392,7 +395,6 @@ Partial Class frmNotificacionesListado
         Me.ClientSize = New System.Drawing.Size(644, 522)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

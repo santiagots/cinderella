@@ -50,8 +50,8 @@ Partial Class frmDiferenciasListado
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.Label11)
         Me.GroupBox1.Controls.Add(Me.txt_Total)
         Me.GroupBox1.Controls.Add(Me.lbl_DescrTot)
@@ -76,7 +76,7 @@ Partial Class frmDiferenciasListado
         Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(445, 412)
+        Me.Label11.Location = New System.Drawing.Point(377, 412)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(26, 29)
         Me.Label11.TabIndex = 31
@@ -87,10 +87,10 @@ Partial Class frmDiferenciasListado
         '
         Me.txt_Total.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Total.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_Total.Location = New System.Drawing.Point(477, 409)
+        Me.txt_Total.Location = New System.Drawing.Point(416, 409)
         Me.txt_Total.Name = "txt_Total"
         Me.txt_Total.ReadOnly = True
-        Me.txt_Total.Size = New System.Drawing.Size(139, 35)
+        Me.txt_Total.Size = New System.Drawing.Size(200, 35)
         Me.txt_Total.TabIndex = 30
         Me.txt_Total.Text = "0,00"
         Me.txt_Total.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -100,7 +100,7 @@ Partial Class frmDiferenciasListado
         Me.lbl_DescrTot.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_DescrTot.AutoSize = True
         Me.lbl_DescrTot.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DescrTot.Location = New System.Drawing.Point(331, 412)
+        Me.lbl_DescrTot.Location = New System.Drawing.Point(263, 412)
         Me.lbl_DescrTot.Name = "lbl_DescrTot"
         Me.lbl_DescrTot.Size = New System.Drawing.Size(98, 29)
         Me.lbl_DescrTot.TabIndex = 29
@@ -108,6 +108,9 @@ Partial Class frmDiferenciasListado
         '
         'lbl_Msg
         '
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(24, 267)
@@ -119,22 +122,26 @@ Partial Class frmDiferenciasListado
         '
         'FechaHasta
         '
-        Me.FechaHasta.Location = New System.Drawing.Point(110, 77)
+        Me.FechaHasta.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FechaHasta.Location = New System.Drawing.Point(110, 86)
         Me.FechaHasta.Name = "FechaHasta"
-        Me.FechaHasta.Size = New System.Drawing.Size(227, 21)
+        Me.FechaHasta.Size = New System.Drawing.Size(400, 21)
         Me.FechaHasta.TabIndex = 27
         '
         'FechaDesde
         '
-        Me.FechaDesde.Location = New System.Drawing.Point(110, 49)
+        Me.FechaDesde.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FechaDesde.Location = New System.Drawing.Point(110, 55)
         Me.FechaDesde.Name = "FechaDesde"
-        Me.FechaDesde.Size = New System.Drawing.Size(227, 21)
+        Me.FechaDesde.Size = New System.Drawing.Size(400, 21)
         Me.FechaDesde.TabIndex = 26
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(8, 83)
+        Me.Label2.Location = New System.Drawing.Point(8, 92)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(76, 15)
         Me.Label2.TabIndex = 25
@@ -143,7 +150,7 @@ Partial Class frmDiferenciasListado
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(8, 54)
+        Me.Label1.Location = New System.Drawing.Point(8, 60)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(80, 15)
         Me.Label1.TabIndex = 24
@@ -161,13 +168,15 @@ Partial Class frmDiferenciasListado
         '
         'Cb_Sucursal
         '
+        Me.Cb_Sucursal.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_Sucursal.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursal.FormattingEnabled = True
         Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
         Me.Cb_Sucursal.Location = New System.Drawing.Point(110, 20)
         Me.Cb_Sucursal.Name = "Cb_Sucursal"
-        Me.Cb_Sucursal.Size = New System.Drawing.Size(227, 23)
+        Me.Cb_Sucursal.Size = New System.Drawing.Size(400, 23)
         Me.Cb_Sucursal.TabIndex = 20
         '
         'btn_Restablecer
@@ -204,8 +213,8 @@ Partial Class frmDiferenciasListado
         Me.DG_Movimientos.AllowUserToDeleteRows = False
         Me.DG_Movimientos.AllowUserToResizeRows = False
         Me.DG_Movimientos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Movimientos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Movimientos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Movimientos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Fecha, Me.Tipo, Me.Descripcion, Me.Monto, Me.Empleado})
@@ -267,7 +276,6 @@ Partial Class frmDiferenciasListado
         Me.ClientSize = New System.Drawing.Size(644, 472)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmDiferenciasListado"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

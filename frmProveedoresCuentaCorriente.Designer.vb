@@ -28,6 +28,7 @@ Partial Class frmProveedoresCuentaCorriente
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProveedoresCuentaCorriente))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Btn_Limpiar = New System.Windows.Forms.Button()
         Me.lbl_referencias = New System.Windows.Forms.Label()
         Me.DG_Cuentas2 = New System.Windows.Forms.DataGridView()
         Me.Btn_Pagar = New System.Windows.Forms.Button()
@@ -71,7 +72,8 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Costo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Total = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Btn_Limpiar = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DG_Cuentas2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_Cuentas, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -83,13 +85,15 @@ Partial Class frmProveedoresCuentaCorriente
         Me.TabMercaderia.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.DG_Mercaderia, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.Btn_Limpiar)
         Me.GroupBox1.Controls.Add(Me.lbl_referencias)
         Me.GroupBox1.Controls.Add(Me.DG_Cuentas2)
@@ -106,6 +110,21 @@ Partial Class frmProveedoresCuentaCorriente
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Cuentas corrientes con los proveedores del sistema."
+        '
+        'Btn_Limpiar
+        '
+        Me.Btn_Limpiar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Limpiar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Update_32
+        Me.Btn_Limpiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Limpiar.Location = New System.Drawing.Point(494, 14)
+        Me.Btn_Limpiar.Name = "Btn_Limpiar"
+        Me.Btn_Limpiar.Size = New System.Drawing.Size(120, 39)
+        Me.Btn_Limpiar.TabIndex = 4
+        Me.Btn_Limpiar.Text = "Actualizar"
+        Me.Btn_Limpiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Limpiar.UseVisualStyleBackColor = True
         '
         'lbl_referencias
         '
@@ -124,8 +143,8 @@ Partial Class frmProveedoresCuentaCorriente
         Me.DG_Cuentas2.AllowUserToDeleteRows = False
         Me.DG_Cuentas2.AllowUserToResizeRows = False
         Me.DG_Cuentas2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Cuentas2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Cuentas2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Cuentas2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -158,8 +177,8 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(505, 22)
         Me.Label2.TabIndex = 8
-        Me.Label2.Text = "Haz click en un proveedor determinado para visualizar el detalle de la cuenta cor" & _
-            "riente."
+        Me.Label2.Text = "Haz click en un proveedor determinado para visualizar el detalle de la cuenta cor" &
+    "riente."
         '
         'lbl_Total
         '
@@ -186,8 +205,8 @@ Partial Class frmProveedoresCuentaCorriente
         'lbl_Msg
         '
         Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.AutoSize = True
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -204,8 +223,8 @@ Partial Class frmProveedoresCuentaCorriente
         Me.DG_Cuentas.AllowUserToResizeColumns = False
         Me.DG_Cuentas.AllowUserToResizeRows = False
         Me.DG_Cuentas.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Cuentas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Cuentas.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Cuentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -281,20 +300,17 @@ Partial Class frmProveedoresCuentaCorriente
         'GroupBox2
         '
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Controls.Add(Me.lbl_Total2)
         Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.lbl_Proveedor)
-        Me.GroupBox2.Controls.Add(Me.Label5)
-        Me.GroupBox2.Controls.Add(Me.lbl_Sucursal)
-        Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Controls.Add(Me.DG_Detalle)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(10, 6)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(620, 470)
+        Me.GroupBox2.Size = New System.Drawing.Size(620, 477)
         Me.GroupBox2.TabIndex = 0
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Cuentas corrientes con los proveedores del sistema."
@@ -304,7 +320,7 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(372, 412)
+        Me.Label4.Location = New System.Drawing.Point(372, 453)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(242, 13)
         Me.Label4.TabIndex = 11
@@ -315,7 +331,7 @@ Partial Class frmProveedoresCuentaCorriente
         Me.lbl_Total2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_Total2.AutoSize = True
         Me.lbl_Total2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Total2.Location = New System.Drawing.Point(207, 431)
+        Me.lbl_Total2.Location = New System.Drawing.Point(208, 444)
         Me.lbl_Total2.Name = "lbl_Total2"
         Me.lbl_Total2.Size = New System.Drawing.Size(79, 25)
         Me.lbl_Total2.TabIndex = 8
@@ -326,7 +342,7 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(3, 435)
+        Me.Label7.Location = New System.Drawing.Point(4, 448)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(198, 15)
         Me.Label7.TabIndex = 6
@@ -334,39 +350,43 @@ Partial Class frmProveedoresCuentaCorriente
         '
         'lbl_Proveedor
         '
+        Me.lbl_Proveedor.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Proveedor.AutoSize = True
-        Me.lbl_Proveedor.Location = New System.Drawing.Point(324, 38)
+        Me.lbl_Proveedor.Location = New System.Drawing.Point(501, 7)
         Me.lbl_Proveedor.Name = "lbl_Proveedor"
-        Me.lbl_Proveedor.Size = New System.Drawing.Size(66, 15)
+        Me.lbl_Proveedor.Size = New System.Drawing.Size(104, 15)
         Me.lbl_Proveedor.TabIndex = 5
         Me.lbl_Proveedor.Text = "Arak Madu"
         '
         'Label5
         '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(238, 38)
+        Me.Label5.Location = New System.Drawing.Point(361, 7)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(80, 15)
+        Me.Label5.Size = New System.Drawing.Size(134, 15)
         Me.Label5.TabIndex = 4
         Me.Label5.Text = "Proveedor :"
         '
         'lbl_Sucursal
         '
+        Me.lbl_Sucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Sucursal.AutoSize = True
-        Me.lbl_Sucursal.Location = New System.Drawing.Point(83, 38)
+        Me.lbl_Sucursal.Location = New System.Drawing.Point(143, 7)
         Me.lbl_Sucursal.Name = "lbl_Sucursal"
-        Me.lbl_Sucursal.Size = New System.Drawing.Size(46, 15)
+        Me.lbl_Sucursal.Size = New System.Drawing.Size(103, 15)
         Me.lbl_Sucursal.TabIndex = 3
         Me.lbl_Sucursal.Text = "Sarasa"
         '
         'Label3
         '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(6, 38)
+        Me.Label3.Location = New System.Drawing.Point(3, 7)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(71, 15)
+        Me.Label3.Size = New System.Drawing.Size(134, 15)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "Sucursal :"
         '
@@ -377,19 +397,19 @@ Partial Class frmProveedoresCuentaCorriente
         Me.DG_Detalle.AllowUserToResizeColumns = False
         Me.DG_Detalle.AllowUserToResizeRows = False
         Me.DG_Detalle.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Detalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Detalle.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Detalle.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Detalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Detalle.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Mercaderia, Me.Fecha, Me.Concepto, Me.Importe})
         Me.DG_Detalle.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.DG_Detalle.Location = New System.Drawing.Point(6, 74)
+        Me.DG_Detalle.Location = New System.Drawing.Point(6, 57)
         Me.DG_Detalle.Name = "DG_Detalle"
         Me.DG_Detalle.ReadOnly = True
         Me.DG_Detalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Detalle.Size = New System.Drawing.Size(608, 335)
+        Me.DG_Detalle.Size = New System.Drawing.Size(608, 384)
         Me.DG_Detalle.TabIndex = 1
         '
         'id_Mercaderia
@@ -437,41 +457,38 @@ Partial Class frmProveedoresCuentaCorriente
         'GroupBox3
         '
         Me.GroupBox3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox3.Controls.Add(Me.Label12)
-        Me.GroupBox3.Controls.Add(Me.Label13)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox3.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupBox3.Controls.Add(Me.lbl_Total3)
         Me.GroupBox3.Controls.Add(Me.Label6)
-        Me.GroupBox3.Controls.Add(Me.lbl_Proveedor2)
-        Me.GroupBox3.Controls.Add(Me.Label9)
-        Me.GroupBox3.Controls.Add(Me.lbl_Fecha)
-        Me.GroupBox3.Controls.Add(Me.Label11)
         Me.GroupBox3.Controls.Add(Me.DG_Mercaderia)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.Location = New System.Drawing.Point(10, 6)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(618, 420)
+        Me.GroupBox3.Size = New System.Drawing.Size(618, 475)
         Me.GroupBox3.TabIndex = 1
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Cuentas corrientes con los proveedores del sistema."
         '
         'Label12
         '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(324, 27)
+        Me.Label12.Location = New System.Drawing.Point(307, 7)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(76, 15)
+        Me.Label12.Size = New System.Drawing.Size(78, 15)
         Me.Label12.TabIndex = 10
         Me.Label12.Text = "Mercaderías"
         '
         'Label13
         '
+        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(238, 27)
+        Me.Label13.Location = New System.Drawing.Point(217, 7)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(75, 15)
+        Me.Label13.Size = New System.Drawing.Size(84, 15)
         Me.Label13.TabIndex = 9
         Me.Label13.Text = "Concepto :"
         '
@@ -480,7 +497,7 @@ Partial Class frmProveedoresCuentaCorriente
         Me.lbl_Total3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_Total3.AutoSize = True
         Me.lbl_Total3.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Total3.Location = New System.Drawing.Point(80, 383)
+        Me.lbl_Total3.Location = New System.Drawing.Point(81, 443)
         Me.lbl_Total3.Name = "lbl_Total3"
         Me.lbl_Total3.Size = New System.Drawing.Size(79, 25)
         Me.lbl_Total3.TabIndex = 8
@@ -491,7 +508,7 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(5, 387)
+        Me.Label6.Location = New System.Drawing.Point(6, 447)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(57, 15)
         Me.Label6.TabIndex = 6
@@ -499,39 +516,43 @@ Partial Class frmProveedoresCuentaCorriente
         '
         'lbl_Proveedor2
         '
+        Me.lbl_Proveedor2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Proveedor2.AutoSize = True
-        Me.lbl_Proveedor2.Location = New System.Drawing.Point(89, 55)
+        Me.lbl_Proveedor2.Location = New System.Drawing.Point(521, 7)
         Me.lbl_Proveedor2.Name = "lbl_Proveedor2"
-        Me.lbl_Proveedor2.Size = New System.Drawing.Size(66, 15)
+        Me.lbl_Proveedor2.Size = New System.Drawing.Size(80, 15)
         Me.lbl_Proveedor2.TabIndex = 5
         Me.lbl_Proveedor2.Text = "Arak Madu"
         '
         'Label9
         '
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(3, 55)
+        Me.Label9.Location = New System.Drawing.Point(431, 7)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(80, 15)
+        Me.Label9.Size = New System.Drawing.Size(84, 15)
         Me.Label9.TabIndex = 4
         Me.Label9.Text = "Proveedor :"
         '
         'lbl_Fecha
         '
+        Me.lbl_Fecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Fecha.AutoSize = True
-        Me.lbl_Fecha.Location = New System.Drawing.Point(89, 27)
+        Me.lbl_Fecha.Location = New System.Drawing.Point(93, 7)
         Me.lbl_Fecha.Name = "lbl_Fecha"
-        Me.lbl_Fecha.Size = New System.Drawing.Size(46, 15)
+        Me.lbl_Fecha.Size = New System.Drawing.Size(78, 15)
         Me.lbl_Fecha.TabIndex = 3
         Me.lbl_Fecha.Text = "Sarasa"
         '
         'Label11
         '
+        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(3, 27)
+        Me.Label11.Location = New System.Drawing.Point(3, 7)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(54, 15)
+        Me.Label11.Size = New System.Drawing.Size(84, 15)
         Me.Label11.TabIndex = 2
         Me.Label11.Text = "Fecha :"
         '
@@ -541,19 +562,19 @@ Partial Class frmProveedoresCuentaCorriente
         Me.DG_Mercaderia.AllowUserToDeleteRows = False
         Me.DG_Mercaderia.AllowUserToResizeRows = False
         Me.DG_Mercaderia.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Mercaderia.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Mercaderia.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Mercaderia.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Mercaderia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Mercaderia.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.Producto, Me.Cantidad, Me.Costo, Me.Total})
         Me.DG_Mercaderia.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.DG_Mercaderia.Location = New System.Drawing.Point(6, 83)
+        Me.DG_Mercaderia.Location = New System.Drawing.Point(6, 56)
         Me.DG_Mercaderia.Name = "DG_Mercaderia"
         Me.DG_Mercaderia.ReadOnly = True
         Me.DG_Mercaderia.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Mercaderia.Size = New System.Drawing.Size(606, 276)
+        Me.DG_Mercaderia.Size = New System.Drawing.Size(606, 379)
         Me.DG_Mercaderia.TabIndex = 1
         '
         'Codigo
@@ -602,20 +623,52 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Total.Name = "Total"
         Me.Total.ReadOnly = True
         '
-        'Btn_Limpiar
+        'TableLayoutPanel1
         '
-        Me.Btn_Limpiar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Limpiar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Update_32
-        Me.Btn_Limpiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Limpiar.Location = New System.Drawing.Point(494, 14)
-        Me.Btn_Limpiar.Name = "Btn_Limpiar"
-        Me.Btn_Limpiar.Size = New System.Drawing.Size(120, 39)
-        Me.Btn_Limpiar.TabIndex = 4
-        Me.Btn_Limpiar.Text = "Actualizar"
-        Me.Btn_Limpiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Limpiar.UseVisualStyleBackColor = True
+        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 5
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label3, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Sucursal, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Proveedor, 4, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(608, 30)
+        Me.TableLayoutPanel1.TabIndex = 12
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 8
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 4, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.lbl_Fecha, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.lbl_Proveedor2, 7, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label13, 3, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label9, 6, 0)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(8, 20)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(604, 30)
+        Me.TableLayoutPanel2.TabIndex = 11
         '
         'frmProveedoresCuentaCorriente
         '
@@ -624,7 +677,6 @@ Partial Class frmProveedoresCuentaCorriente
         Me.ClientSize = New System.Drawing.Size(644, 522)
         Me.Controls.Add(Me.TabCuenta)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmProveedoresCuentaCorriente"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -643,6 +695,10 @@ Partial Class frmProveedoresCuentaCorriente
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         CType(Me.DG_Mercaderia, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -691,4 +747,6 @@ Partial Class frmProveedoresCuentaCorriente
     Friend WithEvents lbl_referencias As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Btn_Limpiar As System.Windows.Forms.Button
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
 End Class

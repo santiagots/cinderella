@@ -24,6 +24,8 @@ Partial Class frmPlanillaEntreSucursalesD1
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPlanillaEntreSucursalesD1))
         Me.GB1 = New System.Windows.Forms.GroupBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblSucursalDestino = New System.Windows.Forms.Label()
         Me.lblMonto = New System.Windows.Forms.Label()
         Me.BtnCerrar = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -37,16 +39,14 @@ Partial Class frmPlanillaEntreSucursalesD1
         Me.lblTipo = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.lblSucursalDestino = New System.Windows.Forms.Label()
         Me.GB1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GB1
         '
         Me.GB1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB1.Controls.Add(Me.Label7)
         Me.GB1.Controls.Add(Me.lblSucursalDestino)
         Me.GB1.Controls.Add(Me.lblMonto)
@@ -69,6 +69,25 @@ Partial Class frmPlanillaEntreSucursalesD1
         Me.GB1.TabIndex = 0
         Me.GB1.TabStop = False
         Me.GB1.Text = "DETALLE DEL MOV. SELECCIONADO"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(19, 101)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(116, 15)
+        Me.Label7.TabIndex = 13
+        Me.Label7.Text = "Sucursal Destino"
+        '
+        'lblSucursalDestino
+        '
+        Me.lblSucursalDestino.AutoSize = True
+        Me.lblSucursalDestino.Location = New System.Drawing.Point(19, 119)
+        Me.lblSucursalDestino.Name = "lblSucursalDestino"
+        Me.lblSucursalDestino.Size = New System.Drawing.Size(26, 16)
+        Me.lblSucursalDestino.TabIndex = 14
+        Me.lblSucursalDestino.Text = "- - -"
         '
         'lblMonto
         '
@@ -116,7 +135,6 @@ Partial Class frmPlanillaEntreSucursalesD1
         '
         'Label4
         '
-        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(305, 27)
@@ -136,10 +154,11 @@ Partial Class frmPlanillaEntreSucursalesD1
         '
         'lblComentarios
         '
-        Me.lblComentarios.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblComentarios.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblComentarios.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblComentarios.Location = New System.Drawing.Point(305, 43)
-        Me.lblComentarios.MaximumSize = New System.Drawing.Size(250, 250)
         Me.lblComentarios.Name = "lblComentarios"
         Me.lblComentarios.Size = New System.Drawing.Size(250, 200)
         Me.lblComentarios.TabIndex = 8
@@ -202,25 +221,6 @@ Partial Class frmPlanillaEntreSucursalesD1
         Me.Label6.TabIndex = 5
         Me.Label6.Text = "Descripción"
         '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(19, 101)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(116, 15)
-        Me.Label7.TabIndex = 13
-        Me.Label7.Text = "Sucursal Destino"
-        '
-        'lblSucursalDestino
-        '
-        Me.lblSucursalDestino.AutoSize = True
-        Me.lblSucursalDestino.Location = New System.Drawing.Point(19, 119)
-        Me.lblSucursalDestino.Name = "lblSucursalDestino"
-        Me.lblSucursalDestino.Size = New System.Drawing.Size(26, 16)
-        Me.lblSucursalDestino.TabIndex = 14
-        Me.lblSucursalDestino.Text = "- - -"
-        '
         'frmPlanillaEntreSucursalesD1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -228,10 +228,7 @@ Partial Class frmPlanillaEntreSucursalesD1
         Me.ClientSize = New System.Drawing.Size(594, 322)
         Me.Controls.Add(Me.GB1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "frmPlanillaEntreSucursalesD1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Mov. entre Sucursales | Detalle"

@@ -44,6 +44,9 @@ Partial Class frmSincronizacion
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.btn_Cerrar)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Progreso)
@@ -63,6 +66,7 @@ Partial Class frmSincronizacion
         '
         'btn_Cerrar
         '
+        Me.btn_Cerrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Cerrar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Cerrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Cerrar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
@@ -78,6 +82,7 @@ Partial Class frmSincronizacion
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(16, 394)
         Me.Label2.Name = "Label2"
@@ -87,6 +92,8 @@ Partial Class frmSincronizacion
         '
         'Progreso
         '
+        Me.Progreso.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Progreso.Location = New System.Drawing.Point(13, 410)
         Me.Progreso.Name = "Progreso"
         Me.Progreso.Size = New System.Drawing.Size(561, 29)
@@ -94,6 +101,9 @@ Partial Class frmSincronizacion
         '
         'GroupBox2
         '
+        Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.ListaEstado)
         Me.GroupBox2.Location = New System.Drawing.Point(13, 76)
         Me.GroupBox2.Name = "GroupBox2"
@@ -104,6 +114,9 @@ Partial Class frmSincronizacion
         '
         'ListaEstado
         '
+        Me.ListaEstado.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ListaEstado.AutoArrange = False
         Me.ListaEstado.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Proceso, Me.Estado})
         Me.ListaEstado.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
@@ -163,6 +176,7 @@ Partial Class frmSincronizacion
         '
         'btnSincronizar
         '
+        Me.btnSincronizar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSincronizar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnSincronizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSincronizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
@@ -189,9 +203,7 @@ Partial Class frmSincronizacion
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(606, 463)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmSincronizacion"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Sincronización de Bases de Datos"

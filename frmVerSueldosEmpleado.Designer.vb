@@ -103,8 +103,6 @@ Partial Class frmVerSueldosEmpleado
         Me.ClientSize = New System.Drawing.Size(494, 422)
         Me.Controls.Add(Me.Gb_Comisiones)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "frmVerSueldosEmpleado"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Sueldos"

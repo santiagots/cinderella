@@ -51,7 +51,6 @@ Partial Class frmReportePreciosSE
         Me.ClientSize = New System.Drawing.Size(794, 572)
         Me.Controls.Add(Me.CrViewer)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmReportePreciosSE"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

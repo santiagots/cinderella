@@ -45,15 +45,21 @@ Partial Class frmPerfiles
         Me.Label2 = New System.Windows.Forms.Label()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.btn_Restablecer_Alta = New System.Windows.Forms.Button()
-        Me.ltbFiltroSucursal = New System.Windows.Forms.ListBox()
-        Me.btnAltaBuscar = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.txtFiltroNombre = New System.Windows.Forms.TextBox()
-        Me.ltbFiltroGrupo = New System.Windows.Forms.ListBox()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.ltbFiltroSucursal = New System.Windows.Forms.ListBox()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtFiltroNombre = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.ltbFiltroGrupo = New System.Windows.Forms.ListBox()
+        Me.btn_Restablecer_Alta = New System.Windows.Forms.Button()
+        Me.btnAltaBuscar = New System.Windows.Forms.Button()
         Me.dgPatentes = New System.Windows.Forms.DataGridView()
+        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombrePermiso = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Grupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -71,16 +77,16 @@ Partial Class frmPerfiles
         Me.ltbFiltroGrupoModificacion = New System.Windows.Forms.ListBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dgPatentesModificacion = New System.Windows.Forms.DataGridView()
+        Me.CodigoMod = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnModificar = New System.Windows.Forms.Button()
         Me.DataGridViewImageColumn1 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TipAgregar = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombrePermiso = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Grupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CodigoMod = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.TabPerfiles.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -89,12 +95,18 @@ Partial Class frmPerfiles
         Me.GroupBox1.SuspendLayout()
         Me.GB_Alta.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.dgPatentes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbMod.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         CType(Me.dgPatentesModificacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel4.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabPerfiles
@@ -127,7 +139,9 @@ Partial Class frmPerfiles
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(285, 327)
@@ -135,6 +149,7 @@ Partial Class frmPerfiles
         Me.lbl_Msg.Size = New System.Drawing.Size(371, 29)
         Me.lbl_Msg.TabIndex = 4
         Me.lbl_Msg.Text = "No se han encontrado perfiles."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GB_Buscar
         '
@@ -182,9 +197,11 @@ Partial Class frmPerfiles
         '
         'txt_buscar
         '
+        Me.txt_buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_buscar.Location = New System.Drawing.Point(93, 30)
         Me.txt_buscar.Name = "txt_buscar"
-        Me.txt_buscar.Size = New System.Drawing.Size(243, 21)
+        Me.txt_buscar.Size = New System.Drawing.Size(597, 21)
         Me.txt_buscar.TabIndex = 1
         '
         'lbl_descripcion_bus
@@ -300,9 +317,11 @@ Partial Class frmPerfiles
         '
         'txtPerfil
         '
+        Me.txtPerfil.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtPerfil.Location = New System.Drawing.Point(129, 23)
         Me.txtPerfil.Name = "txtPerfil"
-        Me.txtPerfil.Size = New System.Drawing.Size(230, 21)
+        Me.txtPerfil.Size = New System.Drawing.Size(770, 21)
         Me.txtPerfil.TabIndex = 1
         '
         'Label2
@@ -333,14 +352,9 @@ Partial Class frmPerfiles
         '
         Me.GroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox4.Controls.Add(Me.TableLayoutPanel3)
         Me.GroupBox4.Controls.Add(Me.btn_Restablecer_Alta)
-        Me.GroupBox4.Controls.Add(Me.ltbFiltroSucursal)
         Me.GroupBox4.Controls.Add(Me.btnAltaBuscar)
-        Me.GroupBox4.Controls.Add(Me.Label1)
-        Me.GroupBox4.Controls.Add(Me.Label9)
-        Me.GroupBox4.Controls.Add(Me.txtFiltroNombre)
-        Me.GroupBox4.Controls.Add(Me.ltbFiltroGrupo)
-        Me.GroupBox4.Controls.Add(Me.Label6)
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(6, 20)
         Me.GroupBox4.Name = "GroupBox4"
@@ -348,6 +362,119 @@ Partial Class frmPerfiles
         Me.GroupBox4.TabIndex = 22
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Filtro"
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel2, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel1, 0, 0)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(7, 15)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(783, 100)
+        Me.TableLayoutPanel3.TabIndex = 23
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label6, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.ltbFiltroSucursal, 1, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(394, 3)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(386, 94)
+        Me.TableLayoutPanel2.TabIndex = 23
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(3, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(94, 15)
+        Me.Label6.TabIndex = 19
+        Me.Label6.Text = "Sucursal:"
+        '
+        'ltbFiltroSucursal
+        '
+        Me.ltbFiltroSucursal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ltbFiltroSucursal.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ltbFiltroSucursal.FormattingEnabled = True
+        Me.ltbFiltroSucursal.ItemHeight = 15
+        Me.ltbFiltroSucursal.Location = New System.Drawing.Point(103, 3)
+        Me.ltbFiltroSucursal.Name = "ltbFiltroSucursal"
+        Me.ltbFiltroSucursal.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
+        Me.ltbFiltroSucursal.Size = New System.Drawing.Size(280, 88)
+        Me.ltbFiltroSucursal.TabIndex = 4
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtFiltroNombre, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label9, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.ltbFiltroGrupo, 1, 1)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(385, 94)
+        Me.TableLayoutPanel1.TabIndex = 23
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 7)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(94, 15)
+        Me.Label1.TabIndex = 14
+        Me.Label1.Text = "Nombre:"
+        '
+        'txtFiltroNombre
+        '
+        Me.txtFiltroNombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFiltroNombre.Location = New System.Drawing.Point(103, 4)
+        Me.txtFiltroNombre.Name = "txtFiltroNombre"
+        Me.txtFiltroNombre.Size = New System.Drawing.Size(279, 21)
+        Me.txtFiltroNombre.TabIndex = 2
+        '
+        'Label9
+        '
+        Me.Label9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(3, 30)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(94, 15)
+        Me.Label9.TabIndex = 21
+        Me.Label9.Text = "Grupo:"
+        '
+        'ltbFiltroGrupo
+        '
+        Me.ltbFiltroGrupo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ltbFiltroGrupo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ltbFiltroGrupo.FormattingEnabled = True
+        Me.ltbFiltroGrupo.ItemHeight = 15
+        Me.ltbFiltroGrupo.Location = New System.Drawing.Point(103, 33)
+        Me.ltbFiltroGrupo.Name = "ltbFiltroGrupo"
+        Me.ltbFiltroGrupo.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
+        Me.ltbFiltroGrupo.Size = New System.Drawing.Size(279, 58)
+        Me.ltbFiltroGrupo.TabIndex = 3
         '
         'btn_Restablecer_Alta
         '
@@ -360,18 +487,6 @@ Partial Class frmPerfiles
         Me.btn_Restablecer_Alta.TabIndex = 22
         Me.btn_Restablecer_Alta.Text = "Restablecer Busqueda"
         Me.btn_Restablecer_Alta.UseVisualStyleBackColor = True
-        '
-        'ltbFiltroSucursal
-        '
-        Me.ltbFiltroSucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ltbFiltroSucursal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ltbFiltroSucursal.FormattingEnabled = True
-        Me.ltbFiltroSucursal.ItemHeight = 15
-        Me.ltbFiltroSucursal.Location = New System.Drawing.Point(560, 21)
-        Me.ltbFiltroSucursal.Name = "ltbFiltroSucursal"
-        Me.ltbFiltroSucursal.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.ltbFiltroSucursal.Size = New System.Drawing.Size(230, 92)
-        Me.ltbFiltroSucursal.TabIndex = 4
         '
         'btnAltaBuscar
         '
@@ -390,52 +505,6 @@ Partial Class frmPerfiles
         Me.TipAgregar.SetToolTip(Me.btnAltaBuscar, "Click aquí para agregar el nuevo perfil en el sistema.")
         Me.btnAltaBuscar.UseVisualStyleBackColor = False
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(4, 23)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 15)
-        Me.Label1.TabIndex = 14
-        Me.Label1.Text = "Nombre:"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(4, 51)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(44, 15)
-        Me.Label9.TabIndex = 21
-        Me.Label9.Text = "Grupo:"
-        '
-        'txtFiltroNombre
-        '
-        Me.txtFiltroNombre.Location = New System.Drawing.Point(126, 20)
-        Me.txtFiltroNombre.Name = "txtFiltroNombre"
-        Me.txtFiltroNombre.Size = New System.Drawing.Size(230, 21)
-        Me.txtFiltroNombre.TabIndex = 2
-        '
-        'ltbFiltroGrupo
-        '
-        Me.ltbFiltroGrupo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ltbFiltroGrupo.FormattingEnabled = True
-        Me.ltbFiltroGrupo.ItemHeight = 15
-        Me.ltbFiltroGrupo.Location = New System.Drawing.Point(126, 51)
-        Me.ltbFiltroGrupo.Name = "ltbFiltroGrupo"
-        Me.ltbFiltroGrupo.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.ltbFiltroGrupo.Size = New System.Drawing.Size(230, 62)
-        Me.ltbFiltroGrupo.TabIndex = 3
-        '
-        'Label6
-        '
-        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(470, 23)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(58, 15)
-        Me.Label6.TabIndex = 19
-        Me.Label6.Text = "Sucursal:"
-        '
         'dgPatentes
         '
         Me.dgPatentes.AllowUserToAddRows = False
@@ -449,6 +518,30 @@ Partial Class frmPerfiles
         Me.dgPatentes.Name = "dgPatentes"
         Me.dgPatentes.Size = New System.Drawing.Size(902, 348)
         Me.dgPatentes.TabIndex = 6
+        '
+        'Codigo
+        '
+        Me.Codigo.DataPropertyName = "Codigo"
+        Me.Codigo.Frozen = True
+        Me.Codigo.HeaderText = "Codigo"
+        Me.Codigo.Name = "Codigo"
+        Me.Codigo.Visible = False
+        Me.Codigo.Width = 71
+        '
+        'NombrePermiso
+        '
+        Me.NombrePermiso.DataPropertyName = "NombrePermiso"
+        Me.NombrePermiso.Frozen = True
+        Me.NombrePermiso.HeaderText = "Nombre"
+        Me.NombrePermiso.Name = "NombrePermiso"
+        Me.NombrePermiso.Width = 350
+        '
+        'Grupo
+        '
+        Me.Grupo.DataPropertyName = "Grupo"
+        Me.Grupo.HeaderText = "Grupo"
+        Me.Grupo.Name = "Grupo"
+        Me.Grupo.ReadOnly = True
         '
         'Btn_Agregar
         '
@@ -498,7 +591,7 @@ Partial Class frmPerfiles
         '
         Me.chkHabilitado.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkHabilitado.AutoSize = True
-        Me.chkHabilitado.Location = New System.Drawing.Point(476, 25)
+        Me.chkHabilitado.Location = New System.Drawing.Point(817, 26)
         Me.chkHabilitado.Name = "chkHabilitado"
         Me.chkHabilitado.Size = New System.Drawing.Size(82, 19)
         Me.chkHabilitado.TabIndex = 4
@@ -507,9 +600,11 @@ Partial Class frmPerfiles
         '
         'txtPerfilModificacion
         '
+        Me.txtPerfilModificacion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtPerfilModificacion.Location = New System.Drawing.Point(129, 23)
         Me.txtPerfilModificacion.Name = "txtPerfilModificacion"
-        Me.txtPerfilModificacion.Size = New System.Drawing.Size(230, 21)
+        Me.txtPerfilModificacion.Size = New System.Drawing.Size(682, 21)
         Me.txtPerfilModificacion.TabIndex = 1
         '
         'Label3
@@ -540,14 +635,9 @@ Partial Class frmPerfiles
         '
         Me.GroupBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox5.Controls.Add(Me.TableLayoutPanel6)
         Me.GroupBox5.Controls.Add(Me.btn_Restablecer_Alta_Modificacion)
-        Me.GroupBox5.Controls.Add(Me.ltbFiltroSucursalModificacion)
         Me.GroupBox5.Controls.Add(Me.btnModificacionBuscar)
-        Me.GroupBox5.Controls.Add(Me.Label4)
-        Me.GroupBox5.Controls.Add(Me.Label5)
-        Me.GroupBox5.Controls.Add(Me.txtFiltroNombreModificacion)
-        Me.GroupBox5.Controls.Add(Me.ltbFiltroGrupoModificacion)
-        Me.GroupBox5.Controls.Add(Me.Label7)
         Me.GroupBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox5.Location = New System.Drawing.Point(6, 20)
         Me.GroupBox5.Name = "GroupBox5"
@@ -570,14 +660,14 @@ Partial Class frmPerfiles
         '
         'ltbFiltroSucursalModificacion
         '
-        Me.ltbFiltroSucursalModificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ltbFiltroSucursalModificacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ltbFiltroSucursalModificacion.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ltbFiltroSucursalModificacion.FormattingEnabled = True
         Me.ltbFiltroSucursalModificacion.ItemHeight = 15
-        Me.ltbFiltroSucursalModificacion.Location = New System.Drawing.Point(560, 21)
+        Me.ltbFiltroSucursalModificacion.Location = New System.Drawing.Point(103, 3)
         Me.ltbFiltroSucursalModificacion.Name = "ltbFiltroSucursalModificacion"
         Me.ltbFiltroSucursalModificacion.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.ltbFiltroSucursalModificacion.Size = New System.Drawing.Size(230, 92)
+        Me.ltbFiltroSucursalModificacion.Size = New System.Drawing.Size(280, 88)
         Me.ltbFiltroSucursalModificacion.TabIndex = 4
         '
         'btnModificacionBuscar
@@ -599,47 +689,53 @@ Partial Class frmPerfiles
         '
         'Label4
         '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(4, 23)
+        Me.Label4.Location = New System.Drawing.Point(3, 7)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(55, 15)
+        Me.Label4.Size = New System.Drawing.Size(94, 15)
         Me.Label4.TabIndex = 14
         Me.Label4.Text = "Nombre:"
         '
         'Label5
         '
+        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(4, 51)
+        Me.Label5.Location = New System.Drawing.Point(3, 30)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(44, 15)
+        Me.Label5.Size = New System.Drawing.Size(94, 15)
         Me.Label5.TabIndex = 21
         Me.Label5.Text = "Grupo:"
         '
         'txtFiltroNombreModificacion
         '
-        Me.txtFiltroNombreModificacion.Location = New System.Drawing.Point(126, 20)
+        Me.txtFiltroNombreModificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFiltroNombreModificacion.Location = New System.Drawing.Point(103, 4)
         Me.txtFiltroNombreModificacion.Name = "txtFiltroNombreModificacion"
-        Me.txtFiltroNombreModificacion.Size = New System.Drawing.Size(230, 21)
+        Me.txtFiltroNombreModificacion.Size = New System.Drawing.Size(279, 21)
         Me.txtFiltroNombreModificacion.TabIndex = 2
         '
         'ltbFiltroGrupoModificacion
         '
         Me.ltbFiltroGrupoModificacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ltbFiltroGrupoModificacion.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ltbFiltroGrupoModificacion.FormattingEnabled = True
         Me.ltbFiltroGrupoModificacion.ItemHeight = 15
-        Me.ltbFiltroGrupoModificacion.Location = New System.Drawing.Point(126, 51)
+        Me.ltbFiltroGrupoModificacion.Location = New System.Drawing.Point(103, 33)
         Me.ltbFiltroGrupoModificacion.Name = "ltbFiltroGrupoModificacion"
         Me.ltbFiltroGrupoModificacion.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.ltbFiltroGrupoModificacion.Size = New System.Drawing.Size(230, 62)
+        Me.ltbFiltroGrupoModificacion.Size = New System.Drawing.Size(279, 58)
         Me.ltbFiltroGrupoModificacion.TabIndex = 3
         '
         'Label7
         '
-        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(470, 23)
+        Me.Label7.Location = New System.Drawing.Point(3, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(58, 15)
+        Me.Label7.Size = New System.Drawing.Size(94, 15)
         Me.Label7.TabIndex = 19
         Me.Label7.Text = "Sucursal:"
         '
@@ -656,6 +752,30 @@ Partial Class frmPerfiles
         Me.dgPatentesModificacion.Name = "dgPatentesModificacion"
         Me.dgPatentesModificacion.Size = New System.Drawing.Size(902, 348)
         Me.dgPatentesModificacion.TabIndex = 6
+        '
+        'CodigoMod
+        '
+        Me.CodigoMod.DataPropertyName = "Codigo"
+        Me.CodigoMod.Frozen = True
+        Me.CodigoMod.HeaderText = "Codigo"
+        Me.CodigoMod.Name = "CodigoMod"
+        Me.CodigoMod.Visible = False
+        Me.CodigoMod.Width = 71
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "NombrePermiso"
+        Me.DataGridViewTextBoxColumn2.Frozen = True
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Nombre"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 350
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.DataPropertyName = "Grupo"
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Grupo"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
         '
         'btnModificar
         '
@@ -700,53 +820,54 @@ Partial Class frmPerfiles
         Me.TipAgregar.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.TipAgregar.ToolTipTitle = "Ayuda"
         '
-        'Codigo
+        'TableLayoutPanel4
         '
-        Me.Codigo.DataPropertyName = "Codigo"
-        Me.Codigo.Frozen = True
-        Me.Codigo.HeaderText = "Codigo"
-        Me.Codigo.Name = "Codigo"
-        Me.Codigo.Visible = False
-        Me.Codigo.Width = 71
+        Me.TableLayoutPanel4.ColumnCount = 2
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label5, 0, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtFiltroNombreModificacion, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.ltbFiltroGrupoModificacion, 1, 1)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 2
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(385, 94)
+        Me.TableLayoutPanel4.TabIndex = 23
         '
-        'NombrePermiso
+        'TableLayoutPanel5
         '
-        Me.NombrePermiso.DataPropertyName = "NombrePermiso"
-        Me.NombrePermiso.Frozen = True
-        Me.NombrePermiso.HeaderText = "Nombre"
-        Me.NombrePermiso.Name = "NombrePermiso"
-        Me.NombrePermiso.Width = 350
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.Label7, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.ltbFiltroSucursalModificacion, 1, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(394, 3)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(386, 94)
+        Me.TableLayoutPanel5.TabIndex = 24
         '
-        'Grupo
+        'TableLayoutPanel6
         '
-        Me.Grupo.DataPropertyName = "Grupo"
-        Me.Grupo.HeaderText = "Grupo"
-        Me.Grupo.Name = "Grupo"
-        Me.Grupo.ReadOnly = True
-        '
-        'CodigoMod
-        '
-        Me.CodigoMod.DataPropertyName = "Codigo"
-        Me.CodigoMod.Frozen = True
-        Me.CodigoMod.HeaderText = "Codigo"
-        Me.CodigoMod.Name = "CodigoMod"
-        Me.CodigoMod.Visible = False
-        Me.CodigoMod.Width = 71
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.DataPropertyName = "NombrePermiso"
-        Me.DataGridViewTextBoxColumn2.Frozen = True
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Nombre"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 350
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.DataPropertyName = "Grupo"
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Grupo"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.TableLayoutPanel6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel6.ColumnCount = 2
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel5, 1, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel4, 0, 0)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(7, 15)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 1
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(783, 100)
+        Me.TableLayoutPanel6.TabIndex = 23
         '
         'frmPerfiles
         '
@@ -755,14 +876,12 @@ Partial Class frmPerfiles
         Me.ClientSize = New System.Drawing.Size(934, 662)
         Me.Controls.Add(Me.TabPerfiles)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmPerfiles"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administración de Perfiles"
         Me.TabPerfiles.ResumeLayout(False)
         Me.TbListado.ResumeLayout(False)
-        Me.TbListado.PerformLayout()
         Me.GB_Buscar.ResumeLayout(False)
         Me.GB_Buscar.PerformLayout()
         CType(Me.DG_Perfiles, System.ComponentModel.ISupportInitialize).EndInit()
@@ -771,15 +890,23 @@ Partial Class frmPerfiles
         Me.GroupBox1.PerformLayout()
         Me.GB_Alta.ResumeLayout(False)
         Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         CType(Me.dgPatentes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbMod.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
         CType(Me.dgPatentesModificacion, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel4.PerformLayout()
+        Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.TableLayoutPanel5.PerformLayout()
+        Me.TableLayoutPanel6.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -839,4 +966,10 @@ Partial Class frmPerfiles
     Friend WithEvents CodigoMod As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
 End Class

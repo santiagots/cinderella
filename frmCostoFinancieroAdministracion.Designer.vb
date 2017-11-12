@@ -57,14 +57,8 @@ Partial Class frmCostoFinancieroAdministracion
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtBanco = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.BtnAgregar = New System.Windows.Forms.Button()
         Me.DG_costoFinanciero = New System.Windows.Forms.DataGridView()
-        Me.btnGuardar = New System.Windows.Forms.Button()
-        Me.btnCancelar = New System.Windows.Forms.Button()
-        Me.lbl_Msg = New System.Windows.Forms.Label()
-        Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Habilitado = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
@@ -93,35 +87,38 @@ Partial Class frmCostoFinancieroAdministracion
         Me.Cuota23 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Cuota24 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TarjetaId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
+        Me.lbl_Msg = New System.Windows.Forms.Label()
+        Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
-        Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.DG_costoFinanciero, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnCount = 3
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.BtnAgregar, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.txtBanco, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 11)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(418, 30)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(854, 59)
         Me.TableLayoutPanel1.TabIndex = 0
         '
         'Label1
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 8)
+        Me.Label1.Location = New System.Drawing.Point(3, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(134, 13)
         Me.Label1.TabIndex = 0
@@ -130,62 +127,32 @@ Partial Class frmCostoFinancieroAdministracion
         'txtBanco
         '
         Me.txtBanco.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtBanco.Location = New System.Drawing.Point(143, 5)
+        Me.txtBanco.Location = New System.Drawing.Point(143, 19)
         Me.txtBanco.Name = "txtBanco"
-        Me.txtBanco.Size = New System.Drawing.Size(272, 20)
+        Me.txtBanco.Size = New System.Drawing.Size(608, 20)
         Me.txtBanco.TabIndex = 1
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(860, 94)
+        Me.GroupBox1.Size = New System.Drawing.Size(860, 78)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Agregar Tarjeta"
         '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel1, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel3, 1, 0)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 19)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(848, 53)
-        Me.TableLayoutPanel2.TabIndex = 3
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel3.ColumnCount = 1
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.BtnAgregar, 0, 0)
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(427, 3)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(418, 47)
-        Me.TableLayoutPanel3.TabIndex = 1
-        '
         'BtnAgregar
         '
+        Me.BtnAgregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnAgregar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnAgregar.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnAgregar.FlatAppearance.BorderSize = 0
         Me.BtnAgregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnAgregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.BtnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnAgregar.Location = New System.Drawing.Point(317, 3)
+        Me.BtnAgregar.Location = New System.Drawing.Point(757, 9)
         Me.BtnAgregar.Name = "BtnAgregar"
-        Me.BtnAgregar.Size = New System.Drawing.Size(98, 41)
+        Me.BtnAgregar.Size = New System.Drawing.Size(94, 41)
         Me.BtnAgregar.TabIndex = 5
         Me.BtnAgregar.Text = "Agregar"
         Me.BtnAgregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -220,7 +187,7 @@ Partial Class frmCostoFinancieroAdministracion
         DataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DG_costoFinanciero.DefaultCellStyle = DataGridViewCellStyle27
-        Me.DG_costoFinanciero.Location = New System.Drawing.Point(12, 125)
+        Me.DG_costoFinanciero.Location = New System.Drawing.Point(12, 96)
         Me.DG_costoFinanciero.MultiSelect = False
         Me.DG_costoFinanciero.Name = "DG_costoFinanciero"
         Me.DG_costoFinanciero.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
@@ -236,63 +203,8 @@ Partial Class frmCostoFinancieroAdministracion
         Me.DG_costoFinanciero.RowsDefaultCellStyle = DataGridViewCellStyle29
         Me.DG_costoFinanciero.RowTemplate.Height = 30
         Me.DG_costoFinanciero.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DG_costoFinanciero.Size = New System.Drawing.Size(860, 429)
+        Me.DG_costoFinanciero.Size = New System.Drawing.Size(860, 458)
         Me.DG_costoFinanciero.TabIndex = 2
-        '
-        'btnGuardar
-        '
-        Me.btnGuardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnGuardar.CausesValidation = False
-        Me.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnGuardar.FlatAppearance.BorderSize = 0
-        Me.btnGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGuardar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
-        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnGuardar.Location = New System.Drawing.Point(772, 560)
-        Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(100, 40)
-        Me.btnGuardar.TabIndex = 5
-        Me.btnGuardar.Text = "Guardar"
-        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnGuardar.UseVisualStyleBackColor = True
-        '
-        'btnCancelar
-        '
-        Me.btnCancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCancelar.CausesValidation = False
-        Me.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCancelar.FlatAppearance.BorderSize = 0
-        Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancelar.Location = New System.Drawing.Point(660, 560)
-        Me.btnCancelar.Name = "btnCancelar"
-        Me.btnCancelar.Size = New System.Drawing.Size(106, 40)
-        Me.btnCancelar.TabIndex = 6
-        Me.btnCancelar.Text = "Cancelar"
-        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnCancelar.UseVisualStyleBackColor = True
-        '
-        'lbl_Msg
-        '
-        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(216, 326)
-        Me.lbl_Msg.MinimumSize = New System.Drawing.Size(343, 26)
-        Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(452, 26)
-        Me.lbl_Msg.TabIndex = 7
-        Me.lbl_Msg.Text = "No se han encontrado costos financieros."
-        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'ErrorProvider
-        '
-        Me.ErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
-        Me.ErrorProvider.ContainerControl = Me
-        Me.ErrorProvider.RightToLeft = True
         '
         'Nombre
         '
@@ -568,6 +480,61 @@ Partial Class frmCostoFinancieroAdministracion
         Me.TarjetaId.Name = "TarjetaId"
         Me.TarjetaId.Visible = False
         '
+        'btnGuardar
+        '
+        Me.btnGuardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnGuardar.CausesValidation = False
+        Me.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnGuardar.FlatAppearance.BorderSize = 0
+        Me.btnGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGuardar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
+        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnGuardar.Location = New System.Drawing.Point(772, 560)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(100, 40)
+        Me.btnGuardar.TabIndex = 5
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnGuardar.UseVisualStyleBackColor = True
+        '
+        'btnCancelar
+        '
+        Me.btnCancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCancelar.CausesValidation = False
+        Me.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCancelar.FlatAppearance.BorderSize = 0
+        Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCancelar.Location = New System.Drawing.Point(660, 560)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(106, 40)
+        Me.btnCancelar.TabIndex = 6
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCancelar.UseVisualStyleBackColor = True
+        '
+        'lbl_Msg
+        '
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Msg.Location = New System.Drawing.Point(216, 312)
+        Me.lbl_Msg.MinimumSize = New System.Drawing.Size(343, 26)
+        Me.lbl_Msg.Name = "lbl_Msg"
+        Me.lbl_Msg.Size = New System.Drawing.Size(452, 26)
+        Me.lbl_Msg.TabIndex = 7
+        Me.lbl_Msg.Text = "No se han encontrado costos financieros."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'ErrorProvider
+        '
+        Me.ErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
+        Me.ErrorProvider.ContainerControl = Me
+        Me.ErrorProvider.RightToLeft = True
+        '
         'frmCostoFinancieroAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -587,8 +554,6 @@ Partial Class frmCostoFinancieroAdministracion
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel3.ResumeLayout(False)
         CType(Me.DG_costoFinanciero, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -600,8 +565,6 @@ Partial Class frmCostoFinancieroAdministracion
     Friend WithEvents txtBanco As TextBox
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents DG_costoFinanciero As DataGridView
-    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents BtnAgregar As Button
     Friend WithEvents btnGuardar As Button
     Friend WithEvents btnCancelar As Button

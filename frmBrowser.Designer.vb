@@ -42,7 +42,6 @@ Partial Class frmBrowser
         Me.ClientSize = New System.Drawing.Size(794, 572)
         Me.Controls.Add(Me.Browser)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmBrowser"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

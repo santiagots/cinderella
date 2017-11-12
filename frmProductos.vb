@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 
 Public Class frmProductos
     Dim NegProductos As New Negocio.NegProductos
@@ -351,31 +352,7 @@ Public Class frmProductos
         'icono de edicion
         TbMod.ImageIndex = 2
 
-        'Cargo el datagrid de productos.
-        Dim dsProductos As New DataSet
-        dsProductos = NegProductos.ListadoProductos()
-        If (dsProductos.Tables(0).Rows.Count > 0) Then
-            DG_Productos.DataSource = dsProductos.Tables(0)
-            DG_Productos.AutoGenerateColumns = False
-            DG_Productos.ColumnHeadersVisible = True
-            DG_Productos.Columns("id_Producto").Visible = False
-            DG_Productos.Columns("CodigoBarra").Visible = False
-            DG_Productos.Columns("Nombre").DisplayIndex = 1
-            DG_Productos.Columns("Codigo").DisplayIndex = 2
-            DG_Productos.Columns("Categoria").DisplayIndex = 3
-            DG_Productos.Columns("Subcategoria").DisplayIndex = 4
-            DG_Productos.Columns("Proveedor").DisplayIndex = 5
-            DG_Productos.Columns("Habilitado").DisplayIndex = 6
-            DG_Productos.Columns("Modificar").DisplayIndex = 7
-            DG_Productos.Columns("Eliminar").DisplayIndex = 8
-            DG_Productos.Refresh()
-            lbl_Msg.Visible = False
-        Else
-            DG_Productos.DataSource = Nothing
-            DG_Productos.ColumnHeadersVisible = False
-            DG_Productos.Refresh()
-            lbl_Msg.Visible = True
-        End If
+        CargarProductos()
 
         EvaluarPermisos()
 
@@ -387,6 +364,38 @@ Public Class frmProductos
 
         'Cambio el cursor a NORMAL.
         TabProductos.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub CargarProductos()
+        'Cargo el datagrid de productos.
+        Dim dsProductos As DataSet = NegProductos.ListadoProductos()
+        If (dsProductos.Tables(0).Rows.Count > 0) Then
+            DG_Productos.DataSource = dsProductos.Tables(0)
+            DG_Productos.AutoGenerateColumns = False
+            DG_Productos.ColumnHeadersVisible = True
+            DG_Productos.Columns("id_Producto").Visible = False
+            DG_Productos.Columns("CodigoBarra").Visible = False
+            DG_Productos.Columns("Nombre").DisplayIndex = 1
+            DG_Productos.Columns("Codigo").DisplayIndex = 2
+            DG_Productos.Columns("Categoria").DisplayIndex = 3
+            DG_Productos.Columns("Subcategoria").DisplayIndex = 4
+            DG_Productos.Columns("Proveedor").DisplayIndex = 5
+            DG_Productos.Columns("precio1").DisplayIndex = 6
+            DG_Productos.Columns("precio2").DisplayIndex = 7
+            DG_Productos.Columns("precio3").DisplayIndex = 8
+            DG_Productos.Columns("precio4").DisplayIndex = 9
+            DG_Productos.Columns("precio5").DisplayIndex = 10
+            DG_Productos.Columns("precio6").DisplayIndex = 11
+            DG_Productos.Columns("Modificar").DisplayIndex = 12
+            DG_Productos.Columns("Eliminar").DisplayIndex = 13
+            DG_Productos.Refresh()
+            lbl_Msg.Visible = False
+        Else
+            DG_Productos.DataSource = Nothing
+            DG_Productos.ColumnHeadersVisible = False
+            DG_Productos.Refresh()
+            lbl_Msg.Visible = True
+        End If
     End Sub
 
     Private Sub Btn_Cancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cancelar.Click
@@ -583,30 +592,7 @@ Public Class frmProductos
         If TabProductos.SelectedTab.Name = "TbListado" Then 'TAB LISTADO DE PRODUCTOS
             'Actualizo el datagrid si se selecciona el tab del listado
             'Cargo el datagrid de productos
-            Dim dsProductos As New DataSet
-            dsProductos = NegProductos.ListadoProductos()
-            If (dsProductos.Tables(0).Rows.Count > 0) Then
-                DG_Productos.DataSource = dsProductos.Tables(0)
-                DG_Productos.AutoGenerateColumns = False
-                DG_Productos.ColumnHeadersVisible = True
-                DG_Productos.Columns("id_Producto").Visible = False
-                DG_Productos.Columns("CodigoBarra").Visible = False
-                DG_Productos.Columns("Nombre").DisplayIndex = 1
-                DG_Productos.Columns("Codigo").DisplayIndex = 2
-                DG_Productos.Columns("Categoria").DisplayIndex = 3
-                DG_Productos.Columns("Subcategoria").DisplayIndex = 4
-                DG_Productos.Columns("Proveedor").DisplayIndex = 5
-                DG_Productos.Columns("Habilitado").DisplayIndex = 6
-                DG_Productos.Columns("Modificar").DisplayIndex = 7
-                DG_Productos.Columns("Eliminar").DisplayIndex = 8
-                DG_Productos.Refresh()
-                lbl_Msg.Visible = False
-            Else
-                DG_Productos.DataSource = Nothing
-                DG_Productos.ColumnHeadersVisible = False
-                DG_Productos.Refresh()
-                lbl_Msg.Visible = True
-            End If
+            CargarProductos()
 
             'Limpio los formularios
             LimpiarFormAltaProductos()
@@ -685,30 +671,7 @@ Public Class frmProductos
                     MessageBox.Show(NegProductos.EliminarProducto(id_Producto), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                     'refresco el datagrid de productos
-                    Dim dsProductos As New DataSet
-                    dsProductos = NegProductos.ListadoProductos()
-                    If (dsProductos.Tables(0).Rows.Count > 0) Then
-                        DG_Productos.DataSource = dsProductos.Tables(0)
-                        DG_Productos.AutoGenerateColumns = False
-                        DG_Productos.ColumnHeadersVisible = True
-                        DG_Productos.Columns("id_Producto").Visible = False
-                        DG_Productos.Columns("CodigoBarra").Visible = False
-                        DG_Productos.Columns("Nombre").DisplayIndex = 1
-                        DG_Productos.Columns("Codigo").DisplayIndex = 2
-                        DG_Productos.Columns("Categoria").DisplayIndex = 3
-                        DG_Productos.Columns("Subcategoria").DisplayIndex = 4
-                        DG_Productos.Columns("Proveedor").DisplayIndex = 5
-                        DG_Productos.Columns("Habilitado").DisplayIndex = 6
-                        DG_Productos.Columns("Modificar").DisplayIndex = 7
-                        DG_Productos.Columns("Eliminar").DisplayIndex = 8
-                        DG_Productos.Refresh()
-                        lbl_Msg.Visible = False
-                    Else
-                        DG_Productos.DataSource = Nothing
-                        DG_Productos.ColumnHeadersVisible = False
-                        DG_Productos.Refresh()
-                        lbl_Msg.Visible = True
-                    End If
+                    CargarProductos()
 
                     'Cambio el cursor a "NORMAL"
                     Me.Cursor = Cursors.Arrow
@@ -1261,31 +1224,7 @@ Public Class frmProductos
             'Cursor
             Me.Cursor = Cursors.WaitCursor
 
-            'Cargo el dataset de productos.
-            Dim dsProductos As New DataSet
-            dsProductos = NegProductos.ListadoProductos()
-            If (dsProductos.Tables(0).Rows.Count > 0) Then
-                DG_Productos.DataSource = dsProductos.Tables(0)
-                DG_Productos.AutoGenerateColumns = False
-                DG_Productos.ColumnHeadersVisible = True
-                DG_Productos.Columns("id_Producto").Visible = False
-                DG_Productos.Columns("CodigoBarra").Visible = False
-                DG_Productos.Columns("Nombre").DisplayIndex = 1
-                DG_Productos.Columns("Codigo").DisplayIndex = 2
-                DG_Productos.Columns("Categoria").DisplayIndex = 3
-                DG_Productos.Columns("Subcategoria").DisplayIndex = 4
-                DG_Productos.Columns("Proveedor").DisplayIndex = 5
-                DG_Productos.Columns("Habilitado").DisplayIndex = 6
-                DG_Productos.Columns("Modificar").DisplayIndex = 7
-                DG_Productos.Columns("Eliminar").DisplayIndex = 8
-                DG_Productos.Refresh()
-                lbl_Msg.Visible = False
-            Else
-                DG_Productos.DataSource = Nothing
-                DG_Productos.ColumnHeadersVisible = False
-                DG_Productos.Refresh()
-                lbl_Msg.Visible = True
-            End If
+            CargarProductos()
 
             'Limpio controles
             rb_Opcion.Checked = True
@@ -1319,31 +1258,7 @@ Public Class frmProductos
                 'ejecuto el sp_Productos_Eliminar.
                 MessageBox.Show(NegProductos.EliminarProducto(id_Producto), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                'refresco el datagrid de productos
-                Dim dsProductos As New DataSet
-                dsProductos = NegProductos.ListadoProductos()
-                If (dsProductos.Tables(0).Rows.Count > 0) Then
-                    DG_Productos.DataSource = dsProductos.Tables(0)
-                    DG_Productos.AutoGenerateColumns = False
-                    DG_Productos.ColumnHeadersVisible = True
-                    DG_Productos.Columns("id_Producto").Visible = False
-                    DG_Productos.Columns("CodigoBarra").Visible = False
-                    DG_Productos.Columns("Nombre").DisplayIndex = 1
-                    DG_Productos.Columns("Codigo").DisplayIndex = 2
-                    DG_Productos.Columns("Categoria").DisplayIndex = 3
-                    DG_Productos.Columns("Subcategoria").DisplayIndex = 4
-                    DG_Productos.Columns("Proveedor").DisplayIndex = 5
-                    DG_Productos.Columns("Habilitado").DisplayIndex = 6
-                    DG_Productos.Columns("Modificar").DisplayIndex = 7
-                    DG_Productos.Columns("Eliminar").DisplayIndex = 8
-                    DG_Productos.Refresh()
-                    lbl_Msg.Visible = False
-                Else
-                    DG_Productos.DataSource = Nothing
-                    DG_Productos.ColumnHeadersVisible = False
-                    DG_Productos.Refresh()
-                    lbl_Msg.Visible = True
-                End If
+                CargarProductos()
             End If
 
             'Cambio el cursor a "NORMAL"
@@ -1396,7 +1311,15 @@ Public Class frmProductos
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde." + Environment.NewLine + Environment.NewLine + " Error Técnico:" + ex.ToString(), "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+            Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\Log.txt"), True)
+                outputFile.WriteLine("ERROR Metodo: ExportarExcel")
+                outputFile.WriteLine(DateTime.Now.ToString() + " " + ex.ToString())
+                outputFile.WriteLine("---------------------------------------------" + Environment.NewLine)
+            End Using
         End Try
     End Sub
 
@@ -1460,7 +1383,15 @@ Public Class frmProductos
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show(ex.Message, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error en la importación de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+            Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\Log.txt"), True)
+                outputFile.WriteLine("ERROR Metodo: ImportarExcel")
+                outputFile.WriteLine(DateTime.Now.ToString() + " " + ex.ToString())
+                outputFile.WriteLine("---------------------------------------------" + Environment.NewLine)
+            End Using
         End Try
     End Sub
 

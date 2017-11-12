@@ -24,8 +24,14 @@ Partial Class frmProductos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProductos))
         Me.TabProductos = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -40,6 +46,132 @@ Partial Class frmProductos
         Me.rb_Opcion = New System.Windows.Forms.RadioButton()
         Me.txt_buscar = New System.Windows.Forms.TextBox()
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.TbAlta = New System.Windows.Forms.TabPage()
+        Me.GB_Alta = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_Foto = New System.Windows.Forms.TextBox()
+        Me.btn_Open = New System.Windows.Forms.Button()
+        Me.lbl_Nombre = New System.Windows.Forms.Label()
+        Me.lbl_Origen = New System.Windows.Forms.Label()
+        Me.txt_Costo = New System.Windows.Forms.TextBox()
+        Me.lbl_Tamano = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.lbl_Codigo = New System.Windows.Forms.Label()
+        Me.lbl_Foto = New System.Windows.Forms.Label()
+        Me.lbl_Categoria = New System.Windows.Forms.Label()
+        Me.lbl_Subcategoria = New System.Windows.Forms.Label()
+        Me.lbl_Proveedor = New System.Windows.Forms.Label()
+        Me.lbl_Descripcion = New System.Windows.Forms.Label()
+        Me.chk_Novedad = New System.Windows.Forms.CheckBox()
+        Me.cb_Proveedores = New System.Windows.Forms.ComboBox()
+        Me.chk_SubirWeb = New System.Windows.Forms.CheckBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.chk_Habilitado = New System.Windows.Forms.CheckBox()
+        Me.txt_Descripcion = New System.Windows.Forms.TextBox()
+        Me.lbl_SubirWeb = New System.Windows.Forms.Label()
+        Me.lbl_Novedad = New System.Windows.Forms.Label()
+        Me.cb_Subcategoria = New System.Windows.Forms.ComboBox()
+        Me.txt_Nombre = New System.Windows.Forms.TextBox()
+        Me.cb_Categoria = New System.Windows.Forms.ComboBox()
+        Me.txt_Origen = New System.Windows.Forms.TextBox()
+        Me.txt_Tamano = New System.Windows.Forms.TextBox()
+        Me.txt_Codigo = New System.Windows.Forms.TextBox()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GB_Precios = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_Precio6 = New System.Windows.Forms.TextBox()
+        Me.lbl_Precio6 = New System.Windows.Forms.Label()
+        Me.txt_Precio5 = New System.Windows.Forms.TextBox()
+        Me.txt_Precio4 = New System.Windows.Forms.TextBox()
+        Me.lbl_Precio1 = New System.Windows.Forms.Label()
+        Me.lbl_Precio2 = New System.Windows.Forms.Label()
+        Me.txt_Precio3 = New System.Windows.Forms.TextBox()
+        Me.txt_Precio2 = New System.Windows.Forms.TextBox()
+        Me.lbl_Precio5 = New System.Windows.Forms.Label()
+        Me.lbl_Precio3 = New System.Windows.Forms.Label()
+        Me.txt_Precio1 = New System.Windows.Forms.TextBox()
+        Me.lbl_Precio4 = New System.Windows.Forms.Label()
+        Me.pb_foto = New System.Windows.Forms.PictureBox()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.lbl_Materiales = New System.Windows.Forms.Label()
+        Me.lbl_Aroma = New System.Windows.Forms.Label()
+        Me.lbl_Colores = New System.Windows.Forms.Label()
+        Me.chk_Colores = New System.Windows.Forms.CheckedListBox()
+        Me.chk_Materiales = New System.Windows.Forms.CheckedListBox()
+        Me.chk_Aromas = New System.Windows.Forms.CheckedListBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Btn_Agregar = New System.Windows.Forms.Button()
+        Me.TbMod = New System.Windows.Forms.TabPage()
+        Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel15 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_Foto_mod = New System.Windows.Forms.TextBox()
+        Me.btn_Open_mod = New System.Windows.Forms.Button()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.txt_Costo_mod = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
+        Me.chk_SubirWeb_mod = New System.Windows.Forms.CheckBox()
+        Me.chk_Novedad_mod = New System.Windows.Forms.CheckBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txt_Descripcion_mod = New System.Windows.Forms.TextBox()
+        Me.cb_Proveedor_mod = New System.Windows.Forms.ComboBox()
+        Me.txt_Nombre_mod = New System.Windows.Forms.TextBox()
+        Me.txt_Origen_mod = New System.Windows.Forms.TextBox()
+        Me.txt_Tamano_mod = New System.Windows.Forms.TextBox()
+        Me.txt_Codigo_mod = New System.Windows.Forms.TextBox()
+        Me.cb_Subcategoria_mod = New System.Windows.Forms.ComboBox()
+        Me.cb_Categoria_mod = New System.Windows.Forms.ComboBox()
+        Me.TableLayoutPanel14 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel13 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Gb_Precios_mod = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_Precio6_mod = New System.Windows.Forms.TextBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.txt_Precio5_mod = New System.Windows.Forms.TextBox()
+        Me.txt_Precio4_mod = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.txt_Precio3_mod = New System.Windows.Forms.TextBox()
+        Me.txt_Precio2_mod = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.txt_Precio1_mod = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
+        Me.pb_CodigoBarra = New System.Windows.Forms.PictureBox()
+        Me.pb_foto_mod = New System.Windows.Forms.PictureBox()
+        Me.Ck_EliminarFoto = New System.Windows.Forms.CheckBox()
+        Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lbl_Colores_mod = New System.Windows.Forms.Label()
+        Me.chk_Materiales_mod = New System.Windows.Forms.CheckedListBox()
+        Me.chk_Aromas_mod = New System.Windows.Forms.CheckedListBox()
+        Me.chk_Colores_mod = New System.Windows.Forms.CheckedListBox()
+        Me.Btn_Cancelar = New System.Windows.Forms.Button()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Btn_Eliminar = New System.Windows.Forms.Button()
+        Me.btn_Modificar = New System.Windows.Forms.Button()
+        Me.Cargar = New System.Windows.Forms.OpenFileDialog()
+        Me.ErrorProductos = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
+        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.id_Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -47,135 +179,42 @@ Partial Class frmProductos
         Me.Subcategoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Proveedor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.TbAlta = New System.Windows.Forms.TabPage()
-        Me.GB_Alta = New System.Windows.Forms.GroupBox()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.txt_Costo = New System.Windows.Forms.TextBox()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.lbl_Colores = New System.Windows.Forms.Label()
-        Me.chk_Colores = New System.Windows.Forms.CheckedListBox()
-        Me.GB_Precios = New System.Windows.Forms.GroupBox()
-        Me.lbl_Precio6 = New System.Windows.Forms.Label()
-        Me.txt_Precio6 = New System.Windows.Forms.TextBox()
-        Me.lbl_Precio5 = New System.Windows.Forms.Label()
-        Me.txt_Precio4 = New System.Windows.Forms.TextBox()
-        Me.txt_Precio5 = New System.Windows.Forms.TextBox()
-        Me.lbl_Precio4 = New System.Windows.Forms.Label()
-        Me.txt_Precio2 = New System.Windows.Forms.TextBox()
-        Me.lbl_Precio1 = New System.Windows.Forms.Label()
-        Me.txt_Precio3 = New System.Windows.Forms.TextBox()
-        Me.lbl_Precio2 = New System.Windows.Forms.Label()
-        Me.txt_Precio1 = New System.Windows.Forms.TextBox()
-        Me.lbl_Precio3 = New System.Windows.Forms.Label()
-        Me.lbl_Foto2 = New System.Windows.Forms.Label()
-        Me.pb_foto = New System.Windows.Forms.PictureBox()
-        Me.lbl_Materiales = New System.Windows.Forms.Label()
-        Me.Btn_Agregar = New System.Windows.Forms.Button()
-        Me.lbl_Aroma = New System.Windows.Forms.Label()
-        Me.chk_Materiales = New System.Windows.Forms.CheckedListBox()
-        Me.chk_Aromas = New System.Windows.Forms.CheckedListBox()
-        Me.cb_Proveedores = New System.Windows.Forms.ComboBox()
-        Me.lbl_Proveedor = New System.Windows.Forms.Label()
-        Me.btn_Open = New System.Windows.Forms.Button()
-        Me.txt_Foto = New System.Windows.Forms.TextBox()
-        Me.chk_Novedad = New System.Windows.Forms.CheckBox()
-        Me.lbl_Novedad = New System.Windows.Forms.Label()
-        Me.chk_SubirWeb = New System.Windows.Forms.CheckBox()
-        Me.lbl_SubirWeb = New System.Windows.Forms.Label()
-        Me.lbl_Foto = New System.Windows.Forms.Label()
-        Me.cb_Subcategoria = New System.Windows.Forms.ComboBox()
-        Me.cb_Categoria = New System.Windows.Forms.ComboBox()
-        Me.lbl_Subcategoria = New System.Windows.Forms.Label()
-        Me.lbl_Categoria = New System.Windows.Forms.Label()
-        Me.txt_Descripcion = New System.Windows.Forms.TextBox()
-        Me.lbl_Descripcion = New System.Windows.Forms.Label()
-        Me.txt_Codigo = New System.Windows.Forms.TextBox()
-        Me.lbl_Codigo = New System.Windows.Forms.Label()
-        Me.txt_Tamano = New System.Windows.Forms.TextBox()
-        Me.lbl_Tamano = New System.Windows.Forms.Label()
-        Me.txt_Origen = New System.Windows.Forms.TextBox()
-        Me.lbl_Origen = New System.Windows.Forms.Label()
-        Me.chk_Habilitado = New System.Windows.Forms.CheckBox()
-        Me.txt_Nombre = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.lbl_Nombre = New System.Windows.Forms.Label()
-        Me.TbMod = New System.Windows.Forms.TabPage()
-        Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
-        Me.Btn_Cancelar = New System.Windows.Forms.Button()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.txt_Costo_mod = New System.Windows.Forms.TextBox()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.Ck_EliminarFoto = New System.Windows.Forms.CheckBox()
-        Me.Btn_Eliminar = New System.Windows.Forms.Button()
-        Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
-        Me.pb_CodigoBarra = New System.Windows.Forms.PictureBox()
-        Me.lbl_Colores_mod = New System.Windows.Forms.Label()
-        Me.chk_Colores_mod = New System.Windows.Forms.CheckedListBox()
-        Me.Gb_Precios_mod = New System.Windows.Forms.GroupBox()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.txt_Precio6_mod = New System.Windows.Forms.TextBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.txt_Precio4_mod = New System.Windows.Forms.TextBox()
-        Me.txt_Precio5_mod = New System.Windows.Forms.TextBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.txt_Precio2_mod = New System.Windows.Forms.TextBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.txt_Precio3_mod = New System.Windows.Forms.TextBox()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.txt_Precio1_mod = New System.Windows.Forms.TextBox()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.chk_Novedad_mod = New System.Windows.Forms.CheckBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.chk_SubirWeb_mod = New System.Windows.Forms.CheckBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.pb_foto_mod = New System.Windows.Forms.PictureBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.btn_Modificar = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.chk_Materiales_mod = New System.Windows.Forms.CheckedListBox()
-        Me.chk_Aromas_mod = New System.Windows.Forms.CheckedListBox()
-        Me.cb_Proveedor_mod = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.btn_Open_mod = New System.Windows.Forms.Button()
-        Me.txt_Foto_mod = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.cb_Subcategoria_mod = New System.Windows.Forms.ComboBox()
-        Me.cb_Categoria_mod = New System.Windows.Forms.ComboBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.txt_Descripcion_mod = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.txt_Codigo_mod = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.txt_Tamano_mod = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.txt_Origen_mod = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.txt_Nombre_mod = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Cargar = New System.Windows.Forms.OpenFileDialog()
-        Me.ErrorProductos = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
-        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.TabProductos.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbAlta.SuspendLayout()
         Me.GB_Alta.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
         Me.GB_Precios.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel3.SuspendLayout()
         Me.TbMod.SuspendLayout()
         Me.GB_Modificacion.SuspendLayout()
-        CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel15.SuspendLayout()
+        Me.TableLayoutPanel8.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
+        Me.TableLayoutPanel14.SuspendLayout()
+        Me.TableLayoutPanel13.SuspendLayout()
         Me.Gb_Precios_mod.SuspendLayout()
+        Me.TableLayoutPanel10.SuspendLayout()
+        Me.TableLayoutPanel12.SuspendLayout()
+        CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pb_foto_mod, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel11.SuspendLayout()
         CType(Me.ErrorProductos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -207,14 +246,17 @@ Partial Class frmProductos
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.AutoSize = True
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(300, 282)
+        Me.lbl_Msg.Location = New System.Drawing.Point(294, 310)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(399, 29)
         Me.lbl_Msg.TabIndex = 4
         Me.lbl_Msg.Text = "No se han encontrado productos."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GB_Buscar
         '
@@ -338,6 +380,8 @@ Partial Class frmProductos
         '
         'txt_buscar
         '
+        Me.txt_buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_buscar.Location = New System.Drawing.Point(156, 33)
         Me.txt_buscar.Name = "txt_buscar"
         Me.txt_buscar.Size = New System.Drawing.Size(276, 21)
@@ -354,19 +398,1485 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Producto, Me.Nombre, Me.Codigo, Me.Categoria, Me.Subcategoria, Me.Proveedor, Me.Habilitado, Me.Modificar, Me.Eliminar})
+        Me.DG_Productos.ColumnHeadersHeight = 46
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Producto, Me.Nombre, Me.Codigo, Me.Categoria, Me.Subcategoria, Me.Proveedor, Me.Habilitado, Me.precio1, Me.precio2, Me.precio3, Me.precio4, Me.precio5, Me.precio6, Me.Modificar, Me.Eliminar})
         Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Productos.Location = New System.Drawing.Point(6, 91)
         Me.DG_Productos.MultiSelect = False
         Me.DG_Productos.Name = "DG_Productos"
         Me.DG_Productos.ReadOnly = True
         Me.DG_Productos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DG_Productos.RowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DG_Productos.RowsDefaultCellStyle = DataGridViewCellStyle9
         Me.DG_Productos.RowTemplate.Height = 30
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(974, 466)
         Me.DG_Productos.TabIndex = 0
+        '
+        'TbAlta
+        '
+        Me.TbAlta.Controls.Add(Me.GB_Alta)
+        Me.TbAlta.Location = New System.Drawing.Point(4, 29)
+        Me.TbAlta.Name = "TbAlta"
+        Me.TbAlta.Padding = New System.Windows.Forms.Padding(3)
+        Me.TbAlta.Size = New System.Drawing.Size(998, 577)
+        Me.TbAlta.TabIndex = 1
+        Me.TbAlta.Text = "Alta de Producto"
+        Me.TbAlta.UseVisualStyleBackColor = True
+        '
+        'GB_Alta
+        '
+        Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Alta.Controls.Add(Me.TableLayoutPanel7)
+        Me.GB_Alta.Controls.Add(Me.Label25)
+        Me.GB_Alta.Controls.Add(Me.Btn_Agregar)
+        Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GB_Alta.Location = New System.Drawing.Point(10, 6)
+        Me.GB_Alta.Name = "GB_Alta"
+        Me.GB_Alta.Size = New System.Drawing.Size(980, 563)
+        Me.GB_Alta.TabIndex = 0
+        Me.GB_Alta.TabStop = False
+        Me.GB_Alta.Text = "Formulario de Alta"
+        '
+        'TableLayoutPanel7
+        '
+        Me.TableLayoutPanel7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel7.ColumnCount = 2
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.TableLayoutPanel7.Controls.Add(Me.TableLayoutPanel1, 0, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.TableLayoutPanel6, 1, 0)
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(6, 16)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 1
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(968, 493)
+        Me.TableLayoutPanel7.TabIndex = 72
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 1, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Nombre, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Origen, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Costo, 1, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Tamano, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label23, 0, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Codigo, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Foto, 0, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Categoria, 0, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Subcategoria, 0, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Proveedor, 0, 8)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Descripcion, 0, 9)
+        Me.TableLayoutPanel1.Controls.Add(Me.chk_Novedad, 1, 12)
+        Me.TableLayoutPanel1.Controls.Add(Me.cb_Proveedores, 1, 8)
+        Me.TableLayoutPanel1.Controls.Add(Me.chk_SubirWeb, 1, 11)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 10)
+        Me.TableLayoutPanel1.Controls.Add(Me.chk_Habilitado, 1, 10)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Descripcion, 1, 9)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_SubirWeb, 0, 11)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Novedad, 0, 12)
+        Me.TableLayoutPanel1.Controls.Add(Me.cb_Subcategoria, 1, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Nombre, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.cb_Categoria, 1, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Origen, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Tamano, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Codigo, 1, 3)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 13
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(381, 487)
+        Me.TableLayoutPanel1.TabIndex = 68
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.txt_Foto, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.btn_Open, 1, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(143, 153)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(235, 29)
+        Me.TableLayoutPanel2.TabIndex = 69
+        '
+        'txt_Foto
+        '
+        Me.txt_Foto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Foto.Location = New System.Drawing.Point(3, 4)
+        Me.txt_Foto.Name = "txt_Foto"
+        Me.txt_Foto.Size = New System.Drawing.Size(189, 21)
+        Me.txt_Foto.TabIndex = 6
+        '
+        'btn_Open
+        '
+        Me.btn_Open.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Open.Location = New System.Drawing.Point(202, 3)
+        Me.btn_Open.Name = "btn_Open"
+        Me.btn_Open.Size = New System.Drawing.Size(30, 23)
+        Me.btn_Open.TabIndex = 7
+        Me.btn_Open.Text = ". . ."
+        Me.btn_Open.UseVisualStyleBackColor = True
+        '
+        'lbl_Nombre
+        '
+        Me.lbl_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Nombre.AutoSize = True
+        Me.lbl_Nombre.Location = New System.Drawing.Point(3, 7)
+        Me.lbl_Nombre.Name = "lbl_Nombre"
+        Me.lbl_Nombre.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Nombre.TabIndex = 1
+        Me.lbl_Nombre.Text = "Nombre (*)"
+        '
+        'lbl_Origen
+        '
+        Me.lbl_Origen.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Origen.AutoSize = True
+        Me.lbl_Origen.Location = New System.Drawing.Point(3, 37)
+        Me.lbl_Origen.Name = "lbl_Origen"
+        Me.lbl_Origen.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Origen.TabIndex = 7
+        Me.lbl_Origen.Text = "Origen"
+        '
+        'txt_Costo
+        '
+        Me.txt_Costo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Costo.Location = New System.Drawing.Point(143, 124)
+        Me.txt_Costo.MaxLength = 255
+        Me.txt_Costo.Name = "txt_Costo"
+        Me.txt_Costo.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Costo.TabIndex = 5
+        '
+        'lbl_Tamano
+        '
+        Me.lbl_Tamano.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Tamano.AutoSize = True
+        Me.lbl_Tamano.Location = New System.Drawing.Point(3, 67)
+        Me.lbl_Tamano.Name = "lbl_Tamano"
+        Me.lbl_Tamano.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Tamano.TabIndex = 15
+        Me.lbl_Tamano.Text = "Tamaño"
+        '
+        'Label23
+        '
+        Me.Label23.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(3, 127)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(134, 15)
+        Me.Label23.TabIndex = 56
+        Me.Label23.Text = "Costo"
+        '
+        'lbl_Codigo
+        '
+        Me.lbl_Codigo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Codigo.AutoSize = True
+        Me.lbl_Codigo.Location = New System.Drawing.Point(3, 97)
+        Me.lbl_Codigo.Name = "lbl_Codigo"
+        Me.lbl_Codigo.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Codigo.TabIndex = 17
+        Me.lbl_Codigo.Text = "Código (*)"
+        '
+        'lbl_Foto
+        '
+        Me.lbl_Foto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Foto.AutoSize = True
+        Me.lbl_Foto.Location = New System.Drawing.Point(3, 160)
+        Me.lbl_Foto.Name = "lbl_Foto"
+        Me.lbl_Foto.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Foto.TabIndex = 27
+        Me.lbl_Foto.Text = "Foto"
+        '
+        'lbl_Categoria
+        '
+        Me.lbl_Categoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Categoria.AutoSize = True
+        Me.lbl_Categoria.Location = New System.Drawing.Point(3, 192)
+        Me.lbl_Categoria.Name = "lbl_Categoria"
+        Me.lbl_Categoria.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Categoria.TabIndex = 21
+        Me.lbl_Categoria.Text = "Categoría (*)"
+        '
+        'lbl_Subcategoria
+        '
+        Me.lbl_Subcategoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Subcategoria.AutoSize = True
+        Me.lbl_Subcategoria.Location = New System.Drawing.Point(3, 222)
+        Me.lbl_Subcategoria.Name = "lbl_Subcategoria"
+        Me.lbl_Subcategoria.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Subcategoria.TabIndex = 22
+        Me.lbl_Subcategoria.Text = "Subcategoría (*)"
+        '
+        'lbl_Proveedor
+        '
+        Me.lbl_Proveedor.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Proveedor.AutoSize = True
+        Me.lbl_Proveedor.Location = New System.Drawing.Point(3, 252)
+        Me.lbl_Proveedor.Name = "lbl_Proveedor"
+        Me.lbl_Proveedor.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Proveedor.TabIndex = 35
+        Me.lbl_Proveedor.Text = "Proveedor (*)"
+        '
+        'lbl_Descripcion
+        '
+        Me.lbl_Descripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Descripcion.AutoSize = True
+        Me.lbl_Descripcion.Location = New System.Drawing.Point(3, 328)
+        Me.lbl_Descripcion.Name = "lbl_Descripcion"
+        Me.lbl_Descripcion.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Descripcion.TabIndex = 19
+        Me.lbl_Descripcion.Text = "Descripcion"
+        '
+        'chk_Novedad
+        '
+        Me.chk_Novedad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Novedad.AutoSize = True
+        Me.chk_Novedad.Checked = True
+        Me.chk_Novedad.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Novedad.Location = New System.Drawing.Point(143, 465)
+        Me.chk_Novedad.Name = "chk_Novedad"
+        Me.chk_Novedad.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Novedad.TabIndex = 14
+        Me.chk_Novedad.UseVisualStyleBackColor = True
+        '
+        'cb_Proveedores
+        '
+        Me.cb_Proveedores.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_Proveedores.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Proveedores.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Proveedores.FormattingEnabled = True
+        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 249)
+        Me.cb_Proveedores.Name = "cb_Proveedores"
+        Me.cb_Proveedores.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Proveedores.TabIndex = 10
+        '
+        'chk_SubirWeb
+        '
+        Me.chk_SubirWeb.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_SubirWeb.AutoSize = True
+        Me.chk_SubirWeb.Checked = True
+        Me.chk_SubirWeb.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_SubirWeb.Location = New System.Drawing.Point(143, 435)
+        Me.chk_SubirWeb.Name = "chk_SubirWeb"
+        Me.chk_SubirWeb.Size = New System.Drawing.Size(235, 14)
+        Me.chk_SubirWeb.TabIndex = 13
+        Me.chk_SubirWeb.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 404)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(134, 15)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Habilitado"
+        '
+        'chk_Habilitado
+        '
+        Me.chk_Habilitado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Habilitado.AutoSize = True
+        Me.chk_Habilitado.Checked = True
+        Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado.Location = New System.Drawing.Point(143, 405)
+        Me.chk_Habilitado.Name = "chk_Habilitado"
+        Me.chk_Habilitado.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Habilitado.TabIndex = 12
+        Me.chk_Habilitado.UseVisualStyleBackColor = True
+        '
+        'txt_Descripcion
+        '
+        Me.txt_Descripcion.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txt_Descripcion.Location = New System.Drawing.Point(143, 278)
+        Me.txt_Descripcion.MaxLength = 255
+        Me.txt_Descripcion.Multiline = True
+        Me.txt_Descripcion.Name = "txt_Descripcion"
+        Me.txt_Descripcion.Size = New System.Drawing.Size(235, 116)
+        Me.txt_Descripcion.TabIndex = 11
+        '
+        'lbl_SubirWeb
+        '
+        Me.lbl_SubirWeb.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_SubirWeb.AutoSize = True
+        Me.lbl_SubirWeb.Location = New System.Drawing.Point(3, 434)
+        Me.lbl_SubirWeb.Name = "lbl_SubirWeb"
+        Me.lbl_SubirWeb.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_SubirWeb.TabIndex = 28
+        Me.lbl_SubirWeb.Text = "Subir a la Web"
+        '
+        'lbl_Novedad
+        '
+        Me.lbl_Novedad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Novedad.AutoSize = True
+        Me.lbl_Novedad.Location = New System.Drawing.Point(3, 464)
+        Me.lbl_Novedad.Name = "lbl_Novedad"
+        Me.lbl_Novedad.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Novedad.TabIndex = 30
+        Me.lbl_Novedad.Text = "Novedad"
+        '
+        'cb_Subcategoria
+        '
+        Me.cb_Subcategoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_Subcategoria.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Subcategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Subcategoria.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Subcategoria.FormattingEnabled = True
+        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 219)
+        Me.cb_Subcategoria.Name = "cb_Subcategoria"
+        Me.cb_Subcategoria.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Subcategoria.TabIndex = 9
+        '
+        'txt_Nombre
+        '
+        Me.txt_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Nombre.Location = New System.Drawing.Point(143, 4)
+        Me.txt_Nombre.MaxLength = 255
+        Me.txt_Nombre.Name = "txt_Nombre"
+        Me.txt_Nombre.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Nombre.TabIndex = 1
+        '
+        'cb_Categoria
+        '
+        Me.cb_Categoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_Categoria.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Categoria.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Categoria.FormattingEnabled = True
+        Me.cb_Categoria.Location = New System.Drawing.Point(143, 189)
+        Me.cb_Categoria.Name = "cb_Categoria"
+        Me.cb_Categoria.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Categoria.TabIndex = 8
+        '
+        'txt_Origen
+        '
+        Me.txt_Origen.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Origen.Location = New System.Drawing.Point(143, 34)
+        Me.txt_Origen.MaxLength = 255
+        Me.txt_Origen.Name = "txt_Origen"
+        Me.txt_Origen.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Origen.TabIndex = 2
+        '
+        'txt_Tamano
+        '
+        Me.txt_Tamano.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Tamano.Location = New System.Drawing.Point(143, 64)
+        Me.txt_Tamano.MaxLength = 255
+        Me.txt_Tamano.Name = "txt_Tamano"
+        Me.txt_Tamano.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Tamano.TabIndex = 3
+        '
+        'txt_Codigo
+        '
+        Me.txt_Codigo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Codigo.Location = New System.Drawing.Point(143, 94)
+        Me.txt_Codigo.MaxLength = 255
+        Me.txt_Codigo.Name = "txt_Codigo"
+        Me.txt_Codigo.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Codigo.TabIndex = 4
+        '
+        'TableLayoutPanel6
+        '
+        Me.TableLayoutPanel6.ColumnCount = 1
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel5, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel3, 0, 1)
+        Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(390, 3)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 2
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(575, 487)
+        Me.TableLayoutPanel6.TabIndex = 71
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.GB_Precios, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.pb_foto, 1, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(569, 202)
+        Me.TableLayoutPanel5.TabIndex = 70
+        '
+        'GB_Precios
+        '
+        Me.GB_Precios.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Precios.Controls.Add(Me.TableLayoutPanel4)
+        Me.GB_Precios.Location = New System.Drawing.Point(3, 3)
+        Me.GB_Precios.Name = "GB_Precios"
+        Me.GB_Precios.Size = New System.Drawing.Size(278, 196)
+        Me.GB_Precios.TabIndex = 52
+        Me.GB_Precios.TabStop = False
+        Me.GB_Precios.Text = "Listas de Precios"
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.ColumnCount = 2
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_Precio6, 1, 5)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_Precio6, 0, 5)
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_Precio5, 1, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_Precio4, 1, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_Precio1, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_Precio2, 0, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_Precio3, 1, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_Precio2, 1, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_Precio5, 0, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_Precio3, 0, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_Precio1, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_Precio4, 0, 3)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 17)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 6
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(272, 176)
+        Me.TableLayoutPanel4.TabIndex = 70
+        '
+        'txt_Precio6
+        '
+        Me.txt_Precio6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio6.Location = New System.Drawing.Point(143, 154)
+        Me.txt_Precio6.Name = "txt_Precio6"
+        Me.txt_Precio6.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio6.TabIndex = 20
+        '
+        'lbl_Precio6
+        '
+        Me.lbl_Precio6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Precio6.AutoSize = True
+        Me.lbl_Precio6.Location = New System.Drawing.Point(3, 157)
+        Me.lbl_Precio6.Name = "lbl_Precio6"
+        Me.lbl_Precio6.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Precio6.TabIndex = 53
+        Me.lbl_Precio6.Text = "Alternativa"
+        '
+        'txt_Precio5
+        '
+        Me.txt_Precio5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio5.Location = New System.Drawing.Point(143, 124)
+        Me.txt_Precio5.Name = "txt_Precio5"
+        Me.txt_Precio5.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio5.TabIndex = 19
+        '
+        'txt_Precio4
+        '
+        Me.txt_Precio4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio4.Location = New System.Drawing.Point(143, 94)
+        Me.txt_Precio4.Name = "txt_Precio4"
+        Me.txt_Precio4.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio4.TabIndex = 18
+        '
+        'lbl_Precio1
+        '
+        Me.lbl_Precio1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Precio1.AutoSize = True
+        Me.lbl_Precio1.Location = New System.Drawing.Point(3, 7)
+        Me.lbl_Precio1.Name = "lbl_Precio1"
+        Me.lbl_Precio1.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Precio1.TabIndex = 47
+        Me.lbl_Precio1.Text = "Efectivo Tigre"
+        '
+        'lbl_Precio2
+        '
+        Me.lbl_Precio2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Precio2.AutoSize = True
+        Me.lbl_Precio2.Location = New System.Drawing.Point(3, 37)
+        Me.lbl_Precio2.Name = "lbl_Precio2"
+        Me.lbl_Precio2.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Precio2.TabIndex = 48
+        Me.lbl_Precio2.Text = "Tarjeta Tigre"
+        '
+        'txt_Precio3
+        '
+        Me.txt_Precio3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio3.Location = New System.Drawing.Point(143, 64)
+        Me.txt_Precio3.Name = "txt_Precio3"
+        Me.txt_Precio3.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio3.TabIndex = 17
+        '
+        'txt_Precio2
+        '
+        Me.txt_Precio2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio2.Location = New System.Drawing.Point(143, 34)
+        Me.txt_Precio2.Name = "txt_Precio2"
+        Me.txt_Precio2.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio2.TabIndex = 16
+        '
+        'lbl_Precio5
+        '
+        Me.lbl_Precio5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Precio5.AutoSize = True
+        Me.lbl_Precio5.Location = New System.Drawing.Point(3, 127)
+        Me.lbl_Precio5.Name = "lbl_Precio5"
+        Me.lbl_Precio5.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Precio5.TabIndex = 50
+        Me.lbl_Precio5.Text = "Mayorista"
+        '
+        'lbl_Precio3
+        '
+        Me.lbl_Precio3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Precio3.AutoSize = True
+        Me.lbl_Precio3.Location = New System.Drawing.Point(3, 67)
+        Me.lbl_Precio3.Name = "lbl_Precio3"
+        Me.lbl_Precio3.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Precio3.TabIndex = 49
+        Me.lbl_Precio3.Text = "Efectivo Capital"
+        '
+        'txt_Precio1
+        '
+        Me.txt_Precio1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio1.Location = New System.Drawing.Point(143, 4)
+        Me.txt_Precio1.Name = "txt_Precio1"
+        Me.txt_Precio1.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio1.TabIndex = 15
+        '
+        'lbl_Precio4
+        '
+        Me.lbl_Precio4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Precio4.AutoSize = True
+        Me.lbl_Precio4.Location = New System.Drawing.Point(3, 97)
+        Me.lbl_Precio4.Name = "lbl_Precio4"
+        Me.lbl_Precio4.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Precio4.TabIndex = 51
+        Me.lbl_Precio4.Text = "Tarjeta Capital"
+        '
+        'pb_foto
+        '
+        Me.pb_foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pb_foto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_foto.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
+        Me.pb_foto.InitialImage = Nothing
+        Me.pb_foto.Location = New System.Drawing.Point(287, 3)
+        Me.pb_foto.Name = "pb_foto"
+        Me.pb_foto.Size = New System.Drawing.Size(279, 196)
+        Me.pb_foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_foto.TabIndex = 40
+        Me.pb_foto.TabStop = False
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 3
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel3.Controls.Add(Me.lbl_Materiales, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.lbl_Aroma, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.lbl_Colores, 2, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.chk_Colores, 2, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.chk_Materiales, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.chk_Aromas, 1, 1)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 211)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 2
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(569, 273)
+        Me.TableLayoutPanel3.TabIndex = 69
+        '
+        'lbl_Materiales
+        '
+        Me.lbl_Materiales.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Materiales.AutoSize = True
+        Me.lbl_Materiales.Location = New System.Drawing.Point(3, 7)
+        Me.lbl_Materiales.Name = "lbl_Materiales"
+        Me.lbl_Materiales.Size = New System.Drawing.Size(183, 15)
+        Me.lbl_Materiales.TabIndex = 39
+        Me.lbl_Materiales.Text = "Materiales Disponibles"
+        '
+        'lbl_Aroma
+        '
+        Me.lbl_Aroma.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Aroma.AutoSize = True
+        Me.lbl_Aroma.Location = New System.Drawing.Point(192, 7)
+        Me.lbl_Aroma.Name = "lbl_Aroma"
+        Me.lbl_Aroma.Size = New System.Drawing.Size(183, 15)
+        Me.lbl_Aroma.TabIndex = 38
+        Me.lbl_Aroma.Text = "Aromas Disponibles"
+        '
+        'lbl_Colores
+        '
+        Me.lbl_Colores.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Colores.AutoSize = True
+        Me.lbl_Colores.Location = New System.Drawing.Point(381, 7)
+        Me.lbl_Colores.Name = "lbl_Colores"
+        Me.lbl_Colores.Size = New System.Drawing.Size(185, 15)
+        Me.lbl_Colores.TabIndex = 54
+        Me.lbl_Colores.Text = "Colores Disponibles"
+        '
+        'chk_Colores
+        '
+        Me.chk_Colores.CheckOnClick = True
+        Me.chk_Colores.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.chk_Colores.FormattingEnabled = True
+        Me.chk_Colores.Location = New System.Drawing.Point(381, 33)
+        Me.chk_Colores.Name = "chk_Colores"
+        Me.chk_Colores.Size = New System.Drawing.Size(185, 237)
+        Me.chk_Colores.TabIndex = 23
+        '
+        'chk_Materiales
+        '
+        Me.chk_Materiales.CheckOnClick = True
+        Me.chk_Materiales.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.chk_Materiales.FormattingEnabled = True
+        Me.chk_Materiales.Location = New System.Drawing.Point(3, 33)
+        Me.chk_Materiales.Name = "chk_Materiales"
+        Me.chk_Materiales.Size = New System.Drawing.Size(183, 237)
+        Me.chk_Materiales.TabIndex = 21
+        '
+        'chk_Aromas
+        '
+        Me.chk_Aromas.CheckOnClick = True
+        Me.chk_Aromas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.chk_Aromas.FormattingEnabled = True
+        Me.chk_Aromas.Location = New System.Drawing.Point(192, 33)
+        Me.chk_Aromas.Name = "chk_Aromas"
+        Me.chk_Aromas.Size = New System.Drawing.Size(183, 237)
+        Me.chk_Aromas.TabIndex = 22
+        '
+        'Label25
+        '
+        Me.Label25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(6, 515)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(117, 13)
+        Me.Label25.TabIndex = 67
+        Me.Label25.Text = "(*) Campos obligatorios."
+        '
+        'Btn_Agregar
+        '
+        Me.Btn_Agregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Agregar.BackColor = System.Drawing.Color.Transparent
+        Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
+        Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Agregar.Location = New System.Drawing.Point(874, 515)
+        Me.Btn_Agregar.Name = "Btn_Agregar"
+        Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Agregar.TabIndex = 24
+        Me.Btn_Agregar.Text = "Agregar"
+        Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.Btn_Agregar, "Agrega el producto al sistema.")
+        Me.Btn_Agregar.UseVisualStyleBackColor = False
+        '
+        'TbMod
+        '
+        Me.TbMod.Controls.Add(Me.GB_Modificacion)
+        Me.TbMod.Location = New System.Drawing.Point(4, 29)
+        Me.TbMod.Name = "TbMod"
+        Me.TbMod.Size = New System.Drawing.Size(998, 577)
+        Me.TbMod.TabIndex = 2
+        Me.TbMod.Text = "Modificación de Producto"
+        Me.TbMod.UseVisualStyleBackColor = True
+        '
+        'GB_Modificacion
+        '
+        Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel15)
+        Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
+        Me.GB_Modificacion.Controls.Add(Me.Label26)
+        Me.GB_Modificacion.Controls.Add(Me.Btn_Eliminar)
+        Me.GB_Modificacion.Controls.Add(Me.btn_Modificar)
+        Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GB_Modificacion.Location = New System.Drawing.Point(10, 6)
+        Me.GB_Modificacion.Name = "GB_Modificacion"
+        Me.GB_Modificacion.Size = New System.Drawing.Size(980, 563)
+        Me.GB_Modificacion.TabIndex = 1
+        Me.GB_Modificacion.TabStop = False
+        Me.GB_Modificacion.Text = "Formulario de Modificación"
+        '
+        'TableLayoutPanel15
+        '
+        Me.TableLayoutPanel15.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel15.ColumnCount = 2
+        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
+        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.TableLayoutPanel15.Controls.Add(Me.TableLayoutPanel8, 0, 0)
+        Me.TableLayoutPanel15.Controls.Add(Me.TableLayoutPanel14, 1, 0)
+        Me.TableLayoutPanel15.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel15.Name = "TableLayoutPanel15"
+        Me.TableLayoutPanel15.RowCount = 1
+        Me.TableLayoutPanel15.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel15.Size = New System.Drawing.Size(968, 490)
+        Me.TableLayoutPanel15.TabIndex = 93
+        '
+        'TableLayoutPanel8
+        '
+        Me.TableLayoutPanel8.ColumnCount = 2
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.Controls.Add(Me.TableLayoutPanel9, 1, 5)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label15, 0, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label13, 0, 1)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label12, 0, 2)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_Costo_mod, 1, 4)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label11, 0, 3)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label24, 0, 4)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label7, 0, 5)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label9, 0, 6)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label8, 0, 7)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label4, 0, 8)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label10, 0, 9)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label14, 0, 10)
+        Me.TableLayoutPanel8.Controls.Add(Me.chk_Habilitado_mod, 1, 10)
+        Me.TableLayoutPanel8.Controls.Add(Me.chk_SubirWeb_mod, 1, 11)
+        Me.TableLayoutPanel8.Controls.Add(Me.chk_Novedad_mod, 1, 12)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label6, 0, 11)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label5, 0, 12)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_Descripcion_mod, 1, 9)
+        Me.TableLayoutPanel8.Controls.Add(Me.cb_Proveedor_mod, 1, 8)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_Nombre_mod, 1, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_Origen_mod, 1, 1)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_Tamano_mod, 1, 2)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_Codigo_mod, 1, 3)
+        Me.TableLayoutPanel8.Controls.Add(Me.cb_Subcategoria_mod, 1, 7)
+        Me.TableLayoutPanel8.Controls.Add(Me.cb_Categoria_mod, 1, 6)
+        Me.TableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
+        Me.TableLayoutPanel8.RowCount = 13
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(381, 484)
+        Me.TableLayoutPanel8.TabIndex = 88
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.ColumnCount = 2
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.txt_Foto_mod, 0, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.btn_Open_mod, 1, 0)
+        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(143, 153)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 1
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(235, 29)
+        Me.TableLayoutPanel9.TabIndex = 89
+        '
+        'txt_Foto_mod
+        '
+        Me.txt_Foto_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Foto_mod.Location = New System.Drawing.Point(3, 4)
+        Me.txt_Foto_mod.Name = "txt_Foto_mod"
+        Me.txt_Foto_mod.Size = New System.Drawing.Size(189, 21)
+        Me.txt_Foto_mod.TabIndex = 6
+        '
+        'btn_Open_mod
+        '
+        Me.btn_Open_mod.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_Open_mod.Location = New System.Drawing.Point(201, 3)
+        Me.btn_Open_mod.Name = "btn_Open_mod"
+        Me.btn_Open_mod.Size = New System.Drawing.Size(31, 23)
+        Me.btn_Open_mod.TabIndex = 7
+        Me.btn_Open_mod.Text = ". . ."
+        Me.btn_Open_mod.UseVisualStyleBackColor = True
+        '
+        'Label15
+        '
+        Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(3, 7)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(134, 15)
+        Me.Label15.TabIndex = 41
+        Me.Label15.Text = "Nombre (*)"
+        '
+        'Label13
+        '
+        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(3, 37)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(134, 15)
+        Me.Label13.TabIndex = 49
+        Me.Label13.Text = "Origen"
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(3, 67)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(134, 15)
+        Me.Label12.TabIndex = 58
+        Me.Label12.Text = "Tamaño"
+        '
+        'txt_Costo_mod
+        '
+        Me.txt_Costo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Costo_mod.Location = New System.Drawing.Point(143, 124)
+        Me.txt_Costo_mod.MaxLength = 255
+        Me.txt_Costo_mod.Name = "txt_Costo_mod"
+        Me.txt_Costo_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Costo_mod.TabIndex = 5
+        '
+        'Label11
+        '
+        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(3, 97)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(134, 15)
+        Me.Label11.TabIndex = 59
+        Me.Label11.Text = "Código (*)"
+        '
+        'Label24
+        '
+        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(3, 127)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(134, 15)
+        Me.Label24.TabIndex = 85
+        Me.Label24.Text = "Costo"
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(3, 160)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(134, 15)
+        Me.Label7.TabIndex = 63
+        Me.Label7.Text = "Foto"
+        '
+        'Label9
+        '
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(3, 192)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(134, 15)
+        Me.Label9.TabIndex = 61
+        Me.Label9.Text = "Categoría (*)"
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(3, 222)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(134, 15)
+        Me.Label8.TabIndex = 62
+        Me.Label8.Text = "Subcategoría (*)"
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(3, 252)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(134, 15)
+        Me.Label4.TabIndex = 67
+        Me.Label4.Text = "Proveedor (*)"
+        '
+        'Label10
+        '
+        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(3, 327)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(134, 15)
+        Me.Label10.TabIndex = 60
+        Me.Label10.Text = "Descripcion"
+        '
+        'Label14
+        '
+        Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(3, 401)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(134, 15)
+        Me.Label14.TabIndex = 72
+        Me.Label14.Text = "Habilitado"
+        '
+        'chk_Habilitado_mod
+        '
+        Me.chk_Habilitado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Habilitado_mod.AutoSize = True
+        Me.chk_Habilitado_mod.Checked = True
+        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 402)
+        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
+        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Habilitado_mod.TabIndex = 12
+        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
+        '
+        'chk_SubirWeb_mod
+        '
+        Me.chk_SubirWeb_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_SubirWeb_mod.AutoSize = True
+        Me.chk_SubirWeb_mod.Checked = True
+        Me.chk_SubirWeb_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_SubirWeb_mod.Location = New System.Drawing.Point(143, 432)
+        Me.chk_SubirWeb_mod.Name = "chk_SubirWeb_mod"
+        Me.chk_SubirWeb_mod.Size = New System.Drawing.Size(235, 14)
+        Me.chk_SubirWeb_mod.TabIndex = 13
+        Me.chk_SubirWeb_mod.UseVisualStyleBackColor = True
+        '
+        'chk_Novedad_mod
+        '
+        Me.chk_Novedad_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Novedad_mod.AutoSize = True
+        Me.chk_Novedad_mod.Checked = True
+        Me.chk_Novedad_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Novedad_mod.Location = New System.Drawing.Point(143, 462)
+        Me.chk_Novedad_mod.Name = "chk_Novedad_mod"
+        Me.chk_Novedad_mod.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Novedad_mod.TabIndex = 14
+        Me.chk_Novedad_mod.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(3, 431)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(134, 15)
+        Me.Label6.TabIndex = 76
+        Me.Label6.Text = "Subir a la Web"
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(3, 461)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(134, 15)
+        Me.Label5.TabIndex = 77
+        Me.Label5.Text = "Novedad"
+        '
+        'txt_Descripcion_mod
+        '
+        Me.txt_Descripcion_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txt_Descripcion_mod.Location = New System.Drawing.Point(143, 278)
+        Me.txt_Descripcion_mod.MaxLength = 255
+        Me.txt_Descripcion_mod.Multiline = True
+        Me.txt_Descripcion_mod.Name = "txt_Descripcion_mod"
+        Me.txt_Descripcion_mod.Size = New System.Drawing.Size(235, 113)
+        Me.txt_Descripcion_mod.TabIndex = 11
+        '
+        'cb_Proveedor_mod
+        '
+        Me.cb_Proveedor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_Proveedor_mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Proveedor_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Proveedor_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Proveedor_mod.FormattingEnabled = True
+        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 249)
+        Me.cb_Proveedor_mod.Name = "cb_Proveedor_mod"
+        Me.cb_Proveedor_mod.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Proveedor_mod.TabIndex = 10
+        '
+        'txt_Nombre_mod
+        '
+        Me.txt_Nombre_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Nombre_mod.Location = New System.Drawing.Point(143, 4)
+        Me.txt_Nombre_mod.MaxLength = 255
+        Me.txt_Nombre_mod.Name = "txt_Nombre_mod"
+        Me.txt_Nombre_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Nombre_mod.TabIndex = 1
+        '
+        'txt_Origen_mod
+        '
+        Me.txt_Origen_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Origen_mod.Location = New System.Drawing.Point(143, 34)
+        Me.txt_Origen_mod.MaxLength = 255
+        Me.txt_Origen_mod.Name = "txt_Origen_mod"
+        Me.txt_Origen_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Origen_mod.TabIndex = 2
+        '
+        'txt_Tamano_mod
+        '
+        Me.txt_Tamano_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Tamano_mod.Location = New System.Drawing.Point(143, 64)
+        Me.txt_Tamano_mod.MaxLength = 255
+        Me.txt_Tamano_mod.Name = "txt_Tamano_mod"
+        Me.txt_Tamano_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Tamano_mod.TabIndex = 3
+        '
+        'txt_Codigo_mod
+        '
+        Me.txt_Codigo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Codigo_mod.Location = New System.Drawing.Point(143, 94)
+        Me.txt_Codigo_mod.MaxLength = 255
+        Me.txt_Codigo_mod.Name = "txt_Codigo_mod"
+        Me.txt_Codigo_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Codigo_mod.TabIndex = 4
+        '
+        'cb_Subcategoria_mod
+        '
+        Me.cb_Subcategoria_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_Subcategoria_mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Subcategoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Subcategoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Subcategoria_mod.FormattingEnabled = True
+        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 219)
+        Me.cb_Subcategoria_mod.Name = "cb_Subcategoria_mod"
+        Me.cb_Subcategoria_mod.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Subcategoria_mod.TabIndex = 9
+        '
+        'cb_Categoria_mod
+        '
+        Me.cb_Categoria_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_Categoria_mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Categoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_Categoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.cb_Categoria_mod.FormattingEnabled = True
+        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 189)
+        Me.cb_Categoria_mod.Name = "cb_Categoria_mod"
+        Me.cb_Categoria_mod.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Categoria_mod.TabIndex = 8
+        '
+        'TableLayoutPanel14
+        '
+        Me.TableLayoutPanel14.ColumnCount = 1
+        Me.TableLayoutPanel14.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel13, 0, 0)
+        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel11, 0, 1)
+        Me.TableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel14.Location = New System.Drawing.Point(390, 3)
+        Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
+        Me.TableLayoutPanel14.RowCount = 2
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 215.0!))
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel14.Size = New System.Drawing.Size(575, 484)
+        Me.TableLayoutPanel14.TabIndex = 92
+        '
+        'TableLayoutPanel13
+        '
+        Me.TableLayoutPanel13.ColumnCount = 2
+        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel13.Controls.Add(Me.Gb_Precios_mod, 0, 0)
+        Me.TableLayoutPanel13.Controls.Add(Me.TableLayoutPanel12, 1, 0)
+        Me.TableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel13.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel13.Name = "TableLayoutPanel13"
+        Me.TableLayoutPanel13.RowCount = 1
+        Me.TableLayoutPanel13.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel13.Size = New System.Drawing.Size(569, 209)
+        Me.TableLayoutPanel13.TabIndex = 91
+        '
+        'Gb_Precios_mod
+        '
+        Me.Gb_Precios_mod.Controls.Add(Me.TableLayoutPanel10)
+        Me.Gb_Precios_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Gb_Precios_mod.Location = New System.Drawing.Point(3, 3)
+        Me.Gb_Precios_mod.Name = "Gb_Precios_mod"
+        Me.Gb_Precios_mod.Size = New System.Drawing.Size(278, 203)
+        Me.Gb_Precios_mod.TabIndex = 78
+        Me.Gb_Precios_mod.TabStop = False
+        Me.Gb_Precios_mod.Text = "Listas de Precios"
+        '
+        'TableLayoutPanel10
+        '
+        Me.TableLayoutPanel10.ColumnCount = 2
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_Precio6_mod, 1, 5)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label22, 0, 5)
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_Precio5_mod, 1, 4)
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_Precio4_mod, 1, 3)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label19, 0, 0)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label20, 0, 1)
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_Precio3_mod, 1, 2)
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_Precio2_mod, 1, 1)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label17, 0, 4)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label21, 0, 2)
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_Precio1_mod, 1, 0)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label18, 0, 3)
+        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 17)
+        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
+        Me.TableLayoutPanel10.RowCount = 6
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(272, 183)
+        Me.TableLayoutPanel10.TabIndex = 89
+        '
+        'txt_Precio6_mod
+        '
+        Me.txt_Precio6_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio6_mod.Location = New System.Drawing.Point(143, 156)
+        Me.txt_Precio6_mod.Name = "txt_Precio6_mod"
+        Me.txt_Precio6_mod.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio6_mod.TabIndex = 20
+        '
+        'Label22
+        '
+        Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(3, 159)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(134, 15)
+        Me.Label22.TabIndex = 53
+        Me.Label22.Text = "Alternativa"
+        '
+        'txt_Precio5_mod
+        '
+        Me.txt_Precio5_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio5_mod.Location = New System.Drawing.Point(143, 124)
+        Me.txt_Precio5_mod.Name = "txt_Precio5_mod"
+        Me.txt_Precio5_mod.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio5_mod.TabIndex = 19
+        '
+        'txt_Precio4_mod
+        '
+        Me.txt_Precio4_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio4_mod.Location = New System.Drawing.Point(143, 94)
+        Me.txt_Precio4_mod.Name = "txt_Precio4_mod"
+        Me.txt_Precio4_mod.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio4_mod.TabIndex = 18
+        '
+        'Label19
+        '
+        Me.Label19.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(3, 7)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(134, 15)
+        Me.Label19.TabIndex = 47
+        Me.Label19.Text = "Efectivo Tigre"
+        '
+        'Label20
+        '
+        Me.Label20.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(3, 37)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(134, 15)
+        Me.Label20.TabIndex = 48
+        Me.Label20.Text = "Tarjeta Tigre"
+        '
+        'txt_Precio3_mod
+        '
+        Me.txt_Precio3_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio3_mod.Location = New System.Drawing.Point(143, 64)
+        Me.txt_Precio3_mod.Name = "txt_Precio3_mod"
+        Me.txt_Precio3_mod.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio3_mod.TabIndex = 17
+        '
+        'txt_Precio2_mod
+        '
+        Me.txt_Precio2_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio2_mod.Location = New System.Drawing.Point(143, 34)
+        Me.txt_Precio2_mod.Name = "txt_Precio2_mod"
+        Me.txt_Precio2_mod.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio2_mod.TabIndex = 16
+        '
+        'Label17
+        '
+        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(3, 127)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(134, 15)
+        Me.Label17.TabIndex = 50
+        Me.Label17.Text = "Mayorista"
+        '
+        'Label21
+        '
+        Me.Label21.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(3, 67)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(134, 15)
+        Me.Label21.TabIndex = 49
+        Me.Label21.Text = "Efectivo Capital"
+        '
+        'txt_Precio1_mod
+        '
+        Me.txt_Precio1_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio1_mod.Location = New System.Drawing.Point(143, 4)
+        Me.txt_Precio1_mod.Name = "txt_Precio1_mod"
+        Me.txt_Precio1_mod.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio1_mod.TabIndex = 15
+        '
+        'Label18
+        '
+        Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(3, 97)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(134, 15)
+        Me.Label18.TabIndex = 51
+        Me.Label18.Text = "Tarjeta Capital"
+        '
+        'TableLayoutPanel12
+        '
+        Me.TableLayoutPanel12.ColumnCount = 2
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Controls.Add(Me.pb_CodigoBarra, 0, 0)
+        Me.TableLayoutPanel12.Controls.Add(Me.pb_foto_mod, 1, 0)
+        Me.TableLayoutPanel12.Controls.Add(Me.Ck_EliminarFoto, 1, 1)
+        Me.TableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(287, 3)
+        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
+        Me.TableLayoutPanel12.RowCount = 2
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
+        Me.TableLayoutPanel12.Size = New System.Drawing.Size(279, 203)
+        Me.TableLayoutPanel12.TabIndex = 90
+        '
+        'pb_CodigoBarra
+        '
+        Me.pb_CodigoBarra.BackColor = System.Drawing.Color.White
+        Me.pb_CodigoBarra.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_CodigoBarra.Location = New System.Drawing.Point(3, 3)
+        Me.pb_CodigoBarra.Name = "pb_CodigoBarra"
+        Me.pb_CodigoBarra.Size = New System.Drawing.Size(133, 172)
+        Me.pb_CodigoBarra.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_CodigoBarra.TabIndex = 81
+        Me.pb_CodigoBarra.TabStop = False
+        '
+        'pb_foto_mod
+        '
+        Me.pb_foto_mod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pb_foto_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_foto_mod.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
+        Me.pb_foto_mod.InitialImage = Nothing
+        Me.pb_foto_mod.Location = New System.Drawing.Point(142, 3)
+        Me.pb_foto_mod.Name = "pb_foto_mod"
+        Me.pb_foto_mod.Size = New System.Drawing.Size(134, 172)
+        Me.pb_foto_mod.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_foto_mod.TabIndex = 70
+        Me.pb_foto_mod.TabStop = False
+        '
+        'Ck_EliminarFoto
+        '
+        Me.Ck_EliminarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Ck_EliminarFoto.AutoSize = True
+        Me.Ck_EliminarFoto.Location = New System.Drawing.Point(142, 181)
+        Me.Ck_EliminarFoto.Name = "Ck_EliminarFoto"
+        Me.Ck_EliminarFoto.Size = New System.Drawing.Size(134, 19)
+        Me.Ck_EliminarFoto.TabIndex = 83
+        Me.Ck_EliminarFoto.Text = "Eliminar Foto"
+        Me.Ck_EliminarFoto.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel11
+        '
+        Me.TableLayoutPanel11.ColumnCount = 3
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel11.Controls.Add(Me.Label1, 0, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.Label3, 1, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.lbl_Colores_mod, 2, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.chk_Materiales_mod, 0, 1)
+        Me.TableLayoutPanel11.Controls.Add(Me.chk_Aromas_mod, 1, 1)
+        Me.TableLayoutPanel11.Controls.Add(Me.chk_Colores_mod, 2, 1)
+        Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel11.Location = New System.Drawing.Point(3, 218)
+        Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
+        Me.TableLayoutPanel11.RowCount = 2
+        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel11.Size = New System.Drawing.Size(569, 263)
+        Me.TableLayoutPanel11.TabIndex = 89
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 7)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(183, 15)
+        Me.Label1.TabIndex = 69
+        Me.Label1.Text = "Materiales Disponibles"
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(192, 7)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(183, 15)
+        Me.Label3.TabIndex = 68
+        Me.Label3.Text = "Aromas Disponibles"
+        '
+        'lbl_Colores_mod
+        '
+        Me.lbl_Colores_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Colores_mod.AutoSize = True
+        Me.lbl_Colores_mod.Location = New System.Drawing.Point(381, 7)
+        Me.lbl_Colores_mod.Name = "lbl_Colores_mod"
+        Me.lbl_Colores_mod.Size = New System.Drawing.Size(185, 15)
+        Me.lbl_Colores_mod.TabIndex = 80
+        Me.lbl_Colores_mod.Text = "Colores Disponibles"
+        '
+        'chk_Materiales_mod
+        '
+        Me.chk_Materiales_mod.CheckOnClick = True
+        Me.chk_Materiales_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.chk_Materiales_mod.FormattingEnabled = True
+        Me.chk_Materiales_mod.Location = New System.Drawing.Point(3, 33)
+        Me.chk_Materiales_mod.Name = "chk_Materiales_mod"
+        Me.chk_Materiales_mod.Size = New System.Drawing.Size(183, 227)
+        Me.chk_Materiales_mod.TabIndex = 21
+        '
+        'chk_Aromas_mod
+        '
+        Me.chk_Aromas_mod.CheckOnClick = True
+        Me.chk_Aromas_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.chk_Aromas_mod.FormattingEnabled = True
+        Me.chk_Aromas_mod.Location = New System.Drawing.Point(192, 33)
+        Me.chk_Aromas_mod.Name = "chk_Aromas_mod"
+        Me.chk_Aromas_mod.Size = New System.Drawing.Size(183, 227)
+        Me.chk_Aromas_mod.TabIndex = 22
+        '
+        'chk_Colores_mod
+        '
+        Me.chk_Colores_mod.CheckOnClick = True
+        Me.chk_Colores_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.chk_Colores_mod.FormattingEnabled = True
+        Me.chk_Colores_mod.Location = New System.Drawing.Point(381, 33)
+        Me.chk_Colores_mod.Name = "chk_Colores_mod"
+        Me.chk_Colores_mod.Size = New System.Drawing.Size(185, 227)
+        Me.chk_Colores_mod.TabIndex = 23
+        '
+        'Btn_Cancelar
+        '
+        Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(662, 516)
+        Me.Btn_Cancelar.Name = "Btn_Cancelar"
+        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Cancelar.TabIndex = 87
+        Me.Btn_Cancelar.Text = "Cancelar"
+        Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de productos")
+        Me.Btn_Cancelar.UseVisualStyleBackColor = True
+        '
+        'Label26
+        '
+        Me.Label26.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label26.AutoSize = True
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.Location = New System.Drawing.Point(6, 516)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(117, 13)
+        Me.Label26.TabIndex = 86
+        Me.Label26.Text = "(*) Campos obligatorios."
+        '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
+        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(768, 517)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Eliminar.TabIndex = 24
+        Me.Btn_Eliminar.Text = "Eliminar"
+        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.Btn_Eliminar, "Elimina el producto del sistema.")
+        Me.Btn_Eliminar.UseVisualStyleBackColor = True
+        '
+        'btn_Modificar
+        '
+        Me.btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Modificar.BackColor = System.Drawing.Color.Transparent
+        Me.btn_Modificar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Modificar.Location = New System.Drawing.Point(874, 516)
+        Me.btn_Modificar.Name = "btn_Modificar"
+        Me.btn_Modificar.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Modificar.TabIndex = 25
+        Me.btn_Modificar.Text = "Modificar"
+        Me.btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btn_Modificar, "Modifica el producto en el sistema.")
+        Me.btn_Modificar.UseVisualStyleBackColor = False
+        '
+        'Cargar
+        '
+        Me.Cargar.FileName = "Cargar"
+        '
+        'ErrorProductos
+        '
+        Me.ErrorProductos.BlinkRate = 200
+        Me.ErrorProductos.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
+        Me.ErrorProductos.ContainerControl = Me
+        '
+        'ToolProd
+        '
+        Me.ToolProd.IsBalloon = True
+        Me.ToolProd.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolProd.ToolTipTitle = "Ayuda"
+        '
+        'OpenFileDialog
+        '
+        Me.OpenFileDialog.FileName = "OpenFileDialog"
         '
         'id_Producto
         '
@@ -404,7 +1914,7 @@ Partial Class frmProductos
         'Subcategoria
         '
         Me.Subcategoria.DataPropertyName = "Subcat"
-        Me.Subcategoria.HeaderText = "Subcategoria"
+        Me.Subcategoria.HeaderText = "Subcat."
         Me.Subcategoria.MaxInputLength = 150
         Me.Subcategoria.Name = "Subcategoria"
         Me.Subcategoria.ReadOnly = True
@@ -429,6 +1939,60 @@ Partial Class frmProductos
         Me.Habilitado.ReadOnly = True
         Me.Habilitado.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         '
+        'precio1
+        '
+        Me.precio1.DataPropertyName = "Precio1"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.precio1.DefaultCellStyle = DataGridViewCellStyle3
+        Me.precio1.HeaderText = "Ef. Tigre"
+        Me.precio1.Name = "precio1"
+        Me.precio1.ReadOnly = True
+        '
+        'precio2
+        '
+        Me.precio2.DataPropertyName = "Precio2"
+        DataGridViewCellStyle4.Format = "C2"
+        Me.precio2.DefaultCellStyle = DataGridViewCellStyle4
+        Me.precio2.HeaderText = "Tj. Tigre"
+        Me.precio2.Name = "precio2"
+        Me.precio2.ReadOnly = True
+        '
+        'precio3
+        '
+        Me.precio3.DataPropertyName = "Precio3"
+        DataGridViewCellStyle5.Format = "C2"
+        Me.precio3.DefaultCellStyle = DataGridViewCellStyle5
+        Me.precio3.HeaderText = "Ef. Capital"
+        Me.precio3.Name = "precio3"
+        Me.precio3.ReadOnly = True
+        '
+        'precio4
+        '
+        Me.precio4.DataPropertyName = "Precio4"
+        DataGridViewCellStyle6.Format = "C2"
+        Me.precio4.DefaultCellStyle = DataGridViewCellStyle6
+        Me.precio4.HeaderText = "Tj. Capital"
+        Me.precio4.Name = "precio4"
+        Me.precio4.ReadOnly = True
+        '
+        'precio5
+        '
+        Me.precio5.DataPropertyName = "Precio5"
+        DataGridViewCellStyle7.Format = "C2"
+        Me.precio5.DefaultCellStyle = DataGridViewCellStyle7
+        Me.precio5.HeaderText = "Mayorista"
+        Me.precio5.Name = "precio5"
+        Me.precio5.ReadOnly = True
+        '
+        'precio6
+        '
+        Me.precio6.DataPropertyName = "Precio6"
+        DataGridViewCellStyle8.Format = "C2"
+        Me.precio6.DefaultCellStyle = DataGridViewCellStyle8
+        Me.precio6.HeaderText = "Alternativo"
+        Me.precio6.Name = "precio6"
+        Me.precio6.ReadOnly = True
+        '
         'Modificar
         '
         Me.Modificar.HeaderText = "Modificar"
@@ -449,1197 +2013,56 @@ Partial Class frmProductos
         Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         '
-        'TbAlta
-        '
-        Me.TbAlta.Controls.Add(Me.GB_Alta)
-        Me.TbAlta.Location = New System.Drawing.Point(4, 29)
-        Me.TbAlta.Name = "TbAlta"
-        Me.TbAlta.Padding = New System.Windows.Forms.Padding(3)
-        Me.TbAlta.Size = New System.Drawing.Size(998, 577)
-        Me.TbAlta.TabIndex = 1
-        Me.TbAlta.Text = "Alta de Producto"
-        Me.TbAlta.UseVisualStyleBackColor = True
-        '
-        'GB_Alta
-        '
-        Me.GB_Alta.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Alta.Controls.Add(Me.Label25)
-        Me.GB_Alta.Controls.Add(Me.txt_Costo)
-        Me.GB_Alta.Controls.Add(Me.Label23)
-        Me.GB_Alta.Controls.Add(Me.lbl_Colores)
-        Me.GB_Alta.Controls.Add(Me.chk_Colores)
-        Me.GB_Alta.Controls.Add(Me.GB_Precios)
-        Me.GB_Alta.Controls.Add(Me.lbl_Foto2)
-        Me.GB_Alta.Controls.Add(Me.pb_foto)
-        Me.GB_Alta.Controls.Add(Me.lbl_Materiales)
-        Me.GB_Alta.Controls.Add(Me.Btn_Agregar)
-        Me.GB_Alta.Controls.Add(Me.lbl_Aroma)
-        Me.GB_Alta.Controls.Add(Me.chk_Materiales)
-        Me.GB_Alta.Controls.Add(Me.chk_Aromas)
-        Me.GB_Alta.Controls.Add(Me.cb_Proveedores)
-        Me.GB_Alta.Controls.Add(Me.lbl_Proveedor)
-        Me.GB_Alta.Controls.Add(Me.btn_Open)
-        Me.GB_Alta.Controls.Add(Me.txt_Foto)
-        Me.GB_Alta.Controls.Add(Me.chk_Novedad)
-        Me.GB_Alta.Controls.Add(Me.lbl_Novedad)
-        Me.GB_Alta.Controls.Add(Me.chk_SubirWeb)
-        Me.GB_Alta.Controls.Add(Me.lbl_SubirWeb)
-        Me.GB_Alta.Controls.Add(Me.lbl_Foto)
-        Me.GB_Alta.Controls.Add(Me.cb_Subcategoria)
-        Me.GB_Alta.Controls.Add(Me.cb_Categoria)
-        Me.GB_Alta.Controls.Add(Me.lbl_Subcategoria)
-        Me.GB_Alta.Controls.Add(Me.lbl_Categoria)
-        Me.GB_Alta.Controls.Add(Me.txt_Descripcion)
-        Me.GB_Alta.Controls.Add(Me.lbl_Descripcion)
-        Me.GB_Alta.Controls.Add(Me.txt_Codigo)
-        Me.GB_Alta.Controls.Add(Me.lbl_Codigo)
-        Me.GB_Alta.Controls.Add(Me.txt_Tamano)
-        Me.GB_Alta.Controls.Add(Me.lbl_Tamano)
-        Me.GB_Alta.Controls.Add(Me.txt_Origen)
-        Me.GB_Alta.Controls.Add(Me.lbl_Origen)
-        Me.GB_Alta.Controls.Add(Me.chk_Habilitado)
-        Me.GB_Alta.Controls.Add(Me.txt_Nombre)
-        Me.GB_Alta.Controls.Add(Me.Label2)
-        Me.GB_Alta.Controls.Add(Me.lbl_Nombre)
-        Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GB_Alta.Location = New System.Drawing.Point(10, 6)
-        Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(980, 550)
-        Me.GB_Alta.TabIndex = 0
-        Me.GB_Alta.TabStop = False
-        Me.GB_Alta.Text = "Formulario de Alta"
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(386, 517)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(117, 13)
-        Me.Label25.TabIndex = 67
-        Me.Label25.Text = "(*) Campos obligatorios."
-        '
-        'txt_Costo
-        '
-        Me.txt_Costo.Location = New System.Drawing.Point(118, 171)
-        Me.txt_Costo.MaxLength = 255
-        Me.txt_Costo.Name = "txt_Costo"
-        Me.txt_Costo.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Costo.TabIndex = 5
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(7, 178)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(38, 15)
-        Me.Label23.TabIndex = 56
-        Me.Label23.Text = "Costo"
-        '
-        'lbl_Colores
-        '
-        Me.lbl_Colores.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Colores.AutoSize = True
-        Me.lbl_Colores.Location = New System.Drawing.Point(778, 263)
-        Me.lbl_Colores.Name = "lbl_Colores"
-        Me.lbl_Colores.Size = New System.Drawing.Size(117, 15)
-        Me.lbl_Colores.TabIndex = 54
-        Me.lbl_Colores.Text = "Colores Disponibles"
-        '
-        'chk_Colores
-        '
-        Me.chk_Colores.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Colores.CheckOnClick = True
-        Me.chk_Colores.FormattingEnabled = True
-        Me.chk_Colores.Location = New System.Drawing.Point(775, 287)
-        Me.chk_Colores.Name = "chk_Colores"
-        Me.chk_Colores.Size = New System.Drawing.Size(187, 196)
-        Me.chk_Colores.TabIndex = 23
-        '
-        'GB_Precios
-        '
-        Me.GB_Precios.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Precios.Controls.Add(Me.lbl_Precio6)
-        Me.GB_Precios.Controls.Add(Me.txt_Precio6)
-        Me.GB_Precios.Controls.Add(Me.lbl_Precio5)
-        Me.GB_Precios.Controls.Add(Me.txt_Precio4)
-        Me.GB_Precios.Controls.Add(Me.txt_Precio5)
-        Me.GB_Precios.Controls.Add(Me.lbl_Precio4)
-        Me.GB_Precios.Controls.Add(Me.txt_Precio2)
-        Me.GB_Precios.Controls.Add(Me.lbl_Precio1)
-        Me.GB_Precios.Controls.Add(Me.txt_Precio3)
-        Me.GB_Precios.Controls.Add(Me.lbl_Precio2)
-        Me.GB_Precios.Controls.Add(Me.txt_Precio1)
-        Me.GB_Precios.Controls.Add(Me.lbl_Precio3)
-        Me.GB_Precios.Location = New System.Drawing.Point(389, 14)
-        Me.GB_Precios.Name = "GB_Precios"
-        Me.GB_Precios.Size = New System.Drawing.Size(289, 232)
-        Me.GB_Precios.TabIndex = 52
-        Me.GB_Precios.TabStop = False
-        Me.GB_Precios.Text = "Listas de Precios"
-        '
-        'lbl_Precio6
-        '
-        Me.lbl_Precio6.AutoSize = True
-        Me.lbl_Precio6.Location = New System.Drawing.Point(6, 197)
-        Me.lbl_Precio6.Name = "lbl_Precio6"
-        Me.lbl_Precio6.Size = New System.Drawing.Size(63, 15)
-        Me.lbl_Precio6.TabIndex = 53
-        Me.lbl_Precio6.Text = "Alternativa"
-        '
-        'txt_Precio6
-        '
-        Me.txt_Precio6.Location = New System.Drawing.Point(145, 192)
-        Me.txt_Precio6.Name = "txt_Precio6"
-        Me.txt_Precio6.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Precio6.TabIndex = 20
-        '
-        'lbl_Precio5
-        '
-        Me.lbl_Precio5.AutoSize = True
-        Me.lbl_Precio5.Location = New System.Drawing.Point(6, 166)
-        Me.lbl_Precio5.Name = "lbl_Precio5"
-        Me.lbl_Precio5.Size = New System.Drawing.Size(60, 15)
-        Me.lbl_Precio5.TabIndex = 50
-        Me.lbl_Precio5.Text = "Mayorista"
-        '
-        'txt_Precio4
-        '
-        Me.txt_Precio4.Location = New System.Drawing.Point(145, 128)
-        Me.txt_Precio4.Name = "txt_Precio4"
-        Me.txt_Precio4.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Precio4.TabIndex = 18
-        '
-        'txt_Precio5
-        '
-        Me.txt_Precio5.Location = New System.Drawing.Point(145, 161)
-        Me.txt_Precio5.Name = "txt_Precio5"
-        Me.txt_Precio5.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Precio5.TabIndex = 19
-        '
-        'lbl_Precio4
-        '
-        Me.lbl_Precio4.AutoSize = True
-        Me.lbl_Precio4.Location = New System.Drawing.Point(6, 135)
-        Me.lbl_Precio4.Name = "lbl_Precio4"
-        Me.lbl_Precio4.Size = New System.Drawing.Size(86, 15)
-        Me.lbl_Precio4.TabIndex = 51
-        Me.lbl_Precio4.Text = "Tarjeta Capital"
-        '
-        'txt_Precio2
-        '
-        Me.txt_Precio2.Location = New System.Drawing.Point(145, 58)
-        Me.txt_Precio2.Name = "txt_Precio2"
-        Me.txt_Precio2.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Precio2.TabIndex = 16
-        '
-        'lbl_Precio1
-        '
-        Me.lbl_Precio1.AutoSize = True
-        Me.lbl_Precio1.Location = New System.Drawing.Point(6, 30)
-        Me.lbl_Precio1.Name = "lbl_Precio1"
-        Me.lbl_Precio1.Size = New System.Drawing.Size(80, 15)
-        Me.lbl_Precio1.TabIndex = 47
-        Me.lbl_Precio1.Text = "Efectivo Tigre"
-        '
-        'txt_Precio3
-        '
-        Me.txt_Precio3.Location = New System.Drawing.Point(145, 93)
-        Me.txt_Precio3.Name = "txt_Precio3"
-        Me.txt_Precio3.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Precio3.TabIndex = 17
-        '
-        'lbl_Precio2
-        '
-        Me.lbl_Precio2.AutoSize = True
-        Me.lbl_Precio2.Location = New System.Drawing.Point(6, 65)
-        Me.lbl_Precio2.Name = "lbl_Precio2"
-        Me.lbl_Precio2.Size = New System.Drawing.Size(76, 15)
-        Me.lbl_Precio2.TabIndex = 48
-        Me.lbl_Precio2.Text = "Tarjeta Tigre"
-        '
-        'txt_Precio1
-        '
-        Me.txt_Precio1.Location = New System.Drawing.Point(145, 23)
-        Me.txt_Precio1.Name = "txt_Precio1"
-        Me.txt_Precio1.Size = New System.Drawing.Size(125, 21)
-        Me.txt_Precio1.TabIndex = 15
-        '
-        'lbl_Precio3
-        '
-        Me.lbl_Precio3.AutoSize = True
-        Me.lbl_Precio3.Location = New System.Drawing.Point(6, 100)
-        Me.lbl_Precio3.Name = "lbl_Precio3"
-        Me.lbl_Precio3.Size = New System.Drawing.Size(90, 15)
-        Me.lbl_Precio3.TabIndex = 49
-        Me.lbl_Precio3.Text = "Efectivo Capital"
-        '
-        'lbl_Foto2
-        '
-        Me.lbl_Foto2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Foto2.AutoSize = True
-        Me.lbl_Foto2.Location = New System.Drawing.Point(757, 16)
-        Me.lbl_Foto2.Name = "lbl_Foto2"
-        Me.lbl_Foto2.Size = New System.Drawing.Size(103, 15)
-        Me.lbl_Foto2.TabIndex = 41
-        Me.lbl_Foto2.Text = "Foto del Producto"
-        '
-        'pb_foto
-        '
-        Me.pb_foto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pb_foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pb_foto.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
-        Me.pb_foto.InitialImage = Nothing
-        Me.pb_foto.Location = New System.Drawing.Point(727, 35)
-        Me.pb_foto.Name = "pb_foto"
-        Me.pb_foto.Size = New System.Drawing.Size(150, 150)
-        Me.pb_foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pb_foto.TabIndex = 40
-        Me.pb_foto.TabStop = False
-        '
-        'lbl_Materiales
-        '
-        Me.lbl_Materiales.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Materiales.AutoSize = True
-        Me.lbl_Materiales.Location = New System.Drawing.Point(386, 263)
-        Me.lbl_Materiales.Name = "lbl_Materiales"
-        Me.lbl_Materiales.Size = New System.Drawing.Size(133, 15)
-        Me.lbl_Materiales.TabIndex = 39
-        Me.lbl_Materiales.Text = "Materiales Disponibles"
-        '
-        'Btn_Agregar
-        '
-        Me.Btn_Agregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Agregar.BackColor = System.Drawing.Color.Transparent
-        Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
-        Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(862, 502)
-        Me.Btn_Agregar.Name = "Btn_Agregar"
-        Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Agregar.TabIndex = 24
-        Me.Btn_Agregar.Text = "Agregar"
-        Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.Btn_Agregar, "Agrega el producto al sistema.")
-        Me.Btn_Agregar.UseVisualStyleBackColor = False
-        '
-        'lbl_Aroma
-        '
-        Me.lbl_Aroma.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Aroma.AutoSize = True
-        Me.lbl_Aroma.Location = New System.Drawing.Point(579, 263)
-        Me.lbl_Aroma.Name = "lbl_Aroma"
-        Me.lbl_Aroma.Size = New System.Drawing.Size(117, 15)
-        Me.lbl_Aroma.TabIndex = 38
-        Me.lbl_Aroma.Text = "Aromas Disponibles"
-        '
-        'chk_Materiales
-        '
-        Me.chk_Materiales.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Materiales.CheckOnClick = True
-        Me.chk_Materiales.FormattingEnabled = True
-        Me.chk_Materiales.Location = New System.Drawing.Point(389, 287)
-        Me.chk_Materiales.Name = "chk_Materiales"
-        Me.chk_Materiales.Size = New System.Drawing.Size(187, 196)
-        Me.chk_Materiales.TabIndex = 21
-        '
-        'chk_Aromas
-        '
-        Me.chk_Aromas.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Aromas.CheckOnClick = True
-        Me.chk_Aromas.FormattingEnabled = True
-        Me.chk_Aromas.Location = New System.Drawing.Point(582, 287)
-        Me.chk_Aromas.Name = "chk_Aromas"
-        Me.chk_Aromas.Size = New System.Drawing.Size(187, 196)
-        Me.chk_Aromas.TabIndex = 22
-        '
-        'cb_Proveedores
-        '
-        Me.cb_Proveedores.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Proveedores.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cb_Proveedores.FormattingEnabled = True
-        Me.cb_Proveedores.Location = New System.Drawing.Point(121, 310)
-        Me.cb_Proveedores.Name = "cb_Proveedores"
-        Me.cb_Proveedores.Size = New System.Drawing.Size(205, 23)
-        Me.cb_Proveedores.TabIndex = 10
-        '
-        'lbl_Proveedor
-        '
-        Me.lbl_Proveedor.AutoSize = True
-        Me.lbl_Proveedor.Location = New System.Drawing.Point(7, 313)
-        Me.lbl_Proveedor.Name = "lbl_Proveedor"
-        Me.lbl_Proveedor.Size = New System.Drawing.Size(79, 15)
-        Me.lbl_Proveedor.TabIndex = 35
-        Me.lbl_Proveedor.Text = "Proveedor (*)"
-        '
-        'btn_Open
-        '
-        Me.btn_Open.Location = New System.Drawing.Point(333, 206)
-        Me.btn_Open.Name = "btn_Open"
-        Me.btn_Open.Size = New System.Drawing.Size(31, 23)
-        Me.btn_Open.TabIndex = 7
-        Me.btn_Open.Text = ". . ."
-        Me.btn_Open.UseVisualStyleBackColor = True
-        '
-        'txt_Foto
-        '
-        Me.txt_Foto.Location = New System.Drawing.Point(118, 208)
-        Me.txt_Foto.Name = "txt_Foto"
-        Me.txt_Foto.Size = New System.Drawing.Size(209, 21)
-        Me.txt_Foto.TabIndex = 6
-        '
-        'chk_Novedad
-        '
-        Me.chk_Novedad.AutoSize = True
-        Me.chk_Novedad.Checked = True
-        Me.chk_Novedad.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Novedad.Location = New System.Drawing.Point(121, 517)
-        Me.chk_Novedad.Name = "chk_Novedad"
-        Me.chk_Novedad.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Novedad.TabIndex = 14
-        Me.chk_Novedad.UseVisualStyleBackColor = True
-        '
-        'lbl_Novedad
-        '
-        Me.lbl_Novedad.AutoSize = True
-        Me.lbl_Novedad.Location = New System.Drawing.Point(7, 517)
-        Me.lbl_Novedad.Name = "lbl_Novedad"
-        Me.lbl_Novedad.Size = New System.Drawing.Size(56, 15)
-        Me.lbl_Novedad.TabIndex = 30
-        Me.lbl_Novedad.Text = "Novedad"
-        '
-        'chk_SubirWeb
-        '
-        Me.chk_SubirWeb.AutoSize = True
-        Me.chk_SubirWeb.Checked = True
-        Me.chk_SubirWeb.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_SubirWeb.Location = New System.Drawing.Point(121, 492)
-        Me.chk_SubirWeb.Name = "chk_SubirWeb"
-        Me.chk_SubirWeb.Size = New System.Drawing.Size(15, 14)
-        Me.chk_SubirWeb.TabIndex = 13
-        Me.chk_SubirWeb.UseVisualStyleBackColor = True
-        '
-        'lbl_SubirWeb
-        '
-        Me.lbl_SubirWeb.AutoSize = True
-        Me.lbl_SubirWeb.Location = New System.Drawing.Point(7, 492)
-        Me.lbl_SubirWeb.Name = "lbl_SubirWeb"
-        Me.lbl_SubirWeb.Size = New System.Drawing.Size(87, 15)
-        Me.lbl_SubirWeb.TabIndex = 28
-        Me.lbl_SubirWeb.Text = "Subir a la Web"
-        '
-        'lbl_Foto
-        '
-        Me.lbl_Foto.AutoSize = True
-        Me.lbl_Foto.Location = New System.Drawing.Point(7, 211)
-        Me.lbl_Foto.Name = "lbl_Foto"
-        Me.lbl_Foto.Size = New System.Drawing.Size(31, 15)
-        Me.lbl_Foto.TabIndex = 27
-        Me.lbl_Foto.Text = "Foto"
-        '
-        'cb_Subcategoria
-        '
-        Me.cb_Subcategoria.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Subcategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Subcategoria.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cb_Subcategoria.FormattingEnabled = True
-        Me.cb_Subcategoria.Location = New System.Drawing.Point(121, 274)
-        Me.cb_Subcategoria.Name = "cb_Subcategoria"
-        Me.cb_Subcategoria.Size = New System.Drawing.Size(206, 23)
-        Me.cb_Subcategoria.TabIndex = 9
-        '
-        'cb_Categoria
-        '
-        Me.cb_Categoria.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Categoria.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cb_Categoria.FormattingEnabled = True
-        Me.cb_Categoria.Location = New System.Drawing.Point(121, 243)
-        Me.cb_Categoria.Name = "cb_Categoria"
-        Me.cb_Categoria.Size = New System.Drawing.Size(206, 23)
-        Me.cb_Categoria.TabIndex = 8
-        '
-        'lbl_Subcategoria
-        '
-        Me.lbl_Subcategoria.AutoSize = True
-        Me.lbl_Subcategoria.Location = New System.Drawing.Point(7, 277)
-        Me.lbl_Subcategoria.Name = "lbl_Subcategoria"
-        Me.lbl_Subcategoria.Size = New System.Drawing.Size(96, 15)
-        Me.lbl_Subcategoria.TabIndex = 22
-        Me.lbl_Subcategoria.Text = "Subcategoría (*)"
-        '
-        'lbl_Categoria
-        '
-        Me.lbl_Categoria.AutoSize = True
-        Me.lbl_Categoria.Location = New System.Drawing.Point(7, 243)
-        Me.lbl_Categoria.Name = "lbl_Categoria"
-        Me.lbl_Categoria.Size = New System.Drawing.Size(76, 15)
-        Me.lbl_Categoria.TabIndex = 21
-        Me.lbl_Categoria.Text = "Categoría (*)"
-        '
-        'txt_Descripcion
-        '
-        Me.txt_Descripcion.Location = New System.Drawing.Point(120, 345)
-        Me.txt_Descripcion.MaxLength = 255
-        Me.txt_Descripcion.Multiline = True
-        Me.txt_Descripcion.Name = "txt_Descripcion"
-        Me.txt_Descripcion.Size = New System.Drawing.Size(207, 116)
-        Me.txt_Descripcion.TabIndex = 11
-        '
-        'lbl_Descripcion
-        '
-        Me.lbl_Descripcion.AutoSize = True
-        Me.lbl_Descripcion.Location = New System.Drawing.Point(7, 345)
-        Me.lbl_Descripcion.Name = "lbl_Descripcion"
-        Me.lbl_Descripcion.Size = New System.Drawing.Size(72, 15)
-        Me.lbl_Descripcion.TabIndex = 19
-        Me.lbl_Descripcion.Text = "Descripcion"
-        '
-        'txt_Codigo
-        '
-        Me.txt_Codigo.Location = New System.Drawing.Point(119, 140)
-        Me.txt_Codigo.MaxLength = 255
-        Me.txt_Codigo.Name = "txt_Codigo"
-        Me.txt_Codigo.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Codigo.TabIndex = 4
-        '
-        'lbl_Codigo
-        '
-        Me.lbl_Codigo.AutoSize = True
-        Me.lbl_Codigo.Location = New System.Drawing.Point(7, 147)
-        Me.lbl_Codigo.Name = "lbl_Codigo"
-        Me.lbl_Codigo.Size = New System.Drawing.Size(62, 15)
-        Me.lbl_Codigo.TabIndex = 17
-        Me.lbl_Codigo.Text = "Código (*)"
-        '
-        'txt_Tamano
-        '
-        Me.txt_Tamano.Location = New System.Drawing.Point(118, 105)
-        Me.txt_Tamano.MaxLength = 255
-        Me.txt_Tamano.Name = "txt_Tamano"
-        Me.txt_Tamano.Size = New System.Drawing.Size(209, 21)
-        Me.txt_Tamano.TabIndex = 3
-        '
-        'lbl_Tamano
-        '
-        Me.lbl_Tamano.AutoSize = True
-        Me.lbl_Tamano.Location = New System.Drawing.Point(7, 112)
-        Me.lbl_Tamano.Name = "lbl_Tamano"
-        Me.lbl_Tamano.Size = New System.Drawing.Size(53, 15)
-        Me.lbl_Tamano.TabIndex = 15
-        Me.lbl_Tamano.Text = "Tamaño"
-        '
-        'txt_Origen
-        '
-        Me.txt_Origen.Location = New System.Drawing.Point(119, 70)
-        Me.txt_Origen.MaxLength = 255
-        Me.txt_Origen.Name = "txt_Origen"
-        Me.txt_Origen.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Origen.TabIndex = 2
-        '
-        'lbl_Origen
-        '
-        Me.lbl_Origen.AutoSize = True
-        Me.lbl_Origen.Location = New System.Drawing.Point(7, 77)
-        Me.lbl_Origen.Name = "lbl_Origen"
-        Me.lbl_Origen.Size = New System.Drawing.Size(44, 15)
-        Me.lbl_Origen.TabIndex = 7
-        Me.lbl_Origen.Text = "Origen"
-        '
-        'chk_Habilitado
-        '
-        Me.chk_Habilitado.AutoSize = True
-        Me.chk_Habilitado.Checked = True
-        Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(121, 467)
-        Me.chk_Habilitado.Name = "chk_Habilitado"
-        Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado.TabIndex = 12
-        Me.chk_Habilitado.UseVisualStyleBackColor = True
-        '
-        'txt_Nombre
-        '
-        Me.txt_Nombre.Location = New System.Drawing.Point(119, 35)
-        Me.txt_Nombre.MaxLength = 255
-        Me.txt_Nombre.Name = "txt_Nombre"
-        Me.txt_Nombre.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Nombre.TabIndex = 1
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 467)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(63, 15)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Habilitado"
-        '
-        'lbl_Nombre
-        '
-        Me.lbl_Nombre.AutoSize = True
-        Me.lbl_Nombre.Location = New System.Drawing.Point(7, 40)
-        Me.lbl_Nombre.Name = "lbl_Nombre"
-        Me.lbl_Nombre.Size = New System.Drawing.Size(68, 15)
-        Me.lbl_Nombre.TabIndex = 1
-        Me.lbl_Nombre.Text = "Nombre (*)"
-        '
-        'TbMod
-        '
-        Me.TbMod.Controls.Add(Me.GB_Modificacion)
-        Me.TbMod.Location = New System.Drawing.Point(4, 29)
-        Me.TbMod.Name = "TbMod"
-        Me.TbMod.Size = New System.Drawing.Size(998, 577)
-        Me.TbMod.TabIndex = 2
-        Me.TbMod.Text = "Modificación de Producto"
-        Me.TbMod.UseVisualStyleBackColor = True
-        '
-        'GB_Modificacion
-        '
-        Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
-        Me.GB_Modificacion.Controls.Add(Me.Label26)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Costo_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label24)
-        Me.GB_Modificacion.Controls.Add(Me.Ck_EliminarFoto)
-        Me.GB_Modificacion.Controls.Add(Me.Btn_Eliminar)
-        Me.GB_Modificacion.Controls.Add(Me.lbl_CodigoBarra)
-        Me.GB_Modificacion.Controls.Add(Me.pb_CodigoBarra)
-        Me.GB_Modificacion.Controls.Add(Me.lbl_Colores_mod)
-        Me.GB_Modificacion.Controls.Add(Me.chk_Colores_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Gb_Precios_mod)
-        Me.GB_Modificacion.Controls.Add(Me.chk_Novedad_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label5)
-        Me.GB_Modificacion.Controls.Add(Me.chk_SubirWeb_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label6)
-        Me.GB_Modificacion.Controls.Add(Me.chk_Habilitado_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label14)
-        Me.GB_Modificacion.Controls.Add(Me.Label16)
-        Me.GB_Modificacion.Controls.Add(Me.pb_foto_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label1)
-        Me.GB_Modificacion.Controls.Add(Me.btn_Modificar)
-        Me.GB_Modificacion.Controls.Add(Me.Label3)
-        Me.GB_Modificacion.Controls.Add(Me.chk_Materiales_mod)
-        Me.GB_Modificacion.Controls.Add(Me.chk_Aromas_mod)
-        Me.GB_Modificacion.Controls.Add(Me.cb_Proveedor_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label4)
-        Me.GB_Modificacion.Controls.Add(Me.btn_Open_mod)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Foto_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label7)
-        Me.GB_Modificacion.Controls.Add(Me.cb_Subcategoria_mod)
-        Me.GB_Modificacion.Controls.Add(Me.cb_Categoria_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label8)
-        Me.GB_Modificacion.Controls.Add(Me.Label9)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Descripcion_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label10)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Codigo_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label11)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Tamano_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label12)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Origen_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label13)
-        Me.GB_Modificacion.Controls.Add(Me.txt_Nombre_mod)
-        Me.GB_Modificacion.Controls.Add(Me.Label15)
-        Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GB_Modificacion.Location = New System.Drawing.Point(10, 6)
-        Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(980, 550)
-        Me.GB_Modificacion.TabIndex = 1
-        Me.GB_Modificacion.TabStop = False
-        Me.GB_Modificacion.Text = "Formulario de Modificación"
-        '
-        'Btn_Cancelar
-        '
-        Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(650, 504)
-        Me.Btn_Cancelar.Name = "Btn_Cancelar"
-        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Cancelar.TabIndex = 87
-        Me.Btn_Cancelar.Text = "Cancelar"
-        Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de productos")
-        Me.Btn_Cancelar.UseVisualStyleBackColor = True
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.Location = New System.Drawing.Point(386, 514)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(117, 13)
-        Me.Label26.TabIndex = 86
-        Me.Label26.Text = "(*) Campos obligatorios."
-        '
-        'txt_Costo_mod
-        '
-        Me.txt_Costo_mod.Location = New System.Drawing.Point(118, 171)
-        Me.txt_Costo_mod.MaxLength = 255
-        Me.txt_Costo_mod.Name = "txt_Costo_mod"
-        Me.txt_Costo_mod.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Costo_mod.TabIndex = 5
-        '
-        'Label24
-        '
-        Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(7, 178)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(38, 15)
-        Me.Label24.TabIndex = 85
-        Me.Label24.Text = "Costo"
-        '
-        'Ck_EliminarFoto
-        '
-        Me.Ck_EliminarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Ck_EliminarFoto.AutoSize = True
-        Me.Ck_EliminarFoto.Location = New System.Drawing.Point(802, 200)
-        Me.Ck_EliminarFoto.Name = "Ck_EliminarFoto"
-        Me.Ck_EliminarFoto.Size = New System.Drawing.Size(99, 19)
-        Me.Ck_EliminarFoto.TabIndex = 83
-        Me.Ck_EliminarFoto.Text = "Eliminar Foto"
-        Me.Ck_EliminarFoto.UseVisualStyleBackColor = True
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
-        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(756, 504)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Eliminar.TabIndex = 24
-        Me.Btn_Eliminar.Text = "Eliminar"
-        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.Btn_Eliminar, "Elimina el producto del sistema.")
-        Me.Btn_Eliminar.UseVisualStyleBackColor = True
-        '
-        'lbl_CodigoBarra
-        '
-        Me.lbl_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_CodigoBarra.AutoSize = True
-        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(675, 24)
-        Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
-        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(102, 15)
-        Me.lbl_CodigoBarra.TabIndex = 82
-        Me.lbl_CodigoBarra.Text = "Código de Barras"
-        '
-        'pb_CodigoBarra
-        '
-        Me.pb_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pb_CodigoBarra.BackColor = System.Drawing.Color.White
-        Me.pb_CodigoBarra.Location = New System.Drawing.Point(657, 43)
-        Me.pb_CodigoBarra.Name = "pb_CodigoBarra"
-        Me.pb_CodigoBarra.Size = New System.Drawing.Size(127, 96)
-        Me.pb_CodigoBarra.TabIndex = 81
-        Me.pb_CodigoBarra.TabStop = False
-        '
-        'lbl_Colores_mod
-        '
-        Me.lbl_Colores_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Colores_mod.AutoSize = True
-        Me.lbl_Colores_mod.Location = New System.Drawing.Point(772, 255)
-        Me.lbl_Colores_mod.Name = "lbl_Colores_mod"
-        Me.lbl_Colores_mod.Size = New System.Drawing.Size(117, 15)
-        Me.lbl_Colores_mod.TabIndex = 80
-        Me.lbl_Colores_mod.Text = "Colores Disponibles"
-        '
-        'chk_Colores_mod
-        '
-        Me.chk_Colores_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Colores_mod.CheckOnClick = True
-        Me.chk_Colores_mod.FormattingEnabled = True
-        Me.chk_Colores_mod.Location = New System.Drawing.Point(775, 279)
-        Me.chk_Colores_mod.Name = "chk_Colores_mod"
-        Me.chk_Colores_mod.Size = New System.Drawing.Size(187, 196)
-        Me.chk_Colores_mod.TabIndex = 23
-        '
-        'Gb_Precios_mod
-        '
-        Me.Gb_Precios_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Gb_Precios_mod.Controls.Add(Me.Label22)
-        Me.Gb_Precios_mod.Controls.Add(Me.txt_Precio6_mod)
-        Me.Gb_Precios_mod.Controls.Add(Me.Label17)
-        Me.Gb_Precios_mod.Controls.Add(Me.txt_Precio4_mod)
-        Me.Gb_Precios_mod.Controls.Add(Me.txt_Precio5_mod)
-        Me.Gb_Precios_mod.Controls.Add(Me.Label18)
-        Me.Gb_Precios_mod.Controls.Add(Me.txt_Precio2_mod)
-        Me.Gb_Precios_mod.Controls.Add(Me.Label19)
-        Me.Gb_Precios_mod.Controls.Add(Me.txt_Precio3_mod)
-        Me.Gb_Precios_mod.Controls.Add(Me.Label20)
-        Me.Gb_Precios_mod.Controls.Add(Me.txt_Precio1_mod)
-        Me.Gb_Precios_mod.Controls.Add(Me.Label21)
-        Me.Gb_Precios_mod.Location = New System.Drawing.Point(389, 14)
-        Me.Gb_Precios_mod.Name = "Gb_Precios_mod"
-        Me.Gb_Precios_mod.Size = New System.Drawing.Size(262, 221)
-        Me.Gb_Precios_mod.TabIndex = 78
-        Me.Gb_Precios_mod.TabStop = False
-        Me.Gb_Precios_mod.Text = "Listas de Precios"
-        '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(6, 194)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(63, 15)
-        Me.Label22.TabIndex = 53
-        Me.Label22.Text = "Alternativa"
-        '
-        'txt_Precio6_mod
-        '
-        Me.txt_Precio6_mod.Location = New System.Drawing.Point(121, 189)
-        Me.txt_Precio6_mod.Name = "txt_Precio6_mod"
-        Me.txt_Precio6_mod.Size = New System.Drawing.Size(135, 21)
-        Me.txt_Precio6_mod.TabIndex = 20
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(6, 166)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(60, 15)
-        Me.Label17.TabIndex = 50
-        Me.Label17.Text = "Mayorista"
-        '
-        'txt_Precio4_mod
-        '
-        Me.txt_Precio4_mod.Location = New System.Drawing.Point(121, 128)
-        Me.txt_Precio4_mod.Name = "txt_Precio4_mod"
-        Me.txt_Precio4_mod.Size = New System.Drawing.Size(135, 21)
-        Me.txt_Precio4_mod.TabIndex = 18
-        '
-        'txt_Precio5_mod
-        '
-        Me.txt_Precio5_mod.Location = New System.Drawing.Point(121, 161)
-        Me.txt_Precio5_mod.Name = "txt_Precio5_mod"
-        Me.txt_Precio5_mod.Size = New System.Drawing.Size(135, 21)
-        Me.txt_Precio5_mod.TabIndex = 19
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(6, 135)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(86, 15)
-        Me.Label18.TabIndex = 51
-        Me.Label18.Text = "Tarjeta Capital"
-        '
-        'txt_Precio2_mod
-        '
-        Me.txt_Precio2_mod.Location = New System.Drawing.Point(121, 58)
-        Me.txt_Precio2_mod.Name = "txt_Precio2_mod"
-        Me.txt_Precio2_mod.Size = New System.Drawing.Size(135, 21)
-        Me.txt_Precio2_mod.TabIndex = 16
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(6, 30)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(80, 15)
-        Me.Label19.TabIndex = 47
-        Me.Label19.Text = "Efectivo Tigre"
-        '
-        'txt_Precio3_mod
-        '
-        Me.txt_Precio3_mod.Location = New System.Drawing.Point(121, 93)
-        Me.txt_Precio3_mod.Name = "txt_Precio3_mod"
-        Me.txt_Precio3_mod.Size = New System.Drawing.Size(135, 21)
-        Me.txt_Precio3_mod.TabIndex = 17
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(6, 65)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(76, 15)
-        Me.Label20.TabIndex = 48
-        Me.Label20.Text = "Tarjeta Tigre"
-        '
-        'txt_Precio1_mod
-        '
-        Me.txt_Precio1_mod.Location = New System.Drawing.Point(121, 23)
-        Me.txt_Precio1_mod.Name = "txt_Precio1_mod"
-        Me.txt_Precio1_mod.Size = New System.Drawing.Size(135, 21)
-        Me.txt_Precio1_mod.TabIndex = 15
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(6, 100)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(90, 15)
-        Me.Label21.TabIndex = 49
-        Me.Label21.Text = "Efectivo Capital"
-        '
-        'chk_Novedad_mod
-        '
-        Me.chk_Novedad_mod.AutoSize = True
-        Me.chk_Novedad_mod.Checked = True
-        Me.chk_Novedad_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Novedad_mod.Location = New System.Drawing.Point(121, 517)
-        Me.chk_Novedad_mod.Name = "chk_Novedad_mod"
-        Me.chk_Novedad_mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Novedad_mod.TabIndex = 14
-        Me.chk_Novedad_mod.UseVisualStyleBackColor = True
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(7, 517)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(56, 15)
-        Me.Label5.TabIndex = 77
-        Me.Label5.Text = "Novedad"
-        '
-        'chk_SubirWeb_mod
-        '
-        Me.chk_SubirWeb_mod.AutoSize = True
-        Me.chk_SubirWeb_mod.Checked = True
-        Me.chk_SubirWeb_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_SubirWeb_mod.Location = New System.Drawing.Point(121, 492)
-        Me.chk_SubirWeb_mod.Name = "chk_SubirWeb_mod"
-        Me.chk_SubirWeb_mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_SubirWeb_mod.TabIndex = 13
-        Me.chk_SubirWeb_mod.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 492)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(87, 15)
-        Me.Label6.TabIndex = 76
-        Me.Label6.Text = "Subir a la Web"
-        '
-        'chk_Habilitado_mod
-        '
-        Me.chk_Habilitado_mod.AutoSize = True
-        Me.chk_Habilitado_mod.Checked = True
-        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(121, 467)
-        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
-        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado_mod.TabIndex = 12
-        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(7, 467)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(63, 15)
-        Me.Label14.TabIndex = 72
-        Me.Label14.Text = "Habilitado"
-        '
-        'Label16
-        '
-        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(840, 24)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(103, 15)
-        Me.Label16.TabIndex = 71
-        Me.Label16.Text = "Foto del Producto"
-        '
-        'pb_foto_mod
-        '
-        Me.pb_foto_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pb_foto_mod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pb_foto_mod.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
-        Me.pb_foto_mod.InitialImage = Nothing
-        Me.pb_foto_mod.Location = New System.Drawing.Point(812, 43)
-        Me.pb_foto_mod.Name = "pb_foto_mod"
-        Me.pb_foto_mod.Size = New System.Drawing.Size(150, 150)
-        Me.pb_foto_mod.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pb_foto_mod.TabIndex = 70
-        Me.pb_foto_mod.TabStop = False
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(386, 255)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(133, 15)
-        Me.Label1.TabIndex = 69
-        Me.Label1.Text = "Materiales Disponibles"
-        '
-        'btn_Modificar
-        '
-        Me.btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Modificar.BackColor = System.Drawing.Color.Transparent
-        Me.btn_Modificar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
-        Me.btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Modificar.Location = New System.Drawing.Point(862, 503)
-        Me.btn_Modificar.Name = "btn_Modificar"
-        Me.btn_Modificar.Size = New System.Drawing.Size(100, 40)
-        Me.btn_Modificar.TabIndex = 25
-        Me.btn_Modificar.Text = "Modificar"
-        Me.btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolProd.SetToolTip(Me.btn_Modificar, "Modifica el producto en el sistema.")
-        Me.btn_Modificar.UseVisualStyleBackColor = False
-        '
-        'Label3
-        '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(579, 255)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(117, 15)
-        Me.Label3.TabIndex = 68
-        Me.Label3.Text = "Aromas Disponibles"
-        '
-        'chk_Materiales_mod
-        '
-        Me.chk_Materiales_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Materiales_mod.CheckOnClick = True
-        Me.chk_Materiales_mod.FormattingEnabled = True
-        Me.chk_Materiales_mod.Location = New System.Drawing.Point(389, 279)
-        Me.chk_Materiales_mod.Name = "chk_Materiales_mod"
-        Me.chk_Materiales_mod.Size = New System.Drawing.Size(187, 196)
-        Me.chk_Materiales_mod.TabIndex = 21
-        '
-        'chk_Aromas_mod
-        '
-        Me.chk_Aromas_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Aromas_mod.CheckOnClick = True
-        Me.chk_Aromas_mod.FormattingEnabled = True
-        Me.chk_Aromas_mod.Location = New System.Drawing.Point(582, 279)
-        Me.chk_Aromas_mod.Name = "chk_Aromas_mod"
-        Me.chk_Aromas_mod.Size = New System.Drawing.Size(187, 196)
-        Me.chk_Aromas_mod.TabIndex = 22
-        '
-        'cb_Proveedor_mod
-        '
-        Me.cb_Proveedor_mod.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Proveedor_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Proveedor_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cb_Proveedor_mod.FormattingEnabled = True
-        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(121, 310)
-        Me.cb_Proveedor_mod.Name = "cb_Proveedor_mod"
-        Me.cb_Proveedor_mod.Size = New System.Drawing.Size(205, 23)
-        Me.cb_Proveedor_mod.TabIndex = 10
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(7, 313)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(79, 15)
-        Me.Label4.TabIndex = 67
-        Me.Label4.Text = "Proveedor (*)"
-        '
-        'btn_Open_mod
-        '
-        Me.btn_Open_mod.Location = New System.Drawing.Point(333, 207)
-        Me.btn_Open_mod.Name = "btn_Open_mod"
-        Me.btn_Open_mod.Size = New System.Drawing.Size(31, 23)
-        Me.btn_Open_mod.TabIndex = 7
-        Me.btn_Open_mod.Text = ". . ."
-        Me.btn_Open_mod.UseVisualStyleBackColor = True
-        '
-        'txt_Foto_mod
-        '
-        Me.txt_Foto_mod.Location = New System.Drawing.Point(118, 208)
-        Me.txt_Foto_mod.Name = "txt_Foto_mod"
-        Me.txt_Foto_mod.Size = New System.Drawing.Size(209, 21)
-        Me.txt_Foto_mod.TabIndex = 6
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(7, 211)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(31, 15)
-        Me.Label7.TabIndex = 63
-        Me.Label7.Text = "Foto"
-        '
-        'cb_Subcategoria_mod
-        '
-        Me.cb_Subcategoria_mod.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Subcategoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Subcategoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cb_Subcategoria_mod.FormattingEnabled = True
-        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(121, 274)
-        Me.cb_Subcategoria_mod.Name = "cb_Subcategoria_mod"
-        Me.cb_Subcategoria_mod.Size = New System.Drawing.Size(206, 23)
-        Me.cb_Subcategoria_mod.TabIndex = 9
-        '
-        'cb_Categoria_mod
-        '
-        Me.cb_Categoria_mod.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_Categoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_Categoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cb_Categoria_mod.FormattingEnabled = True
-        Me.cb_Categoria_mod.Location = New System.Drawing.Point(121, 243)
-        Me.cb_Categoria_mod.Name = "cb_Categoria_mod"
-        Me.cb_Categoria_mod.Size = New System.Drawing.Size(206, 23)
-        Me.cb_Categoria_mod.TabIndex = 8
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(7, 277)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(96, 15)
-        Me.Label8.TabIndex = 62
-        Me.Label8.Text = "Subcategoría (*)"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(7, 243)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(76, 15)
-        Me.Label9.TabIndex = 61
-        Me.Label9.Text = "Categoría (*)"
-        '
-        'txt_Descripcion_mod
-        '
-        Me.txt_Descripcion_mod.Location = New System.Drawing.Point(120, 345)
-        Me.txt_Descripcion_mod.MaxLength = 255
-        Me.txt_Descripcion_mod.Multiline = True
-        Me.txt_Descripcion_mod.Name = "txt_Descripcion_mod"
-        Me.txt_Descripcion_mod.Size = New System.Drawing.Size(207, 104)
-        Me.txt_Descripcion_mod.TabIndex = 11
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(7, 345)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(72, 15)
-        Me.Label10.TabIndex = 60
-        Me.Label10.Text = "Descripcion"
-        '
-        'txt_Codigo_mod
-        '
-        Me.txt_Codigo_mod.Location = New System.Drawing.Point(119, 140)
-        Me.txt_Codigo_mod.MaxLength = 255
-        Me.txt_Codigo_mod.Name = "txt_Codigo_mod"
-        Me.txt_Codigo_mod.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Codigo_mod.TabIndex = 4
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(7, 147)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(62, 15)
-        Me.Label11.TabIndex = 59
-        Me.Label11.Text = "Código (*)"
-        '
-        'txt_Tamano_mod
-        '
-        Me.txt_Tamano_mod.Location = New System.Drawing.Point(118, 105)
-        Me.txt_Tamano_mod.MaxLength = 255
-        Me.txt_Tamano_mod.Name = "txt_Tamano_mod"
-        Me.txt_Tamano_mod.Size = New System.Drawing.Size(209, 21)
-        Me.txt_Tamano_mod.TabIndex = 3
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(7, 112)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(53, 15)
-        Me.Label12.TabIndex = 58
-        Me.Label12.Text = "Tamaño"
-        '
-        'txt_Origen_mod
-        '
-        Me.txt_Origen_mod.Location = New System.Drawing.Point(119, 70)
-        Me.txt_Origen_mod.MaxLength = 255
-        Me.txt_Origen_mod.Name = "txt_Origen_mod"
-        Me.txt_Origen_mod.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Origen_mod.TabIndex = 2
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(7, 77)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(44, 15)
-        Me.Label13.TabIndex = 49
-        Me.Label13.Text = "Origen"
-        '
-        'txt_Nombre_mod
-        '
-        Me.txt_Nombre_mod.Location = New System.Drawing.Point(119, 35)
-        Me.txt_Nombre_mod.MaxLength = 255
-        Me.txt_Nombre_mod.Name = "txt_Nombre_mod"
-        Me.txt_Nombre_mod.Size = New System.Drawing.Size(208, 21)
-        Me.txt_Nombre_mod.TabIndex = 1
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(7, 40)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(68, 15)
-        Me.Label15.TabIndex = 41
-        Me.Label15.Text = "Nombre (*)"
-        '
-        'Cargar
-        '
-        Me.Cargar.FileName = "Cargar"
-        '
-        'ErrorProductos
-        '
-        Me.ErrorProductos.BlinkRate = 200
-        Me.ErrorProductos.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
-        Me.ErrorProductos.ContainerControl = Me
-        '
-        'ToolProd
-        '
-        Me.ToolProd.IsBalloon = True
-        Me.ToolProd.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolProd.ToolTipTitle = "Ayuda"
-        '
-        'OpenFileDialog
-        '
-        Me.OpenFileDialog.FileName = "OpenFileDialog"
-        '
         'frmProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1006, 610)
         Me.Controls.Add(Me.TabProductos)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmProductos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administración de Productos"
         Me.TabProductos.ResumeLayout(False)
         Me.TbListado.ResumeLayout(False)
-        Me.TbListado.PerformLayout()
         Me.GB_Buscar.ResumeLayout(False)
         Me.GB_Buscar.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbAlta.ResumeLayout(False)
         Me.GB_Alta.ResumeLayout(False)
         Me.GB_Alta.PerformLayout()
+        Me.TableLayoutPanel7.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel6.ResumeLayout(False)
+        Me.TableLayoutPanel5.ResumeLayout(False)
         Me.GB_Precios.ResumeLayout(False)
-        Me.GB_Precios.PerformLayout()
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel4.PerformLayout()
         CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel3.PerformLayout()
         Me.TbMod.ResumeLayout(False)
         Me.GB_Modificacion.ResumeLayout(False)
         Me.GB_Modificacion.PerformLayout()
-        CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel15.ResumeLayout(False)
+        Me.TableLayoutPanel8.ResumeLayout(False)
+        Me.TableLayoutPanel8.PerformLayout()
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        Me.TableLayoutPanel9.PerformLayout()
+        Me.TableLayoutPanel14.ResumeLayout(False)
+        Me.TableLayoutPanel13.ResumeLayout(False)
         Me.Gb_Precios_mod.ResumeLayout(False)
-        Me.Gb_Precios_mod.PerformLayout()
+        Me.TableLayoutPanel10.ResumeLayout(False)
+        Me.TableLayoutPanel10.PerformLayout()
+        Me.TableLayoutPanel12.ResumeLayout(False)
+        Me.TableLayoutPanel12.PerformLayout()
+        CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pb_foto_mod, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel11.ResumeLayout(False)
+        Me.TableLayoutPanel11.PerformLayout()
         CType(Me.ErrorProductos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -1713,9 +2136,7 @@ Partial Class frmProductos
     Friend WithEvents rb_Opcion As System.Windows.Forms.RadioButton
     Friend WithEvents btn_Buscar As System.Windows.Forms.Button
     Friend WithEvents btn_Restablecer As System.Windows.Forms.Button
-    Friend WithEvents lbl_Foto2 As System.Windows.Forms.Label
     Friend WithEvents pb_foto As System.Windows.Forms.PictureBox
-    Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents pb_foto_mod As System.Windows.Forms.PictureBox
     Friend WithEvents GB_Precios As System.Windows.Forms.GroupBox
     Friend WithEvents lbl_Precio5 As System.Windows.Forms.Label
@@ -1749,7 +2170,6 @@ Partial Class frmProductos
     Friend WithEvents chk_Colores As System.Windows.Forms.CheckedListBox
     Friend WithEvents lbl_Colores_mod As System.Windows.Forms.Label
     Friend WithEvents chk_Colores_mod As System.Windows.Forms.CheckedListBox
-    Friend WithEvents lbl_CodigoBarra As System.Windows.Forms.Label
     Friend WithEvents pb_CodigoBarra As System.Windows.Forms.PictureBox
     Friend WithEvents Btn_Eliminar As System.Windows.Forms.Button
     Friend WithEvents Ck_EliminarFoto As System.Windows.Forms.CheckBox
@@ -1765,19 +2185,40 @@ Partial Class frmProductos
     Friend WithEvents Label25 As System.Windows.Forms.Label
     Friend WithEvents Label26 As System.Windows.Forms.Label
     Friend WithEvents lbl_Msg As System.Windows.Forms.Label
-    Friend WithEvents id_Producto As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Nombre As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Codigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Categoria As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Subcategoria As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Proveedor As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Habilitado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents Btn_Cancelar As System.Windows.Forms.Button
     Friend WithEvents btn_Exportar As System.Windows.Forms.Button
     Friend WithEvents btn_Importar As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog As System.Windows.Forms.OpenFileDialog
     Friend WithEvents SaveFileDialog As System.Windows.Forms.SaveFileDialog
     Friend WithEvents btn_Restore As System.Windows.Forms.Button
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel8 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel15 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel14 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel13 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel11 As TableLayoutPanel
+    Friend WithEvents id_Producto As DataGridViewTextBoxColumn
+    Friend WithEvents Nombre As DataGridViewTextBoxColumn
+    Friend WithEvents Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents Categoria As DataGridViewTextBoxColumn
+    Friend WithEvents Subcategoria As DataGridViewTextBoxColumn
+    Friend WithEvents Proveedor As DataGridViewTextBoxColumn
+    Friend WithEvents Habilitado As DataGridViewTextBoxColumn
+    Friend WithEvents precio1 As DataGridViewTextBoxColumn
+    Friend WithEvents precio2 As DataGridViewTextBoxColumn
+    Friend WithEvents precio3 As DataGridViewTextBoxColumn
+    Friend WithEvents precio4 As DataGridViewTextBoxColumn
+    Friend WithEvents precio5 As DataGridViewTextBoxColumn
+    Friend WithEvents precio6 As DataGridViewTextBoxColumn
+    Friend WithEvents Modificar As DataGridViewImageColumn
+    Friend WithEvents Eliminar As DataGridViewImageColumn
 End Class

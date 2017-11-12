@@ -71,8 +71,8 @@ Partial Class frmMailBandeja
         Me.DG_Mensajes.AllowUserToResizeColumns = False
         Me.DG_Mensajes.AllowUserToResizeRows = False
         Me.DG_Mensajes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Mensajes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Mensajes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Mensajes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Mensaje, Me.Remitente, Me.Asunto, Me.Leido, Me.Fecha, Me.Eliminar})
@@ -139,9 +139,7 @@ Partial Class frmMailBandeja
         Me.ClientSize = New System.Drawing.Size(594, 472)
         Me.Controls.Add(Me.Gb_Mail)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmMailBandeja"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Centro de Mensajes | Bandeja de Entrada"

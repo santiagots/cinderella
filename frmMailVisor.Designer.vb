@@ -60,21 +60,24 @@ Partial Class frmMailVisor
         '
         'cb_Usuarios
         '
+        Me.cb_Usuarios.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Usuarios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_Usuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Usuarios.Enabled = False
         Me.cb_Usuarios.FormattingEnabled = True
         Me.cb_Usuarios.Location = New System.Drawing.Point(100, 45)
         Me.cb_Usuarios.Name = "cb_Usuarios"
-        Me.cb_Usuarios.Size = New System.Drawing.Size(221, 23)
+        Me.cb_Usuarios.Size = New System.Drawing.Size(482, 23)
         Me.cb_Usuarios.TabIndex = 12
         '
         'lblFecha
         '
-        Me.lblFecha.AutoSize = True
+        Me.lblFecha.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblFecha.Location = New System.Drawing.Point(100, 106)
         Me.lblFecha.Name = "lblFecha"
-        Me.lblFecha.Size = New System.Drawing.Size(45, 15)
+        Me.lblFecha.Size = New System.Drawing.Size(482, 23)
         Me.lblFecha.TabIndex = 11
         Me.lblFecha.Text = "Label6"
         '
@@ -90,7 +93,9 @@ Partial Class frmMailVisor
         '
         'lblMensaje
         '
-        Me.lblMensaje.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblMensaje.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblMensaje.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblMensaje.Location = New System.Drawing.Point(100, 135)
         Me.lblMensaje.Name = "lblMensaje"
@@ -100,10 +105,11 @@ Partial Class frmMailVisor
         '
         'lblAsunto
         '
-        Me.lblAsunto.AutoSize = True
+        Me.lblAsunto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblAsunto.Location = New System.Drawing.Point(100, 77)
         Me.lblAsunto.Name = "lblAsunto"
-        Me.lblAsunto.Size = New System.Drawing.Size(45, 15)
+        Me.lblAsunto.Size = New System.Drawing.Size(482, 23)
         Me.lblAsunto.TabIndex = 8
         Me.lblAsunto.Text = "Label5"
         '
@@ -174,9 +180,7 @@ Partial Class frmMailVisor
         Me.ClientSize = New System.Drawing.Size(594, 372)
         Me.Controls.Add(Me.Gb_Mail)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmMailVisor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Centro de Mensajes | Visor de Mensajes"

@@ -40,24 +40,24 @@ Partial Class frmEmpleadosRegistro
         Me.DT_Fecha = New System.Windows.Forms.DateTimePicker()
         Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.TabVisualizar = New System.Windows.Forms.TabPage()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.CheckListEmpleadosAusentesEdit = New System.Windows.Forms.CheckedListBox()
+        Me.CheckListEmpleadosTardeEdit = New System.Windows.Forms.CheckedListBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.CheckListEmpleadosPresentesEdit = New System.Windows.Forms.CheckedListBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Btn_Editar = New System.Windows.Forms.Button()
-        Me.CheckListEmpleadosPresentesEdit = New System.Windows.Forms.CheckedListBox()
         Me.DT_FechaEdit = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Gb_Fechas2 = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.CheckListEmpleadosTardeEdit = New System.Windows.Forms.CheckedListBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.Gb_Fechas.SuspendLayout()
         Me.Tcontrol.SuspendLayout()
         Me.TabIngresar.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabVisualizar.SuspendLayout()
-        Me.Gb_Fechas2.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.Gb_Fechas2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Gb_Fechas
@@ -114,15 +114,13 @@ Partial Class frmEmpleadosRegistro
         '
         'Tcontrol
         '
-        Me.Tcontrol.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Tcontrol.Controls.Add(Me.TabIngresar)
         Me.Tcontrol.Controls.Add(Me.TabVisualizar)
-        Me.Tcontrol.Location = New System.Drawing.Point(7, 23)
+        Me.Tcontrol.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Tcontrol.Location = New System.Drawing.Point(3, 17)
         Me.Tcontrol.Name = "Tcontrol"
         Me.Tcontrol.SelectedIndex = 0
-        Me.Tcontrol.Size = New System.Drawing.Size(416, 420)
+        Me.Tcontrol.Size = New System.Drawing.Size(424, 431)
         Me.Tcontrol.TabIndex = 4
         '
         'TabIngresar
@@ -134,13 +132,16 @@ Partial Class frmEmpleadosRegistro
         Me.TabIngresar.Location = New System.Drawing.Point(4, 24)
         Me.TabIngresar.Name = "TabIngresar"
         Me.TabIngresar.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabIngresar.Size = New System.Drawing.Size(408, 392)
+        Me.TabIngresar.Size = New System.Drawing.Size(416, 403)
         Me.TabIngresar.TabIndex = 0
         Me.TabIngresar.Text = "Ingreso"
         Me.TabIngresar.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel1
         '
+        Me.TableLayoutPanel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel1.ColumnCount = 3
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
@@ -156,7 +157,7 @@ Partial Class frmEmpleadosRegistro
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(392, 347)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(392, 358)
         Me.TableLayoutPanel1.TabIndex = 9
         '
         'Label7
@@ -187,7 +188,7 @@ Partial Class frmEmpleadosRegistro
         Me.CheckListEmpleadosPresentes.FormattingEnabled = True
         Me.CheckListEmpleadosPresentes.Location = New System.Drawing.Point(3, 28)
         Me.CheckListEmpleadosPresentes.Name = "CheckListEmpleadosPresentes"
-        Me.CheckListEmpleadosPresentes.Size = New System.Drawing.Size(124, 316)
+        Me.CheckListEmpleadosPresentes.Size = New System.Drawing.Size(124, 327)
         Me.CheckListEmpleadosPresentes.TabIndex = 5
         '
         'Label3
@@ -208,7 +209,7 @@ Partial Class frmEmpleadosRegistro
         Me.CheckListEmpleadosAusentes.FormattingEnabled = True
         Me.CheckListEmpleadosAusentes.Location = New System.Drawing.Point(263, 28)
         Me.CheckListEmpleadosAusentes.Name = "CheckListEmpleadosAusentes"
-        Me.CheckListEmpleadosAusentes.Size = New System.Drawing.Size(126, 316)
+        Me.CheckListEmpleadosAusentes.Size = New System.Drawing.Size(126, 327)
         Me.CheckListEmpleadosAusentes.TabIndex = 6
         '
         'CheckListEmpleadosTarde
@@ -219,11 +220,12 @@ Partial Class frmEmpleadosRegistro
         Me.CheckListEmpleadosTarde.FormattingEnabled = True
         Me.CheckListEmpleadosTarde.Location = New System.Drawing.Point(133, 28)
         Me.CheckListEmpleadosTarde.Name = "CheckListEmpleadosTarde"
-        Me.CheckListEmpleadosTarde.Size = New System.Drawing.Size(124, 316)
+        Me.CheckListEmpleadosTarde.Size = New System.Drawing.Size(124, 327)
         Me.CheckListEmpleadosTarde.TabIndex = 7
         '
         'Btn_Agregar
         '
+        Me.Btn_Agregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
@@ -238,6 +240,8 @@ Partial Class frmEmpleadosRegistro
         '
         'DT_Fecha
         '
+        Me.DT_Fecha.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DT_Fecha.Location = New System.Drawing.Point(54, 12)
         Me.DT_Fecha.Name = "DT_Fecha"
         Me.DT_Fecha.Size = New System.Drawing.Size(227, 21)
@@ -262,10 +266,65 @@ Partial Class frmEmpleadosRegistro
         Me.TabVisualizar.Location = New System.Drawing.Point(4, 24)
         Me.TabVisualizar.Name = "TabVisualizar"
         Me.TabVisualizar.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabVisualizar.Size = New System.Drawing.Size(408, 392)
+        Me.TabVisualizar.Size = New System.Drawing.Size(416, 403)
         Me.TabVisualizar.TabIndex = 1
         Me.TabVisualizar.Text = "Editar / Detalle"
         Me.TabVisualizar.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 3
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label8, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.CheckListEmpleadosAusentesEdit, 2, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.CheckListEmpleadosTardeEdit, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label6, 2, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.CheckListEmpleadosPresentesEdit, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label5, 0, 0)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(10, 39)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 2
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(392, 358)
+        Me.TableLayoutPanel2.TabIndex = 3
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(133, 5)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(124, 15)
+        Me.Label8.TabIndex = 13
+        Me.Label8.Text = "Tarde:"
+        '
+        'CheckListEmpleadosAusentesEdit
+        '
+        Me.CheckListEmpleadosAusentesEdit.CheckOnClick = True
+        Me.CheckListEmpleadosAusentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosAusentesEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckListEmpleadosAusentesEdit.FormattingEnabled = True
+        Me.CheckListEmpleadosAusentesEdit.Location = New System.Drawing.Point(263, 28)
+        Me.CheckListEmpleadosAusentesEdit.Name = "CheckListEmpleadosAusentesEdit"
+        Me.CheckListEmpleadosAusentesEdit.Size = New System.Drawing.Size(126, 327)
+        Me.CheckListEmpleadosAusentesEdit.TabIndex = 11
+        '
+        'CheckListEmpleadosTardeEdit
+        '
+        Me.CheckListEmpleadosTardeEdit.CheckOnClick = True
+        Me.CheckListEmpleadosTardeEdit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosTardeEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckListEmpleadosTardeEdit.FormattingEnabled = True
+        Me.CheckListEmpleadosTardeEdit.Location = New System.Drawing.Point(133, 28)
+        Me.CheckListEmpleadosTardeEdit.Name = "CheckListEmpleadosTardeEdit"
+        Me.CheckListEmpleadosTardeEdit.Size = New System.Drawing.Size(124, 327)
+        Me.CheckListEmpleadosTardeEdit.TabIndex = 12
         '
         'Label6
         '
@@ -277,16 +336,16 @@ Partial Class frmEmpleadosRegistro
         Me.Label6.TabIndex = 12
         Me.Label6.Text = "Ausencia:"
         '
-        'CheckListEmpleadosAusentesEdit
+        'CheckListEmpleadosPresentesEdit
         '
-        Me.CheckListEmpleadosAusentesEdit.CheckOnClick = True
-        Me.CheckListEmpleadosAusentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CheckListEmpleadosAusentesEdit.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckListEmpleadosAusentesEdit.FormattingEnabled = True
-        Me.CheckListEmpleadosAusentesEdit.Location = New System.Drawing.Point(263, 28)
-        Me.CheckListEmpleadosAusentesEdit.Name = "CheckListEmpleadosAusentesEdit"
-        Me.CheckListEmpleadosAusentesEdit.Size = New System.Drawing.Size(126, 316)
-        Me.CheckListEmpleadosAusentesEdit.TabIndex = 11
+        Me.CheckListEmpleadosPresentesEdit.CheckOnClick = True
+        Me.CheckListEmpleadosPresentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckListEmpleadosPresentesEdit.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckListEmpleadosPresentesEdit.FormattingEnabled = True
+        Me.CheckListEmpleadosPresentesEdit.Location = New System.Drawing.Point(3, 28)
+        Me.CheckListEmpleadosPresentesEdit.Name = "CheckListEmpleadosPresentesEdit"
+        Me.CheckListEmpleadosPresentesEdit.Size = New System.Drawing.Size(124, 327)
+        Me.CheckListEmpleadosPresentesEdit.TabIndex = 9
         '
         'Label5
         '
@@ -300,6 +359,7 @@ Partial Class frmEmpleadosRegistro
         '
         'Btn_Editar
         '
+        Me.Btn_Editar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Editar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Editar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Editar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
@@ -312,19 +372,10 @@ Partial Class frmEmpleadosRegistro
         Me.Btn_Editar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Editar.UseVisualStyleBackColor = True
         '
-        'CheckListEmpleadosPresentesEdit
-        '
-        Me.CheckListEmpleadosPresentesEdit.CheckOnClick = True
-        Me.CheckListEmpleadosPresentesEdit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CheckListEmpleadosPresentesEdit.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckListEmpleadosPresentesEdit.FormattingEnabled = True
-        Me.CheckListEmpleadosPresentesEdit.Location = New System.Drawing.Point(3, 28)
-        Me.CheckListEmpleadosPresentesEdit.Name = "CheckListEmpleadosPresentesEdit"
-        Me.CheckListEmpleadosPresentesEdit.Size = New System.Drawing.Size(124, 316)
-        Me.CheckListEmpleadosPresentesEdit.TabIndex = 9
-        '
         'DT_FechaEdit
         '
+        Me.DT_FechaEdit.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DT_FechaEdit.Location = New System.Drawing.Point(54, 12)
         Me.DT_FechaEdit.Name = "DT_FechaEdit"
         Me.DT_FechaEdit.Size = New System.Drawing.Size(227, 21)
@@ -353,47 +404,6 @@ Partial Class frmEmpleadosRegistro
         Me.Gb_Fechas2.TabStop = False
         Me.Gb_Fechas2.Text = "Ingresar/Visualizar Fechas y Empleados"
         '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 3
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Label8, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.CheckListEmpleadosAusentesEdit, 2, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.CheckListEmpleadosTardeEdit, 1, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label6, 2, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.CheckListEmpleadosPresentesEdit, 0, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label5, 0, 0)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(10, 39)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 2
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(392, 347)
-        Me.TableLayoutPanel2.TabIndex = 3
-        '
-        'CheckListEmpleadosTardeEdit
-        '
-        Me.CheckListEmpleadosTardeEdit.CheckOnClick = True
-        Me.CheckListEmpleadosTardeEdit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CheckListEmpleadosTardeEdit.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckListEmpleadosTardeEdit.FormattingEnabled = True
-        Me.CheckListEmpleadosTardeEdit.Location = New System.Drawing.Point(133, 28)
-        Me.CheckListEmpleadosTardeEdit.Name = "CheckListEmpleadosTardeEdit"
-        Me.CheckListEmpleadosTardeEdit.Size = New System.Drawing.Size(124, 316)
-        Me.CheckListEmpleadosTardeEdit.TabIndex = 12
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(133, 5)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(124, 15)
-        Me.Label8.TabIndex = 13
-        Me.Label8.Text = "Tarde:"
-        '
         'frmEmpleadosRegistro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -402,7 +412,6 @@ Partial Class frmEmpleadosRegistro
         Me.Controls.Add(Me.Gb_Fechas2)
         Me.Controls.Add(Me.Gb_Fechas)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmEmpleadosRegistro"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -416,9 +425,9 @@ Partial Class frmEmpleadosRegistro
         Me.TableLayoutPanel1.PerformLayout()
         Me.TabVisualizar.ResumeLayout(False)
         Me.TabVisualizar.PerformLayout()
-        Me.Gb_Fechas2.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        Me.Gb_Fechas2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

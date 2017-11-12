@@ -1347,106 +1347,95 @@ Public Class NegProductos
         Dim sourceData As DataTable
 
         Dim encripta As New ClsEncriptacion()
-        Try
-            Using conn As SqlConnection = New SqlConnection()
+        Using conn As SqlConnection = New SqlConnection()
 
-                conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
-                conn.Open()
+            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.Open()
 
-                RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
+            RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
 
-                Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM PRECIOS", conn)
-                Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsBackUp, "PRECIOS")
+            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM PRECIOS", conn)
+            Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "PRECIOS")
 
-                cmd = New SqlCommand("SELECT * FROM  STOCK", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsBackUp, "STOCK")
+            cmd = New SqlCommand("SELECT * FROM  STOCK", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "STOCK")
 
-                cmd = New SqlCommand("SELECT * FROM PRODUCTOS", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsBackUp, "PRODUCTOS")
+            cmd = New SqlCommand("SELECT * FROM PRODUCTOS", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "PRODUCTOS")
 
-                'Guardo la informacion de la tabla antes de ser actualizada
-                dsBackUp.WriteXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")
+            'Guardo la informacion de la tabla antes de ser actualizada
+            dsBackUp.WriteXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")
 
-                cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM PRODUCTOS_CATEGORIAS", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsCategoria)
+            cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM PRODUCTOS_CATEGORIAS", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsCategoria)
 
-                cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM PRODUCTOS_SUBCATEGORIAS", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsSubCategoria)
+            cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM PRODUCTOS_SUBCATEGORIAS", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsSubCategoria)
 
-                cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM PROVEEDORES", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsProveedor)
+            cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM PROVEEDORES", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProveedor)
 
 
-                cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsProductos)
-            End Using
-
-        Catch ex As Exception
-            Throw New Exception("Se ha producido un error al armando el BackUp de seguridad. Por favor, intente más tarde.")
-        End Try
+            cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProductos)
+        End Using
 
         Dim DatosEliminados As List(Of DataRow)
         Dim DatosActualizados As List(Of DataRow)
         Dim DatosNuevos As List(Of DataRow)
 
-        Try
-            RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
-            sourceData = GetDataFormExcel(fileName, "Productos").Tables(0)
+        RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
+        sourceData = GetDataFormExcel(fileName, "Productos").Tables(0)
 
-            If Not (verificarColumnasExcel(sourceData)) Then
-                Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
-            End If
+        If Not (verificarColumnasExcel(sourceData)) Then
+            Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
+        End If
 
-            DatosConError = dsProductos.Tables(0).Clone()
-            DatosConError.Columns.Add("Descripcion_Error")
+        DatosConError = dsProductos.Tables(0).Clone()
+        DatosConError.Columns.Add("Descripcion_Error")
 
-            RaiseEvent UpdateProgress(3, "Validando informacion del Excel...")
-            'Obtengo las filas eliminadas 
-            DatosEliminados = obtenerFilasEliminadas(dsProductos.Tables(0), sourceData)
+        RaiseEvent UpdateProgress(3, "Validando informacion del Excel...")
+        'Obtengo las filas eliminadas 
+        DatosEliminados = obtenerFilasEliminadas(dsProductos.Tables(0), sourceData)
 
-            'Eliminos las filar que tiene un mismo codigo y lo inserto como error
-            sourceData = ElmininarFilasComMismoValor(sourceData, DatosConError, "Codigo")
+        'Eliminos las filar que tiene un mismo codigo y lo inserto como error
+        sourceData = ElmininarFilasComMismoValor(sourceData, DatosConError, "Codigo")
 
-            'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
-            DatosActualizados = obtenerFilasModificadas(dsProductos, sourceData)
+        'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
+        DatosActualizados = obtenerFilasModificadas(dsProductos, sourceData)
 
-            'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
-            DatosNuevos = sourceData.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
+        'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
+        DatosNuevos = sourceData.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
 
-            'Verifico que estos productos nuevos no se encuentren en la base de datos
-            DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
+        'Verifico que estos productos nuevos no se encuentren en la base de datos
+        DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
 
-            'De las filas modificadas verifico que esten bien cargadas
-            DatosActualizados = ValidarDatosVacios(DatosActualizados, DatosConError)
+        'De las filas modificadas verifico que esten bien cargadas
+        DatosActualizados = ValidarDatosVacios(DatosActualizados, DatosConError)
 
-            'De las filas nuevas verifico que esten bien cargadas
-            DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
+        'De las filas nuevas verifico que esten bien cargadas
+        DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
 
-        Catch ex As Exception
-            Throw New Exception("Se ha producido un error al armando el BackUp de seguridad. Por favor, intente más tarde.")
-        End Try
 
         Dim productos As List(Of String) = New List(Of String)
-        Try
-            Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
-            'Armo sentiencias Delete
-            productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo))
-            'Armo sentiencias Update
-            productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo))
-            'Armo sentiencias Insert
-            productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo))
+        Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
-        Catch ex As Exception
-            Throw New Exception("Se ha producido un error al obtener la información del Excel. Por favor, verifique que el formato de los montos sea el correcto y que los campos de Categoría, Subcategoría y Proveedor se encuentren dados de alta en la aplicación y sean correctos.")
-        End Try
+        'Armo sentiencias Delete
+        productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo))
+        'Armo sentiencias Update
+        productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo))
+        'Armo sentiencias Insert
+        productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo))
+
+
 
         If (productos.Count > 0) Then
             Using conn As SqlConnection = New SqlConnection()
@@ -1465,11 +1454,7 @@ Public Class NegProductos
                             cmd.ExecuteNonQuery()
                         Next
                         tran.Commit()
-                    Catch ex As SqlException
-                        Throw New Exception("Se ha producido un error en la conexión a la base de datos. Por favor, intente más tarde.")
-                        tran.Rollback()
                     Catch ex As Exception
-                        Throw New Exception("Se ha producido un error en la importación de la información. Por favor, intente más tarde.")
                         tran.Rollback()
                         Throw
                     End Try

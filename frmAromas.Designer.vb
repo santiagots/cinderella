@@ -202,14 +202,16 @@ Partial Class frmAromas
         '
         'GB_Alta
         '
+        Me.GB_Alta.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Alta.Controls.Add(Me.chk_Habilitado)
         Me.GB_Alta.Controls.Add(Me.txt_descripcion)
         Me.GB_Alta.Controls.Add(Me.Label2)
         Me.GB_Alta.Controls.Add(Me.lbl_descripcion)
         Me.GB_Alta.Controls.Add(Me.Btn_Agregar)
-        Me.GB_Alta.Location = New System.Drawing.Point(27, 27)
+        Me.GB_Alta.Location = New System.Drawing.Point(6, 6)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(522, 189)
+        Me.GB_Alta.Size = New System.Drawing.Size(552, 102)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de Alta"
@@ -219,7 +221,7 @@ Partial Class frmAromas
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(91, 100)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(91, 54)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado.TabIndex = 2
@@ -227,16 +229,18 @@ Partial Class frmAromas
         '
         'txt_descripcion
         '
-        Me.txt_descripcion.Location = New System.Drawing.Point(91, 43)
+        Me.txt_descripcion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_descripcion.Location = New System.Drawing.Point(91, 19)
         Me.txt_descripcion.MaxLength = 255
         Me.txt_descripcion.Name = "txt_descripcion"
-        Me.txt_descripcion.Size = New System.Drawing.Size(164, 20)
+        Me.txt_descripcion.Size = New System.Drawing.Size(455, 20)
         Me.txt_descripcion.TabIndex = 1
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 100)
+        Me.Label2.Location = New System.Drawing.Point(6, 54)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(54, 13)
         Me.Label2.TabIndex = 2
@@ -245,7 +249,7 @@ Partial Class frmAromas
         'lbl_descripcion
         '
         Me.lbl_descripcion.AutoSize = True
-        Me.lbl_descripcion.Location = New System.Drawing.Point(6, 46)
+        Me.lbl_descripcion.Location = New System.Drawing.Point(6, 22)
         Me.lbl_descripcion.Name = "lbl_descripcion"
         Me.lbl_descripcion.Size = New System.Drawing.Size(63, 13)
         Me.lbl_descripcion.TabIndex = 1
@@ -253,12 +257,13 @@ Partial Class frmAromas
         '
         'Btn_Agregar
         '
+        Me.Btn_Agregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Agregar.BackColor = System.Drawing.Color.Transparent
         Me.Btn_Agregar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Agregar
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(410, 149)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(441, 54)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(105, 35)
         Me.Btn_Agregar.TabIndex = 3
@@ -280,22 +285,27 @@ Partial Class frmAromas
         '
         'GB_Buscar
         '
+        Me.GB_Buscar.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Buscar.Controls.Add(Me.txt_Aroma)
         Me.GB_Buscar.Controls.Add(Me.DG_Buscador)
         Me.GB_Buscar.Controls.Add(Me.Btn_Buscar)
         Me.GB_Buscar.Controls.Add(Me.lbl_descripcion_bus)
-        Me.GB_Buscar.Location = New System.Drawing.Point(27, 27)
+        Me.GB_Buscar.Location = New System.Drawing.Point(8, 3)
         Me.GB_Buscar.Name = "GB_Buscar"
-        Me.GB_Buscar.Size = New System.Drawing.Size(526, 253)
+        Me.GB_Buscar.Size = New System.Drawing.Size(550, 391)
         Me.GB_Buscar.TabIndex = 2
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Aroma"
         '
         'txt_Aroma
         '
-        Me.txt_Aroma.Location = New System.Drawing.Point(114, 24)
+        Me.txt_Aroma.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Aroma.Location = New System.Drawing.Point(75, 24)
         Me.txt_Aroma.Name = "txt_Aroma"
-        Me.txt_Aroma.Size = New System.Drawing.Size(252, 20)
+        Me.txt_Aroma.Size = New System.Drawing.Size(413, 20)
         Me.txt_Aroma.TabIndex = 1
         '
         'DG_Buscador
@@ -304,6 +314,9 @@ Partial Class frmAromas
         Me.DG_Buscador.AllowUserToDeleteRows = False
         Me.DG_Buscador.AllowUserToResizeColumns = False
         Me.DG_Buscador.AllowUserToResizeRows = False
+        Me.DG_Buscador.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Buscador.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Buscador.BackgroundColor = System.Drawing.SystemColors.ActiveBorder
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -324,7 +337,7 @@ Partial Class frmAromas
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DG_Buscador.DefaultCellStyle = DataGridViewCellStyle5
-        Me.DG_Buscador.Location = New System.Drawing.Point(9, 73)
+        Me.DG_Buscador.Location = New System.Drawing.Point(9, 63)
         Me.DG_Buscador.MultiSelect = False
         Me.DG_Buscador.Name = "DG_Buscador"
         Me.DG_Buscador.ReadOnly = True
@@ -339,7 +352,7 @@ Partial Class frmAromas
         Me.DG_Buscador.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.DG_Buscador.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.DG_Buscador.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Buscador.Size = New System.Drawing.Size(511, 171)
+        Me.DG_Buscador.Size = New System.Drawing.Size(535, 320)
         Me.DG_Buscador.TabIndex = 3
         '
         'id_Aroma_Bus
@@ -382,18 +395,18 @@ Partial Class frmAromas
         '
         'Btn_Buscar
         '
-        Me.Btn_Buscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
-        Me.Btn_Buscar.Location = New System.Drawing.Point(437, 19)
+        Me.Btn_Buscar.Location = New System.Drawing.Point(494, 9)
         Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(83, 34)
+        Me.Btn_Buscar.Size = New System.Drawing.Size(50, 48)
         Me.Btn_Buscar.TabIndex = 2
         Me.Btn_Buscar.UseVisualStyleBackColor = True
         '
         'lbl_descripcion_bus
         '
         Me.lbl_descripcion_bus.AutoSize = True
-        Me.lbl_descripcion_bus.Location = New System.Drawing.Point(6, 31)
+        Me.lbl_descripcion_bus.Location = New System.Drawing.Point(6, 27)
         Me.lbl_descripcion_bus.Name = "lbl_descripcion_bus"
         Me.lbl_descripcion_bus.Size = New System.Drawing.Size(63, 13)
         Me.lbl_descripcion_bus.TabIndex = 0
@@ -401,23 +414,27 @@ Partial Class frmAromas
         '
         'GB_Modificacion
         '
+        Me.GB_Modificacion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Modificacion.Controls.Add(Me.txt_Modificar)
         Me.GB_Modificacion.Controls.Add(Me.chk_Habilitado_mod)
         Me.GB_Modificacion.Controls.Add(Me.Label3)
         Me.GB_Modificacion.Controls.Add(Me.lbl_descripcion_mod)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Modificar)
-        Me.GB_Modificacion.Location = New System.Drawing.Point(27, 301)
+        Me.GB_Modificacion.Location = New System.Drawing.Point(8, 392)
         Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(526, 157)
+        Me.GB_Modificacion.Size = New System.Drawing.Size(550, 99)
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Modificación de Aroma"
         '
         'txt_Modificar
         '
-        Me.txt_Modificar.Location = New System.Drawing.Point(91, 46)
+        Me.txt_Modificar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Modificar.Location = New System.Drawing.Point(91, 19)
         Me.txt_Modificar.Name = "txt_Modificar"
-        Me.txt_Modificar.Size = New System.Drawing.Size(275, 20)
+        Me.txt_Modificar.Size = New System.Drawing.Size(453, 20)
         Me.txt_Modificar.TabIndex = 6
         '
         'chk_Habilitado_mod
@@ -425,7 +442,7 @@ Partial Class frmAromas
         Me.chk_Habilitado_mod.AutoSize = True
         Me.chk_Habilitado_mod.Checked = True
         Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(91, 100)
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(91, 54)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
         Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado_mod.TabIndex = 4
@@ -434,7 +451,7 @@ Partial Class frmAromas
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 100)
+        Me.Label3.Location = New System.Drawing.Point(6, 54)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(54, 13)
         Me.Label3.TabIndex = 2
@@ -443,7 +460,7 @@ Partial Class frmAromas
         'lbl_descripcion_mod
         '
         Me.lbl_descripcion_mod.AutoSize = True
-        Me.lbl_descripcion_mod.Location = New System.Drawing.Point(6, 46)
+        Me.lbl_descripcion_mod.Location = New System.Drawing.Point(6, 19)
         Me.lbl_descripcion_mod.Name = "lbl_descripcion_mod"
         Me.lbl_descripcion_mod.Size = New System.Drawing.Size(37, 13)
         Me.lbl_descripcion_mod.TabIndex = 1
@@ -452,12 +469,13 @@ Partial Class frmAromas
         '
         'Btn_Modificar
         '
+        Me.Btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_Modificar.BackColor = System.Drawing.Color.Transparent
         Me.Btn_Modificar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
         Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(405, 116)
+        Me.Btn_Modificar.Location = New System.Drawing.Point(429, 54)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(115, 35)
         Me.Btn_Modificar.TabIndex = 5
@@ -477,9 +495,7 @@ Partial Class frmAromas
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(574, 532)
         Me.Controls.Add(Me.TabAromas)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmAromas"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administración de Aromas"

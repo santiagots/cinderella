@@ -35,28 +35,31 @@ Partial Class frmVentasAdministracion
         Me.TbListado = New System.Windows.Forms.TabPage()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.ChkAnuladoNo = New System.Windows.Forms.CheckBox()
-        Me.ChkAnuladoSi = New System.Windows.Forms.CheckBox()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.txtMontoHasta = New System.Windows.Forms.TextBox()
-        Me.txtMontoDesde = New System.Windows.Forms.TextBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.btn_Restablecer = New System.Windows.Forms.Button()
-        Me.BtnFiltrar = New System.Windows.Forms.Button()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.FHasta = New System.Windows.Forms.DateTimePicker()
-        Me.FDesde = New System.Windows.Forms.DateTimePicker()
-        Me.ChkMarcaElectronica = New System.Windows.Forms.CheckBox()
-        Me.ChkMarcaTicket = New System.Windows.Forms.CheckBox()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.ChkMarcaManual = New System.Windows.Forms.CheckBox()
         Me.ChkMarcaSinFacturar = New System.Windows.Forms.CheckBox()
+        Me.ChkMarcaElectronica = New System.Windows.Forms.CheckBox()
+        Me.ChkMarcaTicket = New System.Windows.Forms.CheckBox()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.ChkAnuladoSi = New System.Windows.Forms.CheckBox()
+        Me.ChkAnuladoNo = New System.Windows.Forms.CheckBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.txtFacturaDesde = New System.Windows.Forms.TextBox()
+        Me.FHasta = New System.Windows.Forms.DateTimePicker()
+        Me.txtMontoHasta = New System.Windows.Forms.TextBox()
+        Me.FDesde = New System.Windows.Forms.DateTimePicker()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.txtMontoDesde = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.txtFacturaHasta = New System.Windows.Forms.TextBox()
-        Me.txtFacturaDesde = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btn_Restablecer = New System.Windows.Forms.Button()
+        Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.DG_Ventas = New System.Windows.Forms.DataGridView()
         Me.id_Venta = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NumeroVenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -69,6 +72,11 @@ Partial Class frmVentasAdministracion
         Me.NumFactura = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TbDetalle = New System.Windows.Forms.TabPage()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.lblAnulado = New System.Windows.Forms.Label()
+        Me.Gb_Anulado = New System.Windows.Forms.GroupBox()
+        Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
+        Me.BtnAnular = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.lblPorcentajeFacturacion = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
@@ -85,6 +93,8 @@ Partial Class frmVentasAdministracion
         Me.Label10 = New System.Windows.Forms.Label()
         Me.lblVendedor = New System.Windows.Forms.Label()
         Me.PanelTotalMinoristaSenia = New System.Windows.Forms.Panel()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblCostoFinancieroMinorista = New System.Windows.Forms.Label()
         Me.lblPendienteAbonarMinorista = New System.Windows.Forms.Label()
         Me.lblPendienteAbonarMinoristaDescripcion = New System.Windows.Forms.Label()
         Me.lblSeniaMinorista = New System.Windows.Forms.Label()
@@ -96,7 +106,9 @@ Partial Class frmVentasAdministracion
         Me.Label15 = New System.Windows.Forms.Label()
         Me.lblSubtotalMinorista = New System.Windows.Forms.Label()
         Me.PanelTotalMayorista = New System.Windows.Forms.Panel()
+        Me.lblDescuentoMayorista = New System.Windows.Forms.Label()
         Me.lblPendienteAbonarMayorista = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.lblPendienteAbonarMayoristaDescripcion = New System.Windows.Forms.Label()
         Me.lblSeniaMayorista = New System.Windows.Forms.Label()
         Me.lblSeniaMayoristaDescripcion = New System.Windows.Forms.Label()
@@ -110,24 +122,12 @@ Partial Class frmVentasAdministracion
         Me.lblMontoMayoristaDescripcion = New System.Windows.Forms.Label()
         Me.BtnEmitirFactura = New System.Windows.Forms.Button()
         Me.BtnFactura = New System.Windows.Forms.Button()
-        Me.lblAnulado = New System.Windows.Forms.Label()
         Me.lblFacturado = New System.Windows.Forms.Label()
         Me.label8 = New System.Windows.Forms.Label()
         Me.lblCantidad = New System.Windows.Forms.Label()
         Me.lblPago = New System.Windows.Forms.Label()
-        Me.Gb_Anulado = New System.Windows.Forms.GroupBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
-        Me.BtnAnular = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.ToolVentas = New System.Windows.Forms.ToolTip(Me.components)
-        Me.lblDescuentoMayorista = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.lblCostoFinancieroMinorista = New System.Windows.Forms.Label()
         Me.NUMERO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CODIGO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NOMBRE = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -136,16 +136,23 @@ Partial Class frmVentasAdministracion
         Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ToolVentas = New System.Windows.Forms.ToolTip(Me.components)
         Me.TabVentas.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.DG_Ventas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbDetalle.SuspendLayout()
         Me.lblcontenedor.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
+        Me.Gb_Anulado.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.PanelTotalMinoristaSenia.SuspendLayout()
         Me.PanelTotalMayorista.SuspendLayout()
-        Me.Gb_Anulado.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TipoFacturaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -179,9 +186,9 @@ Partial Class frmVentasAdministracion
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.AutoSize = True
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(278, 362)
@@ -189,120 +196,310 @@ Partial Class frmVentasAdministracion
         Me.lbl_Msg.Size = New System.Drawing.Size(328, 25)
         Me.lbl_Msg.TabIndex = 2
         Me.lbl_Msg.Text = "No se han encontrado ventas."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.ChkAnuladoNo)
-        Me.GroupBox1.Controls.Add(Me.ChkAnuladoSi)
-        Me.GroupBox1.Controls.Add(Me.Label20)
-        Me.GroupBox1.Controls.Add(Me.Label18)
-        Me.GroupBox1.Controls.Add(Me.txtMontoHasta)
-        Me.GroupBox1.Controls.Add(Me.txtMontoDesde)
-        Me.GroupBox1.Controls.Add(Me.Label19)
-        Me.GroupBox1.Controls.Add(Me.btn_Restablecer)
-        Me.GroupBox1.Controls.Add(Me.BtnFiltrar)
-        Me.GroupBox1.Controls.Add(Me.Label12)
-        Me.GroupBox1.Controls.Add(Me.Label11)
-        Me.GroupBox1.Controls.Add(Me.FHasta)
-        Me.GroupBox1.Controls.Add(Me.FDesde)
-        Me.GroupBox1.Controls.Add(Me.ChkMarcaElectronica)
-        Me.GroupBox1.Controls.Add(Me.ChkMarcaTicket)
-        Me.GroupBox1.Controls.Add(Me.ChkMarcaManual)
-        Me.GroupBox1.Controls.Add(Me.ChkMarcaSinFacturar)
-        Me.GroupBox1.Controls.Add(Me.Label17)
-        Me.GroupBox1.Controls.Add(Me.Label29)
-        Me.GroupBox1.Controls.Add(Me.txtFacturaHasta)
-        Me.GroupBox1.Controls.Add(Me.txtFacturaDesde)
-        Me.GroupBox1.Controls.Add(Me.Label13)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(10, 6)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(860, 188)
+        Me.GroupBox1.Size = New System.Drawing.Size(860, 193)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filtrar ventas."
         '
-        'ChkAnuladoNo
+        'TableLayoutPanel2
         '
-        Me.ChkAnuladoNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ChkAnuladoNo.AutoSize = True
-        Me.ChkAnuladoNo.Checked = True
-        Me.ChkAnuladoNo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkAnuladoNo.Location = New System.Drawing.Point(647, 86)
-        Me.ChkAnuladoNo.Name = "ChkAnuladoNo"
-        Me.ChkAnuladoNo.Size = New System.Drawing.Size(42, 19)
-        Me.ChkAnuladoNo.TabIndex = 433
-        Me.ChkAnuladoNo.Text = "No"
-        Me.ChkAnuladoNo.UseVisualStyleBackColor = True
+        Me.TableLayoutPanel2.ColumnCount = 7
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.99999!))
+        Me.TableLayoutPanel2.Controls.Add(Me.ChkMarcaManual, 3, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.ChkMarcaSinFacturar, 1, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.ChkMarcaElectronica, 3, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.ChkMarcaTicket, 1, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel4, 6, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label13, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label19, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label20, 5, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtFacturaDesde, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.FHasta, 6, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtMontoHasta, 3, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FDesde, 6, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label18, 2, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 5, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 5, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtMontoDesde, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label17, 0, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label29, 2, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtFacturaHasta, 3, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel3, 6, 4)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 17)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 5
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(854, 173)
+        Me.TableLayoutPanel2.TabIndex = 3
+        '
+        'ChkMarcaManual
+        '
+        Me.ChkMarcaManual.AutoSize = True
+        Me.ChkMarcaManual.Checked = True
+        Me.ChkMarcaManual.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkMarcaManual.Location = New System.Drawing.Point(257, 63)
+        Me.ChkMarcaManual.Name = "ChkMarcaManual"
+        Me.ChkMarcaManual.Size = New System.Drawing.Size(68, 19)
+        Me.ChkMarcaManual.TabIndex = 424
+        Me.ChkMarcaManual.Text = "Manual"
+        Me.ChkMarcaManual.UseVisualStyleBackColor = True
+        '
+        'ChkMarcaSinFacturar
+        '
+        Me.ChkMarcaSinFacturar.AutoSize = True
+        Me.ChkMarcaSinFacturar.Checked = True
+        Me.ChkMarcaSinFacturar.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkMarcaSinFacturar.Location = New System.Drawing.Point(143, 63)
+        Me.ChkMarcaSinFacturar.Name = "ChkMarcaSinFacturar"
+        Me.ChkMarcaSinFacturar.Size = New System.Drawing.Size(88, 19)
+        Me.ChkMarcaSinFacturar.TabIndex = 423
+        Me.ChkMarcaSinFacturar.Text = "Sin Facturar"
+        Me.ChkMarcaSinFacturar.UseVisualStyleBackColor = True
+        '
+        'ChkMarcaElectronica
+        '
+        Me.ChkMarcaElectronica.AutoSize = True
+        Me.ChkMarcaElectronica.Checked = True
+        Me.ChkMarcaElectronica.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkMarcaElectronica.Location = New System.Drawing.Point(257, 93)
+        Me.ChkMarcaElectronica.Name = "ChkMarcaElectronica"
+        Me.ChkMarcaElectronica.Size = New System.Drawing.Size(87, 19)
+        Me.ChkMarcaElectronica.TabIndex = 426
+        Me.ChkMarcaElectronica.Text = "Electronica"
+        Me.ChkMarcaElectronica.UseVisualStyleBackColor = True
+        '
+        'ChkMarcaTicket
+        '
+        Me.ChkMarcaTicket.AutoSize = True
+        Me.ChkMarcaTicket.Checked = True
+        Me.ChkMarcaTicket.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkMarcaTicket.Location = New System.Drawing.Point(143, 93)
+        Me.ChkMarcaTicket.Name = "ChkMarcaTicket"
+        Me.ChkMarcaTicket.Size = New System.Drawing.Size(58, 19)
+        Me.ChkMarcaTicket.TabIndex = 425
+        Me.ChkMarcaTicket.Text = "Ticket"
+        Me.ChkMarcaTicket.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.ColumnCount = 2
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.ChkAnuladoSi, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.ChkAnuladoNo, 1, 0)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(571, 63)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 1
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(200, 24)
+        Me.TableLayoutPanel4.TabIndex = 435
         '
         'ChkAnuladoSi
         '
-        Me.ChkAnuladoSi.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ChkAnuladoSi.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ChkAnuladoSi.AutoSize = True
         Me.ChkAnuladoSi.Checked = True
         Me.ChkAnuladoSi.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkAnuladoSi.Location = New System.Drawing.Point(604, 86)
+        Me.ChkAnuladoSi.Location = New System.Drawing.Point(3, 3)
         Me.ChkAnuladoSi.Name = "ChkAnuladoSi"
-        Me.ChkAnuladoSi.Size = New System.Drawing.Size(37, 19)
+        Me.ChkAnuladoSi.Size = New System.Drawing.Size(94, 18)
         Me.ChkAnuladoSi.TabIndex = 432
         Me.ChkAnuladoSi.Text = "Si"
         Me.ChkAnuladoSi.UseVisualStyleBackColor = True
         '
-        'Label20
+        'ChkAnuladoNo
         '
-        Me.Label20.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label20.AutoSize = True
-        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(484, 89)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(65, 16)
-        Me.Label20.TabIndex = 431
-        Me.Label20.Text = "Anulado"
+        Me.ChkAnuladoNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ChkAnuladoNo.AutoSize = True
+        Me.ChkAnuladoNo.Checked = True
+        Me.ChkAnuladoNo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ChkAnuladoNo.Location = New System.Drawing.Point(103, 3)
+        Me.ChkAnuladoNo.Name = "ChkAnuladoNo"
+        Me.ChkAnuladoNo.Size = New System.Drawing.Size(94, 18)
+        Me.ChkAnuladoNo.TabIndex = 433
+        Me.ChkAnuladoNo.Text = "No"
+        Me.ChkAnuladoNo.UseVisualStyleBackColor = True
         '
-        'Label18
+        'Label13
         '
-        Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(243, 59)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(13, 16)
-        Me.Label18.TabIndex = 430
-        Me.Label18.Text = "-"
-        '
-        'txtMontoHasta
-        '
-        Me.txtMontoHasta.Location = New System.Drawing.Point(273, 56)
-        Me.txtMontoHasta.Name = "txtMontoHasta"
-        Me.txtMontoHasta.Size = New System.Drawing.Size(103, 21)
-        Me.txtMontoHasta.TabIndex = 428
-        '
-        'txtMontoDesde
-        '
-        Me.txtMontoDesde.Location = New System.Drawing.Point(126, 56)
-        Me.txtMontoDesde.Name = "txtMontoDesde"
-        Me.txtMontoDesde.Size = New System.Drawing.Size(103, 21)
-        Me.txtMontoDesde.TabIndex = 427
+        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(3, 7)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(134, 16)
+        Me.Label13.TabIndex = 420
+        Me.Label13.Text = "N° Factura"
         '
         'Label19
         '
+        Me.Label19.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(6, 59)
+        Me.Label19.Location = New System.Drawing.Point(3, 37)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(50, 16)
+        Me.Label19.Size = New System.Drawing.Size(134, 16)
         Me.Label19.TabIndex = 429
         Me.Label19.Text = "Monto"
+        '
+        'Label20
+        '
+        Me.Label20.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(431, 67)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(134, 16)
+        Me.Label20.TabIndex = 431
+        Me.Label20.Text = "Anulado"
+        '
+        'txtFacturaDesde
+        '
+        Me.txtFacturaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFacturaDesde.Location = New System.Drawing.Point(143, 4)
+        Me.txtFacturaDesde.Name = "txtFacturaDesde"
+        Me.txtFacturaDesde.Size = New System.Drawing.Size(88, 21)
+        Me.txtFacturaDesde.TabIndex = 418
+        '
+        'FHasta
+        '
+        Me.FHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FHasta.Location = New System.Drawing.Point(571, 34)
+        Me.FHasta.Name = "FHasta"
+        Me.FHasta.Size = New System.Drawing.Size(280, 21)
+        Me.FHasta.TabIndex = 1
+        '
+        'txtMontoHasta
+        '
+        Me.txtMontoHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtMontoHasta.Location = New System.Drawing.Point(257, 34)
+        Me.txtMontoHasta.Name = "txtMontoHasta"
+        Me.txtMontoHasta.Size = New System.Drawing.Size(88, 21)
+        Me.txtMontoHasta.TabIndex = 428
+        '
+        'FDesde
+        '
+        Me.FDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FDesde.Location = New System.Drawing.Point(571, 4)
+        Me.FDesde.Name = "FDesde"
+        Me.FDesde.Size = New System.Drawing.Size(280, 21)
+        Me.FDesde.TabIndex = 0
+        '
+        'Label18
+        '
+        Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(237, 37)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(14, 16)
+        Me.Label18.TabIndex = 430
+        Me.Label18.Text = "-"
+        '
+        'Label11
+        '
+        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(431, 37)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(134, 16)
+        Me.Label11.TabIndex = 2
+        Me.Label11.Text = "Fecha hasta"
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(431, 7)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(134, 16)
+        Me.Label12.TabIndex = 3
+        Me.Label12.Text = "Fecha desde"
+        '
+        'txtMontoDesde
+        '
+        Me.txtMontoDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtMontoDesde.Location = New System.Drawing.Point(143, 34)
+        Me.txtMontoDesde.Name = "txtMontoDesde"
+        Me.txtMontoDesde.Size = New System.Drawing.Size(88, 21)
+        Me.txtMontoDesde.TabIndex = 427
+        '
+        'Label17
+        '
+        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(3, 67)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(134, 16)
+        Me.Label17.TabIndex = 422
+        Me.Label17.Text = "Facturado"
+        '
+        'Label29
+        '
+        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label29.AutoSize = True
+        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.Location = New System.Drawing.Point(237, 7)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(14, 16)
+        Me.Label29.TabIndex = 421
+        Me.Label29.Text = "-"
+        '
+        'txtFacturaHasta
+        '
+        Me.txtFacturaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFacturaHasta.Location = New System.Drawing.Point(257, 4)
+        Me.txtFacturaHasta.Name = "txtFacturaHasta"
+        Me.txtFacturaHasta.Size = New System.Drawing.Size(88, 21)
+        Me.txtFacturaHasta.TabIndex = 419
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.btn_Restablecer, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.BtnFiltrar, 1, 0)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(651, 123)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(200, 47)
+        Me.TableLayoutPanel3.TabIndex = 434
         '
         'btn_Restablecer
         '
         Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restablecer.Location = New System.Drawing.Point(648, 141)
+        Me.btn_Restablecer.Location = New System.Drawing.Point(3, 3)
         Me.btn_Restablecer.Name = "btn_Restablecer"
-        Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Restablecer.Size = New System.Drawing.Size(94, 41)
         Me.btn_Restablecer.TabIndex = 9
         Me.btn_Restablecer.Text = "Restablecer Busqueda"
         Me.ToolVentas.SetToolTip(Me.btn_Restablecer, "haz click aquí para restablecer los filtros y el listado de ventas.")
@@ -316,144 +513,14 @@ Partial Class frmVentasAdministracion
         Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnFiltrar.Location = New System.Drawing.Point(754, 141)
+        Me.BtnFiltrar.Location = New System.Drawing.Point(103, 3)
         Me.BtnFiltrar.Name = "BtnFiltrar"
-        Me.BtnFiltrar.Size = New System.Drawing.Size(100, 40)
+        Me.BtnFiltrar.Size = New System.Drawing.Size(94, 41)
         Me.BtnFiltrar.TabIndex = 4
         Me.BtnFiltrar.Text = "Buscar"
         Me.BtnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolVentas.SetToolTip(Me.BtnFiltrar, "Haz click aquí para buscar ventas con los criterios de busqueda seleccionados.")
         Me.BtnFiltrar.UseVisualStyleBackColor = True
-        '
-        'Label12
-        '
-        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(484, 29)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(99, 16)
-        Me.Label12.TabIndex = 3
-        Me.Label12.Text = "Fecha desde"
-        '
-        'Label11
-        '
-        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(484, 61)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(93, 16)
-        Me.Label11.TabIndex = 2
-        Me.Label11.Text = "Fecha hasta"
-        '
-        'FHasta
-        '
-        Me.FHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FHasta.Location = New System.Drawing.Point(604, 56)
-        Me.FHasta.Name = "FHasta"
-        Me.FHasta.Size = New System.Drawing.Size(250, 21)
-        Me.FHasta.TabIndex = 1
-        '
-        'FDesde
-        '
-        Me.FDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FDesde.Location = New System.Drawing.Point(604, 24)
-        Me.FDesde.Name = "FDesde"
-        Me.FDesde.Size = New System.Drawing.Size(250, 21)
-        Me.FDesde.TabIndex = 0
-        '
-        'ChkMarcaElectronica
-        '
-        Me.ChkMarcaElectronica.AutoSize = True
-        Me.ChkMarcaElectronica.Checked = True
-        Me.ChkMarcaElectronica.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkMarcaElectronica.Location = New System.Drawing.Point(224, 108)
-        Me.ChkMarcaElectronica.Name = "ChkMarcaElectronica"
-        Me.ChkMarcaElectronica.Size = New System.Drawing.Size(87, 19)
-        Me.ChkMarcaElectronica.TabIndex = 426
-        Me.ChkMarcaElectronica.Text = "Electronica"
-        Me.ChkMarcaElectronica.UseVisualStyleBackColor = True
-        '
-        'ChkMarcaTicket
-        '
-        Me.ChkMarcaTicket.AutoSize = True
-        Me.ChkMarcaTicket.Checked = True
-        Me.ChkMarcaTicket.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkMarcaTicket.Location = New System.Drawing.Point(126, 108)
-        Me.ChkMarcaTicket.Name = "ChkMarcaTicket"
-        Me.ChkMarcaTicket.Size = New System.Drawing.Size(58, 19)
-        Me.ChkMarcaTicket.TabIndex = 425
-        Me.ChkMarcaTicket.Text = "Ticket"
-        Me.ChkMarcaTicket.UseVisualStyleBackColor = True
-        '
-        'ChkMarcaManual
-        '
-        Me.ChkMarcaManual.AutoSize = True
-        Me.ChkMarcaManual.Checked = True
-        Me.ChkMarcaManual.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkMarcaManual.Location = New System.Drawing.Point(224, 83)
-        Me.ChkMarcaManual.Name = "ChkMarcaManual"
-        Me.ChkMarcaManual.Size = New System.Drawing.Size(68, 19)
-        Me.ChkMarcaManual.TabIndex = 424
-        Me.ChkMarcaManual.Text = "Manual"
-        Me.ChkMarcaManual.UseVisualStyleBackColor = True
-        '
-        'ChkMarcaSinFacturar
-        '
-        Me.ChkMarcaSinFacturar.AutoSize = True
-        Me.ChkMarcaSinFacturar.Checked = True
-        Me.ChkMarcaSinFacturar.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ChkMarcaSinFacturar.Location = New System.Drawing.Point(126, 83)
-        Me.ChkMarcaSinFacturar.Name = "ChkMarcaSinFacturar"
-        Me.ChkMarcaSinFacturar.Size = New System.Drawing.Size(92, 19)
-        Me.ChkMarcaSinFacturar.TabIndex = 423
-        Me.ChkMarcaSinFacturar.Text = "Sin Facturar"
-        Me.ChkMarcaSinFacturar.UseVisualStyleBackColor = True
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(6, 86)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(78, 16)
-        Me.Label17.TabIndex = 422
-        Me.Label17.Text = "Facturado"
-        '
-        'Label29
-        '
-        Me.Label29.AutoSize = True
-        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label29.Location = New System.Drawing.Point(243, 29)
-        Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(13, 16)
-        Me.Label29.TabIndex = 421
-        Me.Label29.Text = "-"
-        '
-        'txtFacturaHasta
-        '
-        Me.txtFacturaHasta.Location = New System.Drawing.Point(273, 26)
-        Me.txtFacturaHasta.Name = "txtFacturaHasta"
-        Me.txtFacturaHasta.Size = New System.Drawing.Size(103, 21)
-        Me.txtFacturaHasta.TabIndex = 419
-        '
-        'txtFacturaDesde
-        '
-        Me.txtFacturaDesde.Location = New System.Drawing.Point(126, 26)
-        Me.txtFacturaDesde.Name = "txtFacturaDesde"
-        Me.txtFacturaDesde.Size = New System.Drawing.Size(103, 21)
-        Me.txtFacturaDesde.TabIndex = 418
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(6, 29)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(80, 16)
-        Me.Label13.TabIndex = 420
-        Me.Label13.Text = "N° Factura"
         '
         'DG_Ventas
         '
@@ -580,17 +647,16 @@ Partial Class frmVentasAdministracion
         Me.lblcontenedor.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblcontenedor.Controls.Add(Me.TableLayoutPanel5)
         Me.lblcontenedor.Controls.Add(Me.TableLayoutPanel1)
         Me.lblcontenedor.Controls.Add(Me.PanelTotalMinoristaSenia)
         Me.lblcontenedor.Controls.Add(Me.PanelTotalMayorista)
         Me.lblcontenedor.Controls.Add(Me.BtnEmitirFactura)
         Me.lblcontenedor.Controls.Add(Me.BtnFactura)
-        Me.lblcontenedor.Controls.Add(Me.lblAnulado)
         Me.lblcontenedor.Controls.Add(Me.lblFacturado)
         Me.lblcontenedor.Controls.Add(Me.label8)
         Me.lblcontenedor.Controls.Add(Me.lblCantidad)
         Me.lblcontenedor.Controls.Add(Me.lblPago)
-        Me.lblcontenedor.Controls.Add(Me.Gb_Anulado)
         Me.lblcontenedor.Controls.Add(Me.Label1)
         Me.lblcontenedor.Controls.Add(Me.DG_Productos)
         Me.lblcontenedor.Controls.Add(Me.Label2)
@@ -601,6 +667,74 @@ Partial Class frmVentasAdministracion
         Me.lblcontenedor.TabIndex = 0
         Me.lblcontenedor.TabStop = False
         Me.lblcontenedor.Text = "Información de la venta realizada."
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.lblAnulado, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Gb_Anulado, 1, 0)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(302, 331)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(552, 213)
+        Me.TableLayoutPanel5.TabIndex = 73
+        '
+        'lblAnulado
+        '
+        Me.lblAnulado.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblAnulado.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAnulado.ForeColor = System.Drawing.Color.Red
+        Me.lblAnulado.Location = New System.Drawing.Point(3, 0)
+        Me.lblAnulado.Name = "lblAnulado"
+        Me.lblAnulado.Size = New System.Drawing.Size(270, 213)
+        Me.lblAnulado.TabIndex = 28
+        Me.lblAnulado.Text = "VENTA ANULADA."
+        Me.lblAnulado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Gb_Anulado
+        '
+        Me.Gb_Anulado.Controls.Add(Me.txtDescripcionAnular)
+        Me.Gb_Anulado.Controls.Add(Me.BtnAnular)
+        Me.Gb_Anulado.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Gb_Anulado.Location = New System.Drawing.Point(279, 3)
+        Me.Gb_Anulado.Name = "Gb_Anulado"
+        Me.Gb_Anulado.Size = New System.Drawing.Size(270, 207)
+        Me.Gb_Anulado.TabIndex = 16
+        Me.Gb_Anulado.TabStop = False
+        Me.Gb_Anulado.Text = "Anular Venta - Motivo"
+        '
+        'txtDescripcionAnular
+        '
+        Me.txtDescripcionAnular.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtDescripcionAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDescripcionAnular.Location = New System.Drawing.Point(9, 21)
+        Me.txtDescripcionAnular.Multiline = True
+        Me.txtDescripcionAnular.Name = "txtDescripcionAnular"
+        Me.txtDescripcionAnular.Size = New System.Drawing.Size(255, 147)
+        Me.txtDescripcionAnular.TabIndex = 15
+        '
+        'BtnAnular
+        '
+        Me.BtnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnAnular.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnAnular.Image = Global.SistemaCinderella.My.Resources.Recursos.Desconectado
+        Me.BtnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnAnular.Location = New System.Drawing.Point(186, 173)
+        Me.BtnAnular.Name = "BtnAnular"
+        Me.BtnAnular.Size = New System.Drawing.Size(78, 27)
+        Me.BtnAnular.TabIndex = 14
+        Me.BtnAnular.Text = "Anular"
+        Me.BtnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolVentas.SetToolTip(Me.BtnAnular, "Anular venta")
+        Me.BtnAnular.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel1
         '
@@ -811,6 +945,28 @@ Partial Class frmVentasAdministracion
         Me.PanelTotalMinoristaSenia.Size = New System.Drawing.Size(258, 141)
         Me.PanelTotalMinoristaSenia.TabIndex = 40
         '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(3, 52)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(123, 15)
+        Me.Label7.TabIndex = 73
+        Me.Label7.Text = "Costo Financiero :"
+        '
+        'lblCostoFinancieroMinorista
+        '
+        Me.lblCostoFinancieroMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblCostoFinancieroMinorista.AutoSize = True
+        Me.lblCostoFinancieroMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCostoFinancieroMinorista.Location = New System.Drawing.Point(193, 52)
+        Me.lblCostoFinancieroMinorista.Name = "lblCostoFinancieroMinorista"
+        Me.lblCostoFinancieroMinorista.Size = New System.Drawing.Size(42, 15)
+        Me.lblCostoFinancieroMinorista.TabIndex = 74
+        Me.lblCostoFinancieroMinorista.Text = "- - - - - "
+        '
         'lblPendienteAbonarMinorista
         '
         Me.lblPendienteAbonarMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -938,10 +1094,21 @@ Partial Class frmVentasAdministracion
         Me.PanelTotalMayorista.Controls.Add(Me.Label24)
         Me.PanelTotalMayorista.Controls.Add(Me.lblMontoMayorista)
         Me.PanelTotalMayorista.Controls.Add(Me.lblMontoMayoristaDescripcion)
-        Me.PanelTotalMayorista.Location = New System.Drawing.Point(268, 403)
+        Me.PanelTotalMayorista.Location = New System.Drawing.Point(0, 169)
         Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
         Me.PanelTotalMayorista.Size = New System.Drawing.Size(298, 156)
         Me.PanelTotalMayorista.TabIndex = 39
+        '
+        'lblDescuentoMayorista
+        '
+        Me.lblDescuentoMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblDescuentoMayorista.AutoSize = True
+        Me.lblDescuentoMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDescuentoMayorista.Location = New System.Drawing.Point(193, 3)
+        Me.lblDescuentoMayorista.Name = "lblDescuentoMayorista"
+        Me.lblDescuentoMayorista.Size = New System.Drawing.Size(42, 15)
+        Me.lblDescuentoMayorista.TabIndex = 74
+        Me.lblDescuentoMayorista.Text = "- - - - - "
         '
         'lblPendienteAbonarMayorista
         '
@@ -953,6 +1120,17 @@ Partial Class frmVentasAdministracion
         Me.lblPendienteAbonarMayorista.Size = New System.Drawing.Size(42, 15)
         Me.lblPendienteAbonarMayorista.TabIndex = 56
         Me.lblPendienteAbonarMayorista.Text = "- - - - - "
+        '
+        'Label23
+        '
+        Me.Label23.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.Location = New System.Drawing.Point(3, 3)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(83, 15)
+        Me.Label23.TabIndex = 73
+        Me.Label23.Text = "Descuento :"
         '
         'lblPendienteAbonarMayoristaDescripcion
         '
@@ -1105,18 +1283,6 @@ Partial Class frmVentasAdministracion
         Me.ToolVentas.SetToolTip(Me.BtnFactura, "Ver detalle factura")
         Me.BtnFactura.UseVisualStyleBackColor = True
         '
-        'lblAnulado
-        '
-        Me.lblAnulado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblAnulado.AutoSize = True
-        Me.lblAnulado.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAnulado.ForeColor = System.Drawing.Color.Red
-        Me.lblAnulado.Location = New System.Drawing.Point(440, 397)
-        Me.lblAnulado.Name = "lblAnulado"
-        Me.lblAnulado.Size = New System.Drawing.Size(188, 24)
-        Me.lblAnulado.TabIndex = 28
-        Me.lblAnulado.Text = "VENTA ANULADA."
-        '
         'lblFacturado
         '
         Me.lblFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -1161,55 +1327,6 @@ Partial Class frmVentasAdministracion
         Me.lblPago.TabIndex = 21
         Me.lblPago.Text = "- - - - - "
         '
-        'Gb_Anulado
-        '
-        Me.Gb_Anulado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Gb_Anulado.Controls.Add(Me.Label9)
-        Me.Gb_Anulado.Controls.Add(Me.txtDescripcionAnular)
-        Me.Gb_Anulado.Controls.Add(Me.BtnAnular)
-        Me.Gb_Anulado.Location = New System.Drawing.Point(592, 335)
-        Me.Gb_Anulado.Name = "Gb_Anulado"
-        Me.Gb_Anulado.Size = New System.Drawing.Size(262, 149)
-        Me.Gb_Anulado.TabIndex = 16
-        Me.Gb_Anulado.TabStop = False
-        Me.Gb_Anulado.Text = "Anular Venta"
-        '
-        'Label9
-        '
-        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(6, 60)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(43, 15)
-        Me.Label9.TabIndex = 29
-        Me.Label9.Text = "Motivo"
-        '
-        'txtDescripcionAnular
-        '
-        Me.txtDescripcionAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDescripcionAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDescripcionAnular.Location = New System.Drawing.Point(55, 27)
-        Me.txtDescripcionAnular.Multiline = True
-        Me.txtDescripcionAnular.Name = "txtDescripcionAnular"
-        Me.txtDescripcionAnular.Size = New System.Drawing.Size(194, 83)
-        Me.txtDescripcionAnular.TabIndex = 15
-        '
-        'BtnAnular
-        '
-        Me.BtnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnAnular.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnAnular.Image = Global.SistemaCinderella.My.Resources.Recursos.Desconectado
-        Me.BtnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnAnular.Location = New System.Drawing.Point(171, 116)
-        Me.BtnAnular.Name = "BtnAnular"
-        Me.BtnAnular.Size = New System.Drawing.Size(78, 27)
-        Me.BtnAnular.TabIndex = 14
-        Me.BtnAnular.Text = "Anular"
-        Me.BtnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolVentas.SetToolTip(Me.BtnAnular, "Anular venta")
-        Me.BtnAnular.UseVisualStyleBackColor = True
-        '
         'Label1
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -1243,67 +1360,6 @@ Partial Class frmVentasAdministracion
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(848, 232)
         Me.DG_Productos.TabIndex = 11
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(6, 337)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(100, 15)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Tipo de Pago :"
-        '
-        'ToolVentas
-        '
-        Me.ToolVentas.IsBalloon = True
-        Me.ToolVentas.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolVentas.ToolTipTitle = "Ayuda."
-        '
-        'lblDescuentoMayorista
-        '
-        Me.lblDescuentoMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblDescuentoMayorista.AutoSize = True
-        Me.lblDescuentoMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDescuentoMayorista.Location = New System.Drawing.Point(193, 3)
-        Me.lblDescuentoMayorista.Name = "lblDescuentoMayorista"
-        Me.lblDescuentoMayorista.Size = New System.Drawing.Size(42, 15)
-        Me.lblDescuentoMayorista.TabIndex = 74
-        Me.lblDescuentoMayorista.Text = "- - - - - "
-        '
-        'Label23
-        '
-        Me.Label23.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label23.AutoSize = True
-        Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(3, 3)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(83, 15)
-        Me.Label23.TabIndex = 73
-        Me.Label23.Text = "Descuento :"
-        '
-        'Label7
-        '
-        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(3, 52)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(123, 15)
-        Me.Label7.TabIndex = 73
-        Me.Label7.Text = "Costo Financiero :"
-        '
-        'lblCostoFinancieroMinorista
-        '
-        Me.lblCostoFinancieroMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblCostoFinancieroMinorista.AutoSize = True
-        Me.lblCostoFinancieroMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCostoFinancieroMinorista.Location = New System.Drawing.Point(193, 52)
-        Me.lblCostoFinancieroMinorista.Name = "lblCostoFinancieroMinorista"
-        Me.lblCostoFinancieroMinorista.Size = New System.Drawing.Size(42, 15)
-        Me.lblCostoFinancieroMinorista.TabIndex = 74
-        Me.lblCostoFinancieroMinorista.Text = "- - - - - "
         '
         'NUMERO
         '
@@ -1369,34 +1425,54 @@ Partial Class frmVentasAdministracion
         Me.SUBTOTAL.Name = "SUBTOTAL"
         Me.SUBTOTAL.ReadOnly = True
         '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(6, 337)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(100, 15)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Tipo de Pago :"
+        '
+        'ToolVentas
+        '
+        Me.ToolVentas.IsBalloon = True
+        Me.ToolVentas.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolVentas.ToolTipTitle = "Ayuda."
+        '
         'frmVentasAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(884, 612)
         Me.Controls.Add(Me.TabVentas)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmVentasAdministracion"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administración de Ventas"
         Me.TabVentas.ResumeLayout(False)
         Me.TbListado.ResumeLayout(False)
-        Me.TbListado.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel4.PerformLayout()
+        Me.TableLayoutPanel3.ResumeLayout(False)
         CType(Me.DG_Ventas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbDetalle.ResumeLayout(False)
         Me.lblcontenedor.ResumeLayout(False)
         Me.lblcontenedor.PerformLayout()
+        Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.Gb_Anulado.ResumeLayout(False)
+        Me.Gb_Anulado.PerformLayout()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.PanelTotalMinoristaSenia.ResumeLayout(False)
         Me.PanelTotalMinoristaSenia.PerformLayout()
         Me.PanelTotalMayorista.ResumeLayout(False)
         Me.PanelTotalMayorista.PerformLayout()
-        Me.Gb_Anulado.ResumeLayout(False)
-        Me.Gb_Anulado.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TipoFacturaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -1420,7 +1496,6 @@ Partial Class frmVentasAdministracion
     Friend WithEvents lblFacturado As System.Windows.Forms.Label
     Friend WithEvents label8 As System.Windows.Forms.Label
     Friend WithEvents lblAnulado As System.Windows.Forms.Label
-    Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents BtnFiltrar As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label
@@ -1507,4 +1582,8 @@ Partial Class frmVentasAdministracion
     Friend WithEvents IVA As DataGridViewTextBoxColumn
     Friend WithEvents MONTO As DataGridViewTextBoxColumn
     Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
 End Class

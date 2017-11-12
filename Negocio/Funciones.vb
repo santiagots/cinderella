@@ -86,6 +86,10 @@ Public Class Funciones
     Private Shared Function CheckForInternetConnection() As Boolean
         Dim sw As Stopwatch = New Stopwatch()
         sw.Start()
+
+#If DEBUG Then
+        Return True
+#End If
         Try
             Dim myPing As Ping = New Ping()
             Dim host As String = "8.8.8.8"

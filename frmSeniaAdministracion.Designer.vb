@@ -129,6 +129,11 @@ Partial Class frmSeniaAdministracion
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
         Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.tabAdministracionReservas.SuspendLayout()
         Me.TabReservas.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -142,6 +147,11 @@ Partial Class frmSeniaAdministracion
         Me.PanelTotalMayorista.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
         Me.SuspendLayout()
         '
         'tabAdministracionReservas
@@ -171,12 +181,12 @@ Partial Class frmSeniaAdministracion
         '
         'lbl_Msg
         '
-        Me.lbl_Msg.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.AutoSize = True
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(267, 388)
+        Me.lbl_Msg.Location = New System.Drawing.Point(260, 405)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(357, 25)
         Me.lbl_Msg.TabIndex = 3
@@ -186,18 +196,9 @@ Partial Class frmSeniaAdministracion
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.chkFRetiro)
-        Me.GroupBox1.Controls.Add(Me.chkFAlta)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupBox1.Controls.Add(Me.btn_Restablecer)
         Me.GroupBox1.Controls.Add(Me.BtnFiltrar)
-        Me.GroupBox1.Controls.Add(Me.cmbModoEntrega)
-        Me.GroupBox1.Controls.Add(Me.Label33)
-        Me.GroupBox1.Controls.Add(Me.txtNombreFiltro)
-        Me.GroupBox1.Controls.Add(Me.Label13)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Controls.Add(Me.dpkRetiro)
-        Me.GroupBox1.Controls.Add(Me.Label12)
-        Me.GroupBox1.Controls.Add(Me.dpkAlta)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(8, 6)
         Me.GroupBox1.Name = "GroupBox1"
@@ -208,21 +209,21 @@ Partial Class frmSeniaAdministracion
         '
         'chkFRetiro
         '
-        Me.chkFRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkFRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkFRetiro.AutoSize = True
-        Me.chkFRetiro.Location = New System.Drawing.Point(833, 58)
+        Me.chkFRetiro.Location = New System.Drawing.Point(221, 5)
         Me.chkFRetiro.Name = "chkFRetiro"
-        Me.chkFRetiro.Size = New System.Drawing.Size(15, 14)
+        Me.chkFRetiro.Size = New System.Drawing.Size(14, 14)
         Me.chkFRetiro.TabIndex = 428
         Me.chkFRetiro.UseVisualStyleBackColor = True
         '
         'chkFAlta
         '
-        Me.chkFAlta.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkFAlta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkFAlta.AutoSize = True
-        Me.chkFAlta.Location = New System.Drawing.Point(832, 24)
+        Me.chkFAlta.Location = New System.Drawing.Point(221, 5)
         Me.chkFAlta.Name = "chkFAlta"
-        Me.chkFAlta.Size = New System.Drawing.Size(15, 14)
+        Me.chkFAlta.Size = New System.Drawing.Size(14, 14)
         Me.chkFAlta.TabIndex = 427
         Me.chkFAlta.UseVisualStyleBackColor = True
         '
@@ -256,76 +257,80 @@ Partial Class frmSeniaAdministracion
         '
         'cmbModoEntrega
         '
+        Me.cmbModoEntrega.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbModoEntrega.FormattingEnabled = True
         Me.cmbModoEntrega.Items.AddRange(New Object() {"Seleccione una opción", "Envió a domicilio", "Retira de la sucursal", "A convenir"})
-        Me.cmbModoEntrega.Location = New System.Drawing.Point(145, 58)
+        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 33)
         Me.cmbModoEntrega.Name = "cmbModoEntrega"
-        Me.cmbModoEntrega.Size = New System.Drawing.Size(250, 23)
+        Me.cmbModoEntrega.Size = New System.Drawing.Size(238, 23)
         Me.cmbModoEntrega.TabIndex = 423
         '
         'Label33
         '
+        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label33.AutoSize = True
         Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Label33.Location = New System.Drawing.Point(6, 61)
+        Me.Label33.Location = New System.Drawing.Point(3, 37)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(131, 16)
+        Me.Label33.Size = New System.Drawing.Size(134, 16)
         Me.Label33.TabIndex = 424
         Me.Label33.Text = "Forma de entrega"
         '
         'txtNombreFiltro
         '
-        Me.txtNombreFiltro.Location = New System.Drawing.Point(145, 24)
+        Me.txtNombreFiltro.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtNombreFiltro.Location = New System.Drawing.Point(143, 4)
         Me.txtNombreFiltro.Name = "txtNombreFiltro"
-        Me.txtNombreFiltro.Size = New System.Drawing.Size(250, 21)
+        Me.txtNombreFiltro.Size = New System.Drawing.Size(238, 21)
         Me.txtNombreFiltro.TabIndex = 421
         '
         'Label13
         '
+        Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(8, 27)
+        Me.Label13.Location = New System.Drawing.Point(3, 7)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(131, 16)
+        Me.Label13.Size = New System.Drawing.Size(134, 16)
         Me.Label13.TabIndex = 422
         Me.Label13.Text = "Nombre/R. Social"
         '
         'Label1
         '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(465, 58)
+        Me.Label1.Location = New System.Drawing.Point(467, 37)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(97, 16)
+        Me.Label1.Size = New System.Drawing.Size(134, 16)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Fecha Retiro"
         '
         'dpkRetiro
         '
-        Me.dpkRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dpkRetiro.Location = New System.Drawing.Point(582, 53)
+        Me.dpkRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dpkRetiro.Location = New System.Drawing.Point(3, 3)
         Me.dpkRetiro.Name = "dpkRetiro"
-        Me.dpkRetiro.Size = New System.Drawing.Size(244, 21)
+        Me.dpkRetiro.Size = New System.Drawing.Size(212, 21)
         Me.dpkRetiro.TabIndex = 6
         '
         'Label12
         '
-        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(465, 25)
+        Me.Label12.Location = New System.Drawing.Point(467, 7)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(82, 16)
+        Me.Label12.Size = New System.Drawing.Size(134, 16)
         Me.Label12.TabIndex = 5
         Me.Label12.Text = "Fecha Alta"
         '
         'dpkAlta
         '
-        Me.dpkAlta.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dpkAlta.Location = New System.Drawing.Point(582, 20)
+        Me.dpkAlta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dpkAlta.Location = New System.Drawing.Point(3, 3)
         Me.dpkAlta.Name = "dpkAlta"
-        Me.dpkAlta.Size = New System.Drawing.Size(244, 21)
+        Me.dpkAlta.Size = New System.Drawing.Size(212, 21)
         Me.dpkAlta.TabIndex = 4
         '
         'dgSenia
@@ -425,29 +430,13 @@ Partial Class frmSeniaAdministracion
         '
         Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.TableLayoutPanel5)
         Me.GroupBox2.Controls.Add(Me.txtObservaciones)
         Me.GroupBox2.Controls.Add(Me.Label35)
-        Me.GroupBox2.Controls.Add(Me.txtDireccion)
-        Me.GroupBox2.Controls.Add(Me.Label34)
-        Me.GroupBox2.Controls.Add(Me.ddlEntrega)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.rblEnvioPromocionesSi)
-        Me.GroupBox2.Controls.Add(Me.rblEnvioPromocionesNo)
-        Me.GroupBox2.Controls.Add(Me.Label32)
-        Me.GroupBox2.Controls.Add(Me.dpkFechaRetiro)
-        Me.GroupBox2.Controls.Add(Me.Label31)
-        Me.GroupBox2.Controls.Add(Me.txtMail)
-        Me.GroupBox2.Controls.Add(Me.Label30)
-        Me.GroupBox2.Controls.Add(Me.txtTelefono)
-        Me.GroupBox2.Controls.Add(Me.Label29)
-        Me.GroupBox2.Controls.Add(Me.txtApellido)
-        Me.GroupBox2.Controls.Add(Me.lblApellido)
-        Me.GroupBox2.Controls.Add(Me.txtNombre)
-        Me.GroupBox2.Controls.Add(Me.lblNombre)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
         Me.GroupBox2.Location = New System.Drawing.Point(11, 0)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(857, 192)
+        Me.GroupBox2.Size = New System.Drawing.Size(857, 205)
         Me.GroupBox2.TabIndex = 21
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Datos de la seña"
@@ -457,17 +446,17 @@ Partial Class frmSeniaAdministracion
         Me.txtObservaciones.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtObservaciones.Enabled = False
-        Me.txtObservaciones.Location = New System.Drawing.Point(139, 138)
+        Me.txtObservaciones.Location = New System.Drawing.Point(153, 146)
         Me.txtObservaciones.Multiline = True
         Me.txtObservaciones.Name = "txtObservaciones"
-        Me.txtObservaciones.Size = New System.Drawing.Size(704, 48)
+        Me.txtObservaciones.Size = New System.Drawing.Size(698, 48)
         Me.txtObservaciones.TabIndex = 11
         '
         'Label35
         '
         Me.Label35.AutoSize = True
         Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(6, 141)
+        Me.Label35.Location = New System.Drawing.Point(6, 149)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(94, 15)
         Me.Label35.TabIndex = 22
@@ -475,67 +464,69 @@ Partial Class frmSeniaAdministracion
         '
         'txtDireccion
         '
-        Me.txtDireccion.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtDireccion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtDireccion.Enabled = False
-        Me.txtDireccion.Location = New System.Drawing.Point(580, 106)
+        Me.txtDireccion.Location = New System.Drawing.Point(603, 94)
         Me.txtDireccion.Name = "txtDireccion"
-        Me.txtDireccion.Size = New System.Drawing.Size(263, 21)
+        Me.txtDireccion.Size = New System.Drawing.Size(235, 21)
         Me.txtDireccion.TabIndex = 10
         '
         'Label34
         '
-        Me.Label34.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label34.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.Location = New System.Drawing.Point(457, 109)
+        Me.Label34.Location = New System.Drawing.Point(463, 97)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(62, 15)
+        Me.Label34.Size = New System.Drawing.Size(134, 15)
         Me.Label34.TabIndex = 20
         Me.Label34.Text = "Dirección:"
         '
         'ddlEntrega
         '
+        Me.ddlEntrega.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ddlEntrega.Enabled = False
         Me.ddlEntrega.FormattingEnabled = True
         Me.ddlEntrega.Items.AddRange(New Object() {"Seleccione una opción", "Envió a domicilio", "Retira de la sucursal", "A convenir"})
-        Me.ddlEntrega.Location = New System.Drawing.Point(139, 109)
+        Me.ddlEntrega.Location = New System.Drawing.Point(143, 93)
         Me.ddlEntrega.Name = "ddlEntrega"
-        Me.ddlEntrega.Size = New System.Drawing.Size(260, 23)
+        Me.ddlEntrega.Size = New System.Drawing.Size(234, 23)
         Me.ddlEntrega.TabIndex = 9
         '
         'Label2
         '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(3, 112)
+        Me.Label2.Location = New System.Drawing.Point(3, 97)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(114, 15)
+        Me.Label2.Size = New System.Drawing.Size(134, 15)
         Me.Label2.TabIndex = 18
         Me.Label2.Text = "Metodo de entrega:"
         '
         'rblEnvioPromocionesSi
         '
-        Me.rblEnvioPromocionesSi.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rblEnvioPromocionesSi.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.rblEnvioPromocionesSi.AutoSize = True
         Me.rblEnvioPromocionesSi.Enabled = False
-        Me.rblEnvioPromocionesSi.Location = New System.Drawing.Point(737, 85)
+        Me.rblEnvioPromocionesSi.Location = New System.Drawing.Point(120, 3)
         Me.rblEnvioPromocionesSi.Name = "rblEnvioPromocionesSi"
         Me.rblEnvioPromocionesSi.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.rblEnvioPromocionesSi.Size = New System.Drawing.Size(38, 19)
+        Me.rblEnvioPromocionesSi.Size = New System.Drawing.Size(112, 18)
         Me.rblEnvioPromocionesSi.TabIndex = 8
         Me.rblEnvioPromocionesSi.Text = "Si"
         Me.rblEnvioPromocionesSi.UseVisualStyleBackColor = True
         '
         'rblEnvioPromocionesNo
         '
-        Me.rblEnvioPromocionesNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rblEnvioPromocionesNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.rblEnvioPromocionesNo.AutoSize = True
         Me.rblEnvioPromocionesNo.Checked = True
         Me.rblEnvioPromocionesNo.Enabled = False
-        Me.rblEnvioPromocionesNo.Location = New System.Drawing.Point(668, 85)
+        Me.rblEnvioPromocionesNo.Location = New System.Drawing.Point(3, 3)
         Me.rblEnvioPromocionesNo.Name = "rblEnvioPromocionesNo"
         Me.rblEnvioPromocionesNo.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.rblEnvioPromocionesNo.Size = New System.Drawing.Size(43, 19)
+        Me.rblEnvioPromocionesNo.Size = New System.Drawing.Size(111, 18)
         Me.rblEnvioPromocionesNo.TabIndex = 7
         Me.rblEnvioPromocionesNo.TabStop = True
         Me.rblEnvioPromocionesNo.Text = "No"
@@ -543,106 +534,112 @@ Partial Class frmSeniaAdministracion
         '
         'Label32
         '
-        Me.Label32.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label32.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label32.AutoSize = True
         Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(457, 85)
+        Me.Label32.Location = New System.Drawing.Point(463, 60)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(190, 15)
+        Me.Label32.Size = New System.Drawing.Size(134, 30)
         Me.Label32.TabIndex = 15
         Me.Label32.Text = "Enviar novedades y promociones:"
         '
         'dpkFechaRetiro
         '
-        Me.dpkFechaRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dpkFechaRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dpkFechaRetiro.Enabled = False
-        Me.dpkFechaRetiro.Location = New System.Drawing.Point(583, 54)
+        Me.dpkFechaRetiro.Location = New System.Drawing.Point(603, 34)
         Me.dpkFechaRetiro.Name = "dpkFechaRetiro"
-        Me.dpkFechaRetiro.Size = New System.Drawing.Size(260, 21)
+        Me.dpkFechaRetiro.Size = New System.Drawing.Size(235, 21)
         Me.dpkFechaRetiro.TabIndex = 5
         '
         'Label31
         '
-        Me.Label31.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label31.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label31.AutoSize = True
         Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label31.Location = New System.Drawing.Point(457, 57)
+        Me.Label31.Location = New System.Drawing.Point(463, 37)
         Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(105, 15)
+        Me.Label31.Size = New System.Drawing.Size(134, 15)
         Me.Label31.TabIndex = 12
         Me.Label31.Text = "F. estimada retiro:"
         '
         'txtMail
         '
+        Me.txtMail.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMail.Enabled = False
-        Me.txtMail.Location = New System.Drawing.Point(139, 81)
+        Me.txtMail.Location = New System.Drawing.Point(143, 64)
         Me.txtMail.Name = "txtMail"
-        Me.txtMail.Size = New System.Drawing.Size(260, 21)
+        Me.txtMail.Size = New System.Drawing.Size(234, 21)
         Me.txtMail.TabIndex = 6
         '
         'Label30
         '
+        Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label30.Location = New System.Drawing.Point(6, 87)
+        Me.Label30.Location = New System.Drawing.Point(3, 67)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(42, 15)
+        Me.Label30.Size = New System.Drawing.Size(134, 15)
         Me.Label30.TabIndex = 10
         Me.Label30.Text = "Email:"
         '
         'txtTelefono
         '
+        Me.txtTelefono.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTelefono.Enabled = False
-        Me.txtTelefono.Location = New System.Drawing.Point(139, 54)
+        Me.txtTelefono.Location = New System.Drawing.Point(143, 34)
         Me.txtTelefono.Name = "txtTelefono"
-        Me.txtTelefono.Size = New System.Drawing.Size(260, 21)
+        Me.txtTelefono.Size = New System.Drawing.Size(234, 21)
         Me.txtTelefono.TabIndex = 4
         '
         'Label29
         '
+        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label29.AutoSize = True
         Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label29.Location = New System.Drawing.Point(3, 57)
+        Me.Label29.Location = New System.Drawing.Point(3, 37)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(58, 15)
+        Me.Label29.Size = New System.Drawing.Size(134, 15)
         Me.Label29.TabIndex = 8
         Me.Label29.Text = "Telefono:"
         '
         'txtApellido
         '
-        Me.txtApellido.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtApellido.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtApellido.Enabled = False
-        Me.txtApellido.Location = New System.Drawing.Point(583, 27)
+        Me.txtApellido.Location = New System.Drawing.Point(603, 4)
         Me.txtApellido.Name = "txtApellido"
-        Me.txtApellido.Size = New System.Drawing.Size(260, 21)
+        Me.txtApellido.Size = New System.Drawing.Size(235, 21)
         Me.txtApellido.TabIndex = 2
         '
         'lblApellido
         '
-        Me.lblApellido.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblApellido.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblApellido.AutoSize = True
         Me.lblApellido.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblApellido.Location = New System.Drawing.Point(457, 30)
+        Me.lblApellido.Location = New System.Drawing.Point(463, 7)
         Me.lblApellido.Name = "lblApellido"
-        Me.lblApellido.Size = New System.Drawing.Size(54, 15)
+        Me.lblApellido.Size = New System.Drawing.Size(134, 15)
         Me.lblApellido.TabIndex = 2
         Me.lblApellido.Text = "Apellido:"
         '
         'txtNombre
         '
+        Me.txtNombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtNombre.Enabled = False
-        Me.txtNombre.Location = New System.Drawing.Point(139, 27)
+        Me.txtNombre.Location = New System.Drawing.Point(143, 4)
         Me.txtNombre.Name = "txtNombre"
-        Me.txtNombre.Size = New System.Drawing.Size(260, 21)
+        Me.txtNombre.Size = New System.Drawing.Size(234, 21)
         Me.txtNombre.TabIndex = 1
         '
         'lblNombre
         '
+        Me.lblNombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblNombre.AutoSize = True
         Me.lblNombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblNombre.Location = New System.Drawing.Point(3, 30)
+        Me.lblNombre.Location = New System.Drawing.Point(3, 7)
         Me.lblNombre.Name = "lblNombre"
-        Me.lblNombre.Size = New System.Drawing.Size(55, 15)
+        Me.lblNombre.Size = New System.Drawing.Size(134, 15)
         Me.lblNombre.TabIndex = 0
         Me.lblNombre.Text = "Nombre:"
         '
@@ -662,9 +659,9 @@ Partial Class frmSeniaAdministracion
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.DG_Productos)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.GroupBox3.Location = New System.Drawing.Point(11, 200)
+        Me.GroupBox3.Location = New System.Drawing.Point(11, 211)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(860, 440)
+        Me.GroupBox3.Size = New System.Drawing.Size(860, 429)
         Me.GroupBox3.TabIndex = 20
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Detalle de la seña"
@@ -691,7 +688,7 @@ Partial Class frmSeniaAdministracion
         Me.TableLayoutPanel1.Controls.Add(Me.lblFechaSeña, 4, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label6, 3, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.lblEncargado, 4, 1)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(10, 20)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 27)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
@@ -822,7 +819,7 @@ Partial Class frmSeniaAdministracion
         Me.PanelTotalMinorista.Controls.Add(Me.lblDescuentoMinorista)
         Me.PanelTotalMinorista.Controls.Add(Me.Label16)
         Me.PanelTotalMinorista.Controls.Add(Me.lblSubtotalMinorista)
-        Me.PanelTotalMinorista.Location = New System.Drawing.Point(342, 305)
+        Me.PanelTotalMinorista.Location = New System.Drawing.Point(342, 294)
         Me.PanelTotalMinorista.Name = "PanelTotalMinorista"
         Me.PanelTotalMinorista.Size = New System.Drawing.Size(258, 128)
         Me.PanelTotalMinorista.TabIndex = 68
@@ -952,7 +949,7 @@ Partial Class frmSeniaAdministracion
         Me.PanelTotalMayorista.Controls.Add(Me.Label24)
         Me.PanelTotalMayorista.Controls.Add(Me.lblSeniaMayorista)
         Me.PanelTotalMayorista.Controls.Add(Me.Label26)
-        Me.PanelTotalMayorista.Location = New System.Drawing.Point(606, 304)
+        Me.PanelTotalMayorista.Location = New System.Drawing.Point(606, 293)
         Me.PanelTotalMayorista.Name = "PanelTotalMayorista"
         Me.PanelTotalMayorista.Size = New System.Drawing.Size(251, 129)
         Me.PanelTotalMayorista.TabIndex = 67
@@ -1094,7 +1091,7 @@ Partial Class frmSeniaAdministracion
         Me.lblFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblFacturado.AutoSize = True
         Me.lblFacturado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblFacturado.Location = New System.Drawing.Point(202, 332)
+        Me.lblFacturado.Location = New System.Drawing.Point(202, 321)
         Me.lblFacturado.Name = "lblFacturado"
         Me.lblFacturado.Size = New System.Drawing.Size(42, 15)
         Me.lblFacturado.TabIndex = 66
@@ -1105,7 +1102,7 @@ Partial Class frmSeniaAdministracion
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(6, 332)
+        Me.Label3.Location = New System.Drawing.Point(6, 321)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(68, 15)
         Me.Label3.TabIndex = 65
@@ -1116,7 +1113,7 @@ Partial Class frmSeniaAdministracion
         Me.lblCantidad.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblCantidad.AutoSize = True
         Me.lblCantidad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCantidad.Location = New System.Drawing.Point(202, 356)
+        Me.lblCantidad.Location = New System.Drawing.Point(202, 345)
         Me.lblCantidad.Name = "lblCantidad"
         Me.lblCantidad.Size = New System.Drawing.Size(42, 15)
         Me.lblCantidad.TabIndex = 64
@@ -1127,7 +1124,7 @@ Partial Class frmSeniaAdministracion
         Me.lblPago.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblPago.AutoSize = True
         Me.lblPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPago.Location = New System.Drawing.Point(202, 308)
+        Me.lblPago.Location = New System.Drawing.Point(202, 297)
         Me.lblPago.Name = "lblPago"
         Me.lblPago.Size = New System.Drawing.Size(42, 15)
         Me.lblPago.TabIndex = 63
@@ -1138,7 +1135,7 @@ Partial Class frmSeniaAdministracion
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(6, 356)
+        Me.Label4.Location = New System.Drawing.Point(6, 345)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(115, 15)
         Me.Label4.TabIndex = 62
@@ -1149,7 +1146,7 @@ Partial Class frmSeniaAdministracion
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(6, 308)
+        Me.Label5.Location = New System.Drawing.Point(6, 297)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(86, 15)
         Me.Label5.TabIndex = 61
@@ -1169,13 +1166,13 @@ Partial Class frmSeniaAdministracion
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CODIGO, Me.DataGridViewTextBoxColumn1, Me.CANTIDAD, Me.PRECIO, Me.IVA, Me.MONTO, Me.SUBTOTAL})
         Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.DG_Productos.Location = New System.Drawing.Point(3, 83)
+        Me.DG_Productos.Location = New System.Drawing.Point(3, 99)
         Me.DG_Productos.MultiSelect = False
         Me.DG_Productos.Name = "DG_Productos"
         Me.DG_Productos.ReadOnly = True
         Me.DG_Productos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Productos.Size = New System.Drawing.Size(854, 215)
+        Me.DG_Productos.Size = New System.Drawing.Size(854, 188)
         Me.DG_Productos.TabIndex = 12
         '
         'CODIGO
@@ -1261,6 +1258,113 @@ Partial Class frmSeniaAdministracion
         '
         Me.ErrorProvider.ContainerControl = Me
         '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 5
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel4, 4, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel3, 4, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label13, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtNombreFiltro, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label33, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.cmbModoEntrega, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label1, 3, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 3, 0)
+        Me.TableLayoutPanel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 2
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(848, 60)
+        Me.TableLayoutPanel2.TabIndex = 429
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.dpkAlta, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.chkFAlta, 1, 0)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(607, 3)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(238, 24)
+        Me.TableLayoutPanel3.TabIndex = 429
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.ColumnCount = 2
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.dpkRetiro, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.chkFRetiro, 1, 0)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(607, 33)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 1
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(238, 24)
+        Me.TableLayoutPanel4.TabIndex = 429
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel5.ColumnCount = 5
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.TableLayoutPanel6, 4, 2)
+        Me.TableLayoutPanel5.Controls.Add(Me.lblNombre, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.txtNombre, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.txtDireccion, 4, 3)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label29, 0, 1)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label34, 3, 3)
+        Me.TableLayoutPanel5.Controls.Add(Me.txtTelefono, 1, 1)
+        Me.TableLayoutPanel5.Controls.Add(Me.dpkFechaRetiro, 4, 1)
+        Me.TableLayoutPanel5.Controls.Add(Me.ddlEntrega, 1, 3)
+        Me.TableLayoutPanel5.Controls.Add(Me.txtApellido, 4, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label30, 0, 2)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label32, 3, 2)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label2, 0, 3)
+        Me.TableLayoutPanel5.Controls.Add(Me.txtMail, 1, 2)
+        Me.TableLayoutPanel5.Controls.Add(Me.Label31, 3, 1)
+        Me.TableLayoutPanel5.Controls.Add(Me.lblApellido, 3, 0)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(10, 20)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 4
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(841, 120)
+        Me.TableLayoutPanel5.TabIndex = 72
+        '
+        'TableLayoutPanel6
+        '
+        Me.TableLayoutPanel6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel6.ColumnCount = 2
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.rblEnvioPromocionesNo, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.rblEnvioPromocionesSi, 1, 0)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(603, 63)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 1
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(235, 24)
+        Me.TableLayoutPanel6.TabIndex = 23
+        '
         'frmSeniaAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1273,9 +1377,7 @@ Partial Class frmSeniaAdministracion
         Me.Text = "Adminsitración de reservas"
         Me.tabAdministracionReservas.ResumeLayout(False)
         Me.TabReservas.ResumeLayout(False)
-        Me.TabReservas.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         CType(Me.dgSenia, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SeniaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabDetalle.ResumeLayout(False)
@@ -1291,6 +1393,16 @@ Partial Class frmSeniaAdministracion
         Me.PanelTotalMayorista.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel3.PerformLayout()
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel4.PerformLayout()
+        Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.TableLayoutPanel5.PerformLayout()
+        Me.TableLayoutPanel6.ResumeLayout(False)
+        Me.TableLayoutPanel6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1393,4 +1505,9 @@ Partial Class frmSeniaAdministracion
     Friend WithEvents lblPorcentajeFacturacion As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
 End Class

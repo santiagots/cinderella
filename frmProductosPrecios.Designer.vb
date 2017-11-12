@@ -47,7 +47,7 @@ Partial Class frmProductosPrecios
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.btn_Buscar)
         Me.GroupBox1.Controls.Add(Me.Cb_Proveedor)
         Me.GroupBox1.Controls.Add(Me.Label1)
@@ -57,8 +57,8 @@ Partial Class frmProductosPrecios
         Me.GroupBox1.Size = New System.Drawing.Size(670, 81)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Seleccione un proveedor de la lista y luego haga click en ""buscar"" para obtener e" & _
-            "l listado de todos los productos."
+        Me.GroupBox1.Text = "Seleccione un proveedor de la lista y luego haga click en ""buscar"" para obtener e" &
+    "l listado de todos los productos."
         '
         'btn_Buscar
         '
@@ -67,7 +67,7 @@ Partial Class frmProductosPrecios
         Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Buscar.Location = New System.Drawing.Point(548, 27)
+        Me.btn_Buscar.Location = New System.Drawing.Point(564, 23)
         Me.btn_Buscar.Name = "btn_Buscar"
         Me.btn_Buscar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Buscar.TabIndex = 2
@@ -82,7 +82,7 @@ Partial Class frmProductosPrecios
         Me.Cb_Proveedor.FormattingEnabled = True
         Me.Cb_Proveedor.Location = New System.Drawing.Point(89, 33)
         Me.Cb_Proveedor.Name = "Cb_Proveedor"
-        Me.Cb_Proveedor.Size = New System.Drawing.Size(200, 23)
+        Me.Cb_Proveedor.Size = New System.Drawing.Size(453, 23)
         Me.Cb_Proveedor.TabIndex = 1
         '
         'Label1
@@ -101,8 +101,8 @@ Partial Class frmProductosPrecios
         Me.DG_Productos.AllowUserToResizeColumns = False
         Me.DG_Productos.AllowUserToResizeRows = False
         Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Productos.ColumnHeadersVisible = False
@@ -221,7 +221,6 @@ Partial Class frmProductosPrecios
         Me.Controls.Add(Me.Btn_Finalizar)
         Me.Controls.Add(Me.DG_Productos)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmProductosPrecios"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
