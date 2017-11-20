@@ -205,9 +205,6 @@ Public Class frmNotaPedidoAdministracion
 
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
-
-        Me.Close()
-
     End Sub
 
     'Cuando realiza un click dentro del datagrid de productos.

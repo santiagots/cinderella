@@ -36,7 +36,7 @@ Public Class ClaveUnicaSincronizar
                 DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
             Else
                 'Selecciono todas las filas de lo sultimos 3 meses la base remota
-                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= CONVERT(DATETIME,'{2}',103)", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3)), transaccionRemota).Tables(0)
+                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= CONVERT(DATETIME,'{2}',103)", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("dd/MM/yyyy")), transaccionRemota).Tables(0)
             End If
 
             If DatosSincronizar.Rows.Count > 0 Then
