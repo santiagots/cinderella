@@ -1036,6 +1036,7 @@ Public Class frmVentas
             Dim PorcentajeFacturacion As Double = 0
             Dim IvaTotal As Double = 0 'Iva total de la vental
             Dim MontoSenia As Double = 0
+            Dim IdClienteMinorista As Integer = 0
 
             If (Not VentaValida("venta")) Then
                 Return
@@ -1050,6 +1051,7 @@ Public Class frmVentas
                 CostoFinanciero = CType(txt_CFTMinorista.Text, Decimal)
                 MontoTotal = CType(txt_TotalMinorista.Text, Decimal)
                 MontoSenia = CType(txt_SeniaMinorista.Text, Decimal)
+                IdClienteMinorista = If(NotaPedido IsNot Nothing, NotaPedido.Id_ConsumidorFinal, 0)
             Else
                 TipoVenta = 2
                 PorcentajeFacturacion = CType(txt_PorcentajeFacturacion.Text, Decimal) / 100
@@ -1094,7 +1096,7 @@ Public Class frmVentas
                     End If
                 End If
 
-                Dim id_Venta As Int64 = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, SubTotal, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, False)
+                Dim id_Venta As Int64 = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, IdClienteMinorista, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, SubTotal, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, False)
 
                 If id_Venta > 0 Then
 
@@ -1456,6 +1458,7 @@ Public Class frmVentas
             Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
             Dim IvaTotal As Double = 0 'Iva total de la vental
             Dim PorcentajeFacturacion As Double = 0
+            Dim IdClienteMinorista As Integer = 0
 
             If (Not VentaReserva()) Then
                 Return
@@ -1477,6 +1480,7 @@ Public Class frmVentas
                     Descuento = CType(txt_DescuentoMinorista.Text, Decimal)
                     MontoTotal = CType(txt_TotalMinorista.Text, Decimal) - CType(txt_CFTMinorista.Text, Decimal)
                     MontoSenia = CType(txt_Senia.Text, Decimal)
+                    IdClienteMinorista = If(NotaPedido IsNot Nothing, NotaPedido.Id_ConsumidorFinal, 0)
                 Else
                     TipoVenta = 2
                     PorcentajeFacturacion = CType(txt_PorcentajeFacturacion.Text, Decimal) / 100
@@ -1520,7 +1524,7 @@ Public Class frmVentas
 
                 Dim Senia As Entidades.Senia = frmSeniaDatos.Senia
 
-                Dim id_Venta As Int64 = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
+                Dim id_Venta As Int64 = RegistrarVenta(TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, IdClienteMinorista, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
                 If id_Venta > 0 Then
 
                     'Si hay que facturar abro el form.
@@ -1677,13 +1681,14 @@ Public Class frmVentas
         Return True
     End Function
 
-    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, Id_Tarjeta As Integer, CantidadCuotas As Integer, PorcentajeFacturacion As Double, id_ListaPrecio As Integer, Descuento As Double, CostoFinanciero As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Int64
+    Private Function RegistrarVenta(TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ClienteMinorista As Integer, Id_Tarjeta As Integer, CantidadCuotas As Integer, PorcentajeFacturacion As Double, id_ListaPrecio As Integer, Descuento As Double, CostoFinanciero As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Int64
 
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
 
         'Datos de la venta.
         EntVentas.id_Cliente = id_Cliente
+        EntVentas.id_ClienteMinorista = id_ClienteMinorista
         EntVentas.PorcentajeFacturacion = PorcentajeFacturacion
         EntVentas.id_Empleado = id_Empleado
         EntVentas.id_Encargado = id_Encargado

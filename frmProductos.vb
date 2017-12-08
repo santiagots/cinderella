@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.IO
+Imports Datos
 
 Public Class frmProductos
     Dim NegProductos As New Negocio.NegProductos
@@ -1312,14 +1313,7 @@ Public Class frmProductos
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-
-            Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\Log.txt"), True)
-                outputFile.WriteLine("ERROR Metodo: ExportarExcel")
-                outputFile.WriteLine(DateTime.Now.ToString() + " " + ex.ToString())
-                outputFile.WriteLine("---------------------------------------------" + Environment.NewLine)
-            End Using
+            LogHelper.WriteLog("ERROR Metodo: ExportarExcel" + Environment.NewLine + ex.ToString())
         End Try
     End Sub
 
@@ -1385,13 +1379,7 @@ Public Class frmProductos
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error en la importación de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-
-            Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\Log.txt"), True)
-                outputFile.WriteLine("ERROR Metodo: ImportarExcel")
-                outputFile.WriteLine(DateTime.Now.ToString() + " " + ex.ToString())
-                outputFile.WriteLine("---------------------------------------------" + Environment.NewLine)
-            End Using
+            LogHelper.WriteLog("ERROR Metodo: ImportarExcel" + Environment.NewLine + ex.ToString())
         End Try
     End Sub
 

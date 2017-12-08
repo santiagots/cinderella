@@ -5,9 +5,9 @@
     Public Property id_Empleado As Integer
     Public Property id_Encargado As Integer
     Public Property id_TipoVenta As Integer
-    Private id_ListaPrecio_ As Integer
     Public Property id_ListaPrecio As Integer
     Public Property id_Cliente As Integer
+    Public Property id_ClienteMinorista As Integer
     Public Property id_Tarjeta As Integer
     Public Property CantidadCuotas As Integer
     Private PorcentajeFacturacion_ As Double

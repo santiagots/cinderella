@@ -109,15 +109,7 @@ Public Class frmSincronizacion
         Catch ex As Exception
             transaccionLocal.Rollback()
             transaccionRemota.Rollback()
-
-            Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-
-            Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\Log.txt"), True)
-                outputFile.WriteLine(String.Format("ERROR Metodo: RegistrarDatosARemoto - Tabla {0}", nombreTabla))
-                outputFile.WriteLine(DateTime.Now.ToString() + " " + ex.ToString())
-                outputFile.WriteLine("---------------------------------------------" + Environment.NewLine)
-            End Using
-
+            LogHelper.WriteLog(String.Format("ERROR Metodo: RegistrarDatosARemoto - Tabla {0}", nombreTabla) + Environment.NewLine + ex.ToString())
             Throw
         Finally
             conexionRemota.Close()

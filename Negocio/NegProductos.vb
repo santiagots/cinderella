@@ -9,6 +9,7 @@ Imports System.Data.OleDb
 Imports System.IO
 Imports System.Linq
 Imports System.Threading
+Imports System.Globalization
 
 Public Enum Fortmats
     Texto
@@ -1170,11 +1171,14 @@ Public Class NegProductos
                 generoArchivo = CrearExcel(nombreArchivo, nombrePlantilla, dsProductos, dsCategoria, dsSubCategoria, dsProveedor, xlApp, xlWorkBook, xlWorkSheet, misValue)
                 Exit For
             Catch ex As System.Runtime.InteropServices.COMException
+                LogHelper.WriteLog("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
                 Dim result As UInt32
                 If UInt32.TryParse(ex.ErrorCode, result) AndAlso result = &H80010001UI Then
                     reintentos += 1
                     System.Threading.Thread.Sleep(1000)
                 End If
+            Catch ex As Exception
+                LogHelper.WriteLog("ERROR Metodo: ExportarExcel" + Environment.NewLine + ex.ToString())
             End Try
         Next
 
@@ -1199,6 +1203,8 @@ Public Class NegProductos
         xlWorkBook = xlApp.Workbooks.Add(System.IO.Path.GetFullPath(nombrePlantilla))
         xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
 
+        Dim cExcelCulture As CultureInfo = New CultureInfo(xlApp.LanguageSettings.LanguageID(Microsoft.Office.Core.MsoAppLanguageID.msoLanguageIDUI))
+
         xlWorkSheet.Name = "Productos"
 
         AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
@@ -1214,7 +1220,7 @@ Public Class NegProductos
         AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D", MaxRowsData)
 
         '//Agrego la validacion de combos anidados para el cargado de la SubCategoria
-        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D", MaxRowsData)
+        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D", MaxRowsData, cExcelCulture)
 
         '//Agrego la validacion de combos para el cargado de los porveedores
         AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F", MaxRowsData)
@@ -1280,7 +1286,7 @@ Public Class NegProductos
         validatingCellsRange.Validation.InCellDropdown = True
     End Sub
 
-    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String, RowCount As Integer)
+    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String, RowCount As Integer, excelCulture As CultureInfo)
         Dim sheetValidation = xlWorkBook.Sheets.Add()
 
         sheetValidation.Name = Name
@@ -1301,15 +1307,17 @@ Public Class NegProductos
             Next
             xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
         Next
-
         Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
-        Dim lookupValues = String.Format("=INDIRECT(SUBSTITUTE(VLOOKUP({0}{1};{0}:{0};1;FALSE);"" "";""_""))", Relacionado, MinRowsData)
+        Dim lookupValues = String.Empty
+        If (excelCulture.Name.Contains("ES")) Then
+            lookupValues = String.Format("=INDIRECTO(SUSTITUIR(BUSCARV({0}{1};{0}:{0};1;FALSO);"" "";""_""))", Relacionado, MinRowsData)
+        Else
+            lookupValues = String.Format("=INDIRECT(SUBSTITUTE(VLOOKUP({0}{1};{0}:{0};1;FALSE);"" "";""_""))", Relacionado, MinRowsData)
+        End If
 
         validatingCellsRange.Validation.Delete()
         validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)
         validatingCellsRange.Validation.InCellDropdown = True
-
-
     End Sub
 
     Private Function IntToLetters(value As Integer) As String

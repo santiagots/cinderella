@@ -73,6 +73,7 @@
     <Compile Include="Adelantos.vb" />
     <Compile Include="Adicionales.vb" />
     <Compile Include="Aromas.vb" />
+    <Compile Include="Etiqueta.vb" />
     <Compile Include="Tarjeta.vb" />
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />

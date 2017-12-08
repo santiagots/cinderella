@@ -92,6 +92,7 @@
     <Compile Include="Sincronizar\Implementacion\SinClaveUnicaSincronizar.vb" />
     <Compile Include="Sincronizar\Interfaces\Sincronizar.vb" />
     <Compile Include="Tabla.vb" />
+    <Compile Include="Utils\LogHelper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

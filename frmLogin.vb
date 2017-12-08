@@ -19,7 +19,6 @@ Public Class frmLogin
             Dim usuario As String
             Dim pwd As String
             Dim Sucursal As String
-
             'Seteo de Variables.
             usuario = Trim(txtUsuario.Text.ToLower)
             pwd = encripta.EncriptarMD5(Trim(txtPWD.Text.ToLower))

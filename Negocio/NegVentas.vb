@@ -55,6 +55,7 @@ Public Class NegVentas
         With cmd.Parameters
             .AddWithValue("@id_Venta", EntVenta.id_Venta)
             .AddWithValue("@id_Cliente", EntVenta.id_Cliente)
+            .AddWithValue("@id_ClienteMinorista", EntVenta.id_ClienteMinorista)
             .AddWithValue("@PorcentajeFacturacion", EntVenta.PorcentajeFacturacion)
             .AddWithValue("@id_Empleado", EntVenta.id_Empleado)
             .AddWithValue("@id_Encargado", EntVenta.id_Encargado)

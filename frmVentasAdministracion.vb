@@ -240,6 +240,8 @@ Public Class frmVentasAdministracion
 
                 If dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString <> "" Then
                     lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("RazonSocial").ToString
+                ElseIf dsVentas.Tables(0).Rows(0).Item("NombreClienteMinorista").ToString <> "" Then
+                    lblCliente.Text = dsVentas.Tables(0).Rows(0).Item("NombreClienteMinorista").ToString
                 Else
                     lblCliente.Text = "- - - - - "
                 End If

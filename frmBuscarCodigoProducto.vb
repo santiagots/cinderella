@@ -101,10 +101,10 @@
                         frmStock.txt_Codigo_mod.Clear()
                         frmStock.txt_Codigo_mod.Text = Codigo
                     ElseIf TipoForm = 3 Then 'FORM DE ETIQUETAS.
-                        frmEtiquetas.txt_Codigo.Clear()
-                        frmEtiquetas.txt_Codigo.Text = Codigo
-                        frmEtiquetas.lbl_Producto.Text = Nombre
-                        frmEtiquetas.EProductos = NegProductos.TraerProducto(NegProductos.TraerID(Codigo))
+                        'frmEtiquetas.txt_Codigo.Clear()
+                        'frmEtiquetas.txt_Codigo.Text = Codigo
+                        'frmEtiquetas.lbl_Producto.Text = Nombre
+                        'frmEtiquetas.EProductos = NegProductos.TraerProducto(NegProductos.TraerID(Codigo))
                     ElseIf TipoForm = 4 Then 'FORM INGRESO DE MERCADERIA.
                         frmStockMasiva.txt_Codigo.Clear()
                         frmStockMasiva.txt_Codigo.Text = Codigo
