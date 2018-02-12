@@ -1100,6 +1100,15 @@ Public Class NegProductos
     End Function
 
     'Funcion para listar todos los productos dependiendo de un proveedor.
+    Function ListadoBuscadoresPorSucursalYProveedor(ByVal id_Proveedor As Integer, ByVal id_Sucursal As Integer) As DataSet
+        If (Funciones.HayInternet) Then
+            Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoBuscadoresPorSucursalYProveedor @id_Proveedor=" & id_Proveedor & ", @id_Sucursal=" & id_Sucursal)
+        Else
+            Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadoresPorSucursalYProveedor @id_Proveedor=" & id_Proveedor & ", @id_Sucursal=" & id_Sucursal)
+        End If
+    End Function
+
+    'Funcion para listar todos los productos dependiendo de un proveedor.
     Function ListadoProductosPorProveedor(ByVal id_Proveedor As Integer) As DataSet
         If (Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoPorProveedor @id_Proveedor=" & id_Proveedor)

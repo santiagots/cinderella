@@ -9,9 +9,9 @@
     </sectionGroup>
   </configSections>
   <connectionStrings>
-    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=VABTCAXLEQ;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
+    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
       providerName="System.Data.SqlClient" />
-    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="B7E7+nLwqZPecJUp9Zi1pkWXOxTJKqyv6QdQUfImMT6FCMZ0DXQ/xswd0eCuas+jIf2KPaONTah1e6KvcU1py5i4tH5CWzTIDL3D6XkxTY0="
+    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezlltpA6/gQhWzNU089HLhPWu39Kk="
       providerName="System.Data.SqlClient" />
   </connectionStrings>
   <system.diagnostics>
@@ -35,7 +35,8 @@
     </sharedListeners>
   </system.diagnostics>
   <appSettings>
-    <add key="ExportarExcelPlantilla" value="Plantilla\Template.xlsx" />
+    <add key="ExportarExcelPlantillaProducto" value="Plantilla\TemplateProducto.xlsx" />
+    <add key="ExportarExcelPlantillaProductoSucursal" value="Plantilla\TemplateProductoSucursal.xlsx" />
     <add key="ClientSettingsProvider.ServiceUri" value="" />
   </appSettings>
   <applicationSettings>
@@ -51,11 +52,8 @@
       </setting>
     </SistemaCinderella.My.MySettings>
   </applicationSettings>
-  <userSettings>
+<userSettings>
     <SistemaCinderella.My.MySettings>
-      <setting name="Sucursal" serializeAs="String">
-        <value>2</value>
-      </setting>
       <setting name="NombreListaPrecio" serializeAs="String">
         <value>Público Tigre</value>
       </setting>
@@ -88,9 +86,6 @@
       </setting>
       <setting name="Internet" serializeAs="String">
         <value>True</value>
-      </setting>
-      <setting name="NombreSucursal" serializeAs="String">
-        <value>Av. Corrientes</value>
       </setting>
       <setting name="PuntoVentaFacturacionManual" serializeAs="String">
         <value>1</value>
@@ -133,6 +128,30 @@
       </setting>
       <setting name="HabilitarExentoSinIVA" serializeAs="String">
         <value>NO</value>
+      </setting>
+      <setting name="DescuentoMinorista" serializeAs="String">
+        <value>10</value>
+      </setting>
+      <setting name="TemporizadorActualizacionMemoriaCache" serializeAs="String">
+        <value>15</value>
+      </setting>
+      <setting name="UsarMemoriaCache" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="Sucursal" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="NombreSucursal" serializeAs="String">
+        <value>Av. Corrientes</value>
+      </setting>
+      <setting name="TemporizadorOrdenesCompra" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="GeneracionOrdenCompraAutomatica" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="PeriodoCaulculoVentaMensual" serializeAs="String">
+        <value>30</value>
       </setting>
     </SistemaCinderella.My.MySettings>
   </userSettings>

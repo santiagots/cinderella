@@ -395,32 +395,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("34"),  _
-         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
-        Public Property Sucursal() As Integer
-            Get
-                Return CType(Me("Sucursal"),Integer)
-            End Get
-            Set
-                Me("Sucursal") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Nueva Sucursal"),  _
-         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
-        Public Property NombreSucursal() As String
-            Get
-                Return CType(Me("NombreSucursal"),String)
-            End Get
-            Set
-                Me("NombreSucursal") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
         Public Property TemporizadorActualizacionMemoriaCache() As String
             Get
@@ -443,6 +417,68 @@ Namespace My
             End Set
         End Property
         
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
+        Public Property Sucursal() As Integer
+            Get
+                Return CType(Me("Sucursal"),Integer)
+            End Get
+            Set
+                Me("Sucursal") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Av. Corrientes"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
+        Public Property NombreSucursal() As String
+            Get
+                Return CType(Me("NombreSucursal"),String)
+            End Get
+            Set
+                Me("NombreSucursal") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300000")>  _
+        Public Property TemporizadorOrdenesCompra() As String
+            Get
+                Return CType(Me("TemporizadorOrdenesCompra"),String)
+            End Get
+            Set
+                Me("TemporizadorOrdenesCompra") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property GeneracionOrdenCompraAutomatica() As Boolean
+            Get
+                Return CType(Me("GeneracionOrdenCompraAutomatica"),Boolean)
+            End Get
+            Set
+                Me("GeneracionOrdenCompraAutomatica") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("30")>  _
+        Public Property PeriodoCaulculoVentaMensual() As String
+            Get
+                Return CType(Me("PeriodoCaulculoVentaMensual"),String)
+            End Get
+            Set
+                Me("PeriodoCaulculoVentaMensual") = value
+            End Set
+        End Property
+        
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
@@ -457,8 +493,9 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0Tvkneh8HcrERuMerFzACRwWiZZg35fXKOi3SK1IWATfrSUVr4B1vhig2+uF9RoZjAu0GhQjaJPS83vNW"& _ 
-            "7a6BIgtE9hqLOwzZbQceOJchkSCCcO9DO6GIiUAGeBwHMwztfqBhcEHUcpKfiqT6sAg+Q==")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3bTQjHHLN8jkQtaJgYs/e9bHnb8gJjPc9toMfRVea7GrTPfdiacS73cv8GtBG1wLnrZDQyC0Azi/MjXUz"& _ 
+            "PYw3j5QlDFnM57xpuWPzIUw6JCt/7AewUvclkZlT5PXCC9i6qPt/E5QKrL1qhuyrgo5AzcZz7X3UTtxq"& _ 
+            "rVNOQMReSY=")>  _
         Public ReadOnly Property ConexionRemoto() As String
             Get
                 Return CType(Me("ConexionRemoto"),String)

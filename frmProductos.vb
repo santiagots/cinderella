@@ -1292,7 +1292,7 @@ Public Class frmProductos
                 AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
 
                 'Exporto el listado de productos a Excel
-                NegProductos.ExportarExcel(SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantilla"))
+                NegProductos.ExportarExcel(SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProducto"))
 
                 'Voy seteando la barra de progreso
                 frmCargadorDeEspera.Close()

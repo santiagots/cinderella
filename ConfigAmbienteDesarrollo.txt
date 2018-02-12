@@ -35,7 +35,8 @@
     </sharedListeners>
   </system.diagnostics>
   <appSettings>
-    <add key="ExportarExcelPlantilla" value="Plantilla\Template.xlsx" />
+    <add key="ExportarExcelPlantillaProducto" value="Plantilla\TemplateProducto.xlsx" />
+    <add key="ExportarExcelPlantillaProductoSucursal" value="Plantilla\TemplateProductoSucursal.xlsx" />
     <add key="ClientSettingsProvider.ServiceUri" value="" />
   </appSettings>
   <applicationSettings>
@@ -128,11 +129,29 @@
       <setting name="HabilitarExentoSinIVA" serializeAs="String">
         <value>NO</value>
       </setting>
+      <setting name="DescuentoMinorista" serializeAs="String">
+        <value>10</value>
+      </setting>
+      <setting name="TemporizadorActualizacionMemoriaCache" serializeAs="String">
+        <value>15</value>
+      </setting>
+      <setting name="UsarMemoriaCache" serializeAs="String">
+        <value>True</value>
+      </setting>
       <setting name="Sucursal" serializeAs="String">
-        <value>34</value>
+        <value>2</value>
       </setting>
       <setting name="NombreSucursal" serializeAs="String">
-        <value>Nueva Sucursal</value>
+        <value>Av. Corrientes</value>
+      </setting>
+      <setting name="TemporizadorOrdenesCompra" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="GeneracionOrdenCompraAutomatica" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="PeriodoCaulculoVentaMensual" serializeAs="String">
+        <value>30</value>
       </setting>
     </SistemaCinderella.My.MySettings>
   </userSettings>

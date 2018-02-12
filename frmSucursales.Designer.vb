@@ -83,7 +83,11 @@ Partial Class frmSucursales
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GB_Sucursal_mod = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
+        Me.txt_CodigoVenta_mod = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txt_Nombre_mod = New System.Windows.Forms.TextBox()
         Me.txt_CodigoPostal_mod = New System.Windows.Forms.TextBox()
@@ -100,34 +104,34 @@ Partial Class frmSucursales
         Me.lbl_Localidad_mod = New System.Windows.Forms.Label()
         Me.lbl_Direccion_mod = New System.Windows.Forms.Label()
         Me.lbl_CodigoPostal_mod = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_ComisionEncargadoMayor_mod = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txt_ComisionVendedorMayor_mod = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.GB_Sucursal_mod = New System.Windows.Forms.GroupBox()
-        Me.txt_CodigoVenta_mod = New System.Windows.Forms.TextBox()
-        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
         Me.GB_Comisiones2_mod = New System.Windows.Forms.GroupBox()
-        Me.lbl_ComisionEncargadoFeriado_mod = New System.Windows.Forms.Label()
-        Me.txt_ComisionVendedorFeriado_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_ComisionVendedorFeriado_mod = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_ComisionEncargadoFeriado_mod = New System.Windows.Forms.TextBox()
+        Me.txt_ComisionVendedorFeriado_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_ComisionEncargadoFeriado_mod = New System.Windows.Forms.Label()
+        Me.lbl_ComisionVendedorFeriado_mod = New System.Windows.Forms.Label()
         Me.GB_Comisiones_mod = New System.Windows.Forms.GroupBox()
-        Me.lbl_ComisionEncargado_mod = New System.Windows.Forms.Label()
-        Me.txt_ComisionVendedor_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_ComisionVendedor_mod = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_ComisionEncargado_mod = New System.Windows.Forms.TextBox()
+        Me.txt_ComisionVendedor_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_ComisionEncargado_mod = New System.Windows.Forms.Label()
+        Me.lbl_ComisionVendedor_mod = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.Btn_Eliminar = New System.Windows.Forms.Button()
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErroresSucursal = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolSucursal = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txt_Email = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.txt_Email_mod = New System.Windows.Forms.TextBox()
         Me.TabSucursales.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Sucursales, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -145,17 +149,17 @@ Partial Class frmSucursales
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TbMod.SuspendLayout()
         Me.GB_Modificacion.SuspendLayout()
-        Me.TableLayoutPanel7.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.GB_Sucursal_mod.SuspendLayout()
-        Me.GB_Comisiones2_mod.SuspendLayout()
-        Me.GB_Comisiones_mod.SuspendLayout()
-        CType(Me.ErroresSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel8.SuspendLayout()
-        Me.TableLayoutPanel9.SuspendLayout()
-        Me.TableLayoutPanel10.SuspendLayout()
-        Me.TableLayoutPanel11.SuspendLayout()
         Me.TableLayoutPanel12.SuspendLayout()
+        Me.GB_Sucursal_mod.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
+        Me.TableLayoutPanel11.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.TableLayoutPanel10.SuspendLayout()
+        Me.GB_Comisiones2_mod.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
+        Me.GB_Comisiones_mod.SuspendLayout()
+        Me.TableLayoutPanel8.SuspendLayout()
+        CType(Me.ErroresSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabSucursales
@@ -296,7 +300,7 @@ Partial Class frmSucursales
         Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Alta.Location = New System.Drawing.Point(12, 7)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(764, 386)
+        Me.GB_Alta.Size = New System.Drawing.Size(764, 407)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de alta de sucursal."
@@ -315,7 +319,7 @@ Partial Class frmSucursales
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(752, 316)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(752, 336)
         Me.TableLayoutPanel6.TabIndex = 21
         '
         'GB_Sucursal
@@ -325,7 +329,7 @@ Partial Class frmSucursales
         Me.GB_Sucursal.Controls.Add(Me.TableLayoutPanel1)
         Me.GB_Sucursal.Location = New System.Drawing.Point(3, 3)
         Me.GB_Sucursal.Name = "GB_Sucursal"
-        Me.GB_Sucursal.Size = New System.Drawing.Size(370, 310)
+        Me.GB_Sucursal.Size = New System.Drawing.Size(370, 330)
         Me.GB_Sucursal.TabIndex = 1
         Me.GB_Sucursal.TabStop = False
         Me.GB_Sucursal.Text = "Información del Establecimiento"
@@ -336,14 +340,14 @@ Partial Class frmSucursales
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.chk_Habilitado, 1, 8)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_CodigoVenta, 1, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.chk_Habilitado, 1, 9)
         Me.TableLayoutPanel1.Controls.Add(Me.Label8, 0, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Habilitado, 0, 9)
         Me.TableLayoutPanel1.Controls.Add(Me.cb_Localidad, 1, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_CodigoPostal, 1, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Direccion, 1, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Nombre, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Habilitado, 0, 8)
         Me.TableLayoutPanel1.Controls.Add(Me.cb_Distrito, 1, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Nombre, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.cb_Provincia, 1, 2)
@@ -354,9 +358,11 @@ Partial Class frmSucursales
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Localidad, 0, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Direccion, 0, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_CodigoPostal, 0, 6)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 19)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label9, 0, 8)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Email, 1, 8)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(5, 18)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 9
+        Me.TableLayoutPanel1.RowCount = 10
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
@@ -366,7 +372,8 @@ Partial Class frmSucursales
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(358, 270)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(358, 299)
         Me.TableLayoutPanel1.TabIndex = 20
         '
         'chk_Habilitado
@@ -375,7 +382,7 @@ Partial Class frmSucursales
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(143, 248)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(143, 277)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(212, 14)
         Me.chk_Habilitado.TabIndex = 9
@@ -443,7 +450,7 @@ Partial Class frmSucursales
         '
         Me.lbl_Habilitado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Habilitado.AutoSize = True
-        Me.lbl_Habilitado.Location = New System.Drawing.Point(3, 248)
+        Me.lbl_Habilitado.Location = New System.Drawing.Point(3, 278)
         Me.lbl_Habilitado.Name = "lbl_Habilitado"
         Me.lbl_Habilitado.Size = New System.Drawing.Size(134, 13)
         Me.lbl_Habilitado.TabIndex = 2
@@ -564,14 +571,14 @@ Partial Class frmSucursales
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(370, 310)
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(370, 330)
         Me.TableLayoutPanel5.TabIndex = 20
         '
         'GB_Comisiones
         '
         Me.GB_Comisiones.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Comisiones.Controls.Add(Me.TableLayoutPanel2)
-        Me.GB_Comisiones.Location = New System.Drawing.Point(3, 7)
+        Me.GB_Comisiones.Location = New System.Drawing.Point(3, 11)
         Me.GB_Comisiones.Name = "GB_Comisiones"
         Me.GB_Comisiones.Size = New System.Drawing.Size(364, 88)
         Me.GB_Comisiones.TabIndex = 10
@@ -636,7 +643,7 @@ Partial Class frmSucursales
         '
         Me.GroupBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel4)
-        Me.GroupBox1.Location = New System.Drawing.Point(3, 215)
+        Me.GroupBox1.Location = New System.Drawing.Point(3, 232)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(364, 86)
         Me.GroupBox1.TabIndex = 16
@@ -701,7 +708,7 @@ Partial Class frmSucursales
         '
         Me.GB_Comisiones2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Comisiones2.Controls.Add(Me.TableLayoutPanel3)
-        Me.GB_Comisiones2.Location = New System.Drawing.Point(3, 111)
+        Me.GB_Comisiones2.Location = New System.Drawing.Point(3, 121)
         Me.GB_Comisiones2.Name = "GB_Comisiones2"
         Me.GB_Comisiones2.Size = New System.Drawing.Size(364, 87)
         Me.GB_Comisiones2.TabIndex = 13
@@ -765,7 +772,7 @@ Partial Class frmSucursales
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(11, 341)
+        Me.Label1.Location = New System.Drawing.Point(6, 376)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(117, 13)
         Me.Label1.TabIndex = 17
@@ -779,7 +786,7 @@ Partial Class frmSucursales
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(658, 340)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(658, 361)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 19
@@ -809,10 +816,38 @@ Partial Class frmSucursales
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(12, 8)
         Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(764, 386)
+        Me.GB_Modificacion.Size = New System.Drawing.Size(764, 407)
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de modificación de sucursal."
+        '
+        'TableLayoutPanel12
+        '
+        Me.TableLayoutPanel12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel12.ColumnCount = 2
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Controls.Add(Me.GB_Sucursal_mod, 0, 0)
+        Me.TableLayoutPanel12.Controls.Add(Me.TableLayoutPanel11, 1, 0)
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(6, 19)
+        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
+        Me.TableLayoutPanel12.RowCount = 1
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Size = New System.Drawing.Size(752, 336)
+        Me.TableLayoutPanel12.TabIndex = 22
+        '
+        'GB_Sucursal_mod
+        '
+        Me.GB_Sucursal_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Sucursal_mod.Controls.Add(Me.TableLayoutPanel7)
+        Me.GB_Sucursal_mod.Location = New System.Drawing.Point(3, 3)
+        Me.GB_Sucursal_mod.Name = "GB_Sucursal_mod"
+        Me.GB_Sucursal_mod.Size = New System.Drawing.Size(370, 330)
+        Me.GB_Sucursal_mod.TabIndex = 1
+        Me.GB_Sucursal_mod.TabStop = False
+        Me.GB_Sucursal_mod.Text = "Información del Establecimiento"
         '
         'TableLayoutPanel7
         '
@@ -821,14 +856,14 @@ Partial Class frmSucursales
         Me.TableLayoutPanel7.ColumnCount = 2
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Controls.Add(Me.chk_Habilitado_mod, 1, 8)
+        Me.TableLayoutPanel7.Controls.Add(Me.txt_Email_mod, 1, 8)
+        Me.TableLayoutPanel7.Controls.Add(Me.Label10, 0, 8)
         Me.TableLayoutPanel7.Controls.Add(Me.txt_CodigoVenta_mod, 1, 7)
         Me.TableLayoutPanel7.Controls.Add(Me.Label7, 0, 7)
         Me.TableLayoutPanel7.Controls.Add(Me.txt_Nombre_mod, 1, 0)
         Me.TableLayoutPanel7.Controls.Add(Me.txt_CodigoPostal_mod, 1, 6)
         Me.TableLayoutPanel7.Controls.Add(Me.txt_Direccion_mod, 1, 5)
         Me.TableLayoutPanel7.Controls.Add(Me.cb_Localidad_mod, 1, 4)
-        Me.TableLayoutPanel7.Controls.Add(Me.lbl_Habilitado_mod, 0, 8)
         Me.TableLayoutPanel7.Controls.Add(Me.cb_Distrito_mod, 1, 3)
         Me.TableLayoutPanel7.Controls.Add(Me.lbl_Nombre_mod, 0, 0)
         Me.TableLayoutPanel7.Controls.Add(Me.lbl_Telefono_mod, 0, 1)
@@ -839,9 +874,11 @@ Partial Class frmSucursales
         Me.TableLayoutPanel7.Controls.Add(Me.lbl_Localidad_mod, 0, 4)
         Me.TableLayoutPanel7.Controls.Add(Me.lbl_Direccion_mod, 0, 5)
         Me.TableLayoutPanel7.Controls.Add(Me.lbl_CodigoPostal_mod, 0, 6)
+        Me.TableLayoutPanel7.Controls.Add(Me.lbl_Habilitado_mod, 0, 9)
+        Me.TableLayoutPanel7.Controls.Add(Me.chk_Habilitado_mod, 1, 9)
         Me.TableLayoutPanel7.Location = New System.Drawing.Point(6, 19)
         Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
-        Me.TableLayoutPanel7.RowCount = 9
+        Me.TableLayoutPanel7.RowCount = 10
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
@@ -851,8 +888,32 @@ Partial Class frmSucursales
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(355, 270)
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(355, 305)
         Me.TableLayoutPanel7.TabIndex = 21
+        '
+        'chk_Habilitado_mod
+        '
+        Me.chk_Habilitado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Habilitado_mod.AutoSize = True
+        Me.chk_Habilitado_mod.Checked = True
+        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 280)
+        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
+        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(209, 14)
+        Me.chk_Habilitado_mod.TabIndex = 9
+        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
+        '
+        'txt_CodigoVenta_mod
+        '
+        Me.txt_CodigoVenta_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_CodigoVenta_mod.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txt_CodigoVenta_mod.Location = New System.Drawing.Point(143, 215)
+        Me.txt_CodigoVenta_mod.MaxLength = 2
+        Me.txt_CodigoVenta_mod.Name = "txt_CodigoVenta_mod"
+        Me.txt_CodigoVenta_mod.Size = New System.Drawing.Size(209, 20)
+        Me.txt_CodigoVenta_mod.TabIndex = 58
         '
         'Label7
         '
@@ -907,7 +968,7 @@ Partial Class frmSucursales
         '
         Me.lbl_Habilitado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Habilitado_mod.AutoSize = True
-        Me.lbl_Habilitado_mod.Location = New System.Drawing.Point(3, 248)
+        Me.lbl_Habilitado_mod.Location = New System.Drawing.Point(3, 281)
         Me.lbl_Habilitado_mod.Name = "lbl_Habilitado_mod"
         Me.lbl_Habilitado_mod.Size = New System.Drawing.Size(134, 13)
         Me.lbl_Habilitado_mod.TabIndex = 31
@@ -1014,21 +1075,56 @@ Partial Class frmSucursales
         Me.lbl_CodigoPostal_mod.TabIndex = 47
         Me.lbl_CodigoPostal_mod.Text = "Código Postal (*)"
         '
+        'TableLayoutPanel11
+        '
+        Me.TableLayoutPanel11.ColumnCount = 1
+        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel11.Controls.Add(Me.GroupBox2, 0, 2)
+        Me.TableLayoutPanel11.Controls.Add(Me.GB_Comisiones2_mod, 0, 1)
+        Me.TableLayoutPanel11.Controls.Add(Me.GB_Comisiones_mod, 0, 0)
+        Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel11.Location = New System.Drawing.Point(379, 3)
+        Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
+        Me.TableLayoutPanel11.RowCount = 3
+        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel11.Size = New System.Drawing.Size(370, 330)
+        Me.TableLayoutPanel11.TabIndex = 21
+        '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.TableLayoutPanel10)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox2.Location = New System.Drawing.Point(3, 209)
+        Me.GroupBox2.Location = New System.Drawing.Point(3, 223)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(364, 98)
+        Me.GroupBox2.Size = New System.Drawing.Size(364, 104)
         Me.GroupBox2.TabIndex = 16
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Comisiones Ventas Mayoristas"
         '
+        'TableLayoutPanel10
+        '
+        Me.TableLayoutPanel10.ColumnCount = 2
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_ComisionEncargadoMayor_mod, 1, 1)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label5, 0, 0)
+        Me.TableLayoutPanel10.Controls.Add(Me.txt_ComisionVendedorMayor_mod, 1, 0)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label6, 0, 1)
+        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
+        Me.TableLayoutPanel10.RowCount = 2
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(358, 85)
+        Me.TableLayoutPanel10.TabIndex = 21
+        '
         'txt_ComisionEncargadoMayor_mod
         '
         Me.txt_ComisionEncargadoMayor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_ComisionEncargadoMayor_mod.Location = New System.Drawing.Point(182, 49)
+        Me.txt_ComisionEncargadoMayor_mod.Location = New System.Drawing.Point(182, 53)
         Me.txt_ComisionEncargadoMayor_mod.Name = "txt_ComisionEncargadoMayor_mod"
         Me.txt_ComisionEncargadoMayor_mod.Size = New System.Drawing.Size(173, 20)
         Me.txt_ComisionEncargadoMayor_mod.TabIndex = 18
@@ -1037,7 +1133,7 @@ Partial Class frmSucursales
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(3, 13)
+        Me.Label5.Location = New System.Drawing.Point(3, 14)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(173, 13)
         Me.Label5.TabIndex = 12
@@ -1046,7 +1142,7 @@ Partial Class frmSucursales
         'txt_ComisionVendedorMayor_mod
         '
         Me.txt_ComisionVendedorMayor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_ComisionVendedorMayor_mod.Location = New System.Drawing.Point(182, 9)
+        Me.txt_ComisionVendedorMayor_mod.Location = New System.Drawing.Point(182, 11)
         Me.txt_ComisionVendedorMayor_mod.Name = "txt_ComisionVendedorMayor_mod"
         Me.txt_ComisionVendedorMayor_mod.Size = New System.Drawing.Size(173, 20)
         Me.txt_ComisionVendedorMayor_mod.TabIndex = 17
@@ -1055,101 +1151,76 @@ Partial Class frmSucursales
         '
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(3, 52)
+        Me.Label6.Location = New System.Drawing.Point(3, 57)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(173, 13)
         Me.Label6.TabIndex = 11
         Me.Label6.Text = "Comisión Encargado (*)"
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 338)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(117, 13)
-        Me.Label2.TabIndex = 18
-        Me.Label2.Text = "(*) Campos obligatorios."
-        '
-        'GB_Sucursal_mod
-        '
-        Me.GB_Sucursal_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Sucursal_mod.Controls.Add(Me.TableLayoutPanel7)
-        Me.GB_Sucursal_mod.Location = New System.Drawing.Point(3, 3)
-        Me.GB_Sucursal_mod.Name = "GB_Sucursal_mod"
-        Me.GB_Sucursal_mod.Size = New System.Drawing.Size(370, 298)
-        Me.GB_Sucursal_mod.TabIndex = 1
-        Me.GB_Sucursal_mod.TabStop = False
-        Me.GB_Sucursal_mod.Text = "Información del Establecimiento"
-        '
-        'txt_CodigoVenta_mod
-        '
-        Me.txt_CodigoVenta_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_CodigoVenta_mod.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txt_CodigoVenta_mod.Location = New System.Drawing.Point(143, 215)
-        Me.txt_CodigoVenta_mod.MaxLength = 2
-        Me.txt_CodigoVenta_mod.Name = "txt_CodigoVenta_mod"
-        Me.txt_CodigoVenta_mod.Size = New System.Drawing.Size(209, 20)
-        Me.txt_CodigoVenta_mod.TabIndex = 58
-        '
-        'chk_Habilitado_mod
-        '
-        Me.chk_Habilitado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Habilitado_mod.AutoSize = True
-        Me.chk_Habilitado_mod.Checked = True
-        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 248)
-        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
-        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(209, 14)
-        Me.chk_Habilitado_mod.TabIndex = 9
-        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
-        '
         'GB_Comisiones2_mod
         '
         Me.GB_Comisiones2_mod.Controls.Add(Me.TableLayoutPanel9)
         Me.GB_Comisiones2_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GB_Comisiones2_mod.Location = New System.Drawing.Point(3, 106)
+        Me.GB_Comisiones2_mod.Location = New System.Drawing.Point(3, 113)
         Me.GB_Comisiones2_mod.Name = "GB_Comisiones2_mod"
-        Me.GB_Comisiones2_mod.Size = New System.Drawing.Size(364, 97)
+        Me.GB_Comisiones2_mod.Size = New System.Drawing.Size(364, 104)
         Me.GB_Comisiones2_mod.TabIndex = 13
         Me.GB_Comisiones2_mod.TabStop = False
         Me.GB_Comisiones2_mod.Text = "Comisiones Feriados y Fines de Semana"
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.ColumnCount = 2
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.txt_ComisionEncargadoFeriado_mod, 1, 1)
+        Me.TableLayoutPanel9.Controls.Add(Me.txt_ComisionVendedorFeriado_mod, 1, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.lbl_ComisionEncargadoFeriado_mod, 0, 1)
+        Me.TableLayoutPanel9.Controls.Add(Me.lbl_ComisionVendedorFeriado_mod, 0, 0)
+        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 2
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(358, 85)
+        Me.TableLayoutPanel9.TabIndex = 22
+        '
+        'txt_ComisionEncargadoFeriado_mod
+        '
+        Me.txt_ComisionEncargadoFeriado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_ComisionEncargadoFeriado_mod.Location = New System.Drawing.Point(182, 53)
+        Me.txt_ComisionEncargadoFeriado_mod.Name = "txt_ComisionEncargadoFeriado_mod"
+        Me.txt_ComisionEncargadoFeriado_mod.Size = New System.Drawing.Size(173, 20)
+        Me.txt_ComisionEncargadoFeriado_mod.TabIndex = 15
+        '
+        'txt_ComisionVendedorFeriado_mod
+        '
+        Me.txt_ComisionVendedorFeriado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_ComisionVendedorFeriado_mod.Location = New System.Drawing.Point(182, 11)
+        Me.txt_ComisionVendedorFeriado_mod.Name = "txt_ComisionVendedorFeriado_mod"
+        Me.txt_ComisionVendedorFeriado_mod.Size = New System.Drawing.Size(173, 20)
+        Me.txt_ComisionVendedorFeriado_mod.TabIndex = 14
         '
         'lbl_ComisionEncargadoFeriado_mod
         '
         Me.lbl_ComisionEncargadoFeriado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_ComisionEncargadoFeriado_mod.AutoSize = True
-        Me.lbl_ComisionEncargadoFeriado_mod.Location = New System.Drawing.Point(3, 52)
+        Me.lbl_ComisionEncargadoFeriado_mod.Location = New System.Drawing.Point(3, 57)
         Me.lbl_ComisionEncargadoFeriado_mod.Name = "lbl_ComisionEncargadoFeriado_mod"
         Me.lbl_ComisionEncargadoFeriado_mod.Size = New System.Drawing.Size(173, 13)
         Me.lbl_ComisionEncargadoFeriado_mod.TabIndex = 58
         Me.lbl_ComisionEncargadoFeriado_mod.Text = "Comisión Encargado (*)"
         '
-        'txt_ComisionVendedorFeriado_mod
-        '
-        Me.txt_ComisionVendedorFeriado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_ComisionVendedorFeriado_mod.Location = New System.Drawing.Point(182, 9)
-        Me.txt_ComisionVendedorFeriado_mod.Name = "txt_ComisionVendedorFeriado_mod"
-        Me.txt_ComisionVendedorFeriado_mod.Size = New System.Drawing.Size(173, 20)
-        Me.txt_ComisionVendedorFeriado_mod.TabIndex = 14
-        '
         'lbl_ComisionVendedorFeriado_mod
         '
         Me.lbl_ComisionVendedorFeriado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_ComisionVendedorFeriado_mod.AutoSize = True
-        Me.lbl_ComisionVendedorFeriado_mod.Location = New System.Drawing.Point(3, 13)
+        Me.lbl_ComisionVendedorFeriado_mod.Location = New System.Drawing.Point(3, 14)
         Me.lbl_ComisionVendedorFeriado_mod.Name = "lbl_ComisionVendedorFeriado_mod"
         Me.lbl_ComisionVendedorFeriado_mod.Size = New System.Drawing.Size(173, 13)
         Me.lbl_ComisionVendedorFeriado_mod.TabIndex = 59
         Me.lbl_ComisionVendedorFeriado_mod.Text = "Comisión Vendedor (*)"
-        '
-        'txt_ComisionEncargadoFeriado_mod
-        '
-        Me.txt_ComisionEncargadoFeriado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_ComisionEncargadoFeriado_mod.Location = New System.Drawing.Point(182, 48)
-        Me.txt_ComisionEncargadoFeriado_mod.Name = "txt_ComisionEncargadoFeriado_mod"
-        Me.txt_ComisionEncargadoFeriado_mod.Size = New System.Drawing.Size(173, 20)
-        Me.txt_ComisionEncargadoFeriado_mod.TabIndex = 15
         '
         'GB_Comisiones_mod
         '
@@ -1157,46 +1228,73 @@ Partial Class frmSucursales
         Me.GB_Comisiones_mod.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GB_Comisiones_mod.Location = New System.Drawing.Point(3, 3)
         Me.GB_Comisiones_mod.Name = "GB_Comisiones_mod"
-        Me.GB_Comisiones_mod.Size = New System.Drawing.Size(364, 97)
+        Me.GB_Comisiones_mod.Size = New System.Drawing.Size(364, 104)
         Me.GB_Comisiones_mod.TabIndex = 10
         Me.GB_Comisiones_mod.TabStop = False
         Me.GB_Comisiones_mod.Text = "Comisiones Semanales"
+        '
+        'TableLayoutPanel8
+        '
+        Me.TableLayoutPanel8.ColumnCount = 2
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_ComisionEncargado_mod, 1, 1)
+        Me.TableLayoutPanel8.Controls.Add(Me.txt_ComisionVendedor_mod, 1, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.lbl_ComisionEncargado_mod, 0, 1)
+        Me.TableLayoutPanel8.Controls.Add(Me.lbl_ComisionVendedor_mod, 0, 0)
+        Me.TableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 16)
+        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
+        Me.TableLayoutPanel8.RowCount = 2
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(358, 85)
+        Me.TableLayoutPanel8.TabIndex = 22
+        '
+        'txt_ComisionEncargado_mod
+        '
+        Me.txt_ComisionEncargado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_ComisionEncargado_mod.Location = New System.Drawing.Point(163, 53)
+        Me.txt_ComisionEncargado_mod.Name = "txt_ComisionEncargado_mod"
+        Me.txt_ComisionEncargado_mod.Size = New System.Drawing.Size(192, 20)
+        Me.txt_ComisionEncargado_mod.TabIndex = 12
+        '
+        'txt_ComisionVendedor_mod
+        '
+        Me.txt_ComisionVendedor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_ComisionVendedor_mod.Location = New System.Drawing.Point(163, 11)
+        Me.txt_ComisionVendedor_mod.Name = "txt_ComisionVendedor_mod"
+        Me.txt_ComisionVendedor_mod.Size = New System.Drawing.Size(192, 20)
+        Me.txt_ComisionVendedor_mod.TabIndex = 11
         '
         'lbl_ComisionEncargado_mod
         '
         Me.lbl_ComisionEncargado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_ComisionEncargado_mod.AutoSize = True
-        Me.lbl_ComisionEncargado_mod.Location = New System.Drawing.Point(3, 52)
+        Me.lbl_ComisionEncargado_mod.Location = New System.Drawing.Point(3, 57)
         Me.lbl_ComisionEncargado_mod.Name = "lbl_ComisionEncargado_mod"
         Me.lbl_ComisionEncargado_mod.Size = New System.Drawing.Size(154, 13)
         Me.lbl_ComisionEncargado_mod.TabIndex = 58
         Me.lbl_ComisionEncargado_mod.Text = "Comisión Encargado (*)"
         '
-        'txt_ComisionVendedor_mod
-        '
-        Me.txt_ComisionVendedor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_ComisionVendedor_mod.Location = New System.Drawing.Point(163, 9)
-        Me.txt_ComisionVendedor_mod.Name = "txt_ComisionVendedor_mod"
-        Me.txt_ComisionVendedor_mod.Size = New System.Drawing.Size(192, 20)
-        Me.txt_ComisionVendedor_mod.TabIndex = 11
-        '
         'lbl_ComisionVendedor_mod
         '
         Me.lbl_ComisionVendedor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_ComisionVendedor_mod.AutoSize = True
-        Me.lbl_ComisionVendedor_mod.Location = New System.Drawing.Point(3, 13)
+        Me.lbl_ComisionVendedor_mod.Location = New System.Drawing.Point(3, 14)
         Me.lbl_ComisionVendedor_mod.Name = "lbl_ComisionVendedor_mod"
         Me.lbl_ComisionVendedor_mod.Size = New System.Drawing.Size(154, 13)
         Me.lbl_ComisionVendedor_mod.TabIndex = 59
         Me.lbl_ComisionVendedor_mod.Text = "Comisión Vendedor (*)"
         '
-        'txt_ComisionEncargado_mod
+        'Label2
         '
-        Me.txt_ComisionEncargado_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_ComisionEncargado_mod.Location = New System.Drawing.Point(163, 48)
-        Me.txt_ComisionEncargado_mod.Name = "txt_ComisionEncargado_mod"
-        Me.txt_ComisionEncargado_mod.Size = New System.Drawing.Size(192, 20)
-        Me.txt_ComisionEncargado_mod.TabIndex = 12
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 374)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(117, 13)
+        Me.Label2.TabIndex = 18
+        Me.Label2.Text = "(*) Campos obligatorios."
         '
         'Btn_Eliminar
         '
@@ -1205,7 +1303,7 @@ Partial Class frmSucursales
         Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(552, 338)
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(552, 359)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Eliminar.TabIndex = 19
@@ -1222,7 +1320,7 @@ Partial Class frmSucursales
         Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(658, 338)
+        Me.Btn_Modificar.Location = New System.Drawing.Point(658, 359)
         Me.Btn_Modificar.Name = "Btn_Modificar"
         Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Modificar.TabIndex = 20
@@ -1242,93 +1340,44 @@ Partial Class frmSucursales
         Me.ToolSucursal.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolSucursal.ToolTipTitle = "Ayuda"
         '
-        'TableLayoutPanel8
+        'Label9
         '
-        Me.TableLayoutPanel8.ColumnCount = 2
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160.0!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel8.Controls.Add(Me.txt_ComisionEncargado_mod, 1, 1)
-        Me.TableLayoutPanel8.Controls.Add(Me.txt_ComisionVendedor_mod, 1, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.lbl_ComisionEncargado_mod, 0, 1)
-        Me.TableLayoutPanel8.Controls.Add(Me.lbl_ComisionVendedor_mod, 0, 0)
-        Me.TableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
-        Me.TableLayoutPanel8.RowCount = 2
-        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(358, 78)
-        Me.TableLayoutPanel8.TabIndex = 22
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(3, 248)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(134, 13)
+        Me.Label9.TabIndex = 62
+        Me.Label9.Text = "Email (*)"
         '
-        'TableLayoutPanel9
+        'txt_Email
         '
-        Me.TableLayoutPanel9.ColumnCount = 2
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel9.Controls.Add(Me.txt_ComisionEncargadoFeriado_mod, 1, 1)
-        Me.TableLayoutPanel9.Controls.Add(Me.txt_ComisionVendedorFeriado_mod, 1, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.lbl_ComisionEncargadoFeriado_mod, 0, 1)
-        Me.TableLayoutPanel9.Controls.Add(Me.lbl_ComisionVendedorFeriado_mod, 0, 0)
-        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 2
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(358, 78)
-        Me.TableLayoutPanel9.TabIndex = 22
+        Me.txt_Email.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Email.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txt_Email.Location = New System.Drawing.Point(143, 245)
+        Me.txt_Email.MaxLength = 2
+        Me.txt_Email.Name = "txt_Email"
+        Me.txt_Email.Size = New System.Drawing.Size(212, 20)
+        Me.txt_Email.TabIndex = 63
         '
-        'TableLayoutPanel10
+        'Label10
         '
-        Me.TableLayoutPanel10.ColumnCount = 2
-        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.Controls.Add(Me.txt_ComisionEncargadoMayor_mod, 1, 1)
-        Me.TableLayoutPanel10.Controls.Add(Me.Label5, 0, 0)
-        Me.TableLayoutPanel10.Controls.Add(Me.txt_ComisionVendedorMayor_mod, 1, 0)
-        Me.TableLayoutPanel10.Controls.Add(Me.Label6, 0, 1)
-        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 16)
-        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
-        Me.TableLayoutPanel10.RowCount = 2
-        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.Size = New System.Drawing.Size(358, 79)
-        Me.TableLayoutPanel10.TabIndex = 21
+        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(3, 248)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(134, 13)
+        Me.Label10.TabIndex = 56
+        Me.Label10.Text = "Email (*)"
         '
-        'TableLayoutPanel11
+        'txt_Email_mod
         '
-        Me.TableLayoutPanel11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel11.ColumnCount = 1
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel11.Controls.Add(Me.GroupBox2, 0, 2)
-        Me.TableLayoutPanel11.Controls.Add(Me.GB_Comisiones2_mod, 0, 1)
-        Me.TableLayoutPanel11.Controls.Add(Me.GB_Comisiones_mod, 0, 0)
-        Me.TableLayoutPanel11.Location = New System.Drawing.Point(379, 3)
-        Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
-        Me.TableLayoutPanel11.RowCount = 3
-        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel11.Size = New System.Drawing.Size(370, 310)
-        Me.TableLayoutPanel11.TabIndex = 21
-        '
-        'TableLayoutPanel12
-        '
-        Me.TableLayoutPanel12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel12.ColumnCount = 2
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.Controls.Add(Me.GB_Sucursal_mod, 0, 0)
-        Me.TableLayoutPanel12.Controls.Add(Me.TableLayoutPanel11, 1, 0)
-        Me.TableLayoutPanel12.Location = New System.Drawing.Point(6, 19)
-        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
-        Me.TableLayoutPanel12.RowCount = 1
-        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.Size = New System.Drawing.Size(752, 316)
-        Me.TableLayoutPanel12.TabIndex = 22
+        Me.txt_Email_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Email_mod.Location = New System.Drawing.Point(143, 245)
+        Me.txt_Email_mod.MaxLength = 255
+        Me.txt_Email_mod.Name = "txt_Email_mod"
+        Me.txt_Email_mod.Size = New System.Drawing.Size(209, 20)
+        Me.txt_Email_mod.TabIndex = 8
         '
         'frmSucursales
         '
@@ -1364,21 +1413,21 @@ Partial Class frmSucursales
         Me.TbMod.ResumeLayout(False)
         Me.GB_Modificacion.ResumeLayout(False)
         Me.GB_Modificacion.PerformLayout()
+        Me.TableLayoutPanel12.ResumeLayout(False)
+        Me.GB_Sucursal_mod.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel7.PerformLayout()
+        Me.TableLayoutPanel11.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
-        Me.GB_Sucursal_mod.ResumeLayout(False)
-        Me.GB_Comisiones2_mod.ResumeLayout(False)
-        Me.GB_Comisiones_mod.ResumeLayout(False)
-        CType(Me.ErroresSucursal, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel8.ResumeLayout(False)
-        Me.TableLayoutPanel8.PerformLayout()
-        Me.TableLayoutPanel9.ResumeLayout(False)
-        Me.TableLayoutPanel9.PerformLayout()
         Me.TableLayoutPanel10.ResumeLayout(False)
         Me.TableLayoutPanel10.PerformLayout()
-        Me.TableLayoutPanel11.ResumeLayout(False)
-        Me.TableLayoutPanel12.ResumeLayout(False)
+        Me.GB_Comisiones2_mod.ResumeLayout(False)
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        Me.TableLayoutPanel9.PerformLayout()
+        Me.GB_Comisiones_mod.ResumeLayout(False)
+        Me.TableLayoutPanel8.ResumeLayout(False)
+        Me.TableLayoutPanel8.PerformLayout()
+        CType(Me.ErroresSucursal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1483,4 +1532,8 @@ Partial Class frmSucursales
     Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel8 As TableLayoutPanel
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txt_Email As TextBox
+    Friend WithEvents txt_Email_mod As TextBox
+    Friend WithEvents Label10 As Label
 End Class

@@ -225,7 +225,7 @@ Public Class frmNotaPedidoAdministracion
                         NotaPedidoBindingSource.RemoveAt(e.RowIndex) 'Elimino el item de la grilla
 
                         'Actualizo el contador de notas de pedidos al pie de la pantalla
-                        Funciones.ActualizarNotasPedidos(False)
+                        Funciones.ActualizarNotasPedidosVentas(False)
                     End If
 
                     'refresco el datagrid
@@ -249,7 +249,7 @@ Public Class frmNotaPedidoAdministracion
     Public Sub RemoverNotaPedido(ByVal notaPedido As NotaPedido)
 
         'Actualizo el contador de notas de pedidos al pie de la pantalla
-        Funciones.ActualizarNotasPedidos(False)
+        Funciones.ActualizarNotasPedidosVentas(False)
 
         If (NotaPedidoBindingSource.List.Count > 1) Then
             NotaPedidoBindingSource.List.Remove(notaPedido)

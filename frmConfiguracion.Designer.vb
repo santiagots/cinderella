@@ -48,10 +48,6 @@ Partial Class frmConfiguracion
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.txtPort = New System.Windows.Forms.TextBox()
         Me.txtSmtp = New System.Windows.Forms.TextBox()
-        Me.txtUsuario = New System.Windows.Forms.TextBox()
-        Me.txtPassword = New System.Windows.Forms.TextBox()
-        Me.lblPassword = New System.Windows.Forms.Label()
-        Me.lblUsuario = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.BtnMailing = New System.Windows.Forms.Button()
         Me.lblPort = New System.Windows.Forms.Label()
@@ -91,6 +87,8 @@ Partial Class frmConfiguracion
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Cb_TiempoComprobacionOrdenesCompra = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Cb_TiempoComprobacionNotasPedidos = New System.Windows.Forms.ComboBox()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -109,13 +107,26 @@ Partial Class frmConfiguracion
         Me.BtnInternet = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Cb_SegundosInternet = New System.Windows.Forms.ComboBox()
-        Me.Host = New System.Windows.Forms.TabPage()
+        Me.TabHost = New System.Windows.Forms.TabPage()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.txtPuertoHost = New System.Windows.Forms.TextBox()
         Me.txtIPHost = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.btnModificarHost = New System.Windows.Forms.Button()
         Me.Label22 = New System.Windows.Forms.Label()
+        Me.TabStock = New System.Windows.Forms.TabPage()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.ROrdenCompraAutomaticaNo = New System.Windows.Forms.RadioButton()
+        Me.ROrdenCompraAutomaticaSI = New System.Windows.Forms.RadioButton()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.txtFechaUltimoCalculoventaMensual = New System.Windows.Forms.TextBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
+        Me.btnModificarStock = New System.Windows.Forms.Button()
+        Me.btnCalcularVentaMensualProducto = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -136,8 +147,12 @@ Partial Class frmConfiguracion
         Me.GroupBox5.SuspendLayout()
         Me.TabInternet.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
-        Me.Host.SuspendLayout()
+        Me.TabHost.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
+        Me.TabStock.SuspendLayout()
+        Me.GroupBox11.SuspendLayout()
+        Me.Panel4.SuspendLayout()
+        Me.GroupBox12.SuspendLayout()
         Me.SuspendLayout()
         '
         'lbl_NombreSucursalActual
@@ -166,7 +181,7 @@ Partial Class frmConfiguracion
         Me.Cb_Sucursales.FormattingEnabled = True
         Me.Cb_Sucursales.Location = New System.Drawing.Point(228, 70)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
-        Me.Cb_Sucursales.Size = New System.Drawing.Size(147, 23)
+        Me.Cb_Sucursales.Size = New System.Drawing.Size(170, 23)
         Me.Cb_Sucursales.TabIndex = 3
         '
         'lbl_NuevaSucursal
@@ -185,7 +200,7 @@ Partial Class frmConfiguracion
         Me.Btn_Actualizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Actualizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Actualizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Actualizar.Location = New System.Drawing.Point(274, 379)
+        Me.Btn_Actualizar.Location = New System.Drawing.Point(304, 379)
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Actualizar.TabIndex = 4
@@ -204,7 +219,7 @@ Partial Class frmConfiguracion
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(380, 425)
+        Me.GroupBox1.Size = New System.Drawing.Size(410, 425)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuración de Sucursal"
@@ -218,7 +233,7 @@ Partial Class frmConfiguracion
         Me.GroupBox10.Controls.Add(Me.Panel3)
         Me.GroupBox10.Location = New System.Drawing.Point(6, 111)
         Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.Size = New System.Drawing.Size(371, 140)
+        Me.GroupBox10.Size = New System.Drawing.Size(398, 140)
         Me.GroupBox10.TabIndex = 7
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Optimización de carga"
@@ -230,7 +245,7 @@ Partial Class frmConfiguracion
         Me.btn_ActualizarListaProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_ActualizarListaProductos.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
         Me.btn_ActualizarListaProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_ActualizarListaProductos.Location = New System.Drawing.Point(222, 100)
+        Me.btn_ActualizarListaProductos.Location = New System.Drawing.Point(246, 99)
         Me.btn_ActualizarListaProductos.Name = "btn_ActualizarListaProductos"
         Me.btn_ActualizarListaProductos.Size = New System.Drawing.Size(146, 34)
         Me.btn_ActualizarListaProductos.TabIndex = 11
@@ -262,7 +277,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoActualizacionMemoriaChace.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_TiempoActualizacionMemoriaChace.Location = New System.Drawing.Point(222, 70)
         Me.Cb_TiempoActualizacionMemoriaChace.Name = "Cb_TiempoActualizacionMemoriaChace"
-        Me.Cb_TiempoActualizacionMemoriaChace.Size = New System.Drawing.Size(146, 23)
+        Me.Cb_TiempoActualizacionMemoriaChace.Size = New System.Drawing.Size(170, 23)
         Me.Cb_TiempoActualizacionMemoriaChace.TabIndex = 6
         '
         'Panel3
@@ -271,14 +286,14 @@ Partial Class frmConfiguracion
         Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceSi)
         Me.Panel3.Location = New System.Drawing.Point(222, 24)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(146, 27)
+        Me.Panel3.Size = New System.Drawing.Size(170, 27)
         Me.Panel3.TabIndex = 29
         '
         'RUsoMemoriaChaceNo
         '
         Me.RUsoMemoriaChaceNo.AutoSize = True
         Me.RUsoMemoriaChaceNo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RUsoMemoriaChaceNo.Location = New System.Drawing.Point(99, 3)
+        Me.RUsoMemoriaChaceNo.Location = New System.Drawing.Point(124, 3)
         Me.RUsoMemoriaChaceNo.Name = "RUsoMemoriaChaceNo"
         Me.RUsoMemoriaChaceNo.Size = New System.Drawing.Size(43, 19)
         Me.RUsoMemoriaChaceNo.TabIndex = 26
@@ -310,7 +325,7 @@ Partial Class frmConfiguracion
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(380, 425)
+        Me.GroupBox2.Size = New System.Drawing.Size(410, 425)
         Me.GroupBox2.TabIndex = 6
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Configuración de Precios"
@@ -319,7 +334,7 @@ Partial Class frmConfiguracion
         '
         Me.txt_descuentoMinorista.Location = New System.Drawing.Point(185, 114)
         Me.txt_descuentoMinorista.Name = "txt_descuentoMinorista"
-        Me.txt_descuentoMinorista.Size = New System.Drawing.Size(160, 21)
+        Me.txt_descuentoMinorista.Size = New System.Drawing.Size(219, 21)
         Me.txt_descuentoMinorista.TabIndex = 12
         '
         'Label24
@@ -356,7 +371,7 @@ Partial Class frmConfiguracion
         Me.Btn_Precios.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Precios.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Precios.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Precios.Location = New System.Drawing.Point(274, 379)
+        Me.Btn_Precios.Location = New System.Drawing.Point(304, 379)
         Me.Btn_Precios.Name = "Btn_Precios"
         Me.Btn_Precios.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Precios.TabIndex = 4
@@ -380,24 +395,20 @@ Partial Class frmConfiguracion
         Me.cb_Precios.FormattingEnabled = True
         Me.cb_Precios.Location = New System.Drawing.Point(185, 68)
         Me.cb_Precios.Name = "cb_Precios"
-        Me.cb_Precios.Size = New System.Drawing.Size(160, 23)
+        Me.cb_Precios.Size = New System.Drawing.Size(219, 23)
         Me.cb_Precios.TabIndex = 3
         '
         'GroupBox3
         '
         Me.GroupBox3.Controls.Add(Me.txtPort)
         Me.GroupBox3.Controls.Add(Me.txtSmtp)
-        Me.GroupBox3.Controls.Add(Me.txtUsuario)
-        Me.GroupBox3.Controls.Add(Me.txtPassword)
-        Me.GroupBox3.Controls.Add(Me.lblPassword)
-        Me.GroupBox3.Controls.Add(Me.lblUsuario)
         Me.GroupBox3.Controls.Add(Me.Label3)
         Me.GroupBox3.Controls.Add(Me.BtnMailing)
         Me.GroupBox3.Controls.Add(Me.lblPort)
         Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(386, 431)
+        Me.GroupBox3.Size = New System.Drawing.Size(416, 431)
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Configuración del Servidor de Mail"
@@ -406,47 +417,15 @@ Partial Class frmConfiguracion
         '
         Me.txtPort.Location = New System.Drawing.Point(119, 62)
         Me.txtPort.Name = "txtPort"
-        Me.txtPort.Size = New System.Drawing.Size(189, 21)
+        Me.txtPort.Size = New System.Drawing.Size(289, 21)
         Me.txtPort.TabIndex = 10
         '
         'txtSmtp
         '
         Me.txtSmtp.Location = New System.Drawing.Point(119, 30)
         Me.txtSmtp.Name = "txtSmtp"
-        Me.txtSmtp.Size = New System.Drawing.Size(189, 21)
+        Me.txtSmtp.Size = New System.Drawing.Size(289, 21)
         Me.txtSmtp.TabIndex = 9
-        '
-        'txtUsuario
-        '
-        Me.txtUsuario.Location = New System.Drawing.Point(119, 95)
-        Me.txtUsuario.Name = "txtUsuario"
-        Me.txtUsuario.Size = New System.Drawing.Size(189, 21)
-        Me.txtUsuario.TabIndex = 8
-        '
-        'txtPassword
-        '
-        Me.txtPassword.Location = New System.Drawing.Point(119, 125)
-        Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.Size = New System.Drawing.Size(189, 21)
-        Me.txtPassword.TabIndex = 7
-        '
-        'lblPassword
-        '
-        Me.lblPassword.AutoSize = True
-        Me.lblPassword.Location = New System.Drawing.Point(7, 131)
-        Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(73, 15)
-        Me.lblPassword.TabIndex = 6
-        Me.lblPassword.Text = "Contraseña:"
-        '
-        'lblUsuario
-        '
-        Me.lblUsuario.AutoSize = True
-        Me.lblUsuario.Location = New System.Drawing.Point(7, 101)
-        Me.lblUsuario.Name = "lblUsuario"
-        Me.lblUsuario.Size = New System.Drawing.Size(53, 15)
-        Me.lblUsuario.TabIndex = 5
-        Me.lblUsuario.Text = "Usuario:"
         '
         'Label3
         '
@@ -463,7 +442,7 @@ Partial Class frmConfiguracion
         Me.BtnMailing.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnMailing.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnMailing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnMailing.Location = New System.Drawing.Point(274, 359)
+        Me.BtnMailing.Location = New System.Drawing.Point(308, 383)
         Me.BtnMailing.Name = "BtnMailing"
         Me.BtnMailing.Size = New System.Drawing.Size(100, 40)
         Me.BtnMailing.TabIndex = 4
@@ -497,7 +476,7 @@ Partial Class frmConfiguracion
         Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox4.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(386, 431)
+        Me.GroupBox4.Size = New System.Drawing.Size(416, 431)
         Me.GroupBox4.TabIndex = 8
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Configuración de Controlador Fiscal"
@@ -521,7 +500,7 @@ Partial Class frmConfiguracion
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeTicket)
         Me.GroupBox9.Location = New System.Drawing.Point(12, 115)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(365, 113)
+        Me.GroupBox9.Size = New System.Drawing.Size(396, 113)
         Me.GroupBox9.TabIndex = 23
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Monto final tope "
@@ -557,21 +536,21 @@ Partial Class frmConfiguracion
         '
         Me.txt_MontoTopeElectronico.Location = New System.Drawing.Point(224, 74)
         Me.txt_MontoTopeElectronico.Name = "txt_MontoTopeElectronico"
-        Me.txt_MontoTopeElectronico.Size = New System.Drawing.Size(111, 21)
+        Me.txt_MontoTopeElectronico.Size = New System.Drawing.Size(166, 21)
         Me.txt_MontoTopeElectronico.TabIndex = 17
         '
         'txt_MontoTopeManual
         '
         Me.txt_MontoTopeManual.Location = New System.Drawing.Point(224, 47)
         Me.txt_MontoTopeManual.Name = "txt_MontoTopeManual"
-        Me.txt_MontoTopeManual.Size = New System.Drawing.Size(111, 21)
+        Me.txt_MontoTopeManual.Size = New System.Drawing.Size(166, 21)
         Me.txt_MontoTopeManual.TabIndex = 16
         '
         'txt_MontoTopeTicket
         '
         Me.txt_MontoTopeTicket.Location = New System.Drawing.Point(224, 20)
         Me.txt_MontoTopeTicket.Name = "txt_MontoTopeTicket"
-        Me.txt_MontoTopeTicket.Size = New System.Drawing.Size(111, 21)
+        Me.txt_MontoTopeTicket.Size = New System.Drawing.Size(166, 21)
         Me.txt_MontoTopeTicket.TabIndex = 15
         '
         'Cb_ConexionControladora
@@ -580,9 +559,9 @@ Partial Class frmConfiguracion
         Me.Cb_ConexionControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_ConexionControladora.FormattingEnabled = True
         Me.Cb_ConexionControladora.Items.AddRange(New Object() {"USB", "COM1"})
-        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(238, 84)
+        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(236, 84)
         Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
-        Me.Cb_ConexionControladora.Size = New System.Drawing.Size(111, 23)
+        Me.Cb_ConexionControladora.Size = New System.Drawing.Size(172, 23)
         Me.Cb_ConexionControladora.TabIndex = 22
         '
         'Label17
@@ -607,7 +586,7 @@ Partial Class frmConfiguracion
         '
         Me.txt_MontoMaximoNotaCredito.Location = New System.Drawing.Point(235, 238)
         Me.txt_MontoMaximoNotaCredito.Name = "txt_MontoMaximoNotaCredito"
-        Me.txt_MontoMaximoNotaCredito.Size = New System.Drawing.Size(111, 21)
+        Me.txt_MontoMaximoNotaCredito.Size = New System.Drawing.Size(167, 21)
         Me.txt_MontoMaximoNotaCredito.TabIndex = 19
         '
         'Label16
@@ -629,7 +608,7 @@ Partial Class frmConfiguracion
         Me.GroupBox7.Controls.Add(Me.Label12)
         Me.GroupBox7.Location = New System.Drawing.Point(12, 268)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(366, 109)
+        Me.GroupBox7.Size = New System.Drawing.Size(396, 109)
         Me.GroupBox7.TabIndex = 17
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Puntos de venta"
@@ -638,21 +617,21 @@ Partial Class frmConfiguracion
         '
         Me.txt_PuntoVentaElectronica.Location = New System.Drawing.Point(224, 74)
         Me.txt_PuntoVentaElectronica.Name = "txt_PuntoVentaElectronica"
-        Me.txt_PuntoVentaElectronica.Size = New System.Drawing.Size(111, 21)
+        Me.txt_PuntoVentaElectronica.Size = New System.Drawing.Size(166, 21)
         Me.txt_PuntoVentaElectronica.TabIndex = 18
         '
         'txt_PuntoVentaManual
         '
         Me.txt_PuntoVentaManual.Location = New System.Drawing.Point(224, 47)
         Me.txt_PuntoVentaManual.Name = "txt_PuntoVentaManual"
-        Me.txt_PuntoVentaManual.Size = New System.Drawing.Size(111, 21)
+        Me.txt_PuntoVentaManual.Size = New System.Drawing.Size(166, 21)
         Me.txt_PuntoVentaManual.TabIndex = 17
         '
         'txt_PuntoVentaControladora
         '
         Me.txt_PuntoVentaControladora.Location = New System.Drawing.Point(224, 20)
         Me.txt_PuntoVentaControladora.Name = "txt_PuntoVentaControladora"
-        Me.txt_PuntoVentaControladora.Size = New System.Drawing.Size(111, 21)
+        Me.txt_PuntoVentaControladora.Size = New System.Drawing.Size(166, 21)
         Me.txt_PuntoVentaControladora.TabIndex = 16
         '
         'Label14
@@ -688,7 +667,7 @@ Partial Class frmConfiguracion
         Me.Btn_Controlador.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Controlador.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Controlador.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Controlador.Location = New System.Drawing.Point(277, 383)
+        Me.Btn_Controlador.Location = New System.Drawing.Point(308, 383)
         Me.Btn_Controlador.Name = "Btn_Controlador"
         Me.Btn_Controlador.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Controlador.TabIndex = 11
@@ -709,16 +688,16 @@ Partial Class frmConfiguracion
         '
         Me.Panel1.Controls.Add(Me.RExentoSinIvaNo)
         Me.Panel1.Controls.Add(Me.RExentoSinIvaSI)
-        Me.Panel1.Location = New System.Drawing.Point(225, 24)
+        Me.Panel1.Location = New System.Drawing.Point(236, 20)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(136, 27)
+        Me.Panel1.Size = New System.Drawing.Size(172, 27)
         Me.Panel1.TabIndex = 27
         '
         'RExentoSinIvaNo
         '
         Me.RExentoSinIvaNo.AutoSize = True
         Me.RExentoSinIvaNo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RExentoSinIvaNo.Location = New System.Drawing.Point(78, 3)
+        Me.RExentoSinIvaNo.Location = New System.Drawing.Point(123, 3)
         Me.RExentoSinIvaNo.Name = "RExentoSinIvaNo"
         Me.RExentoSinIvaNo.Size = New System.Drawing.Size(43, 19)
         Me.RExentoSinIvaNo.TabIndex = 26
@@ -742,9 +721,9 @@ Partial Class frmConfiguracion
         '
         Me.Panel2.Controls.Add(Me.RContrSI)
         Me.Panel2.Controls.Add(Me.RContrNO)
-        Me.Panel2.Location = New System.Drawing.Point(225, 52)
+        Me.Panel2.Location = New System.Drawing.Point(236, 48)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(136, 26)
+        Me.Panel2.Size = New System.Drawing.Size(172, 26)
         Me.Panel2.TabIndex = 28
         '
         'RContrSI
@@ -763,7 +742,7 @@ Partial Class frmConfiguracion
         '
         Me.RContrNO.AutoSize = True
         Me.RContrNO.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RContrNO.Location = New System.Drawing.Point(78, 2)
+        Me.RContrNO.Location = New System.Drawing.Point(123, 2)
         Me.RContrNO.Name = "RContrNO"
         Me.RContrNO.Size = New System.Drawing.Size(43, 19)
         Me.RContrNO.TabIndex = 13
@@ -779,12 +758,13 @@ Partial Class frmConfiguracion
         Me.TabControl1.Controls.Add(Me.TabFacturacion)
         Me.TabControl1.Controls.Add(Me.TabNotificaciones)
         Me.TabControl1.Controls.Add(Me.TabInternet)
-        Me.TabControl1.Controls.Add(Me.Host)
+        Me.TabControl1.Controls.Add(Me.TabHost)
+        Me.TabControl1.Controls.Add(Me.TabStock)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(394, 459)
+        Me.TabControl1.Size = New System.Drawing.Size(424, 459)
         Me.TabControl1.TabIndex = 9
         '
         'TabSucursal
@@ -793,7 +773,7 @@ Partial Class frmConfiguracion
         Me.TabSucursal.Location = New System.Drawing.Point(4, 24)
         Me.TabSucursal.Name = "TabSucursal"
         Me.TabSucursal.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSucursal.Size = New System.Drawing.Size(386, 431)
+        Me.TabSucursal.Size = New System.Drawing.Size(416, 431)
         Me.TabSucursal.TabIndex = 0
         Me.TabSucursal.Text = "Sucursal"
         Me.TabSucursal.UseVisualStyleBackColor = True
@@ -804,7 +784,7 @@ Partial Class frmConfiguracion
         Me.TabPrecios.Location = New System.Drawing.Point(4, 24)
         Me.TabPrecios.Name = "TabPrecios"
         Me.TabPrecios.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrecios.Size = New System.Drawing.Size(386, 431)
+        Me.TabPrecios.Size = New System.Drawing.Size(416, 431)
         Me.TabPrecios.TabIndex = 1
         Me.TabPrecios.Text = "Precios"
         Me.TabPrecios.UseVisualStyleBackColor = True
@@ -814,7 +794,7 @@ Partial Class frmConfiguracion
         Me.TabMail.Controls.Add(Me.GroupBox3)
         Me.TabMail.Location = New System.Drawing.Point(4, 24)
         Me.TabMail.Name = "TabMail"
-        Me.TabMail.Size = New System.Drawing.Size(386, 431)
+        Me.TabMail.Size = New System.Drawing.Size(416, 431)
         Me.TabMail.TabIndex = 2
         Me.TabMail.Text = "Mail"
         Me.TabMail.UseVisualStyleBackColor = True
@@ -824,7 +804,7 @@ Partial Class frmConfiguracion
         Me.TabFacturacion.Controls.Add(Me.GroupBox4)
         Me.TabFacturacion.Location = New System.Drawing.Point(4, 24)
         Me.TabFacturacion.Name = "TabFacturacion"
-        Me.TabFacturacion.Size = New System.Drawing.Size(386, 431)
+        Me.TabFacturacion.Size = New System.Drawing.Size(416, 431)
         Me.TabFacturacion.TabIndex = 3
         Me.TabFacturacion.Text = "Facturación"
         Me.TabFacturacion.UseVisualStyleBackColor = True
@@ -834,13 +814,15 @@ Partial Class frmConfiguracion
         Me.TabNotificaciones.Controls.Add(Me.GroupBox5)
         Me.TabNotificaciones.Location = New System.Drawing.Point(4, 24)
         Me.TabNotificaciones.Name = "TabNotificaciones"
-        Me.TabNotificaciones.Size = New System.Drawing.Size(386, 431)
+        Me.TabNotificaciones.Size = New System.Drawing.Size(416, 431)
         Me.TabNotificaciones.TabIndex = 4
         Me.TabNotificaciones.Text = "Alertas"
         Me.TabNotificaciones.UseVisualStyleBackColor = True
         '
         'GroupBox5
         '
+        Me.GroupBox5.Controls.Add(Me.Label27)
+        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionOrdenesCompra)
         Me.GroupBox5.Controls.Add(Me.Label19)
         Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionNotasPedidos)
         Me.GroupBox5.Controls.Add(Me.Label18)
@@ -853,10 +835,29 @@ Partial Class frmConfiguracion
         Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox5.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(386, 431)
+        Me.GroupBox5.Size = New System.Drawing.Size(416, 431)
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Configuración de Alertas"
+        '
+        'Label27
+        '
+        Me.Label27.Location = New System.Drawing.Point(9, 201)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(261, 36)
+        Me.Label27.TabIndex = 11
+        Me.Label27.Text = "Período de comprobación de nuevas ordenes de compra (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Cb_TiempoComprobacionOrdenesCompra
+        '
+        Me.Cb_TiempoComprobacionOrdenesCompra.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TiempoComprobacionOrdenesCompra.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TiempoComprobacionOrdenesCompra.FormattingEnabled = True
+        Me.Cb_TiempoComprobacionOrdenesCompra.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
+        Me.Cb_TiempoComprobacionOrdenesCompra.Location = New System.Drawing.Point(276, 208)
+        Me.Cb_TiempoComprobacionOrdenesCompra.Name = "Cb_TiempoComprobacionOrdenesCompra"
+        Me.Cb_TiempoComprobacionOrdenesCompra.Size = New System.Drawing.Size(131, 23)
+        Me.Cb_TiempoComprobacionOrdenesCompra.TabIndex = 12
         '
         'Label19
         '
@@ -874,7 +875,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionNotasPedidos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_TiempoComprobacionNotasPedidos.Location = New System.Drawing.Point(275, 163)
         Me.Cb_TiempoComprobacionNotasPedidos.Name = "Cb_TiempoComprobacionNotasPedidos"
-        Me.Cb_TiempoComprobacionNotasPedidos.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionNotasPedidos.Size = New System.Drawing.Size(132, 23)
         Me.Cb_TiempoComprobacionNotasPedidos.TabIndex = 10
         '
         'Label18
@@ -893,7 +894,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionCheques.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_TiempoComprobacionCheques.Location = New System.Drawing.Point(276, 119)
         Me.Cb_TiempoComprobacionCheques.Name = "Cb_TiempoComprobacionCheques"
-        Me.Cb_TiempoComprobacionCheques.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionCheques.Size = New System.Drawing.Size(131, 23)
         Me.Cb_TiempoComprobacionCheques.TabIndex = 8
         '
         'Label1
@@ -912,7 +913,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMovimientos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_TiempoComprobacionMovimientos.Location = New System.Drawing.Point(275, 77)
         Me.Cb_TiempoComprobacionMovimientos.Name = "Cb_TiempoComprobacionMovimientos"
-        Me.Cb_TiempoComprobacionMovimientos.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionMovimientos.Size = New System.Drawing.Size(132, 23)
         Me.Cb_TiempoComprobacionMovimientos.TabIndex = 6
         '
         'BtnNotificaciones
@@ -922,7 +923,7 @@ Partial Class frmConfiguracion
         Me.BtnNotificaciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnNotificaciones.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnNotificaciones.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnNotificaciones.Location = New System.Drawing.Point(277, 382)
+        Me.BtnNotificaciones.Location = New System.Drawing.Point(307, 382)
         Me.BtnNotificaciones.Name = "BtnNotificaciones"
         Me.BtnNotificaciones.Size = New System.Drawing.Size(100, 40)
         Me.BtnNotificaciones.TabIndex = 4
@@ -946,7 +947,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMensajes.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_TiempoComprobacionMensajes.Location = New System.Drawing.Point(275, 35)
         Me.Cb_TiempoComprobacionMensajes.Name = "Cb_TiempoComprobacionMensajes"
-        Me.Cb_TiempoComprobacionMensajes.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_TiempoComprobacionMensajes.Size = New System.Drawing.Size(132, 23)
         Me.Cb_TiempoComprobacionMensajes.TabIndex = 3
         '
         'TabInternet
@@ -954,7 +955,7 @@ Partial Class frmConfiguracion
         Me.TabInternet.Controls.Add(Me.GroupBox6)
         Me.TabInternet.Location = New System.Drawing.Point(4, 24)
         Me.TabInternet.Name = "TabInternet"
-        Me.TabInternet.Size = New System.Drawing.Size(386, 431)
+        Me.TabInternet.Size = New System.Drawing.Size(416, 431)
         Me.TabInternet.TabIndex = 5
         Me.TabInternet.Text = "Internet"
         Me.TabInternet.UseVisualStyleBackColor = True
@@ -971,7 +972,7 @@ Partial Class frmConfiguracion
         Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox6.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(386, 431)
+        Me.GroupBox6.Size = New System.Drawing.Size(416, 431)
         Me.GroupBox6.TabIndex = 8
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Configuración de Internet"
@@ -980,7 +981,7 @@ Partial Class frmConfiguracion
         '
         Me.Rb2.AutoSize = True
         Me.Rb2.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Rb2.Location = New System.Drawing.Point(299, 70)
+        Me.Rb2.Location = New System.Drawing.Point(364, 68)
         Me.Rb2.Name = "Rb2"
         Me.Rb2.Size = New System.Drawing.Size(43, 19)
         Me.Rb2.TabIndex = 16
@@ -991,7 +992,7 @@ Partial Class frmConfiguracion
         '
         Me.Rb1.AutoSize = True
         Me.Rb1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Rb1.Location = New System.Drawing.Point(236, 70)
+        Me.Rb1.Location = New System.Drawing.Point(301, 68)
         Me.Rb1.Name = "Rb1"
         Me.Rb1.Size = New System.Drawing.Size(36, 19)
         Me.Rb1.TabIndex = 15
@@ -1011,7 +1012,7 @@ Partial Class frmConfiguracion
         '
         Me.Label8.Location = New System.Drawing.Point(9, 28)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(371, 33)
+        Me.Label8.Size = New System.Drawing.Size(398, 33)
         Me.Label8.TabIndex = 1
         Me.Label8.Text = "Aquí podrá configurar si la aplicación se conecta a internet o no. En caso afirma" &
     "tivo, podrá modificar el período de comprobación de la conexión."
@@ -1023,7 +1024,7 @@ Partial Class frmConfiguracion
         Me.BtnInternet.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnInternet.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnInternet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnInternet.Location = New System.Drawing.Point(277, 382)
+        Me.BtnInternet.Location = New System.Drawing.Point(307, 382)
         Me.BtnInternet.Name = "BtnInternet"
         Me.BtnInternet.Size = New System.Drawing.Size(100, 40)
         Me.BtnInternet.TabIndex = 4
@@ -1035,10 +1036,10 @@ Partial Class frmConfiguracion
         '
         Me.Label10.Location = New System.Drawing.Point(6, 110)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(153, 36)
+        Me.Label10.Size = New System.Drawing.Size(212, 36)
         Me.Label10.TabIndex = 3
         Me.Label10.Text = "Período de Comprobación ( en segundos )"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Cb_SegundosInternet
         '
@@ -1048,19 +1049,19 @@ Partial Class frmConfiguracion
         Me.Cb_SegundosInternet.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
         Me.Cb_SegundosInternet.Location = New System.Drawing.Point(236, 110)
         Me.Cb_SegundosInternet.Name = "Cb_SegundosInternet"
-        Me.Cb_SegundosInternet.Size = New System.Drawing.Size(101, 23)
+        Me.Cb_SegundosInternet.Size = New System.Drawing.Size(171, 23)
         Me.Cb_SegundosInternet.TabIndex = 3
         '
-        'Host
+        'TabHost
         '
-        Me.Host.Controls.Add(Me.GroupBox8)
-        Me.Host.Location = New System.Drawing.Point(4, 24)
-        Me.Host.Name = "Host"
-        Me.Host.Padding = New System.Windows.Forms.Padding(3)
-        Me.Host.Size = New System.Drawing.Size(386, 431)
-        Me.Host.TabIndex = 6
-        Me.Host.Text = "Host"
-        Me.Host.UseVisualStyleBackColor = True
+        Me.TabHost.Controls.Add(Me.GroupBox8)
+        Me.TabHost.Location = New System.Drawing.Point(4, 24)
+        Me.TabHost.Name = "TabHost"
+        Me.TabHost.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabHost.Size = New System.Drawing.Size(416, 431)
+        Me.TabHost.TabIndex = 6
+        Me.TabHost.Text = "Host"
+        Me.TabHost.UseVisualStyleBackColor = True
         '
         'GroupBox8
         '
@@ -1072,7 +1073,7 @@ Partial Class frmConfiguracion
         Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox8.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(380, 425)
+        Me.GroupBox8.Size = New System.Drawing.Size(410, 425)
         Me.GroupBox8.TabIndex = 8
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Configuración del Host de Servicios"
@@ -1081,14 +1082,14 @@ Partial Class frmConfiguracion
         '
         Me.txtPuertoHost.Location = New System.Drawing.Point(140, 62)
         Me.txtPuertoHost.Name = "txtPuertoHost"
-        Me.txtPuertoHost.Size = New System.Drawing.Size(234, 21)
+        Me.txtPuertoHost.Size = New System.Drawing.Size(264, 21)
         Me.txtPuertoHost.TabIndex = 10
         '
         'txtIPHost
         '
         Me.txtIPHost.Location = New System.Drawing.Point(140, 30)
         Me.txtIPHost.Name = "txtIPHost"
-        Me.txtIPHost.Size = New System.Drawing.Size(234, 21)
+        Me.txtIPHost.Size = New System.Drawing.Size(264, 21)
         Me.txtIPHost.TabIndex = 9
         '
         'Label21
@@ -1106,7 +1107,7 @@ Partial Class frmConfiguracion
         Me.btnModificarHost.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnModificarHost.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.btnModificarHost.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnModificarHost.Location = New System.Drawing.Point(274, 359)
+        Me.btnModificarHost.Location = New System.Drawing.Point(304, 380)
         Me.btnModificarHost.Name = "btnModificarHost"
         Me.btnModificarHost.Size = New System.Drawing.Size(100, 40)
         Me.btnModificarHost.TabIndex = 4
@@ -1123,11 +1124,160 @@ Partial Class frmConfiguracion
         Me.Label22.TabIndex = 3
         Me.Label22.Text = "Puerto:"
         '
+        'TabStock
+        '
+        Me.TabStock.Controls.Add(Me.GroupBox11)
+        Me.TabStock.Location = New System.Drawing.Point(4, 24)
+        Me.TabStock.Name = "TabStock"
+        Me.TabStock.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabStock.Size = New System.Drawing.Size(416, 431)
+        Me.TabStock.TabIndex = 7
+        Me.TabStock.Text = "Stock"
+        Me.TabStock.UseVisualStyleBackColor = True
+        '
+        'GroupBox11
+        '
+        Me.GroupBox11.Controls.Add(Me.Label28)
+        Me.GroupBox11.Controls.Add(Me.Panel4)
+        Me.GroupBox11.Controls.Add(Me.GroupBox12)
+        Me.GroupBox11.Controls.Add(Me.btnModificarStock)
+        Me.GroupBox11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox11.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.Size = New System.Drawing.Size(410, 425)
+        Me.GroupBox11.TabIndex = 6
+        Me.GroupBox11.TabStop = False
+        Me.GroupBox11.Text = "Configuración de Stock"
+        '
+        'Label28
+        '
+        Me.Label28.Location = New System.Drawing.Point(12, 21)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(202, 34)
+        Me.Label28.TabIndex = 28
+        Me.Label28.Text = "Habilitar generación órdenes de compra automáticas:"
+        Me.Label28.UseWaitCursor = True
+        '
+        'Panel4
+        '
+        Me.Panel4.Controls.Add(Me.ROrdenCompraAutomaticaNo)
+        Me.Panel4.Controls.Add(Me.ROrdenCompraAutomaticaSI)
+        Me.Panel4.Location = New System.Drawing.Point(225, 28)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(173, 27)
+        Me.Panel4.TabIndex = 29
+        '
+        'ROrdenCompraAutomaticaNo
+        '
+        Me.ROrdenCompraAutomaticaNo.AutoSize = True
+        Me.ROrdenCompraAutomaticaNo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.ROrdenCompraAutomaticaNo.Location = New System.Drawing.Point(127, 3)
+        Me.ROrdenCompraAutomaticaNo.Name = "ROrdenCompraAutomaticaNo"
+        Me.ROrdenCompraAutomaticaNo.Size = New System.Drawing.Size(43, 19)
+        Me.ROrdenCompraAutomaticaNo.TabIndex = 26
+        Me.ROrdenCompraAutomaticaNo.Tag = ""
+        Me.ROrdenCompraAutomaticaNo.Text = "NO"
+        Me.ROrdenCompraAutomaticaNo.UseVisualStyleBackColor = True
+        '
+        'ROrdenCompraAutomaticaSI
+        '
+        Me.ROrdenCompraAutomaticaSI.AutoSize = True
+        Me.ROrdenCompraAutomaticaSI.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.ROrdenCompraAutomaticaSI.Location = New System.Drawing.Point(11, 3)
+        Me.ROrdenCompraAutomaticaSI.Name = "ROrdenCompraAutomaticaSI"
+        Me.ROrdenCompraAutomaticaSI.Size = New System.Drawing.Size(36, 19)
+        Me.ROrdenCompraAutomaticaSI.TabIndex = 25
+        Me.ROrdenCompraAutomaticaSI.Tag = ""
+        Me.ROrdenCompraAutomaticaSI.Text = "SI"
+        Me.ROrdenCompraAutomaticaSI.UseVisualStyleBackColor = True
+        '
+        'GroupBox12
+        '
+        Me.GroupBox12.Controls.Add(Me.btnCalcularVentaMensualProducto)
+        Me.GroupBox12.Controls.Add(Me.txtFechaUltimoCalculoventaMensual)
+        Me.GroupBox12.Controls.Add(Me.Label30)
+        Me.GroupBox12.Controls.Add(Me.Label29)
+        Me.GroupBox12.Controls.Add(Me.CbPeriodoActualizacionVentaMensual)
+        Me.GroupBox12.Location = New System.Drawing.Point(6, 61)
+        Me.GroupBox12.Name = "GroupBox12"
+        Me.GroupBox12.Size = New System.Drawing.Size(398, 116)
+        Me.GroupBox12.TabIndex = 7
+        Me.GroupBox12.TabStop = False
+        Me.GroupBox12.Text = "Calculo venta mensual"
+        '
+        'txtFechaUltimoCalculoventaMensual
+        '
+        Me.txtFechaUltimoCalculoventaMensual.Enabled = False
+        Me.txtFechaUltimoCalculoventaMensual.Location = New System.Drawing.Point(218, 49)
+        Me.txtFechaUltimoCalculoventaMensual.Name = "txtFechaUltimoCalculoventaMensual"
+        Me.txtFechaUltimoCalculoventaMensual.ReadOnly = True
+        Me.txtFechaUltimoCalculoventaMensual.Size = New System.Drawing.Size(174, 21)
+        Me.txtFechaUltimoCalculoventaMensual.TabIndex = 11
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(6, 52)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(120, 15)
+        Me.Label30.TabIndex = 10
+        Me.Label30.Text = "Fecha ultimo calculo"
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(6, 23)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(176, 15)
+        Me.Label29.TabIndex = 5
+        Me.Label29.Text = "Periodo de actualizacion (días)"
+        '
+        'CbPeriodoActualizacionVentaMensual
+        '
+        Me.CbPeriodoActualizacionVentaMensual.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CbPeriodoActualizacionVentaMensual.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbPeriodoActualizacionVentaMensual.FormattingEnabled = True
+        Me.CbPeriodoActualizacionVentaMensual.Items.AddRange(New Object() {"7", "15", "30", "60"})
+        Me.CbPeriodoActualizacionVentaMensual.Location = New System.Drawing.Point(219, 20)
+        Me.CbPeriodoActualizacionVentaMensual.Name = "CbPeriodoActualizacionVentaMensual"
+        Me.CbPeriodoActualizacionVentaMensual.Size = New System.Drawing.Size(173, 23)
+        Me.CbPeriodoActualizacionVentaMensual.TabIndex = 6
+        '
+        'btnModificarStock
+        '
+        Me.btnModificarStock.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnModificarStock.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnModificarStock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnModificarStock.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.btnModificarStock.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnModificarStock.Location = New System.Drawing.Point(304, 379)
+        Me.btnModificarStock.Name = "btnModificarStock"
+        Me.btnModificarStock.Size = New System.Drawing.Size(100, 40)
+        Me.btnModificarStock.TabIndex = 4
+        Me.btnModificarStock.Text = "Modificar"
+        Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnModificarStock.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.btnCalcularVentaMensualProducto.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnCalcularVentaMensualProducto.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCalcularVentaMensualProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCalcularVentaMensualProducto.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
+        Me.btnCalcularVentaMensualProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCalcularVentaMensualProducto.Location = New System.Drawing.Point(198, 77)
+        Me.btnCalcularVentaMensualProducto.Name = "Button1"
+        Me.btnCalcularVentaMensualProducto.Size = New System.Drawing.Size(194, 34)
+        Me.btnCalcularVentaMensualProducto.TabIndex = 12
+        Me.btnCalcularVentaMensualProducto.Text = "Calcular Venta Mensual"
+        Me.btnCalcularVentaMensualProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCalcularVentaMensualProducto.UseVisualStyleBackColor = True
+        '
         'frmConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(394, 459)
+        Me.ClientSize = New System.Drawing.Size(424, 459)
         Me.Controls.Add(Me.TabControl1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -1166,9 +1316,15 @@ Partial Class frmConfiguracion
         Me.TabInternet.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
-        Me.Host.ResumeLayout(False)
+        Me.TabHost.ResumeLayout(False)
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox8.PerformLayout()
+        Me.TabStock.ResumeLayout(False)
+        Me.GroupBox11.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel4.PerformLayout()
+        Me.GroupBox12.ResumeLayout(False)
+        Me.GroupBox12.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1187,10 +1343,6 @@ Partial Class frmConfiguracion
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents txtPort As System.Windows.Forms.TextBox
     Friend WithEvents txtSmtp As System.Windows.Forms.TextBox
-    Friend WithEvents txtUsuario As System.Windows.Forms.TextBox
-    Friend WithEvents txtPassword As System.Windows.Forms.TextBox
-    Friend WithEvents lblPassword As System.Windows.Forms.Label
-    Friend WithEvents lblUsuario As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents BtnMailing As System.Windows.Forms.Button
     Friend WithEvents lblPort As System.Windows.Forms.Label
@@ -1235,7 +1387,7 @@ Partial Class frmConfiguracion
     Friend WithEvents Cb_TiempoComprobacionCheques As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Cb_TiempoComprobacionMovimientos As System.Windows.Forms.ComboBox
-    Friend WithEvents Host As System.Windows.Forms.TabPage
+    Friend WithEvents TabHost As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
     Friend WithEvents txtPuertoHost As System.Windows.Forms.TextBox
     Friend WithEvents txtIPHost As System.Windows.Forms.TextBox
@@ -1265,4 +1417,19 @@ Partial Class frmConfiguracion
     Friend WithEvents RUsoMemoriaChaceNo As RadioButton
     Friend WithEvents RUsoMemoriaChaceSi As RadioButton
     Friend WithEvents btn_ActualizarListaProductos As Button
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Cb_TiempoComprobacionOrdenesCompra As ComboBox
+    Friend WithEvents TabStock As TabPage
+    Friend WithEvents GroupBox11 As GroupBox
+    Friend WithEvents Label28 As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents ROrdenCompraAutomaticaNo As RadioButton
+    Friend WithEvents ROrdenCompraAutomaticaSI As RadioButton
+    Friend WithEvents GroupBox12 As GroupBox
+    Friend WithEvents txtFechaUltimoCalculoventaMensual As TextBox
+    Friend WithEvents Label30 As Label
+    Friend WithEvents Label29 As Label
+    Friend WithEvents CbPeriodoActualizacionVentaMensual As ComboBox
+    Friend WithEvents btnModificarStock As Button
+    Friend WithEvents btnCalcularVentaMensualProducto As Button
 End Class

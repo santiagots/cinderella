@@ -29,15 +29,16 @@ Partial Class frmStockBitacora
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmStockBitacora))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Cb_Sucursal = New System.Windows.Forms.ComboBox()
+        Me.FechaHasta = New System.Windows.Forms.DateTimePicker()
+        Me.FechaDesde = New System.Windows.Forms.DateTimePicker()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txt_Total = New System.Windows.Forms.TextBox()
         Me.lbl_DescrTot = New System.Windows.Forms.Label()
-        Me.FechaHasta = New System.Windows.Forms.DateTimePicker()
-        Me.FechaDesde = New System.Windows.Forms.DateTimePicker()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Cb_Sucursal = New System.Windows.Forms.ComboBox()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.btn_Buscar = New System.Windows.Forms.Button()
@@ -55,10 +56,9 @@ Partial Class frmStockBitacora
         Me.Minimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Actual = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Optimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.DG_Stock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.DG_Stock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -79,6 +79,87 @@ Partial Class frmStockBitacora
         Me.GroupBox1.Size = New System.Drawing.Size(636, 462)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Cb_Sucursal, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.FechaHasta, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.FechaDesde, 1, 1)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 3
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(518, 100)
+        Me.TableLayoutPanel1.TabIndex = 25
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(3, 7)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(154, 15)
+        Me.Label5.TabIndex = 15
+        Me.Label5.Text = "Sucursal"
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 37)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(154, 15)
+        Me.Label1.TabIndex = 16
+        Me.Label1.Text = "Fecha Desde"
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 72)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(154, 15)
+        Me.Label2.TabIndex = 17
+        Me.Label2.Text = "Fecha Hasta"
+        '
+        'Cb_Sucursal
+        '
+        Me.Cb_Sucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Cb_Sucursal.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_Sucursal.FormattingEnabled = True
+        Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
+        Me.Cb_Sucursal.Location = New System.Drawing.Point(163, 4)
+        Me.Cb_Sucursal.Name = "Cb_Sucursal"
+        Me.Cb_Sucursal.Size = New System.Drawing.Size(352, 23)
+        Me.Cb_Sucursal.TabIndex = 1
+        '
+        'FechaHasta
+        '
+        Me.FechaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FechaHasta.Location = New System.Drawing.Point(163, 69)
+        Me.FechaHasta.Name = "FechaHasta"
+        Me.FechaHasta.Size = New System.Drawing.Size(352, 21)
+        Me.FechaHasta.TabIndex = 3
+        '
+        'FechaDesde
+        '
+        Me.FechaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FechaDesde.Location = New System.Drawing.Point(163, 34)
+        Me.FechaDesde.Name = "FechaDesde"
+        Me.FechaDesde.Size = New System.Drawing.Size(352, 21)
+        Me.FechaDesde.TabIndex = 2
         '
         'Label11
         '
@@ -114,65 +195,6 @@ Partial Class frmStockBitacora
         Me.lbl_DescrTot.Size = New System.Drawing.Size(98, 29)
         Me.lbl_DescrTot.TabIndex = 22
         Me.lbl_DescrTot.Text = "TOTAL:"
-        '
-        'FechaHasta
-        '
-        Me.FechaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FechaHasta.Location = New System.Drawing.Point(163, 69)
-        Me.FechaHasta.Name = "FechaHasta"
-        Me.FechaHasta.Size = New System.Drawing.Size(352, 21)
-        Me.FechaHasta.TabIndex = 3
-        '
-        'FechaDesde
-        '
-        Me.FechaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FechaDesde.Location = New System.Drawing.Point(163, 34)
-        Me.FechaDesde.Name = "FechaDesde"
-        Me.FechaDesde.Size = New System.Drawing.Size(352, 21)
-        Me.FechaDesde.TabIndex = 2
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(3, 72)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(154, 15)
-        Me.Label2.TabIndex = 17
-        Me.Label2.Text = "Fecha Hasta"
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 37)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(154, 15)
-        Me.Label1.TabIndex = 16
-        Me.Label1.Text = "Fecha Desde"
-        '
-        'Label5
-        '
-        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(3, 7)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(154, 15)
-        Me.Label5.TabIndex = 15
-        Me.Label5.Text = "Sucursal"
-        '
-        'Cb_Sucursal
-        '
-        Me.Cb_Sucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Cb_Sucursal.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_Sucursal.FormattingEnabled = True
-        Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursal.Location = New System.Drawing.Point(163, 3)
-        Me.Cb_Sucursal.Name = "Cb_Sucursal"
-        Me.Cb_Sucursal.Size = New System.Drawing.Size(352, 23)
-        Me.Cb_Sucursal.TabIndex = 1
         '
         'lbl_Msg
         '
@@ -353,28 +375,6 @@ Partial Class frmStockBitacora
         Me.Optimo.ReadOnly = True
         Me.Optimo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Cb_Sucursal, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.FechaHasta, 1, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.FechaDesde, 1, 1)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 3
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(518, 100)
-        Me.TableLayoutPanel1.TabIndex = 25
-        '
         'frmStockBitacora
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -388,9 +388,9 @@ Partial Class frmStockBitacora
         Me.Text = "Listado de Stocks Modificados / Eliminados"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.DG_Stock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        CType(Me.DG_Stock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -408,18 +408,18 @@ Partial Class frmStockBitacora
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents txt_Total As System.Windows.Forms.TextBox
     Friend WithEvents lbl_DescrTot As System.Windows.Forms.Label
-    Friend WithEvents PRODUCTO As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Empleado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Subtotal As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Costo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Codigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Accion As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Minimo_Ant As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Optimo_Ant As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Actual_Ant As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Minimo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Actual As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Optimo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents PRODUCTO As DataGridViewTextBoxColumn
+    Friend WithEvents Empleado As DataGridViewTextBoxColumn
+    Friend WithEvents Subtotal As DataGridViewTextBoxColumn
+    Friend WithEvents Costo As DataGridViewTextBoxColumn
+    Friend WithEvents Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents Fecha As DataGridViewTextBoxColumn
+    Friend WithEvents Accion As DataGridViewTextBoxColumn
+    Friend WithEvents Minimo_Ant As DataGridViewTextBoxColumn
+    Friend WithEvents Optimo_Ant As DataGridViewTextBoxColumn
+    Friend WithEvents Actual_Ant As DataGridViewTextBoxColumn
+    Friend WithEvents Minimo As DataGridViewTextBoxColumn
+    Friend WithEvents Actual As DataGridViewTextBoxColumn
+    Friend WithEvents Optimo As DataGridViewTextBoxColumn
 End Class

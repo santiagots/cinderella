@@ -5,6 +5,8 @@ Imports Servicios
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports Negocio
+Imports Entidades
+Imports System.ComponentModel
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -13,12 +15,20 @@ Public Class MDIContenedor
     Dim id_Sucursal As Integer = CInt(My.Settings("Sucursal"))
     Dim negFunciones As New Negocio.Funciones
     Dim negMovimiento As New Negocio.NegMovimientos
-    Dim NegCaja As New Negocio.NegCajaInicial
+    Dim negCaja As New Negocio.NegCajaInicial
+    Dim negProveedores As New Negocio.NegProveedores
+    Dim negStock As New Negocio.NegStock
+    Dim negProducto As New Negocio.NegProductos
+    Dim negEmpleados As New Negocio.NegEmpleados
+    Dim negStockPedido As New Negocio.NegOrdenCompra
+
+
 
     Dim tiempoAcumuladoNotificaciones As Integer = 0
     Dim tiempoAcumuladoMensajes As Integer = 0
     Dim tiempoAcumuladoCheques As Integer = 0
     Dim tiempoAcumuladoNotasPedidos As Integer = 0
+    Dim tiempoAcumuladoOrdenesCompra As Integer = 0
 
     Dim actualizarMemoriaCaheTimer As Threading.Timer
 
@@ -254,10 +264,10 @@ Public Class MDIContenedor
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_NotaPedido_Administración_Visualizar) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_NotaPedido_Administración_Venta)) Then
             NotaPedidoToolStripMenuItem.Visible = True
-            Menu_NotaPedido.Visible = True
+            Menu_NotaPedidoVenta.Visible = True
         Else
             NotaPedidoToolStripMenuItem.Visible = False
-            Menu_NotaPedido.Visible = False
+            Menu_NotaPedidoVenta.Visible = False
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_AltaMasiva)) Then
@@ -591,7 +601,7 @@ Public Class MDIContenedor
 
     End Sub
 
-    Private Sub MDIContenedor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Async Sub MDIContenedor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         'Cursor
         Me.Cursor = Cursors.WaitCursor
@@ -643,6 +653,24 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error obtener el estado de la caja diaria. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
+        'Funcion que ejecuta en segundo plano procesos pesados que no hacen al correcto inicio de la aplicacion
+        bgwEjecutarEnSegundoPlano.RunWorkerAsync()
+
+        'Actualizo los mensajes del usuario
+        Funciones.ActualizarMensajes()
+
+        'Obtengo las notificaciones
+        Funciones.ActualizarNotificaciones()
+
+        'Obtengo los Cheuqes a Vencer notificaciones
+        Funciones.ActualizarChequesVencer()
+
+        'Obtengo las Notas de pedidos por ventas
+        Funciones.ActualizarNotasPedidosVentas()
+
+        'Obtengo las Notas de pedidos por stock
+        Funciones.ActualizarOrdenesCompra()
 
         actualizarMemoriaCaheTimer = New System.Threading.Timer(AddressOf ActualizarMemoriaCache, Nothing, TimeSpan.Zero, TimeSpan.FromMinutes(My.Settings.TemporizadorActualizacionMemoriaCache))
 
@@ -698,7 +726,7 @@ Public Class MDIContenedor
         Dim FNueva As String = ""
         Dim entCajaNueva As New Entidades.CajaInicial
         FNueva = Now.Date.ToString("yyyy/MM/dd")
-        entCajaNueva = NegCaja.ObtenerCaja(id_Sucursal, FNueva)
+        entCajaNueva = negCaja.ObtenerCaja(id_Sucursal, FNueva)
 
         If entCajaNueva.id_Caja > 0 Then
             Me.MenuAccesosRapidos.Visible = False
@@ -718,9 +746,123 @@ Public Class MDIContenedor
         End If
     End Sub
 
+    Private Function CrearOrdenesDeCompraAutomaticas() As String
+        Try
+            Dim cantidad As Integer = 0
+            Dim proveedores As List(Of Proveedores) = negProveedores.TraerProveedor()
+            Dim diaSemana As Integer = Date.Now().DayOfWeek
+            Dim dsEncargado As DataSet = negEmpleados.ListadoEncargadosSucursal(My.Settings.Sucursal)
+
+            'Obtengo las notas de pedidos abiertas o enviadas
+            Dim stockNotaPedidoExistentes As List(Of OrdenCompra) = negStockPedido.Obtener(My.Settings.Sucursal, OrdenCompraPedidoEstado.Nuevo)
+            stockNotaPedidoExistentes.AddRange(negStockPedido.Obtener(My.Settings.Sucursal, OrdenCompraPedidoEstado.Enviado))
+
+            For Each proveedor As Proveedores In proveedores
+
+                Dim stockNotaPedidoAutomatica As OrdenCompra = New OrdenCompra() With {
+                .Detalles = New List(Of OrdenCompraDetalle),
+                .Estado = OrdenCompraPedidoEstado.Nuevo,
+                .Fecha = Date.Now(),
+                .idProveedor = proveedor.id_Proveedor,
+                .idSucursal = My.Settings.Sucursal,
+                .Tipo = OrdenCompraPedidoTipo.Automatico,
+                .idEncargado = If(dsEncargado.Tables.Count = 0, -1, dsEncargado.Tables(0).Rows(0).Item("id_Empleado"))
+                }
+
+                'Si el proveedor recibe notas de pedido este dia
+                If proveedor.DiaPreferentePedido = diaSemana Then
+                    'Obtengo los productos en sotck de este proveedor
+                    Dim stocks As List(Of Stock) = negStock.ListadoStock(My.Settings.Sucursal, proveedor.id_Proveedor)
+                    For Each stock As Stock In stocks
+                        'Verifico si tiene faltante de stock
+                        If stock.Stock_Actual < stock.Stock_Minimo Then
+                            'Verifico que el faltante de stock yo no halla sido solicitado en alguna nota de pedido
+                            Dim sotckEnNotaPedido As Boolean = stockNotaPedidoExistentes.Where(Function(x) x.Detalles.Where(Function(y) y.idProducto = stock.id_Producto).Any).Any
+                            If (Not sotckEnNotaPedido) Then
+                                'Creo el pedido
+                                Dim producto As Productos = negProducto.TraerProducto(stock.id_Producto)
+                                stockNotaPedidoAutomatica.Detalles.Add(New OrdenCompraDetalle() With {
+                                    .idProducto = producto.id_Producto,
+                                    .Costo = producto.Costo,
+                                    .Nombre = producto.Nombre,
+                                    .Cantidad = stock.Stock_Optimo - stock.Stock_Actual + (stock.VentaMensual / 30 * proveedor.PlazoEntrega)})
+                            End If
+                        End If
+                    Next
+                End If
+
+                'Guardo el pedido en caso de que tenga elementos
+                If stockNotaPedidoAutomatica.Detalles.Count > 0 Then
+                    negStockPedido.Guardar(stockNotaPedidoAutomatica)
+                    cantidad += 1
+                End If
+            Next
+            If (cantidad > 0) Then
+                Return $"Se han creado {cantidad} notas de pedido de forma automatica."
+            Else
+                Return String.Empty
+            End If
+        Catch ex As Exception
+            Throw New Exception($"Ha ocurrido un error en la generacion de notas de pedido automaticas. Por favor, Comuníqueselo al administrador.{Environment.NewLine}{ex.Message}", ex)
+        End Try
+    End Function
+
+    Private Function CalcularVentaMensualProducto() As String
+        Try
+            'Obtengo la ultima fecha en la que se calculo la venta mensual de cada producto
+            Dim fechaUltimoCalculoMensual As Date? = negStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
+
+            'Si no hay fecha de ultimo calculo mensual o si ya se supero el periodo configurado
+            If Not fechaUltimoCalculoMensual.HasValue OrElse fechaUltimoCalculoMensual.Value.AddDays(Integer.Parse(My.Settings.PeriodoCaulculoVentaMensual)) <= Date.Now() Then
+                'Calculo el total de ventas de los poductos en sotck en los ultimos 30 dias
+                negStock.CalculaVentaMensual(My.Settings.Sucursal, Date.Now().AddDays(-30), Date.Now())
+                'Actualizo la fecha del calculo
+                negStock.ActualizarUltimoCalculoVentaMensual(My.Settings.Sucursal)
+
+                Return "Se han actualizado las ventas mensuales para los productos en stock de forma exitosa."
+            End If
+
+            Return String.Empty
+        Catch ex As Exception
+            Throw New Exception($"Ha ocurrido un error al actualizar las ventas mensuales para los productos en stock. Por favor, Comuníqueselo al administrador.{Environment.NewLine}{ex.Message}", ex)
+        End Try
+    End Function
+
+
+    Private Sub EjecutarSegundoPlano_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs) Handles bgwEjecutarEnSegundoPlano.DoWork
+        Dim bw As BackgroundWorker = TryCast(sender, BackgroundWorker)
+
+        'Calculo las ventas acumuladas de los ultimos 30 dias de los productos en stock
+        e.Result += CalcularVentaMensualProducto()
+
+        If e.Result.ToString().Length > 0 Then
+            e.Result += Environment.NewLine
+        End If
+
+        'Verifico el stock diponible por proveedro y genero nota de pedido.
+        If My.Settings.GeneracionOrdenCompraAutomatica Then
+            e.Result += CrearOrdenesDeCompraAutomaticas()
+        End If
+
+        If bw.CancellationPending Then
+            e.Cancel = True
+        End If
+    End Sub
+
+    Private Sub EjecutarSegundoPlano_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs) Handles bgwEjecutarEnSegundoPlano.RunWorkerCompleted
+        If e.Cancelled Then
+            MessageBox.Show("La operación fue cancelada", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        ElseIf e.[Error] IsNot Nothing Then
+            MessageBox.Show(e.Error.Message, "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        ElseIf Not String.IsNullOrEmpty(e.Result.ToString().Trim()) Then
+            MessageBox.Show(e.Result, "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+
     Private Sub CerrarCajasAntiguas()
         'Compruebo que las cajas de fechas anteriores estén cerradas.
-        Dim TotCajas As Integer = NegCaja.ComprobarCajas(id_Sucursal)
+        Dim TotCajas As Integer = negCaja.ComprobarCajas(id_Sucursal)
         Dim FechaHoy As Date = Now
 
         If TotCajas > 0 Then
@@ -759,10 +901,10 @@ Public Class MDIContenedor
                     entCajaCerrada.id_Sucursal = id_Sucursal
                     entCajaCerrada.Abierta = 0
                     entCajaCerrada.Empleado = VariablesGlobales.objUsuario.Usuario
-                    entCajaCerrada.Monto = NegCaja.ObtenerSaldo(id_Sucursal, FechaAnterior)
+                    entCajaCerrada.Monto = negCaja.ObtenerSaldo(id_Sucursal, FechaAnterior)
                     entCajaCerrada.Fecha = FechaAnterior
                     entCajaCerrada.Hora = Now
-                    NegCaja.CerrarCaja(entCajaCerrada, id_Sucursal)
+                    negCaja.CerrarCaja(entCajaCerrada, id_Sucursal)
                 Next
 
                 'Voy seteando la barra de progreso
@@ -1364,10 +1506,19 @@ Public Class MDIContenedor
         'Acumulo el tiempo transcurrido
         tiempoAcumuladoNotasPedidos += TemporizadorActualizaciones.Interval
         'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de notas de pedios
-        If (tiempoAcumuladoNotasPedidos >= Integer.Parse(My.Settings("TemporizadorNotasPedido")) AndAlso Menu_NotaPedido.Visible) Then
+        If (tiempoAcumuladoNotasPedidos >= Integer.Parse(My.Settings("TemporizadorNotasPedido")) AndAlso Menu_NotaPedidoVenta.Visible) Then
             'Muestro la alerta de cheques y reinicio el acumulador de tiempo
-            Funciones.ActualizarNotasPedidos()
+            Funciones.ActualizarNotasPedidosVentas()
             tiempoAcumuladoNotasPedidos = 0
+        End If
+
+        'Acumulo el tiempo transcurrido
+        tiempoAcumuladoOrdenesCompra += TemporizadorActualizaciones.Interval
+        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de notas de pedios
+        If (tiempoAcumuladoOrdenesCompra >= Integer.Parse(My.Settings("TemporizadorOrdenesCompra")) AndAlso Menu_OrdenCompra.Visible) Then
+            'Muestro la alerta de cheques y reinicio el acumulador de tiempo
+            Funciones.ActualizarOrdenesCompra()
+            tiempoAcumuladoOrdenesCompra = 0
         End If
 
     End Sub
@@ -1641,7 +1792,7 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub Menu_NotaPedido_Click(sender As Object, e As EventArgs) Handles Menu_NotaPedido.Click
+    Private Sub Menu_NotaPedido_Click(sender As Object, e As EventArgs) Handles Menu_NotaPedidoVenta.Click
         'Compruevo el acceso a internet para actualizar el MIDContenedor
         Negocio.Funciones.HayConexionInternet()
 
@@ -1650,6 +1801,16 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmNotaPedidoAdministracion).Show()
         Me.Cursor = Cursors.Arrow
 
+    End Sub
+
+    Private Sub Menu_NotaPedidoStock_Click(sender As Object, e As EventArgs) Handles Menu_OrdenCompra.Click
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmOrdenCompra).MdiParent = Me
+        Funciones.ControlInstancia(frmOrdenCompra).Show()
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub NuevaNotaPedido(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
@@ -1666,7 +1827,7 @@ Public Class MDIContenedor
             Return
         End If
         Menu_NotaPedido_Click(Nothing, Nothing)
-        Funciones.ActualizarNotasPedidos(False)
+        Funciones.ActualizarNotasPedidosVentas(False)
     End Sub
 
     Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
@@ -1743,4 +1904,15 @@ Public Class MDIContenedor
             negListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), False)
         End If
     End Sub
+
+    Private Sub NotaPedidoToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles NotaPedidoToolStripMenuItem1.Click
+        'Compruevo el acceso a internet para actualizar el MIDContenedor
+        Negocio.Funciones.HayConexionInternet()
+
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmOrdenCompra).MdiParent = Me
+        Funciones.ControlInstancia(frmOrdenCompra).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
 End Class

@@ -5,6 +5,7 @@
     Public Property Stock_Minimo As Integer
     Public Property Stock_Actual As Integer
     Public Property Stock_Optimo As Integer
+    Public Property VentaMensual As Integer
     Public Property Fecha As DateTime
     Public Property Fecha_Mod As Date
     Public Property Motivo As String

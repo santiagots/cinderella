@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Entidades
+
 Public Class NegSucursales
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
@@ -47,6 +49,7 @@ Public Class NegSucursales
                 Sucursal.ComisionEncargadoMayor = CDbl(row.Item("Comision_Encargado_Mayor"))
                 Sucursal.ComisionVendedorMayor = CDbl(row.Item("Comision_Vendedor_Mayor"))
                 Sucursal.CodigoVenta = row.Item("Codigo_Venta").ToString
+                Sucursal.Mail = row.Item("Mail").ToString
 
                 Sucursales.Add(Sucursal)
             Next
@@ -58,9 +61,9 @@ Public Class NegSucursales
 
 
     'Funcion para consultar una sucursal determinada.
-    Public Function TraerSucursal(ByVal id_Sucursal As Integer)
+    Public Function TraerSucursal(ByVal id_Sucursal As Integer) As Sucursales
         Dim dsSucursal As New DataSet
-        Dim entSucursal As New Entidades.Sucursales
+        Dim entSucursal As New Sucursales
 
         If Funciones.HayInternet Then
             dsSucursal = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursal_Detalle @id_Sucursal=" & id_Sucursal)
@@ -86,6 +89,7 @@ Public Class NegSucursales
             entSucursal.ComisionEncargadoMayor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado_Mayor"))
             entSucursal.ComisionVendedorMayor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Vendedor_Mayor"))
             entSucursal.CodigoVenta = dsSucursal.Tables(0).Rows(0).Item("Codigo_Venta").ToString
+            entSucursal.Mail = dsSucursal.Tables(0).Rows(0).Item("Mail").ToString
         End If
         Return entSucursal
     End Function
@@ -122,6 +126,7 @@ Public Class NegSucursales
                 .AddWithValue("@CodigoPostal", esucursales.Codigo_Postal)
                 .AddWithValue("@Telefono", esucursales.Telefono)
                 .AddWithValue("@CodigoVenta", esucursales.CodigoVenta)
+                .AddWithValue("@Mail", esucursales.Mail)
                 .AddWithValue("@Habilitado", esucursales.Habilitado)
             End With
 
@@ -176,6 +181,7 @@ Public Class NegSucursales
                 .AddWithValue("@ComisionEncargadoMayor", esucursales.ComisionEncargadoMayor)
                 .AddWithValue("@Telefono", esucursales.Telefono)
                 .AddWithValue("@CodigoVenta", esucursales.CodigoVenta)
+                .AddWithValue("@Mail", esucursales.Mail)
                 .AddWithValue("@Habilitado", esucursales.Habilitado)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)

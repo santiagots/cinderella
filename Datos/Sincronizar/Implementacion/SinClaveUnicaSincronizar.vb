@@ -16,6 +16,9 @@ Public Class SinClaveUnicaSincronizar
 
             'copio los datos a base local
             Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
+            For Each column As DataColumn In datos.Columns
+                BulkCopy.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
+            Next
             BulkCopy.DestinationTableName = tabla.Nombre
             BulkCopy.WriteToServer(datos)
             BulkCopy.Close()

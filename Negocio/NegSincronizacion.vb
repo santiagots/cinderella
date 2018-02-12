@@ -295,6 +295,8 @@ Public Class NegSincronizacion
         respuesta.Add(MercaderiaDetalle())
         respuesta.Add(Ventas())
         respuesta.Add(VentasDetalle())
+        respuesta.Add(OrdenCompra())
+        respuesta.Add(OrdenCompraDetalle())
         respuesta.Add(Comisiones())
         respuesta.Add(Senia())
         respuesta.Add(Presupuesto())
@@ -317,8 +319,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Registro"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "EMPLEADOS_REGISTROS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -329,8 +331,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND ER.id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -341,8 +343,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND ER.id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -353,8 +355,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS_TARDE"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND ER.id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -365,8 +367,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Caja"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "CAJA_INICIAL"
-        tabla.SQLObtenerDatosLocal = "select * from CAJA_INICIAL where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from CAJA_INICIAL where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from CAJA_INICIAL where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from CAJA_INICIAL where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -378,8 +380,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_CAJA"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -392,8 +394,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_CAJA_FUERTE"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -406,8 +408,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Adicional"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "ADICIONALES"
-        tabla.SQLObtenerDatosLocal = "select * from ADICIONALES where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from ADICIONALES where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from ADICIONALES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from ADICIONALES where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -420,8 +422,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Recibo"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "EMPLEADOS_RECIBOS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -434,8 +436,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_APORTE"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -448,8 +450,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Deposito"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "EMPLEADOS_DEPOSITOS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -462,8 +464,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Deuda"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "DEUDA"
-        tabla.SQLObtenerDatosLocal = "select * from DEUDA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from DEUDA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from DEUDA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from DEUDA where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -476,8 +478,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Adelanto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "ADELANTOS"
-        tabla.SQLObtenerDatosLocal = "select * from ADELANTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from ADELANTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from ADELANTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from ADELANTOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -489,8 +491,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Stock"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "STOCK"
-        tabla.SQLObtenerDatosLocal = "select * from STOCK where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from STOCK where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from STOCK where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from STOCK where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -502,8 +504,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Bitacora"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "STOCK_BITACORA"
-        tabla.SQLObtenerDatosLocal = "select * from STOCK_BITACORA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from STOCK_BITACORA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from STOCK_BITACORA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from STOCK_BITACORA where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -515,8 +517,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_GASTOS"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -528,8 +530,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Registro"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "CUENTA_CORRIENTE"
-        tabla.SQLObtenerDatosLocal = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -541,8 +543,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Mercaderia"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MERCADERIAS"
-        tabla.SQLObtenerDatosLocal = "select * from MERCADERIAS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MERCADERIAS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MERCADERIAS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MERCADERIAS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -557,11 +559,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From MERCADERIAS M 
                                         INNER Join MERCADERIAS_DETALLE D ON D.id_Mercaderia = M.id_Mercaderia
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and M.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= '{0}' and M.id_Sucursal = {1}"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From MERCADERIAS M 
                                         INNER Join MERCADERIAS_DETALLE D ON D.id_Mercaderia = M.id_Mercaderia
-                                        where D.Fecha_Edicion >= Convert(DateTime,'{0}',103) and M.id_Sucursal <> {1}"
+                                        where D.Fecha_Edicion >= '{0}' and M.id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -573,8 +575,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Venta"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "VENTAS"
-        tabla.SQLObtenerDatosLocal = "select * from VENTAS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from VENTAS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from VENTAS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from VENTAS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -589,11 +591,43 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From VENTAS V
                                         INNER Join VENTAS_DETALLE D ON V.id_Venta = D.id_Venta
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and V.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= {0} and V.id_Sucursal = {1}"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From VENTAS V
                                         INNER Join VENTAS_DETALLE D ON V.id_Venta = D.id_Venta
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and V.id_Sucursal <> {1}"
+                                        where D.Fecha_Edicion >= {0} and V.id_Sucursal <> {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function OrdenCompra() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "idOrdenCompra"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "ORDEN_COMPRA"
+        tabla.SQLObtenerDatosLocal = "select * from ORDEN_COMPRA where FechaEdicion >= '{0}' AND idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from ORDEN_COMPRA where FechaEdicion >= '{0}' AND idSucursal <> {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function OrdenCompraDetalle() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "idOrdenCompraDetalle"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "ORDEN_COMPRA_DETALLE"
+        tabla.SQLObtenerDatosLocal = "Select OCD.* 
+                                        From ORDEN_COMPRA  OC
+                                        INNER Join ORDEN_COMPRA_DETALLE OCD ON OC.idOrdenCompra = OCD.idOrdenCompra
+                                        where OCD.FechaEdicion >= '{0}' and OC.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select OCD.* 
+                                        From ORDEN_COMPRA  OC
+                                        INNER Join ORDEN_COMPRA_DETALLE OCD ON OC.idOrdenCompra = OCD.idOrdenCompra
+                                        where OCD.FechaEdicion >= '{0}' and OC.idSucursal = {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -605,8 +639,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Comision"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "COMISIONES"
-        tabla.SQLObtenerDatosLocal = "select * from COMISIONES where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from COMISIONES where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from COMISIONES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from COMISIONES where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -618,8 +652,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Senia"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "SENIA"
-        tabla.SQLObtenerDatosLocal = "select * from SENIA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from SENIA where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from SENIA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from SENIA where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -631,8 +665,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Presupuesto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "PRESUPUESTO"
-        tabla.SQLObtenerDatosLocal = "select * from PRESUPUESTO where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from PRESUPUESTO where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from PRESUPUESTO where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from PRESUPUESTO where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -647,11 +681,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From PRESUPUESTO P
                                         INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and P.id_Sucursal <> {1}"
+                                        where D.Fecha_Edicion >= '{0}' and P.id_Sucursal <> {1}"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From PRESUPUESTO P
                                         INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and P.id_Sucursal <> {1}"
+                                        where D.Fecha_Edicion >= '{0}' and P.id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -662,8 +696,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_NotaPedido"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "NOTAPEDIDO"
-        tabla.SQLObtenerDatosLocal = "Select * from NOTAPEDIDO where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NOTAPEDIDO where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from NOTAPEDIDO where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NOTAPEDIDO where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -677,11 +711,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From NOTAPEDIDO T 
                                         INNER Join NOTAPEDIDO_DETALLE D ON D.id_NotaPedido = T.id_NotaPedido
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and T.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= '{0}' and T.id_Sucursal = {1}"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From NOTAPEDIDO T 
                                         INNER Join NOTAPEDIDO_DETALLE D ON D.id_NotaPedido = T.id_NotaPedido
-                                        where D.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and T.id_Sucursal <> {1}"
+                                        where D.Fecha_Edicion >= '{0}' and T.id_Sucursal <> {1}"
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
@@ -691,8 +725,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Facturacion"
         tabla.ClaveSincronizacion = "Fecha"
         tabla.Nombre = "FACTURACION"
-        tabla.SQLObtenerDatosLocal = "Select * from FACTURACION where Fecha >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from FACTURACION where Fecha >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from FACTURACION where Fecha >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from FACTURACION where Fecha >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -703,8 +737,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_NotaCredito"
         tabla.ClaveSincronizacion = "Fecha"
         tabla.Nombre = "NOTACREDITO"
-        tabla.SQLObtenerDatosLocal = "Select * from NOTACREDITO where Fecha >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NOTACREDITO where Fecha >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from NOTACREDITO where Fecha >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NOTACREDITO where Fecha >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -716,8 +750,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Devolucion"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "DEVOLUCIONES"
-        tabla.SQLObtenerDatosLocal = "Select * from DEVOLUCIONES where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from DEVOLUCIONES where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from DEVOLUCIONES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from DEVOLUCIONES where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -732,12 +766,12 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From DEVOLUCIONES D 
                                         INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
-                                        where DE.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and D.id_Sucursal = {1}"
+                                        where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"
 
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From DEVOLUCIONES D 
                                         INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
-                                        where DE.Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) and D.id_Sucursal <> {1}"
+                                        where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -748,8 +782,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_IMPUESTOS"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -760,8 +794,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Cheque"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "CHEQUE"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -774,8 +808,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_RETIROS"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= CONVERT(DATETIME,'{0}',103) AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 

@@ -29,14 +29,14 @@ Public Class ClaveUnicaSincronizar
             If (UltimaFechasSincronizacion.Rows.Count > 0) Then
                 'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
                 fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
-                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionLocal).Tables(0)
-                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionRemota).Tables(0)
+                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
+                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionRemota).Tables(0)
 
                 'obtengo todos los registros que fueron agregados o modificados
                 DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
             Else
                 'Selecciono todas las filas de lo sultimos 3 meses la base remota
-                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= CONVERT(DATETIME,'{2}',103)", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("dd/MM/yyyy")), transaccionRemota).Tables(0)
+                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= {2}", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")), transaccionRemota).Tables(0)
             End If
 
             If DatosSincronizar.Rows.Count > 0 Then
@@ -48,6 +48,10 @@ Public Class ClaveUnicaSincronizar
 
                 'subo los valores a la base remota
                 Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.Default, transaccionLocal)
+
+                For Each column As DataColumn In DatosSincronizar.Columns
+                    BulkCopy.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
+                Next
                 BulkCopy.DestinationTableName = tabla.Nombre
                 BulkCopy.WriteToServer(DatosSincronizar)
                 BulkCopy.Close()
@@ -72,14 +76,14 @@ Public Class ClaveUnicaSincronizar
             If (UltimaFechasSincronizacion.Rows.Count > 0) Then
                 'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
                 fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
-                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionLocal).Tables(0)
-                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("dd/MM/yyyy"), valorBusqueda), transaccionRemota).Tables(0)
+                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
+                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionRemota).Tables(0)
 
                 'obtengo todos los registros que fueron agregados o modificados
                 DatosSincronizar = ObtenerDatos(DatosLocal, DatosRemoto, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
             Else
                 'Selecciono todas las filas de la base local
-                DatosSincronizar = ejecutarSQL(conexionLocal, String.Format("SELECT * FROM {0}", tabla.Nombre), transaccionLocal).Tables(0)
+                DatosSincronizar = ejecutarSQL(conexionLocal, String.Format("SELECT * FROM {0} WHERE {1} >= {2}", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")), transaccionRemota).Tables(0)
             End If
 
             If DatosSincronizar.Rows.Count > 0 Then
@@ -91,6 +95,9 @@ Public Class ClaveUnicaSincronizar
 
                 'subo los valores a la base remota
                 Dim BulkCopy As New SqlBulkCopy(conexionRemota, SqlBulkCopyOptions.Default, transaccionRemota)
+                For Each column As DataColumn In DatosSincronizar.Columns
+                    BulkCopy.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
+                Next
                 BulkCopy.DestinationTableName = tabla.Nombre
                 BulkCopy.WriteToServer(DatosSincronizar)
                 BulkCopy.Close()

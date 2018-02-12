@@ -6,9 +6,11 @@
     Public Property Stock_Minimo As Integer
     Public Property Stock_Actual As Integer
     Public Property Stock_Optimo As Integer
+    Public Property VentaMensual As Integer
     Public Property Stock_Minimo_Ant As Integer
     Public Property Stock_Actual_Ant As Integer
     Public Property Stock_Optimo_Ant As Integer
+    Public Property VentaMensual_Ant As Integer
     Public Property Fecha As DateTime
     Public Property Motivo As String
     Public Property id_Usuario As Integer

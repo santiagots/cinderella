@@ -24,11 +24,11 @@ Partial Class frmStockMasiva
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmStockMasiva))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TabAlta = New System.Windows.Forms.TabPage()
         Me.Gb_Stock = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -477,9 +477,9 @@ Partial Class frmStockMasiva
         '
         'Costo_2
         '
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.Costo_2.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle6.Format = "C2"
+        DataGridViewCellStyle6.NullValue = "0"
+        Me.Costo_2.DefaultCellStyle = DataGridViewCellStyle6
         Me.Costo_2.FillWeight = 67.53368!
         Me.Costo_2.HeaderText = "Costo"
         Me.Costo_2.Name = "Costo_2"
@@ -494,9 +494,9 @@ Partial Class frmStockMasiva
         '
         'Subtotal
         '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.Subtotal.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle7.Format = "C2"
+        DataGridViewCellStyle7.NullValue = "0"
+        Me.Subtotal.DefaultCellStyle = DataGridViewCellStyle7
         Me.Subtotal.FillWeight = 87.00771!
         Me.Subtotal.HeaderText = "Subtotal"
         Me.Subtotal.Name = "Subtotal"
@@ -623,7 +623,7 @@ Partial Class frmStockMasiva
         Me.Cb_Proveedor.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Proveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Proveedor.FormattingEnabled = True
-        Me.Cb_Proveedor.Location = New System.Drawing.Point(593, 33)
+        Me.Cb_Proveedor.Location = New System.Drawing.Point(593, 34)
         Me.Cb_Proveedor.Name = "Cb_Proveedor"
         Me.Cb_Proveedor.Size = New System.Drawing.Size(163, 23)
         Me.Cb_Proveedor.TabIndex = 2
@@ -763,9 +763,9 @@ Partial Class frmStockMasiva
         'MontoTotal
         '
         Me.MontoTotal.DataPropertyName = "MontoTotal"
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.MontoTotal.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle8.Format = "C2"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.MontoTotal.DefaultCellStyle = DataGridViewCellStyle8
         Me.MontoTotal.HeaderText = "Monto Total"
         Me.MontoTotal.Name = "MontoTotal"
         Me.MontoTotal.ReadOnly = True
@@ -859,9 +859,9 @@ Partial Class frmStockMasiva
         'CostoD
         '
         Me.CostoD.DataPropertyName = "Costo"
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.CostoD.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle9.Format = "C2"
+        DataGridViewCellStyle9.NullValue = "0"
+        Me.CostoD.DefaultCellStyle = DataGridViewCellStyle9
         Me.CostoD.FillWeight = 65.49438!
         Me.CostoD.HeaderText = "Costo"
         Me.CostoD.Name = "CostoD"
@@ -876,9 +876,9 @@ Partial Class frmStockMasiva
         'MontoD
         '
         Me.MontoD.DataPropertyName = "Total"
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = "0"
-        Me.MontoD.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle10.Format = "C2"
+        DataGridViewCellStyle10.NullValue = "0"
+        Me.MontoD.DefaultCellStyle = DataGridViewCellStyle10
         Me.MontoD.FillWeight = 68.58823!
         Me.MontoD.HeaderText = "SubTotal"
         Me.MontoD.Name = "MontoD"

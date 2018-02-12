@@ -1,7 +1,8 @@
-﻿Imports Negocio
+﻿Imports Datos
+Imports Negocio
 
 Public Class frmLogin
-    Dim encripta As New ClsEncriptacion
+    Dim encripta As New Negocio.ClsEncriptacion
     Dim entUsuario As New Entidades.Usuario
     Dim objUsuario As New Negocio.Usuario
     Dim patentes As New Negocio.NegPatentes
@@ -52,18 +53,6 @@ Public Class frmLogin
                 'Almaceno el usuario logueado.
                 VariablesGlobales.objUsuario = entUsuario
 
-                'Actualizo los mensajes del usuario
-                Functions.ActualizarMensajes()
-
-                'Obtengo las notificaciones
-                Functions.ActualizarNotificaciones()
-
-                'Obtengo los Cheuqes a Vencer notificaciones
-                Functions.ActualizarChequesVencer()
-
-                'Obtengo los Cheuqes a Vencer notificaciones
-                Functions.ActualizarNotasPedidos()
-
                 'Seteo a default el cursor.
                 Me.Cursor = Cursors.Default
 
@@ -86,6 +75,7 @@ Public Class frmLogin
             RestaurarControlesLogin()
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se produjo un error en el acceso al sistema. Contacte al administrador.", "Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            LogHelper.WriteLog("ERROR Metodo: LogIn" + Environment.NewLine + ex.ToString())
         End Try
     End Sub
 

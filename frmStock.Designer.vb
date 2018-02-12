@@ -31,6 +31,8 @@ Partial Class frmStock
         Me.TabListado = New System.Windows.Forms.TabPage()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
+        Me.btn_Importar = New System.Windows.Forms.Button()
+        Me.btn_Exportar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.rb_Opcion = New System.Windows.Forms.RadioButton()
@@ -48,6 +50,7 @@ Partial Class frmStock
         Me.Minimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Actual = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Optimo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.VentaMensual = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Modificado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
@@ -55,6 +58,8 @@ Partial Class frmStock
         Me.TabAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_ventaMensual = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Btn_BuscarCodigo = New System.Windows.Forms.Button()
         Me.txt_Codigo = New System.Windows.Forms.TextBox()
@@ -67,10 +72,15 @@ Partial Class frmStock
         Me.txt_Minimo = New System.Windows.Forms.TextBox()
         Me.txt_Optimo = New System.Windows.Forms.TextBox()
         Me.txt_Actual = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.chk_Habilitado = New System.Windows.Forms.CheckBox()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TabModificacion = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_ventaMensual_mod = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_Codigo_mod = New System.Windows.Forms.TextBox()
         Me.Btn_BuscarCodigo_mod = New System.Windows.Forms.Button()
@@ -80,35 +90,34 @@ Partial Class frmStock
         Me.Cb_Sucursales_mod = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
         Me.txt_Actual_mod = New System.Windows.Forms.TextBox()
         Me.txt_Minimo_mod = New System.Windows.Forms.TextBox()
         Me.txt_Optimo_mod = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
+        Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_Motivo = New System.Windows.Forms.TextBox()
         Me.lbl_Usuario2 = New System.Windows.Forms.Label()
-        Me.lbl_Fecha2 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.lbl_Fecha2 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.txt_Motivo = New System.Windows.Forms.TextBox()
         Me.Gb_Mod = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
         Me.lbl_Motivo = New System.Windows.Forms.Label()
-        Me.lbl_Usuario = New System.Windows.Forms.Label()
-        Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.lbl_Usuario = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Btn_Eliminar = New System.Windows.Forms.Button()
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErrorStock = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolStock = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.chk_Habilitado = New System.Windows.Forms.CheckBox()
-        Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.TabStock.SuspendLayout()
         Me.TabListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -121,15 +130,15 @@ Partial Class frmStock
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TabModificacion.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.Gb_Mod.SuspendLayout()
-        CType(Me.ErrorStock, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel7.SuspendLayout()
-        Me.TableLayoutPanel8.SuspendLayout()
         Me.TableLayoutPanel10.SuspendLayout()
-        Me.TableLayoutPanel9.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
+        Me.Gb_Mod.SuspendLayout()
+        Me.TableLayoutPanel8.SuspendLayout()
+        CType(Me.ErrorStock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabStock
@@ -142,7 +151,7 @@ Partial Class frmStock
         Me.TabStock.Location = New System.Drawing.Point(0, 0)
         Me.TabStock.Name = "TabStock"
         Me.TabStock.SelectedIndex = 0
-        Me.TabStock.Size = New System.Drawing.Size(694, 472)
+        Me.TabStock.Size = New System.Drawing.Size(1006, 610)
         Me.TabStock.TabIndex = 0
         '
         'TabListado
@@ -153,7 +162,7 @@ Partial Class frmStock
         Me.TabListado.Location = New System.Drawing.Point(4, 29)
         Me.TabListado.Name = "TabListado"
         Me.TabListado.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabListado.Size = New System.Drawing.Size(686, 439)
+        Me.TabListado.Size = New System.Drawing.Size(998, 577)
         Me.TabListado.TabIndex = 0
         Me.TabListado.Text = "Stock"
         Me.TabListado.UseVisualStyleBackColor = True
@@ -167,7 +176,7 @@ Partial Class frmStock
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(112, 253)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(458, 29)
+        Me.lbl_Msg.Size = New System.Drawing.Size(770, 167)
         Me.lbl_Msg.TabIndex = 1
         Me.lbl_Msg.Text = "No se ha encontrado stocks cargados."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -176,16 +185,52 @@ Partial Class frmStock
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Buscar.Controls.Add(Me.btn_Importar)
+        Me.GB_Buscar.Controls.Add(Me.btn_Exportar)
         Me.GB_Buscar.Controls.Add(Me.TableLayoutPanel1)
         Me.GB_Buscar.Controls.Add(Me.btn_Restablecer)
         Me.GB_Buscar.Controls.Add(Me.btn_Buscar)
         Me.GB_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Buscar.Location = New System.Drawing.Point(8, 6)
         Me.GB_Buscar.Name = "GB_Buscar"
-        Me.GB_Buscar.Size = New System.Drawing.Size(666, 92)
+        Me.GB_Buscar.Size = New System.Drawing.Size(978, 92)
         Me.GB_Buscar.TabIndex = 0
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Stock de productos"
+        '
+        'btn_Importar
+        '
+        Me.btn_Importar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Importar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
+        Me.btn_Importar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Importar.Location = New System.Drawing.Point(658, 43)
+        Me.btn_Importar.Name = "btn_Importar"
+        Me.btn_Importar.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Importar.TabIndex = 11
+        Me.btn_Importar.Text = "Importar"
+        Me.btn_Importar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStock.SetToolTip(Me.btn_Importar, "Haz click aquí para importar el stock. Esta función solo está habilitada para el " &
+        "modo Online")
+        Me.btn_Importar.UseVisualStyleBackColor = True
+        '
+        'btn_Exportar
+        '
+        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Exportar.Location = New System.Drawing.Point(552, 43)
+        Me.btn_Exportar.Name = "btn_Exportar"
+        Me.btn_Exportar.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Exportar.TabIndex = 10
+        Me.btn_Exportar.Text = "Exportar"
+        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStock.SetToolTip(Me.btn_Exportar, "Haz click aquí para exportar el stock. Esta función solo está habilitada para el " &
+        "modo Online")
+        Me.btn_Exportar.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel1
         '
@@ -204,7 +249,7 @@ Partial Class frmStock
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(440, 63)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(540, 63)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'TableLayoutPanel2
@@ -255,7 +300,7 @@ Partial Class frmStock
         Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
         Me.Cb_Sucursal.Location = New System.Drawing.Point(203, 4)
         Me.Cb_Sucursal.Name = "Cb_Sucursal"
-        Me.Cb_Sucursal.Size = New System.Drawing.Size(234, 23)
+        Me.Cb_Sucursal.Size = New System.Drawing.Size(334, 23)
         Me.Cb_Sucursal.TabIndex = 1
         '
         'Label5
@@ -274,16 +319,16 @@ Partial Class frmStock
         Me.txt_buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_buscar.Location = New System.Drawing.Point(203, 36)
         Me.txt_buscar.Name = "txt_buscar"
-        Me.txt_buscar.Size = New System.Drawing.Size(234, 21)
+        Me.txt_buscar.Size = New System.Drawing.Size(334, 21)
         Me.txt_buscar.TabIndex = 4
         '
         'btn_Restablecer
         '
-        Me.btn_Restablecer.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Restablecer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Restablecer.Location = New System.Drawing.Point(452, 43)
+        Me.btn_Restablecer.Location = New System.Drawing.Point(764, 43)
         Me.btn_Restablecer.Name = "btn_Restablecer"
         Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
         Me.btn_Restablecer.TabIndex = 5
@@ -293,12 +338,12 @@ Partial Class frmStock
         '
         'btn_Buscar
         '
-        Me.btn_Buscar.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Buscar.Location = New System.Drawing.Point(558, 43)
+        Me.btn_Buscar.Location = New System.Drawing.Point(870, 43)
         Me.btn_Buscar.Name = "btn_Buscar"
         Me.btn_Buscar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Buscar.TabIndex = 6
@@ -316,7 +361,7 @@ Partial Class frmStock
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Stock.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_Stock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Stock, Me.Codigo, Me.PRODUCTO, Me.Categoria, Me.Minimo, Me.Actual, Me.Optimo, Me.Sucursal, Me.Modificado, Me.Modificar, Me.Eliminar})
+        Me.DG_Stock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Stock, Me.Codigo, Me.PRODUCTO, Me.Categoria, Me.Minimo, Me.Actual, Me.Optimo, Me.VentaMensual, Me.Sucursal, Me.Modificado, Me.Modificar, Me.Eliminar})
         Me.DG_Stock.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Stock.Location = New System.Drawing.Point(8, 104)
         Me.DG_Stock.MultiSelect = False
@@ -324,7 +369,7 @@ Partial Class frmStock
         Me.DG_Stock.ReadOnly = True
         Me.DG_Stock.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Stock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Stock.Size = New System.Drawing.Size(666, 327)
+        Me.DG_Stock.Size = New System.Drawing.Size(978, 465)
         Me.DG_Stock.TabIndex = 0
         '
         'id_Stock
@@ -403,6 +448,13 @@ Partial Class frmStock
         Me.Optimo.ReadOnly = True
         Me.Optimo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
+        'VentaMensual
+        '
+        Me.VentaMensual.DataPropertyName = "Venta_Mensual"
+        Me.VentaMensual.HeaderText = "Vta. Mensual"
+        Me.VentaMensual.Name = "VentaMensual"
+        Me.VentaMensual.ReadOnly = True
+        '
         'Sucursal
         '
         Me.Sucursal.DataPropertyName = "Sucursal"
@@ -444,7 +496,7 @@ Partial Class frmStock
         Me.TabAlta.Location = New System.Drawing.Point(4, 29)
         Me.TabAlta.Name = "TabAlta"
         Me.TabAlta.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabAlta.Size = New System.Drawing.Size(686, 439)
+        Me.TabAlta.Size = New System.Drawing.Size(998, 577)
         Me.TabAlta.TabIndex = 1
         Me.TabAlta.Text = "Alta de Stock"
         Me.TabAlta.UseVisualStyleBackColor = True
@@ -458,7 +510,7 @@ Partial Class frmStock
         Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Alta.Location = New System.Drawing.Point(9, 7)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(668, 260)
+        Me.GB_Alta.Size = New System.Drawing.Size(981, 302)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de Alta"
@@ -468,10 +520,10 @@ Partial Class frmStock
         Me.TableLayoutPanel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel3.ColumnCount = 2
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.chk_Habilitado, 1, 5)
-        Me.TableLayoutPanel3.Controls.Add(Me.Label7, 0, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.txt_ventaMensual, 1, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label11, 0, 5)
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel5, 1, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.lbl_Sucursal, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Cb_Sucursales, 1, 0)
@@ -482,17 +534,39 @@ Partial Class frmStock
         Me.TableLayoutPanel3.Controls.Add(Me.txt_Minimo, 1, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_Optimo, 1, 3)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_Actual, 1, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label7, 0, 6)
+        Me.TableLayoutPanel3.Controls.Add(Me.chk_Habilitado, 1, 6)
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(6, 20)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 6
+        Me.TableLayoutPanel3.RowCount = 7
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(656, 182)
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(969, 210)
         Me.TableLayoutPanel3.TabIndex = 12
+        '
+        'txt_ventaMensual
+        '
+        Me.txt_ventaMensual.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_ventaMensual.Location = New System.Drawing.Point(170, 156)
+        Me.txt_ventaMensual.Name = "txt_ventaMensual"
+        Me.txt_ventaMensual.Size = New System.Drawing.Size(796, 21)
+        Me.txt_ventaMensual.TabIndex = 7
+        '
+        'Label11
+        '
+        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(3, 159)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(161, 15)
+        Me.Label11.TabIndex = 9
+        Me.Label11.Text = "Venta Mensual"
         '
         'TableLayoutPanel5
         '
@@ -502,11 +576,11 @@ Partial Class frmStock
         Me.TableLayoutPanel5.Controls.Add(Me.Btn_BuscarCodigo, 1, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.txt_Codigo, 0, 0)
         Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(143, 33)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(170, 33)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(510, 26)
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(796, 26)
         Me.TableLayoutPanel5.TabIndex = 13
         '
         'Btn_BuscarCodigo
@@ -515,7 +589,7 @@ Partial Class frmStock
         Me.Btn_BuscarCodigo.FlatAppearance.BorderSize = 0
         Me.Btn_BuscarCodigo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Btn_BuscarCodigo.Image = Global.SistemaCinderella.My.Resources.Recursos.Lupa
-        Me.Btn_BuscarCodigo.Location = New System.Drawing.Point(481, 3)
+        Me.Btn_BuscarCodigo.Location = New System.Drawing.Point(767, 3)
         Me.Btn_BuscarCodigo.Name = "Btn_BuscarCodigo"
         Me.Btn_BuscarCodigo.Size = New System.Drawing.Size(23, 20)
         Me.Btn_BuscarCodigo.TabIndex = 3
@@ -526,7 +600,7 @@ Partial Class frmStock
         Me.txt_Codigo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Codigo.Location = New System.Drawing.Point(3, 3)
         Me.txt_Codigo.Name = "txt_Codigo"
-        Me.txt_Codigo.Size = New System.Drawing.Size(472, 21)
+        Me.txt_Codigo.Size = New System.Drawing.Size(758, 21)
         Me.txt_Codigo.TabIndex = 2
         '
         'lbl_Sucursal
@@ -535,7 +609,7 @@ Partial Class frmStock
         Me.lbl_Sucursal.AutoSize = True
         Me.lbl_Sucursal.Location = New System.Drawing.Point(3, 7)
         Me.lbl_Sucursal.Name = "lbl_Sucursal"
-        Me.lbl_Sucursal.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Sucursal.Size = New System.Drawing.Size(161, 15)
         Me.lbl_Sucursal.TabIndex = 5
         Me.lbl_Sucursal.Text = "Sucursal"
         '
@@ -546,9 +620,9 @@ Partial Class frmStock
         Me.Cb_Sucursales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursales.FormattingEnabled = True
         Me.Cb_Sucursales.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursales.Location = New System.Drawing.Point(143, 4)
+        Me.Cb_Sucursales.Location = New System.Drawing.Point(170, 4)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
-        Me.Cb_Sucursales.Size = New System.Drawing.Size(510, 23)
+        Me.Cb_Sucursales.Size = New System.Drawing.Size(796, 23)
         Me.Cb_Sucursales.TabIndex = 1
         '
         'lbl_Producto
@@ -557,7 +631,7 @@ Partial Class frmStock
         Me.lbl_Producto.AutoSize = True
         Me.lbl_Producto.Location = New System.Drawing.Point(3, 38)
         Me.lbl_Producto.Name = "lbl_Producto"
-        Me.lbl_Producto.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Producto.Size = New System.Drawing.Size(161, 15)
         Me.lbl_Producto.TabIndex = 6
         Me.lbl_Producto.Text = "Código de Producto (*)"
         '
@@ -567,7 +641,7 @@ Partial Class frmStock
         Me.lbl_Minimo.AutoSize = True
         Me.lbl_Minimo.Location = New System.Drawing.Point(3, 69)
         Me.lbl_Minimo.Name = "lbl_Minimo"
-        Me.lbl_Minimo.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Minimo.Size = New System.Drawing.Size(161, 15)
         Me.lbl_Minimo.TabIndex = 7
         Me.lbl_Minimo.Text = "Stock Minimo (*)"
         '
@@ -577,7 +651,7 @@ Partial Class frmStock
         Me.lbl_Optimo.AutoSize = True
         Me.lbl_Optimo.Location = New System.Drawing.Point(3, 99)
         Me.lbl_Optimo.Name = "lbl_Optimo"
-        Me.lbl_Optimo.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Optimo.Size = New System.Drawing.Size(161, 15)
         Me.lbl_Optimo.TabIndex = 9
         Me.lbl_Optimo.Text = "Stock Optimo (*)"
         '
@@ -587,33 +661,55 @@ Partial Class frmStock
         Me.lbl_Actual.AutoSize = True
         Me.lbl_Actual.Location = New System.Drawing.Point(3, 129)
         Me.lbl_Actual.Name = "lbl_Actual"
-        Me.lbl_Actual.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Actual.Size = New System.Drawing.Size(161, 15)
         Me.lbl_Actual.TabIndex = 8
         Me.lbl_Actual.Text = "Stock Actual (*)"
         '
         'txt_Minimo
         '
         Me.txt_Minimo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Minimo.Location = New System.Drawing.Point(143, 66)
+        Me.txt_Minimo.Location = New System.Drawing.Point(170, 66)
         Me.txt_Minimo.Name = "txt_Minimo"
-        Me.txt_Minimo.Size = New System.Drawing.Size(510, 21)
+        Me.txt_Minimo.Size = New System.Drawing.Size(796, 21)
         Me.txt_Minimo.TabIndex = 4
         '
         'txt_Optimo
         '
         Me.txt_Optimo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Optimo.Location = New System.Drawing.Point(143, 96)
+        Me.txt_Optimo.Location = New System.Drawing.Point(170, 96)
         Me.txt_Optimo.Name = "txt_Optimo"
-        Me.txt_Optimo.Size = New System.Drawing.Size(510, 21)
+        Me.txt_Optimo.Size = New System.Drawing.Size(796, 21)
         Me.txt_Optimo.TabIndex = 5
         '
         'txt_Actual
         '
         Me.txt_Actual.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Actual.Location = New System.Drawing.Point(143, 126)
+        Me.txt_Actual.Location = New System.Drawing.Point(170, 126)
         Me.txt_Actual.Name = "txt_Actual"
-        Me.txt_Actual.Size = New System.Drawing.Size(510, 21)
+        Me.txt_Actual.Size = New System.Drawing.Size(796, 21)
         Me.txt_Actual.TabIndex = 6
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(3, 188)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(161, 15)
+        Me.Label7.TabIndex = 13
+        Me.Label7.Text = "Habilitado"
+        '
+        'chk_Habilitado
+        '
+        Me.chk_Habilitado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Habilitado.AutoSize = True
+        Me.chk_Habilitado.Checked = True
+        Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado.Location = New System.Drawing.Point(170, 189)
+        Me.chk_Habilitado.Name = "chk_Habilitado"
+        Me.chk_Habilitado.Size = New System.Drawing.Size(796, 14)
+        Me.chk_Habilitado.TabIndex = 12
+        Me.chk_Habilitado.UseVisualStyleBackColor = True
         '
         'Btn_Agregar
         '
@@ -622,7 +718,7 @@ Partial Class frmStock
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(545, 208)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(858, 250)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(117, 46)
         Me.Btn_Agregar.TabIndex = 8
@@ -635,7 +731,7 @@ Partial Class frmStock
         Me.TabModificacion.Controls.Add(Me.GroupBox1)
         Me.TabModificacion.Location = New System.Drawing.Point(4, 29)
         Me.TabModificacion.Name = "TabModificacion"
-        Me.TabModificacion.Size = New System.Drawing.Size(686, 439)
+        Me.TabModificacion.Size = New System.Drawing.Size(998, 577)
         Me.TabModificacion.TabIndex = 2
         Me.TabModificacion.Text = "Modificacion de Stock"
         Me.TabModificacion.UseVisualStyleBackColor = True
@@ -651,18 +747,37 @@ Partial Class frmStock
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(9, 7)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(668, 418)
+        Me.GroupBox1.Size = New System.Drawing.Size(981, 461)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Formulario de Modificación"
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel9.ColumnCount = 1
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.TableLayoutPanel4, 0, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.TableLayoutPanel10, 0, 1)
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 2
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 224.0!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(968, 382)
+        Me.TableLayoutPanel9.TabIndex = 21
         '
         'TableLayoutPanel4
         '
         Me.TableLayoutPanel4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel4.ColumnCount = 2
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_ventaMensual_mod, 1, 5)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label12, 0, 5)
         Me.TableLayoutPanel4.Controls.Add(Me.TableLayoutPanel6, 1, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.Label6, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.lbl_Codigo, 0, 1)
@@ -670,22 +785,41 @@ Partial Class frmStock
         Me.TableLayoutPanel4.Controls.Add(Me.Cb_Sucursales_mod, 1, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label2, 0, 3)
         Me.TableLayoutPanel4.Controls.Add(Me.Label3, 0, 4)
-        Me.TableLayoutPanel4.Controls.Add(Me.Label1, 0, 5)
-        Me.TableLayoutPanel4.Controls.Add(Me.chk_Habilitado_mod, 1, 5)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_Actual_mod, 1, 4)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_Minimo_mod, 1, 2)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_Optimo_mod, 1, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label1, 0, 6)
+        Me.TableLayoutPanel4.Controls.Add(Me.chk_Habilitado_mod, 1, 6)
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 6
+        Me.TableLayoutPanel4.RowCount = 7
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(649, 178)
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(962, 218)
         Me.TableLayoutPanel4.TabIndex = 19
+        '
+        'txt_ventaMensual_mod
+        '
+        Me.txt_ventaMensual_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_ventaMensual_mod.Location = New System.Drawing.Point(179, 156)
+        Me.txt_ventaMensual_mod.Name = "txt_ventaMensual_mod"
+        Me.txt_ventaMensual_mod.Size = New System.Drawing.Size(780, 21)
+        Me.txt_ventaMensual_mod.TabIndex = 7
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(3, 159)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(170, 15)
+        Me.Label12.TabIndex = 9
+        Me.Label12.Text = "Venta Mensual"
         '
         'TableLayoutPanel6
         '
@@ -695,11 +829,11 @@ Partial Class frmStock
         Me.TableLayoutPanel6.Controls.Add(Me.txt_Codigo_mod, 0, 0)
         Me.TableLayoutPanel6.Controls.Add(Me.Btn_BuscarCodigo_mod, 1, 0)
         Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(143, 33)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(179, 33)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(503, 26)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(780, 26)
         Me.TableLayoutPanel6.TabIndex = 20
         '
         'txt_Codigo_mod
@@ -707,7 +841,7 @@ Partial Class frmStock
         Me.txt_Codigo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Codigo_mod.Location = New System.Drawing.Point(3, 3)
         Me.txt_Codigo_mod.Name = "txt_Codigo_mod"
-        Me.txt_Codigo_mod.Size = New System.Drawing.Size(465, 21)
+        Me.txt_Codigo_mod.Size = New System.Drawing.Size(742, 21)
         Me.txt_Codigo_mod.TabIndex = 2
         '
         'Btn_BuscarCodigo_mod
@@ -716,7 +850,7 @@ Partial Class frmStock
         Me.Btn_BuscarCodigo_mod.FlatAppearance.BorderSize = 0
         Me.Btn_BuscarCodigo_mod.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Btn_BuscarCodigo_mod.Image = Global.SistemaCinderella.My.Resources.Recursos.Lupa
-        Me.Btn_BuscarCodigo_mod.Location = New System.Drawing.Point(474, 3)
+        Me.Btn_BuscarCodigo_mod.Location = New System.Drawing.Point(751, 3)
         Me.Btn_BuscarCodigo_mod.Name = "Btn_BuscarCodigo_mod"
         Me.Btn_BuscarCodigo_mod.Size = New System.Drawing.Size(26, 20)
         Me.Btn_BuscarCodigo_mod.TabIndex = 3
@@ -728,7 +862,7 @@ Partial Class frmStock
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(3, 7)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(134, 15)
+        Me.Label6.Size = New System.Drawing.Size(170, 15)
         Me.Label6.TabIndex = 5
         Me.Label6.Text = "Sucursal"
         '
@@ -738,7 +872,7 @@ Partial Class frmStock
         Me.lbl_Codigo.AutoSize = True
         Me.lbl_Codigo.Location = New System.Drawing.Point(3, 38)
         Me.lbl_Codigo.Name = "lbl_Codigo"
-        Me.lbl_Codigo.Size = New System.Drawing.Size(134, 15)
+        Me.lbl_Codigo.Size = New System.Drawing.Size(170, 15)
         Me.lbl_Codigo.TabIndex = 13
         Me.lbl_Codigo.Text = "Código de Producto (*)"
         '
@@ -748,7 +882,7 @@ Partial Class frmStock
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(3, 69)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(134, 15)
+        Me.Label4.Size = New System.Drawing.Size(170, 15)
         Me.Label4.TabIndex = 7
         Me.Label4.Text = "Stock Minimo (*)"
         '
@@ -759,9 +893,9 @@ Partial Class frmStock
         Me.Cb_Sucursales_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursales_mod.FormattingEnabled = True
         Me.Cb_Sucursales_mod.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursales_mod.Location = New System.Drawing.Point(143, 3)
+        Me.Cb_Sucursales_mod.Location = New System.Drawing.Point(179, 3)
         Me.Cb_Sucursales_mod.Name = "Cb_Sucursales_mod"
-        Me.Cb_Sucursales_mod.Size = New System.Drawing.Size(503, 23)
+        Me.Cb_Sucursales_mod.Size = New System.Drawing.Size(780, 23)
         Me.Cb_Sucursales_mod.TabIndex = 1
         '
         'Label2
@@ -770,7 +904,7 @@ Partial Class frmStock
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(3, 99)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(134, 15)
+        Me.Label2.Size = New System.Drawing.Size(170, 15)
         Me.Label2.TabIndex = 9
         Me.Label2.Text = "Stock Optimo (*)"
         '
@@ -780,17 +914,41 @@ Partial Class frmStock
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(3, 129)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(134, 15)
+        Me.Label3.Size = New System.Drawing.Size(170, 15)
         Me.Label3.TabIndex = 8
         Me.Label3.Text = "Stock Actual (*)"
+        '
+        'txt_Actual_mod
+        '
+        Me.txt_Actual_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Actual_mod.Location = New System.Drawing.Point(179, 126)
+        Me.txt_Actual_mod.Name = "txt_Actual_mod"
+        Me.txt_Actual_mod.Size = New System.Drawing.Size(780, 21)
+        Me.txt_Actual_mod.TabIndex = 6
+        '
+        'txt_Minimo_mod
+        '
+        Me.txt_Minimo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Minimo_mod.Location = New System.Drawing.Point(179, 66)
+        Me.txt_Minimo_mod.Name = "txt_Minimo_mod"
+        Me.txt_Minimo_mod.Size = New System.Drawing.Size(780, 21)
+        Me.txt_Minimo_mod.TabIndex = 4
+        '
+        'txt_Optimo_mod
+        '
+        Me.txt_Optimo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Optimo_mod.Location = New System.Drawing.Point(179, 96)
+        Me.txt_Optimo_mod.Name = "txt_Optimo_mod"
+        Me.txt_Optimo_mod.Size = New System.Drawing.Size(780, 21)
+        Me.txt_Optimo_mod.TabIndex = 5
         '
         'Label1
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 159)
+        Me.Label1.Location = New System.Drawing.Point(3, 192)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(134, 15)
+        Me.Label1.Size = New System.Drawing.Size(170, 15)
         Me.Label1.TabIndex = 11
         Me.Label1.Text = "Habilitado"
         '
@@ -800,35 +958,26 @@ Partial Class frmStock
         Me.chk_Habilitado_mod.AutoSize = True
         Me.chk_Habilitado_mod.Checked = True
         Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 160)
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(179, 193)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
-        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(503, 14)
+        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(780, 14)
         Me.chk_Habilitado_mod.TabIndex = 7
         Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
         '
-        'txt_Actual_mod
+        'TableLayoutPanel10
         '
-        Me.txt_Actual_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Actual_mod.Location = New System.Drawing.Point(143, 126)
-        Me.txt_Actual_mod.Name = "txt_Actual_mod"
-        Me.txt_Actual_mod.Size = New System.Drawing.Size(503, 21)
-        Me.txt_Actual_mod.TabIndex = 6
-        '
-        'txt_Minimo_mod
-        '
-        Me.txt_Minimo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Minimo_mod.Location = New System.Drawing.Point(143, 66)
-        Me.txt_Minimo_mod.Name = "txt_Minimo_mod"
-        Me.txt_Minimo_mod.Size = New System.Drawing.Size(503, 21)
-        Me.txt_Minimo_mod.TabIndex = 4
-        '
-        'txt_Optimo_mod
-        '
-        Me.txt_Optimo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Optimo_mod.Location = New System.Drawing.Point(143, 96)
-        Me.txt_Optimo_mod.Name = "txt_Optimo_mod"
-        Me.txt_Optimo_mod.Size = New System.Drawing.Size(503, 21)
-        Me.txt_Optimo_mod.TabIndex = 5
+        Me.TableLayoutPanel10.ColumnCount = 2
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.Controls.Add(Me.GroupBox3, 0, 0)
+        Me.TableLayoutPanel10.Controls.Add(Me.Gb_Mod, 1, 0)
+        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 227)
+        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
+        Me.TableLayoutPanel10.RowCount = 1
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(962, 152)
+        Me.TableLayoutPanel10.TabIndex = 20
         '
         'GroupBox3
         '
@@ -838,10 +987,40 @@ Partial Class frmStock
         Me.GroupBox3.Controls.Add(Me.TableLayoutPanel7)
         Me.GroupBox3.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(318, 143)
+        Me.GroupBox3.Size = New System.Drawing.Size(475, 146)
         Me.GroupBox3.TabIndex = 18
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Datos de la nueva modificación de stock"
+        '
+        'TableLayoutPanel7
+        '
+        Me.TableLayoutPanel7.ColumnCount = 2
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Controls.Add(Me.txt_Motivo, 1, 2)
+        Me.TableLayoutPanel7.Controls.Add(Me.lbl_Usuario2, 1, 1)
+        Me.TableLayoutPanel7.Controls.Add(Me.Label13, 0, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.lbl_Fecha2, 1, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.Label14, 0, 1)
+        Me.TableLayoutPanel7.Controls.Add(Me.Label15, 0, 2)
+        Me.TableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(3, 17)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 3
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(469, 126)
+        Me.TableLayoutPanel7.TabIndex = 20
+        '
+        'txt_Motivo
+        '
+        Me.txt_Motivo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txt_Motivo.Location = New System.Drawing.Point(103, 63)
+        Me.txt_Motivo.Multiline = True
+        Me.txt_Motivo.Name = "txt_Motivo"
+        Me.txt_Motivo.Size = New System.Drawing.Size(363, 60)
+        Me.txt_Motivo.TabIndex = 8
         '
         'lbl_Usuario2
         '
@@ -849,19 +1028,9 @@ Partial Class frmStock
         Me.lbl_Usuario2.AutoSize = True
         Me.lbl_Usuario2.Location = New System.Drawing.Point(103, 37)
         Me.lbl_Usuario2.Name = "lbl_Usuario2"
-        Me.lbl_Usuario2.Size = New System.Drawing.Size(206, 15)
+        Me.lbl_Usuario2.Size = New System.Drawing.Size(363, 15)
         Me.lbl_Usuario2.TabIndex = 5
         Me.lbl_Usuario2.Text = "- - - - - "
-        '
-        'lbl_Fecha2
-        '
-        Me.lbl_Fecha2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Fecha2.AutoSize = True
-        Me.lbl_Fecha2.Location = New System.Drawing.Point(103, 7)
-        Me.lbl_Fecha2.Name = "lbl_Fecha2"
-        Me.lbl_Fecha2.Size = New System.Drawing.Size(206, 15)
-        Me.lbl_Fecha2.TabIndex = 4
-        Me.lbl_Fecha2.Text = "- - - - -"
         '
         'Label13
         '
@@ -872,6 +1041,16 @@ Partial Class frmStock
         Me.Label13.Size = New System.Drawing.Size(94, 15)
         Me.Label13.TabIndex = 3
         Me.Label13.Text = "Fecha"
+        '
+        'lbl_Fecha2
+        '
+        Me.lbl_Fecha2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Fecha2.AutoSize = True
+        Me.lbl_Fecha2.Location = New System.Drawing.Point(103, 7)
+        Me.lbl_Fecha2.Name = "lbl_Fecha2"
+        Me.lbl_Fecha2.Size = New System.Drawing.Size(363, 15)
+        Me.lbl_Fecha2.TabIndex = 4
+        Me.lbl_Fecha2.Text = "- - - - -"
         '
         'Label14
         '
@@ -894,150 +1073,19 @@ Partial Class frmStock
         Me.Label15.TabIndex = 1
         Me.Label15.Text = "Motivo (*)"
         '
-        'txt_Motivo
-        '
-        Me.txt_Motivo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.txt_Motivo.Location = New System.Drawing.Point(103, 63)
-        Me.txt_Motivo.Multiline = True
-        Me.txt_Motivo.Name = "txt_Motivo"
-        Me.txt_Motivo.Size = New System.Drawing.Size(206, 57)
-        Me.txt_Motivo.TabIndex = 8
-        '
         'Gb_Mod
         '
         Me.Gb_Mod.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Mod.Controls.Add(Me.TableLayoutPanel8)
-        Me.Gb_Mod.Location = New System.Drawing.Point(327, 3)
+        Me.Gb_Mod.Location = New System.Drawing.Point(484, 3)
         Me.Gb_Mod.Name = "Gb_Mod"
-        Me.Gb_Mod.Size = New System.Drawing.Size(319, 143)
+        Me.Gb_Mod.Size = New System.Drawing.Size(475, 146)
         Me.Gb_Mod.TabIndex = 17
         Me.Gb_Mod.TabStop = False
         Me.Gb_Mod.Text = "Datos de la última modificación de stock"
         Me.Gb_Mod.Visible = False
-        '
-        'lbl_Motivo
-        '
-        Me.lbl_Motivo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lbl_Motivo.Location = New System.Drawing.Point(103, 60)
-        Me.lbl_Motivo.Name = "lbl_Motivo"
-        Me.lbl_Motivo.Size = New System.Drawing.Size(207, 63)
-        Me.lbl_Motivo.TabIndex = 6
-        Me.lbl_Motivo.Text = "- - - - - "
-        '
-        'lbl_Usuario
-        '
-        Me.lbl_Usuario.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Usuario.AutoSize = True
-        Me.lbl_Usuario.Location = New System.Drawing.Point(103, 37)
-        Me.lbl_Usuario.Name = "lbl_Usuario"
-        Me.lbl_Usuario.Size = New System.Drawing.Size(207, 15)
-        Me.lbl_Usuario.TabIndex = 5
-        Me.lbl_Usuario.Text = "- - - - - "
-        '
-        'lbl_Fecha
-        '
-        Me.lbl_Fecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Fecha.AutoSize = True
-        Me.lbl_Fecha.Location = New System.Drawing.Point(103, 7)
-        Me.lbl_Fecha.Name = "lbl_Fecha"
-        Me.lbl_Fecha.Size = New System.Drawing.Size(207, 15)
-        Me.lbl_Fecha.TabIndex = 4
-        Me.lbl_Fecha.Text = "- - - - -"
-        '
-        'Label10
-        '
-        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(3, 7)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(94, 15)
-        Me.Label10.TabIndex = 3
-        Me.Label10.Text = "Fecha"
-        '
-        'Label9
-        '
-        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(3, 37)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(94, 15)
-        Me.Label9.TabIndex = 2
-        Me.Label9.Text = "Usuario"
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(3, 60)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(94, 15)
-        Me.Label8.TabIndex = 1
-        Me.Label8.Text = "Motivo "
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(421, 365)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Size = New System.Drawing.Size(117, 46)
-        Me.Btn_Eliminar.TabIndex = 9
-        Me.Btn_Eliminar.Text = "Eliminar"
-        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Eliminar.UseVisualStyleBackColor = True
-        '
-        'Btn_Modificar
-        '
-        Me.Btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Modificar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
-        Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(544, 365)
-        Me.Btn_Modificar.Name = "Btn_Modificar"
-        Me.Btn_Modificar.Size = New System.Drawing.Size(117, 46)
-        Me.Btn_Modificar.TabIndex = 10
-        Me.Btn_Modificar.Text = "Modificar"
-        Me.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Modificar.UseVisualStyleBackColor = True
-        '
-        'ErrorStock
-        '
-        Me.ErrorStock.BlinkRate = 200
-        Me.ErrorStock.ContainerControl = Me
-        '
-        'ToolStock
-        '
-        Me.ToolStock.IsBalloon = True
-        Me.ToolStock.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolStock.ToolTipTitle = "Ayuda"
-        '
-        'TableLayoutPanel7
-        '
-        Me.TableLayoutPanel7.ColumnCount = 2
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Controls.Add(Me.txt_Motivo, 1, 2)
-        Me.TableLayoutPanel7.Controls.Add(Me.lbl_Usuario2, 1, 1)
-        Me.TableLayoutPanel7.Controls.Add(Me.Label13, 0, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.lbl_Fecha2, 1, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.Label14, 0, 1)
-        Me.TableLayoutPanel7.Controls.Add(Me.Label15, 0, 2)
-        Me.TableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel7.Location = New System.Drawing.Point(3, 17)
-        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
-        Me.TableLayoutPanel7.RowCount = 3
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(312, 123)
-        Me.TableLayoutPanel7.TabIndex = 20
         '
         'TableLayoutPanel8
         '
@@ -1057,68 +1105,119 @@ Partial Class frmStock
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(313, 123)
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(469, 126)
         Me.TableLayoutPanel8.TabIndex = 20
         '
-        'Label7
+        'lbl_Motivo
         '
-        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(3, 159)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(134, 15)
-        Me.Label7.TabIndex = 13
-        Me.Label7.Text = "Habilitado"
+        Me.lbl_Motivo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbl_Motivo.Location = New System.Drawing.Point(103, 60)
+        Me.lbl_Motivo.Name = "lbl_Motivo"
+        Me.lbl_Motivo.Size = New System.Drawing.Size(363, 66)
+        Me.lbl_Motivo.TabIndex = 6
+        Me.lbl_Motivo.Text = "- - - - - "
         '
-        'chk_Habilitado
+        'Label10
         '
-        Me.chk_Habilitado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chk_Habilitado.AutoSize = True
-        Me.chk_Habilitado.Checked = True
-        Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(143, 160)
-        Me.chk_Habilitado.Name = "chk_Habilitado"
-        Me.chk_Habilitado.Size = New System.Drawing.Size(510, 14)
-        Me.chk_Habilitado.TabIndex = 12
-        Me.chk_Habilitado.UseVisualStyleBackColor = True
+        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(3, 7)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(94, 15)
+        Me.Label10.TabIndex = 3
+        Me.Label10.Text = "Fecha"
         '
-        'TableLayoutPanel10
+        'lbl_Usuario
         '
-        Me.TableLayoutPanel10.ColumnCount = 2
-        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.Controls.Add(Me.GroupBox3, 0, 0)
-        Me.TableLayoutPanel10.Controls.Add(Me.Gb_Mod, 1, 0)
-        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 187)
-        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
-        Me.TableLayoutPanel10.RowCount = 1
-        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel10.Size = New System.Drawing.Size(649, 149)
-        Me.TableLayoutPanel10.TabIndex = 20
+        Me.lbl_Usuario.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Usuario.AutoSize = True
+        Me.lbl_Usuario.Location = New System.Drawing.Point(103, 37)
+        Me.lbl_Usuario.Name = "lbl_Usuario"
+        Me.lbl_Usuario.Size = New System.Drawing.Size(363, 15)
+        Me.lbl_Usuario.TabIndex = 5
+        Me.lbl_Usuario.Text = "- - - - - "
         '
-        'TableLayoutPanel9
+        'Label9
         '
-        Me.TableLayoutPanel9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(3, 37)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(94, 15)
+        Me.Label9.TabIndex = 2
+        Me.Label9.Text = "Usuario"
+        '
+        'lbl_Fecha
+        '
+        Me.lbl_Fecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Fecha.AutoSize = True
+        Me.lbl_Fecha.Location = New System.Drawing.Point(103, 7)
+        Me.lbl_Fecha.Name = "lbl_Fecha"
+        Me.lbl_Fecha.Size = New System.Drawing.Size(363, 15)
+        Me.lbl_Fecha.TabIndex = 4
+        Me.lbl_Fecha.Text = "- - - - -"
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel9.ColumnCount = 1
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Controls.Add(Me.TableLayoutPanel4, 0, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.TableLayoutPanel10, 0, 1)
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(6, 20)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 2
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 184.0!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(655, 339)
-        Me.TableLayoutPanel9.TabIndex = 21
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(3, 60)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(94, 15)
+        Me.Label8.TabIndex = 1
+        Me.Label8.Text = "Motivo "
+        '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(734, 408)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Size = New System.Drawing.Size(117, 46)
+        Me.Btn_Eliminar.TabIndex = 9
+        Me.Btn_Eliminar.Text = "Eliminar"
+        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Eliminar.UseVisualStyleBackColor = True
+        '
+        'Btn_Modificar
+        '
+        Me.Btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Modificar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Modificar.Location = New System.Drawing.Point(857, 408)
+        Me.Btn_Modificar.Name = "Btn_Modificar"
+        Me.Btn_Modificar.Size = New System.Drawing.Size(117, 46)
+        Me.Btn_Modificar.TabIndex = 10
+        Me.Btn_Modificar.Text = "Modificar"
+        Me.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Modificar.UseVisualStyleBackColor = True
+        '
+        'ErrorStock
+        '
+        Me.ErrorStock.BlinkRate = 200
+        Me.ErrorStock.ContainerControl = Me
+        '
+        'ToolStock
+        '
+        Me.ToolStock.IsBalloon = True
+        Me.ToolStock.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolStock.ToolTipTitle = "Ayuda"
+        '
+        'OpenFileDialog
+        '
+        Me.OpenFileDialog.FileName = "OpenFileDialog"
         '
         'frmStock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(694, 472)
+        Me.ClientSize = New System.Drawing.Size(1006, 610)
         Me.Controls.Add(Me.TabStock)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -1141,19 +1240,19 @@ Partial Class frmStock
         Me.TableLayoutPanel5.PerformLayout()
         Me.TabModificacion.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
+        Me.TableLayoutPanel9.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
         Me.TableLayoutPanel6.ResumeLayout(False)
         Me.TableLayoutPanel6.PerformLayout()
+        Me.TableLayoutPanel10.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
-        Me.Gb_Mod.ResumeLayout(False)
-        CType(Me.ErrorStock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel7.PerformLayout()
+        Me.Gb_Mod.ResumeLayout(False)
         Me.TableLayoutPanel8.ResumeLayout(False)
         Me.TableLayoutPanel8.PerformLayout()
-        Me.TableLayoutPanel10.ResumeLayout(False)
-        Me.TableLayoutPanel9.ResumeLayout(False)
+        CType(Me.ErrorStock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1216,17 +1315,6 @@ Partial Class frmStock
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txt_Motivo As System.Windows.Forms.TextBox
     Friend WithEvents lbl_Motivo As System.Windows.Forms.Label
-    Friend WithEvents id_Stock As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Codigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents PRODUCTO As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Categoria As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Minimo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Actual As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Optimo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Sucursal As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Modificado As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Modificar As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
@@ -1239,4 +1327,24 @@ Partial Class frmStock
     Friend WithEvents Label7 As Label
     Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
+    Friend WithEvents btn_Importar As Button
+    Friend WithEvents btn_Exportar As Button
+    Friend WithEvents OpenFileDialog As OpenFileDialog
+    Friend WithEvents SaveFileDialog As SaveFileDialog
+    Friend WithEvents txt_ventaMensual As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents txt_ventaMensual_mod As TextBox
+    Friend WithEvents Label12 As Label
+    Friend WithEvents id_Stock As DataGridViewTextBoxColumn
+    Friend WithEvents Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents PRODUCTO As DataGridViewTextBoxColumn
+    Friend WithEvents Categoria As DataGridViewTextBoxColumn
+    Friend WithEvents Minimo As DataGridViewTextBoxColumn
+    Friend WithEvents Actual As DataGridViewTextBoxColumn
+    Friend WithEvents Optimo As DataGridViewTextBoxColumn
+    Friend WithEvents VentaMensual As DataGridViewTextBoxColumn
+    Friend WithEvents Sucursal As DataGridViewTextBoxColumn
+    Friend WithEvents Modificado As DataGridViewTextBoxColumn
+    Friend WithEvents Modificar As DataGridViewImageColumn
+    Friend WithEvents Eliminar As DataGridViewImageColumn
 End Class

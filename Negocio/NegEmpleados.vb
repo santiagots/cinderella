@@ -7,7 +7,7 @@ Public Class NegEmpleados
     Dim ClsFunciones As New Funciones
 
     'Funcion para consultar un empleado.
-    Public Function TraerEmpleadoPorIdEmpleado(ByVal id_Empleado As Integer)
+    Public Function TraerEmpleadoPorIdEmpleado(ByVal id_Empleado As Integer) As Empleados
         Dim dsEmpleado As New DataSet
         Dim entEmpleado As New Entidades.Empleados
 

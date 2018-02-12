@@ -73,7 +73,12 @@
     <Compile Include="Adelantos.vb" />
     <Compile Include="Adicionales.vb" />
     <Compile Include="Aromas.vb" />
+    <Compile Include="Enum\DiasSemana.vb" />
+    <Compile Include="Enum\StockNotaPedidoEstado.vb" />
+    <Compile Include="Enum\StockNotaPedidoTipo.vb" />
     <Compile Include="Etiqueta.vb" />
+    <Compile Include="OrdenCompra.vb" />
+    <Compile Include="OrdenCompraDetalle.vb" />
     <Compile Include="Tarjeta.vb" />
     <Compile Include="Banco.vb" />
     <Compile Include="CajaInicial.vb" />

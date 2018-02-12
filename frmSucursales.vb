@@ -533,6 +533,7 @@
             txt_ComisionEncargadoMayor_mod.Text = ESucursales.ComisionEncargadoMayor
             txt_ComisionVendedorMayor_mod.Text = ESucursales.ComisionVendedorMayor
             txt_CodigoVenta_mod.Text = ESucursales.CodigoVenta
+            txt_Email_mod.Text = ESucursales.Mail
 
             'Cargo el combo de Provincias
             Dim dsProvincias As New DataSet
@@ -657,6 +658,7 @@
                 txt_ComisionVendedorFeriado_mod.Text = ESucursales.ComisionVendedorFeriado
                 txt_ComisionEncargadoMayor_mod.Text = ESucursales.ComisionEncargadoMayor
                 txt_ComisionVendedorMayor_mod.Text = ESucursales.ComisionVendedorMayor
+                txt_Email_mod.Text = ESucursales.Mail
 
                 'Cargo el combo de Provincias
                 Dim dsProvincias As New DataSet
@@ -736,6 +738,7 @@
                 ESucursales.ComisionVendedorMayor = Trim(txt_ComisionVendedorMayor.Text)
                 ESucursales.ComisionEncargadoMayor = Trim(txt_ComisionEncargadoMayor.Text)
                 ESucursales.CodigoVenta = Trim(txt_CodigoVenta.Text)
+                ESucursales.Mail = Trim(txt_Email.Text)
 
                 If chk_Habilitado.Checked = True Then
                     ESucursales.Habilitado = 1
@@ -834,6 +837,7 @@
                 ESucursales.ComisionVendedorMayor = Trim(txt_ComisionVendedorMayor_mod.Text)
                 ESucursales.ComisionEncargadoMayor = Trim(txt_ComisionEncargadoMayor_mod.Text)
                 ESucursales.CodigoVenta = Trim(txt_CodigoVenta_mod.Text)
+                ESucursales.Mail = Trim(txt_Email_mod.Text)
 
                 If chk_Habilitado_mod.Checked = True Then
                     ESucursales.Habilitado = 1

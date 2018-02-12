@@ -29,7 +29,30 @@ Partial Class frmChequesAdministracion
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmChequesAdministracion))
         Me.TabCheques = New System.Windows.Forms.TabControl()
         Me.BusquedaTab = New System.Windows.Forms.TabPage()
+        Me.btn_Exportar = New System.Windows.Forms.Button()
+        Me.lbl_TotalCartera = New System.Windows.Forms.Label()
+        Me.btn_Restablecer = New System.Windows.Forms.Button()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.lbl_TotalPantalla = New System.Windows.Forms.Label()
+        Me.BtnFiltrar = New System.Windows.Forms.Button()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.lbl_Msg = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txtImporteDesde = New System.Windows.Forms.TextBox()
+        Me.txtImporteHasta = New System.Windows.Forms.TextBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
+        Me.dtFechaSalidaDesde = New System.Windows.Forms.DateTimePicker()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.dtFechaSalidaHasta = New System.Windows.Forms.DateTimePicker()
+        Me.chkFechaSalida = New System.Windows.Forms.CheckBox()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.dtFechaVencimientoDesde = New System.Windows.Forms.DateTimePicker()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.dtFechaVencimientoHasta = New System.Windows.Forms.DateTimePicker()
+        Me.chkFechaVencimiento = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.chkSinSalida = New System.Windows.Forms.CheckBox()
         Me.chkOtros = New System.Windows.Forms.CheckBox()
@@ -57,8 +80,12 @@ Partial Class frmChequesAdministracion
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtClienteNombre = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtLibradorNombre = New System.Windows.Forms.TextBox()
+        Me.cmbBancoEmisor = New System.Windows.Forms.ComboBox()
+        Me.BancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.txtNumero = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -66,31 +93,21 @@ Partial Class frmChequesAdministracion
         Me.Label23 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.lbl_TotalCartera = New System.Windows.Forms.Label()
-        Me.Label35 = New System.Windows.Forms.Label()
-        Me.lbl_TotalPantalla = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.lbl_Msg = New System.Windows.Forms.Label()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btn_Exportar = New System.Windows.Forms.Button()
-        Me.Label29 = New System.Windows.Forms.Label()
-        Me.txtImporteHasta = New System.Windows.Forms.TextBox()
-        Me.dtFechaSalidaHasta = New System.Windows.Forms.DateTimePicker()
-        Me.Label28 = New System.Windows.Forms.Label()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.dtFechaVencimientoHasta = New System.Windows.Forms.DateTimePicker()
-        Me.chkFechaSalida = New System.Windows.Forms.CheckBox()
-        Me.chkFechaVencimiento = New System.Windows.Forms.CheckBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.dtFechaSalidaDesde = New System.Windows.Forms.DateTimePicker()
-        Me.txtImporteDesde = New System.Windows.Forms.TextBox()
-        Me.dtFechaVencimientoDesde = New System.Windows.Forms.DateTimePicker()
-        Me.txtNumero = New System.Windows.Forms.TextBox()
-        Me.cmbBancoEmisor = New System.Windows.Forms.ComboBox()
-        Me.BancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.btn_Restablecer = New System.Windows.Forms.Button()
-        Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.dgvCheques = New System.Windows.Forms.DataGridView()
+        Me.IdChequeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NumeroOrdenDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MarcaFacturado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClienteNombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LibradorNombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Banco = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.NumeroChequeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ImporteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaIngresoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaDespositoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaVencimientoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaSalidaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DestinoSalida = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ChequeBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DetalleTab = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -100,10 +117,10 @@ Partial Class frmChequesAdministracion
         Me.Btn_Salida = New System.Windows.Forms.Button()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.GroupBox = New System.Windows.Forms.GroupBox()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.EstadoDetalle = New System.Windows.Forms.TextBox()
+        Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.BancoEmisor = New System.Windows.Forms.ComboBox()
         Me.DetalleBancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label30 = New System.Windows.Forms.Label()
@@ -133,32 +150,18 @@ Partial Class frmChequesAdministracion
         Me.NumeroCheque = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.IdChequeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NumeroOrdenDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MarcaFacturado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ClienteNombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LibradorNombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Banco = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.NumeroChequeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ImporteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaIngresoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaDespositoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaVencimientoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaSalidaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DestinoSalida = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabCheques.SuspendLayout()
         Me.BusquedaTab.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
+        Me.TableLayoutPanel8.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
         CType(Me.BancoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvCheques, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ChequeBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -166,9 +169,6 @@ Partial Class frmChequesAdministracion
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox.SuspendLayout()
         CType(Me.DetalleBancoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel7.SuspendLayout()
-        Me.TableLayoutPanel8.SuspendLayout()
-        Me.TableLayoutPanel9.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabCheques
@@ -202,6 +202,120 @@ Partial Class frmChequesAdministracion
         Me.BusquedaTab.TabIndex = 0
         Me.BusquedaTab.Text = "Cheques"
         Me.BusquedaTab.UseVisualStyleBackColor = True
+        '
+        'btn_Exportar
+        '
+        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Exportar.Location = New System.Drawing.Point(651, 222)
+        Me.btn_Exportar.Name = "btn_Exportar"
+        Me.btn_Exportar.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Exportar.TabIndex = 19
+        Me.btn_Exportar.Text = "Exportar"
+        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_Exportar.UseVisualStyleBackColor = True
+        '
+        'lbl_TotalCartera
+        '
+        Me.lbl_TotalCartera.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lbl_TotalCartera.AutoSize = True
+        Me.lbl_TotalCartera.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_TotalCartera.Location = New System.Drawing.Point(309, 695)
+        Me.lbl_TotalCartera.Name = "lbl_TotalCartera"
+        Me.lbl_TotalCartera.Size = New System.Drawing.Size(129, 24)
+        Me.lbl_TotalCartera.TabIndex = 407
+        Me.lbl_TotalCartera.Text = "$ 3.000.000.-"
+        '
+        'btn_Restablecer
+        '
+        Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Restablecer.Location = New System.Drawing.Point(757, 223)
+        Me.btn_Restablecer.Name = "btn_Restablecer"
+        Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
+        Me.btn_Restablecer.TabIndex = 22
+        Me.btn_Restablecer.Text = "Restablecer Busqueda"
+        Me.btn_Restablecer.UseVisualStyleBackColor = True
+        '
+        'Label35
+        '
+        Me.Label35.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label35.Location = New System.Drawing.Point(4, 695)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(255, 24)
+        Me.Label35.TabIndex = 406
+        Me.Label35.Text = "Total Cheques en Cartera:"
+        '
+        'lbl_TotalPantalla
+        '
+        Me.lbl_TotalPantalla.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_TotalPantalla.AutoSize = True
+        Me.lbl_TotalPantalla.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_TotalPantalla.Location = New System.Drawing.Point(839, 695)
+        Me.lbl_TotalPantalla.Name = "lbl_TotalPantalla"
+        Me.lbl_TotalPantalla.Size = New System.Drawing.Size(129, 24)
+        Me.lbl_TotalPantalla.TabIndex = 405
+        Me.lbl_TotalPantalla.Text = "$ 3.000.000.-"
+        '
+        'BtnFiltrar
+        '
+        Me.BtnFiltrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnFiltrar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnFiltrar.FlatAppearance.BorderSize = 0
+        Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
+        Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnFiltrar.Location = New System.Drawing.Point(863, 223)
+        Me.BtnFiltrar.Name = "BtnFiltrar"
+        Me.BtnFiltrar.Size = New System.Drawing.Size(100, 40)
+        Me.BtnFiltrar.TabIndex = 23
+        Me.BtnFiltrar.Text = "Buscar"
+        Me.BtnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnFiltrar.UseVisualStyleBackColor = True
+        '
+        'Label33
+        '
+        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.Location = New System.Drawing.Point(487, 695)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(261, 24)
+        Me.Label33.TabIndex = 404
+        Me.Label33.Text = "Total Cheques en Pantalla:"
+        '
+        'lbl_Msg
+        '
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Msg.Location = New System.Drawing.Point(161, 469)
+        Me.lbl_Msg.Name = "lbl_Msg"
+        Me.lbl_Msg.Size = New System.Drawing.Size(654, 25)
+        Me.lbl_Msg.TabIndex = 403
+        Me.lbl_Msg.Text = "No se han encontrado cheques con los filtros seleccionados."
+        Me.lbl_Msg.Visible = False
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(8, 6)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(962, 266)
+        Me.GroupBox1.TabIndex = 17
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Filtrar Cheques"
         '
         'TableLayoutPanel1
         '
@@ -249,6 +363,171 @@ Partial Class frmChequesAdministracion
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(956, 246)
         Me.TableLayoutPanel1.TabIndex = 408
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel9.ColumnCount = 3
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.txtImporteDesde, 0, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.txtImporteHasta, 2, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.Label29, 1, 0)
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(681, 3)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 1
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(272, 26)
+        Me.TableLayoutPanel9.TabIndex = 418
+        '
+        'txtImporteDesde
+        '
+        Me.txtImporteDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtImporteDesde.Location = New System.Drawing.Point(3, 3)
+        Me.txtImporteDesde.Name = "txtImporteDesde"
+        Me.txtImporteDesde.Size = New System.Drawing.Size(120, 21)
+        Me.txtImporteDesde.TabIndex = 12
+        '
+        'txtImporteHasta
+        '
+        Me.txtImporteHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtImporteHasta.Location = New System.Drawing.Point(149, 3)
+        Me.txtImporteHasta.Name = "txtImporteHasta"
+        Me.txtImporteHasta.Size = New System.Drawing.Size(120, 21)
+        Me.txtImporteHasta.TabIndex = 13
+        '
+        'Label29
+        '
+        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label29.AutoSize = True
+        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.Location = New System.Drawing.Point(129, 5)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(14, 16)
+        Me.Label29.TabIndex = 417
+        Me.Label29.Text = "-"
+        '
+        'TableLayoutPanel8
+        '
+        Me.TableLayoutPanel8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel8.ColumnCount = 4
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel8.Controls.Add(Me.dtFechaSalidaDesde, 0, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label28, 1, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.dtFechaSalidaHasta, 2, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.chkFechaSalida, 3, 0)
+        Me.TableLayoutPanel8.Location = New System.Drawing.Point(681, 125)
+        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
+        Me.TableLayoutPanel8.RowCount = 1
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(272, 24)
+        Me.TableLayoutPanel8.TabIndex = 418
+        '
+        'dtFechaSalidaDesde
+        '
+        Me.dtFechaSalidaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtFechaSalidaDesde.Enabled = False
+        Me.dtFechaSalidaDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFechaSalidaDesde.Location = New System.Drawing.Point(3, 3)
+        Me.dtFechaSalidaDesde.Name = "dtFechaSalidaDesde"
+        Me.dtFechaSalidaDesde.Size = New System.Drawing.Size(110, 21)
+        Me.dtFechaSalidaDesde.TabIndex = 19
+        '
+        'Label28
+        '
+        Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label28.AutoSize = True
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.Location = New System.Drawing.Point(119, 4)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(14, 16)
+        Me.Label28.TabIndex = 414
+        Me.Label28.Text = "-"
+        '
+        'dtFechaSalidaHasta
+        '
+        Me.dtFechaSalidaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtFechaSalidaHasta.Enabled = False
+        Me.dtFechaSalidaHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFechaSalidaHasta.Location = New System.Drawing.Point(139, 3)
+        Me.dtFechaSalidaHasta.Name = "dtFechaSalidaHasta"
+        Me.dtFechaSalidaHasta.Size = New System.Drawing.Size(110, 21)
+        Me.dtFechaSalidaHasta.TabIndex = 20
+        '
+        'chkFechaSalida
+        '
+        Me.chkFechaSalida.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkFechaSalida.AutoSize = True
+        Me.chkFechaSalida.Location = New System.Drawing.Point(255, 5)
+        Me.chkFechaSalida.Name = "chkFechaSalida"
+        Me.chkFechaSalida.Size = New System.Drawing.Size(14, 14)
+        Me.chkFechaSalida.TabIndex = 21
+        Me.chkFechaSalida.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel7
+        '
+        Me.TableLayoutPanel7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel7.ColumnCount = 4
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel7.Controls.Add(Me.dtFechaVencimientoDesde, 0, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.Label27, 1, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.dtFechaVencimientoHasta, 2, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.chkFechaVencimiento, 3, 0)
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(681, 95)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 1
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(272, 24)
+        Me.TableLayoutPanel7.TabIndex = 418
+        '
+        'dtFechaVencimientoDesde
+        '
+        Me.dtFechaVencimientoDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtFechaVencimientoDesde.Enabled = False
+        Me.dtFechaVencimientoDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFechaVencimientoDesde.Location = New System.Drawing.Point(3, 3)
+        Me.dtFechaVencimientoDesde.Name = "dtFechaVencimientoDesde"
+        Me.dtFechaVencimientoDesde.Size = New System.Drawing.Size(110, 21)
+        Me.dtFechaVencimientoDesde.TabIndex = 16
+        '
+        'Label27
+        '
+        Me.Label27.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label27.AutoSize = True
+        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label27.Location = New System.Drawing.Point(119, 4)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(14, 16)
+        Me.Label27.TabIndex = 413
+        Me.Label27.Text = "-"
+        '
+        'dtFechaVencimientoHasta
+        '
+        Me.dtFechaVencimientoHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtFechaVencimientoHasta.Enabled = False
+        Me.dtFechaVencimientoHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFechaVencimientoHasta.Location = New System.Drawing.Point(139, 3)
+        Me.dtFechaVencimientoHasta.Name = "dtFechaVencimientoHasta"
+        Me.dtFechaVencimientoHasta.Size = New System.Drawing.Size(110, 21)
+        Me.dtFechaVencimientoHasta.TabIndex = 17
+        '
+        'chkFechaVencimiento
+        '
+        Me.chkFechaVencimiento.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkFechaVencimiento.AutoSize = True
+        Me.chkFechaVencimiento.Location = New System.Drawing.Point(255, 5)
+        Me.chkFechaVencimiento.Name = "chkFechaVencimiento"
+        Me.chkFechaVencimiento.Size = New System.Drawing.Size(14, 14)
+        Me.chkFechaVencimiento.TabIndex = 18
+        Me.chkFechaVencimiento.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel6
         '
@@ -585,6 +864,17 @@ Partial Class frmChequesAdministracion
         Me.txtClienteNombre.Size = New System.Drawing.Size(272, 21)
         Me.txtClienteNombre.TabIndex = 1
         '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(521, 129)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(154, 16)
+        Me.Label8.TabIndex = 402
+        Me.Label8.Text = "Fecha Salida"
+        '
         'Label3
         '
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -603,6 +893,31 @@ Partial Class frmChequesAdministracion
         Me.txtLibradorNombre.Name = "txtLibradorNombre"
         Me.txtLibradorNombre.Size = New System.Drawing.Size(272, 21)
         Me.txtLibradorNombre.TabIndex = 2
+        '
+        'cmbBancoEmisor
+        '
+        Me.cmbBancoEmisor.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmbBancoEmisor.DataSource = Me.BancoBindingSource
+        Me.cmbBancoEmisor.DisplayMember = "Nombre"
+        Me.cmbBancoEmisor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbBancoEmisor.FormattingEnabled = True
+        Me.cmbBancoEmisor.Location = New System.Drawing.Point(681, 66)
+        Me.cmbBancoEmisor.Name = "cmbBancoEmisor"
+        Me.cmbBancoEmisor.Size = New System.Drawing.Size(272, 23)
+        Me.cmbBancoEmisor.TabIndex = 15
+        Me.cmbBancoEmisor.ValueMember = "BancoId"
+        '
+        'BancoBindingSource
+        '
+        Me.BancoBindingSource.DataSource = GetType(Entidades.Banco)
+        '
+        'txtNumero
+        '
+        Me.txtNumero.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtNumero.Location = New System.Drawing.Point(681, 36)
+        Me.txtNumero.Name = "txtNumero"
+        Me.txtNumero.Size = New System.Drawing.Size(272, 21)
+        Me.txtNumero.TabIndex = 14
         '
         'Label12
         '
@@ -681,265 +996,6 @@ Partial Class frmChequesAdministracion
         Me.Label5.TabIndex = 332
         Me.Label5.Text = "N° Cheque"
         '
-        'lbl_TotalCartera
-        '
-        Me.lbl_TotalCartera.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lbl_TotalCartera.AutoSize = True
-        Me.lbl_TotalCartera.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalCartera.Location = New System.Drawing.Point(309, 695)
-        Me.lbl_TotalCartera.Name = "lbl_TotalCartera"
-        Me.lbl_TotalCartera.Size = New System.Drawing.Size(129, 24)
-        Me.lbl_TotalCartera.TabIndex = 407
-        Me.lbl_TotalCartera.Text = "$ 3.000.000.-"
-        '
-        'Label35
-        '
-        Me.Label35.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label35.AutoSize = True
-        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(4, 695)
-        Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(255, 24)
-        Me.Label35.TabIndex = 406
-        Me.Label35.Text = "Total Cheques en Cartera:"
-        '
-        'lbl_TotalPantalla
-        '
-        Me.lbl_TotalPantalla.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_TotalPantalla.AutoSize = True
-        Me.lbl_TotalPantalla.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalPantalla.Location = New System.Drawing.Point(839, 695)
-        Me.lbl_TotalPantalla.Name = "lbl_TotalPantalla"
-        Me.lbl_TotalPantalla.Size = New System.Drawing.Size(129, 24)
-        Me.lbl_TotalPantalla.TabIndex = 405
-        Me.lbl_TotalPantalla.Text = "$ 3.000.000.-"
-        '
-        'Label33
-        '
-        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(487, 695)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(261, 24)
-        Me.Label33.TabIndex = 404
-        Me.Label33.Text = "Total Cheques en Pantalla:"
-        '
-        'lbl_Msg
-        '
-        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(161, 469)
-        Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(654, 25)
-        Me.lbl_Msg.TabIndex = 403
-        Me.lbl_Msg.Text = "No se han encontrado cheques con los filtros seleccionados."
-        Me.lbl_Msg.Visible = False
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
-        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 6)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(962, 266)
-        Me.GroupBox1.TabIndex = 17
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Filtrar Cheques"
-        '
-        'btn_Exportar
-        '
-        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
-        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Exportar.Location = New System.Drawing.Point(651, 222)
-        Me.btn_Exportar.Name = "btn_Exportar"
-        Me.btn_Exportar.Size = New System.Drawing.Size(100, 40)
-        Me.btn_Exportar.TabIndex = 19
-        Me.btn_Exportar.Text = "Exportar"
-        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_Exportar.UseVisualStyleBackColor = True
-        '
-        'Label29
-        '
-        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label29.AutoSize = True
-        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label29.Location = New System.Drawing.Point(129, 5)
-        Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(14, 16)
-        Me.Label29.TabIndex = 417
-        Me.Label29.Text = "-"
-        '
-        'txtImporteHasta
-        '
-        Me.txtImporteHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtImporteHasta.Location = New System.Drawing.Point(149, 3)
-        Me.txtImporteHasta.Name = "txtImporteHasta"
-        Me.txtImporteHasta.Size = New System.Drawing.Size(120, 21)
-        Me.txtImporteHasta.TabIndex = 13
-        '
-        'dtFechaSalidaHasta
-        '
-        Me.dtFechaSalidaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtFechaSalidaHasta.Enabled = False
-        Me.dtFechaSalidaHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFechaSalidaHasta.Location = New System.Drawing.Point(139, 3)
-        Me.dtFechaSalidaHasta.Name = "dtFechaSalidaHasta"
-        Me.dtFechaSalidaHasta.Size = New System.Drawing.Size(110, 21)
-        Me.dtFechaSalidaHasta.TabIndex = 20
-        '
-        'Label28
-        '
-        Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label28.AutoSize = True
-        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label28.Location = New System.Drawing.Point(119, 4)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(14, 16)
-        Me.Label28.TabIndex = 414
-        Me.Label28.Text = "-"
-        '
-        'Label27
-        '
-        Me.Label27.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label27.AutoSize = True
-        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label27.Location = New System.Drawing.Point(119, 4)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(14, 16)
-        Me.Label27.TabIndex = 413
-        Me.Label27.Text = "-"
-        '
-        'dtFechaVencimientoHasta
-        '
-        Me.dtFechaVencimientoHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtFechaVencimientoHasta.Enabled = False
-        Me.dtFechaVencimientoHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFechaVencimientoHasta.Location = New System.Drawing.Point(139, 3)
-        Me.dtFechaVencimientoHasta.Name = "dtFechaVencimientoHasta"
-        Me.dtFechaVencimientoHasta.Size = New System.Drawing.Size(110, 21)
-        Me.dtFechaVencimientoHasta.TabIndex = 17
-        '
-        'chkFechaSalida
-        '
-        Me.chkFechaSalida.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chkFechaSalida.AutoSize = True
-        Me.chkFechaSalida.Location = New System.Drawing.Point(255, 5)
-        Me.chkFechaSalida.Name = "chkFechaSalida"
-        Me.chkFechaSalida.Size = New System.Drawing.Size(14, 14)
-        Me.chkFechaSalida.TabIndex = 21
-        Me.chkFechaSalida.UseVisualStyleBackColor = True
-        '
-        'chkFechaVencimiento
-        '
-        Me.chkFechaVencimiento.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chkFechaVencimiento.AutoSize = True
-        Me.chkFechaVencimiento.Location = New System.Drawing.Point(255, 5)
-        Me.chkFechaVencimiento.Name = "chkFechaVencimiento"
-        Me.chkFechaVencimiento.Size = New System.Drawing.Size(14, 14)
-        Me.chkFechaVencimiento.TabIndex = 18
-        Me.chkFechaVencimiento.UseVisualStyleBackColor = True
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(521, 129)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(154, 16)
-        Me.Label8.TabIndex = 402
-        Me.Label8.Text = "Fecha Salida"
-        '
-        'dtFechaSalidaDesde
-        '
-        Me.dtFechaSalidaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtFechaSalidaDesde.Enabled = False
-        Me.dtFechaSalidaDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFechaSalidaDesde.Location = New System.Drawing.Point(3, 3)
-        Me.dtFechaSalidaDesde.Name = "dtFechaSalidaDesde"
-        Me.dtFechaSalidaDesde.Size = New System.Drawing.Size(110, 21)
-        Me.dtFechaSalidaDesde.TabIndex = 19
-        '
-        'txtImporteDesde
-        '
-        Me.txtImporteDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtImporteDesde.Location = New System.Drawing.Point(3, 3)
-        Me.txtImporteDesde.Name = "txtImporteDesde"
-        Me.txtImporteDesde.Size = New System.Drawing.Size(120, 21)
-        Me.txtImporteDesde.TabIndex = 12
-        '
-        'dtFechaVencimientoDesde
-        '
-        Me.dtFechaVencimientoDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtFechaVencimientoDesde.Enabled = False
-        Me.dtFechaVencimientoDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFechaVencimientoDesde.Location = New System.Drawing.Point(3, 3)
-        Me.dtFechaVencimientoDesde.Name = "dtFechaVencimientoDesde"
-        Me.dtFechaVencimientoDesde.Size = New System.Drawing.Size(110, 21)
-        Me.dtFechaVencimientoDesde.TabIndex = 16
-        '
-        'txtNumero
-        '
-        Me.txtNumero.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtNumero.Location = New System.Drawing.Point(681, 36)
-        Me.txtNumero.Name = "txtNumero"
-        Me.txtNumero.Size = New System.Drawing.Size(272, 21)
-        Me.txtNumero.TabIndex = 14
-        '
-        'cmbBancoEmisor
-        '
-        Me.cmbBancoEmisor.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmbBancoEmisor.DataSource = Me.BancoBindingSource
-        Me.cmbBancoEmisor.DisplayMember = "Nombre"
-        Me.cmbBancoEmisor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbBancoEmisor.FormattingEnabled = True
-        Me.cmbBancoEmisor.Location = New System.Drawing.Point(681, 65)
-        Me.cmbBancoEmisor.Name = "cmbBancoEmisor"
-        Me.cmbBancoEmisor.Size = New System.Drawing.Size(272, 23)
-        Me.cmbBancoEmisor.TabIndex = 15
-        Me.cmbBancoEmisor.ValueMember = "BancoId"
-        '
-        'BancoBindingSource
-        '
-        Me.BancoBindingSource.DataSource = GetType(Entidades.Banco)
-        '
-        'btn_Restablecer
-        '
-        Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restablecer.Location = New System.Drawing.Point(757, 223)
-        Me.btn_Restablecer.Name = "btn_Restablecer"
-        Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
-        Me.btn_Restablecer.TabIndex = 22
-        Me.btn_Restablecer.Text = "Restablecer Busqueda"
-        Me.btn_Restablecer.UseVisualStyleBackColor = True
-        '
-        'BtnFiltrar
-        '
-        Me.BtnFiltrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnFiltrar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnFiltrar.FlatAppearance.BorderSize = 0
-        Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
-        Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnFiltrar.Location = New System.Drawing.Point(863, 223)
-        Me.BtnFiltrar.Name = "BtnFiltrar"
-        Me.BtnFiltrar.Size = New System.Drawing.Size(100, 40)
-        Me.BtnFiltrar.TabIndex = 23
-        Me.BtnFiltrar.Text = "Buscar"
-        Me.BtnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.BtnFiltrar.UseVisualStyleBackColor = True
-        '
         'dgvCheques
         '
         Me.dgvCheques.AllowUserToAddRows = False
@@ -972,6 +1028,135 @@ Partial Class frmChequesAdministracion
         Me.dgvCheques.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvCheques.Size = New System.Drawing.Size(960, 406)
         Me.dgvCheques.TabIndex = 24
+        '
+        'IdChequeDataGridViewTextBoxColumn
+        '
+        Me.IdChequeDataGridViewTextBoxColumn.DataPropertyName = "IdCheque"
+        Me.IdChequeDataGridViewTextBoxColumn.HeaderText = "IdCheque"
+        Me.IdChequeDataGridViewTextBoxColumn.Name = "IdChequeDataGridViewTextBoxColumn"
+        Me.IdChequeDataGridViewTextBoxColumn.ReadOnly = True
+        Me.IdChequeDataGridViewTextBoxColumn.Visible = False
+        Me.IdChequeDataGridViewTextBoxColumn.Width = 5
+        '
+        'NumeroOrdenDataGridViewTextBoxColumn
+        '
+        Me.NumeroOrdenDataGridViewTextBoxColumn.DataPropertyName = "NumeroOrden"
+        Me.NumeroOrdenDataGridViewTextBoxColumn.FillWeight = 19.58897!
+        Me.NumeroOrdenDataGridViewTextBoxColumn.HeaderText = "Orden"
+        Me.NumeroOrdenDataGridViewTextBoxColumn.Name = "NumeroOrdenDataGridViewTextBoxColumn"
+        Me.NumeroOrdenDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NumeroOrdenDataGridViewTextBoxColumn.Width = 65
+        '
+        'MarcaFacturado
+        '
+        Me.MarcaFacturado.DataPropertyName = "MarcaFacturado"
+        Me.MarcaFacturado.FillWeight = 19.52634!
+        Me.MarcaFacturado.HeaderText = "Marca Fact."
+        Me.MarcaFacturado.Name = "MarcaFacturado"
+        Me.MarcaFacturado.ReadOnly = True
+        Me.MarcaFacturado.Width = 65
+        '
+        'ClienteNombreDataGridViewTextBoxColumn
+        '
+        Me.ClienteNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ClienteNombreDataGridViewTextBoxColumn.DataPropertyName = "ClienteNombre"
+        Me.ClienteNombreDataGridViewTextBoxColumn.FillWeight = 35.63578!
+        Me.ClienteNombreDataGridViewTextBoxColumn.HeaderText = "Cliente"
+        Me.ClienteNombreDataGridViewTextBoxColumn.Name = "ClienteNombreDataGridViewTextBoxColumn"
+        Me.ClienteNombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'LibradorNombreDataGridViewTextBoxColumn
+        '
+        Me.LibradorNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.LibradorNombreDataGridViewTextBoxColumn.DataPropertyName = "LibradorNombre"
+        Me.LibradorNombreDataGridViewTextBoxColumn.FillWeight = 38.51844!
+        Me.LibradorNombreDataGridViewTextBoxColumn.HeaderText = "Librador"
+        Me.LibradorNombreDataGridViewTextBoxColumn.Name = "LibradorNombreDataGridViewTextBoxColumn"
+        Me.LibradorNombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'Banco
+        '
+        Me.Banco.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Banco.DataPropertyName = "BancoEmisorId"
+        Me.Banco.DataSource = Me.BancoBindingSource
+        Me.Banco.DisplayMember = "Nombre"
+        Me.Banco.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
+        Me.Banco.FillWeight = 41.91894!
+        Me.Banco.HeaderText = "Banco"
+        Me.Banco.Name = "Banco"
+        Me.Banco.ReadOnly = True
+        Me.Banco.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Banco.ValueMember = "BancoId"
+        '
+        'NumeroChequeDataGridViewTextBoxColumn
+        '
+        Me.NumeroChequeDataGridViewTextBoxColumn.DataPropertyName = "NumeroCheque"
+        Me.NumeroChequeDataGridViewTextBoxColumn.FillWeight = 19.58897!
+        Me.NumeroChequeDataGridViewTextBoxColumn.HeaderText = "Ch. Nro."
+        Me.NumeroChequeDataGridViewTextBoxColumn.Name = "NumeroChequeDataGridViewTextBoxColumn"
+        Me.NumeroChequeDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NumeroChequeDataGridViewTextBoxColumn.Width = 75
+        '
+        'ImporteDataGridViewTextBoxColumn
+        '
+        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
+        Me.ImporteDataGridViewTextBoxColumn.FillWeight = 19.58897!
+        Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Monto"
+        Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
+        Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ImporteDataGridViewTextBoxColumn.Width = 65
+        '
+        'FechaIngresoDataGridViewTextBoxColumn
+        '
+        Me.FechaIngresoDataGridViewTextBoxColumn.DataPropertyName = "FechaIngreso"
+        Me.FechaIngresoDataGridViewTextBoxColumn.FillWeight = 19.58897!
+        Me.FechaIngresoDataGridViewTextBoxColumn.HeaderText = "F. Ingreso"
+        Me.FechaIngresoDataGridViewTextBoxColumn.Name = "FechaIngresoDataGridViewTextBoxColumn"
+        Me.FechaIngresoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaIngresoDataGridViewTextBoxColumn.Width = 80
+        '
+        'FechaDespositoDataGridViewTextBoxColumn
+        '
+        Me.FechaDespositoDataGridViewTextBoxColumn.DataPropertyName = "FechaDesposito"
+        Me.FechaDespositoDataGridViewTextBoxColumn.FillWeight = 176.5132!
+        Me.FechaDespositoDataGridViewTextBoxColumn.HeaderText = "F. Depósito"
+        Me.FechaDespositoDataGridViewTextBoxColumn.Name = "FechaDespositoDataGridViewTextBoxColumn"
+        Me.FechaDespositoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaDespositoDataGridViewTextBoxColumn.Width = 90
+        '
+        'FechaVencimientoDataGridViewTextBoxColumn
+        '
+        Me.FechaVencimientoDataGridViewTextBoxColumn.DataPropertyName = "FechaVencimiento"
+        Me.FechaVencimientoDataGridViewTextBoxColumn.FillWeight = 357.4712!
+        Me.FechaVencimientoDataGridViewTextBoxColumn.HeaderText = "F. Vto."
+        Me.FechaVencimientoDataGridViewTextBoxColumn.Name = "FechaVencimientoDataGridViewTextBoxColumn"
+        Me.FechaVencimientoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaVencimientoDataGridViewTextBoxColumn.Width = 70
+        '
+        'FechaSalidaDataGridViewTextBoxColumn
+        '
+        Me.FechaSalidaDataGridViewTextBoxColumn.DataPropertyName = "FechaSalida"
+        Me.FechaSalidaDataGridViewTextBoxColumn.FillWeight = 368.3036!
+        Me.FechaSalidaDataGridViewTextBoxColumn.HeaderText = "F. Salida"
+        Me.FechaSalidaDataGridViewTextBoxColumn.Name = "FechaSalidaDataGridViewTextBoxColumn"
+        Me.FechaSalidaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaSalidaDataGridViewTextBoxColumn.Width = 75
+        '
+        'Estado
+        '
+        Me.Estado.DataPropertyName = "Estado"
+        Me.Estado.HeaderText = "Estado"
+        Me.Estado.Name = "Estado"
+        Me.Estado.ReadOnly = True
+        Me.Estado.Width = 75
+        '
+        'DestinoSalida
+        '
+        Me.DestinoSalida.DataPropertyName = "DestinoSalida"
+        Me.DestinoSalida.HeaderText = "Dest. Sali"
+        Me.DestinoSalida.Name = "DestinoSalida"
+        Me.DestinoSalida.ReadOnly = True
+        Me.DestinoSalida.Width = 80
         '
         'ChequeBindingSource
         '
@@ -1075,21 +1260,6 @@ Partial Class frmChequesAdministracion
         Me.Label25.TabIndex = 91
         Me.Label25.Text = "(*) Campos obligatorios."
         '
-        'Btn_Cancelar
-        '
-        Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
-        Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(748, 465)
-        Me.Btn_Cancelar.Name = "Btn_Cancelar"
-        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Cancelar.TabIndex = 90
-        Me.Btn_Cancelar.Text = "Cancelar"
-        Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Cancelar.UseVisualStyleBackColor = True
-        '
         'GroupBox
         '
         Me.GroupBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1151,6 +1321,21 @@ Partial Class frmChequesAdministracion
         Me.EstadoDetalle.ReadOnly = True
         Me.EstadoDetalle.Size = New System.Drawing.Size(680, 21)
         Me.EstadoDetalle.TabIndex = 171
+        '
+        'Btn_Cancelar
+        '
+        Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
+        Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(748, 465)
+        Me.Btn_Cancelar.Name = "Btn_Cancelar"
+        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Cancelar.TabIndex = 90
+        Me.Btn_Cancelar.Text = "Cancelar"
+        Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Cancelar.UseVisualStyleBackColor = True
         '
         'BancoEmisor
         '
@@ -1435,191 +1620,6 @@ Partial Class frmChequesAdministracion
         Me.Label20.TabIndex = 142
         Me.Label20.Text = "Fecha Vencimiento (*)"
         '
-        'TableLayoutPanel7
-        '
-        Me.TableLayoutPanel7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel7.ColumnCount = 4
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel7.Controls.Add(Me.dtFechaVencimientoDesde, 0, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.Label27, 1, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.dtFechaVencimientoHasta, 2, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.chkFechaVencimiento, 3, 0)
-        Me.TableLayoutPanel7.Location = New System.Drawing.Point(681, 95)
-        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
-        Me.TableLayoutPanel7.RowCount = 1
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(272, 24)
-        Me.TableLayoutPanel7.TabIndex = 418
-        '
-        'TableLayoutPanel8
-        '
-        Me.TableLayoutPanel8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel8.ColumnCount = 4
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel8.Controls.Add(Me.dtFechaSalidaDesde, 0, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.Label28, 1, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.dtFechaSalidaHasta, 2, 0)
-        Me.TableLayoutPanel8.Controls.Add(Me.chkFechaSalida, 3, 0)
-        Me.TableLayoutPanel8.Location = New System.Drawing.Point(681, 125)
-        Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
-        Me.TableLayoutPanel8.RowCount = 1
-        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(272, 24)
-        Me.TableLayoutPanel8.TabIndex = 418
-        '
-        'TableLayoutPanel9
-        '
-        Me.TableLayoutPanel9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel9.ColumnCount = 3
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel9.Controls.Add(Me.txtImporteDesde, 0, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.txtImporteHasta, 2, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.Label29, 1, 0)
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(681, 3)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 1
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(272, 26)
-        Me.TableLayoutPanel9.TabIndex = 418
-        '
-        'IdChequeDataGridViewTextBoxColumn
-        '
-        Me.IdChequeDataGridViewTextBoxColumn.DataPropertyName = "IdCheque"
-        Me.IdChequeDataGridViewTextBoxColumn.HeaderText = "IdCheque"
-        Me.IdChequeDataGridViewTextBoxColumn.Name = "IdChequeDataGridViewTextBoxColumn"
-        Me.IdChequeDataGridViewTextBoxColumn.ReadOnly = True
-        Me.IdChequeDataGridViewTextBoxColumn.Visible = False
-        Me.IdChequeDataGridViewTextBoxColumn.Width = 5
-        '
-        'NumeroOrdenDataGridViewTextBoxColumn
-        '
-        Me.NumeroOrdenDataGridViewTextBoxColumn.DataPropertyName = "NumeroOrden"
-        Me.NumeroOrdenDataGridViewTextBoxColumn.FillWeight = 19.58897!
-        Me.NumeroOrdenDataGridViewTextBoxColumn.HeaderText = "Orden"
-        Me.NumeroOrdenDataGridViewTextBoxColumn.Name = "NumeroOrdenDataGridViewTextBoxColumn"
-        Me.NumeroOrdenDataGridViewTextBoxColumn.ReadOnly = True
-        Me.NumeroOrdenDataGridViewTextBoxColumn.Width = 65
-        '
-        'MarcaFacturado
-        '
-        Me.MarcaFacturado.DataPropertyName = "MarcaFacturado"
-        Me.MarcaFacturado.FillWeight = 19.52634!
-        Me.MarcaFacturado.HeaderText = "Marca Fact."
-        Me.MarcaFacturado.Name = "MarcaFacturado"
-        Me.MarcaFacturado.ReadOnly = True
-        Me.MarcaFacturado.Width = 65
-        '
-        'ClienteNombreDataGridViewTextBoxColumn
-        '
-        Me.ClienteNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ClienteNombreDataGridViewTextBoxColumn.DataPropertyName = "ClienteNombre"
-        Me.ClienteNombreDataGridViewTextBoxColumn.FillWeight = 35.63578!
-        Me.ClienteNombreDataGridViewTextBoxColumn.HeaderText = "Cliente"
-        Me.ClienteNombreDataGridViewTextBoxColumn.Name = "ClienteNombreDataGridViewTextBoxColumn"
-        Me.ClienteNombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'LibradorNombreDataGridViewTextBoxColumn
-        '
-        Me.LibradorNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.LibradorNombreDataGridViewTextBoxColumn.DataPropertyName = "LibradorNombre"
-        Me.LibradorNombreDataGridViewTextBoxColumn.FillWeight = 38.51844!
-        Me.LibradorNombreDataGridViewTextBoxColumn.HeaderText = "Librador"
-        Me.LibradorNombreDataGridViewTextBoxColumn.Name = "LibradorNombreDataGridViewTextBoxColumn"
-        Me.LibradorNombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'Banco
-        '
-        Me.Banco.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Banco.DataPropertyName = "BancoEmisorId"
-        Me.Banco.DataSource = Me.BancoBindingSource
-        Me.Banco.DisplayMember = "Nombre"
-        Me.Banco.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
-        Me.Banco.FillWeight = 41.91894!
-        Me.Banco.HeaderText = "Banco"
-        Me.Banco.Name = "Banco"
-        Me.Banco.ReadOnly = True
-        Me.Banco.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Banco.ValueMember = "BancoId"
-        '
-        'NumeroChequeDataGridViewTextBoxColumn
-        '
-        Me.NumeroChequeDataGridViewTextBoxColumn.DataPropertyName = "NumeroCheque"
-        Me.NumeroChequeDataGridViewTextBoxColumn.FillWeight = 19.58897!
-        Me.NumeroChequeDataGridViewTextBoxColumn.HeaderText = "Ch. Nro."
-        Me.NumeroChequeDataGridViewTextBoxColumn.Name = "NumeroChequeDataGridViewTextBoxColumn"
-        Me.NumeroChequeDataGridViewTextBoxColumn.ReadOnly = True
-        Me.NumeroChequeDataGridViewTextBoxColumn.Width = 75
-        '
-        'ImporteDataGridViewTextBoxColumn
-        '
-        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
-        Me.ImporteDataGridViewTextBoxColumn.FillWeight = 19.58897!
-        Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Monto"
-        Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
-        Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
-        Me.ImporteDataGridViewTextBoxColumn.Width = 65
-        '
-        'FechaIngresoDataGridViewTextBoxColumn
-        '
-        Me.FechaIngresoDataGridViewTextBoxColumn.DataPropertyName = "FechaIngreso"
-        Me.FechaIngresoDataGridViewTextBoxColumn.FillWeight = 19.58897!
-        Me.FechaIngresoDataGridViewTextBoxColumn.HeaderText = "F. Ingreso"
-        Me.FechaIngresoDataGridViewTextBoxColumn.Name = "FechaIngresoDataGridViewTextBoxColumn"
-        Me.FechaIngresoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaIngresoDataGridViewTextBoxColumn.Width = 80
-        '
-        'FechaDespositoDataGridViewTextBoxColumn
-        '
-        Me.FechaDespositoDataGridViewTextBoxColumn.DataPropertyName = "FechaDesposito"
-        Me.FechaDespositoDataGridViewTextBoxColumn.FillWeight = 176.5132!
-        Me.FechaDespositoDataGridViewTextBoxColumn.HeaderText = "F. Depósito"
-        Me.FechaDespositoDataGridViewTextBoxColumn.Name = "FechaDespositoDataGridViewTextBoxColumn"
-        Me.FechaDespositoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaDespositoDataGridViewTextBoxColumn.Width = 90
-        '
-        'FechaVencimientoDataGridViewTextBoxColumn
-        '
-        Me.FechaVencimientoDataGridViewTextBoxColumn.DataPropertyName = "FechaVencimiento"
-        Me.FechaVencimientoDataGridViewTextBoxColumn.FillWeight = 357.4712!
-        Me.FechaVencimientoDataGridViewTextBoxColumn.HeaderText = "F. Vto."
-        Me.FechaVencimientoDataGridViewTextBoxColumn.Name = "FechaVencimientoDataGridViewTextBoxColumn"
-        Me.FechaVencimientoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaVencimientoDataGridViewTextBoxColumn.Width = 70
-        '
-        'FechaSalidaDataGridViewTextBoxColumn
-        '
-        Me.FechaSalidaDataGridViewTextBoxColumn.DataPropertyName = "FechaSalida"
-        Me.FechaSalidaDataGridViewTextBoxColumn.FillWeight = 368.3036!
-        Me.FechaSalidaDataGridViewTextBoxColumn.HeaderText = "F. Salida"
-        Me.FechaSalidaDataGridViewTextBoxColumn.Name = "FechaSalidaDataGridViewTextBoxColumn"
-        Me.FechaSalidaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaSalidaDataGridViewTextBoxColumn.Width = 75
-        '
-        'Estado
-        '
-        Me.Estado.DataPropertyName = "Estado"
-        Me.Estado.HeaderText = "Estado"
-        Me.Estado.Name = "Estado"
-        Me.Estado.ReadOnly = True
-        Me.Estado.Width = 75
-        '
-        'DestinoSalida
-        '
-        Me.DestinoSalida.DataPropertyName = "DestinoSalida"
-        Me.DestinoSalida.HeaderText = "Dest. Sali"
-        Me.DestinoSalida.Name = "DestinoSalida"
-        Me.DestinoSalida.ReadOnly = True
-        Me.DestinoSalida.Width = 80
-        '
         'frmChequesAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1633,8 +1633,15 @@ Partial Class frmChequesAdministracion
         Me.TabCheques.ResumeLayout(False)
         Me.BusquedaTab.ResumeLayout(False)
         Me.BusquedaTab.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        Me.TableLayoutPanel9.PerformLayout()
+        Me.TableLayoutPanel8.ResumeLayout(False)
+        Me.TableLayoutPanel8.PerformLayout()
+        Me.TableLayoutPanel7.ResumeLayout(False)
+        Me.TableLayoutPanel7.PerformLayout()
         Me.TableLayoutPanel6.ResumeLayout(False)
         Me.TableLayoutPanel6.PerformLayout()
         Me.TableLayoutPanel5.ResumeLayout(False)
@@ -1645,7 +1652,6 @@ Partial Class frmChequesAdministracion
         Me.TableLayoutPanel3.PerformLayout()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
         CType(Me.BancoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvCheques, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ChequeBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1656,12 +1662,6 @@ Partial Class frmChequesAdministracion
         Me.GroupBox.ResumeLayout(False)
         Me.GroupBox.PerformLayout()
         CType(Me.DetalleBancoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel7.ResumeLayout(False)
-        Me.TableLayoutPanel7.PerformLayout()
-        Me.TableLayoutPanel8.ResumeLayout(False)
-        Me.TableLayoutPanel8.PerformLayout()
-        Me.TableLayoutPanel9.ResumeLayout(False)
-        Me.TableLayoutPanel9.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

@@ -42,7 +42,7 @@ Partial Class DialogIngresos
         Me.BtnPagar.TabIndex = 2
         Me.BtnPagar.Text = "Pagar Ahora"
         Me.BtnPagar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolDialog.SetToolTip(Me.BtnPagar, "Al hacer click aquí la mercadería ingresada podrá ser abonada de manera parcial o" & _
+        Me.ToolDialog.SetToolTip(Me.BtnPagar, "Al hacer click aquí la mercadería ingresada podrá ser abonada de manera parcial o" &
                 " total." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Dicho pago quedará registrado en la cuenta corriente del proveedor.")
         Me.BtnPagar.UseVisualStyleBackColor = True
         '
@@ -58,7 +58,7 @@ Partial Class DialogIngresos
         Me.BtnCuentaCorriente.TabIndex = 3
         Me.BtnCuentaCorriente.Text = "Cuenta Corriente"
         Me.BtnCuentaCorriente.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolDialog.SetToolTip(Me.BtnCuentaCorriente, "Al hacer click aquí la mercadería ingresada quedará registrada en la cuenta corri" & _
+        Me.ToolDialog.SetToolTip(Me.BtnCuentaCorriente, "Al hacer click aquí la mercadería ingresada quedará registrada en la cuenta corri" &
                 "ente del proveedor.")
         Me.BtnCuentaCorriente.UseVisualStyleBackColor = True
         '

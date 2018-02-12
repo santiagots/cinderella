@@ -2,9 +2,10 @@
 Imports Negocio
 
 Public Class frmConfiguracion
-    Dim NSucursales As New Negocio.NegSucursales
-    Dim NListas As New Negocio.NegListasPrecio
-    Dim NegErrores As New Negocio.NegManejadorErrores
+    Dim NSucursales As New NegSucursales
+    Dim NListas As New NegListasPrecio
+    Dim NegErrores As New NegManejadorErrores
+    Dim NStock As New NegStock
 
     'Load del formulario.
     Private Sub frmConfiguracion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -53,8 +54,6 @@ Public Class frmConfiguracion
         'Cargo los valores de Mailing.
         txtPort.Text = My.Settings("MailPort")
         txtSmtp.Text = My.Settings("MailHost")
-        txtUsuario.Text = My.Settings("MailUsuario")
-        txtPassword.Text = My.Settings("MailPassword")
 
         'Cargo los valores del Controlador.
         If My.Settings("ControladorStatus") = "SI" Then
@@ -85,6 +84,7 @@ Public Class frmConfiguracion
         Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
         Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
         Cb_TiempoComprobacionNotasPedidos.SelectedItem = CStr(CInt((My.Settings("TemporizadorNotasPedido") / 60000)))
+        Cb_TiempoComprobacionOrdenesCompra.SelectedItem = CStr(CInt((My.Settings("TemporizadorOrdenesCompra") / 60000)))
 
 
         'Comprobacion de internet.
@@ -98,6 +98,22 @@ Public Class frmConfiguracion
         'cargo los valoes del tab Host
         txtIPHost.Text = My.Settings.IpHost
         txtPuertoHost.Text = My.Settings.PuertoHost
+
+        'cargo los valoes del tab Stock
+        If My.Settings.GeneracionOrdenCompraAutomatica Then
+            ROrdenCompraAutomaticaSI.Checked = True
+        Else
+            ROrdenCompraAutomaticaNo.Checked = True
+        End If
+        CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
+
+        Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
+
+        If (fechaUltimoCalculo.HasValue) Then
+            txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
+        Else
+            txtFechaUltimoCalculoventaMensual.Text = "No calculado"
+        End If
 
         EvaluarPermisos()
 
@@ -160,11 +176,9 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If txtPort.Text <> "" And txtSmtp.Text <> "" And txtUsuario.Text <> "" And txtPassword.Text <> "" Then
+            If txtPort.Text <> "" And txtSmtp.Text <> "" Then
                 My.Settings.MailPort = Trim(txtPort.Text)
                 My.Settings.MailHost = Trim(txtSmtp.Text)
-                My.Settings.MailUsuario = Trim(txtUsuario.Text)
-                My.Settings.MailPassword = Trim(txtPassword.Text)
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -229,6 +243,7 @@ Public Class frmConfiguracion
                 My.Settings.TemporizadorMovimientos = (Cb_TiempoComprobacionMovimientos.SelectedItem * 60000)
                 My.Settings.TemporizadorCheques = (Cb_TiempoComprobacionCheques.SelectedItem * 60000)
                 My.Settings.TemporizadorNotasPedido = (Cb_TiempoComprobacionNotasPedidos.SelectedItem * 60000)
+                My.Settings.TemporizadorOrdenesCompra = (Cb_TiempoComprobacionOrdenesCompra.SelectedItem * 60000)
 
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -324,6 +339,26 @@ Public Class frmConfiguracion
             Else
                 MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub btnModificarStock_Click(sender As Object, e As EventArgs) Handles btnModificarStock.Click
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+
+        Try
+            If ROrdenCompraAutomaticaSI.Checked Then
+                My.Settings.GeneracionOrdenCompraAutomatica = True
+            Else
+                My.Settings.GeneracionOrdenCompraAutomatica = False
+            End If
+            My.Settings.PeriodoCaulculoVentaMensual = CbPeriodoActualizacionVentaMensual.SelectedItem
+            MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -438,7 +473,7 @@ Public Class frmConfiguracion
 
         Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
         negListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), False)
-        MessageBox.Show("La memoria cache se ha actualizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show("La memoria cache se ha actualizado correctamente.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -450,5 +485,23 @@ Public Class frmConfiguracion
     Private Sub RUsoMemoriaChaceSi_CheckedChanged(sender As Object, e As EventArgs) Handles RUsoMemoriaChaceSi.CheckedChanged
         Cb_TiempoActualizacionMemoriaChace.Enabled = True
         btn_ActualizarListaProductos.Enabled = True
+    End Sub
+
+    Private Sub btnCalcularVentaMensualProducto_Click(sender As Object, e As EventArgs) Handles btnCalcularVentaMensualProducto.Click
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            'Calculo el total de ventas de los poductos en sotck en los ultimos 30 dias
+            NStock.CalculaVentaMensual(My.Settings.Sucursal, Date.Now().AddDays(-30), Date.Now())
+            'Actualizo la fecha del calculo
+            NStock.ActualizarUltimoCalculoVentaMensual(My.Settings.Sucursal)
+
+            txtFechaUltimoCalculoventaMensual.Text = Date.Now.ToString("yyyy/MM/dd")
+
+            MessageBox.Show("Se han actualizado las ventas mensuales para los productos en stock de forma exitosa.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As Exception
+            MessageBox.Show("Ha ocurrido un error al actualizar las ventas mensuales para los productos en stock. Por favor, Comuníqueselo al administrador", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 End Class

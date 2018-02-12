@@ -1,4 +1,7 @@
-﻿Public Class frmStock
+﻿Imports System.Configuration
+Imports Datos
+
+Public Class frmStock
     Dim Funciones As New Funciones
     Dim NegStock As New Negocio.NegStock
     Dim NegStockBitacora As New Negocio.NegStockBitacora
@@ -75,6 +78,7 @@
         txt_Minimo.Clear()
         txt_Optimo.Clear()
         txt_Codigo.Clear()
+        txt_ventaMensual.Clear()
         Cb_Sucursales.SelectedValue = id_Sucursal
         chk_Habilitado.Checked = True
     End Sub
@@ -85,6 +89,7 @@
         txt_Minimo_mod.Clear()
         txt_Optimo_mod.Clear()
         txt_Codigo_mod.Clear()
+        txt_ventaMensual_mod.Clear()
         txt_Motivo.Clear()
         lbl_Usuario.Text = "- - - - -"
         lbl_Fecha.Text = "- - - - -"
@@ -155,8 +160,9 @@
                 DG_Stock.Columns("Minimo").DisplayIndex = 5
                 DG_Stock.Columns("Actual").DisplayIndex = 6
                 DG_Stock.Columns("Optimo").DisplayIndex = 7
+                DG_Stock.Columns("VentaMensual").DisplayIndex = 8
                 DG_Stock.Columns("Modificar").DisplayIndex = 9
-                DG_Stock.Columns("Eliminar").DisplayIndex = 9
+                DG_Stock.Columns("Eliminar").DisplayIndex = 10
                 DG_Stock.Refresh()
                 lbl_Msg.Visible = False
             Else
@@ -178,6 +184,9 @@
                 Cb_Sucursales.Enabled = False
                 Cb_Sucursales_mod.Enabled = False
             End If
+
+            btn_Exportar.Enabled = Negocio.Funciones.HayInternet
+            btn_Importar.Enabled = Negocio.Funciones.HayInternet
 
             'AGREGADO PARA EL FUNCIONAMIENTO CORRECTO DEPENDIENDO DE LAS PATENTES.
             Dim objusuario As New Negocio.Usuario
@@ -220,8 +229,9 @@
                 DG_Stock.Columns("Minimo").DisplayIndex = 5
                 DG_Stock.Columns("Actual").DisplayIndex = 6
                 DG_Stock.Columns("Optimo").DisplayIndex = 7
+                DG_Stock.Columns("VentaMensual").DisplayIndex = 8
                 DG_Stock.Columns("Modificar").DisplayIndex = 9
-                DG_Stock.Columns("Eliminar").DisplayIndex = 9
+                DG_Stock.Columns("Eliminar").DisplayIndex = 10
                 DG_Stock.Refresh()
                 lbl_Msg.Visible = False
             Else
@@ -348,8 +358,9 @@
                 DG_Stock.Columns("Minimo").DisplayIndex = 5
                 DG_Stock.Columns("Actual").DisplayIndex = 6
                 DG_Stock.Columns("Optimo").DisplayIndex = 7
+                DG_Stock.Columns("VentaMensual").DisplayIndex = 8
                 DG_Stock.Columns("Modificar").DisplayIndex = 9
-                DG_Stock.Columns("Eliminar").DisplayIndex = 9
+                DG_Stock.Columns("Eliminar").DisplayIndex = 10
                 DG_Stock.Refresh()
                 lbl_Msg.Visible = False
             Else
@@ -409,6 +420,7 @@
                 EStock.Stock_Actual = Trim(txt_Actual.Text)
                 EStock.Stock_Minimo = Trim(txt_Minimo.Text)
                 EStock.Stock_Optimo = Trim(txt_Optimo.Text)
+                EStock.VentaMensual = If(String.IsNullOrEmpty(Trim(txt_ventaMensual.Text)), 0, Trim(txt_ventaMensual.Text))
                 If chk_Habilitado.Checked = True Then
                     EStock.Habilitado = 1
                 Else
@@ -474,7 +486,7 @@
 
             'asigno la clase a los controles del tab_Modificacion
             txt_Codigo_mod.Text = NegProductos.TraerCODIGO(EStock.id_Producto)
-            
+
             'Cargo el combo con las sucursales.
             Dim DsSucursales As New DataSet
             DsSucursales = NegSucursal.ListadoSucursales()
@@ -489,6 +501,7 @@
             txt_Actual_mod.Text = EStock.Stock_Actual
             txt_Minimo_mod.Text = EStock.Stock_Minimo
             txt_Optimo_mod.Text = EStock.Stock_Optimo
+            txt_ventaMensual_mod.Text = EStock.VentaMensual
 
             If EStock.Habilitado = 1 Then
                 chk_Habilitado_mod.Checked = True
@@ -534,6 +547,7 @@
                 EStockNuevo.Stock_Actual = Trim(txt_Actual_mod.Text)
                 EStockNuevo.Stock_Minimo = Trim(txt_Minimo_mod.Text)
                 EStockNuevo.Stock_Optimo = Trim(txt_Optimo_mod.Text)
+                EStockNuevo.VentaMensual = If(String.IsNullOrWhiteSpace(Trim(txt_ventaMensual_mod.Text)), 0, Trim(txt_ventaMensual_mod.Text))
                 If chk_Habilitado_mod.Checked = True Then
                     EStockNuevo.Habilitado = 1
                 Else
@@ -553,9 +567,11 @@
                 EStockBitacora.Stock_Actual_Ant = EStock.Stock_Actual
                 EStockBitacora.Stock_Minimo_Ant = EStock.Stock_Minimo
                 EStockBitacora.Stock_Optimo_Ant = EStock.Stock_Optimo
+                EStockBitacora.VentaMensual_Ant = EStock.VentaMensual
                 EStockBitacora.Stock_Actual = Trim(txt_Actual_mod.Text)
                 EStockBitacora.Stock_Minimo = Trim(txt_Minimo_mod.Text)
                 EStockBitacora.Stock_Optimo = Trim(txt_Optimo_mod.Text)
+                EStockBitacora.VentaMensual = Trim(txt_ventaMensual_mod.Text)
                 EStockBitacora.Fecha = Now
                 EStockBitacora.Habilitado = 1
                 EStockBitacora.id_Usuario = VariablesGlobales.objUsuario.id_Usuario
@@ -609,6 +625,7 @@
                 txt_Actual_mod.Text = EStock.Stock_Actual
                 txt_Minimo_mod.Text = EStock.Stock_Minimo
                 txt_Optimo_mod.Text = EStock.Stock_Optimo
+                txt_ventaMensual_mod.Text = EStock.VentaMensual
 
                 If EStock.Habilitado = 1 Then
                     chk_Habilitado_mod.Checked = True
@@ -705,6 +722,105 @@
             DG_Stock.Columns("Modificar").Visible = False
             RemoveHandler DG_Stock.CellDoubleClick, AddressOf DG_Stock_CellDoubleClick
         End If
+    End Sub
+
+    Private Sub btn_Exportar_Click(sender As Object, e As EventArgs) Handles btn_Exportar.Click
+        Try
+            'Configuro la pantalla de guardado de archivos
+            SaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            SaveFileDialog.FileName = String.Format("Stock_{0}", My.Settings.NombreSucursal)
+            SaveFileDialog.Filter = "Excel Files|*.xlsx;"
+
+            If SaveFileDialog.ShowDialog() = DialogResult.OK Then
+                'Cambio el cursor a "WAIT"
+                Me.Cursor = Cursors.WaitCursor
+
+                frmCargadorDeEspera.Show()
+                frmCargadorDeEspera.Text = "Generando Exportación a Excel "
+                frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
+                frmCargadorDeEspera.BarraProgreso.Minimum = 0
+                frmCargadorDeEspera.BarraProgreso.Maximum = 5
+                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.Refresh()
+
+                AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
+
+                'Exporto el listado de productos a Excel
+                NegStock.ExportarExcelStock(My.Settings.Sucursal, SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProductoSucursal"))
+
+                'Voy seteando la barra de progreso
+                frmCargadorDeEspera.Close()
+                frmCargadorDeEspera.Dispose()
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+
+                'si no completo la descripcion, muestro un msg de error.
+                MessageBox.Show("Se ha exportado el listado de productos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        Catch ex As Exception
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.Close()
+            frmCargadorDeEspera.Dispose()
+
+            'Cambio el cursor a "NORMAL"
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Stock", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            LogHelper.WriteLog("ERROR Metodo: ExportarExcelStock" + Environment.NewLine + ex.ToString())
+        End Try
+    End Sub
+
+    Public Sub UpdateProgress(ProgressStep As Integer, ProgressText As String)
+        frmCargadorDeEspera.lbl_Descripcion.Text = ProgressText
+        frmCargadorDeEspera.BarraProgreso.Value = ProgressStep
+        frmCargadorDeEspera.Refresh()
+    End Sub
+
+    Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar.Click
+        Try
+            OpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            OpenFileDialog.Filter = "Excel Files|*.xlsx;"
+            OpenFileDialog.FileName = String.Empty
+
+            If OpenFileDialog.ShowDialog() = DialogResult.OK Then
+                'Cambio el cursor a "WAIT"
+                Me.Cursor = Cursors.WaitCursor
+
+                frmCargadorDeEspera.Show()
+                frmCargadorDeEspera.Text = "Generando Importación del Excel "
+                frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
+                frmCargadorDeEspera.BarraProgreso.Minimum = 0
+                frmCargadorDeEspera.BarraProgreso.Maximum = 4
+                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.Refresh()
+
+                AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
+
+                Dim Mensaje As String = NegStock.ImportarExcelStock(My.Settings.Sucursal, VariablesGlobales.objUsuario.id_Usuario, VariablesGlobales.objUsuario.Nombre, OpenFileDialog.FileName)
+
+                'Voy seteando la barra de progreso
+                frmCargadorDeEspera.Close()
+                frmCargadorDeEspera.Dispose()
+
+                'Cambio el cursor a "NORMAL"
+                Me.Cursor = Cursors.Arrow
+
+                MessageBox.Show(Mensaje, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                btn_Restablecer_Click(Nothing, Nothing)
+            End If
+
+        Catch ex As Exception
+            'Voy seteando la barra de progreso
+            frmCargadorDeEspera.Close()
+            frmCargadorDeEspera.Dispose()
+
+            'Cambio el cursor a "NORMAL"
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha producido un error en la importación de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            LogHelper.WriteLog("ERROR Metodo: ImportarExcel" + Environment.NewLine + ex.ToString())
+        End Try
     End Sub
 #End Region
 

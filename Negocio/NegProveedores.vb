@@ -12,13 +12,17 @@ Public Class NegProveedores
         Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_Listado")
     End Function
 
+    Function ListadoProveedoresConStock(id_Sucursal As Integer) As DataSet
+        Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_ListadoConStock @id_Sucursal=" & id_Sucursal)
+    End Function
+
     'Funcion que trae TODOS los proveedores.
     Function ListadoProveedoresCompleto() As DataSet
         Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_ListadoCompleto")
     End Function
 
     'Funcion para consultar un proveedor.
-    Public Function TraerProveedor(ByVal id_Proveedor As Integer)
+    Public Function TraerProveedor(ByVal id_Proveedor As Integer) As Proveedores
         Dim daProveedor As New SqlDataAdapter
         Dim dsProveedor As New DataSet
         Dim sqlcomando As New SqlCommand
@@ -31,18 +35,49 @@ Public Class NegProveedores
         daProveedor.Fill(dsProveedor)
 
         If dsProveedor.Tables(0).Rows.Count <> 0 Then
-            entProveedor.id_Proveedor = dsProveedor.Tables(0).Rows(0).Item("id_Proveedor").ToString
-            entProveedor.RazonSocial = dsProveedor.Tables(0).Rows(0).Item("RazonSocial").ToString
-            entProveedor.Nombre = dsProveedor.Tables(0).Rows(0).Item("Nombre").ToString
-            entProveedor.Direccion = dsProveedor.Tables(0).Rows(0).Item("Direccion").ToString
-            entProveedor.Mail = dsProveedor.Tables(0).Rows(0).Item("Mail").ToString
-            entProveedor.Telefono = dsProveedor.Tables(0).Rows(0).Item("Telefono").ToString
-            entProveedor.Mail_Alternativo = dsProveedor.Tables(0).Rows(0).Item("Mail_Alternativo").ToString
-            entProveedor.id_CondicionIva = dsProveedor.Tables(0).Rows(0).Item("id_CondicionIva").ToString
-            entProveedor.Habilitado = dsProveedor.Tables(0).Rows(0).Item("Habilitado").ToString
+            entProveedor = ObtenerEntidadProveedor(dsProveedor.Tables(0).Rows(0))
         End If
         Return entProveedor
         con.DesconectarRemoto()
+    End Function
+
+    'Funcion para consultar todos los proveedores.
+    Public Function TraerProveedor() As List(Of Proveedores)
+        Dim daProveedor As New SqlDataAdapter
+        Dim dsProveedor As New DataSet
+        Dim sqlcomando As New SqlCommand
+        Dim proveedores As List(Of Proveedores) = New List(Of Proveedores)()
+
+
+        sqlcomando.CommandText = ("select * from PROVEEDORES where Habilitado = 1")
+        sqlcomando.Connection = con.ConectarRemoto
+
+        daProveedor = New SqlDataAdapter(sqlcomando)
+        daProveedor.Fill(dsProveedor)
+
+        If dsProveedor.Tables(0).Rows.Count <> 0 Then
+            For Each dr As DataRow In dsProveedor.Tables(0).Rows
+                proveedores.Add(ObtenerEntidadProveedor(dr))
+            Next
+        End If
+        Return proveedores
+        con.DesconectarRemoto()
+    End Function
+
+    Private Shared Function ObtenerEntidadProveedor(dr As DataRow) As Proveedores
+        Dim entProveedor As New Proveedores
+        entProveedor.id_Proveedor = dr.Item("id_Proveedor").ToString
+        entProveedor.RazonSocial = dr.Item("RazonSocial").ToString
+        entProveedor.Nombre = dr.Item("Nombre").ToString
+        entProveedor.Direccion = dr.Item("Direccion").ToString
+        entProveedor.Mail = dr.Item("Mail").ToString
+        entProveedor.Telefono = dr.Item("Telefono").ToString
+        entProveedor.Mail_Alternativo = dr.Item("Mail_Alternativo").ToString
+        entProveedor.id_CondicionIva = dr.Item("id_CondicionIva").ToString
+        entProveedor.Habilitado = dr.Item("Habilitado").ToString
+        entProveedor.DiaPreferentePedido = If(String.IsNullOrEmpty(dr.Item("DiaPreferentePedido").ToString), -1, dr.Item("DiaPreferentePedido").ToString)
+        entProveedor.PlazoEntrega = If(String.IsNullOrEmpty(dr.Item("DiaPreferentePedido").ToString), 0, dr.Item("PlazoEntrega").ToString)
+        Return entProveedor
     End Function
 
     'Funcion para insertar un proveedor.
@@ -64,6 +99,8 @@ Public Class NegProveedores
                 .AddWithValue("@Mail", eproveedor.Mail)
                 .AddWithValue("@Telefono", eproveedor.Telefono)
                 .AddWithValue("@Mail_Alternativo", eproveedor.Mail_Alternativo)
+                .AddWithValue("@DiaPreferentePedido", eproveedor.DiaPreferentePedido)
+                .AddWithValue("@PlazoEntrega", eproveedor.PlazoEntrega)
                 .AddWithValue("@Habilitado", eproveedor.Habilitado)
             End With
 
@@ -100,6 +137,8 @@ Public Class NegProveedores
                 .AddWithValue("@Telefono", eproveedores.Telefono)
                 .AddWithValue("@Mail_Alternativo", eproveedores.Mail_Alternativo)
                 .AddWithValue("@id_CondicionIva", eproveedores.id_CondicionIva)
+                .AddWithValue("@DiaPreferentePedido", eproveedores.DiaPreferentePedido)
+                .AddWithValue("@PlazoEntrega", eproveedores.PlazoEntrega)
                 .AddWithValue("@Habilitado", eproveedores.Habilitado)
             End With
 

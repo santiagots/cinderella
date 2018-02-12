@@ -1,4 +1,7 @@
-﻿Public Class frmProveedores
+﻿Imports Entidades
+Imports Negocio
+
+Public Class frmProveedores
     Dim Negproveedores As New Negocio.NegProveedores
     Dim EProveedor As New Entidades.Proveedores
     Dim Negcondiciones As New Negocio.NegCondicionesIva
@@ -15,6 +18,8 @@
         txt_Direccion.Clear()
         txt_Mail.Clear()
         txt_MailAlternativo.Clear()
+        txt_PlazoEntrega.Clear()
+        cb_DiaPedido.SelectedItem = Nothing
         cb_CondicionIva.SelectedItem = Nothing
         chk_Habilitado.Checked = True
     End Sub
@@ -28,6 +33,8 @@
         txt_Direccion_mod.Clear()
         txt_Mail_mod.Clear()
         txt_MailAlternativo_mod.Clear()
+        txt_PlazoEntrega_mod.Clear()
+        cb_DiaPedido_mod.SelectedItem = Nothing
         cb_CondicionIva_mod.SelectedItem = Nothing
         chk_Habilitado_mod.Checked = True
     End Sub
@@ -161,6 +168,9 @@
                 lbl_Msg.Visible = True
             End If
 
+            cb_DiaPedido.DataSource = [Enum].GetValues(GetType(DiasSemana))
+            cb_DiaPedido_mod.DataSource = [Enum].GetValues(GetType(DiasSemana))
+
             EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
@@ -217,6 +227,8 @@
             txt_Mail_mod.Text = EProveedor.Mail
             txt_MailAlternativo_mod.Text = EProveedor.Mail_Alternativo
             txt_Direccion_mod.Text = EProveedor.Direccion
+            txt_PlazoEntrega_mod.Text = EProveedor.PlazoEntrega
+            cb_DiaPedido_mod.SelectedItem = EProveedor.DiaPreferentePedido
 
             If EProveedor.Habilitado = "1" Then
                 chk_Habilitado_mod.Checked = True
@@ -369,7 +381,7 @@
 
     'Boton que Modifica el proveedor.
     Private Sub Btn_Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Modificar.Click
-        If txt_Nombre_mod.Text = "" Or txt_RazonSocial_mod.Text = "" Or txt_Mail_mod.Text = "" Or cb_CondicionIva_mod.SelectedItem Is Nothing Then
+        If txt_Nombre_mod.Text = "" Or txt_RazonSocial_mod.Text = "" Or txt_Mail_mod.Text = "" Or cb_CondicionIva_mod.SelectedItem Is Nothing Or txt_PlazoEntrega_mod.Text = "" Or cb_DiaPedido_mod.SelectedItem Is Nothing Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -383,6 +395,8 @@
                 EProveedor.Mail_Alternativo = Trim(txt_MailAlternativo_mod.Text)
                 EProveedor.Direccion = Trim(txt_Direccion_mod.Text)
                 EProveedor.id_CondicionIva = Trim(cb_CondicionIva_mod.SelectedValue)
+                EProveedor.DiaPreferentePedido = cb_DiaPedido_mod.SelectedValue
+                EProveedor.PlazoEntrega = txt_PlazoEntrega_mod.Text
 
                 If chk_Habilitado_mod.Checked = True Then
                     EProveedor.Habilitado = 1
@@ -410,7 +424,7 @@
 
     'Boton que Crea el proveedor.
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
-        If txt_Nombre.Text = "" Or txt_Mail.Text = "" Or txt_RazonSocial.Text = "" Or cb_CondicionIva.SelectedItem Is Nothing Then
+        If txt_Nombre.Text = "" Or txt_Mail.Text = "" Or txt_RazonSocial.Text = "" Or cb_CondicionIva.SelectedItem Is Nothing Or txt_PlazoEntrega.Text = "" Or cb_DiaPedido.SelectedItem Is Nothing Then
             MessageBox.Show("Debe completar los campos requeridos.", "Administración de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try
@@ -424,6 +438,8 @@
                 EProveedor.Mail_Alternativo = Trim(txt_MailAlternativo.Text)
                 EProveedor.Direccion = Trim(txt_Direccion.Text)
                 EProveedor.id_CondicionIva = cb_CondicionIva.SelectedValue
+                EProveedor.DiaPreferentePedido = cb_DiaPedido.SelectedValue
+                EProveedor.PlazoEntrega = txt_PlazoEntrega.Text
 
                 If chk_Habilitado.Checked = True Then
                     EProveedor.Habilitado = 1
@@ -442,7 +458,7 @@
                 Me.Cursor = Cursors.Arrow
                 MessageBox.Show("Se ha producido un error al registrar el proveedor. Por favor, intente más tarde.", "Administración de Proveedores", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
-        End If        
+        End If
     End Sub
 
     'Restablecer los filtros en listado de proveedores.
@@ -504,6 +520,8 @@
                 txt_Mail_mod.Text = EProveedor.Mail
                 txt_MailAlternativo_mod.Text = EProveedor.Mail_Alternativo
                 txt_Direccion_mod.Text = EProveedor.Direccion
+                txt_PlazoEntrega_mod.Text = EProveedor.PlazoEntrega
+                cb_DiaPedido_mod.SelectedItem = EProveedor.DiaPreferentePedido
 
                 If EProveedor.Habilitado = "1" Then
                     chk_Habilitado_mod.Checked = True
@@ -557,6 +575,15 @@
             TabProveedores.TabPages.Remove(TabProveedores.TabPages("TbMod"))
             DG_Proveedores.Columns("Modificar").Visible = False
             RemoveHandler DG_Proveedores.CellDoubleClick, AddressOf DG_Proveedores_CellDoubleClick
+        End If
+    End Sub
+
+    Private Sub TextBox_Validacion_SoloNumeros(sender As Object, e As KeyPressEventArgs) Handles txt_PlazoEntrega.KeyPress, txt_PlazoEntrega_mod.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        Dim NegErrores As NegManejadorErrores = New NegManejadorErrores()
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
         End If
     End Sub
 #End Region

@@ -44,6 +44,10 @@ Partial Class frmProveedores
         Me.lbl_descripcion_bus = New System.Windows.Forms.Label()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
+        Me.cb_DiaPedido = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txt_PlazoEntrega = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.cb_CondicionIva = New System.Windows.Forms.ComboBox()
         Me.lbl_CondicionIva = New System.Windows.Forms.Label()
         Me.txt_Telefono = New System.Windows.Forms.TextBox()
@@ -62,28 +66,32 @@ Partial Class frmProveedores
         Me.lbl_Nombre = New System.Windows.Forms.Label()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
+        Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
+        Me.cb_DiaPedido_mod = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txt_PlazoEntrega_mod = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Btn_Cancelar = New System.Windows.Forms.Button()
+        Me.cb_CondicionIva_mod = New System.Windows.Forms.ComboBox()
+        Me.lbl_Condicion_mod = New System.Windows.Forms.Label()
+        Me.txt_Telefono_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_Telefono_mod = New System.Windows.Forms.Label()
+        Me.txt_MailAlternativo_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_MailAlternativo_mod = New System.Windows.Forms.Label()
+        Me.txt_Direccion_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_Direccion_mod = New System.Windows.Forms.Label()
+        Me.txt_Mail_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_Mail_mod = New System.Windows.Forms.Label()
+        Me.txt_RazonSocial_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_RazonSocial_mod = New System.Windows.Forms.Label()
+        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
+        Me.txt_Nombre_mod = New System.Windows.Forms.TextBox()
+        Me.lbl_Habilitado_mod = New System.Windows.Forms.Label()
+        Me.lbl_Nombre_mod = New System.Windows.Forms.Label()
+        Me.Btn_Eliminar = New System.Windows.Forms.Button()
+        Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.ErrorProveedor = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolProv = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Btn_Modificar = New System.Windows.Forms.Button()
-        Me.Btn_Eliminar = New System.Windows.Forms.Button()
-        Me.lbl_Nombre_mod = New System.Windows.Forms.Label()
-        Me.lbl_Habilitado_mod = New System.Windows.Forms.Label()
-        Me.txt_Nombre_mod = New System.Windows.Forms.TextBox()
-        Me.chk_Habilitado_mod = New System.Windows.Forms.CheckBox()
-        Me.lbl_RazonSocial_mod = New System.Windows.Forms.Label()
-        Me.txt_RazonSocial_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_Mail_mod = New System.Windows.Forms.Label()
-        Me.txt_Mail_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_Direccion_mod = New System.Windows.Forms.Label()
-        Me.txt_Direccion_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_MailAlternativo_mod = New System.Windows.Forms.Label()
-        Me.txt_MailAlternativo_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_Telefono_mod = New System.Windows.Forms.Label()
-        Me.txt_Telefono_mod = New System.Windows.Forms.TextBox()
-        Me.lbl_Condicion_mod = New System.Windows.Forms.Label()
-        Me.cb_CondicionIva_mod = New System.Windows.Forms.ComboBox()
-        Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
-        Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.TabProveedores.SuspendLayout()
         Me.TbListado.SuspendLayout()
         CType(Me.DG_Proveedores, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,8 +99,8 @@ Partial Class frmProveedores
         Me.TbAlta.SuspendLayout()
         Me.GB_Alta.SuspendLayout()
         Me.TbMod.SuspendLayout()
-        CType(Me.ErrorProveedor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Modificacion.SuspendLayout()
+        CType(Me.ErrorProveedor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabProveedores
@@ -300,6 +308,10 @@ Partial Class frmProveedores
         '
         Me.GB_Alta.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Alta.Controls.Add(Me.cb_DiaPedido)
+        Me.GB_Alta.Controls.Add(Me.Label2)
+        Me.GB_Alta.Controls.Add(Me.txt_PlazoEntrega)
+        Me.GB_Alta.Controls.Add(Me.Label1)
         Me.GB_Alta.Controls.Add(Me.cb_CondicionIva)
         Me.GB_Alta.Controls.Add(Me.lbl_CondicionIva)
         Me.GB_Alta.Controls.Add(Me.txt_Telefono)
@@ -320,10 +332,49 @@ Partial Class frmProveedores
         Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Alta.Location = New System.Drawing.Point(6, 6)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(674, 338)
+        Me.GB_Alta.Size = New System.Drawing.Size(674, 405)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de Alta"
+        '
+        'cb_DiaPedido
+        '
+        Me.cb_DiaPedido.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_DiaPedido.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_DiaPedido.FormattingEnabled = True
+        Me.cb_DiaPedido.Location = New System.Drawing.Point(140, 307)
+        Me.cb_DiaPedido.Name = "cb_DiaPedido"
+        Me.cb_DiaPedido.Size = New System.Drawing.Size(490, 21)
+        Me.cb_DiaPedido.TabIndex = 26
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(8, 310)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(126, 13)
+        Me.Label2.TabIndex = 25
+        Me.Label2.Text = "Día Preferente Pedido (*)"
+        '
+        'txt_PlazoEntrega
+        '
+        Me.txt_PlazoEntrega.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PlazoEntrega.Location = New System.Drawing.Point(140, 274)
+        Me.txt_PlazoEntrega.MaxLength = 255
+        Me.txt_PlazoEntrega.Name = "txt_PlazoEntrega"
+        Me.txt_PlazoEntrega.Size = New System.Drawing.Size(489, 20)
+        Me.txt_PlazoEntrega.TabIndex = 22
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(8, 277)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(86, 13)
+        Me.Label1.TabIndex = 23
+        Me.Label1.Text = "Plazo Entrega (*)"
         '
         'cb_CondicionIva
         '
@@ -331,9 +382,9 @@ Partial Class frmProveedores
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_CondicionIva.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_CondicionIva.FormattingEnabled = True
-        Me.cb_CondicionIva.Location = New System.Drawing.Point(116, 206)
+        Me.cb_CondicionIva.Location = New System.Drawing.Point(140, 206)
         Me.cb_CondicionIva.Name = "cb_CondicionIva"
-        Me.cb_CondicionIva.Size = New System.Drawing.Size(514, 21)
+        Me.cb_CondicionIva.Size = New System.Drawing.Size(490, 21)
         Me.cb_CondicionIva.TabIndex = 6
         '
         'lbl_CondicionIva
@@ -349,10 +400,10 @@ Partial Class frmProveedores
         '
         Me.txt_Telefono.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Telefono.Location = New System.Drawing.Point(116, 171)
+        Me.txt_Telefono.Location = New System.Drawing.Point(140, 171)
         Me.txt_Telefono.MaxLength = 255
         Me.txt_Telefono.Name = "txt_Telefono"
-        Me.txt_Telefono.Size = New System.Drawing.Size(514, 20)
+        Me.txt_Telefono.Size = New System.Drawing.Size(490, 20)
         Me.txt_Telefono.TabIndex = 5
         '
         'lbl_Telefono
@@ -368,10 +419,10 @@ Partial Class frmProveedores
         '
         Me.txt_MailAlternativo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_MailAlternativo.Location = New System.Drawing.Point(116, 136)
+        Me.txt_MailAlternativo.Location = New System.Drawing.Point(140, 136)
         Me.txt_MailAlternativo.MaxLength = 255
         Me.txt_MailAlternativo.Name = "txt_MailAlternativo"
-        Me.txt_MailAlternativo.Size = New System.Drawing.Size(513, 20)
+        Me.txt_MailAlternativo.Size = New System.Drawing.Size(489, 20)
         Me.txt_MailAlternativo.TabIndex = 4
         '
         'lbl_MailAlternativo
@@ -387,10 +438,10 @@ Partial Class frmProveedores
         '
         Me.txt_Direccion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Direccion.Location = New System.Drawing.Point(116, 241)
+        Me.txt_Direccion.Location = New System.Drawing.Point(140, 241)
         Me.txt_Direccion.MaxLength = 255
         Me.txt_Direccion.Name = "txt_Direccion"
-        Me.txt_Direccion.Size = New System.Drawing.Size(513, 20)
+        Me.txt_Direccion.Size = New System.Drawing.Size(489, 20)
         Me.txt_Direccion.TabIndex = 7
         '
         'lbl_Direccion
@@ -406,10 +457,10 @@ Partial Class frmProveedores
         '
         Me.txt_Mail.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Mail.Location = New System.Drawing.Point(116, 101)
+        Me.txt_Mail.Location = New System.Drawing.Point(140, 101)
         Me.txt_Mail.MaxLength = 255
         Me.txt_Mail.Name = "txt_Mail"
-        Me.txt_Mail.Size = New System.Drawing.Size(513, 20)
+        Me.txt_Mail.Size = New System.Drawing.Size(489, 20)
         Me.txt_Mail.TabIndex = 3
         '
         'lbl_Mail
@@ -425,10 +476,10 @@ Partial Class frmProveedores
         '
         Me.txt_RazonSocial.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_RazonSocial.Location = New System.Drawing.Point(116, 66)
+        Me.txt_RazonSocial.Location = New System.Drawing.Point(140, 66)
         Me.txt_RazonSocial.MaxLength = 255
         Me.txt_RazonSocial.Name = "txt_RazonSocial"
-        Me.txt_RazonSocial.Size = New System.Drawing.Size(513, 20)
+        Me.txt_RazonSocial.Size = New System.Drawing.Size(489, 20)
         Me.txt_RazonSocial.TabIndex = 2
         '
         'lbl_RazonSocial
@@ -445,7 +496,7 @@ Partial Class frmProveedores
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado.Location = New System.Drawing.Point(116, 279)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(140, 343)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado.TabIndex = 8
@@ -455,16 +506,16 @@ Partial Class frmProveedores
         '
         Me.txt_Nombre.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Nombre.Location = New System.Drawing.Point(116, 31)
+        Me.txt_Nombre.Location = New System.Drawing.Point(140, 31)
         Me.txt_Nombre.MaxLength = 255
         Me.txt_Nombre.Name = "txt_Nombre"
-        Me.txt_Nombre.Size = New System.Drawing.Size(514, 20)
+        Me.txt_Nombre.Size = New System.Drawing.Size(490, 20)
         Me.txt_Nombre.TabIndex = 1
         '
         'lbl_Habilitado
         '
         Me.lbl_Habilitado.AutoSize = True
-        Me.lbl_Habilitado.Location = New System.Drawing.Point(8, 279)
+        Me.lbl_Habilitado.Location = New System.Drawing.Point(8, 344)
         Me.lbl_Habilitado.Name = "lbl_Habilitado"
         Me.lbl_Habilitado.Size = New System.Drawing.Size(54, 13)
         Me.lbl_Habilitado.TabIndex = 2
@@ -487,7 +538,7 @@ Partial Class frmProveedores
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(568, 292)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(568, 359)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 9
@@ -505,206 +556,14 @@ Partial Class frmProveedores
         Me.TbMod.Text = "Modificación de Proveedor"
         Me.TbMod.UseVisualStyleBackColor = True
         '
-        'ErrorProveedor
-        '
-        Me.ErrorProveedor.BlinkRate = 200
-        Me.ErrorProveedor.ContainerControl = Me
-        '
-        'ToolProv
-        '
-        Me.ToolProv.IsBalloon = True
-        Me.ToolProv.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolProv.ToolTipTitle = "Ayuda"
-        '
-        'Btn_Modificar
-        '
-        Me.Btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Modificar.BackColor = System.Drawing.Color.Transparent
-        Me.Btn_Modificar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
-        Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Modificar.Location = New System.Drawing.Point(564, 296)
-        Me.Btn_Modificar.Name = "Btn_Modificar"
-        Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Modificar.TabIndex = 15
-        Me.Btn_Modificar.Text = "Modificar"
-        Me.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Modificar.UseVisualStyleBackColor = False
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
-        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(458, 296)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Eliminar.TabIndex = 14
-        Me.Btn_Eliminar.Text = "Eliminar"
-        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Eliminar.UseVisualStyleBackColor = True
-        '
-        'lbl_Nombre_mod
-        '
-        Me.lbl_Nombre_mod.AutoSize = True
-        Me.lbl_Nombre_mod.Location = New System.Drawing.Point(6, 32)
-        Me.lbl_Nombre_mod.Name = "lbl_Nombre_mod"
-        Me.lbl_Nombre_mod.Size = New System.Drawing.Size(57, 13)
-        Me.lbl_Nombre_mod.TabIndex = 23
-        Me.lbl_Nombre_mod.Text = "Nombre (*)"
-        '
-        'lbl_Habilitado_mod
-        '
-        Me.lbl_Habilitado_mod.AutoSize = True
-        Me.lbl_Habilitado_mod.Location = New System.Drawing.Point(9, 277)
-        Me.lbl_Habilitado_mod.Name = "lbl_Habilitado_mod"
-        Me.lbl_Habilitado_mod.Size = New System.Drawing.Size(54, 13)
-        Me.lbl_Habilitado_mod.TabIndex = 24
-        Me.lbl_Habilitado_mod.Text = "Habilitado"
-        '
-        'txt_Nombre_mod
-        '
-        Me.txt_Nombre_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Nombre_mod.Location = New System.Drawing.Point(111, 32)
-        Me.txt_Nombre_mod.MaxLength = 255
-        Me.txt_Nombre_mod.Name = "txt_Nombre_mod"
-        Me.txt_Nombre_mod.Size = New System.Drawing.Size(514, 20)
-        Me.txt_Nombre_mod.TabIndex = 22
-        '
-        'chk_Habilitado_mod
-        '
-        Me.chk_Habilitado_mod.AutoSize = True
-        Me.chk_Habilitado_mod.Checked = True
-        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(111, 277)
-        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
-        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado_mod.TabIndex = 33
-        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
-        '
-        'lbl_RazonSocial_mod
-        '
-        Me.lbl_RazonSocial_mod.AutoSize = True
-        Me.lbl_RazonSocial_mod.Location = New System.Drawing.Point(6, 67)
-        Me.lbl_RazonSocial_mod.Name = "lbl_RazonSocial_mod"
-        Me.lbl_RazonSocial_mod.Size = New System.Drawing.Size(83, 13)
-        Me.lbl_RazonSocial_mod.TabIndex = 28
-        Me.lbl_RazonSocial_mod.Text = "Razon Social (*)"
-        '
-        'txt_RazonSocial_mod
-        '
-        Me.txt_RazonSocial_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_RazonSocial_mod.Location = New System.Drawing.Point(111, 67)
-        Me.txt_RazonSocial_mod.MaxLength = 255
-        Me.txt_RazonSocial_mod.Name = "txt_RazonSocial_mod"
-        Me.txt_RazonSocial_mod.Size = New System.Drawing.Size(514, 20)
-        Me.txt_RazonSocial_mod.TabIndex = 25
-        '
-        'lbl_Mail_mod
-        '
-        Me.lbl_Mail_mod.AutoSize = True
-        Me.lbl_Mail_mod.Location = New System.Drawing.Point(6, 102)
-        Me.lbl_Mail_mod.Name = "lbl_Mail_mod"
-        Me.lbl_Mail_mod.Size = New System.Drawing.Size(39, 13)
-        Me.lbl_Mail_mod.TabIndex = 32
-        Me.lbl_Mail_mod.Text = "Mail (*)"
-        '
-        'txt_Mail_mod
-        '
-        Me.txt_Mail_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Mail_mod.Location = New System.Drawing.Point(111, 102)
-        Me.txt_Mail_mod.MaxLength = 255
-        Me.txt_Mail_mod.Name = "txt_Mail_mod"
-        Me.txt_Mail_mod.Size = New System.Drawing.Size(514, 20)
-        Me.txt_Mail_mod.TabIndex = 26
-        '
-        'lbl_Direccion_mod
-        '
-        Me.lbl_Direccion_mod.AutoSize = True
-        Me.lbl_Direccion_mod.Location = New System.Drawing.Point(6, 242)
-        Me.lbl_Direccion_mod.Name = "lbl_Direccion_mod"
-        Me.lbl_Direccion_mod.Size = New System.Drawing.Size(52, 13)
-        Me.lbl_Direccion_mod.TabIndex = 34
-        Me.lbl_Direccion_mod.Text = "Direccion"
-        '
-        'txt_Direccion_mod
-        '
-        Me.txt_Direccion_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Direccion_mod.Location = New System.Drawing.Point(111, 242)
-        Me.txt_Direccion_mod.MaxLength = 255
-        Me.txt_Direccion_mod.Name = "txt_Direccion_mod"
-        Me.txt_Direccion_mod.Size = New System.Drawing.Size(514, 20)
-        Me.txt_Direccion_mod.TabIndex = 31
-        '
-        'lbl_MailAlternativo_mod
-        '
-        Me.lbl_MailAlternativo_mod.AutoSize = True
-        Me.lbl_MailAlternativo_mod.Location = New System.Drawing.Point(6, 137)
-        Me.lbl_MailAlternativo_mod.Name = "lbl_MailAlternativo_mod"
-        Me.lbl_MailAlternativo_mod.Size = New System.Drawing.Size(85, 13)
-        Me.lbl_MailAlternativo_mod.TabIndex = 35
-        Me.lbl_MailAlternativo_mod.Text = "Mail (Alternativo)"
-        '
-        'txt_MailAlternativo_mod
-        '
-        Me.txt_MailAlternativo_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_MailAlternativo_mod.Location = New System.Drawing.Point(111, 137)
-        Me.txt_MailAlternativo_mod.MaxLength = 255
-        Me.txt_MailAlternativo_mod.Name = "txt_MailAlternativo_mod"
-        Me.txt_MailAlternativo_mod.Size = New System.Drawing.Size(514, 20)
-        Me.txt_MailAlternativo_mod.TabIndex = 27
-        '
-        'lbl_Telefono_mod
-        '
-        Me.lbl_Telefono_mod.AutoSize = True
-        Me.lbl_Telefono_mod.Location = New System.Drawing.Point(6, 172)
-        Me.lbl_Telefono_mod.Name = "lbl_Telefono_mod"
-        Me.lbl_Telefono_mod.Size = New System.Drawing.Size(49, 13)
-        Me.lbl_Telefono_mod.TabIndex = 36
-        Me.lbl_Telefono_mod.Text = "Teléfono"
-        '
-        'txt_Telefono_mod
-        '
-        Me.txt_Telefono_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Telefono_mod.Location = New System.Drawing.Point(111, 172)
-        Me.txt_Telefono_mod.MaxLength = 255
-        Me.txt_Telefono_mod.Name = "txt_Telefono_mod"
-        Me.txt_Telefono_mod.Size = New System.Drawing.Size(515, 20)
-        Me.txt_Telefono_mod.TabIndex = 29
-        '
-        'lbl_Condicion_mod
-        '
-        Me.lbl_Condicion_mod.AutoSize = True
-        Me.lbl_Condicion_mod.Location = New System.Drawing.Point(6, 207)
-        Me.lbl_Condicion_mod.Name = "lbl_Condicion_mod"
-        Me.lbl_Condicion_mod.Size = New System.Drawing.Size(102, 13)
-        Me.lbl_Condicion_mod.TabIndex = 37
-        Me.lbl_Condicion_mod.Text = "Condición de IVA (*)"
-        '
-        'cb_CondicionIva_mod
-        '
-        Me.cb_CondicionIva_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cb_CondicionIva_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_CondicionIva_mod.FormattingEnabled = True
-        Me.cb_CondicionIva_mod.Location = New System.Drawing.Point(111, 207)
-        Me.cb_CondicionIva_mod.Name = "cb_CondicionIva_mod"
-        Me.cb_CondicionIva_mod.Size = New System.Drawing.Size(515, 21)
-        Me.cb_CondicionIva_mod.TabIndex = 30
-        '
         'GB_Modificacion
         '
         Me.GB_Modificacion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Modificacion.Controls.Add(Me.cb_DiaPedido_mod)
+        Me.GB_Modificacion.Controls.Add(Me.Label3)
+        Me.GB_Modificacion.Controls.Add(Me.txt_PlazoEntrega_mod)
+        Me.GB_Modificacion.Controls.Add(Me.Label4)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
         Me.GB_Modificacion.Controls.Add(Me.cb_CondicionIva_mod)
         Me.GB_Modificacion.Controls.Add(Me.lbl_Condicion_mod)
@@ -727,10 +586,49 @@ Partial Class frmProveedores
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(6, 6)
         Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(670, 342)
+        Me.GB_Modificacion.Size = New System.Drawing.Size(670, 416)
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
+        '
+        'cb_DiaPedido_mod
+        '
+        Me.cb_DiaPedido_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_DiaPedido_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_DiaPedido_mod.FormattingEnabled = True
+        Me.cb_DiaPedido_mod.Location = New System.Drawing.Point(138, 309)
+        Me.cb_DiaPedido_mod.Name = "cb_DiaPedido_mod"
+        Me.cb_DiaPedido_mod.Size = New System.Drawing.Size(486, 21)
+        Me.cb_DiaPedido_mod.TabIndex = 86
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(6, 312)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(126, 13)
+        Me.Label3.TabIndex = 85
+        Me.Label3.Text = "Día Preferente Pedido (*)"
+        '
+        'txt_PlazoEntrega_mod
+        '
+        Me.txt_PlazoEntrega_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PlazoEntrega_mod.Location = New System.Drawing.Point(139, 276)
+        Me.txt_PlazoEntrega_mod.MaxLength = 255
+        Me.txt_PlazoEntrega_mod.Name = "txt_PlazoEntrega_mod"
+        Me.txt_PlazoEntrega_mod.Size = New System.Drawing.Size(485, 20)
+        Me.txt_PlazoEntrega_mod.TabIndex = 83
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(6, 279)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(86, 13)
+        Me.Label4.TabIndex = 84
+        Me.Label4.Text = "Plazo Entrega (*)"
         '
         'Btn_Cancelar
         '
@@ -739,7 +637,7 @@ Partial Class frmProveedores
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(352, 296)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(352, 370)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 82
@@ -747,6 +645,202 @@ Partial Class frmProveedores
         Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProv.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de proveedores")
         Me.Btn_Cancelar.UseVisualStyleBackColor = True
+        '
+        'cb_CondicionIva_mod
+        '
+        Me.cb_CondicionIva_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cb_CondicionIva_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_CondicionIva_mod.FormattingEnabled = True
+        Me.cb_CondicionIva_mod.Location = New System.Drawing.Point(139, 207)
+        Me.cb_CondicionIva_mod.Name = "cb_CondicionIva_mod"
+        Me.cb_CondicionIva_mod.Size = New System.Drawing.Size(487, 21)
+        Me.cb_CondicionIva_mod.TabIndex = 30
+        '
+        'lbl_Condicion_mod
+        '
+        Me.lbl_Condicion_mod.AutoSize = True
+        Me.lbl_Condicion_mod.Location = New System.Drawing.Point(6, 207)
+        Me.lbl_Condicion_mod.Name = "lbl_Condicion_mod"
+        Me.lbl_Condicion_mod.Size = New System.Drawing.Size(102, 13)
+        Me.lbl_Condicion_mod.TabIndex = 37
+        Me.lbl_Condicion_mod.Text = "Condición de IVA (*)"
+        '
+        'txt_Telefono_mod
+        '
+        Me.txt_Telefono_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Telefono_mod.Location = New System.Drawing.Point(139, 172)
+        Me.txt_Telefono_mod.MaxLength = 255
+        Me.txt_Telefono_mod.Name = "txt_Telefono_mod"
+        Me.txt_Telefono_mod.Size = New System.Drawing.Size(487, 20)
+        Me.txt_Telefono_mod.TabIndex = 29
+        '
+        'lbl_Telefono_mod
+        '
+        Me.lbl_Telefono_mod.AutoSize = True
+        Me.lbl_Telefono_mod.Location = New System.Drawing.Point(6, 172)
+        Me.lbl_Telefono_mod.Name = "lbl_Telefono_mod"
+        Me.lbl_Telefono_mod.Size = New System.Drawing.Size(49, 13)
+        Me.lbl_Telefono_mod.TabIndex = 36
+        Me.lbl_Telefono_mod.Text = "Teléfono"
+        '
+        'txt_MailAlternativo_mod
+        '
+        Me.txt_MailAlternativo_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_MailAlternativo_mod.Location = New System.Drawing.Point(139, 137)
+        Me.txt_MailAlternativo_mod.MaxLength = 255
+        Me.txt_MailAlternativo_mod.Name = "txt_MailAlternativo_mod"
+        Me.txt_MailAlternativo_mod.Size = New System.Drawing.Size(486, 20)
+        Me.txt_MailAlternativo_mod.TabIndex = 27
+        '
+        'lbl_MailAlternativo_mod
+        '
+        Me.lbl_MailAlternativo_mod.AutoSize = True
+        Me.lbl_MailAlternativo_mod.Location = New System.Drawing.Point(6, 137)
+        Me.lbl_MailAlternativo_mod.Name = "lbl_MailAlternativo_mod"
+        Me.lbl_MailAlternativo_mod.Size = New System.Drawing.Size(85, 13)
+        Me.lbl_MailAlternativo_mod.TabIndex = 35
+        Me.lbl_MailAlternativo_mod.Text = "Mail (Alternativo)"
+        '
+        'txt_Direccion_mod
+        '
+        Me.txt_Direccion_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Direccion_mod.Location = New System.Drawing.Point(139, 242)
+        Me.txt_Direccion_mod.MaxLength = 255
+        Me.txt_Direccion_mod.Name = "txt_Direccion_mod"
+        Me.txt_Direccion_mod.Size = New System.Drawing.Size(486, 20)
+        Me.txt_Direccion_mod.TabIndex = 31
+        '
+        'lbl_Direccion_mod
+        '
+        Me.lbl_Direccion_mod.AutoSize = True
+        Me.lbl_Direccion_mod.Location = New System.Drawing.Point(6, 242)
+        Me.lbl_Direccion_mod.Name = "lbl_Direccion_mod"
+        Me.lbl_Direccion_mod.Size = New System.Drawing.Size(52, 13)
+        Me.lbl_Direccion_mod.TabIndex = 34
+        Me.lbl_Direccion_mod.Text = "Direccion"
+        '
+        'txt_Mail_mod
+        '
+        Me.txt_Mail_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Mail_mod.Location = New System.Drawing.Point(139, 102)
+        Me.txt_Mail_mod.MaxLength = 255
+        Me.txt_Mail_mod.Name = "txt_Mail_mod"
+        Me.txt_Mail_mod.Size = New System.Drawing.Size(486, 20)
+        Me.txt_Mail_mod.TabIndex = 26
+        '
+        'lbl_Mail_mod
+        '
+        Me.lbl_Mail_mod.AutoSize = True
+        Me.lbl_Mail_mod.Location = New System.Drawing.Point(6, 102)
+        Me.lbl_Mail_mod.Name = "lbl_Mail_mod"
+        Me.lbl_Mail_mod.Size = New System.Drawing.Size(39, 13)
+        Me.lbl_Mail_mod.TabIndex = 32
+        Me.lbl_Mail_mod.Text = "Mail (*)"
+        '
+        'txt_RazonSocial_mod
+        '
+        Me.txt_RazonSocial_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_RazonSocial_mod.Location = New System.Drawing.Point(139, 67)
+        Me.txt_RazonSocial_mod.MaxLength = 255
+        Me.txt_RazonSocial_mod.Name = "txt_RazonSocial_mod"
+        Me.txt_RazonSocial_mod.Size = New System.Drawing.Size(486, 20)
+        Me.txt_RazonSocial_mod.TabIndex = 25
+        '
+        'lbl_RazonSocial_mod
+        '
+        Me.lbl_RazonSocial_mod.AutoSize = True
+        Me.lbl_RazonSocial_mod.Location = New System.Drawing.Point(6, 67)
+        Me.lbl_RazonSocial_mod.Name = "lbl_RazonSocial_mod"
+        Me.lbl_RazonSocial_mod.Size = New System.Drawing.Size(83, 13)
+        Me.lbl_RazonSocial_mod.TabIndex = 28
+        Me.lbl_RazonSocial_mod.Text = "Razon Social (*)"
+        '
+        'chk_Habilitado_mod
+        '
+        Me.chk_Habilitado_mod.AutoSize = True
+        Me.chk_Habilitado_mod.Checked = True
+        Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(138, 344)
+        Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
+        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(15, 14)
+        Me.chk_Habilitado_mod.TabIndex = 33
+        Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
+        '
+        'txt_Nombre_mod
+        '
+        Me.txt_Nombre_mod.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Nombre_mod.Location = New System.Drawing.Point(139, 32)
+        Me.txt_Nombre_mod.MaxLength = 255
+        Me.txt_Nombre_mod.Name = "txt_Nombre_mod"
+        Me.txt_Nombre_mod.Size = New System.Drawing.Size(486, 20)
+        Me.txt_Nombre_mod.TabIndex = 22
+        '
+        'lbl_Habilitado_mod
+        '
+        Me.lbl_Habilitado_mod.AutoSize = True
+        Me.lbl_Habilitado_mod.Location = New System.Drawing.Point(9, 345)
+        Me.lbl_Habilitado_mod.Name = "lbl_Habilitado_mod"
+        Me.lbl_Habilitado_mod.Size = New System.Drawing.Size(54, 13)
+        Me.lbl_Habilitado_mod.TabIndex = 24
+        Me.lbl_Habilitado_mod.Text = "Habilitado"
+        '
+        'lbl_Nombre_mod
+        '
+        Me.lbl_Nombre_mod.AutoSize = True
+        Me.lbl_Nombre_mod.Location = New System.Drawing.Point(6, 32)
+        Me.lbl_Nombre_mod.Name = "lbl_Nombre_mod"
+        Me.lbl_Nombre_mod.Size = New System.Drawing.Size(57, 13)
+        Me.lbl_Nombre_mod.TabIndex = 23
+        Me.lbl_Nombre_mod.Text = "Nombre (*)"
+        '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
+        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(458, 370)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Eliminar.TabIndex = 14
+        Me.Btn_Eliminar.Text = "Eliminar"
+        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Eliminar.UseVisualStyleBackColor = True
+        '
+        'Btn_Modificar
+        '
+        Me.Btn_Modificar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Modificar.BackColor = System.Drawing.Color.Transparent
+        Me.Btn_Modificar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Modificar.Location = New System.Drawing.Point(564, 370)
+        Me.Btn_Modificar.Name = "Btn_Modificar"
+        Me.Btn_Modificar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Modificar.TabIndex = 15
+        Me.Btn_Modificar.Text = "Modificar"
+        Me.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Modificar.UseVisualStyleBackColor = False
+        '
+        'ErrorProveedor
+        '
+        Me.ErrorProveedor.BlinkRate = 200
+        Me.ErrorProveedor.ContainerControl = Me
+        '
+        'ToolProv
+        '
+        Me.ToolProv.IsBalloon = True
+        Me.ToolProv.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolProv.ToolTipTitle = "Ayuda"
         '
         'frmProveedores
         '
@@ -768,9 +862,9 @@ Partial Class frmProveedores
         Me.GB_Alta.ResumeLayout(False)
         Me.GB_Alta.PerformLayout()
         Me.TbMod.ResumeLayout(False)
-        CType(Me.ErrorProveedor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Modificacion.ResumeLayout(False)
         Me.GB_Modificacion.PerformLayout()
+        CType(Me.ErrorProveedor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -833,4 +927,12 @@ Partial Class frmProveedores
     Friend WithEvents lbl_Nombre_mod As Label
     Friend WithEvents Btn_Eliminar As Button
     Friend WithEvents Btn_Modificar As Button
+    Friend WithEvents cb_DiaPedido As ComboBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents txt_PlazoEntrega As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents cb_DiaPedido_mod As ComboBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txt_PlazoEntrega_mod As TextBox
+    Friend WithEvents Label4 As Label
 End Class

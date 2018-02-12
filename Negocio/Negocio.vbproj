@@ -104,6 +104,7 @@
     <Compile Include="NegDevolucion.vb" />
     <Compile Include="NegDireccion.vb" />
     <Compile Include="NegDistritos.vb" />
+    <Compile Include="NegEmail.vb" />
     <Compile Include="NegEmpleados.vb" />
     <Compile Include="NegFacturacion.vb" />
     <Compile Include="NegFeriados.vb" />
@@ -131,6 +132,7 @@
     <Compile Include="NegSincronizacion.vb" />
     <Compile Include="NegStock.vb" />
     <Compile Include="NegStockBitacora.vb" />
+    <Compile Include="NegStockPedido.vb" />
     <Compile Include="NegSucursales.vb" />
     <Compile Include="NegTarjeta.vb" />
     <Compile Include="NegTipoComision.vb" />
