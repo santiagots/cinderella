@@ -49,6 +49,7 @@
                 dsMovimiento = NegMovimiento.ObtenerMov(id_Movimiento, id_Sucursal, "Gasto")
                 txtMonto.Text = Format(CType(dsMovimiento.Tables(0).Rows(0).Item("Monto").ToString, Decimal), "###0.00")
                 txtDate.Text = dsMovimiento.Tables(0).Rows(0).Item("Fecha").ToString
+                txtObservaciones.Text = dsMovimiento.Tables(0).Rows(0).Item("Observaciones").ToString
                 CbTipo.SelectedValue = dsMovimiento.Tables(0).Rows(0).Item("id_Tipo").ToString
                 btnAceptar.Text = "Modificar"
                 ToolGastos.SetToolTip(btnAceptar, "Al hacer click en el botón 'Modificar' del formulario se modificará en el sistema el retiro de dinero del socio cargado.")
@@ -95,6 +96,7 @@
     Sub LimpiarFormulario()
         txtMonto.Clear()
         txtDate.Value = Date.Now
+        txtObservaciones.Clear()
         CbTipo.SelectedItem = Nothing
         ErrorGastos.Clear()
     End Sub
@@ -130,6 +132,7 @@
                 eGasto.id_Tipo = CbTipo.SelectedValue
                 eGasto.Fecha = Trim(txtDate.Text)
                 eGasto.Monto = Trim(txtMonto.Text)
+                eGasto.Observaciones = Trim(txtObservaciones.Text)
                 eGasto.SoloLectura = False
 
                 'Limpiar Formulario.

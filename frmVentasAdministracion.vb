@@ -779,6 +779,18 @@ Public Class frmVentasAdministracion
                 Next
             End If
 
+            If Not chkMenor.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("TipoVenta") = "Menor").ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
+            If Not chkMayor.Checked Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("TipoVenta") = "Mayor").ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
             DG_Ventas.DataSource = dsVentas.Tables(0)
             DG_Ventas.AutoGenerateColumns = False
             DG_Ventas.ColumnHeadersVisible = True
@@ -822,6 +834,8 @@ Public Class frmVentasAdministracion
         txtMontoHasta.Clear()
         ChkAnuladoNo.Checked = True
         ChkAnuladoSi.Checked = True
+        chkMayor.Checked = True
+        chkMenor.Checked = True
         ChkMarcaElectronica.Checked = True
         ChkMarcaManual.Checked = True
         ChkMarcaSinFacturar.Checked = True

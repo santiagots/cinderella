@@ -31,6 +31,7 @@
                 eGasto.Fecha = txt_Fecha.Value
                 eGasto.Monto = Trim(txt_Monto.Text)
                 eGasto.id_Registro = ECuenta.id_Registro
+                eGasto.Observaciones = $"Gasto por pago de cuenta corriente {Cb_Proveedores.SelectedText}."
                 eGasto.SoloLectura = False
 
                 NegMov.AltaMovGasto(eGasto)

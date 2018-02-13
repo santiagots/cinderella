@@ -448,6 +448,7 @@ Public Class NegMovimientos
             .AddWithValue("@Monto", eGasto.Monto)
             .AddWithValue("@Fecha", eGasto.Fecha)
             .AddWithValue("@SoloLectura", eGasto.SoloLectura)
+            .AddWithValue("@Observaciones", eGasto.Observaciones)
             .AddWithValue("@FechaEdicion", eGasto.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -1048,6 +1049,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
                 eGasto.Monto = -Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1059,6 +1061,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
                 eGasto.Monto = Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1077,6 +1080,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = Relacio("id_TipoGasto")
                 eGasto.Fecha = Now
                 eGasto.Monto = -Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1088,6 +1092,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = Relacio("id_TipoGasto")
                 eGasto.Fecha = Now
                 eGasto.Monto = Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)

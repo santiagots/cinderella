@@ -38,6 +38,8 @@ Partial Class frmMovimientoGasto
         Me.lbl_Sucursal = New System.Windows.Forms.Label()
         Me.ToolGastos = New System.Windows.Forms.ToolTip(Me.components)
         Me.ErrorGastos = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtObservaciones = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.ErrorGastos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -45,7 +47,7 @@ Partial Class frmMovimientoGasto
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(229, 135)
+        Me.Label5.Location = New System.Drawing.Point(229, 214)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(127, 15)
         Me.Label5.TabIndex = 21
@@ -58,7 +60,7 @@ Partial Class frmMovimientoGasto
         Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancelar.Location = New System.Drawing.Point(13, 168)
+        Me.btnCancelar.Location = New System.Drawing.Point(13, 236)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(100, 40)
         Me.btnCancelar.TabIndex = 18
@@ -74,7 +76,7 @@ Partial Class frmMovimientoGasto
         Me.btnAceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAceptar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAceptar.Location = New System.Drawing.Point(256, 168)
+        Me.btnAceptar.Location = New System.Drawing.Point(256, 236)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(100, 40)
         Me.btnAceptar.TabIndex = 19
@@ -85,6 +87,8 @@ Partial Class frmMovimientoGasto
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.txtObservaciones)
+        Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.btnCancelar)
         Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.btnAceptar)
@@ -99,7 +103,7 @@ Partial Class frmMovimientoGasto
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(10, 6)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(372, 214)
+        Me.GroupBox1.Size = New System.Drawing.Size(372, 282)
         Me.GroupBox1.TabIndex = 20
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Alta de movimientos de ""Gastos"" de la sucursal."
@@ -185,11 +189,29 @@ Partial Class frmMovimientoGasto
         Me.ErrorGastos.BlinkRate = 200
         Me.ErrorGastos.ContainerControl = Me
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(10, 141)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(75, 15)
+        Me.Label1.TabIndex = 22
+        Me.Label1.Text = "Observacion"
+        '
+        'txtObservaciones
+        '
+        Me.txtObservaciones.Location = New System.Drawing.Point(127, 138)
+        Me.txtObservaciones.MaxLength = 255
+        Me.txtObservaciones.Multiline = True
+        Me.txtObservaciones.Name = "txtObservaciones"
+        Me.txtObservaciones.Size = New System.Drawing.Size(229, 73)
+        Me.txtObservaciones.TabIndex = 23
+        '
         'frmMovimientoGasto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(394, 232)
+        Me.ClientSize = New System.Drawing.Size(394, 297)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -218,4 +240,6 @@ Partial Class frmMovimientoGasto
     Friend WithEvents lbl_Sucursal As System.Windows.Forms.Label
     Friend WithEvents ToolGastos As System.Windows.Forms.ToolTip
     Friend WithEvents ErrorGastos As System.Windows.Forms.ErrorProvider
+    Friend WithEvents txtObservaciones As TextBox
+    Friend WithEvents Label1 As Label
 End Class

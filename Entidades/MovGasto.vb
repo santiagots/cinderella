@@ -7,5 +7,6 @@
     Public Property Fecha As Date
     Public Property SoloLectura As Boolean
     Public Property FechaEdicion As DateTime
+    Public Property Observaciones As String
 
 End Class

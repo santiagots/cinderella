@@ -81,6 +81,7 @@
                 eGasto.id_Sucursal = id_Sucursal
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
+                eGasto.Observaciones = "Gasto por pago de mercadería."
                 eGasto.Monto = Trim(txt_Monto.Text)
                 NegMov.AltaMovGasto(eGasto)
                 eGasto.SoloLectura = False
