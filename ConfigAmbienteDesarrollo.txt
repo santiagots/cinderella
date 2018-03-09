@@ -153,6 +153,9 @@
       <setting name="PeriodoCaulculoVentaMensual" serializeAs="String">
         <value>30</value>
       </setting>
+	  <setting name="MailSLL" serializeAs="String">
+        <value>False</value>
+      </setting>
     </SistemaCinderella.My.MySettings>
   </userSettings>
   <startup useLegacyV2RuntimeActivationPolicy="true">

@@ -8,4 +8,5 @@
     Public Property Cantidad As Integer
     Public Property Importe As Double
     Public Property FechaEdicion As DateTime
+    Public Property Verificado As Boolean
 End Class

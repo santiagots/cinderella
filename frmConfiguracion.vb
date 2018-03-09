@@ -55,6 +55,12 @@ Public Class frmConfiguracion
         txtPort.Text = My.Settings("MailPort")
         txtSmtp.Text = My.Settings("MailHost")
 
+        If My.Settings.MailSLL Then
+            rbUtilizaSSLSi.Checked = True
+        Else
+            rbUtilizaSSLNo.Checked = True
+        End If
+
         'Cargo los valores del Controlador.
         If My.Settings("ControladorStatus") = "SI" Then
             RContrSI.Checked = True
@@ -179,6 +185,8 @@ Public Class frmConfiguracion
             If txtPort.Text <> "" And txtSmtp.Text <> "" Then
                 My.Settings.MailPort = Trim(txtPort.Text)
                 My.Settings.MailHost = Trim(txtSmtp.Text)
+                My.Settings.MailSLL = rbUtilizaSSLSi.Checked
+
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -504,4 +512,5 @@ Public Class frmConfiguracion
             Me.Cursor = Cursors.Arrow
         End Try
     End Sub
+
 End Class

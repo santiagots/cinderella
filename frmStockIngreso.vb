@@ -7,8 +7,9 @@
     Public codigoProducto As String
     Public idSucursal As Integer
     Public stockCargado As Integer
+    Public validarStock As Boolean
 
-    Sub New(ByVal idProducto As Integer, ByVal codigoProducto As String, ByVal idSucursal As Integer, ByVal stockCargado As Integer)
+    Sub New(ByVal idProducto As Integer, ByVal codigoProducto As String, ByVal idSucursal As Integer, ByVal stockCargado As Integer, Optional validarStock As Boolean = True)
 
         InitializeComponent()
 
@@ -16,6 +17,7 @@
         Me.codigoProducto = codigoProducto
         Me.idSucursal = idSucursal
         Me.stockCargado = stockCargado
+        Me.validarStock = validarStock
     End Sub
 
     Private Sub frmStockFaltante_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -30,7 +32,7 @@
     Private Sub btnCargar_Click(sender As Object, e As EventArgs) Handles btnCargar.Click
         If Integer.Parse(txtStock.Text) <> 0 Then
             stockCargado = Integer.Parse(txtStock.Text)
-            If (eStock.Stock_Actual >= stockCargado OrElse MessageBox.Show("La cantidad ingresada supera el stock disponible del producto. ¿Desea cargar esta cantidad?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+            If (Not validarStock OrElse eStock.Stock_Actual >= stockCargado OrElse MessageBox.Show("La cantidad ingresada supera el stock disponible del producto. ¿Desea cargar esta cantidad?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
                 DialogResult = Windows.Forms.DialogResult.OK
                 stockCargado = Integer.Parse(txtStock.Text)
             Else

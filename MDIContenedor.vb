@@ -753,10 +753,6 @@ Public Class MDIContenedor
             Dim diaSemana As Integer = Date.Now().DayOfWeek
             Dim dsEncargado As DataSet = negEmpleados.ListadoEncargadosSucursal(My.Settings.Sucursal)
 
-            'Obtengo las notas de pedidos abiertas o enviadas
-            Dim stockNotaPedidoExistentes As List(Of OrdenCompra) = negStockPedido.Obtener(My.Settings.Sucursal, OrdenCompraPedidoEstado.Nuevo)
-            stockNotaPedidoExistentes.AddRange(negStockPedido.Obtener(My.Settings.Sucursal, OrdenCompraPedidoEstado.Enviado))
-
             For Each proveedor As Proveedores In proveedores
 
                 Dim stockNotaPedidoAutomatica As OrdenCompra = New OrdenCompra() With {
@@ -776,17 +772,14 @@ Public Class MDIContenedor
                     For Each stock As Stock In stocks
                         'Verifico si tiene faltante de stock
                         If stock.Stock_Actual < stock.Stock_Minimo Then
-                            'Verifico que el faltante de stock yo no halla sido solicitado en alguna nota de pedido
-                            Dim sotckEnNotaPedido As Boolean = stockNotaPedidoExistentes.Where(Function(x) x.Detalles.Where(Function(y) y.idProducto = stock.id_Producto).Any).Any
-                            If (Not sotckEnNotaPedido) Then
-                                'Creo el pedido
-                                Dim producto As Productos = negProducto.TraerProducto(stock.id_Producto)
-                                stockNotaPedidoAutomatica.Detalles.Add(New OrdenCompraDetalle() With {
-                                    .idProducto = producto.id_Producto,
-                                    .Costo = producto.Costo,
-                                    .Nombre = producto.Nombre,
-                                    .Cantidad = stock.Stock_Optimo - stock.Stock_Actual + (stock.VentaMensual / 30 * proveedor.PlazoEntrega)})
-                            End If
+                            'Creo el pedido
+                            Dim producto As Productos = negProducto.TraerProducto(stock.id_Producto)
+                            stockNotaPedidoAutomatica.Detalles.Add(New OrdenCompraDetalle() With {
+                                .Codigo = producto.Codigo,
+                                .idProducto = producto.id_Producto,
+                                .Costo = producto.Costo,
+                                .Nombre = producto.Nombre,
+                                .Cantidad = stock.Stock_Optimo - stock.Stock_Actual + (stock.VentaMensual / 30 * proveedor.PlazoEntrega)})
                         End If
                     Next
                 End If

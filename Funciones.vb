@@ -301,30 +301,31 @@ Public Class Funciones
 
     'Funcion que Envia un correo electronico.
     Public Async Function EnviarMailAsync(ByVal eMail As Entidades.Mail, usuario As String, password As String) As Task(Of String)
+        Dim mail As New MailMessage()
         Try
             'Declaracion de Variables.
             Dim SmtpServer As New SmtpClient()
-            Dim PORT As String = My.Settings("MailPort")
-            Dim HOST As String = My.Settings("MailHost")
+            Dim PORT As String = My.Settings.MailPort
+            Dim HOST As String = My.Settings.MailHost
             Dim USER As String = usuario
             Dim PASS As String = password
 
             'Configuracion del Servidor SMTP
             SmtpServer.UseDefaultCredentials = False
+            SmtpServer.EnableSsl = My.Settings.MailSLL
             SmtpServer.Credentials = New Net.NetworkCredential(USER, PASS)
             SmtpServer.Port = PORT
             SmtpServer.Host = HOST
             SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network
 
             'Creo una instancia de la clase mail.
-            Dim mail As New MailMessage()
             mail = New MailMessage()
 
             'De.
             mail.From = New MailAddress(eMail.From)
 
             'Para.
-            mail.To.Add(eMail.Too)
+            mail.To.Add(New MailAddress(eMail.Too))
 
             'Asunto
             mail.Subject = eMail.Subject
@@ -373,6 +374,7 @@ Public Class Funciones
 
             Return True
         Catch ex As Exception
+            mail.Dispose()
             Return False
         End Try
     End Function

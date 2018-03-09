@@ -5,6 +5,7 @@ Public Class frmVentasAdministracion
     Dim NegStock As New Negocio.NegStock
     Dim NegComisiones As New Negocio.NegComisiones
     Dim NegSenia As New Negocio.NegSenia
+    Dim NegTiposPagos As New Negocio.NegTipoPago
     Dim id_Sucursal As String
     Dim eVentas As New Entidades.Ventas
     Dim Funciones As New Funciones
@@ -89,6 +90,16 @@ Public Class frmVentasAdministracion
                 lbl_Msg.Visible = True
             End If
 
+            Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
+            If DsTiposPagos.Tables(0).Rows.Count > 0 Then
+                cmbFormaPago.DataSource = Nothing
+                cmbFormaPago.DataSource = Funciones.CrearDataTable("id_TipoPago", "Descripcion", DsTiposPagos, "Todas")
+                cmbFormaPago.DisplayMember = "Descripcion"
+                cmbFormaPago.ValueMember = "id_TipoPago"
+                cmbFormaPago.SelectedValue = 0
+                cmbFormaPago.Refresh()
+            End If
+
             EvaluarPermisos()
 
             'Cambio el cursor a NORMAL.
@@ -105,84 +116,9 @@ Public Class frmVentasAdministracion
         Me.Cursor = Cursors.WaitCursor
 
         If TabVentas.SelectedIndex = 0 Then 'TAB LISTADO DE VENTAS
+
             'Actualizo el datagrid si se selecciona el tab del listado
-            Dim dsVentas As New DataSet
-            dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
-            If dsVentas.Tables(0).Rows.Count > 0 Then
-
-                If Not String.IsNullOrEmpty(txtFacturaDesde.Text) Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) If(x("NumeroFactura") Is DBNull.Value, True, Integer.Parse(x("NumeroFactura")) < Integer.Parse(txtFacturaDesde.Text))).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not String.IsNullOrEmpty(txtFacturaHasta.Text) Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) If(x("NumeroFactura") Is DBNull.Value, True, Integer.Parse(x("NumeroFactura")) > Integer.Parse(txtFacturaHasta.Text))).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not String.IsNullOrEmpty(txtMontoDesde.Text) Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Double.Parse(x("MontoTotal")) < Double.Parse(txtMontoDesde.Text)).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not String.IsNullOrEmpty(txtMontoHasta.Text) Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Double.Parse(x("MontoTotal")) > Double.Parse(txtMontoHasta.Text)).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not ChkMarcaSinFacturar.Checked Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = -1).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not ChkMarcaTicket.Checked Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 0).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not ChkMarcaElectronica.Checked Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 2).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not ChkMarcaManual.Checked Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) Integer.Parse(x("TipoRecibo")) = 1).ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not ChkAnuladoSi.Checked Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("Anulado") = "SI").ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                If Not ChkAnuladoNo.Checked Then
-                    For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("Anulado") = "NO").ToList()
-                        dsVentas.Tables(0).Rows.Remove(venta)
-                    Next
-                End If
-
-                DG_Ventas.DataSource = dsVentas.Tables(0)
-                DG_Ventas.AutoGenerateColumns = False
-                DG_Ventas.ColumnHeadersVisible = True
-                DG_Ventas.Columns("Descuento").Visible = False
-                DG_Ventas.Columns("MontoTotal").DefaultCellStyle.Format = "C2"
-                DG_Ventas.Columns("Cliente").DefaultCellStyle.NullValue = "No Disponible"
-                DG_Ventas.Refresh()
-                lbl_Msg.Visible = False
-            Else
-                DG_Ventas.DataSource = Nothing
-                DG_Ventas.Refresh()
-                lbl_Msg.Visible = True
-            End If
+            Buscar()
 
             'Seteo el id_CLiente en cero
             eVentas.id_Venta = 0
@@ -713,9 +649,15 @@ Public Class frmVentasAdministracion
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
+        Buscar()
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub Buscar()
         'Cargo el datagrid
-        Dim dsVentas As New DataSet
-        dsVentas = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
+        Dim dsVentas As DataSet = NegVentas.ListadoVentasCompletoFecha(id_Sucursal, FDesde.Value.ToString("yyyy/MM/dd"), FHasta.Value.ToString("yyyy/MM/dd"))
 
         If dsVentas.Tables(0).Rows.Count > 0 Then
 
@@ -791,6 +733,12 @@ Public Class frmVentasAdministracion
                 Next
             End If
 
+            If cmbFormaPago.Text <> "Todas" Then
+                For Each venta As DataRow In dsVentas.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("FormaPago") <> cmbFormaPago.Text).ToList()
+                    dsVentas.Tables(0).Rows.Remove(venta)
+                Next
+            End If
+
             DG_Ventas.DataSource = dsVentas.Tables(0)
             DG_Ventas.AutoGenerateColumns = False
             DG_Ventas.ColumnHeadersVisible = True
@@ -805,9 +753,6 @@ Public Class frmVentasAdministracion
             DG_Ventas.Refresh()
             lbl_Msg.Visible = True
         End If
-
-        'Cambio el cursor a NORMAL.
-        Me.Cursor = Cursors.Arrow
     End Sub
 
     'Click en "Ver Detalle de Factura"

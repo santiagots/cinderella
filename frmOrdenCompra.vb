@@ -6,16 +6,22 @@ Imports Negocio
 
 Public Class frmOrdenCompra
     Dim NegProveedor As NegProveedores = New NegProveedores()
-    Dim NegStockPedido As NegOrdenCompra = New NegOrdenCompra()
+    Dim NegStock As NegStock = New NegStock()
+    Dim NegOrdenCompra As NegOrdenCompra = New NegOrdenCompra()
     Dim NegEmpleados As NegEmpleados = New NegEmpleados()
     Dim NegProductos As NegProductos = New NegProductos()
     Dim NegSucursales As NegSucursales = New NegSucursales()
     Dim NegEmail As NegEmail = New NegEmail()
+    Dim NegMercaderia As NegMercaderia = New NegMercaderia()
+    Dim NegCuentaCorriente As NegCuentaCorriente = New NegCuentaCorriente()
     Dim dsProductos As DataSet
 
+    Dim stockNotaPedidoExistentes As List(Of OrdenCompra)
     Dim Funciones As Funciones = New Funciones()
     Private Sub frmStockPedido_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InicializarAlta()
+
+        ObtenerNotasPedidosAbiertasEnviadas()
 
         Dim ordenCompraTipoLista As List(Of String) = [Enum].GetNames(GetType(OrdenCompraPedidoTipo)).ToList()
         ordenCompraTipoLista.Insert(0, "Todos")
@@ -59,6 +65,12 @@ Public Class frmOrdenCompra
         BuscarOrdenesCompra()
     End Sub
 
+    Private Sub ObtenerNotasPedidosAbiertasEnviadas()
+        'Obtengo las notas de pedidos abiertas o enviadas
+        stockNotaPedidoExistentes = NegOrdenCompra.Obtener(My.Settings.Sucursal, OrdenCompraPedidoEstado.Nuevo)
+        stockNotaPedidoExistentes.AddRange(NegOrdenCompra.Obtener(My.Settings.Sucursal, OrdenCompraPedidoEstado.Enviado))
+    End Sub
+
     Private Sub EditingControlShowing(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgMercaderiaAlta.EditingControlShowing, dgMercaderiaDetalle.EditingControlShowing
         'Referenciamos el control TextBox subyacente en la celda actual.
         Dim cellTextBox As DataGridViewTextBoxEditingControl
@@ -82,7 +94,7 @@ Public Class frmOrdenCompra
         dataGridView.BeginEdit(True)
     End Sub
 
-    Private Sub CellValidating(sender As Object, e As DataGridViewCellValidatingEventArgs) Handles dgMercaderiaAlta.CellValidating
+    Private Sub CellValidating(sender As Object, e As DataGridViewCellValidatingEventArgs) Handles dgMercaderiaAlta.CellValidating, dgMercaderiaDetalle.CellValidating
         Dim dataGridView As DataGridView = sender
         If (dataGridView.Columns(e.ColumnIndex).HeaderText = "Cantidad") Then
             Dim cantidad As Integer = 0
@@ -96,11 +108,11 @@ Public Class frmOrdenCompra
         End If
     End Sub
 
-    Private Sub dgMercaderiaDetalle_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs)
+    Private Sub dgMercaderiaDetalle_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgMercaderiaDetalle.CellEndEdit
         ActualizarTotales(ModificacionOrdenCompraBindingSource.DataSource, lblMontoTotalDetalle, lblTotalesDetalle)
     End Sub
 
-    Private Sub dgMercaderiaAlta_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgMercaderiaAlta.CellEndEdit
+    Private Sub dgMercaderiaAlta_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgMercaderiaAlta.CellEndEdit, dgMercaderiaDetalle.CellEndEdit
         ActualizarTotales(AltaOrdenCompraBindingSource.DataSource, lblMontoTotalAlta, lblTotalesAlta)
     End Sub
 
@@ -137,6 +149,7 @@ Public Class frmOrdenCompra
         Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = NombreCodigoProducto.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = NombreCodigoProducto.ToUpper()).FirstOrDefault()
         If (dr IsNot Nothing) Then
             Dim producto As Productos = NegProductos.TraerProducto(dr(3))
+
             Return New OrdenCompraDetalle() With {
                 .Cantidad = 1,
                 .Codigo = producto.Codigo,
@@ -189,12 +202,22 @@ Public Class frmOrdenCompra
         If ordenesCompraDetalle IsNot Nothing Then
             Dim ordenesCompra As OrdenCompra = bindingSource.DataSource
 
+            Dim frmStockIngreso As frmStockIngreso
+
             Dim ordenesCompraDetalleGrilla As OrdenCompraDetalle = ordenesCompra.Detalles.FirstOrDefault(Function(x) x.Codigo = ordenesCompraDetalle.Codigo)
             If (ordenesCompraDetalleGrilla IsNot Nothing) Then
-                ordenesCompraDetalleGrilla.Cantidad += 1
+                frmStockIngreso = New frmStockIngreso(ordenesCompraDetalleGrilla.idProducto, ordenesCompraDetalleGrilla.Codigo, My.Settings.Sucursal, ordenesCompraDetalleGrilla.Cantidad, False)
+                If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                    ordenesCompraDetalleGrilla.Cantidad = frmStockIngreso.stockCargado
+                End If
             Else
-                detalleBindingSource.Add(ordenesCompraDetalle)
+                frmStockIngreso = New frmStockIngreso(ordenesCompraDetalle.idProducto, ordenesCompraDetalle.Codigo, My.Settings.Sucursal, 0, False)
+                If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                    ordenesCompraDetalle.Cantidad = frmStockIngreso.stockCargado
+                    detalleBindingSource.Add(ordenesCompraDetalle)
+                End If
             End If
+
             bindingSource.ResetBindings(False)
         Else
             MessageBox.Show("No se a podido encontrar el producto ingresado.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -208,17 +231,24 @@ Public Class frmOrdenCompra
             Return
         End If
 
+        Dim OrdenCompra As OrdenCompra = AltaOrdenCompraBindingSource.DataSource
+        If (OrdenCompra.Detalles.Any(Function(x) Not x.Verificado)) Then
+            MessageBox.Show("Existen productos con advertencias, Por favor verifique las advertencias.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
         Try
             Me.Cursor = Cursors.WaitCursor
-            NegStockPedido.Guardar(AltaOrdenCompraBindingSource.DataSource)
+            NegOrdenCompra.Guardar(AltaOrdenCompraBindingSource.DataSource)
+            ObtenerNotasPedidosAbiertasEnviadas()
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha dado de alta la orden de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
             InicializarAlta()
+            MessageBox.Show("Se ha dado de alta la orden de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            tabOrdenCompra.SelectedTab = TabBusqueda
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error al guardar la orden de compra. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
     Private Sub InicializarAlta()
@@ -233,6 +263,18 @@ Public Class frmOrdenCompra
         AltaOrdenCompraBindingSource.DataSource = ordenCompraAlta
     End Sub
 
+    Private Sub InicializarDetalle()
+        Dim ordenCompraAlta As OrdenCompra = New OrdenCompra() With {
+            .NombreSucursal = My.Settings.NombreSucursal,
+            .idSucursal = My.Settings.Sucursal,
+            .Fecha = DateTime.Now,
+            .Estado = OrdenCompraPedidoEstado.Nuevo,
+            .Tipo = OrdenCompraPedidoTipo.Manual,
+            .Detalles = New List(Of OrdenCompraDetalle)()
+            }
+        ModificacionOrdenCompraBindingSource.DataSource = ordenCompraAlta
+    End Sub
+
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click
         BuscarOrdenesCompra()
     End Sub
@@ -240,7 +282,7 @@ Public Class frmOrdenCompra
     Private Sub BuscarOrdenesCompra()
         Try
             Me.Cursor = Cursors.WaitCursor
-            Dim ordenCompra As List(Of OrdenCompra) = NegStockPedido.Obtener(My.Settings.Sucursal, dpDesdeBusqueda.Value, dpHastaBusqueda.Value)
+            Dim ordenCompra As List(Of OrdenCompra) = NegOrdenCompra.Obtener(My.Settings.Sucursal, dpDesdeBusqueda.Value, dpHastaBusqueda.Value)
 
             If cbProveedorBuscar.SelectedValue > 0 Then
                 ordenCompra = ordenCompra.Where(Function(x) x.idProveedor = cbProveedorBuscar.SelectedValue).ToList()
@@ -298,9 +340,15 @@ Public Class frmOrdenCompra
             Return
         End If
 
+        Dim ordenCompra As OrdenCompra = ModificacionOrdenCompraBindingSource.DataSource
+        If (ordenCompra.Detalles.Any(Function(x) Not x.Verificado)) Then
+            MessageBox.Show("Existen productos con advertencias, Por favor verifique las advertencias.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
         Try
             Me.Cursor = Cursors.WaitCursor
-            NegStockPedido.Modificar(ModificacionOrdenCompraBindingSource.DataSource)
+            NegOrdenCompra.Modificar(ModificacionOrdenCompraBindingSource.DataSource)
             MessageBox.Show("Se ha actualizado la orden de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
             tabOrdenCompra.SelectedTab = TabBusqueda
             Me.Cursor = Cursors.Arrow
@@ -365,8 +413,9 @@ Public Class frmOrdenCompra
                 Try
                     Me.Cursor = Cursors.WaitCursor
                     Dim ordenCompra As OrdenCompra = BuscarOrdenCompraBindingSource.Current
-                    NegStockPedido.Eliminar(ordenCompra)
+                    NegOrdenCompra.Eliminar(ordenCompra)
                     BuscarOrdenCompraBindingSource.Remove(BuscarOrdenCompraBindingSource.Current)
+                    ObtenerNotasPedidosAbiertasEnviadas()
                     MessageBox.Show("Se ha eliminado la orden de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Me.Cursor = Cursors.Arrow
                 Catch ex As Exception
@@ -378,18 +427,51 @@ Public Class frmOrdenCompra
     End Sub
 
     Private Sub dgMercaderiaAlta_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgMercaderiaAlta.CellContentClick
-        If dgOrdenCompraBusqueda.Columns(e.ColumnIndex).Name = "EliminarAlta" Then
+        If dgMercaderiaAlta.Columns(e.ColumnIndex).Name = "EliminarAlta" Then
             If MessageBox.Show("¿Está seguro que desea eliminar el item seleccionado?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 AltaDetallesBindingSource.RemoveCurrent()
             End If
         End If
+
+        If dgMercaderiaAlta.Columns(e.ColumnIndex).Name = "AdvertenciaAlta" Then
+            Dim ordenCompraDetalle As OrdenCompraDetalle = AltaDetallesBindingSource.Current
+            If MostrarAdvertencias(ordenCompraDetalle) = DialogResult.No Then
+                AltaDetallesBindingSource.RemoveCurrent()
+            Else
+                ordenCompraDetalle.Verificado = True
+                If (ordenCompraDetalle.Cantidad <= 0) Then
+                    AltaDetallesBindingSource.RemoveCurrent()
+                    MessageBox.Show("El producto se ha eliminado por tener cantidad igual a cero.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+            End If
+            AltaOrdenCompraBindingSource.ResetBindings(False)
+        End If
     End Sub
 
+    Private Function MostrarAdvertencias(ordenCompraDetalle As OrdenCompraDetalle) As DialogResult
+        Dim frmOrdenCompraProductoRepetido As frmOrdenCompraProductoRepetido = New frmOrdenCompraProductoRepetido()
+        frmOrdenCompraProductoRepetido.OrdenCompraDetalle = ordenCompraDetalle
+        frmOrdenCompraProductoRepetido.OrdenCompra = stockNotaPedidoExistentes.Where(Function(x) x.Detalles.Where(Function(y) y.idProducto = ordenCompraDetalle.idProducto).Any).ToList()
+
+        Return frmOrdenCompraProductoRepetido.ShowDialog()
+    End Function
+
+
     Private Sub dgMercaderiaDetalle_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgMercaderiaDetalle.CellContentClick
-        If dgOrdenCompraBusqueda.Columns(e.ColumnIndex).Name = "EliminarDetalle" Then
+        If dgMercaderiaDetalle.Columns(e.ColumnIndex).Name = "EliminarDetalle" Then
             If MessageBox.Show("¿Está seguro que desea eliminar el item seleccionado?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 ModificacionDetallesBindingSource.RemoveCurrent()
             End If
+        End If
+
+        If dgMercaderiaDetalle.Columns(e.ColumnIndex).Name = "AdvertenciaDetalle" Then
+            Dim ordenCompraDetalle As OrdenCompraDetalle = ModificacionDetallesBindingSource.Current
+            If MostrarAdvertencias(ModificacionDetallesBindingSource.Current) = DialogResult.No Then
+                ModificacionDetallesBindingSource.RemoveCurrent()
+            Else
+                ordenCompraDetalle.Verificado = True
+            End If
+            ModificacionDetallesBindingSource.ResetBindings(False)
         End If
     End Sub
 
@@ -402,14 +484,49 @@ Public Class frmOrdenCompra
         Try
             Me.Cursor = Cursors.WaitCursor
             OrdenCompra.Estado = OrdenCompraPedidoEstado.Recibido
-            NegStockPedido.Recibir(OrdenCompra)
+            GuardarMercaderia(OrdenCompra)
+            NegOrdenCompra.Recibir(OrdenCompra)
             MessageBox.Show("Se a actualizado el stock correctamente.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
             tabOrdenCompra.SelectedTab = TabBusqueda
+            ObtenerNotasPedidosAbiertasEnviadas()
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error al actualizo el stock de la orden de compra. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Public Sub GuardarMercaderia(OrdenCompra As OrdenCompra)
+        'Ingreso la Mercaderia.
+        Dim EMercaderia As New Entidades.Mercaderias() With {
+                .id_Proveedor = OrdenCompra.idProveedor,
+                .id_Sucursal = My.Settings.Sucursal,
+                .Habilitado = 1,
+                .Fecha = Date.Now,
+                .CantidadTotal = OrdenCompra.Detalles.Sum(Function(x) x.Cantidad),
+                .MontoTotal = OrdenCompra.Detalles.Sum(Function(x) x.Costo * x.Cantidad)}
+
+        Dim id_Mercaderia As Int64 = NegMercaderia.AltaMercaderia(EMercaderia)
+
+        For Each mercaderiaDetalle As OrdenCompraDetalle In OrdenCompra.Detalles
+            Dim EMercaDetalle As New Entidades.Mercaderias_Detalle() With {
+            .id_Mercaderia = id_Mercaderia,
+            .id_Producto = mercaderiaDetalle.idProducto,
+            .Costo = mercaderiaDetalle.Costo,
+            .Cantidad = mercaderiaDetalle.Cantidad,
+            .Total = mercaderiaDetalle.Cantidad * mercaderiaDetalle.Costo}
+
+            NegMercaderia.AltaMercaderiaDetalle(EMercaDetalle, My.Settings.Sucursal)
+        Next
+
+        'Ingreso la deuda en la cuenta corriente
+        Dim ECuenta As New Entidades.Cuenta_Corriente() With {
+            .id_Mercaderia = id_Mercaderia,
+            .id_Proveedor = EMercaderia.id_Proveedor,
+            .id_Sucursal = EMercaderia.id_Sucursal,
+            .Fecha = Date.Now,
+            .Monto = EMercaderia.MontoTotal * -1}
+        NegCuentaCorriente.AltaCuentaCorriente(ECuenta)
     End Sub
 
     Private Async Sub btnEnviarAlta_Click(sender As Object, e As EventArgs) Handles btnEnviarAlta.Click
@@ -419,11 +536,15 @@ Public Class frmOrdenCompra
         End If
 
         Dim ordenCompra As OrdenCompra = AltaOrdenCompraBindingSource.DataSource
+        If (ordenCompra.Detalles.Any(Function(x) Not x.Verificado)) Then
+            MessageBox.Show("Existen productos con advertencias, Por favor verifique las advertencias.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
 
         Try
             'Guardo la orden de compra
             Me.Cursor = Cursors.WaitCursor
-            NegStockPedido.Guardar(ordenCompra)
+            NegOrdenCompra.Guardar(ordenCompra)
             MessageBox.Show("Se ha dado de alta la orden de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
@@ -433,19 +554,12 @@ Public Class frmOrdenCompra
         End Try
 
         If MessageBox.Show("¿Desea enviar un email con la orden de compra al proveedor?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
             Dim respuestaEnvioMail = Await EnviarCorreo(ordenCompra, cbProveedorAlta.SelectedValue, cbEncargadoAlta.SelectedValue, AltaDetallesBindingSource)
-
-            If respuestaEnvioMail Then
-                InicializarAlta()
-                tabOrdenCompra.SelectedTab = TabBusqueda
-            Else
-                InicializarAlta()
-            End If
-        Else
-            InicializarAlta()
-            tabOrdenCompra.SelectedTab = TabBusqueda
         End If
+
+        InicializarAlta()
+        ObtenerNotasPedidosAbiertasEnviadas()
+        tabOrdenCompra.SelectedTab = TabBusqueda
     End Sub
 
     Private Async Sub btnEnviarModificacion_Click(sender As Object, e As EventArgs) Handles btnEnviarModificacion.Click
@@ -454,15 +568,32 @@ Public Class frmOrdenCompra
             Return
         End If
 
-        If MessageBox.Show("¿Desea enviar un email con la orden de compra al proveedor?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Dim ordenCompra As OrdenCompra = ModificacionOrdenCompraBindingSource.DataSource
+        Dim ordenCompra As OrdenCompra = ModificacionOrdenCompraBindingSource.DataSource
+        If (ordenCompra.Detalles.Any(Function(x) Not x.Verificado)) Then
+            MessageBox.Show("Existen productos con advertencias, Por favor verifique las advertencias.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
 
+        Try
+            'Guardo la orden de compra
+            Me.Cursor = Cursors.WaitCursor
+            NegOrdenCompra.Modificar(ModificacionOrdenCompraBindingSource.DataSource)
+            Me.Cursor = Cursors.Arrow
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha producido un error al dar de alta la orden de compra. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End Try
+
+        If MessageBox.Show("¿Desea enviar un email con la orden de compra al proveedor?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Dim respuestaEnvioMail = Await EnviarCorreo(ordenCompra, ordenCompra.idProveedor, ordenCompra.idEncargado, ModificacionDetallesBindingSource)
 
             If respuestaEnvioMail Then
+                InicializarDetalle()
                 tabOrdenCompra.SelectedTab = TabBusqueda
             End If
         End If
+        ObtenerNotasPedidosAbiertasEnviadas()
     End Sub
 
     Private Async Function EnviarCorreo(OrdenCompra As OrdenCompra, idProveedor As Integer, idEncargado As Integer, detalleBindingSource As BindingSource) As Threading.Tasks.Task(Of Boolean)
@@ -473,8 +604,8 @@ Public Class frmOrdenCompra
             Dim srMailMansaje As New StreamReader("Plantilla\MailOrdenCompra.txt", Encoding.Default)
 
             'Exporto la lista de productos a Excel
-            Dim nombreArchivo As String = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\OrdenCompraMercaderia.xlsx"
-            Funciones.ExportarAExcel(nombreArchivo, $"Sucursal: {My.Settings.NombreSucursal}", $"Fecha: {Date.Now.ToString("yyyy/MM/dd")}", ObtenerDataTable(detalleBindingSource))
+            Dim nombreArchivo As String = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\OrdenCompra_{My.Settings.NombreSucursal}_{Date.Now.ToString("dd-MM-yyyy")}.xlsx"
+            Funciones.ExportarAExcel(nombreArchivo, $"Sucursal: {My.Settings.NombreSucursal}", $"Fecha: {Date.Now.ToString("dd/MM/yyyy")}", ObtenerDataTable(detalleBindingSource))
 
             Dim proveedor As Proveedores = NegProveedor.TraerProveedor(idProveedor)
             If String.IsNullOrEmpty(proveedor.Mail) Then
@@ -505,15 +636,23 @@ Public Class frmOrdenCompra
             Dim respuesta As DialogResult = DialogInput.ShowDialog()
             If respuesta = DialogResult.OK Then
                 Me.Cursor = Cursors.WaitCursor
-                Await Funciones.EnviarMailAsync(eMail, eMail.From, DialogInput.txtRespuesta.Text)
+                Dim envioOk As Boolean = Await Funciones.EnviarMailAsync(eMail, eMail.From, DialogInput.txtRespuesta.Text)
 
-                'Actualizo la orden de compra a enviada
-                OrdenCompra.Estado = OrdenCompraPedidoEstado.Enviado
-                NegStockPedido.Modificar(OrdenCompra)
+                If envioOk Then
 
-                MessageBox.Show("Se ha enviado la orden de compra al proveedor.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Me.Cursor = Cursors.Arrow
-                Return True
+
+                    'Actualizo la orden de compra a enviada
+                    OrdenCompra.Estado = OrdenCompraPedidoEstado.Enviado
+                    NegOrdenCompra.Modificar(OrdenCompra)
+
+                    MessageBox.Show("Se ha enviado la orden de compra al proveedor.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Cursor = Cursors.Arrow
+                    Return True
+                Else
+                    MessageBox.Show("Se ha producido un error enviar la orden de compra. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Me.Cursor = Cursors.Arrow
+                    Return False
+                End If
             Else
                 MessageBox.Show("Se ha cancela el envió del email.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Return False
@@ -529,7 +668,7 @@ Public Class frmOrdenCompra
         Dim dt As DataTable = New DataTable()
 
         dt.Columns.Add("Código")
-        dt.Columns.Add("Nombre")
+        dt.Columns.Add("Artículo")
         dt.Columns.Add("Cantidad")
 
         For Each detalle As OrdenCompraDetalle In detalleBindingSource.List
@@ -547,4 +686,76 @@ Public Class frmOrdenCompra
     Private Sub BuscarOrdenCompraBindingSource_BindingComplete(sender As Object, e As BindingCompleteEventArgs) Handles BuscarOrdenCompraBindingSource.BindingComplete
         lbl_Msg.Visible = BuscarOrdenCompraBindingSource.List.Count = 0
     End Sub
+
+    Private Sub BtnCargaAutomaticaAlta_Click(sender As Object, e As EventArgs) Handles BtnCargaAutomaticaAlta.Click
+        Try
+            If (cbProveedorAlta.SelectedValue = 0) Then
+                MessageBox.Show("Debe seleccionar un proveedor.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
+
+            Me.Cursor = Cursors.WaitCursor
+
+            Dim productosAgregados As Integer = 0
+            Dim ordenCompra As OrdenCompra = AltaOrdenCompraBindingSource.DataSource
+            Dim proveedor As Proveedores = NegProveedor.TraerProveedor(ordenCompra.idProveedor)
+
+            'Obtengo los productos en sotck de este proveedor
+            Dim stocks As List(Of Stock) = NegStock.ListadoStock(My.Settings.Sucursal, ordenCompra.idProveedor)
+            For Each stock As Stock In stocks
+                'Verifico si tiene faltante de stock
+                If stock.Stock_Actual < stock.Stock_Minimo Then
+                    Dim producto As Productos = NegProductos.TraerProducto(stock.id_Producto)
+                    'Verifico que el producto no esta ingresado en la lista
+                    If Not ordenCompra.Detalles.Any(Function(x) x.Codigo = producto.Codigo) Then
+                        'Agrego el producto
+                        ordenCompra.Detalles.Add(New OrdenCompraDetalle() With {
+                                .Codigo = producto.Codigo,
+                                .idProducto = producto.id_Producto,
+                                .Costo = producto.Costo,
+                                .Nombre = producto.Nombre,
+                                .Cantidad = stock.Stock_Optimo - stock.Stock_Actual + (stock.VentaMensual / 30 * proveedor.PlazoEntrega)})
+
+                        productosAgregados += 1
+                    End If
+                End If
+            Next
+
+            Me.Cursor = Cursors.Arrow
+
+            If (productosAgregados > 0) Then
+                MessageBox.Show($"Se han agregado {productosAgregados} nuevos producto con faltante de stock.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("No se han encontrado productos con faltante de stock para el proveedor seleccionado.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+            ActualizarTotales(AltaOrdenCompraBindingSource.DataSource, lblMontoTotalAlta, lblTotalesAlta)
+            AltaOrdenCompraBindingSource.ResetBindings(False)
+
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha producido un error al cargar los productos de forma automática. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub dgMercaderia_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgMercaderiaAlta.CellFormatting, dgMercaderiaDetalle.CellFormatting
+        Dim dataGridView As DataGridView = CType(sender, DataGridView)
+        If (dataGridView.Columns(e.ColumnIndex).Name.Contains("Advertencia")) Then
+            Dim ordenCompraDetalle As OrdenCompraDetalle = dataGridView.Rows(e.RowIndex).DataBoundItem
+
+            If ordenCompraDetalle.Verificado Then
+                e.Value = New Bitmap(1, 1)
+                Return
+            End If
+
+            Dim existeProductoEnOrdenCompraActiva As Boolean = stockNotaPedidoExistentes.Where(Function(x) x.Detalles.Where(Function(y) y.idProducto = ordenCompraDetalle.idProducto).Any).Any
+            If (existeProductoEnOrdenCompraActiva) Then
+                ordenCompraDetalle.Verificado = False
+            Else
+                e.Value = New Bitmap(1, 1)
+                ordenCompraDetalle.Verificado = True
+            End If
+        End If
+    End Sub
+
 End Class

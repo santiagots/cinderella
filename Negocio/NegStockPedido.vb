@@ -210,6 +210,7 @@ Public Class NegOrdenCompra
             .idOrdenCompra = drStockPedidoDetalle("idOrdenCompra"),
             .idOrdenCompraDetalle = drStockPedidoDetalle("idOrdenCompraDetalle"),
             .Nombre = drStockPedidoDetalle("Nombre"),
+            .Verificado = If(drStockPedidoDetalle("Verificado") Is DBNull.Value, False, drStockPedidoDetalle("Verificado")),
             .Importe = .Cantidad * .Costo
         }
     End Function
@@ -331,9 +332,10 @@ Public Class NegOrdenCompra
         dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
         dt.Columns.Add("Costo", Type.GetType("System.Double"))
         dt.Columns.Add("FechaEdicion", Type.GetType("System.DateTime"))
+        dt.Columns.Add("Verificado", Type.GetType("System.Boolean"))
 
         For Each item As OrdenCompraDetalle In stockNotaPedido.Detalles
-            dt.Rows.Add(item.idOrdenCompraDetalle, stockNotaPedido.idOrdenCompra, item.idProducto, item.Cantidad, item.Costo, item.FechaEdicion)
+            dt.Rows.Add(item.idOrdenCompraDetalle, stockNotaPedido.idOrdenCompra, item.idProducto, item.Cantidad, item.Costo, item.FechaEdicion, item.Verificado)
         Next
 
         Return dt

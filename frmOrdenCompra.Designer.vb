@@ -25,6 +25,8 @@ Partial Class frmOrdenCompra
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmOrdenCompra))
         Me.tabOrdenCompra = New System.Windows.Forms.TabControl()
         Me.TabBusqueda = New System.Windows.Forms.TabPage()
@@ -60,6 +62,8 @@ Partial Class frmOrdenCompra
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.btnEnviarAlta = New System.Windows.Forms.Button()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.BtnCargaAutomaticaAlta = New System.Windows.Forms.Button()
         Me.BtnAgregarAlta = New System.Windows.Forms.Button()
         Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
         Me.txtProductoAlta = New System.Windows.Forms.TextBox()
@@ -71,6 +75,8 @@ Partial Class frmOrdenCompra
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EliminarAlta = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.AdvertenciaAlta = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Verificado = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.AltaDetallesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.AltaOrdenCompraBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label10 = New System.Windows.Forms.Label()
@@ -100,6 +106,8 @@ Partial Class frmOrdenCompra
         Me.CantidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ImporteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EliminarDetalle = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.AdvertenciaDetalle = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.VerificadoDetalle = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.ModificacionDetallesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ModificacionOrdenCompraBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btnRecibirModificacion = New System.Windows.Forms.Button()
@@ -139,6 +147,7 @@ Partial Class frmOrdenCompra
         Me.TabAlta.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
+        Me.TableLayoutPanel7.SuspendLayout()
         CType(Me.dgMercaderiaAlta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AltaDetallesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AltaOrdenCompraBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -209,7 +218,7 @@ Partial Class frmOrdenCompra
         Me.lbl_Msg.Text = "No se han encontrado Ordenes de Compra."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'dgNotaPedidoBusqueda
+        'dgOrdenCompraBusqueda
         '
         Me.dgOrdenCompraBusqueda.AllowUserToAddRows = False
         Me.dgOrdenCompraBusqueda.AllowUserToDeleteRows = False
@@ -225,7 +234,7 @@ Partial Class frmOrdenCompra
         Me.dgOrdenCompraBusqueda.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgOrdenCompraBusqueda.Location = New System.Drawing.Point(3, 17)
         Me.dgOrdenCompraBusqueda.MultiSelect = False
-        Me.dgOrdenCompraBusqueda.Name = "dgNotaPedidoBusqueda"
+        Me.dgOrdenCompraBusqueda.Name = "dgOrdenCompraBusqueda"
         Me.dgOrdenCompraBusqueda.ReadOnly = True
         Me.dgOrdenCompraBusqueda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgOrdenCompraBusqueda.Size = New System.Drawing.Size(763, 430)
@@ -273,7 +282,7 @@ Partial Class frmOrdenCompra
         Me.Eliminar.Name = "Eliminar"
         Me.Eliminar.ReadOnly = True
         '
-        'BuscarStockNotaPedidoBindingSource
+        'BuscarOrdenCompraBindingSource
         '
         Me.BuscarOrdenCompraBindingSource.DataSource = GetType(Entidades.OrdenCompra)
         '
@@ -562,17 +571,45 @@ Partial Class frmOrdenCompra
         Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.BtnAgregarAlta, 2, 0)
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 240.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.TableLayoutPanel7, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.txtProductoAlta, 1, 0)
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(6, 2)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49.0!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(759, 49)
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 58.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(761, 58)
         Me.TableLayoutPanel4.TabIndex = 31
+        '
+        'TableLayoutPanel7
+        '
+        Me.TableLayoutPanel7.ColumnCount = 2
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.93306!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.06694!))
+        Me.TableLayoutPanel7.Controls.Add(Me.BtnCargaAutomaticaAlta, 1, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.BtnAgregarAlta, 0, 0)
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(524, 3)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 1
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(234, 52)
+        Me.TableLayoutPanel7.TabIndex = 36
+        '
+        'BtnCargaAutomaticaAlta
+        '
+        Me.BtnCargaAutomaticaAlta.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.BtnCargaAutomaticaAlta.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnCargaAutomaticaAlta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnCargaAutomaticaAlta.Image = Global.SistemaCinderella.My.Resources.Recursos.ProductosMasivos_32
+        Me.BtnCargaAutomaticaAlta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnCargaAutomaticaAlta.Location = New System.Drawing.Point(110, 5)
+        Me.BtnCargaAutomaticaAlta.Name = "BtnCargaAutomaticaAlta"
+        Me.BtnCargaAutomaticaAlta.Size = New System.Drawing.Size(121, 42)
+        Me.BtnCargaAutomaticaAlta.TabIndex = 35
+        Me.BtnCargaAutomaticaAlta.Text = "Carga Automática"
+        Me.BtnCargaAutomaticaAlta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnCargaAutomaticaAlta.UseVisualStyleBackColor = True
         '
         'BtnAgregarAlta
         '
@@ -581,9 +618,9 @@ Partial Class frmOrdenCompra
         Me.BtnAgregarAlta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnAgregarAlta.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.BtnAgregarAlta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnAgregarAlta.Location = New System.Drawing.Point(656, 3)
+        Me.BtnAgregarAlta.Location = New System.Drawing.Point(3, 5)
         Me.BtnAgregarAlta.Name = "BtnAgregarAlta"
-        Me.BtnAgregarAlta.Size = New System.Drawing.Size(100, 42)
+        Me.BtnAgregarAlta.Size = New System.Drawing.Size(96, 42)
         Me.BtnAgregarAlta.TabIndex = 8
         Me.BtnAgregarAlta.Text = "Agregar"
         Me.BtnAgregarAlta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -594,7 +631,7 @@ Partial Class frmOrdenCompra
         Me.lbl_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_CodigoBarra.AutoSize = True
         Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 17)
+        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 21)
         Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
         Me.lbl_CodigoBarra.Size = New System.Drawing.Size(194, 15)
         Me.lbl_CodigoBarra.TabIndex = 7
@@ -606,9 +643,9 @@ Partial Class frmOrdenCompra
         Me.txtProductoAlta.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.txtProductoAlta.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txtProductoAlta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtProductoAlta.Location = New System.Drawing.Point(203, 14)
+        Me.txtProductoAlta.Location = New System.Drawing.Point(203, 18)
         Me.txtProductoAlta.Name = "txtProductoAlta"
-        Me.txtProductoAlta.Size = New System.Drawing.Size(433, 21)
+        Me.txtProductoAlta.Size = New System.Drawing.Size(315, 21)
         Me.txtProductoAlta.TabIndex = 7
         '
         'lblMontoTotalAlta
@@ -635,14 +672,14 @@ Partial Class frmOrdenCompra
         Me.dgMercaderiaAlta.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgMercaderiaAlta.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.dgMercaderiaAlta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgMercaderiaAlta.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.EliminarAlta})
+        Me.dgMercaderiaAlta.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.EliminarAlta, Me.AdvertenciaAlta, Me.Verificado})
         Me.dgMercaderiaAlta.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dgMercaderiaAlta.DataSource = Me.AltaDetallesBindingSource
-        Me.dgMercaderiaAlta.Location = New System.Drawing.Point(6, 53)
+        Me.dgMercaderiaAlta.Location = New System.Drawing.Point(6, 63)
         Me.dgMercaderiaAlta.Name = "dgMercaderiaAlta"
         Me.dgMercaderiaAlta.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgMercaderiaAlta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgMercaderiaAlta.Size = New System.Drawing.Size(762, 389)
+        Me.dgMercaderiaAlta.Size = New System.Drawing.Size(762, 379)
         Me.dgMercaderiaAlta.TabIndex = 15
         '
         'DataGridViewTextBoxColumn1
@@ -688,6 +725,19 @@ Partial Class frmOrdenCompra
         Me.EliminarAlta.HeaderText = "Eliminar"
         Me.EliminarAlta.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
         Me.EliminarAlta.Name = "EliminarAlta"
+        '
+        'AdvertenciaAlta
+        '
+        Me.AdvertenciaAlta.HeaderText = "Advertencia"
+        Me.AdvertenciaAlta.Image = Global.SistemaCinderella.My.Resources.Recursos.warning_24
+        Me.AdvertenciaAlta.Name = "AdvertenciaAlta"
+        '
+        'Verificado
+        '
+        Me.Verificado.DataPropertyName = "Verificado"
+        Me.Verificado.HeaderText = "Verificado"
+        Me.Verificado.Name = "Verificado"
+        Me.Verificado.Visible = False
         '
         'AltaDetallesBindingSource
         '
@@ -972,7 +1022,7 @@ Partial Class frmOrdenCompra
         Me.dgMercaderiaDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgMercaderiaDetalle.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgMercaderiaDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgMercaderiaDetalle.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.CostoDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.ImporteDataGridViewTextBoxColumn, Me.EliminarDetalle})
+        Me.dgMercaderiaDetalle.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.CostoDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.ImporteDataGridViewTextBoxColumn, Me.EliminarDetalle, Me.AdvertenciaDetalle, Me.VerificadoDetalle})
         Me.dgMercaderiaDetalle.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dgMercaderiaDetalle.DataSource = Me.ModificacionDetallesBindingSource
         Me.dgMercaderiaDetalle.Location = New System.Drawing.Point(6, 75)
@@ -997,6 +1047,8 @@ Partial Class frmOrdenCompra
         'CostoDataGridViewTextBoxColumn
         '
         Me.CostoDataGridViewTextBoxColumn.DataPropertyName = "Costo"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.CostoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
         Me.CostoDataGridViewTextBoxColumn.HeaderText = "Costo"
         Me.CostoDataGridViewTextBoxColumn.Name = "CostoDataGridViewTextBoxColumn"
         Me.CostoDataGridViewTextBoxColumn.ReadOnly = True
@@ -1010,6 +1062,8 @@ Partial Class frmOrdenCompra
         'ImporteDataGridViewTextBoxColumn
         '
         Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
+        DataGridViewCellStyle4.Format = "C2"
+        Me.ImporteDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
         Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Importe"
         Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
         Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
@@ -1019,6 +1073,19 @@ Partial Class frmOrdenCompra
         Me.EliminarDetalle.HeaderText = "Eliminar"
         Me.EliminarDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
         Me.EliminarDetalle.Name = "EliminarDetalle"
+        '
+        'AdvertenciaDetalle
+        '
+        Me.AdvertenciaDetalle.HeaderText = "Advertencia"
+        Me.AdvertenciaDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.warning_24
+        Me.AdvertenciaDetalle.Name = "AdvertenciaDetalle"
+        '
+        'VerificadoDetalle
+        '
+        Me.VerificadoDetalle.DataPropertyName = "Verificado"
+        Me.VerificadoDetalle.HeaderText = "Verificado"
+        Me.VerificadoDetalle.Name = "VerificadoDetalle"
+        Me.VerificadoDetalle.Visible = False
         '
         'ModificacionDetallesBindingSource
         '
@@ -1379,6 +1446,7 @@ Partial Class frmOrdenCompra
         Me.GroupBox3.PerformLayout()
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
+        Me.TableLayoutPanel7.ResumeLayout(False)
         CType(Me.dgMercaderiaAlta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.AltaDetallesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.AltaOrdenCompraBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1490,17 +1558,23 @@ Partial Class frmOrdenCompra
     Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents btnEnviarAlta As Button
     Friend WithEvents dgMercaderiaDetalle As DataGridView
+    Friend WithEvents lbl_Msg As Label
+    Friend WithEvents BtnCargaAutomaticaAlta As Button
+    Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
     Friend WithEvents EliminarAlta As DataGridViewImageColumn
+    Friend WithEvents AdvertenciaAlta As DataGridViewImageColumn
+    Friend WithEvents Verificado As DataGridViewCheckBoxColumn
     Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CostoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CantidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents ImporteDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents EliminarDetalle As DataGridViewImageColumn
-    Friend WithEvents lbl_Msg As Label
+    Friend WithEvents AdvertenciaDetalle As DataGridViewImageColumn
+    Friend WithEvents VerificadoDetalle As DataGridViewCheckBoxColumn
 End Class

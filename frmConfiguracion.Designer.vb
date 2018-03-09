@@ -46,6 +46,9 @@ Partial Class frmConfiguracion
         Me.Label4 = New System.Windows.Forms.Label()
         Me.cb_Precios = New System.Windows.Forms.ComboBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.rbUtilizaSSLNo = New System.Windows.Forms.RadioButton()
+        Me.rbUtilizaSSLSi = New System.Windows.Forms.RadioButton()
         Me.txtPort = New System.Windows.Forms.TextBox()
         Me.txtSmtp = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -121,18 +124,20 @@ Partial Class frmConfiguracion
         Me.ROrdenCompraAutomaticaNo = New System.Windows.Forms.RadioButton()
         Me.ROrdenCompraAutomaticaSI = New System.Windows.Forms.RadioButton()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.btnCalcularVentaMensualProducto = New System.Windows.Forms.Button()
         Me.txtFechaUltimoCalculoventaMensual = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
-        Me.btnCalcularVentaMensualProducto = New System.Windows.Forms.Button()
+        Me.Label31 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
+        Me.Panel5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
@@ -400,6 +405,8 @@ Partial Class frmConfiguracion
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label31)
+        Me.GroupBox3.Controls.Add(Me.Panel5)
         Me.GroupBox3.Controls.Add(Me.txtPort)
         Me.GroupBox3.Controls.Add(Me.txtSmtp)
         Me.GroupBox3.Controls.Add(Me.Label3)
@@ -412,6 +419,39 @@ Partial Class frmConfiguracion
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Configuración del Servidor de Mail"
+        '
+        'Panel5
+        '
+        Me.Panel5.Controls.Add(Me.rbUtilizaSSLNo)
+        Me.Panel5.Controls.Add(Me.rbUtilizaSSLSi)
+        Me.Panel5.Location = New System.Drawing.Point(119, 89)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(170, 27)
+        Me.Panel5.TabIndex = 30
+        '
+        'rbUtilizaSSLNo
+        '
+        Me.rbUtilizaSSLNo.AutoSize = True
+        Me.rbUtilizaSSLNo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.rbUtilizaSSLNo.Location = New System.Drawing.Point(124, 3)
+        Me.rbUtilizaSSLNo.Name = "rbUtilizaSSLNo"
+        Me.rbUtilizaSSLNo.Size = New System.Drawing.Size(43, 19)
+        Me.rbUtilizaSSLNo.TabIndex = 26
+        Me.rbUtilizaSSLNo.Tag = ""
+        Me.rbUtilizaSSLNo.Text = "NO"
+        Me.rbUtilizaSSLNo.UseVisualStyleBackColor = True
+        '
+        'rbUtilizaSSLSi
+        '
+        Me.rbUtilizaSSLSi.AutoSize = True
+        Me.rbUtilizaSSLSi.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.rbUtilizaSSLSi.Location = New System.Drawing.Point(11, 3)
+        Me.rbUtilizaSSLSi.Name = "rbUtilizaSSLSi"
+        Me.rbUtilizaSSLSi.Size = New System.Drawing.Size(36, 19)
+        Me.rbUtilizaSSLSi.TabIndex = 25
+        Me.rbUtilizaSSLSi.Tag = ""
+        Me.rbUtilizaSSLSi.Text = "SI"
+        Me.rbUtilizaSSLSi.UseVisualStyleBackColor = True
         '
         'txtPort
         '
@@ -1205,6 +1245,21 @@ Partial Class frmConfiguracion
         Me.GroupBox12.TabStop = False
         Me.GroupBox12.Text = "Calculo venta mensual"
         '
+        'btnCalcularVentaMensualProducto
+        '
+        Me.btnCalcularVentaMensualProducto.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnCalcularVentaMensualProducto.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCalcularVentaMensualProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCalcularVentaMensualProducto.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
+        Me.btnCalcularVentaMensualProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCalcularVentaMensualProducto.Location = New System.Drawing.Point(198, 77)
+        Me.btnCalcularVentaMensualProducto.Name = "btnCalcularVentaMensualProducto"
+        Me.btnCalcularVentaMensualProducto.Size = New System.Drawing.Size(194, 34)
+        Me.btnCalcularVentaMensualProducto.TabIndex = 12
+        Me.btnCalcularVentaMensualProducto.Text = "Calcular Venta Mensual"
+        Me.btnCalcularVentaMensualProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCalcularVentaMensualProducto.UseVisualStyleBackColor = True
+        '
         'txtFechaUltimoCalculoventaMensual
         '
         Me.txtFechaUltimoCalculoventaMensual.Enabled = False
@@ -1258,20 +1313,14 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
         '
-        'Button1
+        'Label31
         '
-        Me.btnCalcularVentaMensualProducto.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnCalcularVentaMensualProducto.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCalcularVentaMensualProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCalcularVentaMensualProducto.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
-        Me.btnCalcularVentaMensualProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCalcularVentaMensualProducto.Location = New System.Drawing.Point(198, 77)
-        Me.btnCalcularVentaMensualProducto.Name = "Button1"
-        Me.btnCalcularVentaMensualProducto.Size = New System.Drawing.Size(194, 34)
-        Me.btnCalcularVentaMensualProducto.TabIndex = 12
-        Me.btnCalcularVentaMensualProducto.Text = "Calcular Venta Mensual"
-        Me.btnCalcularVentaMensualProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnCalcularVentaMensualProducto.UseVisualStyleBackColor = True
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(8, 96)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(70, 15)
+        Me.Label31.TabIndex = 31
+        Me.Label31.Text = "Utiliza SSL:"
         '
         'frmConfiguracion
         '
@@ -1296,6 +1345,8 @@ Partial Class frmConfiguracion
         CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
+        Me.Panel5.ResumeLayout(False)
+        Me.Panel5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         Me.GroupBox9.ResumeLayout(False)
@@ -1432,4 +1483,8 @@ Partial Class frmConfiguracion
     Friend WithEvents CbPeriodoActualizacionVentaMensual As ComboBox
     Friend WithEvents btnModificarStock As Button
     Friend WithEvents btnCalcularVentaMensualProducto As Button
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents rbUtilizaSSLNo As RadioButton
+    Friend WithEvents rbUtilizaSSLSi As RadioButton
+    Friend WithEvents Label31 As Label
 End Class
