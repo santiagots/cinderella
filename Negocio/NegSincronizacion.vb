@@ -794,8 +794,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Cheque"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "CHEQUE"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal <> {1}"
+        tabla.SQLObtenerDatosLocal = "select * from CHEQUE where Fecha_Edicion >= '{0}' AND SucursalId = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from CHEQUE where Fecha_Edicion >= '{0}' AND SucursalId <> {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla

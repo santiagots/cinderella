@@ -1,4 +1,6 @@
 ﻿Imports System.Configuration
+Imports System.Net
+Imports System.Net.NetworkInformation
 Imports Negocio
 
 Public Class frmConfiguracion
@@ -95,6 +97,8 @@ Public Class frmConfiguracion
 
         'Comprobacion de internet.
         Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
+        txt_IpPing.Text = My.Settings.IpPing
+        Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
         If My.Settings("Internet") Then
             Rb1.Checked = True
         Else
@@ -270,21 +274,38 @@ Public Class frmConfiguracion
     'Actualizo el periodo de comprobacion de internet
     Private Sub BtnInternet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnInternet.Click
         'Cambio el cursor a "WAIT"
-        Me.Cursor = Cursors.WaitCursor
-
         Try
-            If (Rb1.Checked Or Rb2.Checked) And Cb_SegundosInternet.SelectedItem IsNot Nothing Then
-                If Rb1.Checked Then
-                    My.Settings.Internet = True
-                Else
-                    My.Settings.Internet = False
-                End If
-                My.Settings.TemporizadorInternet = (Cb_SegundosInternet.SelectedItem * 1000)
-                My.Settings.Save()
-                MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                MessageBox.Show("Debe seleccionar una opción.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            If (Cb_SegundosInternet.SelectedItem Is Nothing) Then
+                MessageBox.Show("Debe seleccionar una opción en Período de Comprobación.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
             End If
+
+            If (Cb_TimeOut.SelectedItem Is Nothing) Then
+                MessageBox.Show("Debe seleccionar una opción en Tiempo de espera.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+
+            If (String.IsNullOrEmpty(txt_IpPing.Text) Or Not IPAddress.TryParse(txt_IpPing.Text, Nothing)) Then
+                MessageBox.Show("La Ip ingresada es invalida. Verifique que el formato sea el correcto", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+
+            Me.Cursor = Cursors.WaitCursor
+
+            If Rb1.Checked Then
+                My.Settings.Internet = True
+            Else
+                My.Settings.Internet = False
+            End If
+            My.Settings.TemporizadorInternet = (Cb_SegundosInternet.SelectedItem * 1000)
+            My.Settings.IpPing = txt_IpPing.Text
+            My.Settings.IpTimeOut = Cb_TimeOut.SelectedItem
+            My.Settings.Save()
+
+            Negocio.Funciones.Ip = My.Settings.IpPing
+            Negocio.Funciones.TimeOut = My.Settings.IpTimeOut
+
+            MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -308,6 +329,11 @@ Public Class frmConfiguracion
         Else
             Rb1.Checked = True
         End If
+
+        Cb_SegundosInternet.Enabled = Rb1.Checked
+        txt_IpPing.Enabled = Rb1.Checked
+        Cb_TimeOut.Enabled = Rb1.Checked
+        btnVerificarDNS.Enabled = Rb1.Checked
     End Sub
 
     Private Sub txt_PuntoVentaControladora_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaControladora.KeyPress
@@ -335,18 +361,30 @@ Public Class frmConfiguracion
     End Sub
 
     Private Sub btnModificarHost_Click(sender As Object, e As EventArgs) Handles btnModificarHost.Click
+
+        If (Cb_SegundosInternet.SelectedItem Is Nothing) Then
+            MessageBox.Show("Debe seleccionar una opción en Período de Comprobación.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (Not Integer.TryParse(txtPuertoHost.Text, Nothing)) Then
+            MessageBox.Show("El Puerto ingresada es invalida. Verifique que el formato sea el correcto", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (String.IsNullOrEmpty(txtIPHost.Text) Or Not IPAddress.TryParse(txtIPHost.Text, Nothing)) Then
+            MessageBox.Show("La Ip ingresada es invalida. Verifique que el formato sea el correcto", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If txtPuertoHost.Text <> "" And txtIPHost.Text <> "" Then
-                My.Settings.IpHost = Trim(txtIPHost.Text)
-                My.Settings.PuertoHost = Trim(txtPuertoHost.Text)
-                My.Settings.Save()
-                MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            End If
+            My.Settings.IpHost = Trim(txtIPHost.Text)
+            My.Settings.PuertoHost = Trim(txtPuertoHost.Text)
+            My.Settings.Save()
+            MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -513,4 +551,28 @@ Public Class frmConfiguracion
         End Try
     End Sub
 
+    Private Sub btnVerificarDNS_Click(sender As Object, e As EventArgs) Handles btnVerificarDNS.Click
+
+        If (Cb_TimeOut.SelectedItem Is Nothing) Then
+            MessageBox.Show("Debe seleccionar una opción en Tiempo de espera.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (String.IsNullOrEmpty(txt_IpPing.Text) Or Not IPAddress.TryParse(txt_IpPing.Text, Nothing)) Then
+            MessageBox.Show("La Ip ingresada es invalida. Verifique que el formato sea el correcto", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        Try
+            Dim myPing As Ping = New Ping()
+            Dim buffer(23) As Byte
+            Dim PingOptions As PingOptions = New PingOptions()
+            Dim reply As PingReply = myPing.Send(txt_IpPing.Text, Cb_TimeOut.SelectedItem, buffer, PingOptions)
+
+            MessageBox.Show($"Respuesta del DNS: {reply.Status.ToString()}", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
+        Catch ex As Exception
+            MessageBox.Show($"Se genero un error al verificar el DNS. Por favor, Comuníqueselo al administrador.{Environment.NewLine}{ex.ToString()} ", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+    End Sub
 End Class

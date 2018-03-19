@@ -46,6 +46,7 @@ Partial Class frmConfiguracion
         Me.Label4 = New System.Windows.Forms.Label()
         Me.cb_Precios = New System.Windows.Forms.ComboBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label31 = New System.Windows.Forms.Label()
         Me.Panel5 = New System.Windows.Forms.Panel()
         Me.rbUtilizaSSLNo = New System.Windows.Forms.RadioButton()
         Me.rbUtilizaSSLSi = New System.Windows.Forms.RadioButton()
@@ -103,6 +104,10 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMensajes = New System.Windows.Forms.ComboBox()
         Me.TabInternet = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.txt_IpPing = New System.Windows.Forms.TextBox()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Cb_TimeOut = New System.Windows.Forms.ComboBox()
+        Me.Label32 = New System.Windows.Forms.Label()
         Me.Rb2 = New System.Windows.Forms.RadioButton()
         Me.Rb1 = New System.Windows.Forms.RadioButton()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -130,7 +135,7 @@ Partial Class frmConfiguracion
         Me.Label29 = New System.Windows.Forms.Label()
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
-        Me.Label31 = New System.Windows.Forms.Label()
+        Me.btnVerificarDNS = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -419,6 +424,15 @@ Partial Class frmConfiguracion
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Configuración del Servidor de Mail"
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(8, 96)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(70, 15)
+        Me.Label31.TabIndex = 31
+        Me.Label31.Text = "Utiliza SSL:"
         '
         'Panel5
         '
@@ -1002,6 +1016,11 @@ Partial Class frmConfiguracion
         '
         'GroupBox6
         '
+        Me.GroupBox6.Controls.Add(Me.btnVerificarDNS)
+        Me.GroupBox6.Controls.Add(Me.txt_IpPing)
+        Me.GroupBox6.Controls.Add(Me.Label33)
+        Me.GroupBox6.Controls.Add(Me.Cb_TimeOut)
+        Me.GroupBox6.Controls.Add(Me.Label32)
         Me.GroupBox6.Controls.Add(Me.Rb2)
         Me.GroupBox6.Controls.Add(Me.Rb1)
         Me.GroupBox6.Controls.Add(Me.Label11)
@@ -1016,6 +1035,42 @@ Partial Class frmConfiguracion
         Me.GroupBox6.TabIndex = 8
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Configuración de Internet"
+        '
+        'txt_IpPing
+        '
+        Me.txt_IpPing.Location = New System.Drawing.Point(237, 160)
+        Me.txt_IpPing.Name = "txt_IpPing"
+        Me.txt_IpPing.Size = New System.Drawing.Size(170, 21)
+        Me.txt_IpPing.TabIndex = 21
+        '
+        'Label33
+        '
+        Me.Label33.Location = New System.Drawing.Point(6, 201)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(212, 36)
+        Me.Label33.TabIndex = 19
+        Me.Label33.Text = "Tiempo de espera (en milisegundos)"
+        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Cb_TimeOut
+        '
+        Me.Cb_TimeOut.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_TimeOut.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_TimeOut.FormattingEnabled = True
+        Me.Cb_TimeOut.Items.AddRange(New Object() {"500", "1000", "2000", "3000", "5000"})
+        Me.Cb_TimeOut.Location = New System.Drawing.Point(236, 209)
+        Me.Cb_TimeOut.Name = "Cb_TimeOut"
+        Me.Cb_TimeOut.Size = New System.Drawing.Size(171, 23)
+        Me.Cb_TimeOut.TabIndex = 20
+        '
+        'Label32
+        '
+        Me.Label32.Location = New System.Drawing.Point(6, 160)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(212, 36)
+        Me.Label32.TabIndex = 17
+        Me.Label32.Text = "IP de DNS para verificar acceso a internet"
+        Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Rb2
         '
@@ -1313,14 +1368,20 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
         '
-        'Label31
+        'btnVerificarDNS
         '
-        Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(8, 96)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(70, 15)
-        Me.Label31.TabIndex = 31
-        Me.Label31.Text = "Utiliza SSL:"
+        Me.btnVerificarDNS.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnVerificarDNS.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnVerificarDNS.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVerificarDNS.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
+        Me.btnVerificarDNS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 249)
+        Me.btnVerificarDNS.Name = "btnVerificarDNS"
+        Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
+        Me.btnVerificarDNS.TabIndex = 22
+        Me.btnVerificarDNS.Text = "Verificar DNS"
+        Me.btnVerificarDNS.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnVerificarDNS.UseVisualStyleBackColor = True
         '
         'frmConfiguracion
         '
@@ -1487,4 +1548,9 @@ Partial Class frmConfiguracion
     Friend WithEvents rbUtilizaSSLNo As RadioButton
     Friend WithEvents rbUtilizaSSLSi As RadioButton
     Friend WithEvents Label31 As Label
+    Friend WithEvents Label33 As Label
+    Friend WithEvents Cb_TimeOut As ComboBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents txt_IpPing As TextBox
+    Friend WithEvents btnVerificarDNS As Button
 End Class

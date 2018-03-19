@@ -613,7 +613,7 @@ Public Class MDIContenedor
         'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
         AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
 
-        Negocio.Funciones.actualizarEstadoConexionInternet = Sub(x) Funciones.ActualizarEstado(x, Me)
+        Negocio.Funciones.ActualizarEstadoConexionInternet = Sub(x) Funciones.ActualizarEstado(x, Me)
 
         Try
             'Inicio los servicios WCF

@@ -35,6 +35,9 @@ Namespace My
         Protected Overrides Sub OnCreateMainForm()
             'Establesco si la aplicacion va a conectarse a internet para acceder a la base de datos
             Negocio.Funciones.SistemaConConexioInternet = My.Settings.Internet
+            Negocio.Funciones.Ip = My.Settings.IpPing
+            Negocio.Funciones.TimeOut = My.Settings.IpTimeOut
+
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
             Me.MainForm = Global.SistemaCinderella.frmLogin
         End Sub

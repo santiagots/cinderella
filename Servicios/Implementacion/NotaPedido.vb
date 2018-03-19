@@ -32,9 +32,17 @@ Public Class NotaPedido
             detalle.Cantidad = det.Cantidad
             detalle.id_Detalle = det.id_Detalle
             detalle.id_Producto = det.id_Producto
-            detalle.Precio = 0
-            detalle.Iva = 0
-            detalle.Monto = det.Precio
+            'si la venta es minorista
+            If (EntNotaPedido.id_TipoVenta = 1) Then
+                detalle.Precio = 0
+                detalle.Iva = 0
+                detalle.Monto = det.Precio
+            Else 'si la venta es mayorista
+                detalle.Precio = det.Precio
+                detalle.Iva = det.Precio * 0.21
+                detalle.Monto = detalle.Precio + detalle.Iva
+            End If
+
 
             detalleNotaPedido.Add(detalle)
         Next

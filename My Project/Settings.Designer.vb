@@ -511,6 +511,30 @@ Namespace My
                 Me("MailSLL") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("8.8.8.8")>  _
+        Public Property IpPing() As String
+            Get
+                Return CType(Me("IpPing"),String)
+            End Get
+            Set
+                Me("IpPing") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2000")>  _
+        Public Property IpTimeOut() As Integer
+            Get
+                Return CType(Me("IpTimeOut"),Integer)
+            End Get
+            Set
+                Me("IpTimeOut") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

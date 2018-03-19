@@ -5,8 +5,10 @@ Imports System.Net.NetworkInformation
 Public Class Funciones
     Public Shared SistemaConConexioInternet As Boolean
     Public Shared HayInternet As Boolean
+    Public Shared Ip As String
+    Public Shared TimeOut As Integer
 
-    Public Shared actualizarEstadoConexionInternet As Action(Of Boolean)
+    Public Shared ActualizarEstadoConexionInternet As Action(Of Boolean)
 
     'Public Shared Function HayConexionInternet() As Boolean
     '    Dim Url As New System.Uri("http://www.google.com")
@@ -57,25 +59,25 @@ Public Class Funciones
         'Si por configuracion se define que la aplicacion trabaja sin internet 
         If (Not SistemaConConexioInternet) Then
             'muestro el estado del MIDContenedor sin acceso a internet
-            If (actualizarEstadoConexionInternet IsNot Nothing) Then
+            If (ActualizarEstadoConexionInternet IsNot Nothing) Then
                 Funciones.HayInternet = False
-                actualizarEstadoConexionInternet(False)
+                ActualizarEstadoConexionInternet(False)
             End If
             Return False
         End If
 
         If CheckForInternetConnection() Then
             'Actualizo el estado del MIDContenedor para mostrar que se tiene acceso a internet
-            If (actualizarEstadoConexionInternet IsNot Nothing) Then
-                actualizarEstadoConexionInternet(True)
+            If (ActualizarEstadoConexionInternet IsNot Nothing) Then
+                ActualizarEstadoConexionInternet(True)
             End If
             Debug.WriteLine(String.Format("conexion OK {0}", sw.ElapsedMilliseconds))
             Funciones.HayInternet = True
             Return True
         Else
             'Actualizo el estado del MIDContenedor para mostrar que no se tiene acceso a internet
-            If (actualizarEstadoConexionInternet IsNot Nothing) Then
-                actualizarEstadoConexionInternet(False)
+            If (ActualizarEstadoConexionInternet IsNot Nothing) Then
+                ActualizarEstadoConexionInternet(False)
             End If
             Debug.WriteLine(String.Format("conexion NO {0}", sw.ElapsedMilliseconds))
             Funciones.HayInternet = False
@@ -86,14 +88,11 @@ Public Class Funciones
     Private Shared Function CheckForInternetConnection() As Boolean
         Dim sw As Stopwatch = New Stopwatch()
         sw.Start()
-
         Try
             Dim myPing As Ping = New Ping()
-            Dim host As String = "8.8.8.8"
             Dim buffer(23) As Byte
-            Dim timeout As Integer = 2000
             Dim PingOptions As PingOptions = New PingOptions()
-            Dim reply As PingReply = myPing.Send(host, timeout, buffer, PingOptions)
+            Dim reply As PingReply = myPing.Send(Ip, TimeOut, buffer, PingOptions)
             sw.Stop()
             Debug.WriteLine("Hay internet " + sw.ElapsedMilliseconds.ToString())
             Return (reply.Status = IPStatus.Success)

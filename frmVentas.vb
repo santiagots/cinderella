@@ -170,6 +170,7 @@ Public Class frmVentas
                 Else
                     PrecioSinIVA = Precio
                     IVA = PrecioSinIVA * 0.21 * PorcentajeFacturacion
+                    Monto = PrecioSinIVA + IVA
                 End If
 
                 AgregarItemAGrilla(EntProducto, TipoAccion, NumeroFila, cantidad, PrecioSinIVA, IVA, Monto)
