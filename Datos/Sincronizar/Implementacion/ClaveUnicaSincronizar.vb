@@ -23,28 +23,24 @@ Public Class ClaveUnicaSincronizar
 
             'Verifico que exista una ultima sincornizacion
             UltimaFechasSincronizacion = ejecutarSQL(conexionLocal, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionLocal).Tables(0)
-            Dim DatosLocal As DataTable
-            Dim DatosRemoto As DataTable
 
-            If (UltimaFechasSincronizacion.Rows.Count > 0) Then
-                'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
-                fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
-                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
-                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosRemoto, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionRemota).Tables(0)
-
-                'obtengo todos los registros que fueron agregados o modificados
-                DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
-            Else
-                'Selecciono todas las filas de lo sultimos 3 meses la base remota
-                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= {2}", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")), transaccionRemota).Tables(0)
+            'UltimaFechasSincronizacion no tiene elemento cuando se actualiza la aplicacion
+            If (UltimaFechasSincronizacion.Rows.Count = 0) Then
+                'Selecciono todas las filas de lo ultimo 3 meses la base remota que no pertenecen a la sucursal
+                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosRemoto, DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd"), valorBusqueda), transaccionRemota).Tables(0)
             End If
 
             If DatosSincronizar.Rows.Count > 0 Then
 
-                Dim listaId As String = String.Join(",", DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
+                Dim listasId As List(Of List(Of DataRow)) = splitList(500, DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x).ToList())
 
-                Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, listaId), conexionLocal, transaccionLocal)
-                commandEliminoData.ExecuteNonQuery()
+                For Each listaId As List(Of DataRow) In listasId
+                    Dim Ids As String = String.Join(",", listaId.Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
+                    If Not String.IsNullOrEmpty(Ids) Then
+                        Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, Ids), conexionLocal, transaccionLocal)
+                        commandEliminoData.ExecuteNonQuery()
+                    End If
+                Next
 
                 'subo los valores a la base remota
                 Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.Default, transaccionLocal)
@@ -82,16 +78,21 @@ Public Class ClaveUnicaSincronizar
                 'obtengo todos los registros que fueron agregados o modificados
                 DatosSincronizar = ObtenerDatos(DatosLocal, DatosRemoto, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
             Else
-                'Selecciono todas las filas de la base local
-                DatosSincronizar = ejecutarSQL(conexionLocal, String.Format("SELECT * FROM {0} WHERE {1} >= {2}", tabla.Nombre, tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")), transaccionRemota).Tables(0)
+                'Selecciono todas las filas de lo ultimo 6 meses la base local que pertenecen a la sucursal
+                DatosSincronizar = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
             End If
 
             If DatosSincronizar.Rows.Count > 0 Then
 
-                Dim listaId As String = String.Join(",", DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
+                Dim listasId As List(Of List(Of DataRow)) = splitList(500, DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x).ToList())
 
-                Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, listaId), conexionRemota, transaccionRemota)
-                commandEliminoData.ExecuteNonQuery()
+                For Each listaId As List(Of DataRow) In listasId
+                    Dim Ids As String = String.Join(",", listaId.Select(Function(x) x(tabla.ClavePrimaria)).ToArray())
+                    If Not String.IsNullOrEmpty(Ids) Then
+                        Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", tabla.Nombre, tabla.ClavePrimaria, Ids), conexionRemota, transaccionRemota)
+                        commandEliminoData.ExecuteNonQuery()
+                    End If
+                Next
 
                 'subo los valores a la base remota
                 Dim BulkCopy As New SqlBulkCopy(conexionRemota, SqlBulkCopyOptions.Default, transaccionRemota)
@@ -133,5 +134,15 @@ Public Class ClaveUnicaSincronizar
         Next
 
         Return tablaDiferencias
+    End Function
+
+    Private Function splitList(ByVal width As Integer, ByVal inputList As List(Of DataRow)) As List(Of List(Of DataRow))
+        Dim subList As List(Of List(Of DataRow)) = New List(Of List(Of DataRow))()
+        Dim numberOfLists As Integer = (inputList.Count / width)
+        For i As Integer = 0 To numberOfLists
+            subList.Add(inputList.Skip(i * width).Take(width).ToList())
+        Next
+
+        Return subList
     End Function
 End Class
