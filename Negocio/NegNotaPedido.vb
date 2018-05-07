@@ -65,6 +65,7 @@ Public Class NegNotaPedido
             .AddWithValue("@id_NotaPedido", EntNotaPedido.id_NotaPedido)
             .AddWithValue("@id_Cliente", EntNotaPedido.id_Cliente)
             .AddWithValue("@PorcentajeFacturacion", EntNotaPedido.PorcentajeFacturacion)
+            .AddWithValue("@PorcentajeDescuento", EntNotaPedido.PorcentajeDescuento)
             .AddWithValue("@id_Empleado", EntNotaPedido.id_Empleado)
             .AddWithValue("@id_Encargado", EntNotaPedido.id_Encargado)
             .AddWithValue("@id_Sucursal", EntNotaPedido.id_Sucursal)
@@ -287,6 +288,7 @@ Public Class NegNotaPedido
         notaPedido.Fecha = row.Item("Fecha").ToString
         notaPedido.id_Cliente = If(row.Item("id_Cliente") Is DBNull.Value, 0, row.Item("id_Cliente"))
         notaPedido.PorcentajeFacturacion = If(row.Item("PorcentajeFacturacion") Is DBNull.Value, 0, row.Item("PorcentajeFacturacion"))
+        notaPedido.PorcentajeDescuento = If(row.Item("PorcentajeDescuento") Is DBNull.Value, 0, row.Item("PorcentajeDescuento"))
         notaPedido.Id_ConsumidorFinal = If(row.Item("Id_ConsumidorFinal") Is DBNull.Value, 0, row.Item("Id_ConsumidorFinal"))
         notaPedido.id_Empleado = If(row.Item("id_Empleado") Is DBNull.Value, 0, row.Item("id_Empleado"))
         notaPedido.id_Encargado = If(row.Item("id_Encargado") Is DBNull.Value, 0, row.Item("id_Encargado"))

@@ -432,14 +432,13 @@ Public Class frmDevolucionesAdministracion
         Me.Cursor = Cursors.WaitCursor
 
         'Abro el form de datos de facturacion.
-        frmFacturar.id_Devolucion = id_DevolucionDetalle
-        frmFacturar.Monto = MontoTotalDetalle
-        frmFacturar.Descuento = DescuentoDetalle
-        frmFacturar.SubTotal = SubTotalDetalle
-        frmFacturar.TipoPago = TipoPagoDetalle
-        frmFacturar.NotaCredito = True
-        frmFacturar.TipoCliente = TipoDevolucion()
-        Funciones.ControlInstancia(frmFacturar).Show()
+        frmNotaCredito.id_Devolucion = id_DevolucionDetalle
+        frmNotaCredito.Monto = MontoTotalDetalle
+        frmNotaCredito.Descuento = DescuentoDetalle
+        frmNotaCredito.SubTotal = SubTotalDetalle
+        frmNotaCredito.TipoPago = TipoPagoDetalle
+        frmNotaCredito.TipoCliente = TipoDevolucion()
+        Funciones.ControlInstancia(frmNotaCredito).Show()
 
         'Seteo el cursor.
         Me.Cursor = Cursors.Arrow

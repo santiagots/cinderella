@@ -83,6 +83,7 @@ Partial Class frmVentasAdministracion
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.lblAnulado = New System.Windows.Forms.Label()
         Me.Gb_Anulado = New System.Windows.Forms.GroupBox()
+        Me.btnReporteVenta = New System.Windows.Forms.Button()
         Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
         Me.BtnAnular = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -783,6 +784,7 @@ Partial Class frmVentasAdministracion
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 213.0!))
         Me.TableLayoutPanel5.Size = New System.Drawing.Size(552, 213)
         Me.TableLayoutPanel5.TabIndex = 73
         '
@@ -800,6 +802,7 @@ Partial Class frmVentasAdministracion
         '
         'Gb_Anulado
         '
+        Me.Gb_Anulado.Controls.Add(Me.btnReporteVenta)
         Me.Gb_Anulado.Controls.Add(Me.txtDescripcionAnular)
         Me.Gb_Anulado.Controls.Add(Me.BtnAnular)
         Me.Gb_Anulado.Dock = System.Windows.Forms.DockStyle.Fill
@@ -809,6 +812,22 @@ Partial Class frmVentasAdministracion
         Me.Gb_Anulado.TabIndex = 16
         Me.Gb_Anulado.TabStop = False
         Me.Gb_Anulado.Text = "Anular Venta - Motivo"
+        '
+        'btnReporteVenta
+        '
+        Me.btnReporteVenta.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnReporteVenta.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnReporteVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReporteVenta.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
+        Me.btnReporteVenta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnReporteVenta.Location = New System.Drawing.Point(9, 174)
+        Me.btnReporteVenta.Name = "btnReporteVenta"
+        Me.btnReporteVenta.Size = New System.Drawing.Size(90, 27)
+        Me.btnReporteVenta.TabIndex = 16
+        Me.btnReporteVenta.Text = "Imprimir"
+        Me.btnReporteVenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolVentas.SetToolTip(Me.btnReporteVenta, "Anular venta")
+        Me.btnReporteVenta.UseVisualStyleBackColor = True
         '
         'txtDescripcionAnular
         '
@@ -1699,4 +1718,5 @@ Partial Class frmVentasAdministracion
     Friend WithEvents Anulado As DataGridViewTextBoxColumn
     Friend WithEvents TipoFactura As DataGridViewComboBoxColumn
     Friend WithEvents NumFactura As DataGridViewTextBoxColumn
+    Friend WithEvents btnReporteVenta As Button
 End Class

@@ -270,12 +270,12 @@
                 ESubcategorias.id_Categoria = categoria
                 ESubcategorias.Habilitado = hab
 
-                'Try
-                '    'ejecuto el sp_AltaCategorias.
-                '    MessageBox.Show(NSubcategorias.ModificacionSubcategorias(ESubcategorias), "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                'Catch ex As Exception
-                '    MessageBox.Show("Se ha producido un error al modificar la subcategoría. Por favor, intente más tarde.", "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                'End Try
+                Try
+                    'ejecuto el sp_AltaCategorias.
+                    MessageBox.Show(NSubcategorias.ModificacionSubcategorias(ESubcategorias), "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Catch ex As Exception
+                    MessageBox.Show("Se ha producido un error al modificar la subcategoría. Por favor, intente más tarde.", "Administracion de Categorias de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
 
                 'seteo los controles en cero.
                 chk_Habilitado_mod.Checked = False

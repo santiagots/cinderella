@@ -26,6 +26,7 @@ Public Class Cliente
             entCliente.Observaciones = cli.Observaciones
             entCliente.RazonSocial = cli.RazonSocial
             entCliente.Telefono = dir.Telefono
+            entCliente.Bonificacion = cli.Bonificacion
 
             Respuesta.Add(entCliente)
         Next

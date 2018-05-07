@@ -334,7 +334,7 @@ Partial Class frmSeniaAdministracion
         Me.cmbModoEntrega.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbModoEntrega.FormattingEnabled = True
         Me.cmbModoEntrega.Items.AddRange(New Object() {"Seleccione una opción", "Envió a domicilio", "Retira de la sucursal", "A convenir"})
-        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 34)
+        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 33)
         Me.cmbModoEntrega.Name = "cmbModoEntrega"
         Me.cmbModoEntrega.Size = New System.Drawing.Size(238, 23)
         Me.cmbModoEntrega.TabIndex = 423
@@ -651,7 +651,7 @@ Partial Class frmSeniaAdministracion
         Me.ddlEntrega.Enabled = False
         Me.ddlEntrega.FormattingEnabled = True
         Me.ddlEntrega.Items.AddRange(New Object() {"Seleccione una opción", "Envió a domicilio", "Retira de la sucursal", "A convenir"})
-        Me.ddlEntrega.Location = New System.Drawing.Point(143, 94)
+        Me.ddlEntrega.Location = New System.Drawing.Point(143, 93)
         Me.ddlEntrega.Name = "ddlEntrega"
         Me.ddlEntrega.Size = New System.Drawing.Size(234, 23)
         Me.ddlEntrega.TabIndex = 9

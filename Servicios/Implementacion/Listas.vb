@@ -103,6 +103,7 @@ Public Class Listas
         entCofiguracion.NombreGrupoPrecio = Host.NombreListaPrecio
         entCofiguracion.Id_Sucursal = Host.Id_Sucursal
         entCofiguracion.Id_GrupoPrecio = Host.Id_GrupoPrecio
+        entCofiguracion.DecuentoClienteMinorista = Host.DecuentoClienteMinorista
 
         Return entCofiguracion
 

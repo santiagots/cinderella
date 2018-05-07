@@ -13,6 +13,7 @@
     Public Property RazonSocialCliente As String
     Public Property PorcentajeFacturacion As Double
     Public Property PrecioTotal As Double
+    Public Property PorcentajeDescuento As Double
     Public Property Fecha As Date
     Public Property Id_ConsumidorFinal As Integer
     Public Property ConsumidorFinalNombreYApellido As String

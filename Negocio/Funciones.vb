@@ -86,6 +86,7 @@ Public Class Funciones
     End Function
 
     Private Shared Function CheckForInternetConnection() As Boolean
+        Return True
         Dim sw As Stopwatch = New Stopwatch()
         sw.Start()
         Try

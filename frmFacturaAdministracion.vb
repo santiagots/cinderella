@@ -554,36 +554,34 @@ Public Class frmFacturaAdministracion
             If (MessageBox.Show(mensaje, "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
                 If (TipoCliente() = Entidades.TipoCliente.Minorista) Then
                     'Abro el form de datos de facturacion.
-                    Dim frmFacturar As frmFacturar = New frmFacturar()
-                    frmFacturar.id_Venta = IdVenta
-                    frmFacturar.Monto = Total
-                    frmFacturar.Descuento = Descuento + SeniaMonto
-                    frmFacturar.SubTotal = SubTotal
-                    frmFacturar.TipoPago = TipoPago
-                    frmFacturar.TipoCliente = TipoCliente.Minorista
-                    frmFacturar.EsSenia = esSenia
-                    frmFacturar.NotaCredito = True
-                    frmFacturar.PorcentajeFacturacion = 1
-                    frmFacturar.ShowDialog()
+                    Dim frmNotaCredito As frmNotaCredito = New frmNotaCredito()
+                    frmNotaCredito.id_Venta = IdVenta
+                    frmNotaCredito.Monto = Total
+                    frmNotaCredito.Descuento = Descuento + SeniaMonto
+                    frmNotaCredito.SubTotal = SubTotal
+                    frmNotaCredito.TipoPago = TipoPago
+                    frmNotaCredito.TipoCliente = TipoCliente.Minorista
+                    frmNotaCredito.EsSenia = esSenia
+                    frmNotaCredito.PorcentajeFacturacion = 1
+                    frmNotaCredito.ShowDialog()
                 Else
 
                     Dim MontoSeñaSinIva As Double = SeniaMonto / ((0.21 * PorcentajeFacturacion) + 1)
                     Dim DescuentoTotal As Double = Descuento + MontoSeñaSinIva
                     'Abro el form de datos de facturacion.
-                    Dim frmFacturar As frmFacturar = New frmFacturar()
-                    frmFacturar.id_Venta = id_VentaDetalle
-                    frmFacturar.id_Cliente = id_Cliente
-                    frmFacturar.Descuento = Math.Round(DescuentoTotal * PorcentajeFacturacion, 2)
-                    frmFacturar.SubTotal = Math.Round((SubTotal - MontoSeñaSinIva) * PorcentajeFacturacion, 2)
-                    frmFacturar.IvaTotal = Math.Round(frmFacturar.SubTotal * 0.21, 2)
-                    frmFacturar.Monto = Math.Round(frmFacturar.SubTotal + frmFacturar.IvaTotal, 2)
-                    frmFacturar.MontoSenia = Math.Round(MontoSeñaSinIva * PorcentajeFacturacion * 1.21, 2)
-                    frmFacturar.TipoPago = TipoPago
-                    frmFacturar.TipoCliente = TipoCliente.Mayorista
-                    frmFacturar.EsSenia = esSenia
-                    frmFacturar.NotaCredito = True
-                    frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
-                    frmFacturar.ShowDialog()
+                    Dim frmNotaCredito As frmNotaCredito = New frmNotaCredito()
+                    frmNotaCredito.id_Venta = id_VentaDetalle
+                    frmNotaCredito.id_Cliente = id_Cliente
+                    frmNotaCredito.Descuento = Math.Round(DescuentoTotal * PorcentajeFacturacion, 2)
+                    frmNotaCredito.SubTotal = Math.Round((SubTotal - MontoSeñaSinIva) * PorcentajeFacturacion, 2)
+                    frmNotaCredito.IvaTotal = Math.Round(frmFacturar.SubTotal * 0.21, 2)
+                    frmNotaCredito.Monto = Math.Round(frmFacturar.SubTotal + frmFacturar.IvaTotal, 2)
+                    frmNotaCredito.MontoSenia = Math.Round(MontoSeñaSinIva * PorcentajeFacturacion * 1.21, 2)
+                    frmNotaCredito.TipoPago = TipoPago
+                    frmNotaCredito.TipoCliente = TipoCliente.Mayorista
+                    frmNotaCredito.EsSenia = esSenia
+                    frmNotaCredito.PorcentajeFacturacion = PorcentajeFacturacion
+                    frmNotaCredito.ShowDialog()
                 End If
             End If
         End If

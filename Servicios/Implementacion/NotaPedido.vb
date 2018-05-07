@@ -1,11 +1,12 @@
 ﻿Imports System.ServiceModel
+Imports Entidades
 
 <ServiceBehavior(IncludeExceptionDetailInFaults:=True, UseSynchronizationContext:=False)>
 Public Class NotaPedido
     Implements INotaPedido
 
-    Public Delegate Sub NevaNotaPedidoDelegate(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
-    Public Shared Event onNevaNotaPedidoCompleted As NevaNotaPedidoDelegate
+    Public Delegate Sub NuevaNotaPedidoDelegate(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
+    Public Shared Event onNevaNotaPedidoCompleted As NuevaNotaPedidoDelegate
 
     Function SetNevaNotaPedido(ByVal EntNotaPedido As EntidadNotaPedido, EntDetalleNotaPedido As List(Of EntidadNotaPedido_Detalle), ByVal EntConsumidorFinal As EntidadConsumidorFinal) As Boolean Implements INotaPedido.SetNevaNotaPedido
         Negocio.Funciones.HayConexionInternet()
@@ -47,17 +48,27 @@ Public Class NotaPedido
             detalleNotaPedido.Add(detalle)
         Next
 
-        Dim notaPedido As Entidades.NotaPedido = New Entidades.NotaPedido()
-        notaPedido.Fecha = EntNotaPedido.Fecha
-        notaPedido.id_Cliente = EntNotaPedido.id_Cliente
-        notaPedido.Id_ConsumidorFinal = EntNotaPedido.Id_ConsumidorFinal
-        notaPedido.id_Empleado = EntNotaPedido.id_Empleado
-        notaPedido.id_ListaPrecio = EntNotaPedido.id_ListaPrecio
-        notaPedido.id_Sucursal = EntNotaPedido.id_Sucursal
-        notaPedido.id_TipoPago = EntNotaPedido.id_TipoPago
-        notaPedido.id_TipoVenta = EntNotaPedido.id_TipoVenta
-        notaPedido.PrecioTotal = EntNotaPedido.PrecioTotal
-        notaPedido.Vendida = EntNotaPedido.Vendida
+        Dim porcentajeFacturacion As Double = 0
+
+        If (EntNotaPedido.id_TipoVenta = 2) Then
+            Dim Cliente As ClienteMayorista = ClienteNegocio.TraerCliente(EntNotaPedido.id_Cliente)
+            porcentajeFacturacion = If(Cliente.Lista.HasValue, Cliente.Lista.Value, 0)
+        End If
+
+        Dim notaPedido As Entidades.NotaPedido = New Entidades.NotaPedido() With {
+        .Fecha = EntNotaPedido.Fecha,
+        .id_Cliente = EntNotaPedido.id_Cliente,
+        .Id_ConsumidorFinal = EntNotaPedido.Id_ConsumidorFinal,
+        .id_Empleado = EntNotaPedido.id_Empleado,
+        .id_ListaPrecio = EntNotaPedido.id_ListaPrecio,
+        .id_Sucursal = EntNotaPedido.id_Sucursal,
+        .id_TipoPago = EntNotaPedido.id_TipoPago,
+        .id_TipoVenta = EntNotaPedido.id_TipoVenta,
+        .PrecioTotal = EntNotaPedido.PrecioTotal,
+        .Vendida = EntNotaPedido.Vendida,
+        .PorcentajeDescuento = EntNotaPedido.PorcentajeDescuento,
+        .PorcentajeFacturacion = porcentajeFacturacion
+        }
 
         notaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(notaPedido, detalleNotaPedido, EntNotaPedido.id_Sucursal)
 

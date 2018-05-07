@@ -65,8 +65,8 @@ Public Class frmChequesAlta
         If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
             LibradorID.Clear()
             LibradorNombre.Clear()
-            ClienteID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
-            ClienteNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
+            LibradorID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
+            LibradorNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
         End If
         Me.Cursor = Cursors.Arrow
     End Sub

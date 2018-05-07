@@ -10,8 +10,9 @@ Public Class Host
     Public Shared NombreListaPrecio As String
     Public Shared Id_Sucursal As Integer
     Public Shared Id_GrupoPrecio As Integer
+    Public Shared DecuentoClienteMinorista As Decimal
 
-    Sub New(ByVal IP As String, ByVal puerto As String, nomSucrsal As String, nomListaPrecio As String, id_Suc As Integer, id_Precio As Integer)
+    Sub New(ByVal IP As String, ByVal puerto As String, nomSucrsal As String, nomListaPrecio As String, id_Suc As Integer, id_Precio As Integer, decuentoMinorista As Decimal)
         Me.IP = IP
         Me.puerto = puerto
 
@@ -19,6 +20,7 @@ Public Class Host
         NombreListaPrecio = nomListaPrecio
         Id_Sucursal = id_Suc
         Id_GrupoPrecio = id_Precio
+        DecuentoClienteMinorista = decuentoMinorista
 
     End Sub
 

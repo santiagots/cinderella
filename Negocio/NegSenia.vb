@@ -86,15 +86,33 @@ Public Class NegSenia
         cmd.ExecuteNonQuery()
     End Sub
 
-    Public Sub EliminarSenia(id As Integer)
+    Public Sub EliminarSenia(id As Int64)
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim FechaEdicion As DateTime = DateTime.Now()
 
-        clsDatos.ConsultarBaseLocal("execute sp_Senia_Eliminar @idSenia=" & id)
+        cmd.Connection = clsDatos.ConectarLocal()
+        EliminarSenia(id, FechaEdicion, cmd)
+        clsDatos.DesconectarLocal()
 
         If HayInternet Then
-            clsDatos.ConsultarBaseRemoto("execute sp_Senia_Eliminar @idSenia=" & id)
+            cmd = New SqlCommand()
+            cmd.Connection = clsDatos.ConectarRemoto()
+            EliminarSenia(id, FechaEdicion, cmd)
+            clsDatos.DesconectarRemoto()
         End If
+    End Sub
+
+    Public Sub EliminarSenia(id As Int64, FechaEdicion As DateTime, ByRef cmd As SqlCommand)
+        'Cargo y ejecuto el stored.
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Senia_Eliminar"
+        With cmd.Parameters
+            .AddWithValue("@idSenia", id)
+            .AddWithValue("@FechaEdicion", FechaEdicion)
+        End With
+
+        cmd.ExecuteNonQuery()
     End Sub
 
     Public Function ConsultarSeniaActivas(idSucursal As Integer) As List(Of Entidades.Senia)

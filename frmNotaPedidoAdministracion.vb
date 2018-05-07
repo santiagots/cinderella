@@ -272,7 +272,7 @@ Public Class frmNotaPedidoAdministracion
         End If
         EntNotaPedido.RazonSocialCliente = negCliente.TraerCliente(EntNotaPedido.id_Cliente).RazonSocial
 
-        Dim tipoPago As DataRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_TipoPago") = EntNotaPedido.id_TipoVenta).FirstOrDefault()
+        Dim tipoPago As DataRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x("id_TipoPago") = EntNotaPedido.id_TipoPago).FirstOrDefault()
         If (tipoPago IsNot Nothing) Then
             EntNotaPedido.TipoPagoDescripcion = tipoPago.Item("Descripcion")
         Else

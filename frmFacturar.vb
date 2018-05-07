@@ -1,28 +1,28 @@
 ﻿Imports System.Linq
 Imports Entidades
 Imports Negocio
+Imports SistemaCinderella
 
 Public Class frmFacturar
+
     Dim NegCondicionesIva As New Negocio.NegCondicionesIva
     Dim NegFacturacion As New Negocio.NegFacturacion
     Dim NegVentas As New Negocio.NegVentas
-    Dim NegNotaCredito As New Negocio.NegNotaCredito
     Dim NegDevolucion As New Negocio.NegDevolucion
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim NegCliente As New Negocio.NegClienteMayorista
     Dim NegDireccion As New Negocio.NegDireccion
     Dim NegLocalidades As New Negocio.NegLocalidades
     Dim Func As New Funciones
-    Dim EntFacturacion As New Entidades.Facturacion
-    Dim EntNotaCredito As New Entidades.NotaCredito
     Dim EntControlador As New Entidades.ControladorFiscal
-
-    Public NotaCredito As Boolean = False
     Dim TipoFactura As String = ""
+
+    Public Facturas As List(Of Facturacion) = New List(Of Facturacion)
+    Public VentaDetalle As List(Of Ventas_Detalle) = New List(Of Ventas_Detalle)
+    Public EntFacturacion As New Facturacion
     Public Monto As Double
     Public TipoPago As String
     Public id_Venta As Int64
-    Public id_Devolucion As Int64
     Public Descuento As Double
     Public CostoFinanciero As Double
     Public SubTotal As Double
@@ -100,12 +100,6 @@ Public Class frmFacturar
         Cb_IVA.DisplayMember = "Descripcion"
         Cb_IVA.ValueMember = "id_CondicionIva"
 
-        Cb_TipoFacturacion.SelectedIndex = 0
-
-        btnCancelar.Visible = Not NotaCredito
-        btnFacturar.Enabled = Not NotaCredito
-        btnNotaCredito.Enabled = NotaCredito
-
         'Si el cliente es mayorista elimino la condicion de iva consumidor final
         If (TipoCliente = TipoCliente.Mayorista) Then
             ConfigurarMayorista()
@@ -113,35 +107,7 @@ Public Class frmFacturar
             ConfigurarMinorista()
         End If
 
-        If (NotaCredito) Then
-            Me.AcceptButton = btnNotaCredito
-            Me.Text = "Nota de Crédito"
-            txt_Pago.Text = "No Requerido."
-            txt_Pago.ReadOnly = True
-            If (id_Venta > 0) Then
-                EntFacturacion = NegFacturacion.TraerFacturacionPorIdVenta(id_Venta)
-                txt_Factura_Origen.Text = EntFacturacion.NumeroFactura
-            End If
-        Else
-            Me.AcceptButton = btnFacturar
-            txt_Pago.Text = CType(Monto, Decimal)
-            txt_Factura_Origen.Text = "No Requerido."
-            txt_Factura_Origen.ReadOnly = True
-        End If
-
-        'Si la facturacion es para un cliente 
-        If (id_Cliente <> 0) Then
-            'cargo de forma automatica la infomacion del cliente
-            Dim cliente As ClienteMayorista = NegCliente.TraerCliente(id_Cliente)
-            Dim direccion As Direccion = NegDireccion.Consulta(cliente.IdDireccionFacturacion)
-            'Si el cliente es "responsable inscripto" selecciono dicha opcion en caso contrario selecciono "consumidor final"
-            Cb_IVA.SelectedValue = cliente.IdCondicionIva
-            txt_Nombre.Text = cliente.RazonSocial
-            txt_Direccion.Text = direccion.Direccion
-            Dim localidad As DataRow = NegLocalidades.ListadoLocalidades(direccion.IdDistito).Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.ItemArray(0) = direccion.IdLocalidad).FirstOrDefault()
-            txt_Localidad.Text = If(localidad Is Nothing, "", localidad.ItemArray(2))
-            txt_Cuit.Text = cliente.Cuit
-        End If
+        'Cb_TipoFacturacion.SelectedIndex = 0
 
         'verifico que el monto a facturar no supere los limites permitidos
         ValidarMontoTopeFacturacion()
@@ -166,6 +132,8 @@ Public Class frmFacturar
             lbl_CostoFinancieroMinorista.Text = "$ " & Format(CType(CostoFinanciero, Decimal), "###0.00") & ".-"
             lbl_SubtotalMinorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
         End If
+
+        txt_Pago.Text = CType(Monto, Decimal)
     End Sub
 
     Private Sub ConfigurarMayorista()
@@ -196,10 +164,26 @@ Public Class frmFacturar
             lbl_SubtotalMayorista.Text = "$ " & Format(CType(SubTotal, Decimal), "###0.00") & ".-"
             lbl_IvaMayorista.Text = "$ " & Format(CType(IvaTotal, Decimal), "###0.00") & ".-"
         End If
+
+        txt_Pago.Text = CType(Monto, Decimal)
+
+        If (id_Cliente <> 0) Then
+            'cargo de forma automatica la infomacion del cliente
+            Dim cliente As ClienteMayorista = NegCliente.TraerCliente(id_Cliente)
+            Dim direccion As Direccion = NegDireccion.Consulta(cliente.IdDireccionFacturacion)
+            'Si el cliente es "responsable inscripto" selecciono dicha opcion en caso contrario selecciono "consumidor final"
+            Cb_IVA.SelectedValue = cliente.IdCondicionIva
+            txt_Nombre.Text = cliente.RazonSocial
+            txt_Direccion.Text = direccion.Direccion
+            Dim localidad As DataRow = NegLocalidades.ListadoLocalidades(direccion.IdDistito).Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.ItemArray(0) = direccion.IdLocalidad).FirstOrDefault()
+            txt_Localidad.Text = If(localidad Is Nothing, "", localidad.ItemArray(2))
+            txt_Cuit.Text = cliente.Cuit
+        End If
     End Sub
 
     'Click en Facturar!
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnFacturar.Click
+    Private Sub BtnFacturar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnFacturar.Click
+
         Dim Facturo As Boolean = False 'Variable que indicará si se genero la factura.
         Dim PuntoVenta As Integer = 0
         Dim NumeroFactura As IList(Of Integer) = New List(Of Integer) 'Numero de Factura generada. Lo instancio como lista porque una factura manual puede utilizar mas de una factura para su venta
@@ -220,6 +204,7 @@ Public Class frmFacturar
             Return
         End If
 
+        'Facturo la venta
         If MessageBox.Show("¿Ésta seguro que los datos ingresados son correctos?. No podrá modificarlos más adelante.", "Facturación de Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
             Select Case Cb_TipoFacturacion.SelectedItem
                 Case Entidades.TipoFactura.Ticket
@@ -252,21 +237,16 @@ Public Class frmFacturar
                     EntFacturacion.IdSucursal = IdSucursal
                     EntFacturacion.TipoRecibo = Cb_TipoFacturacion.SelectedItem
 
-                    'Inserto la nueva factura.
-                    NegFacturacion.NuevaFacturacion(EntFacturacion)
+                    Facturas.Add(EntFacturacion)
                 Next
-
-                'Actualizo la venta como Facturada.
-                NegVentas.FacturoVenta(True, id_Venta)
 
                 MessageBox.Show(String.Format("Se ha generado la factura correctamente.{0}El vuelto es: {1}", Environment.NewLine, Double.Parse(txt_Pago.Text) - Monto), "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Me.DialogResult = DialogResult.OK
                 Me.Close()
             Else
-                MessageBox.Show("No se ha generado la factura correctamente.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("No se ha generado la factura correctamente. Verifique que la impresora fiscal este bien configurada", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Me.DialogResult = DialogResult.Abort
             End If
-        Else
-            'Rechazo.
         End If
     End Sub
 
@@ -391,7 +371,6 @@ Public Class frmFacturar
             If NegControlador.AbrirTicket(EntControlador) Then
                 lblEstado.Text = "Imprimiendo"
                 Me.Refresh()
-                Dim dsVentas As DataSet = New DataSet()
                 'Si es una seña
                 If (EsSenia) Then
                     'Agrego al ticket un item de seña por el valor señado
@@ -401,16 +380,15 @@ Public Class frmFacturar
                     NegControlador.AgregarItemTicket(EntControlador)
                 Else
                     'Agrego items al ticket
-                    dsVentas = NegVentas.TraerVentaDetalle(id_Venta)
-                    If dsVentas.Tables(0).Rows.Count > 0 Then
-                        For Each prod In dsVentas.Tables(0).Rows
+                    If VentaDetalle.Count > 0 Then
+                        For Each detalle As Ventas_Detalle In VentaDetalle
                             'Seteo la entidad para cada Item.
-                            EntControlador.DPPAL = Func.ReemplazarCaracteres(prod.Item("Nombre").ToString)
-                            EntControlador.CANTIDAD = Func.FormatearCantidad(prod.Item("Cantidad"))
+                            EntControlador.DPPAL = Func.ReemplazarCaracteres(detalle.Nombre)
+                            EntControlador.CANTIDAD = Func.FormatearCantidad(detalle.Cantidad)
                             If (TipoCliente = TipoCliente.Mayorista) Then
-                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio") * PorcentajeFacturacion * 1.21)
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(detalle.Precio * PorcentajeFacturacion * 1.21)
                             Else
-                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Monto"))
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(detalle.Monto)
                             End If
                             NegControlador.AgregarItemTicket(EntControlador)
                         Next
@@ -509,276 +487,30 @@ Public Class frmFacturar
         End If
     End Sub
 
-    Private Sub btnNotaCredito_Click(sender As Object, e As EventArgs) Handles btnNotaCredito.Click
-        Dim GeneracionNotaCredito As Boolean = False 'Variable que indicará si se genero la factura.
-        Dim PuntoVenta As Integer = 0
-        Dim NumeroComprobante As IList(Of Integer) = New List(Of Integer) 'Numero de Factura generada. Lo instancio como lista porque una factura manual puede utilizar mas de una factura para su venta
-
-        If txt_Cuit.Text = "" Or txt_Direccion.Text = "" Or txt_Localidad.Text = "" Or txt_Nombre.Text = "" Or txt_Factura_Origen.Text = "" Or txt_Pago.Text = "" Then
-            'Si algún campo está vacio, muestro Mensaje.
-            MessageBox.Show("Todos los campos son requeridos.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        If (Cb_IVA.Text = "Responsable Inscripto" And Not NegErrores.ValidarCuit(Trim(txt_Cuit.Text))) Then
-            MessageBox.Show("El CUIL ingresado es incorrecto.", "Facturación de Venta", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        If MessageBox.Show("¿Ésta seguro que los datos ingresados son correctos?. No podrá modificarlos más adelante.", "Nota de crédito", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-            Select Case Cb_TipoFacturacion.SelectedItem
-                Case Entidades.TipoFactura.Ticket
-                    GeneracionNotaCredito = GenerarNotaCredito(NumeroComprobante, Descuento, CostoFinanciero)
-                    PuntoVenta = PuntoVentaFacturacionTicket
-                Case Entidades.TipoFactura.Manual
-                    GeneracionNotaCredito = FacturacionManual(NumeroComprobante)
-                    PuntoVenta = PuntoVentaFacturacionManual
-                Case Entidades.TipoFactura.Electronica
-                    MessageBox.Show("Método de generacion de notas de creditos no implementado", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    Return
-            End Select
-
-
-            'Se facturo correctamente, se almacena en la BDD.
-            If GeneracionNotaCredito Then
-                For Each numero In NumeroComprobante
-                    'MAGIC MOMENT: FACTURA MACHINE !
-                    'Completo la entidad de Facturacion.
-                    EntNotaCredito.id_Devolucion = id_Devolucion
-                    EntNotaCredito.Monto = If(EsSenia, MontoSenia, Monto)
-                    EntNotaCredito.NumeroNotaCredito = numero
-                    EntNotaCredito.Nombre = Trim(txt_Nombre.Text)
-                    EntNotaCredito.Cuit = Trim(txt_Cuit.Text)
-                    EntNotaCredito.Direccion = Trim(txt_Direccion.Text)
-                    EntNotaCredito.Localidad = Trim(txt_Localidad.Text)
-                    EntNotaCredito.TipoFactura = TipoFactura
-                    EntNotaCredito.PuntoVenta = PuntoVenta
-                    EntNotaCredito.id_Sucursal = IdSucursal
-                    EntNotaCredito.TipoRecibo = Cb_TipoFacturacion.SelectedItem
-                    EntNotaCredito.id_Factura = CType(EntFacturacion.id_Facturacion, Int64)
-
-                    'Inserto la nueva NotaCredito.
-                    NegNotaCredito.NuevaNotaCredito(EntNotaCredito)
-                Next
-
-                'Actualizo la DEVOLUCION.
-                NegDevolucion.GeneracionNotaCredito(True, id_Devolucion)
-
-                MessageBox.Show("Se ha generado la nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Me.Close()
-            Else
-                MessageBox.Show("No se ha generado la  nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-        Else
-            'Rechazo.
-        End If
-
-    End Sub
-
-    Private Function GenerarNotaCredito(NumeroComprobante As IList(Of Integer), Descuento As Double, CostoFinanciero As Double) As Boolean
-        Dim dsDevoluciones As DataSet
-        'Valores de la entidad "Controlador" fijos.
-        EntControlador.DE1 = ""
-        EntControlador.DE2 = ""
-        EntControlador.DE3 = ""
-        EntControlador.DE4 = ""
-        EntControlador.TIVA = "2100"
-        EntControlador.IIF = ""
-        EntControlador.IIP = ""
-        EntControlador.COLAR1 = "Gracias por su compra."
-        EntControlador.COLAR2 = ""
-        EntControlador.COLAR3 = ""
-        EntControlador.LREMITO1 = "."
-        EntControlador.LREMITO2 = ""
-        EntControlador.COMPROBANTEORIGEN = txt_Factura_Origen.Text
-
-        'Acepto.
-        Select Case (Cb_IVA.Text)
-            Case "Consumidor Final"
-                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-                EntControlador.NCOMP2 = ""
-                EntControlador.CUIT = "D"
-                EntControlador.NCUIT = txt_Cuit.Text.Trim
-                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-                EntControlador.DCOMP3 = ""
-                EntControlador.RI = "F"
-
-                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
-                'le tengo que agregar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Mayorista) Then
-                    Descuento = Math.Round(Descuento * 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
-                End If
-
-            Case "Responsable Inscripto"
-                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-                EntControlador.NCOMP2 = ""
-                EntControlador.CUIT = "T"
-                EntControlador.NCUIT = txt_Cuit.Text.Trim
-                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-                EntControlador.DCOMP3 = ""
-                EntControlador.RI = "I"
-
-                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
-                'le tengo que quitar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Minorista) Then
-                    Descuento = Math.Round(Descuento / 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
-                End If
-
-            Case "Monotributo"
-                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-                EntControlador.NCOMP2 = ""
-                EntControlador.CUIT = "T"
-                EntControlador.NCUIT = txt_Cuit.Text.Trim
-                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-                EntControlador.DCOMP3 = ""
-                EntControlador.RI = "M"
-
-                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
-                'le tengo que agregar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Mayorista) Then
-                    Descuento = Math.Round(Descuento * 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
-                End If
-
-            Case "Exento"
-                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-                EntControlador.NCOMP2 = ""
-                EntControlador.CUIT = "T"
-                EntControlador.NCUIT = txt_Cuit.Text.Trim
-                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-                EntControlador.DCOMP3 = ""
-                EntControlador.RI = "E"
-
-                'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
-                'le tengo que agregar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Mayorista) Then
-                    Descuento = Math.Round(Descuento * 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero * 1.21, 2)
-                End If
-
-            Case "Exento sin IVA"
-                EntControlador.NCOMP1 = txt_Nombre.Text.Trim
-                EntControlador.NCOMP2 = ""
-                EntControlador.CUIT = "T"
-                EntControlador.NCUIT = txt_Cuit.Text.Trim
-                EntControlador.DCOMP1 = txt_Direccion.Text.Trim
-                EntControlador.DCOMP2 = txt_Localidad.Text.Trim
-                EntControlador.DCOMP3 = ""
-                EntControlador.RI = "E"
-
-                'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
-                'le tengo que quitar el IVA al Decuento y al Costo Financiero
-                If (TipoCliente = TipoCliente.Minorista) Then
-                    Descuento = Math.Round(Descuento / 1.21, 2)
-                    CostoFinanciero = Math.Round(CostoFinanciero / 1.21, 2)
-                End If
-
-        End Select
-
-        Dim NegControlador As New Negocio.NegControladorFiscal(My.Settings("ConexionControladora").ToString())
-
-        'Abro el pruesto de la controladora
-        If NegControlador.AbrirPuerto() Then
-
-            If NegControlador.AbrirNotaCredito(EntControlador) Then
-                lblEstado.Text = "Imprimiendo"
-                Me.Refresh()
-                'Si es una seña
-                If (EsSenia) Then
-                    'Agrego al ticket un item de seña por el valor señado
-                    EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
-                    EntControlador.CANTIDAD = Func.FormatearCantidad("1")
-                    EntControlador.PUNITARIO = Func.FormatearPrecio(MontoSenia)
-                    NegControlador.AgregarItemNotaCredito(EntControlador)
-                Else
-                    'Agrego items al ticket
-                    If (id_Venta > 0) Then
-                        dsDevoluciones = NegVentas.TraerVentaDetalle(id_Venta)
-                    Else
-                        dsDevoluciones = NegDevolucion.TraerDevolucionDetalle(id_Devolucion)
-                    End If
-                    If dsDevoluciones.Tables(0).Rows.Count > 0 Then
-                        For Each prod In dsDevoluciones.Tables(0).Rows
-                            'Seteo la entidad para cada Item.
-                            EntControlador.DPPAL = Func.ReemplazarCaracteres(prod.Item("Nombre").ToString)
-                            EntControlador.CANTIDAD = Func.FormatearCantidad(prod.Item("Cantidad"))
-                            If (TipoCliente = TipoCliente.Mayorista) Then
-                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio") * PorcentajeFacturacion * 1.21)
-                            Else
-                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Monto"))
-                            End If
-                            NegControlador.AgregarItemNotaCredito(EntControlador)
-                        Next
-                    End If
-                End If
-
-                'Si hay descuentos, los agrego al ticket
-                If Descuento > 0 Then
-                    NegControlador.DescuentosNotaCredito(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
-                End If
-
-                'Si hay Costo Financiero, los agrego al ticket
-                If CostoFinanciero > 0 Then
-                    NegControlador.RecargosNotaCredito(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2))
-                End If
-
-                'Subtotal y pago.
-                If Descuento = 0 AndAlso CostoFinanciero = 0 Then
-                    Dim sSubtotal As String = NegControlador.SubtotalNotaCredito()
-                End If
-
-
-                'Cierra Ticket.
-                Dim NumeroNotaCredito As Integer = NegControlador.CerrarNotaCredito(EntControlador)
-
-                'Si devuelve un numero de factura significa que facturo correctamente.
-                If NumeroNotaCredito > 0 Then
-                    NumeroComprobante.Add(NumeroNotaCredito)
-                    NegControlador.CerrarPuerto()
-                    Return True
-                End If
-            End If
-        Else
-            lblEstado.Text = "Error"
-        End If
-        NegControlador.CerrarPuerto()
-        Return False
-    End Function
 
     Private Sub ValidarMontoTopeFacturacion()
 
-        'Si la pantalla esta en modo facturacion
-        If (Not NotaCredito) Then
-            Dim errorMontoTope As Boolean = False
+        Dim errorMontoTope As Boolean = False
 
-            If (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Manual And Monto > My.Settings.MontoTopeFacturacionManual) Then
-                errorMontoTope = True
-            ElseIf (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Electronica And Monto > My.Settings.MontoTopeFacturacionElectronica) Then
-                errorMontoTope = True
-            ElseIf (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Ticket And Monto > My.Settings.MontoTopeFaturacionTicket) Then
-                errorMontoTope = True
-            End If
+        If (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Manual And Monto > My.Settings.MontoTopeFacturacionManual) Then
+            errorMontoTope = True
+        ElseIf (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Electronica And Monto > My.Settings.MontoTopeFacturacionElectronica) Then
+            errorMontoTope = True
+        ElseIf (Cb_TipoFacturacion.SelectedItem = Entidades.TipoFactura.Ticket And Monto > My.Settings.MontoTopeFaturacionTicket) Then
+            errorMontoTope = True
+        End If
 
-            If (errorMontoTope) Then
-                lblError.Visible = True
-                btnFacturar.Enabled = False
-            Else
-                lblError.Visible = False
-                btnFacturar.Enabled = True
-            End If
+        If (errorMontoTope) Then
+            lblError.Visible = True
+            btnFacturar.Enabled = False
         Else
             lblError.Visible = False
+            btnFacturar.Enabled = True
         End If
 
     End Sub
 
-    Private Sub txt_Comprobante_Origen_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Factura_Origen.KeyPress
+    Private Sub txt_Comprobante_Origen_KeyPress(sender As Object, e As KeyPressEventArgs)
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
         If KeyAscii = 0 Then
@@ -795,14 +527,14 @@ Public Class frmFacturar
     End Sub
 
     Private Sub DesHabilitarInformacionTicket(factura As String)
-        txt_Cuit.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-        txt_Direccion.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-        txt_Localidad.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-        txt_Nombre.Text = IIf(Not NotaCredito, "No Requerido.", String.Empty)
-        txt_Cuit.ReadOnly = Not NotaCredito
-        txt_Direccion.ReadOnly = Not NotaCredito
-        txt_Localidad.ReadOnly = Not NotaCredito
-        txt_Nombre.ReadOnly = Not NotaCredito
+        txt_Cuit.Text = "No Requerido."
+        txt_Direccion.Text = "No Requerido."
+        txt_Localidad.Text = "No Requerido."
+        txt_Nombre.Text = "No Requerido."
+        txt_Cuit.ReadOnly = True
+        txt_Direccion.ReadOnly = True
+        txt_Localidad.ReadOnly = True
+        txt_Nombre.ReadOnly = True
         TipoFactura = factura
         Label3.Text = "DNI"
     End Sub
@@ -822,5 +554,7 @@ Public Class frmFacturar
 
     Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.DialogResult = DialogResult.Cancel
+        Me.Close()
     End Sub
+
 End Class

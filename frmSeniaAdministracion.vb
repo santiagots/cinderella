@@ -104,16 +104,15 @@ Public Class frmSeniaAdministracion
                     If (TipoFactura >= 0) Then
                         If (MessageBox.Show("La reserva se encuentra facturada, deseha realizar una nota de credito?.", "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes) Then
                             'Abro el form de datos de facturacion.
-                            Dim frmFacturar As frmFacturar = New frmFacturar()
-                            frmFacturar.NotaCredito = True
-                            frmFacturar.id_Devolucion = Integer.Parse(senia.IdVentaSenia)
-                            frmFacturar.Monto = senia.MontoSenia
-                            frmFacturar.Descuento = 0
-                            frmFacturar.IvaTotal = 0
-                            frmFacturar.SubTotal = 0
-                            frmFacturar.TipoPago = TiposPago
-                            frmFacturar.TipoCliente = TipoCliente()
-                            frmFacturar.ShowDialog()
+                            Dim frmNotaPedido As frmNotaCredito = New frmNotaCredito()
+                            frmNotaPedido.id_Devolucion = Integer.Parse(senia.IdVentaSenia)
+                            frmNotaPedido.Monto = senia.MontoSenia
+                            frmNotaPedido.Descuento = 0
+                            frmNotaPedido.IvaTotal = 0
+                            frmNotaPedido.SubTotal = 0
+                            frmNotaPedido.TipoPago = TiposPago
+                            frmNotaPedido.TipoCliente = TipoCliente()
+                            frmNotaPedido.ShowDialog()
                         End If
                     End If
 

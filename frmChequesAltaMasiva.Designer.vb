@@ -60,6 +60,14 @@ Partial Class frmChequesAltaMasiva
         Me.btnAgregar = New System.Windows.Forms.Button()
         Me.btnAgregarConsecutivo = New System.Windows.Forms.Button()
         Me.dgCheques = New System.Windows.Forms.DataGridView()
+        Me.ChequeBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.MontoPagar = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.txt_Total = New System.Windows.Forms.TextBox()
+        Me.lbl_DescrTot = New System.Windows.Forms.Label()
         Me.NumeroOrdenDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MarcaFact = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClienteNombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -71,14 +79,6 @@ Partial Class frmChequesAltaMasiva
         Me.FechaDespositoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FechaVencimientoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Quitar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.ChequeBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.MontoPagar = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.txt_Total = New System.Windows.Forms.TextBox()
-        Me.lbl_DescrTot = New System.Windows.Forms.Label()
         Me.GroupBox.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -460,7 +460,7 @@ Partial Class frmChequesAltaMasiva
         '
         'BancoBindingSource
         '
-        Me.BancoBindingSource.DataSource = GetType(Entidades.Tarjeta)
+        Me.BancoBindingSource.DataSource = GetType(Entidades.Banco)
         '
         'Label4
         '
@@ -543,97 +543,6 @@ Partial Class frmChequesAltaMasiva
         Me.dgCheques.ReadOnly = True
         Me.dgCheques.Size = New System.Drawing.Size(860, 255)
         Me.dgCheques.TabIndex = 73
-        '
-        'NumeroOrdenDataGridViewTextBoxColumn
-        '
-        Me.NumeroOrdenDataGridViewTextBoxColumn.DataPropertyName = "NumeroOrden"
-        Me.NumeroOrdenDataGridViewTextBoxColumn.HeaderText = "Orden"
-        Me.NumeroOrdenDataGridViewTextBoxColumn.Name = "NumeroOrdenDataGridViewTextBoxColumn"
-        Me.NumeroOrdenDataGridViewTextBoxColumn.ReadOnly = True
-        Me.NumeroOrdenDataGridViewTextBoxColumn.Width = 65
-        '
-        'MarcaFact
-        '
-        Me.MarcaFact.DataPropertyName = "MarcaFacturado"
-        Me.MarcaFact.HeaderText = "Marca Fact."
-        Me.MarcaFact.Name = "MarcaFact"
-        Me.MarcaFact.ReadOnly = True
-        Me.MarcaFact.Width = 65
-        '
-        'ClienteNombreDataGridViewTextBoxColumn
-        '
-        Me.ClienteNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ClienteNombreDataGridViewTextBoxColumn.DataPropertyName = "ClienteNombre"
-        Me.ClienteNombreDataGridViewTextBoxColumn.HeaderText = "Cliente"
-        Me.ClienteNombreDataGridViewTextBoxColumn.Name = "ClienteNombreDataGridViewTextBoxColumn"
-        Me.ClienteNombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'LibradorNombreDataGridViewTextBoxColumn
-        '
-        Me.LibradorNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.LibradorNombreDataGridViewTextBoxColumn.DataPropertyName = "LibradorNombre"
-        Me.LibradorNombreDataGridViewTextBoxColumn.HeaderText = "Librador"
-        Me.LibradorNombreDataGridViewTextBoxColumn.Name = "LibradorNombreDataGridViewTextBoxColumn"
-        Me.LibradorNombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'Banco
-        '
-        Me.Banco.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Banco.DataPropertyName = "BancoEmisorId"
-        Me.Banco.DataSource = Me.BancoBindingSource
-        Me.Banco.DisplayMember = "Nombre"
-        Me.Banco.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
-        Me.Banco.HeaderText = "Banco"
-        Me.Banco.Name = "Banco"
-        Me.Banco.ReadOnly = True
-        '
-        'NumeroChequeDataGridViewTextBoxColumn
-        '
-        Me.NumeroChequeDataGridViewTextBoxColumn.DataPropertyName = "NumeroCheque"
-        Me.NumeroChequeDataGridViewTextBoxColumn.HeaderText = "Ch. Nro."
-        Me.NumeroChequeDataGridViewTextBoxColumn.Name = "NumeroChequeDataGridViewTextBoxColumn"
-        Me.NumeroChequeDataGridViewTextBoxColumn.ReadOnly = True
-        Me.NumeroChequeDataGridViewTextBoxColumn.Width = 75
-        '
-        'ImporteDataGridViewTextBoxColumn
-        '
-        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
-        Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Monto"
-        Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
-        Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
-        Me.ImporteDataGridViewTextBoxColumn.Width = 65
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.DataPropertyName = "FechaIngreso"
-        Me.DataGridViewTextBoxColumn1.HeaderText = "F. Ingreso"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DataGridViewTextBoxColumn1.Width = 80
-        '
-        'FechaDespositoDataGridViewTextBoxColumn
-        '
-        Me.FechaDespositoDataGridViewTextBoxColumn.DataPropertyName = "FechaDesposito"
-        Me.FechaDespositoDataGridViewTextBoxColumn.HeaderText = "F. Depósito"
-        Me.FechaDespositoDataGridViewTextBoxColumn.Name = "FechaDespositoDataGridViewTextBoxColumn"
-        Me.FechaDespositoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaDespositoDataGridViewTextBoxColumn.Width = 90
-        '
-        'FechaVencimientoDataGridViewTextBoxColumn
-        '
-        Me.FechaVencimientoDataGridViewTextBoxColumn.DataPropertyName = "FechaVencimiento"
-        Me.FechaVencimientoDataGridViewTextBoxColumn.HeaderText = "F. Vto."
-        Me.FechaVencimientoDataGridViewTextBoxColumn.Name = "FechaVencimientoDataGridViewTextBoxColumn"
-        Me.FechaVencimientoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaVencimientoDataGridViewTextBoxColumn.Width = 80
-        '
-        'Quitar
-        '
-        Me.Quitar.HeaderText = "Quitar"
-        Me.Quitar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Quitar.Name = "Quitar"
-        Me.Quitar.ReadOnly = True
-        Me.Quitar.Width = 55
         '
         'ChequeBindingSource
         '
@@ -728,6 +637,98 @@ Partial Class frmChequesAltaMasiva
         Me.lbl_DescrTot.TabIndex = 75
         Me.lbl_DescrTot.Text = "TOTAL:"
         '
+        'NumeroOrdenDataGridViewTextBoxColumn
+        '
+        Me.NumeroOrdenDataGridViewTextBoxColumn.DataPropertyName = "NumeroOrden"
+        Me.NumeroOrdenDataGridViewTextBoxColumn.HeaderText = "Orden"
+        Me.NumeroOrdenDataGridViewTextBoxColumn.Name = "NumeroOrdenDataGridViewTextBoxColumn"
+        Me.NumeroOrdenDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NumeroOrdenDataGridViewTextBoxColumn.Width = 65
+        '
+        'MarcaFact
+        '
+        Me.MarcaFact.DataPropertyName = "MarcaFacturado"
+        Me.MarcaFact.HeaderText = "Marca Fact."
+        Me.MarcaFact.Name = "MarcaFact"
+        Me.MarcaFact.ReadOnly = True
+        Me.MarcaFact.Width = 65
+        '
+        'ClienteNombreDataGridViewTextBoxColumn
+        '
+        Me.ClienteNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ClienteNombreDataGridViewTextBoxColumn.DataPropertyName = "ClienteNombre"
+        Me.ClienteNombreDataGridViewTextBoxColumn.HeaderText = "Cliente"
+        Me.ClienteNombreDataGridViewTextBoxColumn.Name = "ClienteNombreDataGridViewTextBoxColumn"
+        Me.ClienteNombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'LibradorNombreDataGridViewTextBoxColumn
+        '
+        Me.LibradorNombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.LibradorNombreDataGridViewTextBoxColumn.DataPropertyName = "LibradorNombre"
+        Me.LibradorNombreDataGridViewTextBoxColumn.HeaderText = "Librador"
+        Me.LibradorNombreDataGridViewTextBoxColumn.Name = "LibradorNombreDataGridViewTextBoxColumn"
+        Me.LibradorNombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'Banco
+        '
+        Me.Banco.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Banco.DataPropertyName = "BancoEmisorId"
+        Me.Banco.DataSource = Me.BancoBindingSource
+        Me.Banco.DisplayMember = "Nombre"
+        Me.Banco.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
+        Me.Banco.HeaderText = "Banco"
+        Me.Banco.Name = "Banco"
+        Me.Banco.ReadOnly = True
+        Me.Banco.ValueMember = "BancoId"
+        '
+        'NumeroChequeDataGridViewTextBoxColumn
+        '
+        Me.NumeroChequeDataGridViewTextBoxColumn.DataPropertyName = "NumeroCheque"
+        Me.NumeroChequeDataGridViewTextBoxColumn.HeaderText = "Ch. Nro."
+        Me.NumeroChequeDataGridViewTextBoxColumn.Name = "NumeroChequeDataGridViewTextBoxColumn"
+        Me.NumeroChequeDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NumeroChequeDataGridViewTextBoxColumn.Width = 75
+        '
+        'ImporteDataGridViewTextBoxColumn
+        '
+        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
+        Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Monto"
+        Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
+        Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ImporteDataGridViewTextBoxColumn.Width = 65
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "FechaIngreso"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "F. Ingreso"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Width = 80
+        '
+        'FechaDespositoDataGridViewTextBoxColumn
+        '
+        Me.FechaDespositoDataGridViewTextBoxColumn.DataPropertyName = "FechaDesposito"
+        Me.FechaDespositoDataGridViewTextBoxColumn.HeaderText = "F. Depósito"
+        Me.FechaDespositoDataGridViewTextBoxColumn.Name = "FechaDespositoDataGridViewTextBoxColumn"
+        Me.FechaDespositoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaDespositoDataGridViewTextBoxColumn.Width = 90
+        '
+        'FechaVencimientoDataGridViewTextBoxColumn
+        '
+        Me.FechaVencimientoDataGridViewTextBoxColumn.DataPropertyName = "FechaVencimiento"
+        Me.FechaVencimientoDataGridViewTextBoxColumn.HeaderText = "F. Vto."
+        Me.FechaVencimientoDataGridViewTextBoxColumn.Name = "FechaVencimientoDataGridViewTextBoxColumn"
+        Me.FechaVencimientoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaVencimientoDataGridViewTextBoxColumn.Width = 80
+        '
+        'Quitar
+        '
+        Me.Quitar.HeaderText = "Quitar"
+        Me.Quitar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Quitar.Name = "Quitar"
+        Me.Quitar.ReadOnly = True
+        Me.Quitar.Width = 55
+        '
         'frmChequesAltaMasiva
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -803,19 +804,19 @@ Partial Class frmChequesAltaMasiva
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents txt_Total As System.Windows.Forms.TextBox
     Friend WithEvents lbl_DescrTot As System.Windows.Forms.Label
-    Friend WithEvents NumeroOrdenDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents MarcaFact As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ClienteNombreDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents LibradorNombreDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Banco As System.Windows.Forms.DataGridViewComboBoxColumn
-    Friend WithEvents NumeroChequeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ImporteDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents FechaDespositoDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents FechaVencimientoDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Quitar As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents NumeroOrdenDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents MarcaFact As DataGridViewTextBoxColumn
+    Friend WithEvents ClienteNombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents LibradorNombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Banco As DataGridViewComboBoxColumn
+    Friend WithEvents NumeroChequeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ImporteDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents FechaDespositoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FechaVencimientoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Quitar As DataGridViewImageColumn
 End Class

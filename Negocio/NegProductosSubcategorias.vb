@@ -41,7 +41,7 @@ Public Class NegProductosSubcategorias
             cmd.CommandType = CommandType.StoredProcedure
             cmd.CommandText = "sp_ProductosSubcategorias_Modificacion"
             With cmd.Parameters
-                .AddWithValue("@id_Subcategoria", esubcategorias.id_Categoria)
+                .AddWithValue("@id_Subcategoria", esubcategorias.id_Subcategoria)
                 .AddWithValue("@descrip", esubcategorias.Descripcion)
                 .AddWithValue("@id_Categoria", esubcategorias.id_Categoria)
                 .AddWithValue("@hab", esubcategorias.Habilitado)

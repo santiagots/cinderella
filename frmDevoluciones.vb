@@ -261,16 +261,15 @@ Public Class frmDevoluciones
                                     Me.Cursor = Cursors.WaitCursor
 
                                     'Abro el form de datos de facturacion.
-                                    Dim frmFacturar As frmFacturar = New frmFacturar()
-                                    frmFacturar.NotaCredito = True
-                                    frmFacturar.id_Devolucion = Integer.Parse(idDevolucion)
-                                    frmFacturar.Monto = MontoTotal
-                                    frmFacturar.Descuento = Descuento
-                                    frmFacturar.IvaTotal = IvaTotal
-                                    frmFacturar.SubTotal = MontoTotalSinDescuento
-                                    frmFacturar.TipoPago = TipoPagoControlador
-                                    frmFacturar.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", TipoCliente.Minorista, TipoCliente.Mayorista)
-                                    frmFacturar.ShowDialog()
+                                    Dim frmNotaCredito As frmNotaCredito = New frmNotaCredito()
+                                    frmNotaCredito.id_Devolucion = Integer.Parse(idDevolucion)
+                                    frmNotaCredito.Monto = MontoTotal
+                                    frmNotaCredito.Descuento = Descuento
+                                    frmNotaCredito.IvaTotal = IvaTotal
+                                    frmNotaCredito.SubTotal = MontoTotalSinDescuento
+                                    frmNotaCredito.TipoPago = TipoPagoControlador
+                                    frmNotaCredito.TipoCliente = If(cb_Tipo.SelectedItem = "Minorista", TipoCliente.Minorista, TipoCliente.Mayorista)
+                                    frmNotaCredito.ShowDialog()
 
                                     'Seteo el cursor.
                                     Me.Cursor = Cursors.Arrow

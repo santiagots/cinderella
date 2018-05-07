@@ -35,23 +35,6 @@ Partial Class frmFacturar
         Me.lbl_IvaMayorista = New System.Windows.Forms.Label()
         Me.lbl_SubtotalMayorista = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.txt_Factura_Origen = New System.Windows.Forms.TextBox()
-        Me.txt_Pago = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.txt_Cuit = New System.Windows.Forms.TextBox()
-        Me.lbl_TipoPago = New System.Windows.Forms.Label()
-        Me.txt_Localidad = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.txt_Direccion = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.txt_Nombre = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Cb_IVA = New System.Windows.Forms.ComboBox()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.PanelTotalMinorista = New System.Windows.Forms.TableLayoutPanel()
         Me.lbl_CostoFinancieroMinorista = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
@@ -61,6 +44,21 @@ Partial Class frmFacturar
         Me.Label11 = New System.Windows.Forms.Label()
         Me.lbl_SubtotalMinorista = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.txt_Pago = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txt_Cuit = New System.Windows.Forms.TextBox()
+        Me.lbl_TipoPago = New System.Windows.Forms.Label()
+        Me.txt_Localidad = New System.Windows.Forms.TextBox()
+        Me.txt_Direccion = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txt_Nombre = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Cb_IVA = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.btnFacturar = New System.Windows.Forms.Button()
@@ -77,15 +75,14 @@ Partial Class frmFacturar
         Me.FacturasList = New System.Windows.Forms.ListBox()
         Me.txt_NumeroFacturaManual = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.btnNotaCredito = New System.Windows.Forms.Button()
         Me.lblError = New System.Windows.Forms.Label()
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1.SuspendLayout()
         Me.PanelTotalMayorista.SuspendLayout()
-        Me.TableLayoutPanel1.SuspendLayout()
         Me.PanelTotalMinorista.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GB_FacturacionManual.SuspendLayout()
@@ -249,195 +246,6 @@ Partial Class frmFacturar
         Me.Label17.TabIndex = 18
         Me.Label17.Text = "Descuento"
         '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Label16, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label10, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Factura_Origen, 1, 7)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Pago, 1, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 0, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Cuit, 1, 6)
-        Me.TableLayoutPanel1.Controls.Add(Me.lbl_TipoPago, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Localidad, 1, 5)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label15, 0, 7)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Direccion, 1, 4)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label6, 0, 4)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Nombre, 1, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label7, 0, 5)
-        Me.TableLayoutPanel1.Controls.Add(Me.Cb_IVA, 1, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label3, 0, 6)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(7, 178)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 8
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(349, 228)
-        Me.TableLayoutPanel1.TabIndex = 14
-        '
-        'Label16
-        '
-        Me.Label16.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(3, 34)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(36, 15)
-        Me.Label16.TabIndex = 25
-        Me.Label16.Text = "Pago"
-        '
-        'Label10
-        '
-        Me.Label10.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(4, 6)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(80, 15)
-        Me.Label10.TabIndex = 16
-        Me.Label10.Text = "Tipo de Pago"
-        '
-        'txt_Factura_Origen
-        '
-        Me.txt_Factura_Origen.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Factura_Origen.Location = New System.Drawing.Point(143, 201)
-        Me.txt_Factura_Origen.Name = "txt_Factura_Origen"
-        Me.txt_Factura_Origen.Size = New System.Drawing.Size(203, 21)
-        Me.txt_Factura_Origen.TabIndex = 6
-        '
-        'txt_Pago
-        '
-        Me.txt_Pago.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Pago.Location = New System.Drawing.Point(143, 31)
-        Me.txt_Pago.Name = "txt_Pago"
-        Me.txt_Pago.Size = New System.Drawing.Size(203, 21)
-        Me.txt_Pago.TabIndex = 24
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(4, 62)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(99, 15)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Condición de IVA"
-        '
-        'Label5
-        '
-        Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(3, 90)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(107, 15)
-        Me.Label5.TabIndex = 4
-        Me.Label5.Text = "Nombre y Apellido"
-        '
-        'txt_Cuit
-        '
-        Me.txt_Cuit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Cuit.Location = New System.Drawing.Point(143, 171)
-        Me.txt_Cuit.Name = "txt_Cuit"
-        Me.txt_Cuit.Size = New System.Drawing.Size(203, 21)
-        Me.txt_Cuit.TabIndex = 5
-        '
-        'lbl_TipoPago
-        '
-        Me.lbl_TipoPago.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lbl_TipoPago.AutoSize = True
-        Me.lbl_TipoPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TipoPago.Location = New System.Drawing.Point(143, 6)
-        Me.lbl_TipoPago.Name = "lbl_TipoPago"
-        Me.lbl_TipoPago.Size = New System.Drawing.Size(64, 15)
-        Me.lbl_TipoPago.TabIndex = 17
-        Me.lbl_TipoPago.Text = "EFECTIVO"
-        '
-        'txt_Localidad
-        '
-        Me.txt_Localidad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Localidad.Location = New System.Drawing.Point(143, 143)
-        Me.txt_Localidad.Name = "txt_Localidad"
-        Me.txt_Localidad.Size = New System.Drawing.Size(203, 21)
-        Me.txt_Localidad.TabIndex = 4
-        '
-        'Label15
-        '
-        Me.Label15.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(3, 204)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(88, 15)
-        Me.Label15.TabIndex = 23
-        Me.Label15.Text = "Factura Origen"
-        '
-        'txt_Direccion
-        '
-        Me.txt_Direccion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Direccion.Location = New System.Drawing.Point(143, 115)
-        Me.txt_Direccion.Name = "txt_Direccion"
-        Me.txt_Direccion.Size = New System.Drawing.Size(203, 21)
-        Me.txt_Direccion.TabIndex = 3
-        '
-        'Label6
-        '
-        Me.Label6.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(3, 118)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(59, 15)
-        Me.Label6.TabIndex = 5
-        Me.Label6.Text = "Dirección"
-        '
-        'txt_Nombre
-        '
-        Me.txt_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Nombre.Location = New System.Drawing.Point(143, 87)
-        Me.txt_Nombre.Name = "txt_Nombre"
-        Me.txt_Nombre.Size = New System.Drawing.Size(203, 21)
-        Me.txt_Nombre.TabIndex = 2
-        '
-        'Label7
-        '
-        Me.Label7.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(3, 146)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(61, 15)
-        Me.Label7.TabIndex = 6
-        Me.Label7.Text = "Localidad"
-        '
-        'Cb_IVA
-        '
-        Me.Cb_IVA.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Cb_IVA.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_IVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_IVA.FormattingEnabled = True
-        Me.Cb_IVA.Location = New System.Drawing.Point(143, 59)
-        Me.Cb_IVA.Name = "Cb_IVA"
-        Me.Cb_IVA.Size = New System.Drawing.Size(203, 23)
-        Me.Cb_IVA.TabIndex = 1
-        '
-        'Label3
-        '
-        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(3, 174)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(120, 15)
-        Me.Label3.TabIndex = 12
-        Me.Label3.Text = "CUIT (sólo numeros)"
-        '
         'PanelTotalMinorista
         '
         Me.PanelTotalMinorista.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -551,6 +359,175 @@ Partial Class frmFacturar
         Me.Label12.Size = New System.Drawing.Size(52, 15)
         Me.Label12.TabIndex = 20
         Me.Label12.Text = "Subtotal"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label16, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label10, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Pago, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Cuit, 1, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_TipoPago, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Localidad, 1, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Direccion, 1, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label6, 0, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Nombre, 1, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label7, 0, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.Cb_IVA, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label3, 0, 6)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(7, 178)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 8
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(349, 228)
+        Me.TableLayoutPanel1.TabIndex = 14
+        '
+        'Label16
+        '
+        Me.Label16.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(3, 34)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(36, 15)
+        Me.Label16.TabIndex = 25
+        Me.Label16.Text = "Pago"
+        '
+        'Label10
+        '
+        Me.Label10.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(4, 6)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(80, 15)
+        Me.Label10.TabIndex = 16
+        Me.Label10.Text = "Tipo de Pago"
+        '
+        'txt_Pago
+        '
+        Me.txt_Pago.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Pago.Location = New System.Drawing.Point(143, 31)
+        Me.txt_Pago.Name = "txt_Pago"
+        Me.txt_Pago.Size = New System.Drawing.Size(203, 21)
+        Me.txt_Pago.TabIndex = 24
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(4, 62)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(99, 15)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Condición de IVA"
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(3, 90)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(107, 15)
+        Me.Label5.TabIndex = 4
+        Me.Label5.Text = "Nombre y Apellido"
+        '
+        'txt_Cuit
+        '
+        Me.txt_Cuit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Cuit.Location = New System.Drawing.Point(143, 171)
+        Me.txt_Cuit.Name = "txt_Cuit"
+        Me.txt_Cuit.Size = New System.Drawing.Size(203, 21)
+        Me.txt_Cuit.TabIndex = 5
+        '
+        'lbl_TipoPago
+        '
+        Me.lbl_TipoPago.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.lbl_TipoPago.AutoSize = True
+        Me.lbl_TipoPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_TipoPago.Location = New System.Drawing.Point(143, 6)
+        Me.lbl_TipoPago.Name = "lbl_TipoPago"
+        Me.lbl_TipoPago.Size = New System.Drawing.Size(64, 15)
+        Me.lbl_TipoPago.TabIndex = 17
+        Me.lbl_TipoPago.Text = "EFECTIVO"
+        '
+        'txt_Localidad
+        '
+        Me.txt_Localidad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Localidad.Location = New System.Drawing.Point(143, 143)
+        Me.txt_Localidad.Name = "txt_Localidad"
+        Me.txt_Localidad.Size = New System.Drawing.Size(203, 21)
+        Me.txt_Localidad.TabIndex = 4
+        '
+        'txt_Direccion
+        '
+        Me.txt_Direccion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Direccion.Location = New System.Drawing.Point(143, 115)
+        Me.txt_Direccion.Name = "txt_Direccion"
+        Me.txt_Direccion.Size = New System.Drawing.Size(203, 21)
+        Me.txt_Direccion.TabIndex = 3
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(3, 118)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(59, 15)
+        Me.Label6.TabIndex = 5
+        Me.Label6.Text = "Dirección"
+        '
+        'txt_Nombre
+        '
+        Me.txt_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Nombre.Location = New System.Drawing.Point(143, 87)
+        Me.txt_Nombre.Name = "txt_Nombre"
+        Me.txt_Nombre.Size = New System.Drawing.Size(203, 21)
+        Me.txt_Nombre.TabIndex = 2
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(3, 146)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(61, 15)
+        Me.Label7.TabIndex = 6
+        Me.Label7.Text = "Localidad"
+        '
+        'Cb_IVA
+        '
+        Me.Cb_IVA.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Cb_IVA.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_IVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_IVA.FormattingEnabled = True
+        Me.Cb_IVA.Location = New System.Drawing.Point(143, 59)
+        Me.Cb_IVA.Name = "Cb_IVA"
+        Me.Cb_IVA.Size = New System.Drawing.Size(203, 23)
+        Me.Cb_IVA.TabIndex = 1
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(3, 174)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(120, 15)
+        Me.Label3.TabIndex = 12
+        Me.Label3.Text = "CUIT (sólo numeros)"
         '
         'lbl_Fecha
         '
@@ -726,21 +703,6 @@ Partial Class frmFacturar
         Me.Label8.TabIndex = 0
         Me.Label8.Text = "Numero Factura"
         '
-        'btnNotaCredito
-        '
-        Me.btnNotaCredito.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnNotaCredito.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnNotaCredito.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnNotaCredito.Image = Global.SistemaCinderella.My.Resources.Recursos.nota_credito
-        Me.btnNotaCredito.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNotaCredito.Location = New System.Drawing.Point(549, 493)
-        Me.btnNotaCredito.Name = "btnNotaCredito"
-        Me.btnNotaCredito.Size = New System.Drawing.Size(100, 40)
-        Me.btnNotaCredito.TabIndex = 12
-        Me.btnNotaCredito.Text = "Nota Cred"
-        Me.btnNotaCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnNotaCredito.UseVisualStyleBackColor = True
-        '
         'lblError
         '
         Me.lblError.Dock = System.Windows.Forms.DockStyle.Fill
@@ -762,7 +724,7 @@ Partial Class frmFacturar
         Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancelar.Location = New System.Drawing.Point(443, 493)
+        Me.btnCancelar.Location = New System.Drawing.Point(549, 493)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(100, 40)
         Me.btnCancelar.TabIndex = 14
@@ -807,13 +769,13 @@ Partial Class frmFacturar
         '
         'frmFacturar
         '
+        Me.AcceptButton = Me.btnFacturar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnCancelar
         Me.ClientSize = New System.Drawing.Size(766, 544)
         Me.Controls.Add(Me.TableLayoutPanel4)
         Me.Controls.Add(Me.btnCancelar)
-        Me.Controls.Add(Me.btnNotaCredito)
         Me.Controls.Add(Me.btnFacturar)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -825,10 +787,10 @@ Partial Class frmFacturar
         Me.GroupBox1.PerformLayout()
         Me.PanelTotalMayorista.ResumeLayout(False)
         Me.PanelTotalMayorista.PerformLayout()
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel1.PerformLayout()
         Me.PanelTotalMinorista.ResumeLayout(False)
         Me.PanelTotalMinorista.PerformLayout()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
@@ -875,9 +837,6 @@ Partial Class frmFacturar
     Friend WithEvents FacturasList As System.Windows.Forms.ListBox
     Friend WithEvents txt_NumeroFacturaManual As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents btnNotaCredito As System.Windows.Forms.Button
-    Friend WithEvents txt_Factura_Origen As System.Windows.Forms.TextBox
-    Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txt_Pago As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents lblError As System.Windows.Forms.Label
