@@ -29,6 +29,9 @@ Partial Class frmConfiguracion
         Me.lbl_NuevaSucursal = New System.Windows.Forms.Label()
         Me.Btn_Actualizar = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.txt_RazonSocial = New System.Windows.Forms.TextBox()
+        Me.Label34 = New System.Windows.Forms.Label()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
         Me.btn_ActualizarListaProductos = New System.Windows.Forms.Button()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -104,6 +107,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMensajes = New System.Windows.Forms.ComboBox()
         Me.TabInternet = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.btnVerificarDNS = New System.Windows.Forms.Button()
         Me.txt_IpPing = New System.Windows.Forms.TextBox()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Cb_TimeOut = New System.Windows.Forms.ComboBox()
@@ -135,8 +139,9 @@ Partial Class frmConfiguracion
         Me.Label29 = New System.Windows.Forms.Label()
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
-        Me.btnVerificarDNS = New System.Windows.Forms.Button()
+        Me.Label35 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
+        Me.GroupBox13.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -169,7 +174,7 @@ Partial Class frmConfiguracion
         '
         Me.lbl_NombreSucursalActual.AutoSize = True
         Me.lbl_NombreSucursalActual.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_NombreSucursalActual.Location = New System.Drawing.Point(225, 32)
+        Me.lbl_NombreSucursalActual.Location = New System.Drawing.Point(183, 32)
         Me.lbl_NombreSucursalActual.Name = "lbl_NombreSucursalActual"
         Me.lbl_NombreSucursalActual.Size = New System.Drawing.Size(54, 13)
         Me.lbl_NombreSucursalActual.TabIndex = 2
@@ -189,9 +194,9 @@ Partial Class frmConfiguracion
         Me.Cb_Sucursales.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Sucursales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursales.FormattingEnabled = True
-        Me.Cb_Sucursales.Location = New System.Drawing.Point(228, 70)
+        Me.Cb_Sucursales.Location = New System.Drawing.Point(186, 70)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
-        Me.Cb_Sucursales.Size = New System.Drawing.Size(170, 23)
+        Me.Cb_Sucursales.Size = New System.Drawing.Size(212, 23)
         Me.Cb_Sucursales.TabIndex = 3
         '
         'lbl_NuevaSucursal
@@ -199,9 +204,9 @@ Partial Class frmConfiguracion
         Me.lbl_NuevaSucursal.AutoSize = True
         Me.lbl_NuevaSucursal.Location = New System.Drawing.Point(9, 73)
         Me.lbl_NuevaSucursal.Name = "lbl_NuevaSucursal"
-        Me.lbl_NuevaSucursal.Size = New System.Drawing.Size(96, 15)
+        Me.lbl_NuevaSucursal.Size = New System.Drawing.Size(112, 15)
         Me.lbl_NuevaSucursal.TabIndex = 3
-        Me.lbl_NuevaSucursal.Text = "Nueva Sucursal:"
+        Me.lbl_NuevaSucursal.Text = "(*) Nueva Sucursal:"
         '
         'Btn_Actualizar
         '
@@ -220,6 +225,8 @@ Partial Class frmConfiguracion
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label35)
+        Me.GroupBox1.Controls.Add(Me.GroupBox13)
         Me.GroupBox1.Controls.Add(Me.GroupBox10)
         Me.GroupBox1.Controls.Add(Me.lbl_SucursalActual)
         Me.GroupBox1.Controls.Add(Me.lbl_NombreSucursalActual)
@@ -233,6 +240,33 @@ Partial Class frmConfiguracion
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuración de Sucursal"
+        '
+        'GroupBox13
+        '
+        Me.GroupBox13.Controls.Add(Me.txt_RazonSocial)
+        Me.GroupBox13.Controls.Add(Me.Label34)
+        Me.GroupBox13.Location = New System.Drawing.Point(7, 258)
+        Me.GroupBox13.Name = "GroupBox13"
+        Me.GroupBox13.Size = New System.Drawing.Size(397, 59)
+        Me.GroupBox13.TabIndex = 8
+        Me.GroupBox13.TabStop = False
+        Me.GroupBox13.Text = "Reporte"
+        '
+        'txt_RazonSocial
+        '
+        Me.txt_RazonSocial.Location = New System.Drawing.Point(179, 20)
+        Me.txt_RazonSocial.Name = "txt_RazonSocial"
+        Me.txt_RazonSocial.Size = New System.Drawing.Size(212, 21)
+        Me.txt_RazonSocial.TabIndex = 11
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(6, 23)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(99, 15)
+        Me.Label34.TabIndex = 10
+        Me.Label34.Text = "(*) Razón Social:"
         '
         'GroupBox10
         '
@@ -267,7 +301,7 @@ Partial Class frmConfiguracion
         '
         Me.Label26.Location = New System.Drawing.Point(6, 24)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(202, 32)
+        Me.Label26.Size = New System.Drawing.Size(168, 32)
         Me.Label26.TabIndex = 28
         Me.Label26.Text = "Uso de momería cache para optimización de cargado "
         '
@@ -275,7 +309,7 @@ Partial Class frmConfiguracion
         '
         Me.Label25.Location = New System.Drawing.Point(6, 66)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(215, 35)
+        Me.Label25.Size = New System.Drawing.Size(168, 35)
         Me.Label25.TabIndex = 5
         Me.Label25.Text = "Período de actualización memoria Cache (Minutos)"
         '
@@ -285,18 +319,18 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoActualizacionMemoriaChace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_TiempoActualizacionMemoriaChace.FormattingEnabled = True
         Me.Cb_TiempoActualizacionMemoriaChace.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_TiempoActualizacionMemoriaChace.Location = New System.Drawing.Point(222, 70)
+        Me.Cb_TiempoActualizacionMemoriaChace.Location = New System.Drawing.Point(180, 70)
         Me.Cb_TiempoActualizacionMemoriaChace.Name = "Cb_TiempoActualizacionMemoriaChace"
-        Me.Cb_TiempoActualizacionMemoriaChace.Size = New System.Drawing.Size(170, 23)
+        Me.Cb_TiempoActualizacionMemoriaChace.Size = New System.Drawing.Size(212, 23)
         Me.Cb_TiempoActualizacionMemoriaChace.TabIndex = 6
         '
         'Panel3
         '
         Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceNo)
         Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceSi)
-        Me.Panel3.Location = New System.Drawing.Point(222, 24)
+        Me.Panel3.Location = New System.Drawing.Point(180, 24)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(170, 27)
+        Me.Panel3.Size = New System.Drawing.Size(212, 27)
         Me.Panel3.TabIndex = 29
         '
         'RUsoMemoriaChaceNo
@@ -1036,6 +1070,21 @@ Partial Class frmConfiguracion
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Configuración de Internet"
         '
+        'btnVerificarDNS
+        '
+        Me.btnVerificarDNS.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnVerificarDNS.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnVerificarDNS.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVerificarDNS.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
+        Me.btnVerificarDNS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 249)
+        Me.btnVerificarDNS.Name = "btnVerificarDNS"
+        Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
+        Me.btnVerificarDNS.TabIndex = 22
+        Me.btnVerificarDNS.Text = "Verificar DNS"
+        Me.btnVerificarDNS.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnVerificarDNS.UseVisualStyleBackColor = True
+        '
         'txt_IpPing
         '
         Me.txt_IpPing.Location = New System.Drawing.Point(237, 160)
@@ -1368,20 +1417,14 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
         '
-        'btnVerificarDNS
+        'Label35
         '
-        Me.btnVerificarDNS.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnVerificarDNS.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnVerificarDNS.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnVerificarDNS.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
-        Me.btnVerificarDNS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 249)
-        Me.btnVerificarDNS.Name = "btnVerificarDNS"
-        Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
-        Me.btnVerificarDNS.TabIndex = 22
-        Me.btnVerificarDNS.Text = "Verificar DNS"
-        Me.btnVerificarDNS.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnVerificarDNS.UseVisualStyleBackColor = True
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(9, 392)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(119, 15)
+        Me.Label35.TabIndex = 11
+        Me.Label35.Text = "Campo requerido (*)"
         '
         'frmConfiguracion
         '
@@ -1398,6 +1441,8 @@ Partial Class frmConfiguracion
         Me.Text = "Configuración del Sistema"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.GroupBox13.ResumeLayout(False)
+        Me.GroupBox13.PerformLayout()
         Me.GroupBox10.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
@@ -1553,4 +1598,8 @@ Partial Class frmConfiguracion
     Friend WithEvents Label32 As Label
     Friend WithEvents txt_IpPing As TextBox
     Friend WithEvents btnVerificarDNS As Button
+    Friend WithEvents GroupBox13 As GroupBox
+    Friend WithEvents txt_RazonSocial As TextBox
+    Friend WithEvents Label34 As Label
+    Friend WithEvents Label35 As Label
 End Class

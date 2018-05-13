@@ -535,6 +535,18 @@ Namespace My
                 Me("IpTimeOut") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Cinderella")>  _
+        Public Property RazonSocial() As String
+            Get
+                Return CType(Me("RazonSocial"),String)
+            End Get
+            Set
+                Me("RazonSocial") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

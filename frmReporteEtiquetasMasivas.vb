@@ -144,6 +144,8 @@ Public Class frmReporteEtiquetasMasivas
             rpt.Load(strPath)
             rpt.SetDataSource(DataTable1)
 
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.RazonSocial
+
             'Opciones de Impresion.
             'Tipo de Hoja.
             rpt.PrintOptions.PaperSize = PaperSize.PaperLetter

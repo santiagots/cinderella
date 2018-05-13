@@ -135,5 +135,8 @@
     <Setting Name="IpTimeOut" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2000</Value>
     </Setting>
+    <Setting Name="RazonSocial" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Cinderella</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

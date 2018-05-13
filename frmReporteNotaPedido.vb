@@ -30,47 +30,51 @@ Public Class frmReporteNotaPedido
 
         Dim notaPedidoDetalles As List(Of NotaPedido_Detalle) = negNotaPedido.TraerDetalle(notaPedido.id_NotaPedido)
 
-        Dim Total As Double = 0
+        Dim MontoTotal As Double = 0
+        Dim SubTotal As Double = 0
+        Dim Descuento As Double = 0
+        Dim IVA As Double = 0
 
         For Each detalle As NotaPedido_Detalle In notaPedidoDetalles
 
             Dim entProducto As Entidades.Productos = negProductos.TraerProducto(detalle.id_Producto)
 
-            Total += detalle.Precio * detalle.Cantidad
-
-            AgregarItemATabla(entProducto, detalle.Cantidad, detalle.Precio, notaPedido.id_TipoVenta, notaPedido.id_ListaPrecio)
+            If notaPedido.id_TipoVenta = 1 Then
+                MontoTotal += detalle.Monto * detalle.Cantidad
+                AgregarRow(entProducto, detalle.Cantidad, 0, 0, detalle.Monto)
+            Else
+                MontoTotal += detalle.Precio * detalle.Cantidad
+                AgregarRow(entProducto, detalle.Cantidad, detalle.Precio, detalle.Iva, detalle.Monto)
+            End If
         Next
+
+        Descuento = MontoTotal * (notaPedido.PorcentajeDescuento / 100)
+        SubTotal = MontoTotal - Descuento
 
         Dim rpt
         If notaPedido.id_TipoVenta = 1 Then
             rpt = New ReporteNotaPedidoMinorista
         Else
             rpt = New ReporteNotaPedidoMayorista
+            IVA = SubTotal * 0.21
+            CType(rpt.ReportDefinition.ReportObjects("TxtIva"), TextObject).Text = IVA.ToString("C2")
         End If
 
         rpt.SetDataSource(ds.Tables("NotaPedido"))
+        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.RazonSocial
+        CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings.NombreSucursal
         CType(rpt.ReportDefinition.ReportObjects("txtNumero"), TextObject).Text = notaPedido.id_NotaPedido
         CType(rpt.ReportDefinition.ReportObjects("txtEstado"), TextObject).Text = If(notaPedido.Vendida, "Cerrada", "Abrierta")
         CType(rpt.ReportDefinition.ReportObjects("txtTipoVenta"), TextObject).Text = notaPedido.TipoVentaDescripcion
         CType(rpt.ReportDefinition.ReportObjects("txtNombreVendedor"), TextObject).Text = notaPedido.EmpleadoNombreyApellido
         CType(rpt.ReportDefinition.ReportObjects("txtNombreCliente"), TextObject).Text = If(notaPedido.id_Cliente > 0, notaPedido.RazonSocialCliente, notaPedido.ConsumidorFinalNombreYApellido)
         CType(rpt.ReportDefinition.ReportObjects("txtFecha"), TextObject).Text = notaPedido.Fecha
-        CType(rpt.ReportDefinition.ReportObjects("TxtTotal"), TextObject).Text = Total.ToString("C2")
+        CType(rpt.ReportDefinition.ReportObjects("TxtSubTotal"), TextObject).Text = SubTotal.ToString("C2")
+        CType(rpt.ReportDefinition.ReportObjects("TxtDescuento"), TextObject).Text = Descuento.ToString("C2")
+        CType(rpt.ReportDefinition.ReportObjects("TxtTotal"), TextObject).Text = (MontoTotal - Descuento + IVA).ToString("C2")
 
         CrViewer.ReportSource = rpt
         CrViewer.Refresh()
-    End Sub
-
-    Private Sub AgregarItemATabla(entProducto As Productos, cantidad As Integer, precio As Double, tipoCliente As Integer, listaPrecio As Integer)
-        If tipoCliente = 1 Then
-            AgregarRow(entProducto, cantidad, 0, 0, precio)
-        Else
-            If (listaPrecio = 5) Then 'MayoristaSinFactura
-                AgregarRow(entProducto, cantidad, precio, 0, precio)
-            Else
-                AgregarRow(entProducto, cantidad, precio / 1.21, (precio / 1.21) * 0.21, precio)
-            End If
-        End If
     End Sub
 
     Private Sub AgregarRow(entProducto As Productos, cantidad As Integer, Precio As Double, Iva As Double, monto As Double)

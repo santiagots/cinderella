@@ -97,6 +97,7 @@ Public Class frmReportePreciosSE
                 Me.Cursor = Cursors.Arrow
                 Dim rpt As New ReportePrecios2
                 rpt.SetDataSource(ds.Tables("Productos"))
+                CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.RazonSocial
 
                 CrViewer.ReportSource = rpt
                 CrViewer.Refresh()

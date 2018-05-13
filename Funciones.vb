@@ -477,9 +477,10 @@ Public Class Funciones
     End Function
 
     'Formateo Importe.
-    Public Function FormatearPrecio(ByVal num As String, Optional ByVal pot As Integer = 4)
+    Public Function FormatearPrecio(ByVal num As Double, Optional ByVal pot As Integer = 4)
         Dim SinComas, SinPuntos As String
         Dim NumeroFinal As Integer
+        num = Math.Round(num, pot)
         num = (num * (10 ^ pot))
         SinComas = Replace(num, ",", "")
         SinPuntos = Replace(SinComas, ".", "")

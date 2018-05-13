@@ -29,6 +29,8 @@ Public Class frmConfiguracion
             RUsoMemoriaChaceNo.Checked = True
         End If
 
+        txt_RazonSocial.Text = My.Settings.RazonSocial
+
         'Cargo el listado de sucursales.
         If (NSucursales.ListadoSucursales().Tables.Count <> 0) Then
             Cb_Sucursales.DataSource = NSucursales.ListadoSucursales().Tables(0)
@@ -137,16 +139,17 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If Cb_Sucursales.SelectedValue <> 0 Then
+            If Cb_Sucursales.SelectedValue <> 0 AndAlso Not String.IsNullOrEmpty(txt_RazonSocial.Text) Then
 
                 My.Settings.Sucursal = Cb_Sucursales.SelectedValue
                 My.Settings.NombreSucursal = Cb_Sucursales.SelectedItem("Nombre").ToString
                 My.Settings.TemporizadorActualizacionMemoriaCache = Cb_TiempoActualizacionMemoriaChace.SelectedItem
                 My.Settings.UsarMemoriaCache = If(RUsoMemoriaChaceSi.Checked, True, False)
+                My.Settings.RazonSocial = txt_RazonSocial.Text
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MessageBox.Show("Debe seleccionar una sucursal.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("Debe completar los campos requeridos", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
 
         Catch ex As Exception
@@ -575,4 +578,5 @@ Public Class frmConfiguracion
         End Try
 
     End Sub
+
 End Class
