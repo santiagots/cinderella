@@ -763,12 +763,12 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Detalle"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "DEVOLUCIONES_DETALLE"
-        tabla.SQLObtenerDatosLocal = "Select D.* 
+        tabla.SQLObtenerDatosLocal = "Select DE.* 
                                         From DEVOLUCIONES D 
                                         INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
                                         where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"
 
-        tabla.SQLObtenerDatosRemoto = "Select D.* 
+        tabla.SQLObtenerDatosRemoto = "Select DE.* 
                                         From DEVOLUCIONES D 
                                         INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
                                         where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"

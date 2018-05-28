@@ -23,13 +23,13 @@ Partial Class frmVentasAdministracion
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVentasAdministracion))
         Me.TabVentas = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -613,8 +613,8 @@ Partial Class frmVentasAdministracion
         Me.DG_Ventas.AllowUserToAddRows = False
         Me.DG_Ventas.AllowUserToDeleteRows = False
         Me.DG_Ventas.AllowUserToResizeColumns = False
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DG_Ventas.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DG_Ventas.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle22
         Me.DG_Ventas.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -625,8 +625,8 @@ Partial Class frmVentasAdministracion
         Me.DG_Ventas.Name = "DG_Ventas"
         Me.DG_Ventas.ReadOnly = True
         Me.DG_Ventas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DG_Ventas.RowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DG_Ventas.RowsDefaultCellStyle = DataGridViewCellStyle24
         Me.DG_Ventas.RowTemplate.Height = 30
         Me.DG_Ventas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Ventas.Size = New System.Drawing.Size(860, 362)
@@ -707,8 +707,8 @@ Partial Class frmVentasAdministracion
         '
         Me.Anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.Anulado.DataPropertyName = "Anulado"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Anulado.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Anulado.DefaultCellStyle = DataGridViewCellStyle23
         Me.Anulado.FillWeight = 55.0!
         Me.Anulado.HeaderText = "Anulado"
         Me.Anulado.MaxInputLength = 10
@@ -1512,9 +1512,9 @@ Partial Class frmVentasAdministracion
         '
         'PRECIO
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle25.Format = "C2"
+        DataGridViewCellStyle25.NullValue = Nothing
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle25
         Me.PRECIO.FillWeight = 81.69429!
         Me.PRECIO.HeaderText = "Precio"
         Me.PRECIO.Name = "PRECIO"
@@ -1522,25 +1522,25 @@ Partial Class frmVentasAdministracion
         '
         'IVA
         '
-        DataGridViewCellStyle5.Format = "C2"
-        Me.IVA.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle26.Format = "C2"
+        Me.IVA.DefaultCellStyle = DataGridViewCellStyle26
         Me.IVA.HeaderText = "Iva"
         Me.IVA.Name = "IVA"
         Me.IVA.ReadOnly = True
         '
         'MONTO
         '
-        DataGridViewCellStyle6.Format = "C2"
-        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle27.Format = "C2"
+        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle27
         Me.MONTO.HeaderText = "Monto"
         Me.MONTO.Name = "MONTO"
         Me.MONTO.ReadOnly = True
         '
         'SUBTOTAL
         '
-        DataGridViewCellStyle7.Format = "C2"
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle28.Format = "C2"
+        DataGridViewCellStyle28.NullValue = Nothing
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle28
         Me.SUBTOTAL.FillWeight = 91.37056!
         Me.SUBTOTAL.HeaderText = "Subtotal"
         Me.SUBTOTAL.Name = "SUBTOTAL"

@@ -1,4 +1,5 @@
 ﻿Imports Entidades
+Imports Negocio
 
 Public Class frmDevolucionesAdministracion
     Dim NegDevolucion As New Negocio.NegDevolucion
@@ -431,14 +432,57 @@ Public Class frmDevolucionesAdministracion
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
 
-        'Abro el form de datos de facturacion.
-        frmNotaCredito.id_Devolucion = id_DevolucionDetalle
-        frmNotaCredito.Monto = MontoTotalDetalle
-        frmNotaCredito.Descuento = DescuentoDetalle
-        frmNotaCredito.SubTotal = SubTotalDetalle
-        frmNotaCredito.TipoPago = TipoPagoDetalle
-        frmNotaCredito.TipoCliente = TipoDevolucion()
-        Funciones.ControlInstancia(frmNotaCredito).Show()
+
+        Dim dsDevolucion As DataSet = NegDevolucion.TraerDevolucion(id_DevolucionDetalle)
+
+        Dim PorcentajeFacturacion = CType(dsDevolucion.Tables(0).Rows(0).Item("PorcentajeFacturacion").ToString, Decimal)
+        Dim TipoPago As String = dsDevolucion.Tables(0).Rows(0).Item("TiposPago").ToString()
+        Dim Total As Double = CType(dsDevolucion.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
+        Dim Descuento As Double = CType(dsDevolucion.Tables(0).Rows(0).Item("Descuento").ToString, Double)
+        Dim SubTotal As Double = CType(dsDevolucion.Tables(0).Rows(0).Item("Subtotal").ToString, Double)
+        Dim id_Cliente As Integer = If(dsDevolucion.Tables(0).Rows(0).Item("id_Cliente") Is DBNull.Value, 0, CType(dsDevolucion.Tables(0).Rows(0).Item("id_Cliente").ToString, Integer))
+        Dim frmNotaCredito As frmNotaCredito = New frmNotaCredito()
+
+        If (id_Cliente = 0) Then
+            frmNotaCredito.Monto = Total
+            frmNotaCredito.Descuento = Descuento
+            frmNotaCredito.SubTotal = SubTotal
+            frmNotaCredito.TipoPago = TipoPago
+            frmNotaCredito.TipoCliente = TipoCliente.Minorista
+            frmNotaCredito.EsSenia = False
+            frmNotaCredito.PorcentajeFacturacion = 1
+        Else
+            frmNotaCredito.id_Cliente = id_Cliente
+            frmNotaCredito.Descuento = Math.Round(Descuento * PorcentajeFacturacion, 2)
+            frmNotaCredito.SubTotal = Math.Round(SubTotal * PorcentajeFacturacion, 2)
+            frmNotaCredito.IvaTotal = Math.Round((SubTotal * 0.21) * PorcentajeFacturacion, 2)
+            frmNotaCredito.Monto = Math.Round(frmNotaCredito.SubTotal + frmNotaCredito.IvaTotal, 2)
+            frmNotaCredito.TipoPago = TipoPago
+            frmNotaCredito.TipoCliente = TipoCliente.Mayorista
+            frmNotaCredito.EsSenia = False
+            frmNotaCredito.PorcentajeFacturacion = PorcentajeFacturacion
+        End If
+
+        Dim dsDetalle As DataSet = NegDevolucion.TraerDevolucionDetalle(id_DevolucionDetalle)
+
+        For Each prod In dsDetalle.Tables(0).Rows
+            Dim Detalle As Devolucion_Detalle = New Devolucion_Detalle()
+            Detalle.Nombre = prod.Item("Nombre").ToString()
+            Detalle.Cantidad = prod.Item("Cantidad").ToString()
+            Detalle.Precio = prod.Item("Precio").ToString()
+            Detalle.Iva = prod.Item("Iva").ToString()
+            Detalle.Monto = prod.Item("Monto").ToString()
+            frmNotaCredito.DevolucionDetalle.Add(Detalle)
+        Next
+
+        frmNotaCredito.ShowDialog()
+
+        Dim NegNotaCredito As NegNotaCredito = New NegNotaCredito()
+
+        For Each notaCredito As NotaCredito In frmNotaCredito.NotasCreditos
+            notaCredito.id_Devolucion = id_DevolucionDetalle
+            NegNotaCredito.NuevaNotaCredito(notaCredito)
+        Next
 
         'Seteo el cursor.
         Me.Cursor = Cursors.Arrow

@@ -66,6 +66,9 @@ Partial Class frmFacturaAdministracion
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtNombre = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.txtCUIT = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TabAdministracionFacturas = New System.Windows.Forms.TabControl()
@@ -131,12 +134,12 @@ Partial Class frmFacturaAdministracion
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.lblAnulado = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         CType(Me.DG_facturas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
         Me.TabAdministracionFacturas.SuspendLayout()
         Me.TabFacturas.SuspendLayout()
         Me.TabDetalle.SuspendLayout()
@@ -146,9 +149,6 @@ Partial Class frmFacturaAdministracion
         Me.PanelTotalMinoristaSenia.SuspendLayout()
         Me.PanelTotalMayorista.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel2.SuspendLayout()
-        Me.TableLayoutPanel3.SuspendLayout()
-        Me.TableLayoutPanel5.SuspendLayout()
         Me.SuspendLayout()
         '
         'DG_facturas
@@ -336,7 +336,7 @@ Partial Class frmFacturaAdministracion
         Me.ChkMarcaManual.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ChkMarcaManual.Location = New System.Drawing.Point(3, 3)
         Me.ChkMarcaManual.Name = "ChkMarcaManual"
-        Me.ChkMarcaManual.Size = New System.Drawing.Size(74, 19)
+        Me.ChkMarcaManual.Size = New System.Drawing.Size(74, 18)
         Me.ChkMarcaManual.TabIndex = 424
         Me.ChkMarcaManual.Text = "Manual"
         Me.ChkMarcaManual.UseVisualStyleBackColor = True
@@ -349,7 +349,7 @@ Partial Class frmFacturaAdministracion
         Me.ChkMarcaTicket.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ChkMarcaTicket.Location = New System.Drawing.Point(83, 3)
         Me.ChkMarcaTicket.Name = "ChkMarcaTicket"
-        Me.ChkMarcaTicket.Size = New System.Drawing.Size(74, 19)
+        Me.ChkMarcaTicket.Size = New System.Drawing.Size(74, 18)
         Me.ChkMarcaTicket.TabIndex = 425
         Me.ChkMarcaTicket.Text = "Ticket"
         Me.ChkMarcaTicket.UseVisualStyleBackColor = True
@@ -362,7 +362,7 @@ Partial Class frmFacturaAdministracion
         Me.ChkMarcaElectronica.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ChkMarcaElectronica.Location = New System.Drawing.Point(163, 3)
         Me.ChkMarcaElectronica.Name = "ChkMarcaElectronica"
-        Me.ChkMarcaElectronica.Size = New System.Drawing.Size(140, 19)
+        Me.ChkMarcaElectronica.Size = New System.Drawing.Size(74, 18)
         Me.ChkMarcaElectronica.TabIndex = 426
         Me.ChkMarcaElectronica.Text = "Electronica"
         Me.ChkMarcaElectronica.UseVisualStyleBackColor = True
@@ -504,6 +504,74 @@ Partial Class frmFacturaAdministracion
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filtrar facturas."
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 5
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel5, 4, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel3, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FHasta, 4, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FDesde, 4, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label17, 3, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 3, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label13, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtCUIT, 1, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtFacturaNro, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label2, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 3, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label19, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.txtNombre, 1, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label1, 0, 2)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 4
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(852, 122)
+        Me.TableLayoutPanel2.TabIndex = 435
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.ColumnCount = 3
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.ChkMarcaManual, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.ChkMarcaTicket, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.ChkMarcaElectronica, 2, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(609, 65)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(240, 24)
+        Me.TableLayoutPanel5.TabIndex = 437
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 3
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.txtMontoDesde, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label18, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.txtMontoHasta, 2, 0)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(143, 33)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(240, 26)
+        Me.TableLayoutPanel3.TabIndex = 436
         '
         'txtCUIT
         '
@@ -1268,74 +1336,6 @@ Partial Class frmFacturaAdministracion
         Me.lblAnulado.Text = "VENTA ANULADA."
         Me.lblAnulado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel2.ColumnCount = 5
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel5, 4, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.TableLayoutPanel3, 1, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.FHasta, 4, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.FDesde, 4, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label17, 3, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 3, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label13, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.txtCUIT, 1, 3)
-        Me.TableLayoutPanel2.Controls.Add(Me.txtFacturaNro, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label2, 0, 3)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 3, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label19, 0, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.txtNombre, 1, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label1, 0, 2)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 20)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 4
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(852, 122)
-        Me.TableLayoutPanel2.TabIndex = 435
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.ColumnCount = 3
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.txtMontoDesde, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Label18, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.txtMontoHasta, 2, 0)
-        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(143, 33)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(240, 26)
-        Me.TableLayoutPanel3.TabIndex = 436
-        '
-        'TableLayoutPanel5
-        '
-        Me.TableLayoutPanel5.ColumnCount = 3
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel5.Controls.Add(Me.ChkMarcaManual, 0, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.ChkMarcaTicket, 1, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.ChkMarcaElectronica, 2, 0)
-        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(609, 65)
-        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
-        Me.TableLayoutPanel5.RowCount = 1
-        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(240, 24)
-        Me.TableLayoutPanel5.TabIndex = 437
-        '
         'frmFacturaAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1350,6 +1350,12 @@ Partial Class frmFacturaAdministracion
         CType(Me.DG_facturas, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel5.ResumeLayout(False)
+        Me.TableLayoutPanel5.PerformLayout()
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel3.PerformLayout()
         Me.TabAdministracionFacturas.ResumeLayout(False)
         Me.TabFacturas.ResumeLayout(False)
         Me.TabDetalle.ResumeLayout(False)
@@ -1364,12 +1370,6 @@ Partial Class frmFacturaAdministracion
         Me.PanelTotalMayorista.ResumeLayout(False)
         Me.PanelTotalMayorista.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel2.PerformLayout()
-        Me.TableLayoutPanel3.ResumeLayout(False)
-        Me.TableLayoutPanel3.PerformLayout()
-        Me.TableLayoutPanel5.ResumeLayout(False)
-        Me.TableLayoutPanel5.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

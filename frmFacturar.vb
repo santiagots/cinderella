@@ -22,7 +22,6 @@ Public Class frmFacturar
     Public EntFacturacion As New Facturacion
     Public Monto As Double
     Public TipoPago As String
-    Public id_Venta As Int64
     Public Descuento As Double
     Public CostoFinanciero As Double
     Public SubTotal As Double
@@ -224,7 +223,6 @@ Public Class frmFacturar
                 For Each numero In NumeroFactura
                     'MAGIC MOMENT: FACTURA MACHINE !
                     'Completo la entidad de Facturacion.
-                    EntFacturacion.id_Venta = id_Venta
                     EntFacturacion.Monto = If(EsSenia, MontoSenia, Monto)
                     EntFacturacion.NumeroFactura = numero
                     EntFacturacion.CondicionIva = Cb_IVA.Text

@@ -12,14 +12,19 @@ Public Class NegDevolucion
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
+        dt.Columns.Add("id_Detalle", Type.GetType("System.Int64"))
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
         dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
         dt.Columns.Add("Precio", Type.GetType("System.Double"))
+        dt.Columns.Add("Iva", Type.GetType("System.Double"))
+        dt.Columns.Add("Monto", Type.GetType("System.Double"))
 
         For Each item As Entidades.Devolucion_Detalle In Devolucion.Detalle
-            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio)
+            dt.Rows.Add(ClsDatos.ObtenerCalveUnica(Devolucion.id_Sucursal), item.id_Producto, item.Cantidad, item.Precio, item.Iva, item.Monto)
         Next
 
+        Devolucion.id_Devolucion = ClsDatos.ObtenerCalveUnica(Devolucion.id_Sucursal)
+        Devolucion.FechaEdicion = DateTime.Now
 
         Try
             cmd.Connection = ClsDatos.ConectarLocal()
@@ -58,6 +63,7 @@ Public Class NegDevolucion
             .AddWithValue("@Subtotal", Devolucion.SubTotal)
             .AddWithValue("@CantidadTotal", Devolucion.CantidadTotal)
             .AddWithValue("@Descuento", Devolucion.Descuento)
+            .AddWithValue("@PorcentajeFacturacion", Devolucion.PorcentajeFacturacion)
             .AddWithValue("@Habilitado", Devolucion.Habilitado)
             .AddWithValue("@NotaCredito", Devolucion.NotaCredito)
             .AddWithValue("@FechaEdicion", Devolucion.FechaEdicion)
@@ -91,15 +97,15 @@ Public Class NegDevolucion
 
     'Funcion para consultar un detalle de laa venta.
     Public Function TraerDevolucionDetalle(ByVal id_Devolucion As Int64)
-        Dim dsVentas As New DataSet
+        Dim dsDetalle As New DataSet
 
         If (Funciones.HayInternet) Then
-            dsVentas = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
+            dsDetalle = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
         Else
-            dsVentas = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
+            dsDetalle = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
         End If
 
-        Return dsVentas
+        Return dsDetalle
     End Function
 
     'Funcion para listar todas las devoluciones por FECHA.
@@ -164,7 +170,7 @@ Public Class NegDevolucion
             .AddWithValue("@id_Devolucion", id_Devolucion)
             .AddWithValue("@Texto", Texto)
             .AddWithValue("@Fecha", Now.Date.ToString("yyyy/MM/dd"))
-            .AddWithValue("@Fecha_Edicion", FechaEdicion)
+            .AddWithValue("@FechaEdicion", FechaEdicion)
         End With
 
         'Respuesta del stored.

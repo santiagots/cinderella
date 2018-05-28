@@ -19,9 +19,9 @@ Public Class frmNotaCredito
 
     Dim TipoFactura As String = ""
     Public Monto As Double
+    Public NotasCreditos As List(Of NotaCredito) = New List(Of NotaCredito)
+    Public DevolucionDetalle As List(Of Devolucion_Detalle) = New List(Of Devolucion_Detalle)
     Public TipoPago As String
-    Public id_Venta As Int64
-    Public id_Devolucion As Int64
     Public Descuento As Double
     Public CostoFinanciero As Double
     Public SubTotal As Double
@@ -30,6 +30,7 @@ Public Class frmNotaCredito
     Public TipoCliente As TipoCliente
     Public EsSenia As Boolean = False
     Public PorcentajeFacturacion As Double
+    Public NumeroFactura As String
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
@@ -110,10 +111,7 @@ Public Class frmNotaCredito
 
         txt_Pago.Text = "No Requerido."
         txt_Pago.ReadOnly = True
-        If (id_Venta > 0) Then
-            EntFacturacion = NegFacturacion.TraerFacturacionPorIdVenta(id_Venta)
-            txt_Factura_Origen.Text = EntFacturacion.NumeroFactura
-        End If
+        txt_Factura_Origen.Text = NumeroFactura
 
         'Si la facturacion es para un cliente 
         If (id_Cliente <> 0) Then
@@ -204,7 +202,7 @@ Public Class frmNotaCredito
         Return False
     End Function
 
-    Private Sub AgregarNumeroFactura_Click(sender As Object, e As EventArgs) Handles AgregarNumeroNotaCredito.Click
+    Private Sub AgregarNumeroNotaCredito_Click(sender As Object, e As EventArgs) Handles AgregarNumeroNotaCredito.Click
 
         'Verifico que el numero que se esta por ingresar ya no se encuentre en la lista de numero de facturas ingresados 
         For Each numero In FacturasList.Items
@@ -279,7 +277,6 @@ Public Class frmNotaCredito
                 For Each numero In NumeroComprobante
                     'MAGIC MOMENT: FACTURA MACHINE !
                     'Completo la entidad de Facturacion.
-                    EntNotaCredito.id_Devolucion = id_Devolucion
                     EntNotaCredito.Monto = If(EsSenia, MontoSenia, Monto)
                     EntNotaCredito.NumeroNotaCredito = numero
                     EntNotaCredito.Nombre = Trim(txt_Nombre.Text)
@@ -292,12 +289,8 @@ Public Class frmNotaCredito
                     EntNotaCredito.TipoRecibo = Cb_TipoFacturacion.SelectedItem
                     EntNotaCredito.id_Factura = CType(EntFacturacion.id_Facturacion, Int64)
 
-                    'Inserto la nueva NotaCredito.
-                    NegNotaCredito.NuevaNotaCredito(EntNotaCredito)
+                    NotasCreditos.Add(EntNotaCredito)
                 Next
-
-                'Actualizo la DEVOLUCION.
-                NegDevolucion.GeneracionNotaCredito(True, id_Devolucion)
 
                 MessageBox.Show("Se ha generado la nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Me.Close()
@@ -433,20 +426,15 @@ Public Class frmNotaCredito
                     NegControlador.AgregarItemNotaCredito(EntControlador)
                 Else
                     'Agrego items al ticket
-                    If (id_Venta > 0) Then
-                        dsDevoluciones = NegVentas.TraerVentaDetalle(id_Venta)
-                    Else
-                        dsDevoluciones = NegDevolucion.TraerDevolucionDetalle(id_Devolucion)
-                    End If
-                    If dsDevoluciones.Tables(0).Rows.Count > 0 Then
-                        For Each prod In dsDevoluciones.Tables(0).Rows
+                    If DevolucionDetalle.Count > 0 Then
+                        For Each detalle As Devolucion_Detalle In DevolucionDetalle
                             'Seteo la entidad para cada Item.
-                            EntControlador.DPPAL = Func.ReemplazarCaracteres(prod.Item("Nombre").ToString)
-                            EntControlador.CANTIDAD = Func.FormatearCantidad(prod.Item("Cantidad"))
+                            EntControlador.DPPAL = Func.ReemplazarCaracteres(detalle.Nombre)
+                            EntControlador.CANTIDAD = Func.FormatearCantidad(detalle.Cantidad)
                             If (TipoCliente = TipoCliente.Mayorista) Then
-                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Precio") * PorcentajeFacturacion * 1.21)
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(detalle.Precio * PorcentajeFacturacion * 1.21)
                             Else
-                                EntControlador.PUNITARIO = Func.FormatearPrecio(prod.Item("Monto"))
+                                EntControlador.PUNITARIO = Func.FormatearPrecio(detalle.Monto)
                             End If
                             NegControlador.AgregarItemNotaCredito(EntControlador)
                         Next
@@ -517,5 +505,6 @@ Public Class frmNotaCredito
 
     Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.DialogResult = DialogResult.Cancel
+        Me.Close()
     End Sub
 End Class

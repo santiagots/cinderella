@@ -457,7 +457,7 @@ Public Class frmVentas
     End Sub
 
     'Si desea buscar un producto, se visualiza el formulario.
-    Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
+    Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
         Me.Cursor = Cursors.WaitCursor
         BuscarProducto()
         Me.Cursor = Cursors.Arrow
@@ -544,6 +544,8 @@ Public Class frmVentas
         End If
 
         CargraListaProductos(My.Settings.UsarMemoriaCache)
+
+        PanelTotalMayorista.Location = PanelTotalMinorista.Location
     End Sub
 
     Private Sub CargarComboListaPrecios(tipoCliente As TipoCliente)
@@ -599,8 +601,6 @@ Public Class frmVentas
         listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Codigo").ToString).ToArray())
 
         txt_CodigoBarra.AutoCompleteCustomSource = listaNombreCodigoProductos
-
-        PanelTotalMayorista.Location = PanelTotalMinorista.Location
     End Sub
 
     Private Function CargarComboVendedores(DsEncargados As DataSet) As DataSet
@@ -1072,7 +1072,7 @@ Public Class frmVentas
             'Tiene asignado vendedor.
             If MessageBox.Show("¿Ésta seguro que desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
                 If (PorcentajeFacturacion > 0 AndAlso MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
-                    MostrarPantallaFacturacion(TipoPago, id_Cliente, Descuento, CostoFinanciero, SubTotal, MontoTotal, IvaTotal, MontoSenia, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarVenta)
+                    MostrarPantallaFacturacionVenta(TipoPago, id_Cliente, Descuento, CostoFinanciero, SubTotal, MontoTotal, IvaTotal, MontoSenia, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarVenta)
                 Else
                     FinalizarVenta(Nothing, Nothing)
                 End If
@@ -1599,7 +1599,7 @@ Public Class frmVentas
                 NuevaSenia = frmSeniaDatos.Senia
 
                 If (MessageBox.Show("¿Desea facturar la reserva?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
-                    MostrarPantallaFacturacion(TipoPago, id_Cliente, Descuento, CostoFinanciero, SubTotal, MontoTotal, IvaTotal, MontoSenia, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarSenia)
+                    MostrarPantallaFacturacionSenia(TipoPago, id_Cliente, MontoSenia, CostoFinanciero, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarSenia)
                 Else
                     FinalizarVenta(Nothing, Nothing)
                 End If
@@ -2023,7 +2023,7 @@ Public Class frmVentas
         Return Monto
     End Function
 
-    Private Sub MostrarPantallaFacturacion(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, IvaTotal As Double, MontoSenia As Double, PorcentajeFacturacion As Double, VentaDetalle As List(Of Ventas_Detalle), FacturacionClose As FormClosedEventHandler)
+    Private Sub MostrarPantallaFacturacionVenta(TipoPago As Integer, id_Cliente As Integer, Descuento As Double, CostoFinanciero As Double, SubTotal As Double, MontoTotal As Double, IvaTotal As Double, MontoSenia As Double, PorcentajeFacturacion As Double, VentaDetalle As List(Of Ventas_Detalle), FacturacionClose As FormClosedEventHandler)
         Dim TipoPagoControlador As String
 
         'Seteo Tipo de Pago para la controladora fiscal
@@ -2065,6 +2065,56 @@ Public Class frmVentas
             frmFacturar.TipoPago = TipoPagoControlador
             frmFacturar.TipoCliente = TipoCliente.Mayorista
             frmFacturar.EsSenia = False
+            frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
+        End If
+
+        frmFacturar.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub MostrarPantallaFacturacionSenia(TipoPago As Integer, id_Cliente As Integer, MontoSenia As Double, CostoFinanciero As Double, PorcentajeFacturacion As Double, VentaDetalle As List(Of Ventas_Detalle), FacturacionClose As FormClosedEventHandler)
+        Dim TipoPagoControlador As String
+
+        'Seteo Tipo de Pago para la controladora fiscal
+        If TipoPago = 1 Then
+            TipoPagoControlador = "EFECTIVO"
+        ElseIf TipoPago = 2 Then
+            TipoPagoControlador = "CREDITO"
+        ElseIf TipoPago = 3 Then
+            TipoPagoControlador = "DEBITO"
+        Else
+            TipoPagoControlador = "CHEQUE"
+        End If
+
+        Dim frmFacturar As frmFacturar = New frmFacturar()
+
+        frmFacturar.VentaDetalle = VentaDetalle
+        frmFacturar.MdiParent = Me.MdiParent
+        AddHandler frmFacturar.FormClosed, FacturacionClose
+
+        If (cb_Tipo.SelectedItem = "Minorista") Then
+            frmFacturar.id_Cliente = id_Cliente
+            frmFacturar.TipoPago = TipoPagoControlador
+            frmFacturar.TipoCliente = TipoCliente.Minorista
+            frmFacturar.CostoFinanciero = CostoFinanciero
+            frmFacturar.SubTotal = MontoSenia
+            frmFacturar.Monto = MontoSenia + CostoFinanciero
+            frmFacturar.MontoSenia = MontoSenia
+            frmFacturar.EsSenia = True
+            frmFacturar.PorcentajeFacturacion = 1
+        Else
+
+            Dim MontoSeñaSinIva As Double = MontoSenia / ((0.21 * PorcentajeFacturacion) + 1)
+            Dim CostoFinancieroSinIva As Double = CostoFinanciero / ((0.21 * PorcentajeFacturacion) + 1)
+            frmFacturar.id_Cliente = id_Cliente
+            frmFacturar.TipoPago = TipoPagoControlador
+            frmFacturar.TipoCliente = TipoCliente.Mayorista
+            frmFacturar.CostoFinanciero = Math.Round(CostoFinancieroSinIva, 2)
+            frmFacturar.SubTotal = Math.Round((MontoSeñaSinIva + CostoFinancieroSinIva) * PorcentajeFacturacion, 2)
+            frmFacturar.IvaTotal = Math.Round(frmFacturar.SubTotal * 0.21, 2)
+            frmFacturar.Monto = Math.Round(frmFacturar.SubTotal + frmFacturar.IvaTotal, 2)
+            frmFacturar.MontoSenia = Math.Round(MontoSeñaSinIva * PorcentajeFacturacion * 1.21, 2)
+            frmFacturar.EsSenia = True
             frmFacturar.PorcentajeFacturacion = PorcentajeFacturacion
         End If
 
@@ -2425,4 +2475,5 @@ Public Class frmVentas
         MessageBox.Show("El listado de productos se ha actualizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Cursor = Cursors.Arrow
     End Sub
+
 End Class

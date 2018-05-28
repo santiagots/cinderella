@@ -1735,10 +1735,11 @@ Public Class MDIContenedor
         'Compruevo el acceso a internet para actualizar el MIDContenedor
         Negocio.Funciones.HayConexionInternet()
 
-        'para administrar cambios no es necesario esta online
+        'para administrar ventas no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmDevoluciones).MdiParent = Me
-        Funciones.ControlInstancia(frmDevoluciones).Show()
+        Dim frmDevoluciones As frmDevoluciones = New frmDevoluciones()
+        frmDevoluciones.MdiParent = Me
+        frmDevoluciones.Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

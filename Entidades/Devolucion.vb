@@ -11,6 +11,7 @@
     Public Property CantidadTotal As Integer
     Public Property PrecioTotal As Double
     Public Property Descuento As Double
+    Public Property PorcentajeFacturacion As Double
     Public Property SubTotal As Double
     Public Property Fecha As Date
     Public Property FechaEdicion As Date

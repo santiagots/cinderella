@@ -57,20 +57,11 @@
             If DG_Productos.SelectedRows.Count > 0 Then
                 If e.RowIndex >= 0 Then
                     idProducto = DG_Productos.Rows(e.RowIndex).Cells("id_Producto").Value()
-                    If idProducto <> "" Then
-                        If TipoForm = 1 Then
-                            'TODO: restructurar esta seccion
-                            'frmVentas.txt_CodigoBarra.Clear()
-                            'frmVentas.AgregarItem(idProducto, 1)
-                        ElseIf TipoForm = 2 Then
-                            frmDevoluciones.txt_CodigoBarra.Clear()
-                            frmDevoluciones.AgregarItem(idProducto, 1)
-                        ElseIf TipoForm = 3 Then
-                            frmCargarMercaderiaEgreso.txt_CodigoBarra.Clear()
-                            frmCargarMercaderiaEgreso.AgregarItem(idProducto, 1)
-                        End If
-                        Me.Close()
+                    If idProducto <> "" AndAlso TipoForm = 3 Then
+                        frmCargarMercaderiaEgreso.txt_CodigoBarra.Clear()
+                        frmCargarMercaderiaEgreso.AgregarItem(idProducto, 1)
                     End If
+                    Me.Close()
                 End If
             End If
 

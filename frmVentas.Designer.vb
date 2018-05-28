@@ -324,7 +324,7 @@ Partial Class frmVentas
         Me.Btn_Finalizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Finalizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
         Me.Btn_Finalizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Finalizar.Location = New System.Drawing.Point(839, 695)
+        Me.Btn_Finalizar.Location = New System.Drawing.Point(839, 693)
         Me.Btn_Finalizar.Name = "Btn_Finalizar"
         Me.Btn_Finalizar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Finalizar.TabIndex = 17
@@ -341,7 +341,7 @@ Partial Class frmVentas
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(605, 695)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(605, 693)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 16
@@ -496,9 +496,9 @@ Partial Class frmVentas
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel6.ColumnCount = 4
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.0!))
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
         Me.TableLayoutPanel6.Controls.Add(Me.Label24, 0, 1)
         Me.TableLayoutPanel6.Controls.Add(Me.txt_PorcentajeFacturacion, 1, 1)
@@ -522,7 +522,7 @@ Partial Class frmVentas
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.Location = New System.Drawing.Point(3, 45)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(102, 15)
+        Me.Label24.Size = New System.Drawing.Size(94, 15)
         Me.Label24.TabIndex = 7
         Me.Label24.Text = "Facturación %"
         '
@@ -530,9 +530,9 @@ Partial Class frmVentas
         '
         Me.txt_PorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_PorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(111, 42)
+        Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(103, 42)
         Me.txt_PorcentajeFacturacion.Name = "txt_PorcentajeFacturacion"
-        Me.txt_PorcentajeFacturacion.Size = New System.Drawing.Size(102, 21)
+        Me.txt_PorcentajeFacturacion.Size = New System.Drawing.Size(104, 21)
         Me.txt_PorcentajeFacturacion.TabIndex = 8
         '
         'Btn_BuscarCliente
@@ -556,7 +556,7 @@ Partial Class frmVentas
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(3, 10)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(102, 15)
+        Me.Label3.Size = New System.Drawing.Size(94, 15)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "Cliente"
         '
@@ -565,10 +565,10 @@ Partial Class frmVentas
         Me.txt_id_Cliente.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_id_Cliente.BackColor = System.Drawing.SystemColors.Window
         Me.txt_id_Cliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_id_Cliente.Location = New System.Drawing.Point(111, 7)
+        Me.txt_id_Cliente.Location = New System.Drawing.Point(103, 7)
         Me.txt_id_Cliente.Name = "txt_id_Cliente"
         Me.txt_id_Cliente.ReadOnly = True
-        Me.txt_id_Cliente.Size = New System.Drawing.Size(102, 21)
+        Me.txt_id_Cliente.Size = New System.Drawing.Size(104, 21)
         Me.txt_id_Cliente.TabIndex = 4
         '
         'txt_RazonSocial
@@ -576,10 +576,10 @@ Partial Class frmVentas
         Me.txt_RazonSocial.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_RazonSocial.BackColor = System.Drawing.SystemColors.Window
         Me.txt_RazonSocial.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_RazonSocial.Location = New System.Drawing.Point(219, 7)
+        Me.txt_RazonSocial.Location = New System.Drawing.Point(213, 7)
         Me.txt_RazonSocial.Name = "txt_RazonSocial"
         Me.txt_RazonSocial.ReadOnly = True
-        Me.txt_RazonSocial.Size = New System.Drawing.Size(318, 21)
+        Me.txt_RazonSocial.Size = New System.Drawing.Size(324, 21)
         Me.txt_RazonSocial.TabIndex = 5
         '
         'TableLayoutPanel12
@@ -589,7 +589,7 @@ Partial Class frmVentas
         Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel12.Controls.Add(Me.txt_PorcentajeBonificacion, 0, 0)
         Me.TableLayoutPanel12.Controls.Add(Me.Label33, 0, 0)
-        Me.TableLayoutPanel12.Location = New System.Drawing.Point(219, 38)
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(213, 38)
         Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
         Me.TableLayoutPanel12.RowCount = 1
         Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -1074,7 +1074,7 @@ Partial Class frmVentas
         Me.Btn_NotaPedido.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_NotaPedido.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_NotaPedido.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_NotaPedido.Location = New System.Drawing.Point(711, 695)
+        Me.Btn_NotaPedido.Location = New System.Drawing.Point(711, 693)
         Me.Btn_NotaPedido.Name = "Btn_NotaPedido"
         Me.Btn_NotaPedido.Size = New System.Drawing.Size(122, 40)
         Me.Btn_NotaPedido.TabIndex = 29
