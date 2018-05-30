@@ -1420,15 +1420,12 @@ Public Class frmDevoluciones
     Private Sub CaluclarPrecioMinorista(subtotal As Double)
         Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
         Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 2, MidpointRounding.ToEven)
-        Dim costoFinanciero As Double = 0
 
         If CDbl(descuento) < subtotal Then
-            costoFinanciero = (subtotal - descuento)
-            txt_TotalMinorista.Text = Format(CType(subtotal - descuento + costoFinanciero, Decimal), "###0.00")
+            txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
         Else
             descuento = subtotal
-            costoFinanciero = (subtotal - descuento)
-            txt_TotalMinorista.Text = Format(CType(subtotal - descuento + costoFinanciero, Decimal), "###0.00")
+            txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")
         End If
         txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
         txt_SubtotalMinorista.Text = Format(CType(subtotal, Decimal), "###0.00")
