@@ -504,7 +504,7 @@ Public Class frmVentas
 
         'Pongo el combo en minorista y deshabilito la opcion de clientes.
         cb_Tipo.SelectedIndex = 0
-        enableAllControls(Gb_Cliente, False)
+        enableSeccionCliente(False)
 
         btn_ActualizarListaProductos.Enabled = My.Settings.UsarMemoriaCache
 
@@ -880,7 +880,7 @@ Public Class frmVentas
 
         'Mayorista
         If cb_Tipo.SelectedIndex = 1 Then
-            enableAllControls(Gb_Cliente, True)
+            enableSeccionCliente(True)
             DG_Productos.Columns("MONTO").ReadOnly = True
             DG_Productos.Columns("PRECIO").ReadOnly = False
             DG_Productos.Columns("PRECIO").Visible = True
@@ -890,7 +890,7 @@ Public Class frmVentas
 
         Else
             'Minorista
-            enableAllControls(Gb_Cliente, False)
+            enableSeccionCliente(False)
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
             DG_Productos.Columns("MONTO").ReadOnly = False
@@ -2363,16 +2363,7 @@ Public Class frmVentas
             End If
             'Es MINORISTA
         Else
-            'Es EFECTIVO
-            If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
-                Label33.Enabled = True
-                txt_PorcentajeBonificacion.Enabled = True
-                txt_PorcentajeBonificacion.Value = My.Settings.DescuentoMinorista
-            Else
-                Label33.Enabled = False
-                txt_PorcentajeBonificacion.Enabled = False
-                txt_PorcentajeBonificacion.Value = 0
-            End If
+            txt_PorcentajeBonificacion.Value = 0
         End If
 
         If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 2) Then
@@ -2466,6 +2457,15 @@ Public Class frmVentas
         If TypeOf con IsNot TableLayoutPanel And TypeOf con IsNot GroupBox And Not String.IsNullOrEmpty(con.Name) Then
             con.Enabled = enable
         End If
+
+    End Sub
+
+    Private Sub enableSeccionCliente(enable As Boolean)
+
+        txt_id_Cliente.Enabled = enable
+        txt_RazonSocial.Enabled = enable
+        Btn_BuscarCliente.Enabled = enable
+        txt_PorcentajeFacturacion.Enabled = enable
 
     End Sub
 
