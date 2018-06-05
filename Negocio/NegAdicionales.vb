@@ -11,7 +11,7 @@ Public Class NegAdicionales
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
-        If (eAdicional.id_Adicional > 0) Then
+        If (eAdicional.id_Adicional >= 0) Then
             eAdicional.id_Adicional = clsDatos.ObtenerCalveUnica(eAdicional.id_Sucursal)
         End If
         eAdicional.FechaEdicion = DateTime.Now
