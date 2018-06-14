@@ -128,6 +128,7 @@ Public Class NegComisiones
             cmd.CommandText = "sp_Comisiones_Obtener_Porcentajes_Venta"
             With cmd.Parameters
                 .AddWithValue("@id_Sucursal", id_Sucursal)
+                .AddWithValue("@fecha", Date.Now)
             End With
 
             Dim ComisionVendedor As New SqlParameter("@Comision_Vendedor", SqlDbType.Float)

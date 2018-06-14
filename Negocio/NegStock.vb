@@ -119,27 +119,29 @@ Public Class NegStock
         'Declaro variables
         Dim cmd As SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim fecha As Date = Date.Now
 
         cmd = New SqlCommand
         cmd.Connection = clsDatos.ConectarLocal()
-        ActualizarUltimoCalculoVentaMensual(idSucursal, cmd)
+        ActualizarUltimoCalculoVentaMensual(idSucursal, fecha, cmd)
         clsDatos.DesconectarLocal()
 
         If HayInternet Then
             cmd = New SqlCommand
             cmd.Connection = clsDatos.ConectarRemoto()
-            ActualizarUltimoCalculoVentaMensual(idSucursal, cmd)
+            ActualizarUltimoCalculoVentaMensual(idSucursal, fecha, cmd)
             clsDatos.DesconectarRemoto()
         End If
 
     End Sub
 
-    Private Shared Sub ActualizarUltimoCalculoVentaMensual(idSucursal As Integer, ByRef cmd As SqlCommand)
+    Private Shared Sub ActualizarUltimoCalculoVentaMensual(idSucursal As Integer, fecha As Date, ByRef cmd As SqlCommand)
         'Ejecuto el Stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_CalculoVentaMensual_Actualizar"
         With cmd.Parameters
             .AddWithValue("@id_Sucursal", idSucursal)
+            .AddWithValue("@fecha", fecha)
         End With
 
         'Respuesta del Stored.

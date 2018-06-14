@@ -498,6 +498,7 @@ Public Class NegMovimientos
             .AddWithValue("@Descripcion", eEgreso.Descripcion)
             .AddWithValue("@Aceptado", eEgreso.Aceptado)
             .AddWithValue("@Fecha", eEgreso.Fecha)
+            .AddWithValue("@FechaSys", DateTime.Now)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -1111,6 +1112,7 @@ Public Class NegMovimientos
         With cmd.Parameters
             .AddWithValue("@id_Movimiento", id_Movimiento)
             .AddWithValue("@id_Sucursal", id_SucursalConect)
+            .AddWithValue("@fecha", DateTime.Now)
         End With
 
         'Respuesta del stored.

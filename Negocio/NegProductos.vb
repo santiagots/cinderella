@@ -395,6 +395,7 @@ Public Class NegProductos
                 .AddWithValue("@Habilitado", eproductos.Habilitado)
                 .AddWithValue("@Novedad", eproductos.Novedad)
                 .AddWithValue("@SubirWeb", eproductos.SubirWeb)
+                .AddWithValue("@fecha", DateTime.Now)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -582,6 +583,7 @@ Public Class NegProductos
                 .AddWithValue("@Habilitado", eproductos.Habilitado)
                 .AddWithValue("@Novedad", eproductos.Novedad)
                 .AddWithValue("@SubirWeb", eproductos.SubirWeb)
+                .AddWithValue("@fecha", DateTime.Now)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)

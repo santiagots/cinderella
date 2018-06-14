@@ -75,6 +75,7 @@ Public Class NegNotaCredito
             .AddWithValue("@Id_Sucursal", EntNotaCredito.id_Sucursal)
             .AddWithValue("@TipoRecibo", EntNotaCredito.TipoRecibo)
             .AddWithValue("@Id_Factura", EntNotaCredito.id_Factura)
+            .AddWithValue("@fecha", DateTime.Now)
         End With
 
         'Respuesta del stored.

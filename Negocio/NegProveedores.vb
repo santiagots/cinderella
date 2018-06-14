@@ -102,6 +102,7 @@ Public Class NegProveedores
                 .AddWithValue("@DiaPreferentePedido", eproveedor.DiaPreferentePedido)
                 .AddWithValue("@PlazoEntrega", eproveedor.PlazoEntrega)
                 .AddWithValue("@Habilitado", eproveedor.Habilitado)
+                .AddWithValue("@Fecha", DateTime.Now)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)

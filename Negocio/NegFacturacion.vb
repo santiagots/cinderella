@@ -51,6 +51,7 @@ Public Class NegFacturacion
             .AddWithValue("@PuntoVenta", EntFacturacion.PuntoVenta)
             .AddWithValue("@Id_Sucursal", EntFacturacion.IdSucursal)
             .AddWithValue("@TipoRecibo", EntFacturacion.TipoRecibo)
+            .AddWithValue("@fecha", DateTime.Now)
         End With
 
         'Respuesta del stored.

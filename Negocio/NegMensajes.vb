@@ -28,6 +28,7 @@ Public Class NegMensajes
                 .AddWithValue("@Mensaje", Mensaje)
                 .AddWithValue("@id_Usuario", id_Usuario)
                 .AddWithValue("@id_UsuarioDestino", id_UsuarioDestino)
+                .AddWithValue("@fecha", DateTime.Now)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
             respuesta.Direction = ParameterDirection.Output

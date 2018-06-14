@@ -163,6 +163,7 @@ Public Class NegSincronizacion
         cmd.CommandText = "sp_Sincronizacion_Alta"
         With cmd.Parameters
             .AddWithValue("@id_Sucursal", idSucursal)
+            .AddWithValue("@fecha", DateTime.Now)
         End With
 
         cmd.ExecuteNonQuery()

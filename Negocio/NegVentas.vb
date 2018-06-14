@@ -105,9 +105,9 @@ Public Class NegVentas
     'Funcion para listar todas las ventas.
     Function ListadoVentasCompleto(ByVal id_Sucursal As Integer) As DataSet
         If Funciones.HayInternet Then
-            Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal)
+            Return ClsDatos.ConsultarBaseRemoto("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal & ",@fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
         Else
-            Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal)
+            Return ClsDatos.ConsultarBaseLocal("execute sp_Ventas_ListadoCompleto @id_Sucursal=" & id_Sucursal & ",@fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
         End If
     End Function
 
