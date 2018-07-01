@@ -27,11 +27,7 @@ Public Class NegEmpleados
         Dim dsEmpleado As New DataSet
         Dim entEmpleado As New Entidades.Empleados
 
-        If (Funciones.HayInternet) Then
-            dsEmpleado = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
-        Else
-            dsEmpleado = clsDatos.ConsultarBaseLocal("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
-        End If
+        dsEmpleado = clsDatos.ConsultarBaseLocal("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
 
         If dsEmpleado.Tables(0).Rows.Count <> 0 Then
             entEmpleado = ObtenerEmpleadoFromDataRow(dsEmpleado)
@@ -461,23 +457,15 @@ Public Class NegEmpleados
 
     'Funcion que returna el detalle de sueldo depositados en un periodo de tiempo.
     Function SueldoDepositadoDetalleSucursal(ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As DataSet
-        Dim ds As DataSet
-        Dim SueldoDepositado As Integer = 0
 
-        If (Funciones.HayInternet) Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
 
-        Return ds
     End Function
     'Funcion para insertar un adelanto.
     Function AltaDeposito(ByVal eDeposito As Entidades.Depositos) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         eDeposito.id_Deposito = clsDatos.ObtenerCalveUnica(eDeposito.id_Sucursal)
         eDeposito.FechaEdicion = DateTime.Now()
@@ -486,13 +474,6 @@ Public Class NegEmpleados
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaDeposito(eDeposito, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaDeposito(eDeposito, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -527,7 +508,6 @@ Public Class NegEmpleados
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim Id_Deuda As Int64 = clsDatos.ObtenerCalveUnica(id_Sucursal)
         Dim Fecha_Edicion As DateTime = DateTime.Now()
 
@@ -535,13 +515,6 @@ Public Class NegEmpleados
             cmd.Connection = clsDatos.ConectarLocal()
             msg = ActualizarDeuda(Id_Deuda, id_Empleado, id_Sucursal, Monto, Fecha, Fecha_Edicion, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = ActualizarDeuda(Id_Deuda, id_Empleado, id_Sucursal, Monto, Fecha, Fecha_Edicion, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -569,15 +542,9 @@ Public Class NegEmpleados
     End Function
 
     Function ObtenerEstadoCuenta(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As EstadoCuenta
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
 
-        'Conecto
-        If (HayInternet) Then
-            cmd.Connection = clsDatos.ConectarRemoto()
-        Else
-            cmd.Connection = clsDatos.ConectarLocal()
-        End If
+        cmd.Connection = clsDatos.ConectarLocal()
 
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Empleado_Obtener_Estado_Cuenta"
@@ -637,13 +604,7 @@ Public Class NegEmpleados
         cmd.Parameters.Add(Deuda)
 
         cmd.ExecuteNonQuery()
-
-        'Desconecto
-        If (HayInternet) Then
-            clsDatos.DesconectarRemoto()
-        Else
-            clsDatos.DesconectarLocal()
-        End If
+        clsDatos.DesconectarLocal()
 
         Dim estadoCuenta As EstadoCuenta = New EstadoCuenta()
 
@@ -699,11 +660,7 @@ Public Class NegEmpleados
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto
-        If (HayInternet) Then
-            cmd.Connection = clsDatos.ConectarRemoto()
-        Else
-            cmd.Connection = clsDatos.ConectarLocal()
-        End If
+        cmd.Connection = clsDatos.ConectarLocal()
 
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Deuda_UltimaDeuda"
@@ -718,13 +675,7 @@ Public Class NegEmpleados
         cmd.Parameters.Add(fecha)
 
         cmd.ExecuteNonQuery()
-
-        'Desconecto
-        If (HayInternet) Then
-            clsDatos.DesconectarRemoto()
-        Else
-            clsDatos.DesconectarLocal()
-        End If
+        clsDatos.DesconectarLocal()
 
         If IsDBNull(fecha.Value) Then
             Return Nothing

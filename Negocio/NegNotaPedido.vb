@@ -13,7 +13,6 @@ Public Class NegNotaPedido
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
         Dim dt As DataTable = New DataTable()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Detalle", Type.GetType("System.Int64"))
@@ -38,17 +37,6 @@ Public Class NegNotaPedido
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido dar de alta la nota de pedido en la base local.")
-            End If
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                resultadoOk = NuevaNotaPedido(EntNotaPedido, cmd, dt)
-                ClsDatos.DesconectarLocal()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido dar de alta la nota de pedido en la base remota.")
-                End If
             End If
 
             Return EntNotaPedido.id_NotaPedido
@@ -99,7 +87,6 @@ Public Class NegNotaPedido
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
         Dim dt As DataTable = New DataTable()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Detalle", Type.GetType("System.Int64"))
@@ -122,17 +109,6 @@ Public Class NegNotaPedido
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido actualizar la nota de pedido en la base local.")
-            End If
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                resultadoOk = ActualizarNotaPedido(EntNotaPedido, cmd, dt)
-                ClsDatos.DesconectarLocal()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido actualizar la nota de pedido en la base remota.")
-                End If
             End If
 
             Return resultadoOk
@@ -181,14 +157,8 @@ Public Class NegNotaPedido
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of NotaPedido) = New List(Of NotaPedido)()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_NotaPedido_Consulta_Sucursal @SucursalId=" & SucursalId)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Sucursal @SucursalId=" & SucursalId)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Sucursal @SucursalId=" & SucursalId)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
@@ -205,14 +175,8 @@ Public Class NegNotaPedido
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of NotaPedido_Detalle) = New List(Of NotaPedido_Detalle)()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_NotaPedido_Consulta_Detalle @NotaPedidoId=" & NotaPedidoId)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Detalle @NotaPedidoId=" & NotaPedidoId)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_NotaPedido_Consulta_Detalle @NotaPedidoId=" & NotaPedidoId)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
@@ -228,20 +192,12 @@ Public Class NegNotaPedido
         'Declaro variables
         Dim msg As Boolean
         Dim cmd As SqlCommand = New SqlCommand()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Dim fechaEdicion As DateTime = DateTime.Now
 
         cmd.Connection = ClsDatos.ConectarLocal()
         msg = BorrarNota(NotaPedidoId, fechaEdicion, cmd)
         ClsDatos.DesconectarLocal()
-
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = ClsDatos.ConectarRemoto()
-            msg = BorrarNota(NotaPedidoId, fechaEdicion, cmd)
-            ClsDatos.DesconectarRemoto()
-        End If
 
         Return msg
     End Function

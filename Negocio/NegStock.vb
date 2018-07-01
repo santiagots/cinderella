@@ -16,21 +16,14 @@ Public Class NegStock
     Const MinRowsData As Integer = 2
     'Funcion para listar todos los productos.
     Function ListadoStockSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Stock_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Stock_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Stock_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion que me trae el id del ultimo producto.
     Function UltimoStock() As Integer
         Dim ds As DataSet
-        If (Funciones.HayInternet) Then
-            ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('STOCK') as id_Stock")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('STOCK')  as id_Stock")
-        End If
+
+        ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('STOCK')  as id_Stock")
 
         If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id_Stock")) > 0 Then
             Return ds.Tables(0).Rows(0).Item("id_Stock").ToString
@@ -44,11 +37,7 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim entStock As New Entidades.Stock
 
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_Detalle @id_Stock=" & id_Stock)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Detalle @id_Stock=" & id_Stock)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Detalle @id_Stock=" & id_Stock)
 
         If dsStock.Tables(0).Rows.Count <> 0 Then
             entStock = ObtenerEntidadStock(dsStock.Tables(0).Rows(0))
@@ -62,11 +51,7 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim entStock As List(Of Stock) = New List(Of Stock)
 
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_ListadoSucursalProveedor @id_Sucursal=" & idSucursal & ", @id_Proveedor=" & idProveedor)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_ListadoSucursalProveedor @id_Sucursal=" & idSucursal & ", @id_Proveedor=" & idProveedor)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_ListadoSucursalProveedor @id_Sucursal=" & idSucursal & ", @id_Proveedor=" & idProveedor)
 
         If dsStock.Tables(0).Rows.Count <> 0 Then
             For Each dr As DataRow In dsStock.Tables(0).Rows
@@ -80,19 +65,11 @@ Public Class NegStock
         'Declaro variables
         Dim respuesta As String
         Dim cmd As SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         cmd = New SqlCommand
         cmd.Connection = clsDatos.ConectarLocal()
         respuesta = CalculaVentaMensual(idSucursal, fechaDesde, fechaHasta, cmd)
         clsDatos.DesconectarLocal()
-
-        If HayInternet Then
-            cmd = New SqlCommand
-            cmd.Connection = clsDatos.ConectarRemoto()
-            respuesta = CalculaVentaMensual(idSucursal, fechaDesde, fechaHasta, cmd)
-            clsDatos.DesconectarRemoto()
-        End If
 
         Return respuesta
     End Function
@@ -118,20 +95,12 @@ Public Class NegStock
     Sub ActualizarUltimoCalculoVentaMensual(idSucursal As Integer)
         'Declaro variables
         Dim cmd As SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim fecha As Date = Date.Now
 
         cmd = New SqlCommand
         cmd.Connection = clsDatos.ConectarLocal()
         ActualizarUltimoCalculoVentaMensual(idSucursal, fecha, cmd)
         clsDatos.DesconectarLocal()
-
-        If HayInternet Then
-            cmd = New SqlCommand
-            cmd.Connection = clsDatos.ConectarRemoto()
-            ActualizarUltimoCalculoVentaMensual(idSucursal, fecha, cmd)
-            clsDatos.DesconectarRemoto()
-        End If
 
     End Sub
 
@@ -152,19 +121,11 @@ Public Class NegStock
         'Declaro variables
         Dim fecha As Date?
         Dim cmd As SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            fecha = ObtenerUltimoCalculoVentaMensual(idSucursal, cmd)
-            clsDatos.DesconectarRemoto()
-        Else
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarLocal()
-            fecha = ObtenerUltimoCalculoVentaMensual(idSucursal, cmd)
-            clsDatos.DesconectarLocal()
-        End If
+        cmd = New SqlCommand()
+        cmd.Connection = clsDatos.ConectarLocal()
+        fecha = ObtenerUltimoCalculoVentaMensual(idSucursal, cmd)
+        clsDatos.DesconectarLocal()
 
         Return fecha
     End Function
@@ -215,11 +176,7 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim entStock As New Entidades.Stock
 
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_Producto_Detalle @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Producto_Detalle @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Producto_Detalle @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
 
         If dsStock.Tables(0).Rows.Count <> 0 Then
             entStock.id_Stock = dsStock.Tables(0).Rows(0).Item("id_Stock").ToString
@@ -240,7 +197,6 @@ Public Class NegStock
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         estock.id_Stock = clsDatos.ObtenerCalveUnica(estock.id_Sucursal)
         estock.FechaEdicion = DateTime.Now()
@@ -249,13 +205,6 @@ Public Class NegStock
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaStock(estock, cmd)
             clsDatos.DesconectarLocal()
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaStock(estock, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -298,7 +247,6 @@ Public Class NegStock
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         estock.FechaEdicion = DateTime.Now()
 
@@ -306,14 +254,6 @@ Public Class NegStock
             cmd.Connection = clsDatos.ConectarLocal()
             msg = ModificarStock(estock, cmd)
             clsDatos.DesconectarLocal()
-
-            'Conecto la bdd.
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = ModificarStock(estock, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -352,7 +292,6 @@ Public Class NegStock
     'Funcion para eliminar un stock.
     Function EliminarStock(ByVal id_Stock As Int64) As String
         Dim cmd As New SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim msg As String = ""
         Dim fechaEdicion As DateTime = DateTime.Now()
 
@@ -360,14 +299,6 @@ Public Class NegStock
             cmd.Connection = clsDatos.ConectarLocal()
             msg = EliminarStock(id_Stock, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
-
-            'Conecto la bdd.
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EliminarStock(id_Stock, fechaEdicion, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             Return msg
         Catch ex As Exception
@@ -396,11 +327,7 @@ Public Class NegStock
     'Funcion que comprueba el stock para una cantidad y producto determinado.
     Function ComprobarStock(ByVal id_Producto As Integer, ByVal Cantidad As Integer, ByVal id_Sucursal As Integer) As Boolean
         Dim dsStock As New DataSet
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_Disponibilidad @id_Producto=" & id_Producto & ", @Cantidad=" & Cantidad & ", @id_Sucursal=" & id_Sucursal)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Disponibilidad @id_Producto=" & id_Producto & ", @Cantidad=" & Cantidad & ", @id_Sucursal=" & id_Sucursal)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_Disponibilidad @id_Producto=" & id_Producto & ", @Cantidad=" & Cantidad & ", @id_Sucursal=" & id_Sucursal)
 
         If dsStock.Tables(0).Rows(0).Item(0).ToString > 0 Then
             Return True
@@ -415,7 +342,6 @@ Public Class NegStock
         Dim dsStock As New DataSet
         Dim cmd As New SqlCommand
         Dim msg As Boolean = False
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             eStock = TraerStockProducto(id_Producto, id_Sucursal)
@@ -426,12 +352,6 @@ Public Class NegStock
                 DisminuirStock(id_Producto, Cantidad, id_Sucursal, cmd)
                 clsDatos.DesconectarLocal()
 
-                If HayInternet Then
-                    cmd = New SqlCommand()
-                    cmd.Connection = clsDatos.ConectarRemoto()
-                    DisminuirStock(id_Producto, Cantidad, id_Sucursal, cmd)
-                    clsDatos.DesconectarRemoto()
-                End If
             Else
                 eStock.Habilitado = 1
                 eStock.id_Producto = id_Producto
@@ -472,7 +392,6 @@ Public Class NegStock
         Dim eStock As Entidades.Stock
         Dim Estado As Boolean = False
         eStock = TraerStockProducto(id_Producto, id_Sucursal)
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Si no exite el producto en la sucursal
         If eStock.id_Stock <> 0 Then
@@ -488,14 +407,6 @@ Public Class NegStock
                 cmd.Connection = clsDatos.ConectarLocal()
                 AgregarStock(eStock, cmd, NuevoStock)
                 clsDatos.DesconectarLocal()
-
-                'Conecto la bdd.
-                If HayInternet Then
-                    cmd = New SqlCommand()
-                    cmd.Connection = clsDatos.ConectarRemoto()
-                    AgregarStock(eStock, cmd, NuevoStock)
-                    clsDatos.DesconectarRemoto()
-                End If
 
                 'muestro el mensaje
                 Estado = True
@@ -545,11 +456,7 @@ Public Class NegStock
     'Funcion que comprueba si el producto posee mas stock que el minimo permitido.
     Function ComprobarStockMinimo(ByVal id_Producto As Integer, ByVal id_Sucursal As Integer) As Boolean
         Dim dsStock As New DataSet
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Stock_DisponibilidadMinima @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_DisponibilidadMinima @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Stock_DisponibilidadMinima @id_Producto=" & id_Producto & ", @id_Sucursal=" & id_Sucursal)
 
         If dsStock.Tables(0).Rows(0).Item("Stock_Actual") >= dsStock.Tables(0).Rows(0).Item("Stock_Minimo") Then
             Return True
@@ -620,7 +527,7 @@ Public Class NegStock
         Dim dsSubCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
 
-        cmd.Connection = clsDatos.ConectarRemoto()
+        cmd.Connection = clsDatos.ConectarLocal()
         cmd.CommandType = CommandType.StoredProcedure
 
         RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
@@ -691,7 +598,7 @@ Public Class NegStock
         Dim stock As List(Of String) = New List(Of String)
         Dim bitacoras As List(Of String) = New List(Of String)
 
-        cmd.Connection = clsDatos.ConectarRemoto()
+        cmd.Connection = clsDatos.ConectarLocal()
         cmd.CommandType = CommandType.StoredProcedure
 
         RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
@@ -702,7 +609,7 @@ Public Class NegStock
         adapter = New SqlDataAdapter(cmd)
         adapter.Fill(dsStockActual)
 
-        clsDatos.DesconectarRemoto()
+        clsDatos.DesconectarLocal()
 
         RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
         dtStockNuevo = GetDataFormExcel(fileName, "Productos").Tables(0)
@@ -716,7 +623,7 @@ Public Class NegStock
         Dim fecha As String = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss")
         Dim motivo As String = "Actualizado desde archive excel"
 
-        'busco las altas, modificaciones y bajas de stock
+        ''busco las altas, modificaciones y bajas de stock
         For Each dato In dtStockNuevo.Rows
 
             'si no se cargo ningun valor en StockMinimo StockActual StockOptimo VentaMensual no importo el registro
@@ -767,9 +674,6 @@ Public Class NegStock
         If (stock.Count > 0) Then
 
             Dim conexionLocal As SqlConnection = clsDatos.ConectarLocal()
-            Dim conexionRemota As SqlConnection = clsDatos.ConectarRemoto()
-
-            Dim transaccionRemota As SqlTransaction = conexionRemota.BeginTransaction()
             Dim transaccionLocal As SqlTransaction = conexionLocal.BeginTransaction()
 
             Try
@@ -779,54 +683,54 @@ Public Class NegStock
                     Dim sql As String = stock.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
                     Dim sqlbitacoras As String = bitacoras.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
 
-                    Dim cmdRemoto As SqlCommand = New SqlCommand(sql, conexionRemota)
-                    Dim cmdBitacoraRemoto As SqlCommand = New SqlCommand(sqlbitacoras, conexionRemota)
-                    cmdRemoto.Transaction = transaccionRemota
+                    Dim cmdRemoto As SqlCommand = New SqlCommand(sql, conexionLocal)
+                    Dim cmdBitacoraRemoto As SqlCommand = New SqlCommand(sqlbitacoras, conexionLocal)
+                    cmdRemoto.Transaction = transaccionLocal
                     cmdRemoto.ExecuteNonQuery()
-                    cmdBitacoraRemoto.Transaction = transaccionRemota
+                    cmdBitacoraRemoto.Transaction = transaccionLocal
                     cmdBitacoraRemoto.ExecuteNonQuery()
                 Next
 
-                Dim cmdEliminoDatosLocal As SqlCommand = New SqlCommand($"delete from STOCK where id_Sucursal = {idSucursal}", conexionLocal, transaccionLocal)
-                cmdEliminoDatosLocal.ExecuteNonQuery()
+                'Dim cmdEliminoDatosLocal As SqlCommand = New SqlCommand($"delete from STOCK where id_Sucursal = {idSucursal}", conexionLocal, transaccionLocal)
+                'cmdEliminoDatosLocal.ExecuteNonQuery()
 
-                Dim cmdEliminoDatosBitacoraLocal As SqlCommand = New SqlCommand($"delete from STOCK_BITACORA where id_Sucursal = {idSucursal}", conexionLocal, transaccionLocal)
-                cmdEliminoDatosBitacoraLocal.ExecuteNonQuery()
+                'Dim cmdEliminoDatosBitacoraLocal As SqlCommand = New SqlCommand($"delete from STOCK_BITACORA where id_Sucursal = {idSucursal}", conexionLocal, transaccionLocal)
+                'cmdEliminoDatosBitacoraLocal.ExecuteNonQuery()
 
-                Dim cmdDatosRemotos As SqlCommand = New SqlCommand($"select * from STOCK where id_Sucursal = {idSucursal}", conexionRemota, transaccionRemota)
-                adapter = New SqlDataAdapter(cmdDatosRemotos)
-                adapter.Fill(dsStockRemoto)
+                'Dim cmdDatosRemotos As SqlCommand = New SqlCommand($"select * from STOCK where id_Sucursal = {idSucursal}", conexionRemota, transaccionRemota)
+                'adapter = New SqlDataAdapter(cmdDatosRemotos)
+                'adapter.Fill(dsStockRemoto)
 
-                Dim cmdDatosRemotosBitacora As SqlCommand = New SqlCommand($"select * from STOCK_BITACORA where id_Sucursal = {idSucursal}", conexionRemota, transaccionRemota)
-                adapter = New SqlDataAdapter(cmdDatosRemotosBitacora)
-                adapter.Fill(dsStockRemotoBitacora)
+                'Dim cmdDatosRemotosBitacora As SqlCommand = New SqlCommand($"select * from STOCK_BITACORA where id_Sucursal = {idSucursal}", conexionRemota, transaccionRemota)
+                'adapter = New SqlDataAdapter(cmdDatosRemotosBitacora)
+                'adapter.Fill(dsStockRemotoBitacora)
 
                 'copio el stock a la base local
-                Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
-                For Each column As DataColumn In dsStockRemoto.Tables(0).Columns
-                    BulkCopy.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
-                Next
-                BulkCopy.DestinationTableName = "STOCK"
-                BulkCopy.WriteToServer(dsStockRemoto.Tables(0))
-                BulkCopy.Close()
+                'Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
+                'For Each column As DataColumn In dsStockRemoto.Tables(0).Columns
+                '    BulkCopy.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
+                'Next
+                'BulkCopy.DestinationTableName = "STOCK"
+                'BulkCopy.WriteToServer(dsStockRemoto.Tables(0))
+                'BulkCopy.Close()
 
                 'copio la bitacora a la base local
-                Dim BulkCopyBitacora As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
-                For Each column As DataColumn In dsStockRemotoBitacora.Tables(0).Columns
-                    BulkCopyBitacora.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
-                Next
-                BulkCopyBitacora.DestinationTableName = "STOCK_BITACORA"
-                BulkCopyBitacora.WriteToServer(dsStockRemotoBitacora.Tables(0))
-                BulkCopyBitacora.Close()
+                'Dim BulkCopyBitacora As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
+                'For Each column As DataColumn In dsStockRemotoBitacora.Tables(0).Columns
+                '    BulkCopyBitacora.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
+                'Next
+                'BulkCopyBitacora.DestinationTableName = "STOCK_BITACORA"
+                'BulkCopyBitacora.WriteToServer(dsStockRemotoBitacora.Tables(0))
+                'BulkCopyBitacora.Close()
 
-                transaccionRemota.Commit()
+                'transaccionRemota.Commit()
                 transaccionLocal.Commit()
-                clsDatos.DesconectarRemoto()
+                'clsDatos.DesconectarRemoto()
                 clsDatos.DesconectarLocal()
             Catch ex As Exception
-                transaccionRemota.Rollback()
+                'transaccionRemota.Rollback()
                 transaccionLocal.Rollback()
-                clsDatos.DesconectarRemoto()
+                'clsDatos.DesconectarRemoto()
                 clsDatos.DesconectarLocal()
                 Throw
             End Try

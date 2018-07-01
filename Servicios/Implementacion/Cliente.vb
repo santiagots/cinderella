@@ -10,8 +10,6 @@ Public Class Cliente
         Dim clientesNegocio As NegClienteMayorista = New NegClienteMayorista()
         Dim direccionNegocio As NegDireccion = New NegDireccion()
 
-        Negocio.Funciones.HayConexionInternet()
-
         Dim Respuesta As List(Of EntidadClientes) = New List(Of EntidadClientes)()
 
         For Each cli As Entidades.ClienteMayorista In clientesNegocio.TraerCliente(RazonSocial)

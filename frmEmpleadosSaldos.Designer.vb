@@ -786,7 +786,7 @@ Partial Class frmEmpleadosSaldos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(554, 732)
+        Me.ClientSize = New System.Drawing.Size(554, 733)
         Me.Controls.Add(Me.GbSueldoLiquidar)
         Me.Controls.Add(Me.GbSueldoAbonado)
         Me.Controls.Add(Me.GbSueldoTrabajado)

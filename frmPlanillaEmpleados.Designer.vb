@@ -69,7 +69,7 @@ Partial Class frmPlanillaEmpleados
         Me.Btn_Excel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Excel.Image = Global.SistemaCinderella.My.Resources.Recursos.Btn_Excel
         Me.Btn_Excel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Excel.Location = New System.Drawing.Point(707, 4)
+        Me.Btn_Excel.Location = New System.Drawing.Point(705, 4)
         Me.Btn_Excel.Name = "Btn_Excel"
         Me.Btn_Excel.Size = New System.Drawing.Size(44, 40)
         Me.Btn_Excel.TabIndex = 15
@@ -84,9 +84,9 @@ Partial Class frmPlanillaEmpleados
         Me.btn_Filtrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Filtrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Filtrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Filtrar.Location = New System.Drawing.Point(757, 4)
+        Me.btn_Filtrar.Location = New System.Drawing.Point(755, 4)
         Me.btn_Filtrar.Name = "btn_Filtrar"
-        Me.btn_Filtrar.Size = New System.Drawing.Size(52, 40)
+        Me.btn_Filtrar.Size = New System.Drawing.Size(54, 40)
         Me.btn_Filtrar.TabIndex = 12
         Me.btn_Filtrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolTip1.SetToolTip(Me.btn_Filtrar, "Refinar la planilla. Se tomarán en cuenta, las diferentes opciones seleccionadas." &
@@ -144,7 +144,7 @@ Partial Class frmPlanillaEmpleados
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.btn_Filtrar, 9, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Btn_Excel, 8, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 0)
@@ -181,7 +181,7 @@ Partial Class frmPlanillaEmpleados
         Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursal.FormattingEnabled = True
         Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursal.Location = New System.Drawing.Point(574, 13)
+        Me.Cb_Sucursal.Location = New System.Drawing.Point(572, 14)
         Me.Cb_Sucursal.Name = "Cb_Sucursal"
         Me.Cb_Sucursal.Size = New System.Drawing.Size(127, 23)
         Me.Cb_Sucursal.TabIndex = 13
@@ -191,7 +191,7 @@ Partial Class frmPlanillaEmpleados
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(494, 17)
+        Me.Label4.Location = New System.Drawing.Point(492, 17)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(74, 15)
         Me.Label4.TabIndex = 14
@@ -203,9 +203,9 @@ Partial Class frmPlanillaEmpleados
         Me.Cb_Anios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Anios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Anios.FormattingEnabled = True
-        Me.Cb_Anios.Location = New System.Drawing.Point(53, 13)
+        Me.Cb_Anios.Location = New System.Drawing.Point(53, 14)
         Me.Cb_Anios.Name = "Cb_Anios"
-        Me.Cb_Anios.Size = New System.Drawing.Size(83, 23)
+        Me.Cb_Anios.Size = New System.Drawing.Size(82, 23)
         Me.Cb_Anios.TabIndex = 6
         '
         'Label1
@@ -213,7 +213,7 @@ Partial Class frmPlanillaEmpleados
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(142, 17)
+        Me.Label1.Location = New System.Drawing.Point(141, 17)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(44, 15)
         Me.Label1.TabIndex = 9
@@ -225,9 +225,9 @@ Partial Class frmPlanillaEmpleados
         Me.Cb_Meses.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Meses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Meses.FormattingEnabled = True
-        Me.Cb_Meses.Location = New System.Drawing.Point(192, 13)
+        Me.Cb_Meses.Location = New System.Drawing.Point(191, 14)
         Me.Cb_Meses.Name = "Cb_Meses"
-        Me.Cb_Meses.Size = New System.Drawing.Size(83, 23)
+        Me.Cb_Meses.Size = New System.Drawing.Size(82, 23)
         Me.Cb_Meses.TabIndex = 5
         '
         'Cb_Periodo
@@ -237,7 +237,7 @@ Partial Class frmPlanillaEmpleados
         Me.Cb_Periodo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Periodo.FormattingEnabled = True
         Me.Cb_Periodo.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Periodo.Location = New System.Drawing.Point(361, 13)
+        Me.Cb_Periodo.Location = New System.Drawing.Point(359, 14)
         Me.Cb_Periodo.Name = "Cb_Periodo"
         Me.Cb_Periodo.Size = New System.Drawing.Size(127, 23)
         Me.Cb_Periodo.TabIndex = 8
@@ -247,7 +247,7 @@ Partial Class frmPlanillaEmpleados
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(281, 17)
+        Me.Label3.Location = New System.Drawing.Point(279, 17)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(74, 15)
         Me.Label3.TabIndex = 11

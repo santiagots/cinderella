@@ -179,7 +179,7 @@ Public Class frmMovimientoSocios
                             MessageBox.Show("El cheque se cargó correctamente.", "Movimientos | Socios", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         End If
                     End If
-                        
+
                     Mensaje = NegMovimiento.AltaMovAporte(eMovimientoSocios)
 
                 Else

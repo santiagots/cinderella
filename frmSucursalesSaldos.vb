@@ -4,9 +4,11 @@
     Dim FDesde As String
     Dim FHasta As String
     Dim NegMov As New Negocio.NegMovimientos
+    Dim NegDev As New Negocio.NegDevolucion
     Dim NegAdel As New Negocio.NegAdelantos
     Dim NegAdic As New Negocio.NegAdicionales
     Dim NegVen As New Negocio.NegVentas
+    Dim NegCaj As New Negocio.NegCajaInicial
     Dim NegEmp As New Negocio.NegEmpleados
     Dim Funciones As New Funciones
 
@@ -49,18 +51,23 @@
             Dim VentasFacturado As Double = 0
             Dim Sobrante As Double = 0
             Dim EfectivoIngreso As Double = 0
+            Dim EgresoCajaFuerte As Double = 0
             Dim Mercaderias As Double = 0
+            Dim CajaInicial As Double = 0
 
-            Dim DevolucionEgreso As Double = 0
+            Dim Devolucion As Double = 0
             Dim Adelantos As Double = 0
             Dim Sueldo As Double = 0
             Dim Impuesto As Double = 0
+            Dim ImpuestoEgresos As Double = 0
             Dim Faltante As Double = 0
             Dim Gasto As Double = 0
+            Dim GastosEgresos As Double = 0
             Dim Retiro As Double = 0
             Dim Aporte As Double = 0
             Dim EfectivoEgreso As Double = 0
             Dim PendienteAutorizar As Double = 0
+            Dim IngresoCajaFuerte As Double = 0
             Dim Saldo As Double = 0
 
             '--------OBTENGO LOS DATOS-------'
@@ -79,26 +86,29 @@
             VentasFacturado = NegVen.ObtenerVentasSucursalFacturado(id_Sucursal, FDesde, FHasta)
             Sobrante = NegMov.ObtenerTotalMovCaja(id_Sucursal, FDesde, FHasta, "Sobrante")
             EfectivoIngreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Ingresos")
-            Aporte = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 6)
+            Aporte = NegMov.TotalMovAporte(id_Sucursal, FDesde, FHasta)
+            EgresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, FDesde, FHasta, 2)
+
             Ingresos = Ventas + Sobrante + EfectivoIngreso + Aporte
 
             '----------EGRESOS---------------'
-            DevolucionEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Devolucion")
+            Devolucion = NegDev.TotalDevolucionesEfectivo(id_Sucursal, FDesde, FHasta)
             Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, FDesde, FHasta)
             Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, FDesde, FHasta)
-            Impuesto = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 3)
-            Gasto = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 1)
-            Retiro = NegMov.ConsultarTotalMovimiento(id_Sucursal, FDesde, FHasta, 5)
+            Impuesto = NegMov.TotalMovImpuesto(id_Sucursal, FDesde, FHasta)
+            ImpuestoEgresos = NegMov.TotalMovEgresosImpuesto(id_Sucursal, FDesde, FHasta)
+            Gasto = NegMov.TotalMovGastos(id_Sucursal, FDesde, FHasta)
+            GastosEgresos = NegMov.TotalMovEgresosGastos(id_Sucursal, FDesde, FHasta)
+            Retiro = NegMov.TotalMovRetiro(id_Sucursal, FDesde, FHasta)
             Faltante = NegMov.ObtenerTotalMovCaja(id_Sucursal, FDesde, FHasta, "Faltante")
             EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "Egresos")
             PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, FDesde, FHasta, "EgresosPendientes")
             Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, FDesde, FHasta)
 
-            Egresos = Adelantos + DevolucionEgreso + Sueldo + Impuesto + Faltante + Gasto + Retiro + EfectivoEgreso + Mercaderias
+            Egresos = Adelantos + Devolucion + Sueldo + Impuesto + ImpuestoEgresos + Faltante + Gasto + GastosEgresos + Retiro + EfectivoEgreso + Mercaderias
 
             '------------SALDO---------------'
-            Saldo = NegMov.ConsultaSaldo(id_Sucursal, FHasta)
-
+            Saldo = NegCaj.ObtenerSaldo(id_Sucursal, FHasta)
 
             '------------DISPONIBLE TOTAL---------------'
             Dim CajaFuerteTotal As Double = 0
@@ -119,11 +129,11 @@
             txt_VentasFacturado.Text = "$ " & Format(CType((VentasFacturado), Decimal), "###0.00") & ".-"
             txt_Sobrante.Text = "$ " & Format(CType((Sobrante), Decimal), "###0.00") & ".-"
             txt_Efectivo.Text = "$ " & Format(CType((EfectivoIngreso), Decimal), "###0.00") & ".-"
-            txt_DevolucionesEgr.Text = "$ " & Format(CType((DevolucionEgreso), Decimal), "###0.00") & ".-"
+            txt_DevolucionesEgr.Text = "$ " & Format(CType((Devolucion), Decimal), "###0.00") & ".-"
             txt_Sueldo.Text = "$ " & Format(CType((Sueldo + Adelantos), Decimal), "###0.00") & ".-"
             txt_Impuesto.Text = "$ " & Format(CType((Impuesto), Decimal), "###0.00") & ".-"
             txt_Faltante.Text = "$ " & Format(CType((Faltante), Decimal), "###0.00") & ".-"
-            txt_Gasto.Text = "$ " & Format(CType((Gasto), Decimal), "###0.00") & ".-"
+            txt_Gasto.Text = "$ " & Format(CType((Gasto + GastosEgresos), Decimal), "###0.00") & ".-"
             txt_Retiro.Text = "$ " & Format(CType((Retiro), Decimal), "###0.00") & ".-"
             txt_EfectivoEgreso.Text = "$ " & Format(CType((EfectivoEgreso), Decimal), "###0.00") & ".-"
             txt_PendienteAutorizar.Text = "$ " & Format(CType((PendienteAutorizar), Decimal), "###0.00") & ".-"

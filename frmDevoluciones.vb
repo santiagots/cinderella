@@ -586,16 +586,7 @@ Public Class frmDevoluciones
             End If
             'Es MINORISTA
         Else
-            'Es EFECTIVO
-            If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
-                Label33.Enabled = True
-                txt_PorcentajeBonificacion.Enabled = True
-                txt_PorcentajeBonificacion.Value = My.Settings.DescuentoMinorista
-            Else
-                Label33.Enabled = False
-                txt_PorcentajeBonificacion.Enabled = False
-                txt_PorcentajeBonificacion.Value = 0
-            End If
+            txt_PorcentajeBonificacion.Value = 0
         End If
 
         If (DG_Productos.Rows.Count > 0) Then
@@ -985,9 +976,9 @@ Public Class frmDevoluciones
         Dim dsListaPrecio As DataSet
 
         If tipoCliente = TipoCliente.Mayorista Then
-            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupoCache(3, My.Settings.UsarMemoriaCache)
+            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupo(3)
         Else
-            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
+            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
 
             Dim dv As DataView = dsListaPrecio.Tables(0).DefaultView
             dv.RowFilter = "ListaPrecio like 'Efectivo%'"

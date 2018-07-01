@@ -9,7 +9,6 @@ Public Class NegRecibos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         eRecibo.id_Recibo = clsDatos.ObtenerCalveUnica(eRecibo.id_Sucursal)
         eRecibo.Fecha_Edicion = DateTime.Now()
@@ -18,14 +17,6 @@ Public Class NegRecibos
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaReciboSueldo(eRecibo, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaReciboSueldo(eRecibo, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
-
             'muestro el mensaje
             Return msg
         Catch ex As Exception
@@ -58,11 +49,7 @@ Public Class NegRecibos
     Function ObtenerRecibos(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Anio As Integer)
         Dim dsRecibos As New DataSet
 
-        If Funciones.HayInternet Then
-            dsRecibos = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio)
-        Else
-            dsRecibos = clsDatos.ConsultarBaseLocal("execute sp_Recibos_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio)
-        End If
+        dsRecibos = clsDatos.ConsultarBaseLocal("execute sp_Recibos_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio)
 
         If dsRecibos.Tables(0).Rows.Count > 0 Then
             Return dsRecibos
@@ -75,11 +62,7 @@ Public Class NegRecibos
     Function ObtenerRecibo(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Mes As String, ByVal Anio As Integer)
         Dim dsRecibo As New DataSet
 
-        If Funciones.HayInternet Then
-            dsRecibo = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ObtenerRecibo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
-        Else
-            dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerRecibo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
-        End If
+        dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerRecibo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
 
         If dsRecibo.Tables(0).Rows.Count > 0 Then
             If dsRecibo.Tables(0).Rows(0).Item("Monto").ToString <> "" Then
@@ -96,11 +79,7 @@ Public Class NegRecibos
     Function ObtenerVacacionesMes(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Mes As String, ByVal Anio As Integer)
         Dim dsVacaciones As New DataSet
 
-        If Funciones.HayInternet Then
-            dsVacaciones = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ObtenerVacacionesMes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
-        Else
-            dsVacaciones = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerVacacionesMes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
-        End If
+        dsVacaciones = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerVacacionesMes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
 
         If dsVacaciones.Tables(0).Rows.Count > 0 Then
             If dsVacaciones.Tables(0).Rows(0).Item("Vacaciones").ToString <> "" Then
@@ -117,11 +96,7 @@ Public Class NegRecibos
     Function ObtenerAguinaldoMes(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Mes As String, ByVal Anio As Integer)
         Dim dsAguinaldo As New DataSet
 
-        If Funciones.HayInternet Then
-            dsAguinaldo = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ObtenerAguinaldoMes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
-        Else
-            dsAguinaldo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerAguinaldoMes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
-        End If
+        dsAguinaldo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerAguinaldoMes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @Mes='" & Mes & "', @Anio='" & Anio & "'")
 
         If dsAguinaldo.Tables(0).Rows.Count > 0 Then
             If dsAguinaldo.Tables(0).Rows(0).Item("Aguinaldo").ToString <> "" Then
@@ -139,11 +114,7 @@ Public Class NegRecibos
         Dim ReciboSueldo As Double = 0
         Dim dsRecibo As New DataSet
 
-        If Funciones.HayInternet Then
-            dsRecibo = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ObtenerVacaciones @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
-        Else
-            dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerVacaciones @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
-        End If
+        dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerVacaciones @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
 
         If dsRecibo.Tables(0).Rows.Count > 0 Then
             If dsRecibo.Tables(0).Rows(0).Item("Total").ToString <> "" Then
@@ -161,11 +132,7 @@ Public Class NegRecibos
         Dim ReciboSueldo As Double = 0
         Dim dsRecibo As New DataSet
 
-        If Funciones.HayInternet Then
-            dsRecibo = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ObtenerRecibos @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
-        Else
-            dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerRecibos @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
-        End If
+        dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerRecibos @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
 
         If dsRecibo.Tables(0).Rows.Count > 0 Then
             If dsRecibo.Tables(0).Rows(0).Item("Total").ToString <> "" Then
@@ -183,11 +150,7 @@ Public Class NegRecibos
         Dim ReciboSueldo As Double = 0
         Dim dsRecibo As New DataSet
 
-        If Funciones.HayInternet Then
-            dsRecibo = clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ObtenerAguinaldo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
-        Else
-            dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerAguinaldo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
-        End If
+        dsRecibo = clsDatos.ConsultarBaseLocal("execute sp_Recibos_ObtenerAguinaldo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FechaDesde & "', @FHasta='" & FechaHasta & "'")
 
         If dsRecibo.Tables(0).Rows.Count > 0 Then
             If dsRecibo.Tables(0).Rows(0).Item("Total").ToString <> "" Then
@@ -202,19 +165,11 @@ Public Class NegRecibos
 
     'Funcion que lista las comisiones de un empleado.
     Function ListarVacacionesEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ListadoVacaciones @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Recibos_ListadoVacaciones @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Recibos_ListadoVacaciones @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion que lista las comisiones de un empleado.
     Function ListarAguinaldoEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Recibos_ListadoAguinaldo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Recibos_ListadoAguinaldo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Recibos_ListadoAguinaldo @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 End Class

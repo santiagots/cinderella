@@ -762,7 +762,7 @@ Public Class MDIContenedor
                 .idProveedor = proveedor.id_Proveedor,
                 .idSucursal = My.Settings.Sucursal,
                 .Tipo = OrdenCompraPedidoTipo.Automatico,
-                .idEncargado = If(dsEncargado.Tables.Count = 0, -1, dsEncargado.Tables(0).Rows(0).Item("id_Empleado"))
+                .idEncargado = If(dsEncargado.Tables(0).Rows.Count = 0, -1, dsEncargado.Tables(0).Rows(0).Item("id_Empleado"))
                 }
 
                 'Si el proveedor recibe notas de pedido este dia
@@ -1098,8 +1098,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AdmDeStockToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdmDeStockToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
 
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmStock).MdiParent = Me
@@ -1109,9 +1107,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AltaMasivaToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AltaMasivaToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmStockMasiva).MdiParent = Me
         Funciones.ControlInstancia(frmStockMasiva).Show()
@@ -1158,9 +1153,6 @@ Public Class MDIContenedor
 
     Private Sub AdelantoEfectivoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdelantoEfectivoToolStripMenuItem.Click
         If AdelantoEfectivoToolStripMenuItem.Enabled Then
-            'Compruevo el acceso a internet para actualizar el MIDContenedor
-            Negocio.Funciones.HayConexionInternet()
-
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmAdelantoEfectivo).MdiParent = Me
             Funciones.ControlInstancia(frmAdelantoEfectivo).Show()
@@ -1192,9 +1184,6 @@ Public Class MDIContenedor
 
     Private Sub VentasToolStripMenuItem1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VentasToolStripMenuItem1.Click
         If VentasToolStripMenuItem1.Enabled Then
-            'Compruevo el acceso a internet para actualizar el MIDContenedor
-            Negocio.Funciones.HayConexionInternet()
-
             'para administrar ventas no es necesario esta online
             Me.Cursor = Cursors.WaitCursor
             Dim frmVentas As frmVentas = New frmVentas()
@@ -1205,9 +1194,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AdministraciónToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdministraciónToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         'para administrar ventas no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmVentasAdministracion).MdiParent = Me
@@ -1328,14 +1314,10 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub ReciboDeSueldoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReciboDeSueldoToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmReciboSueldo).MdiParent = Me
         Funciones.ControlInstancia(frmReciboSueldo).Show()
         Me.Cursor = Cursors.Arrow
-
     End Sub
 
     Private Sub MDIContenedor_MaximumSizeChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MaximumSizeChanged
@@ -1347,14 +1329,10 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AccesoGastos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoGastos.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmMovimientoGasto).MdiParent = Me
         Funciones.ControlInstancia(frmMovimientoGasto).Show()
         Me.Cursor = Cursors.Arrow
-
     End Sub
 
     Private Sub AccesoEgresos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoEgresos.Click
@@ -1371,13 +1349,10 @@ Public Class MDIContenedor
 
     Private Sub AccesoImpuestos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoImpuestos.Click
         'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmMovimientoImpuesto).MdiParent = Me
         Funciones.ControlInstancia(frmMovimientoImpuesto).Show()
         Me.Cursor = Cursors.Arrow
-
     End Sub
 
     Private Sub AccesoDiferencia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoDiferencia.Click
@@ -1392,8 +1367,6 @@ Public Class MDIContenedor
 
     Private Sub AccesoRetiro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoRetiro.Click
         'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmMovimientoSocios).MdiParent = Me
         Funciones.ControlInstancia(frmMovimientoSocios).Show()
@@ -1690,8 +1663,6 @@ Public Class MDIContenedor
 
     Private Sub AccesoCajaFuerte_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoCajaFuerte.Click
         'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmMovimientoCajaFuerte).MdiParent = Me
         Funciones.ControlInstancia(frmMovimientoCajaFuerte).Show()
@@ -1699,9 +1670,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub BitácoraToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BitácoraToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmStockBitacora).MdiParent = Me
         Funciones.ControlInstancia(frmStockBitacora).Show()
@@ -1709,21 +1677,13 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub HistorialDeDifCajaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HistorialDeDifCajaToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmDiferenciasListado).MdiParent = Me
         Funciones.ControlInstancia(frmDiferenciasListado).Show()
         Me.Cursor = Cursors.Arrow
-
     End Sub
 
     Private Sub AdicionalesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdicionalesToolStripMenuItem.Click
-
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmAdicionales).MdiParent = Me
         Funciones.ControlInstancia(frmAdicionales).Show()
@@ -1732,9 +1692,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub DevolucionesMenu_Click(sender As Object, e As EventArgs) Handles DevolucionesMenu.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         'para administrar ventas no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
         Dim frmDevoluciones As frmDevoluciones = New frmDevoluciones()
@@ -1744,9 +1701,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AdministracionDevolucionesMenu_Click(sender As Object, e As EventArgs) Handles AdministracionDevolucionesMenu.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmDevolucionesAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmDevolucionesAdministracion).Show()
@@ -1754,26 +1708,17 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AdministraciónToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles AdministraciónToolStripMenuItem2.Click, Menu_ChequesVencer.Click
-        'para administrar cheques es necesario esta online
-        If (Not Negocio.Funciones.HayConexionInternet) Then
-            dialogoConexion.ShowDialog()
-        Else
-            Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmChequesAdministracion).MdiParent = Me
-            Funciones.ControlInstancia(frmChequesAdministracion).Show()
-            Me.Cursor = Cursors.Arrow
-        End If
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmChequesAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmChequesAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub AltaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltaToolStripMenuItem.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmChequesAlta).MdiParent = Me
         Funciones.ControlInstancia(frmChequesAlta).Show()
         Me.Cursor = Cursors.Arrow
-
     End Sub
 
     Private Sub AdministracionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdministracionToolStripMenuItem.Click
@@ -1867,9 +1812,6 @@ Public Class MDIContenedor
     End Sub
 
     Private Sub AdministracionToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AdministracionToolStripMenuItem1.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmPresupuestoAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmPresupuestoAdministracion).Show()
@@ -1895,18 +1837,14 @@ Public Class MDIContenedor
             negProductos.ListadoProductosCache(False)
 
             Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
-            negListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), False)
+            negListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
         End If
     End Sub
 
     Private Sub NotaPedidoToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles NotaPedidoToolStripMenuItem1.Click
-        'Compruevo el acceso a internet para actualizar el MIDContenedor
-        Negocio.Funciones.HayConexionInternet()
-
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmOrdenCompra).MdiParent = Me
         Funciones.ControlInstancia(frmOrdenCompra).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
-
 End Class

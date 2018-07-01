@@ -10,7 +10,6 @@ Public Class NegNotaCredito
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         EntNotaCredito.id_NotaCredito = ClsDatos.ObtenerCalveUnica(EntNotaCredito.id_Sucursal)
 
@@ -18,13 +17,6 @@ Public Class NegNotaCredito
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = NuevaNotaCredito(EntNotaCredito, cmd)
             ClsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = NuevaNotaCredito(EntNotaCredito, cmd)
-                ClsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -41,11 +33,7 @@ Public Class NegNotaCredito
         'Conecto a la bdd.
 
         Try
-            If (Funciones.HayInternet) Then
-                dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCretido_Listado @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-            Else
-                dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCretido_Listado @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-            End If
+            dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCretido_Listado @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
             For Each motaCredito As DataRow In dsNotaCredito.Tables(0).Rows
                 notaCreditos.Add(ObtenerEntidadNotaCredito(motaCredito))
@@ -90,11 +78,7 @@ Public Class NegNotaCredito
         Dim dsNotaCredito As New DataSet
         Dim entNotaCredito As New Entidades.NotaCredito
 
-        If (Funciones.HayInternet) Then
-            dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCredito_Detalle @id_Devolucion=" & id_Devolucion)
-        Else
-            dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCredito_Detalle @id_Devolucion=" & id_Devolucion)
-        End If
+        dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCredito_Detalle @id_Devolucion=" & id_Devolucion)
 
         If dsNotaCredito.Tables(0).Rows.Count <> 0 Then
             entNotaCredito = ObtenerEntidadNotaCredito(dsNotaCredito.Tables(0).Rows(0))
@@ -106,12 +90,7 @@ Public Class NegNotaCredito
     Function TraerNotaCreditoPorID(id_NotaCredito As Int64) As Entidades.NotaCredito
         Dim dsNotaCredito As New DataSet
         Dim entNotaCredito As New Entidades.NotaCredito
-
-        If (Funciones.HayInternet) Then
-            dsNotaCredito = ClsDatos.ConsultarBaseRemoto("execute sp_NotaCredito_Detalle_Por_Id @id_NotaCredito=" & id_NotaCredito)
-        Else
-            dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCredito_Detalle_Por_Id @id_NotaCredito=" & id_NotaCredito)
-        End If
+        dsNotaCredito = ClsDatos.ConsultarBaseLocal("execute sp_NotaCredito_Detalle_Por_Id @id_NotaCredito=" & id_NotaCredito)
 
         If dsNotaCredito.Tables(0).Rows.Count <> 0 Then
             entNotaCredito = ObtenerEntidadNotaCredito(dsNotaCredito.Tables(0).Rows(0))

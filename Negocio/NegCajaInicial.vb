@@ -8,11 +8,7 @@ Public Class NegCajaInicial
         Dim ds As New DataSet
         Dim entCaja As New Entidades.CajaInicial
 
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        End If
+        ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Obtener @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
 
         'lleno la entidad.
         If ds.Tables(0).Rows.Count > 0 Then
@@ -23,15 +19,25 @@ Public Class NegCajaInicial
     End Function
 
     'Funcion para obtener la caja de un terminado dia.
+    Function ObtenerCajaTotal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
+        Dim ds As New DataSet
+        Dim entCaja As New Entidades.CajaInicial
+
+        ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde'" & FDesde & "', @FHasta'" & FHasta & "'")
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
+        Else
+            Return 0
+        End If
+    End Function
+
+    'Funcion para obtener la caja de un terminado dia.
     Function ObtenerUltimaCaja(ByVal id_Sucursal As Integer) As Entidades.CajaInicial
         Dim ds As New DataSet
         Dim entCaja As New Entidades.CajaInicial
 
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
-        End If
+        ds = clsDatos.ConsultarBaseLocal("execute sp_CajaInicial_Ultima @id_Sucursal=" & id_Sucursal)
 
         'lleno la entidad.
         If ds.Tables(0).Rows.Count > 0 Then
@@ -46,7 +52,6 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Try
             EntCaja.id_Caja = clsDatos.ObtenerCalveUnica(sucursal)
             EntCaja.FechaEdicion = DateTime.Now
@@ -57,19 +62,6 @@ Public Class NegCajaInicial
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido cerrar la caja en la base local.")
-            End If
-
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                resultadoOk = CerrarCaja(EntCaja, cmd)
-                clsDatos.DesconectarRemoto()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido cerrar la caja en la base remota.")
-                End If
-
             End If
 
             'retorno valor
@@ -107,7 +99,6 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
             Dim FechaEdicion As DateTime = DateTime.Now
@@ -118,18 +109,6 @@ Public Class NegCajaInicial
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido abrir la caja en la base local.")
-            End If
-
-            'Conecto a la bdd.
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                resultadoOk = AbrirCaja(id_Sucursal, Fecha, FechaEdicion, cmd)
-                clsDatos.DesconectarRemoto()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido abrir la caja en la base remota.")
-                End If
             End If
 
             'retorno valor
@@ -162,15 +141,9 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
-            'Conecto a la bdd.
-            If HayInternet Then
-                cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
+            cmd.Connection = clsDatos.ConectarLocal()
 
             'Cargo y ejecuto el stored.
             cmd.CommandType = CommandType.StoredProcedure
@@ -191,12 +164,7 @@ Public Class NegCajaInicial
             cmd.Parameters.Add(respuesta)
             cmd.ExecuteNonQuery()
 
-            'Desconecto la bdd.
-            If HayInternet Then
-                clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
-            End If
+            clsDatos.DesconectarLocal()
 
             'retorno valor
             Return CInt(respuesta.Value)
@@ -210,7 +178,6 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         eCaja.id_Movimiento = clsDatos.ObtenerCalveUnica(sucursal)
         eCaja.FechaEdicion = DateTime.Now
@@ -222,17 +189,6 @@ Public Class NegCajaInicial
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido dar de alta el movimiento en la base local.")
-            End If
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                resultadoOk = AltaMovCaja(eCaja, cmd)
-                clsDatos.DesconectarRemoto()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido dar de alta el movimiento en la base remota.")
-                End If
             End If
 
             'muestro el mensaje
@@ -268,7 +224,6 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         eCaja.FechaEdicion = DateTime.Now
 
@@ -279,17 +234,6 @@ Public Class NegCajaInicial
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido actualizar el movimiento en la base local.")
-            End If
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                resultadoOk = ActualizarMovCaja(eCaja, cmd)
-                clsDatos.DesconectarRemoto()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido actualizar el movimiento en la base remota.")
-                End If
             End If
 
             'muestro el mensaje
@@ -325,7 +269,6 @@ Public Class NegCajaInicial
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim resultadoOk As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Dim fecha As DateTime = DateTime.Now
 
@@ -336,17 +279,6 @@ Public Class NegCajaInicial
 
             If Not resultadoOk Then
                 Throw New Exception("No se ha podido dar de baja el movimiento en la base local.")
-            End If
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                resultadoOk = BajaMovCaja(id_Movimiento, fecha, cmd)
-                clsDatos.DesconectarRemoto()
-
-                If Not resultadoOk Then
-                    Throw New Exception("No se ha podido dar de baja el movimiento en la base remota.")
-                End If
             End If
 
             'muestro el mensaje
@@ -392,6 +324,7 @@ Public Class NegCajaInicial
 
     Function ObtenerSaldo(ByVal id_Sucursal As Integer, ByVal Fech As Date) As Decimal
         Dim NegVen As New Negocio.NegVentas
+        Dim NegDev As New Negocio.NegDevolucion
         Dim NegMov As New Negocio.NegMovimientos
         Dim NegEmp As New Negocio.NegEmpleados
         Dim NegMerca As New Negocio.NegMercaderia
@@ -408,7 +341,10 @@ Public Class NegCajaInicial
         VentasEfectivo = NegVen.TotalVentasEfectivo(id_Sucursal, Fecha)
 
         Dim Gastos As Double = 0
-        Gastos = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 1)
+        Gastos = NegMov.TotalMovGastos(id_Sucursal, Fecha, Fecha)
+
+        Dim GastosEgresos As Double = 0
+        GastosEgresos = NegMov.TotalMovEgresosGastos(id_Sucursal, Fecha, Fecha)
 
         Dim EfectivoEgreso As Double = 0
         EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Egresos")
@@ -417,10 +353,13 @@ Public Class NegCajaInicial
         EfectivoIngreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Ingresos")
 
         Dim Impuesto As Double = 0
-        Impuesto = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 3)
+        Impuesto = NegMov.TotalMovImpuesto(id_Sucursal, Fecha, Fecha)
+
+        Dim ImpuestoEgreso As Double = 0
+        ImpuestoEgreso = NegMov.TotalMovEgresosImpuesto(id_Sucursal, Fecha, Fecha)
 
         Dim RetirosCaja As Double = 0
-        RetirosCaja = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 5)
+        RetirosCaja = NegMov.TotalMovRetiro(id_Sucursal, Fecha, Fecha)
 
         Dim Sobrante As Double = 0
         Sobrante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Sobrante")
@@ -429,7 +368,7 @@ Public Class NegCajaInicial
         Faltante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Faltante")
 
         Dim AporteSocios As Double = 0
-        AporteSocios = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 6)
+        AporteSocios = NegMov.TotalMovAporte(id_Sucursal, Fecha, Fecha)
 
         Dim Sueldo As Double = 0
         Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, Fecha, Fecha)
@@ -446,8 +385,11 @@ Public Class NegCajaInicial
         Dim IngresoCajaFuerte As Double = 0
         IngresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 2)
 
-        Dim NegDevolucion As Negocio.NegDevolucion = New Negocio.NegDevolucion()
-        Dim DevolucionesEfectivo As Double = NegDevolucion.TotalDevolucionesEfectivo(id_Sucursal, Fecha)
+        Dim DevolucionesEfectivo As Double = 0
+        DevolucionesEfectivo = NegDev.TotalDevolucionesEfectivo(id_Sucursal, Fecha, Fecha)
+
+        Dim PendienteAutorizar As Double = 0
+        PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "EgresosPendientes")
 
         'Calculo el saldo.
         Dim Ingresos As Double = 0
@@ -455,7 +397,7 @@ Public Class NegCajaInicial
         Dim Saldo As Double = 0
 
         Ingresos = VentasEfectivo + Sobrante + entCaja.Monto + EfectivoIngreso + EgresoCajaFuerte + AporteSocios
-        Egresos = EfectivoEgreso + Gastos + Mercaderias + Impuesto + RetirosCaja + Faltante + Adelantos + Sueldo + IngresoCajaFuerte + DevolucionesEfectivo
+        Egresos = EfectivoEgreso + Gastos + GastosEgresos + Mercaderias + Impuesto + ImpuestoEgreso + RetirosCaja + Faltante + Adelantos + Sueldo + IngresoCajaFuerte + DevolucionesEfectivo + PendienteAutorizar
         Saldo = Ingresos - Egresos
 
         Return Format(CType((Saldo), Decimal), "###0.00")

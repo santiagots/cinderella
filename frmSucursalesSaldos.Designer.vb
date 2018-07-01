@@ -356,10 +356,10 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_DisponibleTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_DisponibleTotal.AutoSize = True
-        Me.lbl_DisponibleTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DisponibleTotal.Location = New System.Drawing.Point(180, 52)
+        Me.lbl_DisponibleTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold)
+        Me.lbl_DisponibleTotal.Location = New System.Drawing.Point(180, 54)
         Me.lbl_DisponibleTotal.Name = "lbl_DisponibleTotal"
-        Me.lbl_DisponibleTotal.Size = New System.Drawing.Size(171, 29)
+        Me.lbl_DisponibleTotal.Size = New System.Drawing.Size(171, 24)
         Me.lbl_DisponibleTotal.TabIndex = 85
         Me.lbl_DisponibleTotal.Text = "$ 3.000.000.-"
         '
@@ -1165,10 +1165,10 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_Saldo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Saldo.AutoSize = True
-        Me.lbl_Saldo.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Saldo.Location = New System.Drawing.Point(180, 52)
+        Me.lbl_Saldo.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold)
+        Me.lbl_Saldo.Location = New System.Drawing.Point(180, 54)
         Me.lbl_Saldo.Name = "lbl_Saldo"
-        Me.lbl_Saldo.Size = New System.Drawing.Size(171, 29)
+        Me.lbl_Saldo.Size = New System.Drawing.Size(171, 24)
         Me.lbl_Saldo.TabIndex = 36
         Me.lbl_Saldo.Text = "$ 3.000.000.-"
         '
@@ -1176,7 +1176,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(3, 172)
+        Me.Label10.Location = New System.Drawing.Point(3, 240)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(69, 15)
         Me.Label10.TabIndex = 75
@@ -1185,7 +1185,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentasFacturado
         '
         Me.txt_VentasFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentasFacturado.Location = New System.Drawing.Point(78, 169)
+        Me.txt_VentasFacturado.Location = New System.Drawing.Point(78, 237)
         Me.txt_VentasFacturado.Name = "txt_VentasFacturado"
         Me.txt_VentasFacturado.ReadOnly = True
         Me.txt_VentasFacturado.Size = New System.Drawing.Size(113, 21)
@@ -1195,7 +1195,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(3, 52)
+        Me.Label9.Location = New System.Drawing.Point(3, 75)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(69, 15)
         Me.Label9.TabIndex = 71
@@ -1204,7 +1204,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentasCheque
         '
         Me.txt_VentasCheque.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentasCheque.Location = New System.Drawing.Point(78, 49)
+        Me.txt_VentasCheque.Location = New System.Drawing.Point(78, 72)
         Me.txt_VentasCheque.Name = "txt_VentasCheque"
         Me.txt_VentasCheque.ReadOnly = True
         Me.txt_VentasCheque.Size = New System.Drawing.Size(113, 21)
@@ -1214,7 +1214,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(3, 132)
+        Me.Label7.Location = New System.Drawing.Point(3, 185)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(69, 15)
         Me.Label7.TabIndex = 69
@@ -1223,7 +1223,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentasDebito
         '
         Me.txt_VentasDebito.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentasDebito.Location = New System.Drawing.Point(78, 129)
+        Me.txt_VentasDebito.Location = New System.Drawing.Point(78, 182)
         Me.txt_VentasDebito.Name = "txt_VentasDebito"
         Me.txt_VentasDebito.ReadOnly = True
         Me.txt_VentasDebito.Size = New System.Drawing.Size(113, 21)
@@ -1233,7 +1233,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(3, 92)
+        Me.Label6.Location = New System.Drawing.Point(3, 130)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(69, 15)
         Me.Label6.TabIndex = 67
@@ -1242,7 +1242,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentasCredito
         '
         Me.txt_VentasCredito.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentasCredito.Location = New System.Drawing.Point(78, 89)
+        Me.txt_VentasCredito.Location = New System.Drawing.Point(78, 127)
         Me.txt_VentasCredito.Name = "txt_VentasCredito"
         Me.txt_VentasCredito.ReadOnly = True
         Me.txt_VentasCredito.Size = New System.Drawing.Size(113, 21)
@@ -1252,7 +1252,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lbl_Efectivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Efectivo.AutoSize = True
-        Me.lbl_Efectivo.Location = New System.Drawing.Point(3, 12)
+        Me.lbl_Efectivo.Location = New System.Drawing.Point(3, 20)
         Me.lbl_Efectivo.Name = "lbl_Efectivo"
         Me.lbl_Efectivo.Size = New System.Drawing.Size(69, 15)
         Me.lbl_Efectivo.TabIndex = 65
@@ -1261,7 +1261,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentasEfectivo
         '
         Me.txt_VentasEfectivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentasEfectivo.Location = New System.Drawing.Point(78, 9)
+        Me.txt_VentasEfectivo.Location = New System.Drawing.Point(78, 17)
         Me.txt_VentasEfectivo.Name = "txt_VentasEfectivo"
         Me.txt_VentasEfectivo.ReadOnly = True
         Me.txt_VentasEfectivo.Size = New System.Drawing.Size(113, 21)
@@ -1271,7 +1271,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lblMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblMayorista.AutoSize = True
-        Me.lblMayorista.Location = New System.Drawing.Point(3, 253)
+        Me.lblMayorista.Location = New System.Drawing.Point(3, 350)
         Me.lblMayorista.Name = "lblMayorista"
         Me.lblMayorista.Size = New System.Drawing.Size(69, 15)
         Me.lblMayorista.TabIndex = 63
@@ -1280,7 +1280,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentaMayorista
         '
         Me.txt_VentaMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentaMayorista.Location = New System.Drawing.Point(78, 250)
+        Me.txt_VentaMayorista.Location = New System.Drawing.Point(78, 347)
         Me.txt_VentaMayorista.Name = "txt_VentaMayorista"
         Me.txt_VentaMayorista.ReadOnly = True
         Me.txt_VentaMayorista.Size = New System.Drawing.Size(113, 21)
@@ -1290,7 +1290,7 @@ Partial Class frmSucursalesSaldos
         '
         Me.lblMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblMinorista.AutoSize = True
-        Me.lblMinorista.Location = New System.Drawing.Point(3, 212)
+        Me.lblMinorista.Location = New System.Drawing.Point(3, 295)
         Me.lblMinorista.Name = "lblMinorista"
         Me.lblMinorista.Size = New System.Drawing.Size(69, 15)
         Me.lblMinorista.TabIndex = 56
@@ -1299,7 +1299,7 @@ Partial Class frmSucursalesSaldos
         'txt_VentaMinorista
         '
         Me.txt_VentaMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentaMinorista.Location = New System.Drawing.Point(78, 209)
+        Me.txt_VentaMinorista.Location = New System.Drawing.Point(78, 292)
         Me.txt_VentaMinorista.Name = "txt_VentaMinorista"
         Me.txt_VentaMinorista.ReadOnly = True
         Me.txt_VentaMinorista.Size = New System.Drawing.Size(113, 21)

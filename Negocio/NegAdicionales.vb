@@ -9,7 +9,6 @@ Public Class NegAdicionales
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         If (eAdicional.id_Adicional >= 0) Then
             eAdicional.id_Adicional = clsDatos.ObtenerCalveUnica(eAdicional.id_Sucursal)
@@ -20,13 +19,6 @@ Public Class NegAdicionales
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaAdicional(eAdicional, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaAdicional(eAdicional, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -59,11 +51,7 @@ Public Class NegAdicionales
     Function ObtenerAdicionales(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If Funciones.HayInternet Then
-            dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If dsAdel.Tables(0).Rows.Count > 0 Then
             If dsAdel.Tables(0).Rows(0).Item("Adicional").ToString <> "" Then
@@ -78,22 +66,14 @@ Public Class NegAdicionales
 
     'Funcion que lista las Adicionales de un empleado.
     Function ListarAdicionalesEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Adicionales_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Adicionales_Listado @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion para obtener los adicionales de una sucursal
     Function ObtenerAdicionalesSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If Funciones.HayInternet Then
-            dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_SucursalObtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If dsAdel.Tables(0).Rows.Count > 0 Then
             If dsAdel.Tables(0).Rows(0).Item("Adicional").ToString <> "" Then
@@ -110,11 +90,7 @@ Public Class NegAdicionales
     Function ObtenerAdicionalesSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
         Dim dsAdel As New DataSet
 
-        If Funciones.HayInternet Then
-            dsAdel = clsDatos.ConsultarBaseRemoto("execute sp_Adicionales_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        dsAdel = clsDatos.ConsultarBaseLocal("execute sp_Adicionales_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         Return dsAdel
 

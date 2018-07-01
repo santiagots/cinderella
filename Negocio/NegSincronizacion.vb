@@ -332,8 +332,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -344,8 +344,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -356,8 +356,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS_TARDE"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Auto where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla

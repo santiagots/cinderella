@@ -11,7 +11,6 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As Boolean
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         EntFacturacion.id_Facturacion = ClsDatos.ObtenerCalveUnica(EntFacturacion.IdSucursal)
 
@@ -19,13 +18,6 @@ Public Class NegFacturacion
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = NuevaFacturacion(EntFacturacion, cmd)
             ClsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = NuevaFacturacion(EntFacturacion, cmd)
-                ClsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -67,15 +59,11 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
         'Conecto a la bdd.
 
         Try
-            If (HayInternet) Then
-                cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
+
+            cmd.Connection = ClsDatos.ConectarLocal()
 
             'Ejecuto el stored.
             cmd.CommandType = CommandType.StoredProcedure
@@ -93,12 +81,7 @@ Public Class NegFacturacion
             cmd.Parameters.Add(respuesta)
             cmd.ExecuteNonQuery()
 
-            'Desconecto la bdd.
-            If (HayInternet) Then
-                ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
-            End If
+            ClsDatos.DesconectarLocal()
 
             'retorno valor
             Return respuesta.Value
@@ -112,16 +95,10 @@ Public Class NegFacturacion
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Try
 
-            'Conecto a la bdd.
-            If (HayInternet) Then
-                cmd.Connection = ClsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = ClsDatos.ConectarLocal()
-            End If
+            cmd.Connection = ClsDatos.ConectarLocal()
 
             'Ejecuto el stored.
             cmd.CommandType = CommandType.StoredProcedure
@@ -140,12 +117,7 @@ Public Class NegFacturacion
             cmd.Parameters.Add(respuesta)
             cmd.ExecuteNonQuery()
 
-            'Desconecto la bdd.
-            If (HayInternet) Then
-                ClsDatos.DesconectarRemoto()
-            Else
-                ClsDatos.DesconectarLocal()
-            End If
+            ClsDatos.DesconectarLocal()
 
             'retorno valor
             Return Boolean.Parse(respuesta.Value.ToString())
@@ -163,11 +135,7 @@ Public Class NegFacturacion
         'Conecto a la bdd.
 
         Try
-            If (Funciones.HayInternet) Then
-                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-            Else
-                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-            End If
+            dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Listado @TipoFactura='" & tipoFactura & "', @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
             For Each factura As DataRow In dsFacturas.Tables(0).Rows
                 facturas.Add(ObtenerEntidadFactura(factura))
@@ -187,11 +155,7 @@ Public Class NegFacturacion
         'Conecto a la bdd.
 
         Try
-            If (Funciones.HayInternet) Then
-                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_sucursal @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-            Else
-                dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_sucursal @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-            End If
+            dsFacturas = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_sucursal @idSucursal=" & idSucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
             For Each factura As DataRow In dsFacturas.Tables(0).Rows
                 facturas.Add(ObtenerEntidadFactura(factura))
@@ -208,11 +172,7 @@ Public Class NegFacturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 
-        If (Funciones.HayInternet) Then
-            dsFactura = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)
-        Else
-            dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)
-        End If
+        dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle @id_Venta=" & id_Venta)
 
         If dsFactura.Tables(0).Rows.Count <> 0 Then
             entFactura = ObtenerEntidadFactura(dsFactura.Tables(0).Rows(0))
@@ -226,11 +186,7 @@ Public Class NegFacturacion
         Dim dsFactura As New DataSet
         Dim entFactura As New Entidades.Facturacion
 
-        If (Funciones.HayInternet) Then
-            dsFactura = ClsDatos.ConsultarBaseRemoto("execute sp_Facturacion_Detalle_Por_Id @Id_Factura=" & Id_Factura)
-        Else
-            dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle_Por_Id @Id_Factura=" & Id_Factura)
-        End If
+        dsFactura = ClsDatos.ConsultarBaseLocal("execute sp_Facturacion_Detalle_Por_Id @Id_Factura=" & Id_Factura)
 
         If dsFactura.Tables(0).Rows.Count <> 0 Then
             entFactura = ObtenerEntidadFactura(dsFactura.Tables(0).Rows(0))

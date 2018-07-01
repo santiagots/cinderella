@@ -22,7 +22,7 @@ Public Class NotaPedido
             consumidorFinal.Email = EntConsumidorFinal.Email
             consumidorFinal.Nombre = EntConsumidorFinal.Nombre
 
-            Dim id_ConsumidorFinal As Integer = ClienteNegocio.AltaClienteConsumidorFinal(consumidorFinal)
+            Dim id_ConsumidorFinal As Int64 = ClienteNegocio.AltaClienteConsumidorFinal(consumidorFinal, EntNotaPedido.id_Sucursal)
             EntNotaPedido.Id_ConsumidorFinal = id_ConsumidorFinal
         End If
 

@@ -552,9 +552,9 @@ Public Class frmVentas
         Dim dsListaPrecio As DataSet
 
         If tipoCliente = TipoCliente.Mayorista Then
-            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupoCache(3, My.Settings.UsarMemoriaCache)
+            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupo(3)
         Else
-            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), My.Settings.UsarMemoriaCache)
+            dsListaPrecio = NegListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
         End If
 
         If dsListaPrecio.Tables(0).Rows.Count > 0 Then
@@ -1371,7 +1371,7 @@ Public Class frmVentas
             ConsumidorFinal.Email = String.Empty
             ConsumidorFinal.Nombre = frmDatosClienteMinorista.txt_Nombre.Text
 
-            NotaPedido.Id_ConsumidorFinal = ClienteNegocio.AltaClienteConsumidorFinal(ConsumidorFinal)
+            NotaPedido.Id_ConsumidorFinal = ClienteNegocio.AltaClienteConsumidorFinal(ConsumidorFinal, id_Sucursal)
             NotaPedido.id_TipoVenta = 1
             NotaPedido.PrecioTotal = CType(txt_TotalMinorista.Text, Decimal)
             NotaPedido.id_Cliente = 0
@@ -1437,7 +1437,7 @@ Public Class frmVentas
                 ConsumidorFinal.Email = String.Empty
                 ConsumidorFinal.Nombre = frmDatosClienteMinorista.txt_Nombre.Text
 
-                NotaPedido.Id_ConsumidorFinal = ClienteNegocio.AltaClienteConsumidorFinal(ConsumidorFinal)
+                NotaPedido.Id_ConsumidorFinal = ClienteNegocio.AltaClienteConsumidorFinal(ConsumidorFinal, id_Sucursal)
             End If
 
             NotaPedido.id_TipoVenta = 1
@@ -1601,7 +1601,7 @@ Public Class frmVentas
                 If (MessageBox.Show("¿Desea facturar la reserva?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
                     MostrarPantallaFacturacionSenia(TipoPago, id_Cliente, MontoSenia, CostoFinanciero, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarSenia)
                 Else
-                    FinalizarVenta(Nothing, Nothing)
+                    FinalizarSenia(Nothing, Nothing)
                 End If
             End If
 
@@ -1638,7 +1638,7 @@ Public Class frmVentas
             Dim DiferenciaPagoCheque As Double = 0 'Es el importe que falta cubrir de los cheques recividos como pago
             Dim IvaTotal As Double = 0 'Iva total de la vental
             Dim PorcentajeFacturacion As Double = 0
-            Dim IdClienteMinorista As Integer = 0
+            Dim IdClienteMinorista As Int64 = 0
 
             If (sender IsNot Nothing) Then
                 Me.Show()
@@ -1859,7 +1859,7 @@ Public Class frmVentas
         Return True
     End Function
 
-    Private Function RegistrarVenta(facturado As Boolean, TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ClienteMinorista As Integer, Id_Tarjeta As Integer, CantidadCuotas As Integer, PorcentajeFacturacion As Double, id_ListaPrecio As Integer, Descuento As Double, CostoFinanciero As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Int64
+    Private Function RegistrarVenta(facturado As Boolean, TipoVenta As Integer, TipoPago As Integer, id_Empleado As Integer, id_Encargado As Integer, id_Cliente As Integer, id_ClienteMinorista As Int64, Id_Tarjeta As Integer, CantidadCuotas As Integer, PorcentajeFacturacion As Double, id_ListaPrecio As Integer, Descuento As Double, CostoFinanciero As Double, MontoTotalSinDescuento As Double, MontoTotal As Double, CantidadTotal As Integer, DiferenciaPagoCheque As Double, MontoSenia As Double, EsSenia As Boolean) As Int64
 
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor

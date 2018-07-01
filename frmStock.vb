@@ -175,18 +175,18 @@ Public Class frmStock
             lbl_Fecha2.Text = Now.ToShortDateString
 
             'Depende si es admin o no cargo habilito o no el combo con sucursales.
-            If VariablesGlobales.objUsuario.id_Perfil = 1 AndAlso Negocio.Funciones.HayInternet Then
-                Cb_Sucursal.Enabled = True
-                Cb_Sucursales.Enabled = True
-                Cb_Sucursales_mod.Enabled = True
-            Else
-                Cb_Sucursal.Enabled = False
-                Cb_Sucursales.Enabled = False
-                Cb_Sucursales_mod.Enabled = False
-            End If
+            'If VariablesGlobales.objUsuario.id_Perfil = 1 AndAlso Negocio.Funciones.HayInternet Then
+            '    Cb_Sucursal.Enabled = True
+            '    Cb_Sucursales.Enabled = True
+            '    Cb_Sucursales_mod.Enabled = True
+            'Else
+            '    Cb_Sucursal.Enabled = False
+            '    Cb_Sucursales.Enabled = False
+            '    Cb_Sucursales_mod.Enabled = False
+            'End If
 
-            btn_Exportar.Enabled = Negocio.Funciones.HayInternet
-            btn_Importar.Enabled = Negocio.Funciones.HayInternet
+            'btn_Exportar.Enabled = Negocio.Funciones.HayInternet
+            'btn_Importar.Enabled = Negocio.Funciones.HayInternet
 
             'AGREGADO PARA EL FUNCIONAMIENTO CORRECTO DEPENDIENDO DE LAS PATENTES.
             Dim objusuario As New Negocio.Usuario

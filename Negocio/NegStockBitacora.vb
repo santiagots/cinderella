@@ -6,11 +6,7 @@ Public Class NegStockBitacora
 
     'Funcion para listar todos las acciones sobre stock.
     Function ListadoBitacoraSucursal(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
-        If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_StockBitacora_ListadoSucursal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_StockBitacora_ListadoSucursal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_StockBitacora_ListadoSucursal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion para insertar un stock.
@@ -18,7 +14,6 @@ Public Class NegStockBitacora
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As Integer
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         estock.id_Bitacora = clsDatos.ObtenerCalveUnica(estock.id_Sucursal)
         estock.FechaEdicion = DateTime.Now
@@ -27,13 +22,6 @@ Public Class NegStockBitacora
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaStockBitacora(estock, cmd)
             clsDatos.DesconectarLocal()
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaStockBitacora(estock, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg

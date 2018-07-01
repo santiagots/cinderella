@@ -6,6 +6,7 @@ Public Class frmResumenDiario
     Dim FechaAyer As String = ""
     Dim Saldo As Double = 0
     Dim NegVen As New Negocio.NegVentas
+    Dim NegDev As New NegDevolucion
     Dim NegMov As New Negocio.NegMovimientos
     Dim NegEmp As New Negocio.NegEmpleados
     Dim NegMerca As New Negocio.NegMercaderia
@@ -57,7 +58,7 @@ Public Class frmResumenDiario
         txt_Faltante.Clear()
         txt_Sobrante.Clear()
         txt_Efectivo.Clear()
-        txt_DevolucionesEgr.Clear()
+        txt_Devoluciones.Clear()
         txt_Aporte.Clear()
 
     End Sub
@@ -109,7 +110,7 @@ Public Class frmResumenDiario
             frmCargadorDeEspera.Refresh()
 
             Dim AporteSocios As Double = 0
-            AporteSocios = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 6)
+            AporteSocios = NegMov.TotalMovAporte(id_Sucursal, Fecha, Fecha)
             txt_Aporte.Text = "$ " & Format(CType((AporteSocios), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
@@ -172,8 +173,10 @@ Public Class frmResumenDiario
             frmCargadorDeEspera.Refresh()
 
             Dim Gastos As Double = 0
-            Gastos = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 1)
-            txt_Gastos.Text = "$ " & Format(CType((Gastos), Decimal), "###0.00") & ".-"
+            Gastos = NegMov.TotalMovGastos(id_Sucursal, Fecha, Fecha)
+            Dim GastosEgresos As Double = 0
+            GastosEgresos = NegMov.TotalMovEgresosGastos(id_Sucursal, Fecha, Fecha)
+            txt_Gastos.Text = "$ " & Format(CType((Gastos + GastosEgresos), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo gastos..."
@@ -188,9 +191,9 @@ Public Class frmResumenDiario
             PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Date.MinValue.ToString("yyyy/MM/dd"), Fecha, "EgresosPendientes")
             txt_PendienteAutorizar.Text = "$ " & Format(CType((PendienteAutorizar), Decimal), "###0.00") & ".-"
 
-            Dim DevolucionEgreso As Double = 0
-            DevolucionEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Devolucion")
-            txt_DevolucionesEgr.Text = "$ " & Format(CType((DevolucionEgreso), Decimal), "###0.00") & ".-"
+            Dim Devolucion As Double = 0
+            Devolucion = NegDev.TotalDevolucionesEfectivo(id_Sucursal, Fecha, Fecha)
+            txt_Devoluciones.Text = "$ " & Format(CType((Devolucion), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo egresos..."
@@ -207,8 +210,10 @@ Public Class frmResumenDiario
             frmCargadorDeEspera.Refresh()
 
             Dim Impuesto As Double = 0
-            Impuesto = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 3)
-            txt_Impuesto.Text = "$ " & Format(CType((Impuesto), Decimal), "###0.00") & ".-"
+            Impuesto = NegMov.TotalMovImpuesto(id_Sucursal, Fecha, Fecha)
+            Dim ImpuestoEgresos As Double = 0
+            GastosEgresos = NegMov.TotalMovEgresosImpuesto(id_Sucursal, Fecha, Fecha)
+            txt_Impuesto.Text = "$ " & Format(CType((Impuesto + ImpuestoEgresos), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo impuestos..."
@@ -216,7 +221,7 @@ Public Class frmResumenDiario
             frmCargadorDeEspera.Refresh()
 
             Dim RetirosCaja As Double = 0
-            RetirosCaja = NegMov.ConsultarTotalMovimiento(id_Sucursal, Fecha, Fecha, 5)
+            RetirosCaja = NegMov.TotalMovRetiro(id_Sucursal, Fecha, Fecha)
             txt_RetirosCaja.Text = "$ " & Format(CType((RetirosCaja), Decimal), "###0.00") & ".-"
 
             'Voy seteando la barra de progreso
@@ -289,10 +294,7 @@ Public Class frmResumenDiario
             Dim Ingresos As Double = 0
             Dim Egresos As Double = 0
 
-            Dim NegDevolucion As Negocio.NegDevolucion = New Negocio.NegDevolucion()
-            Dim DevolucionesEfectivo As Double = NegDevolucion.TotalDevolucionesEfectivo(id_Sucursal, Fecha)
-
-            Saldo = NegMov.ConsultaSaldo(id_Sucursal, Fecha)
+            Saldo = NegCaja.ObtenerSaldo(id_Sucursal, Fecha)
 
             lbl_Saldo.Text = "$ " & Format(CType((Saldo), Decimal), "###0.00") & ".-"
             If Saldo < 0 Then

@@ -32,11 +32,7 @@ Public Class NegClienteMayorista
         Dim dsCliente As New DataSet
         Dim clientes As List(Of Entidades.ClienteMayorista) = New List(Of ClienteMayorista)()
 
-        If (Funciones.HayInternet) Then
-            dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_ClienteMayorista_Razon_Social @RazonSocial='" & RazonSocial & "'")
-        Else
-            dsCliente = clsDatos.ConsultarBaseLocal("execute sp_ClienteMayorista_Razon_Social @RazonSocial='" & RazonSocial & "'")
-        End If
+        dsCliente = clsDatos.ConsultarBaseLocal("execute sp_ClienteMayorista_Razon_Social @RazonSocial='" & RazonSocial & "'")
 
         'Lleno la Entidad Clientes.
         If dsCliente.Tables(0).Rows.Count <> 0 Then
@@ -82,45 +78,41 @@ Public Class NegClienteMayorista
     End Sub
 
     'Funcion para insertar un cliente.
-    Function AltaClienteConsumidorFinal(ByVal ecliente As Entidades.ConsumidorFinal) As Integer
+    Function AltaClienteConsumidorFinal(ByVal ecliente As Entidades.ConsumidorFinal, ByVal idSucursal As Integer) As Int64
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim msg As Integer
         Try
-
+            ecliente.id = clsDatos.ObtenerCalveUnica(idSucursal)
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = AltaClienteConsumidorFinal(ecliente, cmd)
+            AltaClienteConsumidorFinal(ecliente, cmd)
             clsDatos.ConectarLocal()
 
             If (Funciones.HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaClienteConsumidorFinal(ecliente, cmd)
+                AltaClienteConsumidorFinal(ecliente, cmd)
                 clsDatos.ConectarRemoto()
             End If
 
-            Return msg
+            Return ecliente.id
 
         Catch ex As Exception
             Return ex.Message
         End Try
     End Function
 
-    Private Shared Function AltaClienteConsumidorFinal(ecliente As ConsumidorFinal, ByRef cmd As SqlCommand) As Integer
+    Private Shared Sub AltaClienteConsumidorFinal(ecliente As ConsumidorFinal, ByRef cmd As SqlCommand)
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
         With cmd.Parameters
+            .AddWithValue("@id", ecliente.id)
             .AddWithValue("@nombre", ecliente.Nombre)
             .AddWithValue("@apellido", ecliente.Apellido)
             .AddWithValue("@email", ecliente.Email)
         End With
 
-        Dim respuesta As New SqlParameter("@id", SqlDbType.Int, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-        Return respuesta.Value
-    End Function
+    End Sub
 
     Public Function ConsultaClienteConsumidorFinal(ByVal id_Cliente As Integer) As ConsumidorFinal
         Dim dsCliente As New DataSet

@@ -29,7 +29,7 @@
 
     'Cuando hace click en Aceptar.
     Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
-        If txtMonto.Text = "" Or txtDescripcion.Text = "" Or txtDate.Text = "" Or cbEmpleado.SelectedItem Is Nothing Then
+        If txtMonto.Text = "" Or txtDescripcion.Text = "" Or txtDate.Text = "" Or cbEmpleado.SelectedValue = 0 Then
             MessageBox.Show("Debe completar los campos requeridos.", "Adelanto de Efectivo a Empleados", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
             Try

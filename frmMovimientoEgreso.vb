@@ -73,7 +73,7 @@
                 'Cargo el movimiento en los controles
                 dsMovimiento = NegMovimiento.ObtenerMov(id_Movimiento, id_Sucursal, "Egreso")
                 If dsMovimiento.Tables(0).Rows.Count = 0 Then
-                    dsMovimiento = NegMovimiento.ObtenerMovDestino(id_Movimiento, id_Sucursal, "Egreso")
+                    dsMovimiento = NegMovimiento.ObtenerMovEgresoPorId(id_Movimiento, id_Sucursal)
                     lbl_SucursalNombre.Text = dsMovimiento.Tables(0).Rows(0).Item("Nombre").ToString
                 End If
                 txtDescripcion.Text = Replace(dsMovimiento.Tables(0).Rows(0).Item("Descripcion").ToString, "<br />", vbCrLf)

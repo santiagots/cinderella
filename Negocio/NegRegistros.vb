@@ -8,29 +8,18 @@ Public Class NegRegistros
 
     'Funcion para listar todos los empleados por sucursal determinada.
     Function ListadoRegistrosSucursal(ByVal id_Sucursal As Integer) As DataSet
-        Dim HayInternet As Boolean = Funciones.HayInternet
-        If (HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Registros_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Registros_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Registros_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion para listar todos los empleados por sucursal y fecha determinada.
     Function ListadoRegistrosFecha(ByVal id_Registro As Int64) As DataSet
-        Dim HayInternet As Boolean = Funciones.HayInternet
-        If (HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_RegistrosFecha_Listado @id_Registro = " & id_Registro)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_RegistrosFecha_Listado @id_Registro = " & id_Registro)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_RegistrosFecha_Listado @id_Registro = " & id_Registro)
     End Function
 
     'Funcion que agrega un nuevo registro
     Function AgregarRegistro(ByVal Ereg As Entidades.Registros)
         'Declaro variables
         Dim NombreEmpleado As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim respuesta As String
         Try
 
@@ -43,32 +32,15 @@ Public Class NegRegistros
             respuesta = AgregarRegistro(Ereg, cmd)
 
             'inserto los empleados presentes para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta", False)
+            InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta")
 
             'inserto los empleados ausentes para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosAusente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+            InsertarRegistroEmpleados(Ereg.EmpleadosAusente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes")
 
             'inserto los empleados tardios para el registro
-            InsertarRegistroEmpleados(Ereg.EmpleadosTarde, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", False)
+            InsertarRegistroEmpleados(Ereg.EmpleadosTarde, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde")
 
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = AgregarRegistro(Ereg, cmd)
-
-                'inserto los empleados presentes para el registro
-                InsertarRegistroEmpleados(Ereg.EmpleadosPresente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta", True)
-
-                'inserto los empleados ausentes para el registro
-                InsertarRegistroEmpleados(Ereg.EmpleadosAusente, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", True)
-
-                'inserto los empleados tardios para el registro
-                InsertarRegistroEmpleados(Ereg.EmpleadosTarde, Ereg.id_Registro, Ereg.id_Sucursal, Ereg.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", True)
-
-                clsDatos.DesconectarRemoto()
-            End If
 
             Return respuesta
         Catch ex As Exception
@@ -97,7 +69,6 @@ Public Class NegRegistros
 
     'Funcion para modificar un registro.
     Function ModificacionRegistro(ByVal ERegistro As Entidades.Registros) As String
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim respuesta As String
 
         Dim RegistroEliminar = ERegistro.id_Registro
@@ -117,34 +88,14 @@ Public Class NegRegistros
             respuesta = AgregarRegistro(ERegistro, cmd)
 
             'inserto los empleados presentes para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta", False)
+            InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta")
 
             'inserto los empleados tardios para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", False)
+            InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde")
 
             'inserto los empleados ausentes para el registro
-            InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", False)
+            InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes")
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = EliminarRegistro(RegistroEliminar, ERegistro.FechaEdicion, cmd)
-
-                cmd = New SqlCommand
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = AgregarRegistro(ERegistro, cmd)
-
-                'inserto los empleados presentes para el registro
-                InsertarRegistroEmpleados(ERegistro.EmpleadosPresente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta", True)
-
-                'inserto los empleados tardios para el registro
-                InsertarRegistroEmpleados(ERegistro.EmpleadosTarde, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Tarde", True)
-
-                'inserto los empleados ausentes para el registro
-                InsertarRegistroEmpleados(ERegistro.EmpleadosAusente, ERegistro.id_Registro, ERegistro.id_Sucursal, ERegistro.FechaEdicion, "sp_RegistrosEmpleados_Alta_Ausentes", True)
-                clsDatos.DesconectarRemoto()
-            End If
 
             Return "El Registro se ha modificado correctamente."
         Catch ex As Exception
@@ -181,7 +132,7 @@ Public Class NegRegistros
         Return respuesta.Value
     End Function
 
-    Function InsertarRegistroEmpleados(CheckedListBoxEmpleados As CheckedListBox, id_Registro As Int64, id_Sucursal As Integer, FechaEdicion As DateTime, Sp As String, BaseRemota As Boolean)
+    Function InsertarRegistroEmpleados(CheckedListBoxEmpleados As CheckedListBox, id_Registro As Int64, id_Sucursal As Integer, FechaEdicion As DateTime, Sp As String)
         'inserto los empleados presentes para el registro
         For Each iten In CheckedListBoxEmpleados.CheckedItems()
 
@@ -191,18 +142,15 @@ Public Class NegRegistros
             End If
 
             'conecto la bdd
-            Dim cmd2 As New SqlCommand
+            Dim cmd As New SqlCommand
             'Conecto
-            If (BaseRemota) Then
-                cmd2.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd2.Connection = clsDatos.ConectarLocal()
-            End If
+            cmd.Connection = clsDatos.ConectarLocal()
+
             Dim id_Empleado As Integer = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
             Dim NombreEmpleado As String = DirectCast(iten.Row, System.Data.DataRow).ItemArray(1)
-            cmd2.CommandType = CommandType.StoredProcedure
-            cmd2.CommandText = Sp
-            With cmd2.Parameters
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd.CommandText = Sp
+            With cmd.Parameters
                 .AddWithValue("@id_Rel", clsDatos.ObtenerCalveUnica(id_Sucursal))
                 .AddWithValue("@id_Registro", id_Registro)
                 .AddWithValue("@id_Empleado", id_Empleado)
@@ -211,15 +159,10 @@ Public Class NegRegistros
             End With
             Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
             respuesta2.Direction = ParameterDirection.Output
-            cmd2.Parameters.Add(respuesta2)
-            cmd2.ExecuteNonQuery()
+            cmd.Parameters.Add(respuesta2)
+            cmd.ExecuteNonQuery()
 
-            'Desconecto
-            If (BaseRemota) Then
-                clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
-            End If
+            clsDatos.DesconectarLocal()
         Next
         Return Nothing
     End Function
@@ -227,16 +170,11 @@ Public Class NegRegistros
 
     'Funcion que me indica si x día es feriado o no.
     Function EsFeriado(ByVal Fecha As String)
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Dim EsFe As Boolean = False
         Dim dsFeriado As New DataSet
 
-        If HayInternet Then
-            dsFeriado = clsDatos.ConsultarBaseRemoto("execute sp_Registros_EsFeriado @Fecha='" & Fecha & "'")
-        Else
-            dsFeriado = clsDatos.ConsultarBaseLocal("execute sp_Registros_EsFeriado @Fecha='" & Fecha & "'")
-        End If
+        dsFeriado = clsDatos.ConsultarBaseLocal("execute sp_Registros_EsFeriado @Fecha='" & Fecha & "'")
 
         If dsFeriado.Tables(0).Rows(0).Item("Tot").ToString <> "" And dsFeriado.Tables(0).Rows(0).Item("Tot").ToString <> "0" Then
             EsFe = True
@@ -249,16 +187,11 @@ Public Class NegRegistros
 
     'Funcion que me indica si un empleado trabajo en x sucursal en x dia.
     Function AsistioEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal Fecha As String)
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         Dim Asistio As Boolean = False
         Dim dsAsistio As New DataSet
 
-        If HayInternet Then
-            dsAsistio = clsDatos.ConsultarBaseRemoto("execute sp_Registros_AsistioEmpleado @Fecha='" & Fecha & "', @id_Empleado='" & id_Empleado & "', @id_Sucursal='" & id_Sucursal & "'")
-        Else
-            dsAsistio = clsDatos.ConsultarBaseLocal("execute sp_Registros_AsistioEmpleado @Fecha='" & Fecha & "', @id_Empleado='" & id_Empleado & "', @id_Sucursal='" & id_Sucursal & "'")
-        End If
+        dsAsistio = clsDatos.ConsultarBaseLocal("execute sp_Registros_AsistioEmpleado @Fecha='" & Fecha & "', @id_Empleado='" & id_Empleado & "', @id_Sucursal='" & id_Sucursal & "'")
 
         If dsAsistio.Tables(0).Rows(0).Item("Tot").ToString <> "" And dsAsistio.Tables(0).Rows(0).Item("Tot").ToString <> "0" Then
             Asistio = True
@@ -271,8 +204,6 @@ Public Class NegRegistros
 
     'Funcion para eliminar un registro.
     Function EliminarRegistro(ByVal id_Registro As Int64) As String
-
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
         Dim respuesta As String
 
@@ -281,14 +212,6 @@ Public Class NegRegistros
             cmd.Connection = clsDatos.ConectarLocal()
             respuesta = EliminarRegistro(id_Registro, FechaEdicion, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = EliminarRegistro(id_Registro, FechaEdicion, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
-
         Catch ex As Exception
             Return ex.Message
         End Try
@@ -314,16 +237,10 @@ Public Class NegRegistros
 
     'Funcion para consultar un registro.
     Public Function TraerRegistro(ByVal id_Registro As Int64)
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
         Dim dsRegistro As New DataSet
         Dim entRegistro As New Entidades.Registros
 
-        If (HayInternet) Then
-            dsRegistro = clsDatos.ConsultarBaseRemoto("execute sp_Registros_Detalle @id_Registro=" & id_Registro)
-        Else
-            dsRegistro = clsDatos.ConsultarBaseLocal("execute sp_Registros_Detalle @id_Registro=" & id_Registro)
-        End If
+        dsRegistro = clsDatos.ConsultarBaseLocal("execute sp_Registros_Detalle @id_Registro=" & id_Registro)
 
         If dsRegistro.Tables(0).Rows.Count <> 0 Then
             entRegistro.id_Registro = dsRegistro.Tables(0).Rows(0).Item("id_Registro").ToString
@@ -335,14 +252,8 @@ Public Class NegRegistros
 
     'Funcion para obtener los dias trabajados de un empleado
     Function ObtenerDias(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        Dim dsDias As New DataSet
-        If HayInternet Then
-            dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsDias = clsDatos.ConsultarBaseLocal("execute sp_Registros_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Dim dsDias As DataSet = clsDatos.ConsultarBaseLocal("execute sp_Registros_Obtener @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If dsDias.Tables(0).Rows.Count = 1 And dsDias.Tables(0).Rows(0).Item("Dias").ToString <> "" Then
             Return dsDias.Tables(0).Rows(0).Item("Dias").ToString
@@ -353,13 +264,7 @@ Public Class NegRegistros
 
     'Funcion para obtener los dias FERIADOS trabajados de un empleado
     Function ObtenerDiasFeriados(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-            Dim HayInternet As Boolean = Funciones.HayInternet
-        Dim dsDias As New DataSet
-        If HayInternet Then
-            dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsDias = clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Dim dsDias As DataSet = clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If dsDias.Tables(0).Rows.Count = 1 And dsDias.Tables(0).Rows(0).Item("Dias").ToString <> "" Then
             Return dsDias.Tables(0).Rows(0).Item("Dias").ToString
@@ -370,45 +275,17 @@ Public Class NegRegistros
 
     'Funcion para obtener los dias trabajados de un empleado
     Function ListarDiasRegularesEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim dsDias As New DataSet
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
-
-        If HayInternet Then
-            dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerDiasRegulares @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsDias = clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerDiasRegulares @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
-
-        Return dsDias
-
+        Return clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerDiasRegulares @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion para obtener los dias trabajados FERIADOS de un empleado
     Function ListarDiasFeriadosEmpleado(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim dsDias As New DataSet
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
-        If HayInternet Then
-            dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerDiasFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsDias = clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerDiasFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
-
-        Return dsDias
-
+        Return clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerDiasFeriados @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion para obtener los dias Ausentes de un empleado
     Function ObtenerDiasAusentes(id_Empleado As Integer, id_Sucursal As String, FDesde As String, FHasta As String) As Integer
-        Dim dsDias As New DataSet
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
-        If HayInternet Then
-            dsDias = clsDatos.ConsultarBaseRemoto("execute sp_Registros_ObtenerAusentes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            dsDias = clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerAusentes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Dim dsDias As DataSet = clsDatos.ConsultarBaseLocal("execute sp_Registros_ObtenerAusentes @id_Empleado=" & id_Empleado & ", @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If dsDias.Tables(0).Rows.Count = 1 And dsDias.Tables(0).Rows(0).Item("Dias").ToString <> "" Then
             Return dsDias.Tables(0).Rows(0).Item("Dias").ToString

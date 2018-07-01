@@ -6,7 +6,6 @@ Public Class NegSenia
     Public Sub CrearSenia(senia As Entidades.Senia)
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         senia.Id = clsDatos.ObtenerCalveUnica(senia.IdSucursal)
         senia.FechaEdicion = DateTime.Now
@@ -15,12 +14,6 @@ Public Class NegSenia
         CrearSenia(senia, cmd)
         ClsDatos.DesconectarLocal()
 
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = ClsDatos.ConectarRemoto()
-            CrearSenia(senia, cmd)
-            ClsDatos.DesconectarRemoto()
-        End If
     End Sub
 
     Public Sub CrearSenia(senia As Entidades.Senia, ByRef cmd As SqlCommand)
@@ -47,7 +40,6 @@ Public Class NegSenia
     Public Sub ActualizarSenia(senia As Entidades.Senia)
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         senia.FechaEdicion = DateTime.Now()
 
@@ -55,12 +47,6 @@ Public Class NegSenia
         ActualizarSenia(senia, cmd)
         clsDatos.DesconectarLocal()
 
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            ActualizarSenia(senia, cmd)
-            clsDatos.DesconectarRemoto()
-        End If
     End Sub
 
     Public Sub ActualizarSenia(senia As Entidades.Senia, ByRef cmd As SqlCommand)
@@ -88,19 +74,11 @@ Public Class NegSenia
 
     Public Sub EliminarSenia(id As Int64)
         Dim cmd As New SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim FechaEdicion As DateTime = DateTime.Now()
 
         cmd.Connection = clsDatos.ConectarLocal()
         EliminarSenia(id, FechaEdicion, cmd)
         clsDatos.DesconectarLocal()
-
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            EliminarSenia(id, FechaEdicion, cmd)
-            clsDatos.DesconectarRemoto()
-        End If
     End Sub
 
     Public Sub EliminarSenia(id As Int64, FechaEdicion As DateTime, ByRef cmd As SqlCommand)
@@ -119,11 +97,7 @@ Public Class NegSenia
         Dim dsStock As New DataSet
         Dim Senias As List(Of Entidades.Senia) = New List(Of Entidades.Senia)()
 
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Senia_Consultar @idSucursal=" & idSucursal)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Senia_Consultar @idSucursal=" & idSucursal)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Senia_Consultar @idSucursal=" & idSucursal)
 
         If dsStock.Tables.Count <> 0 Then
             For Each row As DataRow In dsStock.Tables(0).Rows
@@ -138,11 +112,7 @@ Public Class NegSenia
         Dim dsStock As New DataSet
         Dim Senias As List(Of Entidades.Senia) = New List(Of Entidades.Senia)()
 
-        If Funciones.HayInternet Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Senia_ConsultarVenta @IdVenta=" & idVenta)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Senia_ConsultarVenta @IdVenta=" & idVenta)
-        End If
+        dsStock = clsDatos.ConsultarBaseLocal("execute sp_Senia_ConsultarVenta @IdVenta=" & idVenta)
 
         If dsStock.Tables.Count <> 0 AndAlso dsStock.Tables(0).Rows.Count <> 0 Then
             Return ObtenerSeniaDesdeDataRow(dsStock.Tables(0).Rows(0))

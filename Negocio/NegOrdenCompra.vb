@@ -10,11 +10,7 @@ Public Class NegOrdenCompra
         Dim entStockPedido As OrdenCompra = New OrdenCompra()
         entStockPedido.Detalles = New List(Of OrdenCompraDetalle)()
 
-        If Funciones.HayInternet Then
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener @id_StockNotaPedido=" & idStockPedido)
-        Else
-            dsStockPedido = clsDatos.ConsultarBaseLocal("execute sp_OrdenCompra_Obtener @id_StockNotaPedido=" & idStockPedido)
-        End If
+        dsStockPedido = clsDatos.ConsultarBaseLocal("execute sp_OrdenCompra_Obtener @id_StockNotaPedido=" & idStockPedido)
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             entStockPedido = ObtenerStockPedido(dsStockPedido.Tables(0).Rows(0))
@@ -29,11 +25,7 @@ Public Class NegOrdenCompra
         Dim dsStockPedido As New DataSet
         Dim entStockPedido As List(Of OrdenCompra) = New List(Of OrdenCompra)
 
-        If Funciones.HayInternet Then
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_Listado @id_Sucursal=" & idSucursal & " ,@fechaDesde='" & fechaDesde.ToString("yyyy/MM/dd") & "' ,@fechaHasta='" & fechaHasta.ToString("yyyy/MM/dd") & "'")
-        Else
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_Listado @id_Sucursal=" & idSucursal & " ,@fechaDesde='" & fechaDesde.ToString("yyyy/MM/dd") & "' ,@fechaHasta='" & fechaHasta.ToString("yyyy/MM/dd") & "'")
-        End If
+        dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_Listado @id_Sucursal=" & idSucursal & " ,@fechaDesde='" & fechaDesde.ToString("yyyy/MM/dd") & "' ,@fechaHasta='" & fechaHasta.ToString("yyyy/MM/dd") & "'")
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             For Each row As DataRow In dsStockPedido.Tables(0).Rows
@@ -52,11 +44,7 @@ Public Class NegOrdenCompra
         Dim dsStockPedido As New DataSet
         Dim entStockPedido As List(Of OrdenCompra) = New List(Of OrdenCompra)
 
-        If Funciones.HayInternet Then
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoEstado @id_Sucursal=" & idSucursal & " ,@estado=" & estado)
-        Else
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoEstado @id_Sucursal=" & idSucursal & " ,@estado=" & estado)
-        End If
+        dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoEstado @id_Sucursal=" & idSucursal & " ,@estado=" & estado)
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             For Each row As DataRow In dsStockPedido.Tables(0).Rows
@@ -75,11 +63,7 @@ Public Class NegOrdenCompra
         Dim dsStockPedido As New DataSet
         Dim entStockPedido As List(Of OrdenCompra) = New List(Of OrdenCompra)
 
-        If Funciones.HayInternet Then
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoProveedor @id_Sucursal=" & idSucursal & " ,@id_Proveedor=" & idProveedor)
-        Else
-            dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoProveedor @id_Sucursal=" & idSucursal & " ,@id_Proveedor=" & idProveedor)
-        End If
+        dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoProveedor @id_Sucursal=" & idSucursal & " ,@id_Proveedor=" & idProveedor)
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             For Each row As DataRow In dsStockPedido.Tables(0).Rows
@@ -110,13 +94,6 @@ Public Class NegOrdenCompra
         cmd.Connection = clsDatos.ConectarLocal()
         Guardar(stockNotaPedido, cmd, dt)
         clsDatos.DesconectarLocal()
-
-        If Funciones.HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            Guardar(stockNotaPedido, cmd, dt)
-            clsDatos.DesconectarRemoto()
-        End If
 
         'retorno valor
         Return stockNotaPedido.idOrdenCompra
@@ -159,12 +136,6 @@ Public Class NegOrdenCompra
         Eliminar(StockNotaPedido, cmd)
         clsDatos.DesconectarLocal()
 
-        If Funciones.HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            Eliminar(StockNotaPedido, cmd)
-            clsDatos.DesconectarRemoto()
-        End If
     End Sub
 
     Private Shared Function Eliminar(stockNotaPedido As OrdenCompra, ByRef cmd As SqlCommand) As Boolean
@@ -233,13 +204,6 @@ Public Class NegOrdenCompra
         Modificar(stockNotaPedido, cmd, dt)
         clsDatos.DesconectarLocal()
 
-        If Funciones.HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            Modificar(stockNotaPedido, cmd, dt)
-            clsDatos.DesconectarRemoto()
-        End If
-
         'retorno valor
         Return stockNotaPedido.idOrdenCompra
     End Function
@@ -286,13 +250,6 @@ Public Class NegOrdenCompra
         cmd.Connection = clsDatos.ConectarLocal()
         Recibir(stockNotaPedido, cmd, dt)
         clsDatos.DesconectarLocal()
-
-        If Funciones.HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = clsDatos.ConectarRemoto()
-            Recibir(stockNotaPedido, cmd, dt)
-            clsDatos.DesconectarRemoto()
-        End If
 
         'retorno valor
         Return stockNotaPedido.idOrdenCompra

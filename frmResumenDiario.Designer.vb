@@ -45,7 +45,7 @@ Partial Class frmResumenDiario
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txt_PendienteAutorizar = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.txt_DevolucionesEgr = New System.Windows.Forms.TextBox()
+        Me.txt_Devoluciones = New System.Windows.Forms.TextBox()
         Me.lblMercaderias = New System.Windows.Forms.Label()
         Me.txt_CajaFuerteEgr = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -342,7 +342,7 @@ Partial Class frmResumenDiario
         Me.TableLayoutPanel1.Controls.Add(Me.Label15, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_PendienteAutorizar, 1, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.Label20, 0, 6)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_DevolucionesEgr, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_Devoluciones, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.lblMercaderias, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_CajaFuerteEgr, 1, 8)
         Me.TableLayoutPanel1.Controls.Add(Me.Label11, 0, 8)
@@ -405,14 +405,14 @@ Partial Class frmResumenDiario
         Me.Label20.TabIndex = 85
         Me.Label20.Text = "Pend. de Autorización"
         '
-        'txt_DevolucionesEgr
+        'txt_Devoluciones
         '
-        Me.txt_DevolucionesEgr.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_DevolucionesEgr.Location = New System.Drawing.Point(163, 3)
-        Me.txt_DevolucionesEgr.Name = "txt_DevolucionesEgr"
-        Me.txt_DevolucionesEgr.ReadOnly = True
-        Me.txt_DevolucionesEgr.Size = New System.Drawing.Size(146, 21)
-        Me.txt_DevolucionesEgr.TabIndex = 79
+        Me.txt_Devoluciones.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Devoluciones.Location = New System.Drawing.Point(163, 3)
+        Me.txt_Devoluciones.Name = "txt_Devoluciones"
+        Me.txt_Devoluciones.ReadOnly = True
+        Me.txt_Devoluciones.Size = New System.Drawing.Size(146, 21)
+        Me.txt_Devoluciones.TabIndex = 79
         '
         'lblMercaderias
         '
@@ -1250,7 +1250,7 @@ Partial Class frmResumenDiario
     Friend WithEvents txtMonto As System.Windows.Forms.TextBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents ErrorResumen As System.Windows.Forms.ErrorProvider
-    Friend WithEvents txt_DevolucionesEgr As System.Windows.Forms.TextBox
+    Friend WithEvents txt_Devoluciones As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents lbl_DispoEfect As System.Windows.Forms.Label

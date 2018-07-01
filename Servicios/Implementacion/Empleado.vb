@@ -8,8 +8,6 @@ Public Class Empleado
 
         Dim empleadoNegocio As Negocio.NegEmpleados = New Negocio.NegEmpleados()
 
-        Negocio.Funciones.HayConexionInternet()
-
         Dim empleado As Entidades.Empleados = empleadoNegocio.TraerEmpleadoPorIdUsuario(IdUsuario)
 
         Dim respuesta As EntidadEmpleado = New EntidadEmpleado()

@@ -4,11 +4,7 @@
 
     'Funcion que lista todas las condiciones de iva del sistema.
     Function ListadoCondiciones() As DataSet
-        If Funciones.HayInternet Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Condiciones_Listado")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Condiciones_Listado")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Condiciones_Listado")
     End Function
 
 End Class

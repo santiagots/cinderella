@@ -9,7 +9,6 @@ Public Class NegDevolucion
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim dt As DataTable = New DataTable()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
         dt.Columns.Add("id_Detalle", Type.GetType("System.Int64"))
@@ -30,14 +29,6 @@ Public Class NegDevolucion
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = NuevaDevolucion(Devolucion, cmd, dt)
             ClsDatos.DesconectarLocal()
-
-            'Conecto a la bdd.
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = NuevaDevolucion(Devolucion, cmd, dt)
-                ClsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -84,50 +75,22 @@ Public Class NegDevolucion
 
     'Funcion que obtiene el listado de devoluciones de una sucursal.
     Public Function ObtenerDevolucionesSucursalListado(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim ds As New DataSet
-
-        If Funciones.HayInternet Then
-            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
-
-        Return ds
+        Return ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_SucursalObtenerListado @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion para consultar un detalle de laa venta.
     Public Function TraerDevolucionDetalle(ByVal id_Devolucion As Int64)
-        Dim dsDetalle As New DataSet
-
-        If (Funciones.HayInternet) Then
-            dsDetalle = ClsDatos.ConsultarBaseRemoto("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
-        Else
-            dsDetalle = ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
-        End If
-
-        Return dsDetalle
+        Return ClsDatos.ConsultarBaseLocal("execute sp_DevolucionDetalle_Listado @id_Devolucion=" & id_Devolucion)
     End Function
 
     'Funcion para listar todas las devoluciones por FECHA.
     Function ListadoDevolucionesCompletoFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As DataSet
-        If Funciones.HayInternet Then
-            Return ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            Return ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Return ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_ListadoCompletoFecha @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Funcion para consultar una devolucion.
     Public Function TraerDevolucion(ByVal id_Devolucion As Int64)
-        Dim dsDevolucion As New DataSet
-
-        If (Funciones.HayInternet) Then
-            dsDevolucion = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
-        Else
-            dsDevolucion = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
-        End If
-
-        Return dsDevolucion
+        Return ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_Detalle @id_Devolucion=" & id_Devolucion)
     End Function
 
     Function AnularDevolucion(id_Devolucion As Int64, Texto As String) As Integer
@@ -135,8 +98,6 @@ Public Class NegDevolucion
         Dim cmd As New SqlCommand
         Dim msg As Integer
         Dim FechaEdicion As DateTime = DateTime.Now()
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
 
         If (Texto = "") Then
             Texto = "No se ingreso el motivo."
@@ -146,14 +107,6 @@ Public Class NegDevolucion
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = AnularDevolucion(id_Devolucion, Texto, FechaEdicion, cmd)
             ClsDatos.DesconectarLocal()
-
-            'Conecto a la bdd.
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = AnularDevolucion(id_Devolucion, Texto, FechaEdicion, cmd)
-                ClsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -185,7 +138,6 @@ Public Class NegDevolucion
     'Funcion que actualiza una venta como facturada o no facturada.
     Public Function GeneracionNotaCredito(ByVal credito As Boolean, ByVal id_Devolucion As Int64)
         Dim notaCredito As Integer = 0
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
         Dim msg As Boolean
         Dim fechaEdicion As DateTime = DateTime.Now
@@ -200,14 +152,6 @@ Public Class NegDevolucion
             cmd.Connection = ClsDatos.ConectarLocal()
             msg = GenerarNotaCredito(id_Devolucion, notaCredito, fechaEdicion, cmd)
             ClsDatos.DesconectarLocal()
-
-            'Conecto a la bdd.
-            If HayInternet Then
-                cmd = New SqlCommand
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                msg = GenerarNotaCredito(id_Devolucion, notaCredito, fechaEdicion, cmd)
-                ClsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -235,13 +179,9 @@ Public Class NegDevolucion
         Return CBool(respuesta.Value)
     End Function
 
-    Public Function TotalDevolucionesEfectivo(ByVal id_Sucursal As Integer, ByVal Fecha As String)
+    Public Function TotalDevolucionesEfectivo(ByVal id_Sucursal As Integer, ByVal FDesde As String, FHasta As String)
         Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = ClsDatos.ConsultarBaseRemoto("execute sp_Devolucion_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        Else
-            ds = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        End If
+        ds = ClsDatos.ConsultarBaseLocal("execute sp_Devolucion_TotalDevolucionesEfectivo @id_Sucursal=" & id_Sucursal & ",@FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("DevolucionesTotales").ToString <> "" Then
             Return ds.Tables(0).Rows(0).Item("DevolucionesTotales").ToString

@@ -15,7 +15,7 @@
     Public Property PrecioTotal As Double
     Public Property PorcentajeDescuento As Double
     Public Property Fecha As Date
-    Public Property Id_ConsumidorFinal As Integer
+    Public Property Id_ConsumidorFinal As Int64
     Public Property ConsumidorFinalNombreYApellido As String
     Public Property Vendida As Boolean
     Public Property TipoVentaDescripcion As String

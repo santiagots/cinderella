@@ -90,7 +90,7 @@
                 Funciones.ControlInstancia(frmMovimientoCajaFuerte).Show()
 
             ElseIf Tipo = "Env. otras Suc." Then
-                If (Negocio.Funciones.HayInternet) Then
+                If (Negocio.Funciones.HayConexionInternet()) Then
                     Me.WindowState = FormWindowState.Minimized
                     frmMovimientoEgreso.id_Movimiento = id_Mov
                     Funciones.ControlInstancia(frmMovimientoEgreso).MdiParent = MDIContenedor
@@ -99,7 +99,7 @@
                     MessageBox.Show("No puede ver el detalle del movimiento seleccionado porque no se cuenta con conexión a Internet. Por favor, vuelva a intentar cuando disponga de una conexión a Internet.", "Movimientos | Listado", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             ElseIf Tipo = "Rec.otras Suc." Then
-                If (Negocio.Funciones.HayInternet) Then
+                If (Negocio.Funciones.HayConexionInternet()) Then
                     Me.WindowState = FormWindowState.Minimized
                     frmMovimientoEgreso.id_Movimiento = id_Mov
                     frmMovimientoEgreso.Envio = False

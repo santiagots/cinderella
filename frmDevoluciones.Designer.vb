@@ -1235,7 +1235,7 @@ Partial Class frmDevoluciones
     Friend WithEvents Label1 As Label
     Friend WithEvents txt_PorcentajeFacturacion As NumericUpDown
     Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
-    Friend WithEvents txt_PorcentajeBonificacion As NumericUpDown
     Friend WithEvents Label33 As Label
     Friend WithEvents Cb_ListaPrecio As ComboBox
+    Friend WithEvents txt_PorcentajeBonificacion As NumericUpDown
 End Class

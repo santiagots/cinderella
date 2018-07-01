@@ -7,39 +7,23 @@ Public Class NegMercaderia
 
     'Funcion para listar todos los productos.
     Function ListadoMercaderia(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion para consultar un detalle de pedido de mercadería.
     Function ObtenerDetalleMercaderia(ByVal id_Mercaderia As Int64) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_DetalleProd @id_Mercaderia=" & id_Mercaderia)
     End Function
 
     'Funcion para consultar un pedido de mercadería.
     Public Function TraerMercaderia(ByVal id_Mercaderia As Int64)
-        Dim dsStock As New DataSet
-        If (Funciones.HayInternet) Then
-            dsStock = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
-        Else
-            dsStock = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
-        End If
-        Return dsStock
+        Return clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Detalle @id_Mercaderia=" & id_Mercaderia)
     End Function
 
     'Funcion para insertar una Mercaderia.
     Function AltaMercaderia(ByVal EMercaderia As Entidades.Mercaderias) As Int64
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim id As Integer
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         EMercaderia.id_Mercaderia = clsDatos.ObtenerCalveUnica(EMercaderia.id_Sucursal)
         EMercaderia.FechaEdicion = Date.Now()
@@ -48,13 +32,6 @@ Public Class NegMercaderia
             cmd.Connection = clsDatos.ConectarLocal()
             AltaMercaderia(EMercaderia, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                AltaMercaderia(EMercaderia, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return EMercaderia.id_Mercaderia
@@ -87,7 +64,6 @@ Public Class NegMercaderia
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
         EMercaderiaDetalle.id_Detalle = clsDatos.ObtenerCalveUnica(idSucursal)
         EMercaderiaDetalle.FechaEdicion = Date.Now()
@@ -96,13 +72,6 @@ Public Class NegMercaderia
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaMercaderiaDetalle(EMercaderiaDetalle, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaMercaderiaDetalle(EMercaderiaDetalle, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             Return msg
         Catch ex As Exception
@@ -132,11 +101,8 @@ Public Class NegMercaderia
 
     Public Function TotalMercaderia(ByVal id_Sucursal As Integer, ByVal Fecha As String)
         Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        End If
+
+        ds = clsDatos.ConsultarBaseLocal("execute sp_Mercaderia_Total @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Total").ToString <> "" Then
             Return ds.Tables(0).Rows(0).Item("Total").ToString

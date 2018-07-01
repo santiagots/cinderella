@@ -1,6 +1,7 @@
 ﻿Public Class frmMovimientoCajaFuerte
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim NegMovimiento As New Negocio.NegMovimientos
+    Dim NegCajaInicial As New Negocio.NegCajaInicial
     Dim eCaja As New Entidades.MovCajaFuerte
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
@@ -138,7 +139,7 @@
 
                 'controlo si hay sufiente dinero en caja chica para para poder ingresar a la caja fuerte
                 If (eCaja.id_Tipo = 2) Then
-                    Dim CajaChica As Double = NegMovimiento.ConsultaSaldo(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
+                    Dim CajaChica As Double = NegCajaInicial.ObtenerSaldo(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
                     If (CajaChica < eCaja.Monto) Then
                         Dim str_mensaje As String
                         str_mensaje = "No hay suficiente dinero en la Caja Chica para realizar esa operación." + vbCrLf + "Total disponible en Caja Chica:" + CajaChica.ToString

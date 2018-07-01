@@ -10,7 +10,6 @@ Public Class NegPresupuesto
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim dt As DataTable = New DataTable()
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim IdPresupuesto As Integer = 0
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
@@ -32,14 +31,6 @@ Public Class NegPresupuesto
             cmd.Connection = ClsDatos.ConectarLocal()
             Alta(Presupuesto, cmd, dt)
             ClsDatos.DesconectarLocal()
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                Alta(Presupuesto, cmd, dt)
-                ClsDatos.DesconectarRemoto()
-            End If
-
             'retorno valor
             Return Presupuesto.id_Presupuesto
         Catch ex As Exception
@@ -85,14 +76,8 @@ Public Class NegPresupuesto
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of Presupuesto_Detalle) = New List(Of Presupuesto_Detalle)()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
@@ -109,14 +94,8 @@ Public Class NegPresupuesto
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of Presupuesto) = New List(Of Presupuesto)()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
@@ -131,7 +110,6 @@ Public Class NegPresupuesto
     Public Sub Anula(presupuesto As Presupuesto)
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim IdPresupuesto As Integer = 0
 
         If (presupuesto.DescripcionAnulado = "") Then
@@ -143,14 +121,6 @@ Public Class NegPresupuesto
         cmd.Connection = ClsDatos.ConectarLocal()
         Anular(presupuesto, cmd)
         ClsDatos.DesconectarLocal()
-
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = ClsDatos.ConectarRemoto()
-            Anular(presupuesto, cmd)
-            ClsDatos.DesconectarRemoto()
-        End If
-
 
     End Sub
 
@@ -217,14 +187,8 @@ Public Class NegPresupuesto
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As Presupuesto = New Presupuesto()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows

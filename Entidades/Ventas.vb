@@ -7,7 +7,7 @@
     Public Property id_TipoVenta As Integer
     Public Property id_ListaPrecio As Integer
     Public Property id_Cliente As Integer
-    Public Property id_ClienteMinorista As Integer
+    Public Property id_ClienteMinorista As Int64
     Public Property id_Tarjeta As Integer
     Public Property CantidadCuotas As Integer
     Private PorcentajeFacturacion_ As Double

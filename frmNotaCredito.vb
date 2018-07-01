@@ -293,6 +293,7 @@ Public Class frmNotaCredito
                 Next
 
                 MessageBox.Show("Se ha generado la nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Me.DialogResult = DialogResult.OK
                 Me.Close()
             Else
                 MessageBox.Show("No se ha generado la  nota de crédito correctamente.", "Nota de crédito", MessageBoxButtons.OK, MessageBoxIcon.Information)

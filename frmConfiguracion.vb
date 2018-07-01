@@ -521,7 +521,7 @@ Public Class frmConfiguracion
         negProductos.ListadoProductosCache(False)
 
         Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
-        negListasPrecio.ListadoPreciosPorGrupoCache(My.Settings("ListaPrecio"), False)
+        negListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
         MessageBox.Show("La memoria cache se ha actualizado correctamente.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Cursor = Cursors.Arrow
     End Sub
