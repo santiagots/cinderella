@@ -156,6 +156,18 @@
 	  <setting name="MailSLL" serializeAs="String">
         <value>False</value>
       </setting>
+      <setting name="IpPing" serializeAs="String">
+        <value>8.8.8.8</value>
+      </setting>
+      <setting name="IpTimeOut" serializeAs="String">
+        <value>2000</value>
+      </setting>
+      <setting name="RazonSocial" serializeAs="String">
+        <value>Cinderella</value>
+      </setting>
+      <setting name="TemporizadorSincronizacion" serializeAs="String">
+        <value>7200000</value>
+      </setting>
     </SistemaCinderella.My.MySettings>
   </userSettings>
   <startup useLegacyV2RuntimeActivationPolicy="true">

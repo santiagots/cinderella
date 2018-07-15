@@ -27,16 +27,16 @@ Partial Class frmPlanillaSucursales
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPlanillaSucursales))
         Me.DG_Planilla = New System.Windows.Forms.DataGridView()
         Me.GB_Controles = New System.Windows.Forms.GroupBox()
-        Me.txt_FHasta = New System.Windows.Forms.DateTimePicker()
-        Me.txt_FDesde = New System.Windows.Forms.DateTimePicker()
         Me.Btn_Excel = New System.Windows.Forms.Button()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Cb_Sucursal = New System.Windows.Forms.ComboBox()
         Me.btn_Filtrar = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_FHasta = New System.Windows.Forms.DateTimePicker()
+        Me.Cb_Sucursal = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txt_FDesde = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.DG_Planilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Controles.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -84,22 +84,6 @@ Partial Class frmPlanillaSucursales
         Me.GB_Controles.TabStop = False
         Me.GB_Controles.Text = "Seleccione los diferentes filtros si desea refinar su planilla de movimientos."
         '
-        'txt_FHasta
-        '
-        Me.txt_FHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_FHasta.Location = New System.Drawing.Point(656, 4)
-        Me.txt_FHasta.Name = "txt_FHasta"
-        Me.txt_FHasta.Size = New System.Drawing.Size(287, 21)
-        Me.txt_FHasta.TabIndex = 17
-        '
-        'txt_FDesde
-        '
-        Me.txt_FDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_FDesde.Location = New System.Drawing.Point(143, 4)
-        Me.txt_FDesde.Name = "txt_FDesde"
-        Me.txt_FDesde.Size = New System.Drawing.Size(287, 21)
-        Me.txt_FDesde.TabIndex = 16
-        '
         'Btn_Excel
         '
         Me.Btn_Excel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -114,29 +98,6 @@ Partial Class frmPlanillaSucursales
         Me.Btn_Excel.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolTip1.SetToolTip(Me.Btn_Excel, "Exportar Planilla a Excel")
         Me.Btn_Excel.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(3, 37)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(134, 15)
-        Me.Label4.TabIndex = 14
-        Me.Label4.Text = "Sucursal"
-        '
-        'Cb_Sucursal
-        '
-        Me.Cb_Sucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Cb_Sucursal.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_Sucursal.FormattingEnabled = True
-        Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursal.Location = New System.Drawing.Point(143, 33)
-        Me.Cb_Sucursal.Name = "Cb_Sucursal"
-        Me.Cb_Sucursal.Size = New System.Drawing.Size(287, 23)
-        Me.Cb_Sucursal.TabIndex = 13
         '
         'btn_Filtrar
         '
@@ -153,34 +114,6 @@ Partial Class frmPlanillaSucursales
         Me.ToolTip1.SetToolTip(Me.btn_Filtrar, "Refinar la planilla. Se tomarán en cuenta, las diferentes opciones seleccionadas." &
         "")
         Me.btn_Filtrar.UseVisualStyleBackColor = True
-        '
-        'Label3
-        '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(516, 7)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(134, 15)
-        Me.Label3.TabIndex = 11
-        Me.Label3.Text = "Período Fin"
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(3, 7)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(134, 15)
-        Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Período Inicio"
-        '
-        'ToolTip1
-        '
-        Me.ToolTip1.IsBalloon = True
-        Me.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolTip1.ToolTipTitle = "Ayuda"
         '
         'TableLayoutPanel1
         '
@@ -204,6 +137,73 @@ Partial Class frmPlanillaSucursales
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(946, 60)
         Me.TableLayoutPanel1.TabIndex = 10
+        '
+        'txt_FHasta
+        '
+        Me.txt_FHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_FHasta.Location = New System.Drawing.Point(656, 4)
+        Me.txt_FHasta.Name = "txt_FHasta"
+        Me.txt_FHasta.Size = New System.Drawing.Size(287, 21)
+        Me.txt_FHasta.TabIndex = 17
+        '
+        'Cb_Sucursal
+        '
+        Me.Cb_Sucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Cb_Sucursal.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_Sucursal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_Sucursal.FormattingEnabled = True
+        Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
+        Me.Cb_Sucursal.Location = New System.Drawing.Point(143, 34)
+        Me.Cb_Sucursal.Name = "Cb_Sucursal"
+        Me.Cb_Sucursal.Size = New System.Drawing.Size(287, 23)
+        Me.Cb_Sucursal.TabIndex = 13
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(3, 37)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(134, 15)
+        Me.Label4.TabIndex = 14
+        Me.Label4.Text = "Sucursal"
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(3, 7)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(134, 15)
+        Me.Label2.TabIndex = 10
+        Me.Label2.Text = "Período Inicio"
+        '
+        'txt_FDesde
+        '
+        Me.txt_FDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_FDesde.Location = New System.Drawing.Point(143, 4)
+        Me.txt_FDesde.Name = "txt_FDesde"
+        Me.txt_FDesde.Size = New System.Drawing.Size(287, 21)
+        Me.txt_FDesde.TabIndex = 16
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(516, 7)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(134, 15)
+        Me.Label3.TabIndex = 11
+        Me.Label3.Text = "Período Fin"
+        '
+        'ToolTip1
+        '
+        Me.ToolTip1.IsBalloon = True
+        Me.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolTip1.ToolTipTitle = "Ayuda"
         '
         'frmPlanillaSucursales
         '

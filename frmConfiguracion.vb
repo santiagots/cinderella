@@ -99,6 +99,7 @@ Public Class frmConfiguracion
 
         'Comprobacion de internet.
         Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
+        Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
         txt_IpPing.Text = My.Settings.IpPing
         Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
         If My.Settings("Internet") Then
@@ -283,6 +284,11 @@ Public Class frmConfiguracion
                 Return
             End If
 
+            If (Cb_HorasSincronizacion.SelectedItem Is Nothing) Then
+                MessageBox.Show("Debe seleccionar una opción en Período de Sincronización.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+
             If (Cb_TimeOut.SelectedItem Is Nothing) Then
                 MessageBox.Show("Debe seleccionar una opción en Tiempo de espera.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Return
@@ -301,6 +307,7 @@ Public Class frmConfiguracion
                 My.Settings.Internet = False
             End If
             My.Settings.TemporizadorInternet = (Cb_SegundosInternet.SelectedItem * 1000)
+            My.Settings.TemporizadorSincronizacion = (Cb_HorasSincronizacion.SelectedItem * 3600000)
             My.Settings.IpPing = txt_IpPing.Text
             My.Settings.IpTimeOut = Cb_TimeOut.SelectedItem
             My.Settings.Save()
@@ -334,6 +341,7 @@ Public Class frmConfiguracion
         End If
 
         Cb_SegundosInternet.Enabled = Rb1.Checked
+        Cb_HorasSincronizacion.Enabled = Rb1.Checked
         txt_IpPing.Enabled = Rb1.Checked
         Cb_TimeOut.Enabled = Rb1.Checked
         btnVerificarDNS.Enabled = Rb1.Checked

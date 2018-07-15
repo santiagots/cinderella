@@ -9,11 +9,23 @@ Public Class NegProveedores
 
     'Funcion que trae solo los proveedores habilitados.
     Function ListadoProveedores() As DataSet
-        Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_Listado")
+
+        If (Funciones.HayInternet) Then
+            Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_Listado")
+        Else
+            Return clsDatos.ConsultarBaseLocal("execute sp_Proveedores_Listado")
+        End If
+
     End Function
 
     Function ListadoProveedoresConStock(id_Sucursal As Integer) As DataSet
-        Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_ListadoConStock @id_Sucursal=" & id_Sucursal)
+
+        If (Funciones.HayInternet) Then
+            Return clsDatos.ConsultarBaseRemoto("execute sp_Proveedores_ListadoConStock @id_Sucursal=" & id_Sucursal)
+        Else
+            Return clsDatos.ConsultarBaseLocal("execute sp_Proveedores_ListadoConStock @id_Sucursal=" & id_Sucursal)
+        End If
+
     End Function
 
     'Funcion que trae TODOS los proveedores.
@@ -31,14 +43,27 @@ Public Class NegProveedores
         sqlcomando.CommandText = ("select * from PROVEEDORES where id_Proveedor ='" & id_Proveedor & "'")
         sqlcomando.Connection = con.ConectarRemoto
 
+        If (Funciones.HayInternet) Then
+            sqlcomando.Connection = con.ConectarRemoto
+        Else
+            sqlcomando.Connection = con.ConectarLocal
+        End If
+
         daProveedor = New SqlDataAdapter(sqlcomando)
         daProveedor.Fill(dsProveedor)
 
         If dsProveedor.Tables(0).Rows.Count <> 0 Then
             entProveedor = ObtenerEntidadProveedor(dsProveedor.Tables(0).Rows(0))
         End If
+
+        If (Funciones.HayInternet) Then
+            con.DesconectarRemoto()
+        Else
+            con.DesconectarLocal()
+        End If
+
         Return entProveedor
-        con.DesconectarRemoto()
+
     End Function
 
     'Funcion para consultar todos los proveedores.
@@ -50,7 +75,11 @@ Public Class NegProveedores
 
 
         sqlcomando.CommandText = ("select * from PROVEEDORES where Habilitado = 1")
-        sqlcomando.Connection = con.ConectarRemoto
+        If (Funciones.HayInternet) Then
+            sqlcomando.Connection = con.ConectarRemoto
+        Else
+            sqlcomando.Connection = con.ConectarLocal
+        End If
 
         daProveedor = New SqlDataAdapter(sqlcomando)
         daProveedor.Fill(dsProveedor)
@@ -60,8 +89,14 @@ Public Class NegProveedores
                 proveedores.Add(ObtenerEntidadProveedor(dr))
             Next
         End If
+
+        If (Funciones.HayInternet) Then
+            con.DesconectarRemoto()
+        Else
+            con.DesconectarLocal()
+        End If
+
         Return proveedores
-        con.DesconectarRemoto()
     End Function
 
     Private Shared Function ObtenerEntidadProveedor(dr As DataRow) As Proveedores

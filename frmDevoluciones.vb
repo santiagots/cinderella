@@ -520,7 +520,10 @@ Public Class frmDevoluciones
             txt_DescuentoMinorista.Text = "0,00"
         End If
 
-        Dim PorcentajeDescuento As Double = CType(txt_DescuentoMinorista.Text, Double) / CalcularPrecioTotal()
+        Dim descuento As Double = Math.Round(CType(txt_DescuentoMinorista.Text, Double), 0, MidpointRounding.ToEven)
+        txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+
+        Dim PorcentajeDescuento As Double = descuento / CalcularPrecioTotal()
         txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 2, MidpointRounding.ToEven)
 
         CalcularTotales()
@@ -550,7 +553,10 @@ Public Class frmDevoluciones
             txt_DescuentoMayorista.Text = "0,00"
         End If
 
-        Dim PorcentajeDescuento As Double = CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()
+        Dim descuento As Double = Math.Round(CType(txt_DescuentoMayorista.Text, Double), 0, MidpointRounding.ToEven)
+        txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+
+        Dim PorcentajeDescuento As Double = descuento / CalcularPrecioTotal()
         txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 2, MidpointRounding.ToEven)
 
         CalcularTotales()
@@ -1388,7 +1394,7 @@ Public Class frmDevoluciones
         Dim PorcentajeFacturacion As Double = Double.Parse(txt_PorcentajeFacturacion.Text) / 100
         Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
 
-        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 2, MidpointRounding.ToEven)
+        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim ivaSubTotal As Double = 0
 
         If descuento < subtotal Then
@@ -1410,7 +1416,7 @@ Public Class frmDevoluciones
 
     Private Sub CaluclarPrecioMinorista(subtotal As Double)
         Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
-        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 2, MidpointRounding.ToEven)
+        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
 
         If CDbl(descuento) < subtotal Then
             txt_TotalMinorista.Text = Format(CType(subtotal - descuento, Decimal), "###0.00")

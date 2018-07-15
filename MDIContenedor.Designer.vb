@@ -162,6 +162,7 @@ Partial Class MDIContenedor
         Me.DatosPersonalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TemporizadorActualizaciones = New System.Windows.Forms.Timer(Me.components)
         Me.bgwEjecutarEnSegundoPlano = New System.ComponentModel.BackgroundWorker()
+        Me.TemporizadorSoncronizacion = New System.Windows.Forms.Timer(Me.components)
         Me.MenuSuperior.SuspendLayout()
         Me.MenuAccesos.SuspendLayout()
         Me.MenuInferior.SuspendLayout()
@@ -1265,6 +1266,11 @@ Partial Class MDIContenedor
         'bgwEjecutarEnSegundoPlano
         '
         '
+        'TemporizadorSoncronizacion
+        '
+        Me.TemporizadorSoncronizacion.Enabled = True
+        Me.TemporizadorSoncronizacion.Interval = 3600000
+        '
         'MDIContenedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1433,4 +1439,5 @@ Partial Class MDIContenedor
     Friend WithEvents NotaPedidoToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents Menu_OrdenCompra As ToolStripStatusLabel
     Friend WithEvents bgwEjecutarEnSegundoPlano As System.ComponentModel.BackgroundWorker
+    Friend WithEvents TemporizadorSoncronizacion As Timer
 End Class

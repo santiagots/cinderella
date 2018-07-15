@@ -249,6 +249,11 @@ Public Class Funciones
         End If
     End Sub
 
+    Function MostrarDialogSincronizar() As Boolean
+        Dim dialogSincronizar As DialogSincronizar = New DialogSincronizar()
+        Return dialogSincronizar.ShowDialog() = DialogResult.OK
+    End Function
+
     'Funcion que actualiza los mensajes.
     Public Sub ActualizarMensajes()
         If My.Settings.Internet Then 'Internet Permitido.

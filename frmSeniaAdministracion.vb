@@ -89,6 +89,9 @@ Public Class frmSeniaAdministracion
                     Dim senia As Entidades.Senia = dgSenia.CurrentRow.DataBoundItem
                     NegSenia.EliminarSenia(senia.Id)
 
+                    'Anulo venta
+                    NegVentas.AnularVenta(senia.IdVentaRetiro, "Por eliminacion de reserva")
+
                     'Agrego el stock del producto en la sucursal.
                     Dim dsVentaSeniaDetalle = NegVentas.TraerVentaDetalle(senia.IdVentaSenia)
                     For Each ventaDetalle As DataRow In dsVentaSeniaDetalle.Tables(0).Rows

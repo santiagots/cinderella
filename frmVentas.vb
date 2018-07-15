@@ -371,7 +371,7 @@ Public Class frmVentas
         Dim PorcentajeFacturacion As Double = Double.Parse(txt_PorcentajeFacturacion.Text) / 100
         Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
 
-        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 2, MidpointRounding.ToEven)
+        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim ivaSubTotal As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMayorista.Text)
         Dim seniaSinIva As Double = Math.Round(CDbl(txt_SeniaMayorista.Text) / 1.21, 2)
@@ -399,7 +399,7 @@ Public Class frmVentas
 
     Private Sub CaluclarPrecioMinorista(subtotal As Double)
         Dim PorcentajeDescuento As Double = Double.Parse(txt_PorcentajeBonificacion.Text) / 100
-        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 2, MidpointRounding.ToEven)
+        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
         Dim costoFinanciero As Double = 0
         Dim senia As Double = CDbl(txt_SeniaMinorista.Text)
 
@@ -2226,7 +2226,10 @@ Public Class frmVentas
             txt_DescuentoMinorista.Text = "0,00"
         End If
 
-        Dim PorcentajeDescuento As Double = CType(txt_DescuentoMinorista.Text, Double) / CalcularPrecioTotal()
+        Dim descuento As Double = Math.Round(CType(txt_DescuentoMinorista.Text, Double), 0, MidpointRounding.ToEven)
+        txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+
+        Dim PorcentajeDescuento As Double = descuento / CalcularPrecioTotal()
         txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 2, MidpointRounding.ToEven)
 
         CalcularTotales()
@@ -2238,7 +2241,9 @@ Public Class frmVentas
             txt_Senia.Text = "0,00"
         End If
         CalcularTotales()
-        txt_Senia.Text = Format(CType(txt_Senia.Text, Decimal), "###0.00")
+
+        Dim senia As Double = Math.Round(CType(txt_Senia.Text, Double), 0, MidpointRounding.ToEven)
+        txt_Senia.Text = Format(senia, "###0.00")
     End Sub
 
     Private Sub txt_DescuentoMayorista_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_DescuentoMayorista.LostFocus
@@ -2246,7 +2251,10 @@ Public Class frmVentas
             txt_DescuentoMayorista.Text = "0,00"
         End If
 
-        Dim PorcentajeDescuento As Double = CType(txt_DescuentoMayorista.Text, Double) / CalcularPrecioTotal()
+        Dim descuento As Double = Math.Round(CType(txt_DescuentoMayorista.Text, Double), 0, MidpointRounding.ToEven)
+        txt_DescuentoMinorista.Text = Format(descuento, "###0.00")
+
+        Dim PorcentajeDescuento As Double = descuento / CalcularPrecioTotal()
         txt_PorcentajeBonificacion.Text = Math.Round(PorcentajeDescuento * 100, 2, MidpointRounding.ToEven)
 
         CalcularTotales()
