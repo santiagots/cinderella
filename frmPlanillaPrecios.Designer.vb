@@ -216,7 +216,7 @@ Partial Class frmPlanillaPrecios
         Me.cb_Categoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria.FormattingEnabled = True
         Me.cb_Categoria.Items.AddRange(New Object() {"Todas las Categorías."})
-        Me.cb_Categoria.Location = New System.Drawing.Point(3, 235)
+        Me.cb_Categoria.Location = New System.Drawing.Point(3, 234)
         Me.cb_Categoria.Name = "cb_Categoria"
         Me.cb_Categoria.Size = New System.Drawing.Size(256, 23)
         Me.cb_Categoria.TabIndex = 19
@@ -229,7 +229,7 @@ Partial Class frmPlanillaPrecios
         Me.cb_Subcategoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria.FormattingEnabled = True
         Me.cb_Subcategoria.Items.AddRange(New Object() {"Todas las subcategorías."})
-        Me.cb_Subcategoria.Location = New System.Drawing.Point(3, 265)
+        Me.cb_Subcategoria.Location = New System.Drawing.Point(3, 264)
         Me.cb_Subcategoria.Name = "cb_Subcategoria"
         Me.cb_Subcategoria.Size = New System.Drawing.Size(256, 23)
         Me.cb_Subcategoria.TabIndex = 20

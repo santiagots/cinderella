@@ -10,7 +10,6 @@
     Public Property id_ClienteMinorista As Int64
     Public Property id_Tarjeta As Integer
     Public Property CantidadCuotas As Integer
-    Private PorcentajeFacturacion_ As Double
     Public Property PorcentajeFacturacion As Double
     Public Property Anulado As Integer
     Public Property Habilitado As Integer

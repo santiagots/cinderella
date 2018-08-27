@@ -108,6 +108,7 @@
     <Compile Include="NegEmpleados.vb" />
     <Compile Include="NegFacturacion.vb" />
     <Compile Include="NegFeriados.vb" />
+    <Compile Include="NegInformes.vb" />
     <Compile Include="NegListasPrecio.vb" />
     <Compile Include="NegLocalidades.vb" />
     <Compile Include="NegManejadorErrores.vb" />

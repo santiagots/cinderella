@@ -298,38 +298,22 @@ Public Class NegEmpleados
 
     'Funcion para listar todos los Vendedores por sucursal.
     Function ListadoVendedoresSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Vendedores_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion para listar todos los Encargados por sucursal.
     Function ListadoEncargadosSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Encargados_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion para listar todos los Vendedores por sucursal que asistieron en el dia.
     Function ListadoVendedoresSucursalAsistencia(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Vendedores_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
     End Function
 
     'Funcion para listar todos los Encargados por sucursal que asistieron en el dia.
     Function ListadoEncargadosSucursalAsistencia(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Encargados_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
     End Function
 
     'Obtiene la sumatoria de todos los sueldos de la sucursal.

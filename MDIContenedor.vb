@@ -1809,4 +1809,16 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmOrdenCompra).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
+
+    Private Sub VentasToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        'para administrar proveedores es necesario esta online
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmInformeVentas).MdiParent = Me
+            Funciones.ControlInstancia(frmInformeVentas).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
 End Class

@@ -145,6 +145,7 @@ Partial Class frmVentasAdministracion
         Me.IVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MONTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ToolVentas = New System.Windows.Forms.ToolTip(Me.components)
@@ -1471,7 +1472,7 @@ Partial Class frmVentasAdministracion
         Me.DG_Productos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Productos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NUMERO, Me.CODIGO, Me.NOMBRE, Me.CANTIDAD, Me.PRECIO, Me.IVA, Me.MONTO, Me.SUBTOTAL})
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NUMERO, Me.CODIGO, Me.NOMBRE, Me.CANTIDAD, Me.PRECIO, Me.IVA, Me.MONTO, Me.SUBTOTAL, Me.ID})
         Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.DG_Productos.Location = New System.Drawing.Point(6, 93)
         Me.DG_Productos.MultiSelect = False
@@ -1545,6 +1546,13 @@ Partial Class frmVentasAdministracion
         Me.SUBTOTAL.HeaderText = "Subtotal"
         Me.SUBTOTAL.Name = "SUBTOTAL"
         Me.SUBTOTAL.ReadOnly = True
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        Me.ID.Visible = False
         '
         'Label2
         '
@@ -1689,14 +1697,6 @@ Partial Class frmVentasAdministracion
     Friend WithEvents Label23 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents lblCostoFinancieroMinorista As Label
-    Friend WithEvents NUMERO As DataGridViewTextBoxColumn
-    Friend WithEvents CODIGO As DataGridViewTextBoxColumn
-    Friend WithEvents NOMBRE As DataGridViewTextBoxColumn
-    Friend WithEvents CANTIDAD As DataGridViewTextBoxColumn
-    Friend WithEvents PRECIO As DataGridViewTextBoxColumn
-    Friend WithEvents IVA As DataGridViewTextBoxColumn
-    Friend WithEvents MONTO As DataGridViewTextBoxColumn
-    Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
@@ -1719,4 +1719,13 @@ Partial Class frmVentasAdministracion
     Friend WithEvents TipoFactura As DataGridViewComboBoxColumn
     Friend WithEvents NumFactura As DataGridViewTextBoxColumn
     Friend WithEvents btnReporteVenta As Button
+    Friend WithEvents NUMERO As DataGridViewTextBoxColumn
+    Friend WithEvents CODIGO As DataGridViewTextBoxColumn
+    Friend WithEvents NOMBRE As DataGridViewTextBoxColumn
+    Friend WithEvents CANTIDAD As DataGridViewTextBoxColumn
+    Friend WithEvents PRECIO As DataGridViewTextBoxColumn
+    Friend WithEvents IVA As DataGridViewTextBoxColumn
+    Friend WithEvents MONTO As DataGridViewTextBoxColumn
+    Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
+    Friend WithEvents ID As DataGridViewTextBoxColumn
 End Class

@@ -342,6 +342,11 @@ Public Class frmVentasAdministracion
         dgvCell.Value = ventaDetalle.Item("Monto") * ventaDetalle.Item("Cantidad")
         dgvRow.Cells.Add(dgvCell)
 
+        'Valor de la Columna Id
+        dgvCell = New DataGridViewTextBoxCell()
+        dgvCell.Value = ventaDetalle.Item("id_Producto")
+        dgvRow.Cells.Add(dgvCell)
+
         dgvRow.Height = "20"
 
         'Inserto la fila
@@ -842,10 +847,32 @@ Public Class frmVentasAdministracion
         Me.Cursor = Cursors.Arrow
     End Sub
 
+    Private Function ObtenerDetalleVenta() As List(Of Ventas_Detalle)
+        Dim detalleVenta As List(Of Entidades.Ventas_Detalle) = New List(Of Entidades.Ventas_Detalle)()
+
+        For i = 0 To DG_Productos.Rows.Count - 1
+            If CInt(DG_Productos.Rows(i).Cells.Item("ID").Value) > 0 And CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value) > 0 Then
+                Dim detalle As Entidades.Ventas_Detalle = New Entidades.Ventas_Detalle()
+                detalle.Nombre = DG_Productos.Rows(i).Cells.Item("NOMBRE").Value
+                detalle.Cantidad = CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
+                detalle.id_Producto = CInt(DG_Productos.Rows(i).Cells.Item("ID").Value)
+                detalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
+                detalle.Iva = CDbl(DG_Productos.Rows(i).Cells.Item("IVA").Value)
+                detalle.Monto = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
+
+                detalleVenta.Add(detalle)
+            End If
+        Next
+
+        Return detalleVenta
+    End Function
+
     Private Sub BtnEmitirFactura_Click(sender As Object, e As EventArgs) Handles BtnEmitirFactura.Click
         'Seteo el cursor.
         Me.Cursor = Cursors.WaitCursor
         Dim frmFacturar As frmFacturar = New frmFacturar()
+
+        frmFacturar.VentaDetalle = ObtenerDetalleVenta()
 
         If (TipoCliente() = Entidades.TipoCliente.Minorista) Then
             'Abro el form de datos de facturacion.

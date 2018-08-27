@@ -77,6 +77,10 @@
     <Compile Include="Enum\StockNotaPedidoEstado.vb" />
     <Compile Include="Enum\StockNotaPedidoTipo.vb" />
     <Compile Include="Etiqueta.vb" />
+    <Compile Include="InformeCuotas.vb" />
+    <Compile Include="InformeProductos.vb" />
+    <Compile Include="InformeSubcategoria.vb" />
+    <Compile Include="InformeVenta.vb" />
     <Compile Include="OrdenCompra.vb" />
     <Compile Include="OrdenCompraDetalle.vb" />
     <Compile Include="Tarjeta.vb" />

@@ -23,13 +23,13 @@ Partial Class frmFacturaAdministracion
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFacturaAdministracion))
         Me.DG_facturas = New System.Windows.Forms.DataGridView()
         Me.NumeroFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -246,8 +246,8 @@ Partial Class frmFacturaAdministracion
         'SubTotalDataGridViewTextBoxColumn
         '
         Me.SubTotalDataGridViewTextBoxColumn.DataPropertyName = "SubTotal"
-        DataGridViewCellStyle1.Format = "C2"
-        Me.SubTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle8.Format = "C2"
+        Me.SubTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
         Me.SubTotalDataGridViewTextBoxColumn.HeaderText = "Sub Total"
         Me.SubTotalDataGridViewTextBoxColumn.Name = "SubTotalDataGridViewTextBoxColumn"
         Me.SubTotalDataGridViewTextBoxColumn.ReadOnly = True
@@ -255,8 +255,8 @@ Partial Class frmFacturaAdministracion
         'IVADataGridViewTextBoxColumn
         '
         Me.IVADataGridViewTextBoxColumn.DataPropertyName = "IVA"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.IVADataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle9.Format = "C2"
+        Me.IVADataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
         Me.IVADataGridViewTextBoxColumn.HeaderText = "IVA"
         Me.IVADataGridViewTextBoxColumn.Name = "IVADataGridViewTextBoxColumn"
         Me.IVADataGridViewTextBoxColumn.ReadOnly = True
@@ -264,8 +264,8 @@ Partial Class frmFacturaAdministracion
         'MontoDataGridViewTextBoxColumn
         '
         Me.MontoDataGridViewTextBoxColumn.DataPropertyName = "Monto"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.MontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle10.Format = "C2"
+        Me.MontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle10
         Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
         Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
@@ -1278,9 +1278,9 @@ Partial Class frmFacturaAdministracion
         '
         'PRECIO
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle11.Format = "C2"
+        DataGridViewCellStyle11.NullValue = Nothing
+        Me.PRECIO.DefaultCellStyle = DataGridViewCellStyle11
         Me.PRECIO.FillWeight = 81.69429!
         Me.PRECIO.HeaderText = "Precio"
         Me.PRECIO.Name = "PRECIO"
@@ -1288,25 +1288,25 @@ Partial Class frmFacturaAdministracion
         '
         'IVA
         '
-        DataGridViewCellStyle5.Format = "C2"
-        Me.IVA.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle12.Format = "C2"
+        Me.IVA.DefaultCellStyle = DataGridViewCellStyle12
         Me.IVA.HeaderText = "Iva"
         Me.IVA.Name = "IVA"
         Me.IVA.ReadOnly = True
         '
         'MONTO
         '
-        DataGridViewCellStyle6.Format = "C2"
-        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle13.Format = "C2"
+        Me.MONTO.DefaultCellStyle = DataGridViewCellStyle13
         Me.MONTO.HeaderText = "Monto"
         Me.MONTO.Name = "MONTO"
         Me.MONTO.ReadOnly = True
         '
         'SUBTOTAL
         '
-        DataGridViewCellStyle7.Format = "C2"
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle14.Format = "C2"
+        DataGridViewCellStyle14.NullValue = Nothing
+        Me.SUBTOTAL.DefaultCellStyle = DataGridViewCellStyle14
         Me.SUBTOTAL.FillWeight = 91.37056!
         Me.SUBTOTAL.HeaderText = "Subtotal"
         Me.SUBTOTAL.Name = "SUBTOTAL"

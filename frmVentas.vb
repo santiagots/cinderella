@@ -609,7 +609,7 @@ Public Class frmVentas
         Dim DsVendedores = NegEmpleados.ListadoVendedoresSucursalAsistencia(id_Sucursal)
 
         'si no recupero ningun registro
-        If DsEncargados.Tables(0).Rows.Count = 0 Then
+        If DsVendedores.Tables(0).Rows.Count = 0 Then
             'busco los vendedores que pretenecen a la sucursal
             DsVendedores = NegEmpleados.ListadoVendedoresSucursal(id_Sucursal)
         End If
@@ -1110,7 +1110,7 @@ Public Class frmVentas
             Dim PorcentajeFacturacion As Double = 0
             Dim IvaTotal As Double = 0 'Iva total de la vental
             Dim MontoSenia As Double = 0
-            Dim IdClienteMinorista As Integer = 0
+            Dim IdClienteMinorista As Int64 = 0
 
             If (sender IsNot Nothing) Then
                 Me.Show()
