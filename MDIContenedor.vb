@@ -598,6 +598,12 @@ Public Class MDIContenedor
             CostoFinancieroToolStripMenuItem.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_Informes)) Then
+            InformesToolStripMenuItem.Visible = True
+        Else
+            InformesToolStripMenuItem.Visible = False
+        End If
+
 
     End Sub
 
@@ -1810,7 +1816,7 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub VentasToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub VentasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VentasToolStripMenuItem.Click
         'para administrar proveedores es necesario esta online
         If (Not Negocio.Funciones.HayConexionInternet) Then
             dialogoConexion.ShowDialog()

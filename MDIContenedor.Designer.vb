@@ -98,6 +98,8 @@ Partial Class MDIContenedor
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SueldosDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListasDePreciosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InformesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SeguridadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PerfilesMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_UsuariosMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -679,7 +681,7 @@ Partial Class MDIContenedor
         '
         'Btn_PlanillasMenu
         '
-        Me.Btn_PlanillasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SucursalesToolStripMenuItem, Me.MovEntreSucursalesToolStripMenuItem, Me.SueldosDeEmpleadosToolStripMenuItem, Me.ListasDePreciosToolStripMenuItem})
+        Me.Btn_PlanillasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SucursalesToolStripMenuItem, Me.MovEntreSucursalesToolStripMenuItem, Me.SueldosDeEmpleadosToolStripMenuItem, Me.ListasDePreciosToolStripMenuItem, Me.InformesToolStripMenuItem})
         Me.Btn_PlanillasMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Planilla
         Me.Btn_PlanillasMenu.Name = "Btn_PlanillasMenu"
         Me.Btn_PlanillasMenu.Size = New System.Drawing.Size(78, 20)
@@ -713,6 +715,21 @@ Partial Class MDIContenedor
         Me.ListasDePreciosToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.ListasDePreciosToolStripMenuItem.Text = "Listas de Precios"
         Me.ListasDePreciosToolStripMenuItem.ToolTipText = "Listas de Precios"
+        '
+        'InformesToolStripMenuItem
+        '
+        Me.InformesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VentasToolStripMenuItem})
+        Me.InformesToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Informe
+        Me.InformesToolStripMenuItem.Name = "InformesToolStripMenuItem"
+        Me.InformesToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.InformesToolStripMenuItem.Text = "Informes"
+        '
+        'VentasToolStripMenuItem
+        '
+        Me.VentasToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_32
+        Me.VentasToolStripMenuItem.Name = "VentasToolStripMenuItem"
+        Me.VentasToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
+        Me.VentasToolStripMenuItem.Text = "Ventas"
         '
         'SeguridadToolStripMenuItem
         '
@@ -1440,4 +1457,6 @@ Partial Class MDIContenedor
     Friend WithEvents Menu_OrdenCompra As ToolStripStatusLabel
     Friend WithEvents bgwEjecutarEnSegundoPlano As System.ComponentModel.BackgroundWorker
     Friend WithEvents TemporizadorSoncronizacion As Timer
+    Friend WithEvents InformesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents VentasToolStripMenuItem As ToolStripMenuItem
 End Class

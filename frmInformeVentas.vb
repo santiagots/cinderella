@@ -4,12 +4,25 @@ Imports Negocio
 
 Public Class frmInformeVentas
     Dim NegSucursales As NegSucursales = New NegSucursales()
-    Dim datosProductos As List(Of InformeProductos) = New List(Of InformeProductos)()
+
+    Dim dtGraficoPorTotalTipoCliente As DataTable
+    Dim dtGraficoPorTotalFacturado As DataTable
+    Dim dtGraficoPorTotalFormaPago As DataTable
+    Dim dtGraficoPorTotalFormaPagoMinorista As DataTable
+    Dim dtGraficoPorTotalFormaPagoMayorista As DataTable
+    Dim dtGraficoGastos As DataTable
+    Dim dtGraficoCostos As DataTable
+
+    Dim sucursalesId As List(Of Integer)
+    Dim fechaDesde As Date
+    Dim fechaHasta As Date
+
+
     Private Sub frmInformeVentas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             Me.Cursor = Cursors.WaitCursor
             Dim Sucursales As List(Of Sucursales) = NegSucursales.ListadoSucursalesEntidad()
-            cklSucursales.DataSource = sucursales
+            cklSucursales.DataSource = Sucursales
             cklSucursales.DisplayMember = "Nombre"
             cklSucursales.ValueMember = "id_Sucursal"
 
@@ -19,6 +32,7 @@ Public Class frmInformeVentas
 
             dtpFechaDesde.Value = Date.Now.AddDays(-30)
 
+            LimpiarInformes()
             BuscarDatos()
 
             Me.Cursor = Cursors.Arrow
@@ -27,103 +41,188 @@ Public Class frmInformeVentas
         End Try
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
         LimpiarInformes()
         BuscarDatos()
     End Sub
 
     Private Sub ucPaginadoProductos_btnInicioClick(sender As Object, e As EventArgs) Handles ucPaginadoProductos.btnInicioClick
-        Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        Dim fechaDesde As Date = dtpFechaDesde.Value
-        Dim fechaHasta As Date = dtpFechaHasta.Value
-        datosProductos = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.TotalPagina)
-        TotalProductos(datosProductos)
+        Productos()
     End Sub
 
     Private Sub ucPaginadoProductos_btnFinClick(sender As Object, e As EventArgs) Handles ucPaginadoProductos.btnFinClick
-        Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        Dim fechaDesde As Date = dtpFechaDesde.Value
-        Dim fechaHasta As Date = dtpFechaHasta.Value
-        datosProductos = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.TotalPagina)
-        TotalProductos(datosProductos)
+        Productos()
     End Sub
 
     Private Sub ucPaginadoProductos_btnProximaClick(sender As Object, e As EventArgs) Handles ucPaginadoProductos.btnProximaClick
-        Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        Dim fechaDesde As Date = dtpFechaDesde.Value
-        Dim fechaHasta As Date = dtpFechaHasta.Value
-        datosProductos = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.TotalPagina)
-        TotalProductos(datosProductos)
+        Productos()
     End Sub
 
     Private Sub ucPaginadoProductos_btnAnteriorClick(sender As Object, e As EventArgs) Handles ucPaginadoProductos.btnAnteriorClick
-        Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        Dim fechaDesde As Date = dtpFechaDesde.Value
-        Dim fechaHasta As Date = dtpFechaHasta.Value
-        datosProductos = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.TotalPagina)
-        TotalProductos(datosProductos)
+        Productos()
     End Sub
 
+    Private Sub ucPaginadoSubcategoria_btnInicioClick(sender As Object, e As EventArgs) Handles ucPaginadoSubcategoria.btnInicioClick
+        SubCategrias()
+    End Sub
+
+    Private Sub ucPaginadoSubcategoria_btnFinClick(sender As Object, e As EventArgs) Handles ucPaginadoSubcategoria.btnFinClick
+        SubCategrias()
+    End Sub
+
+    Private Sub ucPaginadoSubcategoria_btnProximaClick(sender As Object, e As EventArgs) Handles ucPaginadoSubcategoria.btnProximaClick
+        SubCategrias()
+    End Sub
+
+    Private Sub ucPaginadoSubcategoria_btnAnteriorClick(sender As Object, e As EventArgs) Handles ucPaginadoSubcategoria.btnAnteriorClick
+        SubCategrias()
+    End Sub
+
+    Private Sub ucPaginadoVentas_btnInicioClick(sender As Object, e As EventArgs) Handles ucPaginadoVentas.btnInicioClick
+        Ventas()
+    End Sub
+
+    Private Sub ucPaginadoVentas_btnFinClick(sender As Object, e As EventArgs) Handles ucPaginadoVentas.btnFinClick
+        Ventas()
+    End Sub
+
+    Private Sub ucPaginadoVentas_btnProximaClick(sender As Object, e As EventArgs) Handles ucPaginadoVentas.btnProximaClick
+        Ventas()
+    End Sub
+
+    Private Sub ucPaginadoVentas_btnAnteriorClick(sender As Object, e As EventArgs) Handles ucPaginadoVentas.btnAnteriorClick
+        Ventas()
+    End Sub
+
+    Private Sub ucPaginadoDistribucionProveedores_btnInicioClick(sender As Object, e As EventArgs) Handles ucPaginadoMercaderiaRecibida.btnInicioClick
+        MercaderiaRecibida()
+    End Sub
+
+    Private Sub ucPaginadoDistribucionProveedores_btnFinClick(sender As Object, e As EventArgs) Handles ucPaginadoMercaderiaRecibida.btnFinClick
+        MercaderiaRecibida()
+    End Sub
+
+    Private Sub ucPaginadoDistribucionProveedores_btnProximaClick(sender As Object, e As EventArgs) Handles ucPaginadoMercaderiaRecibida.btnProximaClick
+        MercaderiaRecibida()
+    End Sub
+
+    Private Sub ucPaginadoDistribucionProveedores_btnAnteriorClick(sender As Object, e As EventArgs) Handles ucPaginadoMercaderiaRecibida.btnAnteriorClick
+        MercaderiaRecibida()
+    End Sub
+
+
     Private Sub LimpiarInformes()
-        chtTotalPorCliente.Series("Cliente").Points.Clear()
-
-        chtTotalFormaPago.Series("FormaPago").Points.Clear()
-        chtTotalMayorista.Series("Mayorista").Points.Clear()
-        chtTotalMinorista.Series("Minorista").Points.Clear()
-
-        chtFacturado.Series("Facturado").Points.Clear()
-
-        chtTotalCuotas.Series("Cuotas").Points.Clear()
-
-        chtProductosMonto.Series("producto").Points.Clear()
-        chtProductosCantidad.Series("producto").Points.Clear()
-
-        chtSubCategoriasMonto.Series("subCategoria").Points.Clear()
-        chtSubCategoriasCantidad.Series("subCategoria").Points.Clear()
-
-        chtVentaEvolucion.Series("Monto").Points.Clear()
-        chtVentaEvolucion.Series("Cantidad").Points.Clear()
-
-        chtProductosEvolucion.Series("Monto").Points.Clear()
-        chtProductosEvolucion.Series("Cantidad").Points.Clear()
-
-        chtSubcategoriaEvolucion.Series("Monto").Points.Clear()
-        chtSubcategoriaEvolucion.Series("Cantidad").Points.Clear()
-
         dgvTotalVentas.DataSource = Nothing
         dgvFacturado.DataSource = Nothing
-        dgvProductoEvolucion.DataSource = New DataTable()
-        dgvSubproductoEvolucion.DataSource = New DataTable()
         dgvProductos.DataSource = Nothing
         dgvSubCategorias.DataSource = Nothing
         dgvTotalFormaPago.DataSource = Nothing
         dgvTotalPorCliente.DataSource = Nothing
-        dgvVentaEvolucion.DataSource = Nothing
+
+        ucPaginadoProductos.OrdenColumna = dgvProductos.Columns(0).DataPropertyName
+        ucPaginadoProductos.OrdenDireccion = SortOrder.Descending
+        ucPaginadoProductos.PaginaTamaño = 50
+        ucPaginadoProductos.PaginaActual = 1
+
+        ucPaginadoSubcategoria.OrdenColumna = dgvSubCategorias.Columns(0).DataPropertyName
+        ucPaginadoSubcategoria.OrdenDireccion = SortOrder.Descending
+        ucPaginadoSubcategoria.PaginaTamaño = 50
+        ucPaginadoSubcategoria.PaginaActual = 1
+
+        ucPaginadoVentas.OrdenColumna = dgvVentas.Columns(0).DataPropertyName
+        ucPaginadoVentas.OrdenDireccion = SortOrder.Descending
+        ucPaginadoVentas.PaginaTamaño = 50
+        ucPaginadoVentas.PaginaActual = 1
+
+        ucPaginadoMercaderiaRecibida.OrdenColumna = dgvMercaderiaRecibida.Columns(0).DataPropertyName
+        ucPaginadoMercaderiaRecibida.OrdenDireccion = SortOrder.Descending
+        ucPaginadoMercaderiaRecibida.PaginaTamaño = 50
+        ucPaginadoMercaderiaRecibida.PaginaActual = 1
     End Sub
 
     Private Sub BuscarDatos()
+
+        'Muestro el form de espera..
+        Dim frmEspera As frmCargadorDeEspera = New frmCargadorDeEspera()
+        frmEspera.Show()
+        frmEspera.Text = "Generando Informe... "
+        frmEspera.lbl_Descripcion.Text = "Obteniendo Total Ventas..."
+        frmEspera.BarraProgreso.Minimum = 0
+        frmEspera.BarraProgreso.Maximum = 10
+        frmEspera.BarraProgreso.Value = 1
+        frmEspera.Refresh()
+
         Try
             Me.Cursor = Cursors.WaitCursor
-            Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-            Dim fechaDesde As Date = dtpFechaDesde.Value
-            Dim fechaHasta As Date = dtpFechaHasta.Value
+            sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+            fechaDesde = dtpFechaDesde.Value
+            fechaHasta = dtpFechaHasta.Value
 
             Dim datosVentas As List(Of InformeVenta) = NegInformes.ObtenerVentas(sucursalesId, fechaDesde, fechaHasta)
-            Dim datosCuotas As List(Of InformeCuotas) = NegInformes.ObtenerCantidadCuotas(sucursalesId, fechaDesde, fechaHasta)
-            datosProductos = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, 1, 100)
-            Dim datosSubcategoria As List(Of InformeSubcategoria) = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, 1, 100)
-
             TotalGeneralVentas(datosVentas)
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Ventas Por Día..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            Ventas()
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Total Ventas Por Cliente..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
             TotalVentasPorTipoCliente(datosVentas)
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Total Ventas Por Forma Pago..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
             TotalVentasPorFormaDePago(datosVentas)
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Total Ventas Por Facturacion..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
             TotalVentasPorFacturacion(datosVentas)
-            TotalCuotas(datosCuotas)
-            TotalProductos(datosProductos)
-            TotalSubCategrias(datosSubcategoria)
-            EvolucionVentas(datosProductos)
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Productos..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            Productos()
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Subcategorias..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            SubCategrias()
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Egresos..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            Costos(datosVentas)
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Distribución Gastos..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            Gastos(datosVentas)
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Distribución Proveedores..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            MercaderiaRecibida()
+
+            frmEspera.Close()
+            frmEspera.Dispose()
+
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
-
+            Me.Cursor = Cursors.Arrow
+            frmEspera.Close()
+            frmEspera.Dispose()
         End Try
     End Sub
 
@@ -144,6 +243,8 @@ Public Class frmInformeVentas
     End Sub
 
     Private Sub TotalVentasPorTipoCliente(datos As List(Of InformeVenta))
+        Dim montoTotal As Decimal = datos.Sum(Function(x) x.MontoTotal)
+
         Dim montoTotalMinorista As Decimal = datos.Where(Function(x) x.TipoCliente = "Minorista").Sum(Function(x) x.MontoTotal)
         Dim cantidadTotalMinorista As Decimal = datos.Where(Function(x) x.TipoCliente = "Minorista").Sum(Function(x) x.CantidadTotal)
         Dim promedioVentasMinorista As Decimal = If(cantidadTotalMinorista > 0, montoTotalMinorista / cantidadTotalMinorista, 0)
@@ -152,27 +253,25 @@ Public Class frmInformeVentas
         Dim cantidadTotalMayorista As Decimal = datos.Where(Function(x) x.TipoCliente = "Mayorista").Sum(Function(x) x.CantidadTotal)
         Dim promedioVentasMayorista As Decimal = If(cantidadTotalMayorista > 0, montoTotalMayorista / cantidadTotalMayorista, 0)
 
-
-
-        Dim dataPoint As DataPoint = chtTotalPorCliente.Series("Cliente").Points.Add(cantidadTotalMinorista)
-        dataPoint.AxisLabel = "Minorista"
-        dataPoint.LegendText = "Minorista"
-        dataPoint.Label = "#PERCENT{0 %}"
-
-        Dim dataPoint2 As DataPoint = chtTotalPorCliente.Series("Cliente").Points.Add(cantidadTotalMayorista)
-        dataPoint2.AxisLabel = "Mayorista"
-        dataPoint2.LegendText = "Mayorista"
-        dataPoint2.Label = "#PERCENT{0 %}"
-
         Dim dt As DataTable = New DataTable()
         dt.Columns.Add("Detalle")
         dt.Columns.Add("Monto")
+        dt.Columns.Add("PorcentajeVenta")
         dt.Columns.Add("Cantidad")
 
-        dt.Rows.Add("Total Ventas Minorista", Math.Round(montoTotalMinorista, 2).ToString("c"), cantidadTotalMinorista)
+        dtGraficoPorTotalTipoCliente = New DataTable()
+        dtGraficoPorTotalTipoCliente.Columns.Add("Detalle")
+        dtGraficoPorTotalTipoCliente.Columns.Add("Cantidad")
+
+        dt.Rows.Add("Total Ventas Minorista", Math.Round(montoTotalMinorista, 2).ToString("c"), (montoTotalMinorista / montoTotal).ToString("p"), cantidadTotalMinorista)
+        dtGraficoPorTotalTipoCliente.Rows.Add("Minorista", cantidadTotalMinorista)
+
         dt.Rows.Add("Promedio Ventas Minorista", Math.Round(promedioVentasMinorista, 2).ToString("c"), "")
-        dt.Rows.Add("Total Ventas Mayorista", Math.Round(montoTotalMayorista, 2).ToString("c"), cantidadTotalMayorista)
-        dt.Rows.Add("Promedio Ventas Minorista", Math.Round(promedioVentasMayorista, 2).ToString("c"), "")
+
+        dt.Rows.Add("Total Ventas Mayorista", Math.Round(montoTotalMayorista, 2).ToString("c"), (montoTotalMayorista / montoTotal).ToString("p"), cantidadTotalMayorista)
+        dtGraficoPorTotalTipoCliente.Rows.Add("Mayorista", cantidadTotalMayorista)
+
+        dt.Rows.Add("Promedio Ventas Mayorista", Math.Round(promedioVentasMayorista, 2).ToString("c"), "")
 
         dgvTotalPorCliente.DataSource = dt
     End Sub
@@ -183,7 +282,22 @@ Public Class frmInformeVentas
         dt.Columns.Add("Grupo")
         dt.Columns.Add("Detalle")
         dt.Columns.Add("Monto")
+        dt.Columns.Add("PorcentajeVenta")
         dt.Columns.Add("Cantidad")
+
+        dtGraficoPorTotalFormaPago = New DataTable()
+        dtGraficoPorTotalFormaPago.Columns.Add("Detalle")
+        dtGraficoPorTotalFormaPago.Columns.Add("Cantidad")
+
+        dtGraficoPorTotalFormaPagoMinorista = New DataTable()
+        dtGraficoPorTotalFormaPagoMinorista.Columns.Add("Detalle")
+        dtGraficoPorTotalFormaPagoMinorista.Columns.Add("Cantidad")
+
+        dtGraficoPorTotalFormaPagoMayorista = New DataTable()
+        dtGraficoPorTotalFormaPagoMayorista.Columns.Add("Detalle")
+        dtGraficoPorTotalFormaPagoMayorista.Columns.Add("Cantidad")
+
+        Dim montoTotal As Decimal = datos.Sum(Function(x) x.MontoTotal)
 
         ''Agrupado por forma de pago
         Dim formasPago As List(Of IGrouping(Of String, InformeVenta)) = datos.GroupBy(Of String)(Function(x) x.FormaPago).ToList()
@@ -191,12 +305,8 @@ Public Class frmInformeVentas
         For Each item As IGrouping(Of String, InformeVenta) In formasPago
             Dim total As Decimal = item.Sum(Function(x) x.MontoTotal)
             Dim cantidad As Decimal = item.Sum(Function(x) x.CantidadTotal)
-            Dim dataPoint As DataPoint = chtTotalFormaPago.Series("FormaPago").Points.Add(total)
-            dataPoint.AxisLabel = item.Key
-            dataPoint.LegendText = item.Key
-            dataPoint.Label = "#PERCENT{0 %}"
-
-            dt.Rows.Add("Totales", item.Key, Math.Round(total, 2).ToString("c"), cantidad)
+            dt.Rows.Add("Totales", item.Key, Math.Round(total, 2).ToString("c"), (total / montoTotal).ToString("p"), cantidad)
+            dtGraficoPorTotalFormaPago.Rows.Add(item.Key, cantidad)
         Next
 
         ''Agrupado por tipo de cliente
@@ -205,25 +315,16 @@ Public Class frmInformeVentas
         For Each item As IGrouping(Of String, InformeVenta) In tiposClientes
             formasPago = item.GroupBy(Of String)(Function(x) x.FormaPago).ToList()
             For Each pagos As IGrouping(Of String, InformeVenta) In formasPago
-                Dim dataPoint As DataPoint
-                Dim total As Decimal = item.Sum(Function(x) x.MontoTotal)
-                Dim cantidad As Decimal = item.Sum(Function(x) x.CantidadTotal)
+                Dim total As Decimal = pagos.Sum(Function(x) x.MontoTotal)
+                Dim cantidad As Decimal = pagos.Sum(Function(x) x.CantidadTotal)
 
                 If item.Key = "Mayorista" Then
-                    dataPoint = chtTotalMayorista.Series(item.Key).Points.Add(total)
-                    dataPoint.AxisLabel = pagos.Key
-                    dataPoint.LegendText = pagos.Key
-                    dataPoint.Label = "#PERCENT{0 %}"
-
-                    dt.Rows.Add("Mayorista", pagos.Key, Math.Round(total, 2).ToString("c"), cantidad)
+                    dt.Rows.Add("Mayorista", pagos.Key, Math.Round(total, 2).ToString("c"), (total / montoTotal).ToString("p"), cantidad)
+                    dtGraficoPorTotalFormaPagoMayorista.Rows.Add(pagos.Key, cantidad)
 
                 ElseIf item.Key = "Minorista" Then
-                    dataPoint = chtTotalMinorista.Series(item.Key).Points.Add(total)
-                    dataPoint.AxisLabel = pagos.Key
-                    dataPoint.LegendText = pagos.Key
-                    dataPoint.Label = "#PERCENT{0 %}"
-
-                    dt.Rows.Add("Minorista", pagos.Key, Math.Round(total, 2).ToString("c"), cantidad)
+                    dt.Rows.Add("Minorista", pagos.Key, Math.Round(total, 2).ToString("c"), (total / montoTotal).ToString("p"), cantidad)
+                    dtGraficoPorTotalFormaPagoMinorista.Rows.Add(pagos.Key, cantidad)
                 End If
             Next
         Next
@@ -235,212 +336,188 @@ Public Class frmInformeVentas
         Dim dt As DataTable = New DataTable()
         dt.Columns.Add("Detalle")
         dt.Columns.Add("Monto")
+        dt.Columns.Add("PorcentajeVenta")
         dt.Columns.Add("Cantidad")
 
-
-
         ''Agrupado por facturado
+        Dim montoTotal As Decimal = datos.Sum(Function(x) x.MontoTotal)
         Dim facturados As List(Of IGrouping(Of String, InformeVenta)) = datos.GroupBy(Of String)(Function(x) x.Facturado).ToList()
 
         For Each item As IGrouping(Of String, InformeVenta) In facturados
             Dim total As Decimal = item.Sum(Function(x) x.MontoTotal)
             Dim cantidad As Decimal = item.Sum(Function(x) x.CantidadTotal)
-            Dim dataPoint As DataPoint = chtFacturado.Series("Facturado").Points.Add(total)
             If item.Key = "1" Then
-                dataPoint.AxisLabel = "Facturado"
-                dataPoint.LegendText = "Facturado"
-                dataPoint.Label = "#PERCENT{0 %}"
-                dt.Rows.Add("Facturado", Math.Round(total, 2).ToString("c"), cantidad)
+                dt.Rows.Add("Facturado", Math.Round(total, 2).ToString("c"), (total / montoTotal).ToString("p"), cantidad)
             Else
-                dataPoint.AxisLabel = "Sin Facturar"
-                dataPoint.LegendText = "Sin Facturar"
-                dataPoint.Label = "#PERCENT{0 %}"
-                dt.Rows.Add("Sin Facturar", Math.Round(total, 2).ToString("c"), cantidad)
+                dt.Rows.Add("Sin Facturar", Math.Round(total, 2).ToString("c"), (total / montoTotal).ToString("p"), cantidad)
             End If
         Next
+
+        dtGraficoPorTotalFacturado = dt
 
         dgvFacturado.DataSource = Nothing
         dgvFacturado.DataSource = dt
     End Sub
 
-    Private Sub TotalCuotas(datosCuotas As List(Of InformeCuotas))
+    Private Sub Productos()
+        Try
+            Me.Cursor = Cursors.WaitCursor
+
+            dgvProductos.AutoGenerateColumns = False
+            dgvProductos.DataSource = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.PaginaTamaño, ucPaginadoProductos.OrdenColumna, ucPaginadoProductos.OrdenDireccion, ucPaginadoProductos.TotalElementos)
+
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar los productos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
 
 
-
-        For Each item As InformeCuotas In datosCuotas
-            Dim dataPoint As DataPoint = chtTotalCuotas.Series("Cuotas").Points.Add(item.Cantidad)
-            dataPoint.AxisLabel = item.NroCuota
-            dataPoint.LegendText = item.NroCuota
-            dataPoint.Label = "#PERCENT{0 %}"
-        Next
     End Sub
 
-    Private Sub TotalProductos(datosProducto As List(Of InformeProductos))
+    Private Sub SubCategrias()
+        Try
+            Me.Cursor = Cursors.WaitCursor
 
-        Dim dt As DataTable = New DataTable()
-        dt.Columns.Add("Nombre")
-        dt.Columns.Add("Monto", Type.GetType("System.Decimal"))
-        dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
+            dgvSubCategorias.AutoGenerateColumns = False
+            dgvSubCategorias.DataSource = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, ucPaginadoSubcategoria.PaginaActual, ucPaginadoSubcategoria.PaginaTamaño, ucPaginadoSubcategoria.OrdenColumna, ucPaginadoSubcategoria.OrdenDireccion, ucPaginadoSubcategoria.TotalElementos)
 
-        Dim productos As List(Of InformeProductos) = datosProducto.OrderByDescending(Function(x) x.Monto).ToList()
-
-        For Each producto As InformeProductos In productos
-            dt.Rows.Add(producto.Nombre, Math.Round(producto.Monto, 2), producto.Cantidad)
-        Next
-
-        dgvProductos.DataSource = dt
-        dgvProductos.Sort(dgvProductos.Columns(2), System.ComponentModel.ListSortDirection.Descending)
-
-        productos = datosProducto.OrderByDescending(Function(x) x.Monto).Take(10).ToList()
-
-        For Each producto As InformeProductos In productos
-            Dim DataPointMonto As DataPoint = chtProductosMonto.Series("producto").Points.Add(producto.Monto)
-            DataPointMonto.AxisLabel = producto.Nombre
-            DataPointMonto.LegendText = producto.Nombre
-            DataPointMonto.Label = "#PERCENT{0 %}"
-        Next
-
-        productos = datosProducto.OrderByDescending(Function(x) x.Cantidad).Take(10).ToList()
-
-        For Each producto As InformeProductos In productos
-            Dim DataPointCant As DataPoint = chtProductosCantidad.Series("producto").Points.Add(producto.Cantidad)
-            DataPointCant.AxisLabel = producto.Nombre
-            DataPointCant.LegendText = producto.Nombre
-            DataPointCant.Label = "#PERCENT{0 %}"
-        Next
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar las subcategorias. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 
-    Private Sub TotalSubCategrias(datosSubcategoria As List(Of InformeSubcategoria))
-        Dim dt As DataTable = New DataTable()
-        dt.Columns.Add("Nombre")
-        dt.Columns.Add("Monto", Type.GetType("System.Decimal"))
-        dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
+    Private Sub Ventas()
+        Try
+            Me.Cursor = Cursors.WaitCursor
 
-        Dim subcategorias As List(Of InformeSubcategoria) = datosSubcategoria.OrderByDescending(Function(x) x.Monto).ToList()
+            dgvVentas.AutoGenerateColumns = False
+            dgvVentas.DataSource = NegInformes.ObtenerVentasDia(sucursalesId, fechaDesde, fechaHasta, ucPaginadoVentas.PaginaActual, ucPaginadoVentas.PaginaTamaño, ucPaginadoVentas.OrdenColumna, ucPaginadoVentas.OrdenDireccion, ucPaginadoVentas.TotalElementos)
 
-        For Each subcategoria As InformeSubcategoria In subcategorias
-            dt.Rows.Add(subcategoria.Nombre, Math.Round(subcategoria.Monto, 2), subcategoria.Cantidad)
-        Next
-
-        dgvSubCategorias.DataSource = dt
-        dgvSubCategorias.Sort(dgvSubCategorias.Columns(2), System.ComponentModel.ListSortDirection.Descending)
-
-        subcategorias = datosSubcategoria.OrderByDescending(Function(x) x.Monto).Take(10).ToList()
-
-        For Each subcategoria As InformeSubcategoria In subcategorias
-            Dim DataPointMonto As DataPoint = chtSubCategoriasMonto.Series("subCategoria").Points.Add(subcategoria.Monto)
-            DataPointMonto.AxisLabel = subcategoria.Nombre
-            DataPointMonto.LegendText = subcategoria.Nombre
-            DataPointMonto.Label = "#PERCENT{0 %}"
-        Next
-
-        subcategorias = datosSubcategoria.OrderByDescending(Function(x) x.Cantidad).Take(10).ToList()
-
-        For Each subcategoria As InformeSubcategoria In subcategorias
-            Dim DataPointCant As DataPoint = chtSubCategoriasCantidad.Series("producto").Points.Add(subcategoria.Cantidad)
-            DataPointCant.AxisLabel = subcategoria.Nombre
-            DataPointCant.LegendText = subcategoria.Nombre
-            DataPointCant.Label = "#PERCENT{0 %}"
-        Next
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar las ventas totales. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 
-    Private Sub EvolucionVentas(datosProducto As List(Of InformeProductos))
+    Private Sub Costos(datos As List(Of InformeVenta))
+        Try
+            Me.Cursor = Cursors.WaitCursor
 
-        'Dim dt As DataTable = New DataTable()
-        'dt.Columns.Add("Fecha")
-        'dt.Columns.Add("Monto")
-        'dt.Columns.Add("Cantidad")
+            dtGraficoCostos = New DataTable()
+            dtGraficoCostos.Columns.Add("Detalle")
+            dtGraficoCostos.Columns.Add("Monto")
 
-        'Dim montoValues As List(Of Decimal) = New List(Of Decimal)()
-        'Dim cantidadValues As List(Of Decimal) = New List(Of Decimal)()
+            Dim dt As DataTable = New DataTable()
+            dt.Columns.Add("Detalle")
+            dt.Columns.Add("Monto")
+            dt.Columns.Add("PorcentajeCosto")
+            dt.Columns.Add("PorcentajeVenta")
 
-        'Dim ventasPorFecha As List(Of IGrouping(Of Date, InformeProductos)) = datosProducto.GroupBy(Of Date)(Function(x) x.Fecha).ToList()
+            Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+            Dim fechaDesde As Date = dtpFechaDesde.Value
+            Dim fechaHasta As Date = dtpFechaHasta.Value
 
-        'For Each ventasFecha As IGrouping(Of Date, InformeProductos) In ventasPorFecha
-        '    Dim monto As Decimal = ventasFecha.Sum(Function(x) x.Monto * x.Cantidad)
-        '    Dim cantidad As Decimal = ventasFecha.Sum(Function(x) x.Cantidad)
 
-        '    montoValues.Add(monto)
-        '    cantidadValues.Add(cantidad)
+            Dim sueldosDevengados As Double = NegInformes.ObtenerSueldosDevengados(sucursalesId, fechaDesde, fechaHasta)
+            Dim costos As DataTable = NegInformes.ObtenerCostos(sucursalesId, fechaDesde, fechaHasta)
 
-        '    dt.Rows.Add(ventasFecha.Key.ToString("dd/MM/yy"), Math.Round(monto, 2).ToString("c"), cantidad)
+            Dim montoTotal As Decimal = datos.Sum(Function(x) x.MontoTotal)
+            Dim costoTotal As Decimal = costos.Rows.Cast(Of DataRow).Sum(Function(x) x("Monto")) + sueldosDevengados
 
-        '    Dim DataPointMonto As DataPoint = chtVentaEvolucion.Series("Monto").Points.Add(monto)
-        '    DataPointMonto.AxisLabel = ventasFecha.Key.ToString("MM/dd")
-        '    DataPointMonto.LegendText = ventasFecha.Key.ToString("MM/dd")
+            For Each row As DataRow In costos.Rows
+                Dim monto As Double = row("Monto")
+                dt.Rows.Add(row("Descripcion"), Math.Round(monto, 2).ToString("c"), If(costoTotal <> 0, (monto / costoTotal).ToString("P"), 0.ToString("P")), If(montoTotal <> 0, (monto / montoTotal).ToString("P"), 0.ToString("P")))
+                dtGraficoCostos.Rows.Add(row("Descripcion"), Math.Round(monto, 2))
+            Next
 
-        '    Dim DataPointCantidad As DataPoint = chtVentaEvolucion.Series("Cantidad").Points.Add(cantidad)
-        '    DataPointCantidad.AxisLabel = ventasFecha.Key.ToString("MM/dd")
-        '    DataPointCantidad.LegendText = ventasFecha.Key.ToString("MM/dd")
-        'Next
+            dt.Rows.Add("Sueldo", Math.Round(sueldosDevengados, 2).ToString("c"), If(costoTotal <> 0, (sueldosDevengados / costoTotal).ToString("p"), 0.ToString("p")), If(montoTotal > 0, (sueldosDevengados / montoTotal).ToString("P"), 0.ToString("P")))
+            dtGraficoCostos.Rows.Add("Sueldo", Math.Round(sueldosDevengados, 2))
+            dt.Rows.Add("Total", Math.Round(costoTotal, 2).ToString("c"), If(costoTotal <> 0, (costoTotal / costoTotal).ToString("p"), 0.ToString("p")), If(montoTotal > 0, (costoTotal / montoTotal).ToString("P"), 0.ToString("P")))
 
-        'dgvVentaEvolucion.DataSource = dt
+            dgvTotalCostos.AutoGenerateColumns = False
+            dgvTotalCostos.DataSource = dt
+
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar los egresos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 
-    Private Sub EvolucionProductos(datosProducto As List(Of InformeProductos), producto As String)
+    Private Sub MercaderiaRecibida()
+        Try
+            Me.Cursor = Cursors.WaitCursor
 
-        'Dim dt As DataTable = New DataTable()
-        'dt.Columns.Add("Nombre")
-        'dt.Columns.Add("Fecha")
-        'dt.Columns.Add("Monto")
-        'dt.Columns.Add("Cantidad")
+            Dim mercaderiaRecivida As DataTable = NegInformes.ObtenerMercaderíaRecibida(sucursalesId, fechaDesde, fechaHasta, ucPaginadoMercaderiaRecibida.PaginaActual, ucPaginadoMercaderiaRecibida.PaginaTamaño, ucPaginadoMercaderiaRecibida.OrdenColumna, ucPaginadoMercaderiaRecibida.OrdenDireccion, ucPaginadoMercaderiaRecibida.TotalElementos)
+            Dim totalMercaderiaRecivida As DataTable = mercaderiaRecivida.Clone()
 
-        'chtProductosEvolucion.Series("Monto").Points.Clear()
-        'chtProductosEvolucion.Series("Cantidad").Points.Clear()
+            If (mercaderiaRecivida.Rows.Count > 0) Then
+                totalMercaderiaRecivida.Rows.Add(0, "Total", mercaderiaRecivida.Rows(0)("TotalMonto"), mercaderiaRecivida.Rows(0)("TotalPorcentajeMonto"), mercaderiaRecivida.Rows(0)("TotalPorcentajeVentas"), 0)
+            End If
 
-        'Dim productosPorFecha As List(Of IGrouping(Of Date, InformeProductos)) = datosProducto.Where(Function(x) x.Producto = producto).GroupBy(Of Date)(Function(x) x.Fecha).ToList()
+            dgvMercaderiaRecibida.AutoGenerateColumns = False
+            dgvMercaderiaRecibida.DataSource = mercaderiaRecivida
 
-        'For Each productoFecha As IGrouping(Of Date, InformeProductos) In productosPorFecha
-        '    Dim monto As Decimal = productoFecha.Sum(Function(x) x.Monto * x.Cantidad)
-        '    Dim cantidad As Decimal = productoFecha.Sum(Function(x) x.Cantidad)
-
-        '    dt.Rows.Add(producto, productoFecha.Key.ToString("dd/MM/yy"), Math.Round(monto, 2).ToString("c"), cantidad)
-
-        '    Dim DataPointMonto As DataPoint = chtProductosEvolucion.Series("Monto").Points.Add(monto)
-        '    DataPointMonto.AxisLabel = productoFecha.Key.ToString("MM/dd")
-        '    DataPointMonto.LegendText = productoFecha.Key.ToString("MM/dd")
-
-        '    Dim DataPointCantidad As DataPoint = chtProductosEvolucion.Series("Cantidad").Points.Add(cantidad)
-        '    DataPointCantidad.AxisLabel = productoFecha.Key.ToString("MM/dd")
-        '    DataPointCantidad.LegendText = productoFecha.Key.ToString("MM/dd")
-        'Next
-
-        'dgvProductoEvolucion.DataSource = dt
+            dgvTotalMercaderiaRecibida.AutoGenerateColumns = False
+            dgvTotalMercaderiaRecibida.DataSource = totalMercaderiaRecivida
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar los egresos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 
-    Private Sub EvolucionSubcategoria(datosProducto As List(Of InformeProductos), subCategoria As String)
+    Private Sub Gastos(datos As List(Of InformeVenta))
+        Try
+            Me.Cursor = Cursors.WaitCursor
 
-        'Dim dt As DataTable = New DataTable()
-        'dt.Columns.Add("Nombre")
-        'dt.Columns.Add("Fecha")
-        'dt.Columns.Add("Monto")
-        'dt.Columns.Add("Cantidad")
+            dtGraficoGastos = New DataTable()
+            dtGraficoGastos.Columns.Add("Detalle")
+            dtGraficoGastos.Columns.Add("Monto")
 
-        'chtSubcategoriaEvolucion.Series("Monto").Points.Clear()
-        'chtSubcategoriaEvolucion.Series("Cantidad").Points.Clear()
+            Dim dt As DataTable = New DataTable()
+            dt.Columns.Add("Detalle")
+            dt.Columns.Add("Monto")
+            dt.Columns.Add("PorcentajeGasto")
+            dt.Columns.Add("PorcentajeVenta")
 
-        'Dim subCategoriaPorFecha As List(Of IGrouping(Of Date, InformeProductos)) = datosProducto.Where(Function(x) x.SubCategoria = subCategoria).GroupBy(Of Date)(Function(x) x.Fecha).ToList()
+            Dim sucursalesId As List(Of Integer) = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+            Dim fechaDesde As Date = dtpFechaDesde.Value
+            Dim fechaHasta As Date = dtpFechaHasta.Value
 
-        'For Each subcategoriaFecha As IGrouping(Of Date, InformeProductos) In subCategoriaPorFecha
-        '    Dim monto As Decimal = subcategoriaFecha.Sum(Function(x) x.Monto * x.Cantidad)
-        '    Dim cantidad As Decimal = subcategoriaFecha.Sum(Function(x) x.Cantidad)
 
-        '    dt.Rows.Add(subCategoria, subcategoriaFecha.Key.ToString("dd/MM/yy"), Math.Round(monto, 2).ToString("c"), cantidad)
+            Dim sueldosPagos As Double = NegInformes.ObtenerSueldosPagos(sucursalesId, fechaDesde, fechaHasta)
+            Dim gastos As DataTable = NegInformes.ObtenerGastos(sucursalesId, fechaDesde, fechaHasta)
 
-        '    Dim DataPointMonto As DataPoint = chtSubcategoriaEvolucion.Series("Monto").Points.Add(monto)
-        '    DataPointMonto.AxisLabel = subcategoriaFecha.Key.ToString("MM/dd")
-        '    DataPointMonto.LegendText = subcategoriaFecha.Key.ToString("MM/dd")
+            Dim montoTotal As Decimal = datos.Sum(Function(x) x.MontoTotal)
+            Dim costoTotal As Decimal = gastos.Rows.Cast(Of DataRow).Sum(Function(x) x("Monto")) + sueldosPagos
 
-        '    Dim DataPointCantidad As DataPoint = chtSubcategoriaEvolucion.Series("Cantidad").Points.Add(cantidad)
-        '    DataPointCantidad.AxisLabel = subcategoriaFecha.Key.ToString("MM/dd")
-        '    DataPointCantidad.LegendText = subcategoriaFecha.Key.ToString("MM/dd")
-        'Next
+            For Each row As DataRow In gastos.Rows
+                Dim monto As Double = row("Monto")
+                dt.Rows.Add(row("Descripcion"), Math.Round(monto, 2).ToString("c"), (monto / costoTotal).ToString("P"), (monto / montoTotal).ToString("P"))
+                dtGraficoGastos.Rows.Add(row("Descripcion"), Math.Round(monto, 2))
+            Next
 
-        'dgvSubproductoEvolucion.DataSource = dt
+            dt.Rows.Add("Sueldo", Math.Round(sueldosPagos, 2).ToString("c"), If(costoTotal <> 0, (sueldosPagos / costoTotal).ToString("p"), 0.ToString("p")), If(montoTotal > 0, (sueldosPagos / montoTotal).ToString("P"), 0.ToString("P")))
+            dtGraficoGastos.Rows.Add("Sueldo", Math.Round(sueldosPagos, 2))
+            dt.Rows.Add("Total", Math.Round(costoTotal, 2).ToString("c"), If(costoTotal <> 0, (costoTotal / costoTotal).ToString("p"), 0.ToString("p")), If(montoTotal > 0, (costoTotal / montoTotal).ToString("P"), 0.ToString("P")))
+
+            dgvTotalGastos.AutoGenerateColumns = False
+            dgvTotalGastos.DataSource = dt
+
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar los egresos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 
 
-    Private Sub DesabilitarSeleccion(sender As Object, e As EventArgs) Handles dgvTotalVentas.SelectionChanged, dgvFacturado.SelectionChanged, dgvTotalFormaPago.SelectionChanged, dgvTotalPorCliente.SelectionChanged, dgvProductoEvolucion.SelectionChanged, dgvSubproductoEvolucion.SelectionChanged, dgvVentaEvolucion.SelectionChanged
+    Private Sub DesabilitarSeleccion(sender As Object, e As EventArgs) Handles dgvTotalVentas.SelectionChanged, dgvFacturado.SelectionChanged, dgvTotalFormaPago.SelectionChanged, dgvTotalPorCliente.SelectionChanged, dgvTotalMercaderiaRecibida.SelectionChanged, dgvTotalGastos.SelectionChanged, dgvTotalCostos.SelectionChanged, dgvMercaderiaRecibida.SelectionChanged
         sender.ClearSelection()
     End Sub
 
@@ -468,46 +545,159 @@ Public Class frmInformeVentas
         lblMensajeSubcategoriasProductos.Visible = Not dgvSubCategorias.RowCount > 0
     End Sub
 
-    Private Sub dgvVentaEvolucion_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvVentaEvolucion.DataBindingComplete
-        lblMensajeEvolucionVentas.Visible = Not dgvVentaEvolucion.RowCount > 0
+    Private Sub dgvVentas_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvVentas.DataBindingComplete
+        lblMensajeVentasDias.Visible = Not dgvVentas.RowCount > 0
     End Sub
 
-    Private Sub dgvProductoEvolucion_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvProductoEvolucion.DataBindingComplete
-        lblMensajeProductoEvolucion.Visible = Not dgvProductoEvolucion.RowCount > 0
-    End Sub
-
-    Private Sub dgvSubproductoEvolucion_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvSubproductoEvolucion.DataBindingComplete
-        lblMensajeSubcategoriaVentas.Visible = Not dgvSubproductoEvolucion.RowCount > 0
+    Private Sub dgvDistribucionProveedores_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvMercaderiaRecibida.DataBindingComplete
+        lblMensajeDistribucionProveedores.Visible = Not dgvMercaderiaRecibida.RowCount > 0
     End Sub
 
     Private Sub dgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellDoubleClick
-        Me.Cursor = Cursors.WaitCursor
-        Dim productoSeleccionado As String = dgvProductos.CurrentRow.DataBoundItem("Nombre")
-        EvolucionProductos(datosProductos, productoSeleccionado)
-        TabInformes.SelectedTab = tabEvolucion
-        Me.Cursor = Cursors.Arrow
+        Dim Funciones As New Funciones
+        Dim informeProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
+        informeProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+        informeProducto.fechaDesde = dtpFechaDesde.Value
+        informeProducto.fechaHasta = dtpFechaHasta.Value
+        informeProducto.idProducto = dgvProductos.CurrentRow.Cells("ProductoId").Value
+        informeProducto.nombreProducto = dgvProductos.CurrentRow.Cells("ProductoNombre").Value
+        informeProducto.MdiParent = Me.MdiParent
+        informeProducto.Show()
     End Sub
 
     Private Sub dgvProductos_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellClick
-        Me.Cursor = Cursors.WaitCursor
-        Dim productoSeleccionado As String = dgvProductos.CurrentRow.DataBoundItem("Nombre")
-        EvolucionProductos(datosProductos, productoSeleccionado)
-        Me.Cursor = Cursors.Arrow
-    End Sub
+        Dim Funciones As New Funciones
 
-    Private Sub dgvSubCategorias_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellClick
-        Me.Cursor = Cursors.WaitCursor
-        Dim subCategoriaSeleccionada As String = dgvSubCategorias.CurrentRow.DataBoundItem("Nombre")
-        EvolucionSubcategoria(datosProductos, subCategoriaSeleccionada)
-        Me.Cursor = Cursors.Arrow
+        If (dgvProductos.Columns(e.ColumnIndex).Name = "ProductoDetalle") Then
+            Dim informeProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
+            informeProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+            informeProducto.fechaDesde = dtpFechaDesde.Value
+            informeProducto.fechaHasta = dtpFechaHasta.Value
+            informeProducto.idProducto = dgvProductos.CurrentRow.Cells("ProductoId").Value
+            informeProducto.nombreProducto = dgvProductos.CurrentRow.Cells("ProductoNombre").Value
+            informeProducto.MdiParent = Me.MdiParent
+            informeProducto.Show()
+        End If
     End Sub
 
     Private Sub dgvSubCategorias_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellDoubleClick
-        Me.Cursor = Cursors.WaitCursor
-        Dim subCategoriaSeleccionada As String = dgvSubCategorias.CurrentRow.DataBoundItem("Nombre")
-        EvolucionSubcategoria(datosProductos, subCategoriaSeleccionada)
-        TabInformes.SelectedTab = tabEvolucion
-        Me.Cursor = Cursors.Arrow
+        Dim Funciones As New Funciones
+        Dim informeSubcategoria As frmInformeSubcategoria = Funciones.ControlInstancia(frmInformeSubcategoria)
+        informeSubcategoria.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+        informeSubcategoria.fechaDesde = dtpFechaDesde.Value
+        informeSubcategoria.fechaHasta = dtpFechaHasta.Value
+        informeSubcategoria.idSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaId").Value
+        informeSubcategoria.nombreSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaNombre").Value
+        informeSubcategoria.MdiParent = Me.MdiParent
+        informeSubcategoria.Show()
     End Sub
+
+    Private Sub dgvSubCategorias_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellClick
+        Dim Funciones As New Funciones
+
+        If (dgvProductos.Columns(e.ColumnIndex).Name = "SubcategoriaDetalle") Then
+            Dim informeSubcategoria As frmInformeSubcategoria = Funciones.ControlInstancia(frmInformeSubcategoria)
+            informeSubcategoria.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+            informeSubcategoria.fechaDesde = dtpFechaDesde.Value
+            informeSubcategoria.fechaHasta = dtpFechaHasta.Value
+            informeSubcategoria.idSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaId").Value
+            informeSubcategoria.nombreSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaNombre").Value
+            informeSubcategoria.MdiParent = Me.MdiParent
+            informeSubcategoria.Show()
+        End If
+    End Sub
+
+    Private Sub dgvSubCategorias_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvSubCategorias.ColumnHeaderMouseClick
+        ucPaginadoSubcategoria.OrdenColumna = dgvSubCategorias.Columns(e.ColumnIndex).DataPropertyName
+        ucPaginadoSubcategoria.OrdenDireccion = If(ucPaginadoSubcategoria.OrdenDireccion = SortOrder.Ascending, SortOrder.Descending, SortOrder.Ascending)
+        SubCategrias()
+        dgvSubCategorias.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = ucPaginadoSubcategoria.OrdenDireccion
+    End Sub
+
+    Private Sub dgvProductos_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvProductos.ColumnHeaderMouseClick
+        ucPaginadoProductos.OrdenColumna = dgvProductos.Columns(e.ColumnIndex).DataPropertyName
+        ucPaginadoProductos.OrdenDireccion = If(ucPaginadoProductos.OrdenDireccion = SortOrder.Ascending, SortOrder.Descending, SortOrder.Ascending)
+        Productos()
+        dgvProductos.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = ucPaginadoProductos.OrdenDireccion
+    End Sub
+
+    Private Sub dgvVentas_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvVentas.ColumnHeaderMouseClick
+        ucPaginadoVentas.OrdenColumna = dgvVentas.Columns(e.ColumnIndex).DataPropertyName
+        ucPaginadoVentas.OrdenDireccion = If(ucPaginadoVentas.OrdenDireccion = SortOrder.Ascending, SortOrder.Descending, SortOrder.Ascending)
+        Ventas()
+        dgvVentas.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = ucPaginadoVentas.OrdenDireccion
+    End Sub
+
+    Private Sub dgvMercaderiaRecibida_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMercaderiaRecibida.ColumnHeaderMouseClick
+        ucPaginadoMercaderiaRecibida.OrdenColumna = dgvMercaderiaRecibida.Columns(e.ColumnIndex).DataPropertyName
+        ucPaginadoMercaderiaRecibida.OrdenDireccion = If(ucPaginadoMercaderiaRecibida.OrdenDireccion = SortOrder.Ascending, SortOrder.Descending, SortOrder.Ascending)
+        MercaderiaRecibida()
+        dgvMercaderiaRecibida.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = ucPaginadoMercaderiaRecibida.OrdenDireccion
+    End Sub
+
+    Private Sub btnGrafico_Click(sender As Object, e As EventArgs) Handles btnGrafico.Click
+
+        Dim cantidad As Integer = 0
+        Dim Funciones As New Funciones
+
+        If (TabInformes.SelectedTab.Name = tabVentas.Name) Then
+            Dim informeGraficoVentas As FrmInformeGraficoVentas = Funciones.ControlInstancia(FrmInformeGraficoVentas)
+            informeGraficoVentas.TotalTipoCliente = dtGraficoPorTotalTipoCliente
+            informeGraficoVentas.TotalFacturado = dtGraficoPorTotalFacturado
+            informeGraficoVentas.TotalCuotas = NegInformes.ObtenerCantidadCuotas(sucursalesId, fechaDesde, fechaHasta)
+            informeGraficoVentas.TotalFormaPago = dtGraficoPorTotalFormaPago
+            informeGraficoVentas.TotalFormaPagoMayorista = dtGraficoPorTotalFormaPagoMayorista
+            informeGraficoVentas.TotalFormaPagoMinorista = dtGraficoPorTotalFormaPagoMinorista
+            informeGraficoVentas.Ventas = ObtenerTodasLasPaginasVentasPorDia(sucursalesId, fechaDesde, fechaHasta)
+            informeGraficoVentas.MdiParent = Me.MdiParent
+            FrmInformeGraficoVentas.Show()
+        End If
+
+        If (TabInformes.SelectedTab.Name = tabProductos.Name) Then
+            Dim informeGraficoProducto As FrmInformeGraficoProducto = Funciones.ControlInstancia(FrmInformeGraficoProducto)
+            informeGraficoProducto.TopProductosMonto = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopProductosCantidad = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopSubcategoriaMonto = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopSubcategoriaCantidad = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            informeGraficoProducto.MdiParent = Me.MdiParent
+            informeGraficoProducto.Show()
+        End If
+
+        If (TabInformes.SelectedTab.Name = tabEgresos.Name) Then
+            Dim informeGraficoEgresos As FrmInformeGraficoEgresos = Funciones.ControlInstancia(FrmInformeGraficoEgresos)
+            informeGraficoEgresos.TopGastos = dtGraficoGastos
+            informeGraficoEgresos.TopProveedor = dtGraficoCostos
+            informeGraficoEgresos.MdiParent = Me.MdiParent
+            informeGraficoEgresos.Show()
+        End If
+
+    End Sub
+
+    Private Function ObtenerTodasLasPaginasVentasPorDia(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date)
+
+        Dim paginaActual As Integer = 1
+        Dim tamañoPagina As Integer = 200
+        Dim totalElementos As Integer = 0
+        Dim resultado As DataTable = New DataTable()
+        Do
+            Dim temp As DataTable = NegInformes.ObtenerVentasDia(id_Sucursales, FDesde, FHasta, paginaActual, tamañoPagina, "", SortOrder.None, totalElementos)
+
+            If temp.Rows.Count = 0 Then
+                Exit Do
+            End If
+
+            If paginaActual = 1 Then
+                resultado = temp.Clone()
+            End If
+
+            paginaActual += 1
+
+            For Each item As DataRow In temp.Rows
+                resultado.ImportRow(item)
+            Next
+        Loop
+
+        Return resultado
+    End Function
 
 End Class

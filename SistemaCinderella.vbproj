@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>SistemaCinderella.My.MyApplication</StartupObject>
     <RootNamespace>SistemaCinderella</RootNamespace>
-    <AssemblyName>SistemaCinderellaDesa</AssemblyName>
+    <AssemblyName>SistemaCinderellaDesarrollo</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -21,7 +21,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>ftp://santiagots-001%40208.118.63.49/Cinderelladesa/</PublishUrl>
+    <PublishUrl>ftp://santiagots-001%40ftp.site4now.net/CinderellaDesa/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -31,13 +31,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://santiagots-001-site5.dtempurl.com/</InstallUrl>
-    <ProductName>Sistema Cinderella Desa</ProductName>
+    <InstallUrl>http://santiagots-001-site2.htempurl.com/</InstallUrl>
+    <ProductName>Sistema Cinderella Desarrollo</ProductName>
     <PublisherName>Morpheus</PublisherName>
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>236</ApplicationRevision>
+    <ApplicationRevision>242</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -51,7 +51,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesa.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -62,7 +62,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesa.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -98,7 +98,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesa.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -108,7 +108,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SistemaCinderellaDesa.xml</DocumentationFile>
+    <DocumentationFile>SistemaCinderellaDesarrollo.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -424,6 +424,36 @@
       <DependentUpon>frmFeriados.vb</DependentUpon>
     </Compile>
     <Compile Include="frmFeriados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInformeProducto.Designer.vb">
+      <DependentUpon>frmInformeProducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInformeProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmInformeGraficoEgresos.Designer.vb">
+      <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmInformeGraficoEgresos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmInformeGraficoProducto.Designer.vb">
+      <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmInformeGraficoProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmInformeGraficoVentas.Designer.vb">
+      <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmInformeGraficoVentas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInformeSubcategoria.Designer.vb">
+      <DependentUpon>frmInformeSubcategoria.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInformeSubcategoria.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmInformeVentas.Designer.vb">
@@ -1140,6 +1170,21 @@
     <EmbeddedResource Include="frmFeriados.resx">
       <DependentUpon>frmFeriados.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInformeProducto.resx">
+      <DependentUpon>frmInformeProducto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmInformeGraficoEgresos.resx">
+      <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmInformeGraficoProducto.resx">
+      <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmInformeGraficoVentas.resx">
+      <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInformeSubcategoria.resx">
+      <DependentUpon>frmInformeSubcategoria.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInformeVentas.resx">
       <DependentUpon>frmInformeVentas.vb</DependentUpon>
     </EmbeddedResource>
@@ -1493,8 +1538,10 @@
     <Content Include="Imagenes\flecha_izq.png" />
     <Content Include="Imagenes\fondo_central.jpg" />
     <None Include="Imagenes\Import-Excel.png" />
+    <None Include="Imagenes\Grafico.png" />
     <Content Include="Imagenes\icono_buscar_48.png" />
     <None Include="Imagenes\icono_imprimir.gif" />
+    <None Include="Imagenes\Informe.png" />
     <Content Include="Imagenes\movimientos.png" />
     <None Include="Imagenes\nota_credito.png" />
     <None Include="Imagenes\not_pedido_32.png" />
