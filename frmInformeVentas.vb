@@ -21,7 +21,17 @@ Public Class frmInformeVentas
     Private Sub frmInformeVentas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             Me.Cursor = Cursors.WaitCursor
-            Dim Sucursales As List(Of Sucursales) = NegSucursales.ListadoSucursalesEntidad()
+
+            Dim Sucursales As List(Of Sucursales) = New List(Of Sucursales)
+
+            If VariablesGlobales.objUsuario.id_Perfil = 1 Then 'si es administrador
+                Sucursales = NegSucursales.ListadoSucursalesEntidad()
+
+            Else
+                Sucursales.Add(New Entidades.Sucursales() With {.Nombre = My.Settings.NombreSucursal, .id_Sucursal = My.Settings.Sucursal})
+                cklSucursales.Enabled = False
+            End If
+
             cklSucursales.DataSource = Sucursales
             cklSucursales.DisplayMember = "Nombre"
             cklSucursales.ValueMember = "id_Sucursal"
