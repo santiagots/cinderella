@@ -58,7 +58,7 @@
                 If e.RowIndex >= 0 Then
                     idProducto = DG_Productos.Rows(e.RowIndex).Cells("id_Producto").Value()
                     If idProducto <> "" AndAlso TipoForm = 3 Then
-                        frmCargarMercaderiaEgreso.txt_CodigoBarra.Clear()
+                        frmCargarMercaderiaEgreso.txt_Producto.Clear()
                         frmCargarMercaderiaEgreso.AgregarItem(idProducto, 1)
                     End If
                     Me.Close()
@@ -80,7 +80,7 @@
             Me.Cursor = Cursors.WaitCursor
 
             'Cargo el datagrid
-            dsProductos = NegProductos.ListadoProductosBuscadores()
+            dsProductos = NegProductos.ListadoProductosBuscadores(True)
             If dsProductos IsNot Nothing Then
                 If (dsProductos.Tables(0).Rows.Count > 0) Then
                     DG_Productos.DataSource = dsProductos.Tables(0)

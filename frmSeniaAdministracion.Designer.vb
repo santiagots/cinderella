@@ -24,12 +24,12 @@ Partial Class frmSeniaAdministracion
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSeniaAdministracion))
         Me.tabAdministracionReservas = New System.Windows.Forms.TabControl()
         Me.TabReservas = New System.Windows.Forms.TabPage()
@@ -51,13 +51,6 @@ Partial Class frmSeniaAdministracion
         Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.dgSenia = New System.Windows.Forms.DataGridView()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoSeniaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaAltaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FormaEntregaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.SeniaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.tabDetalle = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -134,6 +127,14 @@ Partial Class frmSeniaAdministracion
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
         Me.ErrorProvider = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoSeniaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaAltaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FormaEntregaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Imprimir = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.tabAdministracionReservas.SuspendLayout()
         Me.TabReservas.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -334,7 +335,7 @@ Partial Class frmSeniaAdministracion
         Me.cmbModoEntrega.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbModoEntrega.FormattingEnabled = True
         Me.cmbModoEntrega.Items.AddRange(New Object() {"Seleccione una opción", "Envió a domicilio", "Retira de la sucursal", "A convenir"})
-        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 33)
+        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 34)
         Me.cmbModoEntrega.Name = "cmbModoEntrega"
         Me.cmbModoEntrega.Size = New System.Drawing.Size(238, 23)
         Me.cmbModoEntrega.TabIndex = 423
@@ -402,7 +403,7 @@ Partial Class frmSeniaAdministracion
         Me.dgSenia.AutoGenerateColumns = False
         Me.dgSenia.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgSenia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgSenia.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Nombre, Me.MontoTotalDataGridViewTextBoxColumn, Me.MontoSeniaDataGridViewTextBoxColumn, Me.FechaAltaDataGridViewTextBoxColumn, Me.FechaEstimadaRetiroDataGridViewTextBoxColumn, Me.FormaEntregaDataGridViewTextBoxColumn, Me.Eliminar})
+        Me.dgSenia.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Nombre, Me.MontoTotalDataGridViewTextBoxColumn, Me.MontoSeniaDataGridViewTextBoxColumn, Me.FechaAltaDataGridViewTextBoxColumn, Me.FechaEstimadaRetiroDataGridViewTextBoxColumn, Me.FormaEntregaDataGridViewTextBoxColumn, Me.Imprimir, Me.Eliminar})
         Me.dgSenia.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dgSenia.DataSource = Me.SeniaBindingSource
         Me.dgSenia.Location = New System.Drawing.Point(8, 148)
@@ -412,58 +413,6 @@ Partial Class frmSeniaAdministracion
         Me.dgSenia.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgSenia.Size = New System.Drawing.Size(860, 538)
         Me.dgSenia.TabIndex = 0
-        '
-        'Nombre
-        '
-        Me.Nombre.HeaderText = "Nombre/R. Social"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'MontoTotalDataGridViewTextBoxColumn
-        '
-        Me.MontoTotalDataGridViewTextBoxColumn.DataPropertyName = "MontoTotal"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.MontoTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.MontoTotalDataGridViewTextBoxColumn.HeaderText = "Monto Total"
-        Me.MontoTotalDataGridViewTextBoxColumn.Name = "MontoTotalDataGridViewTextBoxColumn"
-        Me.MontoTotalDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'MontoSeniaDataGridViewTextBoxColumn
-        '
-        Me.MontoSeniaDataGridViewTextBoxColumn.DataPropertyName = "MontoSenia"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.MontoSeniaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
-        Me.MontoSeniaDataGridViewTextBoxColumn.HeaderText = "Monto Seña"
-        Me.MontoSeniaDataGridViewTextBoxColumn.Name = "MontoSeniaDataGridViewTextBoxColumn"
-        Me.MontoSeniaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'FechaAltaDataGridViewTextBoxColumn
-        '
-        Me.FechaAltaDataGridViewTextBoxColumn.DataPropertyName = "FechaAlta"
-        Me.FechaAltaDataGridViewTextBoxColumn.HeaderText = "Fecha Alta"
-        Me.FechaAltaDataGridViewTextBoxColumn.Name = "FechaAltaDataGridViewTextBoxColumn"
-        Me.FechaAltaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'FechaEstimadaRetiroDataGridViewTextBoxColumn
-        '
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.DataPropertyName = "FechaEstimadaRetiro"
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.HeaderText = "Fecha Estimada Retiro"
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.Name = "FechaEstimadaRetiroDataGridViewTextBoxColumn"
-        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'FormaEntregaDataGridViewTextBoxColumn
-        '
-        Me.FormaEntregaDataGridViewTextBoxColumn.DataPropertyName = "FormaEntrega"
-        Me.FormaEntregaDataGridViewTextBoxColumn.HeaderText = "Forma Entrega"
-        Me.FormaEntregaDataGridViewTextBoxColumn.Name = "FormaEntregaDataGridViewTextBoxColumn"
-        Me.FormaEntregaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'Eliminar
-        '
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
         '
         'SeniaBindingSource
         '
@@ -651,7 +600,7 @@ Partial Class frmSeniaAdministracion
         Me.ddlEntrega.Enabled = False
         Me.ddlEntrega.FormattingEnabled = True
         Me.ddlEntrega.Items.AddRange(New Object() {"Seleccione una opción", "Envió a domicilio", "Retira de la sucursal", "A convenir"})
-        Me.ddlEntrega.Location = New System.Drawing.Point(143, 93)
+        Me.ddlEntrega.Location = New System.Drawing.Point(143, 94)
         Me.ddlEntrega.Name = "ddlEntrega"
         Me.ddlEntrega.Size = New System.Drawing.Size(234, 23)
         Me.ddlEntrega.TabIndex = 9
@@ -1365,6 +1314,67 @@ Partial Class frmSeniaAdministracion
         '
         Me.ErrorProvider.ContainerControl = Me
         '
+        'Nombre
+        '
+        Me.Nombre.HeaderText = "Nombre/R. Social"
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        '
+        'MontoTotalDataGridViewTextBoxColumn
+        '
+        Me.MontoTotalDataGridViewTextBoxColumn.DataPropertyName = "MontoTotal"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.MontoTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        Me.MontoTotalDataGridViewTextBoxColumn.HeaderText = "Monto Total"
+        Me.MontoTotalDataGridViewTextBoxColumn.Name = "MontoTotalDataGridViewTextBoxColumn"
+        Me.MontoTotalDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'MontoSeniaDataGridViewTextBoxColumn
+        '
+        Me.MontoSeniaDataGridViewTextBoxColumn.DataPropertyName = "MontoSenia"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.MontoSeniaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        Me.MontoSeniaDataGridViewTextBoxColumn.HeaderText = "Monto Seña"
+        Me.MontoSeniaDataGridViewTextBoxColumn.Name = "MontoSeniaDataGridViewTextBoxColumn"
+        Me.MontoSeniaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FechaAltaDataGridViewTextBoxColumn
+        '
+        Me.FechaAltaDataGridViewTextBoxColumn.DataPropertyName = "FechaAlta"
+        Me.FechaAltaDataGridViewTextBoxColumn.HeaderText = "Fecha Alta"
+        Me.FechaAltaDataGridViewTextBoxColumn.Name = "FechaAltaDataGridViewTextBoxColumn"
+        Me.FechaAltaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FechaEstimadaRetiroDataGridViewTextBoxColumn
+        '
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.DataPropertyName = "FechaEstimadaRetiro"
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.HeaderText = "Fecha Estimada Retiro"
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.Name = "FechaEstimadaRetiroDataGridViewTextBoxColumn"
+        Me.FechaEstimadaRetiroDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FormaEntregaDataGridViewTextBoxColumn
+        '
+        Me.FormaEntregaDataGridViewTextBoxColumn.DataPropertyName = "FormaEntrega"
+        Me.FormaEntregaDataGridViewTextBoxColumn.HeaderText = "Forma Entrega"
+        Me.FormaEntregaDataGridViewTextBoxColumn.Name = "FormaEntregaDataGridViewTextBoxColumn"
+        Me.FormaEntregaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'Imprimir
+        '
+        Me.Imprimir.HeaderText = "Imprimir"
+        Me.Imprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
+        Me.Imprimir.Name = "Imprimir"
+        Me.Imprimir.ReadOnly = True
+        Me.Imprimir.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Imprimir.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'Eliminar
+        '
+        Me.Eliminar.HeaderText = "Eliminar"
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        '
         'frmSeniaAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1488,13 +1498,6 @@ Partial Class frmSeniaAdministracion
     Friend WithEvents DG_Productos As DataGridView
     Friend WithEvents Btn_Finalizar As Button
     Friend WithEvents ErrorProvider As ErrorProvider
-    Friend WithEvents Nombre As DataGridViewTextBoxColumn
-    Friend WithEvents MontoTotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents MontoSeniaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents FechaAltaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents FechaEstimadaRetiroDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents FormaEntregaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents CODIGO As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents CANTIDAD As DataGridViewTextBoxColumn
@@ -1510,4 +1513,12 @@ Partial Class frmSeniaAdministracion
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
+    Friend WithEvents Nombre As DataGridViewTextBoxColumn
+    Friend WithEvents MontoTotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents MontoSeniaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FechaAltaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FechaEstimadaRetiroDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FormaEntregaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Imprimir As DataGridViewImageColumn
+    Friend WithEvents Eliminar As DataGridViewImageColumn
 End Class

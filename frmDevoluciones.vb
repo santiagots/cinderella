@@ -60,7 +60,7 @@ Public Class frmDevoluciones
         txt_CodigoBarra.Clear()
         txt_CodigoBarra.Focus()
 
-        CargraListaProductos(My.Settings.UsarMemoriaCache)
+        CargraListaProductos()
 
         PanelTotalMayorista.Location = PanelTotalMinorista.Location
 
@@ -1078,7 +1078,7 @@ Public Class frmDevoluciones
     End Function
 
     Private Function CargarComboTiposPagos(tipoCliente As TipoCliente) As DataSet
-        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
+        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagos()
         Dim filtro As String
 
         'Elimino la forma de pago Cheque
@@ -1291,16 +1291,9 @@ Public Class frmDevoluciones
         End If
     End Sub
 
-    Private Sub btn_ActualizarListaProductos_Click(sender As Object, e As EventArgs) Handles btn_ActualizarListaProductos.Click
-        Me.Cursor = Cursors.WaitCursor
-        CargraListaProductos(False)
-        MessageBox.Show("El listado de productos se ha actualizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Me.Cursor = Cursors.Arrow
-    End Sub
-
-    Private Sub CargraListaProductos(usarCache)
+    Private Sub CargraListaProductos()
         'Obtengo el listado de productos guardados en cache
-        dsProductos = NegProductos.ListadoProductosCache(usarCache)
+        dsProductos = NegProductos.ListadoProductos(True)
 
         'Armo una lista que contiene los nombres y codigos de todos los producto
         Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()

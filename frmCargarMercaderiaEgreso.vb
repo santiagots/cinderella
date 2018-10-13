@@ -6,8 +6,9 @@
     Dim EntProducto As New Entidades.Productos
     Dim NegProductos As New Negocio.NegProductos
     Public Nombre_Sucursal_Destino As String
-    Public dsProductos As New DataTable
+    Public dtProductos As New DataTable
     Dim NegStock As New Negocio.NegStock
+    Dim dsProductos As DataSet
 
 #Region "Eventos del formulario"
     'Load del formulario.
@@ -32,13 +33,24 @@
             DG_Productos.Columns("id_Producto").Visible = False
 
             'Borro el textbox
-            txt_CodigoBarra.Clear()
-            txt_CodigoBarra.Focus()
+            txt_Producto.Clear()
+            txt_Producto.Focus()
 
             'Si mando productos, los cargo en la grilla.
-            If dsProductos IsNot Nothing And dsProductos.Rows.Count > 0 Then
-                AgregarItemsDeBDD(dsProductos)
+            If dtProductos IsNot Nothing And dtProductos.Rows.Count > 0 Then
+                AgregarItemsDeBDD(dtProductos)
             End If
+
+            'Obtengo el listado de productos guardados en cache
+            dsProductos = NegProductos.ListadoProductos(True)
+
+            'Armo una lista que contiene los nombres y codigos de todos los producto
+            Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
+
+            listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Nombre").ToString).ToArray())
+            listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Codigo").ToString).ToArray())
+
+            txt_Producto.AutoCompleteCustomSource = listaNombreCodigoProductos
 
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -113,32 +125,15 @@
     End Sub
 
     'Evento que se ejecuta al ingresar valores en el textbox de codigo de barra.
-    Private Sub txt_CodigoBarra_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txt_CodigoBarra.KeyPress
-        If e.KeyChar = ChrW(Keys.Enter) Then
-            Dim CodigoBarra As String = Trim(txt_CodigoBarra.Text)
-            If CodigoBarra <> "" Then 'Si el campo no está vacio.
-                If CodigoBarra.Length > 1 And CodigoBarra.Length < 13 Then 'Si es codigo de producto.
-                    Me.Cursor = Cursors.WaitCursor
-                    Funciones.ControlInstancia(frmCargarMercaderiaCantidad).MdiParent = MDIContenedor
-                    frmCargarMercaderiaCantidad.Codigo = CodigoBarra
-                    frmCargarMercaderiaCantidad.Tipo = 3
-                    Funciones.ControlInstancia(frmCargarMercaderiaCantidad).Show()
-                    Me.Cursor = Cursors.Arrow
-                ElseIf CodigoBarra.Length >= 13 And IsNumeric(CodigoBarra) Then 'Si es codigo de barra.
-                    Me.Cursor = Cursors.WaitCursor
-                    Funciones.ControlInstancia(frmCargarMercaderiaCantidad).MdiParent = MDIContenedor
-                    frmCargarMercaderiaCantidad.Codigo = CodigoBarra
-                    frmCargarMercaderiaCantidad.Tipo = 2
-                    Funciones.ControlInstancia(frmCargarMercaderiaCantidad).Show()
-                    Me.Cursor = Cursors.Arrow
-                ElseIf CodigoBarra.Length >= 13 Then 'Si es codigo de barra.
-                    txt_CodigoBarra.Clear()
-                    txt_CodigoBarra.Focus()
-                End If
-
-            Else 'si el campo está vacio.
-                txt_CodigoBarra.Focus()
-                MessageBox.Show("Ingrese un código de barra o un código de producto.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+    Private Sub txt_Producto_KeyPress(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txt_Producto.KeyDown
+        If e.KeyData = Keys.Enter Then
+            Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_Producto.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_Producto.Text.ToUpper()).FirstOrDefault()
+            If (dr IsNot Nothing) Then
+                Funciones.ControlInstancia(frmCargarMercaderiaCantidad).MdiParent = MDIContenedor
+                frmCargarMercaderiaCantidad.IdProducto = dr(3)
+                Funciones.ControlInstancia(frmCargarMercaderiaCantidad).Show()
+            Else
+                MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
     End Sub
@@ -201,14 +196,19 @@
         End If
     End Sub
 
-    'Abre la ventana de busqueda de productos.
-    Private Sub Btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar.Click
+    Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmBuscarProducto).MdiParent = MDIContenedor
-        Funciones.ControlInstancia(frmBuscarProducto).Show()
-        frmBuscarProducto.TipoForm = 3
+        Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_Producto.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_Producto.Text.ToUpper()).FirstOrDefault()
+        If (dr IsNot Nothing) Then
+            Funciones.ControlInstancia(frmCargarMercaderiaCantidad).MdiParent = MDIContenedor
+            frmCargarMercaderiaCantidad.IdProducto = dr(3)
+            Funciones.ControlInstancia(frmCargarMercaderiaCantidad).Show()
+        Else
+            MessageBox.Show("El código o nombre de producto no existe. Por favor verifique la información ingresada sea la correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
         Me.Cursor = Cursors.Arrow
     End Sub
+
 #End Region
 
 #Region "Funciones del formulario"
@@ -216,13 +216,13 @@
     Sub LimpiarFormDevoluciones()
         DG_Productos.Rows.Clear()
         txt_Cantidad.Text = 0
-        txt_CodigoBarra.Clear()
+        txt_Producto.Clear()
         txt_Total.Text = "0,00"
-        txt_CodigoBarra.Focus()
+        txt_Producto.Focus()
     End Sub
 
     'Funcion que agrega un nuevo item al DATAGRID - Tipo: 1-ID | 2-CODIGO DE BARRA | 3-CODIGO
-    Public Sub AgregarItem(ByVal Numero As String, ByVal Tipo As Integer, Optional ByVal Cantidad As Integer = 1)
+    Public Sub AgregarItem(ByVal id_Producto As Integer, Optional ByVal Cantidad As Integer = 1)
         Try
             'Seteo el cursor.
             Me.Cursor = Cursors.WaitCursor
@@ -233,25 +233,13 @@
             Dim subtotal As Double = 0
             Dim Repetido As Boolean = False
             Dim SinStock As Boolean = False
-            Dim CodigoBarras As String
-            Dim id_Producto As Integer
-            Dim Codigo As String = ""
 
-            If Tipo = 1 Then 'Si manda el ID
-                id_Producto = Numero
-                EntProducto = NegProductos.TraerProducto(id_Producto) 'Traigo el producto.      
-            ElseIf Tipo = 2 Then 'Si manda el CODIGO DE BARRA
-                CodigoBarras = Numero
-                EntProducto = NegProductos.TraerProductoPorCodBarra(CodigoBarras) 'Traigo el producto.      
-            Else 'Si manda el CODIGO DE PRODUCTO
-                Codigo = Numero
-                EntProducto = NegProductos.TraerProductoPorCodigo(Codigo) 'Traigo el producto.      
-            End If
+            EntProducto = NegProductos.TraerProducto(id_Producto) 'Traigo el producto.      
 
             'Si no encuentra el producto, sale de la funcion.
             If EntProducto.id_Producto = 0 Then
-                txt_CodigoBarra.Clear()
-                txt_CodigoBarra.Focus()
+                txt_Producto.Clear()
+                txt_Producto.Focus()
                 Me.Cursor = Cursors.Arrow
                 MessageBox.Show("No se ha encontrado el producto. Por favor, intente nuevamente.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Exit Sub
@@ -351,8 +339,8 @@
             txt_Cantidad.Text = CalcularCantidadTotal()
 
             'Borro el textbox
-            txt_CodigoBarra.Clear()
-            txt_CodigoBarra.Focus()
+            txt_Producto.Clear()
+            txt_Producto.Focus()
 
             'Seteo el cursor.
             Me.Cursor = Cursors.Arrow

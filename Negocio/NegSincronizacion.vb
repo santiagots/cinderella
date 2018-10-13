@@ -4,6 +4,7 @@ Imports Datos
 Imports System.Linq
 Imports System.Collections.Generic
 Imports System.IO
+Imports System.Reflection
 
 Public Class NegSincronizacion
     Dim objUsuario As Entidades.Usuario
@@ -22,7 +23,7 @@ Public Class NegSincronizacion
         Try
             CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
             miconexion = New SqlConnection
-            miconexion.ConnectionString = CadenaConexion
+            miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
             estado = True
             miconexion.Dispose()
@@ -61,7 +62,7 @@ Public Class NegSincronizacion
             'conexion local
             CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
             miconexion = New SqlConnection
-            miconexion.ConnectionString = CadenaConexion
+            miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
 
             Dim transaccion As SqlTransaction

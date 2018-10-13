@@ -20,15 +20,6 @@ Public Class frmConfiguracion
         'Lista de Precios cargada en el app.config.
         lbl_NombreListaActual.Text = My.Settings("NombreListaPrecio")
 
-        'Periodo de tiempo para la actualizacion de la memoria Cache
-        Cb_TiempoActualizacionMemoriaChace.SelectedItem = My.Settings.TemporizadorActualizacionMemoriaCache.ToString()
-
-        If My.Settings.UsarMemoriaCache Then
-            RUsoMemoriaChaceSi.Checked = True
-        Else
-            RUsoMemoriaChaceNo.Checked = True
-        End If
-
         txt_RazonSocial.Text = My.Settings.RazonSocial
 
         'Cargo el listado de sucursales.
@@ -93,8 +84,6 @@ Public Class frmConfiguracion
         Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
         Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
         Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
-        Cb_TiempoComprobacionNotasPedidos.SelectedItem = CStr(CInt((My.Settings("TemporizadorNotasPedido") / 60000)))
-        Cb_TiempoComprobacionOrdenesCompra.SelectedItem = CStr(CInt((My.Settings("TemporizadorOrdenesCompra") / 60000)))
 
 
         'Comprobacion de internet.
@@ -144,8 +133,6 @@ Public Class frmConfiguracion
 
                 My.Settings.Sucursal = Cb_Sucursales.SelectedValue
                 My.Settings.NombreSucursal = Cb_Sucursales.SelectedItem("Nombre").ToString
-                My.Settings.TemporizadorActualizacionMemoriaCache = Cb_TiempoActualizacionMemoriaChace.SelectedItem
-                My.Settings.UsarMemoriaCache = If(RUsoMemoriaChaceSi.Checked, True, False)
                 My.Settings.RazonSocial = txt_RazonSocial.Text
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -258,8 +245,6 @@ Public Class frmConfiguracion
                 My.Settings.TemporizadorMensajes = (Cb_TiempoComprobacionMensajes.SelectedItem * 60000)
                 My.Settings.TemporizadorMovimientos = (Cb_TiempoComprobacionMovimientos.SelectedItem * 60000)
                 My.Settings.TemporizadorCheques = (Cb_TiempoComprobacionCheques.SelectedItem * 60000)
-                My.Settings.TemporizadorNotasPedido = (Cb_TiempoComprobacionNotasPedidos.SelectedItem * 60000)
-                My.Settings.TemporizadorOrdenesCompra = (Cb_TiempoComprobacionOrdenesCompra.SelectedItem * 60000)
 
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -516,32 +501,6 @@ Public Class frmConfiguracion
         Else
             btnModificarHost.Enabled = False
         End If
-    End Sub
-
-    Private Sub btn_ActualizarListaProductos_Click(sender As Object, e As EventArgs) Handles btn_ActualizarListaProductos.Click
-        Me.Cursor = Cursors.WaitCursor
-        Dim negTipoPago As NegTipoPago = New NegTipoPago()
-        negTipoPago.ListadoTiposPagosCache(False)
-
-        NegTarjeta.TraerTarjetasCache(False)
-
-        Dim negProductos As NegProductos = New NegProductos()
-        negProductos.ListadoProductosCache(False)
-
-        Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
-        negListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
-        MessageBox.Show("La memoria cache se ha actualizado correctamente.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Me.Cursor = Cursors.Arrow
-    End Sub
-
-    Private Sub RUsoMemoriaChaceNo_CheckedChanged(sender As Object, e As EventArgs) Handles RUsoMemoriaChaceNo.CheckedChanged
-        Cb_TiempoActualizacionMemoriaChace.Enabled = False
-        btn_ActualizarListaProductos.Enabled = False
-    End Sub
-
-    Private Sub RUsoMemoriaChaceSi_CheckedChanged(sender As Object, e As EventArgs) Handles RUsoMemoriaChaceSi.CheckedChanged
-        Cb_TiempoActualizacionMemoriaChace.Enabled = True
-        btn_ActualizarListaProductos.Enabled = True
     End Sub
 
     Private Sub btnCalcularVentaMensualProducto_Click(sender As Object, e As EventArgs) Handles btnCalcularVentaMensualProducto.Click

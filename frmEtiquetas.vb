@@ -14,7 +14,7 @@ Public Class frmEtiquetas
 
     Private Sub CargarProductos()
         'Obtengo el listado de productos guardados en cache
-        dsProductos = NegProductos.ListadoProductosCache(My.Settings.UsarMemoriaCache)
+        dsProductos = NegProductos.ListadoProductos(True)
 
         'Armo una lista que contiene los nombres y codigos de todos los producto
         Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()

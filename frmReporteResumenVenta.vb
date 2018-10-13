@@ -42,7 +42,7 @@ Public Class frmReporteResumenVenta
         Dim descuento As Double = CType(dsVentas.Tables(0).Rows(0).Item("Descuento").ToString, Double)
         Dim costoFinanciero As Double = CType(dsVentas.Tables(0).Rows(0).Item("CostoFinanciero").ToString, Double)
         Dim precioTotal As Double = CType(dsVentas.Tables(0).Rows(0).Item("Precio_Total").ToString, Double)
-
+        Dim iva As Double = 0
 
         Dim dsventaDetalles As DataSet = negVenta.TraerVentaDetalle(idVenta)
 
@@ -51,6 +51,9 @@ Public Class frmReporteResumenVenta
             Dim entProducto As Entidades.Productos = negProductos.TraerProducto(ventaDetalle.item("id_Producto"))
 
             AgregarItemATabla(entProducto, ventaDetalle.item("Cantidad"), ventaDetalle.item("Precio"), ventaDetalle.item("Iva"), ventaDetalle.item("Monto"))
+            If (tiposVenta.ToUpper() = "MAYORISTA") Then
+                iva += ventaDetalle.item("Iva") * ventaDetalle.item("Cantidad")
+            End If
         Next
 
         Dim empleado As Empleados = negEmpleados.TraerEmpleadoPorIdEmpleado(id_Empleado)
@@ -70,7 +73,7 @@ Public Class frmReporteResumenVenta
         CType(rpt.ReportDefinition.ReportObjects("TxtSubTotal"), TextObject).Text = subTotal.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtDescuento"), TextObject).Text = descuento.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtCostoFinanciero"), TextObject).Text = costoFinanciero.ToString("C2")
-        CType(rpt.ReportDefinition.ReportObjects("TxtIVA"), TextObject).Text = If(tiposVenta.ToUpper() = "MINORISTA", 0.ToString("C2"), (subTotal * 0.21).ToString("C2"))
+        CType(rpt.ReportDefinition.ReportObjects("TxtIVA"), TextObject).Text = iva.ToString("C2")
         CType(rpt.ReportDefinition.ReportObjects("TxtTotal"), TextObject).Text = precioTotal.ToString("C2")
 
         CrViewer.ReportSource = rpt

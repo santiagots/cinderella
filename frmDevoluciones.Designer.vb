@@ -63,7 +63,6 @@ Partial Class frmDevoluciones
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
-        Me.btn_ActualizarListaProductos = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.GB_ListaPrecio = New System.Windows.Forms.GroupBox()
@@ -561,7 +560,6 @@ Partial Class frmDevoluciones
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.Btn_Agregar, 2, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.btn_ActualizarListaProductos, 1, 0)
         Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel5.Location = New System.Drawing.Point(203, 33)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
@@ -584,21 +582,6 @@ Partial Class frmDevoluciones
         Me.Btn_Agregar.Text = "Agregar"
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Agregar.UseVisualStyleBackColor = True
-        '
-        'btn_ActualizarListaProductos
-        '
-        Me.btn_ActualizarListaProductos.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btn_ActualizarListaProductos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_ActualizarListaProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_ActualizarListaProductos.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
-        Me.btn_ActualizarListaProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_ActualizarListaProductos.Location = New System.Drawing.Point(143, 7)
-        Me.btn_ActualizarListaProductos.Name = "btn_ActualizarListaProductos"
-        Me.btn_ActualizarListaProductos.Size = New System.Drawing.Size(104, 34)
-        Me.btn_ActualizarListaProductos.TabIndex = 13
-        Me.btn_ActualizarListaProductos.Text = "Actualizar"
-        Me.btn_ActualizarListaProductos.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_ActualizarListaProductos.UseVisualStyleBackColor = True
         '
         'Label9
         '
@@ -1231,7 +1214,6 @@ Partial Class frmDevoluciones
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents txt_CodigoBarra As TextBox
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
-    Friend WithEvents btn_ActualizarListaProductos As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents txt_PorcentajeFacturacion As NumericUpDown
     Friend WithEvents TableLayoutPanel12 As TableLayoutPanel

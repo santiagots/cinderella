@@ -105,7 +105,7 @@
                     'Consulto los productos.
                     dsProductos = NegMovimiento.ObtenerMovEgresoMercaderias(id_Movimiento, id_Sucursal).Tables(0)
                     If dsProductos IsNot Nothing And dsProductos.Rows.Count > 0 Then
-                        frmCargarMercaderiaEgreso.dsProductos = dsProductos
+                        frmCargarMercaderiaEgreso.dtProductos = dsProductos
                         lblMercaderias.Text = ""
                         lblMercaderias.Text = "(Total de Mercadería: " & dsProductos.Rows.Count & " producto/s.)"
                         lblMercaderias.Visible = True
@@ -371,7 +371,7 @@
         If CbSucursal.SelectedValue <> 0 Then
             Me.Cursor = Cursors.WaitCursor
             frmCargarMercaderiaEgreso.Nombre_Sucursal_Destino = DirectCast(CbSucursal.SelectedItem, System.Data.DataRowView).Row.ItemArray(1)
-            frmCargarMercaderiaEgreso.dsProductos = dsProductos
+            frmCargarMercaderiaEgreso.dtProductos = dsProductos
             Funciones.ControlInstancia(frmCargarMercaderiaEgreso).MdiParent = MDIContenedor
             Funciones.ControlInstancia(frmCargarMercaderiaEgreso).Show()
             Me.Cursor = Cursors.Arrow

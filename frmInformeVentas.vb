@@ -4,6 +4,11 @@ Imports Negocio
 
 Public Class frmInformeVentas
     Dim NegSucursales As NegSucursales = New NegSucursales()
+    Dim NegCategoria As NegProductosCategorias = New NegProductosCategorias()
+    Dim NegSubcategoria As NegProductosSubcategorias = New NegProductosSubcategorias()
+    Dim NegProductos As NegProductos = New NegProductos()
+    Dim Funciones As Funciones = New Funciones()
+    Dim dsProductos As DataSet
 
     Dim dtGraficoPorTotalTipoCliente As DataTable
     Dim dtGraficoPorTotalFacturado As DataTable
@@ -16,7 +21,9 @@ Public Class frmInformeVentas
     Dim sucursalesId As List(Of Integer)
     Dim fechaDesde As Date
     Dim fechaHasta As Date
-
+    Dim idProducto As String
+    Dim idCategoria As String
+    Dim idSubcategoria As String
 
     Private Sub frmInformeVentas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
@@ -42,12 +49,70 @@ Public Class frmInformeVentas
 
             dtpFechaDesde.Value = Date.Now.AddDays(-30)
 
+            Dim dsCategorias As DataSet = NegCategoria.ListadoCategorias()
+            If dsCategorias.Tables(0).Rows.Count > 0 Then
+                cmbCategoria.DataSource = Funciones.CrearDataTable("id_Categoria", "Descripcion", dsCategorias, "Todas las categorías.")
+                cmbCategoria.DisplayMember = "Descripcion"
+                cmbCategoria.ValueMember = "id_Categoria"
+                cmbCategoria.SelectedValue = 0
+            End If
+
+            Dim dsSubcategorias As DataSet = NegSubcategoria.ListadoSubcategoriasCompleto()
+            If dsSubcategorias.Tables(0).Rows.Count > 0 Then
+                cmbSubcategoria.DataSource = Funciones.CrearDataTable("id_Subcategoria", "Descripcion", dsSubcategorias, "Todas las subcategorías.")
+                cmbSubcategoria.DisplayMember = "Descripcion"
+                cmbSubcategoria.ValueMember = "id_Subcategoria"
+                cmbSubcategoria.SelectedValue = 0
+            End If
+
+            'Obtengo el listado de productos guardados en cache
+            dsProductos = NegProductos.ListadoProductos(True)
+
+            'Armo una lista que contiene los nombres y codigos de todos los producto
+            Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
+
+            listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Nombre").ToString).ToArray())
+            listaNombreCodigoProductos.AddRange(dsProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.Item("Codigo").ToString).ToArray())
+
+            txtProducto.AutoCompleteCustomSource = listaNombreCodigoProductos
+
             LimpiarInformes()
             BuscarDatos()
 
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar los productos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
+    End Sub
+
+    Private Sub cmbCategoria_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbCategoria.SelectionChangeCommitted
+        Try
+            Me.Cursor = Cursors.WaitCursor
+            If cmbCategoria.SelectedValue <> 0 Then
+                Dim dsSubcategorias As DataSet = NegSubcategoria.ListadoSubcategorias(cmbCategoria.SelectedValue)
+                If dsSubcategorias.Tables(0).Rows.Count > 0 Then
+                    cmbSubcategoria.DataSource = Funciones.CrearDataTable("id_Subcategoria", "Descripcion", dsSubcategorias, "Todas las subcategorías.")
+                    cmbSubcategoria.DisplayMember = "Descripcion"
+                    cmbSubcategoria.ValueMember = "id_Subcategoria"
+                    cmbSubcategoria.SelectedValue = 0
+                    cmbSubcategoria.Refresh()
+                End If
+            Else
+                Dim dsSubcategorias As DataSet = NegSubcategoria.ListadoSubcategoriasCompleto()
+                If dsSubcategorias.Tables(0).Rows.Count > 0 Then
+                    cmbSubcategoria.DataSource = Funciones.CrearDataTable("id_Subcategoria", "Descripcion", dsSubcategorias, "Todas las subcategorías.")
+                    cmbSubcategoria.DisplayMember = "Descripcion"
+                    cmbSubcategoria.ValueMember = "id_Subcategoria"
+                    cmbSubcategoria.SelectedValue = 0
+                    cmbSubcategoria.Refresh()
+                End If
+            End If
             Me.Cursor = Cursors.Arrow
         Catch ex As Exception
-
+            MessageBox.Show("Se ha producido un error al consultar los productos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
         End Try
     End Sub
 
@@ -134,6 +199,11 @@ Public Class frmInformeVentas
         ucPaginadoProductos.PaginaTamaño = 50
         ucPaginadoProductos.PaginaActual = 1
 
+        ucPaginadoCategoria.OrdenColumna = dgvSubCategorias.Columns(0).DataPropertyName
+        ucPaginadoCategoria.OrdenDireccion = SortOrder.Descending
+        ucPaginadoCategoria.PaginaTamaño = 50
+        ucPaginadoCategoria.PaginaActual = 1
+
         ucPaginadoSubcategoria.OrdenColumna = dgvSubCategorias.Columns(0).DataPropertyName
         ucPaginadoSubcategoria.OrdenDireccion = SortOrder.Descending
         ucPaginadoSubcategoria.PaginaTamaño = 50
@@ -167,6 +237,10 @@ Public Class frmInformeVentas
             sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
             fechaDesde = dtpFechaDesde.Value
             fechaHasta = dtpFechaHasta.Value
+            idProducto = BuscarProducto()
+            idCategoria = BuscarCategoria()
+            idSubcategoria = BuscarSubcategoria()
+
 
             Dim datosVentas As List(Of InformeVenta) = NegInformes.ObtenerVentas(sucursalesId, fechaDesde, fechaHasta)
             TotalGeneralVentas(datosVentas)
@@ -202,6 +276,12 @@ Public Class frmInformeVentas
             Productos()
 
             frmEspera.lbl_Descripcion.Text = "Obteniendo Subcategorias..."
+            frmEspera.BarraProgreso.Value += 1
+            frmEspera.Refresh()
+
+            Categrias()
+
+            frmEspera.lbl_Descripcion.Text = "Obteniendo Egresos..."
             frmEspera.BarraProgreso.Value += 1
             frmEspera.Refresh()
 
@@ -374,7 +454,7 @@ Public Class frmInformeVentas
             Me.Cursor = Cursors.WaitCursor
 
             dgvProductos.AutoGenerateColumns = False
-            dgvProductos.DataSource = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.PaginaTamaño, ucPaginadoProductos.OrdenColumna, ucPaginadoProductos.OrdenDireccion, ucPaginadoProductos.TotalElementos)
+            dgvProductos.DataSource = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.PaginaTamaño, ucPaginadoProductos.OrdenColumna, ucPaginadoProductos.OrdenDireccion, ucPaginadoProductos.TotalElementos)
 
         Catch ex As Exception
             MessageBox.Show("Se ha producido un error al consultar los productos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -385,12 +465,26 @@ Public Class frmInformeVentas
 
     End Sub
 
+    Private Sub Categrias()
+        Try
+            Me.Cursor = Cursors.WaitCursor
+
+            dgvCategorias.AutoGenerateColumns = False
+            dgvCategorias.DataSource = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, ucPaginadoSubcategoria.PaginaActual, ucPaginadoSubcategoria.PaginaTamaño, ucPaginadoSubcategoria.OrdenColumna, ucPaginadoSubcategoria.OrdenDireccion, ucPaginadoSubcategoria.TotalElementos)
+
+        Catch ex As Exception
+            MessageBox.Show("Se ha producido un error al consultar las subcategorias. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Cursor = Cursors.Arrow
+        End Try
+    End Sub
+
     Private Sub SubCategrias()
         Try
             Me.Cursor = Cursors.WaitCursor
 
             dgvSubCategorias.AutoGenerateColumns = False
-            dgvSubCategorias.DataSource = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, ucPaginadoSubcategoria.PaginaActual, ucPaginadoSubcategoria.PaginaTamaño, ucPaginadoSubcategoria.OrdenColumna, ucPaginadoSubcategoria.OrdenDireccion, ucPaginadoSubcategoria.TotalElementos)
+            dgvSubCategorias.DataSource = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, ucPaginadoSubcategoria.PaginaActual, ucPaginadoSubcategoria.PaginaTamaño, ucPaginadoSubcategoria.OrdenColumna, ucPaginadoSubcategoria.OrdenDireccion, ucPaginadoSubcategoria.TotalElementos)
 
         Catch ex As Exception
             MessageBox.Show("Se ha producido un error al consultar las subcategorias. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -551,6 +645,10 @@ Public Class frmInformeVentas
         lblMensajeProductosProductos.Visible = Not dgvProductos.RowCount > 0
     End Sub
 
+    Private Sub dgvCategorias_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvCategorias.DataBindingComplete
+        lblMensajeCategoriasProductos.Visible = Not dgvProductos.RowCount > 0
+    End Sub
+
     Private Sub dgvSubCategorias_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dgvSubCategorias.DataBindingComplete
         lblMensajeSubcategoriasProductos.Visible = Not dgvSubCategorias.RowCount > 0
     End Sub
@@ -564,56 +662,32 @@ Public Class frmInformeVentas
     End Sub
 
     Private Sub dgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellDoubleClick
-        Dim Funciones As New Funciones
-        Dim informeProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
-        informeProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        informeProducto.fechaDesde = dtpFechaDesde.Value
-        informeProducto.fechaHasta = dtpFechaHasta.Value
-        informeProducto.idProducto = dgvProductos.CurrentRow.Cells("ProductoId").Value
-        informeProducto.nombreProducto = dgvProductos.CurrentRow.Cells("ProductoNombre").Value
-        informeProducto.MdiParent = Me.MdiParent
-        informeProducto.Show()
+        ProductosDetalle(dgvProductos.CurrentRow.Cells("ProductoId").Value, idCategoria, idSubcategoria)
     End Sub
 
     Private Sub dgvProductos_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellClick
-        Dim Funciones As New Funciones
-
         If (dgvProductos.Columns(e.ColumnIndex).Name = "ProductoDetalle") Then
-            Dim informeProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
-            informeProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-            informeProducto.fechaDesde = dtpFechaDesde.Value
-            informeProducto.fechaHasta = dtpFechaHasta.Value
-            informeProducto.idProducto = dgvProductos.CurrentRow.Cells("ProductoId").Value
-            informeProducto.nombreProducto = dgvProductos.CurrentRow.Cells("ProductoNombre").Value
-            informeProducto.MdiParent = Me.MdiParent
-            informeProducto.Show()
+            ProductosDetalle(dgvProductos.CurrentRow.Cells("ProductoId").Value, idCategoria, idSubcategoria)
+        End If
+    End Sub
+
+    Private Sub dgvCategorias_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategorias.CellDoubleClick
+        ProductosDetalle(idProducto, dgvCategorias.CurrentRow.Cells("CategoriaId").Value, idSubcategoria)
+    End Sub
+
+    Private Sub dgvCategorias_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategorias.CellClick
+        If (dgvCategorias.Columns(e.ColumnIndex).Name = "CategoriaDetalle") Then
+            ProductosDetalle(idProducto, dgvCategorias.CurrentRow.Cells("CategoriaId").Value, idSubcategoria)
         End If
     End Sub
 
     Private Sub dgvSubCategorias_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellDoubleClick
-        Dim Funciones As New Funciones
-        Dim informeSubcategoria As frmInformeSubcategoria = Funciones.ControlInstancia(frmInformeSubcategoria)
-        informeSubcategoria.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        informeSubcategoria.fechaDesde = dtpFechaDesde.Value
-        informeSubcategoria.fechaHasta = dtpFechaHasta.Value
-        informeSubcategoria.idSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaId").Value
-        informeSubcategoria.nombreSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaNombre").Value
-        informeSubcategoria.MdiParent = Me.MdiParent
-        informeSubcategoria.Show()
+        ProductosDetalle(idProducto, idCategoria, dgvSubCategorias.CurrentRow.Cells("SubcategoriaId").Value)
     End Sub
 
     Private Sub dgvSubCategorias_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellClick
-        Dim Funciones As New Funciones
-
-        If (dgvProductos.Columns(e.ColumnIndex).Name = "SubcategoriaDetalle") Then
-            Dim informeSubcategoria As frmInformeSubcategoria = Funciones.ControlInstancia(frmInformeSubcategoria)
-            informeSubcategoria.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-            informeSubcategoria.fechaDesde = dtpFechaDesde.Value
-            informeSubcategoria.fechaHasta = dtpFechaHasta.Value
-            informeSubcategoria.idSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaId").Value
-            informeSubcategoria.nombreSubcategoria = dgvSubCategorias.CurrentRow.Cells("SubcategoriaNombre").Value
-            informeSubcategoria.MdiParent = Me.MdiParent
-            informeSubcategoria.Show()
+        If (dgvSubCategorias.Columns(e.ColumnIndex).Name = "SubcategoriaDetalle") Then
+            ProductosDetalle(idProducto, idCategoria, dgvSubCategorias.CurrentRow.Cells("SubcategoriaId").Value)
         End If
     End Sub
 
@@ -665,10 +739,12 @@ Public Class frmInformeVentas
 
         If (TabInformes.SelectedTab.Name = tabProductos.Name) Then
             Dim informeGraficoProducto As FrmInformeGraficoProducto = Funciones.ControlInstancia(FrmInformeGraficoProducto)
-            informeGraficoProducto.TopProductosMonto = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopProductosCantidad = NegInformes.ObtenerProductos(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopSubcategoriaMonto = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopSubcategoriaCantidad = NegInformes.ObtenerSubcategorias(sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopProductosMonto = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopProductosCantidad = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopCategoriaMonto = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopCategoriaCantidad = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopSubcategoriaMonto = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            informeGraficoProducto.TopSubcategoriaCantidad = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
             informeGraficoProducto.MdiParent = Me.MdiParent
             informeGraficoProducto.Show()
         End If
@@ -710,4 +786,45 @@ Public Class frmInformeVentas
         Return resultado
     End Function
 
+    Private Function BuscarProducto() As String
+        Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txtProducto.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txtProducto.Text.ToUpper()).FirstOrDefault()
+        If (dr IsNot Nothing) Then
+            Return dr(3)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Private Function BuscarCategoria() As String
+        If cmbCategoria.SelectedValue <> 0 Then
+            Return cmbCategoria.SelectedValue
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Private Function BuscarSubcategoria() As String
+        If cmbSubcategoria.SelectedValue <> 0 Then
+            Return cmbSubcategoria.SelectedValue
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Private Sub ProductosDetalle(idProducto As String, idCategoria As String, idSubcategoria As String)
+        Dim Funciones As New Funciones
+        Dim frmInfProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
+        frmInfProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+        frmInfProducto.fechaDesde = dtpFechaDesde.Value
+        frmInfProducto.fechaHasta = dtpFechaHasta.Value
+        frmInfProducto.idProducto = idProducto
+        frmInfProducto.idCategoria = idCategoria
+        frmInfProducto.idSubCategoria = idSubcategoria
+        frmInfProducto.MdiParent = Me.MdiParent
+        frmInfProducto.inicializar()
+        If (frmInfProducto.WindowState = FormWindowState.Minimized) Then
+            frmInfProducto.WindowState = FormWindowState.Normal
+        End If
+        frmInfProducto.Show()
+    End Sub
 End Class

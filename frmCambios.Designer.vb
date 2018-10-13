@@ -78,10 +78,12 @@ Partial Class frmCambios
         '
         'txt_Codigo
         '
+        Me.txt_Codigo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txt_Codigo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txt_Codigo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_Codigo.Location = New System.Drawing.Point(172, 61)
+        Me.txt_Codigo.Location = New System.Drawing.Point(187, 61)
         Me.txt_Codigo.Name = "txt_Codigo"
-        Me.txt_Codigo.Size = New System.Drawing.Size(242, 20)
+        Me.txt_Codigo.Size = New System.Drawing.Size(227, 20)
         Me.txt_Codigo.TabIndex = 1
         Me.ToolTip1.SetToolTip(Me.txt_Codigo, "Ingrese el código de barra o de producto de aquel articulo que desea cambiar.")
         '
@@ -92,7 +94,7 @@ Partial Class frmCambios
         Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
         Me.lbl_CodigoBarra.Size = New System.Drawing.Size(187, 39)
         Me.lbl_CodigoBarra.TabIndex = 8
-        Me.lbl_CodigoBarra.Text = "Código de Barra / Producto"
+        Me.lbl_CodigoBarra.Text = "Nombre / Código de Producto"
         '
         'ToolTip1
         '

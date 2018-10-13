@@ -30,8 +30,6 @@ Public Class MDIContenedor
     Dim tiempoAcumuladoNotasPedidos As Integer = 0
     Dim tiempoAcumuladoOrdenesCompra As Integer = 0
 
-    Dim actualizarMemoriaCaheTimer As Threading.Timer
-
     Private Sub MDIContenedor_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If VariablesGlobales.Notificaciones > 0 Then 'Si posee notificaciones pendientes.
             If MessageBox.Show("¿Posee " & VariablesGlobales.Notificaciones & " notificacion(es) pendiente(s). ¿Está seguro de que desea salir de la aplicación?", "Sistema de Gestión " & My.Settings("Empresa"),
@@ -681,8 +679,6 @@ Public Class MDIContenedor
 
         'Obtengo las Notas de pedidos por stock
         Funciones.ActualizarOrdenesCompra()
-
-        actualizarMemoriaCaheTimer = New System.Threading.Timer(AddressOf ActualizarMemoriaCache, Nothing, TimeSpan.Zero, TimeSpan.FromMinutes(My.Settings.TemporizadorActualizacionMemoriaCache))
 
         'Setea el nombre de la aplicacion.
         Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
@@ -1443,24 +1439,6 @@ Public Class MDIContenedor
             Funciones.ActualizarChequesVencer()
             tiempoAcumuladoCheques = 0
         End If
-
-        'Acumulo el tiempo transcurrido
-        tiempoAcumuladoNotasPedidos += TemporizadorActualizaciones.Interval
-        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de notas de pedios
-        If (tiempoAcumuladoNotasPedidos >= Integer.Parse(My.Settings("TemporizadorNotasPedido")) AndAlso Menu_NotaPedidoVenta.Visible) Then
-            'Muestro la alerta de cheques y reinicio el acumulador de tiempo
-            Funciones.ActualizarNotasPedidosVentas()
-            tiempoAcumuladoNotasPedidos = 0
-        End If
-
-        'Acumulo el tiempo transcurrido
-        tiempoAcumuladoOrdenesCompra += TemporizadorActualizaciones.Interval
-        'En caso de que el tiempo acumulado sea mayo o igual al tiempo para mostrar la alertas de notas de pedios
-        If (tiempoAcumuladoOrdenesCompra >= Integer.Parse(My.Settings("TemporizadorOrdenesCompra")) AndAlso Menu_OrdenCompra.Visible) Then
-            'Muestro la alerta de cheques y reinicio el acumulador de tiempo
-            Funciones.ActualizarOrdenesCompra()
-            tiempoAcumuladoOrdenesCompra = 0
-        End If
     End Sub
 
     Private Sub TemporizadorSoncronizacion_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TemporizadorSoncronizacion.Tick
@@ -1743,7 +1721,7 @@ Public Class MDIContenedor
             Return
         End If
         Menu_NotaPedido_Click(Nothing, Nothing)
-        Funciones.ActualizarNotasPedidosVentas(False)
+        Funciones.ActualizarNotasPedidosVentas()
     End Sub
 
     Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
@@ -1791,22 +1769,6 @@ Public Class MDIContenedor
         Funciones.ControlInstancia(frmCostoFinancieroAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmCostoFinancieroAdministracion).Show()
         Me.Cursor = Cursors.Arrow
-    End Sub
-
-    'funcion encargada de actualizar las memorias cache que utiliza el sistema para mejorar los tiempos de carga
-    Private Sub ActualizarMemoriaCache()
-        If (My.Settings.UsarMemoriaCache) Then
-            Dim negTipoPago As NegTipoPago = New NegTipoPago()
-            negTipoPago.ListadoTiposPagosCache(False)
-
-            NegTarjeta.TraerTarjetasCache(False)
-
-            Dim negProductos As NegProductos = New NegProductos()
-            negProductos.ListadoProductosCache(False)
-
-            Dim negListasPrecio As NegListasPrecio = New NegListasPrecio()
-            negListasPrecio.ListadoPreciosPorGrupo(My.Settings("ListaPrecio"))
-        End If
     End Sub
 
     Private Sub NotaPedidoToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles NotaPedidoToolStripMenuItem1.Click

@@ -58,7 +58,7 @@ Public Class frmOrdenCompra
             cbEncargadoAlta.ValueMember = "id_Empleado"
         End If
 
-        dsProductos = NegProductos.ListadoProductosCache(True)
+        dsProductos = NegProductos.ListadoProductos(True)
 
         txtProductoAlta.AutoCompleteCustomSource = CargraListaProductos(cbProveedorAlta.SelectedValue)
 

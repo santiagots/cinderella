@@ -167,7 +167,7 @@ Public Class Funciones
         End If
     End Sub
 
-    Sub ActualizarNotasPedidosVentas(Optional ByVal mostrarAlerta As Boolean = True)
+    Sub ActualizarNotasPedidosVentas()
         If My.Settings.Internet Then 'Internet Permitido.
             'Si hay conexion compruebo los cheques
             If VariablesGlobales.HayConexion Then
@@ -180,19 +180,6 @@ Public Class Funciones
                     MDIContenedor.Menu_NotaPedidoVenta.Text = "(" & notaPedidos.Count & ") Notas de pedidos"
                     MDIContenedor.Menu_NotaPedidoVenta.ToolTipText = "Hace click aquí si deseas ir al administrador de notas de pedidos."
                     MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
-
-                    If (mostrarAlerta) Then
-                        'Form Notify.
-                        ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
-                        frmNotificaciones.lblConexion.Text = "(" & notaPedidos.Count & ") Notas de pedidos pendientes."
-                        frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Mi_Cuenta_Salir
-                        frmNotificaciones.Text = "(" & notaPedidos.Count & ") Notas de pedidos."
-
-                        ControlInstancia(frmNotificaciones).Show()
-
-                        'Sonidito.
-                        SystemSounds.Asterisk.Play()
-                    End If
                 Else
                     MDIContenedor.Menu_NotaPedidoVenta.Text = "(0) Notas de pedidos"
                     MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
@@ -209,7 +196,7 @@ Public Class Funciones
         End If
     End Sub
 
-    Sub ActualizarOrdenesCompra(Optional ByVal mostrarAlerta As Boolean = True)
+    Sub ActualizarOrdenesCompra()
         If My.Settings.Internet Then 'Internet Permitido.
             'Si hay conexion compruebo los cheques
             If VariablesGlobales.HayConexion Then
@@ -220,19 +207,6 @@ Public Class Funciones
                     MDIContenedor.Menu_OrdenCompra.Text = "(" & stockNotaPedidos.Count & ") Ordenes de compra"
                     MDIContenedor.Menu_OrdenCompra.ToolTipText = "Hace click aquí si deseas ir al administrador de ordenes de compra."
                     MDIContenedor.Menu_OrdenCompra.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
-
-                    If (mostrarAlerta) Then
-                        'Form Notify.
-                        ControlInstancia(frmNotificaciones).MdiParent = MDIContenedor
-                        frmNotificaciones.lblConexion.Text = "(" & stockNotaPedidos.Count & ") Ordenes de compra pendientes."
-                        frmNotificaciones.PictureBox1.Image = My.Resources.Recursos.Mi_Cuenta_Salir
-                        frmNotificaciones.Text = "(" & stockNotaPedidos.Count & ") Ordenes de compra"
-
-                        ControlInstancia(frmNotificaciones).Show()
-
-                        'Sonidito.
-                        SystemSounds.Asterisk.Play()
-                    End If
                 Else
                     MDIContenedor.Menu_OrdenCompra.Text = "(0) Ordenes de compra"
                     MDIContenedor.Menu_OrdenCompra.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)

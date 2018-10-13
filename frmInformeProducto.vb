@@ -5,14 +5,18 @@ Public Class frmInformeProducto
     Property sucursalesId As List(Of Integer)
     Property fechaDesde As Date
     Property fechaHasta As Date
-    Property idProducto As Integer
-    Property nombreProducto As String
+    Property idProducto As String
+    Property idCategoria As String
+    Property idSubCategoria As String
 
 
     Private Sub frmInformeDetalle_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        GroupBox6.Text = "Ventas Producto " + nombreProducto
 
+
+    End Sub
+
+    Public Sub inicializar()
         ucPaginadoProductos.OrdenColumna = dgvProductos.Columns(0).DataPropertyName
         ucPaginadoProductos.OrdenDireccion = SortOrder.Descending
         ucPaginadoProductos.PaginaTamaño = 50
@@ -20,8 +24,8 @@ Public Class frmInformeProducto
 
         Productos()
 
-        chtVentasProducto.DataSource = ObtenerTodasLasPaginas(sucursalesId, fechaDesde, fechaHasta, idProducto)
-
+        chtVentasProducto.DataSource = ObtenerTodasLasPaginas()
+        chtVentasProducto.DataBind()
     End Sub
 
     Private Sub ucPaginadoProductos_btnInicioClick(sender As Object, e As EventArgs) Handles ucPaginadoProductos.btnInicioClick
@@ -49,7 +53,7 @@ Public Class frmInformeProducto
             Me.Cursor = Cursors.WaitCursor
 
             dgvProductos.AutoGenerateColumns = False
-            dgvProductos.DataSource = NegInformes.ObtenerVentasDiaProducto(sucursalesId, fechaDesde, fechaHasta, idProducto, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.PaginaTamaño, ucPaginadoProductos.OrdenColumna, ucPaginadoProductos.OrdenDireccion, ucPaginadoProductos.TotalElementos)
+            dgvProductos.DataSource = NegInformes.ObtenerVentasDia(idProducto, idCategoria, idSubCategoria, sucursalesId, fechaDesde, fechaHasta, ucPaginadoProductos.PaginaActual, ucPaginadoProductos.PaginaTamaño, ucPaginadoProductos.OrdenColumna, ucPaginadoProductos.OrdenDireccion, ucPaginadoProductos.TotalElementos)
 
         Catch ex As Exception
             MessageBox.Show("Se ha producido un error al consultar los productos. Por favor, Comuníquese con el administrador.", "Informe de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -65,14 +69,14 @@ Public Class frmInformeProducto
         dgvProductos.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = ucPaginadoProductos.OrdenDireccion
     End Sub
 
-    Private Function ObtenerTodasLasPaginas(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, idProducto As Integer)
+    Private Function ObtenerTodasLasPaginas()
 
         Dim paginaActual As Integer = 1
         Dim tamañoPagina As Integer = 200
         Dim totalElementos As Integer = 0
         Dim resultado As DataTable = New DataTable()
         Do
-            Dim temp As DataTable = NegInformes.ObtenerVentasDiaProducto(id_Sucursales, FDesde, FHasta, idProducto, paginaActual, tamañoPagina, "", SortOrder.None, totalElementos)
+            Dim temp As DataTable = NegInformes.ObtenerVentasDia(idProducto, idCategoria, idSubCategoria, sucursalesId, fechaDesde, fechaHasta, paginaActual, tamañoPagina, "", SortOrder.None, totalElementos)
 
             If temp.Rows.Count = 0 Then
                 Exit Do

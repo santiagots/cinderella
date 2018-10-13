@@ -44,6 +44,7 @@ Public Class frmReporteNotaPedido
                 AgregarRow(entProducto, detalle.Cantidad, 0, 0, detalle.Monto)
             Else
                 MontoTotal += detalle.Precio * detalle.Cantidad
+                IVA += detalle.Iva * detalle.Cantidad
                 AgregarRow(entProducto, detalle.Cantidad, detalle.Precio, detalle.Iva, detalle.Monto)
             End If
         Next
@@ -56,7 +57,6 @@ Public Class frmReporteNotaPedido
             rpt = New ReporteNotaPedidoMinorista
         Else
             rpt = New ReporteNotaPedidoMayorista
-            IVA = SubTotal * 0.21
             CType(rpt.ReportDefinition.ReportObjects("TxtIva"), TextObject).Text = IVA.ToString("C2")
         End If
 

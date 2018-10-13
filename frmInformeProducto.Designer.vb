@@ -140,7 +140,7 @@ Partial Class frmInformeProducto
         Me.GroupBox6.Size = New System.Drawing.Size(942, 306)
         Me.GroupBox6.TabIndex = 2
         Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "Ventas Producto"
+        Me.GroupBox6.Text = "Ventas"
         '
         'lblMensajeProducto
         '

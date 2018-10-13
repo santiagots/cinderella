@@ -14,7 +14,7 @@
             If (IdProveedor > 0) Then
                 dsProductos = NegProductos.ListadoProductosBuscadoresPorProveedor(IdProveedor)
             Else
-                dsProductos = NegProductos.ListadoProductosBuscadores()
+                dsProductos = NegProductos.ListadoProductosBuscadores(True)
             End If
 
 

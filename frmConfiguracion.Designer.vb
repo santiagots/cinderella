@@ -33,14 +33,6 @@ Partial Class frmConfiguracion
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
         Me.txt_RazonSocial = New System.Windows.Forms.TextBox()
         Me.Label34 = New System.Windows.Forms.Label()
-        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
-        Me.btn_ActualizarListaProductos = New System.Windows.Forms.Button()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.Cb_TiempoActualizacionMemoriaChace = New System.Windows.Forms.ComboBox()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.RUsoMemoriaChaceNo = New System.Windows.Forms.RadioButton()
-        Me.RUsoMemoriaChaceSi = New System.Windows.Forms.RadioButton()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.txt_descuentoMinorista = New System.Windows.Forms.NumericUpDown()
         Me.Label24 = New System.Windows.Forms.Label()
@@ -95,10 +87,6 @@ Partial Class frmConfiguracion
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.Cb_TiempoComprobacionOrdenesCompra = New System.Windows.Forms.ComboBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Cb_TiempoComprobacionNotasPedidos = New System.Windows.Forms.ComboBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Cb_TiempoComprobacionCheques = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -144,8 +132,6 @@ Partial Class frmConfiguracion
         Me.btnModificarStock = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
-        Me.GroupBox10.SuspendLayout()
-        Me.Panel3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
@@ -229,7 +215,6 @@ Partial Class frmConfiguracion
         '
         Me.GroupBox1.Controls.Add(Me.Label35)
         Me.GroupBox1.Controls.Add(Me.GroupBox13)
-        Me.GroupBox1.Controls.Add(Me.GroupBox10)
         Me.GroupBox1.Controls.Add(Me.lbl_SucursalActual)
         Me.GroupBox1.Controls.Add(Me.lbl_NombreSucursalActual)
         Me.GroupBox1.Controls.Add(Me.Btn_Actualizar)
@@ -256,7 +241,7 @@ Partial Class frmConfiguracion
         '
         Me.GroupBox13.Controls.Add(Me.txt_RazonSocial)
         Me.GroupBox13.Controls.Add(Me.Label34)
-        Me.GroupBox13.Location = New System.Drawing.Point(7, 258)
+        Me.GroupBox13.Location = New System.Drawing.Point(7, 99)
         Me.GroupBox13.Name = "GroupBox13"
         Me.GroupBox13.Size = New System.Drawing.Size(397, 59)
         Me.GroupBox13.TabIndex = 8
@@ -278,95 +263,6 @@ Partial Class frmConfiguracion
         Me.Label34.Size = New System.Drawing.Size(99, 15)
         Me.Label34.TabIndex = 10
         Me.Label34.Text = "(*) Razón Social:"
-        '
-        'GroupBox10
-        '
-        Me.GroupBox10.Controls.Add(Me.btn_ActualizarListaProductos)
-        Me.GroupBox10.Controls.Add(Me.Label26)
-        Me.GroupBox10.Controls.Add(Me.Label25)
-        Me.GroupBox10.Controls.Add(Me.Cb_TiempoActualizacionMemoriaChace)
-        Me.GroupBox10.Controls.Add(Me.Panel3)
-        Me.GroupBox10.Location = New System.Drawing.Point(6, 111)
-        Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.Size = New System.Drawing.Size(398, 140)
-        Me.GroupBox10.TabIndex = 7
-        Me.GroupBox10.TabStop = False
-        Me.GroupBox10.Text = "Optimización de carga"
-        '
-        'btn_ActualizarListaProductos
-        '
-        Me.btn_ActualizarListaProductos.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btn_ActualizarListaProductos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_ActualizarListaProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_ActualizarListaProductos.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
-        Me.btn_ActualizarListaProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_ActualizarListaProductos.Location = New System.Drawing.Point(246, 99)
-        Me.btn_ActualizarListaProductos.Name = "btn_ActualizarListaProductos"
-        Me.btn_ActualizarListaProductos.Size = New System.Drawing.Size(146, 34)
-        Me.btn_ActualizarListaProductos.TabIndex = 11
-        Me.btn_ActualizarListaProductos.Text = "Actualizar Cache"
-        Me.btn_ActualizarListaProductos.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_ActualizarListaProductos.UseVisualStyleBackColor = True
-        '
-        'Label26
-        '
-        Me.Label26.Location = New System.Drawing.Point(6, 24)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(168, 32)
-        Me.Label26.TabIndex = 28
-        Me.Label26.Text = "Uso de momería cache para optimización de cargado "
-        '
-        'Label25
-        '
-        Me.Label25.Location = New System.Drawing.Point(6, 66)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(168, 35)
-        Me.Label25.TabIndex = 5
-        Me.Label25.Text = "Período de actualización memoria Cache (Minutos)"
-        '
-        'Cb_TiempoActualizacionMemoriaChace
-        '
-        Me.Cb_TiempoActualizacionMemoriaChace.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_TiempoActualizacionMemoriaChace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_TiempoActualizacionMemoriaChace.FormattingEnabled = True
-        Me.Cb_TiempoActualizacionMemoriaChace.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_TiempoActualizacionMemoriaChace.Location = New System.Drawing.Point(180, 70)
-        Me.Cb_TiempoActualizacionMemoriaChace.Name = "Cb_TiempoActualizacionMemoriaChace"
-        Me.Cb_TiempoActualizacionMemoriaChace.Size = New System.Drawing.Size(212, 23)
-        Me.Cb_TiempoActualizacionMemoriaChace.TabIndex = 6
-        '
-        'Panel3
-        '
-        Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceNo)
-        Me.Panel3.Controls.Add(Me.RUsoMemoriaChaceSi)
-        Me.Panel3.Location = New System.Drawing.Point(180, 24)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(212, 27)
-        Me.Panel3.TabIndex = 29
-        '
-        'RUsoMemoriaChaceNo
-        '
-        Me.RUsoMemoriaChaceNo.AutoSize = True
-        Me.RUsoMemoriaChaceNo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RUsoMemoriaChaceNo.Location = New System.Drawing.Point(124, 3)
-        Me.RUsoMemoriaChaceNo.Name = "RUsoMemoriaChaceNo"
-        Me.RUsoMemoriaChaceNo.Size = New System.Drawing.Size(43, 19)
-        Me.RUsoMemoriaChaceNo.TabIndex = 26
-        Me.RUsoMemoriaChaceNo.Tag = ""
-        Me.RUsoMemoriaChaceNo.Text = "NO"
-        Me.RUsoMemoriaChaceNo.UseVisualStyleBackColor = True
-        '
-        'RUsoMemoriaChaceSi
-        '
-        Me.RUsoMemoriaChaceSi.AutoSize = True
-        Me.RUsoMemoriaChaceSi.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RUsoMemoriaChaceSi.Location = New System.Drawing.Point(11, 3)
-        Me.RUsoMemoriaChaceSi.Name = "RUsoMemoriaChaceSi"
-        Me.RUsoMemoriaChaceSi.Size = New System.Drawing.Size(36, 19)
-        Me.RUsoMemoriaChaceSi.TabIndex = 25
-        Me.RUsoMemoriaChaceSi.Tag = ""
-        Me.RUsoMemoriaChaceSi.Text = "SI"
-        Me.RUsoMemoriaChaceSi.UseVisualStyleBackColor = True
         '
         'GroupBox2
         '
@@ -920,10 +816,6 @@ Partial Class frmConfiguracion
         '
         'GroupBox5
         '
-        Me.GroupBox5.Controls.Add(Me.Label27)
-        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionOrdenesCompra)
-        Me.GroupBox5.Controls.Add(Me.Label19)
-        Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionNotasPedidos)
         Me.GroupBox5.Controls.Add(Me.Label18)
         Me.GroupBox5.Controls.Add(Me.Cb_TiempoComprobacionCheques)
         Me.GroupBox5.Controls.Add(Me.Label1)
@@ -938,44 +830,6 @@ Partial Class frmConfiguracion
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Configuración de Alertas"
-        '
-        'Label27
-        '
-        Me.Label27.Location = New System.Drawing.Point(9, 201)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(261, 36)
-        Me.Label27.TabIndex = 11
-        Me.Label27.Text = "Período de comprobación de nuevas ordenes de compra (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        '
-        'Cb_TiempoComprobacionOrdenesCompra
-        '
-        Me.Cb_TiempoComprobacionOrdenesCompra.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_TiempoComprobacionOrdenesCompra.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_TiempoComprobacionOrdenesCompra.FormattingEnabled = True
-        Me.Cb_TiempoComprobacionOrdenesCompra.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_TiempoComprobacionOrdenesCompra.Location = New System.Drawing.Point(276, 208)
-        Me.Cb_TiempoComprobacionOrdenesCompra.Name = "Cb_TiempoComprobacionOrdenesCompra"
-        Me.Cb_TiempoComprobacionOrdenesCompra.Size = New System.Drawing.Size(131, 23)
-        Me.Cb_TiempoComprobacionOrdenesCompra.TabIndex = 12
-        '
-        'Label19
-        '
-        Me.Label19.Location = New System.Drawing.Point(8, 156)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(261, 36)
-        Me.Label19.TabIndex = 9
-        Me.Label19.Text = "Período de comprobación de notas de pedidos pendientes (Minutos)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        '
-        'Cb_TiempoComprobacionNotasPedidos
-        '
-        Me.Cb_TiempoComprobacionNotasPedidos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_TiempoComprobacionNotasPedidos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_TiempoComprobacionNotasPedidos.FormattingEnabled = True
-        Me.Cb_TiempoComprobacionNotasPedidos.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_TiempoComprobacionNotasPedidos.Location = New System.Drawing.Point(275, 163)
-        Me.Cb_TiempoComprobacionNotasPedidos.Name = "Cb_TiempoComprobacionNotasPedidos"
-        Me.Cb_TiempoComprobacionNotasPedidos.Size = New System.Drawing.Size(132, 23)
-        Me.Cb_TiempoComprobacionNotasPedidos.TabIndex = 10
         '
         'Label18
         '
@@ -1467,9 +1321,6 @@ Partial Class frmConfiguracion
         Me.GroupBox1.PerformLayout()
         Me.GroupBox13.ResumeLayout(False)
         Me.GroupBox13.PerformLayout()
-        Me.GroupBox10.ResumeLayout(False)
-        Me.Panel3.ResumeLayout(False)
-        Me.Panel3.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.txt_descuentoMinorista, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1575,8 +1426,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents btnModificarHost As System.Windows.Forms.Button
     Friend WithEvents Label22 As System.Windows.Forms.Label
-    Friend WithEvents Label19 As System.Windows.Forms.Label
-    Friend WithEvents Cb_TiempoComprobacionNotasPedidos As System.Windows.Forms.ComboBox
     Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
     Friend WithEvents txt_MontoTopeElectronico As System.Windows.Forms.TextBox
     Friend WithEvents txt_MontoTopeManual As System.Windows.Forms.TextBox
@@ -1590,16 +1439,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label24 As Label
     Friend WithEvents txt_descuentoMinorista As NumericUpDown
-    Friend WithEvents Label25 As Label
-    Friend WithEvents Cb_TiempoActualizacionMemoriaChace As ComboBox
-    Friend WithEvents GroupBox10 As GroupBox
-    Friend WithEvents Label26 As Label
-    Friend WithEvents Panel3 As Panel
-    Friend WithEvents RUsoMemoriaChaceNo As RadioButton
-    Friend WithEvents RUsoMemoriaChaceSi As RadioButton
-    Friend WithEvents btn_ActualizarListaProductos As Button
-    Friend WithEvents Label27 As Label
-    Friend WithEvents Cb_TiempoComprobacionOrdenesCompra As ComboBox
     Friend WithEvents TabStock As TabPage
     Friend WithEvents GroupBox11 As GroupBox
     Friend WithEvents Label28 As Label

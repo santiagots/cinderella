@@ -1063,9 +1063,9 @@ Public Class NegProductos
 
 #Region "Funciones Listados"
     'Funcion para listar todos los productos.
-    Function ListadoProductos() As DataSet
+    Function ListadoProductos(UsarBaseLocal As Boolean) As DataSet
 
-        If (Funciones.HayInternet) Then
+        If (Not UsarBaseLocal AndAlso Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_Listado")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_Listado")
@@ -1073,23 +1073,12 @@ Public Class NegProductos
     End Function
 
     'Funcion para listar todos los productos.
-    Function ListadoProductosBuscadores() As DataSet
-        If (Funciones.HayInternet) Then
+    Function ListadoProductosBuscadores(UsarBaseLocal As Boolean) As DataSet
+        If (Not UsarBaseLocal AndAlso Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoBuscadores")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadores")
         End If
-    End Function
-
-    'Funcion para listar todos los productos utlizando una memoria cache para optimizar tiempos de respuesta
-    Function ListadoProductosCache(UsarCahce As Boolean) As DataSet
-
-        If (ListaProductosCache Is Nothing OrElse Not UsarCahce) Then
-            ListaProductosCache = ListadoProductosBuscadores()
-        End If
-
-        Return ListaProductosCache
-
     End Function
 
     'Funcion para listar todos los productos dependiendo de un proveedor.

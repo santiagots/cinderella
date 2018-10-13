@@ -92,7 +92,7 @@ Public Class frmVentasAdministracion
                 lbl_Msg.Visible = True
             End If
 
-            Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
+            Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagos()
             If DsTiposPagos.Tables(0).Rows.Count > 0 Then
                 cmbFormaPago.DataSource = Nothing
                 cmbFormaPago.DataSource = Funciones.CrearDataTable("id_TipoPago", "Descripcion", DsTiposPagos, "Todas")

@@ -180,6 +180,18 @@ Public Class frmSeniaAdministracion
                     MessageBox.Show("Se ha producido un error al eliminar el reserva. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Administración de Reservas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
+        ElseIf dgSenia.Columns(e.ColumnIndex).Name = "Imprimir" Then
+            'Cambio el cursor a "WAIT".
+            Me.Cursor = Cursors.WaitCursor
+
+            Dim senias As Entidades.Senia = dgSenia.CurrentRow.DataBoundItem
+
+            Dim frmReporteResumenReserva As frmReporteResumenReserva = New frmReporteResumenReserva()
+            frmReporteResumenReserva.idReserva = senias.IdVentaSenia
+            frmReporteResumenReserva.MontoSenia = senias.MontoSenia
+            frmReporteResumenReserva.MdiParent = Me.MdiParent
+            frmReporteResumenReserva.Show()
+            Me.Cursor = Cursors.Arrow
         Else
             CargarDetalleSenia()
         End If

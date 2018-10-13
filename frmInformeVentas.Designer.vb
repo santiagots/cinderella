@@ -22,7 +22,9 @@ Partial Class frmInformeVentas
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -36,16 +38,28 @@ Partial Class frmInformeVentas
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmInformeVentas))
         Me.dgvTotalPorCliente = New System.Windows.Forms.DataGridView()
+        Me.Detalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgvTotalVentas = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgvFacturado = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgvTotalFormaPago = New System.Windows.Forms.DataGridView()
+        Me.Grupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.lblMensajeTotalVentasVentas = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -65,9 +79,16 @@ Partial Class frmInformeVentas
         Me.DataGridViewTextBoxColumn16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn28 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn29 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ucPaginadoVentas = New SistemaCinderella.Paginado()
         Me.tabProductos = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtProducto = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cmbCategoria = New System.Windows.Forms.ComboBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.cmbSubcategoria = New System.Windows.Forms.ComboBox()
+        Me.TabGrupoProductos = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.lblMensajeProductosProductos = New System.Windows.Forms.Label()
@@ -77,7 +98,17 @@ Partial Class frmInformeVentas
         Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoDetalle = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.ucPaginadoProductos = New SistemaCinderella.Paginado()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel14 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.lblMensajeCategoriasProductos = New System.Windows.Forms.Label()
+        Me.dgvCategorias = New System.Windows.Forms.DataGridView()
+        Me.CategoriaNombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn31 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn33 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CategoriaId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CategoriaDetalle = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.lblMensajeSubcategoriasProductos = New System.Windows.Forms.Label()
@@ -86,8 +117,7 @@ Partial Class frmInformeVentas
         Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SubcategoriaId = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SubproductoDetalle = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.ucPaginadoSubcategoria = New SistemaCinderella.Paginado()
+        Me.SubcategoriaDetalle = New System.Windows.Forms.DataGridViewImageColumn()
         Me.tabEgresos = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
@@ -103,7 +133,6 @@ Partial Class frmInformeVentas
         Me.DataGridViewTextBoxColumn21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn32 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ucPaginadoMercaderiaRecibida = New SistemaCinderella.Paginado()
         Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
         Me.dgvTotalGastos = New System.Windows.Forms.DataGridView()
@@ -130,19 +159,11 @@ Partial Class frmInformeVentas
         Me.TableLayoutPanel13 = New System.Windows.Forms.TableLayoutPanel()
         Me.btnGrafico = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
-        Me.Detalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Grupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ucPaginadoVentas = New SistemaCinderella.Paginado()
+        Me.ucPaginadoProductos = New SistemaCinderella.Paginado()
+        Me.ucPaginadoCategoria = New SistemaCinderella.Paginado()
+        Me.ucPaginadoSubcategoria = New SistemaCinderella.Paginado()
+        Me.ucPaginadoMercaderiaRecibida = New SistemaCinderella.Paginado()
         CType(Me.dgvTotalPorCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvTotalVentas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvFacturado, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -160,9 +181,16 @@ Partial Class frmInformeVentas
         CType(Me.dgvVentas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabProductos.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
+        Me.TabGrupoProductos.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
         Me.TableLayoutPanel10.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         CType(Me.dgvProductos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
+        Me.TableLayoutPanel14.SuspendLayout()
+        Me.GroupBox12.SuspendLayout()
+        CType(Me.dgvCategorias, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage2.SuspendLayout()
         Me.TableLayoutPanel11.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         CType(Me.dgvSubCategorias, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -209,6 +237,43 @@ Partial Class frmInformeVentas
         Me.dgvTotalPorCliente.ShowRowErrors = False
         Me.dgvTotalPorCliente.Size = New System.Drawing.Size(440, 114)
         Me.dgvTotalPorCliente.TabIndex = 7
+        '
+        'Detalle
+        '
+        Me.Detalle.DataPropertyName = "Detalle"
+        DataGridViewCellStyle1.Format = "C2"
+        Me.Detalle.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Detalle.FillWeight = 102.6978!
+        Me.Detalle.HeaderText = "Detalle"
+        Me.Detalle.Name = "Detalle"
+        Me.Detalle.ReadOnly = True
+        Me.Detalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Monto
+        '
+        Me.Monto.DataPropertyName = "Monto"
+        Me.Monto.FillWeight = 85.0!
+        Me.Monto.HeaderText = "Monto"
+        Me.Monto.Name = "Monto"
+        Me.Monto.ReadOnly = True
+        Me.Monto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column1
+        '
+        Me.Column1.DataPropertyName = "PorcentajeVenta"
+        Me.Column1.FillWeight = 60.0!
+        Me.Column1.HeaderText = "% Venta"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'Cantidad
+        '
+        Me.Cantidad.DataPropertyName = "Cantidad"
+        Me.Cantidad.FillWeight = 70.0!
+        Me.Cantidad.HeaderText = "Cantidad"
+        Me.Cantidad.Name = "Cantidad"
+        Me.Cantidad.ReadOnly = True
+        Me.Cantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'dgvTotalVentas
         '
@@ -291,6 +356,41 @@ Partial Class frmInformeVentas
         Me.dgvFacturado.Size = New System.Drawing.Size(440, 66)
         Me.dgvFacturado.TabIndex = 10
         '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.DataPropertyName = "Detalle"
+        Me.DataGridViewTextBoxColumn7.FillWeight = 71.27979!
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Detalle"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.DataPropertyName = "Monto"
+        Me.DataGridViewTextBoxColumn8.FillWeight = 81.76211!
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Monto"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column3
+        '
+        Me.Column3.DataPropertyName = "PorcentajeVenta"
+        Me.Column3.FillWeight = 60.0!
+        Me.Column3.HeaderText = "% Venta"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.DataPropertyName = "Cantidad"
+        Me.DataGridViewTextBoxColumn9.FillWeight = 48.9175!
+        Me.DataGridViewTextBoxColumn9.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.ReadOnly = True
+        Me.DataGridViewTextBoxColumn9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
         'dgvTotalFormaPago
         '
         Me.dgvTotalFormaPago.AllowUserToAddRows = False
@@ -316,6 +416,51 @@ Partial Class frmInformeVentas
         Me.dgvTotalFormaPago.ShowRowErrors = False
         Me.dgvTotalFormaPago.Size = New System.Drawing.Size(440, 190)
         Me.dgvTotalFormaPago.TabIndex = 8
+        '
+        'Grupo
+        '
+        Me.Grupo.DataPropertyName = "Grupo"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.Grupo.DefaultCellStyle = DataGridViewCellStyle3
+        Me.Grupo.HeaderText = "Grupo"
+        Me.Grupo.Name = "Grupo"
+        Me.Grupo.ReadOnly = True
+        Me.Grupo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "Detalle"
+        Me.DataGridViewTextBoxColumn1.FillWeight = 102.6978!
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Detalle"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "Monto"
+        Me.DataGridViewTextBoxColumn2.FillWeight = 80.0!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Monto"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column2
+        '
+        Me.Column2.DataPropertyName = "PorcentajeVenta"
+        Me.Column2.FillWeight = 75.0!
+        Me.Column2.HeaderText = "% Vta"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.DataPropertyName = "Cantidad"
+        Me.DataGridViewTextBoxColumn3.FillWeight = 70.0!
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Cant."
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'GroupBox1
         '
@@ -583,23 +728,10 @@ Partial Class frmInformeVentas
         Me.DataGridViewTextBoxColumn29.ReadOnly = True
         Me.DataGridViewTextBoxColumn29.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         '
-        'ucPaginadoVentas
-        '
-        Me.ucPaginadoVentas.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ucPaginadoVentas.Location = New System.Drawing.Point(4, 498)
-        Me.ucPaginadoVentas.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.ucPaginadoVentas.Name = "ucPaginadoVentas"
-        Me.ucPaginadoVentas.OrdenColumna = Nothing
-        Me.ucPaginadoVentas.OrdenDireccion = System.Windows.Forms.SortOrder.None
-        Me.ucPaginadoVentas.PaginaActual = 0
-        Me.ucPaginadoVentas.PaginaTamaño = 1
-        Me.ucPaginadoVentas.Size = New System.Drawing.Size(444, 40)
-        Me.ucPaginadoVentas.TabIndex = 3
-        Me.ucPaginadoVentas.TotalElementos = 0
-        '
         'tabProductos
         '
         Me.tabProductos.Controls.Add(Me.TableLayoutPanel6)
+        Me.tabProductos.Controls.Add(Me.TabGrupoProductos)
         Me.tabProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tabProductos.Location = New System.Drawing.Point(4, 29)
         Me.tabProductos.Name = "tabProductos"
@@ -611,19 +743,110 @@ Partial Class frmInformeVentas
         '
         'TableLayoutPanel6
         '
-        Me.TableLayoutPanel6.ColumnCount = 2
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel10, 0, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel11, 1, 0)
-        Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel6.ColumnCount = 6
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.76958!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.98178!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.295096!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.43628!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.51726!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 159.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.txtProducto, 1, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Label6, 0, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.cmbCategoria, 1, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.Label5, 3, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.cmbSubcategoria, 4, 1)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(6, 6)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
-        Me.TableLayoutPanel6.RowCount = 1
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 549.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(916, 549)
-        Me.TableLayoutPanel6.TabIndex = 0
+        Me.TableLayoutPanel6.RowCount = 2
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(910, 64)
+        Me.TableLayoutPanel6.TabIndex = 2
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(3, 7)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(97, 16)
+        Me.Label4.TabIndex = 3
+        Me.Label4.Text = "Producto:"
+        '
+        'txtProducto
+        '
+        Me.txtProducto.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txtProducto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.txtProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
+        Me.txtProducto.Location = New System.Drawing.Point(106, 3)
+        Me.txtProducto.Name = "txtProducto"
+        Me.txtProducto.Size = New System.Drawing.Size(249, 22)
+        Me.txtProducto.TabIndex = 4
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(3, 39)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(97, 16)
+        Me.Label6.TabIndex = 7
+        Me.Label6.Text = "Categoría:"
+        '
+        'cmbCategoria
+        '
+        Me.cmbCategoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmbCategoria.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
+        Me.cmbCategoria.FormattingEnabled = True
+        Me.cmbCategoria.Location = New System.Drawing.Point(106, 35)
+        Me.cmbCategoria.Name = "cmbCategoria"
+        Me.cmbCategoria.Size = New System.Drawing.Size(249, 24)
+        Me.cmbCategoria.TabIndex = 8
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(393, 39)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(102, 16)
+        Me.Label5.TabIndex = 5
+        Me.Label5.Text = "Subcategoría:"
+        '
+        'cmbSubcategoria
+        '
+        Me.cmbSubcategoria.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
+        Me.cmbSubcategoria.FormattingEnabled = True
+        Me.cmbSubcategoria.Location = New System.Drawing.Point(501, 33)
+        Me.cmbSubcategoria.Name = "cmbSubcategoria"
+        Me.cmbSubcategoria.Size = New System.Drawing.Size(245, 24)
+        Me.cmbSubcategoria.TabIndex = 6
+        '
+        'TabGrupoProductos
+        '
+        Me.TabGrupoProductos.Controls.Add(Me.TabPage1)
+        Me.TabGrupoProductos.Controls.Add(Me.TabPage3)
+        Me.TabGrupoProductos.Controls.Add(Me.TabPage2)
+        Me.TabGrupoProductos.Location = New System.Drawing.Point(3, 76)
+        Me.TabGrupoProductos.Name = "TabGrupoProductos"
+        Me.TabGrupoProductos.SelectedIndex = 0
+        Me.TabGrupoProductos.Size = New System.Drawing.Size(913, 473)
+        Me.TabGrupoProductos.TabIndex = 1
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.TableLayoutPanel10)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(905, 440)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Productos"
+        Me.TabPage1.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel10
         '
@@ -637,7 +860,7 @@ Partial Class frmInformeVentas
         Me.TableLayoutPanel10.RowCount = 2
         Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
-        Me.TableLayoutPanel10.Size = New System.Drawing.Size(452, 543)
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(899, 434)
         Me.TableLayoutPanel10.TabIndex = 15
         '
         'GroupBox6
@@ -648,7 +871,7 @@ Partial Class frmInformeVentas
         Me.GroupBox6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
         Me.GroupBox6.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(446, 487)
+        Me.GroupBox6.Size = New System.Drawing.Size(893, 378)
         Me.GroupBox6.TabIndex = 2
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Productos"
@@ -660,9 +883,9 @@ Partial Class frmInformeVentas
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblMensajeProductosProductos.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lblMensajeProductosProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMensajeProductosProductos.Location = New System.Drawing.Point(52, 143)
+        Me.lblMensajeProductosProductos.Location = New System.Drawing.Point(48, 135)
         Me.lblMensajeProductosProductos.Name = "lblMensajeProductosProductos"
-        Me.lblMensajeProductosProductos.Size = New System.Drawing.Size(369, 233)
+        Me.lblMensajeProductosProductos.Size = New System.Drawing.Size(796, 123)
         Me.lblMensajeProductosProductos.TabIndex = 14
         Me.lblMensajeProductosProductos.Text = "No se han encontrado datos."
         Me.lblMensajeProductosProductos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -690,7 +913,7 @@ Partial Class frmInformeVentas
         Me.dgvProductos.ShowCellToolTips = False
         Me.dgvProductos.ShowEditingIcon = False
         Me.dgvProductos.ShowRowErrors = False
-        Me.dgvProductos.Size = New System.Drawing.Size(440, 466)
+        Me.dgvProductos.Size = New System.Drawing.Size(887, 357)
         Me.dgvProductos.TabIndex = 10
         '
         'ProductoNombre
@@ -740,19 +963,142 @@ Partial Class frmInformeVentas
         Me.ProductoDetalle.ReadOnly = True
         Me.ProductoDetalle.Width = 60
         '
-        'ucPaginadoProductos
+        'TabPage3
         '
-        Me.ucPaginadoProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ucPaginadoProductos.Location = New System.Drawing.Point(4, 498)
-        Me.ucPaginadoProductos.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.ucPaginadoProductos.Name = "ucPaginadoProductos"
-        Me.ucPaginadoProductos.OrdenColumna = Nothing
-        Me.ucPaginadoProductos.OrdenDireccion = System.Windows.Forms.SortOrder.None
-        Me.ucPaginadoProductos.PaginaActual = 0
-        Me.ucPaginadoProductos.PaginaTamaño = 1
-        Me.ucPaginadoProductos.Size = New System.Drawing.Size(444, 40)
-        Me.ucPaginadoProductos.TabIndex = 3
-        Me.ucPaginadoProductos.TotalElementos = 0
+        Me.TabPage3.Controls.Add(Me.TableLayoutPanel14)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(905, 440)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Categoría"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel14
+        '
+        Me.TableLayoutPanel14.ColumnCount = 1
+        Me.TableLayoutPanel14.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel14.Controls.Add(Me.ucPaginadoCategoria, 0, 1)
+        Me.TableLayoutPanel14.Controls.Add(Me.GroupBox12, 0, 0)
+        Me.TableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel14.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
+        Me.TableLayoutPanel14.RowCount = 2
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
+        Me.TableLayoutPanel14.Size = New System.Drawing.Size(899, 434)
+        Me.TableLayoutPanel14.TabIndex = 17
+        '
+        'GroupBox12
+        '
+        Me.GroupBox12.Controls.Add(Me.lblMensajeCategoriasProductos)
+        Me.GroupBox12.Controls.Add(Me.dgvCategorias)
+        Me.GroupBox12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
+        Me.GroupBox12.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox12.Name = "GroupBox12"
+        Me.GroupBox12.Size = New System.Drawing.Size(893, 375)
+        Me.GroupBox12.TabIndex = 3
+        Me.GroupBox12.TabStop = False
+        Me.GroupBox12.Text = "Categoría"
+        '
+        'lblMensajeCategoriasProductos
+        '
+        Me.lblMensajeCategoriasProductos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblMensajeCategoriasProductos.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lblMensajeCategoriasProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMensajeCategoriasProductos.Location = New System.Drawing.Point(48, 178)
+        Me.lblMensajeCategoriasProductos.Name = "lblMensajeCategoriasProductos"
+        Me.lblMensajeCategoriasProductos.Size = New System.Drawing.Size(796, 34)
+        Me.lblMensajeCategoriasProductos.TabIndex = 15
+        Me.lblMensajeCategoriasProductos.Text = "No se han encontrado datos."
+        Me.lblMensajeCategoriasProductos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'dgvCategorias
+        '
+        Me.dgvCategorias.AllowUserToAddRows = False
+        Me.dgvCategorias.AllowUserToDeleteRows = False
+        Me.dgvCategorias.AllowUserToResizeColumns = False
+        Me.dgvCategorias.AllowUserToResizeRows = False
+        Me.dgvCategorias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvCategorias.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvCategorias.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable
+        Me.dgvCategorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvCategorias.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CategoriaNombre, Me.DataGridViewTextBoxColumn31, Me.DataGridViewTextBoxColumn33, Me.CategoriaId, Me.CategoriaDetalle})
+        Me.dgvCategorias.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvCategorias.Location = New System.Drawing.Point(3, 18)
+        Me.dgvCategorias.MultiSelect = False
+        Me.dgvCategorias.Name = "dgvCategorias"
+        Me.dgvCategorias.ReadOnly = True
+        Me.dgvCategorias.RowHeadersVisible = False
+        Me.dgvCategorias.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.dgvCategorias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvCategorias.ShowCellErrors = False
+        Me.dgvCategorias.ShowCellToolTips = False
+        Me.dgvCategorias.ShowEditingIcon = False
+        Me.dgvCategorias.ShowRowErrors = False
+        Me.dgvCategorias.Size = New System.Drawing.Size(887, 354)
+        Me.dgvCategorias.TabIndex = 10
+        '
+        'CategoriaNombre
+        '
+        Me.CategoriaNombre.DataPropertyName = "Nombre"
+        Me.CategoriaNombre.FillWeight = 102.6978!
+        Me.CategoriaNombre.HeaderText = "Nombre"
+        Me.CategoriaNombre.Name = "CategoriaNombre"
+        Me.CategoriaNombre.ReadOnly = True
+        Me.CategoriaNombre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
+        '
+        'DataGridViewTextBoxColumn31
+        '
+        Me.DataGridViewTextBoxColumn31.DataPropertyName = "Monto"
+        DataGridViewCellStyle6.Format = "C2"
+        Me.DataGridViewTextBoxColumn31.DefaultCellStyle = DataGridViewCellStyle6
+        Me.DataGridViewTextBoxColumn31.FillWeight = 73.54653!
+        Me.DataGridViewTextBoxColumn31.HeaderText = "Monto"
+        Me.DataGridViewTextBoxColumn31.Name = "DataGridViewTextBoxColumn31"
+        Me.DataGridViewTextBoxColumn31.ReadOnly = True
+        Me.DataGridViewTextBoxColumn31.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
+        '
+        'DataGridViewTextBoxColumn33
+        '
+        Me.DataGridViewTextBoxColumn33.DataPropertyName = "Cantidad"
+        Me.DataGridViewTextBoxColumn33.FillWeight = 45.0!
+        Me.DataGridViewTextBoxColumn33.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn33.Name = "DataGridViewTextBoxColumn33"
+        Me.DataGridViewTextBoxColumn33.ReadOnly = True
+        Me.DataGridViewTextBoxColumn33.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
+        '
+        'CategoriaId
+        '
+        Me.CategoriaId.DataPropertyName = "CategoriaId"
+        Me.CategoriaId.HeaderText = "CategoriaId"
+        Me.CategoriaId.Name = "CategoriaId"
+        Me.CategoriaId.ReadOnly = True
+        Me.CategoriaId.Visible = False
+        '
+        'CategoriaDetalle
+        '
+        Me.CategoriaDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.CategoriaDetalle.FillWeight = 60.0!
+        Me.CategoriaDetalle.HeaderText = "Detalle"
+        Me.CategoriaDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.CategoriaDetalle.Name = "CategoriaDetalle"
+        Me.CategoriaDetalle.ReadOnly = True
+        Me.CategoriaDetalle.Width = 60
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.TableLayoutPanel11)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(905, 440)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Subcategoría"
+        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel11
         '
@@ -761,12 +1107,12 @@ Partial Class frmInformeVentas
         Me.TableLayoutPanel11.Controls.Add(Me.GroupBox7, 0, 0)
         Me.TableLayoutPanel11.Controls.Add(Me.ucPaginadoSubcategoria, 0, 1)
         Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel11.Location = New System.Drawing.Point(461, 3)
+        Me.TableLayoutPanel11.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
         Me.TableLayoutPanel11.RowCount = 2
         Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
-        Me.TableLayoutPanel11.Size = New System.Drawing.Size(452, 543)
+        Me.TableLayoutPanel11.Size = New System.Drawing.Size(899, 434)
         Me.TableLayoutPanel11.TabIndex = 16
         '
         'GroupBox7
@@ -777,10 +1123,10 @@ Partial Class frmInformeVentas
         Me.GroupBox7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
         Me.GroupBox7.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(446, 487)
+        Me.GroupBox7.Size = New System.Drawing.Size(893, 378)
         Me.GroupBox7.TabIndex = 3
         Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "SubCategoria"
+        Me.GroupBox7.Text = "Subcategoría"
         '
         'lblMensajeSubcategoriasProductos
         '
@@ -789,9 +1135,9 @@ Partial Class frmInformeVentas
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblMensajeSubcategoriasProductos.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lblMensajeSubcategoriasProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMensajeSubcategoriasProductos.Location = New System.Drawing.Point(52, 156)
+        Me.lblMensajeSubcategoriasProductos.Location = New System.Drawing.Point(48, 135)
         Me.lblMensajeSubcategoriasProductos.Name = "lblMensajeSubcategoriasProductos"
-        Me.lblMensajeSubcategoriasProductos.Size = New System.Drawing.Size(349, 232)
+        Me.lblMensajeSubcategoriasProductos.Size = New System.Drawing.Size(796, 123)
         Me.lblMensajeSubcategoriasProductos.TabIndex = 14
         Me.lblMensajeSubcategoriasProductos.Text = "No se han encontrado datos."
         Me.lblMensajeSubcategoriasProductos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -806,7 +1152,7 @@ Partial Class frmInformeVentas
         Me.dgvSubCategorias.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvSubCategorias.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable
         Me.dgvSubCategorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvSubCategorias.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SubcategoriaNombre, Me.DataGridViewTextBoxColumn14, Me.DataGridViewTextBoxColumn15, Me.SubcategoriaId, Me.SubproductoDetalle})
+        Me.dgvSubCategorias.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SubcategoriaNombre, Me.DataGridViewTextBoxColumn14, Me.DataGridViewTextBoxColumn15, Me.SubcategoriaId, Me.SubcategoriaDetalle})
         Me.dgvSubCategorias.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvSubCategorias.Location = New System.Drawing.Point(3, 18)
         Me.dgvSubCategorias.MultiSelect = False
@@ -819,7 +1165,7 @@ Partial Class frmInformeVentas
         Me.dgvSubCategorias.ShowCellToolTips = False
         Me.dgvSubCategorias.ShowEditingIcon = False
         Me.dgvSubCategorias.ShowRowErrors = False
-        Me.dgvSubCategorias.Size = New System.Drawing.Size(440, 466)
+        Me.dgvSubCategorias.Size = New System.Drawing.Size(887, 357)
         Me.dgvSubCategorias.TabIndex = 10
         '
         'SubcategoriaNombre
@@ -834,8 +1180,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn14
         '
         Me.DataGridViewTextBoxColumn14.DataPropertyName = "Monto"
-        DataGridViewCellStyle6.Format = "C2"
-        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle7.Format = "C2"
+        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridViewTextBoxColumn14.FillWeight = 73.54653!
         Me.DataGridViewTextBoxColumn14.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
@@ -859,29 +1205,15 @@ Partial Class frmInformeVentas
         Me.SubcategoriaId.ReadOnly = True
         Me.SubcategoriaId.Visible = False
         '
-        'SubproductoDetalle
+        'SubcategoriaDetalle
         '
-        Me.SubproductoDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.SubproductoDetalle.FillWeight = 60.0!
-        Me.SubproductoDetalle.HeaderText = "Detalle"
-        Me.SubproductoDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
-        Me.SubproductoDetalle.Name = "SubproductoDetalle"
-        Me.SubproductoDetalle.ReadOnly = True
-        Me.SubproductoDetalle.Width = 60
-        '
-        'ucPaginadoSubcategoria
-        '
-        Me.ucPaginadoSubcategoria.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ucPaginadoSubcategoria.Location = New System.Drawing.Point(4, 498)
-        Me.ucPaginadoSubcategoria.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.ucPaginadoSubcategoria.Name = "ucPaginadoSubcategoria"
-        Me.ucPaginadoSubcategoria.OrdenColumna = Nothing
-        Me.ucPaginadoSubcategoria.OrdenDireccion = System.Windows.Forms.SortOrder.None
-        Me.ucPaginadoSubcategoria.PaginaActual = 0
-        Me.ucPaginadoSubcategoria.PaginaTamaño = 1
-        Me.ucPaginadoSubcategoria.Size = New System.Drawing.Size(444, 40)
-        Me.ucPaginadoSubcategoria.TabIndex = 4
-        Me.ucPaginadoSubcategoria.TotalElementos = 0
+        Me.SubcategoriaDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.SubcategoriaDetalle.FillWeight = 60.0!
+        Me.SubcategoriaDetalle.HeaderText = "Detalle"
+        Me.SubcategoriaDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.SubcategoriaDetalle.Name = "SubcategoriaDetalle"
+        Me.SubcategoriaDetalle.ReadOnly = True
+        Me.SubcategoriaDetalle.Width = 60
         '
         'tabEgresos
         '
@@ -978,8 +1310,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn13
         '
         Me.DataGridViewTextBoxColumn13.DataPropertyName = "Monto"
-        DataGridViewCellStyle7.Format = "C2"
-        Me.DataGridViewTextBoxColumn13.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle8.Format = "C2"
+        Me.DataGridViewTextBoxColumn13.DefaultCellStyle = DataGridViewCellStyle8
         Me.DataGridViewTextBoxColumn13.FillWeight = 73.54653!
         Me.DataGridViewTextBoxColumn13.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
@@ -989,8 +1321,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn26
         '
         Me.DataGridViewTextBoxColumn26.DataPropertyName = "PorcentajeMonto"
-        DataGridViewCellStyle8.Format = "P"
-        Me.DataGridViewTextBoxColumn26.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle9.Format = "P"
+        Me.DataGridViewTextBoxColumn26.DefaultCellStyle = DataGridViewCellStyle9
         Me.DataGridViewTextBoxColumn26.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn26.HeaderText = "% Monto"
         Me.DataGridViewTextBoxColumn26.Name = "DataGridViewTextBoxColumn26"
@@ -1000,8 +1332,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn27
         '
         Me.DataGridViewTextBoxColumn27.DataPropertyName = "PorcentajeVentas"
-        DataGridViewCellStyle9.Format = "P"
-        Me.DataGridViewTextBoxColumn27.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle10.Format = "P"
+        Me.DataGridViewTextBoxColumn27.DefaultCellStyle = DataGridViewCellStyle10
         Me.DataGridViewTextBoxColumn27.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn27.HeaderText = "% Venta"
         Me.DataGridViewTextBoxColumn27.Name = "DataGridViewTextBoxColumn27"
@@ -1062,8 +1394,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn21
         '
         Me.DataGridViewTextBoxColumn21.DataPropertyName = "Monto"
-        DataGridViewCellStyle10.Format = "C2"
-        Me.DataGridViewTextBoxColumn21.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle11.Format = "C2"
+        Me.DataGridViewTextBoxColumn21.DefaultCellStyle = DataGridViewCellStyle11
         Me.DataGridViewTextBoxColumn21.FillWeight = 73.54653!
         Me.DataGridViewTextBoxColumn21.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn21.Name = "DataGridViewTextBoxColumn21"
@@ -1073,8 +1405,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn22
         '
         Me.DataGridViewTextBoxColumn22.DataPropertyName = "PorcentajeMonto"
-        DataGridViewCellStyle11.Format = "P"
-        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle12.Format = "P"
+        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle12
         Me.DataGridViewTextBoxColumn22.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn22.HeaderText = "% Monto"
         Me.DataGridViewTextBoxColumn22.Name = "DataGridViewTextBoxColumn22"
@@ -1084,27 +1416,13 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn32
         '
         Me.DataGridViewTextBoxColumn32.DataPropertyName = "PorcentajeVentas"
-        DataGridViewCellStyle12.Format = "P"
-        Me.DataGridViewTextBoxColumn32.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle13.Format = "P"
+        Me.DataGridViewTextBoxColumn32.DefaultCellStyle = DataGridViewCellStyle13
         Me.DataGridViewTextBoxColumn32.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn32.HeaderText = "% Venta"
         Me.DataGridViewTextBoxColumn32.Name = "DataGridViewTextBoxColumn32"
         Me.DataGridViewTextBoxColumn32.ReadOnly = True
         Me.DataGridViewTextBoxColumn32.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
-        '
-        'ucPaginadoMercaderiaRecibida
-        '
-        Me.ucPaginadoMercaderiaRecibida.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ucPaginadoMercaderiaRecibida.Location = New System.Drawing.Point(4, 504)
-        Me.ucPaginadoMercaderiaRecibida.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.ucPaginadoMercaderiaRecibida.Name = "ucPaginadoMercaderiaRecibida"
-        Me.ucPaginadoMercaderiaRecibida.OrdenColumna = Nothing
-        Me.ucPaginadoMercaderiaRecibida.OrdenDireccion = System.Windows.Forms.SortOrder.None
-        Me.ucPaginadoMercaderiaRecibida.PaginaActual = 0
-        Me.ucPaginadoMercaderiaRecibida.PaginaTamaño = 1
-        Me.ucPaginadoMercaderiaRecibida.Size = New System.Drawing.Size(447, 40)
-        Me.ucPaginadoMercaderiaRecibida.TabIndex = 3
-        Me.ucPaginadoMercaderiaRecibida.TotalElementos = 0
         '
         'TableLayoutPanel8
         '
@@ -1171,8 +1489,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn24
         '
         Me.DataGridViewTextBoxColumn24.DataPropertyName = "Monto"
-        DataGridViewCellStyle13.Format = "C2"
-        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle14.Format = "C2"
+        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle14
         Me.DataGridViewTextBoxColumn24.FillWeight = 73.54653!
         Me.DataGridViewTextBoxColumn24.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn24.Name = "DataGridViewTextBoxColumn24"
@@ -1182,8 +1500,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn25
         '
         Me.DataGridViewTextBoxColumn25.DataPropertyName = "PorcentajeGasto"
-        DataGridViewCellStyle14.Format = "P"
-        Me.DataGridViewTextBoxColumn25.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle15.Format = "P"
+        Me.DataGridViewTextBoxColumn25.DefaultCellStyle = DataGridViewCellStyle15
         Me.DataGridViewTextBoxColumn25.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn25.HeaderText = "% Gasto"
         Me.DataGridViewTextBoxColumn25.Name = "DataGridViewTextBoxColumn25"
@@ -1249,8 +1567,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn18
         '
         Me.DataGridViewTextBoxColumn18.DataPropertyName = "Monto"
-        DataGridViewCellStyle15.Format = "C2"
-        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle16.Format = "C2"
+        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle16
         Me.DataGridViewTextBoxColumn18.FillWeight = 73.54653!
         Me.DataGridViewTextBoxColumn18.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
@@ -1260,8 +1578,8 @@ Partial Class frmInformeVentas
         'DataGridViewTextBoxColumn19
         '
         Me.DataGridViewTextBoxColumn19.DataPropertyName = "PorcentajeCosto"
-        DataGridViewCellStyle16.Format = "P"
-        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle17.Format = "P"
+        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridViewTextBoxColumn19.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn19.HeaderText = "% Costo"
         Me.DataGridViewTextBoxColumn19.Name = "DataGridViewTextBoxColumn19"
@@ -1447,122 +1765,75 @@ Partial Class frmInformeVentas
         Me.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnBuscar.UseVisualStyleBackColor = True
         '
-        'Detalle
+        'ucPaginadoVentas
         '
-        Me.Detalle.DataPropertyName = "Detalle"
-        DataGridViewCellStyle1.Format = "C2"
-        Me.Detalle.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Detalle.FillWeight = 102.6978!
-        Me.Detalle.HeaderText = "Detalle"
-        Me.Detalle.Name = "Detalle"
-        Me.Detalle.ReadOnly = True
-        Me.Detalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ucPaginadoVentas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ucPaginadoVentas.Location = New System.Drawing.Point(4, 498)
+        Me.ucPaginadoVentas.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ucPaginadoVentas.Name = "ucPaginadoVentas"
+        Me.ucPaginadoVentas.OrdenColumna = Nothing
+        Me.ucPaginadoVentas.OrdenDireccion = System.Windows.Forms.SortOrder.None
+        Me.ucPaginadoVentas.PaginaActual = 0
+        Me.ucPaginadoVentas.PaginaTamaño = 1
+        Me.ucPaginadoVentas.Size = New System.Drawing.Size(444, 40)
+        Me.ucPaginadoVentas.TabIndex = 3
+        Me.ucPaginadoVentas.TotalElementos = 0
         '
-        'Monto
+        'ucPaginadoProductos
         '
-        Me.Monto.DataPropertyName = "Monto"
-        Me.Monto.FillWeight = 85.0!
-        Me.Monto.HeaderText = "Monto"
-        Me.Monto.Name = "Monto"
-        Me.Monto.ReadOnly = True
-        Me.Monto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ucPaginadoProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ucPaginadoProductos.Location = New System.Drawing.Point(4, 389)
+        Me.ucPaginadoProductos.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ucPaginadoProductos.Name = "ucPaginadoProductos"
+        Me.ucPaginadoProductos.OrdenColumna = Nothing
+        Me.ucPaginadoProductos.OrdenDireccion = System.Windows.Forms.SortOrder.None
+        Me.ucPaginadoProductos.PaginaActual = 0
+        Me.ucPaginadoProductos.PaginaTamaño = 1
+        Me.ucPaginadoProductos.Size = New System.Drawing.Size(891, 40)
+        Me.ucPaginadoProductos.TabIndex = 3
+        Me.ucPaginadoProductos.TotalElementos = 0
         '
-        'Column1
+        'ucPaginadoCategoria
         '
-        Me.Column1.DataPropertyName = "PorcentajeVenta"
-        Me.Column1.FillWeight = 60.0!
-        Me.Column1.HeaderText = "% Venta"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
+        Me.ucPaginadoCategoria.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ucPaginadoCategoria.Location = New System.Drawing.Point(6, 389)
+        Me.ucPaginadoCategoria.Margin = New System.Windows.Forms.Padding(6, 8, 6, 8)
+        Me.ucPaginadoCategoria.Name = "ucPaginadoCategoria"
+        Me.ucPaginadoCategoria.OrdenColumna = Nothing
+        Me.ucPaginadoCategoria.OrdenDireccion = System.Windows.Forms.SortOrder.None
+        Me.ucPaginadoCategoria.PaginaActual = 0
+        Me.ucPaginadoCategoria.PaginaTamaño = 1
+        Me.ucPaginadoCategoria.Size = New System.Drawing.Size(887, 37)
+        Me.ucPaginadoCategoria.TabIndex = 15
+        Me.ucPaginadoCategoria.TotalElementos = 0
         '
-        'Cantidad
+        'ucPaginadoSubcategoria
         '
-        Me.Cantidad.DataPropertyName = "Cantidad"
-        Me.Cantidad.FillWeight = 70.0!
-        Me.Cantidad.HeaderText = "Cantidad"
-        Me.Cantidad.Name = "Cantidad"
-        Me.Cantidad.ReadOnly = True
-        Me.Cantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ucPaginadoSubcategoria.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ucPaginadoSubcategoria.Location = New System.Drawing.Point(4, 389)
+        Me.ucPaginadoSubcategoria.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ucPaginadoSubcategoria.Name = "ucPaginadoSubcategoria"
+        Me.ucPaginadoSubcategoria.OrdenColumna = Nothing
+        Me.ucPaginadoSubcategoria.OrdenDireccion = System.Windows.Forms.SortOrder.None
+        Me.ucPaginadoSubcategoria.PaginaActual = 0
+        Me.ucPaginadoSubcategoria.PaginaTamaño = 1
+        Me.ucPaginadoSubcategoria.Size = New System.Drawing.Size(891, 40)
+        Me.ucPaginadoSubcategoria.TabIndex = 4
+        Me.ucPaginadoSubcategoria.TotalElementos = 0
         '
-        'Grupo
+        'ucPaginadoMercaderiaRecibida
         '
-        Me.Grupo.DataPropertyName = "Grupo"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.Grupo.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Grupo.HeaderText = "Grupo"
-        Me.Grupo.Name = "Grupo"
-        Me.Grupo.ReadOnly = True
-        Me.Grupo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.DataPropertyName = "Detalle"
-        Me.DataGridViewTextBoxColumn1.FillWeight = 102.6978!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Detalle"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.DataPropertyName = "Monto"
-        Me.DataGridViewTextBoxColumn2.FillWeight = 80.0!
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Monto"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        Me.DataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column2
-        '
-        Me.Column2.DataPropertyName = "PorcentajeVenta"
-        Me.Column2.FillWeight = 75.0!
-        Me.Column2.HeaderText = "% Vta"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.DataPropertyName = "Cantidad"
-        Me.DataGridViewTextBoxColumn3.FillWeight = 70.0!
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Cant."
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
-        Me.DataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'DataGridViewTextBoxColumn7
-        '
-        Me.DataGridViewTextBoxColumn7.DataPropertyName = "Detalle"
-        Me.DataGridViewTextBoxColumn7.FillWeight = 71.27979!
-        Me.DataGridViewTextBoxColumn7.HeaderText = "Detalle"
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.ReadOnly = True
-        Me.DataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'DataGridViewTextBoxColumn8
-        '
-        Me.DataGridViewTextBoxColumn8.DataPropertyName = "Monto"
-        Me.DataGridViewTextBoxColumn8.FillWeight = 81.76211!
-        Me.DataGridViewTextBoxColumn8.HeaderText = "Monto"
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
-        Me.DataGridViewTextBoxColumn8.ReadOnly = True
-        Me.DataGridViewTextBoxColumn8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column3
-        '
-        Me.Column3.DataPropertyName = "PorcentajeVenta"
-        Me.Column3.FillWeight = 60.0!
-        Me.Column3.HeaderText = "% Venta"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn9
-        '
-        Me.DataGridViewTextBoxColumn9.DataPropertyName = "Cantidad"
-        Me.DataGridViewTextBoxColumn9.FillWeight = 48.9175!
-        Me.DataGridViewTextBoxColumn9.HeaderText = "Cantidad"
-        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
-        Me.DataGridViewTextBoxColumn9.ReadOnly = True
-        Me.DataGridViewTextBoxColumn9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ucPaginadoMercaderiaRecibida.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ucPaginadoMercaderiaRecibida.Location = New System.Drawing.Point(4, 504)
+        Me.ucPaginadoMercaderiaRecibida.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ucPaginadoMercaderiaRecibida.Name = "ucPaginadoMercaderiaRecibida"
+        Me.ucPaginadoMercaderiaRecibida.OrdenColumna = Nothing
+        Me.ucPaginadoMercaderiaRecibida.OrdenDireccion = System.Windows.Forms.SortOrder.None
+        Me.ucPaginadoMercaderiaRecibida.PaginaActual = 0
+        Me.ucPaginadoMercaderiaRecibida.PaginaTamaño = 1
+        Me.ucPaginadoMercaderiaRecibida.Size = New System.Drawing.Size(447, 40)
+        Me.ucPaginadoMercaderiaRecibida.TabIndex = 3
+        Me.ucPaginadoMercaderiaRecibida.TotalElementos = 0
         '
         'frmInformeVentas
         '
@@ -1592,9 +1863,17 @@ Partial Class frmInformeVentas
         CType(Me.dgvVentas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabProductos.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
+        Me.TableLayoutPanel6.PerformLayout()
+        Me.TabGrupoProductos.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
         Me.TableLayoutPanel10.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
         CType(Me.dgvProductos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TableLayoutPanel14.ResumeLayout(False)
+        Me.GroupBox12.ResumeLayout(False)
+        CType(Me.dgvCategorias, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage2.ResumeLayout(False)
         Me.TableLayoutPanel11.ResumeLayout(False)
         Me.GroupBox7.ResumeLayout(False)
         CType(Me.dgvSubCategorias, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1643,7 +1922,6 @@ Partial Class frmInformeVentas
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents Label3 As Label
     Friend WithEvents cklSucursales As CheckedListBox
-    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
     Friend WithEvents GroupBox7 As GroupBox
     Friend WithEvents dgvSubCategorias As DataGridView
     Friend WithEvents GroupBox6 As GroupBox
@@ -1682,11 +1960,6 @@ Partial Class frmInformeVentas
     Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
     Friend WithEvents ProductoId As DataGridViewTextBoxColumn
     Friend WithEvents ProductoDetalle As DataGridViewImageColumn
-    Friend WithEvents SubcategoriaNombre As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn15 As DataGridViewTextBoxColumn
-    Friend WithEvents SubcategoriaId As DataGridViewTextBoxColumn
-    Friend WithEvents SubproductoDetalle As DataGridViewImageColumn
     Friend WithEvents DataGridViewTextBoxColumn16 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn28 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn29 As DataGridViewTextBoxColumn
@@ -1723,4 +1996,30 @@ Partial Class frmInformeVentas
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
+    Friend WithEvents Label4 As Label
+    Friend WithEvents txtProducto As TextBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents cmbSubcategoria As ComboBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents cmbCategoria As ComboBox
+    Friend WithEvents TabGrupoProductos As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents TableLayoutPanel14 As TableLayoutPanel
+    Friend WithEvents GroupBox12 As GroupBox
+    Friend WithEvents dgvCategorias As DataGridView
+    Friend WithEvents ucPaginadoCategoria As Paginado
+    Friend WithEvents lblMensajeCategoriasProductos As Label
+    Friend WithEvents SubcategoriaNombre As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn15 As DataGridViewTextBoxColumn
+    Friend WithEvents SubcategoriaId As DataGridViewTextBoxColumn
+    Friend WithEvents SubcategoriaDetalle As DataGridViewImageColumn
+    Friend WithEvents CategoriaNombre As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn31 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn33 As DataGridViewTextBoxColumn
+    Friend WithEvents CategoriaId As DataGridViewTextBoxColumn
+    Friend WithEvents CategoriaDetalle As DataGridViewImageColumn
 End Class

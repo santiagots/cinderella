@@ -341,7 +341,7 @@ Public Class frmVentas
     Function CalcularCantidadTotal()
         Dim cant As Integer
         For i = 0 To (DG_Productos.Rows.Count - 1)
-            If CInt(DG_Productos.Rows(i).Cells.Item("PRECIO").Value) > 0 Then
+            If CInt(DG_Productos.Rows(i).Cells.Item("MONTO").Value) > 0 Then
                 cant += CInt(DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value)
             End If
         Next
@@ -506,8 +506,6 @@ Public Class frmVentas
         cb_Tipo.SelectedIndex = 0
         enableSeccionCliente(False)
 
-        btn_ActualizarListaProductos.Enabled = My.Settings.UsarMemoriaCache
-
         'Sucursal default
         id_Sucursal = My.Settings("Sucursal")
         Nombre_Sucursal = My.Settings("NombreSucursal")
@@ -526,7 +524,7 @@ Public Class frmVentas
         Dim DsVendedores As DataSet = CargarComboVendedores(DsEncargados)
 
         'Cargo el Combo de Bancos
-        Dim Tarjetas As List(Of Tarjeta) = NegTarjeta.TraerTarjetasCache(My.Settings.UsarMemoriaCache).Where(Function(x) x.Habilitado).ToList()
+        Dim Tarjetas As List(Of Tarjeta) = NegTarjeta.TraerTarjetas().Where(Function(x) x.Habilitado).ToList()
         Tarjetas.Insert(0, New Tarjeta() With {.TarjetaId = 0, .Nombre = "Seleccione una Tarjeta..."})
         TrajetaBindingSource.DataSource = Tarjetas
 
@@ -543,7 +541,7 @@ Public Class frmVentas
             CargarSenia(DsVendedores, DsEncargados)
         End If
 
-        CargraListaProductos(My.Settings.UsarMemoriaCache)
+        CargraListaProductos()
 
         PanelTotalMayorista.Location = PanelTotalMinorista.Location
     End Sub
@@ -567,7 +565,7 @@ Public Class frmVentas
     End Sub
 
     Private Function CargarComboTiposPagos(tipoCliente As TipoCliente) As DataSet
-        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
+        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagos()
 
         'Elimino la forma de pago Cheque
         If tipoCliente = TipoCliente.Minorista Then
@@ -590,9 +588,9 @@ Public Class frmVentas
         Return DsTiposPagos
     End Function
 
-    Private Sub CargraListaProductos(usarCache)
+    Private Sub CargraListaProductos()
         'Obtengo el listado de productos guardados en cache
-        dsProductos = NegProductos.ListadoProductosCache(usarCache)
+        dsProductos = NegProductos.ListadoProductos(True)
 
         'Armo una lista que contiene los nombres y codigos de todos los producto
         Dim listaNombreCodigoProductos As AutoCompleteStringCollection = New AutoCompleteStringCollection()
@@ -795,7 +793,7 @@ Public Class frmVentas
 
         Cb_ListaPrecio.SelectedValue = Integer.Parse(dsVentas.Tables(0).Rows(0).Item("id_ListaPrecio"))
 
-        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagosCache(My.Settings.UsarMemoriaCache)
+        Dim DsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagos()
         Dim TipoPagoRow = DsTiposPagos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Descripcion") = dsVentas.Tables(0).Rows(0).Item("TiposPago")).FirstOrDefault()
         If (TipoPagoRow IsNot Nothing) Then
             Cb_TipoPago.SelectedValue = TipoPagoRow.Item("id_TipoPago")
@@ -1014,9 +1012,7 @@ Public Class frmVentas
     Private Sub ActualizarMontosGrillaYTotales()
         'actualizo los montos de la grilla
         For Each row As DataGridViewRow In DG_Productos.Rows
-            If (row.Cells.Item("PRECIO").Value > 0) Then
-                ActualizarColumnaIvaMonto(row.Index, row.Cells.Item("PRECIO").Value)
-            End If
+            ActualizarColumnaIvaMonto(row.Index, row.Cells.Item("PRECIO").Value)
         Next
 
         'actualizo los montos de los totales
@@ -2264,10 +2260,8 @@ Public Class frmVentas
         Me.Cursor = Cursors.WaitCursor
         Dim frmCambios As frmCambios = New frmCambios()
         frmCambios.ShowDialog()
-        If (Not String.IsNullOrEmpty(frmCambios.codigoBarras)) Then
-            AgregarItem(frmCambios.codigoBarras, 2, 2)
-        ElseIf (Not String.IsNullOrEmpty(frmCambios.CodigoProducto)) Then
-            AgregarItem(frmCambios.CodigoProducto, 3, 2)
+        If (frmCambios.DialogResult = DialogResult.OK) Then
+            AgregarItem(frmCambios.IdProducto, 1, 2)
         End If
         Me.Cursor = Cursors.Arrow
     End Sub
@@ -2331,25 +2325,15 @@ Public Class frmVentas
     End Function
 
     Private Function ActualizarMontosProductosMinoristas(Precio As Double, row As DataGridViewRow)
-        Dim esDevolucion As Boolean = row.Cells("PRECIO").Value < 0
-        If esDevolucion Then
-            row.Cells("PRECIO").Value = Precio * -1
-        Else
-            row.Cells("PRECIO").Value = Precio
-        End If
+        Dim esDevolucion As Boolean = row.Cells("MONTO").Value < 0
 
         If esDevolucion Then
-            row.Cells("IVA").Value = Precio * -0.21
-        Else
-            row.Cells("IVA").Value = Precio * 0.21
+            Precio = Precio * -1
         End If
 
-        If esDevolucion Then
-            row.Cells("MONTO").Value = (Precio * -1)
-        Else
-            row.Cells("MONTO").Value = Precio
-        End If
-
+        row.Cells("PRECIO").Value = Precio
+        row.Cells("IVA").Value = Precio * 0.21
+        row.Cells("MONTO").Value = Precio
         row.Cells("SUBTOTAL").Value = Precio * CDbl(row.Cells("CANTIDAD").Value)
         Return row
     End Function
@@ -2475,13 +2459,6 @@ Public Class frmVentas
         Btn_BuscarCliente.Enabled = enable
         txt_PorcentajeFacturacion.Enabled = enable
 
-    End Sub
-
-    Private Sub btn_ActualizarListaProductos_Click(sender As Object, e As EventArgs) Handles btn_ActualizarListaProductos.Click
-        Me.Cursor = Cursors.WaitCursor
-        CargraListaProductos(False)
-        MessageBox.Show("El listado de productos se ha actualizado correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Me.Cursor = Cursors.Arrow
     End Sub
 
 End Class

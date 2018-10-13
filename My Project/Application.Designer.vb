@@ -38,7 +38,13 @@ Namespace My
             Negocio.Funciones.Ip = My.Settings.IpPing
             Negocio.Funciones.TimeOut = My.Settings.IpTimeOut
 
-            AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+            Try
+                Dim rutaBaseDatos As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DB")
+                Datos.ConfigurarBaseDatos.Iniciar(Assembly.GetExecutingAssembly.GetName().Name, rutaBaseDatos)
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString())
+            End Try
+
             Me.MainForm = Global.SistemaCinderella.frmLogin
         End Sub
 

@@ -369,7 +369,7 @@ Public Class frmProductos
 
     Private Sub CargarProductos()
         'Cargo el datagrid de productos.
-        Dim dsProductos As DataSet = NegProductos.ListadoProductos()
+        Dim dsProductos As DataSet = NegProductos.ListadoProductos(False)
         If (dsProductos.Tables(0).Rows.Count > 0) Then
             DG_Productos.DataSource = dsProductos.Tables(0)
             DG_Productos.AutoGenerateColumns = False
@@ -560,7 +560,7 @@ Public Class frmProductos
             Else
                 Me.Cursor = Cursors.WaitCursor
                 ErrorProductos.SetError(txt_buscar, Nothing)
-                Dim dv As DataView = NegProductos.ListadoProductos().Tables(0).DefaultView
+                Dim dv As DataView = NegProductos.ListadoProductos(False).Tables(0).DefaultView
                 If rb_Opcion.Checked = True Then 'Si selecciono nombre.
                     dv.RowFilter = "Nombre LIKE '%" + descrip + "%'"
                 ElseIf rb_Opcion2.Checked = True Then 'si selecciono codigo.
@@ -1195,7 +1195,7 @@ Public Class frmProductos
         Else
             Me.Cursor = Cursors.WaitCursor
             ErrorProductos.SetError(txt_buscar, Nothing)
-            Dim dv As DataView = NegProductos.ListadoProductos().Tables(0).DefaultView
+            Dim dv As DataView = NegProductos.ListadoProductos(False).Tables(0).DefaultView
             If rb_Opcion.Checked = True Then 'Si selecciono nombre.
                 dv.RowFilter = "Nombre LIKE '%" + descrip + "%'"
             ElseIf rb_Opcion2.Checked = True Then 'si selecciono codigo.

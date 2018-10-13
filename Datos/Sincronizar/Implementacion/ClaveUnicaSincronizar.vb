@@ -8,7 +8,7 @@ Public Class ClaveUnicaSincronizar
     Implements Sincronizar
 
     Dim clsDatos As New Datos.Conexion
-    Dim encripta As New ClsEncriptacion
+    Dim encripta As New EncriptacionHelper
 
     Public Sub procesar(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.procesar
         'Verifico que exista una ultima sincornizacion

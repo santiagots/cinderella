@@ -2,12 +2,13 @@
 Imports System.Data.SqlClient
 Imports System.Configuration
 Imports System.Threading
+Imports System.Reflection
 
 Public Class Conexion
     Private CadenaConexion As String
     Dim miconexion As SqlConnection
     Dim miconexionRemoto As SqlConnection
-    Dim encripta As New ClsEncriptacion
+    Dim encripta As New EncriptacionHelper
     Dim com As New SqlCommand
     Dim da As New SqlDataAdapter
     Dim ds As DataSet
@@ -16,7 +17,7 @@ Public Class Conexion
         Try
             CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
             miconexion = New SqlConnection
-            miconexion.ConnectionString = CadenaConexion
+            miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
         Catch ex As Exception
             Windows.Forms.MessageBox.Show("Error conectando con la base de datos local." & ex.ToString())

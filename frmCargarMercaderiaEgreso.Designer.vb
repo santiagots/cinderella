@@ -28,12 +28,13 @@ Partial Class frmCargarMercaderiaEgreso
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCargarMercaderiaEgreso))
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.GB_Fecha = New System.Windows.Forms.GroupBox()
-        Me.lbl_Sucursal2 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.lbl_Sucursal = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.lbl_Fecha = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lbl_Sucursal = New System.Windows.Forms.Label()
+        Me.lbl_Sucursal2 = New System.Windows.Forms.Label()
         Me.txt_Cantidad = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -52,17 +53,16 @@ Partial Class frmCargarMercaderiaEgreso
         Me.SUBTOTAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ELIMINAR = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Gb_Producto = New System.Windows.Forms.GroupBox()
-        Me.Btn_Buscar = New System.Windows.Forms.Button()
-        Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
+        Me.Btn_Agregar = New System.Windows.Forms.Button()
+        Me.txt_Producto = New System.Windows.Forms.TextBox()
         Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ToolCargar = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox2.SuspendLayout()
         Me.GB_Fecha.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Gb_Producto.SuspendLayout()
-        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox2
@@ -100,16 +100,63 @@ Partial Class frmCargarMercaderiaEgreso
         Me.GB_Fecha.TabIndex = 26
         Me.GB_Fecha.TabStop = False
         '
-        'lbl_Sucursal2
+        'TableLayoutPanel1
         '
-        Me.lbl_Sucursal2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Sucursal2.AutoSize = True
-        Me.lbl_Sucursal2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Sucursal2.Location = New System.Drawing.Point(402, 8)
-        Me.lbl_Sucursal2.Name = "lbl_Sucursal2"
-        Me.lbl_Sucursal2.Size = New System.Drawing.Size(114, 15)
-        Me.lbl_Sucursal2.TabIndex = 20
-        Me.lbl_Sucursal2.Text = "Label5"
+        Me.TableLayoutPanel1.ColumnCount = 8
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Fecha, 7, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label4, 6, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label6, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Sucursal, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Sucursal2, 4, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 17)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(789, 32)
+        Me.TableLayoutPanel1.TabIndex = 27
+        '
+        'lbl_Fecha
+        '
+        Me.lbl_Fecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Fecha.AutoSize = True
+        Me.lbl_Fecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Fecha.Location = New System.Drawing.Point(671, 8)
+        Me.lbl_Fecha.Name = "lbl_Fecha"
+        Me.lbl_Fecha.Size = New System.Drawing.Size(115, 15)
+        Me.lbl_Fecha.TabIndex = 15
+        Me.lbl_Fecha.Text = "Label6"
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(541, 8)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(124, 15)
+        Me.Label4.TabIndex = 13
+        Me.Label4.Text = "EN  LA FECHA"
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(3, 8)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(124, 15)
+        Me.Label5.TabIndex = 17
+        Me.Label5.Text = "DE LA SUCURSAL"
         '
         'Label6
         '
@@ -133,38 +180,16 @@ Partial Class frmCargarMercaderiaEgreso
         Me.lbl_Sucursal.TabIndex = 18
         Me.lbl_Sucursal.Text = "Label5"
         '
-        'Label5
+        'lbl_Sucursal2
         '
-        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(3, 8)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(124, 15)
-        Me.Label5.TabIndex = 17
-        Me.Label5.Text = "DE LA SUCURSAL"
-        '
-        'lbl_Fecha
-        '
-        Me.lbl_Fecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Fecha.AutoSize = True
-        Me.lbl_Fecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Fecha.Location = New System.Drawing.Point(671, 8)
-        Me.lbl_Fecha.Name = "lbl_Fecha"
-        Me.lbl_Fecha.Size = New System.Drawing.Size(115, 15)
-        Me.lbl_Fecha.TabIndex = 15
-        Me.lbl_Fecha.Text = "Label6"
-        '
-        'Label4
-        '
-        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(541, 8)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(124, 15)
-        Me.Label4.TabIndex = 13
-        Me.Label4.Text = "EN  LA FECHA"
+        Me.lbl_Sucursal2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Sucursal2.AutoSize = True
+        Me.lbl_Sucursal2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Sucursal2.Location = New System.Drawing.Point(402, 8)
+        Me.lbl_Sucursal2.Name = "lbl_Sucursal2"
+        Me.lbl_Sucursal2.Size = New System.Drawing.Size(114, 15)
+        Me.lbl_Sucursal2.TabIndex = 20
+        Me.lbl_Sucursal2.Text = "Label5"
         '
         'txt_Cantidad
         '
@@ -346,8 +371,8 @@ Partial Class frmCargarMercaderiaEgreso
         '
         Me.Gb_Producto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Gb_Producto.Controls.Add(Me.Btn_Buscar)
-        Me.Gb_Producto.Controls.Add(Me.txt_CodigoBarra)
+        Me.Gb_Producto.Controls.Add(Me.Btn_Agregar)
+        Me.Gb_Producto.Controls.Add(Me.txt_Producto)
         Me.Gb_Producto.Controls.Add(Me.lbl_CodigoBarra)
         Me.Gb_Producto.Controls.Add(Me.Label1)
         Me.Gb_Producto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -358,29 +383,31 @@ Partial Class frmCargarMercaderiaEgreso
         Me.Gb_Producto.TabStop = False
         Me.Gb_Producto.Text = "PRODUCTO"
         '
-        'Btn_Buscar
+        'Btn_Agregar
         '
-        Me.Btn_Buscar.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.Btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
-        Me.Btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Buscar.Location = New System.Drawing.Point(640, 37)
-        Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(149, 38)
-        Me.Btn_Buscar.TabIndex = 3
-        Me.Btn_Buscar.Text = "Buscar Producto"
-        Me.Btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Buscar.UseVisualStyleBackColor = True
+        Me.Btn_Agregar.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
+        Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Agregar.Location = New System.Drawing.Point(694, 37)
+        Me.Btn_Agregar.Name = "Btn_Agregar"
+        Me.Btn_Agregar.Size = New System.Drawing.Size(95, 38)
+        Me.Btn_Agregar.TabIndex = 3
+        Me.Btn_Agregar.Text = "Agregar"
+        Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Agregar.UseVisualStyleBackColor = True
         '
-        'txt_CodigoBarra
+        'txt_Producto
         '
-        Me.txt_CodigoBarra.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.txt_Producto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_CodigoBarra.Location = New System.Drawing.Point(225, 48)
-        Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(409, 20)
-        Me.txt_CodigoBarra.TabIndex = 2
+        Me.txt_Producto.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txt_Producto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.txt_Producto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_Producto.Location = New System.Drawing.Point(181, 48)
+        Me.txt_Producto.Name = "txt_Producto"
+        Me.txt_Producto.Size = New System.Drawing.Size(507, 20)
+        Me.txt_Producto.TabIndex = 2
         '
         'lbl_CodigoBarra
         '
@@ -388,9 +415,9 @@ Partial Class frmCargarMercaderiaEgreso
         Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_CodigoBarra.Location = New System.Drawing.Point(6, 49)
         Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
-        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(213, 15)
+        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(169, 15)
         Me.lbl_CodigoBarra.TabIndex = 7
-        Me.lbl_CodigoBarra.Text = "Código de Barra / Código de Producto"
+        Me.lbl_CodigoBarra.Text = "Nombre / Código de Producto"
         '
         'Label1
         '
@@ -408,31 +435,6 @@ Partial Class frmCargarMercaderiaEgreso
         Me.ToolCargar.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCargar.ToolTipTitle = "Ayuda"
         '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.ColumnCount = 8
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Fecha, 7, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label4, 6, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label5, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label6, 3, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Sucursal, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Sucursal2, 4, 0)
-        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 17)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 1
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(789, 32)
-        Me.TableLayoutPanel1.TabIndex = 27
-        '
         'frmCargarMercaderiaEgreso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -446,11 +448,11 @@ Partial Class frmCargarMercaderiaEgreso
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GB_Fecha.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Gb_Producto.ResumeLayout(False)
         Me.Gb_Producto.PerformLayout()
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -469,8 +471,8 @@ Partial Class frmCargarMercaderiaEgreso
     Friend WithEvents Btn_Finalizar As System.Windows.Forms.Button
     Friend WithEvents DG_Productos As System.Windows.Forms.DataGridView
     Friend WithEvents Gb_Producto As System.Windows.Forms.GroupBox
-    Friend WithEvents Btn_Buscar As System.Windows.Forms.Button
-    Friend WithEvents txt_CodigoBarra As System.Windows.Forms.TextBox
+    Friend WithEvents Btn_Agregar As System.Windows.Forms.Button
+    Friend WithEvents txt_Producto As System.Windows.Forms.TextBox
     Friend WithEvents lbl_CodigoBarra As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents lbl_Sucursal2 As System.Windows.Forms.Label

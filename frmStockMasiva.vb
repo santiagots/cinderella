@@ -639,7 +639,7 @@
 
             If (Cb_Proveedor.SelectedIndex = 0) Then
                 'Obtengo el listado de productos
-                dtProductos = NegProducto.ListadoProductosBuscadores().Tables(0)
+                dtProductos = NegProducto.ListadoProductosBuscadores(False).Tables(0)
             Else
                 'Obtengo el listado de productos segun el proveedor
                 dtProductos = NegProducto.ListadoProductosPorProveedor(Cb_Proveedor.SelectedValue).Tables(0)

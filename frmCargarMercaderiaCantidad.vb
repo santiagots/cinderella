@@ -1,7 +1,7 @@
 ﻿Public Class frmCargarMercaderiaCantidad
-    Public Codigo As String = ""
+    Public IdProducto As Integer
     Public Cantidad As String = ""
-    Public Tipo As Integer = 0
+    Dim entStock As New Entidades.Stock
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim NegStock As New Negocio.NegStock
     Dim EntProducto As New Entidades.Productos
@@ -9,13 +9,10 @@
     Dim id_Sucursal As Integer
     Private Sub frmCargarMercaderiaCantidad_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         id_Sucursal = My.Settings("Sucursal")
-        lbl_Producto.Text = Codigo
-        EntProducto = NegProductos.TraerProductoPorCodigo(Codigo) 'Traigo el producto.
-        Dim entStock As New Entidades.Stock
+        lbl_Producto.Text = IdProducto
+        EntProducto = NegProductos.TraerProducto(IdProducto) 'Traigo el producto.
         entStock = NegStock.TraerStockProducto(EntProducto.id_Producto, id_Sucursal)
         lblStock.Text = entStock.Stock_Actual
-
-
     End Sub
 
     'Boton Cerrar.
@@ -28,12 +25,20 @@
         Try
             If txt_Cantidad.Text = "" Then
                 MessageBox.Show("El campo Cantidad no puede estar vacio.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            Else
-                Cantidad = Trim(txt_Cantidad.Text)
-                frmCargarMercaderiaEgreso.AgregarItem(Codigo, Tipo, Cantidad)
-                Me.Close()
-                frmCargarMercaderiaEgreso.Focus()
+                Return
             End If
+
+            Cantidad = Trim(txt_Cantidad.Text)
+
+            If Cantidad > entStock.Stock_Actual Then
+                MessageBox.Show("La cantidad ingresada no puede ser mayor al stock actual", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+
+            frmCargarMercaderiaEgreso.AgregarItem(IdProducto, Cantidad)
+            Me.Close()
+            frmCargarMercaderiaEgreso.Focus()
+
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString, "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -47,12 +52,20 @@
             Try
                 If txt_Cantidad.Text = "" Then
                     MessageBox.Show("El campo Cantidad no puede estar vacio.", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                Else
-                    Cantidad = Trim(txt_Cantidad.Text)
-                    frmCargarMercaderiaEgreso.AgregarItem(Codigo, Tipo, Cantidad)
-                    Me.Close()
-                    frmCargarMercaderiaEgreso.Focus()
+                    Return
                 End If
+
+                Cantidad = Trim(txt_Cantidad.Text)
+
+                If Cantidad > entStock.Stock_Actual Then
+                    MessageBox.Show("La cantidad ingresada no puede ser mayor al stock actual", "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    Return
+                End If
+
+                frmCargarMercaderiaEgreso.AgregarItem(IdProducto, Cantidad)
+                Me.Close()
+                frmCargarMercaderiaEgreso.Focus()
+
             Catch ex As Exception
                 MessageBox.Show(ex.Message.ToString, "Movimientos | Envió a Otras Sucursales | Cargar Mercaderías", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try

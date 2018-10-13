@@ -15,12 +15,7 @@ Public Class NegTarjeta
         Dim dsTarjetas As DataSet
         Dim respuesta As List(Of Tarjeta) = New List(Of Tarjeta)()
 
-        'Conecto a la bdd.
-        If (Funciones.HayInternet) Then
-            dsTarjetas = clsDatos.ConsultarBaseRemoto("execute sp_Tarjeta_Listado")
-        Else
-            dsTarjetas = clsDatos.ConsultarBaseLocal("execute sp_Tarjeta_Listado")
-        End If
+        dsTarjetas = clsDatos.ConsultarBaseLocal("execute sp_Tarjeta_Listado")
 
         If dsTarjetas.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsTarjetas.Tables(0).Rows
@@ -30,14 +25,6 @@ Public Class NegTarjeta
 
         'retorno valor
         Return respuesta
-    End Function
-
-    Public Shared Function TraerTarjetasCache(usarCache As Boolean) As List(Of Tarjeta)
-        If (ListaTarjetasCache Is Nothing OrElse Not usarCache) Then
-            ListaTarjetasCache = TraerTarjetas()
-        End If
-        'retorno valor
-        Return ListaTarjetasCache
     End Function
 
     Public Shared Function TarearCostoFinanciero() As DataTable

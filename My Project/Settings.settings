@@ -89,12 +89,6 @@
     <Setting Name="DescuentoMinorista" Type="System.Double" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="TemporizadorActualizacionMemoriaCache" Type="System.String" Scope="User">
-      <Value Profile="(Default)">15</Value>
-    </Setting>
-    <Setting Name="UsarMemoriaCache" Type="System.String" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="Sucursal" Roaming="true" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>

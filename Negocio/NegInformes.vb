@@ -207,7 +207,7 @@ Public Class NegInformes
 
 
 
-    Public Shared Function ObtenerProductos(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer, ByRef TotalElementos As Integer) As DataTable
+    Public Shared Function ObtenerProductos(idProducto As String, idCategoria As String, idSubcategoria As String, id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer, ByRef TotalElementos As Integer) As DataTable
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim dt As DataTable = New DataTable()
@@ -219,7 +219,7 @@ Public Class NegInformes
         Next
 
         cmd.Connection = clsDatos.ConectarRemoto()
-        dt = InvocarSPPaginado(cmd, "sp_InformeVentas_Productos", dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
+        dt = InvocarSPPaginadoConFiltro(cmd, "sp_InformeVentas_Productos", idProducto, idCategoria, idSubcategoria, dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
         clsDatos.DesconectarRemoto()
 
         TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
@@ -227,7 +227,7 @@ Public Class NegInformes
         Return dt
     End Function
 
-    Public Shared Function ObtenerSubcategorias(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
+    Public Shared Function ObtenerCategoria(idProducto As String, idCategoria As String, idSubcategoria As String, id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer, ByRef TotalElementos As Integer) As DataTable
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim dt As DataTable = New DataTable()
@@ -239,7 +239,47 @@ Public Class NegInformes
         Next
 
         cmd.Connection = clsDatos.ConectarRemoto()
-        dt = InvocarSPPaginado(cmd, "sp_InformeVentas_Subcategoria", dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
+        dt = InvocarSPPaginadoConFiltro(cmd, "sp_InformeVentas_Categoria", idProducto, idCategoria, idSubcategoria, dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
+        clsDatos.DesconectarRemoto()
+
+        TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
+
+        Return dt
+    End Function
+
+    Public Shared Function ObtenerCategorias(idProducto As String, idCategoria As String, idSubcategoria As String, id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim dt As DataTable = New DataTable()
+
+        'Cargo el listado de sucursales
+        dt.Columns.Add("ID", Type.GetType("System.Int64"))
+        For Each id As Integer In id_Sucursales
+            dt.Rows.Add(id)
+        Next
+
+        cmd.Connection = clsDatos.ConectarRemoto()
+        dt = InvocarSPPaginadoConFiltro(cmd, "sp_InformeVentas_Categoria", idProducto, idCategoria, idSubcategoria, dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
+        clsDatos.DesconectarRemoto()
+
+        TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
+
+        Return dt
+    End Function
+
+    Public Shared Function ObtenerSubcategorias(idProducto As String, idCategoria As String, idSubcategoria As String, id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Dim dt As DataTable = New DataTable()
+
+        'Cargo el listado de sucursales
+        dt.Columns.Add("ID", Type.GetType("System.Int64"))
+        For Each id As Integer In id_Sucursales
+            dt.Rows.Add(id)
+        Next
+
+        cmd.Connection = clsDatos.ConectarRemoto()
+        dt = InvocarSPPaginadoConFiltro(cmd, "sp_InformeVentas_Subcategoria", idProducto, idCategoria, idSubcategoria, dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
         clsDatos.DesconectarRemoto()
 
         TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
@@ -248,6 +288,10 @@ Public Class NegInformes
     End Function
 
     Public Shared Function ObtenerVentasDia(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
+        Return ObtenerVentasDia(String.Empty, String.Empty, String.Empty, id_Sucursales, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion, TotalElementos)
+    End Function
+
+    Public Shared Function ObtenerVentasDia(idProducto As String, idCategoria As String, idSubcategoria As String, id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim dt As DataTable = New DataTable()
@@ -259,7 +303,7 @@ Public Class NegInformes
         Next
 
         cmd.Connection = clsDatos.ConectarRemoto()
-        dt = InvocarSPPaginado(cmd, "sp_InformeVentas_VentasDia", dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
+        dt = InvocarSPPaginadoConFiltro(cmd, "sp_InformeVentas_VentasDia", idProducto, idCategoria, idSubcategoria, dt, FDesde, FHasta, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
         clsDatos.DesconectarRemoto()
 
         TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
@@ -285,100 +329,38 @@ Public Class NegInformes
         Return dt
     End Function
 
-    Public Shared Function ObtenerVentasDiaSubcategoria(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, idSubcategoria As Integer, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim dt As DataTable = New DataTable()
-
-        'Cargo el listado de sucursales
-        dt.Columns.Add("ID", Type.GetType("System.Int64"))
-        For Each id As Integer In id_Sucursales
-            dt.Rows.Add(id)
-        Next
-
-        cmd.Connection = clsDatos.ConectarRemoto()
-        dt = ObtenerVentasDiaSubcategoria(cmd, dt, FDesde, FHasta, idSubcategoria, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
-        clsDatos.DesconectarRemoto()
-
-        TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
-        Return dt
-    End Function
-
-    Private Shared Function ObtenerVentasDiaSubcategoria(ByRef cmd As SqlCommand, IdSucursales As DataTable, FDesde As Date, FHasta As Date, idSubcategoria As Integer, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer) As DataTable
-        cmd.CommandType = CommandType.StoredProcedure
-        cmd.CommandText = "sp_InformeVentas_VentasDiaSubcategoria"
-
-        cmd.Parameters.AddWithValue("@IdSubcategoria", idSubcategoria)
-        cmd.Parameters.AddWithValue("@FDesde", FDesde)
-        cmd.Parameters.AddWithValue("@FHasta", FHasta)
-        cmd.Parameters.AddWithValue("@PaginaOrden", ordenadoPor.ToString())
-        cmd.Parameters.AddWithValue("@PaginaDir", If(direccion = 1, "asc", "desc"))
-        cmd.Parameters.AddWithValue("@PaginaNumero", PaginaNumero)
-        cmd.Parameters.AddWithValue("@PaginaTamaño", PaginaTamaño)
-
-        'Declaro el tipo de dato para el detalle de la venta
-        Dim param = cmd.Parameters.AddWithValue("@id_Sucursales", IdSucursales)
-        param.SqlDbType = SqlDbType.Structured
-        param.TypeName = "dbo.LISTA_ID_TYPE"
-
-        cmd.ExecuteNonQuery()
-
-
-        Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
-        Dim dt As DataTable = New DataTable()
-        adapter.Fill(dt)
-        Return dt
-    End Function
-
-    Public Shared Function ObtenerVentasDiaProducto(id_Sucursales As List(Of Integer), FDesde As Date, FHasta As Date, idProducto As Integer, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As SortOrder, ByRef TotalElementos As Integer) As DataTable
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim dt As DataTable = New DataTable()
-
-        'Cargo el listado de sucursales
-        dt.Columns.Add("ID", Type.GetType("System.Int64"))
-        For Each id As Integer In id_Sucursales
-            dt.Rows.Add(id)
-        Next
-
-        cmd.Connection = clsDatos.ConectarRemoto()
-        dt = ObtenerVentasDiaProducto(cmd, dt, FDesde, FHasta, idProducto, PaginaNumero, PaginaTamaño, ordenadoPor, direccion)
-        clsDatos.DesconectarRemoto()
-
-        TotalElementos = If(dt.Rows.Count > 0, dt(0)("TotalRegistros"), 0)
-        Return dt
-    End Function
-
-    Private Shared Function ObtenerVentasDiaProducto(ByRef cmd As SqlCommand, IdSucursales As DataTable, FDesde As Date, FHasta As Date, idProducto As Integer, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer) As DataTable
-        cmd.CommandType = CommandType.StoredProcedure
-        cmd.CommandText = "sp_InformeVentas_VentasDiaProducto"
-
-        cmd.Parameters.AddWithValue("@IdProducto", idProducto)
-        cmd.Parameters.AddWithValue("@FDesde", FDesde)
-        cmd.Parameters.AddWithValue("@FHasta", FHasta)
-        cmd.Parameters.AddWithValue("@PaginaOrden", ordenadoPor.ToString())
-        cmd.Parameters.AddWithValue("@PaginaDir", If(direccion = 1, "asc", "desc"))
-        cmd.Parameters.AddWithValue("@PaginaNumero", PaginaNumero)
-        cmd.Parameters.AddWithValue("@PaginaTamaño", PaginaTamaño)
-
-        'Declaro el tipo de dato para el detalle de la venta
-        Dim param = cmd.Parameters.AddWithValue("@id_Sucursales", IdSucursales)
-        param.SqlDbType = SqlDbType.Structured
-        param.TypeName = "dbo.LISTA_ID_TYPE"
-
-        cmd.ExecuteNonQuery()
-
-
-        Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
-        Dim dt As DataTable = New DataTable()
-        adapter.Fill(dt)
-        Return dt
-    End Function
-
     Private Shared Function InvocarSPPaginado(ByRef cmd As SqlCommand, sp As String, IdSucursales As DataTable, FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer) As DataTable
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = sp
 
+        cmd.Parameters.AddWithValue("@FDesde", FDesde)
+        cmd.Parameters.AddWithValue("@FHasta", FHasta)
+        cmd.Parameters.AddWithValue("@PaginaOrden", ordenadoPor.ToString())
+        cmd.Parameters.AddWithValue("@PaginaDir", If(direccion = 1, "asc", "desc"))
+        cmd.Parameters.AddWithValue("@PaginaNumero", PaginaNumero)
+        cmd.Parameters.AddWithValue("@PaginaTamaño", PaginaTamaño)
+
+        'Declaro el tipo de dato para el detalle de la venta
+        Dim param = cmd.Parameters.AddWithValue("@id_Sucursales", IdSucursales)
+        param.SqlDbType = SqlDbType.Structured
+        param.TypeName = "dbo.LISTA_ID_TYPE"
+
+        cmd.ExecuteNonQuery()
+
+
+        Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
+        Dim dt As DataTable = New DataTable()
+        adapter.Fill(dt)
+        Return dt
+    End Function
+
+    Private Shared Function InvocarSPPaginadoConFiltro(ByRef cmd As SqlCommand, sp As String, idProducto As String, idCategoria As String, idSubcategoria As String, IdSucursales As DataTable, FDesde As Date, FHasta As Date, PaginaNumero As Integer, PaginaTamaño As Integer, ordenadoPor As String, direccion As Integer) As DataTable
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = sp
+
+        cmd.Parameters.AddWithValue("@idProducto", If(String.IsNullOrEmpty(idProducto), DBNull.Value, idProducto))
+        cmd.Parameters.AddWithValue("@idCategoria", If(String.IsNullOrEmpty(idCategoria), DBNull.Value, idCategoria))
+        cmd.Parameters.AddWithValue("@idSubcategoria", If(String.IsNullOrEmpty(idSubcategoria), DBNull.Value, idSubcategoria))
         cmd.Parameters.AddWithValue("@FDesde", FDesde)
         cmd.Parameters.AddWithValue("@FHasta", FHasta)
         cmd.Parameters.AddWithValue("@PaginaOrden", ordenadoPor.ToString())
