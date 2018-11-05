@@ -535,6 +535,30 @@ Namespace My
                 Return CType(Me("ConexionRemoto"),String)
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
+        Public Property TemporizadorActualizacionMemoriaCache() As String
+            Get
+                Return CType(Me("TemporizadorActualizacionMemoriaCache"),String)
+            End Get
+            Set
+                Me("TemporizadorActualizacionMemoriaCache") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property UsarMemoriaCache() As String
+            Get
+                Return CType(Me("UsarMemoriaCache"),String)
+            End Get
+            Set
+                Me("UsarMemoriaCache") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

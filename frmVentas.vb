@@ -581,7 +581,7 @@ Public Class frmVentas
             Cb_TipoPago.DataSource = Funciones.CrearDataTable("id_TipoPago", "Descripcion", DsTiposPagos, "Seleccione un tipo de pago...")
             Cb_TipoPago.DisplayMember = "Descripcion"
             Cb_TipoPago.ValueMember = "id_TipoPago"
-            Cb_TipoPago.SelectedValue = 0
+            Cb_TipoPago.SelectedValue = 1
             Cb_TipoPago.Refresh()
         End If
 
@@ -903,7 +903,6 @@ Public Class frmVentas
         CargarComboTiposPagos(If(cb_Tipo.SelectedIndex = 1, TipoCliente.Mayorista, TipoCliente.Minorista))
 
         txt_PorcentajeFacturacion.Text = 100
-        txt_PorcentajeBonificacion.Text = 0
         txt_DescuentoMinorista.Text = "0,00"
         txt_DescuentoMayorista.Text = "0,00"
 
@@ -1066,8 +1065,8 @@ Public Class frmVentas
             End If
 
             'Tiene asignado vendedor.
-            If MessageBox.Show("¿Ésta seguro que desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                If (PorcentajeFacturacion > 0 AndAlso MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+            If MessageBox.Show("¿Desea efectuar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+                If (PorcentajeFacturacion > 0 AndAlso MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) = vbYes) Then
                     MostrarPantallaFacturacionVenta(TipoPago, id_Cliente, Descuento, CostoFinanciero, SubTotal, MontoTotal, IvaTotal, MontoSenia, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarVenta)
                 Else
                     FinalizarVenta(Nothing, Nothing)
@@ -1197,7 +1196,7 @@ Public Class frmVentas
                 Me.Cursor = Cursors.Arrow
 
                 'Muestro Mensaje.
-                MessageBox.Show("La venta ha sido registrada correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                AutoClosingMessageBox.Show("La venta ha sido registrada correctamente.", "Registro de Ventas", 1000, MessageBoxButtons.OK, MessageBoxIcon.Question)
 
                 If (NotaPedido IsNot Nothing) Then
                     Dim negNotaPedido As NegNotaPedido = New NegNotaPedido()
@@ -1327,14 +1326,14 @@ Public Class frmVentas
             End If
 
             If (NotaPedido IsNot Nothing) Then
-                If MessageBox.Show("¿Ésta seguro que desea actualizar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+                If MessageBox.Show("¿Desea actualizar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
                     ActualizarNotaPedido()
 
                     Funciones.ControlInstancia(frmNotaPedidoAdministracion).MdiParent = Funciones.ControlInstancia(MDIContenedor)
                     Funciones.ControlInstancia(frmNotaPedidoAdministracion).Show()
                 End If
             Else
-                If MessageBox.Show("¿Ésta seguro que desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+                If MessageBox.Show("¿Desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
                     CrearNuevaNotaPedido()
                 End If
             End If
@@ -1403,7 +1402,7 @@ Public Class frmVentas
         NotaPedido.Fecha = DateTime.Now
         NotaPedido.id_NotaPedido = NotaPedidoNegocio.NuevaNotaPedido(NotaPedido, ObtenerDetalleNotaPedido(), id_Sucursal)
         Me.Cursor = Cursors.Arrow
-        MessageBox.Show("Se ha generado la nota de pedido correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        AutoClosingMessageBox.Show("Se ha generado la nota de pedido correctamente.", "Registro de Ventas", 1000, MessageBoxButtons.OK, MessageBoxIcon.Question)
         Me.Close()
 
     End Sub
@@ -1594,7 +1593,7 @@ Public Class frmVentas
 
                 NuevaSenia = frmSeniaDatos.Senia
 
-                If (MessageBox.Show("¿Desea facturar la reserva?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = vbYes) Then
+                If (MessageBox.Show("¿Desea facturar la reserva?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) = vbYes) Then
                     MostrarPantallaFacturacionSenia(TipoPago, id_Cliente, MontoSenia, CostoFinanciero, PorcentajeFacturacion, ObtenerDetalleVenta(), AddressOf FinalizarSenia)
                 Else
                     FinalizarSenia(Nothing, Nothing)
@@ -1720,7 +1719,7 @@ Public Class frmVentas
                 Me.Cursor = Cursors.Arrow
 
                 'Muestro Mensaje.
-                MessageBox.Show("La reserva ha sido generada correctamente.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Question)
+                AutoClosingMessageBox.Show("La reserva ha sido generada correctamente.", "Registro de Ventas", 1000, MessageBoxButtons.OK, MessageBoxIcon.Question)
 
                 'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
                 If facturada AndAlso PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
@@ -2341,12 +2340,14 @@ Public Class frmVentas
     Private Sub Cb_TipoPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoPago.SelectedIndexChanged
         PosicionarListaPreciosSegunFormaDePago()
 
+        txt_PorcentajeBonificacion.Value = 0
         'Es MAYORISTA
         If (cb_Tipo.SelectedIndex = 1) Then
             'Es EFECTIVO
             If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
                 'habilito el porcentaje de facturacion
                 txt_PorcentajeFacturacion.Enabled = True
+
                 txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
             Else
                 'deshabilito el porcentaje de facturacion
@@ -2355,10 +2356,13 @@ Public Class frmVentas
             End If
             'Es MINORISTA
         Else
-            txt_PorcentajeBonificacion.Value = 0
+            'Es EFECTIVO
+            If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 1) Then
+                txt_PorcentajeBonificacion.Value = My.Settings.DescuentoMinorista
+            End If
         End If
 
-        If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 2) Then
+            If (TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 2) Then
             Cb_Tarjeta.Enabled = True
             Cb_NumeroCuota.Enabled = True
             txt_CostoFinanciero.Enabled = True

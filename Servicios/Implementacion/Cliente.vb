@@ -14,8 +14,12 @@ Public Class Cliente
 
         For Each cli As Entidades.ClienteMayorista In clientesNegocio.TraerCliente(RazonSocial)
             Dim dir As Direccion = direccionNegocio.Consulta(cli.IdDireccionFacturacion)
+            Dim codigoPostas As Integer = 0
+            Dim habilitado As Integer = 0
+            Integer.TryParse(dir.CodigoPostal, codigoPostas)
+
             Dim entCliente As EntidadClientes = New EntidadClientes()
-            entCliente.Codigo_Postal = dir.CodigoPostal
+            entCliente.Codigo_Postal = codigoPostas
             entCliente.Cuit = cli.Cuit
             entCliente.Direccion = dir.Direccion
             entCliente.Habilitado = cli.Habilitado

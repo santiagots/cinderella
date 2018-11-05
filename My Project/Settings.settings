@@ -135,5 +135,11 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezlltpA6/gQhWzNU089HLhPWu39Kk=</Value>
     </Setting>
+    <Setting Name="TemporizadorActualizacionMemoriaCache" Type="System.String" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="UsarMemoriaCache" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
