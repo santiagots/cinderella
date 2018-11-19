@@ -969,6 +969,7 @@
         txt_ComisionEncargadoMayor.Clear()
         txt_ComisionVendedorMayor.Clear()
         txt_CodigoVenta.Clear()
+        txt_Email.Clear()
         cb_Provincia.SelectedItem = Nothing
         cb_Localidad.SelectedItem = Nothing
         cb_Distrito.SelectedItem = Nothing
@@ -989,6 +990,7 @@
         txt_ComisionEncargadoMayor_mod.Clear()
         txt_CodigoVenta_mod.Clear()
         txt_ComisionVendedorMayor_mod.Clear()
+        txt_Email_mod.Clear()
         cb_Provincia_mod.SelectedItem = Nothing
         cb_Localidad_mod.SelectedItem = Nothing
         cb_Distrito_mod.SelectedItem = Nothing

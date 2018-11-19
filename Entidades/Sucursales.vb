@@ -15,6 +15,5 @@
     Public Property Telefono As String
     Public Property Mail As String
     Public Property Habilitado As Integer
-    Public Property id_ListaGrupoPrecio As String
     Public Property CodigoVenta As String
 End Class
