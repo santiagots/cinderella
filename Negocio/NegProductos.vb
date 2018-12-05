@@ -107,7 +107,7 @@ Public Class NegProductos
     End Function
 
     'Funcion para consultar un producto.
-    Public Function TraerProductoPorCodigo(ByVal Codigo As String)
+    Public Function TraerProductoPorCodigo(ByVal Codigo As String) As Entidades.Productos
         Dim daProducto As New SqlDataAdapter
         Dim dsProducto As New DataSet
         Dim sqlcomando As New SqlCommand

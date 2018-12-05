@@ -24,7 +24,7 @@ Partial Class frmReportePreciosSE
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReportePreciosSE))
         Me.CrViewer = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
-        Me.ReportePrecios21 = New SistemaCinderella.ReportePrecios2()
+        Me.ReportePrecios21 = New ReportePrecios2()
         Me.SuspendLayout()
         '
         'CrViewer
@@ -60,5 +60,5 @@ Partial Class frmReportePreciosSE
 
     End Sub
     Friend WithEvents CrViewer As CrystalDecisions.Windows.Forms.CrystalReportViewer
-    Friend WithEvents ReportePrecios21 As SistemaCinderella.ReportePrecios2
+    Friend WithEvents ReportePrecios21 As ReportePrecios2
 End Class

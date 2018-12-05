@@ -24,7 +24,7 @@ Partial Class frmReporteNotaPedido
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReporteNotaPedido))
         Me.CrViewer = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
-        Me.ReporteNotaPedido1 = New SistemaCinderella.ReporteNotaPedidoMayorista()
+        Me.ReporteNotaPedido1 = New ReporteNotaPedidoMayorista()
         Me.SuspendLayout()
         '
         'CrViewer

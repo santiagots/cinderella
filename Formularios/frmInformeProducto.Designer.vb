@@ -38,7 +38,7 @@ Partial Class frmInformeProducto
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ucPaginadoProductos = New SistemaCinderella.Paginado()
+        Me.ucPaginadoProductos = New Paginado()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.chtVentasProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel10.SuspendLayout()

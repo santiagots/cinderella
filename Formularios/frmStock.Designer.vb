@@ -299,7 +299,7 @@ Partial Class frmStock
         Me.Cb_Sucursal.Enabled = False
         Me.Cb_Sucursal.FormattingEnabled = True
         Me.Cb_Sucursal.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursal.Location = New System.Drawing.Point(203, 3)
+        Me.Cb_Sucursal.Location = New System.Drawing.Point(203, 4)
         Me.Cb_Sucursal.Name = "Cb_Sucursal"
         Me.Cb_Sucursal.Size = New System.Drawing.Size(334, 23)
         Me.Cb_Sucursal.TabIndex = 1
@@ -622,7 +622,7 @@ Partial Class frmStock
         Me.Cb_Sucursales.Enabled = False
         Me.Cb_Sucursales.FormattingEnabled = True
         Me.Cb_Sucursales.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursales.Location = New System.Drawing.Point(170, 3)
+        Me.Cb_Sucursales.Location = New System.Drawing.Point(170, 4)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
         Me.Cb_Sucursales.Size = New System.Drawing.Size(796, 23)
         Me.Cb_Sucursales.TabIndex = 1
@@ -896,7 +896,7 @@ Partial Class frmStock
         Me.Cb_Sucursales_mod.Enabled = False
         Me.Cb_Sucursales_mod.FormattingEnabled = True
         Me.Cb_Sucursales_mod.Items.AddRange(New Object() {"Mes Completo", "Primera Quincena", "Segunda Quincena"})
-        Me.Cb_Sucursales_mod.Location = New System.Drawing.Point(179, 4)
+        Me.Cb_Sucursales_mod.Location = New System.Drawing.Point(179, 3)
         Me.Cb_Sucursales_mod.Name = "Cb_Sucursales_mod"
         Me.Cb_Sucursales_mod.Size = New System.Drawing.Size(780, 23)
         Me.Cb_Sucursales_mod.TabIndex = 1

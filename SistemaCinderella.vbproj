@@ -181,28 +181,28 @@
     <Compile Include="ControlesUsuario\Paginado.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DialogInput.Designer.vb">
+    <Compile Include="Formularios\DialogInput.Designer.vb">
       <DependentUpon>DialogInput.vb</DependentUpon>
     </Compile>
-    <Compile Include="DialogInput.vb">
+    <Compile Include="Formularios\DialogInput.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DialogSincronizar.Designer.vb">
+    <Compile Include="Formularios\DialogSincronizar.Designer.vb">
       <DependentUpon>DialogSincronizar.vb</DependentUpon>
     </Compile>
-    <Compile Include="DialogSincronizar.vb">
+    <Compile Include="Formularios\DialogSincronizar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCambios.Designer.vb">
+    <Compile Include="Formularios\frmCambios.Designer.vb">
       <DependentUpon>frmCambios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCambios.vb">
+    <Compile Include="Formularios\frmCambios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCostoFinancieroAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmCostoFinancieroAdministracion.Designer.vb">
       <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCostoFinancieroAdministracion.vb">
+    <Compile Include="Formularios\frmCostoFinancieroAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="db\DsDatos.Designer.vb">
@@ -213,755 +213,755 @@
     <Compile Include="db\DsDatos.vb">
       <DependentUpon>DsDatos.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DialogIngresos.Designer.vb">
+    <Compile Include="Formularios\DialogIngresos.Designer.vb">
       <DependentUpon>DialogIngresos.vb</DependentUpon>
     </Compile>
-    <Compile Include="DialogIngresos.vb">
+    <Compile Include="Formularios\DialogIngresos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAdelantoEfectivo.Designer.vb">
+    <Compile Include="Formularios\frmAdelantoEfectivo.Designer.vb">
       <DependentUpon>frmAdelantoEfectivo.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAdelantoEfectivo.vb">
+    <Compile Include="Formularios\frmAdelantoEfectivo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAdelantoListado.Designer.vb">
+    <Compile Include="Formularios\frmAdelantoListado.Designer.vb">
       <DependentUpon>frmAdelantoListado.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAdelantoListado.vb">
+    <Compile Include="Formularios\frmAdelantoListado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAdicionales.Designer.vb">
+    <Compile Include="Formularios\frmAdicionales.Designer.vb">
       <DependentUpon>frmAdicionales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAdicionales.vb">
+    <Compile Include="Formularios\frmAdicionales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAromas.Designer.vb">
+    <Compile Include="Formularios\frmAromas.Designer.vb">
       <DependentUpon>frmAromas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAromas.vb">
+    <Compile Include="Formularios\frmAromas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBanco.Designer.vb">
+    <Compile Include="Formularios\frmBanco.Designer.vb">
       <DependentUpon>frmBanco.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBanco.vb">
+    <Compile Include="Formularios\frmBanco.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBrowser.Designer.vb">
+    <Compile Include="Formularios\frmBrowser.Designer.vb">
       <DependentUpon>frmBrowser.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBrowser.vb">
+    <Compile Include="Formularios\frmBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBuscarClienteMinorista.Designer.vb">
+    <Compile Include="Formularios\frmBuscarClienteMinorista.Designer.vb">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBuscarClienteMinorista.vb">
+    <Compile Include="Formularios\frmBuscarClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBuscarClienteMayorista.Designer.vb">
+    <Compile Include="Formularios\frmBuscarClienteMayorista.Designer.vb">
       <DependentUpon>frmBuscarClienteMayorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBuscarClienteMayorista.vb">
+    <Compile Include="Formularios\frmBuscarClienteMayorista.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBuscarCodigoProducto.Designer.vb">
+    <Compile Include="Formularios\frmBuscarCodigoProducto.Designer.vb">
       <DependentUpon>frmBuscarCodigoProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBuscarCodigoProducto.vb">
+    <Compile Include="Formularios\frmBuscarCodigoProducto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBuscarPrecioProductos.Designer.vb">
+    <Compile Include="Formularios\frmBuscarPrecioProductos.Designer.vb">
       <DependentUpon>frmBuscarPrecioProductos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBuscarPrecioProductos.vb">
+    <Compile Include="Formularios\frmBuscarPrecioProductos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBuscarProducto.Designer.vb">
+    <Compile Include="Formularios\frmBuscarProducto.Designer.vb">
       <DependentUpon>frmBuscarProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBuscarProducto.vb">
+    <Compile Include="Formularios\frmBuscarProducto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCargadorDeEspera.Designer.vb">
+    <Compile Include="Formularios\frmCargadorDeEspera.Designer.vb">
       <DependentUpon>frmCargadorDeEspera.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCargadorDeEspera.vb">
+    <Compile Include="Formularios\frmCargadorDeEspera.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCargarMercaderiaCantidad.Designer.vb">
+    <Compile Include="Formularios\frmCargarMercaderiaCantidad.Designer.vb">
       <DependentUpon>frmCargarMercaderiaCantidad.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCargarMercaderiaCantidad.vb">
+    <Compile Include="Formularios\frmCargarMercaderiaCantidad.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCargarMercaderiaEgreso.Designer.vb">
+    <Compile Include="Formularios\frmCargarMercaderiaEgreso.Designer.vb">
       <DependentUpon>frmCargarMercaderiaEgreso.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCargarMercaderiaEgreso.vb">
+    <Compile Include="Formularios\frmCargarMercaderiaEgreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChequesAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmChequesAdministracion.Designer.vb">
       <DependentUpon>frmChequesAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmChequesAdministracion.vb">
+    <Compile Include="Formularios\frmChequesAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChequesAlta.Designer.vb">
+    <Compile Include="Formularios\frmChequesAlta.Designer.vb">
       <DependentUpon>frmChequesAlta.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmChequesAlta.vb">
+    <Compile Include="Formularios\frmChequesAlta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChequesAltaMasiva.Designer.vb">
+    <Compile Include="Formularios\frmChequesAltaMasiva.Designer.vb">
       <DependentUpon>frmChequesAltaMasiva.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmChequesAltaMasiva.vb">
+    <Compile Include="Formularios\frmChequesAltaMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmControladorFiscal.Designer.vb">
+    <Compile Include="Formularios\frmControladorFiscal.Designer.vb">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmControladorFiscal.vb">
+    <Compile Include="Formularios\frmControladorFiscal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDatosClienteMinorista.Designer.vb">
+    <Compile Include="Formularios\frmDatosClienteMinorista.Designer.vb">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDatosClienteMinorista.vb">
+    <Compile Include="Formularios\frmDatosClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDevoluciones.Designer.vb">
+    <Compile Include="Formularios\frmDevoluciones.Designer.vb">
       <DependentUpon>frmDevoluciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDevoluciones.vb">
+    <Compile Include="Formularios\frmDevoluciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCargadorAltaProductos.Designer.vb">
+    <Compile Include="Formularios\frmCargadorAltaProductos.Designer.vb">
       <DependentUpon>frmCargadorAltaProductos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCargadorAltaProductos.vb">
+    <Compile Include="Formularios\frmCargadorAltaProductos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmClienteMayorista.Designer.vb">
+    <Compile Include="Formularios\frmClienteMayorista.Designer.vb">
       <DependentUpon>frmClienteMayorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmClienteMayorista.vb">
+    <Compile Include="Formularios\frmClienteMayorista.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="dialogoConexion.Designer.vb">
+    <Compile Include="Formularios\dialogoConexion.Designer.vb">
       <DependentUpon>dialogoConexion.vb</DependentUpon>
     </Compile>
-    <Compile Include="dialogoConexion.vb">
+    <Compile Include="Formularios\dialogoConexion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmColores.Designer.vb">
+    <Compile Include="Formularios\frmColores.Designer.vb">
       <DependentUpon>frmColores.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmColores.vb">
+    <Compile Include="Formularios\frmColores.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConfiguracion.Designer.vb">
+    <Compile Include="Formularios\frmConfiguracion.Designer.vb">
       <DependentUpon>frmConfiguracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmConfiguracion.vb">
+    <Compile Include="Formularios\frmConfiguracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDevolucionesAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmDevolucionesAdministracion.Designer.vb">
       <DependentUpon>frmDevolucionesAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDevolucionesAdministracion.vb">
+    <Compile Include="Formularios\frmDevolucionesAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDiferenciasListado.Designer.vb">
+    <Compile Include="Formularios\frmDiferenciasListado.Designer.vb">
       <DependentUpon>frmDiferenciasListado.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDiferenciasListado.vb">
+    <Compile Include="Formularios\frmDiferenciasListado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEmpleados.Designer.vb">
+    <Compile Include="Formularios\frmEmpleados.Designer.vb">
       <DependentUpon>frmEmpleados.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmEmpleados.vb">
+    <Compile Include="Formularios\frmEmpleados.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEmpleadosRegistro.Designer.vb">
+    <Compile Include="Formularios\frmEmpleadosRegistro.Designer.vb">
       <DependentUpon>frmEmpleadosRegistro.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmEmpleadosRegistro.vb">
+    <Compile Include="Formularios\frmEmpleadosRegistro.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEmpleadosSaldos.Designer.vb">
+    <Compile Include="Formularios\frmEmpleadosSaldos.Designer.vb">
       <DependentUpon>frmEmpleadosSaldos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmEmpleadosSaldos.vb">
+    <Compile Include="Formularios\frmEmpleadosSaldos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEtiquetas.Designer.vb">
+    <Compile Include="Formularios\frmEtiquetas.Designer.vb">
       <DependentUpon>frmEtiquetas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmEtiquetas.vb">
+    <Compile Include="Formularios\frmEtiquetas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEtiquetasMasivas.Designer.vb">
+    <Compile Include="Formularios\frmEtiquetasMasivas.Designer.vb">
       <DependentUpon>frmEtiquetasMasivas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmEtiquetasMasivas.vb">
+    <Compile Include="Formularios\frmEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFacturaAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmFacturaAdministracion.Designer.vb">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmFacturaAdministracion.vb">
+    <Compile Include="Formularios\frmFacturaAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFacturar.Designer.vb">
+    <Compile Include="Formularios\frmFacturar.Designer.vb">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmFacturar.vb">
+    <Compile Include="Formularios\frmFacturar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFeriados.Designer.vb">
+    <Compile Include="Formularios\frmFeriados.Designer.vb">
       <DependentUpon>frmFeriados.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmFeriados.vb">
+    <Compile Include="Formularios\frmFeriados.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmInformeProducto.Designer.vb">
+    <Compile Include="Formularios\frmInformeProducto.Designer.vb">
       <DependentUpon>frmInformeProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmInformeProducto.vb">
+    <Compile Include="Formularios\frmInformeProducto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmInformeGraficoEgresos.Designer.vb">
+    <Compile Include="Formularios\FrmInformeGraficoEgresos.Designer.vb">
       <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmInformeGraficoEgresos.vb">
+    <Compile Include="Formularios\FrmInformeGraficoEgresos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmInformeGraficoProducto.Designer.vb">
+    <Compile Include="Formularios\FrmInformeGraficoProducto.Designer.vb">
       <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmInformeGraficoProducto.vb">
+    <Compile Include="Formularios\FrmInformeGraficoProducto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmInformeGraficoVentas.Designer.vb">
+    <Compile Include="Formularios\FrmInformeGraficoVentas.Designer.vb">
       <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmInformeGraficoVentas.vb">
+    <Compile Include="Formularios\FrmInformeGraficoVentas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmInformeVentas.Designer.vb">
+    <Compile Include="Formularios\frmInformeVentas.Designer.vb">
       <DependentUpon>frmInformeVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmInformeVentas.vb">
+    <Compile Include="Formularios\frmInformeVentas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLogin.Designer.vb">
+    <Compile Include="Formularios\frmLogin.Designer.vb">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmLogin.vb">
+    <Compile Include="Formularios\frmLogin.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMailBandeja.Designer.vb">
+    <Compile Include="Formularios\frmMailBandeja.Designer.vb">
       <DependentUpon>frmMailBandeja.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMailBandeja.vb">
+    <Compile Include="Formularios\frmMailBandeja.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMailNuevo.Designer.vb">
+    <Compile Include="Formularios\frmMailNuevo.Designer.vb">
       <DependentUpon>frmMailNuevo.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMailNuevo.vb">
+    <Compile Include="Formularios\frmMailNuevo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMailVisor.Designer.vb">
+    <Compile Include="Formularios\frmMailVisor.Designer.vb">
       <DependentUpon>frmMailVisor.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMailVisor.vb">
+    <Compile Include="Formularios\frmMailVisor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMateriales.Designer.vb">
+    <Compile Include="Formularios\frmMateriales.Designer.vb">
       <DependentUpon>frmMateriales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMateriales.vb">
+    <Compile Include="Formularios\frmMateriales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMiCuenta.Designer.vb">
+    <Compile Include="Formularios\frmMiCuenta.Designer.vb">
       <DependentUpon>frmMiCuenta.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMiCuenta.vb">
+    <Compile Include="Formularios\frmMiCuenta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoCajaFuerte.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoCajaFuerte.Designer.vb">
       <DependentUpon>frmMovimientoCajaFuerte.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoCajaFuerte.vb">
+    <Compile Include="Formularios\frmMovimientoCajaFuerte.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNotaCreditoAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmNotaCreditoAdministracion.Designer.vb">
       <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmNotaCreditoAdministracion.vb">
+    <Compile Include="Formularios\frmNotaCreditoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNotaCredito.Designer.vb">
+    <Compile Include="Formularios\frmNotaCredito.Designer.vb">
       <DependentUpon>frmNotaCredito.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmNotaCredito.vb">
+    <Compile Include="Formularios\frmNotaCredito.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNotificaciones.Designer.vb">
+    <Compile Include="Formularios\frmNotificaciones.Designer.vb">
       <DependentUpon>frmNotificaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmNotificaciones.vb">
+    <Compile Include="Formularios\frmNotificaciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoCaja.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoCaja.Designer.vb">
       <DependentUpon>frmMovimientoCaja.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoCaja.vb">
+    <Compile Include="Formularios\frmMovimientoCaja.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoEgreso.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoEgreso.Designer.vb">
       <DependentUpon>frmMovimientoEgreso.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoEgreso.vb">
+    <Compile Include="Formularios\frmMovimientoEgreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoGasto.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoGasto.Designer.vb">
       <DependentUpon>frmMovimientoGasto.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoGasto.vb">
+    <Compile Include="Formularios\frmMovimientoGasto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoImpuesto.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoImpuesto.Designer.vb">
       <DependentUpon>frmMovimientoImpuesto.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoImpuesto.vb">
+    <Compile Include="Formularios\frmMovimientoImpuesto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoPlanilla.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoPlanilla.Designer.vb">
       <DependentUpon>frmMovimientoPlanilla.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoPlanilla.vb">
+    <Compile Include="Formularios\frmMovimientoPlanilla.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMovimientoSocios.Designer.vb">
+    <Compile Include="Formularios\frmMovimientoSocios.Designer.vb">
       <DependentUpon>frmMovimientoSocios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMovimientoSocios.vb">
+    <Compile Include="Formularios\frmMovimientoSocios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNotificacionesListado.Designer.vb">
+    <Compile Include="Formularios\frmNotificacionesListado.Designer.vb">
       <DependentUpon>frmNotificacionesListado.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmNotificacionesListado.vb">
+    <Compile Include="Formularios\frmNotificacionesListado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmOrdenCompraProductoRepetido.Designer.vb">
+    <Compile Include="Formularios\frmOrdenCompraProductoRepetido.Designer.vb">
       <DependentUpon>frmOrdenCompraProductoRepetido.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmOrdenCompraProductoRepetido.vb">
+    <Compile Include="Formularios\frmOrdenCompraProductoRepetido.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPagarCuentaCorriente.Designer.vb">
+    <Compile Include="Formularios\frmPagarCuentaCorriente.Designer.vb">
       <DependentUpon>frmPagarCuentaCorriente.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPagarCuentaCorriente.vb">
+    <Compile Include="Formularios\frmPagarCuentaCorriente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPagarMercaderia.Designer.vb">
+    <Compile Include="Formularios\frmPagarMercaderia.Designer.vb">
       <DependentUpon>frmPagarMercaderia.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPagarMercaderia.vb">
+    <Compile Include="Formularios\frmPagarMercaderia.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPerfiles.Designer.vb">
+    <Compile Include="Formularios\frmPerfiles.Designer.vb">
       <DependentUpon>frmPerfiles.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPerfiles.vb">
+    <Compile Include="Formularios\frmPerfiles.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPlanillaEmpleados.Designer.vb">
+    <Compile Include="Formularios\frmPlanillaEmpleados.Designer.vb">
       <DependentUpon>frmPlanillaEmpleados.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPlanillaEmpleados.vb">
+    <Compile Include="Formularios\frmPlanillaEmpleados.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPlanillaEntreSucursales.Designer.vb">
+    <Compile Include="Formularios\frmPlanillaEntreSucursales.Designer.vb">
       <DependentUpon>frmPlanillaEntreSucursales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPlanillaEntreSucursales.vb">
+    <Compile Include="Formularios\frmPlanillaEntreSucursales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPlanillaEntreSucursalesD1.Designer.vb">
+    <Compile Include="Formularios\frmPlanillaEntreSucursalesD1.Designer.vb">
       <DependentUpon>frmPlanillaEntreSucursalesD1.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPlanillaEntreSucursalesD1.vb">
+    <Compile Include="Formularios\frmPlanillaEntreSucursalesD1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPlanillaPrecios.Designer.vb">
+    <Compile Include="Formularios\frmPlanillaPrecios.Designer.vb">
       <DependentUpon>frmPlanillaPrecios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPlanillaPrecios.vb">
+    <Compile Include="Formularios\frmPlanillaPrecios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPlanillaSucursales.Designer.vb">
+    <Compile Include="Formularios\frmPlanillaSucursales.Designer.vb">
       <DependentUpon>frmPlanillaSucursales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPlanillaSucursales.vb">
+    <Compile Include="Formularios\frmPlanillaSucursales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPlanillaSucursalesDetalle.Designer.vb">
+    <Compile Include="Formularios\frmPlanillaSucursalesDetalle.Designer.vb">
       <DependentUpon>frmPlanillaSucursalesDetalle.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPlanillaSucursalesDetalle.vb">
+    <Compile Include="Formularios\frmPlanillaSucursalesDetalle.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductos.Designer.vb">
+    <Compile Include="Formularios\frmProductos.Designer.vb">
       <DependentUpon>frmProductos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductos.vb">
+    <Compile Include="Formularios\frmProductos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductosCat.Designer.vb">
+    <Compile Include="Formularios\frmProductosCat.Designer.vb">
       <DependentUpon>frmProductosCat.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductosCat.vb">
+    <Compile Include="Formularios\frmProductosCat.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductosErrorImportar.Designer.vb">
+    <Compile Include="Formularios\frmProductosErrorImportar.Designer.vb">
       <DependentUpon>frmProductosErrorImportar.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductosErrorImportar.vb">
+    <Compile Include="Formularios\frmProductosErrorImportar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductosMasiva.Designer.vb">
+    <Compile Include="Formularios\frmProductosMasiva.Designer.vb">
       <DependentUpon>frmProductosMasiva.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductosMasiva.vb">
+    <Compile Include="Formularios\frmProductosMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductosPrecios.Designer.vb">
+    <Compile Include="Formularios\frmProductosPrecios.Designer.vb">
       <DependentUpon>frmProductosPrecios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductosPrecios.vb">
+    <Compile Include="Formularios\frmProductosPrecios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductosSubcat.Designer.vb">
+    <Compile Include="Formularios\frmProductosSubcat.Designer.vb">
       <DependentUpon>frmProductosSubcat.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductosSubcat.vb">
+    <Compile Include="Formularios\frmProductosSubcat.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProveedores.Designer.vb">
+    <Compile Include="Formularios\frmProveedores.Designer.vb">
       <DependentUpon>frmProveedores.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProveedores.vb">
+    <Compile Include="Formularios\frmProveedores.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProveedoresCuentaCorriente.Designer.vb">
+    <Compile Include="Formularios\frmProveedoresCuentaCorriente.Designer.vb">
       <DependentUpon>frmProveedoresCuentaCorriente.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProveedoresCuentaCorriente.vb">
+    <Compile Include="Formularios\frmProveedoresCuentaCorriente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReciboSueldo.Designer.vb">
+    <Compile Include="Formularios\frmReciboSueldo.Designer.vb">
       <DependentUpon>frmReciboSueldo.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReciboSueldo.vb">
+    <Compile Include="Formularios\frmReciboSueldo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporteEtiquetas.Designer.vb">
+    <Compile Include="Formularios\frmReporteEtiquetas.Designer.vb">
       <DependentUpon>frmReporteEtiquetas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReporteEtiquetas.vb">
+    <Compile Include="Formularios\frmReporteEtiquetas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporteEtiquetasMasivas.Designer.vb">
+    <Compile Include="Formularios\frmReporteEtiquetasMasivas.Designer.vb">
       <DependentUpon>frmReporteEtiquetasMasivas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReporteEtiquetasMasivas.vb">
+    <Compile Include="Formularios\frmReporteEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporteNotaPedido.Designer.vb">
+    <Compile Include="Formularios\frmReporteNotaPedido.Designer.vb">
       <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReporteNotaPedido.vb">
+    <Compile Include="Formularios\frmReporteNotaPedido.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReportePrecios.Designer.vb">
+    <Compile Include="Formularios\frmReportePrecios.Designer.vb">
       <DependentUpon>frmReportePrecios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReportePrecios.vb">
+    <Compile Include="Formularios\frmReportePrecios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReportePreciosSE.Designer.vb">
+    <Compile Include="Formularios\frmReportePreciosSE.Designer.vb">
       <DependentUpon>frmReportePreciosSE.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReportePreciosSE.vb">
+    <Compile Include="Formularios\frmReportePreciosSE.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReportePresupuesto.Designer.vb">
+    <Compile Include="Formularios\frmReportePresupuesto.Designer.vb">
       <DependentUpon>frmReportePresupuesto.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReportePresupuesto.vb">
+    <Compile Include="Formularios\frmReportePresupuesto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporteResumenReserva.Designer.vb">
+    <Compile Include="Formularios\frmReporteResumenReserva.Designer.vb">
       <DependentUpon>frmReporteResumenReserva.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReporteResumenReserva.vb">
+    <Compile Include="Formularios\frmReporteResumenReserva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporteResumenVenta.Designer.vb">
+    <Compile Include="Formularios\frmReporteResumenVenta.Designer.vb">
       <DependentUpon>frmReporteResumenVenta.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmReporteResumenVenta.vb">
+    <Compile Include="Formularios\frmReporteResumenVenta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmResumenDiario.Designer.vb">
+    <Compile Include="Formularios\frmResumenDiario.Designer.vb">
       <DependentUpon>frmResumenDiario.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmResumenDiario.vb">
+    <Compile Include="Formularios\frmResumenDiario.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSeniaAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmSeniaAdministracion.Designer.vb">
       <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSeniaAdministracion.vb">
+    <Compile Include="Formularios\frmSeniaAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSeniaDatos.Designer.vb">
+    <Compile Include="Formularios\frmSeniaDatos.Designer.vb">
       <DependentUpon>frmSeniaDatos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSeniaDatos.vb">
+    <Compile Include="Formularios\frmSeniaDatos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSincronizacion.Designer.vb">
+    <Compile Include="Formularios\frmSincronizacion.Designer.vb">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSincronizacion.vb">
+    <Compile Include="Formularios\frmSincronizacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStock.Designer.vb">
+    <Compile Include="Formularios\frmStock.Designer.vb">
       <DependentUpon>frmStock.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStock.vb">
+    <Compile Include="Formularios\frmStock.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockBitacora.Designer.vb">
+    <Compile Include="Formularios\frmStockBitacora.Designer.vb">
       <DependentUpon>frmStockBitacora.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockBitacora.vb">
+    <Compile Include="Formularios\frmStockBitacora.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockIngreso.Designer.vb">
+    <Compile Include="Formularios\frmStockIngreso.Designer.vb">
       <DependentUpon>frmStockIngreso.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockIngreso.vb">
+    <Compile Include="Formularios\frmStockIngreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockFaltante.Designer.vb">
+    <Compile Include="Formularios\frmStockFaltante.Designer.vb">
       <DependentUpon>frmStockFaltante.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockFaltante.vb">
+    <Compile Include="Formularios\frmStockFaltante.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockMasiva.Designer.vb">
+    <Compile Include="Formularios\frmStockMasiva.Designer.vb">
       <DependentUpon>frmStockMasiva.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockMasiva.vb">
+    <Compile Include="Formularios\frmStockMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockMotivo.Designer.vb">
+    <Compile Include="Formularios\frmStockMotivo.Designer.vb">
       <DependentUpon>frmStockMotivo.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockMotivo.vb">
+    <Compile Include="Formularios\frmStockMotivo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmOrdenCompra.Designer.vb">
+    <Compile Include="Formularios\frmOrdenCompra.Designer.vb">
       <DependentUpon>frmOrdenCompra.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmOrdenCompra.vb">
+    <Compile Include="Formularios\frmOrdenCompra.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSucursales.Designer.vb">
+    <Compile Include="Formularios\frmSucursales.Designer.vb">
       <DependentUpon>frmSucursales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSucursales.vb">
+    <Compile Include="Formularios\frmSucursales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSucursalesSaldos.Designer.vb">
+    <Compile Include="Formularios\frmSucursalesSaldos.Designer.vb">
       <DependentUpon>frmSucursalesSaldos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSucursalesSaldos.vb">
+    <Compile Include="Formularios\frmSucursalesSaldos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmUsuarios.Designer.vb">
+    <Compile Include="Formularios\frmUsuarios.Designer.vb">
       <DependentUpon>frmUsuarios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmUsuarios.vb">
+    <Compile Include="Formularios\frmUsuarios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVentas.Designer.vb">
+    <Compile Include="Formularios\frmVentas.Designer.vb">
       <DependentUpon>frmVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVentas.vb">
+    <Compile Include="Formularios\frmVentas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVentasAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmVentasAdministracion.Designer.vb">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVentasAdministracion.vb">
+    <Compile Include="Formularios\frmVentasAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerAdelantos.Designer.vb">
+    <Compile Include="Formularios\frmVerAdelantos.Designer.vb">
       <DependentUpon>frmVerAdelantos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerAdelantos.vb">
+    <Compile Include="Formularios\frmVerAdelantos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerAdelantosSucursal.Designer.vb">
+    <Compile Include="Formularios\frmVerAdelantosSucursal.Designer.vb">
       <DependentUpon>frmVerAdelantosSucursal.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerAdelantosSucursal.vb">
+    <Compile Include="Formularios\frmVerAdelantosSucursal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerAdicionalesSucursal.Designer.vb">
+    <Compile Include="Formularios\frmVerAdicionalesSucursal.Designer.vb">
       <DependentUpon>frmVerAdicionalesSucursal.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerAdicionalesSucursal.vb">
+    <Compile Include="Formularios\frmVerAdicionalesSucursal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerAdiconales.Designer.vb">
+    <Compile Include="Formularios\frmVerAdiconales.Designer.vb">
       <DependentUpon>frmVerAdiconales.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerAdiconales.vb">
+    <Compile Include="Formularios\frmVerAdiconales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerAguinaldo.Designer.vb">
+    <Compile Include="Formularios\frmVerAguinaldo.Designer.vb">
       <DependentUpon>frmVerAguinaldo.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerAguinaldo.vb">
+    <Compile Include="Formularios\frmVerAguinaldo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerComision.Designer.vb">
+    <Compile Include="Formularios\frmVerComision.Designer.vb">
       <DependentUpon>frmVerComision.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerComision.vb">
+    <Compile Include="Formularios\frmVerComision.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerComisiones.Designer.vb">
+    <Compile Include="Formularios\frmVerComisiones.Designer.vb">
       <DependentUpon>frmVerComisiones.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerComisiones.vb">
+    <Compile Include="Formularios\frmVerComisiones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerComprasCliente.Designer.vb">
+    <Compile Include="Formularios\frmVerComprasCliente.Designer.vb">
       <DependentUpon>frmVerComprasCliente.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerComprasCliente.vb">
+    <Compile Include="Formularios\frmVerComprasCliente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerDevoluciones.Designer.vb">
+    <Compile Include="Formularios\frmVerDevoluciones.Designer.vb">
       <DependentUpon>frmVerDevoluciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerDevoluciones.vb">
+    <Compile Include="Formularios\frmVerDevoluciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerDifCaja.Designer.vb">
+    <Compile Include="Formularios\frmVerDifCaja.Designer.vb">
       <DependentUpon>frmVerDifCaja.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerDifCaja.vb">
+    <Compile Include="Formularios\frmVerDifCaja.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerEfectivo.Designer.vb">
+    <Compile Include="Formularios\frmVerEfectivo.Designer.vb">
       <DependentUpon>frmVerEfectivo.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerEfectivo.vb">
+    <Compile Include="Formularios\frmVerEfectivo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerFactura.Designer.vb">
+    <Compile Include="Formularios\frmVerFactura.Designer.vb">
       <DependentUpon>frmVerFactura.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerFactura.vb">
+    <Compile Include="Formularios\frmVerFactura.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerFeriados.Designer.vb">
+    <Compile Include="Formularios\frmVerFeriados.Designer.vb">
       <DependentUpon>frmVerFeriados.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerFeriados.vb">
+    <Compile Include="Formularios\frmVerFeriados.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerGastos.Designer.vb">
+    <Compile Include="Formularios\frmVerGastos.Designer.vb">
       <DependentUpon>frmVerGastos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerGastos.vb">
+    <Compile Include="Formularios\frmVerGastos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerImpuestos.Designer.vb">
+    <Compile Include="Formularios\frmVerImpuestos.Designer.vb">
       <DependentUpon>frmVerImpuestos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerImpuestos.vb">
+    <Compile Include="Formularios\frmVerImpuestos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmVerNotaCredito.Designer.vb">
+    <Compile Include="Formularios\FrmVerNotaCredito.Designer.vb">
       <DependentUpon>FrmVerNotaCredito.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmVerNotaCredito.vb">
+    <Compile Include="Formularios\FrmVerNotaCredito.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerRegulares.Designer.vb">
+    <Compile Include="Formularios\frmVerRegulares.Designer.vb">
       <DependentUpon>frmVerRegulares.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerRegulares.vb">
+    <Compile Include="Formularios\frmVerRegulares.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerMovimientosSocios.Designer.vb">
+    <Compile Include="Formularios\frmVerMovimientosSocios.Designer.vb">
       <DependentUpon>frmVerMovimientosSocios.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerMovimientosSocios.vb">
+    <Compile Include="Formularios\frmVerMovimientosSocios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerSueldos.Designer.vb">
+    <Compile Include="Formularios\frmVerSueldos.Designer.vb">
       <DependentUpon>frmVerSueldos.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerSueldos.vb">
+    <Compile Include="Formularios\frmVerSueldos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerSueldosEmpleado.Designer.vb">
+    <Compile Include="Formularios\frmVerSueldosEmpleado.Designer.vb">
       <DependentUpon>frmVerSueldosEmpleado.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerSueldosEmpleado.vb">
+    <Compile Include="Formularios\frmVerSueldosEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerSueldosSucursal.Designer.vb">
+    <Compile Include="Formularios\frmVerSueldosSucursal.Designer.vb">
       <DependentUpon>frmVerSueldosSucursal.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerSueldosSucursal.vb">
+    <Compile Include="Formularios\frmVerSueldosSucursal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerVacaciones.Designer.vb">
+    <Compile Include="Formularios\frmVerVacaciones.Designer.vb">
       <DependentUpon>frmVerVacaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerVacaciones.vb">
+    <Compile Include="Formularios\frmVerVacaciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmVerVentas.Designer.vb">
+    <Compile Include="Formularios\frmVerVentas.Designer.vb">
       <DependentUpon>frmVerVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmVerVentas.vb">
+    <Compile Include="Formularios\frmVerVentas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Funciones.vb" />
-    <Compile Include="MDIContenedor.Designer.vb">
+    <Compile Include="Formularios\MDIContenedor.Designer.vb">
       <DependentUpon>MDIContenedor.vb</DependentUpon>
     </Compile>
-    <Compile Include="MDIContenedor.vb">
+    <Compile Include="Formularios\MDIContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -979,16 +979,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="frmNotaPedidoAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmNotaPedidoAdministracion.Designer.vb">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmNotaPedidoAdministracion.vb">
+    <Compile Include="Formularios\frmNotaPedidoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPresupuestoAdministracion.Designer.vb">
+    <Compile Include="Formularios\frmPresupuestoAdministracion.Designer.vb">
       <DependentUpon>frmPresupuestoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmPresupuestoAdministracion.vb">
+    <Compile Include="Formularios\frmPresupuestoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Recursos.Designer.vb">
@@ -1052,410 +1052,417 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Settings.vb" />
-    <Compile Include="SplashScreen.Designer.vb">
+    <Compile Include="Formularios\SplashScreen.Designer.vb">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </Compile>
-    <Compile Include="SplashScreen.vb">
+    <Compile Include="Formularios\SplashScreen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\AutoClosingMessageBox.vb" />
+    <Compile Include="Utils\CustomDataGrid.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\SortableBindingList.vb" />
     <Compile Include="VariablesGlobales.vb" />
+    <Compile Include="VistaModelo\Common.vb" />
+    <Compile Include="VistaModelo\frmVentas\Pago.vb" />
+    <Compile Include="VistaModelo\frmVentas\Producto.vb" />
+    <Compile Include="VistaModelo\frmVentas\Venta.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
       <DependentUpon>Paginado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DialogInput.resx">
+    <EmbeddedResource Include="Formularios\DialogInput.resx">
       <DependentUpon>DialogInput.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DialogSincronizar.resx">
+    <EmbeddedResource Include="Formularios\DialogSincronizar.resx">
       <DependentUpon>DialogSincronizar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCambios.resx">
+    <EmbeddedResource Include="Formularios\frmCambios.resx">
       <DependentUpon>frmCambios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCostoFinancieroAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmCostoFinancieroAdministracion.resx">
       <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DialogIngresos.resx">
+    <EmbeddedResource Include="Formularios\DialogIngresos.resx">
       <DependentUpon>DialogIngresos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAdelantoEfectivo.resx">
+    <EmbeddedResource Include="Formularios\frmAdelantoEfectivo.resx">
       <DependentUpon>frmAdelantoEfectivo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAdelantoListado.resx">
+    <EmbeddedResource Include="Formularios\frmAdelantoListado.resx">
       <DependentUpon>frmAdelantoListado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAdicionales.resx">
+    <EmbeddedResource Include="Formularios\frmAdicionales.resx">
       <DependentUpon>frmAdicionales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAromas.resx">
+    <EmbeddedResource Include="Formularios\frmAromas.resx">
       <DependentUpon>frmAromas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBanco.resx">
+    <EmbeddedResource Include="Formularios\frmBanco.resx">
       <DependentUpon>frmBanco.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBrowser.resx">
+    <EmbeddedResource Include="Formularios\frmBrowser.resx">
       <DependentUpon>frmBrowser.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBuscarClienteMinorista.resx">
+    <EmbeddedResource Include="Formularios\frmBuscarClienteMinorista.resx">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBuscarClienteMayorista.resx">
+    <EmbeddedResource Include="Formularios\frmBuscarClienteMayorista.resx">
       <DependentUpon>frmBuscarClienteMayorista.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBuscarCodigoProducto.resx">
+    <EmbeddedResource Include="Formularios\frmBuscarCodigoProducto.resx">
       <DependentUpon>frmBuscarCodigoProducto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBuscarPrecioProductos.resx">
+    <EmbeddedResource Include="Formularios\frmBuscarPrecioProductos.resx">
       <DependentUpon>frmBuscarPrecioProductos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBuscarProducto.resx">
+    <EmbeddedResource Include="Formularios\frmBuscarProducto.resx">
       <DependentUpon>frmBuscarProducto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCargadorDeEspera.resx">
+    <EmbeddedResource Include="Formularios\frmCargadorDeEspera.resx">
       <DependentUpon>frmCargadorDeEspera.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCargarMercaderiaCantidad.resx">
+    <EmbeddedResource Include="Formularios\frmCargarMercaderiaCantidad.resx">
       <DependentUpon>frmCargarMercaderiaCantidad.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCargarMercaderiaEgreso.resx">
+    <EmbeddedResource Include="Formularios\frmCargarMercaderiaEgreso.resx">
       <DependentUpon>frmCargarMercaderiaEgreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChequesAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmChequesAdministracion.resx">
       <DependentUpon>frmChequesAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChequesAlta.resx">
+    <EmbeddedResource Include="Formularios\frmChequesAlta.resx">
       <DependentUpon>frmChequesAlta.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChequesAltaMasiva.resx">
+    <EmbeddedResource Include="Formularios\frmChequesAltaMasiva.resx">
       <DependentUpon>frmChequesAltaMasiva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmControladorFiscal.resx">
+    <EmbeddedResource Include="Formularios\frmControladorFiscal.resx">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDatosClienteMinorista.resx">
+    <EmbeddedResource Include="Formularios\frmDatosClienteMinorista.resx">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDevoluciones.resx">
+    <EmbeddedResource Include="Formularios\frmDevoluciones.resx">
       <DependentUpon>frmDevoluciones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCargadorAltaProductos.resx">
+    <EmbeddedResource Include="Formularios\frmCargadorAltaProductos.resx">
       <DependentUpon>frmCargadorAltaProductos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmClienteMayorista.resx">
+    <EmbeddedResource Include="Formularios\frmClienteMayorista.resx">
       <DependentUpon>frmClienteMayorista.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="dialogoConexion.resx">
+    <EmbeddedResource Include="Formularios\dialogoConexion.resx">
       <DependentUpon>dialogoConexion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmColores.resx">
+    <EmbeddedResource Include="Formularios\frmColores.resx">
       <DependentUpon>frmColores.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConfiguracion.resx">
+    <EmbeddedResource Include="Formularios\frmConfiguracion.resx">
       <DependentUpon>frmConfiguracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDevolucionesAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmDevolucionesAdministracion.resx">
       <DependentUpon>frmDevolucionesAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDiferenciasListado.resx">
+    <EmbeddedResource Include="Formularios\frmDiferenciasListado.resx">
       <DependentUpon>frmDiferenciasListado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEmpleados.resx">
+    <EmbeddedResource Include="Formularios\frmEmpleados.resx">
       <DependentUpon>frmEmpleados.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEmpleadosRegistro.resx">
+    <EmbeddedResource Include="Formularios\frmEmpleadosRegistro.resx">
       <DependentUpon>frmEmpleadosRegistro.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEmpleadosSaldos.resx">
+    <EmbeddedResource Include="Formularios\frmEmpleadosSaldos.resx">
       <DependentUpon>frmEmpleadosSaldos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEtiquetas.resx">
+    <EmbeddedResource Include="Formularios\frmEtiquetas.resx">
       <DependentUpon>frmEtiquetas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEtiquetasMasivas.resx">
+    <EmbeddedResource Include="Formularios\frmEtiquetasMasivas.resx">
       <DependentUpon>frmEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFacturaAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmFacturaAdministracion.resx">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFacturar.resx">
+    <EmbeddedResource Include="Formularios\frmFacturar.resx">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFeriados.resx">
+    <EmbeddedResource Include="Formularios\frmFeriados.resx">
       <DependentUpon>frmFeriados.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmInformeProducto.resx">
+    <EmbeddedResource Include="Formularios\frmInformeProducto.resx">
       <DependentUpon>frmInformeProducto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmInformeGraficoEgresos.resx">
+    <EmbeddedResource Include="Formularios\FrmInformeGraficoEgresos.resx">
       <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmInformeGraficoProducto.resx">
+    <EmbeddedResource Include="Formularios\FrmInformeGraficoProducto.resx">
       <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmInformeGraficoVentas.resx">
+    <EmbeddedResource Include="Formularios\FrmInformeGraficoVentas.resx">
       <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmInformeVentas.resx">
+    <EmbeddedResource Include="Formularios\frmInformeVentas.resx">
       <DependentUpon>frmInformeVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLogin.resx">
+    <EmbeddedResource Include="Formularios\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMailBandeja.resx">
+    <EmbeddedResource Include="Formularios\frmMailBandeja.resx">
       <DependentUpon>frmMailBandeja.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMailNuevo.resx">
+    <EmbeddedResource Include="Formularios\frmMailNuevo.resx">
       <DependentUpon>frmMailNuevo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMailVisor.resx">
+    <EmbeddedResource Include="Formularios\frmMailVisor.resx">
       <DependentUpon>frmMailVisor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMateriales.resx">
+    <EmbeddedResource Include="Formularios\frmMateriales.resx">
       <DependentUpon>frmMateriales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMiCuenta.resx">
+    <EmbeddedResource Include="Formularios\frmMiCuenta.resx">
       <DependentUpon>frmMiCuenta.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoCajaFuerte.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoCajaFuerte.resx">
       <DependentUpon>frmMovimientoCajaFuerte.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotaCreditoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmNotaCreditoAdministracion.resx">
       <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotaCredito.resx">
+    <EmbeddedResource Include="Formularios\frmNotaCredito.resx">
       <DependentUpon>frmNotaCredito.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotificaciones.af-ZA.resx">
+    <EmbeddedResource Include="Formularios\frmNotificaciones.af-ZA.resx">
       <DependentUpon>frmNotificaciones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotificaciones.resx">
+    <EmbeddedResource Include="Formularios\frmNotificaciones.resx">
       <DependentUpon>frmNotificaciones.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoCaja.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoCaja.resx">
       <DependentUpon>frmMovimientoCaja.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoEgreso.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoEgreso.resx">
       <DependentUpon>frmMovimientoEgreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoGasto.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoGasto.resx">
       <DependentUpon>frmMovimientoGasto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoImpuesto.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoImpuesto.resx">
       <DependentUpon>frmMovimientoImpuesto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoPlanilla.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoPlanilla.resx">
       <DependentUpon>frmMovimientoPlanilla.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMovimientoSocios.resx">
+    <EmbeddedResource Include="Formularios\frmMovimientoSocios.resx">
       <DependentUpon>frmMovimientoSocios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotificacionesListado.resx">
+    <EmbeddedResource Include="Formularios\frmNotificacionesListado.resx">
       <DependentUpon>frmNotificacionesListado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmOrdenCompraProductoRepetido.resx">
+    <EmbeddedResource Include="Formularios\frmOrdenCompraProductoRepetido.resx">
       <DependentUpon>frmOrdenCompraProductoRepetido.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPagarCuentaCorriente.resx">
+    <EmbeddedResource Include="Formularios\frmPagarCuentaCorriente.resx">
       <DependentUpon>frmPagarCuentaCorriente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPagarMercaderia.resx">
+    <EmbeddedResource Include="Formularios\frmPagarMercaderia.resx">
       <DependentUpon>frmPagarMercaderia.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPerfiles.resx">
+    <EmbeddedResource Include="Formularios\frmPerfiles.resx">
       <DependentUpon>frmPerfiles.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPlanillaEmpleados.resx">
+    <EmbeddedResource Include="Formularios\frmPlanillaEmpleados.resx">
       <DependentUpon>frmPlanillaEmpleados.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPlanillaEntreSucursales.resx">
+    <EmbeddedResource Include="Formularios\frmPlanillaEntreSucursales.resx">
       <DependentUpon>frmPlanillaEntreSucursales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPlanillaEntreSucursalesD1.resx">
+    <EmbeddedResource Include="Formularios\frmPlanillaEntreSucursalesD1.resx">
       <DependentUpon>frmPlanillaEntreSucursalesD1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPlanillaPrecios.resx">
+    <EmbeddedResource Include="Formularios\frmPlanillaPrecios.resx">
       <DependentUpon>frmPlanillaPrecios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPlanillaSucursales.resx">
+    <EmbeddedResource Include="Formularios\frmPlanillaSucursales.resx">
       <DependentUpon>frmPlanillaSucursales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPlanillaSucursalesDetalle.resx">
+    <EmbeddedResource Include="Formularios\frmPlanillaSucursalesDetalle.resx">
       <DependentUpon>frmPlanillaSucursalesDetalle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductos.resx">
+    <EmbeddedResource Include="Formularios\frmProductos.resx">
       <DependentUpon>frmProductos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductosCat.resx">
+    <EmbeddedResource Include="Formularios\frmProductosCat.resx">
       <DependentUpon>frmProductosCat.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductosErrorImportar.resx">
+    <EmbeddedResource Include="Formularios\frmProductosErrorImportar.resx">
       <DependentUpon>frmProductosErrorImportar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductosMasiva.resx">
+    <EmbeddedResource Include="Formularios\frmProductosMasiva.resx">
       <DependentUpon>frmProductosMasiva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductosPrecios.resx">
+    <EmbeddedResource Include="Formularios\frmProductosPrecios.resx">
       <DependentUpon>frmProductosPrecios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductosSubcat.resx">
+    <EmbeddedResource Include="Formularios\frmProductosSubcat.resx">
       <DependentUpon>frmProductosSubcat.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProveedores.resx">
+    <EmbeddedResource Include="Formularios\frmProveedores.resx">
       <DependentUpon>frmProveedores.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProveedoresCuentaCorriente.resx">
+    <EmbeddedResource Include="Formularios\frmProveedoresCuentaCorriente.resx">
       <DependentUpon>frmProveedoresCuentaCorriente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReciboSueldo.resx">
+    <EmbeddedResource Include="Formularios\frmReciboSueldo.resx">
       <DependentUpon>frmReciboSueldo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteEtiquetas.resx">
+    <EmbeddedResource Include="Formularios\frmReporteEtiquetas.resx">
       <DependentUpon>frmReporteEtiquetas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteEtiquetasMasivas.resx">
+    <EmbeddedResource Include="Formularios\frmReporteEtiquetasMasivas.resx">
       <DependentUpon>frmReporteEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteNotaPedido.resx">
+    <EmbeddedResource Include="Formularios\frmReporteNotaPedido.resx">
       <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReportePrecios.resx">
+    <EmbeddedResource Include="Formularios\frmReportePrecios.resx">
       <DependentUpon>frmReportePrecios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReportePreciosSE.resx">
+    <EmbeddedResource Include="Formularios\frmReportePreciosSE.resx">
       <DependentUpon>frmReportePreciosSE.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReportePresupuesto.resx">
+    <EmbeddedResource Include="Formularios\frmReportePresupuesto.resx">
       <DependentUpon>frmReportePresupuesto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteResumenReserva.resx">
+    <EmbeddedResource Include="Formularios\frmReporteResumenReserva.resx">
       <DependentUpon>frmReporteResumenReserva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteResumenVenta.resx">
+    <EmbeddedResource Include="Formularios\frmReporteResumenVenta.resx">
       <DependentUpon>frmReporteResumenVenta.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmResumenDiario.resx">
+    <EmbeddedResource Include="Formularios\frmResumenDiario.resx">
       <DependentUpon>frmResumenDiario.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSeniaAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmSeniaAdministracion.resx">
       <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSeniaDatos.resx">
+    <EmbeddedResource Include="Formularios\frmSeniaDatos.resx">
       <DependentUpon>frmSeniaDatos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSincronizacion.resx">
+    <EmbeddedResource Include="Formularios\frmSincronizacion.resx">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStock.resx">
+    <EmbeddedResource Include="Formularios\frmStock.resx">
       <DependentUpon>frmStock.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockBitacora.resx">
+    <EmbeddedResource Include="Formularios\frmStockBitacora.resx">
       <DependentUpon>frmStockBitacora.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockIngreso.resx">
+    <EmbeddedResource Include="Formularios\frmStockIngreso.resx">
       <DependentUpon>frmStockIngreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockFaltante.resx">
+    <EmbeddedResource Include="Formularios\frmStockFaltante.resx">
       <DependentUpon>frmStockFaltante.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockMasiva.resx">
+    <EmbeddedResource Include="Formularios\frmStockMasiva.resx">
       <DependentUpon>frmStockMasiva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockMotivo.resx">
+    <EmbeddedResource Include="Formularios\frmStockMotivo.resx">
       <DependentUpon>frmStockMotivo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmOrdenCompra.resx">
+    <EmbeddedResource Include="Formularios\frmOrdenCompra.resx">
       <DependentUpon>frmOrdenCompra.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSucursales.resx">
+    <EmbeddedResource Include="Formularios\frmSucursales.resx">
       <DependentUpon>frmSucursales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSucursalesSaldos.resx">
+    <EmbeddedResource Include="Formularios\frmSucursalesSaldos.resx">
       <DependentUpon>frmSucursalesSaldos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmUsuarios.resx">
+    <EmbeddedResource Include="Formularios\frmUsuarios.resx">
       <DependentUpon>frmUsuarios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVentas.resx">
+    <EmbeddedResource Include="Formularios\frmVentas.resx">
       <DependentUpon>frmVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVentasAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmVentasAdministracion.resx">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerAdelantos.resx">
+    <EmbeddedResource Include="Formularios\frmVerAdelantos.resx">
       <DependentUpon>frmVerAdelantos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerAdelantosSucursal.resx">
+    <EmbeddedResource Include="Formularios\frmVerAdelantosSucursal.resx">
       <DependentUpon>frmVerAdelantosSucursal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerAdicionalesSucursal.resx">
+    <EmbeddedResource Include="Formularios\frmVerAdicionalesSucursal.resx">
       <DependentUpon>frmVerAdicionalesSucursal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerAdiconales.resx">
+    <EmbeddedResource Include="Formularios\frmVerAdiconales.resx">
       <DependentUpon>frmVerAdiconales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerAguinaldo.resx">
+    <EmbeddedResource Include="Formularios\frmVerAguinaldo.resx">
       <DependentUpon>frmVerAguinaldo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerComision.resx">
+    <EmbeddedResource Include="Formularios\frmVerComision.resx">
       <DependentUpon>frmVerComision.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerComisiones.resx">
+    <EmbeddedResource Include="Formularios\frmVerComisiones.resx">
       <DependentUpon>frmVerComisiones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerComprasCliente.resx">
+    <EmbeddedResource Include="Formularios\frmVerComprasCliente.resx">
       <DependentUpon>frmVerComprasCliente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerDevoluciones.resx">
+    <EmbeddedResource Include="Formularios\frmVerDevoluciones.resx">
       <DependentUpon>frmVerDevoluciones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerDifCaja.resx">
+    <EmbeddedResource Include="Formularios\frmVerDifCaja.resx">
       <DependentUpon>frmVerDifCaja.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerEfectivo.resx">
+    <EmbeddedResource Include="Formularios\frmVerEfectivo.resx">
       <DependentUpon>frmVerEfectivo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerFactura.resx">
+    <EmbeddedResource Include="Formularios\frmVerFactura.resx">
       <DependentUpon>frmVerFactura.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerFeriados.resx">
+    <EmbeddedResource Include="Formularios\frmVerFeriados.resx">
       <DependentUpon>frmVerFeriados.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerGastos.resx">
+    <EmbeddedResource Include="Formularios\frmVerGastos.resx">
       <DependentUpon>frmVerGastos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerImpuestos.resx">
+    <EmbeddedResource Include="Formularios\frmVerImpuestos.resx">
       <DependentUpon>frmVerImpuestos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmVerNotaCredito.resx">
+    <EmbeddedResource Include="Formularios\FrmVerNotaCredito.resx">
       <DependentUpon>FrmVerNotaCredito.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerRegulares.resx">
+    <EmbeddedResource Include="Formularios\frmVerRegulares.resx">
       <DependentUpon>frmVerRegulares.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerMovimientosSocios.resx">
+    <EmbeddedResource Include="Formularios\frmVerMovimientosSocios.resx">
       <DependentUpon>frmVerMovimientosSocios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerSueldos.resx">
+    <EmbeddedResource Include="Formularios\frmVerSueldos.resx">
       <DependentUpon>frmVerSueldos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerSueldosEmpleado.resx">
+    <EmbeddedResource Include="Formularios\frmVerSueldosEmpleado.resx">
       <DependentUpon>frmVerSueldosEmpleado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerSueldosSucursal.resx">
+    <EmbeddedResource Include="Formularios\frmVerSueldosSucursal.resx">
       <DependentUpon>frmVerSueldosSucursal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerVacaciones.resx">
+    <EmbeddedResource Include="Formularios\frmVerVacaciones.resx">
       <DependentUpon>frmVerVacaciones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmVerVentas.resx">
+    <EmbeddedResource Include="Formularios\frmVerVentas.resx">
       <DependentUpon>frmVerVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MDIContenedor.resx">
+    <EmbeddedResource Include="Formularios\MDIContenedor.resx">
       <DependentUpon>MDIContenedor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -1464,10 +1471,10 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotaPedidoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmNotaPedidoAdministracion.resx">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPresupuestoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\frmPresupuestoAdministracion.resx">
       <DependentUpon>frmPresupuestoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Recursos.resx">
@@ -1618,7 +1625,7 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReportePresupuesto.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SplashScreen.resx">
+    <EmbeddedResource Include="Formularios\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -1663,6 +1670,9 @@
     <None Include="My Project\DataSources\Entidades.StockNotaPedido.datasource" />
     <None Include="My Project\DataSources\Entidades.Tarjeta.datasource" />
     <None Include="My Project\DataSources\Permiso.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.SistemaCinderella.VistaModelo.Ventas.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Venta.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -2187,7 +2197,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Negocio\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

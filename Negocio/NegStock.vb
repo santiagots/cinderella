@@ -511,7 +511,6 @@ Public Class NegStock
             Next
         Next
 
-
         Dim startCell As Excel.Range = CType(xlWorkSheet.Cells(1, 1), Excel.Range)
         Dim endCell As Excel.Range = CType(xlWorkSheet.Cells(dsProductos.Tables(0).Rows.Count + 1, dsProductos.Tables(0).Columns.Count), Excel.Range)
         Dim writeRange As Excel.Range = xlWorkSheet.Range(startCell, endCell)
@@ -627,7 +626,7 @@ Public Class NegStock
         For Each dato In dtStockNuevo.Rows
 
             'si no se cargo ningun valor en StockMinimo StockActual StockOptimo VentaMensual no importo el registro
-            If dato("StockMinimo") Is DBNull.Value Or dato("StockActual") Is DBNull.Value Or dato("StockOptimo") Is DBNull.Value Or dato("VentaMensual") Is DBNull.Value Then
+            If dato("StockMinimo") = 0 Or dato("StockActual") = 0 Or dato("StockOptimo") = 0 Or dato("VentaMensual") = 0 Then
                 Continue For
             End If
 
