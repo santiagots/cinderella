@@ -74,6 +74,7 @@
     <Compile Include="Adicionales.vb" />
     <Compile Include="Aromas.vb" />
     <Compile Include="Enum\DiasSemana.vb" />
+    <Compile Include="Enum\FormaPago.vb" />
     <Compile Include="Enum\StockNotaPedidoEstado.vb" />
     <Compile Include="Enum\StockNotaPedidoTipo.vb" />
     <Compile Include="Etiqueta.vb" />

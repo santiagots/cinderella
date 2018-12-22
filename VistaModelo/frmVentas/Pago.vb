@@ -1,27 +1,29 @@
-﻿Namespace VistaModelo.frmVentas
+﻿Imports Entidades
+
+Namespace VistaModelo.frmVentas
 
     Public Class Pago
         Inherits Common
 
-        Private _FormaPagoId As Integer
-        Public Property FormaPagoId As Integer
+        Private _FormaPagoDescripcion As String
+        Public Property FormaPagoDescripcion As String
             Get
-                Return _FormaPagoId
+                Return _FormaPagoDescripcion
             End Get
-            Set(ByVal value As Integer)
-                If (value <> _FormaPagoId) Then
-                    _FormaPagoId = value
+            Set(ByVal value As String)
+                If (value <> _FormaPagoDescripcion) Then
+                    _FormaPagoDescripcion = value
                     NotifyPropertyChanged()
                 End If
             End Set
         End Property
 
-        Private _FormaPago As String
-        Public Property FormaPago As String
+        Private _FormaPago As FormaPago
+        Public Property FormaPago As FormaPago
             Get
                 Return _FormaPago
             End Get
-            Set(ByVal value As String)
+            Set(ByVal value As FormaPago)
                 If (value <> _FormaPago) Then
                     _FormaPago = value
                     NotifyPropertyChanged()
@@ -29,40 +31,92 @@
             End Set
         End Property
 
-        Private _Monto As Double
-        Public Property Monto As Double
+        Private _SubTotal As Double
+        Public Property SubTotal As Double
             Get
-                Return _Monto
+                Return _SubTotal
             End Get
             Set(ByVal value As Double)
-                If (value <> _Monto) Then
-                    _Monto = value
+                If (value <> _SubTotal) Then
+                    _SubTotal = value
                     NotifyPropertyChanged()
                 End If
             End Set
         End Property
 
-        Private _DescuentoRecargo As Double
-        Public Property DescuentoRecargo As Double
+        Private _Descuento As Double
+        Public Property Descuento As Double
             Get
-                Return _DescuentoRecargo
+                Return _Descuento
             End Get
             Set(ByVal value As Double)
-                If (value <> _DescuentoRecargo) Then
-                    _DescuentoRecargo = value
+                If (value <> _Descuento) Then
+                    _Descuento = value
                     NotifyPropertyChanged()
                 End If
             End Set
         End Property
 
-        Private _Subtotal As Double
-        Public Property Subtotal As Double
+        Private _CostoFinanciero As Double
+        Public Property CostoFinanciero As Double
             Get
-                Return _Subtotal
+                Return _CostoFinanciero
             End Get
             Set(ByVal value As Double)
-                If (value <> _Subtotal) Then
-                    _Subtotal = value
+                If (value <> _CostoFinanciero) Then
+                    _CostoFinanciero = value
+                    NotifyPropertyChanged()
+                End If
+            End Set
+        End Property
+
+        Private _IVA As Double
+        Public Property IVA As Double
+            Get
+                Return _IVA
+            End Get
+            Set(ByVal value As Double)
+                If (value <> _IVA) Then
+                    _IVA = value
+                    NotifyPropertyChanged()
+                End If
+            End Set
+        End Property
+
+        Private _Total As Double
+        Public Property Total As Double
+            Get
+                Return _Total
+            End Get
+            Set(ByVal value As Double)
+                If (value <> _Total) Then
+                    _Total = value
+                    NotifyPropertyChanged()
+                End If
+            End Set
+        End Property
+
+        Private Property _TarjetaId As Integer
+        Public Property TarjetaId As Integer
+            Get
+                Return _TarjetaId
+            End Get
+            Set(ByVal value As Integer)
+                If (value <> _Total) Then
+                    _TarjetaId = value
+                    NotifyPropertyChanged()
+                End If
+            End Set
+        End Property
+
+        Private Property _CuotaId As Integer
+        Public Property CuotaId As Integer
+            Get
+                Return _CuotaId
+            End Get
+            Set(ByVal value As Integer)
+                If (value <> _CuotaId) Then
+                    _CuotaId = value
                     NotifyPropertyChanged()
                 End If
             End Set

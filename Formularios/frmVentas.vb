@@ -4,6 +4,7 @@ Imports System.Threading.Tasks
 Imports Negocio
 Imports Entidades.ClienteMayorista
 Imports System.ComponentModel
+Imports SistemaCinderella.VistaModelo.frmVentas
 
 Public Class frmVentas
     'Instancias
@@ -39,127 +40,34 @@ Public Class frmVentas
     Private NuevaSenia As Senia
     Private id_Venta As Int64
 
-    'Funcion que calcula el Monto total del lista de producto
-    Function ObtenerSubTotal() As Double
-        Dim subtotal As Double = 0
-        If ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Minorista Then
-            subtotal = ventaVistaModelo.Productos.Sum(Function(x) x.Monto * x.Cantidad)
-        Else
-            subtotal = ventaVistaModelo.Productos.Sum(Function(x) x.Precio * x.Cantidad)
-        End If
-        Return subtotal
-    End Function
+    Public Sub New()
 
-    'Funcion que calcula el senia total
-    Function ObtenerSenia() As Double
-        If ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Minorista Then
-            Return ventaVistaModelo.Senia
-        Else
-            'a la seña le quito el iva
-            Return Math.Round(ventaVistaModelo.Senia / 1.21, 2)
-        End If
-    End Function
+        ' This call is required by the designer.
+        InitializeComponent()
 
-    Private Function ObtenerCostoFinanciero() As Double
-        ''TODO: modificar para obtener el costo financiero
-        'If (Cb_NumeroCuota.SelectedItem IsNot Nothing AndAlso TypeOf Cb_TipoPago.SelectedValue Is String AndAlso Cb_TipoPago.SelectedValue = 2) Then
-        '    Return CType(Cb_NumeroCuota.SelectedItem, CostoFinanciero).PorcentajeRecargo
-        'Else
-        '    Return 0
-        'End If
-        Return 0
-    End Function
-
-    Sub CargarMontoPagar()
-
-        Dim totalPago As Double = ventaVistaModelo.Pagos.Sum(Function(x) x.Subtotal)
-        Dim subtotal As Double = ObtenerSubTotal()
-        Dim restante As Double = subtotal - totalPago
-        Dim porcentajeDescuento As Double = ventaVistaModelo.ProcentajeBonificacion / 100
-
-
-        Select Case ventaVistaModelo.FormaPagoSeleccionado
-            Case 1
-                ventaVistaModelo.MontoPago = restante * (1 - porcentajeDescuento)
-            Case 2
-                If (ventaVistaModelo.ListaBancoSeleccionado > 0 AndAlso ventaVistaModelo.ListaCuotaSeleccionado > 0) Then
-                    Dim costoFinanciero As CostoFinanciero = Cb_NroCuota.SelectedItem
-                    ventaVistaModelo.MontoPago = restante * (1 + costoFinanciero.PorcentajeRecargo)
-                Else
-                    ventaVistaModelo.MontoPago = restante
-                End If
-            Case Else
-                ventaVistaModelo.MontoPago = restante
-        End Select
+        ' Add any initialization after the InitializeComponent() call.
 
     End Sub
+
 
     'Funcion que calcula el total con descuento
-    Sub CalcularTotales(tipoCliente As TipoCliente)
-
-        If tipoCliente = TipoCliente.Minorista Then
-            CaluclarPrecioMinorista()
-        Else
-            CalcularPrecioMayorista()
-        End If
-
-        If ventaVistaModelo.SubTotal <= 0 Then
-            Btn_Finalizar.Visible = False
-            Btn_NotaPedido.Visible = False
-            BtnSenia.Visible = False
-        Else
-            Btn_Finalizar.Visible = True
-            Btn_NotaPedido.Visible = True
-            BtnSenia.Visible = True
-        End If
-    End Sub
-
-    Private Sub CalcularPrecioMayorista()
-        Dim PorcentajeFacturacion As Double = ventaVistaModelo.ProcentajeFacturacionClienteMayorista / 100
-        Dim PorcentajeDescuento As Double = ventaVistaModelo.ProcentajeBonificacion / 100
-
-        Dim subtotal As Double = ObtenerSubTotal()
-        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
-        Dim senia As Double = ObtenerSenia()
-        Dim costoFinanciero As Double = (subtotal - descuento - senia) * ObtenerCostoFinanciero()
-
-        If descuento > subtotal Then
-            descuento = subtotal
-        End If
-
-        ventaVistaModelo.Descuento = descuento
-        ventaVistaModelo.CostoFinanciero = costoFinanciero
-        ventaVistaModelo.SubTotal = subtotal - descuento + costoFinanciero
-        ventaVistaModelo.IVA = ventaVistaModelo.SubTotal * (0.21 * PorcentajeFacturacion)
-        ventaVistaModelo.ImporteAbonar = ventaVistaModelo.SubTotal + ventaVistaModelo.IVA - ventaVistaModelo.Senia
-    End Sub
-
-    Private Sub CaluclarPrecioMinorista()
-        Dim PorcentajeDescuento As Double = Double.Parse(ventaVistaModelo.ProcentajeBonificacion) / 100
-
-        Dim subtotal As Double = ObtenerSubTotal()
-        Dim descuento As Double = Math.Round(subtotal * PorcentajeDescuento, 0, MidpointRounding.ToEven)
-        Dim senia As Double = ObtenerSenia()
-        Dim costoFinanciero As Double = (subtotal - descuento - senia) * ObtenerCostoFinanciero()
-
-        If CDbl(descuento) > subtotal Then
-            descuento = subtotal
-        End If
-
-        ventaVistaModelo.Descuento = descuento
-        ventaVistaModelo.CostoFinanciero = costoFinanciero
-        ventaVistaModelo.SubTotal = subtotal
-        ventaVistaModelo.ImporteAbonar = ventaVistaModelo.SubTotal - ventaVistaModelo.Descuento + ventaVistaModelo.CostoFinanciero - ventaVistaModelo.Senia
+    Sub CalcularPago(tipoCliente As TipoCliente)
+        ventaVistaModelo.SubTotal = ventaVistaModelo.ObtenerSubTotalFaltantePago()
+        ventaVistaModelo.CalcularTotal(ventaVistaModelo.SubTotal)
+        HabilitarPagos()
     End Sub
 
     Private Sub PosicionarListaPreciosSegunFormaDePago()
         If ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Minorista Then
-            'TODO: que lista de precio se tiene que seleccionar ahora que se puede utilisar varias formas de pagos
-            'If Cb_TipoPago.Text = "Efectivo" Then
-            '    Cb_ListaPrecio.SelectedIndex = Cb_ListaPrecio.FindString("Efectivo")
-            'Else
-            '    Cb_ListaPrecio.SelectedIndex = Cb_ListaPrecio.FindString("Tarjeta")
-            'End If
+            If (ventaVistaModelo.FormaPagoSeleccionado = 1) Then
+                Dim tarjeta As KeyValuePair(Of Integer, String) = ventaVistaModelo.ListaPrecios.FirstOrDefault(Function(x) x.Value.Contains("Efectivo"))
+                ventaVistaModelo.ListaPrecioSeleccionado = tarjeta.Key
+                Cb_ListaPrecio.SelectedValue = tarjeta.Key
+            Else
+                Dim tarjeta As KeyValuePair(Of Integer, String) = ventaVistaModelo.ListaPrecios.FirstOrDefault(Function(x) x.Value.Contains("Tarjeta"))
+                ventaVistaModelo.ListaPrecioSeleccionado = tarjeta.Key
+                Cb_ListaPrecio.SelectedValue = tarjeta.Key
+            End If
         End If
     End Sub
 
@@ -226,7 +134,6 @@ Public Class frmVentas
         Dim PorcentajeFacturacion As Double = ventaVistaModelo.ProcentajeFacturacionClienteMayorista / 100
 
         If DG_Productos.Columns(e.ColumnIndex).Name = "ProductoCantidad" Then 'Si se modifica la cantidad de un producto
-
             'Verifico si hay stock disponible de la cantidad ingresada del producto
             If (Not NegStock.ComprobarStock(productoEditado.Id, productoEditado.Cantidad, id_Sucursal)) Then
                 'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
@@ -239,26 +146,11 @@ Public Class frmVentas
                     Return
                 End If
             End If
-
-        ElseIf DG_Productos.Columns(e.ColumnIndex).Name = "ProductoPrecio" OrElse DG_Productos.Columns(e.ColumnIndex).Name = "ProductoMonto" Then
-
-            'Si el monto ingresado es mayor que cero.
-            If productoEditado.Precio >= 0 Then
-                If ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Minorista Then
-                    productoEditado.IVA = 0
-                Else
-                    productoEditado.IVA = productoEditado.Precio * 0.21 * PorcentajeFacturacion
-                    productoEditado.Monto = productoEditado.Precio + productoEditado.IVA
-                End If
-            Else
-                ActualizarColumnaIvaMonto(productoEditado, ventaVistaModelo.TipoClienteSeleccionado)
-            End If
         End If
 
-
-        productoEditado.Subtotal = productoEditado.Monto * productoEditado.Cantidad
-        CargarMontoPagar()
-        CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
+        productoEditado.Actualizar(ventaVistaModelo.TipoClienteSeleccionado, ventaVistaModelo.FormaPagoSeleccionado, PorcentajeFacturacion)
+        ventaVistaModelo.ActualizarTotalProducto(ventaVistaModelo.TipoClienteSeleccionado)
+        CalcularPago(ventaVistaModelo.TipoClienteSeleccionado)
     End Sub
 
     'Sobresalto la celda que se está editando.
@@ -317,9 +209,9 @@ Public Class frmVentas
             If Result = System.Windows.Forms.DialogResult.Yes Then 'Si acepta eliminar el item
 
                 Dim productoQuitar As VistaModelo.frmVentas.Producto = DG_Productos.CurrentRow.DataBoundItem
-                ventaVistaModelo.Productos.Remove(productoQuitar)
-
-                CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado) 'Recalculo el Total y lo muestro en el label
+                ventaVistaModelo.QuitarProducto(productoQuitar)
+                ventaVistaModelo.ActualizarTotalProducto(ventaVistaModelo.TipoClienteSeleccionado)
+                CalcularPago(ventaVistaModelo.TipoClienteSeleccionado) 'Recalculo el Total y lo muestro en el label
                 txt_CodigoBarra.Focus()
             End If
         End If
@@ -335,14 +227,14 @@ Public Class frmVentas
 
         sw.Start()
 
-        'Seteo la fecha
-        lbl_Fecha.Text = Now.Date.ToString("d MMM yyyy")
-        'Pongo el combo en minorista y deshabilito la opcion de clientes.
+        DG_ProductosTotales.DefaultCellStyle.SelectionBackColor = DG_ProductosTotales.DefaultCellStyle.BackColor
+        DG_ProductosTotales.DefaultCellStyle.SelectionForeColor = DG_ProductosTotales.DefaultCellStyle.ForeColor
 
-        EnableSeccionCliente(False)
+        dgPagosTotales.DefaultCellStyle.SelectionBackColor = dgPagosTotales.DefaultCellStyle.BackColor
+        dgPagosTotales.DefaultCellStyle.SelectionForeColor = dgPagosTotales.DefaultCellStyle.ForeColor
 
         RemoveHandler Cb_TipoCliente.SelectedIndexChanged, AddressOf Cb_TipoCliente_SelectedIndexChanged
-        RemoveHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
+        'RemoveHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
         RemoveHandler Cb_Banco.SelectedIndexChanged, AddressOf Cb_Banco_SelectedIndexChanged
         RemoveHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
         RemoveHandler Cb_NroCuota.SelectedIndexChanged, AddressOf Cb_NroCuota_SelectedIndexChanged
@@ -351,22 +243,23 @@ Public Class frmVentas
         id_Sucursal = My.Settings("Sucursal")
         Nombre_Sucursal = My.Settings("NombreSucursal")
 
-        'Seteo el nombre de la sucursal
-        lbl_Sucursal.Text = Nombre_Sucursal
-
         CargraListaProductos()
 
         ventaVistaModelo = New VistaModelo.frmVentas.Venta()
 
         VentasBindingSource.DataSource = ventaVistaModelo
 
-        ventaVistaModelo.Encargado = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerEncargados())
-        ventaVistaModelo.Vendedor = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerVendedores())
+        ventaVistaModelo.Encargados = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerEncargados())
+        ventaVistaModelo.Vendedores = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerVendedores())
         ventaVistaModelo.ListaPrecios = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerListaPrecios(TipoCliente.Minorista))
         ventaVistaModelo.ListaPrecioSeleccionado = ventaVistaModelo.ListaPrecios.First().Key
-        ventaVistaModelo.FormasPagos = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerFormasPagos(TipoCliente.Minorista))
+        ventaVistaModelo.FormasPagos = New BindingList(Of KeyValuePair(Of FormaPago, String))(ObtenerFormasPagos(TipoCliente.Minorista))
         ventaVistaModelo.ListaBancos = New BindingList(Of Tarjeta)(ObtenerListaBancos())
+        ventaVistaModelo.FormaPagoSeleccionado = 1
 
+        Cb_FormaPago.SelectedValue = ventaVistaModelo.FormaPagoSeleccionado
+
+        DG_ProductosTotales.ClearSelection()
 
         'Dim listaCuotas As List(Of CostoFinanciero) = New List(Of CostoFinanciero)()
         'listaCuotas.Add(New CostoFinanciero() With {.CostoFinancieroId = 0, .NumeroCuotas = 0})
@@ -381,7 +274,7 @@ Public Class frmVentas
         'End If
 
         AddHandler Cb_TipoCliente.SelectedIndexChanged, AddressOf Cb_TipoCliente_SelectedIndexChanged
-        AddHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
+        'AddHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
         AddHandler Cb_Banco.SelectedIndexChanged, AddressOf Cb_Banco_SelectedIndexChanged
         AddHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
         AddHandler Cb_NroCuota.SelectedIndexChanged, AddressOf Cb_NroCuota_SelectedIndexChanged
@@ -404,7 +297,7 @@ Public Class frmVentas
         txt_CodigoBarra.AutoCompleteCustomSource = listaNombreCodigoProductos
     End Sub
 
-    Private Function ObtenerFormasPagos(tipoCliente As TipoCliente) As List(Of KeyValuePair(Of Integer, String))
+    Private Function ObtenerFormasPagos(tipoCliente As TipoCliente) As List(Of KeyValuePair(Of FormaPago, String))
         Dim dsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagos()
 
         'Elimino la forma de pago Cheque
@@ -416,7 +309,13 @@ Public Class frmVentas
             dsTiposPagos.Tables.Add(dt)
         End If
 
-        Return ObtenerOpcionesParaCombo(dsTiposPagos.Tables(0), "id_TipoPago", "Descripcion")
+        Dim opciones As List(Of KeyValuePair(Of FormaPago, String)) = New List(Of KeyValuePair(Of FormaPago, String))()
+
+        For Each items As DataRow In dsTiposPagos.Tables(0).Rows
+            opciones.Add(New KeyValuePair(Of FormaPago, String)(items("id_TipoPago"), items("Descripcion")))
+        Next
+
+        Return opciones
     End Function
 
     Private Function ObtenerListaBancos() As List(Of Tarjeta)
@@ -424,11 +323,6 @@ Public Class frmVentas
         Tarjetas.Insert(0, New Tarjeta() With {.TarjetaId = 0, .Nombre = "Seleccione una Tarjeta..."})
 
         Return Tarjetas
-    End Function
-
-    Private Function ObtenerCostosFinancieros(idBanco As Integer) As List(Of KeyValuePair(Of Integer, String))
-        Dim CostosFinancieros As List(Of CostoFinanciero) = NegTarjeta.TraerCostosFinancieros(idBanco)
-        Return CostosFinancieros.Select(Function(x) New KeyValuePair(Of Integer, String)(x.CostoFinancieroId, x.NumeroCuotas)).ToList()
     End Function
 
     Private Function ObtenerListaPrecios(tipoCliente As TipoCliente) As List(Of KeyValuePair(Of Integer, String))
@@ -500,19 +394,19 @@ Public Class frmVentas
     End Function
 
     Private Shared Function ObtenerOpcionesParaCombo(dataTable As DataTable, campoValor As String, campoDescripcion As String, Optional leyendaInicial As String = "Seleccione una opción", Optional leyendaSinDatos As String = "No hay opciones disponibles.") As List(Of KeyValuePair(Of Integer, String))
-        Dim encargados As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))()
+        Dim Opciones As List(Of KeyValuePair(Of Integer, String)) = New List(Of KeyValuePair(Of Integer, String))()
 
         For Each items As DataRow In dataTable.Rows
-            encargados.Add(New KeyValuePair(Of Integer, String)(items(campoValor), items(campoDescripcion)))
+            Opciones.Add(New KeyValuePair(Of Integer, String)(items(campoValor), items(campoDescripcion)))
         Next
 
-        If (encargados.Count = 0) Then
-            encargados.Insert(0, New KeyValuePair(Of Integer, String)(0, leyendaSinDatos))
+        If (Opciones.Count = 0) Then
+            Opciones.Insert(0, New KeyValuePair(Of Integer, String)(0, leyendaSinDatos))
         ElseIf (Not String.IsNullOrEmpty(leyendaInicial)) Then
-            encargados.Insert(0, New KeyValuePair(Of Integer, String)(0, leyendaInicial))
+            Opciones.Insert(0, New KeyValuePair(Of Integer, String)(0, leyendaInicial))
         End If
 
-        Return encargados
+        Return Opciones
     End Function
 
     '    'Carga la venta con la nota de pedido
@@ -706,61 +600,25 @@ Public Class frmVentas
 
     '    End Sub
 
-    '    'Actualizo la hora que se muestra dentro del formulario.
-    '    Private Sub Reloj_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Reloj.Tick
-    '        lbl_Hora.Text = Date.Now.ToLongTimeString
-    '    End Sub
     'Dependiendo para que tipo de cliente es la venta, muestro o oculto el panel de clientes.
     Private Sub Cb_TipoCliente_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cb_TipoCliente.SelectedIndexChanged
-        'If (Cb_TipoCliente.SelectedValue Is Nothing) Then
-        '    Return
-        'End If
-
         RemoveHandler Cb_TipoCliente.SelectedIndexChanged, AddressOf Cb_TipoCliente_SelectedIndexChanged
         ventaVistaModelo.TipoClienteSeleccionado = Cb_TipoCliente.SelectedValue
 
-        ventaVistaModelo.FormasPagos = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerFormasPagos(ventaVistaModelo.TipoClienteSeleccionado))
+        ventaVistaModelo.FormasPagos = New BindingList(Of KeyValuePair(Of FormaPago, String))(ObtenerFormasPagos(ventaVistaModelo.TipoClienteSeleccionado))
         ventaVistaModelo.Pagos.Clear()
 
-        TableLayoutPanelTotales.Controls.Remove(txt_Descuento)
-        TableLayoutPanelTotales.Controls.Remove(txt_CFT)
-        TableLayoutPanelTotales.Controls.Remove(txt_Subtotal)
-        TableLayoutPanelTotales.Controls.Remove(txt_IVA)
-        TableLayoutPanelTotales.Controls.Remove(txt_Senia)
-        TableLayoutPanelTotales.Controls.Remove(txt_Total)
-
-
         If ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Mayorista Then
-            EnableSeccionCliente(True)
             DG_Productos.Columns("ProductoMonto").ReadOnly = True
             DG_Productos.Columns("ProductoPrecio").ReadOnly = False
             DG_Productos.Columns("ProductoPrecio").Visible = True
             DG_Productos.Columns("ProductoIVA").Visible = True
 
-            lblTotal1.Text = "DESCUENTO:"
-            lblTotal1.Visible = True
-            lblTotal2.Text = "COSTO FINANCIERO:"
-            lblTotal2.Visible = True
-            lblTotal3.Text = "SUBTOTAL:"
-            lblTotal3.Visible = True
-            lblTotal4.Text = "IVA 21%:"
-            lblTotal4.Visible = True
-            lblTotal5.Text = "SEÑA:"
-            lblTotal5.Visible = txt_Senia.Visible
-            lblTotal6.Text = "IMPORTE A ABONAR:"
-            lblTotal6.Visible = True
-
-            TableLayoutPanelTotales.Controls.Add(txt_Descuento, 1, 0)
-            TableLayoutPanelTotales.Controls.Add(txt_CFT, 1, 1)
-            TableLayoutPanelTotales.Controls.Add(txt_Subtotal, 1, 2)
-            TableLayoutPanelTotales.Controls.Add(txt_IVA, 1, 3)
-            TableLayoutPanelTotales.Controls.Add(txt_Senia, 1, 4)
-            TableLayoutPanelTotales.Controls.Add(txt_Total, 1, 5)
-
-            txt_IVA.Visible = True
+            DG_ProductosTotales.Columns("ProductoPrecioTotal").Visible = True
+            DG_ProductosTotales.Columns("ProductoIVATotal").Visible = True
+            Gb_Cliente.Enabled = True
         Else
             'Minorista
-            EnableSeccionCliente(False)
             txt_RazonSocial.Clear()
             txt_id_Cliente.Clear()
             DG_Productos.Columns("ProductoMonto").ReadOnly = False
@@ -768,35 +626,20 @@ Public Class frmVentas
             DG_Productos.Columns("ProductoPrecio").Visible = False
             DG_Productos.Columns("ProductoIVA").Visible = False
 
-            lblTotal1.Text = "SUBTOTAL:"
-            lblTotal1.Visible = True
-            lblTotal2.Text = "DESCUENTO:"
-            lblTotal2.Visible = True
-            lblTotal3.Text = "COSTO FINANCIERO:"
-            lblTotal4.Visible = True
-            lblTotal4.Text = "SEÑA:"
-            lblTotal4.Visible = txt_Senia.Visible
-            lblTotal5.Text = "IMPORTE A ABONAR:"
-            lblTotal5.Visible = True
-            lblTotal6.Visible = False
-
-            TableLayoutPanelTotales.Controls.Add(txt_Subtotal, 1, 0)
-            TableLayoutPanelTotales.Controls.Add(txt_Descuento, 1, 1)
-            TableLayoutPanelTotales.Controls.Add(txt_CFT, 1, 2)
-            TableLayoutPanelTotales.Controls.Add(txt_Senia, 1, 3)
-            TableLayoutPanelTotales.Controls.Add(txt_Total, 1, 4)
-            txt_IVA.Visible = False
-
+            DG_ProductosTotales.Columns("ProductoPrecioTotal").Visible = False
+            DG_ProductosTotales.Columns("ProductoIVATotal").Visible = False
+            Gb_Cliente.Enabled = False
         End If
 
         ventaVistaModelo.ProcentajeFacturacionClienteMayorista = 100
         ventaVistaModelo.Descuento = 0
 
-        ObtenerListaPrecios(ventaVistaModelo.TipoClienteSeleccionado)
+        ventaVistaModelo.ListaPrecios = New BindingList(Of KeyValuePair(Of Integer, String))(ObtenerListaPrecios(ventaVistaModelo.TipoClienteSeleccionado))
+        ventaVistaModelo.ListaPrecioSeleccionado = ventaVistaModelo.ListaPrecios.First.Key
+        Cb_ListaPrecio.SelectedValue = ventaVistaModelo.ListaPrecioSeleccionado
         PosicionarListaPreciosSegunFormaDePago()
         ActualizarMontosGrillaYTotales(ventaVistaModelo.TipoClienteSeleccionado)
-        CargarMontoPagar()
-
+        ventaVistaModelo.ActualizarTotalProducto(ventaVistaModelo.TipoClienteSeleccionado)
         AddHandler Cb_TipoCliente.SelectedIndexChanged, AddressOf Cb_TipoCliente_SelectedIndexChanged
     End Sub
 
@@ -845,7 +688,7 @@ Public Class frmVentas
             ventaVistaModelo.IdClienteMayorista = frmBuscarClienteMayorista.clienteMayorista.Id
             ventaVistaModelo.NombreClienteMayorista = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
             ventaVistaModelo.ListaPrecioSeleccionado = frmBuscarClienteMayorista.clienteMayorista.IdListaPrecio
-            ventaVistaModelo.ProcentajeBonificacion = frmBuscarClienteMayorista.clienteMayorista.Bonificacion
+            ventaVistaModelo.ProcentajeBonificacionClienteMayorista = frmBuscarClienteMayorista.clienteMayorista.Bonificacion
 
             PorcentajeFacturacionIngresado = If(frmBuscarClienteMayorista.clienteMayorista.Lista = 0, 100, frmBuscarClienteMayorista.clienteMayorista.Lista)
             'TODO: Si tiene una forma de pago en efectivo se tiene que cargar el porcentaje de facturacion
@@ -866,7 +709,7 @@ Public Class frmVentas
         Next
 
         'actualizo los montos de los totales
-        CalcularTotales(tipoCliente)
+        CalcularPago(tipoCliente)
     End Sub
 
     '    'Al finalizar la venta.
@@ -1981,36 +1824,11 @@ Public Class frmVentas
     '        Me.Hide()
     '    End Sub
 
-    Private Sub txt_MontoPago_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_MontoPago.KeyDown
-        If e.KeyData = Keys.Enter Then
-            AgregaPago()
-            Cb_FormaPago.SelectedValue = 0
-            ventaVistaModelo.FormaPagoSeleccionado = 0
-        End If
-    End Sub
-
     Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown
         If e.KeyData = Keys.Enter Then
             Me.Cursor = Cursors.WaitCursor
             BuscarProducto()
             Me.Cursor = Cursors.Arrow
-        End If
-    End Sub
-
-    Private Sub txt_Descuento_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Descuento.LostFocus
-        If (String.IsNullOrEmpty(txt_Descuento.Text)) Then
-            ventaVistaModelo.Descuento = 0
-        End If
-
-        Dim descuento As Double = Math.Round(ventaVistaModelo.Descuento, 0, MidpointRounding.ToEven)
-        Dim subtotal As Double = ObtenerSubTotal()
-
-        If (subtotal > 0) Then
-            Dim PorcentajeDescuento As Double = descuento / subtotal
-            ventaVistaModelo.ProcentajeBonificacion = Math.Round(PorcentajeDescuento * 100, 2, MidpointRounding.ToEven)
-
-            CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
-            CargarMontoPagar()
         End If
     End Sub
 
@@ -2020,23 +1838,21 @@ Public Class frmVentas
             Result = MessageBox.Show("¿Está seguro que desea quitar el pago?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If Result = System.Windows.Forms.DialogResult.Yes Then 'Si acepta eliminar el item
-
-                Dim pagoQuitar As VistaModelo.frmVentas.Pago = dgPagos.CurrentRow.DataBoundItem
-                ventaVistaModelo.Pagos.Remove(pagoQuitar)
-
-                ventaVistaModelo.FormasPagos.Add(New KeyValuePair(Of Integer, String)(pagoQuitar.FormaPagoId, pagoQuitar.FormaPago))
-                ventaVistaModelo.FormasPagos = New BindingList(Of KeyValuePair(Of Integer, String))(ventaVistaModelo.FormasPagos.OrderBy(Function(x) x.Key).ToList())
-
-                CargarMontoPagar()
+                ventaVistaModelo.QuitarPago(dgPagos.CurrentRow.DataBoundItem)
+                ventaVistaModelo.ActualizarTotalPagos()
+                HabilitarPagos()
             End If
         End If
     End Sub
 
-    Private Sub moneda_GotFocus(ByVal sender As Object, ByVal e As EventArgs) Handles txt_Descuento.GotFocus, txt_MontoPago.GotFocus
-        TryCast(sender, TextBox).Clear()
+    Private Sub moneda_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs)
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        If txt.Text.Trim = "" Then
+            txt.Text = "0"
+        End If
     End Sub
 
-    Private Sub moneda_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles txt_Descuento.KeyPress, txt_Senia.KeyPress
+    Private Sub moneda_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
         If e.KeyChar = ChrW(Keys.Enter) Then
             e.Handled = True
             Btn_Finalizar.Focus()
@@ -2048,17 +1864,6 @@ Public Class frmVentas
             e.Handled = True
         End If
     End Sub
-
-    Private Sub moneda_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Descuento.LostFocus, txt_MontoPago.LostFocus
-        Dim txt As TextBox = TryCast(sender, TextBox)
-        If txt.Text.Trim = "" Then
-            txt.Text = "0,00"
-        End If
-    End Sub
-
-    'Private Sub cantidad_GotFocus(ByVal sender As Object, ByVal e As EventArgs)
-    '    TryCast(sender, TextBox).Clear()
-    'End Sub
 
     Private Sub cantidad_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
         If e.KeyChar = ChrW(Keys.Enter) Then
@@ -2105,59 +1910,15 @@ Public Class frmVentas
     '        Me.Cursor = Cursors.Arrow
     '    End Sub
 
-    Private Sub Cb_ListaPrecio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_ListaPrecio.SelectedIndexChanged
-        If (Cb_ListaPrecio.SelectedValue Is Nothing) Then
-            Return
-        End If
+    'Private Sub Cb_ListaPrecio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_ListaPrecio.SelectedIndexChanged
+    '    RemoveHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
+    '    ventaVistaModelo.ListaPrecioSeleccionado = Cb_ListaPrecio.SelectedValue
 
-        Dim precio As Double = 0
-        Dim PorcentajeFacturacion As Double = ventaVistaModelo.ProcentajeFacturacionClienteMayorista / 100
-        For Each producto As VistaModelo.frmVentas.Producto In ventaVistaModelo.Productos
-            'Actualizo el precio de cada item segun la nueva lista de precios seleccioanda
-            Select Case Cb_ListaPrecio.SelectedValue()
-                Case "1"
-                    precio = producto.Precio1
-                Case "2"
-                    precio = producto.Precio2
-                Case "3"
-                    precio = producto.Precio3
-                Case "4"
-                    precio = producto.Precio4
-                Case "5"
-                    precio = producto.Precio5
-                Case "6"
-                    precio = producto.Precio6
-            End Select
+    '    ventaVistaModelo.ActualizarProductos()
+    '    CalcularPago(ventaVistaModelo.TipoClienteSeleccionado)
 
-            Dim esDevolucion As Boolean = producto.Precio < 0
-            If (ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Minorista) Then
-                If esDevolucion Then
-                    precio = precio * -1
-                End If
-
-                producto.Precio = 0
-                producto.IVA = 0
-                producto.Monto = precio
-                producto.Subtotal = producto.Monto * producto.Cantidad
-            Else
-                If (esDevolucion) Then
-                    producto.Precio = -precio
-                    producto.IVA = -precio * (0.21)
-                    producto.Monto = -precio * (1 + 0.21)
-                    producto.Subtotal = producto.Monto * producto.Cantidad
-                Else
-                    producto.Precio = precio
-                    producto.IVA = precio * (0.21 * PorcentajeFacturacion)
-                    producto.Monto = producto.Precio + producto.IVA
-                    producto.Subtotal = producto.Monto * producto.Cantidad
-                End If
-            End If
-        Next
-        'Actualizo los totales
-        CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
-        CargarMontoPagar()
-
-    End Sub
+    '    AddHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
+    'End Sub
 
     Private Sub BuscarProducto()
         Try
@@ -2182,21 +1943,14 @@ Public Class frmVentas
                     'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
                     If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
                         productoIngresado.Cantidad = frmStockFaltante.stockCargado
-                        productoIngresado.Monto = productoIngresado.Cantidad * productoIngresado.Precio
-                        CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
-                        Return
-                    Else
-                        Return
+                    End If
+                Else
+                    Dim frmStockIngreso As frmStockIngreso = New frmStockIngreso(productoEntidad.id_Producto, productoEntidad.Codigo, id_Sucursal, productoIngresado.Cantidad + 1)
+                    If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+                        productoIngresado.Cantidad = frmStockIngreso.stockCargado
                     End If
                 End If
-
-                Dim frmStockIngreso As frmStockIngreso = New frmStockIngreso(productoEntidad.id_Producto, productoEntidad.Codigo, id_Sucursal, productoIngresado.Cantidad + 1)
-                If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
-                    productoIngresado.Cantidad = frmStockIngreso.stockCargado
-                    productoIngresado.Monto = productoIngresado.Cantidad * productoIngresado.Precio
-                    CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
-                End If
-
+                productoIngresado.Actualizar(ventaVistaModelo.TipoClienteSeleccionado, ventaVistaModelo.FormaPagoSeleccionado, ventaVistaModelo.ListaPrecioSeleccionado, ventaVistaModelo.ProcentajeFacturacionClienteMayorista / 100)
 
                 'Si es un producto nuevo
             Else
@@ -2210,90 +1964,21 @@ Public Class frmVentas
                     'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
                     If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
                         cantidad = frmStockFaltante.stockCargado
-                    Else
-                        Return
                     End If
                 Else
                     Dim frmStockIngreso As frmStockIngreso = New frmStockIngreso(productoEntidad.id_Producto, productoEntidad.Codigo, id_Sucursal, 1)
                     If (frmStockIngreso.ShowDialog() = Windows.Forms.DialogResult.OK) Then
                         cantidad = frmStockIngreso.stockCargado
-                    Else
-                        Return
                     End If
                 End If
-
-                'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
-                Dim Precio As Double = 0
-                Select Case ventaVistaModelo.ListaPrecioSeleccionado
-                    Case "1"
-                        Precio = productoEntidad.Precio1
-                    Case "2"
-                        Precio = productoEntidad.Precio2
-                    Case "3"
-                        Precio = productoEntidad.Precio3
-                    Case "4"
-                        Precio = productoEntidad.Precio4
-                    Case "5"
-                        Precio = productoEntidad.Precio5
-                    Case "6"
-                        Precio = productoEntidad.Precio6
-                    Case Else
-                        Precio = 0
-                End Select
-
-                Dim PorcentajeFacturacion As Double = ventaVistaModelo.ProcentajeFacturacionClienteMayorista / 100
-                Dim Monto As Double = 0
-                Dim IVA As Double = 0
-
-                'Los precios que componen la lista de precios minorista incluyen el IVA
-                'Los precios que componen la lista de precios mayoristas NO incluyen el IVA
-                If ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Minorista Then
-                    ventaVistaModelo.Productos.Add(New VistaModelo.frmVentas.Producto() With {
-                        .Codigo = productoEntidad.Codigo,
-                        .Id = productoEntidad.id_Producto,
-                        .Monto = Precio,
-                        .Subtotal = .Monto * cantidad,
-                        .Nombre = productoEntidad.Nombre,
-                        .Cantidad = cantidad,
-                        .Precio1 = productoEntidad.Precio1,
-                        .Precio2 = productoEntidad.Precio2,
-                        .Precio3 = productoEntidad.Precio3,
-                        .Precio4 = productoEntidad.Precio4,
-                        .Precio5 = productoEntidad.Precio5,
-                        .Precio6 = productoEntidad.Precio6})
-                Else
-                    IVA = Precio * 0.21 * PorcentajeFacturacion
-                    Monto = Precio + IVA
-
-                    ventaVistaModelo.Productos.Add(New VistaModelo.frmVentas.Producto() With {
-                        .Codigo = productoEntidad.Codigo,
-                        .Id = productoEntidad.id_Producto,
-                        .Precio = Precio,
-                        .IVA = IVA,
-                        .Monto = Monto,
-                        .Subtotal = Monto * cantidad,
-                        .Nombre = productoEntidad.Nombre,
-                        .Cantidad = cantidad,
-                        .Precio1 = productoEntidad.Precio1,
-                        .Precio2 = productoEntidad.Precio2,
-                        .Precio3 = productoEntidad.Precio3,
-                        .Precio4 = productoEntidad.Precio4,
-                        .Precio5 = productoEntidad.Precio5,
-                        .Precio6 = productoEntidad.Precio6})
-                End If
+                ventaVistaModelo.AgregarProducto(cantidad, productoEntidad)
             End If
 
-            'Lo muestro en el label
-            CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
 
-            CargarMontoPagar()
-
+            CalcularPago(ventaVistaModelo.TipoClienteSeleccionado)
             'Borro el textbox
             ventaVistaModelo.ProductoIngresado = ""
             txt_CodigoBarra.Focus()
-
-            ''VentasBindingSource.EndEdit()
-
         Catch ex As Exception
             MessageBox.Show("Se ha producido un error al agregar el producto.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -2315,10 +2000,9 @@ Public Class frmVentas
             txt_PorcentajeBonificacion.Text = "0"
         End If
 
-        If (DG_Productos.Rows.Count > 0) Then
-            CalcularTotales(ventaVistaModelo.TipoClienteSeleccionado)
-            CargarMontoPagar()
-        End If
+        For Each producto As Producto In ventaVistaModelo.Productos
+            producto.PorcentajeBonificacion = ventaVistaModelo.ProcentajeBonificacionClienteMayorista / 100
+        Next
 
     End Sub
 
@@ -2363,19 +2047,10 @@ Public Class frmVentas
 
     '    End Sub
 
-    Private Sub EnableSeccionCliente(enable As Boolean)
 
-        txt_id_Cliente.Enabled = enable
-        txt_RazonSocial.Enabled = enable
-        Btn_BuscarCliente.Enabled = enable
-        txt_PorcentajeFacturacion.Enabled = enable
 
-    End Sub
-
-    Private Sub btnAgregaFormaPago_Click(sender As Object, e As EventArgs) Handles btnAgregaFormaPago.Click
+    Private Sub btnAgregaFormaPago_Click(sender As Object, e As EventArgs) Handles btnAgregaPago.Click
         AgregaPago()
-        Cb_FormaPago.SelectedValue = 0
-        ventaVistaModelo.FormaPagoSeleccionado = 0
     End Sub
 
     Private Sub AgregaPago()
@@ -2384,64 +2059,58 @@ Public Class frmVentas
             Return
         End If
 
-        If (ventaVistaModelo.FormaPagoSeleccionado = 2 AndAlso ventaVistaModelo.ListaBancoSeleccionado = 0 AndAlso ventaVistaModelo.ListaCuotaSeleccionado = 0) Then
+        If (ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaDebito AndAlso ventaVistaModelo.ListaBancoSeleccionado = 0) Then
+            MessageBox.Show("Debe seleccionar un banco.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        If (ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaCredito AndAlso ventaVistaModelo.ListaBancoSeleccionado = 0 AndAlso ventaVistaModelo.ListaCuotaSeleccionado = 0) Then
             MessageBox.Show("Debe seleccionar un banco y una cantidad de cuotas.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
         End If
 
-        Dim formaPagoSeleccionada As KeyValuePair(Of Integer, String) = ventaVistaModelo.FormasPagos.First(Function(x) x.Key = ventaVistaModelo.FormaPagoSeleccionado)
+        ventaVistaModelo.AgregarPago()
+        ventaVistaModelo.ActualizarTotalPagos()
 
-        ventaVistaModelo.FormasPagos.Remove(formaPagoSeleccionada)
+        'Cb_FormaPago.SelectedValue = 0
+        'ventaVistaModelo.FormaPagoSeleccionado = 0
+        'Cb_Banco.SelectedValue = 0
+        'ventaVistaModelo.ListaBancoSeleccionado = 0
+        'Cb_NroCuota.SelectedValue = 0
+        'ventaVistaModelo.ListaCuotaSeleccionado = 0
+        'ventaVistaModelo.CFTCuota = 0
 
-        Dim porcentajeDescuento As Double = ventaVistaModelo.ProcentajeBonificacion / 100
-        Dim descuentoRecargo As Double = 0
-        Dim monto As Double = 0
-
-        Select Case ventaVistaModelo.FormaPagoSeleccionado
-            Case 1
-                monto = (ventaVistaModelo.MontoPago / (1 - porcentajeDescuento))
-                descuentoRecargo = monto - ventaVistaModelo.MontoPago
-            Case 2
-                If (ventaVistaModelo.ListaBancoSeleccionado > 0 AndAlso ventaVistaModelo.ListaCuotaSeleccionado > 0) Then
-                    Dim costoFinanciero As CostoFinanciero = Cb_NroCuota.SelectedItem
-                    monto = (ventaVistaModelo.MontoPago / (1 + costoFinanciero.PorcentajeRecargo))
-                    descuentoRecargo = monto - ventaVistaModelo.MontoPago
-                Else
-                    monto = ventaVistaModelo.MontoPago
-                    descuentoRecargo = 0
-                End If
-            Case Else
-                monto = ventaVistaModelo.MontoPago
-                descuentoRecargo = 0
-        End Select
-
-
-        ventaVistaModelo.Pagos.Add(New VistaModelo.frmVentas.Pago() With {
-            .FormaPago = formaPagoSeleccionada.Value,
-            .FormaPagoId = formaPagoSeleccionada.Key,
-            .Monto = monto,
-            .DescuentoRecargo = descuentoRecargo,
-            .Subtotal = ventaVistaModelo.MontoPago})
-
-        ventaVistaModelo.MontoPago = 0
+        HabilitarPagos()
     End Sub
 
     Private Sub Cb_FormaPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_FormaPago.SelectedIndexChanged
         RemoveHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
 
         ventaVistaModelo.FormaPagoSeleccionado = Cb_FormaPago.SelectedValue
-        CargarMontoPagar()
+        'PosicionarListaPreciosSegunFormaDePago()
+
+        Cb_Banco.Enabled = ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaCredito OrElse ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaDebito
+        Cb_Banco.SelectedValue = 0
+        ventaVistaModelo.ListaBancoSeleccionado = 0
+
+        Cb_NroCuota.Enabled = ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaCredito
+        Cb_NroCuota.SelectedValue = 0
+        ventaVistaModelo.ListaCuotaSeleccionado = 0
+
+        ventaVistaModelo.CFTCuota = 0
+        CalcularPago(ventaVistaModelo.TipoClienteSeleccionado)
 
         AddHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
     End Sub
 
     Private Sub Cb_Banco_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_Banco.SelectedIndexChanged
         RemoveHandler Cb_Banco.SelectedIndexChanged, AddressOf Cb_Banco_SelectedIndexChanged
-        ventaVistaModelo.ListaBancoSeleccionado = Cb_Banco.SelectedValue
+        If (Cb_Banco.SelectedValue > 0) Then
+            ventaVistaModelo.ListaBancoSeleccionado = Cb_Banco.SelectedValue
 
-        ventaVistaModelo.ListaCuotas = New BindingList(Of CostoFinanciero)(NegTarjeta.TraerCostosFinancieros(ventaVistaModelo.ListaBancoSeleccionado))
-        ventaVistaModelo.ListaCuotaSeleccionado = ventaVistaModelo.ListaCuotas.First.CostoFinancieroId
-        Cb_NroCuota.SelectedValue = ventaVistaModelo.ListaCuotaSeleccionado
+            ventaVistaModelo.ListaCuotas = New BindingList(Of CostoFinanciero)(NegTarjeta.TraerCostosFinancieros(ventaVistaModelo.ListaBancoSeleccionado))
+            ventaVistaModelo.ListaCuotaSeleccionado = ventaVistaModelo.ListaCuotas.First.CostoFinancieroId
+        End If
         AddHandler Cb_Banco.SelectedIndexChanged, AddressOf Cb_Banco_SelectedIndexChanged
     End Sub
 
@@ -2449,8 +2118,51 @@ Public Class frmVentas
         RemoveHandler Cb_NroCuota.SelectedIndexChanged, AddressOf Cb_NroCuota_SelectedIndexChanged
 
         ventaVistaModelo.ListaCuotaSeleccionado = Cb_NroCuota.SelectedValue
-        CargarMontoPagar()
+        ventaVistaModelo.CFTCuota = ventaVistaModelo.CuotaPorcentajeRecargo()
+        ventaVistaModelo.CalcularTotal(ventaVistaModelo.SubTotal)
 
         AddHandler Cb_NroCuota.SelectedIndexChanged, AddressOf Cb_NroCuota_SelectedIndexChanged
+    End Sub
+
+    Private Sub txt_Total_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Total.LostFocus
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        If txt.Text.Trim = "" Then
+            txt.Text = "0"
+        End If
+
+        ventaVistaModelo.CalcularSubtotal(ventaVistaModelo.Total)
+    End Sub
+
+    Private Sub txt_Subtotal_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txt_Subtotal.LostFocus
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        If txt.Text.Trim = "" Then
+            txt.Text = "0"
+        End If
+
+        ventaVistaModelo.CalcularTotal(ventaVistaModelo.SubTotal)
+    End Sub
+
+    Private Sub clearTxt_GotFocus(ByVal sender As Object, ByVal e As EventArgs) Handles txt_Subtotal.GotFocus, txt_Total.GotFocus
+        TryCast(sender, TextBox).Clear()
+    End Sub
+
+    Private Sub enter_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_Subtotal.KeyDown, txt_Total.KeyDown
+        If (e.KeyCode = Keys.Enter) Then
+            e.SuppressKeyPress = True
+            AgregaPago()
+            Btn_Finalizar.Focus()
+        End If
+    End Sub
+
+    Private Sub btnRecargarPago_Click(sender As Object, e As EventArgs) Handles btnRecargarPago.Click
+        ventaVistaModelo.SubTotal = ventaVistaModelo.ObtenerSubTotalFaltantePago()
+        ventaVistaModelo.CalcularTotal(ventaVistaModelo.SubTotal)
+    End Sub
+
+    Private Sub HabilitarPagos()
+        btnAgregaPago.Enabled = ventaVistaModelo.SubTotal > 0
+        btnRecargarPago.Enabled = ventaVistaModelo.SubTotal > 0
+        txt_Subtotal.Enabled = ventaVistaModelo.SubTotal > 0
+        txt_Total.Enabled = ventaVistaModelo.SubTotal > 0
     End Sub
 End Class
