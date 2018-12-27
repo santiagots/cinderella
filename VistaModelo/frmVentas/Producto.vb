@@ -253,7 +253,7 @@ Namespace VistaModelo.frmVentas
             End Set
         End Property
 
-        Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, FormaPago As FormaPago, ListaPrecio As Integer, PorcentajeFacturacion As Double)
+        Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double)
             Dim precio As Double = 0
             'Actualizo el precio de cada item segun la nueva lista de precios seleccioanda
             Select Case ListaPrecio
@@ -271,29 +271,24 @@ Namespace VistaModelo.frmVentas
                     precio = Me.Precio6
             End Select
 
-            If (TipoCliente = Entidades.TipoCliente.Minorista) Then
-                Me.Monto = precio
-            Else
-                Me.Precio = precio
-
-            End If
-
-            Actualizar(TipoCliente, FormaPago, PorcentajeFacturacion)
-
+            Actualizar(TipoCliente, precio, PorcentajeFacturacion)
         End Sub
 
-        Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, FormaPago As FormaPago, PorcentajeFacturacion As Double)
+        Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, Precio As Double, PorcentajeFacturacion As Double)
             If (TipoCliente = Entidades.TipoCliente.Minorista) Then
+                Me.Monto = Precio
                 Me.Precio = 0
                 Me.IVA = 0
                 Me.Subtotal = Me.Monto * Me.Cantidad
             Else
+                Me.Precio = Precio
                 Me.IVA = Precio * (0.21 * PorcentajeFacturacion)
                 Me.Monto = (Me.Precio + Me.IVA)
                 Me.Subtotal = Me.Monto * Me.Cantidad
-            End If
 
+            End If
         End Sub
+
 
         Public Function AgregarPago(FormaPago As FormaPago, tipoCliente As TipoCliente, TarjetaId As Integer, CuotaId As Integer, Monto As Double) As Double
 

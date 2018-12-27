@@ -57,15 +57,14 @@ Partial Class frmVentas
         Me.Btn_Cambiar = New System.Windows.Forms.Button()
         Me.Gb_Cliente = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.txt_PorcentajeFacturacion = New System.Windows.Forms.NumericUpDown()
+        Me.txt_PorcentajeBonificacion = New System.Windows.Forms.NumericUpDown()
+        Me.txt_RazonSocial = New System.Windows.Forms.TextBox()
         Me.Btn_BuscarCliente = New System.Windows.Forms.Button()
+        Me.Label33 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txt_id_Cliente = New System.Windows.Forms.TextBox()
-        Me.txt_RazonSocial = New System.Windows.Forms.TextBox()
-        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txt_PorcentajeBonificacion = New System.Windows.Forms.NumericUpDown()
-        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.txt_PorcentajeFacturacion = New System.Windows.Forms.NumericUpDown()
         Me.Gb_Vendedor = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Cb_Vendedores = New System.Windows.Forms.ComboBox()
@@ -77,17 +76,12 @@ Partial Class frmVentas
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Cb_TipoCliente = New System.Windows.Forms.ComboBox()
         Me.TipoClienteBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Reloj = New System.Windows.Forms.Timer(Me.components)
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.BtnSenia = New System.Windows.Forms.Button()
         Me.Btn_NotaPedido = New System.Windows.Forms.Button()
         Me.btnAgregaPago = New System.Windows.Forms.Button()
         Me.btnRecargarPago = New System.Windows.Forms.Button()
-        Me.GB_ListaPrecio = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
         Me.ListaPreciosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Label14 = New System.Windows.Forms.Label()
         Me.GB_Pagos = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.dgPagosTotales = New SistemaCinderella.CustomDataGrid()
@@ -134,23 +128,28 @@ Partial Class frmVentas
         Me.DG_Productos = New SistemaCinderella.CustomDataGrid()
         Me.ProductoCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoNombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PorcentajeBonificacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoCantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajeBonificacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoPrecio = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoIVA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoMonto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PorcentajePago = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoSubtotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajePago = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoQuitar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.ProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DG_ProductosTotales = New SistemaCinderella.CustomDataGrid()
-        Me.TotalProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoPrecioTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoIVATotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         PagosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         CType(PagosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VentasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -158,16 +157,13 @@ Partial Class frmVentas
         Me.TableLayoutPanel4.SuspendLayout()
         Me.Gb_Cliente.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
-        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel12.SuspendLayout()
         CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Gb_Vendedor.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.VendedorBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EncargadoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TipoClienteBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GB_ListaPrecio.SuspendLayout()
-        Me.TableLayoutPanel9.SuspendLayout()
         CType(Me.ListaPreciosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Pagos.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -185,6 +181,8 @@ Partial Class frmVentas
         CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TotalProductosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel9.SuspendLayout()
         Me.SuspendLayout()
         '
         'PagosBindingSource
@@ -203,9 +201,9 @@ Partial Class frmVentas
         Me.txt_CodigoBarra.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txt_CodigoBarra.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.VentasBindingSource, "ProductoIngresado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_CodigoBarra.Location = New System.Drawing.Point(203, 11)
+        Me.txt_CodigoBarra.Location = New System.Drawing.Point(123, 11)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(491, 21)
+        Me.txt_CodigoBarra.Size = New System.Drawing.Size(309, 21)
         Me.txt_CodigoBarra.TabIndex = 7
         '
         'Btn_Finalizar
@@ -246,7 +244,7 @@ Partial Class frmVentas
         Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(704, 5)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(442, 5)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Agregar.TabIndex = 8
@@ -262,9 +260,9 @@ Partial Class frmVentas
         Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 14)
         Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
-        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(194, 15)
+        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(114, 15)
         Me.lbl_CodigoBarra.TabIndex = 7
-        Me.lbl_CodigoBarra.Text = "Nombre / Código de Producto"
+        Me.lbl_CodigoBarra.Text = "Nombre / Código"
         '
         'Gb_Producto
         '
@@ -272,9 +270,9 @@ Partial Class frmVentas
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Producto.Controls.Add(Me.TableLayoutPanel4)
         Me.Gb_Producto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Gb_Producto.Location = New System.Drawing.Point(12, 180)
+        Me.Gb_Producto.Location = New System.Drawing.Point(12, 144)
         Me.Gb_Producto.Name = "Gb_Producto"
-        Me.Gb_Producto.Size = New System.Drawing.Size(930, 69)
+        Me.Gb_Producto.Size = New System.Drawing.Size(668, 69)
         Me.Gb_Producto.TabIndex = 10
         Me.Gb_Producto.TabStop = False
         Me.Gb_Producto.Text = "PRODUCTO"
@@ -283,7 +281,7 @@ Partial Class frmVentas
         '
         Me.TableLayoutPanel4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel4.ColumnCount = 4
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
@@ -295,7 +293,7 @@ Partial Class frmVentas
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(917, 44)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(655, 44)
         Me.TableLayoutPanel4.TabIndex = 30
         '
         'Btn_Cambiar
@@ -304,7 +302,7 @@ Partial Class frmVentas
         Me.Btn_Cambiar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Cambiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Cambios_32
         Me.Btn_Cambiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cambiar.Location = New System.Drawing.Point(814, 5)
+        Me.Btn_Cambiar.Location = New System.Drawing.Point(552, 5)
         Me.Btn_Cambiar.Name = "Btn_Cambiar"
         Me.Btn_Cambiar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Cambiar.TabIndex = 9
@@ -318,73 +316,89 @@ Partial Class frmVentas
         Me.Gb_Cliente.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Cliente.Controls.Add(Me.TableLayoutPanel6)
+        Me.Gb_Cliente.Enabled = False
         Me.Gb_Cliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Gb_Cliente.Location = New System.Drawing.Point(12, 77)
         Me.Gb_Cliente.Name = "Gb_Cliente"
-        Me.Gb_Cliente.Size = New System.Drawing.Size(600, 97)
+        Me.Gb_Cliente.Size = New System.Drawing.Size(930, 61)
         Me.Gb_Cliente.TabIndex = 11
         Me.Gb_Cliente.TabStop = False
         Me.Gb_Cliente.Text = "CLIENTE"
         '
         'TableLayoutPanel6
         '
-        Me.TableLayoutPanel6.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel6.ColumnCount = 4
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.0!))
+        Me.TableLayoutPanel6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel6.ColumnCount = 8
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.0!))
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
-        Me.TableLayoutPanel6.Controls.Add(Me.Label24, 0, 1)
-        Me.TableLayoutPanel6.Controls.Add(Me.txt_PorcentajeFacturacion, 1, 1)
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.txt_PorcentajeBonificacion, 7, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.txt_RazonSocial, 2, 0)
         Me.TableLayoutPanel6.Controls.Add(Me.Btn_BuscarCliente, 3, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Label33, 6, 0)
         Me.TableLayoutPanel6.Controls.Add(Me.Label3, 0, 0)
         Me.TableLayoutPanel6.Controls.Add(Me.txt_id_Cliente, 1, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.txt_RazonSocial, 2, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel12, 2, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.Label24, 4, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.txt_PorcentajeFacturacion, 5, 0)
         Me.TableLayoutPanel6.Location = New System.Drawing.Point(7, 20)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
-        Me.TableLayoutPanel6.RowCount = 2
+        Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(587, 71)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(917, 34)
         Me.TableLayoutPanel6.TabIndex = 0
         '
-        'Label24
+        'txt_PorcentajeBonificacion
         '
-        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label24.AutoSize = True
-        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(3, 45)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(94, 15)
-        Me.Label24.TabIndex = 7
-        Me.Label24.Text = "Facturación %"
+        Me.txt_PorcentajeBonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.VentasBindingSource, "ProcentajeBonificacionClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txt_PorcentajeBonificacion.DecimalPlaces = 2
+        Me.txt_PorcentajeBonificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_PorcentajeBonificacion.Location = New System.Drawing.Point(820, 7)
+        Me.txt_PorcentajeBonificacion.Name = "txt_PorcentajeBonificacion"
+        Me.txt_PorcentajeBonificacion.Size = New System.Drawing.Size(94, 21)
+        Me.txt_PorcentajeBonificacion.TabIndex = 9
         '
-        'txt_PorcentajeFacturacion
+        'txt_RazonSocial
         '
-        Me.txt_PorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_PorcentajeFacturacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.VentasBindingSource, "ProcentajeFacturacionClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_PorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(103, 42)
-        Me.txt_PorcentajeFacturacion.Name = "txt_PorcentajeFacturacion"
-        Me.txt_PorcentajeFacturacion.Size = New System.Drawing.Size(104, 21)
-        Me.txt_PorcentajeFacturacion.TabIndex = 8
+        Me.txt_RazonSocial.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_RazonSocial.BackColor = System.Drawing.SystemColors.Window
+        Me.txt_RazonSocial.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.VentasBindingSource, "NombreClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txt_RazonSocial.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_RazonSocial.Location = New System.Drawing.Point(158, 7)
+        Me.txt_RazonSocial.Name = "txt_RazonSocial"
+        Me.txt_RazonSocial.ReadOnly = True
+        Me.txt_RazonSocial.Size = New System.Drawing.Size(319, 21)
+        Me.txt_RazonSocial.TabIndex = 5
         '
         'Btn_BuscarCliente
         '
-        Me.Btn_BuscarCliente.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_BuscarCliente.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_BuscarCliente.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_BuscarCliente.FlatAppearance.BorderSize = 0
         Me.Btn_BuscarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Btn_BuscarCliente.Image = Global.SistemaCinderella.My.Resources.Recursos.Clientes_32
-        Me.Btn_BuscarCliente.Location = New System.Drawing.Point(545, 3)
+        Me.Btn_BuscarCliente.Location = New System.Drawing.Point(483, 3)
         Me.Btn_BuscarCliente.Name = "Btn_BuscarCliente"
-        Me.Btn_BuscarCliente.Size = New System.Drawing.Size(39, 29)
+        Me.Btn_BuscarCliente.Size = New System.Drawing.Size(41, 29)
         Me.Btn_BuscarCliente.TabIndex = 6
         Me.ToolProd.SetToolTip(Me.Btn_BuscarCliente, "Permite buscar clientes en el sistema por razon social.")
         Me.Btn_BuscarCliente.UseVisualStyleBackColor = True
+        '
+        'Label33
+        '
+        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.Location = New System.Drawing.Point(725, 10)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(89, 15)
+        Me.Label33.TabIndex = 8
+        Me.Label33.Text = "Bonificación %"
         '
         'Label3
         '
@@ -393,7 +407,7 @@ Partial Class frmVentas
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(3, 10)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(94, 15)
+        Me.Label3.Size = New System.Drawing.Size(49, 15)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "Cliente"
         '
@@ -403,59 +417,32 @@ Partial Class frmVentas
         Me.txt_id_Cliente.BackColor = System.Drawing.SystemColors.Window
         Me.txt_id_Cliente.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.VentasBindingSource, "IdClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_id_Cliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_id_Cliente.Location = New System.Drawing.Point(103, 7)
+        Me.txt_id_Cliente.Location = New System.Drawing.Point(58, 7)
         Me.txt_id_Cliente.Name = "txt_id_Cliente"
         Me.txt_id_Cliente.ReadOnly = True
-        Me.txt_id_Cliente.Size = New System.Drawing.Size(104, 21)
+        Me.txt_id_Cliente.Size = New System.Drawing.Size(94, 21)
         Me.txt_id_Cliente.TabIndex = 4
         '
-        'txt_RazonSocial
+        'Label24
         '
-        Me.txt_RazonSocial.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_RazonSocial.BackColor = System.Drawing.SystemColors.Window
-        Me.txt_RazonSocial.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.VentasBindingSource, "NombreClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_RazonSocial.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_RazonSocial.Location = New System.Drawing.Point(213, 7)
-        Me.txt_RazonSocial.Name = "txt_RazonSocial"
-        Me.txt_RazonSocial.ReadOnly = True
-        Me.txt_RazonSocial.Size = New System.Drawing.Size(324, 21)
-        Me.txt_RazonSocial.TabIndex = 5
+        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(530, 10)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(89, 15)
+        Me.Label24.TabIndex = 7
+        Me.Label24.Text = "Facturación %"
         '
-        'TableLayoutPanel12
+        'txt_PorcentajeFacturacion
         '
-        Me.TableLayoutPanel12.ColumnCount = 2
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.Controls.Add(Me.txt_PorcentajeBonificacion, 0, 0)
-        Me.TableLayoutPanel12.Controls.Add(Me.Label33, 0, 0)
-        Me.TableLayoutPanel12.Location = New System.Drawing.Point(213, 38)
-        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
-        Me.TableLayoutPanel12.RowCount = 1
-        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.Size = New System.Drawing.Size(200, 30)
-        Me.TableLayoutPanel12.TabIndex = 9
-        '
-        'txt_PorcentajeBonificacion
-        '
-        Me.txt_PorcentajeBonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.VentasBindingSource, "ProcentajeBonificacionClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_PorcentajeBonificacion.DecimalPlaces = 2
-        Me.txt_PorcentajeBonificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_PorcentajeBonificacion.Location = New System.Drawing.Point(103, 4)
-        Me.txt_PorcentajeBonificacion.Name = "txt_PorcentajeBonificacion"
-        Me.txt_PorcentajeBonificacion.Size = New System.Drawing.Size(94, 21)
-        Me.txt_PorcentajeBonificacion.TabIndex = 9
-        '
-        'Label33
-        '
-        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(3, 7)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(94, 15)
-        Me.Label33.TabIndex = 8
-        Me.Label33.Text = "Bonificación %"
+        Me.txt_PorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PorcentajeFacturacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.VentasBindingSource, "ProcentajeFacturacionClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txt_PorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(625, 7)
+        Me.txt_PorcentajeFacturacion.Name = "txt_PorcentajeFacturacion"
+        Me.txt_PorcentajeFacturacion.Size = New System.Drawing.Size(94, 21)
+        Me.txt_PorcentajeFacturacion.TabIndex = 8
         '
         'Gb_Vendedor
         '
@@ -594,10 +581,6 @@ Partial Class frmVentas
         Me.TipoClienteBindingSource.DataMember = "TipoCliente"
         Me.TipoClienteBindingSource.DataSource = Me.VentasBindingSource
         '
-        'Reloj
-        '
-        Me.Reloj.Enabled = True
-        '
         'ToolProd
         '
         Me.ToolProd.IsBalloon = True
@@ -666,77 +649,20 @@ Partial Class frmVentas
         Me.ToolProd.SetToolTip(Me.btnRecargarPago, "Señar la venta actual. ")
         Me.btnRecargarPago.UseVisualStyleBackColor = True
         '
-        'GB_ListaPrecio
-        '
-        Me.GB_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_ListaPrecio.Controls.Add(Me.TableLayoutPanel9)
-        Me.GB_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GB_ListaPrecio.Location = New System.Drawing.Point(618, 77)
-        Me.GB_ListaPrecio.Name = "GB_ListaPrecio"
-        Me.GB_ListaPrecio.Size = New System.Drawing.Size(324, 97)
-        Me.GB_ListaPrecio.TabIndex = 22
-        Me.GB_ListaPrecio.TabStop = False
-        Me.GB_ListaPrecio.Text = "LISTA PRECIOS"
-        Me.GB_ListaPrecio.Visible = False
-        '
-        'TableLayoutPanel9
-        '
-        Me.TableLayoutPanel9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel9.ColumnCount = 2
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Controls.Add(Me.Cb_ListaPrecio, 1, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.Label14, 0, 0)
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(6, 39)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 1
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(309, 30)
-        Me.TableLayoutPanel9.TabIndex = 31
-        '
-        'Cb_ListaPrecio
-        '
-        Me.Cb_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Cb_ListaPrecio.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_ListaPrecio.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "ListaPrecioSeleccionado", True))
-        Me.Cb_ListaPrecio.DataSource = Me.ListaPreciosBindingSource
-        Me.Cb_ListaPrecio.DisplayMember = "Value"
-        Me.Cb_ListaPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_ListaPrecio.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Cb_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Cb_ListaPrecio.FormattingEnabled = True
-        Me.Cb_ListaPrecio.Location = New System.Drawing.Point(113, 3)
-        Me.Cb_ListaPrecio.Name = "Cb_ListaPrecio"
-        Me.Cb_ListaPrecio.Size = New System.Drawing.Size(193, 23)
-        Me.Cb_ListaPrecio.TabIndex = 11
-        Me.Cb_ListaPrecio.ValueMember = "Key"
-        '
         'ListaPreciosBindingSource
         '
         Me.ListaPreciosBindingSource.DataMember = "ListaPrecios"
         Me.ListaPreciosBindingSource.DataSource = Me.VentasBindingSource
         '
-        'Label14
-        '
-        Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(3, 7)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(104, 15)
-        Me.Label14.TabIndex = 1
-        Me.Label14.Text = "Lista de Precios"
-        '
         'GB_Pagos
         '
-        Me.GB_Pagos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GB_Pagos.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Pagos.Controls.Add(Me.TableLayoutPanel3)
         Me.GB_Pagos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GB_Pagos.Location = New System.Drawing.Point(12, 465)
+        Me.GB_Pagos.Location = New System.Drawing.Point(12, 447)
         Me.GB_Pagos.Name = "GB_Pagos"
-        Me.GB_Pagos.Size = New System.Drawing.Size(930, 222)
+        Me.GB_Pagos.Size = New System.Drawing.Size(930, 240)
         Me.GB_Pagos.TabIndex = 28
         Me.GB_Pagos.TabStop = False
         Me.GB_Pagos.Text = "PAGOS"
@@ -755,7 +681,7 @@ Partial Class frmVentas
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(924, 202)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(924, 220)
         Me.TableLayoutPanel3.TabIndex = 33
         '
         'dgPagosTotales
@@ -770,7 +696,7 @@ Partial Class frmVentas
         Me.dgPagosTotales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgPagosTotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.dgPagosTotales.Enabled = False
-        Me.dgPagosTotales.Location = New System.Drawing.Point(3, 175)
+        Me.dgPagosTotales.Location = New System.Drawing.Point(3, 193)
         Me.dgPagosTotales.Name = "dgPagosTotales"
         Me.dgPagosTotales.ReadOnly = True
         Me.dgPagosTotales.RowHeadersVisible = False
@@ -856,7 +782,7 @@ Partial Class frmVentas
         Me.dgPagos.ReadOnly = True
         Me.dgPagos.RowHeadersVisible = False
         Me.dgPagos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgPagos.Size = New System.Drawing.Size(918, 81)
+        Me.dgPagos.Size = New System.Drawing.Size(918, 99)
         Me.dgPagos.TabIndex = 35
         '
         'FormaPagoDataGridViewTextBoxColumn
@@ -1137,7 +1063,7 @@ Partial Class frmVentas
         '
         Me.Cb_FormaPago.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_FormaPago.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_FormaPago.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "FormaPagoSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.Never))
+        Me.Cb_FormaPago.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "FormaPagoSeleccionado", True))
         Me.Cb_FormaPago.DataSource = Me.FormasPagosBindingSource
         Me.Cb_FormaPago.DisplayMember = "Value"
         Me.Cb_FormaPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -1170,7 +1096,7 @@ Partial Class frmVentas
         '
         Me.Cb_Banco.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_Banco.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_Banco.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "ListaBancoSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.Never))
+        Me.Cb_Banco.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "ListaBancoSeleccionado", True))
         Me.Cb_Banco.DataSource = Me.ListaBancosBindingSource
         Me.Cb_Banco.DisplayMember = "Nombre"
         Me.Cb_Banco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -1193,7 +1119,7 @@ Partial Class frmVentas
         '
         Me.Cb_NroCuota.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_NroCuota.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_NroCuota.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "ListaCuotaSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.Never))
+        Me.Cb_NroCuota.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "ListaCuotaSeleccionado", True))
         Me.Cb_NroCuota.DataSource = Me.ListaCuotasBindingSource
         Me.Cb_NroCuota.DisplayMember = "NumeroCuotas"
         Me.Cb_NroCuota.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -1256,7 +1182,7 @@ Partial Class frmVentas
         Me.DG_Productos.AllowUserToDeleteRows = False
         Me.DG_Productos.AutoGenerateColumns = False
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ProductoCodigo, Me.ProductoNombre, Me.PorcentajeBonificacion, Me.ProductoCantidad, Me.ProductoPrecio, Me.ProductoIVA, Me.ProductoMonto, Me.PorcentajePago, Me.ProductoSubtotal, Me.ProductoQuitar})
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ProductoCodigo, Me.ProductoNombre, Me.ProductoCantidad, Me.PorcentajeBonificacion, Me.ProductoPrecio, Me.ProductoIVA, Me.ProductoMonto, Me.ProductoSubtotal, Me.PorcentajePago, Me.ProductoQuitar})
         Me.DG_Productos.DataSource = Me.ProductosBindingSource
         Me.DG_Productos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_Productos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
@@ -1264,7 +1190,7 @@ Partial Class frmVentas
         Me.DG_Productos.Name = "DG_Productos"
         Me.DG_Productos.RowHeadersVisible = False
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Productos.Size = New System.Drawing.Size(924, 171)
+        Me.DG_Productos.Size = New System.Drawing.Size(924, 186)
         Me.DG_Productos.TabIndex = 32
         '
         'ProductoCodigo
@@ -1283,23 +1209,23 @@ Partial Class frmVentas
         Me.ProductoNombre.Name = "ProductoNombre"
         Me.ProductoNombre.ReadOnly = True
         '
-        'PorcentajeBonificacion
-        '
-        Me.PorcentajeBonificacion.DataPropertyName = "PorcentajeBonificacion"
-        DataGridViewCellStyle11.Format = "P"
-        Me.PorcentajeBonificacion.DefaultCellStyle = DataGridViewCellStyle11
-        Me.PorcentajeBonificacion.HeaderText = "% Bonif."
-        Me.PorcentajeBonificacion.Name = "PorcentajeBonificacion"
-        Me.PorcentajeBonificacion.Width = 75
-        '
         'ProductoCantidad
         '
         Me.ProductoCantidad.DataPropertyName = "Cantidad"
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.ProductoCantidad.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.ProductoCantidad.DefaultCellStyle = DataGridViewCellStyle11
         Me.ProductoCantidad.HeaderText = "Cantidad"
         Me.ProductoCantidad.Name = "ProductoCantidad"
         Me.ProductoCantidad.Width = 75
+        '
+        'PorcentajeBonificacion
+        '
+        Me.PorcentajeBonificacion.DataPropertyName = "PorcentajeBonificacion"
+        DataGridViewCellStyle12.Format = "P"
+        Me.PorcentajeBonificacion.DefaultCellStyle = DataGridViewCellStyle12
+        Me.PorcentajeBonificacion.HeaderText = "% Bonif."
+        Me.PorcentajeBonificacion.Name = "PorcentajeBonificacion"
+        Me.PorcentajeBonificacion.Width = 75
         '
         'ProductoPrecio
         '
@@ -1335,27 +1261,27 @@ Partial Class frmVentas
         Me.ProductoMonto.Name = "ProductoMonto"
         Me.ProductoMonto.Width = 90
         '
-        'PorcentajePago
-        '
-        Me.PorcentajePago.DataPropertyName = "PorcentajePago"
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle16.Format = "P"
-        Me.PorcentajePago.DefaultCellStyle = DataGridViewCellStyle16
-        Me.PorcentajePago.HeaderText = "% Pago"
-        Me.PorcentajePago.Name = "PorcentajePago"
-        Me.PorcentajePago.ReadOnly = True
-        Me.PorcentajePago.Width = 75
-        '
         'ProductoSubtotal
         '
         Me.ProductoSubtotal.DataPropertyName = "Subtotal"
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle17.Format = "C2"
-        Me.ProductoSubtotal.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle16.Format = "C2"
+        Me.ProductoSubtotal.DefaultCellStyle = DataGridViewCellStyle16
         Me.ProductoSubtotal.HeaderText = "Subtotal"
         Me.ProductoSubtotal.Name = "ProductoSubtotal"
         Me.ProductoSubtotal.ReadOnly = True
         Me.ProductoSubtotal.Width = 90
+        '
+        'PorcentajePago
+        '
+        Me.PorcentajePago.DataPropertyName = "PorcentajePago"
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle17.Format = "P"
+        Me.PorcentajePago.DefaultCellStyle = DataGridViewCellStyle17
+        Me.PorcentajePago.HeaderText = "% Pago"
+        Me.PorcentajePago.Name = "PorcentajePago"
+        Me.PorcentajePago.ReadOnly = True
+        Me.PorcentajePago.Width = 75
         '
         'ProductoQuitar
         '
@@ -1376,39 +1302,17 @@ Partial Class frmVentas
         Me.DG_ProductosTotales.AutoGenerateColumns = False
         Me.DG_ProductosTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_ProductosTotales.ColumnHeadersVisible = False
-        Me.DG_ProductosTotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.ProductoPrecioTotal, Me.ProductoIVATotal, Me.DataGridViewTextBoxColumn7})
+        Me.DG_ProductosTotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.Column1, Me.ProductoPrecioTotal, Me.ProductoIVATotal, Me.DataGridViewTextBoxColumn7})
         Me.DG_ProductosTotales.DataSource = Me.TotalProductosBindingSource
         Me.DG_ProductosTotales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_ProductosTotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.DG_ProductosTotales.Enabled = False
-        Me.DG_ProductosTotales.Location = New System.Drawing.Point(3, 180)
+        Me.DG_ProductosTotales.Location = New System.Drawing.Point(3, 195)
         Me.DG_ProductosTotales.Name = "DG_ProductosTotales"
         Me.DG_ProductosTotales.ReadOnly = True
         Me.DG_ProductosTotales.RowHeadersVisible = False
         Me.DG_ProductosTotales.Size = New System.Drawing.Size(924, 24)
         Me.DG_ProductosTotales.TabIndex = 33
-        '
-        'TotalProductosBindingSource
-        '
-        Me.TotalProductosBindingSource.DataMember = "TotalProductos"
-        Me.TotalProductosBindingSource.DataSource = Me.VentasBindingSource
-        '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.ColumnCount = 1
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.DG_Productos, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.DG_ProductosTotales, 0, 1)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(12, 255)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 2
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(930, 207)
-        Me.TableLayoutPanel1.TabIndex = 34
         '
         'DataGridViewTextBoxColumn2
         '
@@ -1427,6 +1331,13 @@ Partial Class frmVentas
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         Me.DataGridViewTextBoxColumn3.ReadOnly = True
         Me.DataGridViewTextBoxColumn3.Width = 75
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "% Bonif."
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.Width = 75
         '
         'ProductoPrecioTotal
         '
@@ -1463,14 +1374,94 @@ Partial Class frmVentas
         Me.DataGridViewTextBoxColumn7.ReadOnly = True
         Me.DataGridViewTextBoxColumn7.Width = 285
         '
+        'TotalProductosBindingSource
+        '
+        Me.TotalProductosBindingSource.DataMember = "TotalProductos"
+        Me.TotalProductosBindingSource.DataSource = Me.VentasBindingSource
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.DG_Productos, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.DG_ProductosTotales, 0, 1)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(12, 219)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(930, 222)
+        Me.TableLayoutPanel1.TabIndex = 34
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel9)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(686, 144)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(256, 69)
+        Me.GroupBox1.TabIndex = 31
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "LISTA PRECIO"
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.ColumnCount = 2
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.Cb_ListaPrecio, 0, 0)
+        Me.TableLayoutPanel9.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(3, 17)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 1
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(250, 49)
+        Me.TableLayoutPanel9.TabIndex = 0
+        '
+        'Cb_ListaPrecio
+        '
+        Me.Cb_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Cb_ListaPrecio.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_ListaPrecio.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.VentasBindingSource, "ListaPrecioSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Cb_ListaPrecio.DataSource = Me.ListaPreciosBindingSource
+        Me.Cb_ListaPrecio.DisplayMember = "Value"
+        Me.Cb_ListaPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_ListaPrecio.Enabled = False
+        Me.Cb_ListaPrecio.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Cb_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Cb_ListaPrecio.FormattingEnabled = True
+        Me.Cb_ListaPrecio.Location = New System.Drawing.Point(53, 13)
+        Me.Cb_ListaPrecio.Name = "Cb_ListaPrecio"
+        Me.Cb_ListaPrecio.Size = New System.Drawing.Size(194, 23)
+        Me.Cb_ListaPrecio.TabIndex = 4
+        Me.Cb_ListaPrecio.ValueMember = "Key"
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(3, 17)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(44, 15)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "Lista"
+        '
         'frmVentas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(954, 737)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.BtnSenia)
-        Me.Controls.Add(Me.GB_ListaPrecio)
         Me.Controls.Add(Me.Gb_Producto)
         Me.Controls.Add(Me.Btn_NotaPedido)
         Me.Controls.Add(Me.GB_Pagos)
@@ -1491,19 +1482,14 @@ Partial Class frmVentas
         Me.Gb_Cliente.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
         Me.TableLayoutPanel6.PerformLayout()
-        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel12.ResumeLayout(False)
-        Me.TableLayoutPanel12.PerformLayout()
         CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Gb_Vendedor.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         CType(Me.VendedorBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EncargadoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TipoClienteBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GB_ListaPrecio.ResumeLayout(False)
-        Me.TableLayoutPanel9.ResumeLayout(False)
-        Me.TableLayoutPanel9.PerformLayout()
         CType(Me.ListaPreciosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Pagos.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
@@ -1523,6 +1509,9 @@ Partial Class frmVentas
         CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TotalProductosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.TableLayoutPanel9.ResumeLayout(False)
+        Me.TableLayoutPanel9.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1542,24 +1531,18 @@ Partial Class frmVentas
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Cb_TipoCliente As System.Windows.Forms.ComboBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Reloj As System.Windows.Forms.Timer
     Friend WithEvents ToolProd As System.Windows.Forms.ToolTip
     Friend WithEvents Btn_Cambiar As System.Windows.Forms.Button
     Friend WithEvents Cb_Encargados As System.Windows.Forms.ComboBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents GB_ListaPrecio As System.Windows.Forms.GroupBox
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents Cb_ListaPrecio As System.Windows.Forms.ComboBox
     Friend WithEvents GB_Pagos As GroupBox
     Friend WithEvents BtnSenia As Button
     Friend WithEvents Btn_NotaPedido As Button
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents Label24 As Label
-    Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
     Friend WithEvents txt_PorcentajeFacturacion As NumericUpDown
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
     Friend WithEvents txt_PorcentajeBonificacion As NumericUpDown
     Friend WithEvents Label33 As Label
     Friend WithEvents ColorDialog1 As ColorDialog
@@ -1619,18 +1602,23 @@ Partial Class frmVentas
     Friend WithEvents IVADataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents PagoQuitar As DataGridViewImageColumn
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
+    Friend WithEvents Cb_ListaPrecio As ComboBox
+    Friend WithEvents Label4 As Label
     Friend WithEvents ProductoCodigo As DataGridViewTextBoxColumn
     Friend WithEvents ProductoNombre As DataGridViewTextBoxColumn
-    Friend WithEvents PorcentajeBonificacion As DataGridViewTextBoxColumn
     Friend WithEvents ProductoCantidad As DataGridViewTextBoxColumn
+    Friend WithEvents PorcentajeBonificacion As DataGridViewTextBoxColumn
     Friend WithEvents ProductoPrecio As DataGridViewTextBoxColumn
     Friend WithEvents ProductoIVA As DataGridViewTextBoxColumn
     Friend WithEvents ProductoMonto As DataGridViewTextBoxColumn
-    Friend WithEvents PorcentajePago As DataGridViewTextBoxColumn
     Friend WithEvents ProductoSubtotal As DataGridViewTextBoxColumn
+    Friend WithEvents PorcentajePago As DataGridViewTextBoxColumn
     Friend WithEvents ProductoQuitar As DataGridViewImageColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents ProductoPrecioTotal As DataGridViewTextBoxColumn
     Friend WithEvents ProductoIVATotal As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn

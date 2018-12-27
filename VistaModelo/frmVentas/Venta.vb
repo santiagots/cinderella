@@ -582,10 +582,10 @@ Namespace VistaModelo.frmVentas
         End Sub
 
         Public Sub ActualizarProductos()
-            Dim precio As Double = 0
             Dim PorcentajeFacturacion As Double = Me.ProcentajeFacturacionClienteMayorista / 100
             For Each producto As VistaModelo.frmVentas.Producto In Me.Productos.Where(Function(x) Not x.Pago)
-                producto.Actualizar(Me.TipoClienteSeleccionado, Me.ListaPrecioSeleccionado, PorcentajeFacturacion)
+                Dim precio As Double = If(Me.TipoClienteSeleccionado = Entidades.TipoCliente.Minorista, producto.Monto, producto.Precio)
+                producto.Actualizar(Me.TipoClienteSeleccionado, precio, PorcentajeFacturacion)
             Next
         End Sub
 
