@@ -10,17 +10,15 @@ Namespace VistaModelo.frmVentas
         End Sub
 
         Public Sub New(Cantidad As Integer, ProductoEntidad As Entidades.Productos, TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double, PorcentajeBonificacionMayorista As Double)
-            'Depende de la lista de precios asignada, le asigno un determinado precio al producto.
             Dim Precio As Double = 0
+            Dim PorcentajeBonificacion As Double = 0
             Select Case ListaPrecio
                 Case "1"
                     Precio = ProductoEntidad.Precio1
-                Case "2"
-                    Precio = ProductoEntidad.Precio2
+                    PorcentajeBonificacion = ProductoEntidad.Precio2
                 Case "3"
                     Precio = ProductoEntidad.Precio3
-                Case "4"
-                    Precio = ProductoEntidad.Precio4
+                    PorcentajeBonificacion = ProductoEntidad.Precio4
                 Case "5"
                     Precio = ProductoEntidad.Precio5
                 Case "6"
@@ -38,6 +36,7 @@ Namespace VistaModelo.frmVentas
                 Me.Codigo = ProductoEntidad.Codigo
                 Me.Id = ProductoEntidad.id_Producto
                 Me.Monto = Precio
+                Me.PorcentajeBonificacion = PorcentajeBonificacion
                 Me.Subtotal = Precio * Cantidad
                 Me.Nombre = ProductoEntidad.Nombre
                 Me.Cantidad = Cantidad
@@ -50,6 +49,7 @@ Namespace VistaModelo.frmVentas
                 Me.Id = ProductoEntidad.id_Producto
                 Me.PorcentajeBonificacion = PorcentajeBonificacionMayorista
                 Me.Precio = Precio
+                Me.PorcentajeBonificacion = PorcentajeBonificacion
                 Me.IVA = IVA
                 Me.Monto = Monto
                 Me.Subtotal = Monto * Cantidad
@@ -255,22 +255,21 @@ Namespace VistaModelo.frmVentas
 
         Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double)
             Dim precio As Double = 0
+            Dim porcentajeBonificacion As Double = 0
             'Actualizo el precio de cada item segun la nueva lista de precios seleccioanda
             Select Case ListaPrecio
                 Case "1"
                     precio = Me.Precio1
-                Case "2"
-                    precio = Me.Precio2
+                    porcentajeBonificacion = Me.Precio2
                 Case "3"
                     precio = Me.Precio3
-                Case "4"
-                    precio = Me.Precio4
+                    porcentajeBonificacion = Me.Precio4
                 Case "5"
                     precio = Me.Precio5
                 Case "6"
                     precio = Me.Precio6
             End Select
-
+            Me.PorcentajeBonificacion = porcentajeBonificacion
             Actualizar(TipoCliente, precio, PorcentajeFacturacion)
         End Sub
 
@@ -304,15 +303,22 @@ Namespace VistaModelo.frmVentas
                 Me.PorcentajePago = 1
                 Return Monto - subTotalFaltantePago
             Else
+                Dim porcentajePago As Double = 0
+                If (tipoCliente = TipoCliente.Minorista) Then
+                    porcentajePago = Math.Round(Monto / Me.Subtotal, 4)
+                Else
+                    porcentajePago = Math.Round(Monto / (Me.Precio * Me.Cantidad), 4)
+                End If
+
                 Pagos.Add(New ProductoPago() With {
                     .FormaPago = FormaPago,
                     .TarjetaId = TarjetaId,
                     .CuotaId = CuotaId,
                     .Monto = Monto,
-                    .PorcentajePago = Math.Round(Monto / Me.Subtotal, 4)})
+                    .PorcentajePago = porcentajePago})
                 Me.PorcentajePago = Pagos.Sum(Function(x) x.PorcentajePago)
-                Return 0
-            End If
+                    Return 0
+                End If
         End Function
 
         Public Sub QuitarPago(pago As Pago)
@@ -331,7 +337,7 @@ Namespace VistaModelo.frmVentas
             If (tipoCliente = TipoCliente.Minorista) Then
                 Return Me.Subtotal * (1 - Me.PorcentajePago)
             Else
-                Return Me.Precio * Cantidad * (1 - Me.PorcentajePago)
+                Return Me.Precio * Me.Cantidad * (1 - Me.PorcentajePago)
             End If
         End Function
 

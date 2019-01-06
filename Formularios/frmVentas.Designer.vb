@@ -123,8 +123,6 @@ Partial Class frmVentas
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
-        Me.CachedCrystalReport21 = New SistemaCinderella.CachedCrystalReport2()
         Me.DG_Productos = New SistemaCinderella.CustomDataGrid()
         Me.ProductoCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductoNombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -1545,7 +1543,6 @@ Partial Class frmVentas
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
     Friend WithEvents txt_PorcentajeBonificacion As NumericUpDown
     Friend WithEvents Label33 As Label
-    Friend WithEvents ColorDialog1 As ColorDialog
     Friend WithEvents btnAgregaPago As Button
     Friend WithEvents VentasBindingSource As BindingSource
     Friend WithEvents VendedorBindingSource As BindingSource
@@ -1553,7 +1550,6 @@ Partial Class frmVentas
     Friend WithEvents TipoClienteBindingSource As BindingSource
     Friend WithEvents ListaPreciosBindingSource As BindingSource
     Friend WithEvents FormasPagosBindingSource As BindingSource
-    Friend WithEvents CachedCrystalReport21 As CachedCrystalReport2
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents DG_Productos As CustomDataGrid
     Friend WithEvents ProductosBindingSource As BindingSource

@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 
-Namespace VistaModelo.frmVentas
+Namespace VistaModelo
     Public Class Common
         Implements INotifyPropertyChanged
 

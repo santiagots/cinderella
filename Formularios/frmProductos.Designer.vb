@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmProductos
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmProductos
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -46,12 +46,28 @@ Partial Class frmProductos
         Me.rb_Opcion = New System.Windows.Forms.RadioButton()
         Me.txt_buscar = New System.Windows.Forms.TextBox()
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id_Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Subcategoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Proveedor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_Foto = New System.Windows.Forms.TextBox()
+        Me.ProductoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btn_Open = New System.Windows.Forms.Button()
         Me.lbl_Nombre = New System.Windows.Forms.Label()
         Me.lbl_Origen = New System.Windows.Forms.Label()
@@ -66,6 +82,7 @@ Partial Class frmProductos
         Me.lbl_Descripcion = New System.Windows.Forms.Label()
         Me.chk_Novedad = New System.Windows.Forms.CheckBox()
         Me.cb_Proveedores = New System.Windows.Forms.ComboBox()
+        Me.ProveedoresBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.chk_SubirWeb = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.chk_Habilitado = New System.Windows.Forms.CheckBox()
@@ -73,13 +90,15 @@ Partial Class frmProductos
         Me.lbl_SubirWeb = New System.Windows.Forms.Label()
         Me.lbl_Novedad = New System.Windows.Forms.Label()
         Me.cb_Subcategoria = New System.Windows.Forms.ComboBox()
+        Me.SubcategoriasBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.txt_Nombre = New System.Windows.Forms.TextBox()
         Me.cb_Categoria = New System.Windows.Forms.ComboBox()
+        Me.CategoriasBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.txt_Origen = New System.Windows.Forms.TextBox()
         Me.txt_Tamano = New System.Windows.Forms.TextBox()
         Me.txt_Codigo = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.pb_foto = New System.Windows.Forms.PictureBox()
         Me.GB_Precios = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_Precio6 = New System.Windows.Forms.TextBox()
@@ -94,14 +113,6 @@ Partial Class frmProductos
         Me.lbl_Precio3 = New System.Windows.Forms.Label()
         Me.txt_Precio1 = New System.Windows.Forms.TextBox()
         Me.lbl_Precio4 = New System.Windows.Forms.Label()
-        Me.pb_foto = New System.Windows.Forms.PictureBox()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.lbl_Materiales = New System.Windows.Forms.Label()
-        Me.lbl_Aroma = New System.Windows.Forms.Label()
-        Me.lbl_Colores = New System.Windows.Forms.Label()
-        Me.chk_Colores = New System.Windows.Forms.CheckedListBox()
-        Me.chk_Materiales = New System.Windows.Forms.CheckedListBox()
-        Me.chk_Aromas = New System.Windows.Forms.CheckedListBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
@@ -137,7 +148,10 @@ Partial Class frmProductos
         Me.cb_Subcategoria_mod = New System.Windows.Forms.ComboBox()
         Me.cb_Categoria_mod = New System.Windows.Forms.ComboBox()
         Me.TableLayoutPanel14 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel13 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
+        Me.pb_CodigoBarra = New System.Windows.Forms.PictureBox()
+        Me.pb_foto_mod = New System.Windows.Forms.PictureBox()
+        Me.Ck_EliminarFoto = New System.Windows.Forms.CheckBox()
         Me.Gb_Precios_mod = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.txt_Precio6_mod = New System.Windows.Forms.TextBox()
@@ -152,41 +166,30 @@ Partial Class frmProductos
         Me.Label21 = New System.Windows.Forms.Label()
         Me.txt_Precio1_mod = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
-        Me.pb_CodigoBarra = New System.Windows.Forms.PictureBox()
-        Me.pb_foto_mod = New System.Windows.Forms.PictureBox()
-        Me.Ck_EliminarFoto = New System.Windows.Forms.CheckBox()
-        Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.lbl_Colores_mod = New System.Windows.Forms.Label()
-        Me.chk_Materiales_mod = New System.Windows.Forms.CheckedListBox()
-        Me.chk_Aromas_mod = New System.Windows.Forms.CheckedListBox()
-        Me.chk_Colores_mod = New System.Windows.Forms.CheckedListBox()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Btn_Eliminar = New System.Windows.Forms.Button()
         Me.btn_Modificar = New System.Windows.Forms.Button()
+        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OrigenDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TamanioDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CostoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FotoRutaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CategoriasSeleccionadaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SubcategoriasSeleccionadaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProveedoresSeleccionadaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ListaTigreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ListaCapitalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MayoristaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlternativoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Cargar = New System.Windows.Forms.OpenFileDialog()
-        Me.ErrorProductos = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.id_Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Categoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Subcategoria = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Proveedor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Habilitado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.precio1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.precio2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.precio3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.precio4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.precio5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.precio6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabProductos.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GB_Buscar.SuspendLayout()
@@ -196,26 +199,26 @@ Partial Class frmProductos
         Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        CType(Me.ProductoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ProveedoresBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SubcategoriasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CategoriasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
-        Me.TableLayoutPanel5.SuspendLayout()
+        CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Precios.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
-        CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel3.SuspendLayout()
         Me.TbMod.SuspendLayout()
         Me.GB_Modificacion.SuspendLayout()
         Me.TableLayoutPanel15.SuspendLayout()
         Me.TableLayoutPanel8.SuspendLayout()
         Me.TableLayoutPanel9.SuspendLayout()
         Me.TableLayoutPanel14.SuspendLayout()
-        Me.TableLayoutPanel13.SuspendLayout()
-        Me.Gb_Precios_mod.SuspendLayout()
-        Me.TableLayoutPanel10.SuspendLayout()
         Me.TableLayoutPanel12.SuspendLayout()
         CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pb_foto_mod, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel11.SuspendLayout()
-        CType(Me.ErrorProductos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Gb_Precios_mod.SuspendLayout()
+        Me.TableLayoutPanel10.SuspendLayout()
+        CType(Me.ProductosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabProductos
@@ -229,7 +232,7 @@ Partial Class frmProductos
         Me.TabProductos.Name = "TabProductos"
         Me.TabProductos.SelectedIndex = 0
         Me.TabProductos.Size = New System.Drawing.Size(1006, 610)
-        Me.TabProductos.TabIndex = 2
+        Me.TabProductos.TabIndex = 99
         '
         'TbListado
         '
@@ -251,9 +254,9 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(294, 310)
+        Me.lbl_Msg.Location = New System.Drawing.Point(294, 277)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(399, 29)
+        Me.lbl_Msg.Size = New System.Drawing.Size(399, 94)
         Me.lbl_Msg.TabIndex = 4
         Me.lbl_Msg.Text = "No se han encontrado productos."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -399,7 +402,7 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Productos.ColumnHeadersHeight = 46
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Producto, Me.Nombre, Me.Codigo, Me.Categoria, Me.Subcategoria, Me.Proveedor, Me.Habilitado, Me.precio1, Me.precio2, Me.precio3, Me.precio4, Me.precio5, Me.precio6, Me.Modificar, Me.Eliminar})
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.Nombre, Me.id_Producto, Me.Categoria, Me.Subcategoria, Me.Proveedor, Me.precio1, Me.precio2, Me.precio3, Me.precio4, Me.precio5, Me.precio6, Me.Habilitado, Me.Modificar, Me.Eliminar})
         Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Productos.Location = New System.Drawing.Point(6, 91)
         Me.DG_Productos.MultiSelect = False
@@ -412,6 +415,170 @@ Partial Class frmProductos
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(974, 466)
         Me.DG_Productos.TabIndex = 0
+        '
+        'Codigo
+        '
+        Me.Codigo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Codigo.DataPropertyName = "Codigo"
+        Me.Codigo.HeaderText = "Codigo"
+        Me.Codigo.MinimumWidth = 30
+        Me.Codigo.Name = "Codigo"
+        Me.Codigo.ReadOnly = True
+        Me.Codigo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Codigo.Width = 84
+        '
+        'Nombre
+        '
+        Me.Nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Nombre.DataPropertyName = "Nombre"
+        Me.Nombre.HeaderText = "Nombre"
+        Me.Nombre.MinimumWidth = 180
+        Me.Nombre.Name = "Nombre"
+        Me.Nombre.ReadOnly = True
+        Me.Nombre.Width = 180
+        '
+        'id_Producto
+        '
+        Me.id_Producto.DataPropertyName = "id_Producto"
+        Me.id_Producto.HeaderText = "ID"
+        Me.id_Producto.MaxInputLength = 10
+        Me.id_Producto.Name = "id_Producto"
+        Me.id_Producto.ReadOnly = True
+        Me.id_Producto.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.id_Producto.Visible = False
+        '
+        'Categoria
+        '
+        Me.Categoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Categoria.DataPropertyName = "Cat"
+        Me.Categoria.HeaderText = "Categoria"
+        Me.Categoria.Name = "Categoria"
+        Me.Categoria.ReadOnly = True
+        Me.Categoria.Width = 103
+        '
+        'Subcategoria
+        '
+        Me.Subcategoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Subcategoria.DataPropertyName = "Subcat"
+        Me.Subcategoria.HeaderText = "Subcat."
+        Me.Subcategoria.MaxInputLength = 150
+        Me.Subcategoria.Name = "Subcategoria"
+        Me.Subcategoria.ReadOnly = True
+        Me.Subcategoria.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Subcategoria.Width = 89
+        '
+        'Proveedor
+        '
+        Me.Proveedor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Proveedor.DataPropertyName = "Proveedor"
+        Me.Proveedor.HeaderText = "Proveedor"
+        Me.Proveedor.Name = "Proveedor"
+        Me.Proveedor.ReadOnly = True
+        Me.Proveedor.Width = 106
+        '
+        'precio1
+        '
+        Me.precio1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.precio1.DataPropertyName = "Precio1"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.precio1.DefaultCellStyle = DataGridViewCellStyle2
+        Me.precio1.HeaderText = "Lista Tigre"
+        Me.precio1.Name = "precio1"
+        Me.precio1.ReadOnly = True
+        Me.precio1.Width = 98
+        '
+        'precio2
+        '
+        Me.precio2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.precio2.DataPropertyName = "Precio2"
+        DataGridViewCellStyle3.Format = "P2"
+        Me.precio2.DefaultCellStyle = DataGridViewCellStyle3
+        Me.precio2.HeaderText = "Desc. Tigre"
+        Me.precio2.Name = "precio2"
+        Me.precio2.ReadOnly = True
+        Me.precio2.Width = 105
+        '
+        'precio3
+        '
+        Me.precio3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.precio3.DataPropertyName = "Precio3"
+        DataGridViewCellStyle4.Format = "C2"
+        Me.precio3.DefaultCellStyle = DataGridViewCellStyle4
+        Me.precio3.HeaderText = "Lista Capital"
+        Me.precio3.Name = "precio3"
+        Me.precio3.ReadOnly = True
+        Me.precio3.Width = 111
+        '
+        'precio4
+        '
+        Me.precio4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.precio4.DataPropertyName = "Precio4"
+        DataGridViewCellStyle5.Format = "P2"
+        Me.precio4.DefaultCellStyle = DataGridViewCellStyle5
+        Me.precio4.HeaderText = "Desc. Capital"
+        Me.precio4.Name = "precio4"
+        Me.precio4.ReadOnly = True
+        Me.precio4.Width = 117
+        '
+        'precio5
+        '
+        Me.precio5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.precio5.DataPropertyName = "Precio5"
+        DataGridViewCellStyle6.Format = "C2"
+        Me.precio5.DefaultCellStyle = DataGridViewCellStyle6
+        Me.precio5.HeaderText = "Mayorista"
+        Me.precio5.Name = "precio5"
+        Me.precio5.ReadOnly = True
+        Me.precio5.Width = 102
+        '
+        'precio6
+        '
+        Me.precio6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.precio6.DataPropertyName = "Precio6"
+        DataGridViewCellStyle7.Format = "C2"
+        Me.precio6.DefaultCellStyle = DataGridViewCellStyle7
+        Me.precio6.HeaderText = "Alternativo"
+        Me.precio6.Name = "precio6"
+        Me.precio6.ReadOnly = True
+        Me.precio6.Width = 109
+        '
+        'Habilitado
+        '
+        Me.Habilitado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Habilitado.DataPropertyName = "Habilitado"
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Habilitado.DefaultCellStyle = DataGridViewCellStyle8
+        Me.Habilitado.HeaderText = "Habil."
+        Me.Habilitado.MaxInputLength = 10
+        Me.Habilitado.MinimumWidth = 10
+        Me.Habilitado.Name = "Habilitado"
+        Me.Habilitado.ReadOnly = True
+        Me.Habilitado.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Habilitado.Width = 74
+        '
+        'Modificar
+        '
+        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Modificar.HeaderText = ""
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.MinimumWidth = 10
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Modificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Modificar.Width = 19
+        '
+        'Eliminar
+        '
+        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Eliminar.HeaderText = ""
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.MinimumWidth = 10
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Eliminar.Width = 19
         '
         'TbAlta
         '
@@ -446,8 +613,8 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel7.ColumnCount = 2
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel7.Controls.Add(Me.TableLayoutPanel1, 0, 0)
         Me.TableLayoutPanel7.Controls.Add(Me.TableLayoutPanel6, 1, 0)
         Me.TableLayoutPanel7.Location = New System.Drawing.Point(6, 16)
@@ -455,7 +622,7 @@ Partial Class frmProductos
         Me.TableLayoutPanel7.RowCount = 1
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel7.Size = New System.Drawing.Size(968, 493)
-        Me.TableLayoutPanel7.TabIndex = 72
+        Me.TableLayoutPanel7.TabIndex = 68
         '
         'TableLayoutPanel1
         '
@@ -505,7 +672,7 @@ Partial Class frmProductos
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(381, 487)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(478, 487)
         Me.TableLayoutPanel1.TabIndex = 68
         '
         'TableLayoutPanel2
@@ -520,21 +687,26 @@ Partial Class frmProductos
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(235, 29)
-        Me.TableLayoutPanel2.TabIndex = 69
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(332, 29)
+        Me.TableLayoutPanel2.TabIndex = 6
         '
         'txt_Foto
         '
         Me.txt_Foto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Foto.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "FotoRuta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Foto.Location = New System.Drawing.Point(3, 4)
         Me.txt_Foto.Name = "txt_Foto"
-        Me.txt_Foto.Size = New System.Drawing.Size(189, 21)
+        Me.txt_Foto.Size = New System.Drawing.Size(286, 21)
         Me.txt_Foto.TabIndex = 6
+        '
+        'ProductoBindingSource
+        '
+        Me.ProductoBindingSource.DataSource = GetType(SistemaCinderella.VistaModelo.frmProductos.Producto)
         '
         'btn_Open
         '
         Me.btn_Open.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Open.Location = New System.Drawing.Point(202, 3)
+        Me.btn_Open.Location = New System.Drawing.Point(299, 3)
         Me.btn_Open.Name = "btn_Open"
         Me.btn_Open.Size = New System.Drawing.Size(30, 23)
         Me.btn_Open.TabIndex = 7
@@ -548,7 +720,7 @@ Partial Class frmProductos
         Me.lbl_Nombre.Location = New System.Drawing.Point(3, 7)
         Me.lbl_Nombre.Name = "lbl_Nombre"
         Me.lbl_Nombre.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Nombre.TabIndex = 1
+        Me.lbl_Nombre.TabIndex = 0
         Me.lbl_Nombre.Text = "Nombre (*)"
         '
         'lbl_Origen
@@ -558,17 +730,19 @@ Partial Class frmProductos
         Me.lbl_Origen.Location = New System.Drawing.Point(3, 37)
         Me.lbl_Origen.Name = "lbl_Origen"
         Me.lbl_Origen.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Origen.TabIndex = 7
+        Me.lbl_Origen.TabIndex = 0
         Me.lbl_Origen.Text = "Origen"
         '
         'txt_Costo
         '
         Me.txt_Costo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Costo.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Costo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Costo.Location = New System.Drawing.Point(143, 124)
         Me.txt_Costo.MaxLength = 255
         Me.txt_Costo.Name = "txt_Costo"
-        Me.txt_Costo.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Costo.Size = New System.Drawing.Size(332, 21)
         Me.txt_Costo.TabIndex = 5
+        Me.txt_Costo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lbl_Tamano
         '
@@ -577,7 +751,7 @@ Partial Class frmProductos
         Me.lbl_Tamano.Location = New System.Drawing.Point(3, 67)
         Me.lbl_Tamano.Name = "lbl_Tamano"
         Me.lbl_Tamano.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Tamano.TabIndex = 15
+        Me.lbl_Tamano.TabIndex = 0
         Me.lbl_Tamano.Text = "Tamaño"
         '
         'Label23
@@ -587,7 +761,7 @@ Partial Class frmProductos
         Me.Label23.Location = New System.Drawing.Point(3, 127)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(134, 15)
-        Me.Label23.TabIndex = 56
+        Me.Label23.TabIndex = 0
         Me.Label23.Text = "Costo"
         '
         'lbl_Codigo
@@ -597,7 +771,7 @@ Partial Class frmProductos
         Me.lbl_Codigo.Location = New System.Drawing.Point(3, 97)
         Me.lbl_Codigo.Name = "lbl_Codigo"
         Me.lbl_Codigo.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Codigo.TabIndex = 17
+        Me.lbl_Codigo.TabIndex = 0
         Me.lbl_Codigo.Text = "Código (*)"
         '
         'lbl_Foto
@@ -607,7 +781,7 @@ Partial Class frmProductos
         Me.lbl_Foto.Location = New System.Drawing.Point(3, 160)
         Me.lbl_Foto.Name = "lbl_Foto"
         Me.lbl_Foto.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Foto.TabIndex = 27
+        Me.lbl_Foto.TabIndex = 0
         Me.lbl_Foto.Text = "Foto"
         '
         'lbl_Categoria
@@ -617,7 +791,7 @@ Partial Class frmProductos
         Me.lbl_Categoria.Location = New System.Drawing.Point(3, 192)
         Me.lbl_Categoria.Name = "lbl_Categoria"
         Me.lbl_Categoria.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Categoria.TabIndex = 21
+        Me.lbl_Categoria.TabIndex = 0
         Me.lbl_Categoria.Text = "Categoría (*)"
         '
         'lbl_Subcategoria
@@ -627,7 +801,7 @@ Partial Class frmProductos
         Me.lbl_Subcategoria.Location = New System.Drawing.Point(3, 222)
         Me.lbl_Subcategoria.Name = "lbl_Subcategoria"
         Me.lbl_Subcategoria.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Subcategoria.TabIndex = 22
+        Me.lbl_Subcategoria.TabIndex = 0
         Me.lbl_Subcategoria.Text = "Subcategoría (*)"
         '
         'lbl_Proveedor
@@ -637,7 +811,7 @@ Partial Class frmProductos
         Me.lbl_Proveedor.Location = New System.Drawing.Point(3, 252)
         Me.lbl_Proveedor.Name = "lbl_Proveedor"
         Me.lbl_Proveedor.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Proveedor.TabIndex = 35
+        Me.lbl_Proveedor.TabIndex = 0
         Me.lbl_Proveedor.Text = "Proveedor (*)"
         '
         'lbl_Descripcion
@@ -647,7 +821,7 @@ Partial Class frmProductos
         Me.lbl_Descripcion.Location = New System.Drawing.Point(3, 328)
         Me.lbl_Descripcion.Name = "lbl_Descripcion"
         Me.lbl_Descripcion.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Descripcion.TabIndex = 19
+        Me.lbl_Descripcion.TabIndex = 0
         Me.lbl_Descripcion.Text = "Descripcion"
         '
         'chk_Novedad
@@ -656,9 +830,10 @@ Partial Class frmProductos
         Me.chk_Novedad.AutoSize = True
         Me.chk_Novedad.Checked = True
         Me.chk_Novedad.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Novedad.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "Novedad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.chk_Novedad.Location = New System.Drawing.Point(143, 465)
         Me.chk_Novedad.Name = "chk_Novedad"
-        Me.chk_Novedad.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Novedad.Size = New System.Drawing.Size(332, 14)
         Me.chk_Novedad.TabIndex = 14
         Me.chk_Novedad.UseVisualStyleBackColor = True
         '
@@ -666,13 +841,22 @@ Partial Class frmProductos
         '
         Me.cb_Proveedores.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Proveedores.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Proveedores.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ProductoBindingSource, "ProveedoresSeleccionada", True))
+        Me.cb_Proveedores.DataSource = Me.ProveedoresBindingSource
+        Me.cb_Proveedores.DisplayMember = "Value"
         Me.cb_Proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Proveedores.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Proveedores.FormattingEnabled = True
-        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 249)
+        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 248)
         Me.cb_Proveedores.Name = "cb_Proveedores"
-        Me.cb_Proveedores.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Proveedores.Size = New System.Drawing.Size(332, 23)
         Me.cb_Proveedores.TabIndex = 10
+        Me.cb_Proveedores.ValueMember = "Key"
+        '
+        'ProveedoresBindingSource
+        '
+        Me.ProveedoresBindingSource.DataMember = "Proveedores"
+        Me.ProveedoresBindingSource.DataSource = Me.ProductoBindingSource
         '
         'chk_SubirWeb
         '
@@ -680,9 +864,10 @@ Partial Class frmProductos
         Me.chk_SubirWeb.AutoSize = True
         Me.chk_SubirWeb.Checked = True
         Me.chk_SubirWeb.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_SubirWeb.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "SubirAWeb", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.chk_SubirWeb.Location = New System.Drawing.Point(143, 435)
         Me.chk_SubirWeb.Name = "chk_SubirWeb"
-        Me.chk_SubirWeb.Size = New System.Drawing.Size(235, 14)
+        Me.chk_SubirWeb.Size = New System.Drawing.Size(332, 14)
         Me.chk_SubirWeb.TabIndex = 13
         Me.chk_SubirWeb.UseVisualStyleBackColor = True
         '
@@ -693,7 +878,7 @@ Partial Class frmProductos
         Me.Label2.Location = New System.Drawing.Point(3, 404)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(134, 15)
-        Me.Label2.TabIndex = 2
+        Me.Label2.TabIndex = 0
         Me.Label2.Text = "Habilitado"
         '
         'chk_Habilitado
@@ -702,20 +887,22 @@ Partial Class frmProductos
         Me.chk_Habilitado.AutoSize = True
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "Habilitado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.chk_Habilitado.Location = New System.Drawing.Point(143, 405)
         Me.chk_Habilitado.Name = "chk_Habilitado"
-        Me.chk_Habilitado.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Habilitado.Size = New System.Drawing.Size(332, 14)
         Me.chk_Habilitado.TabIndex = 12
         Me.chk_Habilitado.UseVisualStyleBackColor = True
         '
         'txt_Descripcion
         '
+        Me.txt_Descripcion.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Descripcion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Descripcion.Dock = System.Windows.Forms.DockStyle.Fill
         Me.txt_Descripcion.Location = New System.Drawing.Point(143, 278)
         Me.txt_Descripcion.MaxLength = 255
         Me.txt_Descripcion.Multiline = True
         Me.txt_Descripcion.Name = "txt_Descripcion"
-        Me.txt_Descripcion.Size = New System.Drawing.Size(235, 116)
+        Me.txt_Descripcion.Size = New System.Drawing.Size(332, 116)
         Me.txt_Descripcion.TabIndex = 11
         '
         'lbl_SubirWeb
@@ -725,7 +912,7 @@ Partial Class frmProductos
         Me.lbl_SubirWeb.Location = New System.Drawing.Point(3, 434)
         Me.lbl_SubirWeb.Name = "lbl_SubirWeb"
         Me.lbl_SubirWeb.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_SubirWeb.TabIndex = 28
+        Me.lbl_SubirWeb.TabIndex = 0
         Me.lbl_SubirWeb.Text = "Subir a la Web"
         '
         'lbl_Novedad
@@ -735,98 +922,119 @@ Partial Class frmProductos
         Me.lbl_Novedad.Location = New System.Drawing.Point(3, 464)
         Me.lbl_Novedad.Name = "lbl_Novedad"
         Me.lbl_Novedad.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Novedad.TabIndex = 30
+        Me.lbl_Novedad.TabIndex = 0
         Me.lbl_Novedad.Text = "Novedad"
         '
         'cb_Subcategoria
         '
         Me.cb_Subcategoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Subcategoria.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Subcategoria.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ProductoBindingSource, "SubcategoriasSeleccionada", True))
+        Me.cb_Subcategoria.DataSource = Me.SubcategoriasBindingSource
+        Me.cb_Subcategoria.DisplayMember = "Value"
         Me.cb_Subcategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Subcategoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria.FormattingEnabled = True
-        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 219)
+        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 218)
         Me.cb_Subcategoria.Name = "cb_Subcategoria"
-        Me.cb_Subcategoria.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Subcategoria.Size = New System.Drawing.Size(332, 23)
         Me.cb_Subcategoria.TabIndex = 9
+        Me.cb_Subcategoria.ValueMember = "Key"
+        '
+        'SubcategoriasBindingSource
+        '
+        Me.SubcategoriasBindingSource.DataMember = "Subcategorias"
+        Me.SubcategoriasBindingSource.DataSource = Me.ProductoBindingSource
         '
         'txt_Nombre
         '
         Me.txt_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Nombre.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Nombre", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Nombre.Location = New System.Drawing.Point(143, 4)
         Me.txt_Nombre.MaxLength = 255
         Me.txt_Nombre.Name = "txt_Nombre"
-        Me.txt_Nombre.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Nombre.Size = New System.Drawing.Size(332, 21)
         Me.txt_Nombre.TabIndex = 1
         '
         'cb_Categoria
         '
         Me.cb_Categoria.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Categoria.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Categoria.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ProductoBindingSource, "CategoriasSeleccionada", True))
+        Me.cb_Categoria.DataSource = Me.CategoriasBindingSource
+        Me.cb_Categoria.DisplayMember = "Value"
         Me.cb_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Categoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria.FormattingEnabled = True
-        Me.cb_Categoria.Location = New System.Drawing.Point(143, 189)
+        Me.cb_Categoria.Location = New System.Drawing.Point(143, 188)
         Me.cb_Categoria.Name = "cb_Categoria"
-        Me.cb_Categoria.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Categoria.Size = New System.Drawing.Size(332, 23)
         Me.cb_Categoria.TabIndex = 8
+        Me.cb_Categoria.ValueMember = "Key"
+        '
+        'CategoriasBindingSource
+        '
+        Me.CategoriasBindingSource.DataMember = "Categorias"
+        Me.CategoriasBindingSource.DataSource = Me.ProductoBindingSource
         '
         'txt_Origen
         '
         Me.txt_Origen.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Origen.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Origen", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Origen.Location = New System.Drawing.Point(143, 34)
         Me.txt_Origen.MaxLength = 255
         Me.txt_Origen.Name = "txt_Origen"
-        Me.txt_Origen.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Origen.Size = New System.Drawing.Size(332, 21)
         Me.txt_Origen.TabIndex = 2
         '
         'txt_Tamano
         '
         Me.txt_Tamano.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Tamano.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Tamanio", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Tamano.Location = New System.Drawing.Point(143, 64)
         Me.txt_Tamano.MaxLength = 255
         Me.txt_Tamano.Name = "txt_Tamano"
-        Me.txt_Tamano.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Tamano.Size = New System.Drawing.Size(332, 21)
         Me.txt_Tamano.TabIndex = 3
         '
         'txt_Codigo
         '
         Me.txt_Codigo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Codigo.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Codigo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Codigo.Location = New System.Drawing.Point(143, 94)
         Me.txt_Codigo.MaxLength = 255
         Me.txt_Codigo.Name = "txt_Codigo"
-        Me.txt_Codigo.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Codigo.Size = New System.Drawing.Size(332, 21)
         Me.txt_Codigo.TabIndex = 4
         '
         'TableLayoutPanel6
         '
         Me.TableLayoutPanel6.ColumnCount = 1
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel5, 0, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel3, 0, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.pb_foto, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.GB_Precios, 0, 1)
         Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(390, 3)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(487, 3)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 2
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208.0!))
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(575, 487)
-        Me.TableLayoutPanel6.TabIndex = 71
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 216.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(478, 487)
+        Me.TableLayoutPanel6.TabIndex = 99
         '
-        'TableLayoutPanel5
+        'pb_foto
         '
-        Me.TableLayoutPanel5.ColumnCount = 2
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel5.Controls.Add(Me.GB_Precios, 0, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.pb_foto, 1, 0)
-        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
-        Me.TableLayoutPanel5.RowCount = 1
-        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(569, 202)
-        Me.TableLayoutPanel5.TabIndex = 70
+        Me.pb_foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pb_foto.DataBindings.Add(New System.Windows.Forms.Binding("Image", Me.ProductoBindingSource, "Foto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.pb_foto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_foto.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
+        Me.pb_foto.InitialImage = Nothing
+        Me.pb_foto.Location = New System.Drawing.Point(3, 3)
+        Me.pb_foto.Name = "pb_foto"
+        Me.pb_foto.Size = New System.Drawing.Size(472, 265)
+        Me.pb_foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_foto.TabIndex = 40
+        Me.pb_foto.TabStop = False
         '
         'GB_Precios
         '
@@ -834,10 +1042,10 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Precios.Controls.Add(Me.TableLayoutPanel4)
-        Me.GB_Precios.Location = New System.Drawing.Point(3, 3)
+        Me.GB_Precios.Location = New System.Drawing.Point(3, 274)
         Me.GB_Precios.Name = "GB_Precios"
-        Me.GB_Precios.Size = New System.Drawing.Size(278, 196)
-        Me.GB_Precios.TabIndex = 52
+        Me.GB_Precios.Size = New System.Drawing.Size(472, 210)
+        Me.GB_Precios.TabIndex = 15
         Me.GB_Precios.TabStop = False
         Me.GB_Precios.Text = "Listas de Precios"
         '
@@ -868,42 +1076,48 @@ Partial Class frmProductos
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(272, 176)
-        Me.TableLayoutPanel4.TabIndex = 70
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(466, 190)
+        Me.TableLayoutPanel4.TabIndex = 15
         '
         'txt_Precio6
         '
         Me.txt_Precio6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Precio6.Location = New System.Drawing.Point(143, 154)
+        Me.txt_Precio6.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Alternativo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_Precio6.Location = New System.Drawing.Point(143, 159)
         Me.txt_Precio6.Name = "txt_Precio6"
-        Me.txt_Precio6.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio6.Size = New System.Drawing.Size(320, 21)
         Me.txt_Precio6.TabIndex = 20
+        Me.txt_Precio6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lbl_Precio6
         '
         Me.lbl_Precio6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Precio6.AutoSize = True
-        Me.lbl_Precio6.Location = New System.Drawing.Point(3, 157)
+        Me.lbl_Precio6.Location = New System.Drawing.Point(3, 162)
         Me.lbl_Precio6.Name = "lbl_Precio6"
         Me.lbl_Precio6.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Precio6.TabIndex = 53
-        Me.lbl_Precio6.Text = "Alternativa"
+        Me.lbl_Precio6.TabIndex = 0
+        Me.lbl_Precio6.Text = "Alternativa (*)"
         '
         'txt_Precio5
         '
         Me.txt_Precio5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio5.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Mayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Precio5.Location = New System.Drawing.Point(143, 124)
         Me.txt_Precio5.Name = "txt_Precio5"
-        Me.txt_Precio5.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio5.Size = New System.Drawing.Size(320, 21)
         Me.txt_Precio5.TabIndex = 19
+        Me.txt_Precio5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txt_Precio4
         '
         Me.txt_Precio4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio4.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "PorcentajeDescuentoCapital", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "P"))
         Me.txt_Precio4.Location = New System.Drawing.Point(143, 94)
         Me.txt_Precio4.Name = "txt_Precio4"
-        Me.txt_Precio4.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio4.Size = New System.Drawing.Size(320, 21)
         Me.txt_Precio4.TabIndex = 18
+        Me.txt_Precio4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lbl_Precio1
         '
@@ -912,8 +1126,8 @@ Partial Class frmProductos
         Me.lbl_Precio1.Location = New System.Drawing.Point(3, 7)
         Me.lbl_Precio1.Name = "lbl_Precio1"
         Me.lbl_Precio1.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Precio1.TabIndex = 47
-        Me.lbl_Precio1.Text = "Efectivo Tigre"
+        Me.lbl_Precio1.TabIndex = 0
+        Me.lbl_Precio1.Text = "Lista Tigre (*)"
         '
         'lbl_Precio2
         '
@@ -922,24 +1136,28 @@ Partial Class frmProductos
         Me.lbl_Precio2.Location = New System.Drawing.Point(3, 37)
         Me.lbl_Precio2.Name = "lbl_Precio2"
         Me.lbl_Precio2.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Precio2.TabIndex = 48
-        Me.lbl_Precio2.Text = "Tarjeta Tigre"
+        Me.lbl_Precio2.TabIndex = 0
+        Me.lbl_Precio2.Text = "% Desc. Tigre (*)"
         '
         'txt_Precio3
         '
         Me.txt_Precio3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "ListaCapital", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Precio3.Location = New System.Drawing.Point(143, 64)
         Me.txt_Precio3.Name = "txt_Precio3"
-        Me.txt_Precio3.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio3.Size = New System.Drawing.Size(320, 21)
         Me.txt_Precio3.TabIndex = 17
+        Me.txt_Precio3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txt_Precio2
         '
         Me.txt_Precio2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "PorcentajeDescuentoTigre", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "P"))
         Me.txt_Precio2.Location = New System.Drawing.Point(143, 34)
         Me.txt_Precio2.Name = "txt_Precio2"
-        Me.txt_Precio2.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio2.Size = New System.Drawing.Size(320, 21)
         Me.txt_Precio2.TabIndex = 16
+        Me.txt_Precio2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lbl_Precio5
         '
@@ -948,8 +1166,8 @@ Partial Class frmProductos
         Me.lbl_Precio5.Location = New System.Drawing.Point(3, 127)
         Me.lbl_Precio5.Name = "lbl_Precio5"
         Me.lbl_Precio5.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Precio5.TabIndex = 50
-        Me.lbl_Precio5.Text = "Mayorista"
+        Me.lbl_Precio5.TabIndex = 0
+        Me.lbl_Precio5.Text = "Mayorista (*)"
         '
         'lbl_Precio3
         '
@@ -958,120 +1176,29 @@ Partial Class frmProductos
         Me.lbl_Precio3.Location = New System.Drawing.Point(3, 67)
         Me.lbl_Precio3.Name = "lbl_Precio3"
         Me.lbl_Precio3.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Precio3.TabIndex = 49
-        Me.lbl_Precio3.Text = "Efectivo Capital"
+        Me.lbl_Precio3.TabIndex = 0
+        Me.lbl_Precio3.Text = "Lista Capital (*)"
         '
         'txt_Precio1
         '
         Me.txt_Precio1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "ListaTigre", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Precio1.Location = New System.Drawing.Point(143, 4)
         Me.txt_Precio1.Name = "txt_Precio1"
-        Me.txt_Precio1.Size = New System.Drawing.Size(126, 21)
+        Me.txt_Precio1.Size = New System.Drawing.Size(320, 21)
         Me.txt_Precio1.TabIndex = 15
+        Me.txt_Precio1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lbl_Precio4
         '
         Me.lbl_Precio4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Precio4.AutoSize = True
+        Me.lbl_Precio4.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lbl_Precio4.Location = New System.Drawing.Point(3, 97)
         Me.lbl_Precio4.Name = "lbl_Precio4"
         Me.lbl_Precio4.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Precio4.TabIndex = 51
-        Me.lbl_Precio4.Text = "Tarjeta Capital"
-        '
-        'pb_foto
-        '
-        Me.pb_foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pb_foto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pb_foto.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
-        Me.pb_foto.InitialImage = Nothing
-        Me.pb_foto.Location = New System.Drawing.Point(287, 3)
-        Me.pb_foto.Name = "pb_foto"
-        Me.pb_foto.Size = New System.Drawing.Size(279, 196)
-        Me.pb_foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pb_foto.TabIndex = 40
-        Me.pb_foto.TabStop = False
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.ColumnCount = 3
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel3.Controls.Add(Me.lbl_Materiales, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.lbl_Aroma, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.lbl_Colores, 2, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.chk_Colores, 2, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.chk_Materiales, 0, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.chk_Aromas, 1, 1)
-        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 211)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 2
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(569, 273)
-        Me.TableLayoutPanel3.TabIndex = 69
-        '
-        'lbl_Materiales
-        '
-        Me.lbl_Materiales.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Materiales.AutoSize = True
-        Me.lbl_Materiales.Location = New System.Drawing.Point(3, 7)
-        Me.lbl_Materiales.Name = "lbl_Materiales"
-        Me.lbl_Materiales.Size = New System.Drawing.Size(183, 15)
-        Me.lbl_Materiales.TabIndex = 39
-        Me.lbl_Materiales.Text = "Materiales Disponibles"
-        '
-        'lbl_Aroma
-        '
-        Me.lbl_Aroma.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Aroma.AutoSize = True
-        Me.lbl_Aroma.Location = New System.Drawing.Point(192, 7)
-        Me.lbl_Aroma.Name = "lbl_Aroma"
-        Me.lbl_Aroma.Size = New System.Drawing.Size(183, 15)
-        Me.lbl_Aroma.TabIndex = 38
-        Me.lbl_Aroma.Text = "Aromas Disponibles"
-        '
-        'lbl_Colores
-        '
-        Me.lbl_Colores.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Colores.AutoSize = True
-        Me.lbl_Colores.Location = New System.Drawing.Point(381, 7)
-        Me.lbl_Colores.Name = "lbl_Colores"
-        Me.lbl_Colores.Size = New System.Drawing.Size(185, 15)
-        Me.lbl_Colores.TabIndex = 54
-        Me.lbl_Colores.Text = "Colores Disponibles"
-        '
-        'chk_Colores
-        '
-        Me.chk_Colores.CheckOnClick = True
-        Me.chk_Colores.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.chk_Colores.FormattingEnabled = True
-        Me.chk_Colores.Location = New System.Drawing.Point(381, 33)
-        Me.chk_Colores.Name = "chk_Colores"
-        Me.chk_Colores.Size = New System.Drawing.Size(185, 237)
-        Me.chk_Colores.TabIndex = 23
-        '
-        'chk_Materiales
-        '
-        Me.chk_Materiales.CheckOnClick = True
-        Me.chk_Materiales.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.chk_Materiales.FormattingEnabled = True
-        Me.chk_Materiales.Location = New System.Drawing.Point(3, 33)
-        Me.chk_Materiales.Name = "chk_Materiales"
-        Me.chk_Materiales.Size = New System.Drawing.Size(183, 237)
-        Me.chk_Materiales.TabIndex = 21
-        '
-        'chk_Aromas
-        '
-        Me.chk_Aromas.CheckOnClick = True
-        Me.chk_Aromas.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.chk_Aromas.FormattingEnabled = True
-        Me.chk_Aromas.Location = New System.Drawing.Point(192, 33)
-        Me.chk_Aromas.Name = "chk_Aromas"
-        Me.chk_Aromas.Size = New System.Drawing.Size(183, 237)
-        Me.chk_Aromas.TabIndex = 22
+        Me.lbl_Precio4.TabIndex = 0
+        Me.lbl_Precio4.Text = "% Desc. Capital (*)"
         '
         'Label25
         '
@@ -1094,7 +1221,7 @@ Partial Class frmProductos
         Me.Btn_Agregar.Location = New System.Drawing.Point(874, 515)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Agregar.TabIndex = 24
+        Me.Btn_Agregar.TabIndex = 21
         Me.Btn_Agregar.Text = "Agregar"
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.Btn_Agregar, "Agrega el producto al sistema.")
@@ -1134,8 +1261,9 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel15.ColumnCount = 2
-        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
-        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel15.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel15.Controls.Add(Me.TableLayoutPanel8, 0, 0)
         Me.TableLayoutPanel15.Controls.Add(Me.TableLayoutPanel14, 1, 0)
         Me.TableLayoutPanel15.Location = New System.Drawing.Point(6, 20)
@@ -1193,7 +1321,7 @@ Partial Class frmProductos
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(381, 484)
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(478, 484)
         Me.TableLayoutPanel8.TabIndex = 88
         '
         'TableLayoutPanel9
@@ -1208,21 +1336,22 @@ Partial Class frmProductos
         Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
         Me.TableLayoutPanel9.RowCount = 1
         Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(235, 29)
-        Me.TableLayoutPanel9.TabIndex = 89
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(332, 29)
+        Me.TableLayoutPanel9.TabIndex = 6
         '
         'txt_Foto_mod
         '
         Me.txt_Foto_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Foto_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "FotoRuta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Foto_mod.Location = New System.Drawing.Point(3, 4)
         Me.txt_Foto_mod.Name = "txt_Foto_mod"
-        Me.txt_Foto_mod.Size = New System.Drawing.Size(189, 21)
+        Me.txt_Foto_mod.Size = New System.Drawing.Size(286, 21)
         Me.txt_Foto_mod.TabIndex = 6
         '
         'btn_Open_mod
         '
         Me.btn_Open_mod.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btn_Open_mod.Location = New System.Drawing.Point(201, 3)
+        Me.btn_Open_mod.Location = New System.Drawing.Point(298, 3)
         Me.btn_Open_mod.Name = "btn_Open_mod"
         Me.btn_Open_mod.Size = New System.Drawing.Size(31, 23)
         Me.btn_Open_mod.TabIndex = 7
@@ -1262,11 +1391,13 @@ Partial Class frmProductos
         'txt_Costo_mod
         '
         Me.txt_Costo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Costo_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Costo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Costo_mod.Location = New System.Drawing.Point(143, 124)
         Me.txt_Costo_mod.MaxLength = 255
         Me.txt_Costo_mod.Name = "txt_Costo_mod"
-        Me.txt_Costo_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Costo_mod.Size = New System.Drawing.Size(332, 21)
         Me.txt_Costo_mod.TabIndex = 5
+        Me.txt_Costo_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label11
         '
@@ -1354,9 +1485,10 @@ Partial Class frmProductos
         Me.chk_Habilitado_mod.AutoSize = True
         Me.chk_Habilitado_mod.Checked = True
         Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Habilitado_mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "Habilitado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 402)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
-        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Habilitado_mod.Size = New System.Drawing.Size(332, 14)
         Me.chk_Habilitado_mod.TabIndex = 12
         Me.chk_Habilitado_mod.UseVisualStyleBackColor = True
         '
@@ -1366,9 +1498,10 @@ Partial Class frmProductos
         Me.chk_SubirWeb_mod.AutoSize = True
         Me.chk_SubirWeb_mod.Checked = True
         Me.chk_SubirWeb_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_SubirWeb_mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "SubirAWeb", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.chk_SubirWeb_mod.Location = New System.Drawing.Point(143, 432)
         Me.chk_SubirWeb_mod.Name = "chk_SubirWeb_mod"
-        Me.chk_SubirWeb_mod.Size = New System.Drawing.Size(235, 14)
+        Me.chk_SubirWeb_mod.Size = New System.Drawing.Size(332, 14)
         Me.chk_SubirWeb_mod.TabIndex = 13
         Me.chk_SubirWeb_mod.UseVisualStyleBackColor = True
         '
@@ -1378,9 +1511,10 @@ Partial Class frmProductos
         Me.chk_Novedad_mod.AutoSize = True
         Me.chk_Novedad_mod.Checked = True
         Me.chk_Novedad_mod.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_Novedad_mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "Novedad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.chk_Novedad_mod.Location = New System.Drawing.Point(143, 462)
         Me.chk_Novedad_mod.Name = "chk_Novedad_mod"
-        Me.chk_Novedad_mod.Size = New System.Drawing.Size(235, 14)
+        Me.chk_Novedad_mod.Size = New System.Drawing.Size(332, 14)
         Me.chk_Novedad_mod.TabIndex = 14
         Me.chk_Novedad_mod.UseVisualStyleBackColor = True
         '
@@ -1406,124 +1540,181 @@ Partial Class frmProductos
         '
         'txt_Descripcion_mod
         '
+        Me.txt_Descripcion_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Descripcion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Descripcion_mod.Dock = System.Windows.Forms.DockStyle.Fill
         Me.txt_Descripcion_mod.Location = New System.Drawing.Point(143, 278)
         Me.txt_Descripcion_mod.MaxLength = 255
         Me.txt_Descripcion_mod.Multiline = True
         Me.txt_Descripcion_mod.Name = "txt_Descripcion_mod"
-        Me.txt_Descripcion_mod.Size = New System.Drawing.Size(235, 113)
+        Me.txt_Descripcion_mod.Size = New System.Drawing.Size(332, 113)
         Me.txt_Descripcion_mod.TabIndex = 11
         '
         'cb_Proveedor_mod
         '
         Me.cb_Proveedor_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Proveedor_mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Proveedor_mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ProductoBindingSource, "ProveedoresSeleccionada", True))
+        Me.cb_Proveedor_mod.DataSource = Me.ProveedoresBindingSource
+        Me.cb_Proveedor_mod.DisplayMember = "Value"
         Me.cb_Proveedor_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Proveedor_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Proveedor_mod.FormattingEnabled = True
-        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 249)
+        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 248)
         Me.cb_Proveedor_mod.Name = "cb_Proveedor_mod"
-        Me.cb_Proveedor_mod.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Proveedor_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Proveedor_mod.TabIndex = 10
+        Me.cb_Proveedor_mod.ValueMember = "Key"
         '
         'txt_Nombre_mod
         '
         Me.txt_Nombre_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Nombre_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Nombre", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Nombre_mod.Location = New System.Drawing.Point(143, 4)
         Me.txt_Nombre_mod.MaxLength = 255
         Me.txt_Nombre_mod.Name = "txt_Nombre_mod"
-        Me.txt_Nombre_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Nombre_mod.Size = New System.Drawing.Size(332, 21)
         Me.txt_Nombre_mod.TabIndex = 1
         '
         'txt_Origen_mod
         '
         Me.txt_Origen_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Origen_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Origen", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Origen_mod.Location = New System.Drawing.Point(143, 34)
         Me.txt_Origen_mod.MaxLength = 255
         Me.txt_Origen_mod.Name = "txt_Origen_mod"
-        Me.txt_Origen_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Origen_mod.Size = New System.Drawing.Size(332, 21)
         Me.txt_Origen_mod.TabIndex = 2
         '
         'txt_Tamano_mod
         '
         Me.txt_Tamano_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Tamano_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Tamanio", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Tamano_mod.Location = New System.Drawing.Point(143, 64)
         Me.txt_Tamano_mod.MaxLength = 255
         Me.txt_Tamano_mod.Name = "txt_Tamano_mod"
-        Me.txt_Tamano_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Tamano_mod.Size = New System.Drawing.Size(332, 21)
         Me.txt_Tamano_mod.TabIndex = 3
         '
         'txt_Codigo_mod
         '
         Me.txt_Codigo_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Codigo_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Codigo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Codigo_mod.Location = New System.Drawing.Point(143, 94)
         Me.txt_Codigo_mod.MaxLength = 255
         Me.txt_Codigo_mod.Name = "txt_Codigo_mod"
-        Me.txt_Codigo_mod.Size = New System.Drawing.Size(235, 21)
+        Me.txt_Codigo_mod.Size = New System.Drawing.Size(332, 21)
         Me.txt_Codigo_mod.TabIndex = 4
         '
         'cb_Subcategoria_mod
         '
         Me.cb_Subcategoria_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Subcategoria_mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Subcategoria_mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ProductoBindingSource, "SubcategoriasSeleccionada", True))
+        Me.cb_Subcategoria_mod.DataSource = Me.SubcategoriasBindingSource
+        Me.cb_Subcategoria_mod.DisplayMember = "Value"
         Me.cb_Subcategoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Subcategoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria_mod.FormattingEnabled = True
-        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 219)
+        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 218)
         Me.cb_Subcategoria_mod.Name = "cb_Subcategoria_mod"
-        Me.cb_Subcategoria_mod.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Subcategoria_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Subcategoria_mod.TabIndex = 9
+        Me.cb_Subcategoria_mod.ValueMember = "Key"
         '
         'cb_Categoria_mod
         '
         Me.cb_Categoria_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_Categoria_mod.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cb_Categoria_mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ProductoBindingSource, "CategoriasSeleccionada", True))
+        Me.cb_Categoria_mod.DataSource = Me.CategoriasBindingSource
+        Me.cb_Categoria_mod.DisplayMember = "Value"
         Me.cb_Categoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Categoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria_mod.FormattingEnabled = True
-        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 189)
+        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 188)
         Me.cb_Categoria_mod.Name = "cb_Categoria_mod"
-        Me.cb_Categoria_mod.Size = New System.Drawing.Size(235, 23)
+        Me.cb_Categoria_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Categoria_mod.TabIndex = 8
+        Me.cb_Categoria_mod.ValueMember = "Key"
         '
         'TableLayoutPanel14
         '
         Me.TableLayoutPanel14.ColumnCount = 1
         Me.TableLayoutPanel14.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel13, 0, 0)
-        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel11, 0, 1)
+        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel12, 0, 0)
+        Me.TableLayoutPanel14.Controls.Add(Me.Gb_Precios_mod, 0, 1)
         Me.TableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel14.Location = New System.Drawing.Point(390, 3)
+        Me.TableLayoutPanel14.Location = New System.Drawing.Point(487, 3)
         Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
         Me.TableLayoutPanel14.RowCount = 2
-        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 215.0!))
         Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel14.Size = New System.Drawing.Size(575, 484)
-        Me.TableLayoutPanel14.TabIndex = 92
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 216.0!))
+        Me.TableLayoutPanel14.Size = New System.Drawing.Size(478, 484)
+        Me.TableLayoutPanel14.TabIndex = 15
         '
-        'TableLayoutPanel13
+        'TableLayoutPanel12
         '
-        Me.TableLayoutPanel13.ColumnCount = 2
-        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel13.Controls.Add(Me.Gb_Precios_mod, 0, 0)
-        Me.TableLayoutPanel13.Controls.Add(Me.TableLayoutPanel12, 1, 0)
-        Me.TableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel13.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel13.Name = "TableLayoutPanel13"
-        Me.TableLayoutPanel13.RowCount = 1
-        Me.TableLayoutPanel13.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel13.Size = New System.Drawing.Size(569, 209)
-        Me.TableLayoutPanel13.TabIndex = 91
+        Me.TableLayoutPanel12.ColumnCount = 2
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Controls.Add(Me.pb_CodigoBarra, 0, 0)
+        Me.TableLayoutPanel12.Controls.Add(Me.pb_foto_mod, 1, 0)
+        Me.TableLayoutPanel12.Controls.Add(Me.Ck_EliminarFoto, 1, 1)
+        Me.TableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
+        Me.TableLayoutPanel12.RowCount = 2
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
+        Me.TableLayoutPanel12.Size = New System.Drawing.Size(472, 262)
+        Me.TableLayoutPanel12.TabIndex = 15
+        '
+        'pb_CodigoBarra
+        '
+        Me.pb_CodigoBarra.BackColor = System.Drawing.Color.White
+        Me.pb_CodigoBarra.DataBindings.Add(New System.Windows.Forms.Binding("Image", Me.ProductoBindingSource, "CodigoBarrasImagen", True))
+        Me.pb_CodigoBarra.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_CodigoBarra.Location = New System.Drawing.Point(3, 3)
+        Me.pb_CodigoBarra.Name = "pb_CodigoBarra"
+        Me.pb_CodigoBarra.Size = New System.Drawing.Size(230, 231)
+        Me.pb_CodigoBarra.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_CodigoBarra.TabIndex = 81
+        Me.pb_CodigoBarra.TabStop = False
+        '
+        'pb_foto_mod
+        '
+        Me.pb_foto_mod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pb_foto_mod.DataBindings.Add(New System.Windows.Forms.Binding("Image", Me.ProductoBindingSource, "Foto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.pb_foto_mod.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_foto_mod.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
+        Me.pb_foto_mod.InitialImage = Nothing
+        Me.pb_foto_mod.Location = New System.Drawing.Point(239, 3)
+        Me.pb_foto_mod.Name = "pb_foto_mod"
+        Me.pb_foto_mod.Size = New System.Drawing.Size(230, 231)
+        Me.pb_foto_mod.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_foto_mod.TabIndex = 70
+        Me.pb_foto_mod.TabStop = False
+        '
+        'Ck_EliminarFoto
+        '
+        Me.Ck_EliminarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Ck_EliminarFoto.AutoSize = True
+        Me.Ck_EliminarFoto.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoBindingSource, "EliminarFoto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Ck_EliminarFoto.Location = New System.Drawing.Point(239, 240)
+        Me.Ck_EliminarFoto.Name = "Ck_EliminarFoto"
+        Me.Ck_EliminarFoto.Size = New System.Drawing.Size(230, 19)
+        Me.Ck_EliminarFoto.TabIndex = 15
+        Me.Ck_EliminarFoto.Text = "Eliminar Foto"
+        Me.Ck_EliminarFoto.UseVisualStyleBackColor = True
         '
         'Gb_Precios_mod
         '
         Me.Gb_Precios_mod.Controls.Add(Me.TableLayoutPanel10)
         Me.Gb_Precios_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Gb_Precios_mod.Location = New System.Drawing.Point(3, 3)
+        Me.Gb_Precios_mod.Location = New System.Drawing.Point(3, 271)
         Me.Gb_Precios_mod.Name = "Gb_Precios_mod"
-        Me.Gb_Precios_mod.Size = New System.Drawing.Size(278, 203)
-        Me.Gb_Precios_mod.TabIndex = 78
+        Me.Gb_Precios_mod.Size = New System.Drawing.Size(472, 210)
+        Me.Gb_Precios_mod.TabIndex = 16
         Me.Gb_Precios_mod.TabStop = False
         Me.Gb_Precios_mod.Text = "Listas de Precios"
         '
@@ -1554,42 +1745,48 @@ Partial Class frmProductos
         Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel10.Size = New System.Drawing.Size(272, 183)
-        Me.TableLayoutPanel10.TabIndex = 89
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(466, 190)
+        Me.TableLayoutPanel10.TabIndex = 16
         '
         'txt_Precio6_mod
         '
         Me.txt_Precio6_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Precio6_mod.Location = New System.Drawing.Point(143, 156)
+        Me.txt_Precio6_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Alternativo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_Precio6_mod.Location = New System.Drawing.Point(143, 159)
         Me.txt_Precio6_mod.Name = "txt_Precio6_mod"
-        Me.txt_Precio6_mod.Size = New System.Drawing.Size(126, 21)
-        Me.txt_Precio6_mod.TabIndex = 20
+        Me.txt_Precio6_mod.Size = New System.Drawing.Size(320, 21)
+        Me.txt_Precio6_mod.TabIndex = 21
+        Me.txt_Precio6_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label22
         '
         Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(3, 159)
+        Me.Label22.Location = New System.Drawing.Point(3, 162)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(134, 15)
         Me.Label22.TabIndex = 53
-        Me.Label22.Text = "Alternativa"
+        Me.Label22.Text = "Alternativa (*)"
         '
         'txt_Precio5_mod
         '
         Me.txt_Precio5_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio5_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "Mayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Precio5_mod.Location = New System.Drawing.Point(143, 124)
         Me.txt_Precio5_mod.Name = "txt_Precio5_mod"
-        Me.txt_Precio5_mod.Size = New System.Drawing.Size(126, 21)
-        Me.txt_Precio5_mod.TabIndex = 19
+        Me.txt_Precio5_mod.Size = New System.Drawing.Size(320, 21)
+        Me.txt_Precio5_mod.TabIndex = 20
+        Me.txt_Precio5_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txt_Precio4_mod
         '
         Me.txt_Precio4_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio4_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "PorcentajeDescuentoCapital", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "P"))
         Me.txt_Precio4_mod.Location = New System.Drawing.Point(143, 94)
         Me.txt_Precio4_mod.Name = "txt_Precio4_mod"
-        Me.txt_Precio4_mod.Size = New System.Drawing.Size(126, 21)
-        Me.txt_Precio4_mod.TabIndex = 18
+        Me.txt_Precio4_mod.Size = New System.Drawing.Size(320, 21)
+        Me.txt_Precio4_mod.TabIndex = 19
+        Me.txt_Precio4_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label19
         '
@@ -1599,7 +1796,7 @@ Partial Class frmProductos
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(134, 15)
         Me.Label19.TabIndex = 47
-        Me.Label19.Text = "Efectivo Tigre"
+        Me.Label19.Text = "Lista Tigre (*)"
         '
         'Label20
         '
@@ -1609,23 +1806,27 @@ Partial Class frmProductos
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(134, 15)
         Me.Label20.TabIndex = 48
-        Me.Label20.Text = "Tarjeta Tigre"
+        Me.Label20.Text = "% Desc. Tigre (*)"
         '
         'txt_Precio3_mod
         '
         Me.txt_Precio3_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio3_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "ListaCapital", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Precio3_mod.Location = New System.Drawing.Point(143, 64)
         Me.txt_Precio3_mod.Name = "txt_Precio3_mod"
-        Me.txt_Precio3_mod.Size = New System.Drawing.Size(126, 21)
-        Me.txt_Precio3_mod.TabIndex = 17
+        Me.txt_Precio3_mod.Size = New System.Drawing.Size(320, 21)
+        Me.txt_Precio3_mod.TabIndex = 18
+        Me.txt_Precio3_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txt_Precio2_mod
         '
         Me.txt_Precio2_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio2_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "PorcentajeDescuentoTigre", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "P"))
         Me.txt_Precio2_mod.Location = New System.Drawing.Point(143, 34)
         Me.txt_Precio2_mod.Name = "txt_Precio2_mod"
-        Me.txt_Precio2_mod.Size = New System.Drawing.Size(126, 21)
-        Me.txt_Precio2_mod.TabIndex = 16
+        Me.txt_Precio2_mod.Size = New System.Drawing.Size(320, 21)
+        Me.txt_Precio2_mod.TabIndex = 17
+        Me.txt_Precio2_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label17
         '
@@ -1635,7 +1836,7 @@ Partial Class frmProductos
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(134, 15)
         Me.Label17.TabIndex = 50
-        Me.Label17.Text = "Mayorista"
+        Me.Label17.Text = "Mayorista (*)"
         '
         'Label21
         '
@@ -1645,15 +1846,17 @@ Partial Class frmProductos
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(134, 15)
         Me.Label21.TabIndex = 49
-        Me.Label21.Text = "Efectivo Capital"
+        Me.Label21.Text = "Lista Capital (*)"
         '
         'txt_Precio1_mod
         '
         Me.txt_Precio1_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Precio1_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoBindingSource, "ListaTigre", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Precio1_mod.Location = New System.Drawing.Point(143, 4)
         Me.txt_Precio1_mod.Name = "txt_Precio1_mod"
-        Me.txt_Precio1_mod.Size = New System.Drawing.Size(126, 21)
-        Me.txt_Precio1_mod.TabIndex = 15
+        Me.txt_Precio1_mod.Size = New System.Drawing.Size(320, 21)
+        Me.txt_Precio1_mod.TabIndex = 16
+        Me.txt_Precio1_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label18
         '
@@ -1663,140 +1866,7 @@ Partial Class frmProductos
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(134, 15)
         Me.Label18.TabIndex = 51
-        Me.Label18.Text = "Tarjeta Capital"
-        '
-        'TableLayoutPanel12
-        '
-        Me.TableLayoutPanel12.ColumnCount = 2
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.Controls.Add(Me.pb_CodigoBarra, 0, 0)
-        Me.TableLayoutPanel12.Controls.Add(Me.pb_foto_mod, 1, 0)
-        Me.TableLayoutPanel12.Controls.Add(Me.Ck_EliminarFoto, 1, 1)
-        Me.TableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel12.Location = New System.Drawing.Point(287, 3)
-        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
-        Me.TableLayoutPanel12.RowCount = 2
-        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel12.Size = New System.Drawing.Size(279, 203)
-        Me.TableLayoutPanel12.TabIndex = 90
-        '
-        'pb_CodigoBarra
-        '
-        Me.pb_CodigoBarra.BackColor = System.Drawing.Color.White
-        Me.pb_CodigoBarra.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pb_CodigoBarra.Location = New System.Drawing.Point(3, 3)
-        Me.pb_CodigoBarra.Name = "pb_CodigoBarra"
-        Me.pb_CodigoBarra.Size = New System.Drawing.Size(133, 172)
-        Me.pb_CodigoBarra.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pb_CodigoBarra.TabIndex = 81
-        Me.pb_CodigoBarra.TabStop = False
-        '
-        'pb_foto_mod
-        '
-        Me.pb_foto_mod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pb_foto_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pb_foto_mod.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
-        Me.pb_foto_mod.InitialImage = Nothing
-        Me.pb_foto_mod.Location = New System.Drawing.Point(142, 3)
-        Me.pb_foto_mod.Name = "pb_foto_mod"
-        Me.pb_foto_mod.Size = New System.Drawing.Size(134, 172)
-        Me.pb_foto_mod.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pb_foto_mod.TabIndex = 70
-        Me.pb_foto_mod.TabStop = False
-        '
-        'Ck_EliminarFoto
-        '
-        Me.Ck_EliminarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Ck_EliminarFoto.AutoSize = True
-        Me.Ck_EliminarFoto.Location = New System.Drawing.Point(142, 181)
-        Me.Ck_EliminarFoto.Name = "Ck_EliminarFoto"
-        Me.Ck_EliminarFoto.Size = New System.Drawing.Size(134, 19)
-        Me.Ck_EliminarFoto.TabIndex = 83
-        Me.Ck_EliminarFoto.Text = "Eliminar Foto"
-        Me.Ck_EliminarFoto.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel11
-        '
-        Me.TableLayoutPanel11.ColumnCount = 3
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel11.Controls.Add(Me.Label1, 0, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.Label3, 1, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.lbl_Colores_mod, 2, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.chk_Materiales_mod, 0, 1)
-        Me.TableLayoutPanel11.Controls.Add(Me.chk_Aromas_mod, 1, 1)
-        Me.TableLayoutPanel11.Controls.Add(Me.chk_Colores_mod, 2, 1)
-        Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel11.Location = New System.Drawing.Point(3, 218)
-        Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
-        Me.TableLayoutPanel11.RowCount = 2
-        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel11.Size = New System.Drawing.Size(569, 263)
-        Me.TableLayoutPanel11.TabIndex = 89
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 7)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(183, 15)
-        Me.Label1.TabIndex = 69
-        Me.Label1.Text = "Materiales Disponibles"
-        '
-        'Label3
-        '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(192, 7)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(183, 15)
-        Me.Label3.TabIndex = 68
-        Me.Label3.Text = "Aromas Disponibles"
-        '
-        'lbl_Colores_mod
-        '
-        Me.lbl_Colores_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Colores_mod.AutoSize = True
-        Me.lbl_Colores_mod.Location = New System.Drawing.Point(381, 7)
-        Me.lbl_Colores_mod.Name = "lbl_Colores_mod"
-        Me.lbl_Colores_mod.Size = New System.Drawing.Size(185, 15)
-        Me.lbl_Colores_mod.TabIndex = 80
-        Me.lbl_Colores_mod.Text = "Colores Disponibles"
-        '
-        'chk_Materiales_mod
-        '
-        Me.chk_Materiales_mod.CheckOnClick = True
-        Me.chk_Materiales_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.chk_Materiales_mod.FormattingEnabled = True
-        Me.chk_Materiales_mod.Location = New System.Drawing.Point(3, 33)
-        Me.chk_Materiales_mod.Name = "chk_Materiales_mod"
-        Me.chk_Materiales_mod.Size = New System.Drawing.Size(183, 227)
-        Me.chk_Materiales_mod.TabIndex = 21
-        '
-        'chk_Aromas_mod
-        '
-        Me.chk_Aromas_mod.CheckOnClick = True
-        Me.chk_Aromas_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.chk_Aromas_mod.FormattingEnabled = True
-        Me.chk_Aromas_mod.Location = New System.Drawing.Point(192, 33)
-        Me.chk_Aromas_mod.Name = "chk_Aromas_mod"
-        Me.chk_Aromas_mod.Size = New System.Drawing.Size(183, 227)
-        Me.chk_Aromas_mod.TabIndex = 22
-        '
-        'chk_Colores_mod
-        '
-        Me.chk_Colores_mod.CheckOnClick = True
-        Me.chk_Colores_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.chk_Colores_mod.FormattingEnabled = True
-        Me.chk_Colores_mod.Location = New System.Drawing.Point(381, 33)
-        Me.chk_Colores_mod.Name = "chk_Colores_mod"
-        Me.chk_Colores_mod.Size = New System.Drawing.Size(185, 227)
-        Me.chk_Colores_mod.TabIndex = 23
+        Me.Label18.Text = "% Desc. Capital (*)"
         '
         'Btn_Cancelar
         '
@@ -1808,7 +1878,7 @@ Partial Class frmProductos
         Me.Btn_Cancelar.Location = New System.Drawing.Point(662, 516)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Cancelar.TabIndex = 87
+        Me.Btn_Cancelar.TabIndex = 24
         Me.Btn_Cancelar.Text = "Cancelar"
         Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de productos")
@@ -1835,7 +1905,7 @@ Partial Class frmProductos
         Me.Btn_Eliminar.Location = New System.Drawing.Point(768, 517)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Eliminar.TabIndex = 24
+        Me.Btn_Eliminar.TabIndex = 23
         Me.Btn_Eliminar.Text = "Eliminar"
         Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.Btn_Eliminar, "Elimina el producto del sistema.")
@@ -1852,21 +1922,75 @@ Partial Class frmProductos
         Me.btn_Modificar.Location = New System.Drawing.Point(874, 516)
         Me.btn_Modificar.Name = "btn_Modificar"
         Me.btn_Modificar.Size = New System.Drawing.Size(100, 40)
-        Me.btn_Modificar.TabIndex = 25
+        Me.btn_Modificar.TabIndex = 22
         Me.btn_Modificar.Text = "Modificar"
         Me.btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.btn_Modificar, "Modifica el producto en el sistema.")
         Me.btn_Modificar.UseVisualStyleBackColor = False
         '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        '
+        'OrigenDataGridViewTextBoxColumn
+        '
+        Me.OrigenDataGridViewTextBoxColumn.Name = "OrigenDataGridViewTextBoxColumn"
+        '
+        'TamanioDataGridViewTextBoxColumn
+        '
+        Me.TamanioDataGridViewTextBoxColumn.Name = "TamanioDataGridViewTextBoxColumn"
+        '
+        'CodigoDataGridViewTextBoxColumn
+        '
+        Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
+        '
+        'CostoDataGridViewTextBoxColumn
+        '
+        Me.CostoDataGridViewTextBoxColumn.Name = "CostoDataGridViewTextBoxColumn"
+        '
+        'FotoRutaDataGridViewTextBoxColumn
+        '
+        Me.FotoRutaDataGridViewTextBoxColumn.Name = "FotoRutaDataGridViewTextBoxColumn"
+        '
+        'CategoriasSeleccionadaDataGridViewTextBoxColumn
+        '
+        Me.CategoriasSeleccionadaDataGridViewTextBoxColumn.Name = "CategoriasSeleccionadaDataGridViewTextBoxColumn"
+        '
+        'SubcategoriasSeleccionadaDataGridViewTextBoxColumn
+        '
+        Me.SubcategoriasSeleccionadaDataGridViewTextBoxColumn.Name = "SubcategoriasSeleccionadaDataGridViewTextBoxColumn"
+        '
+        'ProveedoresSeleccionadaDataGridViewTextBoxColumn
+        '
+        Me.ProveedoresSeleccionadaDataGridViewTextBoxColumn.Name = "ProveedoresSeleccionadaDataGridViewTextBoxColumn"
+        '
+        'ListaTigreDataGridViewTextBoxColumn
+        '
+        Me.ListaTigreDataGridViewTextBoxColumn.Name = "ListaTigreDataGridViewTextBoxColumn"
+        '
+        'PorcentajeDescuentoTigreDataGridViewTextBoxColumn
+        '
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn.Name = "PorcentajeDescuentoTigreDataGridViewTextBoxColumn"
+        '
+        'ListaCapitalDataGridViewTextBoxColumn
+        '
+        Me.ListaCapitalDataGridViewTextBoxColumn.Name = "ListaCapitalDataGridViewTextBoxColumn"
+        '
+        'PorcentajeDescuentoCapitalDataGridViewTextBoxColumn
+        '
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn.Name = "PorcentajeDescuentoCapitalDataGridViewTextBoxColumn"
+        '
+        'MayoristaDataGridViewTextBoxColumn
+        '
+        Me.MayoristaDataGridViewTextBoxColumn.Name = "MayoristaDataGridViewTextBoxColumn"
+        '
+        'AlternativoDataGridViewTextBoxColumn
+        '
+        Me.AlternativoDataGridViewTextBoxColumn.Name = "AlternativoDataGridViewTextBoxColumn"
+        '
         'Cargar
         '
         Me.Cargar.FileName = "Cargar"
-        '
-        'ErrorProductos
-        '
-        Me.ErrorProductos.BlinkRate = 200
-        Me.ErrorProductos.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink
-        Me.ErrorProductos.ContainerControl = Me
         '
         'ToolProd
         '
@@ -1877,141 +2001,6 @@ Partial Class frmProductos
         'OpenFileDialog
         '
         Me.OpenFileDialog.FileName = "OpenFileDialog"
-        '
-        'id_Producto
-        '
-        Me.id_Producto.DataPropertyName = "id_Producto"
-        Me.id_Producto.HeaderText = "ID"
-        Me.id_Producto.MaxInputLength = 10
-        Me.id_Producto.Name = "id_Producto"
-        Me.id_Producto.ReadOnly = True
-        Me.id_Producto.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Nombre
-        '
-        Me.Nombre.DataPropertyName = "Nombre"
-        Me.Nombre.HeaderText = "Nombre"
-        Me.Nombre.MinimumWidth = 180
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'Codigo
-        '
-        Me.Codigo.DataPropertyName = "Codigo"
-        Me.Codigo.HeaderText = "Codigo"
-        Me.Codigo.MinimumWidth = 30
-        Me.Codigo.Name = "Codigo"
-        Me.Codigo.ReadOnly = True
-        Me.Codigo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Categoria
-        '
-        Me.Categoria.DataPropertyName = "Cat"
-        Me.Categoria.HeaderText = "Categoria"
-        Me.Categoria.Name = "Categoria"
-        Me.Categoria.ReadOnly = True
-        '
-        'Subcategoria
-        '
-        Me.Subcategoria.DataPropertyName = "Subcat"
-        Me.Subcategoria.HeaderText = "Subcat."
-        Me.Subcategoria.MaxInputLength = 150
-        Me.Subcategoria.Name = "Subcategoria"
-        Me.Subcategoria.ReadOnly = True
-        Me.Subcategoria.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Proveedor
-        '
-        Me.Proveedor.DataPropertyName = "Proveedor"
-        Me.Proveedor.HeaderText = "Proveedor"
-        Me.Proveedor.Name = "Proveedor"
-        Me.Proveedor.ReadOnly = True
-        '
-        'Habilitado
-        '
-        Me.Habilitado.DataPropertyName = "Habilitado"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Habilitado.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Habilitado.HeaderText = "Habilitado"
-        Me.Habilitado.MaxInputLength = 10
-        Me.Habilitado.MinimumWidth = 10
-        Me.Habilitado.Name = "Habilitado"
-        Me.Habilitado.ReadOnly = True
-        Me.Habilitado.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'precio1
-        '
-        Me.precio1.DataPropertyName = "Precio1"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.precio1.DefaultCellStyle = DataGridViewCellStyle3
-        Me.precio1.HeaderText = "Ef. Tigre"
-        Me.precio1.Name = "precio1"
-        Me.precio1.ReadOnly = True
-        '
-        'precio2
-        '
-        Me.precio2.DataPropertyName = "Precio2"
-        DataGridViewCellStyle4.Format = "C2"
-        Me.precio2.DefaultCellStyle = DataGridViewCellStyle4
-        Me.precio2.HeaderText = "Tj. Tigre"
-        Me.precio2.Name = "precio2"
-        Me.precio2.ReadOnly = True
-        '
-        'precio3
-        '
-        Me.precio3.DataPropertyName = "Precio3"
-        DataGridViewCellStyle5.Format = "C2"
-        Me.precio3.DefaultCellStyle = DataGridViewCellStyle5
-        Me.precio3.HeaderText = "Ef. Capital"
-        Me.precio3.Name = "precio3"
-        Me.precio3.ReadOnly = True
-        '
-        'precio4
-        '
-        Me.precio4.DataPropertyName = "Precio4"
-        DataGridViewCellStyle6.Format = "C2"
-        Me.precio4.DefaultCellStyle = DataGridViewCellStyle6
-        Me.precio4.HeaderText = "Tj. Capital"
-        Me.precio4.Name = "precio4"
-        Me.precio4.ReadOnly = True
-        '
-        'precio5
-        '
-        Me.precio5.DataPropertyName = "Precio5"
-        DataGridViewCellStyle7.Format = "C2"
-        Me.precio5.DefaultCellStyle = DataGridViewCellStyle7
-        Me.precio5.HeaderText = "Mayorista"
-        Me.precio5.Name = "precio5"
-        Me.precio5.ReadOnly = True
-        '
-        'precio6
-        '
-        Me.precio6.DataPropertyName = "Precio6"
-        DataGridViewCellStyle8.Format = "C2"
-        Me.precio6.DefaultCellStyle = DataGridViewCellStyle8
-        Me.precio6.HeaderText = "Alternativo"
-        Me.precio6.Name = "precio6"
-        Me.precio6.ReadOnly = True
-        '
-        'Modificar
-        '
-        Me.Modificar.HeaderText = "Modificar"
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.MinimumWidth = 10
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Modificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'Eliminar
-        '
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.MinimumWidth = 10
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         '
         'frmProductos
         '
@@ -2036,14 +2025,15 @@ Partial Class frmProductos
         Me.TableLayoutPanel1.PerformLayout()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        CType(Me.ProductoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ProveedoresBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SubcategoriasBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CategoriasBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel6.ResumeLayout(False)
-        Me.TableLayoutPanel5.ResumeLayout(False)
+        CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Precios.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
-        CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel3.ResumeLayout(False)
-        Me.TableLayoutPanel3.PerformLayout()
         Me.TbMod.ResumeLayout(False)
         Me.GB_Modificacion.ResumeLayout(False)
         Me.GB_Modificacion.PerformLayout()
@@ -2053,17 +2043,14 @@ Partial Class frmProductos
         Me.TableLayoutPanel9.ResumeLayout(False)
         Me.TableLayoutPanel9.PerformLayout()
         Me.TableLayoutPanel14.ResumeLayout(False)
-        Me.TableLayoutPanel13.ResumeLayout(False)
-        Me.Gb_Precios_mod.ResumeLayout(False)
-        Me.TableLayoutPanel10.ResumeLayout(False)
-        Me.TableLayoutPanel10.PerformLayout()
         Me.TableLayoutPanel12.ResumeLayout(False)
         Me.TableLayoutPanel12.PerformLayout()
         CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pb_foto_mod, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel11.ResumeLayout(False)
-        Me.TableLayoutPanel11.PerformLayout()
-        CType(Me.ErrorProductos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Gb_Precios_mod.ResumeLayout(False)
+        Me.TableLayoutPanel10.ResumeLayout(False)
+        Me.TableLayoutPanel10.PerformLayout()
+        CType(Me.ProductosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2103,16 +2090,7 @@ Partial Class frmProductos
     Friend WithEvents Cargar As System.Windows.Forms.OpenFileDialog
     Friend WithEvents cb_Proveedores As System.Windows.Forms.ComboBox
     Friend WithEvents lbl_Proveedor As System.Windows.Forms.Label
-    Friend WithEvents ErrorProductos As System.Windows.Forms.ErrorProvider
-    Friend WithEvents lbl_Materiales As System.Windows.Forms.Label
-    Friend WithEvents lbl_Aroma As System.Windows.Forms.Label
-    Friend WithEvents chk_Materiales As System.Windows.Forms.CheckedListBox
-    Friend WithEvents chk_Aromas As System.Windows.Forms.CheckedListBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btn_Modificar As System.Windows.Forms.Button
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents chk_Materiales_mod As System.Windows.Forms.CheckedListBox
-    Friend WithEvents chk_Aromas_mod As System.Windows.Forms.CheckedListBox
     Friend WithEvents cb_Proveedor_mod As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents btn_Open_mod As System.Windows.Forms.Button
@@ -2166,10 +2144,6 @@ Partial Class frmProductos
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents chk_Habilitado_mod As System.Windows.Forms.CheckBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents lbl_Colores As System.Windows.Forms.Label
-    Friend WithEvents chk_Colores As System.Windows.Forms.CheckedListBox
-    Friend WithEvents lbl_Colores_mod As System.Windows.Forms.Label
-    Friend WithEvents chk_Colores_mod As System.Windows.Forms.CheckedListBox
     Friend WithEvents pb_CodigoBarra As System.Windows.Forms.PictureBox
     Friend WithEvents Btn_Eliminar As System.Windows.Forms.Button
     Friend WithEvents Ck_EliminarFoto As System.Windows.Forms.CheckBox
@@ -2194,8 +2168,6 @@ Partial Class frmProductos
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel8 As TableLayoutPanel
@@ -2203,22 +2175,40 @@ Partial Class frmProductos
     Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel15 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel14 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel13 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel11 As TableLayoutPanel
-    Friend WithEvents id_Producto As DataGridViewTextBoxColumn
-    Friend WithEvents Nombre As DataGridViewTextBoxColumn
+    Friend WithEvents ProductoBindingSource As BindingSource
+    Friend WithEvents ProveedoresBindingSource As BindingSource
+    Friend WithEvents SubcategoriasBindingSource As BindingSource
+    Friend WithEvents CategoriasBindingSource As BindingSource
+    Friend WithEvents ProductosBindingSource As BindingSource
+    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents OrigenDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TamanioDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CostoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FotoRutaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CategoriasSeleccionadaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents SubcategoriasSeleccionadaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProveedoresSeleccionadaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ListaTigreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents PorcentajeDescuentoTigreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ListaCapitalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents PorcentajeDescuentoCapitalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents MayoristaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents AlternativoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents Nombre As DataGridViewTextBoxColumn
+    Friend WithEvents id_Producto As DataGridViewTextBoxColumn
     Friend WithEvents Categoria As DataGridViewTextBoxColumn
     Friend WithEvents Subcategoria As DataGridViewTextBoxColumn
     Friend WithEvents Proveedor As DataGridViewTextBoxColumn
-    Friend WithEvents Habilitado As DataGridViewTextBoxColumn
     Friend WithEvents precio1 As DataGridViewTextBoxColumn
     Friend WithEvents precio2 As DataGridViewTextBoxColumn
     Friend WithEvents precio3 As DataGridViewTextBoxColumn
     Friend WithEvents precio4 As DataGridViewTextBoxColumn
     Friend WithEvents precio5 As DataGridViewTextBoxColumn
     Friend WithEvents precio6 As DataGridViewTextBoxColumn
+    Friend WithEvents Habilitado As DataGridViewTextBoxColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
     Friend WithEvents Eliminar As DataGridViewImageColumn
 End Class

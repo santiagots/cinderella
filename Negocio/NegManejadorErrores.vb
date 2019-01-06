@@ -13,19 +13,6 @@ Public Class NegManejadorErrores
         End Select
     End Function
 
-    Function SoloNumerosConDecimales(ByVal Keyascii As Integer) As Integer
-        If InStr("1234567890,", Chr(Keyascii)) = 0 Then
-            SoloNumerosConDecimales = 0
-        Else
-            SoloNumerosConDecimales = Keyascii
-        End If
-        Select Case Keyascii
-            Case 8
-                SoloNumerosConDecimales = Keyascii
-
-        End Select
-    End Function
-
     Function SoloNumerosConEspacio(ByVal Keyascii As Integer) As Integer
         If InStr("1234567890 ", Chr(Keyascii)) = 0 Then
             SoloNumerosConEspacio = 0

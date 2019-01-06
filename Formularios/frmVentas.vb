@@ -180,7 +180,7 @@ Public Class frmVentas
         RemoveHandler e.Control.KeyPress, New KeyPressEventHandler(AddressOf cantidad_KeyPress)
         RemoveHandler e.Control.LostFocus, New EventHandler(AddressOf cantidad_LostFocus)
 
-        If DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name = "ProductoPrecio" Then
+        If DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name = "ProductoPrecio" OrElse DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name = "ProductoMonto" Then
             'agrego los eventos al control TextBox 
             Dim textBox As TextBox = TryCast(e.Control, TextBox)
             If textBox IsNot Nothing Then
@@ -202,7 +202,7 @@ Public Class frmVentas
             'agrego los eventos al control TextBox 
             Dim textBox As TextBox = TryCast(e.Control, TextBox)
             If textBox IsNot Nothing Then
-                AddHandler textBox.KeyPress, New KeyPressEventHandler(AddressOf cantidadConDecimales_KeyPress)
+                AddHandler textBox.KeyPress, New KeyPressEventHandler(AddressOf moneda_KeyPress)
                 AddHandler textBox.LostFocus, New EventHandler(AddressOf cantidad_LostFocus)
             End If
         End If
@@ -263,7 +263,6 @@ Public Class frmVentas
         dgPagosTotales.DefaultCellStyle.SelectionForeColor = dgPagosTotales.DefaultCellStyle.ForeColor
 
         RemoveHandler Cb_TipoCliente.SelectedIndexChanged, AddressOf Cb_TipoCliente_SelectedIndexChanged
-        'RemoveHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
         RemoveHandler Cb_Banco.SelectedIndexChanged, AddressOf Cb_Banco_SelectedIndexChanged
         RemoveHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
         RemoveHandler Cb_NroCuota.SelectedIndexChanged, AddressOf Cb_NroCuota_SelectedIndexChanged
@@ -303,7 +302,6 @@ Public Class frmVentas
         'End If
 
         AddHandler Cb_TipoCliente.SelectedIndexChanged, AddressOf Cb_TipoCliente_SelectedIndexChanged
-        'AddHandler Cb_ListaPrecio.SelectedIndexChanged, AddressOf Cb_ListaPrecio_SelectedIndexChanged
         AddHandler Cb_Banco.SelectedIndexChanged, AddressOf Cb_Banco_SelectedIndexChanged
         AddHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
         AddHandler Cb_NroCuota.SelectedIndexChanged, AddressOf Cb_NroCuota_SelectedIndexChanged
@@ -328,15 +326,18 @@ Public Class frmVentas
 
     Private Function ObtenerFormasPagos(tipoCliente As TipoCliente) As List(Of KeyValuePair(Of FormaPago, String))
         Dim dsTiposPagos As DataSet = NegTiposPagos.ListadoTiposPagos()
+        Dim dv As DataView = dsTiposPagos.Tables(0).DefaultView
+        dv.Sort = "id_TipoPago"
 
-        'Elimino la forma de pago Cheque
         If tipoCliente = TipoCliente.Minorista Then
-            Dim dv As DataView = dsTiposPagos.Tables(0).DefaultView
-            dv.RowFilter = "id_TipoPago <> 4"
-            dsTiposPagos = New DataSet()
-            Dim dt As DataTable = dv.ToTable()
-            dsTiposPagos.Tables.Add(dt)
+            dv.RowFilter = "id_TipoPago in (1, 2, 3)"
+        Else
+            dv.RowFilter = "id_TipoPago in (1, 4, 5)"
         End If
+
+        dsTiposPagos = New DataSet()
+        Dim dt As DataTable = dv.ToTable()
+        dsTiposPagos.Tables.Add(dt)
 
         Dim opciones As List(Of KeyValuePair(Of FormaPago, String)) = New List(Of KeyValuePair(Of FormaPago, String))()
 
@@ -647,7 +648,7 @@ Public Class frmVentas
             DG_ProductosTotales.Columns("ProductoIVATotal").Visible = True
             Gb_Cliente.Enabled = True
 
-            For Each producto As Producto In ventaVistaModelo.Productos
+            For Each producto As VistaModelo.frmVentas.Producto In ventaVistaModelo.Productos
                 producto.PorcentajeBonificacion = ventaVistaModelo.ProcentajeBonificacionClienteMayorista / 100
             Next
         Else
@@ -695,7 +696,7 @@ Public Class frmVentas
             PorcentajeFacturacionIngresado = If(frmBuscarClienteMayorista.clienteMayorista.Lista = 0, 100, frmBuscarClienteMayorista.clienteMayorista.Lista)
             txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
 
-            For Each producto As Producto In ventaVistaModelo.Productos
+            For Each producto As VistaModelo.frmVentas.Producto In ventaVistaModelo.Productos
                 producto.PorcentajeBonificacion = ventaVistaModelo.ProcentajeBonificacionClienteMayorista / 100
             Next
 
@@ -1848,7 +1849,9 @@ Public Class frmVentas
     End Sub
 
     Private Sub moneda_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
-        If e.KeyChar = ChrW(Keys.Enter) Then
+        If e.KeyChar.ToString() = "." Then
+            e.KeyChar = CChar(",")
+        ElseIf e.KeyChar = ChrW(Keys.Enter) Then
             e.Handled = True
             Btn_Finalizar.Focus()
         End If
@@ -1868,19 +1871,6 @@ Public Class frmVentas
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
-        If KeyAscii = 0 Then
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub cantidadConDecimales_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
-        If e.KeyChar = ChrW(Keys.Enter) Then
-            e.Handled = True
-            Btn_Finalizar.Focus()
-        End If
-
-        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
-        KeyAscii = CShort(NegErrores.SoloNumerosConDecimales(KeyAscii))
         If KeyAscii = 0 Then
             e.Handled = True
         End If
@@ -2009,7 +1999,7 @@ Public Class frmVentas
             txt_PorcentajeBonificacion.Text = "0"
         End If
 
-        For Each producto As Producto In ventaVistaModelo.Productos
+        For Each producto As VistaModelo.frmVentas.Producto In ventaVistaModelo.Productos
             producto.PorcentajeBonificacion = ventaVistaModelo.ProcentajeBonificacionClienteMayorista / 100
         Next
 
@@ -2081,14 +2071,6 @@ Public Class frmVentas
         ventaVistaModelo.AgregarPago()
         ventaVistaModelo.ActualizarTotalPagos()
 
-        'Cb_FormaPago.SelectedValue = 0
-        'ventaVistaModelo.FormaPagoSeleccionado = 0
-        'Cb_Banco.SelectedValue = 0
-        'ventaVistaModelo.ListaBancoSeleccionado = 0
-        'Cb_NroCuota.SelectedValue = 0
-        'ventaVistaModelo.ListaCuotaSeleccionado = 0
-        'ventaVistaModelo.CFTCuota = 0
-
         HabilitarPagos()
     End Sub
 
@@ -2096,7 +2078,14 @@ Public Class frmVentas
         RemoveHandler Cb_FormaPago.SelectedIndexChanged, AddressOf Cb_FormaPago_SelectedIndexChanged
 
         ventaVistaModelo.FormaPagoSeleccionado = Cb_FormaPago.SelectedValue
-        'PosicionarListaPreciosSegunFormaDePago()
+
+        If (ventaVistaModelo.TipoClienteSeleccionado = TipoCliente.Mayorista AndAlso ventaVistaModelo.FormaPagoSeleccionado = FormaPago.Efectivo) Then
+            txt_PorcentajeFacturacion.Enabled = True
+        Else
+            txt_PorcentajeFacturacion.Enabled = False
+            ventaVistaModelo.ProcentajeFacturacionClienteMayorista = 100
+            'ventaVistaModelo.ActualizarProductos()
+        End If
 
         Cb_Banco.Enabled = ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaCredito OrElse ventaVistaModelo.FormaPagoSeleccionado = FormaPago.TarjetaDebito
         Cb_Banco.SelectedValue = 0

@@ -368,9 +368,6 @@ Public Class NegProductos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim id_Producto As Integer
-        Dim id_Material As Integer
-        Dim id_Aroma As Integer
-        Dim id_Color As Integer
         Dim nombre_nuevo As String = ""
         If eproductos.Foto <> "" Then
             Dim ext As String = IO.Path.GetExtension(IO.Path.GetFileName(eproductos.Foto))
@@ -427,66 +424,6 @@ Public Class NegProductos
             cmd12.ExecuteNonQuery()
             'desconecto la bdd
             clsDatos.DesconectarRemoto()
-
-            'inserto los materiales para el producto
-            For Each iten In eproductos.Materiales.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Material = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosMateriales_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@id_Material", id_Material)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los aromas para el producto
-            For Each iten In eproductos.Aromas.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Aroma = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosAromas_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@id_Aroma", id_Aroma)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los colores para el producto
-            For Each iten In eproductos.Colores.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Color = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosColores_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@id_Color", id_Color)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
 
             'inserto los precios
             For i = 1 To 6
@@ -719,9 +656,6 @@ Public Class NegProductos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim id_Material As Integer
-        Dim id_Aroma As Integer
-        Dim id_Color As Integer
         Dim nombre_nuevo As String = ""
 
         'Traigo el producto para utilizar su codigo asi se obtiene la foto a eliminar.
@@ -782,55 +716,6 @@ Public Class NegProductos
             'desconecto la bdd
             clsDatos.DesconectarRemoto()
 
-
-            'ELIMINO TODOS LOS MATERIALES DEL PRODUCTO
-            'conecto la bdd
-            Dim cmd3 As New SqlCommand
-            cmd3.Connection = clsDatos.ConectarRemoto()
-            cmd3.CommandType = CommandType.StoredProcedure
-            cmd3.CommandText = "sp_ProductosMateriales_Eliminar"
-            With cmd3.Parameters
-                .AddWithValue("@id_Producto", eproductos.id_Producto)
-            End With
-            Dim respuesta3 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta3.Direction = ParameterDirection.Output
-            cmd3.Parameters.Add(respuesta3)
-            cmd3.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
-
-            'ELIMINO TODOS LOS AROMAS DEL PRODUCTO
-            'conecto la bdd
-            Dim cmd4 As New SqlCommand
-            cmd4.Connection = clsDatos.ConectarRemoto()
-            cmd4.CommandType = CommandType.StoredProcedure
-            cmd4.CommandText = "sp_ProductosAromas_Eliminar"
-            With cmd4.Parameters
-                .AddWithValue("@id_Producto", eproductos.id_Producto)
-            End With
-            Dim respuesta4 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta4.Direction = ParameterDirection.Output
-            cmd4.Parameters.Add(respuesta4)
-            cmd4.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
-
-            'ELIMINO TODOS LOS COLORES DEL PRODUCTO
-            'conecto la bdd
-            Dim cmd5 As New SqlCommand
-            cmd5.Connection = clsDatos.ConectarRemoto()
-            cmd5.CommandType = CommandType.StoredProcedure
-            cmd5.CommandText = "sp_ProductosColores_Eliminar"
-            With cmd5.Parameters
-                .AddWithValue("@id_Producto", eproductos.id_Producto)
-            End With
-            Dim respuesta5 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta5.Direction = ParameterDirection.Output
-            cmd5.Parameters.Add(respuesta5)
-            cmd5.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
-
             'ELIMINO TODOS LOS PRECIOS DEL PRODUCTO
             'conecto la bdd
             Dim cmd6 As New SqlCommand
@@ -846,66 +731,6 @@ Public Class NegProductos
             cmd6.ExecuteNonQuery()
             'desconecto la bdd
             clsDatos.DesconectarRemoto()
-
-            'inserto los materiales para el producto
-            For Each iten In eproductos.Materiales.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Material = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosMateriales_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", eproductos.id_Producto)
-                    .AddWithValue("@id_Material", id_Material)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los aromas para el producto
-            For Each iten In eproductos.Aromas.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Aroma = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosAromas_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", eproductos.id_Producto)
-                    .AddWithValue("@id_Aroma", id_Aroma)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los colores para el producto
-            For Each iten In eproductos.Colores.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Color = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosColores_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", eproductos.id_Producto)
-                    .AddWithValue("@id_Color", id_Color)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
 
             'inserto los precios
             For i = 1 To 6
@@ -1576,8 +1401,8 @@ Public Class NegProductos
             datos.Columns(4).ColumnName <> "SubCategoria" Or datos.Columns(5).ColumnName <> "Proveedor" Or
             datos.Columns(6).ColumnName <> "Origen" Or datos.Columns(7).ColumnName <> "Tamaño" Or
             datos.Columns(8).ColumnName <> "Costo" Or datos.Columns(9).ColumnName <> "CodigoBarra" Or
-            datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Tarjeta_Tigre" Or
-            datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Tarjeta_Capital" Or
+            datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Desc_Tigre" Or
+            datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Desc_Capital" Or
             datos.Columns(14).ColumnName <> "Mayorista" Or datos.Columns(15).ColumnName <> "Alternativa" Or
             datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Then
             Return False

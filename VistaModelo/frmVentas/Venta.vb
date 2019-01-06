@@ -425,11 +425,7 @@ Namespace VistaModelo.frmVentas
             For Each producto As Producto In Me.Productos.Where(Function(x) Not x.Pago)
                 Dim restantePago = producto.Precio * producto.Cantidad * (1 - producto.PorcentajePago)
 
-                If (Me.FormaPagoSeleccionado = FormaPago.Efectivo) Then
-                    restantePago = restantePago * (1 - producto.PorcentajeBonificacion)
-                Else
-                    restantePago = restantePago * (1 + CFTCuota)
-                End If
+                restantePago = restantePago * (1 - producto.PorcentajeBonificacion)
 
                 If (monto < restantePago) Then
                     restantePago = monto
@@ -451,8 +447,6 @@ Namespace VistaModelo.frmVentas
                 If (monto <= 0) Then
                     Exit For
                 End If
-
-
             Next
 
             Me.Descuento = Math.Round(descuento, 2, MidpointRounding.ToEven)
@@ -525,11 +519,8 @@ Namespace VistaModelo.frmVentas
                     restantePago = monto
                 End If
 
-                If (Me.FormaPagoSeleccionado = FormaPago.Efectivo) Then
-                    descuento += restantePago * producto.PorcentajeBonificacion
-                Else
-                    costoFinanciero += restantePago * CFTCuota
-                End If
+                descuento += restantePago * producto.PorcentajeBonificacion
+
                 monto -= restantePago
 
                 If (monto <= 0) Then
@@ -584,8 +575,7 @@ Namespace VistaModelo.frmVentas
         Public Sub ActualizarProductos()
             Dim PorcentajeFacturacion As Double = Me.ProcentajeFacturacionClienteMayorista / 100
             For Each producto As VistaModelo.frmVentas.Producto In Me.Productos.Where(Function(x) Not x.Pago)
-                Dim precio As Double = If(Me.TipoClienteSeleccionado = Entidades.TipoCliente.Minorista, producto.Monto, producto.Precio)
-                producto.Actualizar(Me.TipoClienteSeleccionado, precio, PorcentajeFacturacion)
+                producto.Actualizar(Me.TipoClienteSeleccionado, Me.ListaPrecioSeleccionado, PorcentajeFacturacion)
             Next
         End Sub
 
