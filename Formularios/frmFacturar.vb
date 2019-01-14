@@ -21,7 +21,7 @@ Public Class frmFacturar
     Public VentaDetalle As List(Of Ventas_Detalle) = New List(Of Ventas_Detalle)
     Public EntFacturacion As New Facturacion
     Public Monto As Double
-    Public TipoPago As String
+    Public TipoPago As FormaPago
     Public Descuento As Double
     Public CostoFinanciero As Double
     Public SubTotal As Double

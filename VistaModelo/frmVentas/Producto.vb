@@ -9,7 +9,7 @@ Namespace VistaModelo.frmVentas
             Me.Pagos = New List(Of ProductoPago)()
         End Sub
 
-        Public Sub New(Cantidad As Integer, ProductoEntidad As Entidades.Productos, TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double, PorcentajeBonificacionMayorista As Double)
+        Public Sub New(Cantidad As Integer, ProductoEntidad As Entidades.Productos, TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double, PorcentajeBonificacionMayorista As Double, Optional Devolucion As Boolean = False)
             Dim Precio As Double = 0
             Dim PorcentajeBonificacion As Double = 0
             Select Case ListaPrecio
@@ -55,7 +55,6 @@ Namespace VistaModelo.frmVentas
                 Me.Subtotal = Monto * Cantidad
                 Me.Nombre = ProductoEntidad.Nombre
                 Me.Cantidad = Cantidad
-
             End If
 
             Me.Precio1 = ProductoEntidad.Precio1
@@ -64,6 +63,19 @@ Namespace VistaModelo.frmVentas
             Me.Precio4 = ProductoEntidad.Precio4
             Me.Precio5 = ProductoEntidad.Precio5
             Me.Precio6 = ProductoEntidad.Precio6
+            Me.Devolucion = Devolucion
+
+            If (Devolucion) Then
+                Me.Precio *= -1
+                Me.Monto *= -1
+                Me.Subtotal *= -1
+                Me.IVA *= -1
+                Me.Precio1 *= -1
+                Me.Precio3 *= -1
+                Me.Precio5 *= -1
+                Me.Precio6 *= -1
+            End If
+
             Me.Pagos = New List(Of ProductoPago)()
         End Sub
 
@@ -253,7 +265,18 @@ Namespace VistaModelo.frmVentas
             End Set
         End Property
 
-        Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double)
+        Private _Devolucion As Boolean
+        Public Property Devolucion As Boolean
+            Get
+                Return _Devolucion
+            End Get
+            Set(ByVal value As Boolean)
+                _Devolucion = value
+                NotifyPropertyChanged()
+            End Set
+        End Property
+
+        Public Sub ActualizarPrecio(TipoCliente As Entidades.TipoCliente, ListaPrecio As Integer, PorcentajeFacturacion As Double)
             Dim precio As Double = 0
             Dim porcentajeBonificacion As Double = 0
             'Actualizo el precio de cada item segun la nueva lista de precios seleccioanda
@@ -270,10 +293,17 @@ Namespace VistaModelo.frmVentas
                     precio = Me.Precio6
             End Select
             Me.PorcentajeBonificacion = porcentajeBonificacion
-            Actualizar(TipoCliente, precio, PorcentajeFacturacion)
+
+            If (TipoCliente = Entidades.TipoCliente.Minorista) Then
+                Me.Monto = precio
+            Else
+                Me.Precio = precio
+            End If
+
+            ActualizarSubtotal(TipoCliente, PorcentajeFacturacion)
         End Sub
 
-        Public Sub Actualizar(TipoCliente As Entidades.TipoCliente, Precio As Double, PorcentajeFacturacion As Double)
+        Public Sub ActualizarSubtotal(TipoCliente As Entidades.TipoCliente, PorcentajeFacturacion As Double)
             If (TipoCliente = Entidades.TipoCliente.Minorista) Then
                 Me.Monto = Precio
                 Me.Precio = 0

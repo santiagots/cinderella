@@ -435,7 +435,7 @@ Partial Class frmVentas
         'txt_PorcentajeFacturacion
         '
         Me.txt_PorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_PorcentajeFacturacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.VentasBindingSource, "ProcentajeFacturacionClienteMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txt_PorcentajeFacturacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.VentasBindingSource, "PorcentajeFacturacion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_PorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(625, 7)
         Me.txt_PorcentajeFacturacion.Name = "txt_PorcentajeFacturacion"

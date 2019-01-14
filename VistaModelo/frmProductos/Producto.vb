@@ -21,8 +21,10 @@ Namespace VistaModelo.frmProductos
                 Return _Id
             End Get
             Set(ByVal value As Integer)
-                _Id = value
-                NotifyPropertyChanged()
+                If (value <> _Id) Then
+                    _Id = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -32,8 +34,10 @@ Namespace VistaModelo.frmProductos
                 Return _Nombre
             End Get
             Set(ByVal value As String)
-                _Nombre = value
-                NotifyPropertyChanged()
+                If (value <> _Nombre) Then
+                    _Nombre = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -43,8 +47,10 @@ Namespace VistaModelo.frmProductos
                 Return _Origen
             End Get
             Set(ByVal value As String)
-                _Origen = value
-                NotifyPropertyChanged()
+                If (value <> _Origen) Then
+                    _Origen = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -54,8 +60,10 @@ Namespace VistaModelo.frmProductos
                 Return _Tamanio
             End Get
             Set(ByVal value As String)
-                _Tamanio = value
-                NotifyPropertyChanged()
+                If (value <> _Tamanio) Then
+                    _Tamanio = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -65,8 +73,10 @@ Namespace VistaModelo.frmProductos
                 Return _Codigo
             End Get
             Set(ByVal value As String)
-                _Codigo = value
-                NotifyPropertyChanged()
+                If (value <> _Codigo) Then
+                    _Codigo = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -76,8 +86,10 @@ Namespace VistaModelo.frmProductos
                 Return _Costo
             End Get
             Set(ByVal value As Decimal)
-                _Costo = value
-                NotifyPropertyChanged()
+                If (value <> _Costo) Then
+                    _Costo = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -87,8 +99,10 @@ Namespace VistaModelo.frmProductos
                 Return _FotoRuta
             End Get
             Set(ByVal value As String)
-                _FotoRuta = value
-                NotifyPropertyChanged()
+                If (value <> _FotoRuta) Then
+                    _FotoRuta = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -161,8 +175,10 @@ Namespace VistaModelo.frmProductos
                 Return _Habilitado
             End Get
             Set(ByVal value As Boolean)
-                _Habilitado = value
-                NotifyPropertyChanged()
+                If (value <> _Habilitado) Then
+                    _Habilitado = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -172,8 +188,10 @@ Namespace VistaModelo.frmProductos
                 Return _SubirAWeb
             End Get
             Set(ByVal value As Boolean)
-                _SubirAWeb = value
-                NotifyPropertyChanged()
+                If (value <> _SubirAWeb) Then
+                    _SubirAWeb = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -183,8 +201,10 @@ Namespace VistaModelo.frmProductos
                 Return _Novedad
             End Get
             Set(ByVal value As Boolean)
-                _Novedad = value
-                NotifyPropertyChanged()
+                If (value <> _Novedad) Then
+                    _Novedad = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -194,8 +214,10 @@ Namespace VistaModelo.frmProductos
                 Return _EliminarFoto
             End Get
             Set(ByVal value As Boolean)
-                _EliminarFoto = value
-                NotifyPropertyChanged()
+                If (value <> _EliminarFoto) Then
+                    _EliminarFoto = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -205,8 +227,10 @@ Namespace VistaModelo.frmProductos
                 Return _Descripcion
             End Get
             Set(ByVal value As String)
-                _Descripcion = value
-                NotifyPropertyChanged()
+                If (value <> _Descripcion) Then
+                    _Descripcion = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -216,8 +240,10 @@ Namespace VistaModelo.frmProductos
                 Return _ListaTigre
             End Get
             Set(ByVal value As Double)
-                _ListaTigre = value
-                NotifyPropertyChanged()
+                If (value <> _ListaTigre) Then
+                    _ListaTigre = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -227,8 +253,10 @@ Namespace VistaModelo.frmProductos
                 Return _PorcentajeDescuentoTigre
             End Get
             Set(ByVal value As Double)
-                _PorcentajeDescuentoTigre = value
-                NotifyPropertyChanged()
+                If (value <> _PorcentajeDescuentoTigre) Then
+                    _PorcentajeDescuentoTigre = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -238,8 +266,10 @@ Namespace VistaModelo.frmProductos
                 Return _ListaCapital
             End Get
             Set(ByVal value As Double)
-                _ListaCapital = value
-                NotifyPropertyChanged()
+                If (value <> _ListaCapital) Then
+                    _ListaCapital = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -249,8 +279,10 @@ Namespace VistaModelo.frmProductos
                 Return _PorcentajeDescuentoCapital
             End Get
             Set(ByVal value As Double)
-                _PorcentajeDescuentoCapital = value
-                NotifyPropertyChanged()
+                If (value <> _PorcentajeDescuentoCapital) Then
+                    _PorcentajeDescuentoCapital = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -260,8 +292,10 @@ Namespace VistaModelo.frmProductos
                 Return _Mayorista
             End Get
             Set(ByVal value As Double)
-                _Mayorista = value
-                NotifyPropertyChanged()
+                If (value <> _Mayorista) Then
+                    _Mayorista = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -271,8 +305,10 @@ Namespace VistaModelo.frmProductos
                 Return _Alternativo
             End Get
             Set(ByVal value As Double)
-                _Alternativo = value
-                NotifyPropertyChanged()
+                If (value <> _Alternativo) Then
+                    _Alternativo = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 
@@ -282,8 +318,10 @@ Namespace VistaModelo.frmProductos
                 Return _CodigoBarras
             End Get
             Set(ByVal value As String)
-                _CodigoBarras = value
-                NotifyPropertyChanged()
+                If (value <> _CodigoBarras) Then
+                    _CodigoBarras = value
+                    NotifyPropertyChanged()
+                End If
             End Set
         End Property
 

@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>261</ApplicationRevision>
+    <ApplicationRevision>262</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -136,6 +136,10 @@
     <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>packages\FluentValidation.8.1.2\lib\net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="itextsharp, Version=5.3.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dlls\itextsharp.dll</HintPath>
@@ -146,10 +150,19 @@
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Smo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
@@ -191,12 +204,6 @@
       <DependentUpon>DialogSincronizar.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios\DialogSincronizar.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\frmCambios.Designer.vb">
-      <DependentUpon>frmCambios.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\frmCambios.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmCostoFinancieroAdministracion.Designer.vb">
@@ -1059,6 +1066,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\AutoClosingMessageBox.vb" />
+    <Compile Include="Utils\MensajeExtension.vb" />
     <Compile Include="Utils\CustomDataGrid.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -1069,7 +1077,9 @@
     <Compile Include="VistaModelo\frmVentas\Pago.vb" />
     <Compile Include="VistaModelo\frmVentas\Producto.vb" />
     <Compile Include="VistaModelo\frmVentas\ProductoPago.vb" />
+    <Compile Include="VistaModelo\frmVentas\Validadores\PagoValidator.vb" />
     <Compile Include="VistaModelo\frmVentas\Venta.vb" />
+    <Compile Include="VistaModelo\frmVentas\Validadores\ventaValidator.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
@@ -1080,9 +1090,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\DialogSincronizar.resx">
       <DependentUpon>DialogSincronizar.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmCambios.resx">
-      <DependentUpon>frmCambios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmCostoFinancieroAdministracion.resx">
       <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
@@ -1630,6 +1637,7 @@
     <EmbeddedResource Include="Formularios\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -1690,6 +1698,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Comunes\Comunes.csproj">
+      <Project>{9418cc85-d313-44f6-9b84-2670327f5c18}</Project>
+      <Name>Comunes</Name>
+    </ProjectReference>
     <ProjectReference Include="Datos\Datos.vbproj">
       <Project>{031B7818-3E58-477F-BFAD-17166F3026AF}</Project>
       <Name>Datos</Name>
