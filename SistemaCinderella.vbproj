@@ -13,7 +13,7 @@
     <AssemblyName>SistemaCinderellaDesarrollo</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <IsWebBootstrapper>true</IsWebBootstrapper>
@@ -1080,6 +1080,7 @@
     <Compile Include="VistaModelo\frmVentas\Validadores\PagoValidator.vb" />
     <Compile Include="VistaModelo\frmVentas\Venta.vb" />
     <Compile Include="VistaModelo\frmVentas\Validadores\ventaValidator.vb" />
+    <Compile Include="VistaModelo\frmVentas\VentaNueva.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
@@ -1701,6 +1702,14 @@
     <ProjectReference Include="..\Comunes\Comunes.csproj">
       <Project>{9418cc85-d313-44f6-9b84-2670327f5c18}</Project>
       <Name>Comunes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ventas.Core\Ventas.Core.csproj">
+      <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
+      <Name>Ventas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Common.Core\Common.Core.csproj">
+      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
+      <Name>Common.Core</Name>
     </ProjectReference>
     <ProjectReference Include="Datos\Datos.vbproj">
       <Project>{031B7818-3E58-477F-BFAD-17166F3026AF}</Project>

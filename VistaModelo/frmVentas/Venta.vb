@@ -639,7 +639,7 @@ Namespace VistaModelo.frmVentas
             Dim validator As PagoValidator = New PagoValidator()
             Dim resultado As ValidationResult = validator.Validate(Me)
             If (Not resultado.IsValid) Then
-                Throw New ValidationErrorException(resultado.Errors.Mensaje())
+                'Throw New ValidationErrorException(resultado.Errors.Mensaje())
             End If
 
             Dim formaPagoSeleccionada As KeyValuePair(Of FormaPago, String) = Me.FormasPagos.First(Function(x) x.Key = Me.FormaPagoSeleccionado)
@@ -718,74 +718,7 @@ Namespace VistaModelo.frmVentas
 
         Private Sub Registrar()
 
-            Dim EntVentas As Ventas = New Ventas()
 
-            'Datos de la venta.
-            EntVentas.id_Cliente = Me.IdClienteMayorista
-            'EntVentas.id_ClienteMinorista = id_ClienteMinorista ''TODO: VER COMO OBTENER EL CLIENTE MINORISTA SEÑA
-            EntVentas.PorcentajeFacturacion = Me.PorcentajeFacturacion
-            EntVentas.id_Empleado = Me.VendedorSeleccionado
-            EntVentas.id_Encargado = Me.EncargadoSeleccionado
-            EntVentas.id_Sucursal = id_Sucursal
-            'EntVentas.id_TipoPago = TipoPago
-            EntVentas.id_TipoVenta = Me.TipoClienteSeleccionado
-            EntVentas.id_ListaPrecio = Me.ListaPrecioSeleccionado
-            EntVentas.id_Tarjeta = Id_Tarjeta
-            EntVentas.CantidadCuotas = CantidadCuotas
-            EntVentas.CantidadTotal = CantidadTotal
-            EntVentas.Descuento = Descuento
-            EntVentas.CostoFinanciero = CostoFinanciero
-            EntVentas.SubTotal = MontoTotalSinDescuento
-            EntVentas.PrecioTotal = MontoTotal - DiferenciaPagoCheque
-            EntVentas.Anulado = 0
-            EntVentas.Habilitado = 1
-            EntVentas.Facturado = If(facturado, 1, 0)
-            EntVentas.DiferenciaPagoCheque = DiferenciaPagoCheque
-            EntVentas.MontoSenia = MontoSenia
-            EntVentas.Senia = EsSenia
-
-            'Numero de Venta.
-            Dim id_Venta As Int64 = NegVentas.NuevaVenta(EntVentas, ObtenerDetalleVenta())
-
-
-
-            '        Return id_Venta
-
-            Dim id_Venta As Int64 = RegistrarVenta(facturada, TipoVenta, TipoPago, id_Empleado, id_Encargado, id_Cliente, IdClienteMinorista, Id_Tarjeta, NumerCuotas, PorcentajeFacturacion * 100, id_ListaPrecio, Descuento, CostoFinanciero, MontoTotalSinDescuento, MontoTotal, CantidadTotal, DiferenciaPagoCheque, MontoSenia, True)
-            If id_Venta > 0 Then
-
-                ActualizarStock()
-
-                NuevaSenia.IdVentaSenia = id_Venta
-                negSenia.CrearSenia(NuevaSenia)
-                NuevaSenia = Nothing
-
-                For Each factura As Facturacion In facturas
-                    factura.id_Venta = id_Venta
-                    NegFacturacion.NuevaFacturacion(factura)
-                Next
-
-                RegistrarComisionesEncargadoEmpleado(id_Empleado, id_Encargado, id_Cliente, MontoSenia, id_Venta)
-
-                'Seteo el cursor.
-                Me.Cursor = Cursors.Arrow
-
-                'Muestro Mensaje.
-                AutoClosingMessageBox.Show("La reserva ha sido generada correctamente.", "Registro de Ventas", 1000, MessageBoxButtons.OK, MessageBoxIcon.Question)
-
-                'Si no se factura el 100% de la venta armo un presupuesto por el monto no facturado
-                If facturada AndAlso PorcentajeFacturacion < 1 AndAlso MessageBox.Show("¿Desea Generar un presupuesto por el monto no facturado?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-                    'TODO: PASAR FORMAS DE PAGOS
-                    'AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, Cb_TipoPago.Text, id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia, Id_Tarjeta, NumerCuotas, CostoFinanciero)
-                    AltaPresupuestoSenia(id_Venta, TipoVenta, TipoPago, "FORMA DE PAGO", id_Empleado, id_Encargado, id_Cliente, id_ListaPrecio, PorcentajeFacturacion, MontoSenia, Id_Tarjeta, NumerCuotas, CostoFinanciero)
-                End If
-
-                'Fin de la venta.
-                Me.Close()
-            Else
-                'Muestro Mensaje.
-                MessageBox.Show("Se ha producido un error al registrar la venta. Por favor, Comuniquese con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
         End Sub
     End Class
 End Namespace

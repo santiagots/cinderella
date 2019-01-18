@@ -716,18 +716,18 @@ Public Class frmVentas
 
     'Al finalizar la venta.
     Private Sub Btn_Finalizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Finalizar.Click
-        Try
-            If (ventaVistaModelo.PorcentajeFacturacion > 0 AndAlso MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) = vbYes) Then
+        'Try
+        If (ventaVistaModelo.PorcentajeFacturacion > 0 AndAlso MessageBox.Show("¿Desea facturar la venta?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) = vbYes) Then
                 facturar()
             End If
 
             FinalizarVenta(Nothing, Nothing)
 
-        Catch ex As ValidationErrorException
-            MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("Se ha encontrado un error al finalizar la venta. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        'Catch ex As ValidationErrorException
+        '    MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        'Catch ex As Exception
+        '    MessageBox.Show("Se ha encontrado un error al finalizar la venta. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        'End Try
     End Sub
 
     Private Sub facturar()
@@ -1984,15 +1984,15 @@ Public Class frmVentas
     End Sub
 
     Private Sub AgregaPago()
-        Try
-            ventaVistaModelo.AgregarPago()
+        'Try
+        ventaVistaModelo.AgregarPago()
             ventaVistaModelo.ActualizarTotalPagos()
             HabilitarPagos()
-        Catch ex As ValidationErrorException
-            MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("Se ha encontrado un error al agregar el pago. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        'Catch ex As ValidationErrorException
+        '    MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        'Catch ex As Exception
+        '    MessageBox.Show("Se ha encontrado un error al agregar el pago. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        'End Try
     End Sub
 
     Private Sub Cb_FormaPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_FormaPago.SelectedIndexChanged
