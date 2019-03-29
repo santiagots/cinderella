@@ -7,6 +7,8 @@ Imports System.Threading.Tasks
 Imports Negocio
 Imports Entidades
 Imports System.ComponentModel
+Imports System.Globalization
+Imports Common.Core.Helper
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -611,8 +613,12 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.WaitCursor
 
         'Seteo la cultura del proyecto.
-        System.Threading.Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("es-AR")
+        Dim culture As CultureInfo = New CultureInfo("es-AR", True)
+        culture.NumberFormat.NumberDecimalSeparator = "."
+        System.Threading.Thread.CurrentThread.CurrentCulture = culture
+
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+
 
         'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
         AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
@@ -1726,8 +1732,8 @@ Public Class MDIContenedor
 
     Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmSeniaAdministracion).MdiParent = Me
-        Funciones.ControlInstancia(frmSeniaAdministracion).Show()
+        Funciones.ControlInstancia(frmReservaAdminitracion).MdiParent = Me
+        Funciones.ControlInstancia(frmReservaAdminitracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

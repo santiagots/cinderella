@@ -415,7 +415,7 @@ Public Class frmSeniaAdministracion
         Dim frmVentas As frmVentas = New frmVentas()
         Dim SeniaSeleccionada = dgSenia.CurrentRow.DataBoundItem
 
-        frmVentas.Senia = SeniaSeleccionada
+        'frmVentas.Senia = SeniaSeleccionada
         frmVentas.MdiParent = Me.MdiParent
         frmVentas.Show()
     End Sub

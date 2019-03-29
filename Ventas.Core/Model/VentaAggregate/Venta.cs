@@ -1,0 +1,308 @@
+﻿using Common.Core.Enum;
+using Common.Core.Exceptions;
+using Common.Core.Model;
+using Common.Core.Helper;
+using System.Collections.Generic;
+using System.Linq;
+using Ventas.Core.Model.ValueObjects;
+using System;
+using Ventas.Core.Model.BaseAgreggate;
+
+namespace Ventas.Core.Model.VentaAggregate
+{
+    public class Venta: Transaccion
+    {
+        public string Numero { get; protected set; }
+        public virtual List<Comision> Comisiones { get; protected set; }
+        public virtual IList<Pago> Pagos { get; protected set; }
+        public virtual IList<VentaItem> VentaItems { get; protected set; }
+        public virtual Factura Factura { get; protected set; }
+        public int CantidadTotal { get; private set; }
+        public MontoPago PagoTotal { get; private set; }
+        public bool EstaPaga { get { return !VentaItems.Any(x => x.PorcentajePago != 1) && VentaItems.Count > 0; } }
+
+        internal Venta()
+        {
+        }
+
+        public Venta(int idSucursal) : base(true)
+        {
+            IdSucursal = idSucursal;
+            VentaItems = new List<VentaItem>();
+            Pagos = new List<Pago>();
+            MontoTotal = new MontoProducto(0, 0);
+            PagoTotal = new MontoPago(0, 0, 0, 0);
+            Comisiones = new List<Comision>();
+            Fecha = DateTime.Now;
+            FechaEdicion = DateTime.Now;
+            PorcentajeFacturacion = 1;
+        }
+
+        public void GenerarNumeroVenta(int cantidadVentas, string codigoVentaSucursal)
+        {
+            string facturada = Factura == null ? "N" : "S";
+            Numero = $"{codigoVentaSucursal}{facturada}{Fecha.ToString("yyyyMMdd")}{cantidadVentas.ToString("D9")}";
+        }
+
+        public void AgregaVentaItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+
+            if (ventaItem == null)
+            {
+                ventaItem = new VentaItem(Id, codigoProducto, nombreProducto, monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
+                VentaItems.Add(ventaItem);
+            }
+            else
+            {
+                ventaItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+            }
+
+            ActualizarTotalesVenta();
+        }
+
+        public void ActualizarVentaItem(string codigoProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            if (porcentajeBonificacion > 1)
+                porcentajeBonificacion = 1;
+
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+
+            ventaItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+
+            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ToList();
+
+            ActualizarTotalesVenta();
+        }
+
+        public void ActualizarClienteMayorista(int idClienteMayorista)
+        {
+            IdClienteMayorista = idClienteMayorista;
+        }
+
+        public void ActualizarPorcentajeFacturacion(decimal porcentajeFacturacion)
+        {
+            PorcentajeFacturacion = porcentajeFacturacion;
+        }
+
+        public void AgregaPago(decimal monto, decimal descuento, decimal cft, decimal iva, TipoPago tipoPago, decimal porcentajeFacturacion, string trajeta, int numeroCuotas)
+        {
+            if (VentaItems.Count == 0)
+                throw new NegocioException("Error al registrar el pago. No se encuentran productos registrados en la venta.");
+            if (EstaPaga)
+                throw new NegocioException("Error al registrar el pago. La venta ya cuenta con el/los pagos necesarios para ser finalizada.");
+            if(monto <= 0)
+                throw new NegocioException("Error al registrar el pago. El monto debe ser mayor a cero.");
+            //if(Pagos.Any(x => x.TipoPago == tipoPago && x.Tarjeta == trajeta))
+            //    throw new NegocioException($"Error al registrar el pago. Ya se encuentra registrado un pago {tipoPago.ToString()} {trajeta} seleccione otra forma de pago.".Trim());
+
+            Pago pago = new Pago(Id ,tipoPago, trajeta, numeroCuotas, monto, descuento, cft, iva);
+
+            decimal montoPago = pago.MontoPago.Monto;
+
+            foreach (VentaItem ventaItem in VentaItems.Where(x => x.PorcentajePago != 1))
+            {
+                montoPago = ventaItem.AgregarPago(montoPago, pago.Id);
+            }
+
+            Pagos.Add(pago);
+            ActualizarTotalesPago();
+        }
+
+        public void AgregarEncargado(Empleado encargado)
+        {
+            Encargado = encargado;
+            IdEncargado = encargado != null? encargado.Id : 0;
+        }
+
+        public void AgregarVendedor(Empleado vendedor)
+        {
+            Vendedor = vendedor;
+            IdVendedor = vendedor != null ? vendedor.Id : 0;
+        }
+
+        public void AgregarFactura(TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, List<int> numeroFactura)
+        {
+            if (tipoFactura == TipoFactura.Manual && numeroFactura.Count == 0)
+                throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
+
+            if((condicionesIVA == CondicionIVA.Responsable_Inscripto || condicionesIVA == CondicionIVA.Monotributo || condicionesIVA == CondicionIVA.Exento) && Cuit.Validar(cuit))
+                throw new NegocioException($"Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.");
+
+            if (TipoCliente == TipoCliente.Mayorista && (string.IsNullOrEmpty(nombreYApellido) || string.IsNullOrEmpty(direccion) || string.IsNullOrEmpty(localidad) || string.IsNullOrEmpty(cuit)))
+                throw new NegocioException($"Error al registrar la factura. Debe completar todos los campos obligatorios.");
+
+            Factura = new Factura(Id, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, numeroFactura);
+        }
+
+        public void AgregarComision(Decimal porcentajeComisionEncargado, Decimal porcentajeComisionVendedor)
+        {
+            if (Encargado == null)
+                throw new NegocioException($"Error al registrar la comision del encargado. No se cuentra un encargado en la venta.");
+
+            if (Vendedor == null)
+                throw new NegocioException($"Error al registrar la comision del vendedor. No se cuentra un vendedor en la venta.");
+
+            Comisiones.Add(new Comision(IdEncargado, IdSucursal, Id, porcentajeComisionEncargado, PagoTotal.Total));
+            Comisiones.Add(new Comision(IdVendedor, IdSucursal, Id, porcentajeComisionVendedor, PagoTotal.Total));
+        }
+
+        public void QuitarPago(long idPago)
+        {
+            VentaItems.ToList().ForEach(x => x.QuitarPago(idPago));
+            Pagos.Remove(Pagos.FirstOrDefault(x => x.Id == idPago));
+            ActualizarTotalesPago();
+        }
+
+        public void QuitarPagos()
+        {
+            VentaItems.ToList().ForEach(x => x.QuitarPagos());
+            Pagos.Clear();
+            ActualizarTotalesPago();
+        }
+
+        public void QuitarVentaItem(string codigoProducto)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+
+            if (ventaItem == null)
+                throw new NegocioException($"Error al quitar el pago. El producto con código {codigoProducto} no se encuentra registrados en la venta.");
+
+            VentaItems.Remove(ventaItem);
+            ActualizarTotalesVenta();
+        }
+
+        public void ModificarTipoCliente(TipoCliente tipoCliente)
+        {
+            TipoCliente = tipoCliente;
+            QuitarPagos();
+        }
+
+        public int ObtenerCantidadDeUnidadesDeProducto(string codigoProducto)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            if (ventaItem == null)
+                return 0;
+            else
+                return ventaItem.Cantidad;
+        }
+
+        public MontoPago ObtenerPendienteMontoPago(decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        {
+            if (EstaPaga || VentaItems.Count == 0)
+                return new MontoPago(0, 0, 0, 0);
+
+            return VentaItems.Select(x => x.ObtenerMontoPago(porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion)).Aggregate((x, y) => x + y);
+        }
+
+        public MontoPago ObtenerMontoPagoDesdeSubtotal(decimal montoSubtotal, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        {
+            if (EstaPaga)
+                return new MontoPago(0, 0, 0, 0);
+
+            MontoPago montoPagoPendiente = new MontoPago(0, 0, 0, 0);
+
+            foreach (VentaItem ventaItem in VentaItems)
+            {
+                MontoProducto montoProductoPendientePago = ventaItem.PendientePago();
+
+                if (montoSubtotal >= montoProductoPendientePago.Valor)
+                {
+                    montoPagoPendiente += ventaItem.ObtenerMontoPago(porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+                    montoSubtotal -= montoProductoPendientePago.Valor;
+                }
+                else
+                {
+                    montoPagoPendiente += ventaItem.ObtenerMontoPago(montoSubtotal, porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+                    montoSubtotal = 0;
+                    break;
+                }
+            }
+
+            return montoPagoPendiente;
+        }
+
+        public MontoPago ObtenerMontoPagoDesdeTotal(decimal montoTotal, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        {
+            if (EstaPaga)
+                return new MontoPago(0, 0, 0, 0);
+
+            decimal subtotal = CalcularSubtota(montoTotal, porcentajeCft);
+
+            return ObtenerMontoPagoDesdeSubtotal(subtotal, porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+        }
+
+        public decimal ObtenerMontoPorTipoDeCliente(string codigoProducto, TipoCliente tipoCliente)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            if (ventaItem == null)
+                throw new NegocioException($"Error al obtener el monto para el producto código {codigoProducto}. No se encuentran el producto en lo productos ingresado a vender.");
+            else
+                return ventaItem.ObtenerMontoPorTipoDeCliente(tipoCliente);
+        }
+
+        public decimal ObtenerPorcentajeBonificacionPorTipoDeCliente(string codigoProducto, TipoCliente tipoCliente)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            if (ventaItem == null)
+                throw new NegocioException($"Error al obtener el porcentaje bonificación para el producto código {codigoProducto}. No se encuentran el producto en lo productos ingresado a vender.");
+            else
+                return ventaItem.ObtenerPorcentajeBonificacionPorTipoDeCliente(tipoCliente);
+        }
+
+        public decimal ObtenerBonificacionPorListaDePrecion(string codigoProducto, TipoCliente tipoClienteSeleccionado)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            if (ventaItem == null)
+                return 0;
+            else
+                return ventaItem.Cantidad;
+        }
+
+        private decimal CalcularSubtota(decimal montoTotal, decimal porcentajeCft)
+        {
+            decimal subtotal = 0;
+            foreach (VentaItem ventaItem in VentaItems)
+            {
+                MontoProducto montoProductoPendientePago = ventaItem.PendientePago();
+                decimal totalPendientePago = montoProductoPendientePago.toDecimal();
+                if (montoTotal >= totalPendientePago)
+                {
+                    subtotal += ventaItem.CalcularSubtotal(totalPendientePago, porcentajeCft);
+                    montoTotal -= totalPendientePago;
+                }
+                else
+                {
+                    subtotal += ventaItem.CalcularSubtotal(montoTotal, porcentajeCft);
+                    montoTotal = 0;
+                    break;
+                }
+            }
+
+            return subtotal;
+        }
+
+        public void ActualizarTotalesVenta()
+        {
+            if (VentaItems.Count == 0)
+            {
+                CantidadTotal = 0;
+                MontoTotal = new MontoProducto(0, 0);
+            }
+            else
+            {
+                CantidadTotal = VentaItems.Sum(x => x.Cantidad);
+                MontoTotal = VentaItems.Select(x => x.MontoProducto * x.Cantidad).Aggregate((x, y) => x + y);
+            }
+        }
+
+        public void ActualizarTotalesPago()
+        {
+            if (Pagos.Count == 0)
+                PagoTotal = new MontoPago(0, 0, 0, 0);
+            else
+                PagoTotal = Pagos.Select(x => x.MontoPago).Aggregate((x, y) => x + y);
+
+        }
+    }
+}

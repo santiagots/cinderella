@@ -186,7 +186,7 @@ Public Class NegStock
             entStock.Stock_Minimo = dsStock.Tables(0).Rows(0).Item("Stock_Minimo").ToString
             entStock.Stock_Optimo = dsStock.Tables(0).Rows(0).Item("Stock_Optimo").ToString
             entStock.VentaMensual = If(String.IsNullOrEmpty(dsStock.Tables(0).Rows(0).Item("Venta_Mensual")), 0, dsStock.Tables(0).Rows(0).Item("Venta_Mensual"))
-            entStock.Habilitado = dsStock.Tables(0).Rows(0).Item("Habilitado").ToString
+            entStock.Habilitado = dsStock.Tables(0).Rows(0).Item("Habilitado")
             entStock.Fecha = dsStock.Tables(0).Rows(0).Item("Fecha").ToString
         End If
         Return entStock

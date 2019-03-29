@@ -515,27 +515,6 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True")>  _
-        Public ReadOnly Property Conexion() As String
-            Get
-                Return CType(Me("Conexion"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezl"& _ 
-            "ltpA6/gQhWzNU089HLhPWu39Kk=")>  _
-        Public ReadOnly Property ConexionRemoto() As String
-            Get
-                Return CType(Me("ConexionRemoto"),String)
-            End Get
-        End Property
-        
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
@@ -558,6 +537,27 @@ Namespace My
             Set
                 Me("UsarMemoriaCache") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True")>  _
+        Public ReadOnly Property Conexion() As String
+            Get
+                Return CType(Me("Conexion"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezl"& _ 
+            "ltpA6/gQhWzNU089HLhPWu39Kk=")>  _
+        Public ReadOnly Property ConexionRemoto() As String
+            Get
+                Return CType(Me("ConexionRemoto"),String)
+            End Get
         End Property
     End Class
 End Namespace

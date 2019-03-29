@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Common.Core.Helper;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +10,14 @@ namespace Common.Core.Model
 {
     public abstract class Entity<T>
     {
-        public T Id { get; }
+        [Key]
+        public T Id { get; protected set; }
+
+        public Entity(bool GenerarId = false)
+        {
+            if (GenerarId && Id.GetType() == typeof(long))
+                Id = (T)(object)IdGenerator.ObtenerId();
+        }
 
         public override bool Equals(object obj)
         {

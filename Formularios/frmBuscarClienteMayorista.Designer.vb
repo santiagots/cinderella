@@ -30,13 +30,13 @@ Partial Class frmBuscarClienteMayorista
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lbl_informacion = New System.Windows.Forms.Label()
         Me.DG_Clientes = New System.Windows.Forms.DataGridView()
-        Me.RazonSocialDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CuitDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ClienteMayoristaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btn_Buscar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txt_Buscar = New System.Windows.Forms.TextBox()
         Me.ToolCliente = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ClienteMayoristaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Cuit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RazonSocial = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GB_Clientes.SuspendLayout()
         CType(Me.DG_Clientes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ClienteMayoristaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -125,7 +125,7 @@ Partial Class frmBuscarClienteMayorista
         Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn})
+        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Cuit, Me.RazonSocial})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Clientes.DataSource = Me.ClienteMayoristaBindingSource
         Me.DG_Clientes.Location = New System.Drawing.Point(9, 111)
@@ -135,24 +135,6 @@ Partial Class frmBuscarClienteMayorista
         Me.DG_Clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Clientes.Size = New System.Drawing.Size(555, 221)
         Me.DG_Clientes.TabIndex = 3
-        '
-        'RazonSocialDataGridViewTextBoxColumn
-        '
-        Me.RazonSocialDataGridViewTextBoxColumn.DataPropertyName = "RazonSocial"
-        Me.RazonSocialDataGridViewTextBoxColumn.HeaderText = "Razon Social"
-        Me.RazonSocialDataGridViewTextBoxColumn.Name = "RazonSocialDataGridViewTextBoxColumn"
-        Me.RazonSocialDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CuitDataGridViewTextBoxColumn
-        '
-        Me.CuitDataGridViewTextBoxColumn.DataPropertyName = "Cuit"
-        Me.CuitDataGridViewTextBoxColumn.HeaderText = "Cuit"
-        Me.CuitDataGridViewTextBoxColumn.Name = "CuitDataGridViewTextBoxColumn"
-        Me.CuitDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'ClienteMayoristaBindingSource
-        '
-        Me.ClienteMayoristaBindingSource.DataSource = GetType(Entidades.ClienteMayorista)
         '
         'btn_Buscar
         '
@@ -194,6 +176,24 @@ Partial Class frmBuscarClienteMayorista
         Me.ToolCliente.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCliente.ToolTipTitle = "Ayuda"
         '
+        'ClienteMayoristaBindingSource
+        '
+        Me.ClienteMayoristaBindingSource.DataSource = GetType(Entidades.ClienteMayorista)
+        '
+        'Cuit
+        '
+        Me.Cuit.DataPropertyName = "Cuit"
+        Me.Cuit.HeaderText = "Cuit"
+        Me.Cuit.Name = "Cuit"
+        Me.Cuit.ReadOnly = True
+        '
+        'RazonSocial
+        '
+        Me.RazonSocial.DataPropertyName = "RazonSocial"
+        Me.RazonSocial.HeaderText = "Razon Social"
+        Me.RazonSocial.Name = "RazonSocial"
+        Me.RazonSocial.ReadOnly = True
+        '
         'frmBuscarClienteMayorista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -223,4 +223,6 @@ Partial Class frmBuscarClienteMayorista
     Friend WithEvents ClienteMayoristaBindingSource As BindingSource
     Friend WithEvents RazonSocialDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CuitDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Cuit As DataGridViewTextBoxColumn
+    Friend WithEvents RazonSocial As DataGridViewTextBoxColumn
 End Class

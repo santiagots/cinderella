@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>262</ApplicationRevision>
+    <ApplicationRevision>267</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -127,6 +127,10 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CodigoBarras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dlls\CodigoBarras.dll</HintPath>
@@ -135,6 +139,14 @@
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>packages\FluentValidation.8.1.2\lib\net45\FluentValidation.dll</HintPath>
@@ -144,12 +156,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dlls\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.BatchParserClient, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Smo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
@@ -160,7 +177,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
@@ -212,12 +229,12 @@
     <Compile Include="Formularios\frmCostoFinancieroAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="db\DsDatos.Designer.vb">
+    <Compile Include="DB\DsDatos.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DsDatos.xsd</DependentUpon>
     </Compile>
-    <Compile Include="db\DsDatos.vb">
+    <Compile Include="DB\DsDatos.vb">
       <DependentUpon>DsDatos.xsd</DependentUpon>
     </Compile>
     <Compile Include="Formularios\DialogIngresos.Designer.vb">
@@ -262,10 +279,16 @@
     <Compile Include="Formularios\frmBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmBuscarClienteMinorista.Designer.vb">
+    <Compile Include="Formularios\Ventas\ControlesUsuario\VentaDetalle.Designer.vb">
+      <DependentUpon>VentaDetalle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Ventas\ControlesUsuario\VentaDetalle.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmBuscarClienteMinorista.Designer.vb">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmBuscarClienteMinorista.vb">
+    <Compile Include="Formularios\Ventas\frmBuscarClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmBuscarClienteMayorista.Designer.vb">
@@ -334,10 +357,10 @@
     <Compile Include="Formularios\frmControladorFiscal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmDatosClienteMinorista.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmDatosClienteMinorista.Designer.vb">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmDatosClienteMinorista.vb">
+    <Compile Include="Formularios\Ventas\frmDatosClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmDevoluciones.Designer.vb">
@@ -424,10 +447,16 @@
     <Compile Include="Formularios\frmFacturaAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmFacturar.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmFacturar.Designer.vb">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmFacturar.vb">
+    <Compile Include="Formularios\Ventas\frmFacturar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmFacturarNueva.Designer.vb">
+      <DependentUpon>frmFacturarNueva.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmFacturarNueva.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmFeriados.Designer.vb">
@@ -694,10 +723,10 @@
     <Compile Include="Formularios\frmReporteEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmReporteNotaPedido.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmReporteNotaPedido.Designer.vb">
       <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmReporteNotaPedido.vb">
+    <Compile Include="Formularios\Ventas\frmReporteNotaPedido.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmReportePrecios.Designer.vb">
@@ -718,10 +747,10 @@
     <Compile Include="Formularios\frmReportePresupuesto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmReporteResumenReserva.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmReporteResumenReserva.Designer.vb">
       <DependentUpon>frmReporteResumenReserva.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmReporteResumenReserva.vb">
+    <Compile Include="Formularios\Ventas\frmReporteResumenReserva.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmReporteResumenVenta.Designer.vb">
@@ -736,16 +765,28 @@
     <Compile Include="Formularios\frmResumenDiario.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmSeniaAdministracion.Designer.vb">
-      <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
+    <Compile Include="Formularios\Ventas\frmReserva.Designer.vb">
+      <DependentUpon>frmReserva.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmSeniaAdministracion.vb">
+    <Compile Include="Formularios\Ventas\frmReserva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmSeniaDatos.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmReservaAdminitracion.Designer.vb">
+      <DependentUpon>frmReservaAdminitracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmReservaAdminitracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmSeniaAdministracion.Designer.vb">
+      <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmSeniaAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Ventas\frmSeniaDatos.Designer.vb">
       <DependentUpon>frmSeniaDatos.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmSeniaDatos.vb">
+    <Compile Include="Formularios\Ventas\frmSeniaDatos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmSincronizacion.Designer.vb">
@@ -814,16 +855,16 @@
     <Compile Include="Formularios\frmUsuarios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmVentas.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmVentas.Designer.vb">
       <DependentUpon>frmVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmVentas.vb">
+    <Compile Include="Formularios\Ventas\frmVentas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmVentasAdministracion.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmVentasAdministracion.Designer.vb">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmVentasAdministracion.vb">
+    <Compile Include="Formularios\Ventas\frmVentasAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmVerAdelantos.Designer.vb">
@@ -964,6 +1005,12 @@
     <Compile Include="Formularios\frmVerVentas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\Ventas\ControlesUsuario\ReservaDetalle.Designer.vb">
+      <DependentUpon>ReservaDetalle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Ventas\ControlesUsuario\ReservaDetalle.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Funciones.vb" />
     <Compile Include="Formularios\MDIContenedor.Designer.vb">
       <DependentUpon>MDIContenedor.vb</DependentUpon>
@@ -986,10 +1033,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Formularios\frmNotaPedidoAdministracion.Designer.vb">
+    <Compile Include="Formularios\Ventas\frmNotaPedidoAdministracion.Designer.vb">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmNotaPedidoAdministracion.vb">
+    <Compile Include="Formularios\Ventas\frmNotaPedidoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmPresupuestoAdministracion.Designer.vb">
@@ -1058,6 +1105,12 @@
       <DependentUpon>ReportePresupuesto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\ReporteTransaccion.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteTransaccion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Settings.vb" />
     <Compile Include="Formularios\SplashScreen.Designer.vb">
       <DependentUpon>SplashScreen.vb</DependentUpon>
@@ -1073,14 +1126,22 @@
     <Compile Include="Utils\SortableBindingList.vb" />
     <Compile Include="VariablesGlobales.vb" />
     <Compile Include="VistaModelo\Common.vb" />
+    <Compile Include="VistaModelo\Ventas\frmBuscarClienteMinoristaViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\frmReservaViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\frmReservaAdministracionViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\NotaPedidoItemsViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\frmFacturarViewModel.vb" />
     <Compile Include="VistaModelo\frmProductos\Producto.vb" />
-    <Compile Include="VistaModelo\frmVentas\Pago.vb" />
-    <Compile Include="VistaModelo\frmVentas\Producto.vb" />
-    <Compile Include="VistaModelo\frmVentas\ProductoPago.vb" />
-    <Compile Include="VistaModelo\frmVentas\Validadores\PagoValidator.vb" />
-    <Compile Include="VistaModelo\frmVentas\Venta.vb" />
-    <Compile Include="VistaModelo\frmVentas\Validadores\ventaValidator.vb" />
-    <Compile Include="VistaModelo\frmVentas\VentaNueva.vb" />
+    <Compile Include="VistaModelo\Ventas\frmNotaPedidoAdministracionViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\PagoViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\ReservaAdministracionItemsViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\ReservaDetalle.vb" />
+    <Compile Include="VistaModelo\Ventas\Servicio\Servicio.vb" />
+    <Compile Include="VistaModelo\Ventas\frmVentasAdministracionViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\VentaDetalle.vb" />
+    <Compile Include="VistaModelo\Ventas\VentaItemViewModel.vb" />
+    <Compile Include="VistaModelo\Ventas\Mapper\MapperProfile.vb" />
+    <Compile Include="VistaModelo\Ventas\frmVentasViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
@@ -1116,7 +1177,13 @@
     <EmbeddedResource Include="Formularios\frmBrowser.resx">
       <DependentUpon>frmBrowser.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmBuscarClienteMinorista.resx">
+    <EmbeddedResource Include="Formularios\Ventas\ControlesUsuario\ReservaDetalle.resx">
+      <DependentUpon>ReservaDetalle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Ventas\ControlesUsuario\VentaDetalle.resx">
+      <DependentUpon>VentaDetalle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Ventas\frmBuscarClienteMinorista.resx">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmBuscarClienteMayorista.resx">
@@ -1152,7 +1219,7 @@
     <EmbeddedResource Include="Formularios\frmControladorFiscal.resx">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmDatosClienteMinorista.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmDatosClienteMinorista.resx">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmDevoluciones.resx">
@@ -1197,8 +1264,11 @@
     <EmbeddedResource Include="Formularios\frmFacturaAdministracion.resx">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmFacturar.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmFacturar.resx">
       <DependentUpon>frmFacturar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Ventas\frmFacturarNueva.resx">
+      <DependentUpon>frmFacturarNueva.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmFeriados.resx">
       <DependentUpon>frmFeriados.vb</DependentUpon>
@@ -1336,7 +1406,7 @@
     <EmbeddedResource Include="Formularios\frmReporteEtiquetasMasivas.resx">
       <DependentUpon>frmReporteEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmReporteNotaPedido.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmReporteNotaPedido.resx">
       <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmReportePrecios.resx">
@@ -1348,7 +1418,7 @@
     <EmbeddedResource Include="Formularios\frmReportePresupuesto.resx">
       <DependentUpon>frmReportePresupuesto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmReporteResumenReserva.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmReporteResumenReserva.resx">
       <DependentUpon>frmReporteResumenReserva.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmReporteResumenVenta.resx">
@@ -1357,10 +1427,16 @@
     <EmbeddedResource Include="Formularios\frmResumenDiario.resx">
       <DependentUpon>frmResumenDiario.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmSeniaAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmReserva.resx">
+      <DependentUpon>frmReserva.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Ventas\frmReservaAdminitracion.resx">
+      <DependentUpon>frmReservaAdminitracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Ventas\frmSeniaAdministracion.resx">
       <DependentUpon>frmSeniaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmSeniaDatos.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmSeniaDatos.resx">
       <DependentUpon>frmSeniaDatos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmSincronizacion.resx">
@@ -1396,10 +1472,10 @@
     <EmbeddedResource Include="Formularios\frmUsuarios.resx">
       <DependentUpon>frmUsuarios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmVentas.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmVentas.resx">
       <DependentUpon>frmVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmVentasAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmVentasAdministracion.resx">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1481,7 +1557,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmNotaPedidoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Ventas\frmNotaPedidoAdministracion.resx">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmPresupuestoAdministracion.resx">
@@ -1495,18 +1571,23 @@
     </EmbeddedResource>
     <Content Include="bin\dlls\Interop.EpsonFPHostControlX.dll" />
     <Content Include="bin\dlls\itextsharp.dll" />
-    <Content Include="db\CINDERELLA_LOCAL.mdf">
+    <Content Include="DB\CINDERELLA_LOCAL.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="db\CINDERELLA_LOCAL_log.ldf">
+    <Content Include="DB\CINDERELLA_LOCAL_log.ldf">
       <DependentUpon>CINDERELLA_LOCAL.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="db\Script\01AlterSP.sql" />
-    <Content Include="db\Script\Blanco.txt">
+    <Content Include="DB\Script\01AlterSP.sql" />
+    <Content Include="DB\Script\02AlterTables.sql" />
+    <Content Include="DB\Script\Blanco.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Imagenes\adelantos.png" />
+    <EmbeddedResource Include="Reportes\ReporteTransaccion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteTransaccion.vb</LastGenOutput>
+    </EmbeddedResource>
     <None Include="Imagenes\banco.png" />
     <Content Include="Imagenes\Boton_Ventas.png" />
     <Content Include="Imagenes\btn_AbrirCaja_32.png" />
@@ -1638,21 +1719,52 @@
     <EmbeddedResource Include="Formularios\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmFacturar.FacturarViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.PagoValidator.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.PagoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.Producto.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.ProductoPago.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.Venta.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.VentaItemViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.VentaNueva.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.ventaValidator.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.VentaViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.FacturarViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmBuscarClienteMinoristaViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmFacturarViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmNotaPedidoAdministracionViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmReservaAdministracionViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmReservaViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel+CargarProductoNombreyCodigoDelegate.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel+FacturarDelegate.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel+FacturarDelegateCallBack.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel+StockInsuficienteDelegate.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.MapperProfile.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.NotaPedidoItemsViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.NotaPedidoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.PagoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.ReservaAdministracionItemsViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.ReservaDetalle.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.Servicio.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.VentaDetalle.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.VentaItemViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.VentaViewModel.datasource" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="db\DsDatos.xsc">
+    <None Include="DB\DsDatos.xsc">
       <DependentUpon>DsDatos.xsd</DependentUpon>
     </None>
-    <None Include="db\DsDatos.xsd">
+    <None Include="DB\DsDatos.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DsDatos.Designer.vb</LastGenOutput>
     </None>
-    <None Include="db\DsDatos.xss">
+    <None Include="DB\DsDatos.xss">
       <DependentUpon>DsDatos.xsd</DependentUpon>
     </None>
     <None Include="Imagenes\App.config">
@@ -1699,17 +1811,33 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Service\Common.Service.csproj">
+      <Project>{6CD90B40-30A0-4AD5-A5BF-11B2A2EFDD71}</Project>
+      <Name>Common.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Comunes\Comunes.csproj">
       <Project>{9418cc85-d313-44f6-9b84-2670327f5c18}</Project>
       <Name>Comunes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ventas.Core\Ventas.Core.csproj">
-      <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
-      <Name>Ventas.Core</Name>
+    <ProjectReference Include="..\Ventas.Suport\Ventas.Suport.csproj">
+      <Project>{78ea4aa7-c920-4377-ae7f-6081e1320420}</Project>
+      <Name>Ventas.Suport</Name>
     </ProjectReference>
     <ProjectReference Include="Common.Core\Common.Core.csproj">
       <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
       <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Common.Data\Common.Data.csproj">
+      <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
+      <Name>Common.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="Common.Device\Common.Device.csproj">
+      <Project>{72CB5F3C-E9A6-438F-9CCB-090DF126BDD8}</Project>
+      <Name>Common.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="Controles\Controles.csproj">
+      <Project>{197444e3-7a32-4a44-a9a0-551595095a64}</Project>
+      <Name>Controles</Name>
     </ProjectReference>
     <ProjectReference Include="Datos\Datos.vbproj">
       <Project>{031B7818-3E58-477F-BFAD-17166F3026AF}</Project>
@@ -1726,6 +1854,14 @@
     <ProjectReference Include="Servicios\Servicios.vbproj">
       <Project>{59afdba5-8c7e-4c73-8a37-a7aabd4fec7f}</Project>
       <Name>Servicios</Name>
+    </ProjectReference>
+    <ProjectReference Include="Ventas.Core\Ventas.Core.csproj">
+      <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
+      <Name>Ventas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Ventas.Data\Ventas.Data.csproj">
+      <Project>{9604A1B8-8F7F-4B63-967E-EC7AEE5A9453}</Project>
+      <Name>Ventas.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

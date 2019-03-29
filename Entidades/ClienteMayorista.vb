@@ -1,24 +1,24 @@
 ﻿Public Class ClienteMayorista
 
-    Public Id As Integer
-    Public RazonSocial As String
-    Public Nombre As String
-    Public Cuit As String
-    Public IdCondicionIva As Integer
-    Public Comision As Integer?
-    Public IdCorredor As Integer
-    Public Transporte As String
-    Public Bonificacion As Integer?
-    Public Lista As Integer?
-    Public CondicionPago As String
-    Public IdEmpresa As Integer
-    Public IdListaPrecio As Integer
-    Public Observaciones As String
-    Public IdDireccionFacturacion As Integer
-    Public IdDireccionEntrega As Integer
-    Public Habilitado As Boolean
-    Public SaldoNotaPedido As Decimal
-    Public SaldoCuentaCorriente As Decimal
+    Public Property Id As Integer
+    Public Property RazonSocial As String
+    Public Property Nombre As String
+    Public Property Cuit As String
+    Public Property IdCondicionIva As Integer
+    Public Property Comision As Integer?
+    Public Property IdCorredor As Integer
+    Public Property Transporte As String
+    Public Property Bonificacion As Integer?
+    Public Property Lista As Integer?
+    Public Property CondicionPago As String
+    Public Property IdEmpresa As Integer
+    Public Property IdListaPrecio As Integer
+    Public Property Observaciones As String
+    Public Property IdDireccionFacturacion As Integer
+    Public Property IdDireccionEntrega As Integer
+    Public Property Habilitado As Boolean
+    Public Property SaldoNotaPedido As Decimal
+    Public Property SaldoCuentaCorriente As Decimal
 
     Sub New()
         Id = 0

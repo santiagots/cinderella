@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.EpsonFPHostControlX">
+      <HintPath>..\dlls\Interop.EpsonFPHostControlX.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\dlls\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,10 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\FormaPago.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Enum\CondicionesIVA.cs" />
+    <Compile Include="Enum\TipoCliente.cs" />
+    <Compile Include="Enum\TipoEmpleado.cs" />
+    <Compile Include="Enum\TipoFactura.cs" />
+    <Compile Include="Enum\TipoPago.cs" />
     <Compile Include="Exceptions\NegocioException.cs" />
+    <Compile Include="Extension\ToList.cs" />
+    <Compile Include="Helper\Cuit.cs" />
+    <Compile Include="Helper\IdGenerator.cs" />
+    <Compile Include="Interfaces\IFeriadoRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\Feriado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjects\TicketPago.cs" />
+    <Compile Include="ValueObjects\TicketProducto.cs" />
     <Compile Include="ValueObjects\ValueObjects.cs" />
   </ItemGroup>
   <ItemGroup />
