@@ -18,6 +18,5 @@ namespace Ventas.Core.Model.BaseAgreggate
         public Localidad Localidad { get; internal set; }
         public string Telefono { get; internal set; }
         public string Email { get; internal set; }
-
     }
 }

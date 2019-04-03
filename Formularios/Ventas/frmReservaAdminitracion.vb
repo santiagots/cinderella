@@ -37,7 +37,7 @@ Public Class frmReservaAdminitracion
                           End If
 
                           If DataGridView1.Columns(e.ColumnIndex).Name = "ReservaImprimir" Then
-                              Await frmReservaAdministracionViewModel.ImprimirReservaAsync(DataGridView1.CurrentRow.DataBoundItem, Me)
+                              Await frmReservaAdministracionViewModel.ImprimirReservaAsync(DataGridView1.CurrentRow.DataBoundItem, Me.MdiParent)
                           End If
 
                           ReservaDetalle1.ReservaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.ReservaDetalleSeleccionada
@@ -50,6 +50,7 @@ Public Class frmReservaAdminitracion
                           Await frmReservaAdministracionViewModel.CargarReservaAsync(DataGridView1.CurrentRow.DataBoundItem)
                           ReservaDetalle1.ReservaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.ReservaDetalleSeleccionada
                           ReservaDetalle1.VentaDetalle1.VentaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.VentaDetalleSeleccionada
+                          tabAdministracionReservas.SelectedTab = tabDetalle
                       End Function)
     End Sub
 

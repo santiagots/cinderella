@@ -111,6 +111,7 @@ namespace Ventas.Data
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
+            modelBuilder.Entity<Pago>().Ignore(t => t.MontoRestante);
 
             modelBuilder.Entity<Reserva>().ToTable("NUEVA_RESERVA");
             modelBuilder.Entity<Reserva>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);

@@ -7,5 +7,6 @@
         Public Property CFT As Decimal
         Public Property IVA As Decimal
         Public Property Total As Decimal
+        Public Property Resto As Decimal
     End Class
 End Namespace

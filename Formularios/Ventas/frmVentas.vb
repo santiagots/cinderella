@@ -39,7 +39,8 @@ Public Class frmVentas
                                             5,
                                             AddressOf CargarNombreYCodigoDeProductosEvent,
                                             AddressOf StockInsuficienteEvent,
-                                            AddressOf FacturarEvent)
+                                            AddressOf FacturarEvent,
+                                            AddressOf TerminarVentaEvent)
 
                           VentaViewModelBindingSource.DataSource = ventaViewModel
                           Await ventaViewModel.CargarDatosAsync()
@@ -265,11 +266,23 @@ Public Class frmVentas
         End If
     End Sub
 
+    Private Sub dgPagos_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgPagos.CellFormatting
+        If dgPagos.Columns(e.ColumnIndex).Name = "PagoCorregir" Then
+            Dim pagoViewModel As PagoViewModel = dgPagos.Rows(e.RowIndex).DataBoundItem
+            If (pagoViewModel.Resto = 0) Then
+                e.Value = New Bitmap(1, 1)
+            End If
+        End If
+    End Sub
+
     Private Sub dgPagos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgPagos.CellContentClick
         Ejecutar(
             Sub()
                 If (dgPagos.Columns(e.ColumnIndex).Name = "PagoQuitar") Then
                     ventaViewModel.QuitarPago(dgPagos.CurrentRow.DataBoundItem)
+                End If
+                If (dgPagos.Columns(e.ColumnIndex).Name = "PagoCorregir") Then
+                    ventaViewModel.CorregirPago(dgPagos.CurrentRow.DataBoundItem)
                 End If
             End Sub)
     End Sub
@@ -331,6 +344,11 @@ Public Class frmVentas
         stockCargado = form.stockCargado
         Return form.DialogResult = DialogResult.OK
     End Function
+
+    Public Sub TerminarVentaEvent()
+        MessageBox.Show("Los datos se han guardado de forma correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Me.Dispose()
+    End Sub
 
     Public Sub FacturarEvent(facturarViewModel As frmFacturarViewModel)
         EjecutarAsync(

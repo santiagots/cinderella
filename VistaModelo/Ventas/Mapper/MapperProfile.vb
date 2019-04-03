@@ -63,7 +63,8 @@ Namespace VistaModelo.Ventas
                  .ForMember(Function(des) des.Id, Sub(opt) opt.MapFrom(Function(src) src.Id)) _
                  .ForMember(Function(des) des.IVA, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.IVA)) _
                  .ForMember(Function(des) des.Monto, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Monto)) _
-                 .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Total))
+                 .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Total)) _
+                 .ForMember(Function(des) des.Resto, Sub(opt) opt.MapFrom(Function(src) src.MontoRestante))
 
             CreateMap(Of Model.NotaPedidoAgreggate.NotaPedido, NotaPedidoItemsViewModel)() _
                  .ForMember(Function(des) des.Vendedor, Sub(opt) opt.MapFrom(Function(src) src.Vendedor.ApellidoYNombre)) _

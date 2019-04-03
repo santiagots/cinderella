@@ -13,15 +13,17 @@ namespace Ventas.Core.Model.VentaAggregate
         public MontoPago MontoPago { get; private set; }
         public string Tarjeta { get; private set; }
         public int NumeroCuotas { get; private set; }
+        public decimal PorcentajeRecargo { get; private set; }
         public TipoPago TipoPago { get; private set; }
         public DateTime FechaEdicion { get; private set; }
         public virtual Venta Venta { get; private set; }
-
+        public decimal MontoRestante { get; private set; }
+        
         protected Pago()
         {
         }
 
-        public Pago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal monto, decimal descuento, decimal cft, decimal iva): base(true)
+        public Pago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal porcentajeRecargo, decimal monto, decimal montoRestante, decimal descuento, decimal cft, decimal iva): base(true)
         {
             if((tipoPago == TipoPago.TarjetaCredito || tipoPago == TipoPago.TarjetaDebito) && string.IsNullOrEmpty(tarjeta))
                     throw new NegocioException("Error al crear el pago. La trajeta no puede ser vacia.");
@@ -31,10 +33,31 @@ namespace Ventas.Core.Model.VentaAggregate
 
             IdVenta = IdVenta;
             TipoPago = tipoPago;
+            PorcentajeRecargo = porcentajeRecargo;
             MontoPago = new MontoPago(monto, descuento, cft, iva);
             Tarjeta = tarjeta;
             NumeroCuotas = numeroCuotas;
             FechaEdicion = DateTime.Now;
+            MontoRestante = montoRestante;
+        }
+
+        internal void Corregir()
+        {
+            MontoPago = new MontoPago(MontoPago.Monto - MontoRestante, MontoPago.Descuento, MontoPago.CFT, MontoPago.IVA);
+            ActualizarMontoRestante(0);
+        }
+
+        internal void ActualizarIva(decimal iva)
+        {
+            MontoPago = new MontoPago(MontoPago.Monto, MontoPago.Descuento, MontoPago.CFT, iva);
+        }
+        internal void ActualizarDescuento(decimal descuento)
+        {
+            MontoPago = new MontoPago(MontoPago.Monto, descuento, MontoPago.CFT, MontoPago.IVA);
+        }
+        internal void ActualizarMontoRestante(decimal montoRestante)
+        {
+            MontoRestante = montoRestante;
         }
 
         public override string ToString()

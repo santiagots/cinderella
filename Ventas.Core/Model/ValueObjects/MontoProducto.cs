@@ -27,6 +27,11 @@ namespace Ventas.Core.Model.ValueObjects
             return new MontoProducto(a.Valor + b.Valor, a.Iva + b.Iva);
         }
 
+        public static MontoProducto operator -(MontoProducto a, MontoProducto b)
+        {
+            return new MontoProducto(a.Valor - b.Valor, a.Iva - b.Iva);
+        }
+
         public static MontoProducto operator *(MontoProducto a, decimal b)
         {
             return new MontoProducto(a.Valor * b, a.Iva * b);

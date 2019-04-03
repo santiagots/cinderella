@@ -10,6 +10,7 @@ namespace Ventas.Core.Model.ValueObjects
         public decimal IVA { get; protected set; }
         public decimal Total { get { return Monto - Descuento + CFT + IVA; } }
 
+
         protected MontoPago()
         {
         }
