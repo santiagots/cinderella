@@ -1521,6 +1521,9 @@ Public Class MDIContenedor
             dialogoConexion.ShowDialog()
         Else
             Me.Cursor = Cursors.WaitCursor
+
+            Dim frmNotificacionesListado As frmNotificacionesListado = New frmNotificacionesListado()
+            frmNotificacionesListado.Show()
             Funciones.ControlInstancia(frmNotificacionesListado).MdiParent = Me
             Funciones.ControlInstancia(frmNotificacionesListado).Show()
             Me.Cursor = Cursors.Arrow
@@ -1679,15 +1682,15 @@ Public Class MDIContenedor
 
     Private Sub AdministraciónToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles AdministraciónToolStripMenuItem2.Click, Menu_ChequesVencer.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmChequesAdministracion).MdiParent = Me
-        Funciones.ControlInstancia(frmChequesAdministracion).Show()
+        Funciones.ControlInstancia(frmChequeAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmChequeAdministracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub AltaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AltaToolStripMenuItem.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmChequesAlta).MdiParent = Me
-        Funciones.ControlInstancia(frmChequesAlta).Show()
+        Funciones.ControlInstancia(frmChequeAlta).MdiParent = Me
+        Funciones.ControlInstancia(frmChequeAlta).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

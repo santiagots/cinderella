@@ -8,5 +8,6 @@
         Public Property IVA As Decimal
         Public Property Total As Decimal
         Public Property Resto As Decimal
+        Public Property Habilitado As Boolean
     End Class
 End Namespace

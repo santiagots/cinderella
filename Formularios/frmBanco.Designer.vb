@@ -32,11 +32,12 @@ Partial Class frmBanco
         Me.BtnActualizar = New System.Windows.Forms.Button()
         Me.btnAgregar = New System.Windows.Forms.Button()
         Me.dgvBancos = New System.Windows.Forms.DataGridView()
-        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.BancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Btn_Salir = New System.Windows.Forms.Button()
+        Me.TarjetaId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgvBancos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BancoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,7 +130,7 @@ Partial Class frmBanco
         Me.dgvBancos.AutoGenerateColumns = False
         Me.dgvBancos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvBancos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvBancos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NombreDataGridViewTextBoxColumn, Me.HabilitadoDataGridViewCheckBoxColumn})
+        Me.dgvBancos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TarjetaId, Me.NombreDataGridViewTextBoxColumn, Me.HabilitadoDataGridViewCheckBoxColumn})
         Me.dgvBancos.DataSource = Me.BancoBindingSource
         Me.dgvBancos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvBancos.Location = New System.Drawing.Point(3, 16)
@@ -138,22 +139,6 @@ Partial Class frmBanco
         Me.dgvBancos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvBancos.Size = New System.Drawing.Size(318, 165)
         Me.dgvBancos.TabIndex = 3
-        '
-        'NombreDataGridViewTextBoxColumn
-        '
-        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.FillWeight = 149.2386!
-        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
-        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'HabilitadoDataGridViewCheckBoxColumn
-        '
-        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.FillWeight = 50.76142!
-        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
-        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
         '
         'BancoBindingSource
         '
@@ -187,6 +172,29 @@ Partial Class frmBanco
         Me.Btn_Salir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Salir.UseVisualStyleBackColor = True
         '
+        'TarjetaId
+        '
+        Me.TarjetaId.DataPropertyName = "BancoId"
+        Me.TarjetaId.HeaderText = "TarjetaId"
+        Me.TarjetaId.Name = "TarjetaId"
+        Me.TarjetaId.Visible = False
+        '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.FillWeight = 149.2386!
+        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'HabilitadoDataGridViewCheckBoxColumn
+        '
+        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.FillWeight = 50.76142!
+        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
+        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
+        '
         'frmBanco
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -218,7 +226,8 @@ Partial Class frmBanco
     Friend WithEvents chkHabilitado As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents BancoIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NombreDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents HabilitadoDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents Btn_Salir As System.Windows.Forms.Button
+    Friend WithEvents TarjetaId As DataGridViewTextBoxColumn
+    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents HabilitadoDataGridViewCheckBoxColumn As DataGridViewCheckBoxColumn
 End Class

@@ -18,12 +18,13 @@ namespace Ventas.Core.Model.VentaAggregate
         public DateTime FechaEdicion { get; private set; }
         public virtual Venta Venta { get; private set; }
         public decimal MontoRestante { get; private set; }
-        
+        public bool Habilitado { get; private set; }
+
         protected Pago()
         {
         }
 
-        public Pago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal porcentajeRecargo, decimal monto, decimal montoRestante, decimal descuento, decimal cft, decimal iva): base(true)
+        public Pago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal porcentajeRecargo, decimal monto, decimal montoRestante, decimal descuento, decimal cft, decimal iva, bool habilitado = true): base(true)
         {
             if((tipoPago == TipoPago.TarjetaCredito || tipoPago == TipoPago.TarjetaDebito) && string.IsNullOrEmpty(tarjeta))
                     throw new NegocioException("Error al crear el pago. La trajeta no puede ser vacia.");
@@ -39,6 +40,7 @@ namespace Ventas.Core.Model.VentaAggregate
             NumeroCuotas = numeroCuotas;
             FechaEdicion = DateTime.Now;
             MontoRestante = montoRestante;
+            Habilitado = habilitado;
         }
 
         internal void Corregir()
@@ -53,7 +55,8 @@ namespace Ventas.Core.Model.VentaAggregate
         }
         internal void ActualizarDescuento(decimal descuento)
         {
-            MontoPago = new MontoPago(MontoPago.Monto, descuento, MontoPago.CFT, MontoPago.IVA);
+            if (Habilitado)
+                MontoPago = new MontoPago(MontoPago.Monto, descuento, MontoPago.CFT, MontoPago.IVA);
         }
         internal void ActualizarMontoRestante(decimal montoRestante)
         {

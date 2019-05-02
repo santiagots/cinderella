@@ -61,7 +61,14 @@ Public Class frmVentas
 
     Private Sub Btn_Agregar_Click(sender As Object, e As EventArgs) Handles Btn_Agregar.Click
         Ejecutar(Sub()
-                     ventaViewModel.AgregaItemVenta()
+                     ventaViewModel.AgregaItemVenta(False)
+                     Btn_Agregar.Focus()
+                 End Sub)
+    End Sub
+
+    Private Sub Btn_Cambiar_Click(sender As Object, e As EventArgs) Handles Btn_Cambiar.Click
+        Ejecutar(Sub()
+                     ventaViewModel.AgregaItemVenta(True)
                      Btn_Agregar.Focus()
                  End Sub)
     End Sub
@@ -78,7 +85,7 @@ Public Class frmVentas
         Ejecutar(
             Sub()
                 If (e.KeyData = Keys.Enter) Then
-                    ventaViewModel.AgregaItemVenta()
+                    ventaViewModel.AgregaItemVenta(False)
                 End If
             End Sub)
     End Sub
@@ -267,12 +274,21 @@ Public Class frmVentas
     End Sub
 
     Private Sub dgPagos_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgPagos.CellFormatting
-        If dgPagos.Columns(e.ColumnIndex).Name = "PagoCorregir" Then
+        Try
             Dim pagoViewModel As PagoViewModel = dgPagos.Rows(e.RowIndex).DataBoundItem
-            If (pagoViewModel.Resto = 0) Then
-                e.Value = New Bitmap(1, 1)
+            If dgPagos.Columns(e.ColumnIndex).Name = "PagoCorregir" Then
+                If (pagoViewModel.Resto = 0) Then
+                    e.Value = New Bitmap(1, 1)
+                End If
             End If
-        End If
+            If dgPagos.Columns(e.ColumnIndex).Name = "PagoQuitar" Then
+                If (Not pagoViewModel.Habilitado) Then
+                    e.Value = New Bitmap(1, 1)
+                End If
+            End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub dgPagos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgPagos.CellContentClick

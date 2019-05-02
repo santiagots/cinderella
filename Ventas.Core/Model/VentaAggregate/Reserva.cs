@@ -10,6 +10,7 @@ namespace Ventas.Core.Model.VentaAggregate
 {
     public class Reserva : Entity<long>
     {
+        public int IdSucursal { get; private set; }
         public string Nombre { get; private set; }
         public string Apellido { get; private set; }
         public string Telefono { get; private set; }

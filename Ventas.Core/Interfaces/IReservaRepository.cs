@@ -11,7 +11,7 @@ namespace Ventas.Core.Interfaces
     public interface IReservaRepository
     {
         void Guardar(Reserva reserva);
-        IEnumerable<Reserva> Buscar(bool entregada, string nombre, DateTime? fechaAlta, DateTime? fechaRetiro, ReservaMetodoEntrega? metodoEntrega);
+        IEnumerable<Reserva> Buscar(int idSucursal, bool entregada, string nombre, DateTime? fechaAlta, DateTime? fechaRetiro, ReservaMetodoEntrega? metodoEntrega);
         Reserva Obtener(long idReserva);
         void Eliminar(long id);
     }

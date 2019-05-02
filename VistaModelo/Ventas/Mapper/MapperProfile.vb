@@ -8,7 +8,7 @@ Namespace VistaModelo.Ventas
         Inherits Profile
 
         Public Sub New()
-            CreateMap(Of Model.VentaAggregate.Venta, VentaDetalle)() _
+            CreateMap(Of Model.VentaAggregate.Venta, VentaDetalleViewModel)() _
                 .ForMember(Function(des) des.Fecha, Sub(opt) opt.MapFrom(Function(src) src.Fecha)) _
                 .ForMember(Function(des) des.NombreClienteMayorista, Sub(opt) opt.MapFrom(Function(src) src.ClienteMayorista.RazonSocial)) _
                 .ForMember(Function(des) des.NombreEncargado, Sub(opt) opt.MapFrom(Function(src) src.Encargado.ApellidoYNombre)) _
@@ -64,21 +64,13 @@ Namespace VistaModelo.Ventas
                  .ForMember(Function(des) des.IVA, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.IVA)) _
                  .ForMember(Function(des) des.Monto, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Monto)) _
                  .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Total)) _
-                 .ForMember(Function(des) des.Resto, Sub(opt) opt.MapFrom(Function(src) src.MontoRestante))
+                 .ForMember(Function(des) des.Resto, Sub(opt) opt.MapFrom(Function(src) src.MontoRestante)) _
+                 .ForMember(Function(des) des.Habilitado, Sub(opt) opt.MapFrom(Function(src) src.Habilitado))
 
             CreateMap(Of Model.NotaPedidoAgreggate.NotaPedido, NotaPedidoItemsViewModel)() _
                  .ForMember(Function(des) des.Vendedor, Sub(opt) opt.MapFrom(Function(src) src.Vendedor.ApellidoYNombre)) _
                  .ForMember(Function(des) des.MontoTotal, Sub(opt) opt.MapFrom(Function(src) src.MontoTotal.toDecimal())) _
                  .ForMember(Function(des) des.NombreCliente, Sub(opt) opt.MapFrom(Function(src) If(src.ClienteMinorista IsNot Nothing, src.ClienteMinorista.ApellidoYNombre, src.ClienteMayorista.RazonSocial)))
-
-            CreateMap(Of Model.VentaAggregate.Reserva, ReservaAdministracionItemsViewModel)() _
-                .ForMember(Function(des) des.Nombre, Sub(opt) opt.MapFrom(Function(src) $"{src.Apellido} {src.Nombre}".Trim()))
-
-            CreateMap(Of Model.VentaAggregate.Reserva, ReservaDetalle)() _
-                .ForMember(Function(des) des.EnvioNovedades, Sub(opt) opt.Ignore()) _
-                .ForMember(Function(des) des.NoEnvioNovedades, Sub(opt) opt.Ignore()) _
-                .ForMember(Function(des) des.MetodoEntrega, Sub(opt) opt.Ignore()) _
-                .ForMember(Function(des) des.MetodoEntregaSeleccionado, Sub(opt) opt.MapFrom(Function(src) New KeyValuePair(Of ReservaMetodoEntrega?, String)(src.MetodoEntrega, src.MetodoEntrega.ToString())))
         End Sub
     End Class
 End Namespace

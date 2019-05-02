@@ -18,6 +18,8 @@ Imports Ventas.Core.Model.BaseAgreggate
 Imports AutoMapper
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Common.Core.Enum
+Imports SistemaCinderella.Formularios.Reserva
+Imports Common.Core.Model
 
 Namespace VistaModelo.Ventas
     Public Class frmVentasViewModel
@@ -228,7 +230,7 @@ Namespace VistaModelo.Ventas
             CargarProductosEnVenta(reservaModel.VentaReserva.VentaItems.Cast(Of TransaccionItem)().ToList(), reservaModel.VentaReserva.TipoCliente)
 
             For Each pago As Pago In reserva.VentaReserva.Pagos
-                ventaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Total + pago.MontoPago.Descuento, pago.MontoPago.CFT, pago.MontoPago.IVA, pago.TipoPago, pago.PorcentajeRecargo, reservaModel.VentaReserva.PorcentajeFacturacion, reservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas)
+                ventaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Total + pago.MontoPago.Descuento, pago.MontoPago.CFT, pago.MontoPago.IVA, pago.TipoPago, pago.PorcentajeRecargo, reservaModel.VentaReserva.PorcentajeFacturacion, reservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
             Next
 
             CalcularPendientePago()
@@ -304,16 +306,16 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Async Function ReservaAsyn() As Task
-            Dim ventaDetalle As VentaDetalle = Mapper.Map(Of VentaDetalle)(ventaModel)
-            Dim frmReservaViewModel As frmReservaViewModel = New frmReservaViewModel(ventaDetalle)
+            Dim ventaDetalleViewModel As VentaDetalleViewModel = Mapper.Map(Of VentaDetalleViewModel)(ventaModel)
+            Dim frmReservaViewModel As frmReservaViewModel = New frmReservaViewModel(ventaDetalleViewModel)
 
             If (TipoClienteSeleccionado = Enums.TipoCliente.Mayorista) Then
-                Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Servicio.ObtenerClienteMayorista(IdClienteMayorista))
+                Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(IdClienteMayorista))
                 frmReservaViewModel.ReservaDetalle.Nombre = clienteMayorista.RazonSocial
                 frmReservaViewModel.ReservaDetalle.Apellido = " "
-                frmReservaViewModel.ReservaDetalle.Telefono = clienteMayorista.DomicilioFacturacion.Telefono
-                frmReservaViewModel.ReservaDetalle.Direccion = clienteMayorista.DomicilioFacturacion.Direccion
-                frmReservaViewModel.ReservaDetalle.Email = clienteMayorista.DomicilioFacturacion.Email
+                frmReservaViewModel.ReservaDetalle.Telefono = clienteMayorista?.DomicilioFacturacion?.Telefono
+                frmReservaViewModel.ReservaDetalle.Direccion = clienteMayorista?.DomicilioFacturacion?.Direccion
+                frmReservaViewModel.ReservaDetalle.Email = clienteMayorista?.DomicilioFacturacion?.Email
             End If
 
 
@@ -356,6 +358,8 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Async Function FinalizarVentaAsyn(desdeReserva As Boolean) As Task
+            AgregarCheque()
+
             If (PorcentajeFacturacion > 0) Then
                 FacturarEvent(New frmFacturarViewModel(ventaModel, FacturarCallBackEvent, desdeReserva))
             Else
@@ -402,7 +406,7 @@ Namespace VistaModelo.Ventas
             End If
         End Function
 
-        Friend Sub AgregaItemVenta()
+        Friend Sub AgregaItemVenta(cambio As Boolean)
             Dim producto As Model.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
 
             If (producto Is Nothing) Then
@@ -411,17 +415,19 @@ Namespace VistaModelo.Ventas
 
             producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
-            Dim CantidadUnidadesDeProducto As Integer = ventaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + 1
+            Dim CantidadUnidadesDeProducto As Integer = ventaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(cambio, -1, 1)
             Dim stockInsuficienteConfirmacion As Boolean = False
 
-            If (Not producto.HayStock(CantidadUnidadesDeProducto)) Then
+            If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
                 stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Id, producto.Codigo, CantidadUnidadesDeProducto)
                 If (Not stockInsuficienteConfirmacion) Then
                     Exit Sub
                 End If
             End If
 
-            If (CantidadUnidadesDeProducto > 0) Then
+            If (CantidadUnidadesDeProducto = 0) Then
+                ventaModel.QuitarVentaItem(producto.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
+            Else
                 Dim montoProducto As MontoProducto = producto.ObtenerMonto(ListaPrecioSeleccionado, TipoClienteSeleccionado, PorcentajeFacturacion)
 
                 Dim porcentejeBonificacion As Decimal = 0
@@ -439,25 +445,26 @@ Namespace VistaModelo.Ventas
                 Dim porcentejeBonificacionMayorista As Decimal = producto.ObtenerBonificacion(IdListaPrecioMayorista, Enums.TipoCliente.Mayorista)
 
                 ventaModel.AgregaVentaItem(producto.Codigo,
-                                       producto.Nombre,
-                                       montoProducto.Valor,
-                                       CantidadUnidadesDeProducto,
-                                       porcentejeBonificacion,
-                                       PorcentajeFacturacion,
-                                       TipoClienteSeleccionado,
-                                       montoProductoMinorista.Valor,
-                                       porcentejeBonificacionMinorista,
-                                       montoProductoMayorista.Valor,
-                                       porcentejeBonificacionMayorista)
-
-                CalcularPendientePago()
-
-                NombreCodigoProductoBusqueda = String.Empty
-
-                NotifyPropertyChanged(NameOf(Me.VentaItems))
-                NotifyPropertyChanged(NameOf(Me.TotalVentaItem))
-                NotifyPropertyChanged(NameOf(Me.NombreCodigoProductoBusqueda))
+                                    producto.Nombre,
+                                    montoProducto.Valor,
+                                    CantidadUnidadesDeProducto,
+                                    porcentejeBonificacion,
+                                    PorcentajeFacturacion,
+                                    TipoClienteSeleccionado,
+                                    montoProductoMinorista.Valor,
+                                    porcentejeBonificacionMinorista,
+                                    montoProductoMayorista.Valor,
+                                    porcentejeBonificacionMayorista)
             End If
+
+            CalcularPendientePago()
+
+            NombreCodigoProductoBusqueda = String.Empty
+
+            NotifyPropertyChanged(NameOf(Me.VentaItems))
+            NotifyPropertyChanged(NameOf(Me.TotalVentaItem))
+            NotifyPropertyChanged(NameOf(Me.NombreCodigoProductoBusqueda))
+
         End Sub
 
         Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel)
@@ -714,6 +721,24 @@ Namespace VistaModelo.Ventas
 
             ventaModel.AgregarComision(porcentajeComicionEncargado, porcentajeComicionVendedor)
         End Function
+
+        Private Sub AgregarCheque()
+            Dim cheques As List(Of Pago) = ventaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
+            If (cheques.Any()) Then
+                Dim frmChequeAltaMasiva As frmChequeAltaMasiva = New frmChequeAltaMasiva(cheques.Sum(Function(x) x.MontoPago.Total), IdClienteMayorista)
+                frmChequeAltaMasiva.ShowDialog()
+
+                If (frmChequeAltaMasiva.DialogResult <> DialogResult.OK) Then
+                    Throw New NegocioException("Error al finalizar la venta. No se encuentran cheques registrados.")
+                End If
+
+                If Not frmChequeAltaMasiva.ChequesModel.Any() Then
+                    Throw New NegocioException("Error al finalizar la venta. No se encuentran cheques registrados.")
+                End If
+
+                frmChequeAltaMasiva.ChequesModel.ForEach(Sub(x) ventaModel.AgregarCheque(x))
+            End If
+        End Sub
 
         Private Function ActualizarStock() As Task
 

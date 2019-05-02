@@ -7,6 +7,7 @@ using System.Linq;
 using Ventas.Core.Model.ValueObjects;
 using System;
 using Ventas.Core.Model.BaseAgreggate;
+using Ventas.Core.Model.ChequeAggregate;
 
 namespace Ventas.Core.Model.VentaAggregate
 {
@@ -15,11 +16,12 @@ namespace Ventas.Core.Model.VentaAggregate
         public string Numero { get; protected set; }
         public virtual List<Comision> Comisiones { get; protected set; }
         public virtual IList<Pago> Pagos { get; protected set; }
+        public virtual IList<Cheque> Cheques { get; protected set; }
         public virtual IList<VentaItem> VentaItems { get; protected set; }
         public virtual Factura Factura { get; protected set; }
         public int CantidadTotal { get; private set; }
         public MontoPago PagoTotal { get; private set; }
-        public bool EstaPaga { get { return !VentaItems.Any(x => x.PorcentajePago != 1) && VentaItems.Count > 0; } }
+        public bool EstaPaga { get { return PagoTotal.Monto == MontoTotal.Valor && VentaItems.Count > 0; } }
 
         internal Venta()
         {
@@ -30,6 +32,7 @@ namespace Ventas.Core.Model.VentaAggregate
             IdSucursal = idSucursal;
             VentaItems = new List<VentaItem>();
             Pagos = new List<Pago>();
+            Cheques = new List<Cheque>();
             MontoTotal = new MontoProducto(0, 0);
             PagoTotal = new MontoPago(0, 0, 0, 0);
             Comisiones = new List<Comision>();
@@ -58,11 +61,13 @@ namespace Ventas.Core.Model.VentaAggregate
                 ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
             }
 
-            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ToList();
+            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
 
            ActualizarPagos(porcentajeFacturacion, tipoCliente);
 
            ActualizarTotalesPago();
+
+           ActualizarTotalesVenta();
         }
 
         public void ActualizarVentaItem(string codigoProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
@@ -74,7 +79,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
 
-            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ToList();
+            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
 
             ActualizarPagos(porcentajeFacturacion, tipoCliente);
 
@@ -93,7 +98,7 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajeFacturacion = porcentajeFacturacion;
         }
 
-        public void AgregaPago(decimal monto, decimal descuento, decimal cft, decimal iva, TipoPago tipoPago, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, string trajeta, int numeroCuotas)
+        public void AgregaPago(decimal monto, decimal descuento, decimal cft, decimal iva, TipoPago tipoPago, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, string trajeta, int numeroCuotas, bool habilitado = true)
         {
             if (VentaItems.Count == 0)
                 throw new NegocioException("Error al registrar el pago. No se encuentran productos registrados en la venta.");
@@ -101,19 +106,9 @@ namespace Ventas.Core.Model.VentaAggregate
                 throw new NegocioException("Error al registrar el pago. La venta ya cuenta con el/los pagos necesarios para ser finalizada.");
             if(monto <= 0)
                 throw new NegocioException("Error al registrar el pago. El monto debe ser mayor a cero.");
-            //if(Pagos.Any(x => x.TipoPago == tipoPago && x.Tarjeta == trajeta))
-            //    throw new NegocioException($"Error al registrar el pago. Ya se encuentra registrado un pago {tipoPago.ToString()} {trajeta} seleccione otra forma de pago.".Trim());
 
-            Pago pago = new Pago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, monto, monto, descuento, cft, iva);
+            Pago pago = new Pago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, monto, monto, descuento, cft, iva, habilitado);
 
-            //decimal montoPago = pago.MontoPago.Monto;
-
-            //foreach (VentaItem ventaItem in VentaItems.Where(x => x.PorcentajePago != 1))
-            //{
-            //    decimal montoRestante = ventaItem.AgregarPago(pago);
-            //    if (montoRestante == 0)
-            //        break;
-            //}
             Pagos.Add(pago);
 
             Pagos = Pagos.OrderBy(x => x.TipoPago).ToList();
@@ -121,6 +116,11 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarPagos(porcentajeFacturacion, tipoCliente);
 
             ActualizarTotalesPago();
+        }
+
+        public void AgregarCheque(Cheque cheque)
+        {
+            Cheques.Add(cheque);
         }
 
         public void AgregarEncargado(Empleado encargado)
@@ -193,7 +193,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaItems.Remove(ventaItem);
 
-            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ToList();
+            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
 
             ActualizarPagos(porcentajeFacturacion, tipoCliente);
 

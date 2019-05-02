@@ -35,14 +35,17 @@ Public Class frmReporteResumenReserva
     End Sub
 
     Private Sub frmReporteResumenVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim rpt = New ReporteTransaccion
 
         InicializarTransaccionItemsTable(dtTrasnasccionItems)
         CargarTransaccionItems(TransaccionItems)
 
         InicializarPagosTable(dtPagos)
-        CargarPagos(Pagos)
-
-        Dim rpt = New ReporteTransaccion
+        If (Pagos IsNot Nothing) Then
+            CargarPagos(Pagos)
+        Else
+            rpt.ReportDefinition.Sections("PagosSection").SectionFormat.EnableSuppress = True
+        End If
 
         rpt.Database.Tables("TransaccionItem").SetDataSource(dtTrasnasccionItems)
         rpt.Database.Tables("Pago").SetDataSource(dtPagos)

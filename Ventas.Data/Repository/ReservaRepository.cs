@@ -29,9 +29,9 @@ namespace Ventas.Data.Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<Reserva> Buscar(bool entregada, string nombre, DateTime? fechaAlta, DateTime? fechaRetiro, ReservaMetodoEntrega? metodoEntrega)
+        public IEnumerable<Reserva> Buscar(int idSucursal, bool entregada, string nombre, DateTime? fechaAlta, DateTime? fechaRetiro, ReservaMetodoEntrega? metodoEntrega)
         {
-            IQueryable<Reserva> resultado = _context.Reserva.Where(x => x.Entregada == entregada);
+            IQueryable<Reserva> resultado = _context.Reserva.Where(x => x.IdSucursal == idSucursal &&  x.Entregada == entregada);
 
             if (!string.IsNullOrEmpty(nombre))
                 resultado = resultado.Where(x => x.Nombre.Contains(nombre) || x.Apellido.Contains(nombre));

@@ -68,7 +68,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 MontoPago montoPago = ObtenerMontoPago(pago.MontoRestante, porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
-                PorcentajePago += pago.MontoRestante / Total.Valor;
+                PorcentajePago += Math.Round(pago.MontoRestante / Total.Valor, 4);
                 ActualizarPagos(pago, 0, pago.MontoRestante);
                 return 0;
             }
@@ -77,7 +77,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 MontoPago montoPago = ObtenerMontoPago(pendientePago, porcentajeRecargo ,porcentajeFacturacion, tipoCliente, pago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
-                PorcentajePago += pendientePago / Total.Valor;
+                PorcentajePago += Math.Round(pendientePago / Total.Valor, 4);
                 ActualizarPagos(pago, pago.MontoRestante - pendientePago, pendientePago);
                 return pago.MontoRestante;
             }
@@ -103,31 +103,6 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajeBonificacion = porcentajeBonificacion;
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
         }
-
-        //public Dictionary<Pago, decimal> ActualizarPago(decimal monto, List<Pago> pagos)
-        //{
-
-
-
-
-        //    Dictionary<Pago, decimal> pagosAux = new Dictionary<Pago, decimal>();
-        //    decimal resto = monto * cantidad;
-
-        //    foreach (KeyValuePair<Pago, decimal> pago in Pagos)
-        //    {
-        //        if (resto > pago.Key.MontoPago.Monto)
-        //        {
-        //            pagosAux.Add(pago.Key, pago.Key.MontoPago.Monto);
-        //        }
-        //        else
-        //        {
-        //            pagosAux.Add(pago.Key, resto);
-        //            break;
-        //        }
-        //        resto = resto - pago.Key.MontoPago.Monto;
-        //    }
-        //    return pagosAux;
-        //}
 
         internal decimal ObtenerMontoPorTipoDeCliente(TipoCliente tipoCliente)
         {
@@ -170,7 +145,7 @@ namespace Ventas.Core.Model.VentaAggregate
             decimal iva = 0;
 
             if (tipoCliente == TipoCliente.Mayorista)
-                iva = (monto - decuento + cft) * Constants.IVA * porcentajeFacturacion;
+                iva = Math.Round((monto - decuento + cft) * Constants.IVA * porcentajeFacturacion, 1);
 
             return new MontoPago(monto, decuento, cft, iva);
         }
@@ -188,12 +163,15 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
         {
-            return (total / (1 + Constants.IVA)) / (1 - PorcentajeBonificacion + porcentajeRecargo);
+            return Math.Round((total / (1 + Constants.IVA)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1);
         }
 
         internal void ActualizarPorcentajePago()
         {
-            PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4);
+            if (Total.Valor == 0)
+                PorcentajePago = 0;
+            else
+                PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4);
         }
 
         private MontoProducto ObtenerMontoProducto(decimal monto, decimal porcentajeFacturacion, TipoCliente tipoCliente)

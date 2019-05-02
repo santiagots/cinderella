@@ -229,21 +229,23 @@ Public Class frmMovimientoSocios
     Private Sub btn_Cheque_Click(sender As Object, e As EventArgs) Handles btn_Cheque.Click
 
         If (cmbAccion.Text = "Aporte") Then
-            Dim frmChequesAlta As frmChequesAlta = New frmChequesAlta()
-            frmChequesAlta.ChequeModificar = Cheque
-            frmChequesAlta.ReturnCheque = True
-            frmChequesAlta.ShowDialog()
+            'TODO: ACOMODAR ESTO
+            'Dim frmChequesAlta As frmChequesAlta = New frmChequesAlta()
+            'frmChequesAlta.ChequeModificar = Cheque
+            'frmChequesAlta.ReturnCheque = True
+            'frmChequesAlta.ShowDialog()
 
-            'Si se esta editando un movimiento existente y se presiono el boton salir en la modificacion del cheque. No se tiene que actualizar la informacion del cheque
-            If (Not frmChequesAlta.ChequeModificar Is Nothing) Then
-                Cheque = frmChequesAlta.ChequeModificar
-            End If
+            ''Si se esta editando un movimiento existente y se presiono el boton salir en la modificacion del cheque. No se tiene que actualizar la informacion del cheque
+            'If (Not frmChequesAlta.ChequeModificar Is Nothing) Then
+            '    Cheque = frmChequesAlta.ChequeModificar
+            'End If
 
         Else
-            Dim frmChequesAdministracion As frmChequesAdministracion = New frmChequesAdministracion()
-            frmChequesAdministracion.ReturnCheque = True
-            frmChequesAdministracion.ShowDialog()
-            Cheque = frmChequesAdministracion.ChequeSeleccionado
+            'TODO: ACOMODAR ESTO
+            'Dim frmChequesAdministracion As frmChequesAdministracion = New frmChequesAdministracion()
+            'frmChequesAdministracion.ReturnCheque = True
+            'frmChequesAdministracion.ShowDialog()
+            'Cheque = frmChequesAdministracion.ChequeSeleccionado
         End If
 
         If (Cheque IsNot Nothing) Then

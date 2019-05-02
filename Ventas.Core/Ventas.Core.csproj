@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Enum\NotaPedidoEstado.cs" />
     <Compile Include="Enum\ReservaMetodoEntrega.cs" />
-    <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
+    <Compile Include="Interfaces\IChequeRepository.cs" />
     <Compile Include="Interfaces\IClienteMinoristaRepository.cs" />
     <Compile Include="Interfaces\IFacturaRepository.cs" />
     <Compile Include="Interfaces\INotaPedidoRepository.cs" />
@@ -55,19 +55,16 @@
     <Compile Include="Interfaces\IListaPrecioRepository.cs" />
     <Compile Include="Interfaces\IProductoRepository.cs" />
     <Compile Include="Interfaces\IVentaRepository.cs" />
-    <Compile Include="Model\BaseAgreggate\Distrito.cs" />
     <Compile Include="Model\BaseAgreggate\Domicilio.cs" />
-    <Compile Include="Model\BaseAgreggate\Localidad.cs" />
-    <Compile Include="Model\BaseAgreggate\Provincia.cs" />
     <Compile Include="Model\BaseAgreggate\TransaccionItem.cs" />
     <Compile Include="Model\BaseAgreggate\Transaccion.cs" />
-    <Compile Include="Model\BaseAgreggate\ClienteMayorista.cs" />
     <Compile Include="Model\BaseAgreggate\ClienteMinorista.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedido.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedidoItem.cs" />
     <Compile Include="Model\ValueObjects\MontoPago.cs" />
     <Compile Include="Model\ValueObjects\MontoProducto.cs" />
     <Compile Include="Model\ValueObjects\CostoProducto.cs" />
+    <Compile Include="Model\ChequeAgreggate\Cheque.cs" />
     <Compile Include="Model\VentaAggregate\Comision.cs" />
     <Compile Include="Model\VentaAggregate\Factura.cs" />
     <Compile Include="Model\VentaAggregate\NumeroFactura.cs" />

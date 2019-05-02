@@ -36,13 +36,6 @@ Namespace VistaModelo.Ventas
             End Using
         End Function
 
-        Public Shared Function BuscarReserva(entregada As Boolean, nombre As String, fechaAlta As DateTime?, fechaRetiro As DateTime?, metodoEntrega As ReservaMetodoEntrega?) As IList(Of Reserva)
-            Using context As VentaContext = New VentaContext()
-                Dim reservaRepository As IReservaRepository = New ReservaRepository(context)
-                Return reservaRepository.Buscar(entregada, nombre, fechaAlta, fechaRetiro, metodoEntrega)
-            End Using
-        End Function
-
         Public Shared Function CantidadVentas(idSucursal As Integer) As Integer
             Using context As VentaContext = New VentaContext()
                 Dim ventaRepository As IVentaRepository = New VentaRepository(context)
@@ -64,19 +57,19 @@ Namespace VistaModelo.Ventas
             End Using
         End Sub
 
+        Public Shared Function ObtenerSucursal(idSucursal As Integer) As Sucursal
+            Using context As VentaContext = New VentaContext()
+                Dim sucursalRepository As IRepository(Of Sucursal) = New Repository(Of Sucursal)(context)
+                Return sucursalRepository.GetById(idSucursal)
+            End Using
+        End Function
+
         Friend Shared Sub GuardarReserva(reservaModel As Reserva)
             Using context As VentaContext = New VentaContext()
                 Dim reservaRepository As IReservaRepository = New ReservaRepository(context)
                 reservaRepository.Guardar(reservaModel)
             End Using
         End Sub
-
-        Friend Shared Function EliminarReserva(id As Long) As Object
-            Using context As VentaContext = New VentaContext()
-                Dim reservaRepository As IReservaRepository = New ReservaRepository(context)
-                reservaRepository.Eliminar(id)
-            End Using
-        End Function
 
         Public Shared Function ObtenerNotaPedido(estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, tipoPago As TipoPago?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As IList(Of NotaPedido)
             Using context As VentaContext = New VentaContext()
@@ -143,27 +136,6 @@ Namespace VistaModelo.Ventas
             Using context As VentaContext = New VentaContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 Return productoRepository.Obtener(idSucursal, idProducto)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerClienteMayorista(id As Integer) As Object
-            Using context As VentaContext = New VentaContext()
-                Dim productoRepository As IClienteMayoristaRepository = New ClienteMayoristaRepository(context)
-                Return productoRepository.Obtener(id)
-            End Using
-        End Function
-
-        Public Shared Function ObtenerSucursal(idSucursal As Integer) As Sucursal
-            Using context As VentaContext = New VentaContext()
-                Dim sucursalRepository As IRepository(Of Sucursal) = New Repository(Of Sucursal)(context)
-                Return sucursalRepository.GetById(idSucursal)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerReserva(idReserva As Long) As Object
-            Using context As VentaContext = New VentaContext()
-                Dim reservaRepository As IReservaRepository = New ReservaRepository(context)
-                Return reservaRepository.Obtener(idReserva)
             End Using
         End Function
 

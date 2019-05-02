@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Ventas.Core.Model.BaseAgreggate;
+using Common.Data.Repository;
+using Common.Data;
+using Common.Core.Model;
 
 namespace Ventas.Test
 {
@@ -23,7 +26,7 @@ namespace Ventas.Test
         [Fact]
         public void ObtenerClienteMayorista()
         {
-            ClienteMayoristaRepository repository = new ClienteMayoristaRepository(new VentaContext());
+            ClienteMayoristaRepository repository = new ClienteMayoristaRepository(new CommonContext());
             ClienteMayorista bancos = repository.Obtener(2);
         }
     }

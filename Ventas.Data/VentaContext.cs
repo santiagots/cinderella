@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Common.Core.Model;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ventas.Core.Model.BaseAgreggate;
+using Ventas.Core.Model.ChequeAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;
 using Ventas.Core.Model.VentaAggregate;
 
@@ -21,21 +17,17 @@ namespace Ventas.Data
         {
             Database.Log = sql => Debug.Write(sql);
         }
+        public DbSet<Cheque> Cheque { get; set; }
         public DbSet<ClienteMinorista> ClienteMinorista { get; set; }
-        public DbSet<ClienteMayorista> ClienteMayorista { get; set; }
         public DbSet<CostoFinanciero> CostoFinanciero { get; set; }
         public DbSet<Comision> Comision { get; set; }
-        public DbSet<Distrito> Distrito { get; set; }
-        public DbSet<Domicilio> Domicilio { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
         public DbSet<Factura> Factura  { get; set; }
         public DbSet<ListaPrecio> ListaPrecio { get; set; }
-        public DbSet<Localidad> Localidad { get; set; }
         public DbSet<NumeroFactura> NumeroFactura { get; set; }
         public DbSet<Pago> Pago { get; set; }
         public DbSet<Precio> Precio { get; set; }
         public DbSet<Producto> Producto { get; set; }
-        public DbSet<Provincia> Provincia { get; set; }
         public DbSet<Reserva> Reserva { get; set; }
         public DbSet<Sucursal> Sucursal { get; set; }
         public DbSet<Stock> Stock { get; set; }
@@ -49,33 +41,22 @@ namespace Ventas.Data
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            modelBuilder.Entity<Banco>().ToTable("BANCOS");
+            modelBuilder.Entity<Banco>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<Banco>().Property(t => t.Id).HasColumnName("BancoId");
+
+            modelBuilder.Entity<Cheque>().ToTable("NUEVA_CHEQUE");
+            modelBuilder.Entity<Cheque>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<Cheque>().HasRequired(v => v.BancoEmisor).WithMany().HasForeignKey(x => x.IdBancoEmisor);
+
             modelBuilder.Entity<ClienteMinorista>().ToTable("CLIENTEMINORISTA");
             modelBuilder.Entity<ClienteMinorista>().Property(t => t.Id).HasColumnName("id_ClienteMinorista");
             modelBuilder.Entity<ClienteMinorista>().Ignore(t => t.ApellidoYNombre);
-
-            modelBuilder.Entity<ClienteMayorista>().ToTable("CLIENTEMAYORISTA");
-            modelBuilder.Entity<ClienteMayorista>().Property(t => t.Id).HasColumnName("id_Cliente");
-            modelBuilder.Entity<ClienteMayorista>().Property(t => t.CondicionIVA).HasColumnName("id_CondicionIva");
-            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDireccionFacturacion).HasColumnName("id_DireccionFacturacion");
-            modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDireccionFacturacion);
 
             modelBuilder.Entity<CostoFinanciero>().ToTable("COSTOFINANCIERO");
             modelBuilder.Entity<CostoFinanciero>().Property(t => t.Id).HasColumnName("CostoFinancieroId");
             modelBuilder.Entity<CostoFinanciero>().Property(t => t.IdTarjeta).HasColumnName("IdTarjeta");
             modelBuilder.Entity<CostoFinanciero>().Property(t => t.NumeroCuota).HasColumnName("NroCuota");
-
-            modelBuilder.Entity<Domicilio>().ToTable("DIRECCION");
-            modelBuilder.Entity<Domicilio>().Property(t => t.Id).HasColumnName("id_Direccion");
-            modelBuilder.Entity<Domicilio>().Property(t => t.IdLocalidad).HasColumnName("id_Localidad");
-            modelBuilder.Entity<Domicilio>().Property(t => t.IdDistrito).HasColumnName("id_Distrito");
-            modelBuilder.Entity<Domicilio>().Property(t => t.IdProvincia).HasColumnName("id_Provincia");
-            modelBuilder.Entity<Domicilio>().Property(t => t.Email).HasColumnName("Mail");
-            modelBuilder.Entity<Domicilio>().HasRequired(v => v.Localidad).WithMany().HasForeignKey(x => x.IdLocalidad);
-            modelBuilder.Entity<Domicilio>().HasRequired(v => v.Distrito).WithMany().HasForeignKey(x => x.IdDistrito);
-            modelBuilder.Entity<Domicilio>().HasRequired(v => v.Provincia).WithMany().HasForeignKey(x => x.IdProvincia);
-
-            modelBuilder.Entity<Distrito>().ToTable("DEPARTAMENTOS");
-            modelBuilder.Entity<Distrito>().Property(t => t.Id).HasColumnName("id_Departamento");
 
             modelBuilder.Entity<Comision>().ToTable("NUEVA_COMISION");
             modelBuilder.Entity<Comision>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -100,6 +81,7 @@ namespace Ventas.Data
             modelBuilder.Entity<Venta>().HasOptional(v => v.Factura).WithRequired(f => f.Venta);
             modelBuilder.Entity<Venta>().HasMany(v => v.Pagos).WithRequired(t => t.Venta).HasForeignKey(x => x.IdVenta);
             modelBuilder.Entity<Venta>().HasMany(v => v.VentaItems).WithRequired(t => t.Venta).HasForeignKey(x => x.IdVenta);
+            modelBuilder.Entity<Venta>().HasMany(v => v.Cheques).WithOptional(t => t.Venta).HasForeignKey(x => x.IdVenta);
             modelBuilder.Entity<Venta>().HasRequired(v => v.Encargado).WithMany().HasForeignKey(x => x.IdEncargado);
             modelBuilder.Entity<Venta>().HasRequired(v => v.Vendedor).WithMany().HasForeignKey(x => x.IdVendedor);
             modelBuilder.Entity<Venta>().HasOptional(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
@@ -112,6 +94,7 @@ namespace Ventas.Data
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
             modelBuilder.Entity<Pago>().Ignore(t => t.MontoRestante);
+            modelBuilder.Entity<Pago>().Ignore(t => t.Habilitado);
 
             modelBuilder.Entity<Reserva>().ToTable("NUEVA_RESERVA");
             modelBuilder.Entity<Reserva>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -130,8 +113,10 @@ namespace Ventas.Data
             modelBuilder.Entity<NotaPedido>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<NotaPedido>().HasMany(v => v.NotaPedidoItems).WithRequired(t => t.NotaPedido).HasForeignKey(x => x.IdNotaPedido);
             modelBuilder.Entity<NotaPedido>().HasRequired(v => v.Vendedor).WithMany().HasForeignKey(x => x.IdVendedor);
+            modelBuilder.Entity<NotaPedido>().HasRequired(v => v.Encargado).WithMany().HasForeignKey(x => x.IdEncargado);
             modelBuilder.Entity<NotaPedido>().HasOptional(v => v.ClienteMinorista).WithMany().HasForeignKey(x => x.IdClienteMinorista);
             modelBuilder.Entity<NotaPedido>().HasOptional(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
+            modelBuilder.Entity<NotaPedido>().HasRequired(v => v.Sucursal).WithMany().HasForeignKey(x => x.IdSucursal);
 
             modelBuilder.Entity<NotaPedidoItem>().ToTable("NUEVA_NOTA_PEDIDO_ITEMS");
             modelBuilder.Entity<NotaPedidoItem>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -145,9 +130,6 @@ namespace Ventas.Data
 
             modelBuilder.Entity<ListaPrecio>().ToTable("LISTA_PRECIO");
 
-            modelBuilder.Entity<Localidad>().ToTable("LOCALIDADES");
-            modelBuilder.Entity<Localidad>().Property(t => t.Id).HasColumnName("id_Localidad");
-
             modelBuilder.Entity<Precio>().ToTable("PRECIOS");
             modelBuilder.Entity<Precio>().Property(t => t.Id).HasColumnName("id_Precio");
             modelBuilder.Entity<Precio>().Property(t => t.IdLista).HasColumnName("id_Lista");
@@ -158,9 +140,6 @@ namespace Ventas.Data
             modelBuilder.Entity<Producto>().ToTable("PRODUCTOS");
             modelBuilder.Entity<Producto>().Property(t => t.Id).HasColumnName("id_Producto");
             modelBuilder.Entity<Producto>().Ignore(t => t.Stock);
-
-            modelBuilder.Entity<Provincia>().ToTable("PROVINCIAS");
-            modelBuilder.Entity<Provincia>().Property(t => t.Id).HasColumnName("id_Provincia");
 
             modelBuilder.Entity<Sucursal>().ToTable("SUCURSALES");
             modelBuilder.Entity<Sucursal>().Property(t => t.Id).HasColumnName("id_Sucursal");

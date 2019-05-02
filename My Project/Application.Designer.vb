@@ -36,6 +36,8 @@ Namespace My
         Protected Overrides Sub OnCreateMainForm()
 
             Mapper.Initialize(Sub(x)
+                                  x.AddProfile(Of Formularios.Cheque.MapperProfile)()
+                                  x.AddProfile(Of Formularios.Reserva.MapperProfile)()
                                   x.AddProfile(Of VistaModelo.Ventas.MapperProfile)()
                                   x.AddProfile(Of Ventas.Suport.Mapper.MapperProfile)()
                               End Sub)

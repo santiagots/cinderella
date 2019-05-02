@@ -29,6 +29,12 @@ Partial Class frmVentas
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -39,12 +45,6 @@ Partial Class frmVentas
         Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVentas))
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.VentaViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -95,6 +95,15 @@ Partial Class frmVentas
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalPagoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.dgPagos = New SistemaCinderella.CustomDataGrid()
+        Me.Descripcion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DescuentoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CFTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IVADataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Resto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PagoQuitar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.PagoCorregir = New System.Windows.Forms.DataGridViewImageColumn()
         Me.PagosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
@@ -147,15 +156,6 @@ Partial Class frmVentas
         Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
         Me.ListaPrecioBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Descripcion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DescuentoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CFTDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.IVADataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Resto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PagoQuitar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.PagoCorregir = New System.Windows.Forms.DataGridViewImageColumn()
         CType(Me.VentaViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Gb_Producto.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -809,6 +809,84 @@ Partial Class frmVentas
         Me.dgPagos.Size = New System.Drawing.Size(918, 99)
         Me.dgPagos.TabIndex = 35
         '
+        'Descripcion
+        '
+        Me.Descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Descripcion.DataPropertyName = "Descripcion"
+        Me.Descripcion.HeaderText = "Descripción"
+        Me.Descripcion.Name = "Descripcion"
+        Me.Descripcion.ReadOnly = True
+        '
+        'MontoDataGridViewTextBoxColumn1
+        '
+        Me.MontoDataGridViewTextBoxColumn1.DataPropertyName = "Monto"
+        DataGridViewCellStyle7.Format = "C"
+        Me.MontoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle7
+        Me.MontoDataGridViewTextBoxColumn1.HeaderText = "Monto"
+        Me.MontoDataGridViewTextBoxColumn1.Name = "MontoDataGridViewTextBoxColumn1"
+        Me.MontoDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'DescuentoDataGridViewTextBoxColumn
+        '
+        Me.DescuentoDataGridViewTextBoxColumn.DataPropertyName = "Descuento"
+        DataGridViewCellStyle8.Format = "C"
+        Me.DescuentoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
+        Me.DescuentoDataGridViewTextBoxColumn.HeaderText = "Desc."
+        Me.DescuentoDataGridViewTextBoxColumn.Name = "DescuentoDataGridViewTextBoxColumn"
+        Me.DescuentoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CFTDataGridViewTextBoxColumn
+        '
+        Me.CFTDataGridViewTextBoxColumn.DataPropertyName = "CFT"
+        DataGridViewCellStyle9.Format = "C"
+        Me.CFTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
+        Me.CFTDataGridViewTextBoxColumn.HeaderText = "CFT"
+        Me.CFTDataGridViewTextBoxColumn.Name = "CFTDataGridViewTextBoxColumn"
+        Me.CFTDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'IVADataGridViewTextBoxColumn1
+        '
+        Me.IVADataGridViewTextBoxColumn1.DataPropertyName = "IVA"
+        DataGridViewCellStyle10.Format = "C"
+        Me.IVADataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle10
+        Me.IVADataGridViewTextBoxColumn1.HeaderText = "IVA"
+        Me.IVADataGridViewTextBoxColumn1.Name = "IVADataGridViewTextBoxColumn1"
+        Me.IVADataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'TotalDataGridViewTextBoxColumn1
+        '
+        Me.TotalDataGridViewTextBoxColumn1.DataPropertyName = "Total"
+        DataGridViewCellStyle11.Format = "C"
+        Me.TotalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
+        Me.TotalDataGridViewTextBoxColumn1.HeaderText = "Total"
+        Me.TotalDataGridViewTextBoxColumn1.Name = "TotalDataGridViewTextBoxColumn1"
+        Me.TotalDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'Resto
+        '
+        Me.Resto.DataPropertyName = "Resto"
+        DataGridViewCellStyle12.Format = "C2"
+        Me.Resto.DefaultCellStyle = DataGridViewCellStyle12
+        Me.Resto.HeaderText = "Resto"
+        Me.Resto.Name = "Resto"
+        Me.Resto.ReadOnly = True
+        '
+        'PagoQuitar
+        '
+        Me.PagoQuitar.HeaderText = ""
+        Me.PagoQuitar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.PagoQuitar.Name = "PagoQuitar"
+        Me.PagoQuitar.ReadOnly = True
+        Me.PagoQuitar.Width = 30
+        '
+        'PagoCorregir
+        '
+        Me.PagoCorregir.HeaderText = ""
+        Me.PagoCorregir.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
+        Me.PagoCorregir.Name = "PagoCorregir"
+        Me.PagoCorregir.ReadOnly = True
+        Me.PagoCorregir.Width = 30
+        '
         'PagosBindingSource
         '
         Me.PagosBindingSource.DataMember = "Pagos"
@@ -1404,84 +1482,6 @@ Partial Class frmVentas
         Me.Label4.Size = New System.Drawing.Size(44, 15)
         Me.Label4.TabIndex = 1
         Me.Label4.Text = "Lista"
-        '
-        'Descripcion
-        '
-        Me.Descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Descripcion.DataPropertyName = "Descripcion"
-        Me.Descripcion.HeaderText = "Descripción"
-        Me.Descripcion.Name = "Descripcion"
-        Me.Descripcion.ReadOnly = True
-        '
-        'MontoDataGridViewTextBoxColumn1
-        '
-        Me.MontoDataGridViewTextBoxColumn1.DataPropertyName = "Monto"
-        DataGridViewCellStyle7.Format = "C"
-        Me.MontoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle7
-        Me.MontoDataGridViewTextBoxColumn1.HeaderText = "Monto"
-        Me.MontoDataGridViewTextBoxColumn1.Name = "MontoDataGridViewTextBoxColumn1"
-        Me.MontoDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'DescuentoDataGridViewTextBoxColumn
-        '
-        Me.DescuentoDataGridViewTextBoxColumn.DataPropertyName = "Descuento"
-        DataGridViewCellStyle8.Format = "C"
-        Me.DescuentoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
-        Me.DescuentoDataGridViewTextBoxColumn.HeaderText = "Desc."
-        Me.DescuentoDataGridViewTextBoxColumn.Name = "DescuentoDataGridViewTextBoxColumn"
-        Me.DescuentoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CFTDataGridViewTextBoxColumn
-        '
-        Me.CFTDataGridViewTextBoxColumn.DataPropertyName = "CFT"
-        DataGridViewCellStyle9.Format = "C"
-        Me.CFTDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
-        Me.CFTDataGridViewTextBoxColumn.HeaderText = "CFT"
-        Me.CFTDataGridViewTextBoxColumn.Name = "CFTDataGridViewTextBoxColumn"
-        Me.CFTDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'IVADataGridViewTextBoxColumn1
-        '
-        Me.IVADataGridViewTextBoxColumn1.DataPropertyName = "IVA"
-        DataGridViewCellStyle10.Format = "C"
-        Me.IVADataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle10
-        Me.IVADataGridViewTextBoxColumn1.HeaderText = "IVA"
-        Me.IVADataGridViewTextBoxColumn1.Name = "IVADataGridViewTextBoxColumn1"
-        Me.IVADataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'TotalDataGridViewTextBoxColumn1
-        '
-        Me.TotalDataGridViewTextBoxColumn1.DataPropertyName = "Total"
-        DataGridViewCellStyle11.Format = "C"
-        Me.TotalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
-        Me.TotalDataGridViewTextBoxColumn1.HeaderText = "Total"
-        Me.TotalDataGridViewTextBoxColumn1.Name = "TotalDataGridViewTextBoxColumn1"
-        Me.TotalDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'Resto
-        '
-        Me.Resto.DataPropertyName = "Resto"
-        DataGridViewCellStyle12.Format = "C2"
-        Me.Resto.DefaultCellStyle = DataGridViewCellStyle12
-        Me.Resto.HeaderText = "Resto"
-        Me.Resto.Name = "Resto"
-        Me.Resto.ReadOnly = True
-        '
-        'PagoQuitar
-        '
-        Me.PagoQuitar.HeaderText = ""
-        Me.PagoQuitar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.PagoQuitar.Name = "PagoQuitar"
-        Me.PagoQuitar.ReadOnly = True
-        Me.PagoQuitar.Width = 30
-        '
-        'PagoCorregir
-        '
-        Me.PagoCorregir.HeaderText = ""
-        Me.PagoCorregir.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_Update_24
-        Me.PagoCorregir.Name = "PagoCorregir"
-        Me.PagoCorregir.ReadOnly = True
-        Me.PagoCorregir.Width = 30
         '
         'frmVentas
         '

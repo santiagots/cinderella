@@ -1,4 +1,5 @@
 ﻿using Common.Core.ValueObjects;
+using System;
 
 namespace Ventas.Core.Model.ValueObjects
 {
@@ -13,8 +14,8 @@ namespace Ventas.Core.Model.ValueObjects
 
         public MontoProducto(decimal valor, decimal iva)
         {
-            Valor = valor;
-            Iva = iva;
+            Valor = Math.Round(valor, 1);
+            Iva = Math.Round(iva, 1);
         }
 
         public decimal toDecimal()

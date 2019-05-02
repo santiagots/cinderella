@@ -125,10 +125,17 @@ Namespace VistaModelo.Ventas
 
         Friend Sub ImprimirNotaPedido(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Numero = notaPedidoItem.Numero)
-            Dim frmReporteNotaPedido As frmReporteNotaPedido = New frmReporteNotaPedido()
-            frmReporteNotaPedido.MdiParent = MdiParent
-            frmReporteNotaPedido.notaPedido = notaPedido
-            frmReporteNotaPedido.Show()
+
+            Dim frmReporteResumenReserva As frmReporteResumenReserva = New frmReporteResumenReserva("Resumen de Nota Pedido",
+                                                                                                    1,
+                                                                                                    notaPedido.TipoCliente,
+                                                                                                    notaPedido.Vendedor.ApellidoYNombre,
+                                                                                                    notaPedidoItem.NombreCliente,
+                                                                                                    notaPedido.Fecha,
+                                                                                                    notaPedido.NotaPedidoItems.Cast(Of TransaccionItem).ToList(),
+                                                                                                    Nothing)
+            frmReporteResumenReserva.MdiParent = MdiParent
+            frmReporteResumenReserva.Show()
         End Sub
 
         Private Sub Inicializar()
