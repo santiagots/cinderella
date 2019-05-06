@@ -19,7 +19,7 @@ namespace Ventas.Core.Model.VentaAggregate
         internal Dictionary<Pago, decimal> Pagos { get; private set; }
         public long IdVenta { get; private set; }
         public virtual Venta Venta { get; private set; }
-
+        public bool EsDevolucion { get; private set; }
         private decimal _PorcentajePago;
         public decimal PorcentajePago
         {
@@ -36,7 +36,7 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        internal VentaItem(long idVenta, string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
+        internal VentaItem(long idVenta, string codigoProducto, string nombreProducto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
         {
             Pagos = new Dictionary<Pago, decimal>();
             IdVenta = idVenta;
@@ -46,6 +46,7 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajeBonificacion = porcentajeBonificacion;
             PorcentajePago = 0;
             Cantidad = cantidad;
+            EsDevolucion = esDevolucion;
             FechaEdicion = DateTime.Now;
 
             MontoProductoMinorista = ObtenerMontoProducto(montoProductoMinorista, 1, TipoCliente.Minorista);
@@ -65,7 +66,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             if (pendientePago > pago.MontoRestante)
             {
-                MontoPago montoPago = ObtenerMontoPago(pago.MontoRestante, porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago);
+                MontoPago montoPago = ObtenerMontoPago(pago.MontoRestante, porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago.TipoPago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
                 PorcentajePago += Math.Round(pago.MontoRestante / Total.Valor, 4);
@@ -74,7 +75,7 @@ namespace Ventas.Core.Model.VentaAggregate
             }
             else
             {
-                MontoPago montoPago = ObtenerMontoPago(pendientePago, porcentajeRecargo ,porcentajeFacturacion, tipoCliente, pago);
+                MontoPago montoPago = ObtenerMontoPago(pendientePago, porcentajeRecargo ,porcentajeFacturacion, tipoCliente, pago.TipoPago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
                 PorcentajePago += Math.Round(pendientePago / Total.Valor, 4);
@@ -120,22 +121,17 @@ namespace Ventas.Core.Model.VentaAggregate
                 return PorcentajeBonificacionMayorista;
         }
 
-        internal MontoPago ObtenerMontoPagoPendiente(decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        internal MontoPago ObtenerMontoPagoPendiente(decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente, TipoPago formaPago)
         {
             MontoProducto montoProductoPendientePago = PendientePago();
-            return ObtenerMontoPago(montoProductoPendientePago.Valor, porcentajeRecargo, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+            return ObtenerMontoPago(montoProductoPendientePago.Valor, porcentajeRecargo, porcentajeFacturacion, tipoCliente, formaPago);
         }
 
-        internal MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente, Pago pago)
-        {
-            return ObtenerMontoPago(monto, porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago.TipoPago == TipoPago.Efectivo);
-        }
-
-        internal MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        internal MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente, TipoPago formaPago)
         {
             //Si el porcentaje de recargo es mayor a cero no se tiene que hacer descuento
             decimal porcentajeBonificacion;
-            if (porcentajeRecargo > 0 || !aplicarBonificacion)
+            if (!AplicarBonificacion(formaPago))
                 porcentajeBonificacion = 0;
             else
                 porcentajeBonificacion = PorcentajeBonificacion;
@@ -210,5 +206,11 @@ namespace Ventas.Core.Model.VentaAggregate
                 Pagos.Add(pago, abonado);
             }
         }
+
+        private bool AplicarBonificacion(TipoPago formaPago)
+        {
+            return formaPago == TipoPago.Efectivo || EsDevolucion;
+        }
+
     }
 }

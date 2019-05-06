@@ -21,7 +21,7 @@ namespace Ventas.Core.Model.VentaAggregate
         public virtual Factura Factura { get; protected set; }
         public int CantidadTotal { get; private set; }
         public MontoPago PagoTotal { get; private set; }
-        public bool EstaPaga { get { return PagoTotal.Monto == MontoTotal.Valor && VentaItems.Count > 0; } }
+        public bool EstaPaga { get { return !VentaItems.Any(x => x.PorcentajePago != 1); } }
 
         internal Venta()
         {
@@ -47,13 +47,13 @@ namespace Ventas.Core.Model.VentaAggregate
             Numero = $"{codigoVentaSucursal}{facturada}{Fecha.ToString("yyyyMMdd")}{cantidadVentas.ToString("D9")}";
         }
 
-        public void AgregaVentaItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
+        public void AgregaVentaItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
         {
             VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
 
             if (ventaItem == null)
             {
-                ventaItem = new VentaItem(Id, codigoProducto, nombreProducto, monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
+                ventaItem = new VentaItem(Id, codigoProducto, nombreProducto, monto, cantidad, esDevolucion, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
                 VentaItems.Add(ventaItem);
             }
             else
@@ -61,7 +61,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
             }
 
-            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
+           VentaItems = OrdenarItemsVenta(VentaItems).ToList();
 
            ActualizarPagos(porcentajeFacturacion, tipoCliente);
 
@@ -79,7 +79,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
 
-            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
+            VentaItems = OrdenarItemsVenta(VentaItems).ToList();
 
             ActualizarPagos(porcentajeFacturacion, tipoCliente);
 
@@ -104,10 +104,13 @@ namespace Ventas.Core.Model.VentaAggregate
                 throw new NegocioException("Error al registrar el pago. No se encuentran productos registrados en la venta.");
             if (EstaPaga)
                 throw new NegocioException("Error al registrar el pago. La venta ya cuenta con el/los pagos necesarios para ser finalizada.");
-            if(monto <= 0)
-                throw new NegocioException("Error al registrar el pago. El monto debe ser mayor a cero.");
+            if(monto == 0 && descuento == 0 && cft == 0 && iva == 0)
+                throw new NegocioException("Error al registrar el pago. El monto o el descuento o el CFT o el IVA debe ser mayor a cero.");
 
             Pago pago = new Pago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, monto, monto, descuento, cft, iva, habilitado);
+
+            if (pago.MontoPago.Total < 0)
+                throw new NegocioException("Error al registrar el pago. El total debe ser mayor a cero.");
 
             Pagos.Add(pago);
 
@@ -193,7 +196,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaItems.Remove(ventaItem);
 
-            VentaItems = VentaItems.OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
+            VentaItems = OrdenarItemsVenta(VentaItems).ToList();
 
             ActualizarPagos(porcentajeFacturacion, tipoCliente);
 
@@ -217,15 +220,15 @@ namespace Ventas.Core.Model.VentaAggregate
                 return ventaItem.Cantidad;
         }
 
-        public MontoPago ObtenerPendienteMontoPago(decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        public MontoPago ObtenerPendienteMontoPago(decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, TipoPago formaDePago)
         {
             if (EstaPaga || VentaItems.Count == 0)
                 return new MontoPago(0, 0, 0, 0);
 
-            return VentaItems.Select(x => x.ObtenerMontoPagoPendiente(porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion)).Aggregate((x, y) => x + y);
+            return VentaItems.Select(x => x.ObtenerMontoPagoPendiente(porcentajeCft, porcentajeFacturacion, tipoCliente, formaDePago)).Aggregate((x, y) => x + y);
         }
 
-        public MontoPago ObtenerMontoPagoDesdeSubtotal(decimal montoSubtotal, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        public MontoPago ObtenerMontoPagoDesdeSubtotal(decimal montoSubtotal, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, TipoPago formaDePago)
         {
             if (EstaPaga)
                 return new MontoPago(0, 0, 0, 0);
@@ -238,12 +241,12 @@ namespace Ventas.Core.Model.VentaAggregate
 
                 if (montoSubtotal >= montoProductoPendientePago.Valor)
                 {
-                    montoPagoPendiente += ventaItem.ObtenerMontoPagoPendiente(porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+                    montoPagoPendiente += ventaItem.ObtenerMontoPagoPendiente(porcentajeCft, porcentajeFacturacion, tipoCliente, formaDePago);
                     montoSubtotal -= montoProductoPendientePago.Valor;
                 }
                 else
                 {
-                    montoPagoPendiente += ventaItem.ObtenerMontoPago(montoSubtotal, porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+                    montoPagoPendiente += ventaItem.ObtenerMontoPago(montoSubtotal, porcentajeCft, porcentajeFacturacion, tipoCliente, formaDePago);
                     montoSubtotal = 0;
                     break;
                 }
@@ -252,14 +255,14 @@ namespace Ventas.Core.Model.VentaAggregate
             return montoPagoPendiente;
         }
 
-        public MontoPago ObtenerMontoPagoDesdeTotal(decimal montoTotal, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, bool aplicarBonificacion)
+        public MontoPago ObtenerMontoPagoDesdeTotal(decimal montoTotal, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, TipoPago formaDePago)
         {
             if (EstaPaga)
                 return new MontoPago(0, 0, 0, 0);
 
             decimal subtotal = CalcularSubtota(montoTotal, porcentajeCft);
 
-            return ObtenerMontoPagoDesdeSubtotal(subtotal, porcentajeCft, porcentajeFacturacion, tipoCliente, aplicarBonificacion);
+            return ObtenerMontoPagoDesdeSubtotal(subtotal, porcentajeCft, porcentajeFacturacion, tipoCliente, formaDePago);
         }
 
         public decimal ObtenerMontoPorTipoDeCliente(string codigoProducto, TipoCliente tipoCliente)
@@ -287,6 +290,19 @@ namespace Ventas.Core.Model.VentaAggregate
                 return 0;
             else
                 return ventaItem.Cantidad;
+        }
+
+        private IEnumerable<VentaItem> OrdenarItemsVenta(IEnumerable<VentaItem> itemsVenta)
+        {
+            IEnumerable<IGrouping<bool, VentaItem>> ventaItemGroup =  itemsVenta.GroupBy(x => x.Cantidad > 0);
+
+            List<VentaItem> Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
+            List<VentaItem> Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
+
+            List<VentaItem> Aux = new List<VentaItem>(Devoluciones);
+            Aux.AddRange(Ventas);
+
+            return Aux;
         }
 
         private decimal CalcularSubtota(decimal montoTotal, decimal porcentajeCft)

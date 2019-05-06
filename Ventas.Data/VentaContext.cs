@@ -1,4 +1,5 @@
 ﻿using Common.Core.Model;
+using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -10,13 +11,13 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data
 {
-    public class VentaContext: DbContext
+    public class VentaContext: CommonContext
     {
         public VentaContext()
-        : base("SistemaCinderella.My.MySettings.Conexion")
+        : base()
         {
-            Database.Log = sql => Debug.Write(sql);
         }
+
         public DbSet<Cheque> Cheque { get; set; }
         public DbSet<ClienteMinorista> ClienteMinorista { get; set; }
         public DbSet<CostoFinanciero> CostoFinanciero { get; set; }

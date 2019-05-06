@@ -41,7 +41,7 @@ Public Class frmChequeAlta
         Catch ex As NegocioException
             MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración de Cheques", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador." + ex.ToString(), "Administración de Cheques", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 End Class

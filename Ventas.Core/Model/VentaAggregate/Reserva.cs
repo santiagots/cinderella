@@ -34,7 +34,8 @@ namespace Ventas.Core.Model.VentaAggregate
         internal Reserva(): base(false)
         { }
 
-        public Reserva(string nombre,
+        public Reserva(int idSucursal,
+                       string nombre,
                        string apellido,
                        string telefono,
                        string email,
@@ -44,6 +45,7 @@ namespace Ventas.Core.Model.VentaAggregate
                        string observaciones,
                        Venta venta) : base(true)
         {
+            IdSucursal = idSucursal;
             Nombre = nombre;
             Apellido = apellido;
             Telefono = telefono;

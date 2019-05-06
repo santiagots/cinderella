@@ -268,6 +268,7 @@ Namespace VistaModelo.Ventas
                                            transaccionItem.NombreProducto,
                                            transaccionItem.MontoProducto.Valor,
                                            transaccionItem.Cantidad,
+                                           False,
                                            transaccionItem.PorcentajeBonificacion,
                                            PorcentajeFacturacion,
                                            tipoCliente,
@@ -323,7 +324,9 @@ Namespace VistaModelo.Ventas
             If (frmReserva.ShowDialog() = DialogResult.OK) Then
                 Await FinalizarVentaAsyn(True)
 
-                reservaModel = New Reserva(frmReserva.FrmReservaViewModel.ReservaDetalle.Nombre,
+                reservaModel = New Reserva(
+                                     IdSucursal,
+                                     frmReserva.FrmReservaViewModel.ReservaDetalle.Nombre,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Apellido,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Telefono,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Email,
@@ -406,7 +409,7 @@ Namespace VistaModelo.Ventas
             End If
         End Function
 
-        Friend Sub AgregaItemVenta(cambio As Boolean)
+        Friend Sub AgregaItemVenta(esDevolucion As Boolean)
             Dim producto As Model.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
 
             If (producto Is Nothing) Then
@@ -415,7 +418,7 @@ Namespace VistaModelo.Ventas
 
             producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
-            Dim CantidadUnidadesDeProducto As Integer = ventaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(cambio, -1, 1)
+            Dim CantidadUnidadesDeProducto As Integer = ventaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
             Dim stockInsuficienteConfirmacion As Boolean = False
 
             If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
@@ -448,6 +451,7 @@ Namespace VistaModelo.Ventas
                                     producto.Nombre,
                                     montoProducto.Valor,
                                     CantidadUnidadesDeProducto,
+                                    esDevolucion,
                                     porcentejeBonificacion,
                                     PorcentajeFacturacion,
                                     TipoClienteSeleccionado,
@@ -510,17 +514,17 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Sub CalcularPendientePago()
-            Dim motoPendientePago As MontoPago = ventaModel.ObtenerPendienteMontoPago(CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, AplicarBonificacion())
+            Dim motoPendientePago As MontoPago = ventaModel.ObtenerPendienteMontoPago(CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
             ActualizarPago(motoPendientePago)
         End Sub
 
         Friend Sub CalcularPagoDesdeSubtotal(subtotal As Decimal)
-            Dim motoAPagar As MontoPago = ventaModel.ObtenerMontoPagoDesdeSubtotal(subtotal, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, AplicarBonificacion())
+            Dim motoAPagar As MontoPago = ventaModel.ObtenerMontoPagoDesdeSubtotal(subtotal, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
             ActualizarPago(motoAPagar)
         End Sub
 
         Friend Sub CalcularPagoDesdeTotal(total As Decimal)
-            Dim motoAPagar As MontoPago = ventaModel.ObtenerMontoPagoDesdeTotal(total, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, AplicarBonificacion())
+            Dim motoAPagar As MontoPago = ventaModel.ObtenerMontoPagoDesdeTotal(total, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
             ActualizarPago(motoAPagar)
         End Sub
 

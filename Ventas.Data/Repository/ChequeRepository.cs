@@ -86,7 +86,10 @@ namespace Ventas.Data.Repository
 
         public int UltimoNumeroDeOrden(int idSucursal)
         {
-            return _context.Cheque.Max(x => x.NumeroOrden);
+            if (_context.Cheque.Any())
+                return _context.Cheque.Max(x => x.NumeroOrden);
+            else
+                return 0;
         }
     }
 }
