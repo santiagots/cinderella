@@ -1,16 +1,7 @@
-﻿Imports Common.Core.Enum
-Imports Common.Core.Interfaces
-Imports Common.Data
-Imports Common.Data.Repository
-Imports Common.Service.Facturar
-Imports Ventas.Core.Enum
+﻿Imports Ventas.Core.Enum
 Imports Ventas.Core.Interfaces
-Imports Ventas.Core.Model.BaseAgreggate
-Imports Ventas.Core.Model.NotaPedidoAgreggate
-Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
-Imports Common.Core.ValueObjects
 
 Namespace Formularios.Reserva
     Public Class Servicio

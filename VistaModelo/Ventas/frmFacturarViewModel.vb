@@ -5,10 +5,11 @@ Imports Ventas.Core.Model.VentaAggregate
 Imports SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel
 Imports Common.Core.Exceptions
 Imports System.Threading.Tasks
-Imports Common.Service.Facturar
+Imports Helper = Common.Core.Helper
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Common.Core.ValueObjects
 Imports Common.Core.Model
+Imports Common.Core.Enum
 
 Namespace VistaModelo.Ventas
     Public Class frmFacturarViewModel
@@ -63,11 +64,22 @@ Namespace VistaModelo.Ventas
             End Get
         End Property
 
+        Dim _Visible As Boolean
+        Public Property Visible As Boolean
+            Set(value As Boolean)
+                _Visible = value
+                NotifyPropertyChanged(NameOf(Me.Visible))
+            End Set
+            Get
+                Return _Visible
+            End Get
+        End Property
+
         Public Sub New(ventaModel As Venta, facturarCallBack As FacturarDelegateCallBack, desdeReserva As Boolean)
             Me.ventaModel = ventaModel
             Me.desdeReserva = desdeReserva
             Me.FacturarCallBackEvent = facturarCallBack
-
+            Me.Visible = True
             VerificarLimiteFacturacion(_Total)
         End Sub
 
@@ -86,27 +98,51 @@ Namespace VistaModelo.Ventas
             Numerosfacturas.Remove(numerofactura)
         End Sub
 
-        Friend Sub Aceptar()
+        Friend Async Function AceptarAsync() As Task(Of Boolean)
+                If (TiposFacturaSeleccionada = TipoFactura.Manual AndAlso Numerosfacturas.Count = 0) Then
+                    MessageBox.Show("Error al registrar la factura. Debe ingresar un número de factura.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return False
+                End If
 
-            Dim ticketProducto As IList(Of TicketProducto) = New List(Of TicketProducto)
-            Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
+                If ((CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento) AndAlso Helper.Cuit.Validar(CUIT)) Then
+                    MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return False
+                End If
 
-            If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
-            Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
-            End If
+                If (ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso (String.IsNullOrEmpty(NombreYApellido) OrElse String.IsNullOrEmpty(Direccion) OrElse String.IsNullOrEmpty(Localidad) OrElse String.IsNullOrEmpty(CUIT))) Then
+                    MessageBox.Show("Error al registrar la factura. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return False
+                End If
 
-            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.ToString(), x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT)))
+                Dim ticketProducto As IList(Of TicketProducto) = New List(Of TicketProducto)
+                Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
 
-            Dim numerosFactura As List(Of Integer) = Servicio.FacturarService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT)
-            numerosFactura.ForEach(Sub(x) Numerosfacturas.Add(x))
-            FacturarCallBackEvent(True, Me)
+                If (desdeReserva) Then
+                    ticketProducto.Add(New TicketProducto("Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
+                Else
+                    ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
+                End If
 
-        End Sub
+                ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.ToString(), x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT)))
+
+                Dim numerosFactura As List(Of Integer) = Servicio.FacturarService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT)
+                numerosFactura.ForEach(Sub(x) Numerosfacturas.Add(x))
+
+                ventaModel.AgregarFactura(TiposFacturaSeleccionada,
+                                            CondicionesIVASeleccionada,
+                                            NombreYApellido,
+                                            Direccion,
+                                            Localidad,
+                                            CUIT,
+                                            Numerosfacturas.ToList())
+
+            Visible = False
+            Await FacturarCallBackEvent(True)
+                Return True
+        End Function
 
         Friend Sub Cancelar()
-            FacturarCallBackEvent(False, Nothing)
+            FacturarCallBackEvent(False)
         End Sub
 
         Friend Sub TipoFacturacionChange(tiposFactura As Enums.TipoFactura)

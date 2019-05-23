@@ -85,22 +85,20 @@ Namespace Formularios.Cheque
             Agrega()
             ChequeDetalle.NumeroCheque += 1
             ChequeDetalle.NumeroOrden += 1
-            ChequeDetalle.IdLibrador = 0
-            ChequeDetalle.LibradorNombre = String.Empty
             ChequeDetalle.FechaDesposito = DateTime.Now
             ChequeDetalle.FechaVencimiento = ChequeDetalle.FechaDesposito.AddDays(30)
 
             NotifyPropertyChanged(NameOf(Me.ChequeDetalle))
         End Sub
 
-        Friend Sub Quitar(idCheque As Long)
-            Dim chequeModelEliminar As Model.Cheque = _ChequesModel.FirstOrDefault(Function(x) x.Id = idCheque)
+        Friend Sub Quitar(numeroCheque As Integer)
+            Dim chequeModelEliminar As Model.Cheque = _ChequesModel.FirstOrDefault(Function(x) x.NumeroCheque = numeroCheque)
             If (chequeModelEliminar Is Nothing) Then
                 Throw New NegocioException("Error al quitar el Cheque. El cheque que se está intentando eliminar no se ha encontrado.")
             End If
 
             _ChequesModel.Remove(chequeModelEliminar)
-            Cheques.Remove(Cheques.FirstOrDefault(Function(x) x.Id = chequeModelEliminar.Id))
+            Cheques.Remove(Cheques.FirstOrDefault(Function(x) x.NumeroCheque = numeroCheque))
 
             ChequeDetalle.Monto = obtenerMontoRestante()
 

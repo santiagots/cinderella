@@ -267,7 +267,7 @@ Partial Class frmReservaAdminitracion
         Me.cmbModoEntrega.DataSource = Me.MetodoEntregaBindingSource
         Me.cmbModoEntrega.DisplayMember = "Value"
         Me.cmbModoEntrega.FormattingEnabled = True
-        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 33)
+        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 34)
         Me.cmbModoEntrega.Name = "cmbModoEntrega"
         Me.cmbModoEntrega.Size = New System.Drawing.Size(244, 23)
         Me.cmbModoEntrega.TabIndex = 423

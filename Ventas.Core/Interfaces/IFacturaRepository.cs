@@ -10,6 +10,8 @@ namespace Ventas.Core.Interfaces
 {
     public interface IFacturaRepository
     {
+        Factura Obtener(long id);
+        void Guardar(Factura factura);
         int ObtenerUltimoNumeroFactura(TipoFactura tipoFactura);
     }
 }

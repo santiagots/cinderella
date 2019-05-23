@@ -19,6 +19,9 @@ namespace Ventas.Core.Model.VentaAggregate
         public virtual IList<Cheque> Cheques { get; protected set; }
         public virtual IList<VentaItem> VentaItems { get; protected set; }
         public virtual Factura Factura { get; protected set; }
+        public bool Anulado { get; protected set; }
+        public string MotivoAnulado { get; protected set; }
+        public DateTime? FechaAnulado { get; protected set; }
         public int CantidadTotal { get; private set; }
         public MontoPago PagoTotal { get; private set; }
         public bool EstaPaga { get { return !VentaItems.Any(x => x.PorcentajePago != 1); } }
@@ -45,6 +48,19 @@ namespace Ventas.Core.Model.VentaAggregate
         {
             string facturada = Factura == null ? "N" : "S";
             Numero = $"{codigoVentaSucursal}{facturada}{Fecha.ToString("yyyyMMdd")}{cantidadVentas.ToString("D9")}";
+        }
+
+        public void Anular(string motivo)
+        {
+            if (Anulado)
+                throw new NegocioException("La venta ya se encuentra anulada.");
+
+            if (string.IsNullOrWhiteSpace(motivo))
+                throw new NegocioException("Debe ingresar un motivo para anular una venta.");
+
+            Anulado = true;
+            MotivoAnulado = motivo;
+            FechaAnulado = DateTime.Now;
         }
 
         public void AgregaVentaItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
@@ -140,7 +156,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public void AgregarFactura(TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, List<int> numeroFactura)
         {
-            if (tipoFactura == TipoFactura.Manual && numeroFactura.Count == 0)
+            if (numeroFactura.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
 
             if((condicionesIVA == CondicionIVA.Responsable_Inscripto || condicionesIVA == CondicionIVA.Monotributo || condicionesIVA == CondicionIVA.Exento) && Cuit.Validar(cuit))

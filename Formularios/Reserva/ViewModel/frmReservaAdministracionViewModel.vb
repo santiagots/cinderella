@@ -35,11 +35,10 @@ Namespace Formularios.Reserva
             ReservasDetallesItems = New BindingList(Of ReservaAdministracionItemsViewModel)()
             VentaDetalleSeleccionada = New VentaDetalleViewModel()
             ReservaDetalleSeleccionada = New ReservaDetalleViewModel()
-            FechaAlta = DateTime.Now()
-            FechaAltaSeleccionada = True
+            Inicializar()
         End Sub
 
-        Public Async Function BuscarReservaAsync() As Task
+        Public Async Function BuscarAsync() As Task
             Dim fechaAltaFiltro As DateTime? = If(FechaAltaSeleccionada, FechaAlta, CType(Nothing, DateTime?))
             Dim FechaRetiroFiltro As DateTime? = If(FechaRetiroSeleccionada, FechaRetiro, CType(Nothing, DateTime?))
 
@@ -47,6 +46,11 @@ Namespace Formularios.Reserva
 
             ReservasDetallesItems = New BindingList(Of ReservaAdministracionItemsViewModel)(Mapper.Map(Of List(Of ReservaAdministracionItemsViewModel))(reservasModel))
             NotifyPropertyChanged(NameOf(Me.ReservasDetallesItems))
+        End Function
+
+        Friend Async Function RestablecerAsync() As Task
+            Inicializar()
+            Await BuscarAsync()
         End Function
 
         Friend Async Function EliminarReservaAsync(reservaAdministracionItemsViewModel As ReservaAdministracionItemsViewModel) As Task
@@ -87,5 +91,15 @@ Namespace Formularios.Reserva
             VentaDetalleSeleccionada = Mapper.Map(Of VentaDetalleViewModel)(reservaModel.VentaReserva)
             ReservaDetalleSeleccionada = Mapper.Map(Of ReservaDetalleViewModel)(reservaModel)
         End Function
+
+        Private Sub Inicializar()
+            FechaAlta = DateTime.Now()
+            FechaAltaSeleccionada = True
+
+            FechaRetiro = Nothing
+            FechaRetiroSeleccionada = False
+
+            Nombre = String.Empty
+        End Sub
     End Class
 End Namespace

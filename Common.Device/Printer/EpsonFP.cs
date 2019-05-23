@@ -371,7 +371,7 @@ namespace Common.Device.Printer
             }
             catch (Exception ex)
             {
-                throw new NegocioException();
+                throw new NegocioException("Error al conectarse a la impresora fiscal. Verifique que la impresora se encuentre conectada.", ex);
             }
         }
 

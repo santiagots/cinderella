@@ -17,9 +17,10 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        public NumeroFactura(int numero) : base(true)
+        public NumeroFactura(int numero, long idFactura) : base(true)
         {
             this.Numero = numero;
+            this.IdFactura = idFactura;
         }
     }
 }

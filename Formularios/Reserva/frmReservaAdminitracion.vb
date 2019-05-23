@@ -21,13 +21,19 @@ Public Class frmReservaAdminitracion
                           ReservaDetalle1.AutoScaleMode = AutoScaleMode.None
                           ReservaDetalle1.Btn_BuscarConsumidorFinal.Visible = False
                           frmReservaAdministracionViewModel.CargarMetodosEntregas()
-                          Await frmReservaAdministracionViewModel.BuscarReservaAsync()
+                          Await frmReservaAdministracionViewModel.BuscarAsync()
                       End Function)
     End Sub
 
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click
         EjecutarAsync(Async Function() As Task
-                          Await frmReservaAdministracionViewModel.BuscarReservaAsync()
+                          Await frmReservaAdministracionViewModel.BuscarAsync()
+                      End Function)
+    End Sub
+
+    Private Sub btn_Restablecer_Click(sender As Object, e As EventArgs) Handles btn_Restablecer.Click
+        EjecutarAsync(Async Function() As Task
+                          Await frmReservaAdministracionViewModel.RestablecerAsync()
                       End Function)
     End Sub
 

@@ -25,8 +25,9 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        public Factura(long idVenta, TipoFactura tipoFactura, CondicionIVA condicionIVA, string nombreYApellido, string direccion, string localidad, string cuit, IEnumerable<int> numeroFactura) : base(true)
+        public Factura(long idVenta, TipoFactura tipoFactura, CondicionIVA condicionIVA, string nombreYApellido, string direccion, string localidad, string cuit, IEnumerable<int> numeroFactura) : base()
         {
+            Id = idVenta;
             IdVenta = idVenta;
             TipoFactura = tipoFactura;
             CondicionIVA = condicionIVA;
@@ -34,7 +35,7 @@ namespace Ventas.Core.Model.VentaAggregate
             Direccion = direccion;
             Localidad = localidad;
             CUIT = cuit;
-            NumeroFactura = numeroFactura.Select(x => new NumeroFactura(x)).ToList();
+            NumeroFactura = numeroFactura.Select(x => new NumeroFactura(x, this.Id)).ToList();
         }
     }
 }

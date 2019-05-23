@@ -976,21 +976,21 @@ Partial Class MDIContenedor
         '
         Me.Estado.Image = Global.SistemaCinderella.My.Resources.Recursos.Login_32
         Me.Estado.Name = "Estado"
-        Me.Estado.Size = New System.Drawing.Size(107, 17)
+        Me.Estado.Size = New System.Drawing.Size(99, 17)
         Me.Estado.Text = "Sesión iniciada |"
         '
         'Usuario
         '
         Me.Usuario.Image = Global.SistemaCinderella.My.Resources.Recursos.Mi_Cuenta
         Me.Usuario.Name = "Usuario"
-        Me.Usuario.Size = New System.Drawing.Size(63, 17)
+        Me.Usuario.Size = New System.Drawing.Size(59, 17)
         Me.Usuario.Text = "Usuario"
         '
         'Menu_Mensajes
         '
         Me.Menu_Mensajes.Image = Global.SistemaCinderella.My.Resources.Recursos.Mail_Importante
         Me.Menu_Mensajes.Name = "Menu_Mensajes"
-        Me.Menu_Mensajes.Size = New System.Drawing.Size(89, 17)
+        Me.Menu_Mensajes.Size = New System.Drawing.Size(85, 17)
         Me.Menu_Mensajes.Text = "(0) Mensajes"
         '
         'Menu_Movimientos
@@ -1006,21 +1006,21 @@ Partial Class MDIContenedor
         '
         Me.Menu_ChequesVencer.Image = Global.SistemaCinderella.My.Resources.Recursos.Mi_Cuenta_Salir
         Me.Menu_ChequesVencer.Name = "Menu_ChequesVencer"
-        Me.Menu_ChequesVencer.Size = New System.Drawing.Size(145, 17)
+        Me.Menu_ChequesVencer.Size = New System.Drawing.Size(137, 17)
         Me.Menu_ChequesVencer.Text = "(0) Cheques por vencer"
         '
         'Menu_NotaPedidoVenta
         '
         Me.Menu_NotaPedidoVenta.Image = Global.SistemaCinderella.My.Resources.Recursos.Nota_Pedido_2r
         Me.Menu_NotaPedidoVenta.Name = "Menu_NotaPedidoVenta"
-        Me.Menu_NotaPedidoVenta.Size = New System.Drawing.Size(168, 17)
+        Me.Menu_NotaPedidoVenta.Size = New System.Drawing.Size(157, 17)
         Me.Menu_NotaPedidoVenta.Text = "(0) Nota de pedidos (Venta)"
         '
         'Menu_OrdenCompra
         '
         Me.Menu_OrdenCompra.Image = Global.SistemaCinderella.My.Resources.Recursos.Nota_Pedido_2r
         Me.Menu_OrdenCompra.Name = "Menu_OrdenCompra"
-        Me.Menu_OrdenCompra.Size = New System.Drawing.Size(135, 17)
+        Me.Menu_OrdenCompra.Size = New System.Drawing.Size(125, 17)
         Me.Menu_OrdenCompra.Text = "(0) Orden de Compra"
         '
         'Conectado
@@ -1029,7 +1029,7 @@ Partial Class MDIContenedor
         Me.Conectado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Conectado.Name = "Conectado"
         Me.Conectado.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.Conectado.Size = New System.Drawing.Size(46, 17)
+        Me.Conectado.Size = New System.Drawing.Size(91, 17)
         Me.Conectado.Spring = True
         Me.Conectado.Text = "Sin Conexión a Internet"
         Me.Conectado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1230,7 +1230,7 @@ Partial Class MDIContenedor
         Me.AccesoMercaderias.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.AccesoMercaderias.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.AccesoMercaderias.Name = "AccesoMercaderias"
-        Me.AccesoMercaderias.Size = New System.Drawing.Size(78, 51)
+        Me.AccesoMercaderias.Size = New System.Drawing.Size(76, 51)
         Me.AccesoMercaderias.Text = "Ingreso Mercad."
         Me.AccesoMercaderias.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.AccesoMercaderias.ToolTipText = "Acceso a ingreso de Mercaderías"
@@ -1301,7 +1301,6 @@ Partial Class MDIContenedor
         Me.Controls.Add(Me.MenuAccesos)
         Me.Controls.Add(Me.MenuSuperior)
         Me.Controls.Add(Me.MenuInferior)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuSuperior

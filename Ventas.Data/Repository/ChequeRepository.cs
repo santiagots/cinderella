@@ -81,7 +81,10 @@ namespace Ventas.Data.Repository
 
         public decimal TotalCartera(int idSucursal)
         {
-            return _context.Cheque.Where(x => x.IdSucursal == idSucursal && x.Estado != EstadoCheque.Salido).Sum(x => x.Monto);
+            if (_context.Cheque.Any())
+                return _context.Cheque.Where(x => x.IdSucursal == idSucursal && x.Estado != EstadoCheque.Salido).Sum(x => x.Monto);
+            else
+                return 0;
         }
 
         public int UltimoNumeroDeOrden(int idSucursal)

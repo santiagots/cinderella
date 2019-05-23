@@ -21,7 +21,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>ftp://santiagots-001%40ftp.site4now.net/CinderellaDesa/</PublishUrl>
+    <PublishUrl>C:\Users\stambour\Desktop\aa\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>286</ApplicationRevision>
+    <ApplicationRevision>305</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -162,6 +162,10 @@
     <Reference Include="Microsoft.SqlServer.BatchParserClient, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Smo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>packages\NLog.4.6.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>packages\NPOI.2.4.1\lib\net45\NPOI.dll</HintPath>
       <Private>True</Private>
@@ -195,6 +199,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
@@ -229,6 +237,12 @@
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
     </Compile>
     <Compile Include="ControlesUsuario\ChequeDetalle.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlesUsuario\FacturaDetalle.Designer.vb">
+      <DependentUpon>FacturaDetalle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ControlesUsuario\FacturaDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ControlesUsuario\Paginado.Designer.vb">
@@ -331,10 +345,10 @@
     <Compile Include="ControlesUsuario\VentaDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmBuscarClienteMinorista.Designer.vb">
+    <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.Designer.vb">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmBuscarClienteMinorista.vb">
+    <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmBuscarClienteMayorista.Designer.vb">
@@ -397,10 +411,10 @@
     <Compile Include="Formularios\frmControladorFiscal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmDatosClienteMinorista.Designer.vb">
+    <Compile Include="Formularios\Venta\frmDatosClienteMinorista.Designer.vb">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmDatosClienteMinorista.vb">
+    <Compile Include="Formularios\Venta\frmDatosClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmDevoluciones.Designer.vb">
@@ -481,22 +495,16 @@
     <Compile Include="Formularios\frmEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmFacturaAdministracion.Designer.vb">
+    <Compile Include="Formularios\Venta\frmFacturaAdministracion.Designer.vb">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmFacturaAdministracion.vb">
+    <Compile Include="Formularios\Venta\frmFacturaAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmFacturar.Designer.vb">
+    <Compile Include="Formularios\Venta\frmFacturar.Designer.vb">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmFacturar.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\Ventas\frmFacturarNueva.Designer.vb">
-      <DependentUpon>frmFacturarNueva.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\Ventas\frmFacturarNueva.vb">
+    <Compile Include="Formularios\Venta\frmFacturar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmFeriados.Designer.vb">
@@ -577,10 +585,10 @@
     <Compile Include="Formularios\frmMovimientoCajaFuerte.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmNotaCreditoAdministracion.Designer.vb">
+    <Compile Include="Formularios\Venta\frmNotaCreditoAdministracion.Designer.vb">
       <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmNotaCreditoAdministracion.vb">
+    <Compile Include="Formularios\Venta\frmNotaCreditoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmNotaCredito.Designer.vb">
@@ -763,10 +771,10 @@
     <Compile Include="Formularios\frmReporteEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmReporteNotaPedido.Designer.vb">
+    <Compile Include="Formularios\Venta\frmReporteNotaPedido.Designer.vb">
       <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmReporteNotaPedido.vb">
+    <Compile Include="Formularios\Venta\frmReporteNotaPedido.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmReportePrecios.Designer.vb">
@@ -787,10 +795,10 @@
     <Compile Include="Formularios\frmReportePresupuesto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmReporteResumenReserva.Designer.vb">
+    <Compile Include="Formularios\Venta\frmReporteResumenReserva.Designer.vb">
       <DependentUpon>frmReporteResumenReserva.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmReporteResumenReserva.vb">
+    <Compile Include="Formularios\Venta\frmReporteResumenReserva.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmReporteResumenVenta.Designer.vb">
@@ -883,16 +891,16 @@
     <Compile Include="Formularios\frmUsuarios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmVentas.Designer.vb">
+    <Compile Include="Formularios\Venta\frmVentas.Designer.vb">
       <DependentUpon>frmVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmVentas.vb">
+    <Compile Include="Formularios\Venta\frmVentas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmVentasAdministracion.Designer.vb">
+    <Compile Include="Formularios\Venta\frmVentasAdministracion.Designer.vb">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmVentasAdministracion.vb">
+    <Compile Include="Formularios\Venta\frmVentasAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmVerAdelantos.Designer.vb">
@@ -961,10 +969,10 @@
     <Compile Include="Formularios\frmVerEfectivo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmVerFactura.Designer.vb">
+    <Compile Include="Formularios\Venta\frmVerFactura.Designer.vb">
       <DependentUpon>frmVerFactura.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmVerFactura.vb">
+    <Compile Include="Formularios\Venta\frmVerFactura.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmVerFeriados.Designer.vb">
@@ -1039,6 +1047,12 @@
     <Compile Include="ControlesUsuario\ReservaDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Formularios\Venta\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\Venta\Servicio\Servicio.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\FacturaDetalleViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmVentasAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmVerFacturaViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\VentaAdministracionItemViewModel.vb" />
     <Compile Include="Funciones.vb" />
     <Compile Include="Formularios\MDIContenedor.Designer.vb">
       <DependentUpon>MDIContenedor.vb</DependentUpon>
@@ -1061,10 +1075,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmNotaPedidoAdministracion.Designer.vb">
+    <Compile Include="Formularios\Venta\frmNotaPedidoAdministracion.Designer.vb">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Ventas\frmNotaPedidoAdministracion.vb">
+    <Compile Include="Formularios\Venta\frmNotaPedidoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmPresupuestoAdministracion.Designer.vb">
@@ -1165,7 +1179,6 @@
     <Compile Include="Formularios\Reserva\ViewModel\ReservaAdministracionItemsViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\ReservaDetalleViewModel.vb" />
     <Compile Include="VistaModelo\Ventas\Servicio\Servicio.vb" />
-    <Compile Include="VistaModelo\Ventas\frmVentasAdministracionViewModel.vb" />
     <Compile Include="VistaModelo\Ventas\VentaDetalleViewModel.vb" />
     <Compile Include="VistaModelo\Ventas\VentaItemViewModel.vb" />
     <Compile Include="VistaModelo\Ventas\Mapper\MapperProfile.vb" />
@@ -1174,6 +1187,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlesUsuario\FacturaDetalle.resx">
+      <DependentUpon>FacturaDetalle.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
       <DependentUpon>Paginado.vb</DependentUpon>
@@ -1220,7 +1236,7 @@
     <EmbeddedResource Include="ControlesUsuario\VentaDetalle.resx">
       <DependentUpon>VentaDetalle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmBuscarClienteMinorista.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmBuscarClienteMinorista.resx">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmBuscarClienteMayorista.resx">
@@ -1253,7 +1269,7 @@
     <EmbeddedResource Include="Formularios\frmControladorFiscal.resx">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmDatosClienteMinorista.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmDatosClienteMinorista.resx">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmDevoluciones.resx">
@@ -1295,14 +1311,11 @@
     <EmbeddedResource Include="Formularios\frmEtiquetasMasivas.resx">
       <DependentUpon>frmEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmFacturaAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmFacturaAdministracion.resx">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmFacturar.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmFacturar.resx">
       <DependentUpon>frmFacturar.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmFacturarNueva.resx">
-      <DependentUpon>frmFacturarNueva.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmFeriados.resx">
       <DependentUpon>frmFeriados.vb</DependentUpon>
@@ -1343,7 +1356,7 @@
     <EmbeddedResource Include="Formularios\frmMovimientoCajaFuerte.resx">
       <DependentUpon>frmMovimientoCajaFuerte.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmNotaCreditoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmNotaCreditoAdministracion.resx">
       <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmNotaCredito.resx">
@@ -1440,7 +1453,7 @@
     <EmbeddedResource Include="Formularios\frmReporteEtiquetasMasivas.resx">
       <DependentUpon>frmReporteEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmReporteNotaPedido.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmReporteNotaPedido.resx">
       <DependentUpon>frmReporteNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmReportePrecios.resx">
@@ -1452,7 +1465,7 @@
     <EmbeddedResource Include="Formularios\frmReportePresupuesto.resx">
       <DependentUpon>frmReportePresupuesto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmReporteResumenReserva.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmReporteResumenReserva.resx">
       <DependentUpon>frmReporteResumenReserva.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmReporteResumenVenta.resx">
@@ -1500,10 +1513,10 @@
     <EmbeddedResource Include="Formularios\frmUsuarios.resx">
       <DependentUpon>frmUsuarios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmVentas.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmVentas.resx">
       <DependentUpon>frmVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmVentasAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmVentasAdministracion.resx">
       <DependentUpon>frmVentasAdministracion.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1540,7 +1553,7 @@
     <EmbeddedResource Include="Formularios\frmVerEfectivo.resx">
       <DependentUpon>frmVerEfectivo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmVerFactura.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmVerFactura.resx">
       <DependentUpon>frmVerFactura.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmVerFeriados.resx">
@@ -1585,7 +1598,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Ventas\frmNotaPedidoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmNotaPedidoAdministracion.resx">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmPresupuestoAdministracion.resx">
@@ -1616,9 +1629,17 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReporteTransaccion.vb</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config">
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.FacturaDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmVerFacturaViewModel.datasource" />
+    <None Include="VistaModelo\app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="VistaModelo\Ventas\app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Imagenes\banco.png" />
     <Content Include="Imagenes\Boton_Ventas.png" />
     <Content Include="Imagenes\btn_AbrirCaja_32.png" />
@@ -1754,6 +1775,7 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cheque.ChequeDetalleViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cheque.frmChequeAdministracionViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cheque.frmChequeAltaMasivaViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmVentasAdministracionViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmFacturar.FacturarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.PagoValidator.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.frmVentas.PagoViewModel.datasource" />
@@ -2001,372 +2023,362 @@
   <ItemGroup>
     <PublishFile Include="bin\dlls\CodigoBarras.dll">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="bin\dlls\Interop.EpsonFPHostControlX.dll">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="bin\dlls\itextsharp.dll">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="CodigoBarras">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.CrystalReports.Engine">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ClientDoc">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CommLayer">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CommonControls">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CommonObjectModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.Controllers">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CubeDefModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.DataDefModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.DataSetConversion">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ObjectFactory">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.Prompting">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ReportDefModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.XmlSerialize">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportSource">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.Shared">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.Windows.Forms">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="db\CINDERELLA.mdf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="db\CINDERELLA_LOCAL.mdf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="db\CINDERELLA_LOCAL_log.ldf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="db\CINDERELLA_log.ldf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="FlashControlV71">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="itextsharp">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="log4net">
       <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="log4net.xml">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
       <PublishState>Exclude</PublishState>
       <IncludeHash>True</IncludeHash>
-      <FileType>File</FileType>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.Common">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.ProcessingObjectModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.WinForms">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.VisualBasic.PowerPacks.Vs">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Negocio">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Servicios">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="ShockwaveFlashObjects">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="stdole">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>

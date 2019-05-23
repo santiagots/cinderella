@@ -19,13 +19,6 @@ namespace Ventas.Test
         }
 
         [Fact]
-        public void ObtenerVenta()
-        {
-            VentaRepository repository = new VentaRepository(new VentaContext());
-            List<Venta> bancos = repository.Obtener();
-        }
-
-        [Fact]
         public void GuardarVenta()
         {
 

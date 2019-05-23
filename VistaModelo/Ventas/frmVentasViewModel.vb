@@ -28,7 +28,7 @@ Namespace VistaModelo.Ventas
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
         Public Delegate Function StockInsuficienteDelegate(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
-        Public Delegate Sub FacturarDelegateCallBack(facturar As Boolean, facturarViewModel As frmFacturarViewModel)
+        Public Delegate Function FacturarDelegateCallBack(facturar As Boolean) As Task
         Public Delegate Sub TerminarVentaDelegate()
 
         Private CargarProductoNombreyCodigoEvent As CargarProductoNombreyCodigoDelegate
@@ -364,7 +364,12 @@ Namespace VistaModelo.Ventas
             AgregarCheque()
 
             If (PorcentajeFacturacion > 0) Then
-                FacturarEvent(New frmFacturarViewModel(ventaModel, FacturarCallBackEvent, desdeReserva))
+                Try
+                    FacturarEvent(New frmFacturarViewModel(ventaModel, FacturarCallBackEvent, desdeReserva))
+                Catch ex As Exception
+                    Visible = True
+                End Try
+
             Else
                 Await GuardarAsync()
             End If
@@ -393,18 +398,9 @@ Namespace VistaModelo.Ventas
 
         End Function
 
-        Friend Async Function FacturarAsync(facturar As Boolean, facturarViewModel As frmFacturarViewModel) As Task
+        Friend Async Function FacturarAsync(facturar As Boolean) As Task
             Visible = True
             If (facturar) Then
-                Await Task.Run(Sub()
-                                   ventaModel.AgregarFactura(facturarViewModel.TiposFacturaSeleccionada,
-                                                             facturarViewModel.CondicionesIVASeleccionada,
-                                                             facturarViewModel.NombreYApellido,
-                                                             facturarViewModel.Direccion,
-                                                             facturarViewModel.Localidad,
-                                                             facturarViewModel.CUIT,
-                                                             facturarViewModel.Numerosfacturas.ToList())
-                               End Sub)
                 Await GuardarAsync()
             End If
         End Function
