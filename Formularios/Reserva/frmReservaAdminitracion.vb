@@ -12,7 +12,7 @@ Public Class frmReservaAdminitracion
         ' This call is required by the designer.
         InitializeComponent()
 
-        frmReservaAdministracionViewModel = New frmReservaAdministracionViewModel(My.Settings.Sucursal)
+        frmReservaAdministracionViewModel = New frmReservaAdministracionViewModel(My.Settings.Sucursal, Me.MdiParent)
     End Sub
 
     Private Sub frmReservaAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -37,14 +37,17 @@ Public Class frmReservaAdminitracion
                       End Function)
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+    Private Sub dgReservas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgReservas.CellContentClick
         EjecutarAsync(Async Function() As Task
-                          If DataGridView1.Columns(e.ColumnIndex).Name = "ReservaEliminar" Then
-                              Await frmReservaAdministracionViewModel.EliminarReservaAsync(DataGridView1.CurrentRow.DataBoundItem)
+                          If dgReservas.Columns(e.ColumnIndex).Name = "ReservaEliminar" Then
+                              Dim respuesta As DialogResult = MessageBox.Show("¿Está seguro que desea eliminar la reserva?", "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                              If respuesta = DialogResult.Yes Then
+                                  Await frmReservaAdministracionViewModel.EliminarReservaAsync(dgReservas.CurrentRow.DataBoundItem)
+                              End If
                           End If
 
-                          If DataGridView1.Columns(e.ColumnIndex).Name = "ReservaImprimir" Then
-                              Await frmReservaAdministracionViewModel.ImprimirReservaAsync(DataGridView1.CurrentRow.DataBoundItem, Me.MdiParent)
+                          If dgReservas.Columns(e.ColumnIndex).Name = "ReservaImprimir" Then
+                              Await frmReservaAdministracionViewModel.ImprimirReservaAsync(dgReservas.CurrentRow.DataBoundItem)
                           End If
 
                           ReservaDetalle1.ReservaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.ReservaDetalleSeleccionada
@@ -52,18 +55,32 @@ Public Class frmReservaAdminitracion
                       End Function)
     End Sub
 
-    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+    Private Sub tabAdministracionReservas_Selected(sender As Object, e As TabControlEventArgs) Handles tabAdministracionReservas.Selected
         EjecutarAsync(Async Function() As Task
-                          Await frmReservaAdministracionViewModel.CargarReservaAsync(DataGridView1.CurrentRow.DataBoundItem)
-                          ReservaDetalle1.ReservaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.ReservaDetalleSeleccionada
-                          ReservaDetalle1.VentaDetalle1.VentaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.VentaDetalleSeleccionada
-                          tabAdministracionReservas.SelectedTab = tabDetalle
+                          If (tabAdministracionReservas.SelectedTab.Name = tabDetalle.Name) Then
+                              If (dgReservas.CurrentRow Is Nothing) Then
+                                  MessageBox.Show("No se encuentra una reserva seleccionada. Para ver el detalle de una reserva debe seleccionar una.", "Administración de Reservas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                  tabAdministracionReservas.SelectedTab = tabAdministracion
+                                  Return
+                              End If
+                              Await frmReservaAdministracionViewModel.CargarReservaAsync(dgReservas.CurrentRow.DataBoundItem)
+                              ReservaDetalle1.ReservaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.ReservaDetalleSeleccionada
+                              ReservaDetalle1.VentaDetalle1.VentaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.VentaDetalleSeleccionada
+                          End If
                       End Function)
+    End Sub
+
+    Private Sub dgReservas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgReservas.CellDoubleClick
+        Ejecutar(Sub()
+                     'ReservaDetalle1.ReservaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.ReservaDetalleSeleccionada
+                     'ReservaDetalle1.VentaDetalle1.VentaDetalleBindingSource.DataSource = frmReservaAdministracionViewModel.VentaDetalleSeleccionada
+                     tabAdministracionReservas.SelectedTab = tabDetalle
+                 End Sub)
     End Sub
 
     Private Sub btnRetirar_Click(sender As Object, e As EventArgs) Handles btnRetirar.Click
         Ejecutar(Sub()
-                     frmReservaAdministracionViewModel.RetirarVenta(Me.MdiParent)
+                     frmReservaAdministracionViewModel.RetirarVenta()
                      Dispose()
                  End Sub)
     End Sub

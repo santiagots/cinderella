@@ -1,4 +1,5 @@
-﻿Imports Entidades
+﻿Imports Ventas.Core.Model.BaseAgreggate
+
 Public Class frmDatosClienteMinorista
 
     Public ClienteMinorista As ClienteMinorista
@@ -6,8 +7,7 @@ Public Class frmDatosClienteMinorista
     Private Sub Btn_BuscarConsumidorFinal_Click(sender As Object, e As EventArgs) Handles Btn_BuscarConsumidorFinal.Click
         Dim frmBuscarClienteMinorista As frmBuscarClienteMinorista = New frmBuscarClienteMinorista()
         If (frmBuscarClienteMinorista.ShowDialog() = DialogResult.OK) Then
-            ''TODO:Actualizar Estos
-            ''ClienteMinorista = frmBuscarClienteMinorista.clienteMinorista
+            ClienteMinorista = frmBuscarClienteMinorista.clienteMinorista
             txt_Apellido.Text = ClienteMinorista.Apellido
             txt_Nombre.Text = ClienteMinorista.Nombre
         End If
@@ -21,8 +21,8 @@ Public Class frmDatosClienteMinorista
 
         If (ClienteMinorista Is Nothing) Then
             Dim negClienteMinorista As Negocio.NegClienteMinorista = New Negocio.NegClienteMinorista()
-            ClienteMinorista = New ClienteMinorista() With {.Apellido = txt_Apellido.Text, .Nombre = txt_Nombre.Text}
-            ClienteMinorista.Id = negClienteMinorista.CrearCliente(ClienteMinorista)
+            ClienteMinorista = New ClienteMinorista(txt_Nombre.Text, txt_Apellido.Text)
+            VistaModelo.Ventas.Servicio.GuardarClienteMinorista(ClienteMinorista)
         End If
 
         Me.DialogResult = DialogResult.OK

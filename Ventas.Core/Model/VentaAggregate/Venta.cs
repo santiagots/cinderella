@@ -18,6 +18,7 @@ namespace Ventas.Core.Model.VentaAggregate
         public virtual IList<Pago> Pagos { get; protected set; }
         public virtual IList<Cheque> Cheques { get; protected set; }
         public virtual IList<VentaItem> VentaItems { get; protected set; }
+        public virtual NotaCredito NotaCredito { get; protected set; }
         public virtual Factura Factura { get; protected set; }
         public bool Anulado { get; protected set; }
         public string MotivoAnulado { get; protected set; }
@@ -154,7 +155,7 @@ namespace Ventas.Core.Model.VentaAggregate
             IdVendedor = vendedor != null ? vendedor.Id : 0;
         }
 
-        public void AgregarFactura(TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, List<int> numeroFactura)
+        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroFactura)
         {
             if (numeroFactura.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
@@ -165,7 +166,21 @@ namespace Ventas.Core.Model.VentaAggregate
             if (TipoCliente == TipoCliente.Mayorista && (string.IsNullOrEmpty(nombreYApellido) || string.IsNullOrEmpty(direccion) || string.IsNullOrEmpty(localidad) || string.IsNullOrEmpty(cuit)))
                 throw new NegocioException($"Error al registrar la factura. Debe completar todos los campos obligatorios.");
 
-            Factura = new Factura(Id, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, numeroFactura);
+            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroFactura);
+        }
+
+        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroNotaPedido)
+        {
+            if (numeroNotaPedido.Count == 0)
+                throw new NegocioException($"Error al registrar la nota crédito. Debe ingresar un número de nota crédito.");
+
+            if ((condicionesIVA == CondicionIVA.Responsable_Inscripto || condicionesIVA == CondicionIVA.Monotributo || condicionesIVA == CondicionIVA.Exento) && Cuit.Validar(cuit))
+                throw new NegocioException($"Error al registrar la nota crédito. El CUIL ingresado es incorrecto o se encuentra vacío.");
+
+            if (string.IsNullOrEmpty(nombreYApellido) || string.IsNullOrEmpty(direccion) || string.IsNullOrEmpty(localidad) || string.IsNullOrEmpty(cuit))
+                throw new NegocioException($"Error al registrar la factura. Debe completar todos los campos obligatorios.");
+
+            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroNotaPedido);
         }
 
         public void AgregarComision(Decimal porcentajeComisionEncargado, Decimal porcentajeComisionVendedor)

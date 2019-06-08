@@ -542,8 +542,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\CINDERELLA_LOCAL.mdf;In"& _ 
-            "tegrated Security=True;User Instance=True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True")>  _
         Public ReadOnly Property Conexion() As String
             Get
                 Return CType(Me("Conexion"),String)
@@ -553,9 +552,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("3bTQjHHLN8jkQtaJgYs/e9bHnb8gJjPc9toMfRVea7GrTPfdiacS73cv8GtBG1wLnrZDQyC0Azi/MjXUz"& _ 
-            "PYw3j5QlDFnM57xpuWPzIUw6JCt/7AewUvclkZlT5PXCC9i6qPt/E5QKrL1qhuyrgo5AzcZz7X3UTtxq"& _ 
-            "rVNOQMReSY=")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezl"& _ 
+            "ltpA6/gQhWzNU089HLhPWu39Kk=")>  _
         Public ReadOnly Property ConexionRemoto() As String
             Get
                 Return CType(Me("ConexionRemoto"),String)

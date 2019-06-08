@@ -11,6 +11,7 @@ Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
 Imports Common.Core.ValueObjects
+Imports Common.Service.NotaCredito
 
 Namespace VistaModelo.Ventas
     Public Class Servicio
@@ -54,6 +55,13 @@ Namespace VistaModelo.Ventas
             Using context As VentaContext = New VentaContext()
                 Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
                 notaPedidoRepository.Guardar(notaPedidoModel)
+            End Using
+        End Sub
+
+        Public Shared Sub GuardarClienteMinorista(clienteMinorista As ClienteMinorista)
+            Using context As VentaContext = New VentaContext()
+                Dim clienteMinoristaRepository As IClienteMinoristaRepository = New ClienteMinoristaRepository(context)
+                clienteMinoristaRepository.Guardar(clienteMinorista)
             End Using
         End Sub
 
@@ -144,18 +152,6 @@ Namespace VistaModelo.Ventas
                 Dim feriadoRepository As IFeriadoRepository = New FeriadoRepository(context)
                 Return feriadoRepository.EsFeriado(DateTime.Now)
             End Using
-        End Function
-
-        Public Shared Function ObtenerUltimoNumeroFactura(tipoFactura As TipoFactura) As Integer
-            Using context As VentaContext = New VentaContext()
-                Dim facturaRepository As IFacturaRepository = New FacturaRepository(context)
-                Return facturaRepository.ObtenerUltimoNumeroFactura(tipoFactura)
-            End Using
-        End Function
-
-        Public Shared Function FacturarService(tipoFactura As TipoFactura, tipoCliente As TipoCliente, condicionesIVA As CondicionIVA, pagos As IEnumerable(Of TicketPago), productos As IEnumerable(Of TicketProducto), porcentajeFacturacion As Decimal, nombreYApellido As String, direccion As String, localidad As String, cuit As String) As IList(Of Integer)
-            Dim facturar As FacturarService = New FacturarService(tipoFactura)
-            Return facturar.ObtenerNumeroFactura(tipoCliente, condicionesIVA, pagos, productos, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
         End Function
     End Class
 End Namespace

@@ -26,5 +26,11 @@ namespace Ventas.Data.Repository
 
             return resultado.ToList();
         }
+
+        public void Guardar(ClienteMinorista clienteMinorista)
+        {
+            _context.ClienteMinorista.Add(clienteMinorista);
+            _context.SaveChanges();
+        }
     }
 }

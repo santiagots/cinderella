@@ -32,9 +32,9 @@ namespace Common.Device.Printer
 
         internal static EpsonFPCommand AbrirNotaCredito = new EpsonFPCommand("\xD\x1", "\x0\x0");
 
-        internal static EpsonFPCommand ItemTicket = new EpsonFPCommand("\xB\x2", "\x0\x8");
+        internal static EpsonFPCommand ItemTicket = new EpsonFPCommand("\xB\x2", "\x0\x18");
 
-        internal static EpsonFPCommand ItemNotaCredito = new EpsonFPCommand("\xD\x2", "\x1\x8");
+        internal static EpsonFPCommand ItemNotaCredito = new EpsonFPCommand("\xD\x2", "\x0\x18");
 
         internal static EpsonFPCommand DescuentoTicket = new EpsonFPCommand("\xB\x4", "\x0\x0");
 

@@ -10,5 +10,6 @@ namespace Ventas.Core.Interfaces
     public interface IClienteMinoristaRepository
     {
         IEnumerable<ClienteMinorista> Obtener(string nombre, string apellido);
+        void Guardar(ClienteMinorista clienteMinorista);
     }
 }

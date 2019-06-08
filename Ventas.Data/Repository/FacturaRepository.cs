@@ -1,9 +1,10 @@
 ﻿using Common.Core.Enum;
-using System;
 using System.Linq;
 using System.Data.Entity;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.VentaAggregate;
+using System;
+using System.Collections.Generic;
 
 namespace Ventas.Data.Repository
 {
@@ -16,7 +17,6 @@ namespace Ventas.Data.Repository
         public Factura Obtener(long id)
         {
             return _context.Factura
-                .Include(x => x.Venta)
                 .Include(x => x.NumeroFactura)
                 .FirstOrDefault(x => x.Id == id);
         }
@@ -38,6 +38,39 @@ namespace Ventas.Data.Repository
             {
                 return 0;
             }
+        }
+
+        public IEnumerable<Factura> Buscar(int idSucursal, int? numeroFactura, decimal? montoDesde, decimal? montoHasta, string nombre, int? cuit, DateTime? fechaDesde, DateTime? fechaHasta, List<TipoFactura> tiposFacturas)
+        {
+            IQueryable<Factura> ventas = _context.Factura
+                                        .Include(x => x.NumeroFactura)
+                                        .Where(x => x.Venta.Sucursal.Id == idSucursal);
+
+            if (cuit.HasValue)
+                ventas = ventas.Where(x => x.CUIT == cuit.Value.ToString());
+
+            if (numeroFactura.HasValue)
+                ventas = ventas.Where(x => x.NumeroFactura.Any(y => y.Numero == numeroFactura));
+
+            if (montoDesde.HasValue)
+                ventas = ventas.Where(x => x.Monto >= montoDesde.Value);
+
+            if (montoHasta.HasValue)
+                ventas = ventas.Where(x => x.Monto <= montoHasta.Value);
+
+            if (fechaDesde.HasValue)
+                ventas = ventas.Where(x => DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde.Value).Value);
+
+            if (fechaHasta.HasValue)
+                ventas = ventas.Where(x => DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta.Value).Value);
+
+            if (!string.IsNullOrWhiteSpace(nombre))
+                ventas = ventas.Where(x => x.NombreYApellido.Contains(nombre));
+
+            if (tiposFacturas != null && tiposFacturas.Any())
+                ventas = ventas.Where(x => tiposFacturas.Contains(x.TipoFactura));
+
+            return ventas.OrderByDescending(x => x.Fecha).ToList();
         }
     }
 }

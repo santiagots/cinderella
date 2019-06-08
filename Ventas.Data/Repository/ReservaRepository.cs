@@ -48,14 +48,29 @@ namespace Ventas.Data.Repository
             return resultado.ToList();
         }
 
-        public Reserva Obtener(long idReserva)
+        public Reserva ObtenerPorIdVenta(long idVenta)
         {
             return _context.Reserva
-                .Include(x=> x.VentaReserva.Pagos)
+                .Include(x => x.VentaReserva.Pagos)
                 .Include(x => x.VentaReserva.VentaItems)
                 .Include(x => x.VentaReserva.ClienteMayorista)
                 .Include(x => x.VentaReserva.Encargado)
                 .Include(x => x.VentaReserva.Vendedor)
+                .Include(x => x.VentaReserva.Factura.NumeroFactura)
+                .Include(x => x.VentaReserva.NotaCredito.NumeroNotaCredito)
+                .Where(x => x.IdVentaEntrega == idVenta || x.IdVentaReserva == idVenta).FirstOrDefault();
+        }
+
+        public Reserva Obtener(long idReserva)
+        {
+            return _context.Reserva
+                .Include(x => x.VentaReserva.Pagos)
+                .Include(x => x.VentaReserva.VentaItems)
+                .Include(x => x.VentaReserva.ClienteMayorista)
+                .Include(x => x.VentaReserva.Encargado)
+                .Include(x => x.VentaReserva.Vendedor)
+                .Include(x => x.VentaReserva.Factura.NumeroFactura)
+                .Include(x => x.VentaReserva.NotaCredito.NumeroNotaCredito)
                 .Where(x=> x.Id == idReserva).FirstOrDefault();
         }
 

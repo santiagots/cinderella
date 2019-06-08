@@ -1,25 +1,18 @@
 ﻿Imports System.ComponentModel
-Imports System.Linq
 Imports System.Threading.Tasks
 Imports Model = Ventas.Core.Model.VentaAggregate
-Imports ValueObjects = Ventas.Core.Model.ValueObjects
-Imports Ventas.Core.Interfaces
 Imports Ventas.Core.Model.VentaAggregate
-Imports Ventas.Data.Repository
-Imports Ventas.Data
 Imports Enums = Common.Core.Enum
 Imports Common.Core.Extension
 Imports Common.Core.Exceptions
 Imports Ventas.Core.Model.ValueObjects
-Imports Common.Data
-Imports Common.Data.Repository
-Imports Common.Core.Interfaces
 Imports Ventas.Core.Model.BaseAgreggate
 Imports AutoMapper
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Common.Core.Enum
 Imports SistemaCinderella.Formularios.Reserva
 Imports Common.Core.Model
+Imports SistemaCinderella.Formularios.Venta
 
 Namespace VistaModelo.Ventas
     Public Class frmVentasViewModel
@@ -28,16 +21,20 @@ Namespace VistaModelo.Ventas
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
         Public Delegate Function StockInsuficienteDelegate(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
-        Public Delegate Function FacturarDelegateCallBack(facturar As Boolean) As Task
-        Public Delegate Sub TerminarVentaDelegate()
+        Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As Venta) As Task
+        Public Delegate Function FinalizarDelegateAsync() As Task
+        Public Delegate Sub FinalizarDelegate()
 
         Private CargarProductoNombreyCodigoEvent As CargarProductoNombreyCodigoDelegate
         Private StockInsuficienteEvent As StockInsuficienteDelegate
         Private FacturarEvent As FacturarDelegate
-        Private FacturarCallBackEvent As FacturarDelegateCallBack
-        Private TerminarVentaEvent As TerminarVentaDelegate
-        Private ventaModel As Model.Venta
-        Private reservaModel As Model.Reserva
+        Private FacturarCallBackEvent As FacturarDelegateCallBackAsync
+        Private FinalizarVentaEvent As FinalizarDelegate
+        Private FinalizarNotaPedidoEvent As FinalizarDelegateAsync
+        Private VentaModel As Model.Venta
+        Private SucursalModel As Sucursal
+        Private ReservaModel As Model.Reserva
+        Private NotaPedidoModel As NotaPedido
         Private ReadOnly IdListaPrecioMinorista As Integer
         Private ReadOnly IdListaPrecioMayorista As Integer
 
@@ -54,7 +51,7 @@ Namespace VistaModelo.Ventas
             End Get
             Set(value As Empleado)
                 _EncargadoSeleccionado = value
-                ventaModel.AgregarEncargado(value)
+                VentaModel.AgregarEncargado(value)
             End Set
         End Property
 
@@ -67,7 +64,7 @@ Namespace VistaModelo.Ventas
             End Get
             Set(value As Empleado)
                 _VendedoresSeleccionado = value
-                ventaModel.AgregarVendedor(value)
+                VentaModel.AgregarVendedor(value)
             End Set
         End Property
         Public ReadOnly Property Vendedores As BindingList(Of Empleado)
@@ -93,7 +90,7 @@ Namespace VistaModelo.Ventas
 
         Public ReadOnly Property VentaItems As BindingList(Of VentaItemViewModel)
             Get
-                Return New BindingList(Of VentaItemViewModel)(Mapper.Map(Of List(Of VentaItemViewModel))(ventaModel.VentaItems))
+                Return New BindingList(Of VentaItemViewModel)(Mapper.Map(Of List(Of VentaItemViewModel))(VentaModel.VentaItems))
             End Get
         End Property
 
@@ -101,10 +98,10 @@ Namespace VistaModelo.Ventas
             Get
                 Dim VentaItemViewModel As VentaItemViewModel = New VentaItemViewModel() With {
                     .Nombre = "Total",
-                    .Cantidad = ventaModel.CantidadTotal,
-                    .Iva = ventaModel.MontoTotal.Iva,
-                    .Monto = ventaModel.MontoTotal.Valor,
-                    .Total = ventaModel.MontoTotal.toDecimal()
+                    .Cantidad = VentaModel.CantidadTotal,
+                    .Iva = VentaModel.MontoTotal.Iva,
+                    .Monto = VentaModel.MontoTotal.Valor,
+                    .Total = VentaModel.MontoTotal.toDecimal()
                     }
                 Dim list As BindingList(Of VentaItemViewModel) = New BindingList(Of VentaItemViewModel)
 
@@ -116,19 +113,19 @@ Namespace VistaModelo.Ventas
         Public ReadOnly Property Pagos As BindingList(Of PagoViewModel)
             Get
                 Return New BindingList(Of PagoViewModel)(
-                    Mapper.Map(Of List(Of PagoViewModel))(ventaModel.Pagos))
+                    Mapper.Map(Of List(Of PagoViewModel))(VentaModel.Pagos))
             End Get
         End Property
 
         Public ReadOnly Property TotalPago As BindingList(Of PagoViewModel)
             Get
                 Dim PagoViewModel As PagoViewModel = New PagoViewModel() With {
-                    .CFT = ventaModel.PagoTotal.CFT,
-                    .IVA = ventaModel.PagoTotal.IVA,
-                    .Descuento = ventaModel.PagoTotal.Descuento,
-                    .Monto = ventaModel.PagoTotal.Monto,
-                    .Total = ventaModel.PagoTotal.Total,
-                    .Resto = ventaModel.Pagos.Sum(Function(x) x.MontoRestante),
+                    .CFT = VentaModel.PagoTotal.CFT,
+                    .IVA = VentaModel.PagoTotal.IVA,
+                    .Descuento = VentaModel.PagoTotal.Descuento,
+                    .Monto = VentaModel.PagoTotal.Monto,
+                    .Total = VentaModel.PagoTotal.Total,
+                    .Resto = VentaModel.Pagos.Sum(Function(x) x.MontoRestante),
                     .Descripcion = "Total"
                     }
                 Dim list As BindingList(Of PagoViewModel) = New BindingList(Of PagoViewModel)
@@ -179,7 +176,7 @@ Namespace VistaModelo.Ventas
 
         Public ReadOnly Property HabilitarVenta As Boolean
             Get
-                Return ventaModel.EstaPaga And TotalPago.First.Resto = 0 And ((TipoClienteSeleccionado = Enums.TipoCliente.Mayorista AndAlso IdClienteMayorista > 0) OrElse TipoClienteSeleccionado = Enums.TipoCliente.Minorista)
+                Return VentaModel.EstaPaga And TotalPago.First.Resto = 0 And ((TipoClienteSeleccionado = Enums.TipoCliente.Mayorista AndAlso IdClienteMayorista > 0) OrElse TipoClienteSeleccionado = Enums.TipoCliente.Minorista)
             End Get
         End Property
 
@@ -196,41 +193,50 @@ Namespace VistaModelo.Ventas
 
         Public ReadOnly Property NoEstaPaga As Boolean
             Get
-                Return Not ventaModel.EstaPaga
+                Return Not VentaModel.EstaPaga
             End Get
         End Property
 
         Public ReadOnly Property IdSucursal As Integer
             Get
-                Return ventaModel.IdSucursal
+                Return VentaModel.IdSucursal
             End Get
         End Property
 
-        Public Sub New(IdSucursal As Integer, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate, facturar As FacturarDelegate, terminarVentaEvent As TerminarVentaDelegate)
+        Public Sub New(IdSucursal As Integer, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate, facturar As FacturarDelegate, finalizarVentaEvent As FinalizarDelegate, finalizarNotaPedidoEvent As FinalizarDelegateAsync)
             Me.IdListaPrecioMinorista = idListaPrecioMinorista
             Me.IdListaPrecioMayorista = idListaPrecioMayorista
             Me.CargarProductoNombreyCodigoEvent = cargarProductoNombreyCodigo
             Me.StockInsuficienteEvent = stockInsuficiente
             Me.FacturarEvent = facturar
             Me.FacturarCallBackEvent = AddressOf FacturarAsync
-            Me.TerminarVentaEvent = terminarVentaEvent
+            Me.FinalizarVentaEvent = finalizarVentaEvent
+            Me.FinalizarNotaPedidoEvent = finalizarNotaPedidoEvent
 
             Inicializar(New Model.Venta(IdSucursal), tipoCliente, idListaPrecioMinorista, idListaPrecioMayorista)
         End Sub
 
         Friend Sub CargarNotaPedido(notaPedido As NotaPedido)
+
+            Me.NotaPedidoModel = notaPedido
+
             CargarDatosBasicosTransaccion(notaPedido)
             CargarProductosEnVenta(notaPedido.NotaPedidoItems.Cast(Of TransaccionItem)().ToList(), notaPedido.TipoCliente)
+
+            CalcularPendientePago()
+
+            NotifyPropertyChanged(NameOf(Me.Pagos))
+            NotifyPropertyChanged(NameOf(Me.TotalPago))
         End Sub
 
         Friend Sub CargarReserva(reserva As Reserva)
-            reservaModel = reserva
-            reservaModel.Entregar(ventaModel)
-            CargarDatosBasicosTransaccion(reservaModel.VentaReserva)
-            CargarProductosEnVenta(reservaModel.VentaReserva.VentaItems.Cast(Of TransaccionItem)().ToList(), reservaModel.VentaReserva.TipoCliente)
+            ReservaModel = reserva
+            ReservaModel.Entregar(VentaModel)
+            CargarDatosBasicosTransaccion(ReservaModel.VentaReserva)
+            CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
 
             For Each pago As Pago In reserva.VentaReserva.Pagos
-                ventaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Total + pago.MontoPago.Descuento, pago.MontoPago.CFT, pago.MontoPago.IVA, pago.TipoPago, pago.PorcentajeRecargo, reservaModel.VentaReserva.PorcentajeFacturacion, reservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
+                VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Total + pago.MontoPago.Descuento, pago.MontoPago.CFT, pago.MontoPago.IVA, pago.TipoPago, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
             Next
 
             CalcularPendientePago()
@@ -264,7 +270,7 @@ Namespace VistaModelo.Ventas
                     porcentejeBonificacionMayorista = transaccionItem.PorcentajeBonificacion
                 End If
 
-                ventaModel.AgregaVentaItem(transaccionItem.CodigoProducto,
+                VentaModel.AgregaVentaItem(transaccionItem.CodigoProducto,
                                            transaccionItem.NombreProducto,
                                            transaccionItem.MontoProducto.Valor,
                                            transaccionItem.Cantidad,
@@ -290,24 +296,28 @@ Namespace VistaModelo.Ventas
             If (venta.TipoCliente = Enums.TipoCliente.Mayorista) Then
                 IdClienteMayorista = venta.IdClienteMayorista
                 NombreClienteMayorista = venta.ClienteMayorista.RazonSocial
+
+                VentaModel.ActualizarClienteMayorista(IdClienteMayorista)
             End If
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMayorista()
             CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.Cheque, Enums.TipoPago.Deposito})
-            ventaModel.ModificarTipoCliente(TipoClienteSeleccionado)
+            VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMinorista()
             CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.TarjetaCredito, Enums.TipoPago.TarjetaDebito})
-            ventaModel.ModificarTipoCliente(TipoClienteSeleccionado)
+            VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
             QuitarClienteMayorista()
         End Sub
 
         Friend Async Function ReservaAsyn() As Task
-            Dim ventaDetalleViewModel As VentaDetalleViewModel = Mapper.Map(Of VentaDetalleViewModel)(ventaModel)
+            Dim ventaDetalleViewModel As VentaDetalleViewModel = Mapper.Map(Of VentaDetalleViewModel)(VentaModel)
+            ventaDetalleViewModel.Sucursal = SucursalModel.Nombre
+
             Dim frmReservaViewModel As frmReservaViewModel = New frmReservaViewModel(ventaDetalleViewModel)
 
             If (TipoClienteSeleccionado = Enums.TipoCliente.Mayorista) Then
@@ -324,7 +334,7 @@ Namespace VistaModelo.Ventas
             If (frmReserva.ShowDialog() = DialogResult.OK) Then
                 Await FinalizarVentaAsyn(True)
 
-                reservaModel = New Reserva(
+                ReservaModel = New Reserva(
                                      IdSucursal,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Nombre,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Apellido,
@@ -334,12 +344,12 @@ Namespace VistaModelo.Ventas
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.FechaEstimadaRetiro,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.MetodoEntregaSeleccionado.Key.Value,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Observaciones,
-                                     ventaModel)
+                                     VentaModel)
             End If
         End Function
 
         Friend Sub NotaPedido()
-            Dim notaPedido As NotaPedido = Mapper.Map(Of NotaPedido)(ventaModel)
+            Dim notaPedido As NotaPedido = Mapper.Map(Of NotaPedido)(VentaModel)
 
             If (Not notaPedido.NotaPedidoItems.Any()) Then
                 Throw New NegocioException("No se registran productos. Debe ingresar al menos un producto para generar una nota de pedido.")
@@ -365,7 +375,7 @@ Namespace VistaModelo.Ventas
 
             If (PorcentajeFacturacion > 0) Then
                 Try
-                    FacturarEvent(New frmFacturarViewModel(ventaModel, FacturarCallBackEvent, desdeReserva))
+                    FacturarEvent(New frmFacturarViewModel(VentaModel, FacturarCallBackEvent, TipoDocumentoFiscal.Factura, desdeReserva))
                 Catch ex As Exception
                     Visible = True
                 End Try
@@ -381,24 +391,28 @@ Namespace VistaModelo.Ventas
             Dim taskActualizarStock As Task = ActualizarStock()
             Await Task.WhenAll(taskAgregarComisionesl, taskActualizarStock)
 
-            Dim codigoVentaSucursal As String = (Await Task.Run(Function() Servicio.ObtenerSucursal(IdSucursal))).CodigoVenta
+            Dim codigoVentaSucursal As String = SucursalModel.CodigoVenta
             Dim cantidadVentas As Integer = Await Task.Run(Function() Servicio.CantidadVentas(IdSucursal))
-            ventaModel.GenerarNumeroVenta(cantidadVentas + 1, codigoVentaSucursal)
-            Servicio.GuardarVenta(ventaModel)
+            VentaModel.GenerarNumeroVenta(cantidadVentas + 1, codigoVentaSucursal)
 
-            'cerrar nota de pedido
+            Await Task.Run(Sub() Servicio.GuardarVenta(VentaModel))
 
             'Armar presupuesto
 
-            TerminarVentaEvent()
+            FinalizarVentaEvent()
 
-            If (reservaModel IsNot Nothing) Then
-                Await Task.Run(Sub() Servicio.GuardarReserva(reservaModel))
+            If (ReservaModel IsNot Nothing) Then
+                Await Task.Run(Sub() Servicio.GuardarReserva(ReservaModel))
             End If
 
+            If (NotaPedidoModel IsNot Nothing) Then
+                NotaPedidoModel.Cerrar()
+                Await Task.Run(Sub() Servicio.ActualizarNotaPedido(NotaPedidoModel))
+                Await FinalizarNotaPedidoEvent()
+            End If
         End Function
 
-        Friend Async Function FacturarAsync(facturar As Boolean) As Task
+        Friend Async Function FacturarAsync(facturar As Boolean, ventas As Venta) As Task
             Visible = True
             If (facturar) Then
                 Await GuardarAsync()
@@ -414,7 +428,7 @@ Namespace VistaModelo.Ventas
 
             producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
-            Dim CantidadUnidadesDeProducto As Integer = ventaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
+            Dim CantidadUnidadesDeProducto As Integer = VentaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
             Dim stockInsuficienteConfirmacion As Boolean = False
 
             If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
@@ -425,7 +439,7 @@ Namespace VistaModelo.Ventas
             End If
 
             If (CantidadUnidadesDeProducto = 0) Then
-                ventaModel.QuitarVentaItem(producto.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
+                VentaModel.QuitarVentaItem(producto.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
             Else
                 Dim montoProducto As MontoProducto = producto.ObtenerMonto(ListaPrecioSeleccionado, TipoClienteSeleccionado, PorcentajeFacturacion)
 
@@ -443,7 +457,7 @@ Namespace VistaModelo.Ventas
                 Dim montoProductoMayorista As MontoProducto = producto.ObtenerMonto(IdListaPrecioMayorista, Enums.TipoCliente.Mayorista, 1)
                 Dim porcentejeBonificacionMayorista As Decimal = producto.ObtenerBonificacion(IdListaPrecioMayorista, Enums.TipoCliente.Mayorista)
 
-                ventaModel.AgregaVentaItem(producto.Codigo,
+                VentaModel.AgregaVentaItem(producto.Codigo,
                                     producto.Nombre,
                                     montoProducto.Valor,
                                     CantidadUnidadesDeProducto,
@@ -468,7 +482,7 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel)
-            ventaModel.ActualizarVentaItem(ventaItemViewModel.Codigo,
+            VentaModel.ActualizarVentaItem(ventaItemViewModel.Codigo,
                                            ventaItemViewModel.Monto,
                                            ventaItemViewModel.Cantidad,
                                            ventaItemViewModel.PorcentajeBonificacion,
@@ -482,7 +496,7 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Sub QuitarItemVenta(ventaItemViewModel As VentaItemViewModel)
-            ventaModel.QuitarVentaItem(ventaItemViewModel.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
+            VentaModel.QuitarVentaItem(ventaItemViewModel.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
 
             CalcularPendientePago()
 
@@ -491,8 +505,8 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Sub ActualizarPorcentaBonificacionYPorcentajeFacturacion()
-            For Each ventaItem As VentaItem In ventaModel.VentaItems
-                ventaModel.ActualizarVentaItem(ventaItem.CodigoProducto, ventaItem.MontoProducto.Valor, ventaItem.Cantidad, PorcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+            For Each ventaItem As VentaItem In VentaModel.VentaItems
+                VentaModel.ActualizarVentaItem(ventaItem.CodigoProducto, ventaItem.MontoProducto.Valor, ventaItem.Cantidad, PorcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
             Next
             CalcularPendientePago()
         End Sub
@@ -510,22 +524,22 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Sub CalcularPendientePago()
-            Dim motoPendientePago As MontoPago = ventaModel.ObtenerPendienteMontoPago(CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
+            Dim motoPendientePago As MontoPago = VentaModel.ObtenerPendienteMontoPago(CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
             ActualizarPago(motoPendientePago)
         End Sub
 
         Friend Sub CalcularPagoDesdeSubtotal(subtotal As Decimal)
-            Dim motoAPagar As MontoPago = ventaModel.ObtenerMontoPagoDesdeSubtotal(subtotal, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
+            Dim motoAPagar As MontoPago = VentaModel.ObtenerMontoPagoDesdeSubtotal(subtotal, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
             ActualizarPago(motoAPagar)
         End Sub
 
         Friend Sub CalcularPagoDesdeTotal(total As Decimal)
-            Dim motoAPagar As MontoPago = ventaModel.ObtenerMontoPagoDesdeTotal(total, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
+            Dim motoAPagar As MontoPago = VentaModel.ObtenerMontoPagoDesdeTotal(total, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, FormaPagoSeleccionado)
             ActualizarPago(motoAPagar)
         End Sub
 
         Friend Sub QuitarPago(pagoViewModel As PagoViewModel)
-            ventaModel.QuitarPago(pagoViewModel.Id)
+            VentaModel.QuitarPago(pagoViewModel.Id)
 
             CalcularPendientePago()
 
@@ -534,7 +548,7 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Friend Sub CorregirPago(pagoViewModel As PagoViewModel)
-            ventaModel.CorregirPago(pagoViewModel.Id)
+            VentaModel.CorregirPago(pagoViewModel.Id)
 
             CalcularPendientePago()
 
@@ -545,7 +559,7 @@ Namespace VistaModelo.Ventas
         Friend Sub AgregarPago()
             Dim numeroCuota As Integer = If(CuotaSeleccionado?.NumeroCuota, 0)
             Dim tarjeta As String = If(TarjetaSeleccionada?.Nombre, "")
-            ventaModel.AgregaPago(Subtotal, Descuento, Cft, Iva, FormaPagoSeleccionado, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, tarjeta, numeroCuota)
+            VentaModel.AgregaPago(Subtotal, Descuento, Cft, Iva, FormaPagoSeleccionado, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, tarjeta, numeroCuota)
 
             CalcularPendientePago()
 
@@ -559,13 +573,13 @@ Namespace VistaModelo.Ventas
             NotifyPropertyChanged(NameOf(Me.IdClienteMayorista))
             NotifyPropertyChanged(NameOf(Me.NombreClienteMayorista))
 
-            ventaModel.ActualizarClienteMayorista(idClienteMayorista)
+            VentaModel.ActualizarClienteMayorista(idClienteMayorista)
         End Sub
 
         Friend Sub PorcentajeFacturacionChange(porcentajeFacturacion As Decimal)
             Me.PorcentajeFacturacion = porcentajeFacturacion
             ActualizarPorcentaBonificacionYPorcentajeFacturacion()
-            ventaModel.ActualizarPorcentajeFacturacion(porcentajeFacturacion)
+            VentaModel.ActualizarPorcentajeFacturacion(porcentajeFacturacion)
             NotifyPropertyChanged(NameOf(Me.PorcentajeFacturacion))
         End Sub
 
@@ -584,10 +598,10 @@ Namespace VistaModelo.Ventas
                 ListaPrecioSeleccionado = IdListaPrecioMayorista
             End If
 
-            For Each ventaItem As VentaItem In ventaModel.VentaItems
-                Dim monto As Decimal = ventaModel.ObtenerMontoPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
-                Dim porcentajeBonificacion As Decimal = ventaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
-                ventaModel.ActualizarVentaItem(ventaItem.CodigoProducto, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+            For Each ventaItem As VentaItem In VentaModel.VentaItems
+                Dim monto As Decimal = VentaModel.ObtenerMontoPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
+                Dim porcentajeBonificacion As Decimal = VentaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
+                VentaModel.ActualizarVentaItem(ventaItem.CodigoProducto, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
             Next
             CalcularPendientePago()
         End Sub
@@ -617,6 +631,8 @@ Namespace VistaModelo.Ventas
             tareas.Add(CargarEmpleadosAsync())
             tareas.Add(CargarListaPrecioAsync())
             tareas.Add(CargarTarjetasAsync())
+            tareas.Add(CargarSucursalAsync())
+
             Await Task.WhenAll(tareas)
         End Function
 
@@ -643,6 +659,10 @@ Namespace VistaModelo.Ventas
             NotifyPropertyChanged(NameOf(Me.EncargadoSeleccionado))
             NotifyPropertyChanged(NameOf(Me.Vendedores))
             NotifyPropertyChanged(NameOf(Me.VendedoresSeleccionado))
+        End Function
+
+        Private Async Function CargarSucursalAsync() As Task
+            SucursalModel = Await Task.Run(Function() Servicio.ObtenerSucursal(IdSucursal))
         End Function
 
         Private Async Function CargarTarjetasAsync() As Task
@@ -705,25 +725,18 @@ Namespace VistaModelo.Ventas
         End Sub
 
         Private Async Function AgregarComisiones() As Task
-
-            Dim taskSucursal As Task(Of Sucursal) = Task.Run(Function() Servicio.ObtenerSucursal(IdSucursal))
-            Dim taskEsFeriado As Task(Of Boolean) = Task.Run(Function() Servicio.EsFeriado())
-
-            Await Task.WhenAll(taskSucursal, taskEsFeriado)
-
-            Dim sucursal As Sucursal = taskSucursal.Result
-            Dim esFeriado As Boolean = taskEsFeriado.Result
+            Dim esFeriado As Boolean = Await Task.Run(Function() Servicio.EsFeriado())
 
             Dim porcentajeComicionVendedor As Decimal = 0
             Dim porcentajeComicionEncargado As Decimal = 0
 
-            sucursal.ObtenerPorcentajeComision(esFeriado, TipoClienteSeleccionado, porcentajeComicionVendedor, porcentajeComicionEncargado)
+            SucursalModel.ObtenerPorcentajeComision(esFeriado, TipoClienteSeleccionado, porcentajeComicionVendedor, porcentajeComicionEncargado)
 
-            ventaModel.AgregarComision(porcentajeComicionEncargado, porcentajeComicionVendedor)
+            VentaModel.AgregarComision(porcentajeComicionEncargado, porcentajeComicionVendedor)
         End Function
 
         Private Sub AgregarCheque()
-            Dim cheques As List(Of Pago) = ventaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
+            Dim cheques As List(Of Pago) = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
             If (cheques.Any()) Then
                 Dim frmChequeAltaMasiva As frmChequeAltaMasiva = New frmChequeAltaMasiva(cheques.Sum(Function(x) x.MontoPago.Total), IdClienteMayorista)
                 frmChequeAltaMasiva.ShowDialog()
@@ -736,7 +749,7 @@ Namespace VistaModelo.Ventas
                     Throw New NegocioException("Error al finalizar la venta. No se encuentran cheques registrados.")
                 End If
 
-                frmChequeAltaMasiva.ChequesModel.ForEach(Sub(x) ventaModel.AgregarCheque(x))
+                frmChequeAltaMasiva.ChequesModel.ForEach(Sub(x) VentaModel.AgregarCheque(x))
             End If
         End Sub
 
@@ -745,10 +758,10 @@ Namespace VistaModelo.Ventas
             Dim stocksVenta As List(Of Stock) = New List(Of Stock)
             Dim productosStock As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))()
 
-            If (reservaModel IsNot Nothing) Then
+            If (ReservaModel IsNot Nothing) Then
                 productosStock = ObtenerCambioEnProductosPorReserva()
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) productosStock.Add(New KeyValuePair(Of String, Integer)(x.CodigoProducto, x.Cantidad)))
+                VentaModel.VentaItems.ToList().ForEach(Sub(x) productosStock.Add(New KeyValuePair(Of String, Integer)(x.CodigoProducto, x.Cantidad)))
             End If
 
             For Each productoStock As KeyValuePair(Of String, Integer) In productosStock
@@ -769,8 +782,8 @@ Namespace VistaModelo.Ventas
         Private Function ObtenerCambioEnProductosPorReserva() As List(Of KeyValuePair(Of String, Integer))
             Dim productos As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))()
 
-            For Each ventaItemReserva As VentaItem In reservaModel.VentaReserva.VentaItems
-                Dim ventaItem As VentaItem = ventaModel.VentaItems.FirstOrDefault(Function(x) x.CodigoProducto = ventaItemReserva.CodigoProducto)
+            For Each ventaItemReserva As VentaItem In ReservaModel.VentaReserva.VentaItems
+                Dim ventaItem As VentaItem = VentaModel.VentaItems.FirstOrDefault(Function(x) x.CodigoProducto = ventaItemReserva.CodigoProducto)
                 If (ventaItem Is Nothing) Then
                     productos.Add(New KeyValuePair(Of String, Integer)(ventaItemReserva.CodigoProducto, -ventaItemReserva.Cantidad))
                 Else
@@ -779,8 +792,8 @@ Namespace VistaModelo.Ventas
             Next
 
 
-            For Each ventaItem As VentaItem In ventaModel.VentaItems
-                Dim ventaItemReserva As VentaItem = reservaModel.VentaReserva.VentaItems.FirstOrDefault(Function(x) x.CodigoProducto = ventaItem.CodigoProducto)
+            For Each ventaItem As VentaItem In VentaModel.VentaItems
+                Dim ventaItemReserva As VentaItem = ReservaModel.VentaReserva.VentaItems.FirstOrDefault(Function(x) x.CodigoProducto = ventaItem.CodigoProducto)
                 If (ventaItemReserva Is Nothing) Then
                     productos.Add(New KeyValuePair(Of String, Integer)(ventaItem.CodigoProducto, ventaItem.Cantidad))
                 End If
@@ -801,7 +814,7 @@ Namespace VistaModelo.Ventas
 
         Private Sub Inicializar(venta As Model.Venta, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer)
             Visible = True
-            ventaModel = venta
+            VentaModel = venta
             PorcentajeFacturacion = 1
             PorcentajeBonificacion = 0
             TipoClienteSeleccionado = tipoCliente

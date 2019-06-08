@@ -16,6 +16,7 @@ Public Class frmNotaPedidoAdministracion
                           NotaPedidoBindingSource.DataSource = notaPedidoViewModel
                           Await notaPedidoViewModel.CargarDatosAsync()
                       End Function)
+        Me.DataBindings.Add(New Binding("Visible", Me.NotaPedidoBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
     End Sub
 
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click
@@ -45,9 +46,7 @@ Public Class frmNotaPedidoAdministracion
     End Sub
 
     Private Sub dgNotasPedidos_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgNotasPedidos.CellContentDoubleClick
-        EjecutarAsync(Async Function() As Task
-                          Await notaPedidoViewModel.CargarVenta(dgNotasPedidos.CurrentRow.DataBoundItem, Me.MdiParent)
-                      End Function)
+        Ejecutar(Sub() notaPedidoViewModel.CargarVenta(dgNotasPedidos.CurrentRow.DataBoundItem, Me.MdiParent))
     End Sub
 
     Private Sub Ejecutar(accion As Action)

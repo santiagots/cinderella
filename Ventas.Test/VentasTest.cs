@@ -9,6 +9,8 @@ using Common.Data.Repository;
 using Ventas.Data;
 using Ventas.Data.Repository;
 using System.Diagnostics;
+using Common.Service.Facturar;
+using Common.Core.ValueObjects;
 
 namespace Ventas.Test
 {
@@ -110,6 +112,15 @@ namespace Ventas.Test
         //    }
 
         //}
+
+        [Fact]
+        public void Guardar()
+        {
+            List<TicketProducto> prod = new List<TicketProducto>() { new TicketProducto("Test", 1, 1) };
+
+            FacturarControladorFiscalStrategy notaCredito = new FacturarControladorFiscalStrategy();
+            notaCredito.ObtenerNumeroFactura(TipoCliente.Minorista, CondicionIVA.Consumidor_Final, null, prod, 1, "nombre", "direccion", "localidad", "1");
+        }
 
     }
 }

@@ -12,7 +12,7 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Core.Model.NotaPedidoAgreggate
 {
-    public class NotaPedido: Transaccion
+    public class NotaPedido : Transaccion
     {
         public int Numero { get; protected set; }
         public virtual IList<NotaPedidoItem> NotaPedidoItems { get; protected set; }
@@ -22,7 +22,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         public bool Borrado { get; protected set; }
         public new MontoProducto MontoTotal { get { return NotaPedidoItems.Select(x => x.MontoProducto * x.Cantidad).Aggregate((x, y) => x + y); } }
 
-        public NotaPedido(): base()
+        public NotaPedido() : base()
         {
         }
 
@@ -43,6 +43,12 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         public void AgregarClienteMayorista(int idClienteMayorista)
         {
             IdClienteMayorista = idClienteMayorista;
+        }
+
+        public void Cerrar()
+        {
+            Estado = NotaPedidoEstado.Cerrada;
+            FechaEdicion = DateTime.Now;
         }
 
         public void Eliminar()

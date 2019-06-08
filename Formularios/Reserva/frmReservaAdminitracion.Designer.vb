@@ -49,7 +49,7 @@ Partial Class frmReservaAdminitracion
         Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.lbl_Msg = New System.Windows.Forms.Label()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.dgReservas = New System.Windows.Forms.DataGridView()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoReservaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -72,7 +72,7 @@ Partial Class frmReservaAdminitracion
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.MetodoEntregaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgReservas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReservasDetallesItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabDetalle.SuspendLayout()
         Me.SuspendLayout()
@@ -331,7 +331,7 @@ Partial Class frmReservaAdminitracion
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.lbl_Msg)
-        Me.GroupBox2.Controls.Add(Me.DataGridView1)
+        Me.GroupBox2.Controls.Add(Me.dgReservas)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.GroupBox2.Location = New System.Drawing.Point(3, 139)
@@ -356,22 +356,22 @@ Partial Class frmReservaAdminitracion
         Me.lbl_Msg.Text = "No se han encontrado Reservas."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'DataGridView1
+        'dgReservas
         '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AutoGenerateColumns = False
-        Me.DataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlDark
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NombreDataGridViewTextBoxColumn, Me.MontoTotalDataGridViewTextBoxColumn, Me.MontoReservaDataGridViewTextBoxColumn, Me.FechaAltaDataGridViewTextBoxColumn, Me.FechaEstimadaRetiroDataGridViewTextBoxColumn, Me.MetodoEntregaDataGridViewTextBoxColumn, Me.ReservaImprimir, Me.ReservaEliminar})
-        Me.DataGridView1.DataSource = Me.ReservasDetallesItemsBindingSource
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 17)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(866, 572)
-        Me.DataGridView1.TabIndex = 4
+        Me.dgReservas.AllowUserToAddRows = False
+        Me.dgReservas.AllowUserToDeleteRows = False
+        Me.dgReservas.AutoGenerateColumns = False
+        Me.dgReservas.BackgroundColor = System.Drawing.SystemColors.ControlDark
+        Me.dgReservas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgReservas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NombreDataGridViewTextBoxColumn, Me.MontoTotalDataGridViewTextBoxColumn, Me.MontoReservaDataGridViewTextBoxColumn, Me.FechaAltaDataGridViewTextBoxColumn, Me.FechaEstimadaRetiroDataGridViewTextBoxColumn, Me.MetodoEntregaDataGridViewTextBoxColumn, Me.ReservaImprimir, Me.ReservaEliminar})
+        Me.dgReservas.DataSource = Me.ReservasDetallesItemsBindingSource
+        Me.dgReservas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgReservas.Location = New System.Drawing.Point(3, 17)
+        Me.dgReservas.Name = "dgReservas"
+        Me.dgReservas.ReadOnly = True
+        Me.dgReservas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgReservas.Size = New System.Drawing.Size(866, 572)
+        Me.dgReservas.TabIndex = 4
         '
         'NombreDataGridViewTextBoxColumn
         '
@@ -507,7 +507,7 @@ Partial Class frmReservaAdminitracion
         Me.TableLayoutPanel3.PerformLayout()
         CType(Me.MetodoEntregaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgReservas, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReservasDetallesItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabDetalle.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -535,7 +535,7 @@ Partial Class frmReservaAdminitracion
     Friend WithEvents BtnFiltrar As Button
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents lbl_Msg As Label
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents dgReservas As DataGridView
     Friend WithEvents btnRetirar As Button
     Friend WithEvents FrmReservaAdministracionViewModelBindingSource As BindingSource
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn

@@ -13,5 +13,6 @@ namespace Ventas.Core.Interfaces
         Factura Obtener(long id);
         void Guardar(Factura factura);
         int ObtenerUltimoNumeroFactura(TipoFactura tipoFactura);
+        IEnumerable<Factura> Buscar(int idSucursal, int? numeroFactura, decimal? montoDesde, decimal? montoHasta, string nombre, int? cuit, DateTime? fechaDesde, DateTime? fechaHasta, List<TipoFactura> tiposFacturas);
     }
 }

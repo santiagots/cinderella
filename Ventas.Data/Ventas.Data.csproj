@@ -54,6 +54,7 @@
     <Compile Include="Repository\ChequeRepository.cs" />
     <Compile Include="Repository\ClienteMinoristaRepository.cs" />
     <Compile Include="Repository\FacturaRepository.cs" />
+    <Compile Include="Repository\NotaCreditoRepository.cs" />
     <Compile Include="Repository\NotaPedidoRepository.cs" />
     <Compile Include="Repository\ReservaRepository.cs" />
     <Compile Include="Repository\StockRepository.cs" />
@@ -74,6 +75,10 @@
     <ProjectReference Include="..\Common.Data\Common.Data.csproj">
       <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
       <Name>Common.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entidades\Entidades.vbproj">
+      <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
+      <Name>Entidades</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ventas.Core\Ventas.Core.csproj">
       <Project>{2F8F3F48-9EC8-4F64-8565-5A15CF49E570}</Project>

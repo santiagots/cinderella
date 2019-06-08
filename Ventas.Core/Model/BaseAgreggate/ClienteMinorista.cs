@@ -16,5 +16,15 @@ namespace Ventas.Core.Model.BaseAgreggate
         public string Email { get; internal set; }
         public bool EnviarNovedades { get; internal set; }
         public string ApellidoYNombre { get { return $" {Apellido} {Nombre}"; } }
+
+        internal ClienteMinorista()
+        { }
+
+        public ClienteMinorista(string nombre, string apellido)
+        {
+            Nombre = nombre;
+            Apellido = apellido;
+        }
+
     }
 }

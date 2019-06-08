@@ -6,12 +6,15 @@ Imports Common.Core.Extension
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports Model = Ventas.Core.Model.VentaAggregate
 Imports SistemaCinderella.VistaModelo.Ventas
+Imports SistemaCinderella.Formularios.Venta
+Imports Common.Core.Enum
 
 Namespace Formularios.Reserva
     Public Class frmReservaAdministracionViewModel
         Inherits SistemaCinderella.VistaModelo.Common
 
         Private reservaModel As Model.Reserva
+        Private MdiParent As Form
         Private ReadOnly IdSucursal As Integer
 
         Public Property Nombre As String
@@ -30,13 +33,36 @@ Namespace Formularios.Reserva
         Public Property VentaDetalleSeleccionada As VentaDetalleViewModel
         Public Property ReservaDetalleSeleccionada As ReservaDetalleViewModel
 
-        Sub New(idSucursal As Integer)
+
+        Private _Visible As Boolean
+        Public Property Visible As Boolean
+            Set(value As Boolean)
+                _Visible = value
+                NotifyPropertyChanged(NameOf(Me.Visible))
+            End Set
+            Get
+                Return _Visible
+            End Get
+        End Property
+
+        Sub New(idSucursal As Integer, mdiParent As Form)
             Me.IdSucursal = idSucursal
+            Me.MdiParent = mdiParent
             ReservasDetallesItems = New BindingList(Of ReservaAdministracionItemsViewModel)()
             VentaDetalleSeleccionada = New VentaDetalleViewModel()
             ReservaDetalleSeleccionada = New ReservaDetalleViewModel()
             Inicializar()
         End Sub
+
+        Public Async Function AnularVentaYEliminarReservaAsync(venta As Model.Venta) As Task
+            venta.Anular($"Venta anulada por borrado de reserva ({VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre})")
+            Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
+
+            Await Task.Run(Function() Servicio.EliminarReserva(reservaModel.Id))
+            ReservasDetallesItems.Remove(ReservasDetallesItems.Where(Function(x) x.Id = reservaModel.Id).FirstOrDefault)
+
+            MessageBox.Show("Se ha anulado la venta y eliminado la reserva de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Function
 
         Public Async Function BuscarAsync() As Task
             Dim fechaAltaFiltro As DateTime? = If(FechaAltaSeleccionada, FechaAlta, CType(Nothing, DateTime?))
@@ -48,19 +74,45 @@ Namespace Formularios.Reserva
             NotifyPropertyChanged(NameOf(Me.ReservasDetallesItems))
         End Function
 
-        Friend Async Function RestablecerAsync() As Task
-            Inicializar()
-            Await BuscarAsync()
+        Public Async Function EliminarReservaAsync(reservaAdministracionItemsViewModel As ReservaAdministracionItemsViewModel) As Task
+            reservaModel = Await Task.Run(Function() Servicio.ObtenerReserva(reservaAdministracionItemsViewModel.Id))
+
+            If (reservaModel.VentaReserva.Factura IsNot Nothing) Then
+                Await GenerarNotaCreditoAsync(reservaModel.VentaReserva)
+            Else
+                Await AnularVentaYEliminarReservaAsync(reservaModel.VentaReserva)
+            End If
         End Function
 
-        Friend Async Function EliminarReservaAsync(reservaAdministracionItemsViewModel As ReservaAdministracionItemsViewModel) As Task
-            Await Task.Run(Function() Servicio.EliminarReserva(reservaAdministracionItemsViewModel.Id))
-            ReservasDetallesItems.Remove(ReservasDetallesItems.Where(Function(x) x.Id = reservaAdministracionItemsViewModel.Id).FirstOrDefault)
+        Friend Async Function EliminarReservaAsync(idReserva As Long) As Task
+            Await Task.Run(Function() Servicio.EliminarReserva(idReserva))
+            ReservasDetallesItems.Remove(ReservasDetallesItems.Where(Function(x) x.Id = idReserva).FirstOrDefault)
         End Function
 
-        Friend Async Function ImprimirReservaAsync(reservaAdministracionItemsViewModel As ReservaAdministracionItemsViewModel, MdiParent As Form) As Task
-            Dim reservaModel As Model.Reserva = Await Task.Run(Function() Servicio.ObtenerReserva(reservaAdministracionItemsViewModel.Id))
+        Friend Async Function GenerarNotaCreditoAsync(venta As Model.Venta) As Task
+            Dim respuesta As DialogResult = MessageBox.Show("La reserva tiene una factura asociada. ¿Desea generar una nota de crédito de esta factura?", "Administración de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            If respuesta = DialogResult.Yes Then
+                Visible = False
+                Dim facturarViewModel As frmFacturarViewModel = New frmFacturarViewModel(venta, AddressOf NotaCreditoCallBackAsync, TipoDocumentoFiscal.NotaCredito, False)
+                Dim frmFacturarNueva As frmFacturar = New frmFacturar(facturarViewModel)
+                frmFacturarNueva.MdiParent = MdiParent
+                frmFacturarNueva.Show()
+            Else
+                Await AnularVentaYEliminarReservaAsync(reservaModel.VentaReserva)
+            End If
+        End Function
 
+        Friend Async Function NotaCreditoCallBackAsync(guardar As Boolean, venta As Model.Venta) As Task
+            Visible = True
+            If (guardar) Then
+                Await Task.Run(Sub() Comunes.Servicio.GuardarNotaCredito(venta.NotaCredito))
+                MessageBox.Show("Se ha generado la nota de crédito de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Await AnularVentaYEliminarReservaAsync(venta)
+            End If
+        End Function
+
+        Friend Async Function ImprimirReservaAsync(reservaAdministracionItemsViewModel As ReservaAdministracionItemsViewModel) As Task
+            reservaModel = Await Task.Run(Function() Servicio.ObtenerReserva(reservaAdministracionItemsViewModel.Id))
             Dim frmReporteResumenReserva As frmReporteResumenReserva = New frmReporteResumenReserva("Resumen de Reserva",
                                                                                                     1,
                                                                                                     reservaModel.VentaReserva.TipoCliente,
@@ -73,7 +125,12 @@ Namespace Formularios.Reserva
             frmReporteResumenReserva.Show()
         End Function
 
-        Friend Sub RetirarVenta(MdiParent As Form)
+        Friend Async Function RestablecerAsync() As Task
+            Inicializar()
+            Await BuscarAsync()
+        End Function
+
+        Friend Sub RetirarVenta()
             Dim frmVenta As frmVentas = New frmVentas(reservaModel)
             frmVenta.MdiParent = MdiParent
             frmVenta.Show()

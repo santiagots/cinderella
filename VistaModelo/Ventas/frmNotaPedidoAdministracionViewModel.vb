@@ -67,8 +67,20 @@ Namespace VistaModelo.Ventas
             End Get
         End Property
 
+        Dim _Visible As Boolean
+        Public Property Visible As Boolean
+            Set(value As Boolean)
+                _Visible = value
+                NotifyPropertyChanged(NameOf(Me.Visible))
+            End Set
+            Get
+                Return _Visible
+            End Get
+        End Property
+
         Sub New(IdSucursal As Integer)
             Me.IdSucursal = IdSucursal
+            Visible = True
             Inicializar()
         End Sub
 
@@ -76,11 +88,17 @@ Namespace VistaModelo.Ventas
             Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, Nothing, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
-        Public Async Function CargarVenta(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form) As Task
-            Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Numero = notaPedidoItem.Numero)
-            Dim frmVentas As frmVentas = New frmVentas(notaPedido)
+        Public Sub CargarVenta(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
+            Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Id = notaPedidoItem.Id)
+            Dim frmVentas As frmVentas = New frmVentas(notaPedido, AddressOf CargarVentaCallback)
             frmVentas.MdiParent = MdiParent
             frmVentas.Show()
+            Visible = False
+        End Sub
+
+        Public Async Function CargarVentaCallback() As Task
+            Visible = True
+            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, Nothing, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
         Public Async Function CargarDatosAsync() As Task

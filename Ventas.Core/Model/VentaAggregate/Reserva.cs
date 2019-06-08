@@ -28,7 +28,7 @@ namespace Ventas.Core.Model.VentaAggregate
         public DateTime FechaEdicion { get; internal set; }
         public long IdVentaReserva { get; internal set; }
         public virtual Venta VentaReserva { get; internal set; }
-        public long IdVentaEntrega { get; internal set; }
+        public long? IdVentaEntrega { get; internal set; }
         public virtual Venta VentaEntrega { get; internal set; }
 
         internal Reserva(): base(false)

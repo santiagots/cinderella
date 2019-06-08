@@ -24,8 +24,8 @@ namespace Common.Device.Printer
         private static string MONOTIBUTISTA_SOCIAL = "T";
         private static string CONTRIBUYENTE_EVENTUAL = "C";
         private static string CONTRIBUYENTE_EVENTUAL_SOCIAL = "V";
-        private static string IMPUESTOINTERNOFIJO = "0";
-        private static string IMPUESTOINTERNOPORCENTUAL = "0";
+        private static string IMPUESTOINTERNOFIJO = "";
+        private static string IMPUESTOINTERNOPORCENTUAL = "";
 
         //TIPOS DOCUMENTOS
         private static string DNI = "D";
@@ -68,12 +68,12 @@ namespace Common.Device.Printer
             switch (condicionesIVA)
             {
                 case CondicionIVA.Consumidor_Final:
-                    NombreComprador1 = "";
+                    NombreComprador1 = nombreYApellido;
                     NombreComprador2 = "";
-                    TipoDocumentoComprador = "";
-                    NumeroDocumentoComprador = "";
-                    DomicilioComprador1 = "";
-                    DomicilioComprador2 = "";
+                    TipoDocumentoComprador = DNI;
+                    NumeroDocumentoComprador = cuit;
+                    DomicilioComprador1 = direccion;
+                    DomicilioComprador2 = localidad;
                     DomicilioComprador3 = "";
                     ResponsableIvaComprador = CONSUMIDOR_FINAL;
                     TasaIva = TASA_IVA;
@@ -100,6 +100,12 @@ namespace Common.Device.Printer
             oEpsonFP = new EpsonFPHostControl();
             Initialize();
 
+        }
+
+        public EpsonFP(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal)
+            : this(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
+        {
+            ComprabanteOriginal = comprabanteOriginal;
         }
 
         // Funcion que Abre un Tique.
@@ -175,6 +181,7 @@ namespace Common.Device.Printer
             commands.Add(ColaRemplazo2);
             commands.Add("3");
             commands.Add(ColaRemplazo3);
+            commands.Add("");
             SendData(commands, false);
             return int.Parse(GetExtraField(1));
         }
@@ -190,14 +197,13 @@ namespace Common.Device.Printer
         }
 
         // Funcion que obtiene el subtotal de una Nota de Credito.
-        public decimal SubtotalNotaCredito()
+        public void SubtotalNotaCredito()
         {
             var commands = new List<string>();
 
-            commands.Add(EpsonFPCommand.SubtotalTicket.Cmd);
-            commands.Add(EpsonFPCommand.SubtotalTicket.CmdExt);
-            SendData(commands);
-            return int.Parse(GetExtraField(1));
+            commands.Add(EpsonFPCommand.SubtotalNotaCredito.Cmd);
+            commands.Add(EpsonFPCommand.SubtotalNotaCredito.CmdExt);
+            SendData(commands, false);
         }
 
         // Funcion que Agrega descuentos.
@@ -225,29 +231,27 @@ namespace Common.Device.Printer
         }
 
         // Funcion que Agrega descuentos a la nota de credito.
-        public decimal DescuentosNotaCredito(string descripcion, decimal descuento)
+        public void DescuentosNotaCredito(string descripcion, decimal descuento)
         {
             var commands = new List<string>();
 
             commands.Add(EpsonFPCommand.DescuentoNotaCredito.Cmd);
             commands.Add(EpsonFPCommand.DescuentoNotaCredito.CmdExt);
             commands.Add(descripcion);
-            commands.Add(FormatearPrecio(descuento, 2));
-            SendData(commands);
-            return int.Parse(GetExtraField(1));
+            commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
+            SendData(commands, false);
         }
 
         // Funcion que Agrega recargo.
-        public decimal RecargosNotaCredito(string descripcion, decimal recargo)
+        public void RecargosNotaCredito(string descripcion, decimal recargo)
         {
             var commands = new List<string>();
 
             commands.Add(EpsonFPCommand.RecargoNotaCredito.Cmd);
             commands.Add(EpsonFPCommand.RecargoNotaCredito.CmdExt);
             commands.Add(descripcion);
-            commands.Add(FormatearPrecio(recargo, 2));
-            SendData(commands);
-            return int.Parse(GetExtraField(1));
+            commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
+            SendData(commands, false);
         }
 
         // Funcion que Paga un Tique.
@@ -287,6 +291,7 @@ namespace Common.Device.Printer
         // Funcion que Agrega un item a una Nota de Credito.
         public void AgregarItemNotaCredito(string descripcion, int cantidad, decimal precioUnitario)
         {
+            decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
             var commands = new List<string>();
 
             commands.Add(EpsonFPCommand.ItemNotaCredito.Cmd);
@@ -297,11 +302,11 @@ namespace Common.Device.Printer
             commands.Add(DescripcionExtra4);
             commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearCantidad(cantidad));
-            commands.Add(FormatearPrecio(precioUnitario));
+            commands.Add(FormatearPrecio(precioUnitarioTipoCliente));
             commands.Add(TasaIva);
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
-            SendData(commands);
+            SendData(commands, false);
         }
 
         // Funcion que emite el Cierre X en la controladora
@@ -353,7 +358,7 @@ namespace Common.Device.Printer
             SendData(commands);
         }
 
-        private void SendData(IEnumerable<object> data, bool reconnect = true)
+        private void SendData(IEnumerable<string> data, bool reconnect = true)
         {
             try
             {
@@ -364,7 +369,8 @@ namespace Common.Device.Printer
 
                 foreach (var field in data)
                 {
-                    this.AddDataField(field.ToString());
+                    string value = field ?? string.Empty;
+                    this.AddDataField(value);
                 }
 
                 this.Send();
@@ -472,7 +478,7 @@ namespace Common.Device.Printer
         {
             string SinComas, SinPuntos;
             double montoAux;
-            montoAux = (double)Math.Round(monto, potencia);
+            montoAux = (double)Math.Round(monto, 1);
             montoAux = (montoAux * (Math.Pow(10, potencia)));
             SinComas = montoAux.ToString().Replace(",", "");
             SinPuntos = montoAux.ToString().Replace(".", "");
@@ -503,7 +509,7 @@ namespace Common.Device.Printer
                 case TipoCliente.Minorista:
                     return monto;
                 case TipoCliente.Mayorista:
-                    return Math.Round(monto * PorcentajeFacturacion * (1 + Constants.IVA), 2, MidpointRounding.ToEven);
+                    return Math.Round(monto * PorcentajeFacturacion * (1 + Constants.IVA), 1);
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
             }

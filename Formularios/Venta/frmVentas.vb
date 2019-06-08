@@ -3,7 +3,9 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports Negocio
+Imports SistemaCinderella.Formularios.Venta
 Imports SistemaCinderella.VistaModelo.Ventas
+Imports SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.VentaAggregate
 
@@ -11,6 +13,7 @@ Public Class frmVentas
 
     Private Reserva As Reserva
     Private NotaPedido As NotaPedido
+    Private FinalizarDelegate As FinalizarDelegateAsync
     Private ventaViewModel As frmVentasViewModel
     Private Errores As NegManejadorErrores
 
@@ -19,9 +22,10 @@ Public Class frmVentas
         InitializeComponent()
     End Sub
 
-    Public Sub New(notaPedido As NotaPedido)
+    Public Sub New(notaPedido As NotaPedido, finalizarDelegate As FinalizarDelegateAsync)
         Me.New()
         Me.NotaPedido = notaPedido
+        Me.FinalizarDelegate = finalizarDelegate
     End Sub
 
     Public Sub New(reserva As Reserva)
@@ -39,7 +43,8 @@ Public Class frmVentas
                                             AddressOf CargarNombreYCodigoDeProductosEvent,
                                             AddressOf StockInsuficienteEvent,
                                             AddressOf FacturarEvent,
-                                            AddressOf TerminarVentaEvent)
+                                            AddressOf TerminarVentaEvent,
+                                            FinalizarDelegate)
 
                           VentaViewModelBindingSource.DataSource = ventaViewModel
                           Await ventaViewModel.CargarDatosAsync()
@@ -324,6 +329,8 @@ Public Class frmVentas
             Sub()
                 If MessageBox.Show("¿Desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
                     ventaViewModel.NotaPedido()
+                    MessageBox.Show("Los datos se han guardado de forma correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Dispose()
                 End If
             End Sub)
     End Sub
@@ -340,7 +347,10 @@ Public Class frmVentas
         If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
             ventaViewModel.ClienteMayoristaChange(frmBuscarClienteMayorista.clienteMayorista.Id, frmBuscarClienteMayorista.clienteMayorista.RazonSocial)
         End If
+    End Sub
 
+    Private Sub FrmVentas_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Me.FinalizarDelegate?.Invoke()
     End Sub
 
     Public Sub CargarNombreYCodigoDeProductosEvent(nombreCodigoProductos As List(Of String))

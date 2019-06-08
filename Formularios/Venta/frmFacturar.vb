@@ -1,7 +1,7 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
-Imports SistemaCinderella.VistaModelo.Ventas
+Imports SistemaCinderella.Formularios.Venta
 
 Public Class frmFacturar
 
@@ -33,7 +33,16 @@ Public Class frmFacturar
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
         EjecutarAsync(Async Function() As Task
 
-                          If (Await facturarViewModel.AceptarAsync()) Then
+                          If (Await facturarViewModel.FacturarAsync()) Then
+                              Dispose()
+                          End If
+                      End Function)
+    End Sub
+
+    Private Sub btnNotaCredito_Click(sender As Object, e As EventArgs) Handles btnNotaCredito.Click
+        EjecutarAsync(Async Function() As Task
+
+                          If (Await facturarViewModel.NotaCreditoAsync()) Then
                               Dispose()
                           End If
                       End Function)

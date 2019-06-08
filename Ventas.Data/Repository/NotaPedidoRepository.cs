@@ -29,6 +29,8 @@ namespace Ventas.Data.Repository
             else
                 notaPedido.AgregarNumero(UltimaNotaPedido.Numero + 1);
 
+            _context.Entry(notaPedido.Encargado).State = System.Data.Entity.EntityState.Unchanged;
+            _context.Entry(notaPedido.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
             _context.NotaPedido.Add(notaPedido);
             _context.SaveChanges();
         }
@@ -46,6 +48,7 @@ namespace Ventas.Data.Repository
                                                     .Where(x => !x.Borrado)
                                                     .Include(x => x.NotaPedidoItems)
                                                     .Include(x => x.Vendedor)
+                                                    .Include(x => x.Encargado)
                                                     .Include(x => x.ClienteMayorista)
                                                     .Include(x => x.ClienteMinorista);
 

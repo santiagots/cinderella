@@ -3,6 +3,7 @@ Imports Ventas.Core.Enum
 
 Namespace VistaModelo.Ventas
     Public Class NotaPedidoItemsViewModel
+        Public Property Id As Long
         Public Property Numero As Integer
         Public Property TipoCliente As TipoCliente
         Public Property Vendedor As String

@@ -84,6 +84,7 @@ Partial Class frmVentasAdministracion
         Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
         Me.BtnAnular = New System.Windows.Forms.Button()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
+        Me.BtnNotaCreditoDetalle = New System.Windows.Forms.Button()
         Me.BtnFacturaDetalle = New System.Windows.Forms.Button()
         Me.btnReporteVenta = New System.Windows.Forms.Button()
         Me.BtnEmitirFactura = New System.Windows.Forms.Button()
@@ -774,6 +775,7 @@ Partial Class frmVentasAdministracion
         Me.lblcontenedor.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblcontenedor.Controls.Add(Me.BtnNotaCreditoDetalle)
         Me.lblcontenedor.Controls.Add(Me.BtnFacturaDetalle)
         Me.lblcontenedor.Controls.Add(Me.btnReporteVenta)
         Me.lblcontenedor.Controls.Add(Me.BtnEmitirFactura)
@@ -785,6 +787,22 @@ Partial Class frmVentasAdministracion
         Me.lblcontenedor.TabIndex = 0
         Me.lblcontenedor.TabStop = False
         Me.lblcontenedor.Text = "Información de la venta realizada."
+        '
+        'BtnNotaCreditoDetalle
+        '
+        Me.BtnNotaCreditoDetalle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnNotaCreditoDetalle.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnNotaCreditoDetalle.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmVentasAdministracionViewModelBindingSource, "HabilitarDetalleNotaCredito", True))
+        Me.BtnNotaCreditoDetalle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnNotaCreditoDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
+        Me.BtnNotaCreditoDetalle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnNotaCreditoDetalle.Location = New System.Drawing.Point(567, 497)
+        Me.BtnNotaCreditoDetalle.Name = "BtnNotaCreditoDetalle"
+        Me.BtnNotaCreditoDetalle.Size = New System.Drawing.Size(136, 27)
+        Me.BtnNotaCreditoDetalle.TabIndex = 21
+        Me.BtnNotaCreditoDetalle.Text = "Detalle N. Créd."
+        Me.BtnNotaCreditoDetalle.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnNotaCreditoDetalle.UseVisualStyleBackColor = True
         '
         'BtnFacturaDetalle
         '
@@ -809,7 +827,7 @@ Partial Class frmVentasAdministracion
         Me.btnReporteVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnReporteVenta.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
         Me.btnReporteVenta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnReporteVenta.Location = New System.Drawing.Point(613, 497)
+        Me.btnReporteVenta.Location = New System.Drawing.Point(471, 497)
         Me.btnReporteVenta.Name = "btnReporteVenta"
         Me.btnReporteVenta.Size = New System.Drawing.Size(90, 27)
         Me.btnReporteVenta.TabIndex = 16
@@ -840,7 +858,7 @@ Partial Class frmVentasAdministracion
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.VentaDetalle.Location = New System.Drawing.Point(6, 20)
         Me.VentaDetalle.Name = "VentaDetalle"
-        Me.VentaDetalle.Size = New System.Drawing.Size(916, 458)
+        Me.VentaDetalle.Size = New System.Drawing.Size(916, 471)
         Me.VentaDetalle.TabIndex = 0
         '
         'frmVentasAdministracion
@@ -945,4 +963,5 @@ Partial Class frmVentasAdministracion
     Friend WithEvents Label1 As Label
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents BtnNotaCreditoDetalle As Button
 End Class

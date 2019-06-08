@@ -24,11 +24,11 @@ Public Class frmReporteResumenReserva
         ' This call is required by the designer.
         InitializeComponent()
 
-        Me.Titulo = titulo
-        Me.Numero = numero
+        Me.Titulo = If(String.IsNullOrEmpty(titulo), String.Empty, titulo)
+        Me.Numero = If(String.IsNullOrEmpty(numero), String.Empty, numero)
         Me.TipoCliente = tipoCliente
-        Me.Vendedor = vendedor
-        Me.Cliente = cliente
+        Me.Vendedor = If(String.IsNullOrEmpty(vendedor), String.Empty, vendedor)
+        Me.Cliente = If(String.IsNullOrEmpty(cliente), String.Empty, cliente)
         Me.Fechas = fecha
         Me.TransaccionItems = transaccionItems
         Me.Pagos = Pagos
