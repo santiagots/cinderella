@@ -84,6 +84,9 @@ namespace Ventas.Core.Model.VentaAggregate
                 case TipoPago.Deposito:
                     formaPago = "Deposito";
                     break;
+                case TipoPago.Bonificacion:
+                    formaPago = "Bonificación";
+                    break;
                 default:
                     throw new InvalidOperationException($"La forma de pago {TipoPago.ToString()} no implementa el metodo ToString().");
             }

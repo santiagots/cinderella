@@ -129,6 +129,9 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente, TipoPago formaPago)
         {
+            if(formaPago == TipoPago.Bonificacion)
+                return new MontoPago(0, monto, 0, 0);
+
             //Si el porcentaje de recargo es mayor a cero no se tiene que hacer descuento
             decimal porcentajeBonificacion;
             if (!AplicarBonificacion(formaPago))

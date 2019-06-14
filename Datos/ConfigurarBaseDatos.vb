@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Deployment.Application
 Imports System.IO
+Imports Common.Core.Helper
 Imports Microsoft.SqlServer.Management.Common
 Imports Microsoft.SqlServer.Management.Smo
 
@@ -42,17 +43,22 @@ Public Class ConfigurarBaseDatos
     End Sub
 
     Private Shared Sub ActualizarBaseDatos(rutaEjecucionAplicacion As String)
-        Dim scriptFiles As String() = Directory.GetFiles(Path.Combine(rutaEjecucionAplicacion, "Script"), "*.sql")
-        Dim conexion As Conexion = New Conexion()
+        Try
+            Dim scriptFiles As String() = Directory.GetFiles(Path.Combine(rutaEjecucionAplicacion, "Script"), "*.sql")
+            Dim conexion As Conexion = New Conexion()
 
-        For Each scriptFile As String In scriptFiles
-            Dim script As String = File.ReadAllText(scriptFile)
+            For Each scriptFile As String In scriptFiles
+                Dim script As String = File.ReadAllText(scriptFile)
 
-            Dim conn As SqlConnection = conexion.ConectarLocal()
-            Dim server As Server = New Server(New ServerConnection(conn))
-            server.ConnectionContext.ExecuteNonQuery(script)
-            conexion.DesconectarLocal()
-        Next
+                Dim conn As SqlConnection = conexion.ConectarLocal()
+                Dim server As Server = New Server(New ServerConnection(conn))
+                server.ConnectionContext.ExecuteNonQuery(script)
+                conexion.DesconectarLocal()
+            Next
+        Catch ex As Exception
+            Log.Error(ex)
+            Throw
+        End Try
     End Sub
 
 End Class

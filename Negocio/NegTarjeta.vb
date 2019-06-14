@@ -10,7 +10,7 @@ Public Class NegTarjeta
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim clsDatos As New Datos.Conexion
+        Dim clsDatos As New Conexion
         Dim msg As String = ""
         Dim dsTarjetas As DataSet
         Dim respuesta As List(Of Tarjeta) = New List(Of Tarjeta)()

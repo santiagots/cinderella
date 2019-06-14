@@ -236,7 +236,7 @@ Namespace VistaModelo.Ventas
             CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
 
             For Each pago As Pago In reserva.VentaReserva.Pagos
-                VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Total + pago.MontoPago.Descuento, pago.MontoPago.CFT, pago.MontoPago.IVA, pago.TipoPago, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
+                VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Monto, 0, 0, TipoPago.Bonificacion, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
             Next
 
             CalcularPendientePago()
@@ -299,6 +299,7 @@ Namespace VistaModelo.Ventas
 
                 VentaModel.ActualizarClienteMayorista(IdClienteMayorista)
             End If
+            NotifyPropertyChanged(NameOf(Me.PorcentajeFacturacion))
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMayorista()
