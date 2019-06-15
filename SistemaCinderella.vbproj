@@ -127,8 +127,8 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>packages\AutoMapper.8.1.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CodigoBarras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -163,7 +163,7 @@
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Smo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>packages\NLog.4.6.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>packages\NLog.4.6.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
@@ -1864,29 +1864,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Service\Common.Service.csproj">
-      <Project>{6CD90B40-30A0-4AD5-A5BF-11B2A2EFDD71}</Project>
-      <Name>Common.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Comunes\Comunes.csproj">
       <Project>{9418cc85-d313-44f6-9b84-2670327f5c18}</Project>
       <Name>Comunes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ventas.Suport\Ventas.Suport.csproj">
-      <Project>{78ea4aa7-c920-4377-ae7f-6081e1320420}</Project>
-      <Name>Ventas.Suport</Name>
-    </ProjectReference>
-    <ProjectReference Include="Common.Core\Common.Core.csproj">
-      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
+    <ProjectReference Include="Common\Common.Core\Common.Core.csproj">
+      <Project>{fc33c392-4689-4ce9-93dd-cdab4a65c04c}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="Common.Data\Common.Data.csproj">
-      <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
+    <ProjectReference Include="Common\Common.Data\Common.Data.csproj">
+      <Project>{fb58f971-ff75-4ff7-8b90-53290a8da46f}</Project>
       <Name>Common.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="Common.Device\Common.Device.csproj">
-      <Project>{72CB5F3C-E9A6-438F-9CCB-090DF126BDD8}</Project>
+    <ProjectReference Include="Common\Common.Device\Common.Device.csproj">
+      <Project>{72cb5f3c-e9a6-438f-9ccb-090df126bdd8}</Project>
       <Name>Common.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="Common\Common.Service\Common.Service.csproj">
+      <Project>{6cd90b40-30a0-4ad5-a5bf-11b2a2efdd71}</Project>
+      <Name>Common.Service</Name>
     </ProjectReference>
     <ProjectReference Include="Controles\Controles.csproj">
       <Project>{197444e3-7a32-4a44-a9a0-551595095a64}</Project>
@@ -1908,13 +1904,17 @@
       <Project>{59afdba5-8c7e-4c73-8a37-a7aabd4fec7f}</Project>
       <Name>Servicios</Name>
     </ProjectReference>
-    <ProjectReference Include="Ventas.Core\Ventas.Core.csproj">
-      <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
-      <Name>Ventas.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="Ventas.Data\Ventas.Data.csproj">
       <Project>{9604A1B8-8F7F-4B63-967E-EC7AEE5A9453}</Project>
       <Name>Ventas.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="Venta\Ventas.Core\Ventas.Core.csproj">
+      <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
+      <Name>Ventas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Venta\Ventas.Suport\Ventas.Suport.csproj">
+      <Project>{78ea4aa7-c920-4377-ae7f-6081e1320420}</Project>
+      <Name>Ventas.Suport</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

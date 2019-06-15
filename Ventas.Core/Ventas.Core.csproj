@@ -90,10 +90,6 @@
     <Folder Include="Model\Events\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
-      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
-      <Name>Common.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entidades\Entidades.vbproj">
       <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
       <Name>Entidades</Name>
