@@ -1904,13 +1904,13 @@
       <Project>{59afdba5-8c7e-4c73-8a37-a7aabd4fec7f}</Project>
       <Name>Servicios</Name>
     </ProjectReference>
-    <ProjectReference Include="Ventas.Data\Ventas.Data.csproj">
-      <Project>{9604A1B8-8F7F-4B63-967E-EC7AEE5A9453}</Project>
-      <Name>Ventas.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="Venta\Ventas.Core\Ventas.Core.csproj">
       <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
       <Name>Ventas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Venta\Ventas.Data\Ventas.Data.csproj">
+      <Project>{9604a1b8-8f7f-4b63-967e-ec7aee5a9453}</Project>
+      <Name>Ventas.Data</Name>
     </ProjectReference>
     <ProjectReference Include="Venta\Ventas.Suport\Ventas.Suport.csproj">
       <Project>{78ea4aa7-c920-4377-ae7f-6081e1320420}</Project>
