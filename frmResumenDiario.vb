@@ -548,7 +548,7 @@ Public Class frmResumenDiario
                                         Try
                                             Dim cFiscal As NegControladorFiscal = New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
                                             cFiscal.AbrirPuerto()
-                                            cFiscal.CierreZ()
+                                            cFiscal.CierreZ(My.Settings.ControladorModelo)
                                             cFiscal.CerrarPuerto()
                                         Catch ex As Exception
                                             MessageBox.Show("Se ha producido un error al imprimir el cierre Z. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)

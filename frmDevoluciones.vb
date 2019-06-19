@@ -198,6 +198,7 @@ Public Class frmDevoluciones
                 detalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
                 detalle.Iva = CDbl(DG_Productos.Rows(i).Cells.Item("IVA").Value)
                 detalle.Monto = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
+                detalle.Codigo = CDbl(DG_Productos.Rows(i).Cells.Item("CODIGO").Value)
 
                 detalleDevolucion.Add(detalle)
             End If

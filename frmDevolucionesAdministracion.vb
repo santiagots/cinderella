@@ -472,6 +472,7 @@ Public Class frmDevolucionesAdministracion
             Detalle.Precio = prod.Item("Precio").ToString()
             Detalle.Iva = prod.Item("Iva").ToString()
             Detalle.Monto = prod.Item("Monto").ToString()
+            Detalle.Codigo = prod.Item("Codigo").ToString()
             frmNotaCredito.DevolucionDetalle.Add(Detalle)
         Next
 

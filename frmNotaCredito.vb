@@ -30,7 +30,9 @@ Public Class frmNotaCredito
     Public TipoCliente As TipoCliente
     Public EsSenia As Boolean = False
     Public PorcentajeFacturacion As Double
-    Public NumeroFactura As String
+    Public TipoFacturaOrigen As String
+    Public PuntoVentaFacturaOrigen As String
+    Public NumeroFacturaOrigen As String
     Private IdSucursal As Integer = My.Settings("Sucursal")
     Private PuntoVentaFacturacionTicket As Integer = My.Settings("PuntoVentaFacturacionTicket")
     Private PuntoVentaFacturacionManual As Integer = My.Settings("PuntoVentaFacturacionManual")
@@ -111,7 +113,7 @@ Public Class frmNotaCredito
 
         txt_Pago.Text = "No Requerido."
         txt_Pago.ReadOnly = True
-        txt_Factura_Origen.Text = NumeroFactura
+        txt_Factura_Origen.Text = NumeroFacturaOrigen
 
         'Si la facturacion es para un cliente 
         If (id_Cliente <> 0) Then
@@ -317,9 +319,16 @@ Public Class frmNotaCredito
         EntControlador.COLAR1 = "Gracias por su compra."
         EntControlador.COLAR2 = ""
         EntControlador.COLAR3 = ""
-        EntControlador.LREMITO1 = "."
+        EntControlador.LREMITO1 = ""
         EntControlador.LREMITO2 = ""
-        EntControlador.COMPROBANTEORIGEN = txt_Factura_Origen.Text
+        EntControlador.LREMITO1 = ""
+        EntControlador.LREMITO2 = ""
+        EntControlador.LREMITO3 = ""
+        EntControlador.MODELO = My.Settings.ControladorModelo
+        EntControlador.CodigoCondicionIva = "7"
+        EntControlador.COMPROBANTEORIGEN = ObtenerComprobanteOrigen(My.Settings.ControladorModelo)
+
+        EntControlador.MODELO = My.Settings.ControladorModelo
 
         'Acepto.
         Select Case (Cb_IVA.Text)
@@ -332,6 +341,8 @@ Public Class frmNotaCredito
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "F"
+                EntControlador.TasaIVADescuentoAjuste = "2100"
+                EntControlador.CondicionIVADescuentoAjuste = "7"
 
                 'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
                 'le tengo que agregar el IVA al Decuento y al Costo Financiero
@@ -349,6 +360,8 @@ Public Class frmNotaCredito
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "I"
+                EntControlador.TasaIVADescuentoAjuste = "2100"
+                EntControlador.CondicionIVADescuentoAjuste = "7"
 
                 'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
                 'le tengo que quitar el IVA al Decuento y al Costo Financiero
@@ -366,6 +379,8 @@ Public Class frmNotaCredito
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "M"
+                EntControlador.TasaIVADescuentoAjuste = ""
+                EntControlador.CondicionIVADescuentoAjuste = "0"
 
                 'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
                 'le tengo que agregar el IVA al Decuento y al Costo Financiero
@@ -383,6 +398,8 @@ Public Class frmNotaCredito
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
+                EntControlador.TasaIVADescuentoAjuste = ""
+                EntControlador.CondicionIVADescuentoAjuste = "2"
 
                 'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
                 'le tengo que agregar el IVA al Decuento y al Costo Financiero
@@ -400,6 +417,8 @@ Public Class frmNotaCredito
                 EntControlador.DCOMP2 = txt_Localidad.Text.Trim
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
+                EntControlador.TasaIVADescuentoAjuste = ""
+                EntControlador.CondicionIVADescuentoAjuste = "2"
 
                 'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
                 'le tengo que quitar el IVA al Decuento y al Costo Financiero
@@ -424,6 +443,8 @@ Public Class frmNotaCredito
                     EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
                     EntControlador.CANTIDAD = Func.FormatearCantidad("1")
                     EntControlador.PUNITARIO = Func.FormatearPrecio(MontoSenia)
+                    EntControlador.CodigoItem = "senia"
+                    EntControlador.CodigoUnidadMedida = "7" 'Unidad
                     NegControlador.AgregarItemNotaCredito(EntControlador)
                 Else
                     'Agrego items al ticket
@@ -437,6 +458,8 @@ Public Class frmNotaCredito
                             Else
                                 EntControlador.PUNITARIO = Func.FormatearPrecio(detalle.Monto)
                             End If
+                            EntControlador.CodigoItem = detalle.Codigo
+                            EntControlador.CodigoUnidadMedida = "7" 'Unidad
                             NegControlador.AgregarItemNotaCredito(EntControlador)
                         Next
                     End If
@@ -444,17 +467,17 @@ Public Class frmNotaCredito
 
                 'Si hay descuentos, los agrego al ticket
                 If Descuento > 0 Then
-                    NegControlador.DescuentosNotaCredito(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
+                    NegControlador.DescuentosNotaCredito(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2), EntControlador.MODELO, EntControlador.TasaIVADescuentoAjuste, EntControlador.CondicionIVADescuentoAjuste)
                 End If
 
                 'Si hay Costo Financiero, los agrego al ticket
                 If CostoFinanciero > 0 Then
-                    NegControlador.RecargosNotaCredito(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2))
+                    NegControlador.RecargosNotaCredito(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2), EntControlador.MODELO, EntControlador.TasaIVADescuentoAjuste, EntControlador.CondicionIVADescuentoAjuste)
                 End If
 
                 'Subtotal y pago.
-                If Descuento = 0 AndAlso CostoFinanciero = 0 Then
-                    Dim sSubtotal As String = NegControlador.SubtotalNotaCredito()
+                If Descuento = 0 AndAlso CostoFinanciero = 0 AndAlso EntControlador.MODELO = ImpresoraFiscalModelo.U220AFII Then
+                    Dim sSubtotal As String = NegControlador.SubtotalNotaCredito(EntControlador)
                 End If
 
 
@@ -473,6 +496,18 @@ Public Class frmNotaCredito
         End If
         NegControlador.CerrarPuerto()
         Return False
+    End Function
+
+    Private Function ObtenerComprobanteOrigen(controladorModelo As ImpresoraFiscalModelo) As String
+        If (My.Settings.ControladorModelo = ImpresoraFiscalModelo.U220AFII) Then
+            Return NumeroFacturaOrigen
+        Else
+            Dim codigoDocumentoOrigen As String = If(TipoFacturaOrigen.ToUpper() = "A", "081", "082")
+            Dim puntoVenta As String = PuntoVentaFacturaOrigen.PadLeft(5, "0")
+            Dim numeroFactura As String = NumeroFacturaOrigen.PadLeft(8, "0")
+            Return String.Format("{0}-{1}-{2}", codigoDocumentoOrigen, puntoVenta, numeroFactura)
+        End If
+
     End Function
 
     Private Sub txt_Comprobante_Origen_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Factura_Origen.KeyPress

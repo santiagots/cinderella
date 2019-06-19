@@ -581,7 +581,10 @@ Public Class frmVentasAdministracion
 
                 frmNotaCredito.EsSenia = False
                 frmNotaCredito.TipoPago = TipoPago
-                frmNotaCredito.NumeroFactura = NegFacturacion.TraerFacturacionPorIdVenta(IdVenta)?.NumeroFactura
+                Dim EntFactura As Entidades.Facturacion = NegFacturacion.TraerFacturacionPorIdVenta(IdVenta)
+                frmNotaCredito.NumeroFacturaOrigen = EntFactura?.NumeroFactura
+                frmNotaCredito.TipoFacturaOrigen = EntFactura?.TipoFactura
+                frmNotaCredito.PuntoVentaFacturaOrigen = EntFactura?.PuntoVenta
 
                 Dim dsDetalle As DataSet = NegVentas.TraerVentaDetalle(IdVenta)
 
@@ -592,6 +595,7 @@ Public Class frmVentasAdministracion
                     Detalle.Precio = prod.Item("Precio").ToString()
                     Detalle.Iva = prod.Item("Iva").ToString()
                     Detalle.Monto = prod.Item("Monto").ToString()
+                    Detalle.Codigo = prod.Item("Codigo").ToString()
                     frmNotaCredito.DevolucionDetalle.Add(Detalle)
                 Next
 
@@ -639,7 +643,10 @@ Public Class frmVentasAdministracion
                 frmNotaCredito.TipoPago = TipoPago
                 frmNotaCredito.id_Cliente = id_Cliente
                 frmNotaCredito.EsSenia = True
-                frmNotaCredito.NumeroFactura = NegFacturacion.TraerFacturacionPorIdVenta(id_Venta)?.NumeroFactura
+                Dim EntFactura As Entidades.Facturacion = NegFacturacion.TraerFacturacionPorIdVenta(id_Venta)
+                frmNotaCredito.NumeroFacturaOrigen = EntFactura?.NumeroFactura
+                frmNotaCredito.TipoFacturaOrigen = EntFactura?.TipoFactura
+                frmNotaCredito.PuntoVentaFacturaOrigen = EntFactura?.PuntoVenta
 
                 Dim dsDetalle As DataSet = NegVentas.TraerVentaDetalle(id_Venta)
 
@@ -650,6 +657,7 @@ Public Class frmVentasAdministracion
                     Detalle.Precio = prod.Item("Precio").ToString()
                     Detalle.Iva = prod.Item("Iva").ToString()
                     Detalle.Monto = prod.Item("Monto").ToString()
+                    Detalle.Codigo = prod.Item("Codigo").ToString()
                     frmNotaCredito.DevolucionDetalle.Add(Detalle)
                 Next
 
@@ -859,6 +867,7 @@ Public Class frmVentasAdministracion
                 detalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
                 detalle.Iva = CDbl(DG_Productos.Rows(i).Cells.Item("IVA").Value)
                 detalle.Monto = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
+                detalle.Codigo = DG_Productos.Rows(i).Cells.Item("CODIGO").Value
 
                 detalleVenta.Add(detalle)
             End If

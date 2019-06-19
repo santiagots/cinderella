@@ -26,7 +26,7 @@ Public Class frmControladorFiscal
         Try
             lblEstado.Text = "Imprimiendo cierre Z por rango de fechas"
             ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.CierreZPorRangoDeFecha(FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date)
+            ControladorFiscal.CierreZPorRangoDeFecha(FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, My.Settings.ControladorModelo)
             ControladorFiscal.CerrarPuerto()
             lblEstado.Text = "- - - -"
         Catch ex As Exception
@@ -42,7 +42,7 @@ Public Class frmControladorFiscal
         Try
             lblEstado.Text = "Imprimiendo cierre Z"
             ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.CierreZ()
+            ControladorFiscal.CierreZ(My.Settings.ControladorModelo)
             ControladorFiscal.CerrarPuerto()
             lblEstado.Text = "- - - -"
         Catch ex As Exception

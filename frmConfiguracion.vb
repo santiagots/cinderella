@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Net
 Imports System.Net.NetworkInformation
+Imports Entidades
 Imports Negocio
 
 Public Class frmConfiguracion
@@ -79,6 +80,7 @@ Public Class frmConfiguracion
         txt_PuntoVentaElectronica.Text = My.Settings.PuntoVentaFacturacionElectronica
         txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
         txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
+        Cb_ModeloControlador.SelectedItem = [Enum].GetName(GetType(ImpresoraFiscalModelo), My.Settings.ControladorModelo)
 
         'Comprobacion de notificaciones.
         Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
@@ -220,6 +222,7 @@ Public Class frmConfiguracion
                 My.Settings.PuntoVentaFacturacionElectronica = Integer.Parse(Trim(txt_PuntoVentaElectronica.Text))
                 My.Settings.PuntoVentaFacturacionTicket = Integer.Parse(Trim(txt_PuntoVentaControladora.Text))
                 My.Settings.PuntoVentaFacturacionManual = Integer.Parse(Trim(txt_PuntoVentaManual.Text))
+                My.Settings.ControladorModelo = If(Cb_ModeloControlador.SelectedItem = ImpresoraFiscalModelo.U220AFII.ToString(), ImpresoraFiscalModelo.U220AFII, ImpresoraFiscalModelo.T900FA)
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else

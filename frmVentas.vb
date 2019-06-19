@@ -1489,7 +1489,7 @@ Public Class frmVentas
                 detalle.Precio = CDbl(DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
                 detalle.Iva = CDbl(DG_Productos.Rows(i).Cells.Item("IVA").Value)
                 detalle.Monto = CDbl(DG_Productos.Rows(i).Cells.Item("MONTO").Value)
-
+                detalle.Codigo = DG_Productos.Rows(i).Cells.Item("CODIGO").Value
                 detalleVenta.Add(detalle)
             End If
         Next

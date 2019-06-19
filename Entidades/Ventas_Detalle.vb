@@ -7,5 +7,6 @@
     Public Property Precio As Double
     Public Property Iva As Double
     Public Property Monto As Double
+    Public Property Codigo As String
 
 End Class

@@ -267,8 +267,11 @@ Public Class frmFacturar
         EntControlador.COLAR1 = "Gracias por su compra."
         EntControlador.COLAR2 = ""
         EntControlador.COLAR3 = ""
-        EntControlador.LREMITO1 = "."
+        EntControlador.LREMITO1 = ""
         EntControlador.LREMITO2 = ""
+        EntControlador.LREMITO3 = ""
+        EntControlador.MODELO = My.Settings.ControladorModelo
+        EntControlador.CodigoCondicionIva = "7"
 
         'Acepto.
         Select Case (Cb_IVA.Text)
@@ -281,6 +284,8 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "F"
                 EntControlador.TIVA = "2100"
+                EntControlador.TasaIVADescuentoAjuste = "2100"
+                EntControlador.CondicionIVADescuentoAjuste = "7"
 
                 'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
                 'le tengo que agregar el IVA al Decuento y al Costo Financiero
@@ -299,6 +304,8 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "I"
                 EntControlador.TIVA = "2100"
+                EntControlador.TasaIVADescuentoAjuste = "2100"
+                EntControlador.CondicionIVADescuentoAjuste = "7"
 
                 'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
                 'le tengo que quitar el IVA al Decuento y al Costo Financiero
@@ -317,6 +324,8 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "M"
                 EntControlador.TIVA = "2100"
+                EntControlador.TasaIVADescuentoAjuste = ""
+                EntControlador.CondicionIVADescuentoAjuste = "0"
 
                 'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
                 'le tengo que agregar el IVA al Decuento y al Costo Financiero
@@ -334,6 +343,8 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
                 EntControlador.TIVA = "2100"
+                EntControlador.TasaIVADescuentoAjuste = ""
+                EntControlador.CondicionIVADescuentoAjuste = "2"
 
                 'Si se NO esta disciminando el IVA en la factura y el tipo de cliente es Mayorista 
                 'le tengo que agregar el IVA al Decuento y al Costo Financiero
@@ -351,6 +362,9 @@ Public Class frmFacturar
                 EntControlador.DCOMP3 = ""
                 EntControlador.RI = "E"
                 EntControlador.TIVA = "0000"
+                EntControlador.TasaIVADescuentoAjuste = ""
+                EntControlador.CondicionIVADescuentoAjuste = "2"
+
 
                 'Si se esta disciminando el IVA en la factura y el tipo de cliente es Minorista 
                 'le tengo que quitar el IVA al Decuento y al Costo Financiero
@@ -375,6 +389,8 @@ Public Class frmFacturar
                     EntControlador.DPPAL = Func.ReemplazarCaracteres("Seña")
                     EntControlador.CANTIDAD = Func.FormatearCantidad("1")
                     EntControlador.PUNITARIO = Func.FormatearPrecio(MontoSenia)
+                    EntControlador.CodigoItem = "senia"
+                    EntControlador.CodigoUnidadMedida = "7" 'Unidad
                     NegControlador.AgregarItemTicket(EntControlador)
                 Else
                     'Agrego items al ticket
@@ -388,26 +404,28 @@ Public Class frmFacturar
                             Else
                                 EntControlador.PUNITARIO = Func.FormatearPrecio(detalle.Monto)
                             End If
+                            EntControlador.CodigoItem = detalle.Codigo
+                            EntControlador.CodigoUnidadMedida = "7" 'Unidad
                             NegControlador.AgregarItemTicket(EntControlador)
                         Next
                     End If
                 End If
                 'Si hay descuentos, los agrego al ticket
                 If Descuento > 0 Then
-                    NegControlador.DescuentosTicket(Func.ReemplazarCaracteres("Descuento"), Func.FormatearPrecio(Descuento, 2))
+                    NegControlador.DescuentosTicket(Func.ReemplazarCaracteres("Bonificación"), Func.FormatearPrecio(Descuento, 2), EntControlador.MODELO, EntControlador.TasaIVADescuentoAjuste, EntControlador.CondicionIVADescuentoAjuste)
                 End If
 
                 'Si hay Costo Financiero, los agrego al ticket
                 If CostoFinanciero > 0 Then
-                    NegControlador.RecargosTicket(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2))
+                    NegControlador.RecargosTicket(Func.ReemplazarCaracteres("Costo Financiero"), Func.FormatearPrecio(CostoFinanciero, 2), EntControlador.MODELO, EntControlador.TasaIVADescuentoAjuste, EntControlador.CondicionIVADescuentoAjuste)
                 End If
 
                 'Subtotal y pago.
-                If Descuento = 0 AndAlso CostoFinanciero = 0 Then
-                    Dim sSubtotal As String = NegControlador.SubtotalTicket()
+                If Descuento = 0 AndAlso CostoFinanciero = 0 AndAlso EntControlador.MODELO = ImpresoraFiscalModelo.U220AFII Then
+                    Dim sSubtotal As String = NegControlador.SubtotalTicket(EntControlador)
                 End If
 
-                NegControlador.PagarTicket(lbl_TipoPago.Text, Func.FormatearPrecio(txt_Pago.Text, 2))
+                NegControlador.PagarTicket(lbl_TipoPago.Text, Func.FormatearPrecio(txt_Pago.Text, 2), EntControlador.MODELO)
 
                 'Cierra Ticket.
                 Dim NumeroFactura As Integer = NegControlador.CerrarTicket(EntControlador)

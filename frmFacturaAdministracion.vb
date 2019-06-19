@@ -585,7 +585,10 @@ Public Class frmFacturaAdministracion
                     frmNotaCredito.PorcentajeFacturacion = PorcentajeFacturacion
                 End If
 
-                frmNotaCredito.NumeroFactura = NegFacturacion.TraerFacturacionPorIdVenta(IdVenta)?.NumeroFactura
+                Dim EntFactura As Entidades.Facturacion = NegFacturacion.TraerFacturacionPorIdVenta(IdVenta)
+                frmNotaCredito.NumeroFacturaOrigen = EntFactura?.NumeroFactura
+                frmNotaCredito.TipoFacturaOrigen = EntFactura?.TipoFactura
+                frmNotaCredito.PuntoVentaFacturaOrigen = EntFactura?.PuntoVenta
 
                 Dim dsDetalle As DataSet = NegVentas.TraerVentaDetalle(IdVenta)
 
@@ -596,6 +599,7 @@ Public Class frmFacturaAdministracion
                     Detalle.Precio = prod.Item("Precio").ToString()
                     Detalle.Iva = prod.Item("Iva").ToString()
                     Detalle.Monto = prod.Item("Monto").ToString()
+                    Detalle.Codigo = prod.Item("Codigo").ToString()
                     frmNotaCredito.DevolucionDetalle.Add(Detalle)
                 Next
 

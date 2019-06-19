@@ -147,7 +147,9 @@ Public Class frmSeniaAdministracion
                             frmNotaCredito.TipoPago = TipoPago
                             frmNotaCredito.id_Cliente = id_Cliente
                             frmNotaCredito.EsSenia = True
-                            frmNotaCredito.NumeroFactura = Factura?.NumeroFactura
+                            frmNotaCredito.NumeroFacturaOrigen = Factura?.NumeroFactura
+                            frmNotaCredito.TipoFacturaOrigen = Factura?.TipoFactura
+                            frmNotaCredito.PuntoVentaFacturaOrigen = Factura?.PuntoVenta
 
                             For Each prod In dsVentaSeniaDetalle.Tables(0).Rows
                                 Dim Detalle As Devolucion_Detalle = New Devolucion_Detalle()
@@ -156,6 +158,7 @@ Public Class frmSeniaAdministracion
                                 Detalle.Precio = prod.Item("Precio").ToString()
                                 Detalle.Iva = prod.Item("Iva").ToString()
                                 Detalle.Monto = prod.Item("Monto").ToString()
+                                Detalle.Codigo = prod.Item("Codigo").ToString()
                                 frmNotaCredito.DevolucionDetalle.Add(Detalle)
                             Next
 

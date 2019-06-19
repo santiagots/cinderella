@@ -690,7 +690,7 @@ Public Class NegEmpleados
         entEmpleado.Telefono = dsEmpleado.Tables(0).Rows(0).Item("Telefono").ToString
         entEmpleado.Telefono2 = dsEmpleado.Tables(0).Rows(0).Item("Telefono2").ToString
         entEmpleado.Mail = dsEmpleado.Tables(0).Rows(0).Item("Mail").ToString
-        entEmpleado.Habilitado = dsEmpleado.Tables(0).Rows(0).Item("Habilitado").ToString
+        entEmpleado.Habilitado = dsEmpleado.Tables(0).Rows(0).Item("Habilitado")
         entEmpleado.Fecha = dsEmpleado.Tables(0).Rows(0).Item("Fecha").ToString
         entEmpleado.FechaNacimiento = dsEmpleado.Tables(0).Rows(0).Item("FechaNacimiento").ToString
         entEmpleado.FechaIngreso = dsEmpleado.Tables(0).Rows(0).Item("FechaIngreso").ToString
