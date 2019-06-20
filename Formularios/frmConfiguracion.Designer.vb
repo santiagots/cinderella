@@ -52,6 +52,8 @@ Partial Class frmConfiguracion
         Me.BtnMailing = New System.Windows.Forms.Button()
         Me.lblPort = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Cb_ModeloControladora = New System.Windows.Forms.ComboBox()
+        Me.Label19 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -203,7 +205,7 @@ Partial Class frmConfiguracion
         Me.Btn_Actualizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Actualizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Actualizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Actualizar.Location = New System.Drawing.Point(304, 379)
+        Me.Btn_Actualizar.Location = New System.Drawing.Point(304, 437)
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Actualizar.TabIndex = 4
@@ -223,7 +225,7 @@ Partial Class frmConfiguracion
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(410, 425)
+        Me.GroupBox1.Size = New System.Drawing.Size(410, 483)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuración de Sucursal"
@@ -276,7 +278,7 @@ Partial Class frmConfiguracion
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(410, 425)
+        Me.GroupBox2.Size = New System.Drawing.Size(410, 483)
         Me.GroupBox2.TabIndex = 6
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Configuración de Precios"
@@ -322,7 +324,7 @@ Partial Class frmConfiguracion
         Me.Btn_Precios.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Precios.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Precios.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Precios.Location = New System.Drawing.Point(304, 379)
+        Me.Btn_Precios.Location = New System.Drawing.Point(304, 437)
         Me.Btn_Precios.Name = "Btn_Precios"
         Me.Btn_Precios.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Precios.TabIndex = 4
@@ -361,7 +363,7 @@ Partial Class frmConfiguracion
         Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(416, 431)
+        Me.GroupBox3.Size = New System.Drawing.Size(416, 489)
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Configuración del Servidor de Mail"
@@ -456,6 +458,8 @@ Partial Class frmConfiguracion
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.Cb_ModeloControladora)
+        Me.GroupBox4.Controls.Add(Me.Label19)
         Me.GroupBox4.Controls.Add(Me.Label23)
         Me.GroupBox4.Controls.Add(Me.GroupBox9)
         Me.GroupBox4.Controls.Add(Me.Cb_ConexionControladora)
@@ -471,10 +475,30 @@ Partial Class frmConfiguracion
         Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox4.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(416, 431)
+        Me.GroupBox4.Size = New System.Drawing.Size(416, 456)
         Me.GroupBox4.TabIndex = 8
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Configuración de Controlador Fiscal"
+        '
+        'Cb_ModeloControladora
+        '
+        Me.Cb_ModeloControladora.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_ModeloControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_ModeloControladora.FormattingEnabled = True
+        Me.Cb_ModeloControladora.Items.AddRange(New Object() {"TM-U220AFII", "TM-T900FA"})
+        Me.Cb_ModeloControladora.Location = New System.Drawing.Point(236, 80)
+        Me.Cb_ModeloControladora.Name = "Cb_ModeloControladora"
+        Me.Cb_ModeloControladora.Size = New System.Drawing.Size(172, 23)
+        Me.Cb_ModeloControladora.TabIndex = 30
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(9, 83)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(119, 15)
+        Me.Label19.TabIndex = 29
+        Me.Label19.Text = "Modelo Controlador:"
         '
         'Label23
         '
@@ -493,7 +517,7 @@ Partial Class frmConfiguracion
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeElectronico)
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeManual)
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeTicket)
-        Me.GroupBox9.Location = New System.Drawing.Point(12, 115)
+        Me.GroupBox9.Location = New System.Drawing.Point(12, 138)
         Me.GroupBox9.Name = "GroupBox9"
         Me.GroupBox9.Size = New System.Drawing.Size(396, 113)
         Me.GroupBox9.TabIndex = 23
@@ -554,7 +578,7 @@ Partial Class frmConfiguracion
         Me.Cb_ConexionControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_ConexionControladora.FormattingEnabled = True
         Me.Cb_ConexionControladora.Items.AddRange(New Object() {"USB", "COM1"})
-        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(236, 84)
+        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(236, 109)
         Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
         Me.Cb_ConexionControladora.Size = New System.Drawing.Size(172, 23)
         Me.Cb_ConexionControladora.TabIndex = 22
@@ -562,7 +586,7 @@ Partial Class frmConfiguracion
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(9, 87)
+        Me.Label17.Location = New System.Drawing.Point(9, 112)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(106, 15)
         Me.Label17.TabIndex = 21
@@ -571,7 +595,7 @@ Partial Class frmConfiguracion
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(6, 247)
+        Me.Label15.Location = New System.Drawing.Point(6, 270)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(170, 15)
         Me.Label15.TabIndex = 20
@@ -579,7 +603,7 @@ Partial Class frmConfiguracion
         '
         'txt_MontoMaximoNotaCredito
         '
-        Me.txt_MontoMaximoNotaCredito.Location = New System.Drawing.Point(235, 238)
+        Me.txt_MontoMaximoNotaCredito.Location = New System.Drawing.Point(235, 261)
         Me.txt_MontoMaximoNotaCredito.Name = "txt_MontoMaximoNotaCredito"
         Me.txt_MontoMaximoNotaCredito.Size = New System.Drawing.Size(167, 21)
         Me.txt_MontoMaximoNotaCredito.TabIndex = 19
@@ -587,7 +611,7 @@ Partial Class frmConfiguracion
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(6, 231)
+        Me.Label16.Location = New System.Drawing.Point(6, 254)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(210, 15)
         Me.Label16.TabIndex = 18
@@ -601,7 +625,7 @@ Partial Class frmConfiguracion
         Me.GroupBox7.Controls.Add(Me.Label14)
         Me.GroupBox7.Controls.Add(Me.Label13)
         Me.GroupBox7.Controls.Add(Me.Label12)
-        Me.GroupBox7.Location = New System.Drawing.Point(12, 268)
+        Me.GroupBox7.Location = New System.Drawing.Point(12, 291)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Size = New System.Drawing.Size(396, 109)
         Me.GroupBox7.TabIndex = 17
@@ -662,7 +686,7 @@ Partial Class frmConfiguracion
         Me.Btn_Controlador.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Controlador.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Controlador.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Controlador.Location = New System.Drawing.Point(308, 383)
+        Me.Btn_Controlador.Location = New System.Drawing.Point(308, 406)
         Me.Btn_Controlador.Name = "Btn_Controlador"
         Me.Btn_Controlador.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Controlador.TabIndex = 11
@@ -759,7 +783,7 @@ Partial Class frmConfiguracion
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(424, 459)
+        Me.TabControl1.Size = New System.Drawing.Size(424, 484)
         Me.TabControl1.TabIndex = 9
         '
         'TabSucursal
@@ -768,7 +792,7 @@ Partial Class frmConfiguracion
         Me.TabSucursal.Location = New System.Drawing.Point(4, 24)
         Me.TabSucursal.Name = "TabSucursal"
         Me.TabSucursal.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSucursal.Size = New System.Drawing.Size(416, 431)
+        Me.TabSucursal.Size = New System.Drawing.Size(416, 489)
         Me.TabSucursal.TabIndex = 0
         Me.TabSucursal.Text = "Sucursal"
         Me.TabSucursal.UseVisualStyleBackColor = True
@@ -779,7 +803,7 @@ Partial Class frmConfiguracion
         Me.TabPrecios.Location = New System.Drawing.Point(4, 24)
         Me.TabPrecios.Name = "TabPrecios"
         Me.TabPrecios.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrecios.Size = New System.Drawing.Size(416, 431)
+        Me.TabPrecios.Size = New System.Drawing.Size(416, 489)
         Me.TabPrecios.TabIndex = 1
         Me.TabPrecios.Text = "Precios"
         Me.TabPrecios.UseVisualStyleBackColor = True
@@ -789,7 +813,7 @@ Partial Class frmConfiguracion
         Me.TabMail.Controls.Add(Me.GroupBox3)
         Me.TabMail.Location = New System.Drawing.Point(4, 24)
         Me.TabMail.Name = "TabMail"
-        Me.TabMail.Size = New System.Drawing.Size(416, 431)
+        Me.TabMail.Size = New System.Drawing.Size(416, 489)
         Me.TabMail.TabIndex = 2
         Me.TabMail.Text = "Mail"
         Me.TabMail.UseVisualStyleBackColor = True
@@ -799,7 +823,7 @@ Partial Class frmConfiguracion
         Me.TabFacturacion.Controls.Add(Me.GroupBox4)
         Me.TabFacturacion.Location = New System.Drawing.Point(4, 24)
         Me.TabFacturacion.Name = "TabFacturacion"
-        Me.TabFacturacion.Size = New System.Drawing.Size(416, 431)
+        Me.TabFacturacion.Size = New System.Drawing.Size(416, 456)
         Me.TabFacturacion.TabIndex = 3
         Me.TabFacturacion.Text = "Facturación"
         Me.TabFacturacion.UseVisualStyleBackColor = True
@@ -809,7 +833,7 @@ Partial Class frmConfiguracion
         Me.TabNotificaciones.Controls.Add(Me.GroupBox5)
         Me.TabNotificaciones.Location = New System.Drawing.Point(4, 24)
         Me.TabNotificaciones.Name = "TabNotificaciones"
-        Me.TabNotificaciones.Size = New System.Drawing.Size(416, 431)
+        Me.TabNotificaciones.Size = New System.Drawing.Size(416, 489)
         Me.TabNotificaciones.TabIndex = 4
         Me.TabNotificaciones.Text = "Alertas"
         Me.TabNotificaciones.UseVisualStyleBackColor = True
@@ -826,7 +850,7 @@ Partial Class frmConfiguracion
         Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox5.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(416, 431)
+        Me.GroupBox5.Size = New System.Drawing.Size(416, 489)
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Configuración de Alertas"
@@ -876,7 +900,7 @@ Partial Class frmConfiguracion
         Me.BtnNotificaciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnNotificaciones.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnNotificaciones.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnNotificaciones.Location = New System.Drawing.Point(307, 382)
+        Me.BtnNotificaciones.Location = New System.Drawing.Point(307, 440)
         Me.BtnNotificaciones.Name = "BtnNotificaciones"
         Me.BtnNotificaciones.Size = New System.Drawing.Size(100, 40)
         Me.BtnNotificaciones.TabIndex = 4
@@ -908,7 +932,7 @@ Partial Class frmConfiguracion
         Me.TabInternet.Controls.Add(Me.GroupBox6)
         Me.TabInternet.Location = New System.Drawing.Point(4, 24)
         Me.TabInternet.Name = "TabInternet"
-        Me.TabInternet.Size = New System.Drawing.Size(416, 431)
+        Me.TabInternet.Size = New System.Drawing.Size(416, 489)
         Me.TabInternet.TabIndex = 5
         Me.TabInternet.Text = "Internet"
         Me.TabInternet.UseVisualStyleBackColor = True
@@ -932,7 +956,7 @@ Partial Class frmConfiguracion
         Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox6.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(416, 431)
+        Me.GroupBox6.Size = New System.Drawing.Size(416, 489)
         Me.GroupBox6.TabIndex = 8
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Configuración de Internet"
@@ -964,7 +988,7 @@ Partial Class frmConfiguracion
         Me.btnVerificarDNS.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnVerificarDNS.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
         Me.btnVerificarDNS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 303)
+        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 332)
         Me.btnVerificarDNS.Name = "btnVerificarDNS"
         Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
         Me.btnVerificarDNS.TabIndex = 22
@@ -1055,7 +1079,7 @@ Partial Class frmConfiguracion
         Me.BtnInternet.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnInternet.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnInternet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnInternet.Location = New System.Drawing.Point(307, 382)
+        Me.BtnInternet.Location = New System.Drawing.Point(307, 440)
         Me.BtnInternet.Name = "BtnInternet"
         Me.BtnInternet.Size = New System.Drawing.Size(100, 40)
         Me.BtnInternet.TabIndex = 4
@@ -1089,7 +1113,7 @@ Partial Class frmConfiguracion
         Me.TabHost.Location = New System.Drawing.Point(4, 24)
         Me.TabHost.Name = "TabHost"
         Me.TabHost.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabHost.Size = New System.Drawing.Size(416, 431)
+        Me.TabHost.Size = New System.Drawing.Size(416, 489)
         Me.TabHost.TabIndex = 6
         Me.TabHost.Text = "Host"
         Me.TabHost.UseVisualStyleBackColor = True
@@ -1104,7 +1128,7 @@ Partial Class frmConfiguracion
         Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox8.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(410, 425)
+        Me.GroupBox8.Size = New System.Drawing.Size(410, 483)
         Me.GroupBox8.TabIndex = 8
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Configuración del Host de Servicios"
@@ -1161,7 +1185,7 @@ Partial Class frmConfiguracion
         Me.TabStock.Location = New System.Drawing.Point(4, 24)
         Me.TabStock.Name = "TabStock"
         Me.TabStock.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabStock.Size = New System.Drawing.Size(416, 431)
+        Me.TabStock.Size = New System.Drawing.Size(416, 489)
         Me.TabStock.TabIndex = 7
         Me.TabStock.Text = "Stock"
         Me.TabStock.UseVisualStyleBackColor = True
@@ -1175,7 +1199,7 @@ Partial Class frmConfiguracion
         Me.GroupBox11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox11.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox11.Name = "GroupBox11"
-        Me.GroupBox11.Size = New System.Drawing.Size(410, 425)
+        Me.GroupBox11.Size = New System.Drawing.Size(410, 483)
         Me.GroupBox11.TabIndex = 6
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Configuración de Stock"
@@ -1296,7 +1320,7 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnModificarStock.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.btnModificarStock.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnModificarStock.Location = New System.Drawing.Point(304, 379)
+        Me.btnModificarStock.Location = New System.Drawing.Point(304, 437)
         Me.btnModificarStock.Name = "btnModificarStock"
         Me.btnModificarStock.Size = New System.Drawing.Size(100, 40)
         Me.btnModificarStock.TabIndex = 4
@@ -1308,7 +1332,7 @@ Partial Class frmConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(424, 459)
+        Me.ClientSize = New System.Drawing.Size(424, 484)
         Me.Controls.Add(Me.TabControl1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -1467,4 +1491,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label35 As Label
     Friend WithEvents Label36 As Label
     Friend WithEvents Cb_HorasSincronizacion As ComboBox
+    Friend WithEvents Cb_ModeloControladora As ComboBox
+    Friend WithEvents Label19 As Label
 End Class

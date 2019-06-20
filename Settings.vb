@@ -15,18 +15,22 @@ Namespace My
 
         Private Sub MySettings_SettingChanging(ByVal sender As Object, ByVal e As SettingChangingEventArgs) Handles Me.SettingChanging
             Dim settings As MySettings = sender
-            If (e.SettingName = NameOf(settings.Sucursal)) Then
-                IdGenerator.ID_SUCURSAL = e.NewValue
-            End If
-            If (e.SettingName = NameOf(settings.ConexionControladora)) Then
-                EpsonTMU220FII.TIPO_CONEXION = e.NewValue
-            End If
+
+            Select Case e.SettingName
+                Case NameOf(settings.Sucursal)
+                    IdGenerator.ID_SUCURSAL = e.NewValue
+                Case NameOf(settings.ConexionControladora)
+                    EpsonPrinter.TIPO_CONEXION = e.NewValue
+                Case NameOf(settings.ModeloControladora)
+                    EpsonPrinter.MODELO_CONTROLADORA_FISCAL = e.NewValue
+            End Select
         End Sub
 
         Private Sub MySettings_SettingsLoaded(ByVal sender As Object, ByVal e As SettingsLoadedEventArgs) Handles Me.SettingsLoaded
             Dim settings As MySettings = sender
             IdGenerator.ID_SUCURSAL = settings.Sucursal
-            EpsonTMU220FII.TIPO_CONEXION = settings.ConexionControladora
+            EpsonPrinter.TIPO_CONEXION = settings.ConexionControladora
+            EpsonPrinter.MODELO_CONTROLADORA_FISCAL = settings.ModeloControladora
         End Sub
     End Class
 End Namespace

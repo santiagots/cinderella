@@ -14,7 +14,6 @@ namespace Common.Device.Printer
     internal abstract class EpsonTMBase
     {
         internal static string TASA_IVA = "2100";
-        public static string TIPO_CONEXION = "USB";
 
         //TIPOS RESPONSABILIDAD IVA
         internal static string RESPONSABLE_INSCRIPTO = "I";
@@ -54,9 +53,9 @@ namespace Common.Device.Printer
         internal string DomicilioComprador1;
         internal string DomicilioComprador2;
         internal string DomicilioComprador3;
-        internal string DescripcionPrincipal;
-        internal string Cantidad;
-        internal string PrecioUnitario;
+        //internal string DescripcionPrincipal;
+        //internal string Cantidad;
+        //internal string PrecioUnitario;
         internal string TasaIva;
         internal string TipoDocumentoComprador;
         internal string NumeroDocumentoComprador;
@@ -65,14 +64,14 @@ namespace Common.Device.Printer
         internal TipoCliente TipoCliente;
         internal decimal PorcentajeFacturacion;
 
-        internal void SendData(IEnumerable<string> data, bool reconnect = true)
+        internal void SendData(IEnumerable<string> data/*, bool reconnect = true*/)
         {
             try
             {
-                if (reconnect)
-                {
-                    this.Connect();
-                }
+                //if (reconnect)
+                //{
+                //    this.Connect();
+                //}
 
                 foreach (var field in data)
                 {
@@ -101,28 +100,28 @@ namespace Common.Device.Printer
             return oEpsonFP.GetExtraField(fieldNumber);
         }
 
-        private void Connect()
-        {
-            oEpsonFP.ClosePort();
+        //private void Connect()
+        //{
+        //    oEpsonFP.ClosePort();
 
-            this.WaitForProcess();
-            this.Initialize();
+        //    this.WaitForProcess();
+        //    this.Initialize();
 
-            if (oEpsonFP.OpenPort())
-            {
-                this.WaitForProcess();
-            }
-            else
-            {
-                throw new InvalidOperationException();
-            }
-        }
+        //    if (oEpsonFP.OpenPort())
+        //    {
+        //        this.WaitForProcess();
+        //    }
+        //    else
+        //    {
+        //        throw new InvalidOperationException();
+        //    }
+        //}
 
-        internal void Initialize()
+        internal void Initialize(string tipoConexionControladora)
         {
             oEpsonFP = new EpsonFPHostControl();
 
-            if (TIPO_CONEXION == "USB")
+            if (tipoConexionControladora == "USB")
                 oEpsonFP.CommPort = TxCommPort.USB;
             else
             {

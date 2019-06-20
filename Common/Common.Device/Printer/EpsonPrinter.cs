@@ -15,16 +15,17 @@ namespace Common.Device.Printer
     {
         private IEpsonTM epsonTM;
         public static ModeloControladoraFiscal MODELO_CONTROLADORA_FISCAL = ModeloControladoraFiscal.TM_U220FII;
+        public static string TIPO_CONEXION = "USB";
 
         public EpsonPrinter(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
             if (MODELO_CONTROLADORA_FISCAL == ModeloControladoraFiscal.TM_U220FII)
             {
-                epsonTM = new EpsonTMU220FII(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
+                epsonTM = new EpsonTMU220FII(TIPO_CONEXION, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
             }
             else
             {
-
+                epsonTM = new EpsonTMT900FA(TIPO_CONEXION, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
             }
         }
 
@@ -32,11 +33,11 @@ namespace Common.Device.Printer
         {
             if (MODELO_CONTROLADORA_FISCAL == ModeloControladoraFiscal.TM_U220FII)
             {
-                epsonTM = new EpsonTMU220FII(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, comprabanteOriginal);
+                epsonTM = new EpsonTMU220FII(TIPO_CONEXION, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, comprabanteOriginal);
             }
             else
             {
-
+                epsonTM = new EpsonTMT900FA(TIPO_CONEXION, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
             }
         }
 

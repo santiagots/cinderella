@@ -11,7 +11,7 @@ namespace Common.Device.Printer
 {
     internal class EpsonTMU220FII : EpsonTMBase, IEpsonTM
     {
-        internal EpsonTMU220FII(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        internal EpsonTMU220FII(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
             switch (condicionesIVA)
             {
@@ -45,11 +45,11 @@ namespace Common.Device.Printer
             TipoCliente = tipoCliente;
             PorcentajeFacturacion = porcentajeFacturacion;
 
-            Initialize();
+            Initialize(tipoConexionControladora);
         }
 
-        public EpsonTMU220FII(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal)
-            : this(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
+        public EpsonTMU220FII(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal)
+            : this(tipoConexionControladora, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
         {
             ComprabanteOriginal = comprabanteOriginal;
         }
@@ -110,7 +110,7 @@ namespace Common.Device.Printer
             commands.Add(ColaRemplazo2);
             commands.Add("3");
             commands.Add(ColaRemplazo3);
-            SendData(commands, false);
+            SendData(commands/*, false*/);
             return int.Parse(GetExtraField(1));
         }
 
@@ -128,7 +128,7 @@ namespace Common.Device.Printer
             commands.Add("3");
             commands.Add(ColaRemplazo3);
             commands.Add("");
-            SendData(commands, false);
+            SendData(commands/*, false*/);
             return int.Parse(GetExtraField(1));
         }
 
@@ -139,7 +139,7 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.SubtotalTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.SubtotalTicket.CmdExt);
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que obtiene el subtotal de una Nota de Credito.
@@ -149,7 +149,7 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.SubtotalNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.SubtotalNotaCredito.CmdExt);
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega descuentos.
@@ -161,7 +161,7 @@ namespace Common.Device.Printer
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.CmdExt);
             commands.Add(descripcion);
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega recargo.
@@ -173,7 +173,7 @@ namespace Common.Device.Printer
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.CmdExt);
             commands.Add(descripcion);
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega descuentos a la nota de credito.
@@ -185,7 +185,7 @@ namespace Common.Device.Printer
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.CmdExt);
             commands.Add(descripcion);
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega recargo.
@@ -197,7 +197,7 @@ namespace Common.Device.Printer
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.CmdExt);
             commands.Add(descripcion);
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Paga un Tique.
@@ -210,7 +210,7 @@ namespace Common.Device.Printer
             commands.Add("");
             commands.Add(ReemplazarCaracteres(TipoPago));
             commands.Add(FormatearPrecio(ObtenerMontoSegunTipoDeCliente(MontoPago), 2));
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega un item a un Tique.
@@ -231,7 +231,7 @@ namespace Common.Device.Printer
             commands.Add(TasaIva);
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega un item a una Nota de Credito.
@@ -252,7 +252,7 @@ namespace Common.Device.Printer
             commands.Add(TasaIva);
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
-            SendData(commands, false);
+            SendData(commands/*, false*/);
         }
 
         // Funcion que emite el Cierre X en la controladora

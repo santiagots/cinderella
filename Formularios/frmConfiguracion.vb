@@ -69,7 +69,8 @@ Public Class frmConfiguracion
             RExentoSinIvaNo.Checked = True
         End If
 
-        Cb_ConexionControladora.SelectedItem = My.Settings("ConexionControladora").ToString()
+        Cb_ModeloControladora.SelectedIndex = My.Settings.ModeloControladora
+        Cb_ConexionControladora.SelectedItem = My.Settings.ConexionControladora.ToString()
         txt_MontoTopeTicket.Text = My.Settings.MontoTopeFaturacionTicket
         txt_MontoTopeManual.Text = My.Settings.MontoTopeFacturacionManual
         txt_MontoTopeElectronico.Text = My.Settings.MontoTopeFacturacionElectronica
@@ -212,6 +213,7 @@ Public Class frmConfiguracion
                 Else
                     My.Settings.HabilitarExentoSinIVA = "NO"
                 End If
+                My.Settings.ModeloControladora = Cb_ModeloControladora.SelectedIndex
                 My.Settings.ConexionControladora = Cb_ConexionControladora.SelectedItem
                 My.Settings.MontoTopeFaturacionTicket = Trim(txt_MontoTopeTicket.Text)
                 My.Settings.MontoTopeFacturacionManual = Trim(txt_MontoTopeManual.Text)
@@ -545,5 +547,4 @@ Public Class frmConfiguracion
         End Try
 
     End Sub
-
 End Class
