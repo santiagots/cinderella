@@ -19,14 +19,14 @@ Namespace My
                 IdGenerator.ID_SUCURSAL = e.NewValue
             End If
             If (e.SettingName = NameOf(settings.ConexionControladora)) Then
-                EpsonFP.TIPO_CONEXION = e.NewValue
+                EpsonTMU220FII.TIPO_CONEXION = e.NewValue
             End If
         End Sub
 
         Private Sub MySettings_SettingsLoaded(ByVal sender As Object, ByVal e As SettingsLoadedEventArgs) Handles Me.SettingsLoaded
             Dim settings As MySettings = sender
             IdGenerator.ID_SUCURSAL = settings.Sucursal
-            EpsonFP.TIPO_CONEXION = settings.ConexionControladora
+            EpsonTMU220FII.TIPO_CONEXION = settings.ConexionControladora
         End Sub
     End Class
 End Namespace

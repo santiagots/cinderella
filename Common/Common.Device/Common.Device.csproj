@@ -45,8 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Printer\EpsonFP.cs" />
-    <Compile Include="Printer\EpsonFPCommand.cs" />
+    <Compile Include="Printer\EpsonCommand.cs" />
+    <Compile Include="Printer\EpsonPrinter.cs" />
+    <Compile Include="Printer\EpsonTMBase.cs" />
+    <Compile Include="Printer\EpsonTMT900FA.cs" />
+    <Compile Include="Printer\EpsonTMT900FACommand.cs" />
+    <Compile Include="Printer\EpsonTMU220FII.cs" />
+    <Compile Include="Printer\EpsonTMU220FIICommand.cs" />
+    <Compile Include="Printer\IEpsonTM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

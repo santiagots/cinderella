@@ -11,7 +11,7 @@ namespace Common.Service.NotaCredito
         public List<int> ObtenerNumeroNotaCretido(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, int numeroFacturaOrigen)
         {
             List<int> numeroFacturaRespuesta = new List<int>();
-            EpsonFP epsonFP = new EpsonFP(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, numeroFacturaOrigen.ToString());
+            EpsonTMU220FII epsonFP = new EpsonTMU220FII(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, numeroFacturaOrigen.ToString());
 
             epsonFP.AbrirNotaCredito();
 

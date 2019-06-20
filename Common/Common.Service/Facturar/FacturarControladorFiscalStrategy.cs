@@ -11,7 +11,7 @@ namespace Common.Service.Facturar
         public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
             List<int> numeroFacturaRespuesta = new List<int>();
-            EpsonFP epsonFP = new EpsonFP(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
+            EpsonPrinter epsonFP = new EpsonPrinter(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
 
             epsonFP.AbrirTicket();
 

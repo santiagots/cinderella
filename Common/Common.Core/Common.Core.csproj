@@ -58,6 +58,7 @@
     <Compile Include="Enum\CondicionesIVA.cs" />
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
+    <Compile Include="Enum\ModeloControladoraFiscal.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
     <Compile Include="Enum\TipoEmpleado.cs" />
