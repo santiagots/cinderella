@@ -9,7 +9,8 @@ namespace Common.Device.Printer
 {
     internal class EpsonTMT900FA : EpsonTMBase, IEpsonTM
     {
-        internal EpsonTMT900FA(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        internal EpsonTMT900FA(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit): 
+            this(tipoConexionControladora)
         {
             NombreComprador1 = nombreYApellido;
             NombreComprador2 = "";
@@ -38,8 +39,6 @@ namespace Common.Device.Printer
 
             TipoCliente = tipoCliente;
             PorcentajeFacturacion = porcentajeFacturacion;
-
-            Initialize(tipoConexionControladora);
         }
 
         public EpsonTMT900FA(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal, string PuntoVentaOrigen, CondicionIVA CondicionIVAOriginal)
@@ -47,6 +46,11 @@ namespace Common.Device.Printer
         {
             LineaRemitoAsociados1 = "";
             ComprabanteOriginal = obtenerComprobanteOriginal(CondicionIVAOriginal, PuntoVentaOrigen, comprabanteOriginal);
+        }
+
+        public EpsonTMT900FA(string tipoConexionControladora)
+        {
+            Initialize(tipoConexionControladora);
         }
 
         // Funcion que Abre un Tique.

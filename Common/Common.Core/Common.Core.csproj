@@ -62,6 +62,7 @@
     <Compile Include="Enum\TipoFactura.cs" />
     <Compile Include="Enum\TipoPago.cs" />
     <Compile Include="Exceptions\NegocioException.cs" />
+    <Compile Include="Extension\DateTimeExtensions.cs" />
     <Compile Include="Extension\ToList.cs" />
     <Compile Include="Helper\Cuit.cs" />
     <Compile Include="Helper\IdGenerator.cs" />

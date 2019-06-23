@@ -11,12 +11,24 @@ using System.Threading.Tasks;
 
 namespace Common.Device.Printer
 {
-    public class EpsonPrinter
+    public class EpsonPrinter : IDisposable
     {
         private IEpsonTM epsonTM;
         public static string PUNTO_VENTA = "1";
         public static ModeloControladoraFiscal MODELO_CONTROLADORA_FISCAL = ModeloControladoraFiscal.TM_U220FII;
         public static string TIPO_CONEXION = "USB";
+
+        public EpsonPrinter()
+        {
+            if (MODELO_CONTROLADORA_FISCAL == ModeloControladoraFiscal.TM_U220FII)
+            {
+                epsonTM = new EpsonTMU220FII(TIPO_CONEXION);
+            }
+            else
+            {
+                epsonTM = new EpsonTMT900FA(TIPO_CONEXION);
+            }
+        }
 
         public EpsonPrinter(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
@@ -130,6 +142,11 @@ namespace Common.Device.Printer
         public void ObtenerEstados()
         {
             epsonTM.ObtenerEstados();
+        }
+
+        public void Dispose()
+        {
+            epsonTM.Dispose();
         }
     }
 }

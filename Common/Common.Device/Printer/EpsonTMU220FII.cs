@@ -11,7 +11,8 @@ namespace Common.Device.Printer
 {
     internal class EpsonTMU220FII : EpsonTMBase, IEpsonTM
     {
-        internal EpsonTMU220FII(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        internal EpsonTMU220FII(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit):
+            this(tipoConexionControladora)
         {
             NombreComprador1 = nombreYApellido;
             NombreComprador2 = "";
@@ -39,14 +40,17 @@ namespace Common.Device.Printer
 
             TipoCliente = tipoCliente;
             PorcentajeFacturacion = porcentajeFacturacion;
-
-            Initialize(tipoConexionControladora);
         }
 
         public EpsonTMU220FII(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal)
             : this(tipoConexionControladora, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
         {
             ComprabanteOriginal = comprabanteOriginal;
+        }
+
+        public EpsonTMU220FII(string tipoConexionControladora)
+        {
+            Initialize(tipoConexionControladora);
         }
 
         // Funcion que Abre un Tique.

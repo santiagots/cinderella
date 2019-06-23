@@ -31,5 +31,15 @@ namespace Common.Service.Facturar
         {
             return facturarStrategy.ObtenerNumeroFactura(tipoCliente, condicionesIVA, pagos, productos, porcentajeFacturacion , nombreYApellido, direccion, localidad, cuit);
         }
+
+        public void ObtenerCierreZ()
+        {
+            facturarStrategy.ObtenerCierreZ();
+        }
+
+        public void ObtenerCierreZPorFecha(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            facturarStrategy.ObtenerCierreZPorFecha(fechaDesde, fechaHasta);
+        }
     }
 }

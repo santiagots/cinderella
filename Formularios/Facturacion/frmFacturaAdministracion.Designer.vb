@@ -23,6 +23,7 @@ Partial Class frmFacturaAdministracion
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFacturaAdministracion))
         Me.DG_facturas = New System.Windows.Forms.DataGridView()
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -184,6 +185,8 @@ Partial Class frmFacturaAdministracion
         '
         Me.MontoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.MontoDataGridViewTextBoxColumn.DataPropertyName = "Monto"
+        DataGridViewCellStyle1.Format = "C"
+        Me.MontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
         Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
         Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
@@ -205,7 +208,7 @@ Partial Class frmFacturaAdministracion
         '
         'FrmFacturaAdministracionViewModelBindingSource
         '
-        Me.FrmFacturaAdministracionViewModelBindingSource.DataSource = GetType(Formularios.Facturacion.frmFacturaAdministracionViewModel)
+        Me.FrmFacturaAdministracionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmFacturaAdministracionViewModel)
         '
         'lbl_Msg
         '

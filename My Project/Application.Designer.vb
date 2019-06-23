@@ -37,6 +37,7 @@ Namespace My
 
             Mapper.Initialize(Sub(x)
                                   x.AddProfile(Of Comunes.MapperProfile)()
+                                  x.AddProfile(Of Formularios.Facturacion.MapperProfile)()
                                   x.AddProfile(Of Formularios.Venta.MapperProfile)()
                                   x.AddProfile(Of Formularios.Cheque.MapperProfile)()
                                   x.AddProfile(Of Formularios.Reserva.MapperProfile)()

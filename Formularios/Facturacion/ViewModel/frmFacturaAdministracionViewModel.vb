@@ -4,7 +4,6 @@ Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports SistemaCinderella.Comunes
-Imports SistemaCinderella.VistaModelo.Ventas
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Model = Ventas.Core.Model.VentaAggregate
 

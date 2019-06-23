@@ -132,7 +132,7 @@ Partial Class frmFacturar
         '
         'FacturarBindingSource
         '
-        Me.FacturarBindingSource.DataSource = GetType(Formularios.Facturacion.frmFacturarViewModel)
+        Me.FacturarBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmFacturarViewModel)
         '
         'Label4
         '

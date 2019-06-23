@@ -3,18 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Device.Printer;
 using Common.Core.ValueObjects;
+using System;
 
 namespace Common.Service.Facturar
 {
     public class FacturarControladorFiscalStrategy : IFacturarStrategy
     {
+        public void ObtenerCierreZ()
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            { 
+                epsonFP.CierreZ();
+            }
+        }
+
+        public void ObtenerCierreZPorFecha(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                epsonFP.CierreZPorRangoDeFecha(fechaDesde, fechaHasta);
+            }
+        }
+
         public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
             List<int> numeroFacturaRespuesta = new List<int>();
-            EpsonPrinter epsonFP = new EpsonPrinter(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
-
-            try
+            using (EpsonPrinter epsonFP = new EpsonPrinter(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit))
             {
+
                 epsonFP.AbrirTicket();
 
                 foreach (TicketProducto ticketProducto in productos)
@@ -33,18 +49,13 @@ namespace Common.Service.Facturar
 
                 foreach (TicketPago pago in pagos)
                 {
-                    epsonFP.PagarTicket(pago.TipoPago, pago.NumeroCuotas , pago.Total);
+                    epsonFP.PagarTicket(pago.TipoPago, pago.NumeroCuotas, pago.Total);
                 }
 
                 int numeroTicket = epsonFP.CerrarTicket();
 
                 numeroFacturaRespuesta.Add(numeroTicket);
                 return numeroFacturaRespuesta;
-            }
-            catch
-            {
-                epsonFP.ObtenerEstados();
-                throw;
             }
         }
     }

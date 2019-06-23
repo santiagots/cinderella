@@ -30,6 +30,7 @@ Partial Class frmNotaCreditoAdministracion
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.ChkMarcaManual = New System.Windows.Forms.CheckBox()
+        Me.FrmNotaCreditoAdministracionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ChkMarcaTicket = New System.Windows.Forms.CheckBox()
         Me.ChkMarcaElectronica = New System.Windows.Forms.CheckBox()
         Me.txtCUIT = New System.Windows.Forms.TextBox()
@@ -50,9 +51,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.FHasta = New System.Windows.Forms.DateTimePicker()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.DG_NotaCredito = New System.Windows.Forms.DataGridView()
-        Me.Factura = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.NotaCreditoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.FrmNotaCreditoAdministracionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PuntoVentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -63,13 +61,15 @@ Partial Class frmNotaCreditoAdministracion
         Me.LocalidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Factura = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.NotaCreditoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
+        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.DG_NotaCredito, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NotaCreditoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -179,6 +179,10 @@ Partial Class frmNotaCreditoAdministracion
         Me.ChkMarcaManual.TabIndex = 424
         Me.ChkMarcaManual.Text = "Manual"
         Me.ChkMarcaManual.UseVisualStyleBackColor = True
+        '
+        'FrmNotaCreditoAdministracionViewModelBindingSource
+        '
+        Me.FrmNotaCreditoAdministracionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmNotaCreditoAdministracionViewModel)
         '
         'ChkMarcaTicket
         '
@@ -413,22 +417,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.DG_NotaCredito.Size = New System.Drawing.Size(930, 529)
         Me.DG_NotaCredito.TabIndex = 435
         '
-        'Factura
-        '
-        Me.Factura.HeaderText = "Factura"
-        Me.Factura.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
-        Me.Factura.Name = "Factura"
-        Me.Factura.ReadOnly = True
-        '
-        'NotaCreditoBindingSource
-        '
-        Me.NotaCreditoBindingSource.DataMember = "NotaCredito"
-        Me.NotaCreditoBindingSource.DataSource = Me.FrmNotaCreditoAdministracionViewModelBindingSource
-        '
-        'FrmNotaCreditoAdministracionViewModelBindingSource
-        '
-        Me.FrmNotaCreditoAdministracionViewModelBindingSource.DataSource = GetType(Formularios.Facturacion.frmNotaCreditoAdministracionViewModel)
-        '
         'NumeroDataGridViewTextBoxColumn
         '
         Me.NumeroDataGridViewTextBoxColumn.DataPropertyName = "Numero"
@@ -499,6 +487,18 @@ Partial Class frmNotaCreditoAdministracion
         Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
         Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
         '
+        'Factura
+        '
+        Me.Factura.HeaderText = "Factura"
+        Me.Factura.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
+        Me.Factura.Name = "Factura"
+        Me.Factura.ReadOnly = True
+        '
+        'NotaCreditoBindingSource
+        '
+        Me.NotaCreditoBindingSource.DataMember = "NotaCredito"
+        Me.NotaCreditoBindingSource.DataSource = Me.FrmNotaCreditoAdministracionViewModelBindingSource
+        '
         'frmNotaCreditoAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -515,11 +515,11 @@ Partial Class frmNotaCreditoAdministracion
         Me.TableLayoutPanel1.PerformLayout()
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
+        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         CType(Me.DG_NotaCredito, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NotaCreditoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

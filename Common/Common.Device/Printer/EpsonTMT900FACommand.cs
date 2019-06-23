@@ -12,7 +12,7 @@ namespace Common.Device.Printer
 
         internal static EpsonCommand CierreDeDia = new EpsonCommand("\x8\x1", "\x0\x0");
 
-        internal static EpsonCommand CierreDeDiaPorFecha = new EpsonCommand("\x8\x10", "\x0\x1");
+        internal static EpsonCommand CierreDeDiaPorFecha = new EpsonCommand("\x8\x12", "\x0\x3");
 
         internal static EpsonCommand Informacionjornada = new EpsonCommand("\x8\x3", "\xC\x0");
 

@@ -23,6 +23,16 @@ Namespace Formularios.Facturacion
             End Using
         End Function
 
+        Friend Shared Sub CierreZPorFecha(fechaDesde As Date, fechaHasta As Date)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerCierreZPorFecha(fechaDesde, fechaHasta)
+        End Sub
+
+        Public Shared Sub CierreZ()
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerCierreZ()
+        End Sub
+
         Friend Shared Function ObtenerFactura(id As Long) As Model.Factura
             Using context As VentaContext = New VentaContext()
                 Dim facturaRepository As IFacturaRepository = New FacturaRepository(context)

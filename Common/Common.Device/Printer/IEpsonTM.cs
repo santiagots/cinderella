@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Common.Device.Printer
 {
-    interface IEpsonTM
+    interface IEpsonTM: IDisposable
     {
         void AbrirTicket();
         void AbrirNotaCredito();

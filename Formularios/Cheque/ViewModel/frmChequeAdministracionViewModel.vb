@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.Configuration
-Imports System.Globalization
 Imports System.IO
 Imports System.Threading.Tasks
 Imports AutoMapper
@@ -8,8 +7,6 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Extension
 Imports Common.Core.Model
-Imports Microsoft.Office.Interop
-Imports NPOI.HSSF.UserModel
 Imports NPOI.SS.UserModel
 Imports NPOI.XSSF.UserModel
 Imports Model = Ventas.Core.Model.ChequeAggregate
