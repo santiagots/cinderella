@@ -12,16 +12,17 @@ Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Common.Core.Enum
 Imports SistemaCinderella.Formularios.Reserva
 Imports Common.Core.Model
-Imports SistemaCinderella.Formularios.Venta
+Imports SistemaCinderella.Formularios.Facturacion
+Imports SistemaCinderella.Comunes
 
-Namespace VistaModelo.Ventas
+Namespace Formularios.Venta
     Public Class frmVentasViewModel
-        Inherits Common
+        Inherits SistemaCinderella.VistaModelo.Common
 
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
         Public Delegate Function StockInsuficienteDelegate(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
-        Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As Venta) As Task
+        Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As Model.Venta) As Task
         Public Delegate Function FinalizarDelegateAsync() As Task
         Public Delegate Sub FinalizarDelegate()
 
@@ -229,7 +230,7 @@ Namespace VistaModelo.Ventas
             NotifyPropertyChanged(NameOf(Me.TotalPago))
         End Sub
 
-        Friend Sub CargarReserva(reserva As Reserva)
+        Friend Sub CargarReserva(reserva As Model.Reserva)
             ReservaModel = reserva
             ReservaModel.Entregar(VentaModel)
             CargarDatosBasicosTransaccion(ReservaModel.VentaReserva)
@@ -335,7 +336,7 @@ Namespace VistaModelo.Ventas
             If (frmReserva.ShowDialog() = DialogResult.OK) Then
                 Await FinalizarVentaAsyn(True)
 
-                ReservaModel = New Reserva(
+                ReservaModel = New Model.Reserva(
                                      IdSucursal,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Nombre,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Apellido,
@@ -413,7 +414,7 @@ Namespace VistaModelo.Ventas
             End If
         End Function
 
-        Friend Async Function FacturarAsync(facturar As Boolean, ventas As Venta) As Task
+        Friend Async Function FacturarAsync(facturar As Boolean, ventas As Model.Venta) As Task
             Visible = True
             If (facturar) Then
                 Await GuardarAsync()

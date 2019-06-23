@@ -11,32 +11,28 @@ namespace Common.Device.Printer
     {
         internal EpsonTMT900FA(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
+            NombreComprador1 = nombreYApellido;
+            NombreComprador2 = "";
+            DomicilioComprador1 = direccion;
+            DomicilioComprador2 = localidad;
+            DomicilioComprador3 = "";
+            TasaIva = TASA_IVA;
+
             switch (condicionesIVA)
             {
                 case CondicionIVA.Consumidor_Final:
-                    NombreComprador1 = nombreYApellido;
-                    NombreComprador2 = "";
                     TipoDocumentoComprador = DNI;
                     NumeroDocumentoComprador = cuit;
-                    DomicilioComprador1 = direccion;
-                    DomicilioComprador2 = localidad;
-                    DomicilioComprador3 = "";
                     ResponsableIvaComprador = CONSUMIDOR_FINAL;
-                    TasaIva = TASA_IVA;
                     break;
                 case CondicionIVA.Monotributo:
                 case CondicionIVA.Responsable_Inscripto:
                 case CondicionIVA.Exento:
                 default:
-                    NombreComprador1 = nombreYApellido;
-                    NombreComprador2 = "";
+                    LineaRemitoAsociados1 = "903-00001-00000001";
                     TipoDocumentoComprador = CUIT;
                     NumeroDocumentoComprador = cuit;
-                    DomicilioComprador1 = direccion;
-                    DomicilioComprador2 = localidad;
-                    DomicilioComprador3 = "";
                     ResponsableIvaComprador = ObtenerResponsableIvaComprador(condicionesIVA);
-                    TasaIva = TASA_IVA;
                     break;
             }
 
@@ -46,10 +42,11 @@ namespace Common.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public EpsonTMT900FA(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal)
+        public EpsonTMT900FA(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal, string PuntoVentaOrigen, CondicionIVA CondicionIVAOriginal)
             : this(tipoConexionControladora, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
         {
-            ComprabanteOriginal = comprabanteOriginal;
+            LineaRemitoAsociados1 = "";
+            ComprabanteOriginal = obtenerComprobanteOriginal(CondicionIVAOriginal, PuntoVentaOrigen, comprabanteOriginal);
         }
 
         // Funcion que Abre un Tique.
@@ -69,6 +66,7 @@ namespace Common.Device.Printer
             commands.Add(ResponsableIvaComprador);
             commands.Add(LineaRemitoAsociados1);
             commands.Add(LineaRemitoAsociados2);
+            commands.Add(LineaRemitoAsociados3);
             commands.Add("");
             SendData(commands);
         }
@@ -90,6 +88,7 @@ namespace Common.Device.Printer
             commands.Add(ResponsableIvaComprador);
             commands.Add(LineaRemitoAsociados1);
             commands.Add(LineaRemitoAsociados2);
+            commands.Add(LineaRemitoAsociados3);
             commands.Add(ComprabanteOriginal);
             SendData(commands);
         }
@@ -133,21 +132,21 @@ namespace Common.Device.Printer
         // Funcion que obtiene el subtotal de un Tique.
         public void SubtotalTicket()
         {
-            var commands = new List<string>();
+            //var commands = new List<string>();
 
-            commands.Add(EpsonTMT900FACommand.SubtotalTicket.Cmd);
-            commands.Add(EpsonTMT900FACommand.SubtotalTicket.CmdExt);
-            SendData(commands/*, false*/);
+            //commands.Add(EpsonTMT900FACommand.SubtotalTicket.Cmd);
+            //commands.Add(EpsonTMT900FACommand.SubtotalTicket.CmdExt);
+            //SendData(commands/*, false*/);
         }
 
         // Funcion que obtiene el subtotal de una Nota de Credito.
         public void SubtotalNotaCredito()
         {
-            var commands = new List<string>();
+            //var commands = new List<string>();
 
-            commands.Add(EpsonTMT900FACommand.SubtotalNotaCredito.Cmd);
-            commands.Add(EpsonTMT900FACommand.SubtotalNotaCredito.CmdExt);
-            SendData(commands/*, false*/);
+            //commands.Add(EpsonTMT900FACommand.SubtotalNotaCredito.Cmd);
+            //commands.Add(EpsonTMT900FACommand.SubtotalNotaCredito.CmdExt);
+            //SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega descuentos.
@@ -157,8 +156,11 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMT900FACommand.DescuentoTicket.Cmd);
             commands.Add(EpsonTMT900FACommand.DescuentoTicket.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
+            commands.Add(TASA_IVA);
+            commands.Add("0");
+            commands.Add(GRAVADO);
             SendData(commands/*, false*/);
         }
 
@@ -169,8 +171,11 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMT900FACommand.RecargoTicket.Cmd);
             commands.Add(EpsonTMT900FACommand.RecargoTicket.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
+            commands.Add(TASA_IVA);
+            commands.Add("0");
+            commands.Add(GRAVADO);
             SendData(commands/*, false*/);
         }
 
@@ -181,8 +186,11 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMT900FACommand.DescuentoNotaCredito.Cmd);
             commands.Add(EpsonTMT900FACommand.DescuentoNotaCredito.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
+            commands.Add(TASA_IVA);
+            commands.Add("0");
+            commands.Add(GRAVADO);
             SendData(commands/*, false*/);
         }
 
@@ -193,26 +201,33 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMT900FACommand.RecargoNotaCredito.Cmd);
             commands.Add(EpsonTMT900FACommand.RecargoNotaCredito.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
+            commands.Add(TASA_IVA);
+            commands.Add("0");
+            commands.Add(GRAVADO);
             SendData(commands/*, false*/);
         }
 
         // Funcion que Paga un Tique.
-        public void PagarTicket(string TipoPago, decimal MontoPago)
+        public void PagarTicket(TipoPago TipoPago, int cantidadCuotas, decimal MontoPago)
         {
             var commands = new List<string>();
 
             commands.Add(EpsonTMT900FACommand.Pago.Cmd);
             commands.Add(EpsonTMT900FACommand.Pago.CmdExt);
+            commands.Add(cantidadCuotas > 0? cantidadCuotas.ToString(): "");
             commands.Add("");
-            commands.Add(ReemplazarCaracteres(TipoPago));
+            commands.Add("");
+            commands.Add("");
+            commands.Add("");
+            commands.Add(ObtenerCodigoFormaPago(TipoPago));
             commands.Add(FormatearPrecio(ObtenerMontoSegunTipoDeCliente(MontoPago), 2));
             SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega un item a un Tique.
-        public void AgregarItemTicket(string descripcion, int cantidad, decimal precioUnitario)
+        public void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario)
         {
             decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
             var commands = new List<string>();
@@ -229,11 +244,16 @@ namespace Common.Device.Printer
             commands.Add(TasaIva);
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
+            commands.Add("");
+            commands.Add("");
+            commands.Add(codigoItem);
+            commands.Add(POR_UNIDAD);
+            commands.Add(SIN_CONDICION_IVA);
             SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega un item a una Nota de Credito.
-        public void AgregarItemNotaCredito(string descripcion, int cantidad, decimal precioUnitario)
+        public void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario)
         {
             decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
             var commands = new List<string>();
@@ -250,6 +270,11 @@ namespace Common.Device.Printer
             commands.Add(TasaIva);
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
+            commands.Add("");
+            commands.Add("");
+            commands.Add(codigoItem);
+            commands.Add(POR_UNIDAD);
+            commands.Add(SIN_CONDICION_IVA);
             SendData(commands/*, false*/);
         }
 
@@ -300,6 +325,17 @@ namespace Common.Device.Printer
             commands.Add(EpsonTMT900FACommand.ObtenerEstadoImpresora.Cmd);
             commands.Add(EpsonTMT900FACommand.ObtenerEstadoImpresora.CmdExt);
             SendData(commands);
+        }
+
+        private string obtenerComprobanteOriginal(CondicionIVA condicionIvaOriginal, string puntoVentaOriginal, string comprabanteOriginal)
+        {
+            string codigoDocumento = string.Empty;
+            if (condicionIvaOriginal == CondicionIVA.Responsable_Inscripto)
+                codigoDocumento = "081"; //Documento Factura A
+            else
+                codigoDocumento = "082"; //Documento Factura B
+
+            return $"{codigoDocumento}-{puntoVentaOriginal.PadLeft(5, '0')}-{comprabanteOriginal.PadLeft(8, '0')}";
         }
     }
 }

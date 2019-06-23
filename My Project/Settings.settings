@@ -128,18 +128,18 @@
     <Setting Name="Conexion" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True</Value>
+      <Value Profile="(Default)">Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True</Value>
     </Setting>
     <Setting Name="ConexionRemoto" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezlltpA6/gQhWzNU089HLhPWu39Kk=&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;3bTQjHHLN8jkQtaJgYs/e9bHnb8gJjPc9toMfRVea7GrTPfdiacS73cv8GtBG1wLnrZDQyC0Azi/MjXUzPYw3j5QlDFnM57xpuWPzIUw6JCt/7AewUvclkZlT5PXCC9i6qPt/E5QKrL1qhuyrgo5AzcZz7X3UTtxqrVNOQMReSY=&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezlltpA6/gQhWzNU089HLhPWu39Kk=</Value>
+      <Value Profile="(Default)">3bTQjHHLN8jkQtaJgYs/e9bHnb8gJjPc9toMfRVea7GrTPfdiacS73cv8GtBG1wLnrZDQyC0Azi/MjXUzPYw3j5QlDFnM57xpuWPzIUw6JCt/7AewUvclkZlT5PXCC9i6qPt/E5QKrL1qhuyrgo5AzcZz7X3UTtxqrVNOQMReSY=</Value>
     </Setting>
     <Setting Name="ModeloControladora" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

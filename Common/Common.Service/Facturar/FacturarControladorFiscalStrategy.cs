@@ -13,31 +13,39 @@ namespace Common.Service.Facturar
             List<int> numeroFacturaRespuesta = new List<int>();
             EpsonPrinter epsonFP = new EpsonPrinter(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
 
-            epsonFP.AbrirTicket();
-
-            foreach (TicketProducto ticketProducto in productos)
+            try
             {
-                epsonFP.AgregarItemTicket(ticketProducto.Nombre, ticketProducto.Cantidad, ticketProducto.Monto);
+                epsonFP.AbrirTicket();
+
+                foreach (TicketProducto ticketProducto in productos)
+                {
+                    epsonFP.AgregarItemTicket(ticketProducto.Codigo, ticketProducto.Nombre, ticketProducto.Cantidad, ticketProducto.Monto);
+                }
+
+                if (pagos.Any(x => x.Descuento > 0))
+                    epsonFP.DescuentosTicket("Bonificación", pagos.Sum(x => x.Descuento));
+
+                if (pagos.Any(x => x.Cft > 0))
+                    epsonFP.RecargosTicket("Costo Financiero", pagos.Sum(x => x.Cft));
+
+                if (!pagos.Any(x => x.Descuento > 0) && !pagos.Any(x => x.Cft > 0))
+                    epsonFP.SubtotalTicket();
+
+                foreach (TicketPago pago in pagos)
+                {
+                    epsonFP.PagarTicket(pago.TipoPago, pago.NumeroCuotas , pago.Total);
+                }
+
+                int numeroTicket = epsonFP.CerrarTicket();
+
+                numeroFacturaRespuesta.Add(numeroTicket);
+                return numeroFacturaRespuesta;
             }
-
-            if (pagos.Any(x => x.Descuento > 0))
-                epsonFP.DescuentosTicket("Descuento", pagos.Sum(x => x.Descuento));
-
-            if (pagos.Any(x => x.Cft > 0))
-                epsonFP.RecargosTicket("Costo Financiero", pagos.Sum(x => x.Cft));
-
-            if (!pagos.Any(x => x.Descuento > 0) && !pagos.Any(x => x.Cft > 0))
-                epsonFP.SubtotalTicket();
-
-            foreach (TicketPago pago in pagos)
+            catch
             {
-                epsonFP.PagarTicket(pago.Nombre, pago.Total);
+                epsonFP.ObtenerEstados();
+                throw;
             }
-
-            int numeroTicket = epsonFP.CerrarTicket();
-
-            numeroFacturaRespuesta.Add(numeroTicket);
-            return numeroFacturaRespuesta;
         }
     }
 }

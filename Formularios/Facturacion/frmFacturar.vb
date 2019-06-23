@@ -1,7 +1,7 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
-Imports SistemaCinderella.Formularios.Venta
+Imports SistemaCinderella.Formularios.Facturacion
 
 Public Class frmFacturar
 

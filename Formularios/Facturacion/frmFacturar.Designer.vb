@@ -132,7 +132,7 @@ Partial Class frmFacturar
         '
         'FacturarBindingSource
         '
-        Me.FacturarBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.frmFacturarViewModel)
+        Me.FacturarBindingSource.DataSource = GetType(Formularios.Facturacion.frmFacturarViewModel)
         '
         'Label4
         '
@@ -449,7 +449,7 @@ Partial Class frmFacturar
         'txt_Cuit
         '
         Me.txt_Cuit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "CUIT", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N2"))
+        Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "CUIT", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
         Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarDatosCliente", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Cuit.Location = New System.Drawing.Point(143, 346)
         Me.txt_Cuit.Name = "txt_Cuit"

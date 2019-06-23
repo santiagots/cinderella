@@ -1,6 +1,6 @@
 ﻿Imports Common.Core.Enum
 
-Namespace Formularios.Venta
+Namespace Formularios.Facturacion
     Public Class DocumentoFiscalViewModel
         Public Property Id As Long
         Public Property Numero As String

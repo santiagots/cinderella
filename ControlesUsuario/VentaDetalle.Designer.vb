@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports SistemaCinderella.Comunes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class VentaDetalle
     Inherits System.Windows.Forms.UserControl
 
@@ -201,7 +203,7 @@ Partial Class VentaDetalle
         '
         'VentaDetalleBindingSource
         '
-        Me.VentaDetalleBindingSource.DataSource = GetType(SistemaCinderella.VistaModelo.Ventas.VentaDetalleViewModel)
+        Me.VentaDetalleBindingSource.DataSource = GetType(VentaDetalleViewModel)
         '
         'DataGridView3
         '

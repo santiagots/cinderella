@@ -3,9 +3,10 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports Negocio
+Imports SistemaCinderella.Comunes
+Imports SistemaCinderella.Formularios.Facturacion
 Imports SistemaCinderella.Formularios.Venta
-Imports SistemaCinderella.VistaModelo.Ventas
-Imports SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel
+Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.VentaAggregate
 

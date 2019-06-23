@@ -8,6 +8,8 @@ Imports Model = Ventas.Core.Model.VentaAggregate
 Imports SistemaCinderella.VistaModelo.Ventas
 Imports SistemaCinderella.Formularios.Venta
 Imports Common.Core.Enum
+Imports SistemaCinderella.Comunes
+Imports SistemaCinderella.Formularios.Facturacion
 
 Namespace Formularios.Reserva
     Public Class frmReservaAdministracionViewModel

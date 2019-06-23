@@ -205,7 +205,7 @@ Partial Class frmFacturaAdministracion
         '
         'FrmFacturaAdministracionViewModelBindingSource
         '
-        Me.FrmFacturaAdministracionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.frmFacturaAdministracionViewModel)
+        Me.FrmFacturaAdministracionViewModelBindingSource.DataSource = GetType(Formularios.Facturacion.frmFacturaAdministracionViewModel)
         '
         'lbl_Msg
         '

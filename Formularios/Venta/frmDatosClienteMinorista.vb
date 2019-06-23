@@ -1,4 +1,5 @@
-﻿Imports Ventas.Core.Model.BaseAgreggate
+﻿Imports SistemaCinderella.Formularios.Venta
+Imports Ventas.Core.Model.BaseAgreggate
 
 Public Class frmDatosClienteMinorista
 
@@ -22,7 +23,7 @@ Public Class frmDatosClienteMinorista
         If (ClienteMinorista Is Nothing) Then
             Dim negClienteMinorista As Negocio.NegClienteMinorista = New Negocio.NegClienteMinorista()
             ClienteMinorista = New ClienteMinorista(txt_Nombre.Text, txt_Apellido.Text)
-            VistaModelo.Ventas.Servicio.GuardarClienteMinorista(ClienteMinorista)
+            Servicio.GuardarClienteMinorista(ClienteMinorista)
         End If
 
         Me.DialogResult = DialogResult.OK

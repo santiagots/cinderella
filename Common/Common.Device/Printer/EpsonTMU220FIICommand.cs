@@ -43,10 +43,6 @@ namespace Common.Device.Printer
         internal static EpsonCommand CerraTicket = new EpsonCommand("\xB\x6", "\x0\x3");
 
         internal static EpsonCommand CerraNotaCredito = new EpsonCommand("\xD\x6", "\x0\x3");
-
-        internal static EpsonCommand CloseTicket1 = new EpsonCommand("\xB\x6", "\x0\x1");
-
-        internal static EpsonCommand CloseTicket2 = new EpsonCommand("\x8\xA", "\x0\x0");
     }
 }
 

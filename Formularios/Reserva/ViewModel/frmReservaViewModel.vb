@@ -4,6 +4,7 @@ Imports Ventas.Core.Enum
 Imports Common.Core.Extension
 Imports SistemaCinderella.VistaModelo
 Imports SistemaCinderella.VistaModelo.Ventas
+Imports SistemaCinderella.Comunes
 
 Namespace Formularios.Reserva
     Public Class frmReservaViewModel

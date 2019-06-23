@@ -4,7 +4,7 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Ventas.Core.Model.VentaAggregate
 
-Namespace Formularios.Venta
+Namespace Formularios.Facturacion
     Public Class frmVerFacturaViewModel
         Inherits SistemaCinderella.VistaModelo.Common
 

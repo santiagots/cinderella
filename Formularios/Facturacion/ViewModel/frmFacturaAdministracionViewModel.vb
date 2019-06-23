@@ -3,11 +3,12 @@ Imports System.Threading.Tasks
 Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
+Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.VistaModelo.Ventas
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Model = Ventas.Core.Model.VentaAggregate
 
-Namespace Formularios.Venta
+Namespace Formularios.Facturacion
     Public Class frmFacturaAdministracionViewModel
         Inherits SistemaCinderella.VistaModelo.Common
 
@@ -143,7 +144,7 @@ Namespace Formularios.Venta
 
         Friend Async Function CargarVentaAsync(documentoFiscalViewModel As DocumentoFiscalViewModel) As Task
             Dim facturaSeleccionada As Model.Factura = _Facturas.FirstOrDefault(Function(x) x.Id = documentoFiscalViewModel.Id)
-            _VentaDetalleSeleccionada = Await Task.Run(Function() Servicio.ObtenerVenta(facturaSeleccionada.IdVenta))
+            _VentaDetalleSeleccionada = Await Task.Run(Function() Comunes.Servicio.ObtenerVenta(facturaSeleccionada.IdVenta))
 
             MotivoAnulacion = _VentaDetalleSeleccionada.MotivoAnulado
             FechaAnulacion = _VentaDetalleSeleccionada.FechaAnulado
@@ -175,7 +176,7 @@ Namespace Formularios.Venta
         Private Async Function GenerarNotaCredito() As Task
             VentasPorAnular.Add(New Tuple(Of Model.Venta, String)(_VentaDetalleSeleccionada, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
 
-            Dim reserva As Model.Reserva = Await Task.Run(Function() Servicio.ObtenerReservaPorIdVenta(_VentaDetalleSeleccionada.Id))
+            Dim reserva As Model.Reserva = Await Task.Run(Function() Comunes.Servicio.ObtenerReservaPorIdVenta(_VentaDetalleSeleccionada.Id))
 
             If (reserva?.VentaReserva?.Id <> _VentaDetalleSeleccionada.Id) Then
                 VentasPorAnular.Add(New Tuple(Of Model.Venta, String)(reserva.VentaReserva, "La venta tiene asociada una reserva facturada. ¿Desea generar una nota de crédito de esta factura?"))
@@ -187,7 +188,7 @@ Namespace Formularios.Venta
         Friend Async Function FacturarCallBackAsync(guardar As Boolean, venta As Model.Venta) As Task
             Visible = True
             If (guardar) Then
-                Await Task.Run(Sub() Servicio.GuardarFactura(_VentaDetalleSeleccionada.Factura))
+                Await Task.Run(Sub() Comunes.Servicio.GuardarFactura(_VentaDetalleSeleccionada.Factura))
                 MessageBox.Show("Se ha generado la factura de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         End Function
@@ -219,7 +220,7 @@ Namespace Formularios.Venta
 
         Public Async Function AnularVentaAsync(venta As Model.Venta) As Task
             venta.Anular(MotivoAnulacion + $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
-            Await Task.Run(Sub() Servicio.ActualizarVenta(venta))
+            Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
             MessageBox.Show("Se ha anulado la venta de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Function
 

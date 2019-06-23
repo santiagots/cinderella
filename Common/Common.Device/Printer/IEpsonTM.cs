@@ -1,4 +1,5 @@
 ﻿
+using Common.Core.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace Common.Device.Printer
         void RecargosTicket(string descripcion, decimal recargo);
         void DescuentosNotaCredito(string descripcion, decimal descuento);
         void RecargosNotaCredito(string descripcion, decimal recargo);
-        void PagarTicket(string TipoPago, decimal MontoPago);
-        void AgregarItemTicket(string descripcion, int cantidad, decimal precioUnitario);
-        void AgregarItemNotaCredito(string descripcion, int cantidad, decimal precioUnitario);
+        void PagarTicket(TipoPago TipoPago, int numeroCuotas, decimal montoPago);
+        void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario);
+        void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario);
         void CierreX();
         void CierreZ();
         void CierreZPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta);

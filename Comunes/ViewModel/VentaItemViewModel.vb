@@ -1,4 +1,4 @@
-﻿Namespace VistaModelo.Ventas
+﻿Namespace Comunes
     Public Class VentaItemViewModel
         Public Property Codigo As String
         Public Property Nombre As String

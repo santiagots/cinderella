@@ -3,7 +3,7 @@ Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports Entidades
 Imports Negocio
-Imports SistemaCinderella.Formularios.Venta
+Imports SistemaCinderella.Formularios.Facturacion
 
 Public Class frmFacturaAdministracion
 

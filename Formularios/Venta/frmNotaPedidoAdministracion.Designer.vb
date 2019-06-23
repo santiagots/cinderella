@@ -98,7 +98,7 @@ Partial Class frmNotaPedidoAdministracion
         '
         'NotaPedidoBindingSource
         '
-        Me.NotaPedidoBindingSource.DataSource = GetType(SistemaCinderella.VistaModelo.Ventas.frmNotaPedidoAdministracionViewModel)
+        Me.NotaPedidoBindingSource.DataSource = GetType(Formularios.Venta.frmNotaPedidoAdministracionViewModel)
         '
         'Label12
         '

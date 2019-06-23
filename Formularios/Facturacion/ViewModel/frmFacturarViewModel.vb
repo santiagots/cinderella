@@ -9,8 +9,9 @@ Imports Common.Core.ValueObjects
 Imports Common.Core.Model
 Imports Common.Core.Enum
 Imports Model = Ventas.Core.Model.VentaAggregate
+Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
 
-Namespace Formularios.Venta
+Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
         Inherits SistemaCinderella.VistaModelo.Common
 
@@ -19,6 +20,8 @@ Namespace Formularios.Venta
         Private ventaModel As Model.Venta
         Private desdeReserva As Boolean
         Private tipoDocumentoFiscal As TipoDocumentoFiscal
+        Private CondicionIvaOriginal As CondicionIVA
+        Private PuntoVentaOriginal As Integer
 
         Public ReadOnly Property TiposFactura As BindingList(Of Enums.TipoFactura)
             Get
@@ -90,10 +93,14 @@ Namespace Formularios.Venta
             Me.Direccion = String.Empty
             Me.Localidad = String.Empty
             Me.CUIT = String.Empty
-            Me.NumeroFacturaOrigen = If(ventaModel.Factura?.NumeroFactura?.First?.Numero, 0)
             Me.tipoDocumentoFiscal = tipoDocumentoFiscal
             If (tipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
                 VerificarLimiteFacturacion(_Total)
+            End If
+            If (tipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito) Then
+                Me.NumeroFacturaOrigen = If(ventaModel.Factura?.NumeroFactura?.First?.Numero, 0)
+                Me.PuntoVentaOriginal = ventaModel.Factura?.PuntoVenta
+                Me.CondicionIvaOriginal = ventaModel.Factura?.CondicionIVA
             End If
         End Sub
 
@@ -137,12 +144,12 @@ Namespace Formularios.Venta
             Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
 
             If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
+                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
+                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.CodigoProducto, x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
             End If
 
-            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.ToString(), x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT)))
+            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
 
             Dim numerosFactura As List(Of Integer) = Servicio.FacturarService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT)
             numerosFactura.ForEach(Sub(x) Numerosfacturas.Add(x))
@@ -182,14 +189,14 @@ Namespace Formularios.Venta
             Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
 
             If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
+                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
+                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.CodigoProducto, x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
             End If
 
-            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.ToString(), x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT)))
+            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
 
-            Dim numerosFactura As List(Of Integer) = Servicio.NotaCreditoService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT, NumeroFacturaOrigen)
+            Dim numerosFactura As List(Of Integer) = Servicio.NotaCreditoService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT, NumeroFacturaOrigen, PuntoVentaOriginal, CondicionIvaOriginal)
             numerosFactura.ForEach(Sub(x) Numerosfacturas.Add(x))
 
             ventaModel.AgregarNotaCredito(ObtenerPuntoVenta(),

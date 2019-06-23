@@ -10,7 +10,7 @@ namespace Common.Device.Printer
     {
         internal static EpsonCommand CierreDeCaja = new EpsonCommand("\x8\x2", "\x0\x1");
 
-        internal static EpsonCommand CierreDeDia = new EpsonCommand("\x8\x1", "\xC\x0");
+        internal static EpsonCommand CierreDeDia = new EpsonCommand("\x8\x1", "\x0\x0");
 
         internal static EpsonCommand CierreDeDiaPorFecha = new EpsonCommand("\x8\x10", "\x0\x1");
 
@@ -22,9 +22,9 @@ namespace Common.Device.Printer
 
         internal static EpsonCommand AbrirNotaCredito = new EpsonCommand("\xD\x1", "\x0\x0");
 
-        internal static EpsonCommand ItemTicket = new EpsonCommand("\xB\x2", "\x0\x18");
+        internal static EpsonCommand ItemTicket = new EpsonCommand("\xB\x2", "\x40\x10");
 
-        internal static EpsonCommand ItemNotaCredito = new EpsonCommand("\xD\x2", "\x0\x18");
+        internal static EpsonCommand ItemNotaCredito = new EpsonCommand("\xD\x2", "\x40\x10");
 
         internal static EpsonCommand DescuentoTicket = new EpsonCommand("\xB\x4", "\x0\x0"); 
 
@@ -43,9 +43,5 @@ namespace Common.Device.Printer
         internal static EpsonCommand CerraTicket = new EpsonCommand("\xB\x6", "\x0\x3");
 
         internal static EpsonCommand CerraNotaCredito = new EpsonCommand("\xD\x6", "\x0\x3");
-
-        internal static EpsonCommand CloseTicket1 = new EpsonCommand("\xB\x6", "\x0\x1");
-
-        internal static EpsonCommand CloseTicket2 = new EpsonCommand("\x8\xA", "\x0\x0");
     }
 }

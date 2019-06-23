@@ -2,9 +2,9 @@
 Imports System.Threading.Tasks
 Imports Ventas.Core.Model.BaseAgreggate
 
-Namespace VistaModelo.Ventas
+Namespace Formularios.Venta
     Public Class frmBuscarClienteMinoristaViewModel
-        Inherits Common
+        Inherits SistemaCinderella.VistaModelo.Common
 
         Public Property Nombre As String
         Public Property Apellido As String

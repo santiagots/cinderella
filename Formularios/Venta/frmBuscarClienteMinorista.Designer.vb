@@ -90,7 +90,7 @@ Partial Class frmBuscarClienteMinorista
         '
         'FrmBuscarClienteMinoristaViewModelBindingSource
         '
-        Me.FrmBuscarClienteMinoristaViewModelBindingSource.DataSource = GetType(SistemaCinderella.VistaModelo.Ventas.frmBuscarClienteMinoristaViewModel)
+        Me.FrmBuscarClienteMinoristaViewModelBindingSource.DataSource = GetType(Formularios.Venta.frmBuscarClienteMinoristaViewModel)
         '
         'lbl_Msg
         '

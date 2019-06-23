@@ -4,7 +4,8 @@ Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Extension
-Imports SistemaCinderella.VistaModelo.Ventas
+Imports SistemaCinderella.Comunes
+Imports SistemaCinderella.Formularios.Facturacion
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Model = Ventas.Core.Model.VentaAggregate
 
@@ -130,7 +131,7 @@ Namespace Formularios.Venta
         End Function
 
         Friend Async Function CargarVentaAsync(ventaAdministracionItemViewModel As VentaAdministracionItemViewModel) As Task
-            VentaModelSeleccionada = Await Task.Run(Function() Servicio.ObtenerVenta(ventaAdministracionItemViewModel.Id))
+            VentaModelSeleccionada = Await Task.Run(Function() Comunes.Servicio.ObtenerVenta(ventaAdministracionItemViewModel.Id))
             MotivoAnulacion = VentaModelSeleccionada.MotivoAnulado
             FechaAnulacion = VentaModelSeleccionada.FechaAnulado
 
@@ -182,18 +183,18 @@ Namespace Formularios.Venta
         End Sub
 
         Private Async Function GenerarNotaCredito() As Task
-            Dim reserva As Model.Reserva = Await Task.Run(Function() Servicio.ObtenerReservaPorIdVenta(VentaModelSeleccionada.Id))
+            Dim reserva As Model.Reserva = Await Task.Run(Function() Comunes.Servicio.ObtenerReservaPorIdVenta(VentaModelSeleccionada.Id))
 
             If (reserva IsNot Nothing) Then
 
                 If (reserva.VentaReserva.Id = VentaModelSeleccionada.Id) Then
                     VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, True, "La reserva se encuentra facturada, ¿Desea realizar una nota de crédito?"))
                 Else
-                    VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, True, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
+                    VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, False, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
                     VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(reserva.VentaReserva, True, "La venta tiene asociada una reserva facturada. ¿Desea generar una nota de crédito de esta factura?"))
                 End If
             Else
-                VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, True, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
+                VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, False, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
             End If
 
 
@@ -204,7 +205,7 @@ Namespace Formularios.Venta
         Friend Async Function FacturarCallBackAsync(guardar As Boolean, venta As Model.Venta) As Task
             Visible = True
             If (guardar) Then
-                Await Task.Run(Sub() Servicio.GuardarFactura(VentaModelSeleccionada.Factura))
+                Await Task.Run(Sub() Comunes.Servicio.GuardarFactura(VentaModelSeleccionada.Factura))
                 MessageBox.Show("Se ha generado la factura de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         End Function
@@ -226,7 +227,7 @@ Namespace Formularios.Venta
 
         Public Async Function AnularVentaAsync(venta As Model.Venta) As Task
             venta.Anular(MotivoAnulacion + $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
-            Await Task.Run(Sub() Servicio.ActualizarVenta(venta))
+            Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
             NotifyPropertyChanged(NameOf(Me.Ventas))
             MessageBox.Show("Se ha anulado la venta de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Function

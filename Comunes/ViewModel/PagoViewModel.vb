@@ -1,4 +1,4 @@
-﻿Namespace VistaModelo.Ventas
+﻿Namespace Comunes
     Public Class PagoViewModel
         Public Property Id As Long
         Public Property Descripcion As String

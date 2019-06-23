@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Comunes\Mapper\MapperProfile.vb" />
     <Compile Include="Comunes\Servicio\Servicio.vb" />
     <Compile Include="ControlesUsuario\ChequeDetalle.Designer.vb">
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
@@ -275,6 +276,8 @@
     <Compile Include="Formularios\DialogSincronizar.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\Facturacion\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\Facturacion\Servicio\Servicio.vb" />
     <Compile Include="Formularios\frmCostoFinancieroAdministracion.Designer.vb">
       <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
     </Compile>
@@ -399,10 +402,10 @@
     <Compile Include="Formularios\frmChequesAltaMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmControladorFiscal.Designer.vb">
+    <Compile Include="Formularios\Venta\frmControladorFiscal.Designer.vb">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmControladorFiscal.vb">
+    <Compile Include="Formularios\Venta\frmControladorFiscal.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\Venta\frmDatosClienteMinorista.Designer.vb">
@@ -489,16 +492,16 @@
     <Compile Include="Formularios\frmEtiquetasMasivas.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Venta\frmFacturaAdministracion.Designer.vb">
+    <Compile Include="Formularios\Facturacion\frmFacturaAdministracion.Designer.vb">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Venta\frmFacturaAdministracion.vb">
+    <Compile Include="Formularios\Facturacion\frmFacturaAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Venta\frmFacturar.Designer.vb">
+    <Compile Include="Formularios\Facturacion\frmFacturar.Designer.vb">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Venta\frmFacturar.vb">
+    <Compile Include="Formularios\Facturacion\frmFacturar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmFeriados.Designer.vb">
@@ -579,10 +582,10 @@
     <Compile Include="Formularios\frmMovimientoCajaFuerte.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Venta\frmNotaCreditoAdministracion.Designer.vb">
+    <Compile Include="Formularios\Facturacion\frmNotaCreditoAdministracion.Designer.vb">
       <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Venta\frmNotaCreditoAdministracion.vb">
+    <Compile Include="Formularios\Facturacion\frmNotaCreditoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmNotaCredito.Designer.vb">
@@ -963,10 +966,10 @@
     <Compile Include="Formularios\frmVerEfectivo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Venta\frmVerDocumentoFiscal.Designer.vb">
+    <Compile Include="Formularios\Facturacion\frmVerDocumentoFiscal.Designer.vb">
       <DependentUpon>frmVerDocumentoFiscal.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Venta\frmVerDocumentoFiscal.vb">
+    <Compile Include="Formularios\Facturacion\frmVerDocumentoFiscal.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmVerFeriados.Designer.vb">
@@ -1043,11 +1046,11 @@
     </Compile>
     <Compile Include="Formularios\Venta\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Venta\Servicio\Servicio.vb" />
-    <Compile Include="Formularios\Venta\ViewModel\DocumentoFiscalViewModel.vb" />
-    <Compile Include="Formularios\Venta\ViewModel\frmFacturaAdministracionViewModel.vb" />
-    <Compile Include="Formularios\Venta\ViewModel\frmNotaCreditoAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\DocumentoFiscalViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\frmFacturaAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\frmNotaCreditoAdministracionViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmVentasAdministracionViewModel.vb" />
-    <Compile Include="Formularios\Venta\ViewModel\frmVerDocumentoFiscalViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\frmVerDocumentoFiscalViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\VentaAdministracionItemViewModel.vb" />
     <Compile Include="Funciones.vb" />
     <Compile Include="Formularios\MDIContenedor.Designer.vb">
@@ -1163,22 +1166,20 @@
     <Compile Include="Utils\SortableBindingList.vb" />
     <Compile Include="VariablesGlobales.vb" />
     <Compile Include="VistaModelo\Common.vb" />
-    <Compile Include="VistaModelo\Ventas\frmBuscarClienteMinoristaViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmBuscarClienteMinoristaViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAdministracionViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\frmReservaViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\frmReservaAdministracionViewModel.vb" />
-    <Compile Include="VistaModelo\Ventas\NotaPedidoItemsViewModel.vb" />
-    <Compile Include="Formularios\Venta\ViewModel\frmFacturarViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\NotaPedidoItemsViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\frmFacturarViewModel.vb" />
     <Compile Include="VistaModelo\frmProductos\Producto.vb" />
-    <Compile Include="VistaModelo\Ventas\frmNotaPedidoAdministracionViewModel.vb" />
-    <Compile Include="VistaModelo\Ventas\PagoViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmNotaPedidoAdministracionViewModel.vb" />
+    <Compile Include="Comunes\ViewModel\PagoViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\ReservaAdministracionItemsViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\ReservaDetalleViewModel.vb" />
-    <Compile Include="VistaModelo\Ventas\Servicio\Servicio.vb" />
-    <Compile Include="VistaModelo\Ventas\VentaDetalleViewModel.vb" />
-    <Compile Include="VistaModelo\Ventas\VentaItemViewModel.vb" />
-    <Compile Include="VistaModelo\Ventas\Mapper\MapperProfile.vb" />
-    <Compile Include="VistaModelo\Ventas\frmVentasViewModel.vb" />
+    <Compile Include="Comunes\ViewModel\VentaDetalleViewModel.vb" />
+    <Compile Include="Comunes\ViewModel\VentaItemViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmVentasViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
@@ -1259,7 +1260,7 @@
     <EmbeddedResource Include="Formularios\frmChequesAltaMasiva.resx">
       <DependentUpon>frmChequesAltaMasiva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmControladorFiscal.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmControladorFiscal.resx">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Venta\frmDatosClienteMinorista.resx">
@@ -1304,10 +1305,10 @@
     <EmbeddedResource Include="Formularios\frmEtiquetasMasivas.resx">
       <DependentUpon>frmEtiquetasMasivas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Venta\frmFacturaAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Facturacion\frmFacturaAdministracion.resx">
       <DependentUpon>frmFacturaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Venta\frmFacturar.resx">
+    <EmbeddedResource Include="Formularios\Facturacion\frmFacturar.resx">
       <DependentUpon>frmFacturar.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmFeriados.resx">
@@ -1349,7 +1350,7 @@
     <EmbeddedResource Include="Formularios\frmMovimientoCajaFuerte.resx">
       <DependentUpon>frmMovimientoCajaFuerte.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Venta\frmNotaCreditoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Facturacion\frmNotaCreditoAdministracion.resx">
       <DependentUpon>frmNotaCreditoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmNotaCredito.resx">
@@ -1546,7 +1547,7 @@
     <EmbeddedResource Include="Formularios\frmVerEfectivo.resx">
       <DependentUpon>frmVerEfectivo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Venta\frmVerDocumentoFiscal.resx">
+    <EmbeddedResource Include="Formularios\Facturacion\frmVerDocumentoFiscal.resx">
       <DependentUpon>frmVerDocumentoFiscal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmVerFeriados.resx">
@@ -1628,10 +1629,8 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmFacturaAdministracionViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmNotaCreditoAdministracionViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmVerFacturaViewModel.datasource" />
+    <None Include="packages.config" />
     <None Include="VistaModelo\app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="VistaModelo\Ventas\app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Imagenes\nota_creditoPequeño.png" />
@@ -1806,7 +1805,6 @@
     <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.VentaDetalle.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.VentaItemViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.VistaModelo.Ventas.VentaViewModel.datasource" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Plantilla\TemplateCheques.xlsx">
@@ -1864,10 +1862,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Comunes\Comunes.csproj">
-      <Project>{9418cc85-d313-44f6-9b84-2670327f5c18}</Project>
-      <Name>Comunes</Name>
-    </ProjectReference>
     <ProjectReference Include="Common\Common.Core\Common.Core.csproj">
       <Project>{fc33c392-4689-4ce9-93dd-cdab4a65c04c}</Project>
       <Name>Common.Core</Name>

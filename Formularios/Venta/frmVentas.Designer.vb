@@ -205,7 +205,7 @@ Partial Class frmVentas
         '
         'VentaViewModelBindingSource
         '
-        Me.VentaViewModelBindingSource.DataSource = GetType(SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel)
+        Me.VentaViewModelBindingSource.DataSource = GetType(Formularios.Venta.frmVentasViewModel)
         '
         'Btn_Finalizar
         '

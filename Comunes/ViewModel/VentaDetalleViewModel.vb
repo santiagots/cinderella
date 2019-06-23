@@ -2,7 +2,7 @@
 Imports Common.Core.Enum
 Imports SistemaCinderella.VistaModelo.Ventas
 
-Namespace VistaModelo.Ventas
+Namespace Comunes
     Public Class VentaDetalleViewModel
         Public Property Sucursal As String
         Public Property TipoCliente As TipoCliente

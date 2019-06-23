@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Core.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,24 +9,26 @@ namespace Common.Core.ValueObjects
 {
     public class TicketPago : ValueObjects<TicketPago>
     {
-        public string Nombre { get; private set; }
+        public TipoPago TipoPago { get; private set; }
         public decimal Monto { get; private set; }
         public decimal Descuento { get; private set; }
         public decimal Cft { get; private set; }
+        public int NumeroCuotas { get; private set; }
         public decimal Total { get { return Monto - Descuento + Cft; } }
 
-        public TicketPago(string nombre, decimal monto, decimal descuento, decimal cft)
+        public TicketPago(TipoPago tipoPago, decimal monto, decimal descuento, decimal cft, int numeroCuotas)
         {
-            Nombre = nombre;
+            TipoPago = tipoPago;
             Monto = monto;
             Descuento = descuento;
             Cft = cft;
+            NumeroCuotas = numeroCuotas;
         }
 
         protected override bool EqualsCore(TicketPago other)
         {
             return Total == other.Total &&
-                Nombre == other.Nombre;
+                TipoPago == other.TipoPago;
         }
 
         protected override int GetHashCodeCore()

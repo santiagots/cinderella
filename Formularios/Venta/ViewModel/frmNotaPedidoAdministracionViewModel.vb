@@ -5,12 +5,11 @@ Imports Common.Core.Extension
 Imports Common.Core.Enum
 Imports Ventas.Core.Enum
 Imports Ventas.Core.Model.NotaPedidoAgreggate
-Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Core.Model.BaseAgreggate
 
-Namespace VistaModelo.Ventas
+Namespace Formularios.Venta
     Public Class frmNotaPedidoAdministracionViewModel
-        Inherits Common
+        Inherits SistemaCinderella.VistaModelo.Common
 
         Private ReadOnly IdSucursal As Integer
         Public Property EstadoSeleccionado As KeyValuePair(Of NotaPedidoEstado?, String)

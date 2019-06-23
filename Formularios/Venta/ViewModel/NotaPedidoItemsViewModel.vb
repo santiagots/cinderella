@@ -1,7 +1,7 @@
 ﻿Imports Common.Core.Enum
 Imports Ventas.Core.Enum
 
-Namespace VistaModelo.Ventas
+Namespace Formularios.Venta
     Public Class NotaPedidoItemsViewModel
         Public Property Id As Long
         Public Property Numero As Integer

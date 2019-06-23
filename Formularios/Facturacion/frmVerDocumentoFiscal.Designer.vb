@@ -254,7 +254,7 @@ Partial Class frmVerDocumentoFiscal
         '
         'DocumentoFiscalViewModelBindingSource
         '
-        Me.DocumentoFiscalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.DocumentoFiscalViewModel)
+        Me.DocumentoFiscalViewModelBindingSource.DataSource = GetType(Formularios.Facturacion.DocumentoFiscalViewModel)
         '
         'frmVerDocumentoFiscal
         '

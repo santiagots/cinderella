@@ -23,6 +23,14 @@ Namespace Comunes
                 notaCreditoRepository.Guardar(notaCredito)
             End Using
         End Sub
+
+        Friend Shared Sub GuardarFactura(factura As Factura)
+            Using context As VentaContext = New VentaContext()
+                Dim facturaRepository As IFacturaRepository = New FacturaRepository(context)
+                facturaRepository.Guardar(factura)
+            End Using
+        End Sub
+
         Friend Shared Function ObtenerBancos() As IList(Of Banco)
             Using context As CommonContext = New CommonContext()
                 Dim repository As Repository(Of Banco) = New Repository(Of Banco)(context)
@@ -30,10 +38,24 @@ Namespace Comunes
             End Using
         End Function
 
+        Friend Shared Function ObtenerVenta(idVenta As Long) As Venta
+            Using context As VentaContext = New VentaContext()
+                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
+                Return ventaRepository.Obtener(idVenta)
+            End Using
+        End Function
+
         Friend Shared Function ObtenerClienteMayorista(id As Integer) As Object
             Using context As CommonContext = New CommonContext()
                 Dim clienteMayoristaRepository As IClienteMayoristaRepository = New ClienteMayoristaRepository(context)
                 Return clienteMayoristaRepository.Obtener(id)
+            End Using
+        End Function
+
+        Friend Shared Function ObtenerReservaPorIdVenta(idVenta As Long) As Reserva
+            Using context As VentaContext = New VentaContext()
+                Dim reservaRepository As IReservaRepository = New ReservaRepository(context)
+                Return reservaRepository.ObtenerPorIdVenta(idVenta)
             End Using
         End Function
     End Class

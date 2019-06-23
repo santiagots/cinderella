@@ -2,8 +2,8 @@
 Imports Entidades
 Imports System.Linq
 Imports System.Threading.Tasks
-Imports SistemaCinderella.VistaModelo.Ventas
 Imports Common.Core.Exceptions
+Imports SistemaCinderella.Formularios.Venta
 
 Public Class frmNotaPedidoAdministracion
 

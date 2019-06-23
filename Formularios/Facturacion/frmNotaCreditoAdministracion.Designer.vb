@@ -427,7 +427,7 @@ Partial Class frmNotaCreditoAdministracion
         '
         'FrmNotaCreditoAdministracionViewModelBindingSource
         '
-        Me.FrmNotaCreditoAdministracionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.frmNotaCreditoAdministracionViewModel)
+        Me.FrmNotaCreditoAdministracionViewModelBindingSource.DataSource = GetType(Formularios.Facturacion.frmNotaCreditoAdministracionViewModel)
         '
         'NumeroDataGridViewTextBoxColumn
         '

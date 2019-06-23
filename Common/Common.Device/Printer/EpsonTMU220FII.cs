@@ -13,32 +13,27 @@ namespace Common.Device.Printer
     {
         internal EpsonTMU220FII(string tipoConexionControladora, TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
+            NombreComprador1 = nombreYApellido;
+            NombreComprador2 = "";
+            DomicilioComprador1 = direccion;
+            DomicilioComprador2 = localidad;
+            DomicilioComprador3 = "";
+            TasaIva = TASA_IVA;
+
             switch (condicionesIVA)
             {
                 case CondicionIVA.Consumidor_Final:
-                    NombreComprador1 = nombreYApellido;
-                    NombreComprador2 = "";
                     TipoDocumentoComprador = DNI;
                     NumeroDocumentoComprador = cuit;
-                    DomicilioComprador1 = direccion;
-                    DomicilioComprador2 = localidad;
-                    DomicilioComprador3 = "";
                     ResponsableIvaComprador = CONSUMIDOR_FINAL;
-                    TasaIva = TASA_IVA;
                     break;
                 case CondicionIVA.Monotributo:
                 case CondicionIVA.Responsable_Inscripto:
                 case CondicionIVA.Exento:
                 default:
-                    NombreComprador1 = nombreYApellido;
-                    NombreComprador2 = "";
                     TipoDocumentoComprador = CUIT;
                     NumeroDocumentoComprador = cuit;
-                    DomicilioComprador1 = direccion;
-                    DomicilioComprador2 = localidad;
-                    DomicilioComprador3 = "";
                     ResponsableIvaComprador = ObtenerResponsableIvaComprador(condicionesIVA);
-                    TasaIva = TASA_IVA;
                     break;
             }
 
@@ -159,7 +154,7 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
             SendData(commands/*, false*/);
         }
@@ -171,7 +166,7 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
             SendData(commands/*, false*/);
         }
@@ -183,7 +178,7 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
             SendData(commands/*, false*/);
         }
@@ -195,26 +190,32 @@ namespace Common.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.CmdExt);
-            commands.Add(descripcion);
+            commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
             SendData(commands/*, false*/);
         }
 
         // Funcion que Paga un Tique.
-        public void PagarTicket(string TipoPago, decimal MontoPago)
+        public void PagarTicket(TipoPago TipoPago, int cantidadCuotas, decimal MontoPago)
         {
+            string formaPago = string.Empty;
+            if (cantidadCuotas > 0)
+                formaPago = $"{TipoPago.ToString()} ({cantidadCuotas.ToString()})";
+            else
+                formaPago = TipoPago.ToString();
+
             var commands = new List<string>();
 
             commands.Add(EpsonTMU220FIICommand.Pago.Cmd);
             commands.Add(EpsonTMU220FIICommand.Pago.CmdExt);
             commands.Add("");
-            commands.Add(ReemplazarCaracteres(TipoPago));
+            commands.Add(ReemplazarCaracteres(formaPago));
             commands.Add(FormatearPrecio(ObtenerMontoSegunTipoDeCliente(MontoPago), 2));
             SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega un item a un Tique.
-        public void AgregarItemTicket(string descripcion, int cantidad, decimal precioUnitario)
+        public void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario)
         {
             decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
             var commands = new List<string>();
@@ -235,7 +236,7 @@ namespace Common.Device.Printer
         }
 
         // Funcion que Agrega un item a una Nota de Credito.
-        public void AgregarItemNotaCredito(string descripcion, int cantidad, decimal precioUnitario)
+        public void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario)
         {
             decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
             var commands = new List<string>();

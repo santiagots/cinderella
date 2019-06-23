@@ -8,13 +8,15 @@ namespace Common.Core.ValueObjects
 {
     public class TicketProducto : ValueObjects<TicketProducto>
     {
+        public string Codigo { get; private set; }
         public string Nombre { get; private set; }
         public int Cantidad { get; private set; }
         public decimal Monto { get; private set; }
         public decimal Total { get { return Cantidad * Monto;  } }
 
-        public TicketProducto(string nombre, int cantidad, decimal monto)
+        public TicketProducto(string codigo, string nombre, int cantidad, decimal monto)
         {
+            Codigo = codigo;
             Nombre = nombre;
             Cantidad = cantidad;
             Monto = monto;

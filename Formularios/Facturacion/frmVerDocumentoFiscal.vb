@@ -2,7 +2,7 @@
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
-Imports SistemaCinderella.Formularios.Venta
+Imports SistemaCinderella.Formularios.Facturacion
 
 Public Class frmVerDocumentoFiscal
     Private frmVerFacturaViewModel As frmVerFacturaViewModel

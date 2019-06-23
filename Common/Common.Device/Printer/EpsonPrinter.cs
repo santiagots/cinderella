@@ -14,6 +14,7 @@ namespace Common.Device.Printer
     public class EpsonPrinter
     {
         private IEpsonTM epsonTM;
+        public static string PUNTO_VENTA = "1";
         public static ModeloControladoraFiscal MODELO_CONTROLADORA_FISCAL = ModeloControladoraFiscal.TM_U220FII;
         public static string TIPO_CONEXION = "USB";
 
@@ -29,7 +30,7 @@ namespace Common.Device.Printer
             }
         }
 
-        public EpsonPrinter(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal)
+        public EpsonPrinter(TipoCliente tipoCliente, CondicionIVA condicionesIVA, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, string comprabanteOriginal, string puntoVentaOrigen, CondicionIVA CondicionIVAOriginal)
         {
             if (MODELO_CONTROLADORA_FISCAL == ModeloControladoraFiscal.TM_U220FII)
             {
@@ -37,7 +38,7 @@ namespace Common.Device.Printer
             }
             else
             {
-                epsonTM = new EpsonTMT900FA(TIPO_CONEXION, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit);
+                epsonTM = new EpsonTMT900FA(TIPO_CONEXION, tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, comprabanteOriginal, puntoVentaOrigen, CondicionIVAOriginal);
             }
         }
 
@@ -91,19 +92,19 @@ namespace Common.Device.Printer
             epsonTM.RecargosNotaCredito(descripcion, recargo);
         }
 
-        public void PagarTicket(string TipoPago, decimal MontoPago)
+        public void PagarTicket(TipoPago TipoPago, int numeroCuotas, decimal montoPago)
         {
-            epsonTM.PagarTicket(TipoPago, MontoPago);
+            epsonTM.PagarTicket(TipoPago, numeroCuotas, montoPago);
         }
 
-        public void AgregarItemTicket(string descripcion, int cantidad, decimal precioUnitario)
+        public void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario)
         {
-            epsonTM.AgregarItemTicket(descripcion, cantidad, precioUnitario);
+            epsonTM.AgregarItemTicket(codigoItem, descripcion, cantidad, precioUnitario);
         }
 
-        public void AgregarItemNotaCredito(string descripcion, int cantidad, decimal precioUnitario)
+        public void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario)
         {
-            epsonTM.AgregarItemNotaCredito(descripcion, cantidad, precioUnitario);
+            epsonTM.AgregarItemNotaCredito(codigoItem, descripcion, cantidad, precioUnitario);
         }
 
         public void CierreX()

@@ -14,6 +14,7 @@ namespace Common.Device.Printer
     internal abstract class EpsonTMBase
     {
         internal static string TASA_IVA = "2100";
+        internal static string SIN_TASA_IVA = "0000";
 
         //TIPOS RESPONSABILIDAD IVA
         internal static string RESPONSABLE_INSCRIPTO = "I";
@@ -28,6 +29,17 @@ namespace Common.Device.Printer
         internal static string IMPUESTOINTERNOFIJO = "";
         internal static string IMPUESTOINTERNOPORCENTUAL = "";
 
+        //CONDICION ANTE IVA
+        internal static string GRAVADO = "7";
+        internal static string EXCENTO = "2";
+        internal static string NO_GRABADO = "1";
+        internal static string NO_CORRESPONDE = "0";
+        internal static string SIN_CONDICION_IVA = "";
+
+
+        //UNIDADES MEDIDA
+        internal static string POR_UNIDAD = "7";
+
         //TIPOS DOCUMENTOS
         internal static string DNI = "D";
         internal static string CUIT = "T";
@@ -36,6 +48,7 @@ namespace Common.Device.Printer
         internal static string PASAPORTE = "P";
         internal static string LIBRETA_CIVICA = "V";
         internal static string LIBRETA_ENROLAMIENTO = "E";
+
 
         internal static string DescripcionExtra1 = "";
         internal static string DescripcionExtra2 = "";
@@ -46,6 +59,7 @@ namespace Common.Device.Printer
         internal static string ColaRemplazo3 = "";
         internal static string LineaRemitoAsociados1 = "";
         internal static string LineaRemitoAsociados2 = "";
+        internal static string LineaRemitoAsociados3 = "";
         private EpsonFPHostControl oEpsonFP;
 
         internal string NombreComprador1;
@@ -130,6 +144,7 @@ namespace Common.Device.Printer
             }
 
             oEpsonFP.ProtocolType = TxProtocolType.protocol_Extended;
+            oEpsonFP.OpenPort();
         }
 
         private void Send()
@@ -220,6 +235,27 @@ namespace Common.Device.Printer
                     return Math.Round(monto * PorcentajeFacturacion * (1 + Constants.IVA), 1);
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
+            }
+        }
+
+        internal string ObtenerCodigoFormaPago(TipoPago tipoPago)
+        {
+            switch (tipoPago)
+            {
+                case TipoPago.Bonificacion:
+                    return "99";
+                case TipoPago.Cheque:
+                    return "3";
+                case TipoPago.Deposito:
+                    return "7";
+                case TipoPago.Efectivo:
+                    return "8";
+                case TipoPago.TarjetaCredito:
+                    return "20";
+                case TipoPago.TarjetaDebito:
+                    return "21";
+                default:
+                    throw new InvalidOperationException($"Error al realizar la facturación. Tipo de forma de pago no reconocido {tipoPago.ToString()}");
             }
         }
     }

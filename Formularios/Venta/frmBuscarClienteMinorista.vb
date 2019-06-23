@@ -1,5 +1,6 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Exceptions
+Imports SistemaCinderella.Formularios.Venta
 Imports SistemaCinderella.VistaModelo.Ventas
 Imports Ventas.Core.Model.BaseAgreggate
 
