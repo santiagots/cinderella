@@ -79,13 +79,14 @@ Namespace Formularios.Facturacion
                         Dim dataCell As List(Of ICell) = facturasSheet.GetRow(index).Cells
                         dataCell(0).SetCellValue(factura.NumeroFactura.First.Numero.ToString())
                         dataCell(1).SetCellValue(factura.PuntoVenta)
-                        dataCell(2).SetCellValue(factura.TipoFactura)
-                        dataCell(3).SetCellValue(factura.CondicionIVA)
-                        dataCell(4).SetCellValue(factura.NombreYApellido)
-                        dataCell(5).SetCellValue(factura.Direccion)
-                        dataCell(6).SetCellValue(factura.Localidad)
-                        dataCell(7).SetCellValue(factura.Monto)
-                        dataCell(8).SetCellValue(factura.Fecha.ToString("yyyy/MM/dd"))
+                        dataCell(2).SetCellValue(factura.TipoFactura.ToString())
+                        dataCell(3).SetCellValue(factura.CondicionIVA.ToString())
+                        dataCell(4).SetCellValue(factura.CUIT)
+                        dataCell(5).SetCellValue(factura.NombreYApellido)
+                        dataCell(6).SetCellValue(factura.Direccion)
+                        dataCell(7).SetCellValue(factura.Localidad)
+                        dataCell(8).SetCellValue(factura.Monto)
+                        dataCell(9).SetCellValue(factura.Fecha.ToString("yyyy/MM/dd"))
                         index += 1
                     Next
 
