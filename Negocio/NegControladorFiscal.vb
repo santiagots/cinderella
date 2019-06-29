@@ -25,7 +25,7 @@ Public Class NegControladorFiscal
         If (Control.MODELO = Entidades.ImpresoraFiscalModelo.U220AFII) Then
             Return AbrirTicket_U220AFII(Control)
         Else
-            Control.LREMITO1 = "081-00001-00000027"
+            Control.LREMITO1 = "903-00001-00000001"
             Return AbrirTicket_T900FA(Control)
         End If
     End Function
@@ -672,7 +672,7 @@ Public Class NegControladorFiscal
     Public Function CierreZPorRangoDeFecha_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H12))
-        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaDesde.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand
