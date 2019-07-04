@@ -29,20 +29,22 @@ Partial Class frmControladorFiscal
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmControladorFiscal))
         Me.btnCierreZ = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.btnCierreZPorFecha = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.FHastaCierreZ = New System.Windows.Forms.DateTimePicker()
-        Me.FDesdeCierreZ = New System.Windows.Forms.DateTimePicker()
-        Me.lblEstado = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.FHastaCierreZ = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.FDesdeCierreZ = New System.Windows.Forms.DateTimePicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblEstado = New System.Windows.Forms.Label()
+        Me.btnCierreZPorFecha = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btn_Exportar = New System.Windows.Forms.Button()
-        Me.BtnFiltrar = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.FHasta = New System.Windows.Forms.DateTimePicker()
         Me.FDesde = New System.Windows.Forms.DateTimePicker()
+        Me.btn_Exportar = New System.Windows.Forms.Button()
+        Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.dgTickets = New System.Windows.Forms.DataGridView()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NumeroFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -56,23 +58,27 @@ Partial Class frmControladorFiscal
         Me.FacturacionBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnDuplicadosDocumentosA = New System.Windows.Forms.Button()
+        Me.btnCintaTestigoDigital = New System.Windows.Forms.Button()
+        Me.btnResumenDeTotales = New System.Windows.Forms.Button()
+        Me.btnInformacionDeTransacciones = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox2.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnCierreZ
         '
-        Me.btnCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnCierreZ.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.btnCierreZ.Location = New System.Drawing.Point(733, 19)
+        Me.btnCierreZ.Location = New System.Drawing.Point(3, 3)
         Me.btnCierreZ.Name = "btnCierreZ"
-        Me.btnCierreZ.Size = New System.Drawing.Size(121, 40)
+        Me.btnCierreZ.Size = New System.Drawing.Size(135, 40)
         Me.btnCierreZ.TabIndex = 0
         Me.btnCierreZ.Text = "Cierre Z día"
         Me.btnCierreZ.UseVisualStyleBackColor = True
@@ -81,76 +87,36 @@ Partial Class frmControladorFiscal
         '
         Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.TableLayoutPanel3)
         Me.GroupBox2.Controls.Add(Me.TableLayoutPanel1)
-        Me.GroupBox2.Controls.Add(Me.btnCierreZPorFecha)
-        Me.GroupBox2.Controls.Add(Me.btnCierreZ)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(860, 120)
+        Me.GroupBox2.Size = New System.Drawing.Size(860, 169)
         Me.GroupBox2.TabIndex = 2
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Controlador Fiscal"
         '
-        'btnCierreZPorFecha
+        'TableLayoutPanel1
         '
-        Me.btnCierreZPorFecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCierreZPorFecha.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCierreZPorFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCierreZPorFecha.Location = New System.Drawing.Point(733, 70)
-        Me.btnCierreZPorFecha.Name = "btnCierreZPorFecha"
-        Me.btnCierreZPorFecha.Size = New System.Drawing.Size(121, 40)
-        Me.btnCierreZPorFecha.TabIndex = 12
-        Me.btnCierreZPorFecha.Text = "Cierre Z por rango de fecha"
-        Me.btnCierreZPorFecha.UseVisualStyleBackColor = True
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(3, 37)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(194, 16)
-        Me.Label1.TabIndex = 11
-        Me.Label1.Text = "Fecha desde"
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(3, 67)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(194, 16)
-        Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Fecha hasta"
-        '
-        'FHastaCierreZ
-        '
-        Me.FHastaCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FHastaCierreZ.Location = New System.Drawing.Point(203, 65)
-        Me.FHastaCierreZ.Name = "FHastaCierreZ"
-        Me.FHastaCierreZ.Size = New System.Drawing.Size(515, 20)
-        Me.FHastaCierreZ.TabIndex = 9
-        '
-        'FDesdeCierreZ
-        '
-        Me.FDesdeCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FDesdeCierreZ.Location = New System.Drawing.Point(203, 35)
-        Me.FDesdeCierreZ.Name = "FDesdeCierreZ"
-        Me.FDesdeCierreZ.Size = New System.Drawing.Size(515, 20)
-        Me.FDesdeCierreZ.TabIndex = 8
-        '
-        'lblEstado
-        '
-        Me.lblEstado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblEstado.AutoSize = True
-        Me.lblEstado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEstado.Location = New System.Drawing.Point(203, 7)
-        Me.lblEstado.Name = "lblEstado"
-        Me.lblEstado.Size = New System.Drawing.Size(515, 15)
-        Me.lblEstado.TabIndex = 1
-        Me.lblEstado.Text = "- - - -"
+        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.FHastaCierreZ, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.FDesdeCierreZ, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.lblEstado, 1, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 3
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(848, 90)
+        Me.TableLayoutPanel1.TabIndex = 6
         '
         'Label4
         '
@@ -163,6 +129,67 @@ Partial Class frmControladorFiscal
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "Estado"
         '
+        'FHastaCierreZ
+        '
+        Me.FHastaCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FHastaCierreZ.Location = New System.Drawing.Point(203, 65)
+        Me.FHastaCierreZ.Name = "FHastaCierreZ"
+        Me.FHastaCierreZ.Size = New System.Drawing.Size(642, 20)
+        Me.FHastaCierreZ.TabIndex = 9
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(3, 67)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(194, 16)
+        Me.Label2.TabIndex = 10
+        Me.Label2.Text = "Fecha hasta"
+        '
+        'FDesdeCierreZ
+        '
+        Me.FDesdeCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FDesdeCierreZ.Location = New System.Drawing.Point(203, 35)
+        Me.FDesdeCierreZ.Name = "FDesdeCierreZ"
+        Me.FDesdeCierreZ.Size = New System.Drawing.Size(642, 20)
+        Me.FDesdeCierreZ.TabIndex = 8
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(3, 37)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(194, 16)
+        Me.Label1.TabIndex = 11
+        Me.Label1.Text = "Fecha desde"
+        '
+        'lblEstado
+        '
+        Me.lblEstado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblEstado.AutoSize = True
+        Me.lblEstado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEstado.Location = New System.Drawing.Point(203, 7)
+        Me.lblEstado.Name = "lblEstado"
+        Me.lblEstado.Size = New System.Drawing.Size(642, 15)
+        Me.lblEstado.TabIndex = 1
+        Me.lblEstado.Text = "- - - -"
+        '
+        'btnCierreZPorFecha
+        '
+        Me.btnCierreZPorFecha.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCierreZPorFecha.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCierreZPorFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCierreZPorFecha.Location = New System.Drawing.Point(144, 3)
+        Me.btnCierreZPorFecha.Name = "btnCierreZPorFecha"
+        Me.btnCierreZPorFecha.Size = New System.Drawing.Size(135, 40)
+        Me.btnCierreZPorFecha.TabIndex = 12
+        Me.btnCierreZPorFecha.Text = "Cierre Z por rango de fecha"
+        Me.btnCierreZPorFecha.UseVisualStyleBackColor = True
+        '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -170,43 +197,31 @@ Partial Class frmControladorFiscal
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupBox1.Controls.Add(Me.btn_Exportar)
         Me.GroupBox1.Controls.Add(Me.BtnFiltrar)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 138)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 187)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(860, 83)
         Me.GroupBox1.TabIndex = 3
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Tickets"
         '
-        'btn_Exportar
+        'TableLayoutPanel2
         '
-        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
-        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Exportar.Location = New System.Drawing.Point(606, 26)
-        Me.btn_Exportar.Name = "btn_Exportar"
-        Me.btn_Exportar.Size = New System.Drawing.Size(121, 40)
-        Me.btn_Exportar.TabIndex = 12
-        Me.btn_Exportar.Text = "Exportar"
-        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_Exportar.UseVisualStyleBackColor = True
-        '
-        'BtnFiltrar
-        '
-        Me.BtnFiltrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnFiltrar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnFiltrar.FlatAppearance.BorderSize = 0
-        Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
-        Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnFiltrar.Location = New System.Drawing.Point(733, 26)
-        Me.BtnFiltrar.Name = "BtnFiltrar"
-        Me.BtnFiltrar.Size = New System.Drawing.Size(121, 40)
-        Me.BtnFiltrar.TabIndex = 10
-        Me.BtnFiltrar.Text = "Buscar"
-        Me.BtnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.BtnFiltrar.UseVisualStyleBackColor = True
+        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FHasta, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.FDesde, 1, 0)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 17)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 2
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(594, 60)
+        Me.TableLayoutPanel2.TabIndex = 6
         '
         'Label12
         '
@@ -246,6 +261,37 @@ Partial Class frmControladorFiscal
         Me.FDesde.Size = New System.Drawing.Size(388, 20)
         Me.FDesde.TabIndex = 4
         '
+        'btn_Exportar
+        '
+        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Exportar.Location = New System.Drawing.Point(606, 26)
+        Me.btn_Exportar.Name = "btn_Exportar"
+        Me.btn_Exportar.Size = New System.Drawing.Size(121, 40)
+        Me.btn_Exportar.TabIndex = 12
+        Me.btn_Exportar.Text = "Exportar"
+        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_Exportar.UseVisualStyleBackColor = True
+        '
+        'BtnFiltrar
+        '
+        Me.BtnFiltrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnFiltrar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnFiltrar.FlatAppearance.BorderSize = 0
+        Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
+        Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnFiltrar.Location = New System.Drawing.Point(733, 26)
+        Me.BtnFiltrar.Name = "BtnFiltrar"
+        Me.BtnFiltrar.Size = New System.Drawing.Size(121, 40)
+        Me.BtnFiltrar.TabIndex = 10
+        Me.BtnFiltrar.Text = "Buscar"
+        Me.BtnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnFiltrar.UseVisualStyleBackColor = True
+        '
         'dgTickets
         '
         Me.dgTickets.AllowUserToAddRows = False
@@ -259,11 +305,11 @@ Partial Class frmControladorFiscal
         Me.dgTickets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgTickets.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.FechaDataGridViewTextBoxColumn, Me.NumeroFacturaDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.LocalidadDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn, Me.SubTotal, Me.IVA, Me.Monto})
         Me.dgTickets.DataSource = Me.FacturacionBindingSource
-        Me.dgTickets.Location = New System.Drawing.Point(12, 227)
+        Me.dgTickets.Location = New System.Drawing.Point(12, 276)
         Me.dgTickets.Name = "dgTickets"
         Me.dgTickets.ReadOnly = True
         Me.dgTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgTickets.Size = New System.Drawing.Size(860, 523)
+        Me.dgTickets.Size = New System.Drawing.Size(860, 474)
         Me.dgTickets.TabIndex = 4
         '
         'FechaDataGridViewTextBoxColumn
@@ -354,46 +400,75 @@ Partial Class frmControladorFiscal
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.lbl_Msg.Visible = False
         '
-        'TableLayoutPanel1
+        'btnDuplicadosDocumentosA
         '
-        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Label4, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.FHastaCierreZ, 1, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.FDesdeCierreZ, 1, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.lblEstado, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 3
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(721, 90)
-        Me.TableLayoutPanel1.TabIndex = 6
+        Me.btnDuplicadosDocumentosA.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnDuplicadosDocumentosA.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnDuplicadosDocumentosA.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDuplicadosDocumentosA.Location = New System.Drawing.Point(426, 3)
+        Me.btnDuplicadosDocumentosA.Name = "btnDuplicadosDocumentosA"
+        Me.btnDuplicadosDocumentosA.Size = New System.Drawing.Size(135, 40)
+        Me.btnDuplicadosDocumentosA.TabIndex = 14
+        Me.btnDuplicadosDocumentosA.Text = "Duplicados documentos ““A””"
+        Me.btnDuplicadosDocumentosA.UseVisualStyleBackColor = True
         '
-        'TableLayoutPanel2
+        'btnCintaTestigoDigital
         '
-        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Label12, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label11, 0, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.FHasta, 1, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.FDesde, 1, 0)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 17)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 2
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(594, 60)
-        Me.TableLayoutPanel2.TabIndex = 6
+        Me.btnCintaTestigoDigital.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCintaTestigoDigital.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.btnCintaTestigoDigital.Location = New System.Drawing.Point(285, 3)
+        Me.btnCintaTestigoDigital.Name = "btnCintaTestigoDigital"
+        Me.btnCintaTestigoDigital.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.btnCintaTestigoDigital.Size = New System.Drawing.Size(135, 40)
+        Me.btnCintaTestigoDigital.TabIndex = 13
+        Me.btnCintaTestigoDigital.Text = "Cinta testigo digital"
+        Me.btnCintaTestigoDigital.UseVisualStyleBackColor = True
+        '
+        'btnResumenDeTotales
+        '
+        Me.btnResumenDeTotales.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnResumenDeTotales.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnResumenDeTotales.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnResumenDeTotales.Location = New System.Drawing.Point(567, 3)
+        Me.btnResumenDeTotales.Name = "btnResumenDeTotales"
+        Me.btnResumenDeTotales.Size = New System.Drawing.Size(135, 40)
+        Me.btnResumenDeTotales.TabIndex = 15
+        Me.btnResumenDeTotales.Text = "Resumen de Totales"
+        Me.btnResumenDeTotales.UseVisualStyleBackColor = True
+        '
+        'btnInformacionDeTransacciones
+        '
+        Me.btnInformacionDeTransacciones.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnInformacionDeTransacciones.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnInformacionDeTransacciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInformacionDeTransacciones.Location = New System.Drawing.Point(708, 3)
+        Me.btnInformacionDeTransacciones.Name = "btnInformacionDeTransacciones"
+        Me.btnInformacionDeTransacciones.Size = New System.Drawing.Size(140, 40)
+        Me.btnInformacionDeTransacciones.TabIndex = 16
+        Me.btnInformacionDeTransacciones.Text = "Información de Transacciones "
+        Me.btnInformacionDeTransacciones.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 6
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel3.Controls.Add(Me.btnInformacionDeTransacciones, 5, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.btnCierreZ, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.btnResumenDeTotales, 4, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.btnCierreZPorFecha, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.btnDuplicadosDocumentosA, 3, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.btnCintaTestigoDigital, 2, 0)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 116)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(851, 47)
+        Me.TableLayoutPanel3.TabIndex = 6
         '
         'frmControladorFiscal
         '
@@ -408,13 +483,14 @@ Partial Class frmControladorFiscal
         Me.Name = "frmControladorFiscal"
         Me.Text = "Controlador Fiscal"
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FacturacionBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -449,4 +525,9 @@ Partial Class frmControladorFiscal
     Friend WithEvents Monto As DataGridViewTextBoxColumn
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents btnInformacionDeTransacciones As Button
+    Friend WithEvents btnResumenDeTotales As Button
+    Friend WithEvents btnDuplicadosDocumentosA As Button
+    Friend WithEvents btnCintaTestigoDigital As Button
 End Class
