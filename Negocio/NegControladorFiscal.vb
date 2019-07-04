@@ -29,7 +29,7 @@ Public Class NegControladorFiscal
             Return AbrirTicket_T900FA(Control)
         End If
     End Function
-    Public Function AbrirTicket_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Boolean
+    Private Function AbrirTicket_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Boolean
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -49,7 +49,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function AbrirTicket_T900FA(ByVal Control As Entidades.ControladorFiscal) As Boolean
+    Private Function AbrirTicket_T900FA(ByVal Control As Entidades.ControladorFiscal) As Boolean
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -80,7 +80,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function AbrirNotaCredito_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Boolean
+    Private Function AbrirNotaCredito_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Boolean
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -100,7 +100,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function AbrirNotaCredito_T900FA(ByVal Control As Entidades.ControladorFiscal) As Boolean
+    Private Function AbrirNotaCredito_T900FA(ByVal Control As Entidades.ControladorFiscal) As Boolean
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -132,7 +132,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function CerrarTicket_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Integer
+    Private Function CerrarTicket_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Integer
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H6))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
@@ -152,7 +152,7 @@ Public Class NegControladorFiscal
 
     End Function
 
-    Public Function CerrarTicket_T900FA(ByVal Control As Entidades.ControladorFiscal) As Integer
+    Private Function CerrarTicket_T900FA(ByVal Control As Entidades.ControladorFiscal) As Integer
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H6))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
@@ -182,7 +182,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function CerrarNotaCredito_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Integer
+    Private Function CerrarNotaCredito_U220AFII(ByVal Control As Entidades.ControladorFiscal) As Integer
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H6))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
@@ -202,7 +202,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function CerrarNotaCredito_T900FA(ByVal Control As Entidades.ControladorFiscal) As Integer
+    Private Function CerrarNotaCredito_T900FA(ByVal Control As Entidades.ControladorFiscal) As Integer
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H6))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
@@ -232,7 +232,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function SubtotalTicket_U220AFII() As String
+    Private Function SubtotalTicket_U220AFII() As String
         Dim sSubtotal As String = ""
         Dim bAnswer As Boolean = False
 
@@ -246,7 +246,7 @@ Public Class NegControladorFiscal
         Return sSubtotal
     End Function
 
-    Public Function SubtotalTicket_T900FA() As String
+    Private Function SubtotalTicket_T900FA() As String
         Dim sSubtotal As String = ""
         Dim bAnswer As Boolean = False
 
@@ -270,7 +270,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function SubtotalNotaCredito_U220AFII() As String
+    Private Function SubtotalNotaCredito_U220AFII() As String
         Dim sSubtotal As String = ""
         Dim bAnswer As Boolean = False
 
@@ -284,7 +284,7 @@ Public Class NegControladorFiscal
         Return sSubtotal
     End Function
 
-    Public Function SubtotalNotaCredito_T900FA() As String
+    Private Function SubtotalNotaCredito_T900FA() As String
         Dim sSubtotal As String = ""
         Dim bAnswer As Boolean = False
 
@@ -308,7 +308,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function DescuentosTicket_U220AFII(ByVal descrip As String, ByVal descuento As String)
+    Private Function DescuentosTicket_U220AFII(ByVal descrip As String, ByVal descuento As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H4))
@@ -320,7 +320,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function DescuentosTicket_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
+    Private Function DescuentosTicket_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H4))
@@ -345,7 +345,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function RecargosTicket_U220AFII(ByVal descrip As String, ByVal descuento As String)
+    Private Function RecargosTicket_U220AFII(ByVal descrip As String, ByVal descuento As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H4))
@@ -357,7 +357,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function RecargosTicket_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
+    Private Function RecargosTicket_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H4))
@@ -382,7 +382,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function DescuentosNotaCredito_U220AFII(ByVal descrip As String, ByVal descuento As String)
+    Private Function DescuentosNotaCredito_U220AFII(ByVal descrip As String, ByVal descuento As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
@@ -394,7 +394,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function DescuentosNotaCredito_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
+    Private Function DescuentosNotaCredito_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
@@ -419,7 +419,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function RecargosNotaCredito_U220AFII(ByVal descrip As String, ByVal descuento As String)
+    Private Function RecargosNotaCredito_U220AFII(ByVal descrip As String, ByVal descuento As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
@@ -431,7 +431,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function RecargosNotaCredito_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
+    Private Function RecargosNotaCredito_T900FA(ByVal descrip As String, ByVal descuento As String, tasaIVA As String, CondicionFrenteIva As String)
         Dim bAnswer As Boolean = False
 
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H4))
@@ -457,7 +457,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function PagarTicket_U220AFII(ByVal TipoPago As String, ByVal MontoPago As String)
+    Private Function PagarTicket_U220AFII(ByVal TipoPago As String, ByVal MontoPago As String)
         Dim bAnswer As Boolean = False
         'Send Payment
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H5))
@@ -470,7 +470,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function PagarTicket_T900FA(ByVal TipoPago As String, ByVal MontoPago As String)
+    Private Function PagarTicket_T900FA(ByVal TipoPago As String, ByVal MontoPago As String)
         Dim bAnswer As Boolean = False
         'Send Payment
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H5))
@@ -497,7 +497,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function AgregarItemTicket_U220AFII(ByVal Control As Entidades.ControladorFiscal)
+    Private Function AgregarItemTicket_U220AFII(ByVal Control As Entidades.ControladorFiscal)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H18))
@@ -516,7 +516,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function AgregarItemTicket_T900FA(ByVal Control As Entidades.ControladorFiscal)
+    Private Function AgregarItemTicket_T900FA(ByVal Control As Entidades.ControladorFiscal)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HB) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H40) + Chr(&H10))
@@ -550,7 +550,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function AgregarItemNotaCredito_U220AFII(ByVal Control As Entidades.ControladorFiscal)
+    Private Function AgregarItemNotaCredito_U220AFII(ByVal Control As Entidades.ControladorFiscal)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H18))
@@ -569,7 +569,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function AgregarItemNotaCredito_T900FA(ByVal Control As Entidades.ControladorFiscal)
+    Private Function AgregarItemNotaCredito_T900FA(ByVal Control As Entidades.ControladorFiscal)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&HD) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H40) + Chr(&H10))
@@ -603,7 +603,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function CierreX_U220AFII()
+    Private Function CierreX_U220AFII()
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
@@ -612,7 +612,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function CierreX_T900FA()
+    Private Function CierreX_T900FA()
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H2))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
@@ -631,7 +631,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function CierreZ_U220AFII()
+    Private Function CierreZ_U220AFII()
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&HC) + Chr(&H0))
@@ -640,7 +640,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function CierreZ_T900FA()
+    Private Function CierreZ_T900FA()
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H1))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -658,7 +658,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function CierreZPorRangoDeFecha_U220AFII(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime)
+    Private Function CierreZPorRangoDeFecha_U220AFII(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H10))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
@@ -669,7 +669,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function CierreZPorRangoDeFecha_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime)
+    Private Function CierreZPorRangoDeFecha_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H12))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
@@ -689,7 +689,7 @@ Public Class NegControladorFiscal
         End If
     End Function
 
-    Public Function Informacionjornada_U220AFII()
+    Private Function Informacionjornada_U220AFII()
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H3))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&HC) + Chr(&H0))
@@ -698,7 +698,7 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function Informacionjornada_T900FA()
+    Private Function Informacionjornada_T900FA()
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H3))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&HC) + Chr(&H0))
@@ -706,6 +706,182 @@ Public Class NegControladorFiscal
         FPDelay()
         Return bAnswer
     End Function
+
+    Public Function CintaTestigoDigital(ByVal Modelo As ImpresoraFiscalModelo, ByRef nombreArchivo As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return CintaTestigoDigital_T900FA(nombreArchivo)
+        End If
+    End Function
+
+    Private Function CintaTestigoDigital_T900FA(ByRef nombreArchivo As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        nombreArchivo = oEpsonFP.GetExtraField(1)
+        Return bAnswer
+    End Function
+
+    Public Function DuplicadosDocumentosTipoA(ByVal Modelo As ImpresoraFiscalModelo, ByRef nombreArchivo As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return DuplicadosDocumentosTipoA_T900FA(nombreArchivo)
+        End If
+    End Function
+
+    Private Function DuplicadosDocumentosTipoA_T900FA(ByRef nombreArchivo As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H2))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        nombreArchivo = oEpsonFP.GetExtraField(1)
+        Return bAnswer
+    End Function
+
+    Public Function ResumenTotales(ByVal Modelo As ImpresoraFiscalModelo, ByRef nombreArchivo As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return ResumenTotales_T900FA(nombreArchivo)
+        End If
+    End Function
+
+    Private Function ResumenTotales_T900FA(ByRef nombreArchivo As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H4))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        nombreArchivo = oEpsonFP.GetExtraField(1)
+        Return bAnswer
+    End Function
+
+    Public Function DescargaReporteMemoriaTransacciones(ByVal Modelo As ImpresoraFiscalModelo, ByRef datos As String, ByRef continuar As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return DescargaReporteMemoriaTransacciones_T900FA(datos, continuar)
+        End If
+    End Function
+
+    Private Function DescargaReporteMemoriaTransacciones_T900FA(ByRef datos As String, ByRef continuar As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H70))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+
+        datos = oEpsonFP.GetExtraField(1)
+        continuar = oEpsonFP.GetExtraField(2)
+        Return bAnswer
+    End Function
+
+    Public Function FinalizarDescargaReporteMemoriaTransacciones(ByVal Modelo As ImpresoraFiscalModelo) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return FinalizarDescargaReporteMemoriaTransacciones_T900FA()
+        End If
+    End Function
+
+    Private Function FinalizarDescargaReporteMemoriaTransacciones_T900FA()
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H71))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    Public Function CancelarDescargaReporteMemoriaTransacciones(ByVal Modelo As ImpresoraFiscalModelo) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return CancelarDescargaReporteMemoriaTransacciones_T900FA()
+        End If
+    End Function
+
+    Private Function CancelarDescargaReporteMemoriaTransacciones_T900FA()
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H72))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+
+    Public Function BorradoJornadasMemoriaTransacciones(ByVal Modelo As ImpresoraFiscalModelo, BorrarHastaJornadaFiscalNumero As Integer) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return BorradoJornadasMemoriaTransacciones_T900FA(BorrarHastaJornadaFiscalNumero)
+        End If
+    End Function
+
+    Private Function BorradoJornadasMemoriaTransacciones_T900FA(BorrarHastaJornadaFiscalNumero As Integer)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H10))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(BorrarHastaJornadaFiscalNumero.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    Public Function InformacionMemoriaTransacciones(ByVal Modelo As ImpresoraFiscalModelo, ByRef DescargarCintaTestigoDigitalDesde As String, ByRef DescargarCintaTestigoDigitalHasta As String,
+                                                           ByRef DescargarDuplicadosTipoADesde As String, ByRef DescargarDuplicadosTipoAHasta As String,
+                                                           ByRef DescargarResumenTotalesDesde As String, ByRef DescargarResumenTotalesHasta As String,
+                                                           ByRef JornadasDescargadasCompletamenteDesde As String, ByRef JornadasDescargadasCompletamenteHasta As String,
+                                                           ByRef JornadasBorradasDesde As String, ByRef JornadasBorradasHasta As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return InformacionMemoriaTransacciones_T900FA(DescargarCintaTestigoDigitalDesde, DescargarCintaTestigoDigitalHasta,
+                                                                       DescargarDuplicadosTipoADesde, DescargarDuplicadosTipoAHasta,
+                                                                       DescargarResumenTotalesDesde, DescargarResumenTotalesHasta,
+                                                                       JornadasDescargadasCompletamenteDesde, JornadasDescargadasCompletamenteHasta,
+                                                                       JornadasBorradasDesde, JornadasBorradasHasta)
+        End If
+    End Function
+
+    Private Function InformacionMemoriaTransacciones_T900FA(ByRef DescargarCintaTestigoDigitalDesde As String, ByRef DescargarCintaTestigoDigitalHasta As String,
+                                                           ByRef DescargarDuplicadosTipoADesde As String, ByRef DescargarDuplicadosTipoAHasta As String,
+                                                           ByRef DescargarResumenTotalesDesde As String, ByRef DescargarResumenTotalesHasta As String,
+                                                           ByRef JornadasDescargadasCompletamenteDesde As String, ByRef JornadasDescargadasCompletamenteHasta As String,
+                                                           ByRef JornadasBorradasDesde As String, ByRef JornadasBorradasHasta As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H15))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        DescargarCintaTestigoDigitalDesde = oEpsonFP.GetExtraField(1)
+        DescargarCintaTestigoDigitalHasta = oEpsonFP.GetExtraField(2)
+        DescargarDuplicadosTipoADesde = oEpsonFP.GetExtraField(3)
+        DescargarDuplicadosTipoAHasta = oEpsonFP.GetExtraField(4)
+        DescargarResumenTotalesDesde = oEpsonFP.GetExtraField(5)
+        DescargarResumenTotalesHasta = oEpsonFP.GetExtraField(6)
+        JornadasDescargadasCompletamenteDesde = oEpsonFP.GetExtraField(7)
+        JornadasDescargadasCompletamenteHasta = oEpsonFP.GetExtraField(8)
+        JornadasBorradasDesde = oEpsonFP.GetExtraField(9)
+        JornadasBorradasHasta = oEpsonFP.GetExtraField(10)
+
+        FPDelay()
+        Return bAnswer
+    End Function
+
 
     'Funcion que abre los puertos de la impresora.
     Public Function AbrirPuerto() As Boolean

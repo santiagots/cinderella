@@ -1,5 +1,7 @@
 ﻿Imports Negocio
 Imports Microsoft.Office.Interop
+Imports System.Text
+Imports System.IO
 
 Public Class frmControladorFiscal
 
@@ -51,6 +53,100 @@ Public Class frmControladorFiscal
             Me.Cursor = Cursors.Arrow
         End Try
         Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub btnCintaTestigoDigital_Click(sender As Object, e As EventArgs) Handles btnCintaTestigoDigital.Click
+
+        If (FolderBrowserDialog.ShowDialog() <> DialogResult.OK) Then
+            Return
+        End If
+
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            Dim nombreArchivo As String = String.Empty
+            lblEstado.Text = "Imprimiendo Cinta Testigo Digital"
+            ControladorFiscal.AbrirPuerto()
+            ControladorFiscal.CintaTestigoDigital(My.Settings.ControladorModelo, nombreArchivo)
+
+            Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+
+            ControladorFiscal.CerrarPuerto()
+
+            Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
+                sw.Write(archivo)
+            End Using
+            MessageBox.Show(String.Format("Se han generar el archivo {0} correctamente.", nombreArchivo), "Controlador Fiscal", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            lblEstado.Text = "- - - -"
+        Catch ex As Exception
+            lblEstado.Text = "Error en generar archivo cinta testigo digital"
+            MessageBox.Show("Se ha producido un error al generar archivo cinta testigo digital. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Cursor = Cursors.Arrow
+        End Try
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub btnDuplicadosDocumentosA_Click(sender As Object, e As EventArgs) Handles btnDuplicadosDocumentosA.Click
+
+        If (FolderBrowserDialog.ShowDialog() <> DialogResult.OK) Then
+            Return
+        End If
+
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            Dim nombreArchivo As String = String.Empty
+            lblEstado.Text = "Imprimiendo Duplicados Documentos Tipo A"
+            ControladorFiscal.AbrirPuerto()
+            ControladorFiscal.DuplicadosDocumentosTipoA(My.Settings.ControladorModelo, nombreArchivo)
+
+            Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+
+            ControladorFiscal.CerrarPuerto()
+
+            Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
+                sw.Write(archivo)
+            End Using
+            MessageBox.Show(String.Format("Se han generar el archivo {0} correctamente.", nombreArchivo), "Controlador Fiscal", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            lblEstado.Text = "- - - -"
+        Catch ex As Exception
+            lblEstado.Text = "Error en generar archivo duplicados documentos tipo A."
+            MessageBox.Show("Se ha producido un error al generar archivo duplicados documentos tipo A. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Cursor = Cursors.Arrow
+        End Try
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub btnResumenDeTotales_Click(sender As Object, e As EventArgs) Handles btnResumenDeTotales.Click
+        If (FolderBrowserDialog.ShowDialog() <> DialogResult.OK) Then
+            Return
+        End If
+
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            Dim nombreArchivo As String = String.Empty
+            lblEstado.Text = "Imprimiendo Resumen de Totales"
+            ControladorFiscal.AbrirPuerto()
+            ControladorFiscal.ResumenTotales(My.Settings.ControladorModelo, nombreArchivo)
+
+            Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+
+            ControladorFiscal.CerrarPuerto()
+
+            Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
+                sw.Write(archivo)
+            End Using
+            MessageBox.Show(String.Format("Se han generar el archivo {0} correctamente.", nombreArchivo), "Controlador Fiscal", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            lblEstado.Text = "- - - -"
+        Catch ex As Exception
+            lblEstado.Text = "Error en generar archivo resumen de totales."
+            MessageBox.Show("Se ha producido un error al generar resumen de totales. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Cursor = Cursors.Arrow
+        End Try
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub btnInformacionDeTransacciones_Click(sender As Object, e As EventArgs) Handles btnInformacionDeTransacciones.Click
+        Dim frmInformacionTransacciones As frmInformacionTransacciones = New frmInformacionTransacciones()
+        frmInformacionTransacciones.ShowDialog()
     End Sub
 
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click
@@ -201,6 +297,25 @@ Public Class frmControladorFiscal
         Next
 
     End Sub
+
+    Private Function ObtenerArchivoDesdeControlador() As StringBuilder
+        Try
+            Dim archivo As StringBuilder = New StringBuilder()
+            Dim continuar As String = String.Empty
+            Do
+                Dim datos As String = String.Empty
+                ControladorFiscal.DescargaReporteMemoriaTransacciones(My.Settings.ControladorModelo, datos, continuar)
+                archivo.Append(datos)
+            Loop While (continuar = "S")
+
+            ControladorFiscal.FinalizarDescargaReporteMemoriaTransacciones(My.Settings.ControladorModelo)
+            Return archivo
+
+        Catch ex As Exception
+            ControladorFiscal.CancelarDescargaReporteMemoriaTransacciones(My.Settings.ControladorModelo)
+            Throw
+        End Try
+    End Function
 
     Sub EvaluarPermisos()
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_EmitirCierreZdía)) Then
