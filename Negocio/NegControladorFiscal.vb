@@ -707,60 +707,69 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function CintaTestigoDigital(ByVal Modelo As ImpresoraFiscalModelo, ByRef nombreArchivo As String) As Boolean
+    Public Function CintaTestigoDigital(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
 
         If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
             Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
         Else
-            Return CintaTestigoDigital_T900FA(nombreArchivo)
+            Return CintaTestigoDigital_T900FA(fechaDesde, fechaHasta, nombreArchivo)
         End If
     End Function
 
-    Private Function CintaTestigoDigital_T900FA(ByRef nombreArchivo As String)
+    Private Function CintaTestigoDigital_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaDesde.ToString("ddMMyy"))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         nombreArchivo = oEpsonFP.GetExtraField(1)
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
-    Public Function DuplicadosDocumentosTipoA(ByVal Modelo As ImpresoraFiscalModelo, ByRef nombreArchivo As String) As Boolean
+    Public Function DuplicadosDocumentosTipoA(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
 
         If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
             Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
         Else
-            Return DuplicadosDocumentosTipoA_T900FA(nombreArchivo)
+            Return DuplicadosDocumentosTipoA_T900FA(fechaDesde, fechaHasta, nombreArchivo)
         End If
     End Function
 
-    Private Function DuplicadosDocumentosTipoA_T900FA(ByRef nombreArchivo As String)
+    Private Function DuplicadosDocumentosTipoA_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H2))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaDesde.ToString("ddMMyy"))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         nombreArchivo = oEpsonFP.GetExtraField(1)
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
-    Public Function ResumenTotales(ByVal Modelo As ImpresoraFiscalModelo, ByRef nombreArchivo As String) As Boolean
+    Public Function ResumenTotales(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
 
         If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
             Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
         Else
-            Return ResumenTotales_T900FA(nombreArchivo)
+            Return ResumenTotales_T900FA(fechaDesde, fechaHasta, nombreArchivo)
         End If
     End Function
 
-    Private Function ResumenTotales_T900FA(ByRef nombreArchivo As String)
+    Private Function ResumenTotales_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H4))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaDesde.ToString("ddMMyy"))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         nombreArchivo = oEpsonFP.GetExtraField(1)
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
@@ -782,6 +791,7 @@ Public Class NegControladorFiscal
 
         datos = oEpsonFP.GetExtraField(1)
         continuar = oEpsonFP.GetExtraField(2)
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
@@ -800,6 +810,7 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
@@ -818,6 +829,7 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
@@ -838,6 +850,7 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(BorrarHastaJornadaFiscalNumero.ToString())
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
@@ -879,6 +892,7 @@ Public Class NegControladorFiscal
         JornadasBorradasHasta = oEpsonFP.GetExtraField(10)
 
         FPDelay()
+        EvaluarCodigoDeError()
         Return bAnswer
     End Function
 
@@ -935,4 +949,50 @@ Public Class NegControladorFiscal
 
         End Select
     End Function
+
+    Private Sub EvaluarCodigoDeError()
+        Select Case ReturnCode()
+            Case "0801"
+                Throw New InvalidOperationException("Cod. Error 0801 Requiere período de actividades iniciado")
+            Case "0802"
+                Throw New InvalidOperationException("Cod. Error 0802 Require un Cierre Z")
+            Case "0803"
+                Throw New InvalidOperationException("Cod. Error 0803 Memoria fiscal llena")
+            Case "0804"
+                Throw New InvalidOperationException("Cod. Error 0804 Requiere jornada fiscal abierta")
+            Case "0807"
+                Throw New InvalidOperationException("Cod. Error 0807 Período auditado sin datos")
+            Case "0808"
+                Throw New InvalidOperationException("Cod. Error 0808 Rango auditado inválido")
+            Case "0809"
+                Throw New InvalidOperationException("Cod. Error 0809 Restan datos por auditar/descargar")
+            Case "080A"
+                Throw New InvalidOperationException("Cod. Error 080A No hay más datos a descargar")
+            Case "080B"
+                Throw New InvalidOperationException("Cod. Error 080B No es posible abrir la jornada fiscal")
+            Case "080C"
+                Throw New InvalidOperationException("Cod. Error 080C No es posible cerrar la jornada fiscal")
+            Case "0810"
+                Throw New InvalidOperationException("Cod. Error 0810 Tipo de documento solicitado inválido")
+            Case "0811"
+                Throw New InvalidOperationException("Cod. Error 0811 Número de documento solicitado inválido")
+            Case "0812"
+                Throw New InvalidOperationException("Cod. Error 0812 Documento solicitado no existente")
+            Case "0813"
+                Throw New InvalidOperationException("Cod. Error 0813 La copia del documento solicitado fue borrada")
+            Case "0814"
+                Throw New InvalidOperationException("Cod. Error 0814 Tipo de documento no soportado")
+            Case "0815"
+                Throw New InvalidOperationException("Cod. Error 0815 Registrado para emitir documentos normales")
+            Case "0816"
+                Throw New InvalidOperationException("Cod. Error 0816 Registrado para emitir documentos M")
+            Case "0817"
+                Throw New InvalidOperationException("Cod. Error 0817 Falta descargar jornadas previas")
+            Case "0818"
+                Throw New InvalidOperationException("Cod. Error 0818 Sólo se puede imprimir el cambio una única vez dentro de la jornada")
+            Case "0819"
+                Throw New InvalidOperationException("Cod. Error 0819 Requiere que se encuentre establecida la línea de inicio de actividades")
+        End Select
+    End Sub
+
 End Class

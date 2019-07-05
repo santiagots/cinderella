@@ -66,7 +66,7 @@ Public Class frmControladorFiscal
             Dim nombreArchivo As String = String.Empty
             lblEstado.Text = "Imprimiendo Cinta Testigo Digital"
             ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.CintaTestigoDigital(My.Settings.ControladorModelo, nombreArchivo)
+            ControladorFiscal.CintaTestigoDigital(My.Settings.ControladorModelo, FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, nombreArchivo)
 
             Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
 
@@ -75,8 +75,10 @@ Public Class frmControladorFiscal
             Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                 sw.Write(archivo)
             End Using
-            MessageBox.Show(String.Format("Se han generar el archivo {0} correctamente.", nombreArchivo), "Controlador Fiscal", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
             lblEstado.Text = "- - - -"
+        Catch ex As InvalidOperationException
+            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             lblEstado.Text = "Error en generar archivo cinta testigo digital"
             MessageBox.Show("Se ha producido un error al generar archivo cinta testigo digital. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -96,7 +98,7 @@ Public Class frmControladorFiscal
             Dim nombreArchivo As String = String.Empty
             lblEstado.Text = "Imprimiendo Duplicados Documentos Tipo A"
             ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.DuplicadosDocumentosTipoA(My.Settings.ControladorModelo, nombreArchivo)
+            ControladorFiscal.DuplicadosDocumentosTipoA(My.Settings.ControladorModelo, FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, nombreArchivo)
 
             Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
 
@@ -105,8 +107,10 @@ Public Class frmControladorFiscal
             Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                 sw.Write(archivo)
             End Using
-            MessageBox.Show(String.Format("Se han generar el archivo {0} correctamente.", nombreArchivo), "Controlador Fiscal", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
             lblEstado.Text = "- - - -"
+        Catch ex As InvalidOperationException
+            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             lblEstado.Text = "Error en generar archivo duplicados documentos tipo A."
             MessageBox.Show("Se ha producido un error al generar archivo duplicados documentos tipo A. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -125,7 +129,7 @@ Public Class frmControladorFiscal
             Dim nombreArchivo As String = String.Empty
             lblEstado.Text = "Imprimiendo Resumen de Totales"
             ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.ResumenTotales(My.Settings.ControladorModelo, nombreArchivo)
+            ControladorFiscal.ResumenTotales(My.Settings.ControladorModelo, FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, nombreArchivo)
 
             Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
 
@@ -134,8 +138,10 @@ Public Class frmControladorFiscal
             Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                 sw.Write(archivo)
             End Using
-            MessageBox.Show(String.Format("Se han generar el archivo {0} correctamente.", nombreArchivo), "Controlador Fiscal", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
             lblEstado.Text = "- - - -"
+        Catch ex As InvalidOperationException
+            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             lblEstado.Text = "Error en generar archivo resumen de totales."
             MessageBox.Show("Se ha producido un error al generar resumen de totales. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)

@@ -13,6 +13,8 @@ Public Class frmInformacionTransacciones
 
             ObtenerInformacionMemoriaTransacciones()
 
+        Catch ex As InvalidOperationException
+            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             MessageBox.Show("Se ha producido un error al obtener los datos de la controladora fiscal. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Cursor = Cursors.Arrow
@@ -31,6 +33,8 @@ Public Class frmInformacionTransacciones
 
                 ObtenerInformacionMemoriaTransacciones()
             End If
+        Catch ex As InvalidOperationException
+            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             MessageBox.Show("Se ha producido un error al obtener los datos de la controladora fiscal. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
