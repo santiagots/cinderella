@@ -40,8 +40,6 @@ Public Class Funciones
 
                 'Sonidito.
                 SystemSounds.Asterisk.Play()
-
-                LogHelper.WriteLog("ERROR Metodo: ActualizarEstado Conexión a Internet")
             Else
                 MDIContenedor.Conectado.Text = "Sin Conexión a Internet"
                 MDIContenedor.Conectado.Image = My.Resources.Recursos.NoInternet_32
@@ -56,8 +54,6 @@ Public Class Funciones
 
                 'Sonidito.
                 SystemSounds.Exclamation.Play()
-
-                LogHelper.WriteLog("ERROR Metodo: ActualizarEstado Sin Conexión a Internet")
             End If
 
         End If

@@ -5,6 +5,7 @@ Imports System.IO
 
 Public Class frmControladorFiscal
 
+    Private NegErrores As New Negocio.NegManejadorErrores
     Private ControladorFiscal As NegControladorFiscal
 
     Dim negFactuarcion As Negocio.NegFacturacion
@@ -25,33 +26,41 @@ Public Class frmControladorFiscal
 
     Private Sub btnCierreX_Click(sender As Object, e As EventArgs) Handles btnCierreZPorFecha.Click
         Me.Cursor = Cursors.WaitCursor
-        Try
-            lblEstado.Text = "Imprimiendo cierre Z por rango de fechas"
-            ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.CierreZPorRangoDeFecha(FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, My.Settings.ControladorModelo)
-            ControladorFiscal.CerrarPuerto()
-            lblEstado.Text = "- - - -"
-        Catch ex As Exception
-            lblEstado.Text = "Error en imprecion cierre z por rango de fechas"
-            MessageBox.Show("Se ha producido un error al imprimir el cierre z por rango de fechas. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Cursor = Cursors.Arrow
-        End Try
+        Using ControladorFiscal As New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
+            Try
+                lblEstado.Text = "Imprimiendo cierre Z por rango de fechas"
+                ControladorFiscal.AbrirPuerto()
+                If (rbFecha.Checked) Then
+                    ControladorFiscal.CierreZPorRangoDeFecha(dtFechaDesde.Value.Date, dtFechaHasta.Value.Date, My.Settings.ControladorModelo)
+                Else
+                    ControladorFiscal.CierreZPorRangoDeJornada(Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), My.Settings.ControladorModelo)
+                End If
+                ControladorFiscal.CerrarPuerto()
+                lblEstado.Text = "Cierre Z por rango de fechas finalizado"
+            Catch ex As Exception
+                lblEstado.Text = "Error en imprecion cierre z por rango de fechas"
+                MessageBox.Show("Se ha producido un error al imprimir el cierre z por rango de fechas. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Cursor = Cursors.Arrow
+            End Try
+        End Using
         Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub btnCierreZ_Click(sender As Object, e As EventArgs) Handles btnCierreZ.Click
         Me.Cursor = Cursors.WaitCursor
-        Try
-            lblEstado.Text = "Imprimiendo cierre Z"
-            ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.CierreZ(My.Settings.ControladorModelo)
-            ControladorFiscal.CerrarPuerto()
-            lblEstado.Text = "- - - -"
-        Catch ex As Exception
-            lblEstado.Text = "Error en impresión cierre z"
-            MessageBox.Show("Se ha producido un error al imprimir el cierre Z. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Cursor = Cursors.Arrow
-        End Try
+        Using ControladorFiscal As New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
+            Try
+                lblEstado.Text = "Imprimiendo cierre Z"
+                ControladorFiscal.AbrirPuerto()
+                ControladorFiscal.CierreZ(My.Settings.ControladorModelo)
+                ControladorFiscal.CerrarPuerto()
+                lblEstado.Text = "Cierre Z Finalizado"
+            Catch ex As Exception
+                lblEstado.Text = "Error en impresión cierre z"
+                MessageBox.Show("Se ha producido un error al imprimir el cierre Z. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Cursor = Cursors.Arrow
+            End Try
+        End Using
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -62,28 +71,35 @@ Public Class frmControladorFiscal
         End If
 
         Me.Cursor = Cursors.WaitCursor
-        Try
-            Dim nombreArchivo As String = String.Empty
-            lblEstado.Text = "Imprimiendo Cinta Testigo Digital"
-            ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.CintaTestigoDigital(My.Settings.ControladorModelo, FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, nombreArchivo)
+        Using ControladorFiscal As New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
+            Try
+                Dim nombreArchivo As String = String.Empty
+                lblEstado.Text = "Imprimiendo Cinta Testigo Digital"
+                ControladorFiscal.AbrirPuerto()
 
-            Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+                If (rbFecha.Checked) Then
+                    ControladorFiscal.CintaTestigoDigitalPorRangoDeFecha(My.Settings.ControladorModelo, dtFechaDesde.Value, dtFechaHasta.Value, nombreArchivo)
+                Else
+                    ControladorFiscal.CintaTestigoDigitalPorRangoDeJornada(My.Settings.ControladorModelo, Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), nombreArchivo)
+                End If
+                ControladorFiscal.CerrarPuerto()
 
-            ControladorFiscal.CerrarPuerto()
+                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
 
-            Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
-                sw.Write(archivo)
-            End Using
-            MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            lblEstado.Text = "- - - -"
-        Catch ex As InvalidOperationException
-            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            lblEstado.Text = "Error en generar archivo cinta testigo digital"
-            MessageBox.Show("Se ha producido un error al generar archivo cinta testigo digital. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Cursor = Cursors.Arrow
-        End Try
+                Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
+                    sw.Write(archivo)
+                End Using
+                MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                lblEstado.Text = "Cinta Testigo Digital Finalizado"
+            Catch ex As InvalidOperationException
+                lblEstado.Text = ex.Message
+                MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex As Exception
+                lblEstado.Text = "Error en generar archivo cinta testigo digital"
+                MessageBox.Show("Se ha producido un error al generar archivo cinta testigo digital. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Cursor = Cursors.Arrow
+            End Try
+        End Using
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -94,28 +110,35 @@ Public Class frmControladorFiscal
         End If
 
         Me.Cursor = Cursors.WaitCursor
-        Try
-            Dim nombreArchivo As String = String.Empty
-            lblEstado.Text = "Imprimiendo Duplicados Documentos Tipo A"
-            ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.DuplicadosDocumentosTipoA(My.Settings.ControladorModelo, FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, nombreArchivo)
+        Using ControladorFiscal As New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
+            Try
+                Dim nombreArchivo As String = String.Empty
+                lblEstado.Text = "Imprimiendo Duplicados Documentos Tipo A"
+                ControladorFiscal.AbrirPuerto()
 
-            Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+                If (rbFecha.Checked) Then
+                    ControladorFiscal.DuplicadosDocumentosTipoAPorRangoDeFecha(My.Settings.ControladorModelo, dtFechaDesde.Value, dtFechaHasta.Value, nombreArchivo)
+                Else
+                    ControladorFiscal.DuplicadosDocumentosTipoAPorRangoDeJornada(My.Settings.ControladorModelo, Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), nombreArchivo)
+                End If
+                ControladorFiscal.CerrarPuerto()
 
-            ControladorFiscal.CerrarPuerto()
+                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
 
-            Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
-                sw.Write(archivo)
-            End Using
-            MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            lblEstado.Text = "- - - -"
-        Catch ex As InvalidOperationException
-            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            lblEstado.Text = "Error en generar archivo duplicados documentos tipo A."
-            MessageBox.Show("Se ha producido un error al generar archivo duplicados documentos tipo A. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Cursor = Cursors.Arrow
-        End Try
+                Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
+                    sw.Write(archivo)
+                End Using
+                MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                lblEstado.Text = "Duplicados Documentos Tipo A Finalizado"
+            Catch ex As InvalidOperationException
+                lblEstado.Text = ex.Message
+                MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex As Exception
+                lblEstado.Text = "Error en generar archivo duplicados documentos tipo A."
+                MessageBox.Show("Se ha producido un error al generar archivo duplicados documentos tipo A. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Cursor = Cursors.Arrow
+            End Try
+        End Using
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -125,28 +148,36 @@ Public Class frmControladorFiscal
         End If
 
         Me.Cursor = Cursors.WaitCursor
-        Try
-            Dim nombreArchivo As String = String.Empty
-            lblEstado.Text = "Imprimiendo Resumen de Totales"
-            ControladorFiscal.AbrirPuerto()
-            ControladorFiscal.ResumenTotales(My.Settings.ControladorModelo, FDesdeCierreZ.Value.Date, FHastaCierreZ.Value.Date, nombreArchivo)
+        Using ControladorFiscal As New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
+            Try
+                Dim nombreArchivo As String = String.Empty
+                lblEstado.Text = "Imprimiendo Resumen de Totales"
+                ControladorFiscal.AbrirPuerto()
 
-            Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+                If (rbFecha.Checked) Then
+                    ControladorFiscal.ResumenTotalesPorRangoDeFechas(My.Settings.ControladorModelo, dtFechaDesde.Value, dtFechaHasta.Value, nombreArchivo)
+                Else
+                    ControladorFiscal.ResumenTotalesPorRangoDeJornadas(My.Settings.ControladorModelo, Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), nombreArchivo)
+                End If
 
-            ControladorFiscal.CerrarPuerto()
+                ControladorFiscal.CerrarPuerto()
 
-            Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
-                sw.Write(archivo)
-            End Using
-            MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            lblEstado.Text = "- - - -"
-        Catch ex As InvalidOperationException
-            MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            lblEstado.Text = "Error en generar archivo resumen de totales."
-            MessageBox.Show("Se ha producido un error al generar resumen de totales. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Cursor = Cursors.Arrow
-        End Try
+                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+
+                Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
+                    sw.Write(archivo)
+                End Using
+                MessageBox.Show(String.Format("Se han generar el archivo correctamente {0}{1}", Environment.NewLine, nombreArchivo), "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                lblEstado.Text = "Resumen de Totales Finalizado"
+            Catch ex As InvalidOperationException
+                lblEstado.Text = ex.Message
+                MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex As Exception
+                lblEstado.Text = "Error en generar archivo resumen de totales."
+                MessageBox.Show("Se ha producido un error al generar resumen de totales. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.Cursor = Cursors.Arrow
+            End Try
+        End Using
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -322,6 +353,26 @@ Public Class frmControladorFiscal
             Throw
         End Try
     End Function
+
+    Private Sub rbJornada_CheckedChanged(sender As Object, e As EventArgs) Handles rbJornada.CheckedChanged, rbFecha.CheckedChanged
+        habilitarFiltrosReporte()
+    End Sub
+
+    Private Sub habilitarFiltrosReporte()
+        dtFechaDesde.Enabled = rbFecha.Checked
+        dtFechaHasta.Enabled = rbFecha.Checked
+
+        txtJornadaDesde.Enabled = rbJornada.Checked
+        txtJornadaHasta.Enabled = rbJornada.Checked
+    End Sub
+
+    Private Sub NumeroCheque_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtJornadaDesde.KeyPress, txtJornadaHasta.KeyPress
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(NegErrores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
 
     Sub EvaluarPermisos()
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_EmitirCierreZdía)) Then

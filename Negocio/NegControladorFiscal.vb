@@ -1,8 +1,9 @@
 ﻿Imports EpsonFPHostControlX
 Imports System.Windows.Forms.Application
 Imports Entidades
+Imports Datos
 
-Public Class NegControladorFiscal
+Public Class NegControladorFiscal : Implements IDisposable
     Public oEpsonFP As EpsonFPHostControl
 
     'Constructor.
@@ -677,6 +678,53 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand
         FPDelay()
+
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H15))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    Public Function CierreZPorRangoDeJornada(ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByVal Modelo As ImpresoraFiscalModelo) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Return CierreZPorRangoDeJornada_U220AFII(jornadaDesde, jornadaHasta)
+        Else
+            Return CierreZPorRangoDeJornada_T900FA(jornadaDesde, jornadaHasta)
+        End If
+    End Function
+
+    Private Function CierreZPorRangoDeJornada_U220AFII(ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H11))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H1))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaDesde.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaHasta.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand
+        FPDelay()
+        Return bAnswer
+    End Function
+
+    Private Function CierreZPorRangoDeJornada_T900FA(ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H13))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H3))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaDesde.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaHasta.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand
+        FPDelay()
+
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H14))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand
+        FPDelay()
+
+        bAnswer = oEpsonFP.AddDataField(Chr(&H8) + Chr(&H15))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand
+
+        FPDelay()
         Return bAnswer
     End Function
 
@@ -707,16 +755,16 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function CintaTestigoDigital(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
+    Public Function CintaTestigoDigitalPorRangoDeFecha(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
 
         If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
             Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
         Else
-            Return CintaTestigoDigital_T900FA(fechaDesde, fechaHasta, nombreArchivo)
+            Return CintaTestigoDigitalPorRangoDeFecha_T900FA(fechaDesde, fechaHasta, nombreArchivo)
         End If
     End Function
 
-    Private Function CintaTestigoDigital_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
+    Private Function CintaTestigoDigitalPorRangoDeFecha_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -729,16 +777,40 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function DuplicadosDocumentosTipoA(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
+    Public Function CintaTestigoDigitalPorRangoDeJornada(ByVal Modelo As ImpresoraFiscalModelo, ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByRef nombreArchivo As String) As Boolean
 
         If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
             Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
         Else
-            Return DuplicadosDocumentosTipoA_T900FA(fechaDesde, fechaHasta, nombreArchivo)
+            Return CintaTestigoDigitalPorRangoDeJornada_T900FA(jornadaDesde, jornadaHasta, nombreArchivo)
         End If
     End Function
 
-    Private Function DuplicadosDocumentosTipoA_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
+    Private Function CintaTestigoDigitalPorRangoDeJornada_T900FA(ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByRef nombreArchivo As String)
+
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H52))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaDesde)
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaHasta)
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        nombreArchivo = oEpsonFP.GetExtraField(1)
+
+        EvaluarCodigoDeError()
+        Return bAnswer
+    End Function
+
+    Public Function DuplicadosDocumentosTipoAPorRangoDeFecha(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return DuplicadosDocumentosTipoAPorRangoDeFecha_T900FA(fechaDesde, fechaHasta, nombreArchivo)
+        End If
+    End Function
+
+    Private Function DuplicadosDocumentosTipoAPorRangoDeFecha_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H2))
@@ -751,21 +823,65 @@ Public Class NegControladorFiscal
         Return bAnswer
     End Function
 
-    Public Function ResumenTotales(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
+    Public Function DuplicadosDocumentosTipoAPorRangoDeJornada(ByVal Modelo As ImpresoraFiscalModelo, ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByRef nombreArchivo As String) As Boolean
 
         If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
             Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
         Else
-            Return ResumenTotales_T900FA(fechaDesde, fechaHasta, nombreArchivo)
+            Return DuplicadosDocumentosTipoAPorRangoDeJornada_T900FA(jornadaDesde, jornadaHasta, nombreArchivo)
         End If
     End Function
 
-    Private Function ResumenTotales_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
+    Private Function DuplicadosDocumentosTipoAPorRangoDeJornada_T900FA(ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByRef nombreArchivo As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H52))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H2))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaDesde.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaHasta.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        nombreArchivo = oEpsonFP.GetExtraField(1)
+        EvaluarCodigoDeError()
+        Return bAnswer
+    End Function
+
+    Public Function ResumenTotalesPorRangoDeFechas(ByVal Modelo As ImpresoraFiscalModelo, ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return ResumenTotalesPorRangoDeFechas_T900FA(fechaDesde, fechaHasta, nombreArchivo)
+        End If
+    End Function
+
+    Private Function ResumenTotalesPorRangoDeFechas_T900FA(ByVal fechaDesde As DateTime, ByVal fechaHasta As DateTime, ByRef nombreArchivo As String)
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H51))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H4))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaDesde.ToString("ddMMyy"))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(fechaHasta.ToString("ddMMyy"))
+        If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+        nombreArchivo = oEpsonFP.GetExtraField(1)
+        EvaluarCodigoDeError()
+        Return bAnswer
+    End Function
+
+    Public Function ResumenTotalesPorRangoDeJornadas(ByVal Modelo As ImpresoraFiscalModelo, ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByRef nombreArchivo As String) As Boolean
+
+        If (Modelo = ImpresoraFiscalModelo.U220AFII) Then
+            Throw New InvalidOperationException("Comando no implementado para el modelo de impresora seleccionada")
+        Else
+            Return ResumenTotalesPorRangoDeJornadas_T900FA(jornadaDesde, jornadaHasta, nombreArchivo)
+        End If
+    End Function
+
+    Private Function ResumenTotalesPorRangoDeJornadas_T900FA(ByVal jornadaDesde As Integer, ByVal jornadaHasta As Integer, ByRef nombreArchivo As String)
+        Dim bAnswer As Boolean = False
+        bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H52))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H4))
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaDesde.ToString())
+        If bAnswer Then bAnswer = oEpsonFP.AddDataField(jornadaHasta.ToString())
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
         nombreArchivo = oEpsonFP.GetExtraField(1)
@@ -788,8 +904,8 @@ Public Class NegControladorFiscal
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
         FPDelay()
-
         datos = oEpsonFP.GetExtraField(1)
+        FPDelay()
         continuar = oEpsonFP.GetExtraField(2)
         EvaluarCodigoDeError()
         Return bAnswer
@@ -876,6 +992,7 @@ Public Class NegControladorFiscal
                                                            ByRef DescargarResumenTotalesDesde As String, ByRef DescargarResumenTotalesHasta As String,
                                                            ByRef JornadasDescargadasCompletamenteDesde As String, ByRef JornadasDescargadasCompletamenteHasta As String,
                                                            ByRef JornadasBorradasDesde As String, ByRef JornadasBorradasHasta As String)
+        LogHelper.WriteLog(String.Format("INFO Metodo inicio: InformacionMemoriaTransacciones_T900FA"))
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H15))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
@@ -890,6 +1007,18 @@ Public Class NegControladorFiscal
         JornadasDescargadasCompletamenteHasta = oEpsonFP.GetExtraField(8)
         JornadasBorradasDesde = oEpsonFP.GetExtraField(9)
         JornadasBorradasHasta = oEpsonFP.GetExtraField(10)
+
+        LogHelper.WriteLog(String.Format("INFO Metodo fin: InformacionMemoriaTransacciones_T900FA '{0}' '{1}' '{2}' '{3}' '{4}' '{5}' '{6}' '{7}' '{8}' '{9}'",
+        DescargarCintaTestigoDigitalDesde,
+        DescargarCintaTestigoDigitalHasta,
+        DescargarDuplicadosTipoADesde,
+        DescargarDuplicadosTipoAHasta,
+        DescargarResumenTotalesDesde,
+        DescargarResumenTotalesHasta,
+        JornadasDescargadasCompletamenteDesde,
+        JornadasDescargadasCompletamenteHasta,
+        JornadasBorradasDesde,
+        JornadasBorradasHasta))
 
         FPDelay()
         EvaluarCodigoDeError()
@@ -951,6 +1080,7 @@ Public Class NegControladorFiscal
     End Function
 
     Private Sub EvaluarCodigoDeError()
+        LogHelper.WriteLog(String.Format("INFO Metodo: EvaluarCodigoDeError ReturnCode'{0}' FiscalStatus'{1}' PrinterStatus'{2}'", ReturnCode(), FiscalStatus(), PrinterStatus))
         Select Case ReturnCode()
             Case "0801"
                 Throw New InvalidOperationException("Cod. Error 0801 Requiere período de actividades iniciado")
@@ -995,4 +1125,8 @@ Public Class NegControladorFiscal
         End Select
     End Sub
 
+    Public Sub Dispose() Implements IDisposable.Dispose
+        CerrarPuerto()
+        GC.SuppressFinalize(Me)
+    End Sub
 End Class
