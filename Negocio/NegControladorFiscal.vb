@@ -992,11 +992,12 @@ Public Class NegControladorFiscal : Implements IDisposable
                                                            ByRef DescargarResumenTotalesDesde As String, ByRef DescargarResumenTotalesHasta As String,
                                                            ByRef JornadasDescargadasCompletamenteDesde As String, ByRef JornadasDescargadasCompletamenteHasta As String,
                                                            ByRef JornadasBorradasDesde As String, ByRef JornadasBorradasHasta As String)
-        LogHelper.WriteLog(String.Format("INFO Metodo inicio: InformacionMemoriaTransacciones_T900FA"))
         Dim bAnswer As Boolean = False
         bAnswer = oEpsonFP.AddDataField(Chr(&H9) + Chr(&H15))
         If bAnswer Then bAnswer = oEpsonFP.AddDataField(Chr(&H0) + Chr(&H0))
         If bAnswer Then bAnswer = oEpsonFP.SendCommand()
+        FPDelay()
+
         DescargarCintaTestigoDigitalDesde = oEpsonFP.GetExtraField(1)
         DescargarCintaTestigoDigitalHasta = oEpsonFP.GetExtraField(2)
         DescargarDuplicadosTipoADesde = oEpsonFP.GetExtraField(3)
@@ -1008,19 +1009,6 @@ Public Class NegControladorFiscal : Implements IDisposable
         JornadasBorradasDesde = oEpsonFP.GetExtraField(9)
         JornadasBorradasHasta = oEpsonFP.GetExtraField(10)
 
-        LogHelper.WriteLog(String.Format("INFO Metodo fin: InformacionMemoriaTransacciones_T900FA '{0}' '{1}' '{2}' '{3}' '{4}' '{5}' '{6}' '{7}' '{8}' '{9}'",
-        DescargarCintaTestigoDigitalDesde,
-        DescargarCintaTestigoDigitalHasta,
-        DescargarDuplicadosTipoADesde,
-        DescargarDuplicadosTipoAHasta,
-        DescargarResumenTotalesDesde,
-        DescargarResumenTotalesHasta,
-        JornadasDescargadasCompletamenteDesde,
-        JornadasDescargadasCompletamenteHasta,
-        JornadasBorradasDesde,
-        JornadasBorradasHasta))
-
-        FPDelay()
         EvaluarCodigoDeError()
         Return bAnswer
     End Function

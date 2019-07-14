@@ -76,11 +76,11 @@ Public Class frmInformacionTransacciones
         txtCitaTestigoDigitalHasta.Text = DescargarCintaTestigoDigitalHasta
         txtDupicadosTipoADesde.Text = DescargarDuplicadosTipoADesde
         txtDupicadosTipoAHasta.Text = DescargarDuplicadosTipoAHasta
-        txtJornadasBorradasDesde.Text = DescargarResumenTotalesDesde
-        txtJornadasBorradasHasta.Text = DescargarResumenTotalesHasta
-        txtResumenTotalesDesde.Text = JornadasDescargadasCompletamenteDesde
-        txtResumenTotalesHasta.Text = JornadasDescargadasCompletamenteHasta
-        txtDescargasCompletasDesde.Text = JornadasBorradasDesde
-        txtDescargasCompletasHasta.Text = JornadasBorradasHasta
+        txtResumenTotalesDesde.Text = DescargarResumenTotalesDesde
+        txtResumenTotalesHasta.Text = DescargarResumenTotalesHasta
+        txtDescargasCompletasDesde.Text = JornadasDescargadasCompletamenteDesde
+        txtDescargasCompletasHasta.Text = JornadasDescargadasCompletamenteHasta
+        txtJornadasBorradasDesde.Text = JornadasBorradasDesde
+        txtJornadasBorradasHasta.Text = JornadasBorradasHasta
     End Sub
 End Class

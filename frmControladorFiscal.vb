@@ -6,7 +6,6 @@ Imports System.IO
 Public Class frmControladorFiscal
 
     Private NegErrores As New Negocio.NegManejadorErrores
-    Private ControladorFiscal As NegControladorFiscal
 
     Dim negFactuarcion As Negocio.NegFacturacion
 
@@ -15,7 +14,6 @@ Public Class frmControladorFiscal
         Try
             EvaluarPermisos()
             negFactuarcion = New NegFacturacion()
-            ControladorFiscal = New NegControladorFiscal(My.Settings("ConexionControladora").ToString())
         Catch ex As Exception
             lblEstado.Text = "Error Inicialización"
             MessageBox.Show("Se ha producido un error al inicializar la controladora fiscal. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -31,12 +29,17 @@ Public Class frmControladorFiscal
                 lblEstado.Text = "Imprimiendo cierre Z por rango de fechas"
                 ControladorFiscal.AbrirPuerto()
                 If (rbFecha.Checked) Then
+                    validarRangoFecha()
                     ControladorFiscal.CierreZPorRangoDeFecha(dtFechaDesde.Value.Date, dtFechaHasta.Value.Date, My.Settings.ControladorModelo)
                 Else
+                    validarRangoJornadaFiscales()
                     ControladorFiscal.CierreZPorRangoDeJornada(Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), My.Settings.ControladorModelo)
                 End If
                 ControladorFiscal.CerrarPuerto()
                 lblEstado.Text = "Cierre Z por rango de fechas finalizado"
+            Catch ex As InvalidOperationException
+                lblEstado.Text = ex.Message
+                MessageBox.Show(ex.Message, "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch ex As Exception
                 lblEstado.Text = "Error en imprecion cierre z por rango de fechas"
                 MessageBox.Show("Se ha producido un error al imprimir el cierre z por rango de fechas. Por favor, vuelva a intentar más tarde o contáctese con el Administrador.", "Controlador Fiscal", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -78,13 +81,14 @@ Public Class frmControladorFiscal
                 ControladorFiscal.AbrirPuerto()
 
                 If (rbFecha.Checked) Then
+                    validarRangoFecha()
                     ControladorFiscal.CintaTestigoDigitalPorRangoDeFecha(My.Settings.ControladorModelo, dtFechaDesde.Value, dtFechaHasta.Value, nombreArchivo)
                 Else
+                    validarRangoJornadaFiscales()
                     ControladorFiscal.CintaTestigoDigitalPorRangoDeJornada(My.Settings.ControladorModelo, Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), nombreArchivo)
                 End If
-                ControladorFiscal.CerrarPuerto()
 
-                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador(ControladorFiscal)
 
                 Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                     sw.Write(archivo)
@@ -117,13 +121,14 @@ Public Class frmControladorFiscal
                 ControladorFiscal.AbrirPuerto()
 
                 If (rbFecha.Checked) Then
+                    validarRangoFecha()
                     ControladorFiscal.DuplicadosDocumentosTipoAPorRangoDeFecha(My.Settings.ControladorModelo, dtFechaDesde.Value, dtFechaHasta.Value, nombreArchivo)
                 Else
+                    validarRangoJornadaFiscales()
                     ControladorFiscal.DuplicadosDocumentosTipoAPorRangoDeJornada(My.Settings.ControladorModelo, Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), nombreArchivo)
                 End If
-                ControladorFiscal.CerrarPuerto()
 
-                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador(ControladorFiscal)
 
                 Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                     sw.Write(archivo)
@@ -155,14 +160,14 @@ Public Class frmControladorFiscal
                 ControladorFiscal.AbrirPuerto()
 
                 If (rbFecha.Checked) Then
+                    validarRangoFecha()
                     ControladorFiscal.ResumenTotalesPorRangoDeFechas(My.Settings.ControladorModelo, dtFechaDesde.Value, dtFechaHasta.Value, nombreArchivo)
                 Else
+                    validarRangoJornadaFiscales()
                     ControladorFiscal.ResumenTotalesPorRangoDeJornadas(My.Settings.ControladorModelo, Integer.Parse(txtJornadaDesde.Text), Integer.Parse(txtJornadaHasta.Text), nombreArchivo)
                 End If
 
-                ControladorFiscal.CerrarPuerto()
-
-                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador()
+                Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador(ControladorFiscal)
 
                 Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                     sw.Write(archivo)
@@ -335,7 +340,7 @@ Public Class frmControladorFiscal
 
     End Sub
 
-    Private Function ObtenerArchivoDesdeControlador() As StringBuilder
+    Private Function ObtenerArchivoDesdeControlador(ControladorFiscal As NegControladorFiscal) As StringBuilder
         Try
             Dim archivo As StringBuilder = New StringBuilder()
             Dim continuar As String = String.Empty
@@ -364,6 +369,25 @@ Public Class frmControladorFiscal
 
         txtJornadaDesde.Enabled = rbJornada.Checked
         txtJornadaHasta.Enabled = rbJornada.Checked
+    End Sub
+
+    Private Sub validarRangoFecha()
+        If (dtFechaDesde.Value <= dtFechaHasta.Value) Then
+            Throw New InvalidOperationException("Los valores de los rangos de fechas ingresados son inválidos. El valor desde no puede ser mayor al valor hasta.")
+        End If
+    End Sub
+
+    Private Sub validarRangoJornadaFiscales()
+        Dim jornadaDesde As Integer = Integer.Parse(txtJornadaDesde.Text)
+        Dim jornadaHasta As Integer = Integer.Parse(txtJornadaHasta.Text)
+
+        If (jornadaDesde > 0 AndAlso jornadaHasta) Then
+            Throw New InvalidOperationException("Los valores de los rangos de jornadas ingresados son inválidos. Los valores deben ser mayor a cero.")
+        End If
+
+        If (jornadaDesde <= jornadaHasta) Then
+            Throw New InvalidOperationException("Los valores de los rangos de jornadas ingresados son inválidos. El valor desde no puede ser mayor al valor hasta.")
+        End If
     End Sub
 
     Private Sub NumeroCheque_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtJornadaDesde.KeyPress, txtJornadaHasta.KeyPress
