@@ -89,6 +89,9 @@ Public Class frmControladorFiscal
                 End If
 
                 Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador(ControladorFiscal)
+                If (archivo.Length = 0) Then
+                    Throw New Exception()
+                End If
 
                 Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                     sw.Write(archivo)
@@ -129,6 +132,9 @@ Public Class frmControladorFiscal
                 End If
 
                 Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador(ControladorFiscal)
+                If (archivo.Length = 0) Then
+                    Throw New Exception()
+                End If
 
                 Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                     sw.Write(archivo)
@@ -168,6 +174,9 @@ Public Class frmControladorFiscal
                 End If
 
                 Dim archivo As StringBuilder = ObtenerArchivoDesdeControlador(ControladorFiscal)
+                If (archivo.Length = 0) Then
+                    Throw New Exception()
+                End If
 
                 Using sw As StreamWriter = New System.IO.StreamWriter(FolderBrowserDialog.SelectedPath + "\" + nombreArchivo.ToString())
                     sw.Write(archivo)
@@ -372,7 +381,7 @@ Public Class frmControladorFiscal
     End Sub
 
     Private Sub validarRangoFecha()
-        If (dtFechaDesde.Value <= dtFechaHasta.Value) Then
+        If (dtFechaDesde.Value > dtFechaHasta.Value) Then
             Throw New InvalidOperationException("Los valores de los rangos de fechas ingresados son inválidos. El valor desde no puede ser mayor al valor hasta.")
         End If
     End Sub
@@ -381,11 +390,11 @@ Public Class frmControladorFiscal
         Dim jornadaDesde As Integer = Integer.Parse(txtJornadaDesde.Text)
         Dim jornadaHasta As Integer = Integer.Parse(txtJornadaHasta.Text)
 
-        If (jornadaDesde > 0 AndAlso jornadaHasta) Then
+        If (jornadaDesde > 0 AndAlso jornadaHasta > 0) Then
             Throw New InvalidOperationException("Los valores de los rangos de jornadas ingresados son inválidos. Los valores deben ser mayor a cero.")
         End If
 
-        If (jornadaDesde <= jornadaHasta) Then
+        If (jornadaDesde > jornadaHasta) Then
             Throw New InvalidOperationException("Los valores de los rangos de jornadas ingresados son inválidos. El valor desde no puede ser mayor al valor hasta.")
         End If
     End Sub
