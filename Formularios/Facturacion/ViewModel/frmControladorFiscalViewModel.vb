@@ -9,6 +9,7 @@ Imports System.IO
 Imports NPOI.SS.UserModel
 Imports NPOI.XSSF.UserModel
 Imports Common.Core.Exceptions
+Imports System.Text
 
 Namespace Formularios.Facturacion
 
@@ -19,6 +20,25 @@ Namespace Formularios.Facturacion
 
         Public Property ControladorFiscalFechaDesde As DateTime
         Public Property ControladorFiscalFechaHasta As DateTime
+        Public Property ControladorFiscalJornadaDesde As Integer
+        Public Property ControladorFiscalJornadaHasta As Integer
+
+        Private _ControladorFiscalFiltrarPorFecha As Boolean
+        Public Property ControladorFiscalFiltrarPorFecha() As Boolean
+            Get
+                Return _ControladorFiscalFiltrarPorFecha
+            End Get
+            Set(ByVal value As Boolean)
+                _ControladorFiscalFiltrarPorFecha = value
+                NotifyPropertyChanged(NameOf(Me.Facturas))
+            End Set
+        End Property
+
+        Public ReadOnly Property ControladorFiscalFiltrarPorJornada() As Boolean
+            Get
+                Return Not _ControladorFiscalFiltrarPorFecha
+            End Get
+        End Property
         Public Property TicketFechaDesde As DateTime
         Public Property TicketFechaHasta As DateTime
         Private _Facturas As List(Of Factura)
@@ -48,9 +68,65 @@ Namespace Formularios.Facturacion
             Servicio.CierreZ()
         End Sub
 
-        Friend Sub CierreZPorFecha()
-            Servicio.CierreZPorFecha(TicketFechaDesde, TicketFechaHasta)
+        Friend Sub CierreZPorFiltro(ControladorFiscalFiltrarPorFecha As Boolean)
+            If Me.ControladorFiscalFiltrarPorFecha Then
+                Servicio.CierreZPorFecha(TicketFechaDesde, TicketFechaHasta)
+            Else
+                Servicio.CierreZPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta)
+            End If
+
         End Sub
+
+        Friend Function CintaTestigoDigitalPorFiltro(rutaArchivo As String, ControladorFiscalFiltrarPorFecha As Boolean) As String
+            Dim nombre As String = String.Empty
+            Dim datos As StringBuilder = New StringBuilder()
+
+            If Me.ControladorFiscalFiltrarPorFecha Then
+                Servicio.CintaTestigoDigitalPorFecha(TicketFechaDesde, TicketFechaHasta, nombre, datos)
+            Else
+                Servicio.CintaTestigoDigitalPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
+            End If
+
+            Using sw As New System.IO.StreamWriter($"{rutaArchivo}/{nombre}")
+                sw.Write(datos.ToString())
+            End Using
+
+            Return nombre
+        End Function
+
+        Friend Function DuplicadosDocumentosTipoA(rutaArchivo As String, ControladorFiscalFiltrarPorFecha As Boolean) As String
+            Dim nombre As String = String.Empty
+            Dim datos As StringBuilder = New StringBuilder()
+
+            If Me.ControladorFiscalFiltrarPorFecha Then
+                Servicio.DuplicadosDocumentosTipoAPorFecha(TicketFechaDesde, TicketFechaHasta, nombre, datos)
+            Else
+                Servicio.DuplicadosDocumentosTipoAPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
+            End If
+
+            Using sw As New System.IO.StreamWriter($"{rutaArchivo}/{nombre}")
+                sw.Write(datos.ToString())
+            End Using
+
+            Return nombre
+        End Function
+
+        Friend Function ResumenTotales(rutaArchivo As String, ControladorFiscalFiltrarPorFecha As Boolean) As String
+            Dim nombre As String = String.Empty
+            Dim datos As StringBuilder = New StringBuilder()
+
+            If Me.ControladorFiscalFiltrarPorFecha Then
+                Servicio.ResumenTotalesPorRangoDeFecha(TicketFechaDesde, TicketFechaHasta, nombre, datos)
+            Else
+                Servicio.ResumenTotalesPorRangoDeJornadaFiscal(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
+            End If
+
+            Using sw As New System.IO.StreamWriter($"{rutaArchivo}/{nombre}")
+                sw.Write(datos.ToString())
+            End Using
+
+            Return nombre
+        End Function
 
         Friend Async Function BuscarAsync() As Task
             Dim tiposFacturas As List(Of TipoFactura) = New List(Of TipoFactura)()

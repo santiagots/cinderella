@@ -297,8 +297,8 @@ namespace Common.Device.Printer
         {
             var commands = new List<string>();
 
-            commands.Add(EpsonTMT900FACommand.CierreDeDia.Cmd);
-            commands.Add(EpsonTMT900FACommand.CierreDeDia.CmdExt);
+            commands.Add(EpsonTMT900FACommand.CierreZ.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierreZ.CmdExt);
             SendData(commands);
         }
 
@@ -306,11 +306,133 @@ namespace Common.Device.Printer
         {
             var commands = new List<string>();
 
-            commands.Add(EpsonTMT900FACommand.CierreDeDiaPorFecha.Cmd);
-            commands.Add(EpsonTMT900FACommand.CierreDeDiaPorFecha.CmdExt);
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.CierrZPorRangoDeFecha.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierrZPorRangoDeFecha.CmdExt);
             commands.Add(fechaDesde.ToString("ddMMyy"));
             commands.Add(fechaHasta.ToString("ddMMyy"));
             SendData(commands);
+
+            //Fuerzo una continuacion
+            commands.Clear();
+            commands.Add(EpsonTMT900FACommand.CierrZContinuarReporte.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierrZContinuarReporte.CmdExt);
+            SendData(commands);
+
+            //Cierro la ejecucion
+            commands.Clear();
+            commands.Add(EpsonTMT900FACommand.CierrZFinalizarReporte.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierrZFinalizarReporte.CmdExt);
+            SendData(commands);
+        }
+
+        public void CierreZPorRangoDeJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.CierrZPorRangoDeJornadaFiscal.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierrZPorRangoDeJornadaFiscal.CmdExt);
+            commands.Add(controladorFiscalJornadaDesde.ToString());
+            commands.Add(controladorFiscalJornadaHasta.ToString());
+            SendData(commands);
+
+            //Fuerzo una continuacion
+            commands.Clear();
+            commands.Add(EpsonTMT900FACommand.CierrZContinuarReporte.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierrZContinuarReporte.CmdExt);
+            SendData(commands);
+
+            //Cierro la ejecucion
+            commands.Clear();
+            commands.Add(EpsonTMT900FACommand.CierrZFinalizarReporte.Cmd);
+            commands.Add(EpsonTMT900FACommand.CierrZFinalizarReporte.CmdExt);
+            SendData(commands);
+
+        }
+
+        public void CintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.CintaTestigoDigitalPorRangoDeFecha.Cmd);
+            commands.Add(EpsonTMT900FACommand.CintaTestigoDigitalPorRangoDeFecha.CmdExt);
+            commands.Add(fechaDesde.ToString("ddMMyy"));
+            commands.Add(fechaHasta.ToString("ddMMyy"));
+            SendData(commands);
+            nombreArchivo = GetExtraField(1);
+            datos = ObtenerDatosReporte();
+        }
+
+        public void CintaTestigoDigitalPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.CintaTestigoDigitalPorRangoDeJornadaFiscal.Cmd);
+            commands.Add(EpsonTMT900FACommand.CintaTestigoDigitalPorRangoDeJornadaFiscal.CmdExt);
+            commands.Add(controladorFiscalJornadaDesde.ToString());
+            commands.Add(controladorFiscalJornadaHasta.ToString());
+            SendData(commands);
+            nombreArchivo = GetExtraField(1);
+            datos = ObtenerDatosReporte();
+        }
+
+        public void DuplicadosDocumentosTipoAPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.DuplicadosDocumentosTipoAPorRangoDeFecha.Cmd);
+            commands.Add(EpsonTMT900FACommand.DuplicadosDocumentosTipoAPorRangoDeFecha.CmdExt);
+            commands.Add(fechaDesde.ToString("ddMMyy"));
+            commands.Add(fechaHasta.ToString("ddMMyy"));
+            SendData(commands);
+            nombreArchivo = GetExtraField(1);
+            datos = ObtenerDatosReporte();
+        }
+
+        public void DuplicadosDocumentosTipoAPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.DuplicadosDocumentosTipoAPorRangoDeJornadaFiscal.Cmd);
+            commands.Add(EpsonTMT900FACommand.DuplicadosDocumentosTipoAPorRangoDeJornadaFiscal.CmdExt);
+            commands.Add(controladorFiscalJornadaDesde.ToString());
+            commands.Add(controladorFiscalJornadaHasta.ToString());
+            SendData(commands);
+            nombreArchivo = GetExtraField(1);
+            datos = ObtenerDatosReporte();
+        }
+
+        public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.ResumenTotalesPorRangoDeFecha.Cmd);
+            commands.Add(EpsonTMT900FACommand.ResumenTotalesPorRangoDeFecha.CmdExt);
+            commands.Add(fechaDesde.ToString("ddMMyy"));
+            commands.Add(fechaHasta.ToString("ddMMyy"));
+            SendData(commands);
+            nombreArchivo = GetExtraField(1);
+            datos = ObtenerDatosReporte();
+        }
+
+        public void ResumenTotalesPorRangoDeJornadaFiscal(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            var commands = new List<string>();
+
+            //Inicio el reporte
+            commands.Add(EpsonTMT900FACommand.ResumenTotalesPorRangoDeJornadaFiscal.Cmd);
+            commands.Add(EpsonTMT900FACommand.ResumenTotalesPorRangoDeJornadaFiscal.CmdExt);
+            commands.Add(controladorFiscalJornadaDesde.ToString());
+            commands.Add(controladorFiscalJornadaHasta.ToString());
+            SendData(commands);
+            nombreArchivo = GetExtraField(1);
+            datos = ObtenerDatosReporte();
         }
 
         public void Informacionjornada()
@@ -340,6 +462,45 @@ namespace Common.Device.Printer
                 codigoDocumento = "082"; //Documento Factura B
 
             return $"{codigoDocumento}-{puntoVentaOriginal.PadLeft(5, '0')}-{comprabanteOriginal.PadLeft(8, '0')}";
+        }
+
+        private StringBuilder ObtenerDatosReporte()
+        {
+            List<string> commands = new List<string>();
+            StringBuilder datos = new StringBuilder();
+
+            string hayMasDatos = string.Empty;
+            datos = new StringBuilder();
+
+            try
+            {
+                do
+                {
+                    commands.Clear();
+                    commands.Add(EpsonTMT900FACommand.ContinuarDescargaReporte.Cmd);
+                    commands.Add(EpsonTMT900FACommand.ContinuarDescargaReporte.CmdExt);
+                    SendData(commands);
+
+                    datos.Append(GetExtraField(1));
+                    hayMasDatos = GetExtraField(2);
+
+                } while (hayMasDatos == "S");
+            }
+            catch
+            {
+                commands.Clear();
+                commands.Add(EpsonTMT900FACommand.CancelarDescargaReporte.Cmd);
+                commands.Add(EpsonTMT900FACommand.CancelarDescargaReporte.CmdExt);
+                SendData(commands);
+                throw;
+            }
+
+            commands.Clear();
+            commands.Add(EpsonTMT900FACommand.FinalizarDescargaReporte.Cmd);
+            commands.Add(EpsonTMT900FACommand.FinalizarDescargaReporte.CmdExt);
+            SendData(commands);
+
+            return datos;
         }
     }
 }

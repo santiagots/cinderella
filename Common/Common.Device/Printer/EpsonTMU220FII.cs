@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Text;
 
 namespace Common.Device.Printer
 {
@@ -275,8 +276,8 @@ namespace Common.Device.Printer
         {
             var commands = new List<string>();
 
-            commands.Add(EpsonTMU220FIICommand.CierreDeDia.Cmd);
-            commands.Add(EpsonTMU220FIICommand.CierreDeDia.CmdExt);
+            commands.Add(EpsonTMU220FIICommand.CierreZ.Cmd);
+            commands.Add(EpsonTMU220FIICommand.CierreZ.CmdExt);
             SendData(commands);
         }
 
@@ -284,10 +285,62 @@ namespace Common.Device.Printer
         {
             var commands = new List<string>();
 
-            commands.Add(EpsonTMU220FIICommand.CierreDeDiaPorFecha.Cmd);
-            commands.Add(EpsonTMU220FIICommand.CierreDeDiaPorFecha.CmdExt);
+            commands.Add(EpsonTMU220FIICommand.CierreZPorRangoDeFecha.Cmd);
+            commands.Add(EpsonTMU220FIICommand.CierreZPorRangoDeFecha.CmdExt);
             commands.Add(fechaDesde.ToString("ddMMyy"));
             commands.Add(fechaHasta.ToString("ddMMyy"));
+            SendData(commands);
+        }
+
+
+        public void CintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void CintaTestigoDigitalPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void CintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void CintaTestigoDigitalPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void DuplicadosDocumentosTipoAPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void DuplicadosDocumentosTipoAPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void ResumenTotalesPorRangoDeJornadaFiscal(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void CierreZPorRangoDeJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMU220FIICommand.CierreZPorRangoDeJornada.Cmd);
+            commands.Add(EpsonTMU220FIICommand.CierreZPorRangoDeJornada.CmdExt);
+            commands.Add(controladorFiscalJornadaDesde.ToString());
+            commands.Add(controladorFiscalJornadaHasta.ToString());
             SendData(commands);
         }
 

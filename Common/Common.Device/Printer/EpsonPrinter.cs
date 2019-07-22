@@ -134,6 +134,41 @@ namespace Common.Device.Printer
             epsonTM.CierreZPorRangoDeFecha(fechaDesde, fechaHasta);
         }
 
+        public void CierreZPorRangoDeJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta)
+        {
+            epsonTM.CierreZPorRangoDeJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta);
+        }
+
+        public void CintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            epsonTM.CintaTestigoDigitalPorFecha(fechaDesde, fechaHasta, out nombreArchivo, out datos);
+        }
+
+        public void CintaTestigoDigitalPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            epsonTM.CintaTestigoDigitalPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombreArchivo, out datos);
+        }
+
+        public void DuplicadosDocumentosTipoAPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            epsonTM.DuplicadosDocumentosTipoAPorFecha(fechaDesde, fechaHasta, out nombreArchivo, out datos);
+        }
+
+        public void DuplicadosDocumentosTipoAPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            epsonTM.DuplicadosDocumentosTipoAPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombreArchivo, out datos);
+        }
+
+        public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            epsonTM.ResumenTotalesPorRangoDeFecha(fechaDesde, fechaHasta, out nombreArchivo, out datos);
+        }
+
+        public void ResumenTotalesPorRangoDeJornadaFiscal(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombreArchivo, out StringBuilder datos)
+        {
+            epsonTM.ResumenTotalesPorRangoDeJornadaFiscal(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombreArchivo, out datos);
+        }
+
         public void Informacionjornada()
         {
             epsonTM.Informacionjornada();

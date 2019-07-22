@@ -2,6 +2,7 @@
 using Common.Core.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Common.Service.Facturar
 {
@@ -40,6 +41,41 @@ namespace Common.Service.Facturar
         public void ObtenerCierreZPorFecha(DateTime fechaDesde, DateTime fechaHasta)
         {
             facturarStrategy.ObtenerCierreZPorFecha(fechaDesde, fechaHasta);
+        }
+
+        public void ObtenerCierreZPorJornada(int ControladorFiscalJornadaDesde, int ControladorFiscalJornadaHasta)
+        {
+            facturarStrategy.ObtenerCierreZPorJornadaFiscal(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta);
+        }
+
+        public void ObtenerCintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
+        {
+            facturarStrategy.ObtenerCintaTestigoDigitalPorFecha(fechaDesde, fechaHasta, out nombre, out datos);
+        }
+
+        public void ObtenerCintaTestigoDigitalPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombre, out StringBuilder datos)
+        {
+            facturarStrategy.ObtenerCintaTestigoDigitalPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
+        }
+
+        public void ObtenerDuplicadosDocumentosTipoAPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
+        {
+            facturarStrategy.DuplicadosDocumentosTipoAPorFecha(fechaDesde, fechaHasta, out nombre, out datos);
+        }
+
+        public void ObtenerDuplicadosDocumentosTipoAPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombre, out StringBuilder datos)
+        {
+            facturarStrategy.DuplicadosDocumentosTipoAPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
+        }
+
+        public void ObtenerResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
+        {
+            facturarStrategy.ResumenTotalesPorRangoDeFecha(fechaDesde, fechaHasta, out nombre, out datos);
+        }
+
+        public void ObtenerResumenTotalesPorRangoDeJornadaFiscal(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombre, out StringBuilder datos)
+        {
+            facturarStrategy.ResumenTotalesPorRangoDeJornadaFiscal(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
         }
     }
 }

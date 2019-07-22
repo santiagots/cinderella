@@ -6,6 +6,7 @@ Imports Model = Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
 Imports Common.Core.ValueObjects
+Imports System.Text
 
 Namespace Formularios.Facturacion
     Public Class Servicio
@@ -26,6 +27,41 @@ Namespace Formularios.Facturacion
         Friend Shared Sub CierreZPorFecha(fechaDesde As Date, fechaHasta As Date)
             Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
             facturar.ObtenerCierreZPorFecha(fechaDesde, fechaHasta)
+        End Sub
+
+        Friend Shared Sub CierreZPorJornada(controladorFiscalJornadaDesde As Integer, controladorFiscalJornadaHasta As Integer)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerCierreZPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta)
+        End Sub
+
+        Friend Shared Sub CintaTestigoDigitalPorFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerCintaTestigoDigitalPorFecha(fechaDesde, fechaHasta, nombre, datos)
+        End Sub
+
+        Friend Shared Sub CintaTestigoDigitalPorJornada(ControladorFiscalJornadaDesde As Integer, ControladorFiscalJornadaHasta As Integer, ByRef nombre As String, ByRef datos As StringBuilder)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerCintaTestigoDigitalPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
+        End Sub
+
+        Friend Shared Sub DuplicadosDocumentosTipoAPorFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerDuplicadosDocumentosTipoAPorFecha(fechaDesde, fechaHasta, nombre, datos)
+        End Sub
+
+        Friend Shared Sub DuplicadosDocumentosTipoAPorJornada(ControladorFiscalJornadaDesde As Integer, ControladorFiscalJornadaHasta As Integer, ByRef nombre As String, ByRef datos As StringBuilder)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerDuplicadosDocumentosTipoAPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
+        End Sub
+
+        Friend Shared Sub ResumenTotalesPorRangoDeFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerResumenTotalesPorRangoDeFecha(fechaDesde, fechaHasta, nombre, datos)
+        End Sub
+
+        Friend Shared Sub ResumenTotalesPorRangoDeJornadaFiscal(ControladorFiscalJornadaDesde As Integer, ControladorFiscalJornadaHasta As Integer, ByRef nombre As String, ByRef datos As StringBuilder)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.ObtenerResumenTotalesPorRangoDeJornadaFiscal(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
         End Sub
 
         Public Shared Sub CierreZ()

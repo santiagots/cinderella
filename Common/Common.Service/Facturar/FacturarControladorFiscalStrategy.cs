@@ -4,6 +4,8 @@ using System.Linq;
 using Common.Device.Printer;
 using Common.Core.ValueObjects;
 using System;
+using System.Text;
+using Common.Core.Exceptions;
 
 namespace Common.Service.Facturar
 {
@@ -21,7 +23,99 @@ namespace Common.Service.Facturar
         {
             using (EpsonPrinter epsonFP = new EpsonPrinter())
             {
+                if (fechaDesde < fechaHasta)
+                    throw new NegocioException("Error, el valor de la fecha desde no puede ser mayor a la fecha hasta.");
+
                 epsonFP.CierreZPorRangoDeFecha(fechaDesde, fechaHasta);
+            }
+        }
+
+        public void ObtenerCierreZPorJornadaFiscal(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if(controladorFiscalJornadaDesde == 0 || controladorFiscalJornadaHasta == 0)
+                    throw new NegocioException("Error, el valor de la jornada desde o hasta debe ser mayor a cero.");
+
+                if (controladorFiscalJornadaDesde > controladorFiscalJornadaHasta)
+                    throw new NegocioException("Error, el valor de la jornada desde no puede ser mayor a la jornada hasta.");
+
+                epsonFP.CierreZPorRangoDeJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta);
+            }
+        }
+
+        public void ObtenerCintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if (fechaDesde < fechaHasta)
+                    throw new NegocioException("Error, la fecha desde no puede ser mayor a la fecha hasta.");
+
+                epsonFP.CintaTestigoDigitalPorFecha(fechaDesde, fechaHasta, out nombre, out datos);
+            }
+        }
+
+        public void ObtenerCintaTestigoDigitalPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombre, out StringBuilder datos)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if (controladorFiscalJornadaDesde == 0 || controladorFiscalJornadaHasta == 0)
+                    throw new NegocioException("Error, el valor de la jornada desde o hasta debe ser mayor a cero.");
+
+                if (controladorFiscalJornadaDesde > controladorFiscalJornadaHasta)
+                    throw new NegocioException("Error, el valor de la jornada desde no puede ser mayor a la jornada hasta.");
+
+                epsonFP.CintaTestigoDigitalPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
+            }
+        }
+
+        public void DuplicadosDocumentosTipoAPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if (fechaDesde < fechaHasta)
+                    throw new NegocioException("Error, la fecha desde no puede ser mayor a la fecha hasta.");
+
+                epsonFP.DuplicadosDocumentosTipoAPorFecha(fechaDesde, fechaHasta, out nombre, out datos);
+            }
+        }
+
+        public void DuplicadosDocumentosTipoAPorJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombre, out StringBuilder datos)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if (controladorFiscalJornadaDesde == 0 || controladorFiscalJornadaHasta == 0)
+                    throw new NegocioException("Error, el valor de la jornada desde o hasta debe ser mayor a cero.");
+
+                if (controladorFiscalJornadaDesde > controladorFiscalJornadaHasta)
+                    throw new NegocioException("Error, el valor de la jornada desde no puede ser mayor a la jornada hasta.");
+
+                epsonFP.DuplicadosDocumentosTipoAPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
+            }
+        }
+
+        public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if (fechaDesde < fechaHasta)
+                    throw new NegocioException("Error, la fecha desde no puede ser mayor a la fecha hasta.");
+
+                epsonFP.ResumenTotalesPorRangoDeFecha(fechaDesde, fechaHasta, out nombre, out datos);
+            }
+        }
+
+        public void ResumenTotalesPorRangoDeJornadaFiscal(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta, out string nombre, out StringBuilder datos)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                if (controladorFiscalJornadaDesde == 0 || controladorFiscalJornadaHasta == 0)
+                    throw new NegocioException("Error, el valor de la jornada desde o hasta debe ser mayor a cero.");
+
+                if (controladorFiscalJornadaDesde > controladorFiscalJornadaHasta)
+                    throw new NegocioException("Error, el valor de la jornada desde no puede ser mayor a la jornada hasta.");
+
+                epsonFP.ResumenTotalesPorRangoDeJornadaFiscal(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
             }
         }
 

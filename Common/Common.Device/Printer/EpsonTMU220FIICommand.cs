@@ -10,9 +10,11 @@ namespace Common.Device.Printer
     {
         internal static EpsonCommand CierreDeCaja = new EpsonCommand("\x8\x2", "\x0\x1");
 
-        internal static EpsonCommand CierreDeDia = new EpsonCommand("\x8\x1", "\xC\x0");
+        internal static EpsonCommand CierreZ = new EpsonCommand("\x8\x1", "\xC\x0");
 
-        internal static EpsonCommand CierreDeDiaPorFecha = new EpsonCommand("\x8\x10", "\x0\x1");
+        internal static EpsonCommand CierreZPorRangoDeFecha = new EpsonCommand("\x8\x10", "\x0\x1");
+
+        internal static EpsonCommand CierreZPorRangoDeJornada = new EpsonCommand("\x8\x11", "\x0\x1");
 
         internal static EpsonCommand Informacionjornada = new EpsonCommand("\x8\x3", "\xC\x0");
 
