@@ -44,6 +44,11 @@ Namespace Formularios.Facturacion
             facturar.ObtenerCintaTestigoDigitalPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
         End Sub
 
+        Friend Shared Sub BorradoJornadasMemoriaTransacciones(borradasJornadasHasta As Integer)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            facturar.BorradoJornadasMemoriaTransacciones(borradasJornadasHasta)
+        End Sub
+
         Friend Shared Sub DuplicadosDocumentosTipoAPorFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
             Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
             facturar.ObtenerDuplicadosDocumentosTipoAPorFecha(fechaDesde, fechaHasta, nombre, datos)
@@ -88,6 +93,31 @@ Namespace Formularios.Facturacion
                 Dim facturaRepository As IFacturaRepository = New FacturaRepository(context)
                 Return facturaRepository.ObtenerUltimoNumeroFactura(tipoFactura)
             End Using
+        End Function
+
+        Public Shared Function ObtenerMemoriaTransacciones(ByRef cintaTestigoDigitalDisponiblesDesde As Integer,
+                                                           ByRef cintaTestigoDigitalDisponiblesHasta As Integer,
+                                                           ByRef descargarDuplicadosTipoADisponiblesDesde As Integer,
+                                                           ByRef descargarDuplicadosTipoADisponiblesHasta As Integer,
+                                                           ByRef resumenTotalesDisponiblesDesde As Integer,
+                                                           ByRef resumenTotalesDisponiblesHasta As Integer,
+                                                           ByRef jornadasDescargadasCompletamenteDesde As Integer,
+                                                           ByRef jornadasDescargadasCompletamenteHasta As Integer,
+                                                           ByRef jornadasBorradasDesde As Integer,
+                                                           ByRef jornadasBorradasHasta As Integer)
+
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+
+            facturar.ObtenerMemoriaTransacciones(cintaTestigoDigitalDisponiblesDesde,
+                                                 cintaTestigoDigitalDisponiblesHasta,
+                                                 descargarDuplicadosTipoADisponiblesDesde,
+                                                 descargarDuplicadosTipoADisponiblesHasta,
+                                                 resumenTotalesDisponiblesDesde,
+                                                 resumenTotalesDisponiblesHasta,
+                                                 jornadasDescargadasCompletamenteDesde,
+                                                 jornadasDescargadasCompletamenteHasta,
+                                                 jornadasBorradasDesde,
+                                                 jornadasBorradasHasta)
         End Function
 
         Public Shared Function FacturarService(tipoFactura As TipoFactura, tipoCliente As TipoCliente, condicionesIVA As CondicionIVA, pagos As IEnumerable(Of TicketPago), productos As IEnumerable(Of TicketProducto), porcentajeFacturacion As Decimal, nombreYApellido As String, direccion As String, localidad As String, cuit As String) As IList(Of Integer)

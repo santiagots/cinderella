@@ -19,6 +19,14 @@ namespace Common.Service.Facturar
             }
         }
 
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                epsonFP.BorradoJornadasMemoriaTransacciones(borradasJornadasHasta);
+            }
+        }
+
         public void ObtenerCierreZPorFecha(DateTime fechaDesde, DateTime fechaHasta)
         {
             using (EpsonPrinter epsonFP = new EpsonPrinter())
@@ -150,6 +158,14 @@ namespace Common.Service.Facturar
 
                 numeroFacturaRespuesta.Add(numeroTicket);
                 return numeroFacturaRespuesta;
+            }
+        }
+
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            using (EpsonPrinter epsonFP = new EpsonPrinter())
+            {
+                epsonFP.ObtenerMemoriaTransacciones(out cintaTestigoDigitalDisponiblesDesde, out cintaTestigoDigitalDisponiblesHasta, out descargarDuplicadosTipoADisponiblesDesde, out descargarDuplicadosTipoADisponiblesHasta, out resumenTotalesDisponiblesDesde, out resumenTotalesDisponiblesHasta, out jornadasDescargadasCompletamenteDesde, out jornadasDescargadasCompletamenteHasta, out jornadasBorradasDesde, out jornadasBorradasHasta);
             }
         }
     }

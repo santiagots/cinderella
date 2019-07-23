@@ -58,5 +58,15 @@ namespace Common.Service.Facturar
         {
             throw new NegocioException("El metodo de facturacion manual no permite obtener reportes de Duplicados Documentos Tipo A");
         }
+
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            throw new NegocioException("El metodo de facturacion manual no permite obtener el estado de la Memoria de Transacciones");
+        }
+
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            throw new NegocioException("El metodo de facturacion manual no permite borrar jornadas de la Memoria de Transacciones");
+        }
     }
 }

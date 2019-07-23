@@ -77,5 +77,15 @@ namespace Common.Service.Facturar
         {
             facturarStrategy.ResumenTotalesPorRangoDeJornadaFiscal(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombre, out datos);
         }
+
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            facturarStrategy.ObtenerMemoriaTransacciones(out cintaTestigoDigitalDisponiblesDesde, out cintaTestigoDigitalDisponiblesHasta, out descargarDuplicadosTipoADisponiblesDesde, out  descargarDuplicadosTipoADisponiblesHasta, out  resumenTotalesDisponiblesDesde, out  resumenTotalesDisponiblesHasta, out  jornadasDescargadasCompletamenteDesde, out  jornadasDescargadasCompletamenteHasta, out  jornadasBorradasDesde, out  jornadasBorradasHasta);
+        }
+
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            facturarStrategy.BorradoJornadasMemoriaTransacciones(borradasJornadasHasta);
+        }
     }
 }

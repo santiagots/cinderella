@@ -435,6 +435,36 @@ namespace Common.Device.Printer
             datos = ObtenerDatosReporte();
         }
 
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMT900FACommand.InformacionMemoriaTransacciones.Cmd);
+            commands.Add(EpsonTMT900FACommand.InformacionMemoriaTransacciones.CmdExt);
+            SendData(commands);
+
+            cintaTestigoDigitalDisponiblesDesde = int.Parse(GetExtraField(1));
+            cintaTestigoDigitalDisponiblesHasta = int.Parse(GetExtraField(2));
+            descargarDuplicadosTipoADisponiblesDesde = int.Parse(GetExtraField(3));
+            descargarDuplicadosTipoADisponiblesHasta = int.Parse(GetExtraField(4));
+            resumenTotalesDisponiblesDesde = int.Parse(GetExtraField(5));
+            resumenTotalesDisponiblesHasta = int.Parse(GetExtraField(6));
+            jornadasDescargadasCompletamenteDesde = int.Parse(GetExtraField(7));
+            jornadasDescargadasCompletamenteHasta = int.Parse(GetExtraField(8));
+            jornadasBorradasDesde = int.Parse(GetExtraField(9));
+            jornadasBorradasHasta = int.Parse(GetExtraField(10));
+        }
+
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMT900FACommand.BorradoJornadasMemoriaTransacciones.Cmd);
+            commands.Add(EpsonTMT900FACommand.BorradoJornadasMemoriaTransacciones.CmdExt);
+            commands.Add(borradasJornadasHasta.ToString());
+            SendData(commands);
+        }
+
         public void Informacionjornada()
         {
             var commands = new List<string>();

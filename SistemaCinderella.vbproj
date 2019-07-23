@@ -126,6 +126,24 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Desarrollo|x86'">
+    <OutputPath>bin\x86\Desarrollo\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Desarrollo|AnyCPU'">
+    <OutputPath>bin\Desarrollo\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Piloto|x86'">
+    <OutputPath>bin\x86\Piloto\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Piloto|AnyCPU'">
+    <OutputPath>bin\Piloto\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
@@ -276,9 +294,16 @@
     <Compile Include="Formularios\DialogSincronizar.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\Facturacion\frmInformacionTransacciones.Designer.vb">
+      <DependentUpon>frmInformacionTransacciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Facturacion\frmInformacionTransacciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\Facturacion\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Facturacion\Servicio\Servicio.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmControladorFiscalViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\frmInformacionTransaccionesViewModel.vb" />
     <Compile Include="Formularios\frmCostoFinancieroAdministracion.Designer.vb">
       <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
     </Compile>
@@ -1201,6 +1226,9 @@
     <EmbeddedResource Include="Formularios\DialogSincronizar.resx">
       <DependentUpon>DialogSincronizar.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Facturacion\frmInformacionTransacciones.resx">
+      <DependentUpon>frmInformacionTransacciones.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmCostoFinancieroAdministracion.resx">
       <DependentUpon>frmCostoFinancieroAdministracion.vb</DependentUpon>
     </EmbeddedResource>
@@ -1624,9 +1652,24 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReporteTransaccion.vb</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.Debug.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.Desarrollo.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.Piloto.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.Release.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmInformacionTransaccionesViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.FacturaDetalleViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmFacturaAdministracionViewModel.datasource" />
@@ -2412,4 +2455,24 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="app_config_AfterCompile" AfterTargets="AfterCompile" Condition="Exists('app.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="app.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="app.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="App.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
+  <Target Name="app_config_AfterPublish" AfterTargets="AfterPublish" Condition="Exists('app.$(Configuration).config')">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
 </Project>

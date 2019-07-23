@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports Common.Core.Extension
 Imports Enums = Common.Core.Enum
-Imports SistemaCinderella.VistaModelo.Ventas.frmVentasViewModel
 Imports Common.Core.Exceptions
 Imports System.Threading.Tasks
 Imports Helper = Common.Core.Helper

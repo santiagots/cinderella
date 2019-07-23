@@ -63,5 +63,15 @@ namespace Common.Service.Facturar
         {
             throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
         }
+
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
+        }
+
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
+        }
     }
 }

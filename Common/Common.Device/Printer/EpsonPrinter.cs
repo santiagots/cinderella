@@ -169,6 +169,16 @@ namespace Common.Device.Printer
             epsonTM.ResumenTotalesPorRangoDeJornadaFiscal(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta, out nombreArchivo, out datos);
         }
 
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            epsonTM.ObtenerMemoriaTransacciones(out cintaTestigoDigitalDisponiblesDesde, out cintaTestigoDigitalDisponiblesHasta, out descargarDuplicadosTipoADisponiblesDesde, out descargarDuplicadosTipoADisponiblesHasta, out resumenTotalesDisponiblesDesde, out resumenTotalesDisponiblesHasta, out jornadasDescargadasCompletamenteDesde, out jornadasDescargadasCompletamenteHasta, out jornadasBorradasDesde, out jornadasBorradasHasta);
+        }
+
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            epsonTM.BorradoJornadasMemoriaTransacciones(borradasJornadasHasta);
+        }
+
         public void Informacionjornada()
         {
             epsonTM.Informacionjornada();

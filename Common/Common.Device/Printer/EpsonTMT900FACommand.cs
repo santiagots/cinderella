@@ -32,6 +32,10 @@ namespace Common.Device.Printer
 
         internal static EpsonCommand ResumenTotalesPorRangoDeJornadaFiscal = new EpsonCommand("\x9\x52", "\x0\x4");
 
+        internal static EpsonCommand InformacionMemoriaTransacciones = new EpsonCommand("\x9\x15", "\x0\x0");
+
+        internal static EpsonCommand BorradoJornadasMemoriaTransacciones = new EpsonCommand("\x9\x10", "\x0\x0");
+
         internal static EpsonCommand ContinuarDescargaReporte = new EpsonCommand("\x9\x70", "\x0\x0");
 
         internal static EpsonCommand FinalizarDescargaReporte = new EpsonCommand("\x9\x71", "\x0\x0");

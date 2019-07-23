@@ -333,6 +333,16 @@ namespace Common.Device.Printer
             throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
         }
 
+        public void ObtenerMemoriaTransacciones(out int cintaTestigoDigitalDisponiblesDesde, out int cintaTestigoDigitalDisponiblesHasta, out int descargarDuplicadosTipoADisponiblesDesde, out int descargarDuplicadosTipoADisponiblesHasta, out int resumenTotalesDisponiblesDesde, out int resumenTotalesDisponiblesHasta, out int jornadasDescargadasCompletamenteDesde, out int jornadasDescargadasCompletamenteHasta, out int jornadasBorradasDesde, out int jornadasBorradasHasta)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
         public void CierreZPorRangoDeJornada(int controladorFiscalJornadaDesde, int controladorFiscalJornadaHasta)
         {
             var commands = new List<string>();

@@ -73,6 +73,13 @@ Public Class frmControladorFiscal
                  End Sub)
     End Sub
 
+    Private Sub btnInformacionTransaccionesPorFiltro_Click(sender As Object, e As EventArgs) Handles btnInformacionTransaccionesPorFiltro.Click
+        Ejecutar(Sub()
+                     Dim frmInformacionTransacciones As frmInformacionTransacciones = New frmInformacionTransacciones()
+                     frmInformacionTransacciones.ShowDialog()
+                 End Sub)
+    End Sub
+
     Private Sub EvaluarPermisos()
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Sistema_Controlador_Fiscal_EmitirCierreZdía)) Then
             btnCierreZ.Enabled = True
