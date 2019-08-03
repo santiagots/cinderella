@@ -33,6 +33,7 @@ namespace Common.Device.Printer
                 case CondicionIVA.Responsable_Inscripto:
                 case CondicionIVA.Exento:
                 default:
+                    LineaRemitoAsociados1 = ".";
                     TipoDocumentoComprador = CUIT;
                     NumeroDocumentoComprador = cuit;
                     ResponsableIvaComprador = ObtenerResponsableIvaComprador(condicionesIVA);

@@ -31,7 +31,7 @@ namespace Common.Service.Facturar
         {
             using (EpsonPrinter epsonFP = new EpsonPrinter())
             {
-                if (fechaDesde < fechaHasta)
+                if (fechaDesde > fechaHasta)
                     throw new NegocioException("Error, el valor de la fecha desde no puede ser mayor a la fecha hasta.");
 
                 epsonFP.CierreZPorRangoDeFecha(fechaDesde, fechaHasta);
