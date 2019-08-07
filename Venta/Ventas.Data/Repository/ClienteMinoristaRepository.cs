@@ -8,7 +8,7 @@ using Ventas.Core.Model.BaseAgreggate;
 
 namespace Ventas.Data.Repository
 {
-    public class ClienteMinoristaRepository : BaseRepository, IClienteMinoristaRepository
+    public class ClienteMinoristaRepository : BaseRepository<VentaContext>, IClienteMinoristaRepository
     {
         public ClienteMinoristaRepository(VentaContext ventaContext) : base(ventaContext)
         {

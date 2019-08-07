@@ -8,7 +8,7 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data.Repository
 {
-    public class ReservaRepository : BaseRepository, IReservaRepository
+    public class ReservaRepository : BaseRepository<VentaContext>, IReservaRepository
     {
         public ReservaRepository(VentaContext ventaContext) : base(ventaContext)
         {

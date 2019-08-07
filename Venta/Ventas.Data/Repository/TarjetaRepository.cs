@@ -8,7 +8,7 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data.Repository
 {
-    public class TarjetaRepository : BaseRepository, ITarjetaRepository
+    public class TarjetaRepository : BaseRepository<VentaContext>, ITarjetaRepository
     {
         public TarjetaRepository(VentaContext ventaContext) : base(ventaContext)
         {

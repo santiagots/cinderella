@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Ventas.Data.Repository
 {
-    public class NotaCreditoRepository : BaseRepository, INotaCreditoRepository
+    public class NotaCreditoRepository : BaseRepository<VentaContext>, INotaCreditoRepository
     {
         public NotaCreditoRepository(VentaContext ventaContext) : base(ventaContext)
         {

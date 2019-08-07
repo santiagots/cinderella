@@ -12,7 +12,7 @@ using Common.Core.Model;
 
 namespace Ventas.Data.Repository
 {
-    public class ProductoRepository: BaseRepository, IProductoRepository
+    public class ProductoRepository: BaseRepository<VentaContext>, IProductoRepository
     {
         public ProductoRepository(VentaContext ventaContext) : base(ventaContext)
         {

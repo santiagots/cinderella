@@ -8,7 +8,7 @@ using Ventas.Core.Model.ChequeAggregate;
 
 namespace Ventas.Data.Repository
 {
-    public class ChequeRepository : BaseRepository, IChequeRepository
+    public class ChequeRepository : BaseRepository<VentaContext>, IChequeRepository
     {
         public ChequeRepository(VentaContext ventaContext) : base(ventaContext)
         {

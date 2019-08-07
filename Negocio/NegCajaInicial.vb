@@ -338,58 +338,58 @@ Public Class NegCajaInicial
         entCaja = ObtenerCaja(id_Sucursal, FechaAyer)
 
         Dim VentasEfectivo As Double = 0
-        VentasEfectivo = NegVen.TotalVentasEfectivo(id_Sucursal, Fecha)
+        VentasEfectivo = NegVen.TotalVentasEfectivo(id_Sucursal, Fecha) 'ok
 
         Dim Gastos As Double = 0
-        Gastos = NegMov.TotalMovGastos(id_Sucursal, Fecha, Fecha)
+        Gastos = NegMov.TotalMovGastos(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim GastosEgresos As Double = 0
-        GastosEgresos = NegMov.TotalMovEgresosGastos(id_Sucursal, Fecha, Fecha)
+        GastosEgresos = NegMov.TotalMovEgresosGastos(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim EfectivoEgreso As Double = 0
-        EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Egresos")
+        EfectivoEgreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Egresos") 'ok
 
         Dim EfectivoIngreso As Double = 0
-        EfectivoIngreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Ingresos")
+        EfectivoIngreso = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "Ingresos") 'ok
 
         Dim Impuesto As Double = 0
-        Impuesto = NegMov.TotalMovImpuesto(id_Sucursal, Fecha, Fecha)
+        Impuesto = NegMov.TotalMovImpuesto(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim ImpuestoEgreso As Double = 0
-        ImpuestoEgreso = NegMov.TotalMovEgresosImpuesto(id_Sucursal, Fecha, Fecha)
+        ImpuestoEgreso = NegMov.TotalMovEgresosImpuesto(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim RetirosCaja As Double = 0
-        RetirosCaja = NegMov.TotalMovRetiro(id_Sucursal, Fecha, Fecha)
+        RetirosCaja = NegMov.TotalMovRetiro(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim Sobrante As Double = 0
-        Sobrante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Sobrante")
+        Sobrante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Sobrante") 'ok
 
         Dim Faltante As Double = 0
-        Faltante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Faltante")
+        Faltante = NegMov.ObtenerTotalMovCaja(id_Sucursal, Fecha, Fecha, "Faltante") 'ok
 
         Dim AporteSocios As Double = 0
-        AporteSocios = NegMov.TotalMovAporte(id_Sucursal, Fecha, Fecha)
+        AporteSocios = NegMov.TotalMovAporte(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim Sueldo As Double = 0
-        Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, Fecha, Fecha)
+        Sueldo = NegEmp.ObtenerSueldosSucursal(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim Mercaderias As Double = 0
-        Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, Fecha, Fecha)
+        Mercaderias = NegMov.ConsultarTotalGastoMercaderia(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim Adelantos As Double = 0
-        Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, Fecha, Fecha)
+        Adelantos = NegAdel.ObtenerAdelantosSucursal(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim EgresoCajaFuerte As Double = 0
-        EgresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 1)
+        EgresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 1) 'ok
 
         Dim IngresoCajaFuerte As Double = 0
-        IngresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 2)
+        IngresoCajaFuerte = NegMov.ObtenerTotalMovCajaFuerte(id_Sucursal, Fecha, Fecha, 2) 'ok
 
         Dim DevolucionesEfectivo As Double = 0
-        DevolucionesEfectivo = NegDev.TotalDevolucionesEfectivo(id_Sucursal, Fecha, Fecha)
+        DevolucionesEfectivo = NegDev.TotalDevolucionesEfectivo(id_Sucursal, Fecha, Fecha) 'ok
 
         Dim PendienteAutorizar As Double = 0
-        PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "EgresosPendientes")
+        PendienteAutorizar = NegMov.ObtenerTotalMovEgreso(id_Sucursal, Fecha, Fecha, "EgresosPendientes") 'ok
 
         'Calculo el saldo.
         Dim Ingresos As Double = 0

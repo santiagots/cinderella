@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Ventas.Data.Repository
 {
-    public class NotaPedidoRepository : BaseRepository, INotaPedidoRepository
+    public class NotaPedidoRepository : BaseRepository<VentaContext>, INotaPedidoRepository
     {
         public NotaPedidoRepository(VentaContext ventaContext) : base(ventaContext)
         {

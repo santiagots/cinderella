@@ -252,6 +252,7 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Comunes\Mapper\MapperProfile.vb" />
     <Compile Include="Comunes\Servicio\Servicio.vb" />
+    <Compile Include="Comunes\ViewModel\SaldoSucursalViewModel.vb" />
     <Compile Include="ControlesUsuario\ChequeDetalle.Designer.vb">
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
     </Compile>
@@ -262,6 +263,12 @@
       <DependentUpon>Paginado.vb</DependentUpon>
     </Compile>
     <Compile Include="ControlesUsuario\Paginado.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlesUsuario\SaldosSucursal.Designer.vb">
+      <DependentUpon>SaldosSucursal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ControlesUsuario\SaldosSucursal.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Formularios\Cheque\frmChequeAdministracion.Designer.vb">
@@ -368,6 +375,14 @@
     <Compile Include="ControlesUsuario\VentaDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Formularios\ResumenDiario\Servicio\Servico.vb" />
+    <Compile Include="Formularios\ResumenDiario\frmResumenDiario.Designer.vb">
+      <DependentUpon>frmResumenDiario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\ResumenDiario\frmResumenDiario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\ResumenDiario\ViewModel\frmResumenDiarioViewModel.vb" />
     <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.Designer.vb">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </Compile>
@@ -830,12 +845,6 @@
     <Compile Include="Formularios\frmReporteResumenVenta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmResumenDiario.Designer.vb">
-      <DependentUpon>frmResumenDiario.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\frmResumenDiario.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Formularios\Reserva\frmReserva.Designer.vb">
       <DependentUpon>frmReserva.vb</DependentUpon>
     </Compile>
@@ -1214,6 +1223,9 @@
     <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
       <DependentUpon>Paginado.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ControlesUsuario\SaldosSucursal.resx">
+      <DependentUpon>SaldosSucursal.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cheque\frmChequeAdministracion.resx">
       <DependentUpon>frmChequeAdministracion.vb</DependentUpon>
     </EmbeddedResource>
@@ -1258,6 +1270,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ControlesUsuario\VentaDetalle.resx">
       <DependentUpon>VentaDetalle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\ResumenDiario\frmResumenDiario.resx">
+      <DependentUpon>frmResumenDiario.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Venta\frmBuscarClienteMinorista.resx">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
@@ -1494,9 +1509,6 @@
     <EmbeddedResource Include="Formularios\frmReporteResumenVenta.resx">
       <DependentUpon>frmReporteResumenVenta.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmResumenDiario.resx">
-      <DependentUpon>frmResumenDiario.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Reserva\frmReserva.resx">
       <DependentUpon>frmReserva.vb</DependentUpon>
     </EmbeddedResource>
@@ -1667,9 +1679,11 @@
     <None Include="app.Release.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
+    <None Include="My Project\DataSources\SistemaCinderella.Comunes.SaldoSucursalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmInformacionTransaccionesViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.ResumenDiario.frmResumenDiarioViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.FacturaDetalleViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmFacturaAdministracionViewModel.datasource" />
@@ -2444,7 +2458,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ControlesUsuario\Cheque\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

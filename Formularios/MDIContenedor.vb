@@ -1,14 +1,9 @@
-﻿Imports System.Windows.Forms
-Imports System.Configuration
-Imports System.Resources
-Imports Servicios
-Imports System.Threading
+﻿Imports Servicios
 Imports System.Threading.Tasks
 Imports Negocio
 Imports Entidades
 Imports System.ComponentModel
 Imports System.Globalization
-Imports Common.Core.Helper
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -654,7 +649,7 @@ Public Class MDIContenedor
 
         Try
             'Cierro las cajas Antiguas que no esten cerradas
-            CerrarCajasAntiguas()
+            CerrarCajasAntiguasAsync()
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha encontrado un error al calcular las cajas pendientes. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -739,12 +734,10 @@ Public Class MDIContenedor
 
     Private Sub VerificarEstadoCaja()
         'Muestro el detalle de la caja cerrada.
-        Dim FNueva As String = ""
-        Dim entCajaNueva As New Entidades.CajaInicial
-        FNueva = Now.Date.ToString("yyyy/MM/dd")
-        entCajaNueva = negCaja.ObtenerCaja(id_Sucursal, FNueva)
 
-        If entCajaNueva.id_Caja > 0 Then
+        Dim cierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.ResumenDiario.Servicio.ObtenerCierreCaja(My.Settings.Sucursal, Now.Date)
+
+        If cierreCaja <> Nothing Then
             Me.MenuAccesosRapidos.Visible = False
             Me.ToolsMenu.Visible = False
             Me.SeguridadToolStripMenuItem.Visible = False
@@ -784,7 +777,7 @@ Public Class MDIContenedor
                 'Si el proveedor recibe notas de pedido este dia
                 If proveedor.DiaPreferentePedido = diaSemana Then
                     'Obtengo los productos en sotck de este proveedor
-                    Dim stocks As List(Of Stock) = negStock.ListadoStock(My.Settings.Sucursal, proveedor.id_Proveedor)
+                    Dim stocks As List(Of Entidades.Stock) = negStock.ListadoStock(My.Settings.Sucursal, proveedor.id_Proveedor)
                     For Each stock As Stock In stocks
                         'Verifico si tiene faltante de stock
                         If stock.Stock_Actual < stock.Stock_Minimo Then
@@ -869,51 +862,39 @@ Public Class MDIContenedor
     End Sub
 
 
-    Private Sub CerrarCajasAntiguas()
+    Private Async Function CerrarCajasAntiguasAsync() As Task
         'Compruebo que las cajas de fechas anteriores estén cerradas.
-        Dim TotCajas As Integer = negCaja.ComprobarCajas(id_Sucursal)
-        Dim FechaHoy As Date = Now
+        Dim ultimoCierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.ResumenDiario.Servicio.ObtenerUltimoCierreCaja(My.Settings.Sucursal)
+        Dim totalCajas As Integer = 0
+        If ultimoCierreCaja <> Nothing Then
+            totalCajas = DateDiff(DateInterval.Day, ultimoCierreCaja.Fecha, DateTime.Now)
+        End If
 
-        If TotCajas > 0 Then
+        If totalCajas > 1 Then
             'Sino lo están, las calculo
-            If (MessageBox.Show("Se han encontrado " & TotCajas & " cajas diarias pendientes." & vbCrLf & "Presione OK para comenzar a calcular los cierres de caja pendientes. Ésta operación puede tardar unos minutos.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Exclamation) = vbOK) Then
+            If (MessageBox.Show($"Se han encontrado {totalCajas - 1} cajas diarias pendientes.{ Environment.NewLine }Presione OK para comenzar a calcular los cierres de caja pendientes. Ésta operación puede tardar unos minutos.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Exclamation) = vbOK) Then
                 'Si la cant. de dias es mayor a cero, voy calculando las cajas.
 
-                'Muestro el form de espera..
-                frmCargadorDeEspera.Show()
                 frmCargadorDeEspera.Text = "Calculando Cajas Pendientes... "
                 frmCargadorDeEspera.lbl_Descripcion.Text = "Iniciando... "
                 frmCargadorDeEspera.BarraProgreso.Minimum = 0
-                frmCargadorDeEspera.BarraProgreso.Maximum = TotCajas + 1
+                frmCargadorDeEspera.BarraProgreso.Maximum = totalCajas
                 frmCargadorDeEspera.BarraProgreso.Value = 1
-                frmCargadorDeEspera.Refresh()
 
                 'Disminuyo el dia de hoy hasta que cumpla con la cantidad de dias faltantes.
-                For d = TotCajas To 1 Step -1
+                For dias = (totalCajas - 1) To 1 Step -1
                     'Fecha anterior.
-                    Dim FechaAnterior As Date
-                    Dim Resultado As Integer = 0
-                    Dim entCajaCerrada As New Entidades.CajaInicial
-                    Dim di As Integer = 0
-
-                    di = (d * -1)
-                    FechaAnterior = FechaHoy.AddDays(di)
+                    Dim fechaAnterior As Date = DateTime.Now.AddDays(dias * -1)
+                    Dim sucursalSaldo As Ventas.Core.Model.ValueObjects.SucursalSaldo = Await Task.Run(Function() Formularios.ResumenDiario.Servicio.CargarSaldoAsync(My.Settings.Sucursal, fechaAnterior))
+                    Dim cierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = New Ventas.Core.Model.VentaAggregate.CierreCaja(My.Settings.Sucursal)
+                    cierreCaja.Cerrar(VariablesGlobales.objUsuario.id_Usuario, sucursalSaldo.Total, sucursalSaldo.Total, False, fechaAnterior)
+                    Await Task.Run(Sub() Formularios.ResumenDiario.Servicio.GuardarCierreCaja(cierreCaja))
 
                     'Voy seteando la barra de progreso
-                    frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo Cierre de Caja del " & FechaAnterior.ToString("dd/MM/yyyy")
+                    frmCargadorDeEspera.Show()
+                    frmCargadorDeEspera.lbl_Descripcion.Text = "Obteniendo Cierre de Caja del " & fechaAnterior.ToString("dd/MM/yyyy")
                     frmCargadorDeEspera.BarraProgreso.Value += 1
                     frmCargadorDeEspera.Refresh()
-
-                    'Calculo la caja para la fecha dada.
-                    entCajaCerrada.id_Empleado = VariablesGlobales.objUsuario.id_Usuario
-                    entCajaCerrada.id_Movimiento = 0
-                    entCajaCerrada.id_Sucursal = id_Sucursal
-                    entCajaCerrada.Abierta = 0
-                    entCajaCerrada.Empleado = VariablesGlobales.objUsuario.Usuario
-                    entCajaCerrada.Monto = negCaja.ObtenerSaldo(id_Sucursal, FechaAnterior)
-                    entCajaCerrada.Fecha = FechaAnterior
-                    entCajaCerrada.Hora = Now
-                    negCaja.CerrarCaja(entCajaCerrada, id_Sucursal)
                 Next
 
                 'Voy seteando la barra de progreso
@@ -921,7 +902,7 @@ Public Class MDIContenedor
                 frmCargadorDeEspera.Dispose()
             End If
         End If
-    End Sub
+    End Function
 
     Private Sub Temporizador_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Temporizador.Tick
         Funciones.ActualizarEstado(Negocio.Funciones.HayConexionInternet(), Me)

@@ -11,7 +11,7 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data.Repository
 {
-    public class EmpleadoRepository : BaseRepository, IEmpleadoRepository
+    public class EmpleadoRepository : BaseRepository<VentaContext>, IEmpleadoRepository
     {
         public EmpleadoRepository(VentaContext ventaContext) : base(ventaContext)
         {

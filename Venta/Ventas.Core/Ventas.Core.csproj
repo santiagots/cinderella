@@ -48,10 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\CierreCajaEstado.cs" />
+    <Compile Include="Enum\CierreCajaSituacion.cs" />
     <Compile Include="Enum\NotaPedidoEstado.cs" />
     <Compile Include="Enum\ReservaMetodoEntrega.cs" />
     <Compile Include="Interfaces\IChequeRepository.cs" />
+    <Compile Include="Interfaces\ICierreCajaRepository.cs" />
     <Compile Include="Interfaces\IClienteMinoristaRepository.cs" />
+    <Compile Include="Interfaces\IEstadoCuentaSucursal.cs" />
     <Compile Include="Interfaces\IFacturaRepository.cs" />
     <Compile Include="Interfaces\INotaCreditoRepository.cs" />
     <Compile Include="Interfaces\INotaPedidoRepository.cs" />
@@ -70,10 +74,15 @@
     <Compile Include="Model\BaseAgreggate\ClienteMinorista.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedido.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedidoItem.cs" />
+    <Compile Include="Model\ValueObjects\Egreso.cs" />
+    <Compile Include="Model\ValueObjects\Ingreso.cs" />
     <Compile Include="Model\ValueObjects\MontoPago.cs" />
     <Compile Include="Model\ValueObjects\MontoProducto.cs" />
     <Compile Include="Model\ValueObjects\CostoProducto.cs" />
     <Compile Include="Model\ChequeAgreggate\Cheque.cs" />
+    <Compile Include="Model\ValueObjects\SucursalSaldos.cs" />
+    <Compile Include="Model\ValueObjects\Venta.cs" />
+    <Compile Include="Model\VentaAggregate\CierreCaja.cs" />
     <Compile Include="Model\VentaAggregate\Comision.cs" />
     <Compile Include="Model\VentaAggregate\Factura.cs" />
     <Compile Include="Model\VentaAggregate\NotaCredito.cs" />

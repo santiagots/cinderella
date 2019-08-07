@@ -9,7 +9,7 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data.Repository
 {
-    public class ListaPrecioRepository : BaseRepository, IListaPrecioRepository
+    public class ListaPrecioRepository : BaseRepository<VentaContext>, IListaPrecioRepository
     {
         public ListaPrecioRepository(VentaContext ventaContext) : base(ventaContext)
         {

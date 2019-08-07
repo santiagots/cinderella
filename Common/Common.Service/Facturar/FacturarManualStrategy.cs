@@ -36,7 +36,7 @@ namespace Common.Service.Facturar
 
         public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
-            throw new NegocioException("El metodo de facturacion manual no permite obtener reportes de Cinta Testigo Digital");
+            return new List<int>();
         }
 
         public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)

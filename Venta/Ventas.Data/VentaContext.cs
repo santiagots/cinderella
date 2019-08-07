@@ -20,6 +20,7 @@ namespace Ventas.Data
 
         public DbSet<Cheque> Cheque { get; set; }
         public DbSet<ClienteMinorista> ClienteMinorista { get; set; }
+        public DbSet<CierreCaja> CierreCaja { get; set; }
         public DbSet<CostoFinanciero> CostoFinanciero { get; set; }
         public DbSet<Comision> Comision { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
@@ -56,6 +57,9 @@ namespace Ventas.Data
             modelBuilder.Entity<ClienteMinorista>().Property(t => t.Id).HasColumnName("id_ClienteMinorista");
             modelBuilder.Entity<ClienteMinorista>().Ignore(t => t.ApellidoYNombre);
 
+            modelBuilder.Entity<CierreCaja>().ToTable("NUEVA_CIERRE_CAJA");
+            modelBuilder.Entity<CierreCaja>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
             modelBuilder.Entity<CostoFinanciero>().ToTable("COSTOFINANCIERO");
             modelBuilder.Entity<CostoFinanciero>().Property(t => t.Id).HasColumnName("CostoFinancieroId");
             modelBuilder.Entity<CostoFinanciero>().Property(t => t.IdTarjeta).HasColumnName("IdTarjeta");
@@ -67,12 +71,10 @@ namespace Ventas.Data
             modelBuilder.Entity<Factura>().ToTable("NUEVA_FACTURA");
             modelBuilder.Entity<Factura>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<Factura>().HasMany(v => v.NumeroFactura).WithRequired(t => t.Factura).HasForeignKey(x => x.IdFactura);
-            //modelBuilder.Entity<Factura>().HasRequired(v => v.Venta).WithMany().HasForeignKey(x => x.IdVenta);
 
             modelBuilder.Entity<NotaCredito>().ToTable("NUEVA_NOTA_CREDITO");
             modelBuilder.Entity<NotaCredito>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<NotaCredito>().HasMany(v => v.NumeroNotaCredito).WithRequired(t => t.NotaCredito).HasForeignKey(x => x.IdNotaCredito);
-            //modelBuilder.Entity<NotaCredito>().HasRequired(v => v.Venta).WithMany().HasForeignKey(x => x.IdVenta);
 
             modelBuilder.Entity<NumeroFactura>().ToTable("NUEVA_NUMERO_FACTURA");
             modelBuilder.Entity<NumeroFactura>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);

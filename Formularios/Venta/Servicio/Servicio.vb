@@ -76,6 +76,34 @@ Namespace Formularios.Venta
             End Using
         End Function
 
+        Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fecha As DateTime) As Decimal
+            Using context As VentaContext = New VentaContext()
+                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
+                Return ventaRepository.ObtenerTotal(idSucursal, fecha)
+            End Using
+        End Function
+
+        Friend Shared Function ObtenerTotalVentasPorTipoPago(idSucursal As Integer, fecha As DateTime, tipoPago As TipoPago) As Decimal
+            Using context As VentaContext = New VentaContext()
+                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
+                Return ventaRepository.ObtenerTotalPorTipoPago(idSucursal, fecha, tipoPago)
+            End Using
+        End Function
+
+        Friend Shared Function ObtenerTotalVentasPorTipoCliente(idSucursal As Integer, fecha As DateTime, tipoCliente As TipoCliente) As Decimal
+            Using context As VentaContext = New VentaContext()
+                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
+                Return ventaRepository.ObtenerTotalPorTipoCliente(idSucursal, fecha, tipoCliente)
+            End Using
+        End Function
+
+        Friend Shared Function ObtenerTotalVentasPorPorFacturacion(idSucursal As Integer, fecha As DateTime, facturado As Boolean) As Decimal
+            Using context As VentaContext = New VentaContext()
+                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
+                Return ventaRepository.ObtenerTotalPorFacturacion(idSucursal, fecha, facturado)
+            End Using
+        End Function
+
         Friend Shared Sub GuardarReserva(reservaModel As Model.Reserva)
             Using context As VentaContext = New VentaContext()
                 Dim reservaRepository As IReservaRepository = New ReservaRepository(context)

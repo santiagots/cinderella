@@ -57,8 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\ChequeRepository.cs" />
+    <Compile Include="Repository\CierreCajaRepository.cs" />
     <Compile Include="Repository\ClienteMinoristaRepository.cs" />
     <Compile Include="Repository\FacturaRepository.cs" />
     <Compile Include="Repository\NotaCreditoRepository.cs" />
