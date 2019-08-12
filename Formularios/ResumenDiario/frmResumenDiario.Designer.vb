@@ -23,6 +23,7 @@ Partial Class frmResumenDiario
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmResumenDiario))
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.txtMonto = New System.Windows.Forms.TextBox()
@@ -54,16 +55,16 @@ Partial Class frmResumenDiario
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.SaldosSucursal = New SistemaCinderella.SaldosSucursal()
-        Me.TableLayoutPanel6.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout
+        Me.GroupBox3.SuspendLayout
         CType(Me.FrmResumenDiarioViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox2.SuspendLayout()
-        Me.TableLayoutPanel5.SuspendLayout()
-        Me.GB_Monto.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
-        Me.GB_Caja.SuspendLayout()
-        Me.SuspendLayout()
+        Me.GroupBox2.SuspendLayout
+        Me.TableLayoutPanel5.SuspendLayout
+        Me.GB_Monto.SuspendLayout
+        Me.GroupBox4.SuspendLayout
+        Me.GroupBox1.SuspendLayout
+        Me.GB_Caja.SuspendLayout
+        Me.SuspendLayout
         '
         'TableLayoutPanel6
         '
@@ -455,7 +456,7 @@ Partial Class frmResumenDiario
         Me.SaldosSucursal.Size = New System.Drawing.Size(962, 286)
         Me.SaldosSucursal.TabIndex = 77
         '
-        'frmResumenDiario3
+        'frmResumenDiario
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -463,20 +464,21 @@ Partial Class frmResumenDiario
         Me.Controls.Add(Me.SaldosSucursal)
         Me.Controls.Add(Me.TableLayoutPanel5)
         Me.Controls.Add(Me.TableLayoutPanel6)
-        Me.Name = "frmResumenDiario3"
-        Me.Text = "frmResumenDiario3"
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Name = "frmResumenDiario"
+        Me.Text = "Resumen Diario"
         Me.TableLayoutPanel6.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.GroupBox3.PerformLayout
         CType(Me.FrmResumenDiarioViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.GroupBox2.PerformLayout
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.GB_Monto.ResumeLayout(False)
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GB_Caja.ResumeLayout(False)
-        Me.GB_Caja.PerformLayout()
+        Me.GB_Caja.PerformLayout
         Me.ResumeLayout(False)
 
     End Sub

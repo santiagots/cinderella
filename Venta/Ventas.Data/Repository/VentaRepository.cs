@@ -42,6 +42,7 @@ namespace Ventas.Data.Repository
         {
             decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
                                                     x.Venta.IdSucursal == idSucursal &&
+                                                    x.TipoPago != TipoPago.Bonificacion &&
                                                     DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
                                                     DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
                                             .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
@@ -52,6 +53,7 @@ namespace Ventas.Data.Repository
         {
             decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
                                                     x.Venta.IdSucursal == idSucursal &&
+                                                    x.TipoPago != TipoPago.Bonificacion &&
                                                     DbFunctions.TruncateTime(x.Venta.Fecha).Value == DbFunctions.TruncateTime(fecha).Value)
                                             .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
             return resultado ?? 0;

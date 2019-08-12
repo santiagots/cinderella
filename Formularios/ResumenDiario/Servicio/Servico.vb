@@ -57,13 +57,14 @@ Namespace Formularios.ResumenDiario
             Dim cheques As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorTipoPago(idSucursal, fecha, TipoPago.Cheque))
             Dim credito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorTipoPago(idSucursal, fecha, TipoPago.TarjetaCredito))
             Dim debito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorTipoPago(idSucursal, fecha, TipoPago.TarjetaDebito))
+            Dim deposito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorTipoPago(idSucursal, fecha, TipoPago.Deposito))
             Dim facturado As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorPorFacturacion(idSucursal, fecha, True))
             Dim minorista As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorTipoCliente(idSucursal, fecha, TipoCliente.Minorista))
             Dim mayorista As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentasPorTipoCliente(idSucursal, fecha, TipoCliente.Mayorista))
 
             Await Task.WhenAll(efectivo, cheques, credito, credito, minorista, mayorista)
 
-            Return New ValueObjects.Venta(efectivo.Result, cheques.Result, credito.Result, debito.Result, facturado.Result, minorista.Result, mayorista.Result)
+            Return New ValueObjects.Venta(efectivo.Result, cheques.Result, credito.Result, debito.Result, deposito.Result, facturado.Result, minorista.Result, mayorista.Result)
         End Function
 
         Private Shared Async Function CargarIngresosAsync(idSucursal As Integer, fecha As DateTime) As Task(Of ValueObjects.Ingreso)

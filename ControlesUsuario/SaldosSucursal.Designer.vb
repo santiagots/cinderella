@@ -29,7 +29,6 @@ Partial Class SaldosSucursal
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.lblTotalVentas = New System.Windows.Forms.Label()
         Me.txt_Efectivo = New System.Windows.Forms.TextBox()
-        Me.SaldoSucursalViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txt_TotalVentas = New System.Windows.Forms.TextBox()
         Me.lblCaja = New System.Windows.Forms.Label()
@@ -65,13 +64,7 @@ Partial Class SaldosSucursal
         Me.txt_EfectivoEgreso = New System.Windows.Forms.TextBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txt_VentaMayorista = New System.Windows.Forms.TextBox()
-        Me.txt_VentaMinorista = New System.Windows.Forms.TextBox()
-        Me.lblMayorista = New System.Windows.Forms.Label()
-        Me.txt_TotalFacturado = New System.Windows.Forms.TextBox()
-        Me.lblMinorista = New System.Windows.Forms.Label()
         Me.txt_VentasDebito = New System.Windows.Forms.TextBox()
-        Me.lblTotalFacturado = New System.Windows.Forms.Label()
         Me.txt_VentasCredito = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -79,14 +72,23 @@ Partial Class SaldosSucursal
         Me.txt_VentasEfectivo = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.txt_VentasCheque = New System.Windows.Forms.TextBox()
+        Me.lblMayorista = New System.Windows.Forms.Label()
+        Me.txt_VentaMayorista = New System.Windows.Forms.TextBox()
+        Me.lblMinorista = New System.Windows.Forms.Label()
+        Me.txt_VentaMinorista = New System.Windows.Forms.TextBox()
+        Me.lblTotalFacturado = New System.Windows.Forms.Label()
+        Me.txt_TotalFacturado = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txt_VentasDeposito = New System.Windows.Forms.TextBox()
+        Me.SaldoSucursalViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel7.SuspendLayout()
         Me.GbDetalle.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        CType(Me.SaldoSucursalViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
+        CType(Me.SaldoSucursalViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel7
@@ -190,10 +192,6 @@ Partial Class SaldosSucursal
         Me.txt_Efectivo.ReadOnly = True
         Me.txt_Efectivo.Size = New System.Drawing.Size(146, 21)
         Me.txt_Efectivo.TabIndex = 72
-        '
-        'SaldoSucursalViewModelBindingSource
-        '
-        Me.SaldoSucursalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Comunes.SaldoSucursalViewModel)
         '
         'Label10
         '
@@ -579,13 +577,7 @@ Partial Class SaldosSucursal
         Me.TableLayoutPanel3.ColumnCount = 2
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.txt_VentaMayorista, 1, 6)
-        Me.TableLayoutPanel3.Controls.Add(Me.txt_VentaMinorista, 1, 5)
-        Me.TableLayoutPanel3.Controls.Add(Me.lblMayorista, 0, 6)
-        Me.TableLayoutPanel3.Controls.Add(Me.txt_TotalFacturado, 1, 4)
-        Me.TableLayoutPanel3.Controls.Add(Me.lblMinorista, 0, 5)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasDebito, 1, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.lblTotalFacturado, 0, 4)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasCredito, 1, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.Label19, 0, 3)
         Me.TableLayoutPanel3.Controls.Add(Me.Label6, 0, 0)
@@ -593,95 +585,44 @@ Partial Class SaldosSucursal
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasEfectivo, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Label18, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasCheque, 1, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.lblMayorista, 0, 7)
+        Me.TableLayoutPanel3.Controls.Add(Me.txt_VentaMayorista, 1, 7)
+        Me.TableLayoutPanel3.Controls.Add(Me.lblMinorista, 0, 6)
+        Me.TableLayoutPanel3.Controls.Add(Me.txt_VentaMinorista, 1, 6)
+        Me.TableLayoutPanel3.Controls.Add(Me.lblTotalFacturado, 0, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.txt_TotalFacturado, 1, 5)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label7, 0, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasDeposito, 1, 4)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 7
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TableLayoutPanel3.RowCount = 8
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.49953!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.50328!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(222, 261)
         Me.TableLayoutPanel3.TabIndex = 87
-        '
-        'txt_VentaMayorista
-        '
-        Me.txt_VentaMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentaMayorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_VentaMayorista.Location = New System.Drawing.Point(78, 231)
-        Me.txt_VentaMayorista.Name = "txt_VentaMayorista"
-        Me.txt_VentaMayorista.ReadOnly = True
-        Me.txt_VentaMayorista.Size = New System.Drawing.Size(141, 20)
-        Me.txt_VentaMayorista.TabIndex = 15
-        '
-        'txt_VentaMinorista
-        '
-        Me.txt_VentaMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_VentaMinorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaMinorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_VentaMinorista.Location = New System.Drawing.Point(78, 193)
-        Me.txt_VentaMinorista.Name = "txt_VentaMinorista"
-        Me.txt_VentaMinorista.ReadOnly = True
-        Me.txt_VentaMinorista.Size = New System.Drawing.Size(141, 20)
-        Me.txt_VentaMinorista.TabIndex = 16
-        '
-        'lblMayorista
-        '
-        Me.lblMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblMayorista.AutoSize = True
-        Me.lblMayorista.Location = New System.Drawing.Point(3, 235)
-        Me.lblMayorista.Name = "lblMayorista"
-        Me.lblMayorista.Size = New System.Drawing.Size(69, 13)
-        Me.lblMayorista.TabIndex = 57
-        Me.lblMayorista.Text = "Mayorista"
-        '
-        'txt_TotalFacturado
-        '
-        Me.txt_TotalFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_TotalFacturado.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaFacturado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_TotalFacturado.Location = New System.Drawing.Point(78, 156)
-        Me.txt_TotalFacturado.Name = "txt_TotalFacturado"
-        Me.txt_TotalFacturado.ReadOnly = True
-        Me.txt_TotalFacturado.Size = New System.Drawing.Size(141, 20)
-        Me.txt_TotalFacturado.TabIndex = 14
-        '
-        'lblMinorista
-        '
-        Me.lblMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblMinorista.AutoSize = True
-        Me.lblMinorista.Location = New System.Drawing.Point(3, 197)
-        Me.lblMinorista.Name = "lblMinorista"
-        Me.lblMinorista.Size = New System.Drawing.Size(69, 13)
-        Me.lblMinorista.TabIndex = 54
-        Me.lblMinorista.Text = "Minorista"
         '
         'txt_VentasDebito
         '
         Me.txt_VentasDebito.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_VentasDebito.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaDebito", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_VentasDebito.Location = New System.Drawing.Point(78, 119)
+        Me.txt_VentasDebito.Location = New System.Drawing.Point(78, 102)
         Me.txt_VentasDebito.Name = "txt_VentasDebito"
         Me.txt_VentasDebito.ReadOnly = True
         Me.txt_VentasDebito.Size = New System.Drawing.Size(141, 20)
         Me.txt_VentasDebito.TabIndex = 72
         '
-        'lblTotalFacturado
-        '
-        Me.lblTotalFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblTotalFacturado.AutoSize = True
-        Me.lblTotalFacturado.Location = New System.Drawing.Point(3, 160)
-        Me.lblTotalFacturado.Name = "lblTotalFacturado"
-        Me.lblTotalFacturado.Size = New System.Drawing.Size(69, 13)
-        Me.lblTotalFacturado.TabIndex = 51
-        Me.lblTotalFacturado.Text = "Facturado"
-        '
         'txt_VentasCredito
         '
         Me.txt_VentasCredito.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_VentasCredito.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaCredito", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_VentasCredito.Location = New System.Drawing.Point(78, 82)
+        Me.txt_VentasCredito.Location = New System.Drawing.Point(78, 70)
         Me.txt_VentasCredito.Name = "txt_VentasCredito"
         Me.txt_VentasCredito.ReadOnly = True
         Me.txt_VentasCredito.Size = New System.Drawing.Size(141, 20)
@@ -691,7 +632,7 @@ Partial Class SaldosSucursal
         '
         Me.Label19.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(3, 123)
+        Me.Label19.Location = New System.Drawing.Point(3, 105)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(69, 13)
         Me.Label19.TabIndex = 73
@@ -701,7 +642,7 @@ Partial Class SaldosSucursal
         '
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(3, 12)
+        Me.Label6.Location = New System.Drawing.Point(3, 9)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(69, 13)
         Me.Label6.TabIndex = 38
@@ -711,17 +652,17 @@ Partial Class SaldosSucursal
         '
         Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(3, 86)
+        Me.Label16.Location = New System.Drawing.Point(3, 73)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(69, 13)
         Me.Label16.TabIndex = 71
-        Me.Label16.Text = "Credito"
+        Me.Label16.Text = "Crédito"
         '
         'txt_VentasEfectivo
         '
         Me.txt_VentasEfectivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_VentasEfectivo.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaEfectivo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_VentasEfectivo.Location = New System.Drawing.Point(78, 8)
+        Me.txt_VentasEfectivo.Location = New System.Drawing.Point(78, 6)
         Me.txt_VentasEfectivo.Name = "txt_VentasEfectivo"
         Me.txt_VentasEfectivo.ReadOnly = True
         Me.txt_VentasEfectivo.Size = New System.Drawing.Size(141, 20)
@@ -731,7 +672,7 @@ Partial Class SaldosSucursal
         '
         Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(3, 49)
+        Me.Label18.Location = New System.Drawing.Point(3, 41)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(69, 13)
         Me.Label18.TabIndex = 59
@@ -741,11 +682,96 @@ Partial Class SaldosSucursal
         '
         Me.txt_VentasCheque.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_VentasCheque.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaCheque", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.txt_VentasCheque.Location = New System.Drawing.Point(78, 45)
+        Me.txt_VentasCheque.Location = New System.Drawing.Point(78, 38)
         Me.txt_VentasCheque.Name = "txt_VentasCheque"
         Me.txt_VentasCheque.ReadOnly = True
         Me.txt_VentasCheque.Size = New System.Drawing.Size(141, 20)
         Me.txt_VentasCheque.TabIndex = 58
+        '
+        'lblMayorista
+        '
+        Me.lblMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblMayorista.AutoSize = True
+        Me.lblMayorista.Location = New System.Drawing.Point(3, 236)
+        Me.lblMayorista.Name = "lblMayorista"
+        Me.lblMayorista.Size = New System.Drawing.Size(69, 13)
+        Me.lblMayorista.TabIndex = 57
+        Me.lblMayorista.Text = "Mayorista"
+        '
+        'txt_VentaMayorista
+        '
+        Me.txt_VentaMayorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_VentaMayorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaMayorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_VentaMayorista.Location = New System.Drawing.Point(78, 232)
+        Me.txt_VentaMayorista.Name = "txt_VentaMayorista"
+        Me.txt_VentaMayorista.ReadOnly = True
+        Me.txt_VentaMayorista.Size = New System.Drawing.Size(141, 20)
+        Me.txt_VentaMayorista.TabIndex = 15
+        '
+        'lblMinorista
+        '
+        Me.lblMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblMinorista.AutoSize = True
+        Me.lblMinorista.Location = New System.Drawing.Point(3, 201)
+        Me.lblMinorista.Name = "lblMinorista"
+        Me.lblMinorista.Size = New System.Drawing.Size(69, 13)
+        Me.lblMinorista.TabIndex = 54
+        Me.lblMinorista.Text = "Minorista"
+        '
+        'txt_VentaMinorista
+        '
+        Me.txt_VentaMinorista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_VentaMinorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaMinorista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_VentaMinorista.Location = New System.Drawing.Point(78, 198)
+        Me.txt_VentaMinorista.Name = "txt_VentaMinorista"
+        Me.txt_VentaMinorista.ReadOnly = True
+        Me.txt_VentaMinorista.Size = New System.Drawing.Size(141, 20)
+        Me.txt_VentaMinorista.TabIndex = 16
+        '
+        'lblTotalFacturado
+        '
+        Me.lblTotalFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblTotalFacturado.AutoSize = True
+        Me.lblTotalFacturado.Location = New System.Drawing.Point(3, 169)
+        Me.lblTotalFacturado.Name = "lblTotalFacturado"
+        Me.lblTotalFacturado.Size = New System.Drawing.Size(69, 13)
+        Me.lblTotalFacturado.TabIndex = 51
+        Me.lblTotalFacturado.Text = "Facturado"
+        '
+        'txt_TotalFacturado
+        '
+        Me.txt_TotalFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_TotalFacturado.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaFacturado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_TotalFacturado.Location = New System.Drawing.Point(78, 166)
+        Me.txt_TotalFacturado.Name = "txt_TotalFacturado"
+        Me.txt_TotalFacturado.ReadOnly = True
+        Me.txt_TotalFacturado.Size = New System.Drawing.Size(141, 20)
+        Me.txt_TotalFacturado.TabIndex = 14
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(3, 137)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(69, 13)
+        Me.Label7.TabIndex = 74
+        Me.Label7.Text = "Deposito"
+        '
+        'txt_VentasDeposito
+        '
+        Me.txt_VentasDeposito.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_VentasDeposito.BackColor = System.Drawing.SystemColors.Control
+        Me.txt_VentasDeposito.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaDeposito", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_VentasDeposito.Location = New System.Drawing.Point(78, 134)
+        Me.txt_VentasDeposito.Name = "txt_VentasDeposito"
+        Me.txt_VentasDeposito.ReadOnly = True
+        Me.txt_VentasDeposito.Size = New System.Drawing.Size(141, 20)
+        Me.txt_VentasDeposito.TabIndex = 75
+        '
+        'SaldoSucursalViewModelBindingSource
+        '
+        Me.SaldoSucursalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Comunes.SaldoSucursalViewModel)
         '
         'SaldosSucursal
         '
@@ -759,12 +785,12 @@ Partial Class SaldosSucursal
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
-        CType(Me.SaldoSucursalViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
+        CType(Me.SaldoSucursalViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -825,4 +851,6 @@ Partial Class SaldosSucursal
     Friend WithEvents Label18 As Label
     Friend WithEvents txt_VentasCheque As TextBox
     Friend WithEvents SaldoSucursalViewModelBindingSource As BindingSource
+    Friend WithEvents Label7 As Label
+    Friend WithEvents txt_VentasDeposito As TextBox
 End Class

@@ -34,6 +34,12 @@ Namespace Comunes
             End Get
         End Property
 
+        Public ReadOnly Property VentaDeposito() As Decimal
+            Get
+                Return SucursalSaldo.Venta.Deposito
+            End Get
+        End Property
+
         Public ReadOnly Property VentaDebito() As Decimal
             Get
                 Return SucursalSaldo.Venta.Debito
@@ -156,7 +162,7 @@ Namespace Comunes
 
         Sub New()
             Me.SucursalSaldo = New SucursalSaldo(
-                                    New Venta(0, 0, 0, 0, 0, 0, 0),
+                                    New Venta(0, 0, 0, 0, 0, 0, 0, 0),
                                     New Ingreso(0, 0, 0, 0, 0, 0),
                                     New Egreso(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
                                     0,

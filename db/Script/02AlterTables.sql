@@ -137,3 +137,89 @@ ELSE BEGIN
 	PRINT 'The database update failed'
 END
 GO
+
+/*
+Run this script on:
+
+        sql5030.site4now.net.DB_9B1463_cinderella    -  This database will be modified
+
+to synchronize it with:
+
+        AR5CG4371FY6.CINDERELLA_LOCAL
+
+You are recommended to back up your database before running this script
+
+Script created by SQL Compare version 11.6.11 from Red Gate Software Ltd at 06/08/2019 09:58:34 p.m.
+
+*/
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[NUEVA_CIERRE_CAJA]'
+GO
+IF OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U') IS NULL
+CREATE TABLE [dbo].[NUEVA_CIERRE_CAJA]
+(
+[Id] [bigint] NOT NULL,
+[IdSucursal] [int] NOT NULL,
+[IdUsuarioCierre] [int] NOT NULL,
+[IdUsuarioAbre] [int] NULL,
+[Estado] [int] NOT NULL,
+[Situacion] [int] NOT NULL,
+[Abierta] [bit] NOT NULL,
+[Monto] [numeric] (18, 2) NOT NULL,
+[Diferencia] [numeric] (18, 2) NOT NULL,
+[Fecha] [datetime] NOT NULL,
+[Comentarios] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Borrado] [bit] NOT NULL,
+[FechaEdicion] [datetime] NOT NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_NUEVA_CIERRE_CAJA] on [dbo].[NUEVA_CIERRE_CAJA]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'PK_NUEVA_CIERRE_CAJA' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]'))
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] ADD CONSTRAINT [PK_NUEVA_CIERRE_CAJA] PRIMARY KEY CLUSTERED  ([Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding foreign keys to [dbo].[NUEVA_CIERRE_CAJA]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_SUCURSALES]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_SUCURSALES] FOREIGN KEY ([IdSucursal]) REFERENCES [dbo].[SUCURSALES] ([id_Sucursal])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding foreign keys to [dbo].[NUEVA_CIERRE_CAJA]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS] FOREIGN KEY ([IdUsuarioCierre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS1]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS1] FOREIGN KEY ([IdUsuarioAbre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+	IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+	PRINT 'The database update failed'
+END
+GO

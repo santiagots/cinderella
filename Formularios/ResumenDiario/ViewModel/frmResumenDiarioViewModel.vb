@@ -76,7 +76,7 @@ Namespace Formularios.ResumenDiario
             Fecha = Date.Now()
             Sucursal = NombreSucursal
             SucursalSaldo = New ValueObjects.SucursalSaldo(
-                        New ValueObjects.Venta(0, 0, 0, 0, 0, 0, 0),
+                        New ValueObjects.Venta(0, 0, 0, 0, 0, 0, 0, 0),
                         New ValueObjects.Ingreso(0, 0, 0, 0, 0, 0),
                         New ValueObjects.Egreso(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
                         0,

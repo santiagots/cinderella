@@ -8,16 +8,18 @@ namespace Ventas.Core.Model.ValueObjects
         public decimal Cheque { get; protected set; }
         public decimal Credito { get; protected set; }
         public decimal Debito { get; protected set; }
+        public decimal Deposito { get; protected set; }
         public decimal Facturado { get; protected set; }
         public decimal Minorista { get; protected set; }
         public decimal Mayorista { get; protected set; }
 
-        public Venta(decimal efectivo, decimal cheque, decimal credito, decimal debito, decimal facturado, decimal minorista, decimal mayorista)
+        public Venta(decimal efectivo, decimal cheque, decimal credito, decimal debito, decimal deposito, decimal facturado, decimal minorista, decimal mayorista)
         {
             Efectivo = efectivo;
             Cheque = cheque;
             Credito = credito;
             Debito = debito;
+            Deposito = deposito;
             Facturado = facturado;
             Minorista = minorista;
             Mayorista = mayorista;
@@ -29,6 +31,7 @@ namespace Ventas.Core.Model.ValueObjects
                 Cheque == other.Cheque &&
                 Credito == other.Credito &&
                 Debito == other.Debito &&
+                Deposito == other.Deposito &&
                 Facturado == other.Facturado &&
                 Minorista == other.Minorista &&
                 Mayorista == other.Mayorista;
@@ -40,6 +43,7 @@ namespace Ventas.Core.Model.ValueObjects
                 Cheque +
                 Credito +
                 Debito +
+                Deposito +
                 Facturado +
                 Minorista +
                 Mayorista).GetHashCode();
