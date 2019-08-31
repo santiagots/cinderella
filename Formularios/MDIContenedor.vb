@@ -735,9 +735,9 @@ Public Class MDIContenedor
     Private Sub VerificarEstadoCaja()
         'Muestro el detalle de la caja cerrada.
 
-        Dim cierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.ResumenDiario.Servicio.ObtenerCierreCaja(My.Settings.Sucursal, Now.Date)
+        Dim cierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.SucursalSaldo.Servicio.ObtenerCierreCaja(My.Settings.Sucursal, Now.Date)
 
-        If cierreCaja <> Nothing Then
+        If cierreCaja <> Nothing AndAlso cierreCaja.Estado = Ventas.Core.Enum.CierreCajaEstado.Cerrada Then
             Me.MenuAccesosRapidos.Visible = False
             Me.ToolsMenu.Visible = False
             Me.SeguridadToolStripMenuItem.Visible = False
@@ -864,31 +864,38 @@ Public Class MDIContenedor
 
     Private Async Function CerrarCajasAntiguasAsync() As Task
         'Compruebo que las cajas de fechas anteriores estén cerradas.
-        Dim ultimoCierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.ResumenDiario.Servicio.ObtenerUltimoCierreCaja(My.Settings.Sucursal)
+        Dim ultimoCierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.SucursalSaldo.Servicio.ObtenerUltimoCierreCaja(My.Settings.Sucursal)
         Dim totalCajas As Integer = 0
         If ultimoCierreCaja <> Nothing Then
-            totalCajas = DateDiff(DateInterval.Day, ultimoCierreCaja.Fecha, DateTime.Now)
+            totalCajas = DateDiff(DateInterval.Day, ultimoCierreCaja.Fecha, DateTime.Now) - 1
         End If
 
-        If totalCajas > 1 Then
+        If totalCajas > 0 Then
             'Sino lo están, las calculo
-            If (MessageBox.Show($"Se han encontrado {totalCajas - 1} cajas diarias pendientes.{ Environment.NewLine }Presione OK para comenzar a calcular los cierres de caja pendientes. Ésta operación puede tardar unos minutos.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Exclamation) = vbOK) Then
+            If (MessageBox.Show($"Se han encontrado {totalCajas} cajas diarias pendientes.{ Environment.NewLine }Presione OK para comenzar a calcular los cierres de caja pendientes. Ésta operación puede tardar unos minutos.", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Exclamation) = vbOK) Then
                 'Si la cant. de dias es mayor a cero, voy calculando las cajas.
 
                 frmCargadorDeEspera.Text = "Calculando Cajas Pendientes... "
                 frmCargadorDeEspera.lbl_Descripcion.Text = "Iniciando... "
                 frmCargadorDeEspera.BarraProgreso.Minimum = 0
                 frmCargadorDeEspera.BarraProgreso.Maximum = totalCajas
-                frmCargadorDeEspera.BarraProgreso.Value = 1
+                frmCargadorDeEspera.BarraProgreso.Value = 0
 
                 'Disminuyo el dia de hoy hasta que cumpla con la cantidad de dias faltantes.
-                For dias = (totalCajas - 1) To 1 Step -1
+                For dias = (totalCajas) To 1 Step -1
                     'Fecha anterior.
                     Dim fechaAnterior As Date = DateTime.Now.AddDays(dias * -1)
-                    Dim sucursalSaldo As Ventas.Core.Model.ValueObjects.SucursalSaldo = Await Task.Run(Function() Formularios.ResumenDiario.Servicio.CargarSaldoAsync(My.Settings.Sucursal, fechaAnterior))
-                    Dim cierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = New Ventas.Core.Model.VentaAggregate.CierreCaja(My.Settings.Sucursal)
-                    cierreCaja.Cerrar(VariablesGlobales.objUsuario.id_Usuario, sucursalSaldo.Total, sucursalSaldo.Total, False, fechaAnterior)
-                    Await Task.Run(Sub() Formularios.ResumenDiario.Servicio.GuardarCierreCaja(cierreCaja))
+                    Dim sucursalSaldo As Ventas.Core.Model.ValueObjects.SucursalSaldo = Await Task.Run(Function() Formularios.SucursalSaldo.Servicio.CargarSaldoAsync(My.Settings.Sucursal, fechaAnterior))
+
+                    Dim CierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.SucursalSaldo.Servicio.ObtenerCierreCaja(My.Settings.Sucursal, fechaAnterior)
+                    If (CierreCaja = Nothing) Then
+                        CierreCaja = New Ventas.Core.Model.VentaAggregate.CierreCaja(My.Settings.Sucursal)
+                        CierreCaja.Cerrar(VariablesGlobales.objUsuario.id_Usuario, sucursalSaldo.Total, sucursalSaldo.Total, False, fechaAnterior)
+                        Await Task.Run(Sub() Formularios.SucursalSaldo.Servicio.GuardarCierreCaja(CierreCaja))
+                    Else
+                        CierreCaja.Cerrar(VariablesGlobales.objUsuario.id_Usuario, sucursalSaldo.Total, sucursalSaldo.Total, False, fechaAnterior)
+                        Await Task.Run(Sub() Formularios.SucursalSaldo.Servicio.ActualizarCierreCaja(CierreCaja))
+                    End If
 
                     'Voy seteando la barra de progreso
                     frmCargadorDeEspera.Show()
@@ -1195,8 +1202,8 @@ Public Class MDIContenedor
     Private Sub EstadoDeCuentaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EstadoDeCuentaToolStripMenuItem.Click
         'para administrar ventas no es necesario esta online
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmSucursalesSaldos).MdiParent = Me
-        Funciones.ControlInstancia(frmSucursalesSaldos).Show()
+        Funciones.ControlInstancia(frmSucursalesSaldo).MdiParent = Me
+        Funciones.ControlInstancia(frmSucursalesSaldo).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -1632,8 +1639,8 @@ Public Class MDIContenedor
 
     Private Sub HistorialDeDifCajaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HistorialDeDifCajaToolStripMenuItem.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmDiferenciasListado).MdiParent = Me
-        Funciones.ControlInstancia(frmDiferenciasListado).Show()
+        Funciones.ControlInstancia(frmCierreCaja).MdiParent = Me
+        Funciones.ControlInstancia(frmCierreCaja).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

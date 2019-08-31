@@ -41,6 +41,8 @@ Namespace My
                                   x.AddProfile(Of Formularios.Venta.MapperProfile)()
                                   x.AddProfile(Of Formularios.Cheque.MapperProfile)()
                                   x.AddProfile(Of Formularios.Reserva.MapperProfile)()
+                                  x.AddProfile(Of Formularios.MovimientoDetalle.MapperProfile)()
+                                  x.AddProfile(Of Formularios.SucursalSaldo.MapperProfile)()
                                   x.AddProfile(Of Ventas.Suport.Mapper.MapperProfile)()
                               End Sub)
 

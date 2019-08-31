@@ -5,169 +5,54 @@ Namespace Comunes
     Public Class SaldoSucursalViewModel
         Inherits SistemaCinderella.VistaModelo.Common
 
-        Private _SucursalSaldo As SucursalSaldo
-        Public Property SucursalSaldo As SucursalSaldo
-            Get
-                Return _SucursalSaldo
-            End Get
-            Set(value As SucursalSaldo)
-                _SucursalSaldo = value
-                NotifyPropertyChanged(NameOf(Me.SucursalSaldo))
-            End Set
-        End Property
+        Public Property VentaEfectivo As Decimal
 
-        Public ReadOnly Property VentaEfectivo() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Efectivo
-            End Get
-        End Property
+        Public Property VentaCheque As Decimal
 
-        Public ReadOnly Property VentaCheque() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Cheque
-            End Get
-        End Property
+        Public Property VentaCredito As Decimal
 
-        Public ReadOnly Property VentaCredito() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Credito
-            End Get
-        End Property
+        Public Property VentaDeposito As Decimal
 
-        Public ReadOnly Property VentaDeposito() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Deposito
-            End Get
-        End Property
+        Public Property VentaDebito As Decimal
 
-        Public ReadOnly Property VentaDebito() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Debito
-            End Get
-        End Property
+        Public Property VentaFacturado As Decimal
 
-        Public ReadOnly Property VentaFacturado() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Facturado
-            End Get
-        End Property
+        Public Property VentaSinFacturar As Decimal
 
-        Public ReadOnly Property VentaMinorista() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Minorista
-            End Get
-        End Property
+        Public Property VentaMinorista As Decimal
 
-        Public ReadOnly Property VentaMayorista() As Decimal
-            Get
-                Return SucursalSaldo.Venta.Mayorista
-            End Get
-        End Property
+        Public Property VentaMayorista As Decimal
 
-        Public ReadOnly Property VentaTotal() As Decimal
-            Get
-                Return SucursalSaldo.Ingreso.TotalVentas
-            End Get
-        End Property
+        Public Property VentaTotal As Decimal
 
-        Public ReadOnly Property CajaInical() As Decimal
-            Get
-                Return SucursalSaldo.Ingreso.CajaInicial
-            End Get
-        End Property
+        Public Property CajaInical As Decimal
 
-        Public ReadOnly Property RecibidosSucursal() As Decimal
-            Get
-                Return SucursalSaldo.Ingreso.RecibidosSucursal
-            End Get
-        End Property
+        Public Property RecibidosSucursal As Decimal
 
-        Public ReadOnly Property SobranteCaja() As Decimal
-            Get
-                Return SucursalSaldo.Ingreso.SobranteCaja
-            End Get
-        End Property
+        Public Property SobranteCaja As Decimal
 
-        Public ReadOnly Property EgresoCajaFuerte() As Decimal
-            Get
-                Return SucursalSaldo.Ingreso.EgresosCajaFuerte
-            End Get
-        End Property
+        Public Property EgresoCajaFuerte As Decimal
 
-        Public ReadOnly Property AporteSocios() As Decimal
-            Get
-                Return SucursalSaldo.Ingreso.AporteSocios
-            End Get
-        End Property
+        Public Property AporteSocios As Decimal
 
-        Public ReadOnly Property Devoluciones() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.Devoluciones
-            End Get
-        End Property
+        Public Property Devoluciones As Decimal
 
-        Public ReadOnly Property Mercaderia() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.Mercaderias
-            End Get
-        End Property
+        Public Property Mercaderia As Decimal
 
-        Public ReadOnly Property Sueldos() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.Sueldos
-            End Get
-        End Property
+        Public Property Sueldos As Decimal
 
-        Public ReadOnly Property Gastos() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.Gastos
-            End Get
-        End Property
+        Public Property Gastos As Decimal
 
-        Public ReadOnly Property Impuestos() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.Impuestos
-            End Get
-        End Property
+        Public Property Impuestos As Decimal
 
-        Public ReadOnly Property EnviosSucursales() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.EnviosSucursales
-            End Get
-        End Property
+        Public Property EnviosSucursales As Decimal
 
-        Public ReadOnly Property PendienteAutorizacion() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.PendientesAutorizacion
-            End Get
-        End Property
+        Public Property PendienteAutorizacion As Decimal
 
-        Public ReadOnly Property FaltanteCaja() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.FaltanteCaja
-            End Get
-        End Property
+        Public Property FaltanteCaja As Decimal
 
-        Public ReadOnly Property IngresosCajaFuerte() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.IngresoCajaFuerte
-            End Get
-        End Property
+        Public Property IngresosCajaFuerte As Decimal
 
-        Public ReadOnly Property RetiroSocios() As Decimal
-            Get
-                Return SucursalSaldo.Egreso.RetirosSocios
-            End Get
-        End Property
-
-        Sub New()
-            Me.SucursalSaldo = New SucursalSaldo(
-                                    New Venta(0, 0, 0, 0, 0, 0, 0, 0),
-                                    New Ingreso(0, 0, 0, 0, 0, 0),
-                                    New Egreso(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                                    0,
-                                    0)
-        End Sub
-
+        Public Property RetiroSocios As Decimal
     End Class
 End Namespace

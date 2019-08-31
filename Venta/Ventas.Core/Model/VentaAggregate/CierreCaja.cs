@@ -68,23 +68,21 @@ namespace Ventas.Core.Model.VentaAggregate
             Borrado = false;
             FechaEdicion = Fecha;
             Monto = montoRegistrado;
+            Diferencia = montoRegistrado - montoFisico.Value;
 
-            if (montoFisico == montoRegistrado)
+            if (Diferencia == 0)
             {
                 Situacion = CierreCajaSituacion.SinDiferencia;
-                Diferencia = 0;
             }
-            else if (montoFisico > montoRegistrado)
+            else if (Diferencia > 0)
             {
                 Situacion = CierreCajaSituacion.SobranteDinero;
                 Comentarios = "Sobrante de dinero en el cierre de caja.";
-                Diferencia = montoFisico.Value - montoRegistrado;
             }
             else
             {
                 Situacion = CierreCajaSituacion.FaltanteDinero;
                 Comentarios = "Faltante de dinero en el cierre de caja.";
-                Diferencia = montoRegistrado - montoFisico.Value;
             }
         }
     }

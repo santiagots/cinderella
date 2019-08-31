@@ -1,4 +1,6 @@
-﻿Public Class frmMovimientoPlanilla
+﻿Imports SistemaCinderella.Formularios.MovimientoDetalle
+
+Public Class frmMovimientoPlanilla
     'Instancias
     Dim id_Sucursal As Integer
     Dim Nombre_Sucursal As String
@@ -288,13 +290,13 @@
             frmCargadorDeEspera.Refresh()
 
             'Cargo los movimientos de Dif. de Caja.
-            Dim DsCaja As New DataSet
-            DsCaja = NegMovimiento.ObtenerMovCaja(id_Sucursal, Anio, NumeroMes)
-            If DsCaja IsNot Nothing Then
-                For Each mov In DsCaja.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Dif. de Caja")
-                Next
-            End If
+            Dim fechaDesde As DateTime = New DateTime(Anio, NumeroMes, 1)
+            Dim fechaHasta As DateTime = fechaDesde.AddMonths(1).AddDays(-1)
+
+            Dim cajas As List(Of MovimientoCaja) = Servicio.ObtenerMovimientoCaja(id_Sucursal, fechaDesde, fechaHasta, Nothing)
+            For Each caja As MovimientoCaja In cajas
+                AgregarMovimiento(0, caja.Fecha, caja.Comentarios, caja.Monto, "Dif. de Caja")
+            Next
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 3
@@ -309,8 +311,6 @@
                     AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Gasto", mov.item("SoloLectura"))
                 Next
             End If
-
-
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 4
@@ -401,13 +401,15 @@
             frmCargadorDeEspera.Dispose()
         ElseIf Tipo = "Diferencias de Caja" Then
             'Cargo los movimientos de Dif. de Caja.
-            Dim DsCaja As New DataSet
-            DsCaja = NegMovimiento.ObtenerMovCaja(id_Sucursal, Anio, NumeroMes)
-            If DsCaja IsNot Nothing Then
-                For Each mov In DsCaja.Tables(0).Rows
-                    AgregarMovimiento(mov.item("id_Movimiento"), mov.item("Fecha"), mov.item("Tipo"), mov.item("Monto"), "Dif. de Caja")
-                Next
-            End If
+            'Cargo los movimientos de Dif. de Caja.
+            Dim fechaDesde As DateTime = New DateTime(Anio, NumeroMes, 1)
+            Dim fechaHasta As DateTime = fechaDesde.AddMonths(1).AddDays(-1)
+
+            Dim cajas As List(Of MovimientoCaja) = Servicio.ObtenerMovimientoCaja(id_Sucursal, fechaDesde, fechaHasta, Nothing)
+            For Each caja As MovimientoCaja In cajas
+                AgregarMovimiento(0, caja.Fecha, caja.Comentarios, caja.Monto, "Dif. de Caja")
+            Next
+
         ElseIf Tipo = "Egresos" Then
             'Cargo los movimientos de Egresos.
             Dim DsEgreso As New DataSet

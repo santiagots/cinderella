@@ -626,13 +626,18 @@ Public Class NegMovimientos
         End If
     End Function
 
+    'Obtengo el movimiento de un determinado rango de fechas.
+    Function ObtenerMovCajaFuerteFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As Integer)
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
+    End Function
+
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovEgreso(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As String) As Double
         Dim ds As New DataSet
         If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         End If
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then

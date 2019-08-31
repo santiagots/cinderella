@@ -38,105 +38,37 @@ namespace Ventas.Data.Repository
                             .FirstOrDefault(x => x.Id == idVenta);
         }
 
-        public decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta)
+        public decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
-            decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
+            IQueryable<Pago> pagos = _context.Pago.Where(x => x.Venta.Anulado == false &&
                                                     x.Venta.IdSucursal == idSucursal &&
-                                                    x.TipoPago != TipoPago.Bonificacion &&
                                                     DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
-                                            .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-            return resultado ?? 0;
-        }
+                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
 
-        public decimal ObtenerTotal(int idSucursal, DateTime fecha)
-        {
-            decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                    x.Venta.IdSucursal == idSucursal &&
-                                                    x.TipoPago != TipoPago.Bonificacion &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value == DbFunctions.TruncateTime(fecha).Value)
-                                            .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-            return resultado ?? 0;
-        }
+            if (facturado.HasValue)
+            {
+                if (facturado.Value)
+                    pagos = pagos.Where(x => x.Venta.Factura != null);
+                else
+                    pagos = pagos.Where(x => x.Venta.Factura == null);
+            }
 
-        public decimal ObtenerTotalPorTipoPago(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago tipoPago)
-        {
-            decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                    x.Venta.IdSucursal == idSucursal &&
-                                                    x.TipoPago == tipoPago &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
-                                            .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-            return resultado ?? 0;
-        }
+            if (tipoCliente.HasValue)
+                pagos = pagos.Where(x => x.Venta.TipoCliente == tipoCliente);
 
-        public decimal ObtenerTotalPorTipoPago(int idSucursal, DateTime fecha, TipoPago tipoPago)
-        {
-            decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                    x.Venta.IdSucursal == idSucursal &&
-                                                    x.TipoPago == tipoPago &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fecha).Value)
-                                                .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-
-            return resultado ?? 0;
-        }
-
-        public decimal ObtenerTotalPorFacturacion(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool facturado)
-        {
-            decimal? resultado = null;
-            IQueryable<Pago> Pagos =  _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                            x.Venta.IdSucursal == idSucursal &&
-                                                            DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                                            DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
-
-            if(facturado)
-                resultado = Pagos.Where(x => x.Venta.Factura != null)
-                                .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
+            if (tipoPago.HasValue)
+                pagos = pagos.Where(x => x.TipoPago == tipoPago.Value);
             else
-                resultado = Pagos.Where(x => x.Venta.Factura == null)
-                                .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
+                pagos = pagos.Where(x => x.TipoPago != TipoPago.Bonificacion);
+
+            decimal? resultado = pagos.Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
 
             return resultado ?? 0;
         }
 
-        public decimal ObtenerTotalPorFacturacion(int idSucursal, DateTime fecha, bool facturado)
+        public decimal ObtenerTotal(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
-            decimal? resultado = null;
-            IQueryable<Pago> Pagos = _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                           x.Venta.IdSucursal == idSucursal &&
-                                                           DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fecha).Value);
-
-            if (facturado)
-                resultado = Pagos.Where(x => x.Venta.Factura != null)
-                                .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-            else
-                resultado = Pagos.Where(x => x.Venta.Factura == null)
-                                .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-
-            return resultado ?? 0;
-        }
-
-        public decimal ObtenerTotalPorTipoCliente(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoCliente tipoCliente)
-        {
-            decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                    x.Venta.IdSucursal == idSucursal &&
-                                                    x.Venta.TipoCliente == tipoCliente &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
-                                            .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-
-            return resultado ?? 0;
-        }
-
-        public decimal ObtenerTotalPorTipoCliente(int idSucursal, DateTime fecha, TipoCliente tipoCliente)
-        {
-            decimal? resultado = _context.Pago.Where(x => x.Venta.Anulado == false &&
-                                                    x.Venta.IdSucursal == idSucursal &&
-                                                    x.Venta.TipoCliente == tipoCliente &&
-                                                    DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fecha).Value)
-                                            .Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
-
-            return resultado ?? 0;
+            return ObtenerTotal(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente);
         }
 
         public int Cantidad(int idSucursal)
@@ -154,14 +86,8 @@ namespace Ventas.Data.Repository
 
         public IEnumerable<Venta> Buscar(int idSucursal, int? numeroFacturaDesde, int? numeroFacturaHasta, decimal? montoDesde, decimal? montoHasta, DateTime? fechaDesde, DateTime? fechaHasta, bool? anulado, IEnumerable<TipoFactura> tiposFacturas, IEnumerable<TipoPago> tiposPagos, IEnumerable<TipoCliente> tiposClientes)
         {
-            IQueryable<Venta> ventas = _context.Venta
-                                        .Include(x => x.ClienteMayorista)
-                                        .Include(x => x.Vendedor)
-                                        .Include(x => x.Encargado)
-                                        .Include(x => x.Pagos)
-                                        .Include(x => x.Factura)
-                                        .Include(x => x.Factura.NumeroFactura)
-                                        .Where(x => x.Sucursal.Id == idSucursal);
+            IQueryable<Venta> ventas = ObtenerContextoVentaReducido()
+                                                        .Where(x => x.Sucursal.Id == idSucursal);
             
             if(numeroFacturaDesde.HasValue)
                 ventas = ventas.Where(x => x.Factura.NumeroFactura.Any(y => y.Numero >= numeroFacturaDesde.Value));
@@ -195,6 +121,48 @@ namespace Ventas.Data.Repository
 
 
             return ventas.OrderByDescending(x => x.Fecha).ToList();
+        }
+
+        public IEnumerable<Venta> Buscar(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        {
+            IQueryable<Venta> ventas = ObtenerContextoVentaReducido()
+                                                        .Where(x => x.Anulado == false &&
+                                                        x.IdSucursal == idSucursal &&
+                                                        DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
+                                                        DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
+
+            if (facturado.HasValue)
+            {
+                if (facturado.Value)
+                    ventas = ventas.Where(x => x.Factura != null);
+                else
+                    ventas = ventas.Where(x => x.Factura == null);
+            }
+
+            if (tipoCliente.HasValue)
+                ventas = ventas.Where(x => x.TipoCliente == tipoCliente.Value);
+
+            if (tipoPago.HasValue)
+                ventas = ventas.Where(x => x.Pagos.Any(y => y.TipoPago == tipoPago.Value));
+            else
+                ventas = ventas.Where(x => x.Pagos.Any(y => y.TipoPago != TipoPago.Bonificacion));
+
+            return ventas.OrderByDescending(x => x.Fecha).ToList();
+        }
+
+        public IEnumerable<Venta> Buscar(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        {
+            return Buscar(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente);
+        }
+
+        private IQueryable<Venta> ObtenerContextoVentaReducido()
+        {
+            return _context.Venta.Include(x => x.ClienteMayorista)
+                                 .Include(x => x.Vendedor)
+                                 .Include(x => x.Encargado)
+                                 .Include(x => x.Pagos)
+                                 .Include(x => x.Factura)
+                                 .Include(x => x.Factura.NumeroFactura);
         }
     }
 }

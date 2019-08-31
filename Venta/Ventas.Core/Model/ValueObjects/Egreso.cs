@@ -36,7 +36,12 @@ namespace Ventas.Core.Model.ValueObjects
 
         public decimal Total()
         {
-            return Sueldos + Devoluciones + Impuestos + FaltanteCaja + Gastos + RetirosSocios + EnviosSucursales + Mercaderias;
+            return EnviosSucursales + Gastos + Mercaderias + Impuestos + RetirosSocios + FaltanteCaja + Sueldos + IngresoCajaFuerte + Devoluciones + PendientesAutorizacion;
+        }
+
+        public decimal Disponible()
+        {
+            return EnviosSucursales + Gastos + Mercaderias + Impuestos + RetirosSocios + FaltanteCaja + Sueldos + Devoluciones;
         }
 
         protected override bool EqualsCore(Egreso other)

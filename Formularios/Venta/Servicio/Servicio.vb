@@ -76,31 +76,17 @@ Namespace Formularios.Venta
             End Using
         End Function
 
-        Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fecha As DateTime) As Decimal
+        Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fecha As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Decimal
             Using context As VentaContext = New VentaContext()
                 Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.ObtenerTotal(idSucursal, fecha)
+                Return ventaRepository.ObtenerTotal(idSucursal, fecha, facturado, tipoPago, tipoCliente)
             End Using
         End Function
 
-        Friend Shared Function ObtenerTotalVentasPorTipoPago(idSucursal As Integer, fecha As DateTime, tipoPago As TipoPago) As Decimal
+        Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fechaDesde As DateTime, fechaHasta As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Decimal
             Using context As VentaContext = New VentaContext()
                 Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.ObtenerTotalPorTipoPago(idSucursal, fecha, tipoPago)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerTotalVentasPorTipoCliente(idSucursal As Integer, fecha As DateTime, tipoCliente As TipoCliente) As Decimal
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.ObtenerTotalPorTipoCliente(idSucursal, fecha, tipoCliente)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerTotalVentasPorPorFacturacion(idSucursal As Integer, fecha As DateTime, facturado As Boolean) As Decimal
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.ObtenerTotalPorFacturacion(idSucursal, fecha, facturado)
+                Return ventaRepository.ObtenerTotal(idSucursal, fechaDesde, fechaHasta, facturado, tipoPago, tipoCliente)
             End Using
         End Function
 

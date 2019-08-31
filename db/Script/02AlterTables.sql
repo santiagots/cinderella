@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-        (local)\SQLEXPRESS.C:\USERS\SANTI\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
+        (local)\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 11.6.11 from Red Gate Software Ltd at 03/06/2019 08:29:25 p.m.
+Script created by SQL Compare version 11.6.11 from Red Gate Software Ltd at 27/08/2019 10:31:24 p.m.
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,189 +24,54 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Dropping foreign keys from [dbo].[NUEVA_RESERVA]'
+PRINT N'Dropping foreign keys from [dbo].[NUEVA_CIERRE_CAJA]'
 GO
-IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_RESERVA_NUEVA_RESERVA]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_RESERVA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_RESERVA] DROP CONSTRAINT [FK_NUEVA_RESERVA_NUEVA_RESERVA]
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] DROP CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS]
 GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Altering [dbo].[NUEVA_FACTURA]'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-IF COL_LENGTH(N'[dbo].[NUEVA_FACTURA]', N'PuntoVenta') IS NULL
-ALTER TABLE [dbo].[NUEVA_FACTURA] ADD[PuntoVenta] [int] NOT NULL CONSTRAINT [DF_NUEVA_FACTURA_PuntoVenta] DEFAULT ((0))
-IF COL_LENGTH(N'[dbo].[NUEVA_FACTURA]', N'Monto') IS NULL
-ALTER TABLE [dbo].[NUEVA_FACTURA] ADD[Monto] [decimal] (18, 2) NOT NULL CONSTRAINT [DF_NUEVA_FACTURA_Monto] DEFAULT ((0))
-IF COL_LENGTH(N'[dbo].[NUEVA_FACTURA]', N'Fecha') IS NULL
-ALTER TABLE [dbo].[NUEVA_FACTURA] ADD[Fecha] [datetime] NOT NULL CONSTRAINT [DF_NUEVA_FACTURA_Fecha] DEFAULT (getdate())
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS1]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] DROP CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS1]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Creating [dbo].[NUEVA_NOTA_CREDITO]'
+PRINT N'Creating [dbo].[sp_MovCajaFuerte_ObtenerPorFecha]'
 GO
-IF OBJECT_ID(N'[dbo].[NUEVA_NOTA_CREDITO]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_NOTA_CREDITO]
-(
-[Id] [bigint] NOT NULL,
-[IdVenta] [bigint] NOT NULL,
-[PuntoVenta] [int] NOT NULL CONSTRAINT [DF_NUEVA_NOTA_CREDITO_PuntoVenta] DEFAULT ((0)),
-[TipoFactura] [int] NOT NULL,
-[CondicionIVA] [int] NOT NULL,
-[Monto] [decimal] (18, 2) NOT NULL CONSTRAINT [DF_NUEVA_NOTA_CREDITO_Monto] DEFAULT ((0)),
-[NombreYApellido] [varchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Direccion] [varchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Localidad] [varchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[CUIT] [nchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Fecha] [datetime] NOT NULL
-)
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating primary key [PK_NUEVA_NOTA_CREDITO] on [dbo].[NUEVA_NOTA_CREDITO]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'PK_NUEVA_NOTA_CREDITO' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_NOTA_CREDITO]'))
-ALTER TABLE [dbo].[NUEVA_NOTA_CREDITO] ADD CONSTRAINT [PK_NUEVA_NOTA_CREDITO] PRIMARY KEY CLUSTERED  ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating [dbo].[NUEVA_NUMERO_NOTA_CREDITO]'
-GO
-IF OBJECT_ID(N'[dbo].[NUEVA_NUMERO_NOTA_CREDITO]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_NUMERO_NOTA_CREDITO]
-(
-[Id] [bigint] NOT NULL,
-[IdNotaCredito] [bigint] NOT NULL,
-[Numero] [int] NOT NULL
-)
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating primary key [PK_NUEVA_NUMERO_NOTA_CREDITO] on [dbo].[NUEVA_NUMERO_NOTA_CREDITO]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'PK_NUEVA_NUMERO_NOTA_CREDITO' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_NUMERO_NOTA_CREDITO]'))
-ALTER TABLE [dbo].[NUEVA_NUMERO_NOTA_CREDITO] ADD CONSTRAINT [PK_NUEVA_NUMERO_NOTA_CREDITO] PRIMARY KEY CLUSTERED  ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_NOTA_CREDITO]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_NOTA_CREDITO_NUEVA_VENTAS]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_NOTA_CREDITO]', 'U'))
-ALTER TABLE [dbo].[NUEVA_NOTA_CREDITO] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_NOTA_CREDITO_NUEVA_VENTAS] FOREIGN KEY ([IdVenta]) REFERENCES [dbo].[NUEVA_NOTA_CREDITO] ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_NUMERO_NOTA_CREDITO]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_NUMERO_NOTA_CREDITO_NUEVA_NOTA_CREDITO]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_NUMERO_NOTA_CREDITO]', 'U'))
-ALTER TABLE [dbo].[NUEVA_NUMERO_NOTA_CREDITO] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_NUMERO_NOTA_CREDITO_NUEVA_NOTA_CREDITO] FOREIGN KEY ([IdNotaCredito]) REFERENCES [dbo].[NUEVA_NOTA_CREDITO] ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_RESERVA]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_RESERVA_NUEVA_RESERVA]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_RESERVA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_RESERVA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_RESERVA_NUEVA_RESERVA] FOREIGN KEY ([IdVentaEntrega]) REFERENCES [dbo].[NUEVA_VENTAS] ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Altering [dbo].[NUEVA_VENTAS]'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-IF COL_LENGTH(N'[dbo].[NUEVA_VENTAS]', N'Anulado') IS NULL
-ALTER TABLE [dbo].[NUEVA_VENTAS] ADD[Anulado] [bit] NULL CONSTRAINT [DF_NUEVA_VENTAS_Anulado] DEFAULT ((0))
-IF COL_LENGTH(N'[dbo].[NUEVA_VENTAS]', N'MotivoAnulado') IS NULL
-ALTER TABLE [dbo].[NUEVA_VENTAS] ADD[MotivoAnulado] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
-IF COL_LENGTH(N'[dbo].[NUEVA_VENTAS]', N'FechaAnulado') IS NULL
-ALTER TABLE [dbo].[NUEVA_VENTAS] ADD[FechaAnulado] [datetime] NULL
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-COMMIT TRANSACTION
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-DECLARE @Success AS BIT
-SET @Success = 1
-SET NOEXEC OFF
-IF (@Success = 1) PRINT 'The database update succeeded'
-ELSE BEGIN
-	IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
-	PRINT 'The database update failed'
+IF OBJECT_ID(N'[dbo].[sp_MovCajaFuerte_ObtenerPorFecha]', 'P') IS NULL
+EXEC sp_executesql N'-- =============================================
+-- Author:		Morpheus
+-- Create date: 28/08/12
+-- Description:	Obtener Movimientos.
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_MovCajaFuerte_ObtenerPorFecha] 
+@id_Sucursal AS INT,
+@FDesde AS date,
+@FHasta AS date,
+@Tipo as int
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	select Fecha_Sys as Fecha, Monto
+	from MOVIMIENTOS_CAJA_FUERTE  
+	where (Borrado = 0) and (CAST(Fecha AS DATE) between @FDesde and @FHasta) and (id_Sucursal=@id_Sucursal) and id_Tipo = @Tipo	
 END
-GO
 
-/*
-Run this script on:
 
-        sql5030.site4now.net.DB_9B1463_cinderella    -  This database will be modified
 
-to synchronize it with:
-
-        AR5CG4371FY6.CINDERELLA_LOCAL
-
-You are recommended to back up your database before running this script
-
-Script created by SQL Compare version 11.6.11 from Red Gate Software Ltd at 06/08/2019 09:58:34 p.m.
-
-*/
-SET NUMERIC_ROUNDABORT OFF
-GO
-SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
-GO
-SET XACT_ABORT ON
-GO
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
-GO
-BEGIN TRANSACTION
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating [dbo].[NUEVA_CIERRE_CAJA]'
-GO
-IF OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_CIERRE_CAJA]
-(
-[Id] [bigint] NOT NULL,
-[IdSucursal] [int] NOT NULL,
-[IdUsuarioCierre] [int] NOT NULL,
-[IdUsuarioAbre] [int] NULL,
-[Estado] [int] NOT NULL,
-[Situacion] [int] NOT NULL,
-[Abierta] [bit] NOT NULL,
-[Monto] [numeric] (18, 2) NOT NULL,
-[Diferencia] [numeric] (18, 2) NOT NULL,
-[Fecha] [datetime] NOT NULL,
-[Comentarios] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Borrado] [bit] NOT NULL,
-[FechaEdicion] [datetime] NOT NULL
-)
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating primary key [PK_NUEVA_CIERRE_CAJA] on [dbo].[NUEVA_CIERRE_CAJA]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'PK_NUEVA_CIERRE_CAJA' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] ADD CONSTRAINT [PK_NUEVA_CIERRE_CAJA] PRIMARY KEY CLUSTERED  ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_CIERRE_CAJA]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_SUCURSALES]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_SUCURSALES] FOREIGN KEY ([IdSucursal]) REFERENCES [dbo].[SUCURSALES] ([id_Sucursal])
+'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 PRINT N'Adding foreign keys to [dbo].[NUEVA_CIERRE_CAJA]'
 GO
 IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS] FOREIGN KEY ([IdUsuarioCierre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS] FOREIGN KEY ([IdUsuarioCierre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
 GO
 IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS1]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS1] FOREIGN KEY ([IdUsuarioAbre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
+ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS1] FOREIGN KEY ([IdUsuarioAbre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

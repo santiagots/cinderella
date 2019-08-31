@@ -81,7 +81,6 @@
     <Compile Include="Model\ValueObjects\CostoProducto.cs" />
     <Compile Include="Model\ChequeAgreggate\Cheque.cs" />
     <Compile Include="Model\ValueObjects\SucursalSaldos.cs" />
-    <Compile Include="Model\ValueObjects\Venta.cs" />
     <Compile Include="Model\VentaAggregate\CierreCaja.cs" />
     <Compile Include="Model\VentaAggregate\Comision.cs" />
     <Compile Include="Model\VentaAggregate\Factura.cs" />
