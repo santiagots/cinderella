@@ -40,6 +40,10 @@ Partial Class frmMovimientoCajaFuerte
         Me.lbl_Sucursal = New System.Windows.Forms.Label()
         Me.ToolCaja = New System.Windows.Forms.ToolTip(Me.components)
         Me.ErrorCaja = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtTotalCajaChica = New System.Windows.Forms.TextBox()
+        Me.txtTotalCajaFuerte = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.ErrorCaja, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -49,6 +53,10 @@ Partial Class frmMovimientoCajaFuerte
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.txtTotalCajaChica)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.txtTotalCajaFuerte)
+        Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.btnAceptar)
         Me.GroupBox1.Controls.Add(Me.btnCancelar)
         Me.GroupBox1.Controls.Add(Me.Label5)
@@ -65,7 +73,7 @@ Partial Class frmMovimientoCajaFuerte
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(10, 6)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(372, 334)
+        Me.GroupBox1.Size = New System.Drawing.Size(372, 481)
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Alta de movimientos de ""Caja Fuerte""."
@@ -77,7 +85,7 @@ Partial Class frmMovimientoCajaFuerte
         Me.btnAceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAceptar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAceptar.Location = New System.Drawing.Point(256, 286)
+        Me.btnAceptar.Location = New System.Drawing.Point(256, 433)
         Me.btnAceptar.Name = "btnAceptar"
         Me.btnAceptar.Size = New System.Drawing.Size(100, 40)
         Me.btnAceptar.TabIndex = 13
@@ -92,7 +100,7 @@ Partial Class frmMovimientoCajaFuerte
         Me.btnCancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancelar.Location = New System.Drawing.Point(13, 286)
+        Me.btnCancelar.Location = New System.Drawing.Point(13, 433)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(100, 40)
         Me.btnCancelar.TabIndex = 12
@@ -104,7 +112,7 @@ Partial Class frmMovimientoCajaFuerte
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(229, 257)
+        Me.Label5.Location = New System.Drawing.Point(229, 404)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(127, 15)
         Me.Label5.TabIndex = 18
@@ -137,10 +145,10 @@ Partial Class frmMovimientoCajaFuerte
         Me.txtDescripcion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDescripcion.Location = New System.Drawing.Point(13, 162)
+        Me.txtDescripcion.Location = New System.Drawing.Point(13, 215)
         Me.txtDescripcion.Multiline = True
         Me.txtDescripcion.Name = "txtDescripcion"
-        Me.txtDescripcion.Size = New System.Drawing.Size(343, 92)
+        Me.txtDescripcion.Size = New System.Drawing.Size(343, 186)
         Me.txtDescripcion.TabIndex = 5
         '
         'txtMonto
@@ -173,7 +181,7 @@ Partial Class frmMovimientoCajaFuerte
         'lbl_Descripcion
         '
         Me.lbl_Descripcion.AutoSize = True
-        Me.lbl_Descripcion.Location = New System.Drawing.Point(10, 144)
+        Me.lbl_Descripcion.Location = New System.Drawing.Point(10, 197)
         Me.lbl_Descripcion.Name = "lbl_Descripcion"
         Me.lbl_Descripcion.Size = New System.Drawing.Size(72, 15)
         Me.lbl_Descripcion.TabIndex = 4
@@ -217,11 +225,51 @@ Partial Class frmMovimientoCajaFuerte
         Me.ErrorCaja.BlinkRate = 200
         Me.ErrorCaja.ContainerControl = Me
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(10, 144)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(100, 15)
+        Me.Label1.TabIndex = 19
+        Me.Label1.Text = "Total Caja Fuerte"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(10, 171)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(96, 15)
+        Me.Label2.TabIndex = 21
+        Me.Label2.Text = "Total Caja Chica"
+        '
+        'txtTotalCajaChica
+        '
+        Me.txtTotalCajaChica.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtTotalCajaChica.Enabled = False
+        Me.txtTotalCajaChica.Location = New System.Drawing.Point(127, 165)
+        Me.txtTotalCajaChica.Name = "txtTotalCajaChica"
+        Me.txtTotalCajaChica.ReadOnly = True
+        Me.txtTotalCajaChica.Size = New System.Drawing.Size(229, 21)
+        Me.txtTotalCajaChica.TabIndex = 22
+        '
+        'txtTotalCajaFuerte
+        '
+        Me.txtTotalCajaFuerte.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtTotalCajaFuerte.Enabled = False
+        Me.txtTotalCajaFuerte.Location = New System.Drawing.Point(127, 138)
+        Me.txtTotalCajaFuerte.Name = "txtTotalCajaFuerte"
+        Me.txtTotalCajaFuerte.ReadOnly = True
+        Me.txtTotalCajaFuerte.Size = New System.Drawing.Size(229, 21)
+        Me.txtTotalCajaFuerte.TabIndex = 20
+        '
         'frmMovimientoCajaFuerte
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(394, 352)
+        Me.ClientSize = New System.Drawing.Size(394, 499)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -250,4 +298,8 @@ Partial Class frmMovimientoCajaFuerte
     Friend WithEvents lbl_Sucursal As System.Windows.Forms.Label
     Friend WithEvents ToolCaja As System.Windows.Forms.ToolTip
     Friend WithEvents ErrorCaja As System.Windows.Forms.ErrorProvider
+    Friend WithEvents txtTotalCajaChica As TextBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents txtTotalCajaFuerte As TextBox
+    Friend WithEvents Label1 As Label
 End Class

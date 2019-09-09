@@ -3,7 +3,6 @@ using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ChequeAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;

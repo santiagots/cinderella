@@ -10,10 +10,6 @@ Namespace Formularios.SucursalSaldo
     Public Class frmResumenDiarioViewModel
         Inherits SistemaCinderella.VistaModelo.Common
 
-        Private NegDev As New Negocio.NegDevolucion
-        Private NegMov As New Negocio.NegMovimientos
-        Private NegEmp As New Negocio.NegEmpleados
-        Private NegAdel As New Negocio.NegAdelantos
         Private NegUsuarios As New Negocio.Usuario
         Private IdSucursal As Integer
         Private CajaActual As CierreCaja
@@ -80,7 +76,7 @@ Namespace Formularios.SucursalSaldo
         End Function
 
         Friend Async Function AbrirCajaAsync() As Task
-            CajaActual.Abir(VariablesGlobales.objUsuario.id_Usuario)
+            CajaActual.Abrir(VariablesGlobales.objUsuario.id_Usuario)
             Await Task.Run(Sub() Servicio.ActualizarCierreCaja(CajaActual))
             Await CargarSaldoAsync()
 

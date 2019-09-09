@@ -414,9 +414,9 @@ Public Class MDIContenedor
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_HistorialDiferenciaCaja)) Then
-            HistorialDeDifCajaToolStripMenuItem.Visible = True
+            HistorialDeCierreCajaToolStripMenuItem.Visible = True
         Else
-            HistorialDeDifCajaToolStripMenuItem.Visible = False
+            HistorialDeCierreCajaToolStripMenuItem.Visible = False
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Sucursales_Administración_Visualizar) Or
@@ -867,7 +867,7 @@ Public Class MDIContenedor
         Dim ultimoCierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.SucursalSaldo.Servicio.ObtenerUltimoCierreCaja(My.Settings.Sucursal)
         Dim totalCajas As Integer = 0
         If ultimoCierreCaja <> Nothing Then
-            totalCajas = DateDiff(DateInterval.Day, ultimoCierreCaja.Fecha, DateTime.Now) - 1
+            totalCajas = DateDiff(DateInterval.Day, ultimoCierreCaja.Fecha.Date, DateTime.Now.Date) - 1
         End If
 
         If totalCajas > 0 Then
@@ -885,7 +885,7 @@ Public Class MDIContenedor
                 For dias = (totalCajas) To 1 Step -1
                     'Fecha anterior.
                     Dim fechaAnterior As Date = DateTime.Now.AddDays(dias * -1)
-                    Dim sucursalSaldo As Ventas.Core.Model.ValueObjects.SucursalSaldo = Await Task.Run(Function() Formularios.SucursalSaldo.Servicio.CargarSaldoAsync(My.Settings.Sucursal, fechaAnterior))
+                    Dim sucursalSaldo As Ventas.Core.Model.ValueObjects.SucursalSaldo = Await Formularios.SucursalSaldo.Servicio.CargarSaldoAsync(My.Settings.Sucursal, fechaAnterior)
 
                     Dim CierreCaja As Ventas.Core.Model.VentaAggregate.CierreCaja = Formularios.SucursalSaldo.Servicio.ObtenerCierreCaja(My.Settings.Sucursal, fechaAnterior)
                     If (CierreCaja = Nothing) Then
@@ -1342,8 +1342,8 @@ Public Class MDIContenedor
 
     Private Sub AccesoDiferencia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccesoDiferencia.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmMovimientoCaja).MdiParent = Me
-        Funciones.ControlInstancia(frmMovimientoCaja).Show()
+        Funciones.ControlInstancia(frmCierreCaja).MdiParent = Me
+        Funciones.ControlInstancia(frmCierreCaja).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -1637,10 +1637,10 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub HistorialDeDifCajaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HistorialDeDifCajaToolStripMenuItem.Click
+    Private Sub HistorialDeDifCajaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HistorialDeCierreCajaToolStripMenuItem.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmCierreCaja).MdiParent = Me
-        Funciones.ControlInstancia(frmCierreCaja).Show()
+        Funciones.ControlInstancia(frmCierreCajaAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmCierreCajaAdministracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 
@@ -1723,8 +1723,8 @@ Public Class MDIContenedor
 
     Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
         Me.Cursor = Cursors.WaitCursor
-        Funciones.ControlInstancia(frmReservaAdminitracion).MdiParent = Me
-        Funciones.ControlInstancia(frmReservaAdminitracion).Show()
+        Funciones.ControlInstancia(frmReservaAdministracion).MdiParent = Me
+        Funciones.ControlInstancia(frmReservaAdministracion).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

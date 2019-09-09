@@ -3,7 +3,7 @@ Imports Common.Core.Exceptions
 Imports SistemaCinderella.Formularios.Reserva
 Imports SistemaCinderella.VistaModelo.Ventas
 
-Public Class frmReservaAdminitracion
+Public Class frmReservaAdministracion
 
     Public frmReservaAdministracionViewModel As frmReservaAdministracionViewModel
 

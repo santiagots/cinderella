@@ -37,7 +37,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>418</ApplicationRevision>
+    <ApplicationRevision>420</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -175,8 +175,6 @@
       <HintPath>dlls\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.BatchParserClient, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SqlServer.Smo, Version=14.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
@@ -399,6 +397,12 @@
     <Compile Include="Formularios\SucursalSaldo\frmCierreCaja.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\SucursalSaldo\frmCierreCajaAdministracion.Designer.vb">
+      <DependentUpon>frmCierreCajaAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\SucursalSaldo\frmCierreCajaAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\SucursalSaldo\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\SucursalSaldo\Servicio\Servico.vb" />
     <Compile Include="Formularios\SucursalSaldo\frmResumenDiario.Designer.vb">
@@ -408,6 +412,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\SucursalSaldo\ViewModel\CierreCajaItem.vb" />
+    <Compile Include="Formularios\SucursalSaldo\ViewModel\frmCierreCajaAdministracionViewModel.vb" />
     <Compile Include="Formularios\SucursalSaldo\ViewModel\frmCierreCajaViewModel.vb" />
     <Compile Include="Formularios\SucursalSaldo\ViewModel\frmResumenDiarioViewModel.vb" />
     <Compile Include="Formularios\SucursalSaldo\frmSucursalesSaldo.Designer.vb">
@@ -885,10 +890,10 @@
     <Compile Include="Formularios\Reserva\frmReserva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Reserva\frmReservaAdminitracion.Designer.vb">
-      <DependentUpon>frmReservaAdminitracion.vb</DependentUpon>
+    <Compile Include="Formularios\Reserva\frmReservaAdministracion.Designer.vb">
+      <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Reserva\frmReservaAdminitracion.vb">
+    <Compile Include="Formularios\Reserva\frmReservaAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmSincronizacion.Designer.vb">
@@ -1252,6 +1257,9 @@
     <EmbeddedResource Include="Formularios\SucursalSaldo\frmCierreCaja.resx">
       <DependentUpon>frmCierreCaja.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\SucursalSaldo\frmCierreCajaAdministracion.resx">
+      <DependentUpon>frmCierreCajaAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\SucursalSaldo\frmResumenDiario.resx">
       <DependentUpon>frmResumenDiario.vb</DependentUpon>
     </EmbeddedResource>
@@ -1496,8 +1504,8 @@
     <EmbeddedResource Include="Formularios\Reserva\frmReserva.resx">
       <DependentUpon>frmReserva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Reserva\frmReservaAdminitracion.resx">
-      <DependentUpon>frmReservaAdminitracion.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\Reserva\frmReservaAdministracion.resx">
+      <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmSincronizacion.resx">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
@@ -1644,6 +1652,7 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.ResumenDiario.frmResumenDiarioViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.SucursalesSaldo.frmSucursalesSaldoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.SucursalSaldo.frmCierreCajaViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.SucursalSaldo.frmCierreCajaViewModel1.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.FacturaDetalleViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmFacturaAdministracionViewModel.datasource" />
@@ -2306,16 +2315,6 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
-    <PublishFile Include="Microsoft.ReportViewer.Common">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
       <Visible>False</Visible>
       <Group>
@@ -2327,16 +2326,6 @@
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Microsoft.ReportViewer.ProcessingObjectModel">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="Microsoft.ReportViewer.WinForms">
       <Visible>False</Visible>
       <Group>
       </Group>

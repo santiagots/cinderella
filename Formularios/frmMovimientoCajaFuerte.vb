@@ -1,4 +1,7 @@
-﻿Public Class frmMovimientoCajaFuerte
+﻿Imports SistemaCinderella.Formularios.SucursalSaldo
+Imports Ventas.Core.Model.ValueObjects
+
+Public Class frmMovimientoCajaFuerte
     Dim NegErrores As New Negocio.NegManejadorErrores
     Dim NegMovimiento As New Negocio.NegMovimientos
     Dim NegCajaInicial As New Negocio.NegCajaInicial
@@ -6,7 +9,11 @@
     Dim id_Sucursal As String
     Dim Nombre_Sucursal As String
     Dim dsMovimiento As New DataSet
+    Dim CajaFuerteTotal As Double
+    Dim CajaChicaTotal As Double
+
     Public id_Movimiento As Int64 = 0
+
 
     'Al cerrar el formulario me fijo si está abierto el form de listados, si lo está, hago foco.
     Private Sub frmMovimientoCaja_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -22,7 +29,7 @@
     End Sub
 
     'Cuando carga el formulario.
-    Private Sub frmMovimientoCajaChica_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Async Function frmMovimientoCajaChica_LoadAsync(ByVal sender As System.Object, ByVal e As System.EventArgs) As Threading.Tasks.Task Handles MyBase.Load
         Try
             'Cambio el cursor a "WAIT"
             Me.Cursor = Cursors.WaitCursor
@@ -54,6 +61,14 @@
                 ToolCaja.SetToolTip(btnAceptar, "Al hacer click en el botón 'Aceptar' del formulario se registrará en el sistema el movimiento de caja fuerte.")
             End If
 
+
+            CajaFuerteTotal = NegMovimiento.ConsultarTotalCajaFuerte(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
+            txtTotalCajaFuerte.Text = CajaFuerteTotal.ToString("c2")
+
+            Dim sucursalSaldo As SucursalSaldo = Await Servicio.CargarSaldoAsync(My.Settings.Sucursal, Date.Now)
+            CajaChicaTotal = sucursalSaldo.Total
+            txtTotalCajaChica.Text = CajaChicaTotal.ToString("c2")
+
             txtMonto.Focus()
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
@@ -61,7 +76,7 @@
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error al cargar el formulario. Por favor, contáctese con el administrador", "Movimientos | Caja Fuerte", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-    End Sub
+    End Function
 
     'Valida solo moneda.
     Private Sub txtMonto_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtMonto.KeyPress
@@ -93,7 +108,7 @@
     End Sub
 
     'Cuando hace click en Aceptar.
-    Private Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
+    Private Async Sub btnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAceptar.Click
         If txtMonto.Text = "" Or txtDate.Text = "" Or CbTipo.SelectedItem Is Nothing Then
             MessageBox.Show("Debe completar los campos requeridos.", "Movimientos | Caja Fuerte", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
@@ -126,8 +141,6 @@
 
                 'controlo si hay sufiente dinero en caja para poder retirar    
                 If (eCaja.id_Tipo = 1) Then
-                    Dim CajaFuerteTotal As Double = 0
-                    CajaFuerteTotal = NegMovimiento.ConsultarTotalCajaFuerte(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
                     If (CajaFuerteTotal < eCaja.Monto) Then
                         Dim str_mensaje As String
                         str_mensaje = "No hay suficiente dinero en la caja para realizar esa operación." + vbCrLf + "Total disponible en Caja Fuerte:" + CajaFuerteTotal.ToString
@@ -139,10 +152,9 @@
 
                 'controlo si hay sufiente dinero en caja chica para para poder ingresar a la caja fuerte
                 If (eCaja.id_Tipo = 2) Then
-                    Dim CajaChica As Double = NegCajaInicial.ObtenerSaldo(id_Sucursal, Date.Now.ToString("yyyy/MM/dd"))
-                    If (CajaChica < eCaja.Monto) Then
+                    If (CajaChicaTotal < eCaja.Monto) Then
                         Dim str_mensaje As String
-                        str_mensaje = "No hay suficiente dinero en la Caja Chica para realizar esa operación." + vbCrLf + "Total disponible en Caja Chica:" + CajaChica.ToString
+                        str_mensaje = "No hay suficiente dinero en la Caja Chica para realizar esa operación." + vbCrLf + "Total disponible en Caja Chica:" + CajaChicaTotal.ToString("C2")
                         MessageBox.Show(str_mensaje, "Dinero insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                         Me.Cursor = Cursors.Default
                         Exit Sub

@@ -1,4 +1,5 @@
-﻿Imports SistemaCinderella.Formularios.MovimientoDetalle
+﻿Imports System.Globalization
+Imports SistemaCinderella.Formularios.MovimientoDetalle
 
 Public Class frmMovimientoPlanilla
     'Instancias
@@ -52,13 +53,14 @@ Public Class frmMovimientoPlanilla
             Dim Tipo As String = DG_Movimientos.Rows(e.RowIndex).Cells("Tipo").Value()
             Dim Descripcion As String = DG_Movimientos.Rows(e.RowIndex).Cells("Descripcion").Value()
             Dim id_Mov As Int64 = DG_Movimientos.Rows(e.RowIndex).Cells("id_Movimiento").Value()
+            Dim fecha As DateTime = DateTime.ParseExact(DG_Movimientos.Rows(e.RowIndex).Cells("Fecha").Value(), {"d/M/yyyy", "d/M/yyyy HH:mm:ss"}, CultureInfo.InvariantCulture, DateTimeStyles.None)
 
             'Dependiendo del tipo abro un form u otro.
-            If Tipo = "Dif. de Caja" Then
+            If Tipo = "Cierre de Caja" Then
                 Me.WindowState = FormWindowState.Minimized
-                frmMovimientoCaja.id_Movimiento = id_Mov
-                Funciones.ControlInstancia(frmMovimientoCaja).MdiParent = MDIContenedor
-                Funciones.ControlInstancia(frmMovimientoCaja).Show()
+                Dim frmCierreCaja As frmCierreCaja = New frmCierreCaja(fecha)
+                Funciones.ControlInstancia(frmCierreCaja).MdiParent = MDIContenedor
+                Funciones.ControlInstancia(frmCierreCaja).Show()
             ElseIf Tipo = "Egreso" Then
                 Me.WindowState = FormWindowState.Minimized
                 frmMovimientoEgreso.id_Movimiento = id_Mov
@@ -131,7 +133,7 @@ Public Class frmMovimientoPlanilla
                     'Dependiendo del tipo abro un form u otro.
                     Dim Estado As String = ""
 
-                    If Tipo = "Dif. de Caja" Then
+                    If Tipo = "Cierre de Caja" Then
                         Estado = NegMovimiento.EliminarMovimiento(id_Mov, id_Sucursal, 1)
                     ElseIf Tipo = "Env. otras Suc." Then
                         If (Negocio.Funciones.HayInternet) Then
@@ -286,16 +288,16 @@ Public Class frmMovimientoPlanilla
 
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.BarraProgreso.Value = 2
-            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando movimientos de diferencias de caja... (1/8)"
+            frmCargadorDeEspera.lbl_Descripcion.Text = "Cargando movimientos de cierre de caja... (1/8)"
             frmCargadorDeEspera.Refresh()
 
-            'Cargo los movimientos de Dif. de Caja.
+            'Cargo los movimientos de cierre de Caja.
             Dim fechaDesde As DateTime = New DateTime(Anio, NumeroMes, 1)
             Dim fechaHasta As DateTime = fechaDesde.AddMonths(1).AddDays(-1)
 
             Dim cajas As List(Of MovimientoCaja) = Servicio.ObtenerMovimientoCaja(id_Sucursal, fechaDesde, fechaHasta, Nothing)
             For Each caja As MovimientoCaja In cajas
-                AgregarMovimiento(0, caja.Fecha, caja.Comentarios, caja.Monto, "Dif. de Caja")
+                AgregarMovimiento(0, caja.Fecha, caja.Comentarios, caja.Total, "Cierre de Caja", True)
             Next
 
             'Voy seteando la barra de progreso
@@ -399,15 +401,14 @@ Public Class frmMovimientoPlanilla
             'Voy seteando la barra de progreso
             frmCargadorDeEspera.Close()
             frmCargadorDeEspera.Dispose()
-        ElseIf Tipo = "Diferencias de Caja" Then
-            'Cargo los movimientos de Dif. de Caja.
-            'Cargo los movimientos de Dif. de Caja.
+        ElseIf Tipo = "Cierre de Caja" Then
+            'Cargo los movimientos de Cierre de Caja.
             Dim fechaDesde As DateTime = New DateTime(Anio, NumeroMes, 1)
             Dim fechaHasta As DateTime = fechaDesde.AddMonths(1).AddDays(-1)
 
             Dim cajas As List(Of MovimientoCaja) = Servicio.ObtenerMovimientoCaja(id_Sucursal, fechaDesde, fechaHasta, Nothing)
             For Each caja As MovimientoCaja In cajas
-                AgregarMovimiento(0, caja.Fecha, caja.Comentarios, caja.Monto, "Dif. de Caja")
+                AgregarMovimiento(0, caja.Fecha, caja.Comentarios, caja.Total, "Cierre de Caja", True)
             Next
 
         ElseIf Tipo = "Egresos" Then

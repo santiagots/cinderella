@@ -1,7 +1,7 @@
 ﻿Imports SistemaCinderella.Formularios.Reserva
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmReservaAdminitracion
+Partial Class frmReservaAdministracion
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -25,7 +25,7 @@ Partial Class frmReservaAdminitracion
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReservaAdminitracion))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReservaAdministracion))
         Me.tabAdministracionReservas = New System.Windows.Forms.TabControl()
         Me.tabAdministracion = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -86,7 +86,7 @@ Partial Class frmReservaAdminitracion
         Me.tabAdministracionReservas.Location = New System.Drawing.Point(0, 0)
         Me.tabAdministracionReservas.Name = "tabAdministracionReservas"
         Me.tabAdministracionReservas.SelectedIndex = 0
-        Me.tabAdministracionReservas.Size = New System.Drawing.Size(892, 773)
+        Me.tabAdministracionReservas.Size = New System.Drawing.Size(884, 761)
         Me.tabAdministracionReservas.TabIndex = 0
         '
         'tabAdministracion
@@ -95,7 +95,7 @@ Partial Class frmReservaAdminitracion
         Me.tabAdministracion.Location = New System.Drawing.Point(4, 29)
         Me.tabAdministracion.Name = "tabAdministracion"
         Me.tabAdministracion.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabAdministracion.Size = New System.Drawing.Size(884, 740)
+        Me.tabAdministracion.Size = New System.Drawing.Size(876, 728)
         Me.tabAdministracion.TabIndex = 0
         Me.tabAdministracion.Text = "Reserva"
         Me.tabAdministracion.UseVisualStyleBackColor = True
@@ -112,7 +112,7 @@ Partial Class frmReservaAdminitracion
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 136.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(878, 734)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(870, 722)
         Me.TableLayoutPanel1.TabIndex = 8
         '
         'GroupBox1
@@ -124,7 +124,7 @@ Partial Class frmReservaAdminitracion
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(872, 130)
+        Me.GroupBox1.Size = New System.Drawing.Size(864, 130)
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filtrar reservas"
@@ -152,7 +152,7 @@ Partial Class frmReservaAdminitracion
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(860, 60)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(852, 60)
         Me.TableLayoutPanel2.TabIndex = 429
         '
         'TableLayoutPanel4
@@ -163,11 +163,11 @@ Partial Class frmReservaAdminitracion
         Me.TableLayoutPanel4.Controls.Add(Me.dpkRetiro, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.chkFRetiro, 1, 0)
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(613, 33)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(609, 33)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(244, 24)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(240, 24)
         Me.TableLayoutPanel4.TabIndex = 429
         '
         'dpkRetiro
@@ -176,7 +176,7 @@ Partial Class frmReservaAdminitracion
         Me.dpkRetiro.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmReservaAdministracionViewModelBindingSource, "FechaRetiro", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "D"))
         Me.dpkRetiro.Location = New System.Drawing.Point(3, 3)
         Me.dpkRetiro.Name = "dpkRetiro"
-        Me.dpkRetiro.Size = New System.Drawing.Size(218, 21)
+        Me.dpkRetiro.Size = New System.Drawing.Size(214, 21)
         Me.dpkRetiro.TabIndex = 6
         '
         'FrmReservaAdministracionViewModelBindingSource
@@ -188,7 +188,7 @@ Partial Class frmReservaAdminitracion
         Me.chkFRetiro.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkFRetiro.AutoSize = True
         Me.chkFRetiro.DataBindings.Add(New System.Windows.Forms.Binding("CheckState", Me.FrmReservaAdministracionViewModelBindingSource, "FechaRetiroSeleccionada", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chkFRetiro.Location = New System.Drawing.Point(227, 5)
+        Me.chkFRetiro.Location = New System.Drawing.Point(223, 5)
         Me.chkFRetiro.Name = "chkFRetiro"
         Me.chkFRetiro.Size = New System.Drawing.Size(14, 14)
         Me.chkFRetiro.TabIndex = 428
@@ -202,11 +202,11 @@ Partial Class frmReservaAdminitracion
         Me.TableLayoutPanel3.Controls.Add(Me.dpkAlta, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.chkFAlta, 1, 0)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(613, 3)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(609, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(244, 24)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(240, 24)
         Me.TableLayoutPanel3.TabIndex = 429
         '
         'dpkAlta
@@ -215,7 +215,7 @@ Partial Class frmReservaAdminitracion
         Me.dpkAlta.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmReservaAdministracionViewModelBindingSource, "FechaAlta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "D"))
         Me.dpkAlta.Location = New System.Drawing.Point(3, 3)
         Me.dpkAlta.Name = "dpkAlta"
-        Me.dpkAlta.Size = New System.Drawing.Size(218, 21)
+        Me.dpkAlta.Size = New System.Drawing.Size(214, 21)
         Me.dpkAlta.TabIndex = 4
         '
         'chkFAlta
@@ -223,7 +223,7 @@ Partial Class frmReservaAdminitracion
         Me.chkFAlta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkFAlta.AutoSize = True
         Me.chkFAlta.DataBindings.Add(New System.Windows.Forms.Binding("CheckState", Me.FrmReservaAdministracionViewModelBindingSource, "FechaAltaSeleccionada", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chkFAlta.Location = New System.Drawing.Point(227, 5)
+        Me.chkFAlta.Location = New System.Drawing.Point(223, 5)
         Me.chkFAlta.Name = "chkFAlta"
         Me.chkFAlta.Size = New System.Drawing.Size(14, 14)
         Me.chkFAlta.TabIndex = 427
@@ -246,7 +246,7 @@ Partial Class frmReservaAdminitracion
         Me.txtNombreFiltro.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmReservaAdministracionViewModelBindingSource, "Nombre", True))
         Me.txtNombreFiltro.Location = New System.Drawing.Point(143, 4)
         Me.txtNombreFiltro.Name = "txtNombreFiltro"
-        Me.txtNombreFiltro.Size = New System.Drawing.Size(244, 21)
+        Me.txtNombreFiltro.Size = New System.Drawing.Size(240, 21)
         Me.txtNombreFiltro.TabIndex = 421
         '
         'Label33
@@ -267,9 +267,9 @@ Partial Class frmReservaAdminitracion
         Me.cmbModoEntrega.DataSource = Me.MetodoEntregaBindingSource
         Me.cmbModoEntrega.DisplayMember = "Value"
         Me.cmbModoEntrega.FormattingEnabled = True
-        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 34)
+        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 33)
         Me.cmbModoEntrega.Name = "cmbModoEntrega"
-        Me.cmbModoEntrega.Size = New System.Drawing.Size(244, 23)
+        Me.cmbModoEntrega.Size = New System.Drawing.Size(240, 23)
         Me.cmbModoEntrega.TabIndex = 423
         Me.cmbModoEntrega.ValueMember = "Key"
         '
@@ -283,7 +283,7 @@ Partial Class frmReservaAdminitracion
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(473, 37)
+        Me.Label1.Location = New System.Drawing.Point(469, 37)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(134, 16)
         Me.Label1.TabIndex = 7
@@ -294,7 +294,7 @@ Partial Class frmReservaAdminitracion
         Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(473, 7)
+        Me.Label12.Location = New System.Drawing.Point(469, 7)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(134, 16)
         Me.Label12.TabIndex = 5
@@ -305,7 +305,7 @@ Partial Class frmReservaAdminitracion
         Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restablecer.Location = New System.Drawing.Point(660, 84)
+        Me.btn_Restablecer.Location = New System.Drawing.Point(652, 84)
         Me.btn_Restablecer.Name = "btn_Restablecer"
         Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
         Me.btn_Restablecer.TabIndex = 426
@@ -320,7 +320,7 @@ Partial Class frmReservaAdminitracion
         Me.BtnFiltrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnFiltrar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.BtnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnFiltrar.Location = New System.Drawing.Point(766, 84)
+        Me.BtnFiltrar.Location = New System.Drawing.Point(758, 84)
         Me.BtnFiltrar.Name = "BtnFiltrar"
         Me.BtnFiltrar.Size = New System.Drawing.Size(100, 40)
         Me.BtnFiltrar.TabIndex = 425
@@ -336,7 +336,7 @@ Partial Class frmReservaAdminitracion
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.GroupBox2.Location = New System.Drawing.Point(3, 139)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(872, 592)
+        Me.GroupBox2.Size = New System.Drawing.Size(864, 580)
         Me.GroupBox2.TabIndex = 7
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Resultado"
@@ -351,7 +351,7 @@ Partial Class frmReservaAdminitracion
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(230, 228)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(412, 150)
+        Me.lbl_Msg.Size = New System.Drawing.Size(404, 138)
         Me.lbl_Msg.TabIndex = 5
         Me.lbl_Msg.Text = "No se han encontrado Reservas."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -370,7 +370,7 @@ Partial Class frmReservaAdminitracion
         Me.dgReservas.Name = "dgReservas"
         Me.dgReservas.ReadOnly = True
         Me.dgReservas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgReservas.Size = New System.Drawing.Size(866, 572)
+        Me.dgReservas.Size = New System.Drawing.Size(858, 560)
         Me.dgReservas.TabIndex = 4
         '
         'NombreDataGridViewTextBoxColumn
@@ -457,7 +457,7 @@ Partial Class frmReservaAdminitracion
         Me.tabDetalle.Location = New System.Drawing.Point(4, 29)
         Me.tabDetalle.Name = "tabDetalle"
         Me.tabDetalle.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabDetalle.Size = New System.Drawing.Size(884, 740)
+        Me.tabDetalle.Size = New System.Drawing.Size(876, 728)
         Me.tabDetalle.TabIndex = 1
         Me.tabDetalle.Text = "Detalle de la reserva"
         Me.tabDetalle.UseVisualStyleBackColor = True
@@ -482,16 +482,16 @@ Partial Class frmReservaAdminitracion
         Me.btnRetirar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnRetirar.UseVisualStyleBackColor = True
         '
-        'frmReservaAdminitracion
+        'frmReservaAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(892, 773)
+        Me.ClientSize = New System.Drawing.Size(884, 761)
         Me.Controls.Add(Me.tabAdministracionReservas)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximumSize = New System.Drawing.Size(900, 800)
         Me.MinimumSize = New System.Drawing.Size(900, 800)
-        Me.Name = "frmReservaAdminitracion"
+        Me.Name = "frmReservaAdministracion"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administración de Reservas"
         Me.tabAdministracionReservas.ResumeLayout(False)

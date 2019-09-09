@@ -3,10 +3,10 @@ Imports Common.Core.Enum
 Imports Ventas.Core.Interfaces
 Imports Ventas.Core.Model.VentaAggregate
 Imports ValueObjects = Ventas.Core.Model.ValueObjects
-Imports Ventas.Data
-Imports Ventas.Data.Repository
 Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Enum
+Imports Ventas.Data
+Imports Ventas.Data.Repository
 
 Namespace Formularios.SucursalSaldo
     Public Class Servicio

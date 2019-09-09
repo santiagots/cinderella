@@ -1128,7 +1128,7 @@ Partial Class SaldosSucursal
         'txt_TotalSinFacturado
         '
         Me.txt_TotalSinFacturado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_TotalSinFacturado.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaSinFacturar", True))
+        Me.txt_TotalSinFacturado.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "VentaSinFacturar", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "C2"))
         Me.txt_TotalSinFacturado.Location = New System.Drawing.Point(68, 172)
         Me.txt_TotalSinFacturado.Name = "txt_TotalSinFacturado"
         Me.txt_TotalSinFacturado.ReadOnly = True
