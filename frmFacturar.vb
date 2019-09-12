@@ -267,7 +267,7 @@ Public Class frmFacturar
         EntControlador.COLAR1 = "Gracias por su compra."
         EntControlador.COLAR2 = ""
         EntControlador.COLAR3 = ""
-        EntControlador.LREMITO1 = ""
+        EntControlador.LREMITO1 = "."
         EntControlador.LREMITO2 = ""
         EntControlador.LREMITO3 = ""
         EntControlador.MODELO = My.Settings.ControladorModelo
