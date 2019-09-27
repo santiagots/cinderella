@@ -1,4 +1,6 @@
-﻿using Common.Core.Model;
+﻿using Common.Core.Constants;
+using Common.Core.Enum;
+using Common.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +25,20 @@ namespace Ventas.Core.Model.BaseAgreggate
 
         public TransaccionItem(bool GenerarId) : base(GenerarId)
         { }
+
+        internal MontoProducto ObtenerMontoProducto(decimal monto, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            if (tipoCliente == TipoCliente.Minorista)
+                return new MontoProducto(monto, 0);
+            else
+                return new MontoProducto(monto, monto * Constants.IVA * porcentajeFacturacion);
+        }
+
+        internal void ActualizarMontoProducto(decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            Cantidad = cantidad;
+            PorcentajeBonificacion = porcentajeBonificacion;
+            MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
+        }
     }
 }

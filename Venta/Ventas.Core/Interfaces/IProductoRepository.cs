@@ -7,6 +7,7 @@ namespace Ventas.Core.Interfaces
     public interface IProductoRepository
     {
         Producto Obtener(int idSucursal, int idProducto);
+        Producto Obtener(int idSucursal, string codigoBarra);
         IList<Producto> Obtener();
     }
 }

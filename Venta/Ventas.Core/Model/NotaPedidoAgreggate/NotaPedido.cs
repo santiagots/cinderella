@@ -16,7 +16,8 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
     {
         public int Numero { get; protected set; }
         public virtual IList<NotaPedidoItem> NotaPedidoItems { get; protected set; }
-        public int? IdClienteMinorista { get; protected set; }
+        public new int? IdEncargado { get; internal set; }
+        public long? IdClienteMinorista { get; protected set; }
         public ClienteMinorista ClienteMinorista { get; internal set; }
         public NotaPedidoEstado Estado { get; protected set; }
         public bool Borrado { get; protected set; }
@@ -26,8 +27,18 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         {
         }
 
-        public NotaPedido(bool GenerarId) : base(GenerarId)
+        public NotaPedido(int idSucursal) : base(true)
         {
+            IdSucursal = idSucursal;
+            Fecha = DateTime.Now;
+            FechaEdicion = DateTime.Now;
+            PorcentajeFacturacion = 1;
+            NotaPedidoItems = new List<NotaPedidoItem>();
+        }
+
+        public void AgregarVendedor(int idVendedor)
+        {
+            IdVendedor = idVendedor;
         }
 
         public void AgregarNumero(int numero)
@@ -35,7 +46,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             Numero = numero;
         }
 
-        public void AgregarClienteMinorista(int idClienteMinorista)
+        public void AgregarClienteMinorista(long idClienteMinorista)
         {
             IdClienteMinorista = idClienteMinorista;
         }
@@ -43,6 +54,26 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         public void AgregarClienteMayorista(int idClienteMayorista)
         {
             IdClienteMayorista = idClienteMayorista;
+        }
+
+        public void AgregarTipoCliente(TipoCliente tipoCliente)
+        {
+            TipoCliente = tipoCliente;
+        }
+
+        public void AgregaNotaPedidoItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+
+            if (notaPedidoItem == null)
+            {
+                notaPedidoItem = new NotaPedidoItem(Id, codigoProducto, nombreProducto, monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+                NotaPedidoItems.Add(notaPedidoItem);
+            }
+            else
+            {
+                notaPedidoItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+            }
         }
 
         public void Cerrar()

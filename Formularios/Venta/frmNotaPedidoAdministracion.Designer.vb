@@ -98,7 +98,7 @@ Partial Class frmNotaPedidoAdministracion
         '
         'NotaPedidoBindingSource
         '
-        Me.NotaPedidoBindingSource.DataSource = GetType(Formularios.Venta.frmNotaPedidoAdministracionViewModel)
+        Me.NotaPedidoBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.frmNotaPedidoAdministracionViewModel)
         '
         'Label12
         '
@@ -376,7 +376,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbTipoVenta.DisplayMember = "Value"
         Me.cmbTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbTipoVenta.FormattingEnabled = True
-        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 34)
+        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 33)
         Me.cmbTipoVenta.Name = "cmbTipoVenta"
         Me.cmbTipoVenta.Size = New System.Drawing.Size(283, 23)
         Me.cmbTipoVenta.TabIndex = 426
@@ -404,7 +404,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbVendedor.DisplayMember = "Value"
         Me.cmbVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbVendedor.FormattingEnabled = True
-        Me.cmbVendedor.Location = New System.Drawing.Point(612, 4)
+        Me.cmbVendedor.Location = New System.Drawing.Point(612, 3)
         Me.cmbVendedor.Name = "cmbVendedor"
         Me.cmbVendedor.Size = New System.Drawing.Size(283, 23)
         Me.cmbVendedor.TabIndex = 430
@@ -423,7 +423,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cbEstado.DisplayMember = "Value"
         Me.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbEstado.FormattingEnabled = True
-        Me.cbEstado.Location = New System.Drawing.Point(143, 3)
+        Me.cbEstado.Location = New System.Drawing.Point(143, 4)
         Me.cbEstado.Name = "cbEstado"
         Me.cbEstado.Size = New System.Drawing.Size(283, 23)
         Me.cbEstado.TabIndex = 438

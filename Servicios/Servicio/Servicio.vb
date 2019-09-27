@@ -1,0 +1,46 @@
+﻿Imports Ventas.Core.Interfaces
+Imports VentaModel = Ventas.Core.Model.VentaAggregate
+Imports BaseModel = Ventas.Core.Model.BaseAgreggate
+Imports PedidoModelNota = Ventas.Core.Model.NotaPedidoAgreggate
+Imports Ventas.Data
+Imports Ventas.Data.Repository
+
+Public Class Servicio
+    Public Shared Function ObtenerListaProductos() As IList(Of VentaModel.Producto)
+        Dim listaProducto As IList(Of VentaModel.Producto) = New List(Of VentaModel.Producto)
+        Using context As VentaContext = New VentaContext()
+            Dim productoRepository As IProductoRepository = New ProductoRepository(context)
+            listaProducto = productoRepository.Obtener()
+        End Using
+
+        Return listaProducto
+    End Function
+
+    Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As VentaModel.Producto
+        Using context As VentaContext = New VentaContext()
+            Dim productoRepository As IProductoRepository = New ProductoRepository(context)
+            Return productoRepository.Obtener(idSucursal, idProducto)
+        End Using
+    End Function
+
+    Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, codigoBarra As String) As VentaModel.Producto
+        Using context As VentaContext = New VentaContext()
+            Dim productoRepository As IProductoRepository = New ProductoRepository(context)
+            Return productoRepository.Obtener(idSucursal, codigoBarra)
+        End Using
+    End Function
+
+    Friend Shared Sub GuardarNotaPedido(notaPedidoModel As PedidoModelNota.NotaPedido)
+        Using context As VentaContext = New VentaContext()
+            Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
+            notaPedidoRepository.Guardar(notaPedidoModel)
+        End Using
+    End Sub
+
+    Public Shared Sub GuardarClienteMinorista(clienteMinorista As BaseModel.ClienteMinorista)
+        Using context As VentaContext = New VentaContext()
+            Dim clienteMinoristaRepository As IClienteMinoristaRepository = New ClienteMinoristaRepository(context)
+            clienteMinoristaRepository.Guardar(clienteMinorista)
+        End Using
+    End Sub
+End Class

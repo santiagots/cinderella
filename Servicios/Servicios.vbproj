@@ -52,10 +52,27 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.7\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,7 +95,7 @@
     <Compile Include="Entidad\EntidadConsumidorFinal.vb" />
     <Compile Include="Entidad\EntidadEmpleado.vb" />
     <Compile Include="Entidad\EntidadNotaPedido.vb" />
-    <Compile Include="Entidad\EntidadNotaPedido_Detalle.vb" />
+    <Compile Include="Entidad\EntidadNotaPedidoItems.vb" />
     <Compile Include="Entidad\EntidadProducto.vb" />
     <Compile Include="Entidad\EntidadProductoReducido.vb" />
     <Compile Include="Entidad\EntidadTipoPrecios.vb" />
@@ -96,6 +113,7 @@
     <Compile Include="Interfaces\INotaPedido.vb" />
     <Compile Include="Interfaces\IProducto.vb" />
     <Compile Include="Interfaces\IUsuario.vb" />
+    <Compile Include="Mapper\MapperProfile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -111,6 +129,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Servicio\Servicio.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -130,8 +149,17 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj">
+      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.Data\Common.Data.csproj">
+      <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
+      <Name>Common.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entidades\Entidades.vbproj">
       <Project>{9f729c51-e2de-49e8-9c49-dcf6befdcaab}</Project>
       <Name>Entidades</Name>
@@ -139,6 +167,14 @@
     <ProjectReference Include="..\Negocio\Negocio.vbproj">
       <Project>{d0101b76-7ce1-476b-84f3-9e99244c1e88}</Project>
       <Name>Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Venta\Ventas.Core\Ventas.Core.csproj">
+      <Project>{2F8F3F48-9EC8-4F64-8565-5A15CF49E570}</Project>
+      <Name>Ventas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Venta\Ventas.Data\Ventas.Data.csproj">
+      <Project>{9604A1B8-8F7F-4B63-967E-EC7AEE5A9453}</Project>
+      <Name>Ventas.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

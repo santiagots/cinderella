@@ -129,7 +129,7 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function CargarNotaPedidoAsync(estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, tipoPago As TipoPago?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As Task
-            _NotaPedidosItems = Await Task.Run(Function() Servicio.ObtenerNotaPedido(estado, tipoCliente, tipoPago, fechaDesde, fechaHasta, IdVendedor, nombreCliente))
+            _NotaPedidosItems = Await Task.Run(Function() Servicio.ObtenerNotaPedido(IdSucursal, estado, tipoCliente, tipoPago, fechaDesde, fechaHasta, IdVendedor, nombreCliente))
             NotifyPropertyChanged(NameOf(Me.NotaPedidosItems))
         End Function
 

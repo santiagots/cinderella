@@ -12,6 +12,7 @@ namespace Ventas.Core.Model.VentaAggregate
     public class Producto : Entity<int>
     {
         public string Codigo { get; private set; }
+        public string CodigoBarra { get; private set; }
         public string Nombre {get; private set; }
         public virtual Stock Stock { get; set; }
         public virtual IList<Precio> Precios { get; set; }
@@ -20,10 +21,11 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        public Producto(int id, string codigo, string nombre, Stock stock)
+        public Producto(int id, string codigo, string codigoBarra, string nombre, Stock stock)
         {
             Id = id;
             Codigo = codigo;
+            CodigoBarra = codigoBarra;
             Nombre = nombre;
             Stock = stock;
         }

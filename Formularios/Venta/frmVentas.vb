@@ -346,7 +346,7 @@ Public Class frmVentas
         Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
         frmBuscarClienteMayorista.ShowDialog()
         If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
-            ventaViewModel.ClienteMayoristaChange(frmBuscarClienteMayorista.clienteMayorista.Id, frmBuscarClienteMayorista.clienteMayorista.RazonSocial)
+            ventaViewModel.ClienteMayoristaChange(frmBuscarClienteMayorista.clienteMayorista.Id, frmBuscarClienteMayorista.clienteMayorista.RazonSocial, frmBuscarClienteMayorista.clienteMayorista.Bonificacion / 100)
         End If
     End Sub
 
@@ -392,8 +392,8 @@ Public Class frmVentas
 
     Private Sub HabilitarSegunFormaDePago(tipoPago As TipoPago)
         ventaViewModel.FormaPagoSeleccionado = Cb_FormaPago.SelectedValue
-        Cb_Trajeta.Enabled = tipoPago = TipoPago.TarjetaCredito OrElse tipoPago = TipoPago.TarjetaDebito
-        Cb_NroCuota.Enabled = tipoPago = TipoPago.TarjetaCredito
+        Cb_Trajeta.Enabled = tipoPago = TipoPago.TarjetaCrédito OrElse tipoPago = TipoPago.TarjetaDébito
+        Cb_NroCuota.Enabled = tipoPago = TipoPago.TarjetaCrédito
     End Sub
 
     Private Sub Ejecutar(accion As Action)

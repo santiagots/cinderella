@@ -7,7 +7,7 @@ Namespace Formularios.Venta
         Public Property NumeroFactura As String
         Public Property TipoCliente As TipoCliente
         Public Property TipoPago As String
-        Public Property TipoFactura As TipoFactura?
+        Public Property TipoFactura As String
         Public Property NombreVendedor As String
         Public Property NombreClienteMayorista As String
         Public Property MontoTotal As Decimal

@@ -1,4 +1,5 @@
-﻿using Common.Core.Model;
+﻿using Common.Core.Enum;
+using Common.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,20 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
     {
         public long IdNotaPedido { get; private set; }
         public virtual NotaPedido NotaPedido { get; private set; }
+
+        public NotaPedidoItem() : base()
+        {
+        }
+
+        internal NotaPedidoItem(long idNotaPedido, string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente) : base(true)
+        {
+            IdNotaPedido = idNotaPedido;
+            CodigoProducto = codigoProducto;
+            NombreProducto = nombreProducto;
+            MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
+            PorcentajeBonificacion = porcentajeBonificacion;
+            Cantidad = cantidad;
+            FechaEdicion = DateTime.Now;
+        }
     }
 }

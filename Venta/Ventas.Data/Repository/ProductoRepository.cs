@@ -34,6 +34,22 @@ namespace Ventas.Data.Repository
             return producto;
         }
 
+        public Producto Obtener(int idSucursal, string codigoBarra)
+        {
+            Producto producto = _context.Producto.Include(x => x.Precios).FirstOrDefault(x => x.CodigoBarra == codigoBarra);
+            if (producto == null)
+                throw new NegocioException($"El producto con el código de barras {codigoBarra} no existe.");
+
+            Stock stock = _context.Stock.FirstOrDefault(x => x.IdSucursal == idSucursal && x.IdProducto == producto.Id);
+
+            if (stock == null)
+                stock = new Stock(idSucursal, producto.Id, 0, 0, 0, 0);
+
+            producto.Stock = stock;
+
+            return producto;
+        }
+
         public IList<Producto> Obtener()
         {
             return _context.Producto.ToList();

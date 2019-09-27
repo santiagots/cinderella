@@ -26,10 +26,10 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public Pago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal porcentajeRecargo, decimal monto, decimal montoRestante, decimal descuento, decimal cft, decimal iva, bool habilitado = true): base(true)
         {
-            if((tipoPago == TipoPago.TarjetaCredito || tipoPago == TipoPago.TarjetaDebito) && string.IsNullOrEmpty(tarjeta))
+            if((tipoPago == TipoPago.TarjetaCrédito || tipoPago == TipoPago.TarjetaDébito) && string.IsNullOrEmpty(tarjeta))
                     throw new NegocioException("Error al crear el pago. La trajeta no puede ser vacia.");
 
-            if (tipoPago == TipoPago.TarjetaCredito && numeroCuotas == 0)
+            if (tipoPago == TipoPago.TarjetaCrédito && numeroCuotas == 0)
                 throw new NegocioException("Error al crear el pago. La cantidad de cuotas debe ser mayor a cero.");
 
             IdVenta = IdVenta;
@@ -72,10 +72,10 @@ namespace Ventas.Core.Model.VentaAggregate
                 case TipoPago.Efectivo:
                     formaPago = "Efectivo";
                     break;
-                case TipoPago.TarjetaCredito:
+                case TipoPago.TarjetaCrédito:
                     formaPago = $"{Tarjeta} ({NumeroCuotas})";
                     break;
-                case TipoPago.TarjetaDebito:
+                case TipoPago.TarjetaDébito:
                     formaPago = $"{Tarjeta}";
                     break;
                 case TipoPago.Cheque:

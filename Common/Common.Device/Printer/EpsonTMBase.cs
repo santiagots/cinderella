@@ -245,9 +245,9 @@ namespace Common.Device.Printer
                     return "7";
                 case TipoPago.Efectivo:
                     return "8";
-                case TipoPago.TarjetaCredito:
+                case TipoPago.TarjetaCrédito:
                     return "20";
-                case TipoPago.TarjetaDebito:
+                case TipoPago.TarjetaDébito:
                     return "21";
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de forma de pago no reconocido {tipoPago.ToString()}");

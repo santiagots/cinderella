@@ -44,6 +44,7 @@ Namespace My
                                   x.AddProfile(Of Formularios.MovimientoDetalle.MapperProfile)()
                                   x.AddProfile(Of Formularios.SucursalSaldo.MapperProfile)()
                                   x.AddProfile(Of Ventas.Suport.Mapper.MapperProfile)()
+                                  x.AddProfile(Of Servicios.MapperProfile)()
                               End Sub)
 
             'Establesco si la aplicacion va a conectarse a internet para acceder a la base de datos

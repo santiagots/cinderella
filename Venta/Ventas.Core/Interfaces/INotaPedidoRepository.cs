@@ -12,7 +12,11 @@ namespace Ventas.Core.Interfaces
     public interface INotaPedidoRepository
     {
         void Guardar(NotaPedido notaPedido);
-        List<NotaPedido> Obtener(NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente);
+
+        List<NotaPedido> Obtener(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente);
+
+        int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado);
+        
         void Actualizar(NotaPedido notaPedido);
     }
 }

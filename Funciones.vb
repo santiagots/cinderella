@@ -6,6 +6,7 @@ Imports System.Net.Mime
 Imports Microsoft.Office.Interop
 Imports Datos
 Imports System.Threading.Tasks
+Imports Ventas.Core.Enum
 
 Public Class Funciones
 
@@ -22,6 +23,19 @@ Public Class Funciones
             formulario = value
         End Set
     End Property
+
+    Public Shared Function ObtenerInstanciaFormulario(nombreFormulario As String) As Form
+
+        Dim formularios As FormCollection = Application.OpenForms
+
+        For Each formulario As Form In formularios
+            If (formulario.Name = nombreFormulario) Then
+                Return formulario
+            End If
+        Next
+
+        Return Nothing
+    End Function
 
     'Funcion que actualiza el estado de internet de la aplicacion.
     Public Sub ActualizarEstado(Internete As Boolean, MDIContenedor As MDIContenedor)
@@ -167,34 +181,19 @@ Public Class Funciones
         End If
     End Sub
 
-    Sub ActualizarNotasPedidosVentas()
-        If My.Settings.Internet Then 'Internet Permitido.
-            'Si hay conexion compruebo los cheques
-            If VariablesGlobales.HayConexion Then
-                Dim negNotaPedido As Negocio.NegNotaPedido = New Negocio.NegNotaPedido()
-                Dim notaPedidos As List(Of NotaPedido) = negNotaPedido.TraerNotas(My.Settings.Sucursal)
+    Async Function ActualizarNotasPedidosVentasAsync() As Task
+        Dim notasPedidoAbiertas As Integer = Await Task.Run(Function() Formularios.Venta.Servicio.ObtenerCantidadNotaPedido(My.Settings.Sucursal, NotaPedidoEstado.Abierta))
 
-                notaPedidos = notaPedidos.Where(Function(x) x.Vendida = False).ToList()
-
-                If notaPedidos.Count >= 1 Then
-                    MDIContenedor.Menu_NotaPedidoVenta.Text = "(" & notaPedidos.Count & ") Notas de pedidos"
-                    MDIContenedor.Menu_NotaPedidoVenta.ToolTipText = "Hace click aquí si deseas ir al administrador de notas de pedidos."
-                    MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
-                Else
-                    MDIContenedor.Menu_NotaPedidoVenta.Text = "(0) Notas de pedidos"
-                    MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
-                End If
-            Else 'Si no hay conexion no hago nada.
-                MDIContenedor.Menu_NotaPedidoVenta.Text = "(-) Notas de pedidos"
-                MDIContenedor.Menu_NotaPedidoVenta.ToolTipText = "No se pudo comprobar las notas de pedidos pendientes"
-                MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
-            End If
+        If notasPedidoAbiertas >= 1 Then
+            MDIContenedor.Menu_NotaPedidoVenta.Text = "(" & notasPedidoAbiertas & ") Notas de pedidos"
+            MDIContenedor.Menu_NotaPedidoVenta.ToolTipText = "Hace click aquí si deseas ir al administrador de notas de pedidos."
+            MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Bold)
         Else
-            MDIContenedor.Menu_NotaPedidoVenta.Text = "(-) Notas de pedidos"
-            MDIContenedor.Menu_NotaPedidoVenta.ToolTipText = "No se pudo comprobar las notas de pedidos pendientes"
+            MDIContenedor.Menu_NotaPedidoVenta.Text = "(0) Notas de pedidos"
             MDIContenedor.Menu_NotaPedidoVenta.Font = New Font(MDIContenedor.Menu_Movimientos.Font, FontStyle.Regular)
         End If
-    End Sub
+
+    End Function
 
     Sub ActualizarOrdenesCompra()
         If My.Settings.Internet Then 'Internet Permitido.

@@ -98,13 +98,6 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarPorcentajePago();
         }
 
-        internal void ActualizarMontoProducto(decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
-        {
-            Cantidad = cantidad;
-            PorcentajeBonificacion = porcentajeBonificacion;
-            MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
-        }
-
         internal decimal ObtenerMontoPorTipoDeCliente(TipoCliente tipoCliente)
         {
             if (tipoCliente == TipoCliente.Minorista)
@@ -171,14 +164,6 @@ namespace Ventas.Core.Model.VentaAggregate
                 PorcentajePago = 0;
             else
                 PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4);
-        }
-
-        private MontoProducto ObtenerMontoProducto(decimal monto, decimal porcentajeFacturacion, TipoCliente tipoCliente)
-        {
-            if (tipoCliente == TipoCliente.Minorista)
-                return new MontoProducto(monto, 0);
-            else
-                return new MontoProducto(monto, monto * Constants.IVA * porcentajeFacturacion);
         }
 
         internal IEnumerable<Pago> ObtenerPagosDeProducto()

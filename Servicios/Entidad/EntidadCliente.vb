@@ -9,5 +9,5 @@
     Public Property Observaciones As String
     Public Property Habilitado As Integer
     Public Property Fecha As DateTime
-    Public Property Bonificacion As Double
+    Public Property Bonificacion As Decimal
 End Class

@@ -122,13 +122,13 @@ Namespace Formularios.SucursalSaldo
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaCreditoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaCredito, Nothing))
+            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaCrédito, Nothing))
             Dim titulo As String = $"Ventas en tarjeta crédito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
             MostrarMovimiento(titulo, efectivoEgresos)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaDebitoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaDebito, Nothing))
+            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaDébito, Nothing))
             Dim titulo As String = $"Ventas en tarjeta debito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
             MostrarMovimiento(titulo, efectivoEgresos)
         End Function
@@ -202,8 +202,8 @@ Namespace Formularios.SucursalSaldo
         Private Async Function CargarResumenVentaAsync() As Task
             Dim efectivo As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Efectivo, Nothing))
             Dim cheques As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Cheque, Nothing))
-            Dim credito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaCredito, Nothing))
-            Dim debito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaDebito, Nothing))
+            Dim credito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaCrédito, Nothing))
+            Dim debito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaDébito, Nothing))
             Dim deposito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Deposito, Nothing))
             Dim facturado As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, True, Nothing, Nothing))
             Dim sinFacturar As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, False, Nothing, Nothing))

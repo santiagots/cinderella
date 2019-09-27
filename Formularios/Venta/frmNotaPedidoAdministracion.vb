@@ -7,7 +7,7 @@ Imports SistemaCinderella.Formularios.Venta
 
 Public Class frmNotaPedidoAdministracion
 
-    Private notaPedidoViewModel As frmNotaPedidoAdministracionViewModel
+    Public notaPedidoViewModel As frmNotaPedidoAdministracionViewModel
 
     Private Sub frmNotaPedidoAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EjecutarAsync(Async Function() As Task

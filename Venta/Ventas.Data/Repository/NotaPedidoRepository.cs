@@ -29,8 +29,12 @@ namespace Ventas.Data.Repository
             else
                 notaPedido.AgregarNumero(UltimaNotaPedido.Numero + 1);
 
-            _context.Entry(notaPedido.Encargado).State = System.Data.Entity.EntityState.Unchanged;
-            _context.Entry(notaPedido.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
+            if(notaPedido.Encargado != null)
+                _context.Entry(notaPedido.Encargado).State = System.Data.Entity.EntityState.Unchanged;
+
+            if (notaPedido.Vendedor != null)
+                _context.Entry(notaPedido.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
+
             _context.NotaPedido.Add(notaPedido);
             _context.SaveChanges();
         }
@@ -42,10 +46,10 @@ namespace Ventas.Data.Repository
             _context.SaveChanges();
         }
 
-        public List<NotaPedido> Obtener(NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
+        public List<NotaPedido> Obtener(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
         {
             IQueryable<NotaPedido> notaPedido = _context.NotaPedido
-                                                    .Where(x => !x.Borrado)
+                                                    .Where(x => !x.Borrado && x.IdSucursal == idSucursal)
                                                     .Include(x => x.NotaPedidoItems)
                                                     .Include(x => x.Vendedor)
                                                     .Include(x => x.Encargado)
@@ -71,6 +75,17 @@ namespace Ventas.Data.Repository
                 notaPedido = notaPedido.Where(x => x.ClienteMinorista.Apellido.Contains(nombreCliente) || x.ClienteMinorista.Nombre.Contains(nombreCliente) || x.ClienteMayorista.RazonSocial.Contains(nombreCliente));
 
             return notaPedido.ToList();
+        }
+
+        public int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado)
+        {
+            IQueryable<NotaPedido> notaPedido = _context.NotaPedido
+                                                    .Where(x => !x.Borrado && x.IdSucursal == idSucursal);
+
+            if (estado.HasValue)
+                notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
+
+            return notaPedido.Count();
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Ventas.Data
             modelBuilder.Entity<Cheque>().HasRequired(v => v.BancoEmisor).WithMany().HasForeignKey(x => x.IdBancoEmisor);
 
             modelBuilder.Entity<ClienteMinorista>().ToTable("CLIENTEMINORISTA");
+            modelBuilder.Entity<ClienteMinorista>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<ClienteMinorista>().Property(t => t.Id).HasColumnName("id_ClienteMinorista");
             modelBuilder.Entity<ClienteMinorista>().Ignore(t => t.ApellidoYNombre);
 
@@ -127,7 +128,7 @@ namespace Ventas.Data
             modelBuilder.Entity<NotaPedido>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<NotaPedido>().HasMany(v => v.NotaPedidoItems).WithRequired(t => t.NotaPedido).HasForeignKey(x => x.IdNotaPedido);
             modelBuilder.Entity<NotaPedido>().HasRequired(v => v.Vendedor).WithMany().HasForeignKey(x => x.IdVendedor);
-            modelBuilder.Entity<NotaPedido>().HasRequired(v => v.Encargado).WithMany().HasForeignKey(x => x.IdEncargado);
+            modelBuilder.Entity<NotaPedido>().HasOptional(v => v.Encargado).WithMany().HasForeignKey(x => x.IdEncargado);
             modelBuilder.Entity<NotaPedido>().HasOptional(v => v.ClienteMinorista).WithMany().HasForeignKey(x => x.IdClienteMinorista);
             modelBuilder.Entity<NotaPedido>().HasOptional(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
             modelBuilder.Entity<NotaPedido>().HasRequired(v => v.Sucursal).WithMany().HasForeignKey(x => x.IdSucursal);

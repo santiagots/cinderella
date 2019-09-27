@@ -616,7 +616,7 @@ Public Class MDIContenedor
 
 
         'Agrego un handler al servicio WCF de alta de notas de pedido para mostrar la pantalla cuando se genere una nota de pedido
-        AddHandler Servicios.NotaPedido.onNevaNotaPedidoCompleted, AddressOf NuevaNotaPedido
+        Servicios.NotaPedido.AgregarNotaPedidoService = AddressOf NuevaNotaPedidoDesdeServicio
 
         Negocio.Funciones.ActualizarEstadoConexionInternet = Sub(x) Funciones.ActualizarEstado(x, Me)
 
@@ -676,7 +676,7 @@ Public Class MDIContenedor
         Funciones.ActualizarChequesVencer()
 
         'Obtengo las Notas de pedidos por ventas
-        Funciones.ActualizarNotasPedidosVentas()
+        Funciones.ActualizarNotasPedidosVentasAsync()
 
         'Obtengo las Notas de pedidos por stock
         Funciones.ActualizarOrdenesCompra()
@@ -1704,22 +1704,34 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub NuevaNotaPedido(EntNotaPedido As Entidades.NotaPedido, EntConsumidorFinal As Entidades.ConsumidorFinal)
+    'Private Sub NuevaNotaPedido()
 
-        'abro la pantalla de notas de pedido, la ejecuta de esta forma para que no detenga la ejecucion del metodo
-        Task.Run(Sub() SetMidParent())
+    '    'abro la pantalla de notas de pedido, la ejecuta de esta forma para que no detenga la ejecucion del metodo
+    '    Task.Run(Sub() SetMidParentAsync())
 
-    End Sub
+    'End Sub
 
-    'Invoca el emtodo Menu_NotaPedido_Click y ActualizarNotasPedidos a travez de un delegado para que el hilo de la intefraz tenga acceso a sus propiedades
-    Private Sub SetMidParent()
+    Private Async Function NuevaNotaPedidoDesdeServicio() As Task
         If Me.InvokeRequired Then
-            Me.Invoke(New Action(AddressOf SetMidParent))
+            Me.Invoke(New Action(AddressOf NuevaNotaPedidoDesdeServicio))
             Return
         End If
-        Menu_NotaPedido_Click(Nothing, Nothing)
-        Funciones.ActualizarNotasPedidosVentas()
-    End Sub
+
+        Dim formularios As FormCollection = Application.OpenForms
+
+        Dim frmNotaPedidoAdministracion As frmNotaPedidoAdministracion = Funciones.ObtenerInstanciaFormulario("frmNotaPedidoAdministracion")
+
+        If frmNotaPedidoAdministracion Is Nothing OrElse frmNotaPedidoAdministracion.IsDisposed Then
+            frmNotaPedidoAdministracion = New frmNotaPedidoAdministracion()
+            frmNotaPedidoAdministracion.MdiParent = Me
+            frmNotaPedidoAdministracion.Show()
+        Else
+            frmNotaPedidoAdministracion.BringToFront()
+            Await frmNotaPedidoAdministracion.notaPedidoViewModel.Buscar()
+        End If
+
+        Await Funciones.ActualizarNotasPedidosVentasAsync()
+    End Function
 
     Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
         Me.Cursor = Cursors.WaitCursor

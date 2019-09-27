@@ -222,6 +222,11 @@ Namespace Formularios.Venta
             Me.NotaPedidoModel = notaPedido
 
             CargarDatosBasicosTransaccion(notaPedido)
+
+            If (notaPedido.TipoCliente = Enums.TipoCliente.Mayorista) Then
+                PorcentajeBonificacion = notaPedido.NotaPedidoItems?.First().PorcentajeBonificacion
+            End If
+
             CargarProductosEnVenta(notaPedido.NotaPedidoItems.Cast(Of TransaccionItem)().ToList(), notaPedido.TipoCliente)
 
             CalcularPendientePago()
@@ -292,7 +297,7 @@ Namespace Formularios.Venta
         Private Sub CargarDatosBasicosTransaccion(venta As Transaccion)
             TipoClienteSeleccionado = venta.TipoCliente
             PorcentajeFacturacion = venta.PorcentajeFacturacion
-            EncargadoSeleccionado = venta.Encargado
+            EncargadoSeleccionado = If(venta.IdEncargado > 0, venta.Encargado, Nothing)
             VendedoresSeleccionado = venta.Vendedor
             If (venta.TipoCliente = Enums.TipoCliente.Mayorista) Then
                 IdClienteMayorista = venta.IdClienteMayorista
@@ -310,7 +315,7 @@ Namespace Formularios.Venta
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMinorista()
-            CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.TarjetaCredito, Enums.TipoPago.TarjetaDebito})
+            CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.TarjetaCrédito, Enums.TipoPago.TarjetaDébito})
             VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
             QuitarClienteMayorista()
@@ -569,9 +574,10 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.TotalPago))
         End Sub
 
-        Friend Sub ClienteMayoristaChange(idClienteMayorista As Integer, nombreClienteMayorista As String)
+        Friend Sub ClienteMayoristaChange(idClienteMayorista As Integer, nombreClienteMayorista As String, porcentajeBonificacion As Decimal)
             Me.IdClienteMayorista = idClienteMayorista
             Me.NombreClienteMayorista = nombreClienteMayorista
+            Me.PorcentajeBonificacion = porcentajeBonificacion
             NotifyPropertyChanged(NameOf(Me.IdClienteMayorista))
             NotifyPropertyChanged(NameOf(Me.NombreClienteMayorista))
 

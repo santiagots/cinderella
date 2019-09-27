@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ventas.Core.Model.BaseAgreggate
 {
-    public class ClienteMinorista : Entity<int>
+    public class ClienteMinorista : Entity<long>
     {
         public string Nombre { get; internal set; }
         public string Apellido { get; internal set; }
@@ -20,7 +20,7 @@ namespace Ventas.Core.Model.BaseAgreggate
         internal ClienteMinorista()
         { }
 
-        public ClienteMinorista(string nombre, string apellido)
+        public ClienteMinorista(string nombre, string apellido): base(true)
         {
             Nombre = nombre;
             Apellido = apellido;
