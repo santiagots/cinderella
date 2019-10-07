@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-        (local)\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
+        ARCNU434BG8X\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
 
 to synchronize it with:
 
-        AR5CG4371FY6.CINDERELLA_LOCAL
+        ARCNU434BG8X.CINDERELLA_LOCAL
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 11.6.11 from Red Gate Software Ltd at 27/08/2019 10:31:24 p.m.
+Script created by SQL Compare version 13.7.7.10021 from Red Gate Software Ltd at 5/10/2019 11:06:07
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -18,66 +18,83 @@ SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDE
 GO
 SET XACT_ABORT ON
 GO
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET TRANSACTION ISOLATION LEVEL Serializable
 GO
 BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Dropping foreign keys from [dbo].[NUEVA_CIERRE_CAJA]'
+PRINT N'Dropping constraints from [dbo].[CLIENTEMINORISTA]'
 GO
-IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] DROP CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS]
-GO
-IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS1]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] DROP CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS1]
+ALTER TABLE [dbo].[CLIENTEMINORISTA] DROP CONSTRAINT [PK_ClienteMinorista]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Creating [dbo].[sp_MovCajaFuerte_ObtenerPorFecha]'
-GO
-IF OBJECT_ID(N'[dbo].[sp_MovCajaFuerte_ObtenerPorFecha]', 'P') IS NULL
-EXEC sp_executesql N'-- =============================================
--- Author:		Morpheus
--- Create date: 28/08/12
--- Description:	Obtener Movimientos.
--- =============================================
-CREATE PROCEDURE [dbo].[sp_MovCajaFuerte_ObtenerPorFecha] 
-@id_Sucursal AS INT,
-@FDesde AS date,
-@FHasta AS date,
-@Tipo as int
-
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	select Fecha_Sys as Fecha, Monto
-	from MOVIMIENTOS_CAJA_FUERTE  
-	where (Borrado = 0) and (CAST(Fecha AS DATE) between @FDesde and @FHasta) and (id_Sucursal=@id_Sucursal) and id_Tipo = @Tipo	
-END
-
-
-
-'
+PRINT N'Altering [dbo].[NUEVA_VENTAS]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_CIERRE_CAJA]'
+ALTER TABLE [dbo].[NUEVA_VENTAS] ALTER COLUMN [IdClienteMinorista] [bigint] NULL
 GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS] FOREIGN KEY ([IdUsuarioCierre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
+IF @@ERROR <> 0 SET NOEXEC ON
 GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_CIERRE_CAJA_USUARIOS1]', 'F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_CIERRE_CAJA]', 'U'))
-ALTER TABLE [dbo].[NUEVA_CIERRE_CAJA] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_CIERRE_CAJA_USUARIOS1] FOREIGN KEY ([IdUsuarioAbre]) REFERENCES [dbo].[USUARIOS] ([id_Usuario])
+PRINT N'Altering [dbo].[NUEVA_NOTA_PEDIDO]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[NUEVA_NOTA_PEDIDO] ALTER COLUMN [IdEncargado] [int] NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[NUEVA_NOTA_PEDIDO] ALTER COLUMN [IdClienteMinorista] [bigint] NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Rebuilding [dbo].[CLIENTEMINORISTA]'
+GO
+CREATE TABLE [dbo].[RG_Recovery_1_CLIENTEMINORISTA]
+(
+[id_ClienteMinorista] [bigint] NOT NULL,
+[Apellido] [nvarchar] (125) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Nombre] [nvarchar] (125) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Telefono] [nvarchar] (125) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Email] [nvarchar] (125) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[EnviarNovedades] [bit] NULL,
+[Direccion] [nvarchar] (125) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+INSERT INTO [dbo].[RG_Recovery_1_CLIENTEMINORISTA]([id_ClienteMinorista], [Apellido], [Nombre], [Telefono], [Email], [EnviarNovedades], [Direccion]) SELECT [id_ClienteMinorista], [Apellido], [Nombre], [Telefono], [Email], [EnviarNovedades], [Direccion] FROM [dbo].[CLIENTEMINORISTA]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DROP TABLE [dbo].[CLIENTEMINORISTA]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+EXEC sp_rename N'[dbo].[RG_Recovery_1_CLIENTEMINORISTA]', N'CLIENTEMINORISTA', N'OBJECT'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_ClienteMinorista] on [dbo].[CLIENTEMINORISTA]'
+GO
+ALTER TABLE [dbo].[CLIENTEMINORISTA] ADD CONSTRAINT [PK_ClienteMinorista] PRIMARY KEY CLUSTERED  ([id_ClienteMinorista])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 COMMIT TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
+GO
+-- This statement writes to the SQL Server Log so SQL Monitor can show this deployment.
+IF HAS_PERMS_BY_NAME(N'sys.xp_logevent', N'OBJECT', N'EXECUTE') = 1
+BEGIN
+    DECLARE @databaseName AS nvarchar(2048), @eventMessage AS nvarchar(2048)
+    SET @databaseName = REPLACE(REPLACE(DB_NAME(), N'\', N'\\'), N'"', N'\"')
+    SET @eventMessage = N'Redgate SQL Compare: { "deployment": { "description": "Redgate SQL Compare deployed to ' + @databaseName + N'", "database": "' + @databaseName + N'" }}'
+    EXECUTE sys.xp_logevent 55000, @eventMessage
+END
 GO
 DECLARE @Success AS BIT
 SET @Success = 1
