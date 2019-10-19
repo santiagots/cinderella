@@ -1112,37 +1112,57 @@ Public Class NegProductos
     End Sub
 
     Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String, RowCount As Integer, excelCulture As CultureInfo)
-        Dim sheetValidation = xlWorkBook.Sheets.Add()
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\LogExcel.txt"), True)
+            outputFile.WriteLine($"Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, {Name} As String, {Column} As String, {Relacionado} As String, {RowCount} As Integer, {excelCulture.Name} As CultureInfo)")
 
-        sheetValidation.Name = Name
-        sheetValidation.Visible = False
+            Dim sheetValidation = xlWorkBook.Sheets.Add()
 
-        Dim categorias = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(r) r.ItemArray(0).ToString()).Distinct().ToArray()
+            outputFile.WriteLine($"heetValidation.Name = {Name}")
+            sheetValidation.Name = Name
 
-        For i As Integer = 0 To categorias.Length - 1
+            outputFile.WriteLine($"sheetValidation.Visible = False")
+            sheetValidation.Visible = False
 
-            Dim subCategorias As String() = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Where(Function(r) r.ItemArray(0).ToString() = categorias(i)).Select(Function(y) y.ItemArray(1).ToString()).ToArray()
-            Dim j As Integer = 0
+            Dim categorias = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(r) r.ItemArray(0).ToString()).Distinct().ToArray()
 
-            For Each subcategoria As String In subCategorias
-                j = j + 1
-                Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
-                sheetValidation.Range(Cell).Value = subcategoria
+            For i As Integer = 0 To categorias.Length - 1
 
+                Dim subCategorias As String() = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Where(Function(r) r.ItemArray(0).ToString() = categorias(i)).Select(Function(y) y.ItemArray(1).ToString()).ToArray()
+                Dim j As Integer = 0
+
+                For Each subcategoria As String In subCategorias
+                    j = j + 1
+                    Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
+                    outputFile.WriteLine($"sheetValidation.Range(Cell).Value = {Cell} {subcategoria}")
+                    sheetValidation.Range(Cell).Value = subcategoria
+
+                Next
+
+                outputFile.WriteLine($"xlWorkBook.Names.Add({categorias(i)}")
+                xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
             Next
-            xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
-        Next
-        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
-        Dim lookupValues = String.Empty
-        If (excelCulture.Name.Contains("ES")) Then
-            lookupValues = String.Format("=INDIRECTO(SUSTITUIR(BUSCARV({0}{1};{0}:{0};1;FALSO);"" "";""_""))", Relacionado, MinRowsData)
-        Else
-            lookupValues = String.Format("=INDIRECT(SUBSTITUTE(VLOOKUP({0}{1};{0}:{0};1;FALSE);"" "";""_""))", Relacionado, MinRowsData)
-        End If
 
-        validatingCellsRange.Validation.Delete()
-        validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)
-        validatingCellsRange.Validation.InCellDropdown = True
+            outputFile.WriteLine($"xlWorkSheet.Range({Column + MinRowsData.ToString()}, {Column + RowCount.ToString()})")
+            Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
+            Dim lookupValues = String.Empty
+            If (excelCulture.Name.Contains("ES")) Then
+                lookupValues = String.Format("=INDIRECTO(SUSTITUIR(BUSCARV({0}{1};{0}:{0};1;FALSO);"" "";""_""))", Relacionado, MinRowsData)
+            Else
+                lookupValues = String.Format("=INDIRECT(SUBSTITUTE(VLOOKUP({0}{1};{0}:{0};1;FALSE);"" "";""_""))", Relacionado, MinRowsData)
+            End If
+
+            outputFile.WriteLine(lookupValues)
+
+            outputFile.WriteLine("validatingCellsRange.Validation.Delete()")
+            validatingCellsRange.Validation.Delete()
+
+            outputFile.WriteLine("validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)")
+            validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)
+
+            outputFile.WriteLine("validatingCellsRange.Validation.InCellDropdown = True")
+            validatingCellsRange.Validation.InCellDropdown = True
+        End Using
     End Sub
 
     Private Function IntToLetters(value As Integer) As String
