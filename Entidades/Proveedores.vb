@@ -7,7 +7,7 @@
     Public Property Mail As String
     Public Property Telefono As String
     Public Property Mail_Alternativo As String
-    Public Property Habilitado As Integer
+    Public Property Habilitado As Boolean
     Public Property PlazoEntrega As Integer
     Public Property DiaPreferentePedido As DiasSemana
 End Class

@@ -1,0 +1,38 @@
+﻿Imports AutoMapper
+Imports SistemaCinderella.Formularios.Reserva
+Imports Ventas.Core.Enum
+Imports Model = Producto.Core.Model.ProductoAgreggate
+
+
+Namespace Formularios.Producto
+    Public Class MapperProfile
+        Inherits Profile
+
+        Public Sub New()
+            CreateMap(Of Model.Producto, ProductoItemViewModel)() _
+            .ForMember(Function(des) des.Categoria, Sub(opt) opt.MapFrom(Function(src) src.Categoria.Descripcion)) _
+            .ForMember(Function(des) des.Subcategoria, Sub(opt) opt.MapFrom(Function(src) src.Subcategoria.Descripcion)) _
+            .ForMember(Function(des) des.Proveedore, Sub(opt) opt.MapFrom(Function(src) src.Proveedor.RazonSocial)) _
+            .AfterMap(Sub(src As Model.Producto, des As ProductoItemViewModel)
+                          des.ListaTigre = If(src.Precios.Count >= 1, src.Precios(0).Monto, 0)
+                          des.PorcentajeDescuentoTigre = If(src.Precios.Count >= 2, src.Precios(1).Monto, 0)
+                          des.ListaCapital = If(src.Precios.Count >= 3, src.Precios(2).Monto, 0)
+                          des.PorcentajeDescuentoCapital = If(src.Precios.Count >= 4, src.Precios(3).Monto, 0)
+                          des.Mayorista = If(src.Precios.Count >= 5, src.Precios(4).Monto, 0)
+                          des.Alternativo = If(src.Precios.Count >= 6, src.Precios(5).Monto, 0)
+                      End Sub)
+
+            CreateMap(Of Model.Producto, ProductoDetalleViewModel)() _
+            .ForMember(Function(des) des.FotoRuta, Sub(opt) opt.MapFrom(Function(src) src.Foto)) _
+            .ForMember(Function(des) des.Foto, Sub(opt) opt.Ignore()) _
+            .AfterMap(Sub(src As Model.Producto, des As ProductoDetalleViewModel)
+                          des.ListaTigre = If(src.Precios.Count >= 1, src.Precios(0).Monto, 0)
+                          des.PorcentajeDescuentoTigre = If(src.Precios.Count >= 2, src.Precios(1).Monto, 0)
+                          des.ListaCapital = If(src.Precios.Count >= 3, src.Precios(2).Monto, 0)
+                          des.PorcentajeDescuentoCapital = If(src.Precios.Count >= 4, src.Precios(3).Monto, 0)
+                          des.Mayorista = If(src.Precios.Count >= 5, src.Precios(4).Monto, 0)
+                          des.Alternativo = If(src.Precios.Count >= 6, src.Precios(5).Monto, 0)
+                      End Sub)
+        End Sub
+    End Class
+End Namespace

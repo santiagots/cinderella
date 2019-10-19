@@ -4,7 +4,7 @@ Imports Ventas.Core.Model.BaseAgreggate
 
 Namespace Formularios.Venta
     Public Class frmBuscarClienteMinoristaViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Public Property Nombre As String
         Public Property Apellido As String

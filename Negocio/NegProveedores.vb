@@ -108,8 +108,8 @@ Public Class NegProveedores
         entProveedor.Mail = dr.Item("Mail").ToString
         entProveedor.Telefono = dr.Item("Telefono").ToString
         entProveedor.Mail_Alternativo = dr.Item("Mail_Alternativo").ToString
-        entProveedor.id_CondicionIva = dr.Item("id_CondicionIva").ToString
-        entProveedor.Habilitado = dr.Item("Habilitado").ToString
+        entProveedor.id_CondicionIva = If(dr.Item("id_CondicionIva") IsNot DBNull.Value, dr.Item("id_CondicionIva"), 0)
+        entProveedor.Habilitado = dr.Item("Habilitado")
         entProveedor.DiaPreferentePedido = If(String.IsNullOrEmpty(dr.Item("DiaPreferentePedido").ToString), -1, dr.Item("DiaPreferentePedido").ToString)
         entProveedor.PlazoEntrega = If(String.IsNullOrEmpty(dr.Item("DiaPreferentePedido").ToString), 0, dr.Item("PlazoEntrega").ToString)
         Return entProveedor

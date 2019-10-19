@@ -3,6 +3,7 @@ using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Diagnostics;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ChequeAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;
@@ -10,11 +11,12 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data
 {
-    public class VentaContext: CommonContext
+    public class VentaContext: DbContext
     {
         public VentaContext()
-        : base()
+        : base("SistemaCinderella.My.MySettings.Conexion")
         {
+            Database.Log = sql => Debug.Write(sql);
         }
 
         public DbSet<Cheque> Cheque { get; set; }

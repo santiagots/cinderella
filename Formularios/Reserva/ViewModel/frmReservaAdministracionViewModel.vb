@@ -13,7 +13,7 @@ Imports SistemaCinderella.Formularios.Facturacion
 
 Namespace Formularios.Reserva
     Public Class frmReservaAdministracionViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private reservaModel As Model.Reserva
         Private MdiParent As Form

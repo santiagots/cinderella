@@ -9,7 +9,7 @@ Imports Ventas.Core.Model.BaseAgreggate
 
 Namespace Formularios.Venta
     Public Class frmNotaPedidoAdministracionViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private ReadOnly IdSucursal As Integer
         Public Property EstadoSeleccionado As KeyValuePair(Of NotaPedidoEstado?, String)

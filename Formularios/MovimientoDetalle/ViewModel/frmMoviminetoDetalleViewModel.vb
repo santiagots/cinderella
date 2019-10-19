@@ -3,7 +3,7 @@
 Namespace Formularios.MovimientoDetalle
 
     Public Class frmMoviminetoDetalleViewModel(Of T)
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Public Property Titulo As String
         Public Property MovimientoDetalle As BindingList(Of T)

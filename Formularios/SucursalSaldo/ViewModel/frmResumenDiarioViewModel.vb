@@ -8,7 +8,7 @@ Imports System.ComponentModel
 
 Namespace Formularios.SucursalSaldo
     Public Class frmResumenDiarioViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private NegUsuarios As New Negocio.Usuario
         Private IdSucursal As Integer

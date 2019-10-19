@@ -155,8 +155,8 @@ Namespace Formularios.Venta
             Return listaPrecio
         End Function
 
-        Public Shared Function ObtenerListaProductos() As IList(Of Producto)
-            Dim listaProducto As IList(Of Producto) = New List(Of Producto)
+        Public Shared Function ObtenerListaProductos() As IList(Of Model.Producto)
+            Dim listaProducto As IList(Of Model.Producto) = New List(Of Model.Producto)
             Using context As VentaContext = New VentaContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 listaProducto = productoRepository.Obtener()
@@ -165,7 +165,7 @@ Namespace Formularios.Venta
             Return listaProducto
         End Function
 
-        Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As Producto
+        Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As Model.Producto
             Using context As VentaContext = New VentaContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 Return productoRepository.Obtener(idSucursal, idProducto)

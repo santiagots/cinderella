@@ -6,7 +6,7 @@ Imports Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Facturacion
     Public Class frmVerFacturaViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private IdDocuemtnoFiscal As Long
         Private TipoDocumentoFiscal As TipoDocumentoFiscal

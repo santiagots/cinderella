@@ -71,6 +71,7 @@
     <Compile Include="Extension\DateTimeExtensions.cs" />
     <Compile Include="Extension\ToList.cs" />
     <Compile Include="Helper\Cuit.cs" />
+    <Compile Include="Helper\Encriptar.cs" />
     <Compile Include="Helper\IdGenerator.cs" />
     <Compile Include="Helper\Log.cs" />
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />

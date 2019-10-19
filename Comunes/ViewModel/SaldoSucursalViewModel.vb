@@ -3,7 +3,7 @@
 Namespace Comunes
 
     Public Class SaldoSucursalViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Public Property VentaEfectivo As Decimal
 

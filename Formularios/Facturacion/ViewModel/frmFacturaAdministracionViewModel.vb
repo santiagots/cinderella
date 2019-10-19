@@ -9,7 +9,7 @@ Imports Model = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Facturacion
     Public Class frmFacturaAdministracionViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private VentasPorAnular As List(Of Tuple(Of Model.Venta, String))
         Private IdSucursal As Integer

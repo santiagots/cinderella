@@ -7,7 +7,7 @@ Imports Model = Ventas.Core.Model.VentaAggregate
 Namespace Formularios.Facturacion
 
     Public Class frmNotaCreditoAdministracionViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private IdSucursal As Integer
         Private MdiParent As Form

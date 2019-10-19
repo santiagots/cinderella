@@ -8,7 +8,7 @@ Imports SistemaCinderella.Comunes
 
 Namespace Formularios.Reserva
     Public Class frmReservaViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
         Public Property ReservaDetalle As ReservaDetalleViewModel
         Public Property VentaDetalle As VentaDetalleViewModel
 

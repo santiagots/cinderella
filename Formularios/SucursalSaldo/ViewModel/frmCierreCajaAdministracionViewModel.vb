@@ -8,7 +8,7 @@ Imports AutoMapper
 Namespace Formularios.SucursalSaldo
 
     Public Class frmCierreCajaAdministracionViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private IdSucursal As Integer
 

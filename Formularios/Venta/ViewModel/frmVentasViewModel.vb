@@ -17,7 +17,7 @@ Imports SistemaCinderella.Comunes
 
 Namespace Formularios.Venta
     Public Class frmVentasViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
         Public Delegate Function StockInsuficienteDelegate(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean
@@ -810,7 +810,7 @@ Namespace Formularios.Venta
             Return productos
         End Function
 
-        Private Function GuardarProductoCompletoEnListaDeProductos(producto As Producto) As Producto
+        Private Function GuardarProductoCompletoEnListaDeProductos(producto As Model.Producto) As Model.Producto
             If (producto.Stock Is Nothing) Then
                 Dim productoCompleto As Model.Producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
                 Productos(Productos.IndexOf(producto)) = productoCompleto

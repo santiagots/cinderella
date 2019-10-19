@@ -229,12 +229,8 @@ Public Class frmProveedores
             txt_Direccion_mod.Text = EProveedor.Direccion
             txt_PlazoEntrega_mod.Text = EProveedor.PlazoEntrega
             cb_DiaPedido_mod.SelectedItem = EProveedor.DiaPreferentePedido
+            chk_Habilitado_mod.Checked = EProveedor.Habilitado
 
-            If EProveedor.Habilitado = "1" Then
-                chk_Habilitado_mod.Checked = True
-            Else
-                chk_Habilitado_mod.Checked = False
-            End If
 
             'Cargo el combo de Condiciones de IVA
             Dim dsCondiciones As New DataSet

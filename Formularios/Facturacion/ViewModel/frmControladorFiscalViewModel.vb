@@ -14,7 +14,7 @@ Imports System.Text
 Namespace Formularios.Facturacion
 
     Public Class frmControladorFiscalViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private IdSucursal As Integer
 

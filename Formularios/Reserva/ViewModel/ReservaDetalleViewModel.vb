@@ -4,7 +4,7 @@ Imports Common.Core.Extension
 
 Namespace Formularios.Reserva
     Public Class ReservaDetalleViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private _Nombre As String
         Public Property Nombre As String

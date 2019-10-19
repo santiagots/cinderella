@@ -12,7 +12,7 @@ Imports Ventas.Core.Enum
 Namespace Formularios.SucursalSaldo
 
     Public Class frmSucursalesSaldoViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private NegDev As New Negocio.NegDevolucion
         Private NegMov As New Negocio.NegMovimientos

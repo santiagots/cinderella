@@ -6,7 +6,7 @@ Imports Model = Ventas.Core.Model.ChequeAggregate
 
 Namespace Formularios.Cheque
     Public Class frmChequeAltaViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private idSucursal As Integer
 

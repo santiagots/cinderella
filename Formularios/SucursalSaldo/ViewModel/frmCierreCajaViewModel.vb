@@ -5,7 +5,7 @@ Imports Ventas.Core.Enum
 Namespace Formularios.SucursalSaldo
 
     Public Class frmCierreCajaViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private NegUsuarios As New Negocio.Usuario
         Private IdSucursal As Integer

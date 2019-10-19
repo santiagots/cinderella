@@ -4,7 +4,7 @@ Imports Common.Core.Model
 
 Namespace Formularios.Cheque
     Public Class ChequeDetalleViewModel
-        Inherits VistaModelo.Common
+        Inherits Comunes.Common
         Property Id As Long
         Property NumeroOrden As Integer
         Property NumeroCheque As Integer

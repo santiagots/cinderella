@@ -12,7 +12,7 @@ Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private FacturarCallBackEvent As FacturarDelegateCallBackAsync
 

@@ -11,7 +11,7 @@ Imports Model = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Venta
     Public Class frmVentasAdministracionViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Private IdSucursal As Integer
         Private VentaModelSeleccionada As Model.Venta

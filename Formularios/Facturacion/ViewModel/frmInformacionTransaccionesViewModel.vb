@@ -1,6 +1,6 @@
 ﻿Namespace Formularios.Facturacion
     Public Class frmInformacionTransaccionesViewModel
-        Inherits SistemaCinderella.VistaModelo.Common
+        Inherits Comunes.Common
 
         Public Property CintaTestigoDigitalDisponiblesDesde As Integer
         Public Property CintaTestigoDigitalDisponiblesHasta As Integer
