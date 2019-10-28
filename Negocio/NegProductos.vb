@@ -67,9 +67,9 @@ Public Class NegProductos
             entProducto.Codigo = dsProducto.Tables(0).Rows(0).Item("Codigo").ToString
             entProducto.CodigoBarra = dsProducto.Tables(0).Rows(0).Item("CodigoBarra").ToString
             entProducto.Foto = dsProducto.Tables(0).Rows(0).Item("Foto").ToString
-            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado").ToString
-            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad").ToString
-            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb").ToString
+            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado")
+            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad")
+            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb")
         End If
 
         If (HayInternet) Then
@@ -139,9 +139,9 @@ Public Class NegProductos
             entProducto.Codigo = dsProducto.Tables(0).Rows(0).Item("Codigo").ToString
             entProducto.CodigoBarra = dsProducto.Tables(0).Rows(0).Item("CodigoBarra").ToString
             entProducto.Foto = dsProducto.Tables(0).Rows(0).Item("Foto").ToString
-            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado").ToString
-            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad").ToString
-            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb").ToString
+            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado")
+            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad")
+            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb")
         End If
 
         If (HayInternet) Then
@@ -210,9 +210,9 @@ Public Class NegProductos
             entProducto.Codigo = dsProducto.Tables(0).Rows(0).Item("Codigo").ToString
             entProducto.CodigoBarra = dsProducto.Tables(0).Rows(0).Item("CodigoBarra").ToString
             entProducto.Foto = dsProducto.Tables(0).Rows(0).Item("Foto").ToString
-            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado").ToString
-            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad").ToString
-            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb").ToString
+            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado")
+            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad")
+            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb")
         End If
 
         If (HayInternet) Then
@@ -1135,7 +1135,7 @@ Public Class NegProductos
                     j = j + 1
                     Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
                     outputFile.WriteLine($"sheetValidation.Range(Cell).Value = {Cell} {subcategoria}")
-                    sheetValidation.Range(Cell).Value = subcategoria
+                    sheetValidation.Range(Cell).Value = "hola" 'subcategoria
 
                 Next
 
@@ -1147,9 +1147,9 @@ Public Class NegProductos
             Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
             Dim lookupValues = String.Empty
             If (excelCulture.Name.Contains("ES")) Then
-                lookupValues = String.Format("=INDIRECTO(SUSTITUIR(BUSCARV({0}{1};{0}:{0};1;FALSO);"" "";""_""))", Relacionado, MinRowsData)
+                lookupValues = String.Format("=INDIRECTO(SUSTITUIR({0}{1};"" "";""_""))", Relacionado, MinRowsData)
             Else
-                lookupValues = String.Format("=INDIRECT(SUBSTITUTE(VLOOKUP({0}{1};{0}:{0};1;FALSE);"" "";""_""))", Relacionado, MinRowsData)
+                lookupValues = String.Format("=INDIRECT(SUBSTITUTE({0}{1};"" "";""_""))", Relacionado, MinRowsData)
             End If
 
             outputFile.WriteLine(lookupValues)
@@ -1158,10 +1158,12 @@ Public Class NegProductos
             validatingCellsRange.Validation.Delete()
 
             outputFile.WriteLine("validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)")
-            validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)
+            validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues, Type.Missing)
 
             outputFile.WriteLine("validatingCellsRange.Validation.InCellDropdown = True")
             validatingCellsRange.Validation.InCellDropdown = True
+            validatingCellsRange.Validation.IgnoreBlank = True
+
         End Using
     End Sub
 

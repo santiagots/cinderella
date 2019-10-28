@@ -161,11 +161,11 @@ Public Class NegStock
         entStock.Stock_Minimo = dr.Item("Stock_Minimo").ToString
         entStock.Stock_Optimo = dr.Item("Stock_Optimo").ToString
         entStock.VentaMensual = If(dr.Item("Venta_Mensual") Is DBNull.Value, 0, dr.Item("Venta_Mensual"))
-        entStock.Habilitado = dr.Item("Habilitado").ToString
+        entStock.Habilitado = dr.Item("Habilitado")
         entStock.Usuario = dr.Item("Usuario").ToString
         entStock.id_Usuario = dr.Item("id_Usuario").ToString
         entStock.Motivo = dr.Item("Motivo_Mod").ToString
-        entStock.Modificado = dr.Item("Modificado").ToString
+        entStock.Modificado = dr.Item("Modificado")
         entStock.Fecha_Mod = dr.Item("Fecha_Mod").ToString
         entStock.Fecha = dr.Item("Fecha").ToString
         Return entStock

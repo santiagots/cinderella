@@ -394,9 +394,9 @@ Namespace Formularios.Venta
 
         Friend Async Function GuardarAsync() As Task
             'registrar cheque
-            Dim taskAgregarComisionesl As Task = AgregarComisiones()
+            Dim taskAgregarComisiones As Task = AgregarComisiones()
             Dim taskActualizarStock As Task = ActualizarStock()
-            Await Task.WhenAll(taskAgregarComisionesl, taskActualizarStock)
+            Await Task.WhenAll(taskAgregarComisiones, taskActualizarStock)
 
             Dim codigoVentaSucursal As String = SucursalModel.CodigoVenta
             Dim cantidadVentas As Integer = Await Task.Run(Function() Servicio.CantidadVentas(IdSucursal))

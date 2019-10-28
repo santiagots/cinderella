@@ -22,6 +22,7 @@ Partial Class frmVerComisiones
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmVerComisiones))
         Me.Gb_Comisiones = New System.Windows.Forms.GroupBox()
         Me.btnCancelar = New System.Windows.Forms.Button()
@@ -94,6 +95,8 @@ Partial Class frmVerComisiones
         'Porcentaje
         '
         Me.Porcentaje.DataPropertyName = "Comision"
+        DataGridViewCellStyle1.Format = "P"
+        Me.Porcentaje.DefaultCellStyle = DataGridViewCellStyle1
         Me.Porcentaje.FillWeight = 111.9289!
         Me.Porcentaje.HeaderText = "Porcentaje"
         Me.Porcentaje.Name = "Porcentaje"
@@ -133,8 +136,8 @@ Partial Class frmVerComisiones
     Friend WithEvents Gb_Comisiones As System.Windows.Forms.GroupBox
     Friend WithEvents DG_Comisiones As System.Windows.Forms.DataGridView
     Friend WithEvents btnCancelar As System.Windows.Forms.Button
-    Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Porcentaje As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Comision As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Precio_Total As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Fecha As DataGridViewTextBoxColumn
+    Friend WithEvents Porcentaje As DataGridViewTextBoxColumn
+    Friend WithEvents Comision As DataGridViewTextBoxColumn
+    Friend WithEvents Precio_Total As DataGridViewTextBoxColumn
 End Class

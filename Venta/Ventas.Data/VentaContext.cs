@@ -1,6 +1,7 @@
 ﻿using Common.Core.Model;
 using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
@@ -11,11 +12,12 @@ using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data
 {
-    public class VentaContext: DbContext
+    public class VentaContext: CommonContext
     {
         public VentaContext()
-        : base("SistemaCinderella.My.MySettings.Conexion")
+        : base()
         {
+            this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
             Database.Log = sql => Debug.Write(sql);
         }
 
