@@ -1135,7 +1135,7 @@ Public Class NegProductos
                     j = j + 1
                     Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
                     outputFile.WriteLine($"sheetValidation.Range(Cell).Value = {Cell} {subcategoria}")
-                    sheetValidation.Range(Cell).Value = "hola" 'subcategoria
+                    sheetValidation.Range(Cell).Value = subcategoria
 
                 Next
 
