@@ -1,5 +1,6 @@
 ﻿using Common.Core.Constants;
 using Common.Core.Enum;
+using Common.Core.Helper;
 using Common.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace Ventas.Core.Model.BaseAgreggate
         {
             Cantidad = cantidad;
             PorcentajeBonificacion = porcentajeBonificacion;
+            Log.InfoCurrentStack();
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
         }
     }

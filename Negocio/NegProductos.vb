@@ -1143,26 +1143,26 @@ Public Class NegProductos
                 xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
             Next
 
-            outputFile.WriteLine($"xlWorkSheet.Range({Column + MinRowsData.ToString()}, {Column + RowCount.ToString()})")
-            Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
-            Dim lookupValues = String.Empty
-            If (excelCulture.Name.Contains("ES")) Then
-                lookupValues = String.Format("=INDIRECTO(SUSTITUIR({0}{1};"" "";""_""))", Relacionado, MinRowsData)
-            Else
-                lookupValues = String.Format("=INDIRECT(SUBSTITUTE({0}{1};"" "";""_""))", Relacionado, MinRowsData)
-            End If
+            'outputFile.WriteLine($"xlWorkSheet.Range({Column + MinRowsData.ToString()}, {Column + RowCount.ToString()})")
+            'Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
+            'Dim lookupValues = String.Empty
+            'If (excelCulture.Name.Contains("ES")) Then
+            '    lookupValues = String.Format("=INDIRECTO(SUSTITUIR({0}{1};"" "";""_""))", Relacionado, MinRowsData)
+            'Else
+            '    lookupValues = String.Format("=INDIRECT(SUBSTITUTE({0}{1};"" "";""_""))", Relacionado, MinRowsData)
+            'End If
 
-            outputFile.WriteLine(lookupValues)
+            'outputFile.WriteLine(lookupValues)
 
-            outputFile.WriteLine("validatingCellsRange.Validation.Delete()")
-            validatingCellsRange.Validation.Delete()
+            'outputFile.WriteLine("validatingCellsRange.Validation.Delete()")
+            'validatingCellsRange.Validation.Delete()
 
-            outputFile.WriteLine("validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)")
-            validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues, Type.Missing)
+            'outputFile.WriteLine("validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)")
+            'validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues, Type.Missing)
 
-            outputFile.WriteLine("validatingCellsRange.Validation.InCellDropdown = True")
-            validatingCellsRange.Validation.InCellDropdown = True
-            validatingCellsRange.Validation.IgnoreBlank = True
+            'outputFile.WriteLine("validatingCellsRange.Validation.InCellDropdown = True")
+            'validatingCellsRange.Validation.InCellDropdown = True
+            'validatingCellsRange.Validation.IgnoreBlank = True
 
         End Using
     End Sub

@@ -427,7 +427,9 @@ Namespace Formularios.Venta
         End Function
 
         Friend Sub AgregaItemVenta(esDevolucion As Boolean)
-            Dim producto As Model.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
+            Dim producto As Model.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
+                                                                                OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
+                                                                                OrElse x.CodigoBarra.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
 
             If (producto Is Nothing) Then
                 Throw New NegocioException("El producto ingresado no existe")
