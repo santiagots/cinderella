@@ -33,6 +33,11 @@ Public Class frmEtiquetas
         End If
 
         Dim dr As DataRow = dsProductos.Tables(0).Rows.Cast(Of DataRow).Where(Function(x) x.Item("Nombre").ToString().ToUpper() = txt_Codigo.Text.ToUpper() Or x.Item("Codigo").ToString().ToUpper() = txt_Codigo.Text.ToUpper()).FirstOrDefault()
+        If (dr Is Nothing) Then
+            MessageBox.Show("El producto ingresado no existe.", "Administración de Etiquetas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
         Dim etiqueta As Etiqueta = New Etiqueta() With
             {.Codigo = dr("Codigo"),
             .Nombre = dr("Nombre"),
@@ -40,6 +45,12 @@ Public Class frmEtiquetas
             .Cantiadad = Integer.Parse(txtCantidad.Text)}
 
         EtiquetaBindingSource.Add(etiqueta)
+    End Sub
+
+    Private Sub dgEtiquetas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgEtiquetas.CellContentClick
+        If dgEtiquetas.Columns(e.ColumnIndex).Name = "Eliminar" Then
+            EtiquetaBindingSource.RemoveCurrent()
+        End If
     End Sub
 
     'Click en generar reporte.

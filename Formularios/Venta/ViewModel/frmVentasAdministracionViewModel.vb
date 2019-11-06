@@ -81,7 +81,7 @@ Namespace Formularios.Venta
 
         Public ReadOnly Property HabilitarAnular As Boolean
             Get
-                Return VentaModelSeleccionada.Factura IsNot Nothing AndAlso Not VentaModelSeleccionada.Anulado
+                Return Not VentaModelSeleccionada.Anulado
             End Get
         End Property
 
@@ -228,7 +228,7 @@ Namespace Formularios.Venta
         Public Async Function AnularVentaAsync(venta As Model.Venta) As Task
             venta.Anular(MotivoAnulacion + $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
             Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
-            NotifyPropertyChanged(NameOf(Me.Ventas))
+            Await BuscarAsync()
             MessageBox.Show("Se ha anulado la venta de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Function
 

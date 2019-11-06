@@ -39,7 +39,6 @@ namespace Ventas.Core.Model.BaseAgreggate
         {
             Cantidad = cantidad;
             PorcentajeBonificacion = porcentajeBonificacion;
-            Log.InfoCurrentStack();
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
         }
     }

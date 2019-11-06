@@ -626,9 +626,9 @@ Public Class NegStock
         For Each dato In dtStockNuevo.Rows
 
             'si no se cargo ningun valor en StockMinimo StockActual StockOptimo VentaMensual no importo el registro
-            If dato("StockMinimo") = 0 Or dato("StockActual") = 0 Or dato("StockOptimo") = 0 Or dato("VentaMensual") = 0 Then
-                Continue For
-            End If
+            'If dato("StockMinimo") = 0 Or dato("StockActual") = 0 Or dato("StockOptimo") = 0 Or dato("VentaMensual") = 0 Then
+            '    Continue For
+            'End If
 
             Dim stockActual As DataRow = dsStockActual.Tables(0).Rows.Cast(Of DataRow)().FirstOrDefault(Function(x) dato("Codigo") = x("Codigo"))
 
@@ -733,7 +733,7 @@ Public Class NegStock
                 clsDatos.DesconectarLocal()
                 Throw
             End Try
-            Return String.Format("Se han actualizado {0} elementos.", stock.Count)
+            Return $"Se han actualizado {stock.Where(Function(x) x.ToUpper.StartsWith("UPDATE")).Count()} elementos y se han registrado {stock.Where(Function(x) x.ToUpper.StartsWith("INSERT")).Count()} elementos"
         Else
             Return "No se encontro cambios en el stock en el Excel importado."
         End If

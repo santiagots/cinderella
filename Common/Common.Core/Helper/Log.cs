@@ -9,7 +9,7 @@ namespace Common.Core.Helper
 
         public static void InfoCurrentStack()
         {
-            log.Info(CurrentStackCustomizedLog());
+            log.Error(CurrentStackCustomizedLog());
         }
 
         public static void Error(Exception ex)

@@ -587,33 +587,39 @@ Namespace Formularios.Venta
         End Sub
 
         Friend Sub PorcentajeFacturacionChange(porcentajeFacturacion As Decimal)
-            Me.PorcentajeFacturacion = porcentajeFacturacion
-            ActualizarPorcentaBonificacionYPorcentajeFacturacion()
-            VentaModel.ActualizarPorcentajeFacturacion(porcentajeFacturacion)
-            NotifyPropertyChanged(NameOf(Me.PorcentajeFacturacion))
+            If (Me.PorcentajeFacturacion <> porcentajeFacturacion) Then
+                Me.PorcentajeFacturacion = porcentajeFacturacion
+                ActualizarPorcentaBonificacionYPorcentajeFacturacion()
+                VentaModel.ActualizarPorcentajeFacturacion(porcentajeFacturacion)
+                NotifyPropertyChanged(NameOf(Me.PorcentajeFacturacion))
+            End If
         End Sub
 
         Friend Sub PorcentajeBonificacionChange(porcentajeBonificacion As Decimal)
-            Me.PorcentajeBonificacion = porcentajeBonificacion
-            ActualizarPorcentaBonificacionYPorcentajeFacturacion()
-            NotifyPropertyChanged(NameOf(Me.PorcentajeBonificacion))
+            If (Me.PorcentajeBonificacion <> porcentajeBonificacion) Then
+                Me.PorcentajeBonificacion = porcentajeBonificacion
+                ActualizarPorcentaBonificacionYPorcentajeFacturacion()
+                NotifyPropertyChanged(NameOf(Me.PorcentajeBonificacion))
+            End If
         End Sub
 
         Friend Sub TipoClienteChange(TipoCliente As Enums.TipoCliente)
-            TipoClienteSeleccionado = TipoCliente
+            If (Me.TipoClienteSeleccionado <> TipoCliente) Then
+                TipoClienteSeleccionado = TipoCliente
 
-            If (TipoClienteSeleccionado = Enums.TipoCliente.Minorista) Then
-                ListaPrecioSeleccionado = IdListaPrecioMinorista
-            Else
-                ListaPrecioSeleccionado = IdListaPrecioMayorista
+                If (TipoClienteSeleccionado = Enums.TipoCliente.Minorista) Then
+                    ListaPrecioSeleccionado = IdListaPrecioMinorista
+                Else
+                    ListaPrecioSeleccionado = IdListaPrecioMayorista
+                End If
+
+                For Each ventaItem As VentaItem In VentaModel.VentaItems
+                    Dim monto As Decimal = VentaModel.ObtenerMontoPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
+                    Dim porcentajeBonificacion As Decimal = VentaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
+                    VentaModel.ActualizarVentaItem(ventaItem.CodigoProducto, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+                Next
+                CalcularPendientePago()
             End If
-
-            For Each ventaItem As VentaItem In VentaModel.VentaItems
-                Dim monto As Decimal = VentaModel.ObtenerMontoPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
-                Dim porcentajeBonificacion As Decimal = VentaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
-                VentaModel.ActualizarVentaItem(ventaItem.CodigoProducto, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
-            Next
-            CalcularPendientePago()
         End Sub
 
         Friend Sub FormaPagoChange(tipoPago As Enums.TipoPago)

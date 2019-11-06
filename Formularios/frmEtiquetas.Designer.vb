@@ -39,6 +39,7 @@ Partial Class frmEtiquetas
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CantiadadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         CType(Me.ErrorEtiquetas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EtiquetaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgEtiquetas, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,7 +98,7 @@ Partial Class frmEtiquetas
         Me.dgEtiquetas.AutoGenerateColumns = False
         Me.dgEtiquetas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgEtiquetas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgEtiquetas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.NombreDataGridViewTextBoxColumn, Me.CantiadadDataGridViewTextBoxColumn})
+        Me.dgEtiquetas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.NombreDataGridViewTextBoxColumn, Me.CantiadadDataGridViewTextBoxColumn, Me.Eliminar})
         Me.dgEtiquetas.DataSource = Me.EtiquetaBindingSource
         Me.dgEtiquetas.Location = New System.Drawing.Point(9, 100)
         Me.dgEtiquetas.Name = "dgEtiquetas"
@@ -222,6 +223,14 @@ Partial Class frmEtiquetas
         Me.CantiadadDataGridViewTextBoxColumn.HeaderText = "Cantiadad"
         Me.CantiadadDataGridViewTextBoxColumn.Name = "CantiadadDataGridViewTextBoxColumn"
         '
+        'Eliminar
+        '
+        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Eliminar.HeaderText = ""
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.Width = 5
+        '
         'frmEtiquetas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -258,4 +267,5 @@ Partial Class frmEtiquetas
     Friend WithEvents Codigo As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CantiadadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Eliminar As DataGridViewImageColumn
 End Class
