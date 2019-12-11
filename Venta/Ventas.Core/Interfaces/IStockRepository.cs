@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Ventas.Core.Model.VentaAggregate;
+using Ventas.Core.Model.BaseAgreggate;
 
 namespace Ventas.Core.Interfaces
 {

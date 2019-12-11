@@ -72,9 +72,9 @@ Public Class frmReporteResumenReserva
     Private Sub CargarTransaccionItems(TransaccionItems As IEnumerable(Of TransaccionItem))
         For Each item As TransaccionItem In TransaccionItems
             If TipoCliente = Common.Core.Enum.TipoCliente.Minorista Then
-                AgregarRowTransaccionItems(item.CodigoProducto, item.NombreProducto, item.Cantidad, 0, 0, item.MontoProducto.toDecimal())
+                AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, 0, 0, item.MontoProducto.toDecimal())
             Else
-                AgregarRowTransaccionItems(item.CodigoProducto, item.NombreProducto, item.Cantidad, item.MontoProducto.Valor, item.MontoProducto.Iva, item.MontoProducto.toDecimal())
+                AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, item.MontoProducto.Valor, item.MontoProducto.Iva, item.MontoProducto.toDecimal())
             End If
         Next
     End Sub

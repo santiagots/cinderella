@@ -20,12 +20,11 @@ namespace Common.Data
         }
 
         public DbSet<Banco> Banco { get; set; }
-
         public DbSet<ClienteMayorista> ClienteMayorista { get; set; }
-
         public DbSet<Feriado> Feriado { get; set; }
-
         public DbSet<Domicilio> Domicilio { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<SubCategoria> SubCategoria { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,6 +39,14 @@ namespace Common.Data
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.CondicionIVA).HasColumnName("id_CondicionIva");
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDireccionFacturacion).HasColumnName("id_DireccionFacturacion");
             modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDireccionFacturacion);
+
+            modelBuilder.Entity<Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
+            modelBuilder.Entity<Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
+            modelBuilder.Entity<Categoria>().HasMany(v => v.SubCategorias).WithRequired(t => t.Categoria).HasForeignKey(x => x.IdCategoria);
+
+            modelBuilder.Entity<SubCategoria>().ToTable("PRODUCTOS_SUBCATEGORIAS");
+            modelBuilder.Entity<SubCategoria>().Property(t => t.Id).HasColumnName("id_Subcategoria");
+            modelBuilder.Entity<SubCategoria>().Property(t => t.IdCategoria).HasColumnName("id_Categoria");
 
             modelBuilder.Entity<Feriado>().ToTable("FERIADOS");
             modelBuilder.Entity<Feriado>().Property(t => t.Id).HasColumnName("id_Feriado");

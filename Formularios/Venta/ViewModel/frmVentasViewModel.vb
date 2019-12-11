@@ -6,7 +6,7 @@ Imports Enums = Common.Core.Enum
 Imports Common.Core.Extension
 Imports Common.Core.Exceptions
 Imports Ventas.Core.Model.ValueObjects
-Imports Ventas.Core.Model.BaseAgreggate
+Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports AutoMapper
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Common.Core.Enum
@@ -33,42 +33,42 @@ Namespace Formularios.Venta
         Private FinalizarVentaEvent As FinalizarDelegate
         Private FinalizarNotaPedidoEvent As FinalizarDelegateAsync
         Private VentaModel As Model.Venta
-        Private SucursalModel As Sucursal
+        Private SucursalModel As ModelBase.Sucursal
         Private ReservaModel As Model.Reserva
         Private NotaPedidoModel As NotaPedido
         Private ReadOnly IdListaPrecioMinorista As Integer
         Private ReadOnly IdListaPrecioMayorista As Integer
 
-        Private Productos As List(Of Model.Producto) = New List(Of Model.Producto)
+        Private Productos As List(Of ModelBase.Producto) = New List(Of ModelBase.Producto)
 
         Public Property TipoClienteSeleccionado As Enums.TipoCliente
 
         Public ReadOnly Property TipoCliente As BindingList(Of Enums.TipoCliente)
 
-        Private _EncargadoSeleccionado As Empleado
-        Public Property EncargadoSeleccionado As Empleado
+        Private _EncargadoSeleccionado As ModelBase.Empleado
+        Public Property EncargadoSeleccionado As ModelBase.Empleado
             Get
                 Return _EncargadoSeleccionado
             End Get
-            Set(value As Empleado)
+            Set(value As ModelBase.Empleado)
                 _EncargadoSeleccionado = value
                 VentaModel.AgregarEncargado(value)
             End Set
         End Property
 
-        Public ReadOnly Property Encargados As BindingList(Of Empleado)
+        Public ReadOnly Property Encargados As BindingList(Of ModelBase.Empleado)
 
-        Private _VendedoresSeleccionado As Empleado
-        Public Property VendedoresSeleccionado As Empleado
+        Private _VendedoresSeleccionado As ModelBase.Empleado
+        Public Property VendedoresSeleccionado As ModelBase.Empleado
             Get
                 Return _VendedoresSeleccionado
             End Get
-            Set(value As Empleado)
+            Set(value As ModelBase.Empleado)
                 _VendedoresSeleccionado = value
                 VentaModel.AgregarVendedor(value)
             End Set
         End Property
-        Public ReadOnly Property Vendedores As BindingList(Of Empleado)
+        Public ReadOnly Property Vendedores As BindingList(Of ModelBase.Empleado)
 
         Public Property IdClienteMayorista As Integer
 
@@ -227,7 +227,7 @@ Namespace Formularios.Venta
                 PorcentajeBonificacion = notaPedido.NotaPedidoItems?.First().PorcentajeBonificacion
             End If
 
-            CargarProductosEnVenta(notaPedido.NotaPedidoItems.Cast(Of TransaccionItem)().ToList(), notaPedido.TipoCliente)
+            CargarProductosEnVenta(notaPedido.NotaPedidoItems.Cast(Of ModelBase.TransaccionItem)().ToList(), notaPedido.TipoCliente)
 
             CalcularPendientePago()
 
@@ -239,7 +239,7 @@ Namespace Formularios.Venta
             ReservaModel = reserva
             ReservaModel.Entregar(VentaModel)
             CargarDatosBasicosTransaccion(ReservaModel.VentaReserva)
-            CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
+            CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of ModelBase.TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
 
             For Each pago As Pago In reserva.VentaReserva.Pagos
                 VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Monto, 0, 0, TipoPago.Bonificacion, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
@@ -251,15 +251,15 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.TotalPago))
         End Sub
 
-        Private Sub CargarProductosEnVenta(transaccionItems As List(Of TransaccionItem), tipoCliente As TipoCliente)
+        Private Sub CargarProductosEnVenta(transaccionItems As List(Of ModelBase.TransaccionItem), tipoCliente As TipoCliente)
             Dim montoProductoMinorista As MontoProducto = New MontoProducto(0, 0)
             Dim porcentejeBonificacionMinorista As Decimal = 0
 
             Dim montoProductoMayorista As MontoProducto
             Dim porcentejeBonificacionMayorista As Decimal
 
-            For Each transaccionItem As TransaccionItem In transaccionItems
-                Dim producto As Model.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = transaccionItem.CodigoProducto.ToUpper())
+            For Each transaccionItem As ModelBase.TransaccionItem In transaccionItems
+                Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = transaccionItem.Producto.Codigo.ToUpper())
                 producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
                 If tipoCliente = TipoCliente.Minorista Then
@@ -276,8 +276,7 @@ Namespace Formularios.Venta
                     porcentejeBonificacionMayorista = transaccionItem.PorcentajeBonificacion
                 End If
 
-                VentaModel.AgregaVentaItem(transaccionItem.CodigoProducto,
-                                           transaccionItem.NombreProducto,
+                VentaModel.AgregaVentaItem(producto,
                                            transaccionItem.MontoProducto.Valor,
                                            transaccionItem.Cantidad,
                                            False,
@@ -294,7 +293,7 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.TotalVentaItem))
         End Sub
 
-        Private Sub CargarDatosBasicosTransaccion(venta As Transaccion)
+        Private Sub CargarDatosBasicosTransaccion(venta As ModelBase.Transaccion)
             TipoClienteSeleccionado = venta.TipoCliente
             PorcentajeFacturacion = venta.PorcentajeFacturacion
             EncargadoSeleccionado = If(venta.IdEncargado > 0, venta.Encargado, Nothing)
@@ -427,7 +426,7 @@ Namespace Formularios.Venta
         End Function
 
         Friend Sub AgregaItemVenta(esDevolucion As Boolean)
-            Dim producto As Model.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
+            Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
                                                                                 OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
                                                                                 OrElse x.CodigoBarra.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
 
@@ -466,8 +465,7 @@ Namespace Formularios.Venta
                 Dim montoProductoMayorista As MontoProducto = producto.ObtenerMonto(IdListaPrecioMayorista, Enums.TipoCliente.Mayorista, 1)
                 Dim porcentejeBonificacionMayorista As Decimal = producto.ObtenerBonificacion(IdListaPrecioMayorista, Enums.TipoCliente.Mayorista)
 
-                VentaModel.AgregaVentaItem(producto.Codigo,
-                                    producto.Nombre,
+                VentaModel.AgregaVentaItem(producto,
                                     montoProducto.Valor,
                                     CantidadUnidadesDeProducto,
                                     esDevolucion,
@@ -515,7 +513,7 @@ Namespace Formularios.Venta
 
         Friend Sub ActualizarPorcentaBonificacionYPorcentajeFacturacion()
             For Each ventaItem As VentaItem In VentaModel.VentaItems
-                VentaModel.ActualizarVentaItem(ventaItem.CodigoProducto, ventaItem.MontoProducto.Valor, ventaItem.Cantidad, PorcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+                VentaModel.ActualizarVentaItem(ventaItem.Producto.Codigo, ventaItem.MontoProducto.Valor, ventaItem.Cantidad, PorcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
             Next
             CalcularPendientePago()
         End Sub
@@ -614,9 +612,9 @@ Namespace Formularios.Venta
                 End If
 
                 For Each ventaItem As VentaItem In VentaModel.VentaItems
-                    Dim monto As Decimal = VentaModel.ObtenerMontoPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
-                    Dim porcentajeBonificacion As Decimal = VentaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.CodigoProducto, TipoClienteSeleccionado)
-                    VentaModel.ActualizarVentaItem(ventaItem.CodigoProducto, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+                    Dim monto As Decimal = VentaModel.ObtenerMontoPorTipoDeCliente(ventaItem.Producto.Codigo, TipoClienteSeleccionado)
+                    Dim porcentajeBonificacion As Decimal = VentaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.Producto.Codigo, TipoClienteSeleccionado)
+                    VentaModel.ActualizarVentaItem(ventaItem.Producto.Codigo, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
                 Next
                 CalcularPendientePago()
             End If
@@ -662,12 +660,12 @@ Namespace Formularios.Venta
 
 
         Private Async Function CargarEmpleadosAsync() As Task
-            Dim encargados As List(Of Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Encargado, IdSucursal))
-            Dim vendedor As List(Of Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal))
+            Dim encargados As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Encargado, IdSucursal))
+            Dim vendedor As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal))
             vendedor.AddRange(encargados)
-            _Encargados = New BindingList(Of Empleado)(encargados)
+            _Encargados = New BindingList(Of ModelBase.Empleado)(encargados)
             EncargadoSeleccionado = _Encargados.First()
-            _Vendedores = New BindingList(Of Empleado)(vendedor)
+            _Vendedores = New BindingList(Of ModelBase.Empleado)(vendedor)
             VendedoresSeleccionado = _Vendedores.First()
 
 
@@ -771,17 +769,17 @@ Namespace Formularios.Venta
 
         Private Function ActualizarStock() As Task
 
-            Dim stocksVenta As List(Of Stock) = New List(Of Stock)
+            Dim stocksVenta As List(Of ModelBase.Stock) = New List(Of ModelBase.Stock)
             Dim productosStock As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))()
 
             If (ReservaModel IsNot Nothing) Then
                 productosStock = ObtenerCambioEnProductosPorReserva()
             Else
-                VentaModel.VentaItems.ToList().ForEach(Sub(x) productosStock.Add(New KeyValuePair(Of String, Integer)(x.CodigoProducto, x.Cantidad)))
+                VentaModel.VentaItems.ToList().ForEach(Sub(x) productosStock.Add(New KeyValuePair(Of String, Integer)(x.Producto.Codigo, x.Cantidad)))
             End If
 
             For Each productoStock As KeyValuePair(Of String, Integer) In productosStock
-                Dim stock As Stock = Productos.FirstOrDefault(Function(x) x.Codigo = productoStock.Key).Stock
+                Dim stock As ModelBase.Stock = Productos.FirstOrDefault(Function(x) x.Codigo = productoStock.Key).Stock
 
                 If (productoStock.Value > 0) Then
                     stock.Disminuir(Math.Abs(productoStock.Value))
@@ -799,28 +797,28 @@ Namespace Formularios.Venta
             Dim productos As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))()
 
             For Each ventaItemReserva As VentaItem In ReservaModel.VentaReserva.VentaItems
-                Dim ventaItem As VentaItem = VentaModel.VentaItems.FirstOrDefault(Function(x) x.CodigoProducto = ventaItemReserva.CodigoProducto)
+                Dim ventaItem As VentaItem = VentaModel.VentaItems.FirstOrDefault(Function(x) x.Producto.Codigo = ventaItemReserva.Producto.Codigo)
                 If (ventaItem Is Nothing) Then
-                    productos.Add(New KeyValuePair(Of String, Integer)(ventaItemReserva.CodigoProducto, -ventaItemReserva.Cantidad))
+                    productos.Add(New KeyValuePair(Of String, Integer)(ventaItemReserva.Producto.Codigo, -ventaItemReserva.Cantidad))
                 Else
-                    productos.Add(New KeyValuePair(Of String, Integer)(ventaItemReserva.CodigoProducto, ventaItem.Cantidad - ventaItemReserva.Cantidad))
+                    productos.Add(New KeyValuePair(Of String, Integer)(ventaItemReserva.Producto.Codigo, ventaItem.Cantidad - ventaItemReserva.Cantidad))
                 End If
             Next
 
 
             For Each ventaItem As VentaItem In VentaModel.VentaItems
-                Dim ventaItemReserva As VentaItem = ReservaModel.VentaReserva.VentaItems.FirstOrDefault(Function(x) x.CodigoProducto = ventaItem.CodigoProducto)
+                Dim ventaItemReserva As VentaItem = ReservaModel.VentaReserva.VentaItems.FirstOrDefault(Function(x) x.Producto.Codigo = ventaItem.Producto.Codigo)
                 If (ventaItemReserva Is Nothing) Then
-                    productos.Add(New KeyValuePair(Of String, Integer)(ventaItem.CodigoProducto, ventaItem.Cantidad))
+                    productos.Add(New KeyValuePair(Of String, Integer)(ventaItem.Producto.Codigo, ventaItem.Cantidad))
                 End If
             Next
 
             Return productos
         End Function
 
-        Private Function GuardarProductoCompletoEnListaDeProductos(producto As Model.Producto) As Model.Producto
+        Private Function GuardarProductoCompletoEnListaDeProductos(producto As ModelBase.Producto) As ModelBase.Producto
             If (producto.Stock Is Nothing) Then
-                Dim productoCompleto As Model.Producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
+                Dim productoCompleto As ModelBase.Producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
                 Productos(Productos.IndexOf(producto)) = productoCompleto
                 producto = productoCompleto
             End If

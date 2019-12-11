@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ventas.Core.Model.VentaAggregate;
+using Ventas.Core.Model.BaseAgreggate;
 
 namespace Ventas.Core.Interfaces
 {
     public interface IProductoRepository
     {
         Producto Obtener(int idSucursal, int idProducto);
-        Producto Obtener(int idSucursal, string codigoBarra);
+        Producto ObtenerPorCodigo(int idSucursal, string Codigo);
+        Producto ObtenerPorCodigoBarras(int idSucursal, string Codigo);
         IList<Producto> Obtener();
     }
 }

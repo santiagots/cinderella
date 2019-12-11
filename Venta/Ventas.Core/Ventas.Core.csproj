@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IClienteMinoristaRepository.cs" />
     <Compile Include="Interfaces\IEstadoCuentaSucursal.cs" />
     <Compile Include="Interfaces\IFacturaRepository.cs" />
+    <Compile Include="Interfaces\IInformeVentaRepository.cs" />
     <Compile Include="Interfaces\INotaCreditoRepository.cs" />
     <Compile Include="Interfaces\INotaPedidoRepository.cs" />
     <Compile Include="Interfaces\IReservaRepository.cs" />
@@ -72,6 +73,11 @@
     <Compile Include="Model\BaseAgreggate\TransaccionItem.cs" />
     <Compile Include="Model\BaseAgreggate\Transaccion.cs" />
     <Compile Include="Model\BaseAgreggate\ClienteMinorista.cs" />
+    <Compile Include="Model\InformeAggregate\InformeVentaEgresos.cs" />
+    <Compile Include="Model\InformeAggregate\InformeVentaPorProducto.cs" />
+    <Compile Include="Model\InformeAggregate\InformeVentaPorFecha.cs" />
+    <Compile Include="Model\InformeAggregate\InformeVentaPorTipoPago.cs" />
+    <Compile Include="Model\InformeAggregate\InformeVentaPorTipoVenta.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedido.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedidoItem.cs" />
     <Compile Include="Model\ValueObjects\Egreso.cs" />
@@ -88,16 +94,16 @@
     <Compile Include="Model\VentaAggregate\NumeroFactura.cs" />
     <Compile Include="Model\VentaAggregate\NumeroNotaCredito.cs" />
     <Compile Include="Model\VentaAggregate\Reserva.cs" />
-    <Compile Include="Model\VentaAggregate\Stock.cs" />
+    <Compile Include="Model\BaseAgreggate\Stock.cs" />
     <Compile Include="Model\VentaAggregate\Tarjeta.cs" />
     <Compile Include="Model\VentaAggregate\CostoFinanciero.cs" />
     <Compile Include="Model\BaseAgreggate\Empleado.cs" />
     <Compile Include="Model\VentaAggregate\ListaPrecio.cs" />
     <Compile Include="Model\VentaAggregate\Pago.cs" />
-    <Compile Include="Model\VentaAggregate\Precio.cs" />
+    <Compile Include="Model\BaseAgreggate\Precio.cs" />
     <Compile Include="Model\BaseAgreggate\Sucursal.cs" />
     <Compile Include="Model\VentaAggregate\VentaItem.cs" />
-    <Compile Include="Model\VentaAggregate\Producto.cs" />
+    <Compile Include="Model\BaseAgreggate\Producto.cs" />
     <Compile Include="Model\VentaAggregate\Venta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

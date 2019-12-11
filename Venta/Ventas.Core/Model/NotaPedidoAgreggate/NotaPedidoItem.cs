@@ -19,11 +19,11 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         {
         }
 
-        internal NotaPedidoItem(long idNotaPedido, string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente) : base(true)
+        internal NotaPedidoItem(long idNotaPedido, Producto producto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente) : base(true)
         {
             IdNotaPedido = idNotaPedido;
-            CodigoProducto = codigoProducto;
-            NombreProducto = nombreProducto;
+            IdProducto = producto.Id;
+            Producto = producto;
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
             PorcentajeBonificacion = porcentajeBonificacion;
             Cantidad = cantidad;

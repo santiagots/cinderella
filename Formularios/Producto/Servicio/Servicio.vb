@@ -3,6 +3,7 @@ Imports Model = Producto.Core.Model.ProductoAgreggate
 Imports Producto.Data
 Imports Producto.Data.Repository
 Imports Producto.Core.Model.ProductoAgreggate
+Imports Common.Core.Model
 
 Namespace Formularios.Producto
     Public Class Servicio
@@ -48,14 +49,14 @@ Namespace Formularios.Producto
             End Using
         End Function
 
-        Public Shared Function ObtenerCategorias() As IList(Of Model.Categoria)
+        Public Shared Function ObtenerCategorias() As IList(Of Categoria)
             Using context As ProductoContext = New ProductoContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 Return productoRepository.ObtenerCategorias()
             End Using
         End Function
 
-        Public Shared Function ObtenerSubcategorias(idCategoria As Integer) As IList(Of Model.SubCategoria)
+        Public Shared Function ObtenerSubcategorias(idCategoria As Integer) As IList(Of SubCategoria)
             Using context As ProductoContext = New ProductoContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 Return productoRepository.ObtenerSubcategorias(idCategoria)

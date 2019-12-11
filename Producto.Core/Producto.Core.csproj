@@ -42,11 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IProductoRepository.cs" />
-    <Compile Include="Model\ProductoAgreggate\Categoria.cs" />
     <Compile Include="Model\ProductoAgreggate\Precio.cs" />
     <Compile Include="Model\ProductoAgreggate\Producto.cs" />
     <Compile Include="Model\ProductoAgreggate\Proveedor.cs" />
-    <Compile Include="Model\ProductoAgreggate\SubCategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -54,6 +54,7 @@
     <Compile Include="BancoTest.cs" />
     <Compile Include="EmpleadoTest.cs" />
     <Compile Include="CostoFinancieroTest.cs" />
+    <Compile Include="UnitTest2.cs" />
     <Compile Include="VentaItemTest.cs" />
     <Compile Include="VentasTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

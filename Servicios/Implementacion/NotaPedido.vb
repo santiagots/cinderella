@@ -28,7 +28,11 @@ Public Class NotaPedido
 
         End If
 
-        notaPedido.Items.ForEach(Sub(x) notaPedidoModel.AgregaNotaPedidoItem(x.CodigoProducto, x.NombreProducto, x.Precio, x.Cantidad, x.PorcentajeBonificacion, 1, notaPedido.TipoCliente))
+        For Each item As EntidadNotaPedidoItems In notaPedido.Items
+
+            Dim producto As BaseModel.Producto = Servicio.ObtenerProductoPorCodigoCompleto(notaPedido.IdSucursal, item.CodigoProducto)
+            notaPedidoModel.AgregaNotaPedidoItem(producto, item.Precio, item.Cantidad, item.PorcentajeBonificacion, 1, notaPedido.TipoCliente)
+        Next
 
         'Doy de alta el consumidor final y lo relaciono a la nota de pedido
         Dim consumidorFinal As Entidades.ConsumidorFinal = New Entidades.ConsumidorFinal()

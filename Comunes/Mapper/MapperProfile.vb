@@ -38,20 +38,20 @@ Namespace Comunes
 
             CreateMap(Of Model.VentaItem, VentaItemViewModel)() _
                 .ForMember(Function(des) des.Cantidad, Sub(opt) opt.MapFrom(Function(src) src.Cantidad)) _
-                .ForMember(Function(des) des.Codigo, Sub(opt) opt.MapFrom(Function(src) src.CodigoProducto)) _
+                .ForMember(Function(des) des.Codigo, Sub(opt) opt.MapFrom(Function(src) src.Producto.Codigo)) _
                 .ForMember(Function(des) des.Iva, Sub(opt) opt.MapFrom(Function(src) src.MontoProducto.Iva)) _
                 .ForMember(Function(des) des.Monto, Sub(opt) opt.MapFrom(Function(src) src.MontoProducto.Valor)) _
-                .ForMember(Function(des) des.Nombre, Sub(opt) opt.MapFrom(Function(src) src.NombreProducto)) _
+                .ForMember(Function(des) des.Nombre, Sub(opt) opt.MapFrom(Function(src) src.Producto.Nombre)) _
                 .ForMember(Function(des) des.PorcentajeBonificacion, Sub(opt) opt.MapFrom(Function(src) src.PorcentajeBonificacion)) _
                 .ForMember(Function(des) des.PorcentajePago, Sub(opt) opt.MapFrom(Function(src) src.PorcentajePago)) _
                 .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.Total().toDecimal()))
 
             CreateMap(Of VentaItemViewModel, Model.VentaItem)() _
                  .ForMember(Function(des) des.Cantidad, Sub(opt) opt.MapFrom(Function(src) src.Cantidad)) _
-                 .ForMember(Function(des) des.CodigoProducto, Sub(opt) opt.MapFrom(Function(src) src.Codigo)) _
+                 .ForPath(Function(des) des.Producto.Codigo, Sub(opt) opt.MapFrom(Function(src) src.Codigo)) _
                  .ForPath(Function(des) des.MontoProducto.Iva, Sub(opt) opt.MapFrom(Function(src) src.Iva)) _
                  .ForPath(Function(des) des.MontoProducto.Valor, Sub(opt) opt.MapFrom(Function(src) src.Monto)) _
-                 .ForMember(Function(des) des.NombreProducto, Sub(opt) opt.MapFrom(Function(src) src.Nombre)) _
+                 .ForPath(Function(des) des.Producto.Nombre, Sub(opt) opt.MapFrom(Function(src) src.Nombre)) _
                  .ForMember(Function(des) des.PorcentajeBonificacion, Sub(opt) opt.MapFrom(Function(src) src.PorcentajeBonificacion)) _
                  .ForMember(Function(des) des.PorcentajePago, Sub(opt) opt.MapFrom(Function(src) src.PorcentajePago))
 

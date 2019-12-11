@@ -32,9 +32,9 @@ Public Class frmReporteNotaPedido
 
         For Each item As NotaPedidoItem In notaPedido.NotaPedidoItems
             If notaPedido.TipoCliente = Common.Core.Enum.TipoCliente.Minorista Then
-                AgregarRow(item.CodigoProducto, item.NombreProducto, item.Cantidad, 0, 0, item.MontoProducto.toDecimal())
+                AgregarRow(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, 0, 0, item.MontoProducto.toDecimal())
             Else
-                AgregarRow(item.CodigoProducto, item.NombreProducto, item.Cantidad, item.MontoProducto.Valor, item.MontoProducto.Iva, item.MontoProducto.toDecimal())
+                AgregarRow(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, item.MontoProducto.Valor, item.MontoProducto.Iva, item.MontoProducto.toDecimal())
             End If
         Next
 

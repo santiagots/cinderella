@@ -1,5 +1,4 @@
-﻿using Common.Core.Model;
-using Common.Data;
+﻿using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.Entity;
@@ -14,10 +13,13 @@ namespace Ventas.Data
 {
     public class VentaContext: CommonContext
     {
-        public VentaContext()
+        public VentaContext(bool local = true)
         : base()
         {
-            this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
+            if(local)
+                this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
+            else
+                this.Database.Connection.ConnectionString = Cripto.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
             Database.Log = sql => Debug.Write(sql);
         }
 
@@ -46,11 +48,9 @@ namespace Ventas.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Banco>().ToTable("BANCOS");
-            modelBuilder.Entity<Banco>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            modelBuilder.Entity<Banco>().Property(t => t.Id).HasColumnName("BancoId");
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<Cheque>().ToTable("NUEVA_CHEQUE");
             modelBuilder.Entity<Cheque>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -125,6 +125,7 @@ namespace Ventas.Data
             modelBuilder.Entity<VentaItem>().Property(t => t.Cantidad).HasColumnName("Cantidad");
             modelBuilder.Entity<VentaItem>().Property(t => t.MontoProducto.Valor).HasColumnName("Monto");
             modelBuilder.Entity<VentaItem>().Property(t => t.MontoProducto.Iva).HasColumnName("Iva");
+            modelBuilder.Entity<VentaItem>().HasRequired(v => v.Producto).WithMany().HasForeignKey(x => x.IdProducto);
             modelBuilder.Entity<VentaItem>().Ignore(t => t.Total);
             modelBuilder.Entity<VentaItem>().Ignore(t => t.PorcentajePago);
 
@@ -142,6 +143,7 @@ namespace Ventas.Data
             modelBuilder.Entity<NotaPedidoItem>().Property(t => t.Cantidad).HasColumnName("Cantidad");
             modelBuilder.Entity<NotaPedidoItem>().Property(t => t.MontoProducto.Valor).HasColumnName("Monto");
             modelBuilder.Entity<NotaPedidoItem>().Property(t => t.MontoProducto.Iva).HasColumnName("Iva");
+            modelBuilder.Entity<NotaPedidoItem>().HasRequired(v => v.Producto).WithMany().HasForeignKey(x => x.IdProducto);
 
             modelBuilder.Entity<Empleado>().ToTable("EMPLEADOS");
             modelBuilder.Entity<Empleado>().Property(t => t.Id).HasColumnName("id_Empleado");
@@ -158,6 +160,10 @@ namespace Ventas.Data
 
             modelBuilder.Entity<Producto>().ToTable("PRODUCTOS");
             modelBuilder.Entity<Producto>().Property(t => t.Id).HasColumnName("id_Producto");
+            modelBuilder.Entity<Producto>().Property(t => t.IdCategoria).HasColumnName("id_Categoria");
+            modelBuilder.Entity<Producto>().Property(t => t.IdSubcategoria).HasColumnName("id_Subcategoria");
+            modelBuilder.Entity<Producto>().HasRequired(t => t.Categoria).WithMany().HasForeignKey(x => x.IdCategoria);
+            modelBuilder.Entity<Producto>().HasRequired(t => t.SubCategoria).WithMany().HasForeignKey(x => x.IdSubcategoria);
             modelBuilder.Entity<Producto>().Ignore(t => t.Stock);
 
             modelBuilder.Entity<Sucursal>().ToTable("SUCURSALES");

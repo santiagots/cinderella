@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Threading.Tasks
 Imports Common.Core.Exceptions
+Imports Common.Core.Model
 Imports Datos
 Imports Producto.Core.Model.ProductoAgreggate
 Imports SistemaCinderella.Formularios.Producto
@@ -318,7 +319,6 @@ Public Class frmProductos
                     'Elimino la columna de ID para que no se muestre
                     DatosConError.Columns.RemoveAt(0)
                     frmProductosErrorImportar.productosError = DatosConError
-
                     frmProductosErrorImportar.ShowDialog()
                 End If
             End If

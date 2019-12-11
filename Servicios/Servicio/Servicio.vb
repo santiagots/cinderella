@@ -6,8 +6,8 @@ Imports Ventas.Data
 Imports Ventas.Data.Repository
 
 Public Class Servicio
-    Public Shared Function ObtenerListaProductos() As IList(Of VentaModel.Producto)
-        Dim listaProducto As IList(Of VentaModel.Producto) = New List(Of VentaModel.Producto)
+    Public Shared Function ObtenerListaProductos() As IList(Of BaseModel.Producto)
+        Dim listaProducto As IList(Of BaseModel.Producto) = New List(Of BaseModel.Producto)
         Using context As VentaContext = New VentaContext()
             Dim productoRepository As IProductoRepository = New ProductoRepository(context)
             listaProducto = productoRepository.Obtener()
@@ -16,17 +16,24 @@ Public Class Servicio
         Return listaProducto
     End Function
 
-    Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As VentaModel.Producto
+    Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As BaseModel.Producto
         Using context As VentaContext = New VentaContext()
             Dim productoRepository As IProductoRepository = New ProductoRepository(context)
             Return productoRepository.Obtener(idSucursal, idProducto)
         End Using
     End Function
 
-    Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, codigoBarra As String) As VentaModel.Producto
+    Public Shared Function ObtenerProductoPorCodigoBarrasCompleto(idSucursal As Integer, codigoBarra As String) As BaseModel.Producto
         Using context As VentaContext = New VentaContext()
             Dim productoRepository As IProductoRepository = New ProductoRepository(context)
-            Return productoRepository.Obtener(idSucursal, codigoBarra)
+            Return productoRepository.ObtenerPorCodigoBarras(idSucursal, codigoBarra)
+        End Using
+    End Function
+
+    Public Shared Function ObtenerProductoPorCodigoCompleto(idSucursal As Integer, codigo As String) As BaseModel.Producto
+        Using context As VentaContext = New VentaContext()
+            Dim productoRepository As IProductoRepository = New ProductoRepository(context)
+            Return productoRepository.ObtenerPorCodigo(idSucursal, codigo)
         End Using
     End Function
 

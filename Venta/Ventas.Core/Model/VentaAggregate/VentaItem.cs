@@ -12,6 +12,7 @@ namespace Ventas.Core.Model.VentaAggregate
 {
     public class VentaItem : TransaccionItem
     {
+
         private MontoProducto MontoProductoMinorista;
         private decimal PorcentajeBonificacionMinorista;
         private MontoProducto MontoProductoMayorista;
@@ -36,12 +37,12 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        internal VentaItem(long idVenta, string codigoProducto, string nombreProducto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
+        internal VentaItem(long idVenta, Producto producto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
         {
             Pagos = new Dictionary<Pago, decimal>();
             IdVenta = idVenta;
-            CodigoProducto = codigoProducto;
-            NombreProducto = nombreProducto;
+            IdProducto = producto.Id;
+            Producto = producto;
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
             PorcentajeBonificacion = porcentajeBonificacion;
             PorcentajePago = 0;

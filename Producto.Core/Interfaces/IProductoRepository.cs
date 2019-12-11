@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Common.Core.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Modelo = Producto.Core.Model.ProductoAgreggate;
 
 namespace Producto.Core.Interfaces
@@ -11,8 +8,8 @@ namespace Producto.Core.Interfaces
     {
         void Actualizar(Modelo.Producto producto);
         IList<Modelo.Producto> Buscar(string codigo, string nombre, int pagina, int itemsPorPagina);
-        IList<Modelo.Categoria> ObtenerCategorias();
-        IList<Modelo.SubCategoria> ObtenerSubcategorias(int idCategoria);
+        IList<Categoria> ObtenerCategorias();
+        IList<SubCategoria> ObtenerSubcategorias(int idCategoria);
         IList<Modelo.Proveedor> ObtenerProveedores();
         int BuscarTotal(string codigo, string nombre);
         void Guardar(Modelo.Producto producto);

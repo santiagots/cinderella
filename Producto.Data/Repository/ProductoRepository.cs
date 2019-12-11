@@ -7,6 +7,7 @@ using Producto.Core.Interfaces;
 using Modelo = Producto.Core.Model.ProductoAgreggate;
 using Ventas.Data.Repository;
 using Common.Core.Exceptions;
+using Common.Core.Model;
 
 namespace Producto.Data.Repository
 {
@@ -96,12 +97,12 @@ namespace Producto.Data.Repository
                                     .Where(x => x.Id == idProducto).FirstOrDefault();
         }
 
-        public IList<Modelo.Categoria> ObtenerCategorias()
+        public IList<Categoria> ObtenerCategorias()
         {
             return _context.Categoria.Where(x => x.Habilitado).OrderBy(x => x.Descripcion).ToList();
         }
 
-        public IList<Modelo.SubCategoria> ObtenerSubcategorias(int idCategoria)
+        public IList<SubCategoria> ObtenerSubcategorias(int idCategoria)
         {
             return _context.SubCategoria.Where(x => x.IdCategoria == idCategoria && x.Habilitado).OrderBy(x => x.Descripcion).ToList();
         }

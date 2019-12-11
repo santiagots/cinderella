@@ -1,14 +1,9 @@
-﻿using Common.Data.Repository;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Core.Model.VentaAggregate;
 using System.Data.Entity;
 using Ventas.Core.Interfaces;
 using Common.Core.Exceptions;
-using Common.Core.Model;
+using Ventas.Core.Model.BaseAgreggate;
 
 namespace Ventas.Data.Repository
 {
@@ -34,7 +29,23 @@ namespace Ventas.Data.Repository
             return producto;
         }
 
-        public Producto Obtener(int idSucursal, string codigoBarra)
+        public Producto ObtenerPorCodigo(int idSucursal, string codigo)
+        {
+            Producto producto = _context.Producto.Include(x => x.Precios).FirstOrDefault(x => x.Codigo == codigo);
+            if (producto == null)
+                throw new NegocioException($"El producto con código {codigo} no existe.");
+
+            Stock stock = _context.Stock.FirstOrDefault(x => x.IdSucursal == idSucursal && x.IdProducto == producto.Id);
+
+            if (stock == null)
+                stock = new Stock(idSucursal, producto.Id, 0, 0, 0, 0);
+
+            producto.Stock = stock;
+
+            return producto;
+        }
+
+        public Producto ObtenerPorCodigoBarras(int idSucursal, string codigoBarra)
         {
             Producto producto = _context.Producto.Include(x => x.Precios).FirstOrDefault(x => x.CodigoBarra == codigoBarra);
             if (producto == null)

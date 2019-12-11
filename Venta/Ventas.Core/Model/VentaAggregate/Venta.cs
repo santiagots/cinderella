@@ -64,13 +64,13 @@ namespace Ventas.Core.Model.VentaAggregate
             FechaAnulado = DateTime.Now;
         }
 
-        public void AgregaVentaItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
+        public void AgregaVentaItem(Producto producto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
         {
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == producto.Codigo);
 
             if (ventaItem == null)
             {
-                ventaItem = new VentaItem(Id, codigoProducto, nombreProducto, monto, cantidad, esDevolucion, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
+                ventaItem = new VentaItem(Id, producto, monto, cantidad, esDevolucion, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
                 VentaItems.Add(ventaItem);
             }
             else
@@ -92,7 +92,7 @@ namespace Ventas.Core.Model.VentaAggregate
             if (porcentajeBonificacion > 1)
                 porcentajeBonificacion = 1;
 
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
 
             ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
 
@@ -220,7 +220,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public void QuitarVentaItem(string codigoProducto, decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
 
             if (ventaItem == null)
                 throw new NegocioException($"Error al quitar el pago. El producto con código {codigoProducto} no se encuentra registrados en la venta.");
@@ -244,7 +244,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public int ObtenerCantidadDeUnidadesDeProducto(string codigoProducto)
         {
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
             if (ventaItem == null)
                 return 0;
             else
@@ -298,7 +298,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public decimal ObtenerMontoPorTipoDeCliente(string codigoProducto, TipoCliente tipoCliente)
         {
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
             if (ventaItem == null)
                 throw new NegocioException($"Error al obtener el monto para el producto código {codigoProducto}. No se encuentran el producto en lo productos ingresado a vender.");
             else
@@ -307,7 +307,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public decimal ObtenerPorcentajeBonificacionPorTipoDeCliente(string codigoProducto, TipoCliente tipoCliente)
         {
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
             if (ventaItem == null)
                 throw new NegocioException($"Error al obtener el porcentaje bonificación para el producto código {codigoProducto}. No se encuentran el producto en lo productos ingresado a vender.");
             else
@@ -316,7 +316,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public decimal ObtenerBonificacionPorListaDePrecion(string codigoProducto, TipoCliente tipoClienteSeleccionado)
         {
-            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
             if (ventaItem == null)
                 return 0;
             else

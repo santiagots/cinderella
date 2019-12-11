@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -21,6 +22,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>C:\Users\stambour\Desktop\aa\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -37,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>446</ApplicationRevision>
+    <ApplicationRevision>451</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -158,12 +161,10 @@
     <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.1.0.145, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
@@ -397,6 +398,37 @@
     <Compile Include="Formularios\frmBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.Designer.vb">
+      <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\InformeVenta\frmInformeVentas2.Designer.vb">
+      <DependentUpon>frmInformeVentas2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\InformeVenta\frmInformeVentas2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\InformeVenta\Servicio\Servicio.vb" />
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoVentas2.Designer.vb">
+      <DependentUpon>FrmInformeGraficoVentas2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoVentas2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\InformeVenta\ViewModel\frmInformeGraficoEgresosViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\frmInformeGraficoProductoViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\frmInformeGraficoVentasViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\frmInformeProductoViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\frmInformeVentasViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalEgresoItemViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalFacturadoItemViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalPorDiaItemViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalPorFormaPagoItemViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalProductoItemViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalPorTipoClienteItemViewModel.vb" />
+    <Compile Include="Formularios\InformeVenta\ViewModel\TotalVentaItemViewModel.vb" />
     <Compile Include="Formularios\MovimientoDetalle\frmMoviminetoDetalle.Designer.vb">
       <DependentUpon>frmMoviminetoDetalle.vb</DependentUpon>
     </Compile>
@@ -626,22 +658,16 @@
     <Compile Include="Formularios\frmFeriados.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmInformeProducto.Designer.vb">
+    <Compile Include="Formularios\InformeVenta\frmInformeProducto.Designer.vb">
       <DependentUpon>frmInformeProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmInformeProducto.vb">
+    <Compile Include="Formularios\InformeVenta\frmInformeProducto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmInformeGraficoEgresos.Designer.vb">
-      <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\FrmInformeGraficoEgresos.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\FrmInformeGraficoProducto.Designer.vb">
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoProducto.Designer.vb">
       <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmInformeGraficoProducto.vb">
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoProducto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmInformeGraficoVentas.Designer.vb">
@@ -1286,6 +1312,15 @@
     <EmbeddedResource Include="ControlesUsuario\VentaDetalle.resx">
       <DependentUpon>VentaDetalle.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.resx">
+      <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\InformeVenta\frmInformeVentas2.resx">
+      <DependentUpon>frmInformeVentas2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoVentas2.resx">
+      <DependentUpon>FrmInformeGraficoVentas2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\MovimientoDetalle\frmMoviminetoDetalle.resx">
       <DependentUpon>frmMoviminetoDetalle.vb</DependentUpon>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -1386,13 +1421,10 @@
     <EmbeddedResource Include="Formularios\frmFeriados.resx">
       <DependentUpon>frmFeriados.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmInformeProducto.resx">
+    <EmbeddedResource Include="Formularios\InformeVenta\frmInformeProducto.resx">
       <DependentUpon>frmInformeProducto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmInformeGraficoEgresos.resx">
-      <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmInformeGraficoProducto.resx">
+    <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoProducto.resx">
       <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmInformeGraficoVentas.resx">
@@ -1685,6 +1717,9 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmInformacionTransaccionesViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.InformeVenta.frmInformeGraficoProductoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.InformeVenta.frmInformeProductoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.InformeVenta.frmInformeVentasViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.MovimientoDetalle.Devolucion.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.MovimientoDetalle.frmMoviminetoDetalleViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.MovimientoDetalle.frmMoviminetoDetalleViewModel`1[].datasource" />
@@ -2444,6 +2479,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Formularios\InformeVenta\Mapper\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
@@ -2474,4 +2510,12 @@
     <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
     <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
   </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
 </Project>

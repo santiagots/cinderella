@@ -738,23 +738,23 @@ Public Class frmInformeVentas
         End If
 
         If (TabInformes.SelectedTab.Name = tabProductos.Name) Then
-            Dim informeGraficoProducto As FrmInformeGraficoProducto = Funciones.ControlInstancia(FrmInformeGraficoProducto)
-            informeGraficoProducto.TopProductosMonto = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopProductosCantidad = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopCategoriaMonto = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopCategoriaCantidad = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopSubcategoriaMonto = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
-            informeGraficoProducto.TopSubcategoriaCantidad = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
-            informeGraficoProducto.MdiParent = Me.MdiParent
-            informeGraficoProducto.Show()
+            'Dim informeGraficoProducto As FrmInformeGraficoProducto = Funciones.ControlInstancia(FrmInformeGraficoProducto)
+            'informeGraficoProducto.TopProductosMonto = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            'informeGraficoProducto.TopProductosCantidad = NegInformes.ObtenerProductos(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            'informeGraficoProducto.TopCategoriaMonto = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            'informeGraficoProducto.TopCategoriaCantidad = NegInformes.ObtenerCategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            'informeGraficoProducto.TopSubcategoriaMonto = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Monto", SortOrder.Descending, cantidad)
+            'informeGraficoProducto.TopSubcategoriaCantidad = NegInformes.ObtenerSubcategorias(idProducto, idCategoria, idSubcategoria, sucursalesId, fechaDesde, fechaHasta, 1, 10, "Cantidad", SortOrder.Descending, cantidad)
+            'informeGraficoProducto.MdiParent = Me.MdiParent
+            'informeGraficoProducto.Show()
         End If
 
         If (TabInformes.SelectedTab.Name = tabEgresos.Name) Then
-            Dim informeGraficoEgresos As FrmInformeGraficoEgresos = Funciones.ControlInstancia(FrmInformeGraficoEgresos)
-            informeGraficoEgresos.TopGastos = dtGraficoGastos
-            informeGraficoEgresos.TopProveedor = dtGraficoCostos
-            informeGraficoEgresos.MdiParent = Me.MdiParent
-            informeGraficoEgresos.Show()
+            'Dim informeGraficoEgresos As FrmInformeGraficoEgresos2 = Funciones.ControlInstancia(FrmInformeGraficoEgresos2)
+            'informeGraficoEgresos.TopGastos = dtGraficoGastos
+            'informeGraficoEgresos.TopProveedor = dtGraficoCostos
+            'informeGraficoEgresos.MdiParent = Me.MdiParent
+            'informeGraficoEgresos.Show()
         End If
 
     End Sub
@@ -812,19 +812,19 @@ Public Class frmInformeVentas
     End Function
 
     Private Sub ProductosDetalle(idProducto As String, idCategoria As String, idSubcategoria As String)
-        Dim Funciones As New Funciones
-        Dim frmInfProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
-        frmInfProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
-        frmInfProducto.fechaDesde = dtpFechaDesde.Value
-        frmInfProducto.fechaHasta = dtpFechaHasta.Value
-        frmInfProducto.idProducto = idProducto
-        frmInfProducto.idCategoria = idCategoria
-        frmInfProducto.idSubCategoria = idSubcategoria
-        frmInfProducto.MdiParent = Me.MdiParent
-        frmInfProducto.inicializar()
-        If (frmInfProducto.WindowState = FormWindowState.Minimized) Then
-            frmInfProducto.WindowState = FormWindowState.Normal
-        End If
-        frmInfProducto.Show()
+        'Dim Funciones As New Funciones
+        'Dim frmInfProducto As frmInformeProducto = Funciones.ControlInstancia(frmInformeProducto)
+        'frmInfProducto.sucursalesId = cklSucursales.CheckedItems.Cast(Of Sucursales).Select(Function(x) x.id_Sucursal).ToList()
+        'frmInfProducto.fechaDesde = dtpFechaDesde.Value
+        'frmInfProducto.fechaHasta = dtpFechaHasta.Value
+        'frmInfProducto.idProducto = idProducto
+        'frmInfProducto.idCategoria = idCategoria
+        'frmInfProducto.idSubCategoria = idSubcategoria
+        'frmInfProducto.MdiParent = Me.MdiParent
+        'frmInfProducto.inicializar()
+        'If (frmInfProducto.WindowState = FormWindowState.Minimized) Then
+        '    frmInfProducto.WindowState = FormWindowState.Normal
+        'End If
+        'frmInfProducto.Show()
     End Sub
 End Class

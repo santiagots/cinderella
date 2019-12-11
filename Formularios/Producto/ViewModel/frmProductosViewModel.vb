@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
 Imports AutoMapper
+Imports Common.Core.Model
 Imports Model = Producto.Core.Model.ProductoAgreggate
 
 Namespace Formularios.Producto
@@ -28,8 +29,8 @@ Namespace Formularios.Producto
                 Return TotalProductos = 0
             End Get
         End Property
-        Public Property Categorias As BindingList(Of Model.Categoria)
-        Public Property SubCategorias As BindingList(Of Model.SubCategoria)
+        Public Property Categorias As BindingList(Of Categoria)
+        Public Property SubCategorias As BindingList(Of SubCategoria)
         Public Property Provedores As BindingList(Of Model.Proveedor)
 
         Public Sub New()
@@ -188,16 +189,16 @@ Namespace Formularios.Producto
         End Function
 
         Private Async Function CargarCategoriasAsync() As Task
-            Dim categoriaModel As IList(Of Model.Categoria) = Await Task.Run(Function() Servicio.ObtenerCategorias())
+            Dim categoriaModel As IList(Of Categoria) = Await Task.Run(Function() Servicio.ObtenerCategorias())
 
             Me.ProductoNuevo.Categoria = categoriaModel.First()
-            Me.Categorias = New BindingList(Of Model.Categoria)(categoriaModel)
+            Me.Categorias = New BindingList(Of Categoria)(categoriaModel)
             NotifyPropertyChanged(NameOf(Me.Categorias))
         End Function
 
         Friend Async Function CargarSubcategoriasAsync(idCategoria As Integer) As Task
-            Dim subCategoriaModel As IList(Of Model.SubCategoria) = Await Task.Run(Function() Servicio.ObtenerSubcategorias(idCategoria))
-            Me.SubCategorias = New BindingList(Of Model.SubCategoria)(subCategoriaModel)
+            Dim subCategoriaModel As IList(Of SubCategoria) = Await Task.Run(Function() Servicio.ObtenerSubcategorias(idCategoria))
+            Me.SubCategorias = New BindingList(Of SubCategoria)(subCategoriaModel)
             NotifyPropertyChanged(NameOf(Me.SubCategorias))
         End Function
 

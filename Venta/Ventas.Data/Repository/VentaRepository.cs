@@ -31,6 +31,7 @@ namespace Ventas.Data.Repository
                             .Include(x => x.Pagos)
                             .Include(x => x.Cheques)
                             .Include(x => x.VentaItems)
+                            .Include(x => x.VentaItems.Select(y => y.Producto))
                             .Include(x => x.Factura)
                             .Include(x => x.Factura.NumeroFactura)
                             .Include(x => x.NotaCredito)
@@ -80,6 +81,7 @@ namespace Ventas.Data.Repository
         {
             _context.Entry(venta.Encargado).State = System.Data.Entity.EntityState.Unchanged;
             _context.Entry(venta.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
+            venta.VentaItems.ToList().ForEach(x => _context.Entry(x.Producto).State = System.Data.Entity.EntityState.Unchanged);
             _context.Venta.Add(venta);
             _context.SaveChanges();
         }

@@ -1,5 +1,5 @@
-﻿Imports Producto.Core.Model.ProductoAgreggate
-Imports System.ComponentModel
+﻿Imports Common.Core.Model
+Imports Producto.Core.Model.ProductoAgreggate
 
 Namespace Formularios.Producto
     Public Class ProductoDetalleViewModel

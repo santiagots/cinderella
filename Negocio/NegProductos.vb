@@ -1284,69 +1284,84 @@ Public Class NegProductos
         Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
         'Armo sentiencias Delete
-        productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo))
+        productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo, DatosConError))
         'Armo sentiencias Update
-        productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo))
+        productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo, DatosConError))
         'Armo sentiencias Insert
-        productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo))
+        productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo, DatosConError))
 
-
-
-        If (productos.Count > 0) Then
-            Using conn As SqlConnection = New SqlConnection()
-
-                conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
-                conn.Open()
-                Using tran As SqlTransaction = conn.BeginTransaction()
-
-                    Try
-                        For i = 0 To productos.Count Step 200
-                            Dim cantidad As Integer = If(i + 200 > productos.Count, productos.Count, i + 200)
-                            RaiseEvent UpdateProgress(4, String.Format("Actualizando informacion en la base de datos {0} de {1}", cantidad.ToString(), productos.Count.ToString()))
-                            Dim sql As String = productos.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
-                            Dim cmd As SqlCommand = New SqlCommand(sql, conn)
-                            cmd.Transaction = tran
-                            cmd.ExecuteNonQuery()
-                        Next
-                        tran.Commit()
-                    Catch ex As Exception
-                        tran.Rollback()
-                        Throw
-                    End Try
-                End Using
-            End Using
-            If (DatosConError.Rows.Count = 0) Then
-                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos y se han eliminado {2} productos.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count)
-            Else
-                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos, se han eliminado {2} productos y se encontrar {3} productos con errores para ser importados.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count, DatosConError.Rows.Count)
-            End If
-
-        Else
-            If (DatosConError.Rows.Count = 0) Then
-                Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
-            Else
-                Return String.Format("Se encontrar {0} productos con errores para ser importados.", DatosConError.Rows.Count)
-            End If
+        If (DatosConError.Rows.Count > 0) Then
+            Return $"No se ha podido importar el listado de productos, se han encontrar {DatosConError.Rows.Count} productos con errores. Por favor, verifique los errores y vuelva a intentarlo."
         End If
+
+        If (productos.Count = 0) Then
+            Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
+        End If
+
+        Using conn As SqlConnection = New SqlConnection()
+            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.Open()
+            Using tran As SqlTransaction = conn.BeginTransaction()
+
+                Try
+                    For i = 0 To productos.Count Step 200
+                        Dim cantidad As Integer = If(i + 200 > productos.Count, productos.Count, i + 200)
+                        RaiseEvent UpdateProgress(4, String.Format("Actualizando informacion en la base de datos {0} de {1}", cantidad.ToString(), productos.Count.ToString()))
+                        Dim sql As String = productos.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
+                        Dim cmd As SqlCommand = New SqlCommand(sql, conn)
+                        cmd.Transaction = tran
+                        cmd.ExecuteNonQuery()
+                    Next
+                    tran.Commit()
+                Catch ex As Exception
+                    tran.Rollback()
+                    Throw
+                End Try
+            End Using
+        End Using
+
+        Return $"Se han cargado {DatosNuevos.Count} nuevos productos, se han actualizaron {DatosActualizados.Count} productos y se han eliminado {DatosEliminados.Count} productos."
     End Function
 
-    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer) As List(Of String)
+    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer, ByRef DatosConError As DataTable) As List(Of String)
         Dim i As Integer = 0
         Dim sql As List(Of String) = New List(Of String)
         Dim codigoBarras As String
+        Dim mensajeError As String
 
         Do While (i < Datos.Count)
+            mensajeError = String.Empty
+
             'Obtengo el codigo de la Categoria ingresada
             Dim categoriaDescripcion As String = Datos(i)("Categoria").ToString()
             Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = categoriaDescripcion).FirstOrDefault()
+
+            If (categoria Is Nothing) Then
+                mensajeError += $"La categoria '{categoriaDescripcion}' no existe. Verifique que la categoria se encuentre registrado o ingrese una categoria valido.{Environment.NewLine}"
+            End If
 
             'Obtengo el codigo de la SubCategoria ingresada
             Dim subCategoriaDescripcion As String = Datos(i)("SubCategoria").ToString()
             Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = subCategoriaDescripcion).FirstOrDefault()
 
+            If (subCategoria Is Nothing) Then
+                mensajeError += $"El subcategoria '{subCategoriaDescripcion}' no existe. Verifique que la subcategoria se encuentre registrado o ingrese una subcategoria valido.{Environment.NewLine}"
+            End If
+
             'Obtengo el codigo de la Proveedor ingresada
             Dim ProveedorDescripcion As String = Datos(i)("Proveedor").ToString()
             Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = ProveedorDescripcion).FirstOrDefault()
+
+            If (Proveedor Is Nothing) Then
+                mensajeError += $"El proveedor '{ProveedorDescripcion}' no existe. Verifique que el proveedor se encuentre registrado o ingrese un proveedor valido.{Environment.NewLine}"
+            End If
+
+            If (Not String.IsNullOrEmpty(mensajeError)) Then
+                DatosConError.ImportRow(Datos(i))
+                DatosConError.Rows.Item(DatosConError.Rows.Count - 1)("Descripcion_Error") = mensajeError
+                i = (i + 1)
+                Continue Do
+            End If
 
             'Obtengo el codigo de Habilitacion
             Dim habilitado As Integer = If(Datos(i)(17).ToString() = "Si", 1, 0)

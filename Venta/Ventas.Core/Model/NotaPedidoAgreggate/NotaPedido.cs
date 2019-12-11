@@ -61,13 +61,13 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             TipoCliente = tipoCliente;
         }
 
-        public void AgregaNotaPedidoItem(string codigoProducto, string nombreProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        public void AgregaNotaPedidoItem(Producto producto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
-            NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.CodigoProducto == codigoProducto);
+            NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == producto.Codigo);
 
             if (notaPedidoItem == null)
             {
-                notaPedidoItem = new NotaPedidoItem(Id, codigoProducto, nombreProducto, monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+                notaPedidoItem = new NotaPedidoItem(Id, producto, monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
                 NotaPedidoItems.Add(notaPedidoItem);
             }
             else

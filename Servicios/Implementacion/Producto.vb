@@ -1,4 +1,4 @@
-﻿Imports Model = Ventas.Core.Model.VentaAggregate
+﻿Imports Model = Ventas.Core.Model.BaseAgreggate
 Imports System.ServiceModel
 Imports AutoMapper
 

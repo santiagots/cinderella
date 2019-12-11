@@ -145,7 +145,7 @@ Namespace Formularios.Facturacion
             If (desdeReserva) Then
                 ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.CodigoProducto, x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
+                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor)))
             End If
 
             ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
@@ -190,7 +190,7 @@ Namespace Formularios.Facturacion
             If (desdeReserva) Then
                 ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.CodigoProducto, x.NombreProducto, x.Cantidad, x.MontoProducto.Valor)))
+                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor)))
             End If
 
             ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))

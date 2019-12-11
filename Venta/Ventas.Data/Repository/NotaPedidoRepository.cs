@@ -50,7 +50,7 @@ namespace Ventas.Data.Repository
         {
             IQueryable<NotaPedido> notaPedido = _context.NotaPedido
                                                     .Where(x => !x.Borrado && x.IdSucursal == idSucursal)
-                                                    .Include(x => x.NotaPedidoItems)
+                                                    .Include(x => x.NotaPedidoItems.Select(y => y.Producto))
                                                     .Include(x => x.Vendedor)
                                                     .Include(x => x.Encargado)
                                                     .Include(x => x.ClienteMayorista)

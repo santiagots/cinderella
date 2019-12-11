@@ -3,10 +3,12 @@ using Model = Producto.Core.Model.ProductoAgreggate;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
 using System.Configuration;
+using Common.Core.Model;
+using Common.Data;
 
 namespace Producto.Data
 {
-    public class ProductoContext : DbContext
+    public class ProductoContext : CommonContext
     {
         public ProductoContext()
         : base()
@@ -16,13 +18,13 @@ namespace Producto.Data
         }
 
         public DbSet<Model.Producto> Producto { get; set; }
-        public DbSet<Model.Categoria> Categoria { get; set; }
         public DbSet<Model.Proveedor> Proveedor { get; set; }
         public DbSet<Model.Precio> Precio { get; set; }
-        public DbSet<Model.SubCategoria> SubCategoria { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<Model.Producto>().ToTable("PRODUCTOS");
@@ -35,15 +37,7 @@ namespace Producto.Data
             modelBuilder.Entity<Model.Producto>().HasOptional(t => t.Subcategoria).WithMany().HasForeignKey(x => x.IdSubcategoria);
             modelBuilder.Entity<Model.Producto>().HasOptional(t => t.Proveedor).WithMany().HasForeignKey(x => x.IdProveedor);
             modelBuilder.Entity<Model.Producto>().HasMany(v => v.Precios).WithRequired().HasForeignKey(x => x.IdProducto);
-
-            modelBuilder.Entity<Model.Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
-            modelBuilder.Entity<Model.Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
-            modelBuilder.Entity<Model.Categoria>().HasMany(v => v.SubCategorias).WithRequired(t => t.Categoria).HasForeignKey(x => x.IdCategoria);
-
-            modelBuilder.Entity<Model.SubCategoria>().ToTable("PRODUCTOS_SUBCATEGORIAS");
-            modelBuilder.Entity<Model.SubCategoria>().Property(t => t.Id).HasColumnName("id_Subcategoria");
-            modelBuilder.Entity<Model.SubCategoria>().Property(t => t.IdCategoria).HasColumnName("id_Categoria");
-            
+           
             modelBuilder.Entity<Model.Proveedor>().ToTable("PROVEEDORES");
             modelBuilder.Entity<Model.Proveedor>().Property(t => t.Id).HasColumnName("id_Proveedor");
 

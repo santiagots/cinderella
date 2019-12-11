@@ -62,6 +62,7 @@
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
     <Compile Include="Enum\ModeloControladoraFiscal.cs" />
+    <Compile Include="Enum\OrdenarDireccion.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
     <Compile Include="Enum\TipoEmpleado.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Model\Banco.cs" />
+    <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\ClienteMayorista.cs" />
     <Compile Include="Model\Distrito.cs" />
     <Compile Include="Model\Domicilio.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Model\Feriado.cs" />
     <Compile Include="Model\Localidad.cs" />
     <Compile Include="Model\Provincia.cs" />
+    <Compile Include="Model\SubCategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\TicketPago.cs" />
     <Compile Include="ValueObjects\TicketProducto.cs" />

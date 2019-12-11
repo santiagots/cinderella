@@ -7,7 +7,7 @@ Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Data
 Imports Common.Core.Interfaces
 Imports Ventas.Core.Enum
-Imports Ventas.Core.Model.BaseAgreggate
+Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports Common.Data.Repository
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 
@@ -20,7 +20,7 @@ Namespace Formularios.Venta
             End Using
         End Function
 
-        Public Shared Sub ActualizarStock(stocks As List(Of Stock))
+        Public Shared Sub ActualizarStock(stocks As List(Of ModelBase.Stock))
             Using context As VentaContext = New VentaContext()
                 Dim stockRepository As IStockRepository = New StockRepository(context)
                 stockRepository.Actualizar(stocks)
@@ -34,7 +34,7 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Function BuscarClienteMinorista(nombre As String, apellido As String) As IList(Of ClienteMinorista)
+        Public Shared Function BuscarClienteMinorista(nombre As String, apellido As String) As IList(Of ModelBase.ClienteMinorista)
             Using context As VentaContext = New VentaContext()
                 Dim clienteMinoristaRepository As IClienteMinoristaRepository = New ClienteMinoristaRepository(context)
                 Return clienteMinoristaRepository.Obtener(nombre, apellido)
@@ -62,16 +62,16 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Sub GuardarClienteMinorista(clienteMinorista As ClienteMinorista)
+        Public Shared Sub GuardarClienteMinorista(clienteMinorista As ModelBase.ClienteMinorista)
             Using context As VentaContext = New VentaContext()
                 Dim clienteMinoristaRepository As IClienteMinoristaRepository = New ClienteMinoristaRepository(context)
                 clienteMinoristaRepository.Guardar(clienteMinorista)
             End Using
         End Sub
 
-        Public Shared Function ObtenerSucursal(idSucursal As Integer) As Sucursal
+        Public Shared Function ObtenerSucursal(idSucursal As Integer) As ModelBase.Sucursal
             Using context As VentaContext = New VentaContext()
-                Dim sucursalRepository As IRepository(Of Sucursal) = New Repository(Of Sucursal)(context)
+                Dim sucursalRepository As IRepository(Of ModelBase.Sucursal) = New Repository(Of ModelBase.Sucursal)(context)
                 Return sucursalRepository.GetById(idSucursal)
             End Using
         End Function
@@ -111,9 +111,9 @@ Namespace Formularios.Venta
             End Using
         End Function
 
-        Public Shared Function ObtenerEmpleados(tipoEmpleado As TipoEmpleado, idSucursal As Integer) As IList(Of Empleado)
+        Public Shared Function ObtenerEmpleados(tipoEmpleado As TipoEmpleado, idSucursal As Integer) As IList(Of ModelBase.Empleado)
 
-            Dim empleado As IList(Of Empleado) = New List(Of Empleado)
+            Dim empleado As IList(Of ModelBase.Empleado) = New List(Of ModelBase.Empleado)
             Using context As VentaContext = New VentaContext()
                 Dim empleadoRepository As IEmpleadoRepository = New EmpleadoRepository(context)
                 empleado = empleadoRepository.ObtenerPresentes(idSucursal, tipoEmpleado)
@@ -155,8 +155,8 @@ Namespace Formularios.Venta
             Return listaPrecio
         End Function
 
-        Public Shared Function ObtenerListaProductos() As IList(Of Model.Producto)
-            Dim listaProducto As IList(Of Model.Producto) = New List(Of Model.Producto)
+        Public Shared Function ObtenerListaProductos() As IList(Of ModelBase.Producto)
+            Dim listaProducto As IList(Of ModelBase.Producto) = New List(Of ModelBase.Producto)
             Using context As VentaContext = New VentaContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 listaProducto = productoRepository.Obtener()
@@ -165,7 +165,7 @@ Namespace Formularios.Venta
             Return listaProducto
         End Function
 
-        Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As Model.Producto
+        Public Shared Function ObtenerProductoCompleto(idSucursal As Integer, idProducto As Integer) As ModelBase.Producto
             Using context As VentaContext = New VentaContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
                 Return productoRepository.Obtener(idSucursal, idProducto)
