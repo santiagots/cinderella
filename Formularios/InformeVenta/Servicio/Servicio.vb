@@ -39,6 +39,13 @@ Namespace Formularios.InformeVenta
             End Using
         End Function
 
+        Friend Shared Function BuscarInformeVentaPorFacturacion(idSucursales As IEnumerable(Of Integer), fechaDesde As DateTime, fechaHasta As DateTime) As IEnumerable(Of InformeVentaPorTipoVenta)
+            Using context As VentaContext = New VentaContext(False)
+                Dim informeVentaRepository As IInformeVentaRepository = New InformeVentaRepository(context)
+                Return informeVentaRepository.InformeVentaPorFacturacion(idSucursales, fechaDesde, fechaHasta)
+            End Using
+        End Function
+
         Friend Shared Function BuscarInformeVentaPorTipoPago(idSucursales As IEnumerable(Of Integer), fechaDesde As DateTime, fechaHasta As DateTime) As IEnumerable(Of InformeVentaPorTipoPago)
             Using context As VentaContext = New VentaContext(False)
                 Dim informeVentaRepository As IInformeVentaRepository = New InformeVentaRepository(context)

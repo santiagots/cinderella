@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>451</ApplicationRevision>
+    <ApplicationRevision>463</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -404,17 +404,17 @@
     <Compile Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\InformeVenta\frmInformeVentas2.Designer.vb">
-      <DependentUpon>frmInformeVentas2.vb</DependentUpon>
+    <Compile Include="Formularios\InformeVenta\frmInformeVentas.Designer.vb">
+      <DependentUpon>frmInformeVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\InformeVenta\frmInformeVentas2.vb">
+    <Compile Include="Formularios\InformeVenta\frmInformeVentas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\InformeVenta\Servicio\Servicio.vb" />
-    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoVentas2.Designer.vb">
-      <DependentUpon>FrmInformeGraficoVentas2.vb</DependentUpon>
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoVentas.Designer.vb">
+      <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoVentas2.vb">
+    <Compile Include="Formularios\InformeVenta\FrmInformeGraficoVentas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\InformeVenta\ViewModel\frmInformeGraficoEgresosViewModel.vb" />
@@ -668,18 +668,6 @@
       <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios\InformeVenta\FrmInformeGraficoProducto.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\FrmInformeGraficoVentas.Designer.vb">
-      <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\FrmInformeGraficoVentas.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\frmInformeVentas.Designer.vb">
-      <DependentUpon>frmInformeVentas.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\frmInformeVentas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmLogin.Designer.vb">
@@ -1315,11 +1303,11 @@
     <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.resx">
       <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\InformeVenta\frmInformeVentas2.resx">
-      <DependentUpon>frmInformeVentas2.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\InformeVenta\frmInformeVentas.resx">
+      <DependentUpon>frmInformeVentas.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoVentas2.resx">
-      <DependentUpon>FrmInformeGraficoVentas2.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoVentas.resx">
+      <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\MovimientoDetalle\frmMoviminetoDetalle.resx">
       <DependentUpon>frmMoviminetoDetalle.vb</DependentUpon>
@@ -1426,12 +1414,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoProducto.resx">
       <DependentUpon>FrmInformeGraficoProducto.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmInformeGraficoVentas.resx">
-      <DependentUpon>FrmInformeGraficoVentas.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmInformeVentas.resx">
-      <DependentUpon>frmInformeVentas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>

@@ -9,6 +9,7 @@ namespace Ventas.Core.Interfaces
     public interface IInformeVentaRepository
     {
         IList<InformeVentaPorTipoVenta> InformeVentaPorTipoVenta(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta);
+        IList<InformeVentaPorTipoVenta> InformeVentaPorFacturacion(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta);
         IList<InformeVentaPorTipoPago> InformeVentaPorTipoPago(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta);
         IList<InformeVentaPorFecha> InformeVentaPorFecha(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems);
         IList<InformeVentaPorProducto> InformeProductoPorFecha(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, int? idProducto, Categoria categoria, SubCategoria subcategoria, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems);

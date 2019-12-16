@@ -108,8 +108,8 @@ Namespace Formularios.InformeVenta
             Dim datos As List(Of Tuple(Of String, Decimal, Integer)) = informeProductoPorNombre.Select(Function(x)
                                                                                                            Return New Tuple(Of String, Decimal, Integer)(
                                                                                                                     x.Nombre,
-                                                                                                                    x.MontoTotal,
-                                                                                                                    x.CantidadTotal)
+                                                                                                                    x.Monto,
+                                                                                                                    x.Cantidad)
                                                                                                        End Function).ToList()
 
             Return ObtenerDT("Nombre", "Monto", "Cantidad", datos)

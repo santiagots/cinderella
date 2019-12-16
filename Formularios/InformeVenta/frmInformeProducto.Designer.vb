@@ -38,6 +38,7 @@ Partial Class frmInformeProducto
         Me.dgvProductos = New System.Windows.Forms.DataGridView()
         Me.ProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.BindingNavigatorProductos = New System.Windows.Forms.BindingNavigator(Me.components)
+        Me.PaginasProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
         Me.BindingNavigatorMoveFirstItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorMovePreviousItem = New System.Windows.Forms.ToolStripButton()
@@ -47,7 +48,6 @@ Partial Class frmInformeProducto
         Me.BindingNavigatorMoveNextItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorMoveLastItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.PaginasProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.FrmInformeProductoViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -227,6 +227,11 @@ Partial Class frmInformeProducto
         Me.BindingNavigatorProductos.TabIndex = 3
         Me.BindingNavigatorProductos.Text = "BindingNavigator1"
         '
+        'PaginasProductosBindingSource
+        '
+        Me.PaginasProductosBindingSource.DataMember = "PaginasProductos"
+        Me.PaginasProductosBindingSource.DataSource = Me.FrmInformeProductoViewModelBindingSource
+        '
         'BindingNavigatorCountItem
         '
         Me.BindingNavigatorCountItem.Name = "BindingNavigatorCountItem"
@@ -293,11 +298,6 @@ Partial Class frmInformeProducto
         '
         Me.BindingNavigatorSeparator2.Name = "BindingNavigatorSeparator2"
         Me.BindingNavigatorSeparator2.Size = New System.Drawing.Size(6, 25)
-        '
-        'PaginasProductosBindingSource
-        '
-        Me.PaginasProductosBindingSource.DataMember = "PaginasProductos"
-        Me.PaginasProductosBindingSource.DataSource = Me.FrmInformeProductoViewModelBindingSource
         '
         'FrmInformeProductoViewModelBindingSource
         '

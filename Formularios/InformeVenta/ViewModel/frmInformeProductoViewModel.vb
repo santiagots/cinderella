@@ -48,8 +48,8 @@ Namespace Formularios.InformeVenta
             PaginasProductos = New BindingList(Of TotalProductoItemViewModel)(0) {}
             PaginasActualProductos = 0
 
-            ProductoNombreOrdenadoPor = "Monto"
-            ProductoNombreOrdenadoDireccion = OrdenadoDireccion.DESC
+            ProductoNombreOrdenadoPor = "Nombre"
+            ProductoNombreOrdenadoDireccion = OrdenadoDireccion.ASC
         End Sub
 
 
@@ -65,8 +65,8 @@ Namespace Formularios.InformeVenta
                                                      PaginasProductos(PaginasActualProductos).Add(New TotalProductoItemViewModel() With {
                                                                 .Nombre = g.Nombre,
                                                                 .IdProducto = g.IdProducto,
-                                                                .Monto = g.MontoTotal,
-                                                                .Cantidad = g.CantidadTotal})
+                                                                .Monto = g.Monto,
+                                                                .Cantidad = g.Cantidad})
                                                  End Sub)
             End If
             NotifyPropertyChanged(NameOf(Me.Productos))
@@ -79,7 +79,7 @@ Namespace Formularios.InformeVenta
             dt.Columns.Add("Monto", GetType(Decimal))
             dt.Columns.Add("Cantidad", GetType(Integer))
 
-            InformeProductoPorNombre.ForEach(Sub(x) dt.Rows.Add(x.Nombre, x.MontoTotal, x.CantidadTotal))
+            InformeProductoPorNombre.ForEach(Sub(x) dt.Rows.Add(x.Nombre, x.Monto, x.Cantidad))
             Return dt
         End Function
 

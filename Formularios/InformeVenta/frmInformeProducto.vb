@@ -29,19 +29,6 @@ Public Class frmInformeProducto
                       End Function)
     End Sub
 
-    Private Sub dgvProductos_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvProductos.ColumnHeaderMouseClick
-        EjecutarAsync(Async Function() As Task
-                          If (dgvProductos.Columns(e.ColumnIndex).SortMode <> DataGridViewColumnSortMode.NotSortable) Then
-                              frmInformeProductoViewModel.ProductoNombreOrdenadoPor = dgvProductos.Columns(e.ColumnIndex).DataPropertyName
-                              frmInformeProductoViewModel.ProductoNombreOrdenadoDireccion = If(frmInformeProductoViewModel.ProductoNombreOrdenadoDireccion = OrdenadoDireccion.ASC, OrdenadoDireccion.DESC, OrdenadoDireccion.ASC)
-                              Await frmInformeProductoViewModel.CargarProductoPorNombreAsync()
-                              chtVentasProducto.DataSource = frmInformeProductoViewModel.ObtenerDTProductoPorNombre()
-                              chtVentasProducto.DataBind()
-                              ActualizarIconoOrdenamiento()
-                          End If
-                      End Function)
-    End Sub
-
     Private Sub BindingNavigatorMoveNextItem_Click(sender As Object, e As EventArgs) Handles BindingNavigatorMoveNextItem.Click
         EjecutarAsync(Async Function() As Task
                           frmInformeProductoViewModel.PaginasActualProductos += 1

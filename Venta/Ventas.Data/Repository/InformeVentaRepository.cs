@@ -20,21 +20,35 @@ namespace Ventas.Data.Repository
 
         public IList<InformeVentaPorTipoVenta> InformeVentaPorTipoVenta(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta)
         {
-            var datos = InformeVentaFiltrarVentas(idSucursales, fechaDesde, fechaHasta)
-                                                    .GroupBy(x => new { x.TipoCliente, Facturada = x.Factura != null ? true : false })
-                                                    .Select(g => new
-                                                    {
-                                                        g.Key.TipoCliente,
-                                                        g.Key.Facturada,
-                                                        MontoTotal = g.Sum(x => x.Pagos.Sum(y => y.MontoPago.Monto - y.MontoPago.Descuento + y.MontoPago.CFT + y.MontoPago.IVA)),
-                                                        CantidadTotal = g.Count()
-                                                    })
-                                                    .ToList();
+            string sqlSelect = $@"  {InformeVentaFiltrarVentas(idSucursales)} 
+                                    Select	V.TipoCliente,
+		                                    cast(1 as bit) Facturado,
+		                                    sum (P.Monto - P.Descuento + P.CFT + P.IVA) Monto,
+		                                    count(DISTINCT V.Id) Cantidad
+                                    from
+	                                    ventas_filtro V
+	                                    Inner Join NUEVA_VENTA_PAGOS P on V.Id = P.IdVenta
+                                    group by V.TipoCliente";
 
-            List<InformeVentaPorTipoVenta> informeVentaPorTipoCliente = new List<InformeVentaPorTipoVenta>();
-            datos.ForEach(x => informeVentaPorTipoCliente.Add(new InformeVentaPorTipoVenta(x.TipoCliente, x.Facturada, x.MontoTotal, x.CantidadTotal)));
+            return _context.Database.SqlQuery<InformeVentaPorTipoVenta>(sqlSelect,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta)).ToList();
+        }
 
-            return informeVentaPorTipoCliente;
+        public IList<InformeVentaPorTipoVenta> InformeVentaPorFacturacion(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            string sqlSelect = $@"  {InformeVentaFiltrarVentas(idSucursales)} 
+                                    Select	sum (P.Monto - P.Descuento + P.CFT + P.IVA) Monto,
+		                                    count(DISTINCT V.Id) Cantidad
+                                    from
+	                                    ventas_filtro V
+                                        Inner Join NUEVA_FACTURA F on V.Id = F.IdVenta
+	                                    Inner Join NUEVA_VENTA_PAGOS P on V.Id = P.IdVenta
+                                    group by V.TipoCliente";
+
+            return _context.Database.SqlQuery<InformeVentaPorTipoVenta>(sqlSelect,
+                                            new SqlParameter("@FDesde", fechaDesde),
+                                            new SqlParameter("@FHasta", fechaHasta)).ToList();
         }
 
         public IList<InformeVentaPorTipoPago> InformeVentaPorTipoPago(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta)
@@ -59,128 +73,194 @@ namespace Ventas.Data.Repository
 
         public IList<InformeVentaPorFecha> InformeVentaPorFecha(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems)
         {
-            var datos = InformeVentaFiltrarVentas(idSucursales, fechaDesde, fechaHasta)
-                                                    .GroupBy(x => DbFunctions.TruncateTime(x.Fecha).Value )
-                                                    .Select(g => new
-                                                    {
-                                                        Fecha = g.Key,
-                                                        Monto = g.Sum(x => (decimal?) x.Pagos.Sum(y => y.MontoPago.Monto - y.MontoPago.Descuento + y.MontoPago.CFT + y.MontoPago.IVA) ?? 0),
-                                                        Cantidad = g.Count()
-                                                    })
-                                                    .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                                                    .Skip(itemsPorPagina * (pagina - 1))
-                                                    .Take(itemsPorPagina)
-                                                    .ToList();
+            string sqlCount = $@"   {InformeVentaFiltrarVentas(idSucursales)} 
+									select count(1)
+									from 
+										(select 1 fila
+										from ventas_filtro
+										group by cast(fecha As Date)) datos";
 
-            List<InformeVentaPorFecha> informeVentaPorFecha = new List<InformeVentaPorFecha>();
-            datos.ForEach(x => informeVentaPorFecha.Add(new InformeVentaPorFecha(x.Fecha, x.Monto, x.Cantidad)));
+            string sqlSelect = $@"{InformeVentaFiltrarVentas(idSucursales)} 
+                                    Select cast(V.fecha As Date) fecha,
+		                                    sum(P.Monto - P.Descuento + P.CFT + P.IVA) Monto,
+		                                    count(DISTINCT V.Id) Cantidad
+                                    from
+                                        ventas_filtro V
+                                        Inner Join NUEVA_VENTA_PAGOS P on V.Id = P.IdVenta
+                                    group by cast(V.fecha As Date)
+                                    Order by
+	                                    {ordenadoPor} {ordenarDireccion.ToString()}
+	                                OFFSET @PaginaTamaño * (@PaginaNumero - 1) ROWS
+	                                FETCH NEXT @PaginaTamaño ROWS ONLY";
 
-            totalItems = InformeVentaFiltrarVentas(idSucursales, fechaDesde, fechaHasta)
-                                                .GroupBy(x => DbFunctions.TruncateTime(x.Fecha).Value)
-                                                .Count();
 
-            return informeVentaPorFecha;
+            totalItems = _context.Database.SqlQuery<int>(sqlCount,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta)).Single();
+
+
+            return _context.Database.SqlQuery<InformeVentaPorFecha>(sqlSelect,
+                                                                    new SqlParameter("@FDesde", fechaDesde),
+                                                                    new SqlParameter("@FHasta", fechaHasta),
+                                                                    new SqlParameter("@PaginaTamaño", itemsPorPagina),
+                                                                    new SqlParameter("@PaginaNumero", pagina)).ToList();
         }
 
         public IList<InformeVentaPorProducto> InformeProductoPorFecha(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, int? idProducto, Categoria categoria, SubCategoria subcategoria, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems)
         {
-            var datos = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { DbFunctions.TruncateTime(x.Venta.Fecha).Value })
-                                    .Select(g => new
-                                    {
-                                        Nombre = g.Key,
-                                        Monto = g.Sum(x => x.MontoProducto.Valor + x.MontoProducto.Iva),
-                                        Cantidad = g.Sum(x => x.Cantidad)
-                                    })
-                                    .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                                    .Skip(itemsPorPagina * (pagina - 1))
-                                    .Take(itemsPorPagina)
-                                    .ToList();
+            string sqlCount = $@"   {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select count(1)
+									from 
+										(select 1 fila
+										from Productos_filtro
+										Group by Fecha) as dato";
 
-            List<InformeVentaPorProducto> informeVentaPorProducto = new List<InformeVentaPorProducto>();
-            datos.ForEach(x => informeVentaPorProducto.Add(new InformeVentaPorProducto(x.Nombre.Value.ToShortDateString(), 0, x.Monto, x.Cantidad)));
+            string sqlSelect = $@"  {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select  CAST(Fecha as varchar) Nombre,
+		                                    Sum(Monto) Monto,
+		                                    Sum(Cantidad) Cantidad
+									from
+										Productos_filtro
+                                    Group by
+	                                    Fecha
+                                    Order by
+	                                    {ordenadoPor} {ordenarDireccion.ToString()}
+	                                OFFSET @PaginaTamaño * (@PaginaNumero - 1) ROWS
+	                                FETCH NEXT @PaginaTamaño ROWS ONLY";
 
-            totalItems = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { DbFunctions.TruncateTime(x.Venta.Fecha).Value })
-                                    .Count();
+            totalItems = _context.Database.SqlQuery<int>(sqlCount,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value)).Single();
 
-            return informeVentaPorProducto;
+            return _context.Database.SqlQuery<InformeVentaPorProducto>(sqlSelect,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value),
+                                                        new SqlParameter("@PaginaTamaño", itemsPorPagina),
+                                                        new SqlParameter("@PaginaNumero", pagina)).ToList();
         }
 
         public IList<InformeVentaPorProducto> InformeProductoPorNombre(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, int? idProducto, Categoria categoria, SubCategoria subcategoria, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems)
         {
-            var datos = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { x.Producto.Nombre  })
-                                    .Select(g => new
-                                    {
-                                        Nombre = g.Key.ToString(),
-                                        g.FirstOrDefault().IdProducto,
-                                        Monto = g.Sum(x => (x.MontoProducto.Valor + x.MontoProducto.Iva) * x.Cantidad),
-                                        Cantidad = g.Sum(x => x.Cantidad)
-                                    })
-                                    .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                                    .Skip(itemsPorPagina * (pagina - 1))
-                                    .Take(itemsPorPagina)
-                                    .ToList();
+            string sqlCount = $@"   {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select count(1)
+									from 
+										(select 1 fila
+										from Productos_filtro
+										Group by Nombre, idProducto) as dato";
 
-            List<InformeVentaPorProducto> informeVentaPorProducto = new List<InformeVentaPorProducto>();
-            datos.ForEach(x => informeVentaPorProducto.Add(new InformeVentaPorProducto(x.Nombre, x.IdProducto, x.Monto, x.Cantidad)));
+            string sqlSelect = $@"  {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select  Nombre,
+                                            idProducto,
+		                                    Sum(Monto) Monto,
+		                                    Sum(Cantidad) Cantidad
+									from
+										Productos_filtro
+                                    Group by
+	                                    Nombre, idProducto
+                                    Order by
+	                                    {ordenadoPor} {ordenarDireccion.ToString()}
+	                                OFFSET @PaginaTamaño * (@PaginaNumero - 1) ROWS
+	                                FETCH NEXT @PaginaTamaño ROWS ONLY";
 
-            totalItems = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { x.Producto.Nombre })
-                                    .Count();
+            totalItems = _context.Database.SqlQuery<int>(sqlCount,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value)).Single();
 
-            return informeVentaPorProducto;
+            return _context.Database.SqlQuery<InformeVentaPorProducto>(sqlSelect,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null? (object)categoria.Id: DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null? (object)subcategoria.Id: DBNull.Value),
+                                                        new SqlParameter("@PaginaTamaño", itemsPorPagina),
+                                                        new SqlParameter("@PaginaNumero", pagina)).ToList();
         }
 
         public IList<InformeVentaPorProducto> InformeProductoPorCategoria(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, int? idProducto, Categoria categoria, SubCategoria subcategoria, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems)
         {
-            var datos = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { x.Producto.Categoria.Descripcion })
-                                    .Select(g => new
-                                    {
-                                        Nombre = g.Key.Descripcion,
-                                        Monto = g.Sum(x => (x.MontoProducto.Valor + x.MontoProducto.Iva) * x.Cantidad),
-                                        Cantidad = g.Sum(x => x.Cantidad)
-                                    })
-                                    .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                                    .Skip(itemsPorPagina * (pagina - 1))
-                                    .Take(itemsPorPagina)
-                                    .ToList();
+            string sqlCount = $@"   {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select count(1)
+									from 
+										(select 1 fila
+										from Productos_filtro
+										Group by Categoria) as dato";
 
-            List<InformeVentaPorProducto> informeVentaPorProducto = new List<InformeVentaPorProducto>();
-            datos.ForEach(x => informeVentaPorProducto.Add(new InformeVentaPorProducto(x.Nombre, 0,  x.Monto, x.Cantidad)));
+            string sqlSelect = $@"  {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select  Categoria as Nombre,
+		                                    Sum(Monto) Monto,
+		                                    Sum(Cantidad) Cantidad
+									from
+										Productos_filtro
+                                    Group by
+	                                    Categoria
+                                    Order by
+	                                    {ordenadoPor} {ordenarDireccion.ToString()}
+	                                OFFSET @PaginaTamaño * (@PaginaNumero - 1) ROWS
+	                                FETCH NEXT @PaginaTamaño ROWS ONLY";
 
-            totalItems = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { x.Producto.Categoria.Descripcion })
-                                    .Count();
+            totalItems = _context.Database.SqlQuery<int>(sqlCount,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value)).Single();
 
-            return informeVentaPorProducto;
+            return _context.Database.SqlQuery<InformeVentaPorProducto>(sqlSelect,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value),
+                                                        new SqlParameter("@PaginaTamaño", itemsPorPagina),
+                                                        new SqlParameter("@PaginaNumero", pagina)).ToList();
         }
 
         public IList<InformeVentaPorProducto> InformeProductoPorSubCategoria(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, int? idProducto, Categoria categoria, SubCategoria subcategoria, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int itemsPorPagina, int pagina, out int totalItems)
         {
-            var datos = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                                    .GroupBy(x => new { x.Producto.SubCategoria.Descripcion })
-                                    .Select(g => new
-                                    {
-                                        Nombre = g.Key.Descripcion,
-                                        Monto = g.Sum(x => (x.MontoProducto.Valor + x.MontoProducto.Iva) * x.Cantidad),
-                                        Cantidad = g.Sum(x => x.Cantidad)
-                                    })
-                                    .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                                    .Skip(itemsPorPagina * (pagina - 1))
-                                    .Take(itemsPorPagina)
-                                    .ToList();
+            string sqlCount = $@"   {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select count(1)
+									from 
+										(select 1 fila
+										from Productos_filtro
+										Group by Subcategoria) as dato";
 
-            List<InformeVentaPorProducto> informeVentaPorProducto = new List<InformeVentaPorProducto>();
-            datos.ForEach(x => informeVentaPorProducto.Add(new InformeVentaPorProducto(x.Nombre, 0, x.Monto, x.Cantidad)));
+            string sqlSelect = $@"  {InformeVentaFiltrarProducto(idSucursales)} 
+                                    select  Subcategoria as Nombre,
+		                                    Sum(Monto) Monto,
+		                                    Sum(Cantidad) Cantidad
+									from
+										Productos_filtro
+                                    Group by
+	                                    Subcategoria
+                                    Order by
+	                                    {ordenadoPor} {ordenarDireccion.ToString()}
+	                                OFFSET @PaginaTamaño * (@PaginaNumero - 1) ROWS
+	                                FETCH NEXT @PaginaTamaño ROWS ONLY";
 
-            totalItems = InformeVentaFiltrarProducto(idSucursales, fechaDesde, fechaHasta, idProducto, categoria, subcategoria)
-                        .GroupBy(x => new { x.Producto.SubCategoria.Descripcion })
-                        .Count();
+            totalItems = _context.Database.SqlQuery<int>(sqlCount,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value)).Single();
 
-            return informeVentaPorProducto;
+            return _context.Database.SqlQuery<InformeVentaPorProducto>(sqlSelect,
+                                                        new SqlParameter("@FDesde", fechaDesde),
+                                                        new SqlParameter("@FHasta", fechaHasta),
+                                                        new SqlParameter("@idProducto", (object)idProducto ?? DBNull.Value),
+                                                        new SqlParameter("@idCategoria", categoria != null ? (object)categoria.Id : DBNull.Value),
+                                                        new SqlParameter("@idSubcategoria", subcategoria != null ? (object)subcategoria.Id : DBNull.Value),
+                                                        new SqlParameter("@PaginaTamaño", itemsPorPagina),
+                                                        new SqlParameter("@PaginaNumero", pagina)).ToList();
         }
 
         public IList<InformeVentaEgresos> InformeCostos(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta)
@@ -286,7 +366,7 @@ namespace Ventas.Data.Repository
             totalItems = _context.Database.SqlQuery<int>(sqlCount,
                                                         new SqlParameter("@FDesde", fechaDesde),
                                                         new SqlParameter("@FHasta", fechaHasta)).Single();
-		                    
+
 
             return _context.Database.SqlQuery<InformeVentaEgresos>(sqlSelect,
                                                                     new SqlParameter("@FDesde", fechaDesde),
@@ -295,8 +375,18 @@ namespace Ventas.Data.Repository
                                                                     new SqlParameter("@PaginaNumero", pagina)).ToList();
         }
 
-        public decimal TotalVenta(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta) 
-            => InformeVentaFiltrarPagos(idSucursales, fechaDesde, fechaHasta).Sum(x => x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.CFT + x.MontoPago.IVA);
+        public decimal TotalVenta(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            string sqlSelect = $@"  {InformeVentaFiltrarVentas(idSucursales)} 
+                                    Select	sum (P.Monto - P.Descuento + P.CFT + P.IVA) Monto
+                                    from
+	                                    ventas_filtro V
+                                        Inner Join NUEVA_VENTA_PAGOS P on V.Id = P.IdVenta";
+                                    
+            return _context.Database.SqlQuery<decimal>(sqlSelect,
+                                            new SqlParameter("@FDesde", fechaDesde),
+                                            new SqlParameter("@FHasta", fechaHasta)).Single();
+        }
 
         public decimal TotalMercaderia(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -316,45 +406,60 @@ namespace Ventas.Data.Repository
                                idSucursales.Contains(x.Venta.IdSucursal) &&
                                DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
                                DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
-        
 
-        private IQueryable<Venta> InformeVentaFiltrarVentas(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta) =>   
-            _context.Venta.Where(x => x.Anulado == false &&
-                                 idSucursales.Contains(x.IdSucursal) &&
-                                 DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                 DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
-        
 
-        private IQueryable<VentaItem> InformeVentaFiltrarProducto(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta, int? idProducto, Categoria categoria, SubCategoria subcategoria)
-        {
-            IQueryable<VentaItem> productos = _context.VentaItem.Where(x => !x.Venta.Anulado &&
-                                              !x.EsDevolucion &&
-                                              idSucursales.Contains(x.Venta.IdSucursal) &&
-                                              DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                              DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
+        private string InformeVentaFiltrarVentas(IEnumerable<int> idSucursales)
+            => $@"WITH ventas_filtro AS(
+                            select *
+                            from NUEVA_VENTAS V
+                            where
+                                Anulado = 0
+                                and V.Fecha between @FDesde and @FHasta
+			                    and V.IdSucursal in ({string.Join(", ", idSucursales)})
+			                    )";
 
-            if (idProducto.HasValue)
-                productos = productos.Where(x => x.Producto.Id == idProducto.Value);
-            if (categoria != null)
-                productos = productos.Where(x => x.Producto.IdCategoria == categoria.Id);
-            if (subcategoria != null)
-                productos = productos.Where(x => x.Producto.IdSubcategoria == subcategoria.Id);
-
-            return productos;
-        }
+        private string InformeVentaFiltrarProducto(IEnumerable<int> idSucursales)
+            => $@"with ventas_filtro AS(
+                            select *
+                            from NUEVA_VENTAS V
+                            where
+                                Anulado = 0
+                                and V.Fecha between @FDesde and @FHasta
+                                and V.IdSucursal in ({string.Join(", ", idSucursales)})
+			                    ),
+	                    Productos_filtro as (
+                            select CAST(V.Fecha AS DATE) Fecha,
+			                    VI.idProducto,
+			                    P.Nombre,
+			                    C.Descripcion Categoria,
+                                SC.Descripcion Subcategoria,
+			                    (VI.Monto + VI.IVA) * VI.Cantidad Monto,
+                                VI.Cantidad
+                            from
+                                ventas_filtro V
+                                Inner Join NUEVA_VENTA_ITEMS VI on V.Id = VI.IdVenta
+                                Inner Join PRODUCTOS P on P.id_Producto = VI.IdProducto
+                                Inner Join PRODUCTOS_CATEGORIAS C on C.id_Categoria = P.id_Categoria
+                                Inner Join PRODUCTOS_SUBCATEGORIAS SC on SC.id_Subcategoria = P.id_Subcategoria
+                            where
+			                    (@idProducto IS NULL OR P.id_Producto = @idProducto) AND
+			                    (@idCategoria IS NULL OR P.id_Categoria = @idCategoria) AND
+			                    (@idSubcategoria IS NULL OR P.id_Subcategoria = @idSubcategoria)
+			                    )";
 
         private string SqlMercaderia(IEnumerable<int> idSucursales) 
-            => $@"with MERCADERIA as (  select 
-			                                P.RazonSocial Nombre,
-			                                CAST(COALESCE(Sum(M.MontoTotal),0) AS DECIMAL(18,2)) Monto
-		                                from MERCADERIAS M 
-                                                inner join PROVEEDORES P on P.id_Proveedor = M.id_Proveedor
-		                                where 
-			                                M.Habilitado = 1
-			                                and M.Fecha between @FDesde and @FHasta
-			                                and M.id_Sucursal in ({string.Join(", ", idSucursales)})
-			                            group by
-			                                P.RazonSocial)";
+            => $@"with MERCADERIA as (  
+                                select 
+			                        P.RazonSocial Nombre,
+			                        CAST(COALESCE(Sum(M.MontoTotal),0) AS DECIMAL(18,2)) Monto
+		                        from MERCADERIAS M 
+                                        inner join PROVEEDORES P on P.id_Proveedor = M.id_Proveedor
+		                        where 
+			                        M.Habilitado = 1
+			                        and M.Fecha between @FDesde and @FHasta
+			                        and M.id_Sucursal in ({string.Join(", ", idSucursales)})
+			                    group by
+			                        P.RazonSocial)";
         
     }
 }

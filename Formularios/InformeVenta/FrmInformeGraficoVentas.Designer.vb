@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmInformeGraficoVentas
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class FrmInformeGraficoVentas
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
@@ -179,7 +179,7 @@ Partial Class FrmInformeGraficoVentas
         Series3.Name = "Series1"
         Series3.ToolTip = "#VAL - #VALX"
         Series3.XValueMember = "Detalle"
-        Series3.YValueMembers = "Cantidad"
+        Series3.YValueMembers = "Monto"
         Me.chtTotalFormaPagoMayorita.Series.Add(Series3)
         Me.chtTotalFormaPagoMayorita.Size = New System.Drawing.Size(310, 233)
         Me.chtTotalFormaPagoMayorita.TabIndex = 4
@@ -208,7 +208,7 @@ Partial Class FrmInformeGraficoVentas
         Series4.Name = "Series1"
         Series4.ToolTip = "#VAL - #VALX"
         Series4.XValueMember = "Detalle"
-        Series4.YValueMembers = "Cantidad"
+        Series4.YValueMembers = "Monto"
         Me.chtTotalFormaPagoMinorista.Series.Add(Series4)
         Me.chtTotalFormaPagoMinorista.Size = New System.Drawing.Size(310, 233)
         Me.chtTotalFormaPagoMinorista.TabIndex = 3
@@ -236,7 +236,7 @@ Partial Class FrmInformeGraficoVentas
         Series5.Name = "Series1"
         Series5.ToolTip = "#VAL - #VALX"
         Series5.XValueMember = "Detalle"
-        Series5.YValueMembers = "Cantidad"
+        Series5.YValueMembers = "Monto"
         Me.chtTotalFormaPago.Series.Add(Series5)
         Me.chtTotalFormaPago.Size = New System.Drawing.Size(310, 233)
         Me.chtTotalFormaPago.TabIndex = 2
@@ -282,7 +282,7 @@ Partial Class FrmInformeGraficoVentas
         Series6.Name = "Series1"
         Series6.ToolTip = "#VAL - #VALX"
         Series6.XValueMember = "Detalle"
-        Series6.YValueMembers = "Cantidad"
+        Series6.YValueMembers = "Monto"
         Me.chtTotalFacturado.Series.Add(Series6)
         Me.chtTotalFacturado.Size = New System.Drawing.Size(310, 233)
         Me.chtTotalFacturado.TabIndex = 2
@@ -311,7 +311,7 @@ Partial Class FrmInformeGraficoVentas
         Series7.Name = "Series1"
         Series7.ToolTip = "#VAL - #VALX"
         Series7.XValueMember = "NroCuota"
-        Series7.YValueMembers = "Cantidad"
+        Series7.YValueMembers = "Monto"
         Me.chtTotalCuotas.Series.Add(Series7)
         Me.chtTotalCuotas.Size = New System.Drawing.Size(311, 233)
         Me.chtTotalCuotas.TabIndex = 1
@@ -340,7 +340,7 @@ Partial Class FrmInformeGraficoVentas
         Series8.Name = "Cantidad"
         Series8.ToolTip = "#VAL - #VALX"
         Series8.XValueMember = "Detalle"
-        Series8.YValueMembers = "Cantidad"
+        Series8.YValueMembers = "Monto"
         Me.chtTotalTipoCliente.Series.Add(Series8)
         Me.chtTotalTipoCliente.Size = New System.Drawing.Size(309, 233)
         Me.chtTotalTipoCliente.TabIndex = 0
@@ -351,14 +351,14 @@ Partial Class FrmInformeGraficoVentas
         Title7.Text = "Total Por Tipo Cliente"
         Me.chtTotalTipoCliente.Titles.Add(Title7)
         '
-        'FrmInformeGraficoVentas
+        'FrmInformeGraficoVentas2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(954, 737)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "FrmInformeGraficoVentas"
+        Me.Name = "FrmInformeGraficoVentas2"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Informe Ventas"
         Me.TableLayoutPanel1.ResumeLayout(False)

@@ -9,14 +9,9 @@ namespace Ventas.Core.Model.InformeAggregate
     public class InformeVentaPorFecha
     {
         public DateTime Fecha { get; internal set; }
-        public decimal MontoTotal { get; internal set; }
-        public int CantidadTotal { get; internal set; }
+        public decimal Monto { get; internal set; }
+        public int Cantidad { get; internal set; }
 
-        public InformeVentaPorFecha(DateTime fecha, decimal montoTotal, int cantidadTotal)
-        {
-            Fecha = fecha;
-            MontoTotal = montoTotal;
-            CantidadTotal = cantidadTotal;
-        }
+        protected InformeVentaPorFecha() {}
     }
 }

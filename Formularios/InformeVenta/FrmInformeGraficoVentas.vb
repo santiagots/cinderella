@@ -4,7 +4,7 @@ Imports Common.Core.Exceptions
 Imports SistemaCinderella.Formularios.InformeVenta
 Imports Ventas.Core.Model.InformeAggregate
 
-Public Class FrmInformeGraficoVentas2
+Public Class FrmInformeGraficoVentas
     Private frmInformeGraficoVentasViewModel As frmInformeGraficoVentasViewModel
 
     Sub New(informeVentaPorTipoVenta As List(Of InformeVentaPorTipoVenta), informeVentaPorTipoPago As List(Of InformeVentaPorTipoPago), informeVentaPorFecha As List(Of InformeVentaPorFecha))
@@ -15,7 +15,7 @@ Public Class FrmInformeGraficoVentas2
         frmInformeGraficoVentasViewModel = New frmInformeGraficoVentasViewModel(informeVentaPorTipoVenta, informeVentaPorTipoPago, informeVentaPorFecha)
     End Sub
 
-    Private Sub FrmInformeGraficoVentas2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmInformeGraficoVentas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         chtTotalTipoCliente.DataSource = frmInformeGraficoVentasViewModel.ObtenerVentasTipoCliente()
         chtTotalTipoCliente.DataBind()
 

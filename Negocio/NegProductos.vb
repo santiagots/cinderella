@@ -1334,7 +1334,7 @@ Public Class NegProductos
 
             'Obtengo el codigo de la Categoria ingresada
             Dim categoriaDescripcion As String = Datos(i)("Categoria").ToString()
-            Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = categoriaDescripcion).FirstOrDefault()
+            Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = categoriaDescripcion.ToUpper()).FirstOrDefault()
 
             If (categoria Is Nothing) Then
                 mensajeError += $"La categoria '{categoriaDescripcion}' no existe. Verifique que la categoria se encuentre registrado o ingrese una categoria valido.{Environment.NewLine}"
@@ -1342,7 +1342,7 @@ Public Class NegProductos
 
             'Obtengo el codigo de la SubCategoria ingresada
             Dim subCategoriaDescripcion As String = Datos(i)("SubCategoria").ToString()
-            Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = subCategoriaDescripcion).FirstOrDefault()
+            Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = subCategoriaDescripcion.ToUpper()).FirstOrDefault()
 
             If (subCategoria Is Nothing) Then
                 mensajeError += $"El subcategoria '{subCategoriaDescripcion}' no existe. Verifique que la subcategoria se encuentre registrado o ingrese una subcategoria valido.{Environment.NewLine}"
@@ -1350,7 +1350,7 @@ Public Class NegProductos
 
             'Obtengo el codigo de la Proveedor ingresada
             Dim ProveedorDescripcion As String = Datos(i)("Proveedor").ToString()
-            Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = ProveedorDescripcion).FirstOrDefault()
+            Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = ProveedorDescripcion.ToUpper()).FirstOrDefault()
 
             If (Proveedor Is Nothing) Then
                 mensajeError += $"El proveedor '{ProveedorDescripcion}' no existe. Verifique que el proveedor se encuentre registrado o ingrese un proveedor valido.{Environment.NewLine}"

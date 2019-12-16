@@ -1793,8 +1793,8 @@ Public Class MDIContenedor
             dialogoConexion.ShowDialog()
         Else
             Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmInformeVentas2).MdiParent = Me
-            Funciones.ControlInstancia(frmInformeVentas2).Show()
+            Funciones.ControlInstancia(frmInformeVentas).MdiParent = Me
+            Funciones.ControlInstancia(frmInformeVentas).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

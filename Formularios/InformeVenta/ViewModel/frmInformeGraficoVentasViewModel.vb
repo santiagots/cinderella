@@ -20,7 +20,7 @@ Namespace Formularios.InformeVenta
             Dim datos As List(Of Tuple(Of String, Decimal)) = informeVentaPorTipoCliente.Select(Function(x)
                                                                                                     Return New Tuple(Of String, Decimal)(
                                                                                                                     x.Key.ToString(),
-                                                                                                                    x.Sum(Function(y) y.MontoTotal))
+                                                                                                                    x.Sum(Function(y) y.Monto))
                                                                                                 End Function).ToList()
 
             Return ObtenerDT("Detalle", "Monto", datos)
@@ -32,7 +32,7 @@ Namespace Formularios.InformeVenta
             Dim datos As List(Of Tuple(Of String, Decimal)) = informeVentasFacturadas.Select(Function(x)
                                                                                                  Return New Tuple(Of String, Decimal)(
                                                                                                                     If(x.Key, "Facturado", "Sin Facturar"),
-                                                                                                                    x.Sum(Function(y) y.MontoTotal))
+                                                                                                                    x.Sum(Function(y) y.Monto))
                                                                                              End Function).ToList()
 
             Return ObtenerDT("Detalle", "Monto", datos)
@@ -76,8 +76,8 @@ Namespace Formularios.InformeVenta
             Dim datos As List(Of Tuple(Of String, Integer, Decimal)) = InformeVentaPorFecha.Select(Function(x)
                                                                                                        Return New Tuple(Of String, Integer, Decimal)(
                                                                                                                     x.Fecha,
-                                                                                                                    x.CantidadTotal,
-                                                                                                                    x.MontoTotal)
+                                                                                                                    x.Cantidad,
+                                                                                                                    x.Monto)
                                                                                                    End Function).ToList()
 
             Return ObtenerDT("Fecha", "Cantidad", "Monto", datos)

@@ -260,6 +260,7 @@ Namespace Formularios.InformeVenta
 
             Dim tareas As List(Of Task) = New List(Of Task) From {
                 CargarVentaPorTipoVentaAsync(),
+                CargarVentaPorFacturacionAsync(TotalMontoVenta),
                 CargarVentasPorFormaPagoAsync(),
                 CargarVentasPorFechaAsync(),
                 CargarProductoPorNombreAsync(),
@@ -275,10 +276,6 @@ Namespace Formularios.InformeVenta
         End Function
 
         Friend Async Function BuscarProductoAsync() As Task
-
-            TotalMontoVenta = Await Task.Run(Function() Servicio.ObtenerTotalVenta(ObtenerIdSucursales(), FechaDesde, FechaHasta))
-            TotalMontoMercaderia = Await Task.Run(Function() Servicio.ObtenerTotalMercaderia(ObtenerIdSucursales(), FechaDesde, FechaHasta))
-
             Dim tareas As List(Of Task) = New List(Of Task) From {
                 CargarProductoPorNombreAsync(),
                 CargarProductoPorCategoriaAsync(),
@@ -300,8 +297,8 @@ Namespace Formularios.InformeVenta
             InformeVentaPorFecha.ForEach(Sub(g)
                                              PaginasTotalPorDia(PaginasActualTotalPorDia).Add(New TotalPorDiaItemViewModel() With {
                                                         .Fecha = g.Fecha,
-                                                        .Cantidad = g.CantidadTotal,
-                                                        .Monto = g.MontoTotal})
+                                                        .Cantidad = g.Cantidad,
+                                                        .Monto = g.Monto})
                                          End Sub)
 
             NotifyPropertyChanged(NameOf(Me.TotalPorDia))
@@ -312,7 +309,12 @@ Namespace Formularios.InformeVenta
 
             CargarVentasTotal(InformeVentaPorTipoVenta)
             CargarVentasPorTipoCliente(InformeVentaPorTipoVenta)
-            CargarVentasPorTotalFacturado(InformeVentaPorTipoVenta)
+        End Function
+
+        Public Async Function CargarVentaPorFacturacionAsync(ventaTotal As Decimal) As Task
+            InformeVentaPorTipoVenta = Await Task.Run(Function() Servicio.BuscarInformeVentaPorFacturacion(ObtenerIdSucursales(), FechaDesde, FechaHasta))
+
+            CargarVentasPorTotalFacturado(InformeVentaPorTipoVenta, ventaTotal)
         End Function
 
         Public Async Function CargarVentasPorFormaPagoAsync() As Task
@@ -339,8 +341,8 @@ Namespace Formularios.InformeVenta
 
             TotalVentas.Add(New TotalVentaItemViewModel() With {
                 .Detalle = "Total",
-                .Cantidad = informeVentaPorTipoVenta.Sum(Function(x) x.CantidadTotal),
-                .Monto = informeVentaPorTipoVenta.Sum(Function(x) x.MontoTotal)})
+                .Cantidad = informeVentaPorTipoVenta.Sum(Function(x) x.Cantidad),
+                .Monto = informeVentaPorTipoVenta.Sum(Function(x) x.Monto)})
 
             NotifyPropertyChanged(NameOf(Me.TotalVentas))
         End Sub
@@ -353,30 +355,37 @@ Namespace Formularios.InformeVenta
             informeVentaPorTipoCliente.ForEach(Sub(g)
                                                    TotalPorTipoCliente.Add(New TotalPorTipoClienteItemViewModel() With {
                                                         .Detalle = g.Key.ToString(),
-                                                        .Cantidad = g.Sum(Function(x) x.CantidadTotal),
-                                                        .Monto = g.Sum(Function(x) x.MontoTotal),
-                                                        .PorcentajeVenta = g.Sum(Function(x) x.MontoTotal) / informeVentaPorTipoVenta.Sum(Function(x) x.MontoTotal)})
+                                                        .Cantidad = g.Sum(Function(x) x.Cantidad),
+                                                        .Monto = g.Sum(Function(x) x.Monto),
+                                                        .PorcentajeVenta = g.Sum(Function(x) x.Monto) / informeVentaPorTipoVenta.Sum(Function(x) x.Monto)})
                                                End Sub)
 
             NotifyPropertyChanged(NameOf(Me.TotalPorTipoCliente))
 
         End Sub
 
-        Private Sub CargarVentasPorTotalFacturado(informeVentaPorTipoVenta As List(Of InformeVentaPorTipoVenta))
+        Private Sub CargarVentasPorTotalFacturado(informeVentaPorTipoVenta As List(Of InformeVentaPorTipoVenta), ventaTotal As Decimal)
             TotalFacturado.Clear()
 
             Dim informeVentaPorTipoCliente = informeVentaPorTipoVenta.GroupBy(Function(x) x.Facturado).ToList()
 
-            informeVentaPorTipoCliente.ForEach(Sub(g)
-                                                   TotalFacturado.Add(New TotalFacturadoItemViewModel() With {
-                                                        .Detalle = If(g.Key, "Facturado", "Sin Facturar"),
-                                                        .Cantidad = g.Sum(Function(x) x.CantidadTotal),
-                                                        .Monto = g.Sum(Function(x) x.MontoTotal),
-                                                        .PorcentajeVenta = g.Sum(Function(x) x.MontoTotal) / informeVentaPorTipoVenta.Sum(Function(x) x.MontoTotal)})
-                                               End Sub)
+            If (informeVentaPorTipoCliente.Count > 0) Then
+                informeVentaPorTipoCliente.ForEach(Sub(g)
+                                                       TotalFacturado.Add(New TotalFacturadoItemViewModel() With {
+                                                        .Detalle = "Facturado",
+                                                        .Cantidad = g.Sum(Function(x) x.Cantidad),
+                                                        .Monto = g.Sum(Function(x) x.Monto),
+                                                        .PorcentajeVenta = g.Sum(Function(x) x.Monto) / ventaTotal})
+                                                   End Sub)
+            Else
+                TotalFacturado.Add(New TotalFacturadoItemViewModel() With {
+                                                        .Detalle = "Facturado",
+                                                        .Cantidad = 0,
+                                                        .Monto = 0,
+                                                        .PorcentajeVenta = 0})
+            End If
 
             NotifyPropertyChanged(NameOf(Me.TotalFacturado))
-
         End Sub
 
         Private Sub CargarVentasPorFormaPago(informeVentaPorTipoPago As List(Of InformeVentaPorTipoPago))
@@ -409,8 +418,8 @@ Namespace Formularios.InformeVenta
                                                      PaginasProductos(PaginasActualProductos).Add(New TotalProductoItemViewModel() With {
                                                             .Nombre = g.Nombre,
                                                             .IdProducto = g.IdProducto,
-                                                            .Monto = g.MontoTotal,
-                                                            .Cantidad = g.CantidadTotal})
+                                                            .Monto = g.Monto,
+                                                            .Cantidad = g.Cantidad})
                                                  End Sub)
             End If
             NotifyPropertyChanged(NameOf(Me.Productos))
@@ -429,8 +438,8 @@ Namespace Formularios.InformeVenta
                                                         PaginasProductosPorCategoria(PaginasActualProductosPorCategoria).Add(New TotalProductoItemViewModel() With {
                                                             .Nombre = g.Nombre,
                                                             .IdProducto = g.IdProducto,
-                                                            .Monto = g.MontoTotal,
-                                                            .Cantidad = g.CantidadTotal})
+                                                            .Monto = g.Monto,
+                                                            .Cantidad = g.Cantidad})
                                                     End Sub)
             End If
             NotifyPropertyChanged(NameOf(Me.ProductosPorCategoria))
@@ -449,8 +458,8 @@ Namespace Formularios.InformeVenta
                                                            PaginasProductosPorSubcategoria(PaginasActualProductosPorSubcategoria).Add(New TotalProductoItemViewModel() With {
                                                             .Nombre = g.Nombre,
                                                             .IdProducto = g.IdProducto,
-                                                            .Monto = g.MontoTotal,
-                                                            .Cantidad = g.CantidadTotal})
+                                                            .Monto = g.Monto,
+                                                            .Cantidad = g.Cantidad})
                                                        End Sub)
             End If
             NotifyPropertyChanged(NameOf(Me.ProductosPorSubcategoria))

@@ -2,12 +2,13 @@
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
+Imports Common.Core.Model
 Imports Entidades
 Imports Negocio
 Imports SistemaCinderella.Formularios.InformeVenta
 Imports Ventas.Core.Model.BaseAgreggate
 
-Public Class frmInformeVentas2
+Public Class frmInformeVentas
 
     Private frmInformeVentasViewModel As frmInformeVentasViewModel
 
@@ -51,7 +52,7 @@ Public Class frmInformeVentas2
                           Dim Funciones As New Funciones
 
                           If (TabInformes.SelectedTab.Name = tabVentas.Name) Then
-                              Dim informeGraficoVentas As FrmInformeGraficoVentas2 = New FrmInformeGraficoVentas2(frmInformeVentasViewModel.InformeVentaPorTipoVenta, frmInformeVentasViewModel.InformeVentaPorTipoPago, frmInformeVentasViewModel.InformeVentaPorFecha)
+                              Dim informeGraficoVentas As FrmInformeGraficoVentas = New FrmInformeGraficoVentas(frmInformeVentasViewModel.InformeVentaPorTipoVenta, frmInformeVentasViewModel.InformeVentaPorTipoPago, frmInformeVentasViewModel.InformeVentaPorFecha)
                               informeGraficoVentas.ShowDialog()
                           End If
 
@@ -334,6 +335,26 @@ Public Class frmInformeVentas2
                       End Function)
     End Sub
 
+    Private Sub dgvCategorias_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategorias.CellClick
+        If (dgvCategorias.Columns(e.ColumnIndex).Name = "CategoriaDetalle") Then
+            Dim categoriaSeleccionada As TotalProductoItemViewModel = dgvCategorias.CurrentRow.DataBoundItem
+            Dim categoria As KeyValuePair(Of Categoria, String) = frmInformeVentasViewModel.Categorias.Where(Function(x) x.Key.Descripcion.ToUpper() = categoriaSeleccionada.Nombre.ToUpper()).FirstOrDefault()
+
+            Dim frmInformeProducto As frmInformeProducto = New frmInformeProducto(frmInformeVentasViewModel.ObtenerIdSucursales, frmInformeVentasViewModel.FechaDesde, frmInformeVentasViewModel.FechaHasta, frmInformeVentasViewModel.ObtenerIdProducto(), categoria.Key, frmInformeVentasViewModel.SubcategoriaSeleccionada.Key)
+            frmInformeProducto.ShowDialog()
+        End If
+    End Sub
+
+    Private Sub dgvSubCategorias_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellClick
+        If (dgvSubCategorias.Columns(e.ColumnIndex).Name = "SubcategoriaDetalle") Then
+            Dim subcategoriaSeleccionada As TotalProductoItemViewModel = dgvSubCategorias.CurrentRow.DataBoundItem
+            Dim subcategoria As KeyValuePair(Of SubCategoria, String) = frmInformeVentasViewModel.Subcategoria.Where(Function(x) x.Key.Descripcion.ToUpper() = subcategoriaSeleccionada.Nombre.ToUpper()).FirstOrDefault()
+
+            Dim frmInformeProducto As frmInformeProducto = New frmInformeProducto(frmInformeVentasViewModel.ObtenerIdSucursales, frmInformeVentasViewModel.FechaDesde, frmInformeVentasViewModel.FechaHasta, frmInformeVentasViewModel.ObtenerIdProducto(), frmInformeVentasViewModel.CategoriaSeleccionada.Key, subcategoria.Key)
+            frmInformeProducto.ShowDialog()
+        End If
+    End Sub
+
     Private Sub dgvProductos_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellClick
         If (dgvProductos.Columns(e.ColumnIndex).Name = "ProductoDetalle") Then
             Dim producto As TotalProductoItemViewModel = dgvProductos.CurrentRow.DataBoundItem
@@ -342,7 +363,23 @@ Public Class frmInformeVentas2
         End If
     End Sub
 
-    Private Sub dgvProductos_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellContentDoubleClick
+    Private Sub dgvCategorias_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategorias.CellDoubleClick
+        Dim categoriaSeleccionada As TotalProductoItemViewModel = dgvCategorias.CurrentRow.DataBoundItem
+        Dim categoria As KeyValuePair(Of Categoria, String) = frmInformeVentasViewModel.Categorias.Where(Function(x) x.Key.Descripcion.ToUpper() = categoriaSeleccionada.Nombre.ToUpper()).FirstOrDefault()
+
+        Dim frmInformeProducto As frmInformeProducto = New frmInformeProducto(frmInformeVentasViewModel.ObtenerIdSucursales, frmInformeVentasViewModel.FechaDesde, frmInformeVentasViewModel.FechaHasta, frmInformeVentasViewModel.ObtenerIdProducto(), categoria.Key, frmInformeVentasViewModel.SubcategoriaSeleccionada.Key)
+        frmInformeProducto.ShowDialog()
+    End Sub
+
+    Private Sub dgvSubCategorias_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvSubCategorias.CellDoubleClick
+        Dim subcategoriaSeleccionada As TotalProductoItemViewModel = dgvSubCategorias.CurrentRow.DataBoundItem
+        Dim subcategoria As KeyValuePair(Of SubCategoria, String) = frmInformeVentasViewModel.Subcategoria.Where(Function(x) x.Key.Descripcion.ToUpper() = subcategoriaSeleccionada.Nombre.ToUpper()).FirstOrDefault()
+
+        Dim frmInformeProducto As frmInformeProducto = New frmInformeProducto(frmInformeVentasViewModel.ObtenerIdSucursales, frmInformeVentasViewModel.FechaDesde, frmInformeVentasViewModel.FechaHasta, frmInformeVentasViewModel.ObtenerIdProducto(), frmInformeVentasViewModel.CategoriaSeleccionada.Key, subcategoria.Key)
+        frmInformeProducto.ShowDialog()
+    End Sub
+
+    Private Sub dgvProductos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProductos.CellDoubleClick
         Dim producto As TotalProductoItemViewModel = dgvProductos.CurrentRow.DataBoundItem
         Dim frmInformeProducto As frmInformeProducto = New frmInformeProducto(frmInformeVentasViewModel.ObtenerIdSucursales, frmInformeVentasViewModel.FechaDesde, frmInformeVentasViewModel.FechaHasta, producto.IdProducto, frmInformeVentasViewModel.CategoriaSeleccionada.Key, frmInformeVentasViewModel.SubcategoriaSeleccionada.Key)
         frmInformeProducto.ShowDialog()
