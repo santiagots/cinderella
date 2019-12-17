@@ -88,10 +88,10 @@ Namespace Formularios.Facturacion
             End Using
         End Function
 
-        Public Shared Function ObtenerUltimoNumeroFactura(tipoFactura As TipoFactura) As Integer
+        Public Shared Function ObtenerUltimoNumeroFactura(idSucursal As Integer, tipoFactura As TipoFactura) As Integer
             Using context As VentaContext = New VentaContext()
                 Dim facturaRepository As IFacturaRepository = New FacturaRepository(context)
-                Return facturaRepository.ObtenerUltimoNumeroFactura(tipoFactura)
+                Return facturaRepository.ObtenerUltimoNumeroFactura(idSucursal, tipoFactura)
             End Using
         End Function
 

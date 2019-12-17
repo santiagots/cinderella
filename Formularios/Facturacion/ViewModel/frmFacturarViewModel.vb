@@ -244,7 +244,7 @@ Namespace Formularios.Facturacion
         End Sub
 
         Public Async Function CargarNumeroFacturaAsync() As Task
-            _Numerofactura = Await Task.Run(Function() Servicio.ObtenerUltimoNumeroFactura(Enums.TipoFactura.Manual) + 1)
+            _Numerofactura = Await Task.Run(Function() Servicio.ObtenerUltimoNumeroFactura(ventaModel.IdSucursal, Enums.TipoFactura.Manual) + 1)
             _Numerosfacturas = New BindingList(Of Integer)()
 
             NotifyPropertyChanged(NameOf(Me.Numerofactura))

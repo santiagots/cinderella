@@ -296,7 +296,7 @@ Namespace Formularios.Venta
         Private Sub CargarDatosBasicosTransaccion(venta As ModelBase.Transaccion)
             TipoClienteSeleccionado = venta.TipoCliente
             PorcentajeFacturacion = venta.PorcentajeFacturacion
-            EncargadoSeleccionado = If(venta.IdEncargado > 0, venta.Encargado, Nothing)
+            EncargadoSeleccionado = If(venta.IdEncargado > 0, venta.Encargado, Encargados.First())
             VendedoresSeleccionado = venta.Vendedor
             If (venta.TipoCliente = Enums.TipoCliente.Mayorista) Then
                 IdClienteMayorista = venta.IdClienteMayorista
