@@ -29,17 +29,11 @@ namespace Ventas.Data.Repository
 
         public int ObtenerUltimoNumeroFactura(int idSucursal, TipoFactura tipoFactura)
         {
-            Factura factura = _context.Factura.Where(x => x.Venta.Sucursal.Id == idSucursal)
-                                              .OrderByDescending(x => x.Id)
-                                              .FirstOrDefault(x => x.TipoFactura == tipoFactura);
-            if (factura != null)
-            {
-                return factura.NumeroFactura.Max(x => x.Numero);
-            }
-            else
-            {
-                return 0;
-            }
+            int? factura = _context.NumeroFactura.Where(x => x.Factura.Venta.Sucursal.Id == idSucursal && x.Factura.TipoFactura == tipoFactura)
+                                              .OrderByDescending(x => x.Numero)
+                                              .Max(x => (int?)x.Numero);
+
+            return factura ?? 0;
         }
 
         public IEnumerable<Factura> Buscar(int idSucursal, int? numeroFactura, decimal? montoDesde, decimal? montoHasta, string nombre, int? cuit, DateTime? fechaDesde, DateTime? fechaHasta, List<TipoFactura> tiposFacturas)

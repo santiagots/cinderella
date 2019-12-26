@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using Producto.Core.Interfaces;
 using Modelo = Producto.Core.Model.ProductoAgreggate;
 using Ventas.Data.Repository;
@@ -27,7 +28,7 @@ namespace Producto.Data.Repository
             _context.SaveChanges();
         }
 
-        public IList<Modelo.Producto> Buscar(string codigo, string nombre, int pagina, int itemsPorPagina)
+        public IList<Modelo.Producto> Buscar(string codigo, string nombre, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina)
         {
             IQueryable<Modelo.Producto> productos = _context.Producto
                                                                 .Include(x => x.Categoria)
@@ -41,8 +42,8 @@ namespace Producto.Data.Repository
             if (!String.IsNullOrEmpty(nombre))
                 productos = productos.Where(x => x.Nombre.Contains(nombre));
 
-            return productos.OrderBy(x => x.Codigo)
-                            .ThenBy(x => x.Nombre)
+            return productos
+                            .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
                             .Skip(itemsPorPagina * (pagina - 1))
                             .Take(itemsPorPagina)
                             .ToList();

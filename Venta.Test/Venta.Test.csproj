@@ -79,6 +79,14 @@
       <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Negocio\Negocio.vbproj">
+      <Project>{D0101B76-7CE1-476B-84F3-9E99244C1E88}</Project>
+      <Name>Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Producto.Core\Producto.Core.csproj">
+      <Project>{40e88d99-4efa-498e-9a6e-a8d11e6c4e78}</Project>
+      <Name>Producto.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Venta\Ventas.Core\Ventas.Core.csproj">
       <Project>{2F8F3F48-9EC8-4F64-8565-5A15CF49E570}</Project>
       <Name>Ventas.Core</Name>

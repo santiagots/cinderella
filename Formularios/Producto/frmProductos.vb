@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Threading.Tasks
+Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Model
 Imports Datos
@@ -94,6 +95,17 @@ Public Class frmProductos
         DG_Productos.Cursor = Cursors.Hand
     End Sub
 
+    Private Sub DG_Productos_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DG_Productos.ColumnHeaderMouseClick
+        EjecutarAsync(Async Function() As Task
+                          If (DG_Productos.Columns(e.ColumnIndex).SortMode <> DataGridViewColumnSortMode.NotSortable) Then
+                              frmProductosViewModel.ProductosOrdenadoPor = DG_Productos.Columns(e.ColumnIndex).DataPropertyName
+                              frmProductosViewModel.ProductosOrdenadoDireccion = If(frmProductosViewModel.ProductosOrdenadoDireccion = OrdenadoDireccion.ASC, OrdenadoDireccion.DESC, OrdenadoDireccion.ASC)
+                              Await frmProductosViewModel.BuscarPaginaActualAsync(True)
+                              ActualizarIconoOrdenamiento(DG_Productos, frmProductosViewModel.ProductosOrdenadoPor, frmProductosViewModel.ProductosOrdenadoDireccion)
+                          End If
+                      End Function)
+    End Sub
+
     Private Sub Btn_Agregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Agregar.Click
         EjecutarAsync(Async Function() As Task
                           Await frmProductosViewModel.AgregarProductoAsync()
@@ -174,6 +186,12 @@ Public Class frmProductos
                               TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
                           End Function)
         End If
+    End Sub
+
+    Private Sub ActualizarIconoOrdenamiento(datagridview As DataGridView, OrdenadoPor As String, OrdenadoDireccion As OrdenadoDireccion)
+        Dim dataGridViewColumn As DataGridViewColumn = datagridview.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.DataPropertyName = OrdenadoPor).FirstOrDefault()
+
+        dataGridViewColumn.HeaderCell.SortGlyphDirection = If(OrdenadoDireccion = OrdenadoDireccion.ASC, SortOrder.Ascending, SortOrder.Descending)
     End Sub
 
     Private Sub Ejecutar(accion As Action)

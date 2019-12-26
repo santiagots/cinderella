@@ -94,7 +94,7 @@ namespace Ventas.Core.Model.VentaAggregate
             Borrado = false;
             FechaEdicion = Fecha;
             Monto = montoRegistrado;
-            Diferencia = montoRegistrado - montoFisico.Value;
+            Diferencia = montoFisico.Value - montoRegistrado;
 
             if (Diferencia == 0)
             {

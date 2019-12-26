@@ -471,7 +471,7 @@ Public Class NegProductos
         End Try
     End Function
 
-    Private Function ArmarCodigoBarras(id_Producto As String) As String
+    Public Function ArmarCodigoBarras(id_Producto As String) As String
         Dim CodigoBarra As String = ""
         Dim CodigoProducto As String = ""
 

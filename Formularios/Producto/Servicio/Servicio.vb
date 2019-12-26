@@ -4,13 +4,14 @@ Imports Producto.Data
 Imports Producto.Data.Repository
 Imports Producto.Core.Model.ProductoAgreggate
 Imports Common.Core.Model
+Imports Common.Core.Enum
 
 Namespace Formularios.Producto
     Public Class Servicio
-        Public Shared Function BuscarProductos(codigo As String, nombre As String, pagina As Integer, itemsPorPagina As Integer) As IList(Of Model.Producto)
+        Public Shared Function BuscarProductos(codigo As String, nombre As String, ordenadoPor As String, ordenarDireccion As OrdenadoDireccion, pagina As Integer, itemsPorPagina As Integer) As IList(Of Model.Producto)
             Using context As ProductoContext = New ProductoContext()
                 Dim productoRepository As IProductoRepository = New ProductoRepository(context)
-                Return productoRepository.Buscar(codigo, nombre, pagina, itemsPorPagina)
+                Return productoRepository.Buscar(codigo, nombre, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina)
             End Using
         End Function
 

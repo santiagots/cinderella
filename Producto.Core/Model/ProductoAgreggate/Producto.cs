@@ -104,19 +104,23 @@ namespace Producto.Core.Model.ProductoAgreggate
             return codigo + ObtenerCodigoVerificador(codigo);
         }
 
-        private string ObtenerCodigoVerificador(string codigoBarras)
+        private string ObtenerCodigoVerificador(string codigo)
         {
-            int suma = 0;
-            for (int i = 0; i <= 11; i++)
+            int num;
+            if (codigo == null || codigo.Length != 12)
             {
-                int digit = codigoBarras[i] - 0x30;
-                if ((i & 0x01) == 1)
-                    suma += digit;
-                else
-                    suma += digit * 3;
+                throw new ArgumentException("Code length should be 12, i.e. excluding the checksum digit");
             }
-            int mod = suma % 10;
-            return (mod == 0 ? 0 : 10 - mod).ToString();
+            int num1 = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                if (!int.TryParse(codigo[i].ToString(), out num))
+                {
+                    throw new ArgumentException("Invalid character encountered in specified code.");
+                }
+                num1 = num1 + (i % 2 == 0 ? num : num * 3);
+            }
+            return ((10 - num1 % 10) % 10).ToString();
         }
     } 
 }

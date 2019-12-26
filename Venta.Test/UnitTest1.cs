@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using Common.Core.Enum;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Negocio;
 using Ventas.Core.Model.InformeAggregate;
 using Ventas.Data;
 using Ventas.Data.Repository;
+using Producto.Core.Model.ProductoAgreggate;
 
 namespace Venta.Test
 {

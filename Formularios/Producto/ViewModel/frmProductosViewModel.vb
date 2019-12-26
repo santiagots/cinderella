@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
 Imports AutoMapper
+Imports Common.Core.Enum
 Imports Common.Core.Model
 Imports Model = Producto.Core.Model.ProductoAgreggate
 
@@ -32,12 +33,17 @@ Namespace Formularios.Producto
         Public Property Categorias As BindingList(Of Categoria)
         Public Property SubCategorias As BindingList(Of SubCategoria)
         Public Property Provedores As BindingList(Of Model.Proveedor)
+        Public Property ProductosOrdenadoDireccion As OrdenadoDireccion
+        Public Property ProductosOrdenadoPor As String
 
         Public Sub New()
             Productos = New BindingList(Of ProductoItemViewModel)()
             ProductoNuevo = New ProductoDetalleViewModel()
             ProductoDetalle = New ProductoDetalleViewModel()
             FiltroPorCodigo = True
+            ProductosOrdenadoDireccion = OrdenadoDireccion.ASC
+            ProductosOrdenadoPor = "Codigo"
+
             ReDim Preserve ListaProductos(0)
         End Sub
 
@@ -170,7 +176,7 @@ Namespace Formularios.Producto
             Dim nombre As String = If(FiltroPorNombre, Filtro, Nothing)
             Dim codigo As String = If(FiltroPorCodigo, Filtro, Nothing)
 
-            Dim productosModel As IList(Of Model.Producto) = Await Task.Run(Function() Servicio.BuscarProductos(codigo, nombre, PaginaActual, ItemsPorPaginas))
+            Dim productosModel As IList(Of Model.Producto) = Await Task.Run(Function() Servicio.BuscarProductos(codigo, nombre, ProductosOrdenadoPor, ProductosOrdenadoDireccion, PaginaActual, ItemsPorPaginas))
             Return Mapper.Map(Of List(Of ProductoItemViewModel))(productosModel)
         End Function
 
