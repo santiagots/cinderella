@@ -23,6 +23,8 @@ Namespace My
                     EpsonPrinter.TIPO_CONEXION = e.NewValue
                 Case NameOf(settings.ModeloControladora)
                     EpsonPrinter.MODELO_CONTROLADORA_FISCAL = e.NewValue
+                Case NameOf(settings.PuntoVentaFacturacionTicket)
+                    EpsonPrinter.PUNTO_VENTA = e.NewValue
             End Select
         End Sub
 
@@ -31,6 +33,7 @@ Namespace My
             IdGenerator.ID_SUCURSAL = settings.Sucursal
             EpsonPrinter.TIPO_CONEXION = settings.ConexionControladora
             EpsonPrinter.MODELO_CONTROLADORA_FISCAL = settings.ModeloControladora
+            EpsonPrinter.PUNTO_VENTA = settings.PuntoVentaFacturacionTicket
         End Sub
     End Class
 End Namespace

@@ -47,6 +47,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -71,6 +72,7 @@
     <Compile Include="Exceptions\NegocioException.cs" />
     <Compile Include="Extension\DateTimeExtensions.cs" />
     <Compile Include="Extension\ToList.cs" />
+    <Compile Include="Helper\CertificadosX509.cs" />
     <Compile Include="Helper\Cuit.cs" />
     <Compile Include="Helper\Encriptar.cs" />
     <Compile Include="Helper\IdGenerator.cs" />

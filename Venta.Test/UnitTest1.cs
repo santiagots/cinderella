@@ -7,6 +7,8 @@ using Ventas.Core.Model.InformeAggregate;
 using Ventas.Data;
 using Ventas.Data.Repository;
 using Producto.Core.Model.ProductoAgreggate;
+using Common.ExternalService;
+using Common.ExternalService.Contracts;
 
 namespace Venta.Test
 {
@@ -72,6 +74,13 @@ namespace Venta.Test
             var informeVenta = repository.InformeMercaderia(new List<int>() { 2, 27, 30, 32, 33, 34, 41, 42, 43, 44 },
                                                             new DateTime(1990, 1, 1),
                                                             new DateTime(2030, 1, 1),"Cantidad",OrdenadoDireccion.DESC,10,1, out cantidad);
+        }
+
+        [TestMethod]
+        public void TestObtenerAfipToken()
+        {
+            Common.ExternalService.AfipTokenAccesoService afipTokenAcceso = new Common.ExternalService.AfipTokenAccesoService();
+            Common.ExternalService.Contracts.AfipTokenAcceso response = afipTokenAcceso.Obtener("wsfe", "c:\\cinderella.p12", "cinderella");
         }
     }
 }

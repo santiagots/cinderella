@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>465</ApplicationRevision>
+    <ApplicationRevision>466</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
