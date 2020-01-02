@@ -216,8 +216,8 @@ Namespace Formularios.SucursalSaldo
             Saldos.VentaEfectivo = efectivo.Result
             Saldos.VentaCheque = cheques.Result
             Saldos.VentaCredito = credito.Result
-            Saldos.VentaDeposito = debito.Result
-            Saldos.VentaDebito = deposito.Result
+            Saldos.VentaDeposito = deposito.Result
+            Saldos.VentaDebito = debito.Result
             Saldos.VentaFacturado = facturado.Result
             Saldos.VentaSinFacturar = sinFacturar.Result
             Saldos.VentaMinorista = minorista.Result
