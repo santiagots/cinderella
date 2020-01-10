@@ -3,14 +3,14 @@ using System.Linq;
 using Common.Core.Enum;
 using Common.Core.ValueObjects;
 using Common.Device.Printer;
+using Common.Service.NotaCredito.Contracts;
 
 namespace Common.Service.NotaCredito
 {
     public class NotaCreditoControladorFiscalStrategy : INotaCreditoStrategy
     {
-        public List<int> ObtenerNumeroNotaCretido(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, int numeroFacturaOrigen, int puntoVentaOrigen, CondicionIVA condicionesIVAOriginal)
+        public ObtenerNumeroNotaCretidoResponse ObtenerNumeroNotaCretido(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, int numeroFacturaOrigen, int puntoVentaOrigen, CondicionIVA condicionesIVAOriginal)
         {
-            List<int> numeroFacturaRespuesta = new List<int>();
             EpsonPrinter epsonFP = new EpsonPrinter(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, numeroFacturaOrigen.ToString(), puntoVentaOrigen.ToString(), condicionesIVAOriginal);
 
             epsonFP.AbrirNotaCredito();
@@ -31,8 +31,10 @@ namespace Common.Service.NotaCredito
 
             int numeroTicket = epsonFP.CerrarNotaCredito();
 
-            numeroFacturaRespuesta.Add(numeroTicket);
-            return numeroFacturaRespuesta;
+            return new ObtenerNumeroNotaCretidoResponse()
+            {
+                NumeroNotaCredito = new List<int>() { numeroTicket }
+            };
         }
     }
 }

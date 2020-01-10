@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using Common.Core.Enum;
+using Common.Data.Repository;
 
 namespace Ventas.Data.Repository
 {

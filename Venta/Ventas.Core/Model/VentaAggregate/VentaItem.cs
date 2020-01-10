@@ -67,7 +67,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             if (pendientePago > pago.MontoRestante)
             {
-                MontoPago montoPago = ObtenerMontoPago(pago.MontoRestante, porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago.TipoPago);
+                MontoPago montoPago = ObtenerMontoPago(pago.MontoRestante,  porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago.TipoPago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
                 PorcentajePago += Math.Round(pago.MontoRestante / Total.Valor, 4);
@@ -135,12 +135,12 @@ namespace Ventas.Core.Model.VentaAggregate
 
             decimal decuento = monto * porcentajeBonificacion;
             decimal cft = monto * porcentajeRecargo;
-            decimal iva = 0;
+            decimal montoIva = 0;
 
             if (tipoCliente == TipoCliente.Mayorista)
-                iva = Math.Round((monto - decuento + cft) * Constants.IVA * porcentajeFacturacion, 1);
+                montoIva = Math.Round((monto - decuento + cft) * Producto.SubCategoria.IVA * porcentajeFacturacion, 1);
 
-            return new MontoPago(monto, decuento, cft, iva);
+            return new MontoPago(monto, decuento, cft, montoIva);
         }
 
 
@@ -156,7 +156,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
         {
-            return Math.Round((total / (1 + Constants.IVA)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1);
+            return Math.Round((total / (1 + Producto.SubCategoria.IVA)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1);
         }
 
         internal void ActualizarPorcentajePago()

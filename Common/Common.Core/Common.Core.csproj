@@ -77,9 +77,11 @@
     <Compile Include="Helper\Encriptar.cs" />
     <Compile Include="Helper\IdGenerator.cs" />
     <Compile Include="Helper\Log.cs" />
+    <Compile Include="Interfaces\IAfipTokenAccesRepository.cs" />
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Model\AfipTokenAcces.cs" />
     <Compile Include="Model\Banco.cs" />
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\ClienteMayorista.cs" />

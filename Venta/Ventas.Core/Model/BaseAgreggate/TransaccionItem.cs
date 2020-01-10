@@ -32,7 +32,7 @@ namespace Ventas.Core.Model.BaseAgreggate
             if (tipoCliente == TipoCliente.Minorista)
                 return new MontoProducto(monto, 0);
             else
-                return new MontoProducto(monto, monto * Constants.IVA * porcentajeFacturacion);
+                return new MontoProducto(monto, monto * Producto.SubCategoria.IVA * porcentajeFacturacion);
         }
 
         internal void ActualizarMontoProducto(decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)

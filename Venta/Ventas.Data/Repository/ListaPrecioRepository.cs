@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Common.Data.Repository;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.VentaAggregate;
 

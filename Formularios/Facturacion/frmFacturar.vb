@@ -64,6 +64,10 @@ Public Class frmFacturar
         Ejecutar(Sub() facturarViewModel.TipoFacturacionChange(Cb_TipoFacturacion.SelectedItem))
     End Sub
 
+    Private Sub Cb_IVA_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_IVA.SelectedIndexChanged
+        Ejecutar(Sub() facturarViewModel.CondicionesIVAChange(Cb_IVA.SelectedItem))
+    End Sub
+
     Private Sub Ejecutar(accion As Action)
         Try
             accion()

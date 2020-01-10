@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.ValueObjects;
+using Common.Service.NotaCredito.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Common.Service.NotaCredito
             }
         }
 
-        public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, int numeroFacturaOrigen, int puntoVentaOrigen, CondicionIVA condicionIVAOriginal)
+        public ObtenerNumeroNotaCretidoResponse ObtenerNumeroNotaCretido(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit, int numeroFacturaOrigen, int puntoVentaOrigen, CondicionIVA condicionIVAOriginal)
         {
             return notaCreditoStrategy.ObtenerNumeroNotaCretido(tipoCliente, condicionesIVA, pagos, productos, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, numeroFacturaOrigen, puntoVentaOrigen, condicionIVAOriginal);
         }

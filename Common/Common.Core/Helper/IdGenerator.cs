@@ -18,7 +18,7 @@ namespace Common.Core.Helper
 
             //Duerno la ejecucion 10 ms para asegurarme que no se generen claves duplicadas
             Thread.Sleep(10);
-            return long.Parse($"{ID_SUCURSAL}{DateTime.Now.ToString("yyyMMddhhmmssfff")}");
+            return long.Parse($"{ID_SUCURSAL}{DateTime.Now.ToString("yyyMMddHHmmssfff")}");
         }    
     }
 }

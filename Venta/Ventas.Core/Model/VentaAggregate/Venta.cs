@@ -155,32 +155,24 @@ namespace Ventas.Core.Model.VentaAggregate
             IdVendedor = vendedor != null ? vendedor.Id : 0;
         }
 
-        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroFactura)
+        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroFactura, string cae, DateTime fechaVencimientoCae)
         {
             if (numeroFactura.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
+            if (tipoFactura == TipoFactura.Electronica && string.IsNullOrEmpty(cae))
+                throw new NegocioException($"Error al registrar la factura. No se encuentra un Codigo CAE.");
 
-            if((condicionesIVA == CondicionIVA.Responsable_Inscripto || condicionesIVA == CondicionIVA.Monotributo || condicionesIVA == CondicionIVA.Exento) && Cuit.Validar(cuit))
-                throw new NegocioException($"Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.");
-
-            if (TipoCliente == TipoCliente.Mayorista && (string.IsNullOrEmpty(nombreYApellido) || string.IsNullOrEmpty(direccion) || string.IsNullOrEmpty(localidad) || string.IsNullOrEmpty(cuit)))
-                throw new NegocioException($"Error al registrar la factura. Debe completar todos los campos obligatorios.");
-
-            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroFactura);
+            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroFactura, cae, fechaVencimientoCae);
         }
 
-        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroNotaPedido)
+        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroNotaPedido, string cae, DateTime fechaVencimientoCae)
         {
             if (numeroNotaPedido.Count == 0)
-                throw new NegocioException($"Error al registrar la nota crédito. Debe ingresar un número de nota crédito.");
+                throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
+            if (tipoFactura == TipoFactura.Electronica && string.IsNullOrEmpty(cae))
+                throw new NegocioException($"Error al registrar la factura. No se encuentra un Codigo CAE.");
 
-            if ((condicionesIVA == CondicionIVA.Responsable_Inscripto || condicionesIVA == CondicionIVA.Monotributo || condicionesIVA == CondicionIVA.Exento) && Cuit.Validar(cuit))
-                throw new NegocioException($"Error al registrar la nota crédito. El CUIL ingresado es incorrecto o se encuentra vacío.");
-
-            if (string.IsNullOrEmpty(nombreYApellido) || string.IsNullOrEmpty(direccion) || string.IsNullOrEmpty(localidad) || string.IsNullOrEmpty(cuit))
-                throw new NegocioException($"Error al registrar la factura. Debe completar todos los campos obligatorios.");
-
-            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroNotaPedido);
+            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroNotaPedido, cae, fechaVencimientoCae);
         }
 
         public void AgregarComision(Decimal porcentajeComisionEncargado, Decimal porcentajeComisionVendedor)

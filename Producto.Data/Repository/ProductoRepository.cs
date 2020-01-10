@@ -6,9 +6,9 @@ using System.Linq;
 using System.Linq.Dynamic;
 using Producto.Core.Interfaces;
 using Modelo = Producto.Core.Model.ProductoAgreggate;
-using Ventas.Data.Repository;
 using Common.Core.Exceptions;
 using Common.Core.Model;
+using Common.Data.Repository;
 
 namespace Producto.Data.Repository
 {

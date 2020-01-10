@@ -4,6 +4,7 @@ using System.Data.Entity;
 using Ventas.Core.Interfaces;
 using Common.Core.Exceptions;
 using Ventas.Core.Model.BaseAgreggate;
+using Common.Data.Repository;
 
 namespace Ventas.Data.Repository
 {
@@ -15,7 +16,13 @@ namespace Ventas.Data.Repository
 
         public Producto Obtener(int idSucursal,int idProducto)
         {
-            Producto producto = _context.Producto.Include(x => x.Precios).FirstOrDefault(x => x.Id == idProducto);
+            Producto producto = _context
+                                .Producto
+                                .Include(x => x.Precios)
+                                .Include(x => x.Categoria)
+                                .Include(x => x.SubCategoria)
+                                .FirstOrDefault(x => x.Id == idProducto);
+
             if (producto == null)
                 throw new NegocioException($"El producto con id {idProducto} no existe.");
 

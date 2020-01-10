@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Model;
+using Common.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

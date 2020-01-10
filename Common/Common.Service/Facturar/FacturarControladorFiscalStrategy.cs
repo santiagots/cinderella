@@ -6,6 +6,7 @@ using Common.Core.ValueObjects;
 using System;
 using System.Text;
 using Common.Core.Exceptions;
+using Common.Service.Facturar.Contracts;
 
 namespace Common.Service.Facturar
 {
@@ -127,9 +128,8 @@ namespace Common.Service.Facturar
             }
         }
 
-        public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
-            List<int> numeroFacturaRespuesta = new List<int>();
             using (EpsonPrinter epsonFP = new EpsonPrinter(tipoCliente, condicionesIVA, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit))
             {
 
@@ -156,8 +156,9 @@ namespace Common.Service.Facturar
 
                 int numeroTicket = epsonFP.CerrarTicket();
 
-                numeroFacturaRespuesta.Add(numeroTicket);
-                return numeroFacturaRespuesta;
+                return new ObtenerNumeroFacturaResponse(){
+                    NumeroFactura = new List<int>() { numeroTicket }
+                };
             }
         }
 

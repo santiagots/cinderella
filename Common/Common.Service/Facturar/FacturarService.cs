@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.ValueObjects;
+using Common.Service.Facturar.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Common.Service.Facturar
             }
         }
 
-        public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
             return facturarStrategy.ObtenerNumeroFactura(tipoCliente, condicionesIVA, pagos, productos, porcentajeFacturacion , nombreYApellido, direccion, localidad, cuit);
         }

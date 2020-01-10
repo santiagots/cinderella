@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Data.Entity;
-using Ventas.Data.Repository;
 using Common.Core.Interfaces;
 using Common.Core.Model;
 

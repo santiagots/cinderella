@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Core.Enum;
 using Ventas.Core.Enum;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.NotaPedidoAgreggate;
 using System.Data.Entity;
+using Common.Data.Repository;
 
 namespace Ventas.Data.Repository
 {

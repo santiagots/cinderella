@@ -95,7 +95,7 @@ Namespace Formularios.Facturacion
             End Using
         End Function
 
-        Public Shared Function ObtenerMemoriaTransacciones(ByRef cintaTestigoDigitalDisponiblesDesde As Integer,
+        Public Shared Sub ObtenerMemoriaTransacciones(ByRef cintaTestigoDigitalDisponiblesDesde As Integer,
                                                            ByRef cintaTestigoDigitalDisponiblesHasta As Integer,
                                                            ByRef descargarDuplicadosTipoADisponiblesDesde As Integer,
                                                            ByRef descargarDuplicadosTipoADisponiblesHasta As Integer,
@@ -118,16 +118,7 @@ Namespace Formularios.Facturacion
                                                  jornadasDescargadasCompletamenteHasta,
                                                  jornadasBorradasDesde,
                                                  jornadasBorradasHasta)
-        End Function
+        End Sub
 
-        Public Shared Function FacturarService(tipoFactura As TipoFactura, tipoCliente As TipoCliente, condicionesIVA As CondicionIVA, pagos As IEnumerable(Of TicketPago), productos As IEnumerable(Of TicketProducto), porcentajeFacturacion As Decimal, nombreYApellido As String, direccion As String, localidad As String, cuit As String) As IList(Of Integer)
-            Dim facturar As FacturarService = New FacturarService(tipoFactura)
-            Return facturar.ObtenerNumeroFactura(tipoCliente, condicionesIVA, pagos, productos, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit)
-        End Function
-
-        Public Shared Function NotaCreditoService(tipoFactura As TipoFactura, tipoCliente As TipoCliente, condicionesIVA As CondicionIVA, pagos As IEnumerable(Of TicketPago), productos As IEnumerable(Of TicketProducto), porcentajeFacturacion As Decimal, nombreYApellido As String, direccion As String, localidad As String, cuit As String, numeroFacturaOrigen As Integer, puntoVentaOrigen As Integer, condicionIVAOriginal As CondicionIVA) As IList(Of Integer)
-            Dim notaCredito As NotaCreditoService = New NotaCreditoService(tipoFactura)
-            Return notaCredito.ObtenerNumeroFactura(tipoCliente, condicionesIVA, pagos, productos, porcentajeFacturacion, nombreYApellido, direccion, localidad, cuit, numeroFacturaOrigen, puntoVentaOrigen, condicionIVAOriginal)
-        End Function
     End Class
 End Namespace

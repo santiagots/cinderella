@@ -5,6 +5,7 @@ using Ventas.Core.Interfaces;
 using Ventas.Core.Model.VentaAggregate;
 using System;
 using System.Collections.Generic;
+using Common.Data.Repository;
 
 namespace Ventas.Data.Repository
 {

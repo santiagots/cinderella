@@ -3,7 +3,12 @@ using Common.Core.Exceptions;
 using System.Collections.Generic;
 using Common.Core.ValueObjects;
 using System;
+using System.Linq;
 using System.Text;
+using Common.ExternalService;
+using Common.Service.Facturar.Contracts;
+using Common.ExternalService.Contracts;
+using Common.Core.Constants;
 
 namespace Common.Service.Facturar
 {
@@ -39,9 +44,20 @@ namespace Common.Service.Facturar
             throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
         }
 
-        public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
-            throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
+            AfipCAEResponse response = AfipFacturacionElectronicaService.ObtenerCEA(tipoCliente, 
+                TipoDocumentoFiscal.Factura,
+                condicionesIVA,
+                ObtenerMonto(tipoCliente, pagos, porcentajeFacturacion),
+                cuit);
+
+            return new ObtenerNumeroFacturaResponse()
+            {
+                CAE = response.Codigo,
+                FechaVencimientoCAE = response.FechaVencimiento,
+                NumeroFactura = new List<int>() { response.NumeroComprobante }
+            };
         }
 
         public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)
@@ -72,6 +88,19 @@ namespace Common.Service.Facturar
         public void BorradoJornadasMemoriaTransacciones(int borradasJornadasHasta)
         {
             throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
+        }
+
+        private decimal ObtenerMonto(TipoCliente tipoCliente, List<TicketPago> pagos, decimal porcentajeFacturacion)
+        {
+            switch (tipoCliente)
+            {
+                case TipoCliente.Minorista:
+                    return Math.Round(pagos.Sum(x => x.Total) / (1 + Constants.IVA), 1); //obtengo el total sin el iva
+                case TipoCliente.Mayorista:
+                    return Math.Round(pagos.Sum(x => x.Total) * porcentajeFacturacion, 1);
+                default:
+                    throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {tipoCliente.ToString()}");
+            }
         }
     }
 }

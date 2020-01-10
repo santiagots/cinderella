@@ -4,6 +4,7 @@ using Common.Core.Enum;
 using Common.Core.ValueObjects;
 using Common.Core.Exceptions;
 using System.Text;
+using Common.Service.Facturar.Contracts;
 
 namespace Common.Service.Facturar
 {
@@ -34,9 +35,9 @@ namespace Common.Service.Facturar
             throw new NegocioException("El metodo de facturacion manual no permite obtener reportes de Cinta Testigo Digital");
         }
 
-        public List<int> ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
+        public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(TipoCliente tipoCliente, CondicionIVA condicionesIVA, List<TicketPago> pagos, IList<TicketProducto> productos, decimal porcentajeFacturacion, string nombreYApellido, string direccion, string localidad, string cuit)
         {
-            return new List<int>();
+            return new ObtenerNumeroFacturaResponse();
         }
 
         public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)

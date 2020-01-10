@@ -201,7 +201,7 @@ Partial Class frmFacturar
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 146.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_TotalMinorista, 1, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Label10, 0, 12)
@@ -253,7 +253,7 @@ Partial Class frmFacturar
         Me.lbl_TotalMinorista.AutoSize = True
         Me.lbl_TotalMinorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Total", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.lbl_TotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_TotalMinorista.Location = New System.Drawing.Point(143, 162)
+        Me.lbl_TotalMinorista.Location = New System.Drawing.Point(149, 162)
         Me.lbl_TotalMinorista.Name = "lbl_TotalMinorista"
         Me.lbl_TotalMinorista.Size = New System.Drawing.Size(73, 16)
         Me.lbl_TotalMinorista.TabIndex = 3
@@ -275,9 +275,9 @@ Partial Class frmFacturar
         Me.lbl_Fecha.AutoSize = True
         Me.lbl_Fecha.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Fecha", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "g"))
         Me.lbl_Fecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.lbl_Fecha.Location = New System.Drawing.Point(143, 7)
+        Me.lbl_Fecha.Location = New System.Drawing.Point(149, 7)
         Me.lbl_Fecha.Name = "lbl_Fecha"
-        Me.lbl_Fecha.Size = New System.Drawing.Size(209, 16)
+        Me.lbl_Fecha.Size = New System.Drawing.Size(203, 16)
         Me.lbl_Fecha.TabIndex = 15
         Me.lbl_Fecha.Text = "04/05/2012"
         '
@@ -287,7 +287,7 @@ Partial Class frmFacturar
         Me.lbl_CostoFinancieroMinorista.AutoSize = True
         Me.lbl_CostoFinancieroMinorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "CostoFinanciero", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.lbl_CostoFinancieroMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CostoFinancieroMinorista.Location = New System.Drawing.Point(143, 100)
+        Me.lbl_CostoFinancieroMinorista.Location = New System.Drawing.Point(149, 100)
         Me.lbl_CostoFinancieroMinorista.Name = "lbl_CostoFinancieroMinorista"
         Me.lbl_CostoFinancieroMinorista.Size = New System.Drawing.Size(73, 16)
         Me.lbl_CostoFinancieroMinorista.TabIndex = 23
@@ -300,7 +300,7 @@ Partial Class frmFacturar
         Me.Label9.Location = New System.Drawing.Point(4, 9)
         Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(132, 13)
+        Me.Label9.Size = New System.Drawing.Size(138, 13)
         Me.Label9.TabIndex = 14
         Me.Label9.Text = "Fecha"
         '
@@ -310,7 +310,7 @@ Partial Class frmFacturar
         Me.lbl_IvaMayorista.AutoSize = True
         Me.lbl_IvaMayorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Iva", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.lbl_IvaMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_IvaMayorista.Location = New System.Drawing.Point(143, 131)
+        Me.lbl_IvaMayorista.Location = New System.Drawing.Point(149, 131)
         Me.lbl_IvaMayorista.Name = "lbl_IvaMayorista"
         Me.lbl_IvaMayorista.Size = New System.Drawing.Size(73, 16)
         Me.lbl_IvaMayorista.TabIndex = 3
@@ -322,9 +322,9 @@ Partial Class frmFacturar
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(3, 350)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(116, 13)
+        Me.Label3.Size = New System.Drawing.Size(140, 13)
         Me.Label3.TabIndex = 12
-        Me.Label3.Text = "CUIT (sólo numeros) (*)"
+        Me.Label3.Text = "CUIT/DNI (sólo numeros) (*)"
         '
         'Label22
         '
@@ -343,7 +343,7 @@ Partial Class frmFacturar
         Me.lbl_DescuentoMinorista.AutoSize = True
         Me.lbl_DescuentoMinorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Descuento", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.lbl_DescuentoMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DescuentoMinorista.Location = New System.Drawing.Point(143, 69)
+        Me.lbl_DescuentoMinorista.Location = New System.Drawing.Point(149, 69)
         Me.lbl_DescuentoMinorista.Name = "lbl_DescuentoMinorista"
         Me.lbl_DescuentoMinorista.Size = New System.Drawing.Size(73, 16)
         Me.lbl_DescuentoMinorista.TabIndex = 19
@@ -376,7 +376,7 @@ Partial Class frmFacturar
         Me.lbl_SubtotalMinorista.AutoSize = True
         Me.lbl_SubtotalMinorista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Subtotal", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.lbl_SubtotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_SubtotalMinorista.Location = New System.Drawing.Point(143, 38)
+        Me.lbl_SubtotalMinorista.Location = New System.Drawing.Point(149, 38)
         Me.lbl_SubtotalMinorista.Name = "lbl_SubtotalMinorista"
         Me.lbl_SubtotalMinorista.Size = New System.Drawing.Size(73, 16)
         Me.lbl_SubtotalMinorista.TabIndex = 21
@@ -450,40 +450,40 @@ Partial Class frmFacturar
         '
         Me.txt_Cuit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "CUIT", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarDatosCliente", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Cuit.Location = New System.Drawing.Point(143, 346)
+        Me.txt_Cuit.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarCUIT", True))
+        Me.txt_Cuit.Location = New System.Drawing.Point(149, 346)
         Me.txt_Cuit.Name = "txt_Cuit"
-        Me.txt_Cuit.Size = New System.Drawing.Size(209, 20)
+        Me.txt_Cuit.Size = New System.Drawing.Size(203, 20)
         Me.txt_Cuit.TabIndex = 5
         '
         'txt_Localidad
         '
         Me.txt_Localidad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Localidad.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Localidad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Localidad.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarDatosCliente", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Localidad.Location = New System.Drawing.Point(143, 315)
+        Me.txt_Localidad.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarLocalidad", True))
+        Me.txt_Localidad.Location = New System.Drawing.Point(149, 315)
         Me.txt_Localidad.Name = "txt_Localidad"
-        Me.txt_Localidad.Size = New System.Drawing.Size(209, 20)
+        Me.txt_Localidad.Size = New System.Drawing.Size(203, 20)
         Me.txt_Localidad.TabIndex = 4
         '
         'txt_Direccion
         '
         Me.txt_Direccion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Direccion.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "Direccion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Direccion.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarDatosCliente", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Direccion.Location = New System.Drawing.Point(143, 284)
+        Me.txt_Direccion.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarDireccion", True))
+        Me.txt_Direccion.Location = New System.Drawing.Point(149, 284)
         Me.txt_Direccion.Name = "txt_Direccion"
-        Me.txt_Direccion.Size = New System.Drawing.Size(209, 20)
+        Me.txt_Direccion.Size = New System.Drawing.Size(203, 20)
         Me.txt_Direccion.TabIndex = 3
         '
         'txt_Nombre
         '
         Me.txt_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Nombre.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "NombreYApellido", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Nombre.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarDatosCliente", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Nombre.Location = New System.Drawing.Point(143, 253)
+        Me.txt_Nombre.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarNombreYAplellido", True))
+        Me.txt_Nombre.Location = New System.Drawing.Point(149, 253)
         Me.txt_Nombre.Name = "txt_Nombre"
-        Me.txt_Nombre.Size = New System.Drawing.Size(209, 20)
+        Me.txt_Nombre.Size = New System.Drawing.Size(203, 20)
         Me.txt_Nombre.TabIndex = 2
         '
         'Cb_IVA
@@ -494,9 +494,9 @@ Partial Class frmFacturar
         Me.Cb_IVA.DataSource = Me.CondicionesIVABindingSource
         Me.Cb_IVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_IVA.FormattingEnabled = True
-        Me.Cb_IVA.Location = New System.Drawing.Point(143, 222)
+        Me.Cb_IVA.Location = New System.Drawing.Point(149, 222)
         Me.Cb_IVA.Name = "Cb_IVA"
-        Me.Cb_IVA.Size = New System.Drawing.Size(209, 21)
+        Me.Cb_IVA.Size = New System.Drawing.Size(203, 21)
         Me.Cb_IVA.TabIndex = 1
         '
         'CondicionesIVABindingSource
@@ -509,9 +509,9 @@ Partial Class frmFacturar
         Me.txt_FacturaOrigen.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_FacturaOrigen.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FacturarBindingSource, "HabilitarNotaCredito", True))
         Me.txt_FacturaOrigen.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FacturarBindingSource, "NumeroFacturaOrigen", True))
-        Me.txt_FacturaOrigen.Location = New System.Drawing.Point(143, 375)
+        Me.txt_FacturaOrigen.Location = New System.Drawing.Point(149, 375)
         Me.txt_FacturaOrigen.Name = "txt_FacturaOrigen"
-        Me.txt_FacturaOrigen.Size = New System.Drawing.Size(209, 20)
+        Me.txt_FacturaOrigen.Size = New System.Drawing.Size(203, 20)
         Me.txt_FacturaOrigen.TabIndex = 25
         '
         'TableLayoutPanel5

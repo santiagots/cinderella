@@ -9,6 +9,10 @@ Imports Common.Core.Model
 Imports Common.Core.Enum
 Imports Model = Ventas.Core.Model.VentaAggregate
 Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
+Imports Common.Service.Facturar
+Imports Common.Service.Facturar.Contracts
+Imports Common.Service.NotaCredito
+Imports Common.Service.NotaCredito.Contracts
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -35,11 +39,7 @@ Namespace Formularios.Facturacion
         Public Property CostoFinanciero As Decimal
         Public Property Iva As Decimal
         Public Property Total As Decimal
-        Public ReadOnly Property CondicionesIVA As BindingList(Of Enums.CondicionIVA)
-            Get
-                Return New BindingList(Of Enums.CondicionIVA)([Enum](Of Enums.CondicionIVA).ToList())
-            End Get
-        End Property
+        Public Property CondicionesIVA As BindingList(Of Enums.CondicionIVA)
         Public Property CondicionesIVASeleccionada As Enums.CondicionIVA
         Public Property NombreYApellido As String
         Public Property Direccion As String
@@ -67,9 +67,27 @@ Namespace Formularios.Facturacion
             End Get
         End Property
 
-        Public ReadOnly Property HabilitarDatosCliente As Boolean
+        Public ReadOnly Property HabilitarNombreYAplellido As Boolean
             Get
-                Return ventaModel.TipoCliente = Enums.TipoCliente.Mayorista OrElse tipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito
+                Return CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento OrElse tipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarDireccion As Boolean
+            Get
+                Return CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento OrElse tipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarLocalidad As Boolean
+            Get
+                Return CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento OrElse tipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarCUIT As Boolean
+            Get
+                Return CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento OrElse TiposFacturaSeleccionada = TipoFactura.Electronica OrElse tipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito
             End Get
         End Property
 
@@ -101,6 +119,7 @@ Namespace Formularios.Facturacion
                 Me.PuntoVentaOriginal = ventaModel.Factura?.PuntoVenta
                 Me.CondicionIvaOriginal = ventaModel.Factura?.CondicionIVA
             End If
+            CargarCondicionesIva(ventaModel.TipoCliente)
         End Sub
 
         Public Sub New(ventaModel As Model.Venta, facturarCallBack As FacturarDelegateCallBackAsync, tipoDocumentoFiscal As TipoDocumentoFiscal, desdeReserva As Boolean)
@@ -129,12 +148,14 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            If ((CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento) AndAlso Helper.Cuit.Validar(CUIT)) Then
+            If (HabilitarCUIT) AndAlso Not Helper.Cuit.Validar(CUIT) Then
                 MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
 
-            If (ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso (String.IsNullOrEmpty(NombreYApellido) OrElse String.IsNullOrEmpty(Direccion) OrElse String.IsNullOrEmpty(Localidad) OrElse String.IsNullOrEmpty(CUIT))) Then
+            If (HabilitarNombreYAplellido AndAlso String.IsNullOrEmpty(NombreYApellido)) OrElse
+               (HabilitarDireccion AndAlso String.IsNullOrEmpty(Direccion)) OrElse
+               (HabilitarLocalidad AndAlso String.IsNullOrEmpty(Localidad)) Then
                 MessageBox.Show("Error al registrar la factura. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
@@ -150,8 +171,8 @@ Namespace Formularios.Facturacion
 
             ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
 
-            Dim numerosFactura As List(Of Integer) = Servicio.FacturarService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT)
-            numerosFactura.ForEach(Sub(x) Numerosfacturas.Add(x))
+            Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada)
+            Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT)
 
             ventaModel.AgregarFactura(ObtenerPuntoVenta,
                                     TiposFacturaSeleccionada,
@@ -161,7 +182,9 @@ Namespace Formularios.Facturacion
                                     Localidad,
                                     CUIT,
                                     ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
-                                    Numerosfacturas.ToList())
+                                    ObtenerNumeroFacturaResponse.NumeroFactura,
+                                    ObtenerNumeroFacturaResponse.CAE,
+                                    ObtenerNumeroFacturaResponse.FechaVencimientoCAE)
 
             Visible = False
             Await FacturarCallBackEvent(True, ventaModel)
@@ -170,17 +193,19 @@ Namespace Formularios.Facturacion
 
         Friend Async Function NotaCreditoAsync() As Task(Of Boolean)
             If (TiposFacturaSeleccionada = TipoFactura.Manual AndAlso Numerosfacturas.Count = 0) Then
-                MessageBox.Show("Error al registrar la nota de crédito. Debe ingresar un número de nota de crédito.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Error al registrar la factura. Debe ingresar un número de factura.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
 
-            If ((CondicionesIVASeleccionada = CondicionIVA.Responsable_Inscripto OrElse CondicionesIVASeleccionada = CondicionIVA.Monotributo OrElse CondicionesIVASeleccionada = CondicionIVA.Exento) AndAlso Helper.Cuit.Validar(CUIT)) Then
-                MessageBox.Show("Error al registrar la nota de crédito. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If (HabilitarCUIT) AndAlso Not Helper.Cuit.Validar(CUIT) Then
+                MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
 
-            If (String.IsNullOrEmpty(NombreYApellido) OrElse String.IsNullOrEmpty(Direccion) OrElse String.IsNullOrEmpty(Localidad) OrElse String.IsNullOrEmpty(CUIT) OrElse NumeroFacturaOrigen < 0) Then
-                MessageBox.Show("Error al registrar la nota de crédito. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If (HabilitarNombreYAplellido AndAlso String.IsNullOrEmpty(NombreYApellido)) OrElse
+               (HabilitarDireccion AndAlso String.IsNullOrEmpty(Direccion)) OrElse
+               (HabilitarLocalidad AndAlso String.IsNullOrEmpty(Localidad)) Then
+                MessageBox.Show("Error al registrar la factura. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
 
@@ -195,8 +220,8 @@ Namespace Formularios.Facturacion
 
             ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
 
-            Dim numerosFactura As List(Of Integer) = Servicio.NotaCreditoService(TiposFacturaSeleccionada, ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT, NumeroFacturaOrigen, PuntoVentaOriginal, CondicionIvaOriginal)
-            numerosFactura.ForEach(Sub(x) Numerosfacturas.Add(x))
+            Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada)
+            Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT, NumeroFacturaOrigen, PuntoVentaOriginal, CondicionIvaOriginal)
 
             ventaModel.AgregarNotaCredito(ObtenerPuntoVenta(),
                                             TiposFacturaSeleccionada,
@@ -206,7 +231,10 @@ Namespace Formularios.Facturacion
                                             Localidad,
                                             CUIT,
                                             ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
-                                            Numerosfacturas.ToList())
+                                            ObtenerNumeroNotaCretidoResponse.NumeroNotaCredito,
+                                            ObtenerNumeroNotaCretidoResponse.CAE,
+                                            ObtenerNumeroNotaCretidoResponse.FechaVencimientoCAE
+)
 
             Visible = False
             Await FacturarCallBackEvent(True, ventaModel)
@@ -220,6 +248,11 @@ Namespace Formularios.Facturacion
         Friend Sub TipoFacturacionChange(tiposFactura As Enums.TipoFactura)
             TiposFacturaSeleccionada = tiposFactura
             NotifyPropertyChanged(NameOf(Me.TiposFacturaSeleccionada))
+        End Sub
+
+        Friend Sub CondicionesIVAChange(condicionesIVA As Enums.CondicionIVA)
+            CondicionesIVASeleccionada = condicionesIVA
+            NotifyPropertyChanged(NameOf(Me.CondicionesIVASeleccionada))
         End Sub
 
         Public Async Function CargarDatosAsync() As Task
@@ -265,6 +298,20 @@ Namespace Formularios.Facturacion
             NotifyPropertyChanged(NameOf(Me.Localidad))
             NotifyPropertyChanged(NameOf(Me.CUIT))
         End Function
+
+        Public Sub CargarCondicionesIva(tipoCliente As TipoCliente)
+
+            CondicionesIVA = New BindingList(Of CondicionIVA)()
+
+            If (tipoCliente = TipoCliente.Minorista) Then
+                CondicionesIVA.Add(CondicionIVA.Consumidor_Final)
+            Else
+                CondicionesIVA.Add(CondicionIVA.Exento)
+                CondicionesIVA.Add(CondicionIVA.Monotributo)
+                CondicionesIVA.Add(CondicionIVA.Responsable_Inscripto)
+            End If
+            NotifyPropertyChanged(NameOf(Me.CondicionesIVA))
+        End Sub
 
         Private Function ObtenerPuntoVenta() As Integer
             Select Case TiposFacturaSeleccionada

@@ -9,6 +9,7 @@ using Ventas.Data.Repository;
 using Producto.Core.Model.ProductoAgreggate;
 using Common.ExternalService;
 using Common.ExternalService.Contracts;
+using Common.Core.Model;
 
 namespace Venta.Test
 {
@@ -79,8 +80,27 @@ namespace Venta.Test
         [TestMethod]
         public void TestObtenerAfipToken()
         {
-            Common.ExternalService.AfipTokenAccesoService afipTokenAcceso = new Common.ExternalService.AfipTokenAccesoService();
-            Common.ExternalService.Contracts.AfipTokenAcceso response = afipTokenAcceso.Obtener("wsfe", "c:\\cinderella.p12", "cinderella");
+            AfipTokenAcces response = Common.ExternalService.AfipTokenAccesService.Obtener("wsfe", "c:\\cinderella.p12", "cinderella");
+        }
+
+        [TestMethod]
+        public void TestFacturacionAElectronica()
+        {
+            Common.ExternalService.AfipFacturacionElectronicaService.ObtenerCEA(TipoCliente.Mayorista,
+                                                                                TipoDocumentoFiscal.Factura,
+                                                                                CondicionIVA.Responsable_Inscripto,
+                                                                                100,
+                                                                                "20111111112");
+        }
+
+        [TestMethod]
+        public void TestFacturacionBElectronica()
+        {
+            Common.ExternalService.AfipFacturacionElectronicaService.ObtenerCEA(TipoCliente.Minorista,
+                                                                                TipoDocumentoFiscal.Factura,
+                                                                                CondicionIVA.Consumidor_Final,
+                                                                                100,
+                                                                                "20111111112");
         }
     }
 }

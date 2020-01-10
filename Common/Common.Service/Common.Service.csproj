@@ -47,11 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Facturar\Contracts\ObtenerNumeroFacturaRequest.cs" />
+    <Compile Include="Facturar\Contracts\ObtenerNumeroFacturaResponse.cs" />
     <Compile Include="Facturar\FacturarControladorFiscalStrategy.cs" />
     <Compile Include="Facturar\FacturarElectrinicaStrategy.cs" />
     <Compile Include="Facturar\FacturarManualStrategy.cs" />
     <Compile Include="Facturar\FacturarService.cs" />
     <Compile Include="Facturar\IFacturarStrategy.cs" />
+    <Compile Include="NotaCredito\Contracts\ObtenerNumeroNotaCretidoResponse.cs" />
     <Compile Include="NotaCredito\INotaCreditoStrategy.cs" />
     <Compile Include="NotaCredito\NotaCreditoControladorFiscalStrategy.cs" />
     <Compile Include="NotaCredito\NotaCreditoElectrinicaStrategy.cs" />
@@ -64,9 +67,17 @@
       <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common.Data\Common.Data.csproj">
+      <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
+      <Name>Common.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Device\Common.Device.csproj">
       <Project>{72CB5F3C-E9A6-438F-9CCB-090DF126BDD8}</Project>
       <Name>Common.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.ExternalService\Common.ExternalService.csproj">
+      <Project>{41526F18-279A-4607-B4B5-3A15B7EA2A9C}</Project>
+      <Name>Common.ExternalService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,9 @@
-﻿using Common.Core.Helper;
+﻿using Common.Core.Exceptions;
+using Common.Core.Helper;
+using Common.Core.Interfaces;
+using Common.Core.Model;
+using Common.Data;
+using Common.Data.Repository;
 using Common.ExternalService.Contracts;
 using System;
 using System.Text;
@@ -6,33 +11,52 @@ using System.Xml;
 
 namespace Common.ExternalService
 {
-    public class AfipTokenAccesoService
+    public class AfipTokenAccesService
     {
         private static string XmlLoginTicketRequestTemplate = "<loginTicketRequest><header><uniqueId></uniqueId><generationTime></generationTime><expirationTime></expirationTime></header><service></service></loginTicketRequest>";
-        private static AfipTokenAcceso AfipTokenAcceso = new Contracts.AfipTokenAcceso();
+        private static AfipTokenAcces AfipTokenAccesoCache;
 
-        public static AfipTokenAcceso Obtener(string nombreServicio, string pathCertificado, string passwordCertificado = "")
+        public static AfipTokenAcces Obtener(string nombreServicio, string pathCertificado, string passwordCertificado = "")
         {
-            if (AfipTokenAcceso.FechaExpiracion < DateTime.Now)
+            if (AfipTokenAccesoCache == null || !AfipTokenAccesoCache.EsValido())
             {
-                XmlDocument logInTicket = ObtenerLogInTicket(nombreServicio);
+                // Verifico si en el dia se genero un token
+                IAfipTokenAccesRepository repository = new AfipTokenAccesRepository(new CommonContext());
+                AfipTokenAcces afipTokenAccesDB = repository.Obtener(DateTime.Now);
 
-                // Convierto el Login Ticket Request a bytes, firmo el msg y lo convierto a Base64
-                Encoding EncodedMsg = Encoding.UTF8;
-                byte[] logInTicketByte = EncodedMsg.GetBytes(logInTicket.OuterXml);
-                byte[] logInTicketFirmadoByte = CertificadosX509.FirmaMensaje(logInTicketByte, pathCertificado, passwordCertificado);
-                string logInTicketFirmadoBase64 = Convert.ToBase64String(logInTicketFirmadoByte);
+                if (afipTokenAccesDB == null || !afipTokenAccesDB.EsValido())
+                {
+                    AfipTokenAccesoCache = ObtenerLogInTicket(nombreServicio, pathCertificado, passwordCertificado);
+                    repository.Guardar(AfipTokenAccesoCache);
+                }
+                else
+                {
+                    AfipTokenAccesoCache = afipTokenAccesDB;
+                }
 
-                XmlDocument logInTicketRespuesta = ObtenerLogInTicketRespuesta(logInTicketFirmadoBase64);
-
-                AfipTokenAcceso = new AfipTokenAcceso(
-                                                    uint.Parse(logInTicketRespuesta.SelectSingleNode("//uniqueId").InnerText),
-                                                    DateTime.Parse(logInTicketRespuesta.SelectSingleNode("//generationTime").InnerText),
-                                                    DateTime.Parse(logInTicketRespuesta.SelectSingleNode("//expirationTime").InnerText),
-                                                    logInTicketRespuesta.SelectSingleNode("//sign").InnerText,
-                                                    logInTicketRespuesta.SelectSingleNode("//token").InnerText);
             }
-            return AfipTokenAcceso;
+            return AfipTokenAccesoCache;
+        }
+
+        public static AfipTokenAcces ObtenerLogInTicket(string nombreServicio, string pathCertificado, string passwordCertificado = "")
+        {
+            XmlDocument logInTicket = ObtenerLogInTicket(nombreServicio);
+
+            // Convierto el Login Ticket Request a bytes, firmo el msg y lo convierto a Base64
+            Encoding EncodedMsg = Encoding.UTF8;
+            byte[] logInTicketByte = EncodedMsg.GetBytes(logInTicket.OuterXml);
+            byte[] logInTicketFirmadoByte = CertificadosX509.FirmaMensaje(logInTicketByte, pathCertificado, passwordCertificado);
+            string logInTicketFirmadoBase64 = Convert.ToBase64String(logInTicketFirmadoByte);
+
+            XmlDocument logInTicketRespuesta = ObtenerLogInTicketRespuesta(logInTicketFirmadoBase64);
+
+            return new AfipTokenAcces(
+                    int.Parse(logInTicketRespuesta.SelectSingleNode("//uniqueId").InnerText),
+                    DateTime.Parse(logInTicketRespuesta.SelectSingleNode("//generationTime").InnerText),
+                    DateTime.Parse(logInTicketRespuesta.SelectSingleNode("//expirationTime").InnerText),
+                    logInTicketRespuesta.SelectSingleNode("//sign").InnerText,
+                    logInTicketRespuesta.SelectSingleNode("//token").InnerText
+                );
         }
 
         private static XmlDocument ObtenerLogInTicket(string nombreServicio)
@@ -54,12 +78,19 @@ namespace Common.ExternalService
 
         private static XmlDocument ObtenerLogInTicketRespuesta(string logInTicketFirmado)
         {
-            Afip.Wsaa.LoginCMSClient loginCMSClient = new Afip.Wsaa.LoginCMSClient();
-            string loginTicketResponse = loginCMSClient.loginCms(logInTicketFirmado);
+            try
+            {
+                Afip.Wsaa.LoginCMSClient loginCMSClient = new Afip.Wsaa.LoginCMSClient();
+                string loginTicketResponse = loginCMSClient.loginCms(logInTicketFirmado);
 
-            XmlDocument XmlLoginTicketResponse = new XmlDocument();
-            XmlLoginTicketResponse.LoadXml(loginTicketResponse);
-            return XmlLoginTicketResponse;
+                XmlDocument XmlLoginTicketResponse = new XmlDocument();
+                XmlLoginTicketResponse.LoadXml(loginTicketResponse);
+                return XmlLoginTicketResponse;
+            }
+            catch(Exception ex)
+            {
+                throw new NegocioException($"Error al obtener el token de acceso ante la AFIP.", ex);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
     {
         public int IdCategoria { get; private set; }
         public Categoria Categoria { get; private set; }
+        public decimal IVA { get; private set; }
         public string Descripcion { get; protected set; }
         public bool Habilitado { get; protected set; }
 

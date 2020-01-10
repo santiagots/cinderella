@@ -17,8 +17,8 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        public NotaCredito(long idVenta, int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, IEnumerable<int> numeroFactura)
-            : base(idVenta, puntoVenta, tipoFactura, condicionIVA, nombreYApellido, direccion, localidad, cuit, monto)
+        public NotaCredito(long idVenta, int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, IEnumerable<int> numeroFactura, string cae, DateTime fechaVencimientoCae)
+            : base(idVenta, puntoVenta, tipoFactura, condicionIVA, nombreYApellido, direccion, localidad, cuit, cae, fechaVencimientoCae, monto)
         {
             IdVenta = idVenta;
             NumeroNotaCredito = numeroFactura.Select(x => new NumeroNotaCredito(x, this.Id)).ToList();
