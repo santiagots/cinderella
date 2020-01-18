@@ -10,6 +10,7 @@ using Producto.Core.Model.ProductoAgreggate;
 using Common.ExternalService;
 using Common.ExternalService.Contracts;
 using Common.Core.Model;
+using Common.Core.Helper;
 
 namespace Venta.Test
 {
@@ -82,6 +83,13 @@ namespace Venta.Test
         {
             AfipTokenAcces response = Common.ExternalService.AfipTokenAccesService.Obtener("wsfe", "c:\\cinderella.p12", "cinderella");
         }
+
+        [TestMethod]
+        public void TestObtenerFechaVenciamiento()
+        {
+            DateTime fecha = CertificadosX509.ObtenerVencimiento("c:\\cinderella.p12", "cinderella");
+        }
+
 
         [TestMethod]
         public void TestFacturacionAElectronica()

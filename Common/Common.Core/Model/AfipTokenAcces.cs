@@ -15,7 +15,7 @@ namespace Common.Core.Model
 
         internal AfipTokenAcces() { }
 
-        public AfipTokenAcces(int id, DateTime fechaGeneracion, DateTime fechaExpiracion, string firma, string token)
+        public AfipTokenAcces(long id, DateTime fechaGeneracion, DateTime fechaExpiracion, string firma, string token)
         {
             Id = id;
             FechaGeneracion = fechaGeneracion;

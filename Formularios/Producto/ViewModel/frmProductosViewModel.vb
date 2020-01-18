@@ -203,7 +203,7 @@ Namespace Formularios.Producto
         End Function
 
         Friend Async Function CargarSubcategoriasAsync(idCategoria As Integer) As Task
-            Dim subCategoriaModel As IList(Of SubCategoria) = Await Task.Run(Function() Servicio.ObtenerSubcategorias(idCategoria))
+            Dim subCategoriaModel As IList(Of SubCategoria) = Await Task.Run(Function() Servicio.ObtenerSubcategoriasPorCategoria(idCategoria))
             Me.SubCategorias = New BindingList(Of SubCategoria)(subCategoriaModel)
             NotifyPropertyChanged(NameOf(Me.SubCategorias))
         End Function

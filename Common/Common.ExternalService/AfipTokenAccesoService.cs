@@ -51,7 +51,7 @@ namespace Common.ExternalService
             XmlDocument logInTicketRespuesta = ObtenerLogInTicketRespuesta(logInTicketFirmadoBase64);
 
             return new AfipTokenAcces(
-                    int.Parse(logInTicketRespuesta.SelectSingleNode("//uniqueId").InnerText),
+                    long.Parse(logInTicketRespuesta.SelectSingleNode("//uniqueId").InnerText),
                     DateTime.Parse(logInTicketRespuesta.SelectSingleNode("//generationTime").InnerText),
                     DateTime.Parse(logInTicketRespuesta.SelectSingleNode("//expirationTime").InnerText),
                     logInTicketRespuesta.SelectSingleNode("//sign").InnerText,

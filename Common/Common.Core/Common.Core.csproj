@@ -78,9 +78,11 @@
     <Compile Include="Helper\IdGenerator.cs" />
     <Compile Include="Helper\Log.cs" />
     <Compile Include="Interfaces\IAfipTokenAccesRepository.cs" />
+    <Compile Include="Interfaces\ICategoriaRepository.cs" />
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISubCategoriaRepository.cs" />
     <Compile Include="Model\AfipTokenAcces.cs" />
     <Compile Include="Model\Banco.cs" />
     <Compile Include="Model\Categoria.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Model\Domicilio.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Feriado.cs" />
+    <Compile Include="Model\IVA.cs" />
     <Compile Include="Model\Localidad.cs" />
     <Compile Include="Model\Provincia.cs" />
     <Compile Include="Model\SubCategoria.cs" />

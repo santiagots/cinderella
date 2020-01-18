@@ -58,6 +58,7 @@
     <Compile Include="ProductoContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ProductoRepository.cs" />
+    <Compile Include="Repository\ProveedorRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj">

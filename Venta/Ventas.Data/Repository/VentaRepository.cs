@@ -80,8 +80,8 @@ namespace Ventas.Data.Repository
 
         public void Guardar(Venta venta)
         {
-            _context.Entry(venta.Encargado).State = System.Data.Entity.EntityState.Unchanged;
-            _context.Entry(venta.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
+            _context.Entry(venta.Encargado).State = EntityState.Unchanged;
+            _context.Entry(venta.Vendedor).State = EntityState.Unchanged;
             venta.VentaItems.ToList().ForEach(x => _context.Entry(x.Producto).State = System.Data.Entity.EntityState.Unchanged);
             _context.Venta.Add(venta);
             _context.SaveChanges();

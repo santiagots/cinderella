@@ -54,10 +54,10 @@ namespace Ventas.Core.Model.VentaAggregate
         public void Anular(string motivo)
         {
             if (Anulado)
-                throw new NegocioException("La venta ya se encuentra anulada.");
+                throw new NegocioException("Error al anular la venta. La venta ya se encuentra anulada.");
 
             if (string.IsNullOrWhiteSpace(motivo))
-                throw new NegocioException("Debe ingresar un motivo para anular una venta.");
+                throw new NegocioException("Error al anular la venta. Debe ingresar un motivo para anular una venta.");
 
             Anulado = true;
             MotivoAnulado = motivo;

@@ -4,9 +4,9 @@
     {
         protected readonly T _context;
 
-        public BaseRepository(T ventaContext)
+        public BaseRepository(T context)
         {
-            _context = ventaContext;
+            _context = context;
         }
     }
 }

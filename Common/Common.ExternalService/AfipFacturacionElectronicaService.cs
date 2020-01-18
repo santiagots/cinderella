@@ -50,13 +50,13 @@ namespace Common.ExternalService
         private static string RECHAZADO = "R";
         private static string PARCIAL = "P";
 
-        public static AfipCAEResponse ObtenerCEA(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal, CondicionIVA condicionesIVA, decimal TotalNeto, string cuit)
+        public static AfipCAEResponse ObtenerCEA(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal, CondicionIVA condicionesIVA, IList<TicketProducto> productos, decimal porcentajeFacturacion, string cuit)
         {
 
             Afip.Wsfev1.FECAERequest request = new Afip.Wsfev1.FECAERequest()
             {
                 FeCabReq = ObtenerCabecera(1, tipoCliente, tipoDocumentoFiscal),
-                FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(tipoCliente, tipoDocumentoFiscal, condicionesIVA, TotalNeto, cuit) }
+                FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(tipoCliente, tipoDocumentoFiscal, condicionesIVA, productos, porcentajeFacturacion, cuit) }
             };
             Afip.Wsfev1.ServiceSoapClient serviceClient = new Afip.Wsfev1.ServiceSoapClient();
 
@@ -92,7 +92,7 @@ namespace Common.ExternalService
                 PtoVta = PUNTO_VENTA
             };
 
-        private static Afip.Wsfev1.FECAEDetRequest ObtenerDetalle(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal, CondicionIVA condicionesIVA, decimal TotalNeto, string cuit)
+        private static Afip.Wsfev1.FECAEDetRequest ObtenerDetalle(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal, CondicionIVA condicionesIVA, IList<TicketProducto> productos, decimal porcentajeFacturacion, string cuit)
         {
             Afip.Wsfev1.FECAEDetRequest request = new Afip.Wsfev1.FECAEDetRequest();
 
@@ -105,11 +105,11 @@ namespace Common.ExternalService
             request.MonId = PESOS;
             request.MonCotiz = PESOS_COTIZACION;
             request.ImpTotConc = 0;                 //Importe total no grabado
-            request.ImpNeto = (double)TotalNeto;    //Importe total neto
+            request.ImpNeto = (double)0;//TotalNeto;    //Importe total neto
             request.ImpOpEx = 0;                    //Importe total excento
+            request.ImpTrib = 0;
 
-            AgregarAlicutaIva(TotalNeto, request);
-            AgregarTributo(TotalNeto, request);
+            AgregarAlicutaIva(0/*TotalNeto*/, request);
 
             request.ImpTotal = (double)Math.Round(request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib, 1);
 
@@ -131,11 +131,6 @@ namespace Common.ExternalService
 
                 request.ImpIVA = request.Iva.First().Importe;
             }
-        }
-
-        private static void AgregarTributo(decimal TotalNeto, Afip.Wsfev1.FECAEDetRequest request)
-        {
-            request.ImpTrib = 0;
         }
 
         private static int ObtenerNumeroComprobante(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal)

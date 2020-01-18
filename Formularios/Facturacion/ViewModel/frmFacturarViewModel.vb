@@ -164,9 +164,9 @@ Namespace Formularios.Facturacion
             Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
 
             If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
+                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto), 0))
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor)))
+                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor, x.Producto.SubCategoria.IVA.Valor)))
             End If
 
             ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
@@ -213,9 +213,9 @@ Namespace Formularios.Facturacion
             Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
 
             If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto)))
+                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto), 0))
             Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor)))
+                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor, x.Producto.SubCategoria.IVA.Valor)))
             End If
 
             ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
@@ -233,8 +233,7 @@ Namespace Formularios.Facturacion
                                             ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
                                             ObtenerNumeroNotaCretidoResponse.NumeroNotaCredito,
                                             ObtenerNumeroNotaCretidoResponse.CAE,
-                                            ObtenerNumeroNotaCretidoResponse.FechaVencimientoCAE
-)
+                                            ObtenerNumeroNotaCretidoResponse.FechaVencimientoCAE)
 
             Visible = False
             Await FacturarCallBackEvent(True, ventaModel)

@@ -138,7 +138,7 @@ namespace Ventas.Core.Model.VentaAggregate
             decimal montoIva = 0;
 
             if (tipoCliente == TipoCliente.Mayorista)
-                montoIva = Math.Round((monto - decuento + cft) * Producto.SubCategoria.IVA * porcentajeFacturacion, 1);
+                montoIva = Math.Round((monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion, 1);
 
             return new MontoPago(monto, decuento, cft, montoIva);
         }
@@ -156,7 +156,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
         {
-            return Math.Round((total / (1 + Producto.SubCategoria.IVA)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1);
+            return Math.Round((total / (1 + Producto.SubCategoria.IVA.Valor)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1);
         }
 
         internal void ActualizarPorcentajePago()

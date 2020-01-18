@@ -49,7 +49,8 @@ namespace Common.Service.Facturar
             AfipCAEResponse response = AfipFacturacionElectronicaService.ObtenerCEA(tipoCliente, 
                 TipoDocumentoFiscal.Factura,
                 condicionesIVA,
-                ObtenerMonto(tipoCliente, pagos, porcentajeFacturacion),
+                productos,
+                porcentajeFacturacion,
                 cuit);
 
             return new ObtenerNumeroFacturaResponse()

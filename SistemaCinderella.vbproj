@@ -449,8 +449,10 @@
     <Compile Include="Formularios\MovimientoDetalle\ViewModel\MovimientoVenta.vb" />
     <Compile Include="Formularios\Producto\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Producto\Servicio\Servicio.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\frmSubCategoriaViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\ProductoItemViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\ProductoDetalleViewModel.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\SubcategoriaItemViewModel.vb" />
     <Compile Include="Formularios\Reserva\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Reserva\Servicio\Servicio.vb" />
     <Compile Include="ControlesUsuario\VentaDetalle.Designer.vb">
@@ -862,10 +864,10 @@
     <Compile Include="Formularios\frmProductosPrecios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmProductosSubcat.Designer.vb">
-      <DependentUpon>frmProductosSubcat.vb</DependentUpon>
+    <Compile Include="Formularios\Producto\frmSubCategoria.Designer.vb">
+      <DependentUpon>frmSubCategoria.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmProductosSubcat.vb">
+    <Compile Include="Formularios\Producto\frmSubCategoria.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmProveedores.Designer.vb">
@@ -1515,8 +1517,8 @@
     <EmbeddedResource Include="Formularios\frmProductosPrecios.resx">
       <DependentUpon>frmProductosPrecios.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmProductosSubcat.resx">
-      <DependentUpon>frmProductosSubcat.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\Producto\frmSubCategoria.resx">
+      <DependentUpon>frmSubCategoria.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmProveedores.resx">
       <DependentUpon>frmProveedores.vb</DependentUpon>
@@ -1707,7 +1709,9 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.MovimientoDetalle.frmMoviminetoDetalleViewModel`1[].datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.MovimientoDetalle.Servicio.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.frmProductosViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.frmSubCategoriaViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.ProductoDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.SubcategoriaItemViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.ResumenDiario.frmResumenDiarioViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.SucursalesSaldo.frmSucursalesSaldoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.SucursalSaldo.frmCierreCajaViewModel.datasource" />
@@ -1724,6 +1728,7 @@
     <None Include="Imagenes\nota_creditoPequeño.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Imagenes\banco.png" />
     <Content Include="Imagenes\Boton_Ventas.png" />

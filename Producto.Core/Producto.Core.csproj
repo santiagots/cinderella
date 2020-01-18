@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IProductoRepository.cs" />
+    <Compile Include="Interfaces\IProveedorRepository.cs" />
     <Compile Include="Model\ProductoAgreggate\Precio.cs" />
     <Compile Include="Model\ProductoAgreggate\Producto.cs" />
     <Compile Include="Model\ProductoAgreggate\Proveedor.cs" />

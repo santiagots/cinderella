@@ -26,6 +26,7 @@ namespace Common.Data
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<AfipTokenAcces> AfipTokenAcces { get; set; }
+        public DbSet<IVA> IVA { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -51,6 +52,7 @@ namespace Common.Data
             modelBuilder.Entity<SubCategoria>().ToTable("PRODUCTOS_SUBCATEGORIAS");
             modelBuilder.Entity<SubCategoria>().Property(t => t.Id).HasColumnName("id_Subcategoria");
             modelBuilder.Entity<SubCategoria>().Property(t => t.IdCategoria).HasColumnName("id_Categoria");
+            modelBuilder.Entity<SubCategoria>().HasRequired(v => v.IVA).WithMany().HasForeignKey(x => x.IdIVA);
 
             modelBuilder.Entity<Feriado>().ToTable("FERIADOS");
             modelBuilder.Entity<Feriado>().Property(t => t.Id).HasColumnName("id_Feriado");
@@ -74,6 +76,9 @@ namespace Common.Data
 
             modelBuilder.Entity<Provincia>().ToTable("PROVINCIAS");
             modelBuilder.Entity<Provincia>().Property(t => t.Id).HasColumnName("id_Provincia");
+
+            modelBuilder.Entity<IVA>().ToTable("NUEVA_IVA");
+            modelBuilder.Entity<IVA>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             base.OnModelCreating(modelBuilder);
         }

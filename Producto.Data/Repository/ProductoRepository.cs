@@ -7,14 +7,13 @@ using System.Linq.Dynamic;
 using Producto.Core.Interfaces;
 using Modelo = Producto.Core.Model.ProductoAgreggate;
 using Common.Core.Exceptions;
-using Common.Core.Model;
 using Common.Data.Repository;
 
 namespace Producto.Data.Repository
 {
     public class ProductoRepository : BaseRepository<ProductoContext>, IProductoRepository
     {
-        public ProductoRepository(ProductoContext ventaContext) : base(ventaContext)
+        public ProductoRepository(ProductoContext productoContext) : base(productoContext)
         {
         }
 
@@ -24,6 +23,9 @@ namespace Producto.Data.Repository
                 _context.Entry(precio).State = EntityState.Modified;
 
             _context.Producto.Attach(producto);
+            _context.Entry(producto.Proveedor).State = EntityState.Unchanged;
+            _context.Entry(producto.Categoria).State = EntityState.Unchanged;
+            _context.Entry(producto.Subcategoria).State = EntityState.Unchanged;
             _context.Entry(producto).State = EntityState.Modified;
             _context.SaveChanges();
         }
@@ -71,6 +73,10 @@ namespace Producto.Data.Repository
                     throw new NegocioException($"El código de producto {producto.Codigo} ya está en uso. Por favor, ingrese otro código de producto.");
                 }
 
+                _context.Entry(producto.Proveedor).State = EntityState.Unchanged;
+                _context.Entry(producto.Categoria).State = EntityState.Unchanged;
+                _context.Entry(producto.Subcategoria).State = EntityState.Unchanged;
+
                 _context.Producto.Add(producto);
                 _context.SaveChanges();
 
@@ -96,21 +102,6 @@ namespace Producto.Data.Repository
                                     .Include(x => x.Proveedor)
                                     .Include(x => x.Precios)
                                     .Where(x => x.Id == idProducto).FirstOrDefault();
-        }
-
-        public IList<Categoria> ObtenerCategorias()
-        {
-            return _context.Categoria.Where(x => x.Habilitado).OrderBy(x => x.Descripcion).ToList();
-        }
-
-        public IList<SubCategoria> ObtenerSubcategorias(int idCategoria)
-        {
-            return _context.SubCategoria.Where(x => x.IdCategoria == idCategoria && x.Habilitado).OrderBy(x => x.Descripcion).ToList();
-        }
-
-        public IList<Modelo.Proveedor> ObtenerProveedores()
-        {
-            return _context.Proveedor.Where(x => x.Habilitado).OrderBy(x => x.RazonSocial).ToList();
         }
     }
 }

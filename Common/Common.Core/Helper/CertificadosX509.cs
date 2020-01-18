@@ -17,6 +17,12 @@ namespace Common.Core.Helper
             return FirmaMensaje(mensaje, ObtieneCertificadoDesdeArchivo(pathCertificado, passwordCertificado));
         }
 
+        public static DateTime ObtenerVencimiento(string pathCertificado, string passwordCertificado = "")
+        {
+            X509Certificate2 certificado = ObtieneCertificadoDesdeArchivo(pathCertificado, passwordCertificado);
+            return certificado.NotAfter;
+        }
+
         private static byte[] FirmaMensaje(byte[] mensaje, X509Certificate2 certificado)
         {
             // Pongo el mensaje en un objeto ContentInfo (requerido para construir el obj SignedCms)

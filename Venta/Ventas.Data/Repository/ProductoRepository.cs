@@ -21,6 +21,7 @@ namespace Ventas.Data.Repository
                                 .Include(x => x.Precios)
                                 .Include(x => x.Categoria)
                                 .Include(x => x.SubCategoria)
+                                .Include(x => x.SubCategoria.IVA)
                                 .FirstOrDefault(x => x.Id == idProducto);
 
             if (producto == null)

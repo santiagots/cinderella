@@ -1,6 +1,5 @@
 ﻿Imports AutoMapper
-Imports SistemaCinderella.Formularios.Reserva
-Imports Ventas.Core.Enum
+Imports Common.Core.Model
 Imports Model = Producto.Core.Model.ProductoAgreggate
 
 
@@ -33,6 +32,12 @@ Namespace Formularios.Producto
                           des.Mayorista = If(src.Precios.Count >= 5, src.Precios(4).Monto, 0)
                           des.Alternativo = If(src.Precios.Count >= 6, src.Precios(5).Monto, 0)
                       End Sub)
+
+            CreateMap(Of SubCategoria, SubcategoriaItemViewModel)() _
+            .ForMember(Function(des) des.CategoriaNombre, Sub(opt) opt.MapFrom(Function(src) src.Categoria.Descripcion)) _
+            .ForMember(Function(des) des.SubcategoriaNombre, Sub(opt) opt.MapFrom(Function(src) src.Descripcion)) _
+            .ForMember(Function(des) des.IVA, Sub(opt) opt.MapFrom(Function(src) src.IVA.Valor.ToString("p")))
+
         End Sub
     End Class
 End Namespace
