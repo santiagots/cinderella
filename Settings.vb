@@ -1,8 +1,7 @@
 ﻿
 Imports System.Configuration
 Imports Common.Core.Helper
-Imports Common.Device
-Imports Common.Device.Printer
+Imports Factura.Device.Printer
 
 Namespace My
 

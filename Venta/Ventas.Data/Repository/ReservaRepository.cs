@@ -19,11 +19,13 @@ namespace Ventas.Data.Repository
         {
             if (_context.Reserva.Any(x => x.Id == reserva.Id))
             {
+                reserva.VentaReserva.VentaItems.ToList().ForEach(x => x.Producto = null); //pongo null la Producto porque sino entra en conflicto cuando varios productos tiene la misma Producto
+                reserva.VentaEntrega.VentaItems.ToList().ForEach(x => x.Producto = null); //pongo null la Producto porque sino entra en conflicto cuando varios productos tiene la misma Producto
                 _context.Entry(reserva).State = EntityState.Modified;
             }
             else
             {
-                _context.Entry(reserva.VentaReserva).State = System.Data.Entity.EntityState.Unchanged;
+                _context.Entry(reserva.VentaReserva).State = EntityState.Unchanged;
                 _context.Reserva.Add(reserva);
             }
 
@@ -67,6 +69,7 @@ namespace Ventas.Data.Repository
             return _context.Reserva
                 .Include(x => x.VentaReserva.Pagos)
                 .Include(x => x.VentaReserva.VentaItems)
+                .Include(x => x.VentaReserva.VentaItems.Select(y => y.Producto.SubCategoria.IVA))
                 .Include(x => x.VentaReserva.ClienteMayorista)
                 .Include(x => x.VentaReserva.Encargado)
                 .Include(x => x.VentaReserva.Vendedor)

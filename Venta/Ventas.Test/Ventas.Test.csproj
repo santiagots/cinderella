@@ -59,19 +59,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common.Service\Common.Service.csproj">
+    <ProjectReference Include="..\..\Common\Common.Service\Common.Service.csproj">
       <Project>{6CD90B40-30A0-4AD5-A5BF-11B2A2EFDD71}</Project>
       <Name>Common.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common.Core\Common.Core.csproj">
+    <ProjectReference Include="..\..\Common\Common.Core\Common.Core.csproj">
       <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common.Data\Common.Data.csproj">
+    <ProjectReference Include="..\..\Common\Common.Data\Common.Data.csproj">
       <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
       <Name>Common.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SistemaCinderella.vbproj">
+    <ProjectReference Include="..\..\SistemaCinderella.vbproj">
       <Project>{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}</Project>
       <Name>SistemaCinderella</Name>
     </ProjectReference>

@@ -2,7 +2,7 @@
 Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
-Imports Ventas.Core.Model.VentaAggregate
+Imports Model = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Facturacion
     Public Class frmVerFacturaViewModel
@@ -31,13 +31,13 @@ Namespace Formularios.Facturacion
         End Function
 
         Private Async Function CargarDatosNotaCreditoAsync(idDocuemtnoFiscal As Long) As Task
-            Dim notaCredito As NotaCredito = Await Task.Run(Function() Servicio.ObtenerNotaCredito(idDocuemtnoFiscal))
+            Dim notaCredito As Model.NotaCredito = Await Task.Run(Function() Servicio.ObtenerNotaCredito(idDocuemtnoFiscal))
             DocumentoFiscalViewModel = Mapper.Map(Of DocumentoFiscalViewModel)(notaCredito)
             NotifyPropertyChanged(NameOf(DocumentoFiscalViewModel))
         End Function
 
         Private Async Function CargarDatosDesdeFacturaAsync(idDocuemtnoFiscal As Long) As Task
-            Dim factura As Factura = Await Task.Run(Function() Servicio.ObtenerFactura(idDocuemtnoFiscal))
+            Dim factura As Model.Factura = Await Task.Run(Function() Servicio.ObtenerFactura(idDocuemtnoFiscal))
             DocumentoFiscalViewModel = Mapper.Map(Of DocumentoFiscalViewModel)(factura)
             NotifyPropertyChanged(NameOf(DocumentoFiscalViewModel))
         End Function

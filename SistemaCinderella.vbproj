@@ -1963,14 +1963,6 @@
       <Project>{fb58f971-ff75-4ff7-8b90-53290a8da46f}</Project>
       <Name>Common.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="Common\Common.Device\Common.Device.csproj">
-      <Project>{72cb5f3c-e9a6-438f-9ccb-090df126bdd8}</Project>
-      <Name>Common.Device</Name>
-    </ProjectReference>
-    <ProjectReference Include="Common\Common.Service\Common.Service.csproj">
-      <Project>{6cd90b40-30a0-4ad5-a5bf-11b2a2efdd71}</Project>
-      <Name>Common.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="Controles\Controles.csproj">
       <Project>{197444e3-7a32-4a44-a9a0-551595095a64}</Project>
       <Name>Controles</Name>
@@ -1982,6 +1974,18 @@
     <ProjectReference Include="Entidades\Entidades.vbproj">
       <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
       <Name>Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="Factura\Factura.Core\Factura.Core.csproj">
+      <Project>{FE14CB9D-559D-465F-991D-20B9BCD29222}</Project>
+      <Name>Factura.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Factura\Factura.Device\Factura.Device.csproj">
+      <Project>{4F5C04CB-E485-499D-9843-4FBCE4221C49}</Project>
+      <Name>Factura.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="Factura\Factura.Service\Factura.Service.csproj">
+      <Project>{841532F4-09EF-4B4B-9D66-59ABED84B770}</Project>
+      <Name>Factura.Service</Name>
     </ProjectReference>
     <ProjectReference Include="Negocio\Negocio.vbproj">
       <Project>{D0101B76-7CE1-476B-84F3-9E99244C1E88}</Project>

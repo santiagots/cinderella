@@ -1,10 +1,9 @@
 ﻿using System.Data.Entity;
 using Model = Producto.Core.Model.ProductoAgreggate;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics;
 using System.Configuration;
-using Common.Core.Model;
 using Common.Data;
+using Common.Core.Helper;
 
 namespace Producto.Data
 {
@@ -13,8 +12,7 @@ namespace Producto.Data
         public ProductoContext()
         : base()
         {
-            this.Database.Connection.ConnectionString = Cripto.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
-            Database.Log = sql => Debug.Write(sql);
+            this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
         }
 
         public DbSet<Model.Producto> Producto { get; set; }

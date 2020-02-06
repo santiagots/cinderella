@@ -82,8 +82,8 @@ Namespace Formularios.Producto
 
         Public Shared Function ObtenerIVAs() As IList(Of IVA)
             Using context As ProductoContext = New ProductoContext()
-                Dim ivaRepository As IRepository(Of IVA) = New Repository(Of IVA)(context)
-                Return ivaRepository.List().OrderBy(Function(x) x.Valor).ToList()
+                Dim ivaRepository As IIVARepository = New IVARepository(context)
+                Return ivaRepository.Obtener()
             End Using
         End Function
 

@@ -18,7 +18,7 @@ namespace Ventas.Core.Model.BaseAgreggate
         public MontoProducto Total { get { return MontoProducto * Cantidad; } }
         public decimal PorcentajeBonificacion { get; internal set; }
         public int IdProducto { get; internal set; }
-        public virtual Producto Producto { get; internal set; }
+        public virtual Producto Producto { get; set; }
         public DateTime FechaEdicion { get; internal set; }
 
         internal TransaccionItem() : base()

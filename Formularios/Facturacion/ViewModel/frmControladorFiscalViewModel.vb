@@ -41,7 +41,7 @@ Namespace Formularios.Facturacion
         End Property
         Public Property TicketFechaDesde As DateTime
         Public Property TicketFechaHasta As DateTime
-        Private _Facturas As List(Of Factura)
+        Private _Facturas As List(Of Ventas.Core.Model.VentaAggregate.Factura)
         Public ReadOnly Property Facturas As BindingList(Of DocumentoFiscalViewModel)
             Get
                 Return New BindingList(Of DocumentoFiscalViewModel)(Mapper.Map(Of List(Of DocumentoFiscalViewModel))(_Facturas))
@@ -56,7 +56,7 @@ Namespace Formularios.Facturacion
 
         Sub New(IdSucursal As Integer)
             Me.IdSucursal = IdSucursal
-            Me._Facturas = New List(Of Factura)()
+            Me._Facturas = New List(Of Ventas.Core.Model.VentaAggregate.Factura)()
             ControladorFiscalFechaDesde = Date.Now.StartOfWeek(DayOfWeek.Monday)
             ControladorFiscalFechaHasta = Date.Now
 
@@ -150,7 +150,7 @@ Namespace Formularios.Facturacion
 
                     Dim index As Integer = 3
 
-                    For Each factura As Factura In _Facturas
+                    For Each factura As Ventas.Core.Model.VentaAggregate.Factura In _Facturas
                         facturasSheet.CopyRow(index, index + 2)
                         Dim dataCell As List(Of ICell) = facturasSheet.GetRow(index).Cells
                         dataCell(0).SetCellValue(factura.NumeroFactura.First.Numero.ToString())

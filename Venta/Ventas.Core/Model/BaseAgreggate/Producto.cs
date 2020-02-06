@@ -14,9 +14,9 @@ namespace Ventas.Core.Model.BaseAgreggate
         public string CodigoBarra { get; private set; }
         public string Nombre {get; private set; }
         public int IdCategoria { get; private set; }
-        public virtual Categoria Categoria { get; private set; }
+        public virtual Categoria Categoria { get; set; }
         public int IdSubcategoria { get; private set; }
-        public virtual SubCategoria SubCategoria { get; private set; }
+        public virtual SubCategoria SubCategoria { get; set; }
         public virtual Stock Stock { get; set; }
         public virtual IList<Precio> Precios { get; set; }
         
@@ -24,7 +24,7 @@ namespace Ventas.Core.Model.BaseAgreggate
         {
         }
 
-        public Producto(int id, string codigo, string codigoBarra, string nombre, Stock stock)
+        public Producto(int id, string codigo, string codigoBarra, string nombre, int idCategoria, int idSubcategoria, Stock stock)
         {
             Id = id;
             Codigo = codigo;

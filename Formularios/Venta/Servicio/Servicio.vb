@@ -10,6 +10,7 @@ Imports Ventas.Core.Enum
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports Common.Data.Repository
 Imports Ventas.Core.Model.NotaPedidoAgreggate
+Imports Common.Core.Model
 
 Namespace Formularios.Venta
     Public Class Servicio

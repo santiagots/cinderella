@@ -13,12 +13,6 @@ namespace Producto.Core.Model.ProductoAgreggate
         public virtual SubCategoria Subcategoria { get; protected set; }
         public int? IdProveedor { get; protected set; }
         public virtual Proveedor Proveedor { get; protected set; }
-
-        public void AgregarNombre(string value)
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual IList<Precio> Precios { get; protected set; }
         public string Nombre { get; protected set; }
         public string Descripcion { get; protected set; }

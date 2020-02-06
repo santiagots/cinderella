@@ -4,15 +4,17 @@ Imports Enums = Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports System.Threading.Tasks
 Imports Helper = Common.Core.Helper
-Imports Common.Core.ValueObjects
 Imports Common.Core.Model
 Imports Common.Core.Enum
 Imports Model = Ventas.Core.Model.VentaAggregate
 Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
-Imports Common.Service.Facturar
-Imports Common.Service.Facturar.Contracts
 Imports Common.Service.NotaCredito
-Imports Common.Service.NotaCredito.Contracts
+Imports Factura.Service.Factura
+Imports Factura.Service.NotaCredito.Contracts
+Imports Factura.Service.Factura.Contracts
+Imports Factura.Service.Common.Contracts
+Imports Ventas.Core.Model.VentaAggregate
+Imports Ventas.Core.Model.ValueObjects
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -148,8 +150,13 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            If (HabilitarCUIT) AndAlso Not Helper.Cuit.Validar(CUIT) Then
+            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.Validar(CUIT) Then
                 MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+
+            If ventaModel.TipoCliente = Enums.TipoCliente.Minorista AndAlso HabilitarCUIT AndAlso Not Helper.Dni.Validar(CUIT) Then
+                MessageBox.Show("Error al registrar la factura. El DNI ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
 
@@ -160,19 +167,23 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            Dim ticketProducto As IList(Of TicketProducto) = New List(Of TicketProducto)
-            Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
+            Dim obtenerNumeroFacturaRequest As ObtenerNumeroFacturaRequest = New ObtenerNumeroFacturaRequest() With {
+                .CondicionIVA = CondicionesIVASeleccionada,
+                .Cuit = CUIT,
+                .Direccion = Direccion,
+                .Localidad = Localidad,
+                .NombreYApellido = NombreYApellido,
+                .Pagos = New List(Of PagoRequest)(),
+                .PorcentajeFacturacion = ventaModel.PorcentajeFacturacion,
+                .Productos = New List(Of ProductoRequest)(),
+                .TipoCliente = ventaModel.TipoCliente
+            }
 
-            If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto), 0))
-            Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor, x.Producto.SubCategoria.IVA.Valor)))
-            End If
-
-            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
+            obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems)
+            obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
             Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada)
-            Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT)
+            Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
 
             ventaModel.AgregarFactura(ObtenerPuntoVenta,
                                     TiposFacturaSeleccionada,
@@ -197,8 +208,13 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            If (HabilitarCUIT) AndAlso Not Helper.Cuit.Validar(CUIT) Then
+            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.Validar(CUIT) Then
                 MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+
+            If ventaModel.TipoCliente = Enums.TipoCliente.Minorista AndAlso HabilitarCUIT AndAlso Not Helper.Dni.Validar(CUIT) Then
+                MessageBox.Show("Error al registrar la factura. El DNI ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
 
@@ -209,19 +225,28 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            Dim ticketProducto As IList(Of TicketProducto) = New List(Of TicketProducto)
-            Dim ticketPago As IList(Of TicketPago) = New List(Of TicketPago)
+            Dim ObtenerNumeroNotaCretidoRequest As ObtenerNumeroNotaCretidoRequest = New ObtenerNumeroNotaCretidoRequest() With {
+                .CondicionIVA = CondicionesIVASeleccionada,
+                .Cuit = CUIT,
+                .CondicionIVAOriginal = CondicionIvaOriginal,
+                .Direccion = Direccion,
+                .Localidad = Localidad,
+                .NombreYApellido = NombreYApellido,
+                .NumeroFacturaOrigen = NumeroFacturaOrigen,
+                .Pagos = New List(Of PagoRequest)(),
+                .PorcentajeFacturacion = ventaModel.PorcentajeFacturacion,
+                .Productos = New List(Of ProductoRequest)(),
+                .PuntoVentaOrigen = PuntoVentaOriginal,
+                .TipoCliente = ventaModel.TipoCliente
+            }
 
-            If (desdeReserva) Then
-                ticketProducto.Add(New TicketProducto("senia", "Seña", 1, ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto), 0))
-            Else
-                ventaModel.VentaItems.ToList().ForEach(Sub(x) ticketProducto.Add(New TicketProducto(x.Producto.Codigo, x.Producto.Nombre, x.Cantidad, x.MontoProducto.Valor, x.Producto.SubCategoria.IVA.Valor)))
-            End If
+            ventaModel.ActualizarPagos(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente) ''fuerzo la registracion de los pagos a cada producto
 
-            ventaModel.Pagos.ToList().ForEach(Sub(x) ticketPago.Add(New TicketPago(x.TipoPago, x.MontoPago.Monto, x.MontoPago.Descuento, x.MontoPago.CFT, x.NumeroCuotas)))
+            ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems)
+            ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
             Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada)
-            Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ventaModel.TipoCliente, CondicionesIVASeleccionada, ticketPago, ticketProducto, ventaModel.PorcentajeFacturacion, NombreYApellido, Direccion, Localidad, CUIT, NumeroFacturaOrigen, PuntoVentaOriginal, CondicionIvaOriginal)
+            Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest)
 
             ventaModel.AgregarNotaCredito(ObtenerPuntoVenta(),
                                             TiposFacturaSeleccionada,
@@ -343,5 +368,65 @@ Namespace Formularios.Facturacion
                 LimiteFacturacion = False
             End If
         End Sub
+
+        Private Function ObtenerProductoRequest(desdeReserva As Boolean, porcentajeFacturacion As Decimal, tipoCliente As TipoCliente, ventaItems As List(Of VentaItem)) As List(Of ProductoRequest)
+
+            Dim request As List(Of ProductoRequest) = New List(Of ProductoRequest)()
+
+            If (desdeReserva) Then
+                request.Add(New ProductoRequest() With {
+                    .Cantidad = 1,
+                    .Codigo = "senia",
+                    .Nombre = "Seña",
+                    .Monto = ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
+                    .Descuento = ventaModel.Pagos.Sum(Function(x) x.MontoPago.Descuento),
+                    .CFT = ventaModel.Pagos.Sum(Function(x) x.MontoPago.CFT),
+                    .IVA = Servicio.ObtenerIVA(0.21)})
+            Else
+                For Each ventaItem As VentaItem In ventaItems
+
+                    Dim pagos As List(Of Pago) = ventaItem.ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente)
+
+                    request.Add(New ProductoRequest() With {
+                            .Cantidad = ventaItem.Cantidad,
+                            .Codigo = ventaItem.Producto.Codigo,
+                            .Nombre = ventaItem.Producto.Nombre,
+                            .Monto = ventaItem.MontoProducto.Valor,
+                            .Descuento = pagos.Sum(Function(x) x.MontoPago.Descuento),
+                            .CFT = pagos.Sum(Function(x) x.MontoPago.CFT),
+                            .IVA = ventaItem.Producto.SubCategoria.IVA})
+                Next
+            End If
+            Return request
+        End Function
+
+        Private Function ObtenerPagoRequest(pordentajeFacturacion As Decimal, tipoCliente As TipoCliente, itemVenta As List(Of VentaItem), pagos As List(Of Pago)) As List(Of PagoRequest)
+
+            Dim request As List(Of PagoRequest) = New List(Of PagoRequest)()
+
+            'Dim pagos As List(Of Pago) = itemVenta.SelectMany(Of Pago)(Function(x) x.ObtenerPagosDeProducto(pordentajeFacturacion, tipoCliente)).ToList()
+
+            'request = pagos.GroupBy(Function(x) New With {Key x.TipoPago, Key x.NumeroCuotas}) _
+            '                .Select(Function(y) New PagoRequest() With {
+            '                    .TipoPago = y.Key.TipoPago,
+            '                    .NumeroCuotas = y.Key.NumeroCuotas,
+            '                    .Monto = y.Sum(Function(z) z.MontoPago.Monto),
+            '                    .Descuento = y.Sum(Function(z) z.MontoPago.Descuento),
+            '                    .CFT = y.Sum(Function(z) z.MontoPago.CFT),
+            '                    .IVA = y.Sum(Function(z) z.MontoPago.IVA)
+            '                    }).ToList()
+
+            'Return request
+
+            pagos.ForEach(Sub(x) request.Add(New PagoRequest() With {
+                                        .Monto = x.MontoPago.Monto,
+                                        .CFT = x.MontoPago.CFT,
+                                        .Descuento = x.MontoPago.Descuento,
+                                        .IVA = x.MontoPago.IVA,
+                                        .TipoPago = x.TipoPago,
+                                        .NumeroCuotas = x.NumeroCuotas}))
+
+            Return request
+        End Function
     End Class
 End Namespace

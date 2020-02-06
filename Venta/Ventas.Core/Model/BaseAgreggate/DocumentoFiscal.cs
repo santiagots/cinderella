@@ -21,14 +21,14 @@ namespace Ventas.Core.Model.BaseAgreggate
         public decimal Monto { get; protected set; }
         public DateTime Fecha { get; protected set; }
         public string CAE { get; protected set; }
-        public DateTime FechaVencimientoCAE { get; protected set; }
+        public DateTime? FechaVencimientoCAE { get; protected set; }
 
         public DocumentoFiscal() : base()
         { }
 
         public DocumentoFiscal(bool GenerarId) : base(GenerarId)
         { }
-        internal DocumentoFiscal(long idVenta, int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionIVA, string nombreYApellido, string direccion, string localidad, string cuit, string cae, DateTime fechaVencimeintoCae, decimal monto) : base()
+        internal DocumentoFiscal(long idVenta, int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionIVA, string nombreYApellido, string direccion, string localidad, string cuit, string cae, DateTime? fechaVencimeintoCae, decimal monto) : base()
         {
             Id = idVenta;
             PuntoVenta = puntoVenta;

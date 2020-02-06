@@ -1,13 +1,8 @@
 ﻿using Common.Core.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Data
 {
@@ -25,15 +20,11 @@ namespace Common.Data
         public DbSet<Domicilio> Domicilio { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<SubCategoria> SubCategoria { get; set; }
-        public DbSet<AfipTokenAcces> AfipTokenAcces { get; set; }
         public DbSet<IVA> IVA { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            modelBuilder.Entity<AfipTokenAcces>().ToTable("NUEVA_AFIP_TOKEN_ACCES");
-            modelBuilder.Entity<AfipTokenAcces>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             modelBuilder.Entity<Banco>().ToTable("BANCOS");
             modelBuilder.Entity<Banco>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);

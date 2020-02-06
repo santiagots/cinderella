@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D917F74-4921-4255-8A4D-9EE1C91A063F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Factura.ExternalService</RootNamespace>
+    <AssemblyName>Factura.ExternalService</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AfipFacturacionElectronicaService.cs" />
+    <Compile Include="AfipTokenAccesoService.cs" />
+    <Compile Include="Connected Services\Afip.Wsaa\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\Afip.Wsfev1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\AfipAlicuotaIvaRequest.cs" />
+    <Compile Include="Contracts\AfipObtenerCAERequest.cs" />
+    <Compile Include="Contracts\AfipObtenerCAEResponse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj">
+      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.Data\Common.Data.csproj">
+      <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
+      <Name>Common.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factura.Data\Factura.Data.csproj">
+      <Project>{03F19A1F-1217-4DE7-9455-B4438C252830}</Project>
+      <Name>Factura.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factura\Factura.Core\Factura.Core.csproj">
+      <Project>{FE14CB9D-559D-465F-991D-20B9BCD29222}</Project>
+      <Name>Factura.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\Afip.Wsaa\Factura.ExternalService.Afip.Wsaa.loginCmsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsaa\LoginCms.wsdl" />
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.CbteTipoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.ConceptoTipoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.DocTipoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.DummyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEAConsultarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEAGetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEARegInformativoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEAResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEASinMovConsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEASinMovimientoConsultarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEASinMovimientoInformarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEASinMovResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEASolicitarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAESolicitarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECompConsultaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECompConsultarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECompTotXRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECompUltimoAutorizadoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECotizacionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEDummyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEPaisResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetPtosVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposCbteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposConceptoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposDocResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposIvaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposMonedasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposOpcionalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposPaisesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposTributosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEPtoVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FERecuperaLastCbteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FERegXReqResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FETributoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.IvaTipoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.MonedaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.OpcionalTipoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\service.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Afip.Wsaa\" />
+    <WCFMetadataStorage Include="Connected Services\Afip.Wsfev1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsfev1\service.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsfev1\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsfev1\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsfev1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsaa\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsaa\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Afip.Wsaa\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -35,13 +35,13 @@ Partial Class VentaDetalle
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView4 = New System.Windows.Forms.DataGridView()
         Me.DescripcionDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -61,6 +61,13 @@ Partial Class VentaDetalle
         Me.TotalDataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PagosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CantidadDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalVentaItemBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox7 = New System.Windows.Forms.TextBox()
@@ -86,13 +93,6 @@ Partial Class VentaDetalle
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CantidadDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TotalPagoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -203,7 +203,7 @@ Partial Class VentaDetalle
         '
         'VentaDetalleBindingSource
         '
-        Me.VentaDetalleBindingSource.DataSource = GetType(VentaDetalleViewModel)
+        Me.VentaDetalleBindingSource.DataSource = GetType(SistemaCinderella.Comunes.VentaDetalleViewModel)
         '
         'DataGridView3
         '
@@ -294,6 +294,63 @@ Partial Class VentaDetalle
         Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.Size = New System.Drawing.Size(894, 24)
         Me.DataGridView2.TabIndex = 75
+        '
+        'CodigoDataGridViewTextBoxColumn1
+        '
+        Me.CodigoDataGridViewTextBoxColumn1.DataPropertyName = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn1.HeaderText = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn1.Name = "CodigoDataGridViewTextBoxColumn1"
+        Me.CodigoDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'NombreDataGridViewTextBoxColumn1
+        '
+        Me.NombreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreDataGridViewTextBoxColumn1.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn1.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn1.Name = "NombreDataGridViewTextBoxColumn1"
+        Me.NombreDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'CantidadDataGridViewTextBoxColumn1
+        '
+        Me.CantidadDataGridViewTextBoxColumn1.DataPropertyName = "Cantidad"
+        Me.CantidadDataGridViewTextBoxColumn1.HeaderText = "Cantidad"
+        Me.CantidadDataGridViewTextBoxColumn1.Name = "CantidadDataGridViewTextBoxColumn1"
+        Me.CantidadDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.CantidadDataGridViewTextBoxColumn1.Width = 75
+        '
+        'MontoDataGridViewTextBoxColumn1
+        '
+        Me.MontoDataGridViewTextBoxColumn1.DataPropertyName = "Monto"
+        DataGridViewCellStyle11.Format = "C2"
+        Me.MontoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
+        Me.MontoDataGridViewTextBoxColumn1.HeaderText = "Monto"
+        Me.MontoDataGridViewTextBoxColumn1.Name = "MontoDataGridViewTextBoxColumn1"
+        Me.MontoDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "Iva"
+        DataGridViewCellStyle12.Format = "C2"
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle12
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Iva"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'TotalDataGridViewTextBoxColumn1
+        '
+        Me.TotalDataGridViewTextBoxColumn1.DataPropertyName = "Total"
+        DataGridViewCellStyle13.Format = "C2"
+        Me.TotalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle13
+        Me.TotalDataGridViewTextBoxColumn1.HeaderText = "Total"
+        Me.TotalDataGridViewTextBoxColumn1.Name = "TotalDataGridViewTextBoxColumn1"
+        Me.TotalDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'PorcentajeBonificacionDataGridViewTextBoxColumn1
+        '
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.HeaderText = "PorcentajeBonificacion"
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn1"
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.Width = 85
         '
         'TotalVentaItemBindingSource
         '
@@ -514,6 +571,7 @@ Partial Class VentaDetalle
         Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
         Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
         Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CodigoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CodigoDataGridViewTextBoxColumn.Width = 75
         '
         'NombreDataGridViewTextBoxColumn
@@ -523,6 +581,7 @@ Partial Class VentaDetalle
         Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
         Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
         Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NombreDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'CantidadDataGridViewTextBoxColumn
         '
@@ -530,6 +589,7 @@ Partial Class VentaDetalle
         Me.CantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad"
         Me.CantidadDataGridViewTextBoxColumn.Name = "CantidadDataGridViewTextBoxColumn"
         Me.CantidadDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CantidadDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CantidadDataGridViewTextBoxColumn.Width = 75
         '
         'MontoDataGridViewTextBoxColumn
@@ -540,6 +600,7 @@ Partial Class VentaDetalle
         Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
         Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.MontoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'DataGridViewTextBoxColumn1
         '
@@ -549,6 +610,7 @@ Partial Class VentaDetalle
         Me.DataGridViewTextBoxColumn1.HeaderText = "Iva"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'TotalDataGridViewTextBoxColumn
         '
@@ -558,6 +620,7 @@ Partial Class VentaDetalle
         Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
         Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
         Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
+        Me.TotalDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'PorcentajeBonificacionDataGridViewTextBoxColumn
         '
@@ -567,64 +630,8 @@ Partial Class VentaDetalle
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.HeaderText = "% Bonif."
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn"
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.ReadOnly = True
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Width = 85
-        '
-        'CodigoDataGridViewTextBoxColumn1
-        '
-        Me.CodigoDataGridViewTextBoxColumn1.DataPropertyName = "Codigo"
-        Me.CodigoDataGridViewTextBoxColumn1.HeaderText = "Codigo"
-        Me.CodigoDataGridViewTextBoxColumn1.Name = "CodigoDataGridViewTextBoxColumn1"
-        Me.CodigoDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'NombreDataGridViewTextBoxColumn1
-        '
-        Me.NombreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreDataGridViewTextBoxColumn1.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn1.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn1.Name = "NombreDataGridViewTextBoxColumn1"
-        Me.NombreDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'CantidadDataGridViewTextBoxColumn1
-        '
-        Me.CantidadDataGridViewTextBoxColumn1.DataPropertyName = "Cantidad"
-        Me.CantidadDataGridViewTextBoxColumn1.HeaderText = "Cantidad"
-        Me.CantidadDataGridViewTextBoxColumn1.Name = "CantidadDataGridViewTextBoxColumn1"
-        Me.CantidadDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.CantidadDataGridViewTextBoxColumn1.Width = 75
-        '
-        'MontoDataGridViewTextBoxColumn1
-        '
-        Me.MontoDataGridViewTextBoxColumn1.DataPropertyName = "Monto"
-        DataGridViewCellStyle11.Format = "C2"
-        Me.MontoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
-        Me.MontoDataGridViewTextBoxColumn1.HeaderText = "Monto"
-        Me.MontoDataGridViewTextBoxColumn1.Name = "MontoDataGridViewTextBoxColumn1"
-        Me.MontoDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.DataPropertyName = "Iva"
-        DataGridViewCellStyle12.Format = "C2"
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle12
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Iva"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'TotalDataGridViewTextBoxColumn1
-        '
-        Me.TotalDataGridViewTextBoxColumn1.DataPropertyName = "Total"
-        DataGridViewCellStyle13.Format = "C2"
-        Me.TotalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle13
-        Me.TotalDataGridViewTextBoxColumn1.HeaderText = "Total"
-        Me.TotalDataGridViewTextBoxColumn1.Name = "TotalDataGridViewTextBoxColumn1"
-        Me.TotalDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'PorcentajeBonificacionDataGridViewTextBoxColumn1
-        '
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.HeaderText = "PorcentajeBonificacion"
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn1"
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.Width = 85
         '
         'VentaDetalle
         '

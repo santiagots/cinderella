@@ -12,7 +12,6 @@ namespace Ventas.Core.Model.VentaAggregate
 {
     public class VentaItem : TransaccionItem
     {
-
         private MontoProducto MontoProductoMinorista;
         private decimal PorcentajeBonificacionMinorista;
         private MontoProducto MontoProductoMayorista;
@@ -35,6 +34,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public VentaItem(): base()
         {
+            Pagos = new Dictionary<Pago, decimal>();
         }
 
         internal VentaItem(long idVenta, Producto producto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
@@ -167,15 +167,14 @@ namespace Ventas.Core.Model.VentaAggregate
                 PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4);
         }
 
-        internal IEnumerable<Pago> ObtenerPagosDeProducto()
+        public IEnumerable<Pago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
             List<Pago> pagos = new List<Pago>();
 
             foreach (KeyValuePair<Pago, decimal> montoPorPago in this.Pagos)
             {
-                Pago pago = montoPorPago.Key;
-                pago.ActualizarMontoRestante(montoPorPago.Value);
-                pagos.Add(pago);
+                MontoPago montoPago = ObtenerMontoPago(montoPorPago.Value, montoPorPago.Key.PorcentajeRecargo, porcentajeFacturacion, tipoCliente, montoPorPago.Key.TipoPago);
+                pagos.Add(new Pago(montoPorPago.Key.IdVenta, montoPorPago.Key.TipoPago, montoPorPago.Key.Tarjeta, montoPorPago.Key.NumeroCuotas, montoPorPago.Key.PorcentajeRecargo, montoPago.Monto, 0, montoPago.Descuento, montoPago.CFT, montoPago.IVA));
             }
 
             return pagos;

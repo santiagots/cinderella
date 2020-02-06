@@ -32,7 +32,7 @@ namespace Ventas.Data.Repository
                             .Include(x => x.Pagos)
                             .Include(x => x.Cheques)
                             .Include(x => x.VentaItems)
-                            .Include(x => x.VentaItems.Select(y => y.Producto))
+                            .Include(x => x.VentaItems.Select(y => y.Producto.SubCategoria.IVA))
                             .Include(x => x.Factura)
                             .Include(x => x.Factura.NumeroFactura)
                             .Include(x => x.NotaCredito)
@@ -82,7 +82,9 @@ namespace Ventas.Data.Repository
         {
             _context.Entry(venta.Encargado).State = EntityState.Unchanged;
             _context.Entry(venta.Vendedor).State = EntityState.Unchanged;
-            venta.VentaItems.ToList().ForEach(x => _context.Entry(x.Producto).State = System.Data.Entity.EntityState.Unchanged);
+            venta.VentaItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria
+            venta.VentaItems.ToList().ForEach(x => x.Producto.SubCategoria = null); //pongo null la subcategoria porque sino entra en conflicto cuando varios productos tiene la misma subcategoria
+            venta.VentaItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
             _context.Venta.Add(venta);
             _context.SaveChanges();
         }

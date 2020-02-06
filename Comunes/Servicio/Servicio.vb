@@ -3,7 +3,6 @@ Imports Common.Data.Repository
 Imports Common.Core.Model
 Imports Ventas.Data.Repository
 Imports Ventas.Core.Interfaces
-
 Imports Common.Core.Interfaces
 Imports Common.Data
 Imports Ventas.Core.Model.VentaAggregate
@@ -24,7 +23,7 @@ Namespace Comunes
             End Using
         End Sub
 
-        Friend Shared Sub GuardarFactura(factura As Factura)
+        Friend Shared Sub GuardarFactura(factura As Ventas.Core.Model.VentaAggregate.Factura)
             Using context As VentaContext = New VentaContext()
                 Dim facturaRepository As IFacturaRepository = New FacturaRepository(context)
                 facturaRepository.Guardar(factura)

@@ -1,4 +1,5 @@
-﻿using Common.Data;
+﻿using Common.Core.Helper;
+using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.Entity;
@@ -19,8 +20,7 @@ namespace Ventas.Data
             if(local)
                 this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
             else
-                this.Database.Connection.ConnectionString = Cripto.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
-            Database.Log = sql => Debug.Write(sql);
+                this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
         }
 
         public DbSet<Cheque> Cheque { get; set; }
@@ -112,6 +112,7 @@ namespace Ventas.Data
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
             modelBuilder.Entity<Pago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
+            modelBuilder.Entity<Pago>().Property(t => t.PorcentajeRecargo).HasPrecision(18, 4);
             modelBuilder.Entity<Pago>().Ignore(t => t.MontoRestante);
             modelBuilder.Entity<Pago>().Ignore(t => t.Habilitado);
 

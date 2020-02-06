@@ -113,14 +113,14 @@ namespace Ventas.Test
 
         //}
 
-        [Fact]
-        public void Guardar()
-        {
-            List<TicketProducto> prod = new List<TicketProducto>() { new TicketProducto("Test", 1, 1) };
+        //[Fact]
+        //public void Guardar()
+        //{
+        //    List<TicketProducto> prod = new List<TicketProducto>() { new TicketProducto("Test", 1, 1) };
 
-            FacturarControladorFiscalStrategy notaCredito = new FacturarControladorFiscalStrategy();
-            notaCredito.ObtenerNumeroFactura(TipoCliente.Minorista, CondicionIVA.Consumidor_Final, null, prod, 1, "nombre", "direccion", "localidad", "1");
-        }
+        //    FacturarControladorFiscalStrategy notaCredito = new FacturarControladorFiscalStrategy();
+        //    notaCredito.ObtenerNumeroFactura(TipoCliente.Minorista, CondicionIVA.Consumidor_Final, null, prod, 1, "nombre", "direccion", "localidad", "1");
+        //}
 
     }
 }

@@ -1,12 +1,13 @@
 ﻿Imports Common.Core.Enum
-Imports Common.Service.Facturar
-Imports Common.Service.NotaCredito
 Imports Ventas.Core.Interfaces
 Imports Model = Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
-Imports Common.Core.ValueObjects
 Imports System.Text
+Imports Factura.Service.Factura
+Imports Common.Core.Interfaces
+Imports Common.Data.Repository
+Imports Common.Core.Model
 
 Namespace Formularios.Facturacion
     Public Class Servicio
@@ -119,6 +120,13 @@ Namespace Formularios.Facturacion
                                                  jornadasBorradasDesde,
                                                  jornadasBorradasHasta)
         End Sub
+
+        Public Shared Function ObtenerIVA(porcentaje As Decimal) As IVA
+            Using context As VentaContext = New VentaContext()
+                Dim ivaRepository As IIVARepository = New IVARepository(context)
+                Return ivaRepository.Obtener(porcentaje)
+            End Using
+        End Function
 
     End Class
 End Namespace

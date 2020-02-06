@@ -155,7 +155,7 @@ namespace Ventas.Core.Model.VentaAggregate
             IdVendedor = vendedor != null ? vendedor.Id : 0;
         }
 
-        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroFactura, string cae, DateTime fechaVencimientoCae)
+        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroFactura, string cae, DateTime? fechaVencimientoCae)
         {
             if (numeroFactura.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
@@ -165,7 +165,7 @@ namespace Ventas.Core.Model.VentaAggregate
             Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroFactura, cae, fechaVencimientoCae);
         }
 
-        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroNotaPedido, string cae, DateTime fechaVencimientoCae)
+        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroNotaPedido, string cae, DateTime? fechaVencimientoCae)
         {
             if (numeroNotaPedido.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
@@ -319,8 +319,8 @@ namespace Ventas.Core.Model.VentaAggregate
         {
             IEnumerable<IGrouping<bool, VentaItem>> ventaItemGroup =  itemsVenta.GroupBy(x => x.Cantidad > 0);
 
-            List<VentaItem> Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
-            List<VentaItem> Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ToList();
+            List<VentaItem> Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
+            List<VentaItem> Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
 
             List<VentaItem> Aux = new List<VentaItem>(Devoluciones);
             Aux.AddRange(Ventas);
@@ -351,7 +351,7 @@ namespace Ventas.Core.Model.VentaAggregate
             return subtotal;
         }
 
-        private void ActualizarPagos(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        public void ActualizarPagos(decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
             foreach (VentaItem ventaItems in VentaItems)
             {
@@ -368,6 +368,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 {
                     decimal montoRestante = ventaItems.AgregarPago(pago, pago.PorcentajeRecargo, porcentajeFacturacion, tipoCliente);
                     ventaItems.ActualizarPorcentajePago();
+
                     if (montoRestante == 0)
                         break;
                 }

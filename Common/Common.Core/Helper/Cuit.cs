@@ -8,42 +8,38 @@ namespace Common.Core.Helper
 {
     public class Cuit
     {
-        public static bool Validar(string cuit)
+        public static int CalcularDigitoCuit(string cuit)
         {
-            int suma = 0;
-            bool valido;
-            int cuitNumero = 0;
-            cuit = cuit.Replace("-", "");
-            if (int.TryParse(cuit, out cuitNumero))
+            int[] mult = new[] { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
+            char[] nums = cuit.ToCharArray();
+            int total = 0;
+            for (int i = 0; i<mult.Length; i++)
             {
-                if (cuit.Length != 11)
-                    valido = false;
-                else
-                {
-                    suma = 0;
-                    suma += System.Convert.ToInt32(cuit.Substring(0, 1)) * 5;
-                    suma += System.Convert.ToInt32(cuit.Substring(1, 1)) * 4;
-                    suma += System.Convert.ToInt32(cuit.Substring(2, 1)) * 3;
-                    suma += System.Convert.ToInt32(cuit.Substring(3, 1)) * 2;
-                    suma += System.Convert.ToInt32(cuit.Substring(4, 1)) * 7;
-                    suma += System.Convert.ToInt32(cuit.Substring(5, 1)) * 6;
-                    suma += System.Convert.ToInt32(cuit.Substring(6, 1)) * 5;
-                    suma += System.Convert.ToInt32(cuit.Substring(7, 1)) * 4;
-                    suma += System.Convert.ToInt32(cuit.Substring(8, 1)) * 3;
-                    suma += System.Convert.ToInt32(cuit.Substring(9, 1)) * 2;
-                    suma += System.Convert.ToInt32(cuit.Substring(10, 1));
-                }
-
-                if (Math.Round(suma / (double)11, 0) == (suma / (double)11))
-                    valido = true;
-                else
-                    valido = false;
+                total += int.Parse(nums[i].ToString()) * mult[i];
             }
-            else
-                valido = false;
-            return (valido);
+            var resto = total % 11;
+            return resto == 0 ? 0 : resto == 1 ? 9 : 11 - resto;
         }
 
+        public static bool Validar(string cuit)
+        {
+            cuit = cuit.Replace("-", string.Empty);
 
+            if (string.IsNullOrWhiteSpace(cuit))
+            {
+                return false;
+            }
+
+            if (cuit.Length != 11)
+            {
+                return false;
+            }
+            else
+            {
+                int calculado = CalcularDigitoCuit(cuit);
+                int digito = int.Parse(cuit.Substring(10));
+                return calculado == digito;
+            }
+        }
     }
 }

@@ -62,7 +62,6 @@
     <Compile Include="Enum\CondicionesIVA.cs" />
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
-    <Compile Include="Enum\ModeloControladoraFiscal.cs" />
     <Compile Include="Enum\OrdenarDireccion.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
@@ -74,16 +73,16 @@
     <Compile Include="Extension\ToList.cs" />
     <Compile Include="Helper\CertificadosX509.cs" />
     <Compile Include="Helper\Cuit.cs" />
+    <Compile Include="Helper\Dni.cs" />
     <Compile Include="Helper\Encriptar.cs" />
     <Compile Include="Helper\IdGenerator.cs" />
     <Compile Include="Helper\Log.cs" />
-    <Compile Include="Interfaces\IAfipTokenAccesRepository.cs" />
     <Compile Include="Interfaces\ICategoriaRepository.cs" />
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
+    <Compile Include="Interfaces\IIVARepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubCategoriaRepository.cs" />
-    <Compile Include="Model\AfipTokenAcces.cs" />
     <Compile Include="Model\Banco.cs" />
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\ClienteMayorista.cs" />
@@ -96,8 +95,6 @@
     <Compile Include="Model\Provincia.cs" />
     <Compile Include="Model\SubCategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueObjects\TicketPago.cs" />
-    <Compile Include="ValueObjects\TicketProducto.cs" />
     <Compile Include="ValueObjects\ValueObjects.cs" />
   </ItemGroup>
   <ItemGroup>
