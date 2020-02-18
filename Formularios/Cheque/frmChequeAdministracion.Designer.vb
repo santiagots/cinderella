@@ -772,7 +772,7 @@ Partial Class frmChequeAdministracion
         Me.cmbBancoEmisor.DisplayMember = "Value"
         Me.cmbBancoEmisor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbBancoEmisor.FormattingEnabled = True
-        Me.cmbBancoEmisor.Location = New System.Drawing.Point(163, 69)
+        Me.cmbBancoEmisor.Location = New System.Drawing.Point(163, 68)
         Me.cmbBancoEmisor.Name = "cmbBancoEmisor"
         Me.cmbBancoEmisor.Size = New System.Drawing.Size(284, 23)
         Me.cmbBancoEmisor.TabIndex = 15
