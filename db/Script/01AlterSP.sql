@@ -5,11 +5,11 @@ Run this script on:
 
 to synchronize it with:
 
-        ARCNU434BG8X\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF
+        ARCNU434BG8X.CINDERELLA_LOCAL
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 13.7.7.10021 from Red Gate Software Ltd at 13/12/2019 15:40:26
+Script created by SQL Compare version 13.7.7.10021 from Red Gate Software Ltd at 7/2/2020 15:35:06
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,27 +24,103 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Altering [dbo].[sp_GrupoPrecios_Listado]'
+PRINT N'Dropping constraints from [dbo].[NUEVA_VENTA_PAGOS]'
 GO
--- =============================================
--- Author:		Santiago
--- Create date: 13-09-2015
--- Description:	obtiene el listado de grupos de precios
--- =============================================
-ALTER PROCEDURE [dbo].[sp_GrupoPrecios_Listado] 
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Insert statements for procedure here
-	SELECT  * from [dbo].[LISTA_GRUPO] where id_Lista != 5  order by ListaPrecio  ASC
-
-END
-
-
-
+IF EXISTS (SELECT 1 FROM sys.columns WHERE name = N'PorcentajeRecargo' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_VENTA_PAGOS]', 'U') AND default_object_id = OBJECT_ID(N'[dbo].[DF_NUEVA_VENTA_PAGOS_PorcentajeRecargo]', 'D'))
+ALTER TABLE [dbo].[NUEVA_VENTA_PAGOS] DROP CONSTRAINT [DF_NUEVA_VENTA_PAGOS_PorcentajeRecargo]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[NUEVA_FACTURA]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+IF COL_LENGTH(N'[dbo].[NUEVA_FACTURA]', N'CAE') IS NULL
+ALTER TABLE [dbo].[NUEVA_FACTURA] ADD[CAE] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+IF COL_LENGTH(N'[dbo].[NUEVA_FACTURA]', N'FechaVencimientoCAE') IS NULL
+ALTER TABLE [dbo].[NUEVA_FACTURA] ADD[FechaVencimientoCAE] [datetime] NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[NUEVA_VENTA_PAGOS]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[NUEVA_VENTA_PAGOS] ALTER COLUMN [PorcentajeRecargo] [numeric] (18, 4) NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding constraints to [dbo].[NUEVA_VENTA_PAGOS]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE name = N'PorcentajeRecargo' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_VENTA_PAGOS]', 'U') AND default_object_id = OBJECT_ID(N'[dbo].[DF_NUEVA_VENTA_PAGOS_PorcentajeRecargo]', 'D'))
+ALTER TABLE [dbo].[NUEVA_VENTA_PAGOS] ADD CONSTRAINT [DF_NUEVA_VENTA_PAGOS_PorcentajeRecargo] DEFAULT ((0)) FOR [PorcentajeRecargo]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[NUEVA_IVA]'
+GO
+IF OBJECT_ID(N'[dbo].[NUEVA_IVA]', 'U') IS NULL
+CREATE TABLE [dbo].[NUEVA_IVA]
+(
+[Id] [int] NOT NULL,
+[Valor] [decimal] (6, 4) NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_NUEVA_IVA] on [dbo].[NUEVA_IVA]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_IVA]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_IVA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_IVA] ADD CONSTRAINT [PK_NUEVA_IVA] PRIMARY KEY CLUSTERED  ([Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[PRODUCTOS_SUBCATEGORIAS]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+IF COL_LENGTH(N'[dbo].[PRODUCTOS_SUBCATEGORIAS]', N'IdIVA') IS NULL
+ALTER TABLE [dbo].[PRODUCTOS_SUBCATEGORIAS] ADD[IdIVA] [int] NOT NULL CONSTRAINT [DF_PRODUCTOS_SUBCATEGORIAS_IVA] DEFAULT ((5))
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[NUEVA_AFIP_TOKEN_ACCES]'
+GO
+IF OBJECT_ID(N'[dbo].[NUEVA_AFIP_TOKEN_ACCES]', 'U') IS NULL
+CREATE TABLE [dbo].[NUEVA_AFIP_TOKEN_ACCES]
+(
+[Id] [bigint] NOT NULL,
+[FechaGeneracion] [datetime] NOT NULL,
+[FechaExpiracion] [datetime] NOT NULL,
+[Firma] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Token] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_NUEVA_AFIP_TOKEN_ACCES] on [dbo].[NUEVA_AFIP_TOKEN_ACCES]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_AFIP_TOKEN_ACCES]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_AFIP_TOKEN_ACCES]', 'U'))
+ALTER TABLE [dbo].[NUEVA_AFIP_TOKEN_ACCES] ADD CONSTRAINT [PK_NUEVA_AFIP_TOKEN_ACCES] PRIMARY KEY CLUSTERED  ([Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding foreign keys to [dbo].[PRODUCTOS_SUBCATEGORIAS]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PRODUCTOS_SUBCATEGORIAS_NUEVA_IVA]','F') AND parent_object_id = OBJECT_ID(N'[dbo].[PRODUCTOS_SUBCATEGORIAS]', 'U'))
+ALTER TABLE [dbo].[PRODUCTOS_SUBCATEGORIAS] WITH NOCHECK  ADD CONSTRAINT [FK_PRODUCTOS_SUBCATEGORIAS_NUEVA_IVA] FOREIGN KEY ([IdIVA]) REFERENCES [dbo].[NUEVA_IVA] ([Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Enabling constraints on [dbo].[NUEVA_FACTURA]'
+GO
+ALTER TABLE [dbo].[NUEVA_FACTURA] CHECK CONSTRAINT [FK_NUEVA_FACTURA_NUEVA_VENTAS]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Enabling constraints on [dbo].[NUEVA_VENTA_PAGOS]'
+GO
+ALTER TABLE [dbo].[NUEVA_VENTA_PAGOS] WITH CHECK CHECK CONSTRAINT [FK_NUEVA_VENTA_PAGOS_NUEVA_VENTAS]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

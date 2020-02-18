@@ -156,7 +156,7 @@ namespace Factura.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.CmdExt);
-            commands.Add(ReemplazarCaracteres(descripcion));
+            commands.Add(ReemplazarCaracteres($"DTO. {descripcion}"));
             commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
             SendData(commands/*, false*/);
         }
@@ -168,7 +168,7 @@ namespace Factura.Device.Printer
 
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.CmdExt);
-            commands.Add(ReemplazarCaracteres(descripcion));
+            commands.Add(ReemplazarCaracteres($"AJUSTE {descripcion}"));
             commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
             SendData(commands/*, false*/);
         }
