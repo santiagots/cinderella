@@ -23,6 +23,9 @@ Partial Class frmNotaCreditoAdministracion
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNotaCreditoAdministracion))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
@@ -53,8 +56,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.DG_NotaCredito = New System.Windows.Forms.DataGridView()
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PuntoVentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CondicionIVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CUITDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreYApellidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DireccionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -63,6 +64,10 @@ Partial Class frmNotaCreditoAdministracion
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Factura = New System.Windows.Forms.DataGridViewImageColumn()
         Me.NotaCreditoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CondicionIVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -406,13 +411,37 @@ Partial Class frmNotaCreditoAdministracion
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_NotaCredito.AutoGenerateColumns = False
         Me.DG_NotaCredito.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DG_NotaCredito.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_NotaCredito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_NotaCredito.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.PuntoVentaDataGridViewTextBoxColumn, Me.TipoFacturaDataGridViewTextBoxColumn, Me.CondicionIVADataGridViewTextBoxColumn, Me.CUITDataGridViewTextBoxColumn, Me.NombreYApellidoDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.LocalidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.Factura})
+        Me.DG_NotaCredito.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.PuntoVentaDataGridViewTextBoxColumn, Me.CUITDataGridViewTextBoxColumn, Me.NombreYApellidoDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.LocalidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.TipoFacturaDataGridViewTextBoxColumn, Me.CondicionIVADataGridViewTextBoxColumn, Me.Factura})
         Me.DG_NotaCredito.DataSource = Me.NotaCreditoBindingSource
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DG_NotaCredito.DefaultCellStyle = DataGridViewCellStyle2
         Me.DG_NotaCredito.Location = New System.Drawing.Point(12, 196)
         Me.DG_NotaCredito.MultiSelect = False
         Me.DG_NotaCredito.Name = "DG_NotaCredito"
         Me.DG_NotaCredito.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DG_NotaCredito.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.DG_NotaCredito.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_NotaCredito.Size = New System.Drawing.Size(930, 529)
         Me.DG_NotaCredito.TabIndex = 435
@@ -430,20 +459,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.PuntoVentaDataGridViewTextBoxColumn.HeaderText = "P. Venta"
         Me.PuntoVentaDataGridViewTextBoxColumn.Name = "PuntoVentaDataGridViewTextBoxColumn"
         Me.PuntoVentaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'TipoFacturaDataGridViewTextBoxColumn
-        '
-        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "T. Factura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
-        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CondicionIVADataGridViewTextBoxColumn
-        '
-        Me.CondicionIVADataGridViewTextBoxColumn.DataPropertyName = "CondicionIVA"
-        Me.CondicionIVADataGridViewTextBoxColumn.HeaderText = "Condición IVA"
-        Me.CondicionIVADataGridViewTextBoxColumn.Name = "CondicionIVADataGridViewTextBoxColumn"
-        Me.CondicionIVADataGridViewTextBoxColumn.ReadOnly = True
         '
         'CUITDataGridViewTextBoxColumn
         '
@@ -498,6 +513,34 @@ Partial Class frmNotaCreditoAdministracion
         '
         Me.NotaCreditoBindingSource.DataMember = "NotaCredito"
         Me.NotaCreditoBindingSource.DataSource = Me.FrmNotaCreditoAdministracionViewModelBindingSource
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "TipoFactura"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "T. Factura"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Width = 81
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "CondicionIVA"
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Condición IVA"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 81
+        '
+        'TipoFacturaDataGridViewTextBoxColumn
+        '
+        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
+        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "T. Factura"
+        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
+        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CondicionIVADataGridViewTextBoxColumn
+        '
+        Me.CondicionIVADataGridViewTextBoxColumn.DataPropertyName = "CondicionIVA"
+        Me.CondicionIVADataGridViewTextBoxColumn.HeaderText = "Condición IVA"
+        Me.CondicionIVADataGridViewTextBoxColumn.Name = "CondicionIVADataGridViewTextBoxColumn"
+        Me.CondicionIVADataGridViewTextBoxColumn.ReadOnly = True
         '
         'frmNotaCreditoAdministracion
         '
@@ -563,4 +606,6 @@ Partial Class frmNotaCreditoAdministracion
     Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents FechaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Factura As DataGridViewImageColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
 End Class

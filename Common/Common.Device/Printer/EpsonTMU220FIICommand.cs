@@ -26,7 +26,11 @@ namespace Common.Device.Printer
 
         internal static EpsonCommand ItemTicket = new EpsonCommand("\xB\x2", "\x0\x18");
 
+        internal static EpsonCommand ItemTicketRetorno = new EpsonCommand("\xB\x2", "\x0\x1C");
+
         internal static EpsonCommand ItemNotaCredito = new EpsonCommand("\xD\x2", "\x0\x18");
+
+        internal static EpsonCommand ItemNotaCreditoRetorno = new EpsonCommand("\xD\x2", "\x0\x1C");
 
         internal static EpsonCommand DescuentoTicket = new EpsonCommand("\xB\x4", "\x0\x0");
 
