@@ -2,6 +2,7 @@
 using Common.Core.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Factura.Device.Printer
@@ -49,6 +50,21 @@ namespace Factura.Device.Printer
         public EpsonTMU220FII(string tipoConexionControladora)
         {
             Initialize(tipoConexionControladora);
+        }
+
+        public int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        {
+            AbrirTicket();
+            productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));
+            pagos.ForEach(x => PagarTicket(x.TipoPago, x.NumeroCuotas, x.Neto(PorcentajeFacturacion)));
+            return CerrarTicket();
+        }
+
+        public int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        {
+            AbrirNotaCredito();
+            productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));
+            return CerrarNotaCredito();
         }
 
         // Funcion que Abre un Tique.
@@ -157,7 +173,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.CmdExt);
             commands.Add(ReemplazarCaracteres($"DTO. {descripcion}"));
-            commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
+            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(descuento, iva), 2));
             SendData(commands/*, false*/);
         }
 
@@ -169,7 +185,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.CmdExt);
             commands.Add(ReemplazarCaracteres($"AJUSTE {descripcion}"));
-            commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
+            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(recargo, iva), 2));
             SendData(commands/*, false*/);
         }
 
@@ -181,7 +197,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(descuento * PorcentajeFacturacion, 2));
+            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(descuento, iva), 2));
             SendData(commands/*, false*/);
         }
 
@@ -193,7 +209,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(recargo * PorcentajeFacturacion, 2));
+            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(recargo, iva), 2));
             SendData(commands/*, false*/);
         }
 
@@ -212,15 +228,14 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.Pago.CmdExt);
             commands.Add("");
             commands.Add(ReemplazarCaracteres(formaPago));
-            commands.Add(FormatearPrecio(MontoPago * PorcentajeFacturacion, 2));
+            commands.Add(FormatearPrecio(MontoPago, 2));
             SendData(commands/*, false*/);
         }
 
         // Funcion que Agrega un item a un Tique.
         public void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario, decimal iva)
         {
-            //TODO: ver como funciona esto
-            //decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
+            decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario, iva);
             var commands = new List<string>();
 
             commands.Add(EpsonTMU220FIICommand.ItemTicket.Cmd);
@@ -231,7 +246,7 @@ namespace Factura.Device.Printer
             commands.Add(DescripcionExtra4);
             commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearCantidad(cantidad));
-            commands.Add(FormatearPrecio(precioUnitario));
+            commands.Add(FormatearPrecio(precioUnitarioTipoCliente));
             commands.Add(FormatearIVA(iva));
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
@@ -241,8 +256,7 @@ namespace Factura.Device.Printer
         // Funcion que Agrega un item a una Nota de Credito.
         public void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario, decimal iva)
         {
-            //TODO: ver como funciona esto
-            //decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario);
+            decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario, iva);
             var commands = new List<string>();
 
             commands.Add(EpsonTMU220FIICommand.ItemNotaCredito.Cmd);
@@ -253,8 +267,8 @@ namespace Factura.Device.Printer
             commands.Add(DescripcionExtra4);
             commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearCantidad(cantidad));
+            commands.Add(FormatearPrecio(precioUnitarioTipoCliente));
             commands.Add(FormatearIVA(iva));
-            commands.Add(TasaIva);
             commands.Add(IMPUESTOINTERNOFIJO);
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
             SendData(commands/*, false*/);

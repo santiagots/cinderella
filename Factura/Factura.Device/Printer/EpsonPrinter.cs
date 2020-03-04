@@ -1,6 +1,7 @@
 ﻿using Common.Core.Enum;
 using Factura.Core.Enum;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Factura.Device.Printer
@@ -48,74 +49,14 @@ namespace Factura.Device.Printer
             }
         }
 
-        public void AbrirTicket()
+        public int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
         {
-            epsonTM.AbrirTicket();
+            return epsonTM.ObtenreNumeroFactura(productos, pagos);
         }
 
-        public void AbrirNotaCredito()
+        public int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
         {
-            epsonTM.AbrirNotaCredito();
-        }
-
-        public int CerrarTicket()
-        {
-            return epsonTM.CerrarTicket();
-        }
-
-        public int CerrarNotaCredito()
-        {
-            return epsonTM.CerrarNotaCredito();
-        }
-
-        public void SubtotalTicket()
-        {
-            epsonTM.SubtotalTicket();
-        }
-
-        public void SubtotalNotaCredito()
-        {
-            epsonTM.SubtotalNotaCredito();
-        }
-
-        public void DescuentosTicket(string descripcion, decimal descuento, decimal iva)
-        {
-            epsonTM.DescuentosTicket(descripcion, descuento, iva);
-        }
-
-        public void RecargosTicket(string descripcion, decimal recargo, decimal iva)
-        {
-            epsonTM.RecargosTicket(descripcion, recargo, iva);
-        }
-
-        public void DescuentosNotaCredito(string descripcion, decimal descuento, decimal iva)
-        {
-            epsonTM.DescuentosNotaCredito(descripcion, descuento, iva);
-        }
-
-        public void RecargosNotaCredito(string descripcion, decimal recargo, decimal iva)
-        {
-            epsonTM.RecargosNotaCredito(descripcion, recargo, iva);
-        }
-
-        public void PagarTicket(TipoPago TipoPago, int numeroCuotas, decimal montoPago)
-        {
-            epsonTM.PagarTicket(TipoPago, numeroCuotas, montoPago);
-        }
-
-        public void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario, decimal iva)
-        {
-            epsonTM.AgregarItemTicket(codigoItem, descripcion, cantidad, precioUnitario, iva);
-        }
-
-        public void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario, decimal iva)
-        {
-            epsonTM.AgregarItemNotaCredito(codigoItem, descripcion, cantidad, precioUnitario, iva);
-        }
-
-        public void CierreX()
-        {
-            epsonTM.CierreX();
+            return epsonTM.ObtenerNumeroNotaCretido(productos, pagos);
         }
 
         public void CierreZ()

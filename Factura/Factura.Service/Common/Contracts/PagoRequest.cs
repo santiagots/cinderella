@@ -10,6 +10,7 @@ namespace Factura.Service.Common.Contracts
         public decimal Monto { get; set; }
         public decimal Descuento { get; set; }
         public decimal CFT { get; set; }
+        public decimal Neto { get => Monto - Descuento + CFT; }
         public decimal IVA { get; set; }
     }
 }

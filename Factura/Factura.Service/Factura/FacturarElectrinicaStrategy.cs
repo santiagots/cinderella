@@ -104,7 +104,7 @@ namespace Factura.Service.Factura
                 {
                     Codigo = g.Key.Id,
                     Monto = ObtenerMontoSegunTipoDeCliente(g.Sum(y => y.Neto), g.Key.Valor, tipoCliente),
-                    IvaMonto = Math.Round(ObtenerMontoSegunTipoDeCliente(g.Sum(y => y.Neto), g.Key.Valor, tipoCliente) * g.Key.Valor, 1)
+                    IvaMonto = Math.Round(ObtenerMontoSegunTipoDeCliente(g.Sum(y => y.Neto), g.Key.Valor, tipoCliente) * g.Key.Valor, 1, MidpointRounding.AwayFromZero)
                 }).ToList();
         }
 
@@ -113,7 +113,7 @@ namespace Factura.Service.Factura
             switch (tipoCliente)
             {
                 case TipoCliente.Minorista:
-                    return Math.Round(monto / (1+iva), 1);
+                    return Math.Round(monto / (1+iva), 1, MidpointRounding.AwayFromZero);
                 case TipoCliente.Mayorista:
                     return monto;
                 default:

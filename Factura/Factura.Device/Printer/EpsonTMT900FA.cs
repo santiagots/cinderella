@@ -51,6 +51,42 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
+        public int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        {
+            AbrirTicket();
+            productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
+            productos.ForEach(x => {
+                if (x.Descuento > 0)
+                    DescuentosTicket(x.Nombre, x.Descuento, x.IVA);
+
+                if (x.CFT > 0)
+                    RecargosTicket(x.Nombre, x.CFT, x.IVA);
+            });
+
+            SubtotalTicket();
+
+            pagos.ForEach(x => PagarTicket(x.TipoPago, x.NumeroCuotas, x.Neto(PorcentajeFacturacion)));
+
+            return CerrarTicket();
+        }
+
+        public int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        {
+            AbrirNotaCredito();
+            productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
+            productos.ForEach(x => {
+                if (x.Descuento > 0)
+                    DescuentosNotaCredito(x.Nombre, x.Descuento, x.IVA);
+
+                if (x.CFT > 0)
+                    RecargosNotaCredito(x.Nombre, x.CFT, x.IVA);
+            });
+
+            SubtotalNotaCredito();
+
+            return CerrarNotaCredito();
+        }
+
         // Funcion que Abre un Tique.
         public void AbrirTicket()
         {
@@ -224,8 +260,6 @@ namespace Factura.Device.Printer
             commands.Add("");
             commands.Add("");
             commands.Add(ObtenerCodigoFormaPago(TipoPago));
-            //TODO: ver como funciona esto
-            //commands.Add(FormatearPrecio(ObtenerMontoSegunTipoDeCliente(MontoPago, iva), 2));
             commands.Add(FormatearPrecio(MontoPago, 2));
             SendData(commands/*, false*/);
         }

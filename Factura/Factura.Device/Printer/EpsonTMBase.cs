@@ -238,7 +238,7 @@ namespace Factura.Device.Printer
                 case TipoCliente.Minorista:
                     return monto;
                 case TipoCliente.Mayorista:
-                    return Math.Round(monto * PorcentajeFacturacion * (1 + iva), 1);
+                    return Math.Round(monto * PorcentajeFacturacion * (1 + iva), 1, MidpointRounding.AwayFromZero);
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
             }
@@ -253,7 +253,7 @@ namespace Factura.Device.Printer
                     return monto * PorcentajeFacturacion;
                 case MONOTRIBUTISTA:
                 case EXENTO:
-                    return Math.Round(monto * PorcentajeFacturacion * (1 + iva), 1);
+                    return Math.Round(monto * PorcentajeFacturacion * (1 + iva), 1, MidpointRounding.AwayFromZero);
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
             }

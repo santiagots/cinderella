@@ -53,6 +53,8 @@
     <Compile Include="Printer\EpsonTMU220FII.cs" />
     <Compile Include="Printer\EpsonTMU220FIICommand.cs" />
     <Compile Include="Printer\IEpsonTM.cs" />
+    <Compile Include="Printer\PagoPrinter.cs" />
+    <Compile Include="Printer\Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

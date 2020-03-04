@@ -132,36 +132,13 @@ namespace Factura.Service.Factura
         {
             using (EpsonPrinter epsonFP = new EpsonPrinter(request.TipoCliente, request.CondicionIVA, request.PorcentajeFacturacion, request.NombreYApellido, request.Direccion, request.Localidad, request.Cuit))
             {
+                List<ProductoPrinter> productos = request.Productos.Select(x => new ProductoPrinter(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.Descuento, x.CFT, x.IVA.Valor)).ToList();
+                List<PagoPrinter> pagos = request.Pagos.Select(x => new PagoPrinter(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
-                epsonFP.AbrirTicket();
-
-                foreach (ProductoRequest producto in request.Productos)
-                {
-                    epsonFP.AgregarItemTicket(producto.Codigo, producto.Nombre, producto.Cantidad, producto.Monto, producto.IVA.Valor);
-                }
-
-                foreach (ProductoRequest producto in request.Productos)
-                { 
-                    if (producto.Descuento > 0)
-                        epsonFP.DescuentosTicket(producto.Nombre, producto.Descuento, producto.IVA.Valor);
-
-                    if (producto.CFT > 0)
-                        epsonFP.RecargosTicket(producto.Nombre, producto.CFT, producto.IVA.Valor);
-                }
-
-                //if (!request.Pagos.Any(x => x.Descuento > 0) && !request.Pagos.Any(x => x.CFT > 0))
-                    epsonFP.SubtotalTicket();
-
-                foreach (PagoRequest pago in request.Pagos.Where(x => x.TipoPago != TipoPago.Bonificacion))
-                {
-                    decimal monto = (pago.Monto - pago.Descuento + pago.CFT) * request.PorcentajeFacturacion + pago.IVA;
-                    epsonFP.PagarTicket(pago.TipoPago, pago.NumeroCuotas, monto);
-                }
-
-                int numeroTicket = epsonFP.CerrarTicket();
+                int numeroFactura = epsonFP.ObtenreNumeroFactura(productos, pagos);
 
                 return new ObtenerNumeroFacturaResponse(){
-                    NumeroFactura = new List<int>() { numeroTicket }
+                    NumeroFactura = new List<int>() { numeroFactura }
                 };
             }
         }

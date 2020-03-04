@@ -1,11 +1,14 @@
 ﻿using Common.Core.Enum;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Factura.Device.Printer
 {
     interface IEpsonTM: IDisposable
     {
+        int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos);
+        int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos);
         void AbrirTicket();
         void AbrirNotaCredito();
         int CerrarTicket();

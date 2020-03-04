@@ -14,8 +14,8 @@ namespace Ventas.Core.Model.ValueObjects
 
         public MontoProducto(decimal valor, decimal iva)
         {
-            Valor = Math.Round(valor, 1);
-            Iva = Math.Round(iva, 1);
+            Valor = Math.Round(valor, 1, MidpointRounding.AwayFromZero);
+            Iva = Math.Round(iva, 1, MidpointRounding.AwayFromZero);
         }
 
         public decimal toDecimal()

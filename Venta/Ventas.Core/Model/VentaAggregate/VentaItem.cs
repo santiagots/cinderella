@@ -70,7 +70,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 MontoPago montoPago = ObtenerMontoPago(pago.MontoRestante,  porcentajeRecargo, porcentajeFacturacion, tipoCliente, pago.TipoPago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
-                PorcentajePago += Math.Round(pago.MontoRestante / Total.Valor, 4);
+                PorcentajePago += Math.Round(pago.MontoRestante / Total.Valor, 4, MidpointRounding.AwayFromZero);
                 ActualizarPagos(pago, 0, pago.MontoRestante);
                 return 0;
             }
@@ -79,7 +79,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 MontoPago montoPago = ObtenerMontoPago(pendientePago, porcentajeRecargo ,porcentajeFacturacion, tipoCliente, pago.TipoPago);
                 pago.ActualizarIva(pago.MontoPago.IVA + montoPago.IVA);
                 pago.ActualizarDescuento(pago.MontoPago.Descuento + montoPago.Descuento);
-                PorcentajePago += Math.Round(pendientePago / Total.Valor, 4);
+                PorcentajePago += Math.Round(pendientePago / Total.Valor, 4, MidpointRounding.AwayFromZero);
                 ActualizarPagos(pago, pago.MontoRestante - pendientePago, pendientePago);
                 return pago.MontoRestante;
             }
@@ -138,7 +138,7 @@ namespace Ventas.Core.Model.VentaAggregate
             decimal montoIva = 0;
 
             if (tipoCliente == TipoCliente.Mayorista)
-                montoIva = Math.Round((monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion, 1);
+                montoIva = Math.Round((monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion, 1, MidpointRounding.AwayFromZero);
 
             return new MontoPago(monto, decuento, cft, montoIva);
         }
@@ -156,7 +156,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
         {
-            return Math.Round((total / (1 + Producto.SubCategoria.IVA.Valor)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1);
+            return Math.Round((total / (1 + Producto.SubCategoria.IVA.Valor)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1, MidpointRounding.AwayFromZero);
         }
 
         internal void ActualizarPorcentajePago()
@@ -164,7 +164,7 @@ namespace Ventas.Core.Model.VentaAggregate
             if (Total.Valor == 0)
                 PorcentajePago = 0;
             else
-                PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4);
+                PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4, MidpointRounding.AwayFromZero);
         }
 
         public IEnumerable<Pago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
