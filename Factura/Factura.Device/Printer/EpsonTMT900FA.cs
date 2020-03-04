@@ -270,14 +270,22 @@ namespace Factura.Device.Printer
             decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario, iva);
             var commands = new List<string>();
 
-            commands.Add(EpsonTMT900FACommand.ItemTicket.Cmd);
-            commands.Add(EpsonTMT900FACommand.ItemTicket.CmdExt);
+            if (cantidad >= 0)
+            {
+                commands.Add(EpsonTMT900FACommand.ItemTicket.Cmd);
+                commands.Add(EpsonTMT900FACommand.ItemTicket.CmdExt);
+            }
+            else
+            {
+                commands.Add(EpsonTMT900FACommand.ItemTicketRetorno.Cmd);
+                commands.Add(EpsonTMT900FACommand.ItemTicketRetorno.CmdExt);
+            }
             commands.Add(DescripcionExtra1);
             commands.Add(DescripcionExtra2);
             commands.Add(DescripcionExtra3);
             commands.Add(DescripcionExtra4);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearCantidad(cantidad));
+            commands.Add(FormatearCantidad(Math.Abs(cantidad)));
             commands.Add(FormatearPrecio(precioUnitarioTipoCliente));
             commands.Add(FormatearIVA(iva));
             commands.Add(IMPUESTOINTERNOFIJO);
@@ -296,14 +304,22 @@ namespace Factura.Device.Printer
             decimal precioUnitarioTipoCliente = ObtenerMontoSegunTipoDeCliente(precioUnitario, iva);
             var commands = new List<string>();
 
-            commands.Add(EpsonTMT900FACommand.ItemNotaCredito.Cmd);
-            commands.Add(EpsonTMT900FACommand.ItemNotaCredito.CmdExt);
+            if (cantidad >= 0)
+            {
+                commands.Add(EpsonTMT900FACommand.ItemNotaCredito.Cmd);
+                commands.Add(EpsonTMT900FACommand.ItemNotaCredito.CmdExt);
+            }
+            else
+            {
+                commands.Add(EpsonTMT900FACommand.ItemNotaCreditoRetorno.Cmd);
+                commands.Add(EpsonTMT900FACommand.ItemNotaCreditoRetorno.CmdExt);
+            }
             commands.Add(DescripcionExtra1);
             commands.Add(DescripcionExtra2);
             commands.Add(DescripcionExtra3);
             commands.Add(DescripcionExtra4);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearCantidad(cantidad));
+            commands.Add(FormatearCantidad(Math.Abs(cantidad)));
             commands.Add(FormatearPrecio(precioUnitarioTipoCliente));
             commands.Add(FormatearIVA(iva));
             commands.Add(IMPUESTOINTERNOFIJO);

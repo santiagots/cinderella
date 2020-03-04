@@ -2,6 +2,7 @@
 Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
+Imports Common.Core.Helper
 Imports Common.Core.Model
 Imports Datos
 Imports Producto.Core.Model.ProductoAgreggate
@@ -199,8 +200,10 @@ Public Class frmProductos
             Me.UseWaitCursor = True
             accion()
         Catch ex As NegocioException
+            Log.Error(ex)
             MessageBox.Show(ex.Message, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.UseWaitCursor = False
@@ -212,8 +215,10 @@ Public Class frmProductos
             Me.UseWaitCursor = True
             Await accion()
         Catch ex As NegocioException
+            Log.Error(ex)
             MessageBox.Show(ex.Message, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.UseWaitCursor = False

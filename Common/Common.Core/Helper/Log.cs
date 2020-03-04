@@ -12,6 +12,11 @@ namespace Common.Core.Helper
             log.Error(CurrentStackCustomizedLog());
         }
 
+        public static void Info(string mensaje)
+        {
+            log.Info(mensaje);
+        }
+
         public static void Error(Exception ex)
         {
             log.Error(ex);

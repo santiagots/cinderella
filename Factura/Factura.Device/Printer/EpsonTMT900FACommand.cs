@@ -46,7 +46,11 @@
 
         internal static EpsonCommand ItemTicket = new EpsonCommand("\xB\x2", "\x40\x10");
 
+        internal static EpsonCommand ItemTicketRetorno = new EpsonCommand("\xB\x2", "\x40\x16");
+
         internal static EpsonCommand ItemNotaCredito = new EpsonCommand("\xD\x2", "\x40\x10");
+
+        internal static EpsonCommand ItemNotaCreditoRetorno = new EpsonCommand("\xD\x2", "\x40\x16");
 
         internal static EpsonCommand DescuentoTicket = new EpsonCommand("\xB\x4", "\x0\x0"); 
 

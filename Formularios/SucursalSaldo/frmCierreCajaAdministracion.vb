@@ -1,5 +1,6 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Exceptions
+Imports Common.Core.Helper
 Imports SistemaCinderella.Formularios.SucursalSaldo
 
 Public Class frmCierreCajaAdministracion
@@ -44,8 +45,10 @@ Public Class frmCierreCajaAdministracion
         Try
             accion()
         Catch ex As NegocioException
+            Log.Error(ex)
             MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
@@ -54,8 +57,10 @@ Public Class frmCierreCajaAdministracion
         Try
             Await accion()
         Catch ex As NegocioException
+            Log.Error(ex)
             MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub

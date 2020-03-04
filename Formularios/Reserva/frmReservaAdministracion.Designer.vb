@@ -234,9 +234,9 @@ Partial Class frmReservaAdministracion
         Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(3, 0)
+        Me.Label13.Location = New System.Drawing.Point(3, 7)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(134, 30)
+        Me.Label13.Size = New System.Drawing.Size(134, 16)
         Me.Label13.TabIndex = 422
         Me.Label13.Text = "Nombre/R. Social"
         '
@@ -267,7 +267,7 @@ Partial Class frmReservaAdministracion
         Me.cmbModoEntrega.DataSource = Me.MetodoEntregaBindingSource
         Me.cmbModoEntrega.DisplayMember = "Value"
         Me.cmbModoEntrega.FormattingEnabled = True
-        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 34)
+        Me.cmbModoEntrega.Location = New System.Drawing.Point(143, 33)
         Me.cmbModoEntrega.Name = "cmbModoEntrega"
         Me.cmbModoEntrega.Size = New System.Drawing.Size(240, 23)
         Me.cmbModoEntrega.TabIndex = 423
