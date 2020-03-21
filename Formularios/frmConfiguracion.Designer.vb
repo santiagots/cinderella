@@ -31,7 +31,21 @@ Partial Class frmConfiguracion
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
-        Me.txt_RazonSocial = New System.Windows.Forms.TextBox()
+        Me.txt_DatosFiscalEmail = New System.Windows.Forms.TextBox()
+        Me.Label40 = New System.Windows.Forms.Label()
+        Me.txt_DatosFiscalTelefono = New System.Windows.Forms.TextBox()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.txt_DatosFiscalDireccion = New System.Windows.Forms.TextBox()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.dt_DatosFiscalInicioActividad = New System.Windows.Forms.DateTimePicker()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.txt_DatosFiscalIIBB = New System.Windows.Forms.TextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.txt_DatosFiscalCUIT = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.txt_DatosFiscalRazonSocial = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.txt_DatosFiscalNombreFantasia = New System.Windows.Forms.TextBox()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.txt_descuentoMinorista = New System.Windows.Forms.NumericUpDown()
@@ -132,6 +146,8 @@ Partial Class frmConfiguracion
         Me.Label29 = New System.Windows.Forms.Label()
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
+        Me.txt_DatosFiscalNombreFantasiaFuente = New System.Windows.Forms.Button()
+        Me.FontDialog = New System.Windows.Forms.FontDialog()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -184,9 +200,9 @@ Partial Class frmConfiguracion
         Me.Cb_Sucursales.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_Sucursales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Sucursales.FormattingEnabled = True
-        Me.Cb_Sucursales.Location = New System.Drawing.Point(186, 70)
+        Me.Cb_Sucursales.Location = New System.Drawing.Point(140, 70)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
-        Me.Cb_Sucursales.Size = New System.Drawing.Size(212, 23)
+        Me.Cb_Sucursales.Size = New System.Drawing.Size(258, 23)
         Me.Cb_Sucursales.TabIndex = 3
         '
         'lbl_NuevaSucursal
@@ -205,7 +221,7 @@ Partial Class frmConfiguracion
         Me.Btn_Actualizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Actualizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Actualizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Actualizar.Location = New System.Drawing.Point(304, 437)
+        Me.Btn_Actualizar.Location = New System.Drawing.Point(304, 404)
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Actualizar.TabIndex = 4
@@ -225,7 +241,7 @@ Partial Class frmConfiguracion
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(410, 483)
+        Me.GroupBox1.Size = New System.Drawing.Size(410, 450)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuración de Sucursal"
@@ -241,30 +257,157 @@ Partial Class frmConfiguracion
         '
         'GroupBox13
         '
-        Me.GroupBox13.Controls.Add(Me.txt_RazonSocial)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalNombreFantasiaFuente)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalEmail)
+        Me.GroupBox13.Controls.Add(Me.Label40)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalTelefono)
+        Me.GroupBox13.Controls.Add(Me.Label39)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalDireccion)
+        Me.GroupBox13.Controls.Add(Me.Label38)
+        Me.GroupBox13.Controls.Add(Me.dt_DatosFiscalInicioActividad)
+        Me.GroupBox13.Controls.Add(Me.Label37)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalIIBB)
+        Me.GroupBox13.Controls.Add(Me.Label27)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalCUIT)
+        Me.GroupBox13.Controls.Add(Me.Label26)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalRazonSocial)
+        Me.GroupBox13.Controls.Add(Me.Label25)
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalNombreFantasia)
         Me.GroupBox13.Controls.Add(Me.Label34)
         Me.GroupBox13.Location = New System.Drawing.Point(7, 99)
         Me.GroupBox13.Name = "GroupBox13"
-        Me.GroupBox13.Size = New System.Drawing.Size(397, 59)
+        Me.GroupBox13.Size = New System.Drawing.Size(397, 290)
         Me.GroupBox13.TabIndex = 8
         Me.GroupBox13.TabStop = False
-        Me.GroupBox13.Text = "Reporte"
+        Me.GroupBox13.Text = "Datos Fiscales"
         '
-        'txt_RazonSocial
+        'txt_DatosFiscalEmail
         '
-        Me.txt_RazonSocial.Location = New System.Drawing.Point(179, 20)
-        Me.txt_RazonSocial.Name = "txt_RazonSocial"
-        Me.txt_RazonSocial.Size = New System.Drawing.Size(212, 21)
-        Me.txt_RazonSocial.TabIndex = 11
+        Me.txt_DatosFiscalEmail.Location = New System.Drawing.Point(133, 128)
+        Me.txt_DatosFiscalEmail.Name = "txt_DatosFiscalEmail"
+        Me.txt_DatosFiscalEmail.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalEmail.TabIndex = 25
+        '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Location = New System.Drawing.Point(6, 131)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(58, 15)
+        Me.Label40.TabIndex = 24
+        Me.Label40.Text = "(*) Email:"
+        '
+        'txt_DatosFiscalTelefono
+        '
+        Me.txt_DatosFiscalTelefono.Location = New System.Drawing.Point(133, 101)
+        Me.txt_DatosFiscalTelefono.Name = "txt_DatosFiscalTelefono"
+        Me.txt_DatosFiscalTelefono.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalTelefono.TabIndex = 23
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Location = New System.Drawing.Point(6, 104)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(74, 15)
+        Me.Label39.TabIndex = 22
+        Me.Label39.Text = "(*) Teléfono:"
+        '
+        'txt_DatosFiscalDireccion
+        '
+        Me.txt_DatosFiscalDireccion.Location = New System.Drawing.Point(133, 74)
+        Me.txt_DatosFiscalDireccion.Name = "txt_DatosFiscalDireccion"
+        Me.txt_DatosFiscalDireccion.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalDireccion.TabIndex = 21
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Location = New System.Drawing.Point(6, 77)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(78, 15)
+        Me.Label38.TabIndex = 20
+        Me.Label38.Text = "(*) Dirección:"
+        '
+        'dt_DatosFiscalInicioActividad
+        '
+        Me.dt_DatosFiscalInicioActividad.Location = New System.Drawing.Point(133, 212)
+        Me.dt_DatosFiscalInicioActividad.Name = "dt_DatosFiscalInicioActividad"
+        Me.dt_DatosFiscalInicioActividad.Size = New System.Drawing.Size(258, 21)
+        Me.dt_DatosFiscalInicioActividad.TabIndex = 19
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Location = New System.Drawing.Point(6, 212)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(106, 15)
+        Me.Label37.TabIndex = 18
+        Me.Label37.Text = "(*) Inicio Actividad:"
+        '
+        'txt_DatosFiscalIIBB
+        '
+        Me.txt_DatosFiscalIIBB.Location = New System.Drawing.Point(133, 182)
+        Me.txt_DatosFiscalIIBB.Name = "txt_DatosFiscalIIBB"
+        Me.txt_DatosFiscalIIBB.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalIIBB.TabIndex = 17
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(6, 185)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(48, 15)
+        Me.Label27.TabIndex = 16
+        Me.Label27.Text = "(*) IIBB:"
+        '
+        'txt_DatosFiscalCUIT
+        '
+        Me.txt_DatosFiscalCUIT.Location = New System.Drawing.Point(133, 155)
+        Me.txt_DatosFiscalCUIT.Name = "txt_DatosFiscalCUIT"
+        Me.txt_DatosFiscalCUIT.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalCUIT.TabIndex = 15
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(6, 158)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(53, 15)
+        Me.Label26.TabIndex = 14
+        Me.Label26.Text = "(*) CUIT:"
+        '
+        'txt_DatosFiscalRazonSocial
+        '
+        Me.txt_DatosFiscalRazonSocial.Location = New System.Drawing.Point(133, 47)
+        Me.txt_DatosFiscalRazonSocial.Name = "txt_DatosFiscalRazonSocial"
+        Me.txt_DatosFiscalRazonSocial.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalRazonSocial.TabIndex = 13
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(6, 50)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(99, 15)
+        Me.Label25.TabIndex = 12
+        Me.Label25.Text = "(*) Razón Social:"
+        '
+        'txt_DatosFiscalNombreFantasia
+        '
+        Me.txt_DatosFiscalNombreFantasia.Location = New System.Drawing.Point(133, 20)
+        Me.txt_DatosFiscalNombreFantasia.Name = "txt_DatosFiscalNombreFantasia"
+        Me.txt_DatosFiscalNombreFantasia.Size = New System.Drawing.Size(196, 21)
+        Me.txt_DatosFiscalNombreFantasia.TabIndex = 11
         '
         'Label34
         '
         Me.Label34.AutoSize = True
         Me.Label34.Location = New System.Drawing.Point(6, 23)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(99, 15)
+        Me.Label34.Size = New System.Drawing.Size(121, 15)
         Me.Label34.TabIndex = 10
-        Me.Label34.Text = "(*) Razón Social:"
+        Me.Label34.Text = "(*) Nombre Fantasía:"
         '
         'GroupBox2
         '
@@ -278,7 +421,7 @@ Partial Class frmConfiguracion
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(410, 483)
+        Me.GroupBox2.Size = New System.Drawing.Size(410, 450)
         Me.GroupBox2.TabIndex = 6
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Configuración de Precios"
@@ -324,7 +467,7 @@ Partial Class frmConfiguracion
         Me.Btn_Precios.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Precios.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Precios.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Precios.Location = New System.Drawing.Point(304, 437)
+        Me.Btn_Precios.Location = New System.Drawing.Point(304, 404)
         Me.Btn_Precios.Name = "Btn_Precios"
         Me.Btn_Precios.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Precios.TabIndex = 4
@@ -363,7 +506,7 @@ Partial Class frmConfiguracion
         Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(416, 489)
+        Me.GroupBox3.Size = New System.Drawing.Size(416, 456)
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Configuración del Servidor de Mail"
@@ -792,7 +935,7 @@ Partial Class frmConfiguracion
         Me.TabSucursal.Location = New System.Drawing.Point(4, 24)
         Me.TabSucursal.Name = "TabSucursal"
         Me.TabSucursal.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabSucursal.Size = New System.Drawing.Size(416, 489)
+        Me.TabSucursal.Size = New System.Drawing.Size(416, 456)
         Me.TabSucursal.TabIndex = 0
         Me.TabSucursal.Text = "Sucursal"
         Me.TabSucursal.UseVisualStyleBackColor = True
@@ -803,7 +946,7 @@ Partial Class frmConfiguracion
         Me.TabPrecios.Location = New System.Drawing.Point(4, 24)
         Me.TabPrecios.Name = "TabPrecios"
         Me.TabPrecios.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPrecios.Size = New System.Drawing.Size(416, 489)
+        Me.TabPrecios.Size = New System.Drawing.Size(416, 456)
         Me.TabPrecios.TabIndex = 1
         Me.TabPrecios.Text = "Precios"
         Me.TabPrecios.UseVisualStyleBackColor = True
@@ -813,7 +956,7 @@ Partial Class frmConfiguracion
         Me.TabMail.Controls.Add(Me.GroupBox3)
         Me.TabMail.Location = New System.Drawing.Point(4, 24)
         Me.TabMail.Name = "TabMail"
-        Me.TabMail.Size = New System.Drawing.Size(416, 489)
+        Me.TabMail.Size = New System.Drawing.Size(416, 456)
         Me.TabMail.TabIndex = 2
         Me.TabMail.Text = "Mail"
         Me.TabMail.UseVisualStyleBackColor = True
@@ -833,7 +976,7 @@ Partial Class frmConfiguracion
         Me.TabNotificaciones.Controls.Add(Me.GroupBox5)
         Me.TabNotificaciones.Location = New System.Drawing.Point(4, 24)
         Me.TabNotificaciones.Name = "TabNotificaciones"
-        Me.TabNotificaciones.Size = New System.Drawing.Size(416, 489)
+        Me.TabNotificaciones.Size = New System.Drawing.Size(416, 456)
         Me.TabNotificaciones.TabIndex = 4
         Me.TabNotificaciones.Text = "Alertas"
         Me.TabNotificaciones.UseVisualStyleBackColor = True
@@ -850,7 +993,7 @@ Partial Class frmConfiguracion
         Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox5.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(416, 489)
+        Me.GroupBox5.Size = New System.Drawing.Size(416, 456)
         Me.GroupBox5.TabIndex = 7
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Configuración de Alertas"
@@ -900,7 +1043,7 @@ Partial Class frmConfiguracion
         Me.BtnNotificaciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnNotificaciones.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnNotificaciones.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnNotificaciones.Location = New System.Drawing.Point(307, 440)
+        Me.BtnNotificaciones.Location = New System.Drawing.Point(307, 407)
         Me.BtnNotificaciones.Name = "BtnNotificaciones"
         Me.BtnNotificaciones.Size = New System.Drawing.Size(100, 40)
         Me.BtnNotificaciones.TabIndex = 4
@@ -932,7 +1075,7 @@ Partial Class frmConfiguracion
         Me.TabInternet.Controls.Add(Me.GroupBox6)
         Me.TabInternet.Location = New System.Drawing.Point(4, 24)
         Me.TabInternet.Name = "TabInternet"
-        Me.TabInternet.Size = New System.Drawing.Size(416, 489)
+        Me.TabInternet.Size = New System.Drawing.Size(416, 456)
         Me.TabInternet.TabIndex = 5
         Me.TabInternet.Text = "Internet"
         Me.TabInternet.UseVisualStyleBackColor = True
@@ -956,7 +1099,7 @@ Partial Class frmConfiguracion
         Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox6.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(416, 489)
+        Me.GroupBox6.Size = New System.Drawing.Size(416, 456)
         Me.GroupBox6.TabIndex = 8
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Configuración de Internet"
@@ -988,7 +1131,7 @@ Partial Class frmConfiguracion
         Me.btnVerificarDNS.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnVerificarDNS.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
         Me.btnVerificarDNS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 332)
+        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 316)
         Me.btnVerificarDNS.Name = "btnVerificarDNS"
         Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
         Me.btnVerificarDNS.TabIndex = 22
@@ -1079,7 +1222,7 @@ Partial Class frmConfiguracion
         Me.BtnInternet.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnInternet.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.BtnInternet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnInternet.Location = New System.Drawing.Point(307, 440)
+        Me.BtnInternet.Location = New System.Drawing.Point(307, 407)
         Me.BtnInternet.Name = "BtnInternet"
         Me.BtnInternet.Size = New System.Drawing.Size(100, 40)
         Me.BtnInternet.TabIndex = 4
@@ -1113,7 +1256,7 @@ Partial Class frmConfiguracion
         Me.TabHost.Location = New System.Drawing.Point(4, 24)
         Me.TabHost.Name = "TabHost"
         Me.TabHost.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabHost.Size = New System.Drawing.Size(416, 489)
+        Me.TabHost.Size = New System.Drawing.Size(416, 456)
         Me.TabHost.TabIndex = 6
         Me.TabHost.Text = "Host"
         Me.TabHost.UseVisualStyleBackColor = True
@@ -1128,7 +1271,7 @@ Partial Class frmConfiguracion
         Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox8.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(410, 483)
+        Me.GroupBox8.Size = New System.Drawing.Size(410, 450)
         Me.GroupBox8.TabIndex = 8
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Configuración del Host de Servicios"
@@ -1185,7 +1328,7 @@ Partial Class frmConfiguracion
         Me.TabStock.Location = New System.Drawing.Point(4, 24)
         Me.TabStock.Name = "TabStock"
         Me.TabStock.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabStock.Size = New System.Drawing.Size(416, 489)
+        Me.TabStock.Size = New System.Drawing.Size(416, 456)
         Me.TabStock.TabIndex = 7
         Me.TabStock.Text = "Stock"
         Me.TabStock.UseVisualStyleBackColor = True
@@ -1199,7 +1342,7 @@ Partial Class frmConfiguracion
         Me.GroupBox11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox11.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox11.Name = "GroupBox11"
-        Me.GroupBox11.Size = New System.Drawing.Size(410, 483)
+        Me.GroupBox11.Size = New System.Drawing.Size(410, 450)
         Me.GroupBox11.TabIndex = 6
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Configuración de Stock"
@@ -1320,13 +1463,22 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnModificarStock.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.btnModificarStock.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnModificarStock.Location = New System.Drawing.Point(304, 437)
+        Me.btnModificarStock.Location = New System.Drawing.Point(304, 404)
         Me.btnModificarStock.Name = "btnModificarStock"
         Me.btnModificarStock.Size = New System.Drawing.Size(100, 40)
         Me.btnModificarStock.TabIndex = 4
         Me.btnModificarStock.Text = "Modificar"
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
+        '
+        'txt_DatosFiscalNombreFantasiaFuente
+        '
+        Me.txt_DatosFiscalNombreFantasiaFuente.Location = New System.Drawing.Point(335, 19)
+        Me.txt_DatosFiscalNombreFantasiaFuente.Name = "txt_DatosFiscalNombreFantasiaFuente"
+        Me.txt_DatosFiscalNombreFantasiaFuente.Size = New System.Drawing.Size(56, 23)
+        Me.txt_DatosFiscalNombreFantasiaFuente.TabIndex = 26
+        Me.txt_DatosFiscalNombreFantasiaFuente.Text = "Fuente"
+        Me.txt_DatosFiscalNombreFantasiaFuente.UseVisualStyleBackColor = True
         '
         'frmConfiguracion
         '
@@ -1486,11 +1638,27 @@ Partial Class frmConfiguracion
     Friend WithEvents txt_IpPing As TextBox
     Friend WithEvents btnVerificarDNS As Button
     Friend WithEvents GroupBox13 As GroupBox
-    Friend WithEvents txt_RazonSocial As TextBox
+    Friend WithEvents txt_DatosFiscalNombreFantasia As TextBox
     Friend WithEvents Label34 As Label
     Friend WithEvents Label35 As Label
     Friend WithEvents Label36 As Label
     Friend WithEvents Cb_HorasSincronizacion As ComboBox
     Friend WithEvents Cb_ModeloControladora As ComboBox
     Friend WithEvents Label19 As Label
+    Friend WithEvents txt_DatosFiscalCUIT As TextBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents txt_DatosFiscalRazonSocial As TextBox
+    Friend WithEvents Label25 As Label
+    Friend WithEvents txt_DatosFiscalIIBB As TextBox
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Label37 As Label
+    Friend WithEvents dt_DatosFiscalInicioActividad As DateTimePicker
+    Friend WithEvents txt_DatosFiscalEmail As TextBox
+    Friend WithEvents Label40 As Label
+    Friend WithEvents txt_DatosFiscalTelefono As TextBox
+    Friend WithEvents Label39 As Label
+    Friend WithEvents txt_DatosFiscalDireccion As TextBox
+    Friend WithEvents Label38 As Label
+    Friend WithEvents txt_DatosFiscalNombreFantasiaFuente As Button
+    Friend WithEvents FontDialog As FontDialog
 End Class

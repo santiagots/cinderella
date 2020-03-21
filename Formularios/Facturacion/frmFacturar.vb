@@ -1,4 +1,5 @@
 ﻿Imports System.Threading.Tasks
+Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports SistemaCinderella.Formularios.Facturacion
@@ -32,8 +33,14 @@ Public Class frmFacturar
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
         EjecutarAsync(Async Function() As Task
-
                           If (Await facturarViewModel.FacturarAsync()) Then
+
+                              If facturarViewModel.TiposFacturaSeleccionada = TipoFactura.Electronica Then
+                                  Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(facturarViewModel.ventaModel.Id, TipoDocumentoFiscal.Factura)
+                                  frmReporteResumenReserva.MdiParent = MdiParent
+                                  frmReporteResumenReserva.Show()
+                              End If
+
                               Dispose()
                           End If
                       End Function)
@@ -41,8 +48,14 @@ Public Class frmFacturar
 
     Private Sub btnNotaCredito_Click(sender As Object, e As EventArgs) Handles btnNotaCredito.Click
         EjecutarAsync(Async Function() As Task
-
                           If (Await facturarViewModel.NotaCreditoAsync()) Then
+
+                              If facturarViewModel.TiposFacturaSeleccionada = TipoFactura.Electronica Then
+                                  Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(facturarViewModel.ventaModel, TipoDocumentoFiscal.NotaCredito)
+                                  frmReporteResumenReserva.MdiParent = MdiParent
+                                  frmReporteResumenReserva.Show()
+                              End If
+
                               Dispose()
                           End If
                       End Function)

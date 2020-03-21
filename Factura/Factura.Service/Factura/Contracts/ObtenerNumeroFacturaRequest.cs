@@ -10,6 +10,7 @@ namespace Factura.Service.Factura.Contracts
         public CondicionIVA CondicionIVA { get; set; }
         public List<PagoRequest> Pagos { get; set; }
         public List<ProductoRequest> Productos { get; set; }
+        public List<int> NumerosFacturas { get; set; }
         public decimal PorcentajeFacturacion { get; set; }
         public string NombreYApellido { get; set; }
         public string Direccion { get; set; }

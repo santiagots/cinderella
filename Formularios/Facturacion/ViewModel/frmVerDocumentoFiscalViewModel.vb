@@ -8,8 +8,8 @@ Namespace Formularios.Facturacion
     Public Class frmVerFacturaViewModel
         Inherits Comunes.Common
 
-        Private IdDocuemtnoFiscal As Long
-        Private TipoDocumentoFiscal As TipoDocumentoFiscal
+        Public IdDocuemtnoFiscal As Long
+        Public TipoDocumentoFiscal As TipoDocumentoFiscal
 
         Public Property DocumentoFiscalViewModel As DocumentoFiscalViewModel
 

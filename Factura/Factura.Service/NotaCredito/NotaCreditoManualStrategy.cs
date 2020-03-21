@@ -6,7 +6,10 @@ namespace Common.Service.NotaCredito
     {
         public ObtenerNumeroNotaCretidoResponse ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest request)
         {
-            return new ObtenerNumeroNotaCretidoResponse();
+            return new ObtenerNumeroNotaCretidoResponse()
+            {
+                NumeroNotaCredito = request.NumerosNotaCredito
+            };
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Ventas.Data.Repository
 
         public Venta Obtener(long idVenta)
         {
-            return _context.Venta
+            Venta venta =_context.Venta
                             .Include(x => x.Sucursal)
                             .Include(x => x.Encargado)
                             .Include(x => x.Vendedor)
@@ -38,6 +38,10 @@ namespace Ventas.Data.Repository
                             .Include(x => x.NotaCredito)
                             .Include(x => x.NotaCredito.NumeroNotaCredito)
                             .FirstOrDefault(x => x.Id == idVenta);
+
+            //fuerzo la registracion de los pagos a cada producto
+            venta.ActualizarPagos();
+            return venta;
         }
 
         public decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)

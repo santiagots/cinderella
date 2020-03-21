@@ -80,7 +80,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
            VentaItems = OrdenarItemsVenta(VentaItems).ToList();
 
-           ActualizarPagos(porcentajeFacturacion, tipoCliente);
+           ActualizarPagos();
 
            ActualizarTotalesPago();
 
@@ -98,7 +98,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaItems = OrdenarItemsVenta(VentaItems).ToList();
 
-            ActualizarPagos(porcentajeFacturacion, tipoCliente);
+            ActualizarPagos();
 
             ActualizarTotalesPago();
 
@@ -133,7 +133,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             Pagos = Pagos.OrderBy(x => x.TipoPago).ToList();
 
-            ActualizarPagos(porcentajeFacturacion, tipoCliente);
+            ActualizarPagos();
 
             ActualizarTotalesPago();
         }
@@ -221,7 +221,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaItems = OrdenarItemsVenta(VentaItems).ToList();
 
-            ActualizarPagos(porcentajeFacturacion, tipoCliente);
+            ActualizarPagos();
 
             ActualizarTotalesPago();
 
@@ -351,7 +351,7 @@ namespace Ventas.Core.Model.VentaAggregate
             return subtotal;
         }
 
-        public void ActualizarPagos(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        public void ActualizarPagos()
         {
             foreach (VentaItem ventaItems in VentaItems)
             {
@@ -366,7 +366,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
                 foreach (VentaItem ventaItems in VentaItems.Where(x => x.PorcentajePago < 1))
                 {
-                    decimal montoRestante = ventaItems.AgregarPago(pago, pago.PorcentajeRecargo, porcentajeFacturacion, tipoCliente);
+                    decimal montoRestante = ventaItems.AgregarPago(pago, pago.PorcentajeRecargo, PorcentajeFacturacion, TipoCliente);
                     ventaItems.ActualizarPorcentajePago();
 
                     if (montoRestante == 0)

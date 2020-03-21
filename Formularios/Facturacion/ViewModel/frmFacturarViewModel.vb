@@ -22,11 +22,12 @@ Namespace Formularios.Facturacion
 
         Private FacturarCallBackEvent As FacturarDelegateCallBackAsync
 
-        Private ventaModel As Model.Venta
         Private desdeReserva As Boolean
         Private tipoDocumentoFiscal As TipoDocumentoFiscal
         Private CondicionIvaOriginal As CondicionIVA
         Private PuntoVentaOriginal As Integer
+
+        Public ventaModel As Model.Venta
 
         Public ReadOnly Property TiposFactura As BindingList(Of Enums.TipoFactura)
             Get
@@ -176,7 +177,8 @@ Namespace Formularios.Facturacion
                 .Pagos = New List(Of PagoRequest)(),
                 .PorcentajeFacturacion = ventaModel.PorcentajeFacturacion,
                 .Productos = New List(Of ProductoRequest)(),
-                .TipoCliente = ventaModel.TipoCliente
+                .TipoCliente = ventaModel.TipoCliente,
+                .NumerosFacturas = Numerosfacturas.ToList()
             }
 
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems)
@@ -237,10 +239,9 @@ Namespace Formularios.Facturacion
                 .PorcentajeFacturacion = ventaModel.PorcentajeFacturacion,
                 .Productos = New List(Of ProductoRequest)(),
                 .PuntoVentaOrigen = PuntoVentaOriginal,
-                .TipoCliente = ventaModel.TipoCliente
+                .TipoCliente = ventaModel.TipoCliente,
+                .NumerosNotaCredito = Numerosfacturas.ToList()
             }
-
-            ventaModel.ActualizarPagos(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente) ''fuerzo la registracion de los pagos a cada producto
 
             ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems)
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
@@ -385,15 +386,13 @@ Namespace Formularios.Facturacion
             Else
                 For Each ventaItem As VentaItem In ventaItems
 
-                    Dim pagos As List(Of Pago) = ventaItem.ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente)
-
                     request.Add(New ProductoRequest() With {
                             .Cantidad = ventaItem.Cantidad,
                             .Codigo = ventaItem.Producto.Codigo,
                             .Nombre = ventaItem.Producto.Nombre,
                             .Monto = ventaItem.MontoProducto.Valor,
-                            .Descuento = pagos.Sum(Function(x) x.MontoPago.Descuento),
-                            .CFT = pagos.Sum(Function(x) x.MontoPago.CFT),
+                            .Descuento = ventaItem.TotalDescuento(porcentajeFacturacion, tipoCliente),
+                            .CFT = ventaItem.TotalCFT(porcentajeFacturacion, tipoCliente),
                             .IVA = ventaItem.Producto.SubCategoria.IVA})
                 Next
             End If

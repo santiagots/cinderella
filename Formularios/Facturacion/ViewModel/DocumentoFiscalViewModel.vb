@@ -13,5 +13,13 @@ Namespace Formularios.Facturacion
         Public Property CUIT As String
         Public Property Monto As Decimal
         Public Property Fecha As DateTime
+        Public Property CAE As String
+        Public Property FechaVenciminetoCAE As DateTime?
+
+        Public ReadOnly Property HabilitarImprimirFacturaElectronica As Boolean
+            Get
+                Return TipoFactura = TipoFactura.Electronica
+            End Get
+        End Property
     End Class
 End Namespace

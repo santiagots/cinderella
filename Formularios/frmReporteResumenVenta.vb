@@ -62,7 +62,7 @@ Public Class frmReporteResumenVenta
 
         rpt.SetDataSource(ds.Tables("venta"))
 
-        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.RazonSocial
+        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings("NombreSucursal")
         CType(rpt.ReportDefinition.ReportObjects("txtNombreVendedor"), TextObject).Text = $"{empleado.Apellido}, {empleado.Nombre}"
         CType(rpt.ReportDefinition.ReportObjects("txtNombreCliente"), TextObject).Text = razonSocial

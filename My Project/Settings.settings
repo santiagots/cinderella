@@ -113,7 +113,7 @@
     <Setting Name="IpTimeOut" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2000</Value>
     </Setting>
-    <Setting Name="RazonSocial" Type="System.String" Scope="User">
+    <Setting Name="DatosFiscalNombreFantasia" Type="System.String" Scope="User">
       <Value Profile="(Default)">Cinderella</Value>
     </Setting>
     <Setting Name="TemporizadorSincronizacion" Type="System.String" Scope="User">
@@ -149,6 +149,30 @@
     </Setting>
     <Setting Name="Setting1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalRazonSocial" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalDireccion" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalTel" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalEmail" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalCUIT" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalIIBB" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalInicioActividad" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalNombreFantasiaFuente" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 26.25pt, style=Bold</Value>
     </Setting>
   </Settings>
 </SettingsFile>

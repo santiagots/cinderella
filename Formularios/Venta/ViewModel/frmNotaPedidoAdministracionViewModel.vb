@@ -143,7 +143,7 @@ Namespace Formularios.Venta
         Friend Sub ImprimirNotaPedido(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Numero = notaPedidoItem.Numero)
 
-            Dim frmReporteResumenReserva As frmReporteResumenReserva = New frmReporteResumenReserva("Resumen de Nota Pedido",
+            Dim frmReporteResumenReserva As frmReporteTransaccion = New frmReporteTransaccion("Resumen de Nota Pedido",
                                                                                                     1,
                                                                                                     notaPedido.TipoCliente,
                                                                                                     notaPedido.Vendedor.ApellidoYNombre,

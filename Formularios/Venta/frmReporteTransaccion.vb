@@ -1,11 +1,10 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
 Imports Entidades
-Imports Negocio
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.VentaAggregate
 
-Public Class frmReporteResumenReserva
+Public Class frmReporteTransaccion
 
     Private Titulo As String
     Private Numero As String
@@ -50,7 +49,7 @@ Public Class frmReporteResumenReserva
         rpt.Database.Tables("TransaccionItem").SetDataSource(dtTrasnasccionItems)
         rpt.Database.Tables("Pago").SetDataSource(dtPagos)
 
-        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.RazonSocial
+        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtTitulo"), TextObject).Text = Titulo
         CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings.NombreSucursal
         CType(rpt.ReportDefinition.ReportObjects("txtNumero"), TextObject).Text = Numero

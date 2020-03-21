@@ -36,7 +36,10 @@ namespace Factura.Service.Factura
 
         public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(ObtenerNumeroFacturaRequest request)
         {
-            return new ObtenerNumeroFacturaResponse();
+            return new ObtenerNumeroFacturaResponse()
+            {
+                NumeroFactura = request.NumerosFacturas
+            };
         }
 
         public void ResumenTotalesPorRangoDeFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombre, out StringBuilder datos)

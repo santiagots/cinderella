@@ -31,7 +31,6 @@ namespace Ventas.Core.Model.VentaAggregate
                 _PorcentajePago = value;
             }
         }
-
         public VentaItem(): base()
         {
             Pagos = new Dictionary<Pago, decimal>();
@@ -143,7 +142,6 @@ namespace Ventas.Core.Model.VentaAggregate
             return new MontoPago(monto, decuento, cft, montoIva);
         }
 
-
         internal MontoProducto PendientePago()
         {
             return Total * (1 - PorcentajePago);
@@ -152,6 +150,17 @@ namespace Ventas.Core.Model.VentaAggregate
         internal MontoProducto TotalPago()
         {
             return Total * PorcentajePago;
+        }
+
+        public decimal TotalDescuento(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            return pagos.Sum(x => x.MontoPago.Descuento);
+        }
+        public decimal TotalCFT(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            return pagos.Sum(x => x.MontoPago.CFT);
         }
 
         internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
@@ -167,7 +176,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4, MidpointRounding.AwayFromZero);
         }
 
-        public IEnumerable<Pago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        internal IEnumerable<Pago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
             List<Pago> pagos = new List<Pago>();
 

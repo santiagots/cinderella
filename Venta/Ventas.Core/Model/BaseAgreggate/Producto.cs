@@ -3,7 +3,6 @@ using Common.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 using Ventas.Core.Model.ValueObjects;
-using Common.Core.Constants;
 using Common.Core.Exceptions;
 
 namespace Ventas.Core.Model.BaseAgreggate

@@ -7,6 +7,7 @@ using Factura.ExternalService.Contracts;
 using Common.Core.Exceptions;
 using Common.Core.Constants;
 using Factura.Core.Model.AfipAgreggate;
+using Newtonsoft.Json;
 
 namespace Factura.ExternalService
 {
@@ -51,24 +52,30 @@ namespace Factura.ExternalService
 
         public static AfipObtenerCAEResponse ObtenerCEA(AfipObtenerCAERequest request)
         {
+            Afip.Wsfev1.ServiceSoapClient serviceClient = new Afip.Wsfev1.ServiceSoapClient();
+
+            Afip.Wsfev1.DummyResponse dummyResponse = serviceClient.FEDummy();
+
             Afip.Wsfev1.FECAERequest feCAERequest = new Afip.Wsfev1.FECAERequest()
             {
                 FeCabReq = ObtenerCabecera(1, request.TipoCliente, request.TipoDocumentoFiscal),
                 FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(request.TipoCliente, request.TipoDocumentoFiscal, request.CondicionIVA, request.Cuit, request.ImporteNeto, request.AlicuotasIva) }
             };
 
-            Afip.Wsfev1.ServiceSoapClient serviceClient = new Afip.Wsfev1.ServiceSoapClient();
+            string feCAERequestString = JsonConvert.SerializeObject(feCAERequest);
 
-            Afip.Wsfev1.FECAEResponse response = serviceClient.FECAESolicitar(ObtenerAuth(), feCAERequest);
+            Afip.Wsfev1.FECAEResponse feCAEResponse = serviceClient.FECAESolicitar(ObtenerAuth(), feCAERequest);
 
-            VerificarErrorEnRespuesta(response.Errors);
-            VerificarObservacionesEnRespuesta(response);
+            string feCAEResponseString = JsonConvert.SerializeObject(feCAEResponse);
+
+            VerificarErrorEnRespuesta(feCAEResponse.Errors);
+            VerificarObservacionesEnRespuesta(feCAEResponse);
 
             return new AfipObtenerCAEResponse()
             {
-                NumeroComprobante = (int)response.FeDetResp.First().CbteDesde,
-                Codigo = response.FeDetResp.First().CAE,
-                FechaVencimiento = DateTime.ParseExact(response.FeDetResp.First().CAEFchVto, "yyyyMMdd", CultureInfo.InvariantCulture)
+                NumeroComprobante = (int)feCAEResponse.FeDetResp.First().CbteDesde,
+                Codigo = feCAEResponse.FeDetResp.First().CAE,
+                FechaVencimiento = DateTime.ParseExact(feCAEResponse.FeDetResp.First().CAEFchVto, "yyyyMMdd", CultureInfo.InvariantCulture)
             };
         }
 
@@ -111,7 +118,7 @@ namespace Factura.ExternalService
 
             AgregarAlicutaIva(alicuotaIva, request);
 
-            request.ImpTotal = request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib;
+            request.ImpTotal = Math.Round(request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib, 2, MidpointRounding.AwayFromZero);
 
             return request;
         }
@@ -131,7 +138,7 @@ namespace Factura.ExternalService
                     Importe = (double)x.IvaMonto
                 }).ToArray();
                     
-                request.ImpIVA = alicuotaIva.Sum(x => (double)x.IvaMonto);
+                request.ImpIVA = Math.Round(alicuotaIva.Sum(x => (double)x.IvaMonto), 2, MidpointRounding.AwayFromZero);
             }
         }
 
@@ -184,7 +191,7 @@ namespace Factura.ExternalService
         private static void VerificarErrorEnRespuesta(Afip.Wsfev1.Err[] error)
         {
             if (error != null)
-                throw new NegocioException($"{string.Join("\n", error.Select(x => x.Msg))}");
+                throw new NegocioException($"{string.Join("\n", error.Select(x =>$"{x.Code} {x.Msg}"))}");
         }
 
         private static void VerificarObservacionesEnRespuesta(Afip.Wsfev1.FECAEResponse CaeResponse)

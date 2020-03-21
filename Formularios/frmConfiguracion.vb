@@ -20,7 +20,15 @@ Public Class frmConfiguracion
         'Lista de Precios cargada en el app.config.
         lbl_NombreListaActual.Text = My.Settings("NombreListaPrecio")
 
-        txt_RazonSocial.Text = My.Settings.RazonSocial
+        txt_DatosFiscalNombreFantasia.Text = My.Settings.DatosFiscalNombreFantasia
+        FontDialog.Font = My.Settings.DatosFiscalNombreFantasiaFuente
+        txt_DatosFiscalRazonSocial.Text = My.Settings.DatosFiscalRazonSocial
+        txt_DatosFiscalDireccion.Text = My.Settings.DatosFiscalDireccion
+        txt_DatosFiscalTelefono.Text = My.Settings.DatosFiscalTel
+        txt_DatosFiscalEmail.Text = My.Settings.DatosFiscalEmail
+        txt_DatosFiscalCUIT.Text = My.Settings.DatosFiscalCUIT
+        txt_DatosFiscalIIBB.Text = My.Settings.DatosFiscalIIBB
+        dt_DatosFiscalInicioActividad.Value = If(My.Settings.DatosFiscalInicioActividad = Date.MinValue, Date.Now, My.Settings.DatosFiscalInicioActividad)
 
         'Cargo el listado de sucursales.
         If (NSucursales.ListadoSucursales().Tables.Count <> 0) Then
@@ -130,11 +138,18 @@ Public Class frmConfiguracion
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            If Cb_Sucursales.SelectedValue <> 0 AndAlso Not String.IsNullOrEmpty(txt_RazonSocial.Text) Then
+            If Cb_Sucursales.SelectedValue <> 0 AndAlso Not String.IsNullOrEmpty(txt_DatosFiscalNombreFantasia.Text) Then
 
                 My.Settings.Sucursal = Cb_Sucursales.SelectedValue
                 My.Settings.NombreSucursal = Cb_Sucursales.SelectedItem("Nombre").ToString
-                My.Settings.RazonSocial = txt_RazonSocial.Text
+                My.Settings.DatosFiscalNombreFantasia = txt_DatosFiscalNombreFantasia.Text
+                My.Settings.DatosFiscalRazonSocial = txt_DatosFiscalRazonSocial.Text
+                My.Settings.DatosFiscalDireccion = txt_DatosFiscalDireccion.Text
+                My.Settings.DatosFiscalTel = txt_DatosFiscalTelefono.Text
+                My.Settings.DatosFiscalEmail = txt_DatosFiscalEmail.Text
+                My.Settings.DatosFiscalCUIT = txt_DatosFiscalCUIT.Text
+                My.Settings.DatosFiscalIIBB = txt_DatosFiscalIIBB.Text
+                My.Settings.DatosFiscalInicioActividad = dt_DatosFiscalInicioActividad.Value
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -546,5 +561,11 @@ Public Class frmConfiguracion
             MessageBox.Show($"Se genero un error al verificar el DNS. Por favor, Comuníqueselo al administrador.{Environment.NewLine}{ex.ToString()} ", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
+    End Sub
+
+    Private Sub txt_DatosFiscalNombreFantasiaFuente_Click(sender As Object, e As EventArgs) Handles txt_DatosFiscalNombreFantasiaFuente.Click
+        If (FontDialog.ShowDialog() = DialogResult.OK) Then
+            My.Settings.DatosFiscalNombreFantasiaFuente = FontDialog.Font
+        End If
     End Sub
 End Class

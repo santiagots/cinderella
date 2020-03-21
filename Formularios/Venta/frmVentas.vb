@@ -107,6 +107,10 @@ Public Class frmVentas
     Private Sub Cb_TipoCliente_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoCliente.SelectedIndexChanged
         Ejecutar(
             Sub()
+                If (Cb_TipoCliente.SelectedValue Is Nothing) Then
+                    Return
+                End If
+
                 ventaViewModel.TipoClienteChange(Cb_TipoCliente.SelectedValue)
                 If (Cb_TipoCliente.SelectedValue = Common.Core.Enum.TipoCliente.Mayorista) Then
                     ventaViewModel.ConfigurarVentaParaClienteMayorista()
@@ -373,6 +377,7 @@ Public Class frmVentas
 
     Public Sub TerminarVentaEvent()
         MessageBox.Show("Los datos se han guardado de forma correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        VentaViewModelBindingSource.Dispose()
         Me.Dispose()
     End Sub
 

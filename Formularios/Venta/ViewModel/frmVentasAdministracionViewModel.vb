@@ -141,7 +141,7 @@ Namespace Formularios.Venta
         End Function
 
         Friend Sub Imprimir()
-            Dim frmReporteResumenReserva As frmReporteResumenReserva = New frmReporteResumenReserva("Resumen de Venta",
+            Dim frmReporteResumenReserva As frmReporteTransaccion = New frmReporteTransaccion("Resumen de Venta",
                                                                                                     1,
                                                                                                     VentaModelSeleccionada.TipoCliente,
                                                                                                     VentaModelSeleccionada.Vendedor.ApellidoYNombre,

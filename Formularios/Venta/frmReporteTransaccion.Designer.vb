@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmReporteResumenReserva
+Partial Class frmReporteTransaccion
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,6 +22,7 @@ Partial Class frmReporteResumenReserva
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReporteTransaccion))
         Me.CrViewer = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.SuspendLayout()
         '
@@ -41,17 +42,18 @@ Partial Class frmReporteResumenReserva
         Me.CrViewer.TabIndex = 0
         Me.CrViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
-        'frmReporteResumenVenta
+        'frmReporteTransaccion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(794, 572)
         Me.Controls.Add(Me.CrViewer)
-        Me.Name = "frmReporteResumenVenta"
-        Me.Text = "frmReporteResumenVenta"
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Name = "frmReporteTransaccion"
+        Me.Text = "Venta"
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents CrViewer As CrystalDecisions.Windows.Forms.CrystalReportViewer
+    Private WithEvents CrViewer As CrystalDecisions.Windows.Forms.CrystalReportViewer
 End Class

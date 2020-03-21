@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -494,12 +494,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Cinderella")>  _
-        Public Property RazonSocial() As String
+        Public Property DatosFiscalNombreFantasia() As String
             Get
-                Return CType(Me("RazonSocial"),String)
+                Return CType(Me("DatosFiscalNombreFantasia"),String)
             End Get
             Set
-                Me("RazonSocial") = value
+                Me("DatosFiscalNombreFantasia") = value
             End Set
         End Property
         
@@ -593,6 +593,101 @@ Namespace My
             End Get
             Set
                 Me("Setting1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalRazonSocial() As String
+            Get
+                Return CType(Me("DatosFiscalRazonSocial"),String)
+            End Get
+            Set
+                Me("DatosFiscalRazonSocial") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalDireccion() As String
+            Get
+                Return CType(Me("DatosFiscalDireccion"),String)
+            End Get
+            Set
+                Me("DatosFiscalDireccion") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalTel() As String
+            Get
+                Return CType(Me("DatosFiscalTel"),String)
+            End Get
+            Set
+                Me("DatosFiscalTel") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalEmail() As String
+            Get
+                Return CType(Me("DatosFiscalEmail"),String)
+            End Get
+            Set
+                Me("DatosFiscalEmail") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalCUIT() As String
+            Get
+                Return CType(Me("DatosFiscalCUIT"),String)
+            End Get
+            Set
+                Me("DatosFiscalCUIT") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalIIBB() As String
+            Get
+                Return CType(Me("DatosFiscalIIBB"),String)
+            End Get
+            Set
+                Me("DatosFiscalIIBB") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property DatosFiscalInicioActividad() As Date
+            Get
+                Return CType(Me("DatosFiscalInicioActividad"),Date)
+            End Get
+            Set
+                Me("DatosFiscalInicioActividad") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Segoe UI, 26.25pt, style=Bold")>  _
+        Public Property DatosFiscalNombreFantasiaFuente() As Global.System.Drawing.Font
+            Get
+                Return CType(Me("DatosFiscalNombreFantasiaFuente"),Global.System.Drawing.Font)
+            End Get
+            Set
+                Me("DatosFiscalNombreFantasiaFuente") = value
             End Set
         End Property
     End Class

@@ -11,6 +11,7 @@ namespace Factura.Service.NotaCredito.Contracts
         public CondicionIVA CondicionIVAOriginal { get; set; }
         public List<PagoRequest> Pagos { get; set; }
         public List<ProductoRequest> Productos { get; set; }
+        public List<int> NumerosNotaCredito { get; set; }
         public int NumeroFacturaOrigen { get; set; }
         public int PuntoVentaOrigen { get; set; }
         public decimal PorcentajeFacturacion { get; set; }

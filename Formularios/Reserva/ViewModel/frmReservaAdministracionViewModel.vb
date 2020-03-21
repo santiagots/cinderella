@@ -115,7 +115,7 @@ Namespace Formularios.Reserva
 
         Friend Async Function ImprimirReservaAsync(reservaAdministracionItemsViewModel As ReservaAdministracionItemsViewModel) As Task
             reservaModel = Await Task.Run(Function() Servicio.ObtenerReserva(reservaAdministracionItemsViewModel.Id))
-            Dim frmReporteResumenReserva As frmReporteResumenReserva = New frmReporteResumenReserva("Resumen de Reserva",
+            Dim frmReporteResumenReserva As frmReporteTransaccion = New frmReporteTransaccion("Resumen de Reserva",
                                                                                                     1,
                                                                                                     reservaModel.VentaReserva.TipoCliente,
                                                                                                     reservaModel.VentaReserva.Vendedor.ApellidoYNombre,
