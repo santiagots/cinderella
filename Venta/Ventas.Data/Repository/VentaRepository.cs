@@ -39,6 +39,8 @@ namespace Ventas.Data.Repository
                             .Include(x => x.NotaCredito.NumeroNotaCredito)
                             .FirstOrDefault(x => x.Id == idVenta);
 
+            //fuerzo el ordenamiento pq puede recuperarse en otro orden al guardado
+            venta.OrdenarItemsVenta();
             //fuerzo la registracion de los pagos a cada producto
             venta.ActualizarPagos();
             return venta;

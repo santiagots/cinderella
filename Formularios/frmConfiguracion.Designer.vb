@@ -31,6 +31,7 @@ Partial Class frmConfiguracion
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.txt_DatosFiscalNombreFantasiaFuente = New System.Windows.Forms.Button()
         Me.txt_DatosFiscalEmail = New System.Windows.Forms.TextBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.txt_DatosFiscalTelefono = New System.Windows.Forms.TextBox()
@@ -146,8 +147,9 @@ Partial Class frmConfiguracion
         Me.Label29 = New System.Windows.Forms.Label()
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
-        Me.txt_DatosFiscalNombreFantasiaFuente = New System.Windows.Forms.Button()
         Me.FontDialog = New System.Windows.Forms.FontDialog()
+        Me.txt_DatosFiscalLocalidad = New System.Windows.Forms.TextBox()
+        Me.Label41 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -257,6 +259,8 @@ Partial Class frmConfiguracion
         '
         'GroupBox13
         '
+        Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalLocalidad)
+        Me.GroupBox13.Controls.Add(Me.Label41)
         Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalNombreFantasiaFuente)
         Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalEmail)
         Me.GroupBox13.Controls.Add(Me.Label40)
@@ -281,9 +285,18 @@ Partial Class frmConfiguracion
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Datos Fiscales"
         '
+        'txt_DatosFiscalNombreFantasiaFuente
+        '
+        Me.txt_DatosFiscalNombreFantasiaFuente.Location = New System.Drawing.Point(335, 19)
+        Me.txt_DatosFiscalNombreFantasiaFuente.Name = "txt_DatosFiscalNombreFantasiaFuente"
+        Me.txt_DatosFiscalNombreFantasiaFuente.Size = New System.Drawing.Size(56, 23)
+        Me.txt_DatosFiscalNombreFantasiaFuente.TabIndex = 26
+        Me.txt_DatosFiscalNombreFantasiaFuente.Text = "Fuente"
+        Me.txt_DatosFiscalNombreFantasiaFuente.UseVisualStyleBackColor = True
+        '
         'txt_DatosFiscalEmail
         '
-        Me.txt_DatosFiscalEmail.Location = New System.Drawing.Point(133, 128)
+        Me.txt_DatosFiscalEmail.Location = New System.Drawing.Point(133, 155)
         Me.txt_DatosFiscalEmail.Name = "txt_DatosFiscalEmail"
         Me.txt_DatosFiscalEmail.Size = New System.Drawing.Size(258, 21)
         Me.txt_DatosFiscalEmail.TabIndex = 25
@@ -291,7 +304,7 @@ Partial Class frmConfiguracion
         'Label40
         '
         Me.Label40.AutoSize = True
-        Me.Label40.Location = New System.Drawing.Point(6, 131)
+        Me.Label40.Location = New System.Drawing.Point(6, 158)
         Me.Label40.Name = "Label40"
         Me.Label40.Size = New System.Drawing.Size(58, 15)
         Me.Label40.TabIndex = 24
@@ -299,7 +312,7 @@ Partial Class frmConfiguracion
         '
         'txt_DatosFiscalTelefono
         '
-        Me.txt_DatosFiscalTelefono.Location = New System.Drawing.Point(133, 101)
+        Me.txt_DatosFiscalTelefono.Location = New System.Drawing.Point(133, 128)
         Me.txt_DatosFiscalTelefono.Name = "txt_DatosFiscalTelefono"
         Me.txt_DatosFiscalTelefono.Size = New System.Drawing.Size(258, 21)
         Me.txt_DatosFiscalTelefono.TabIndex = 23
@@ -307,7 +320,7 @@ Partial Class frmConfiguracion
         'Label39
         '
         Me.Label39.AutoSize = True
-        Me.Label39.Location = New System.Drawing.Point(6, 104)
+        Me.Label39.Location = New System.Drawing.Point(6, 131)
         Me.Label39.Name = "Label39"
         Me.Label39.Size = New System.Drawing.Size(74, 15)
         Me.Label39.TabIndex = 22
@@ -331,7 +344,7 @@ Partial Class frmConfiguracion
         '
         'dt_DatosFiscalInicioActividad
         '
-        Me.dt_DatosFiscalInicioActividad.Location = New System.Drawing.Point(133, 212)
+        Me.dt_DatosFiscalInicioActividad.Location = New System.Drawing.Point(133, 239)
         Me.dt_DatosFiscalInicioActividad.Name = "dt_DatosFiscalInicioActividad"
         Me.dt_DatosFiscalInicioActividad.Size = New System.Drawing.Size(258, 21)
         Me.dt_DatosFiscalInicioActividad.TabIndex = 19
@@ -339,7 +352,7 @@ Partial Class frmConfiguracion
         'Label37
         '
         Me.Label37.AutoSize = True
-        Me.Label37.Location = New System.Drawing.Point(6, 212)
+        Me.Label37.Location = New System.Drawing.Point(6, 239)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(106, 15)
         Me.Label37.TabIndex = 18
@@ -347,7 +360,7 @@ Partial Class frmConfiguracion
         '
         'txt_DatosFiscalIIBB
         '
-        Me.txt_DatosFiscalIIBB.Location = New System.Drawing.Point(133, 182)
+        Me.txt_DatosFiscalIIBB.Location = New System.Drawing.Point(133, 209)
         Me.txt_DatosFiscalIIBB.Name = "txt_DatosFiscalIIBB"
         Me.txt_DatosFiscalIIBB.Size = New System.Drawing.Size(258, 21)
         Me.txt_DatosFiscalIIBB.TabIndex = 17
@@ -355,7 +368,7 @@ Partial Class frmConfiguracion
         'Label27
         '
         Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(6, 185)
+        Me.Label27.Location = New System.Drawing.Point(6, 212)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(48, 15)
         Me.Label27.TabIndex = 16
@@ -363,7 +376,7 @@ Partial Class frmConfiguracion
         '
         'txt_DatosFiscalCUIT
         '
-        Me.txt_DatosFiscalCUIT.Location = New System.Drawing.Point(133, 155)
+        Me.txt_DatosFiscalCUIT.Location = New System.Drawing.Point(133, 182)
         Me.txt_DatosFiscalCUIT.Name = "txt_DatosFiscalCUIT"
         Me.txt_DatosFiscalCUIT.Size = New System.Drawing.Size(258, 21)
         Me.txt_DatosFiscalCUIT.TabIndex = 15
@@ -371,7 +384,7 @@ Partial Class frmConfiguracion
         'Label26
         '
         Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(6, 158)
+        Me.Label26.Location = New System.Drawing.Point(6, 185)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(53, 15)
         Me.Label26.TabIndex = 14
@@ -1471,14 +1484,21 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
         '
-        'txt_DatosFiscalNombreFantasiaFuente
+        'txt_DatosFiscalLocalidad
         '
-        Me.txt_DatosFiscalNombreFantasiaFuente.Location = New System.Drawing.Point(335, 19)
-        Me.txt_DatosFiscalNombreFantasiaFuente.Name = "txt_DatosFiscalNombreFantasiaFuente"
-        Me.txt_DatosFiscalNombreFantasiaFuente.Size = New System.Drawing.Size(56, 23)
-        Me.txt_DatosFiscalNombreFantasiaFuente.TabIndex = 26
-        Me.txt_DatosFiscalNombreFantasiaFuente.Text = "Fuente"
-        Me.txt_DatosFiscalNombreFantasiaFuente.UseVisualStyleBackColor = True
+        Me.txt_DatosFiscalLocalidad.Location = New System.Drawing.Point(133, 101)
+        Me.txt_DatosFiscalLocalidad.Name = "txt_DatosFiscalLocalidad"
+        Me.txt_DatosFiscalLocalidad.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalLocalidad.TabIndex = 28
+        '
+        'Label41
+        '
+        Me.Label41.AutoSize = True
+        Me.Label41.Location = New System.Drawing.Point(6, 104)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(80, 15)
+        Me.Label41.TabIndex = 27
+        Me.Label41.Text = "(*) Localidad:"
         '
         'frmConfiguracion
         '
@@ -1661,4 +1681,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label38 As Label
     Friend WithEvents txt_DatosFiscalNombreFantasiaFuente As Button
     Friend WithEvents FontDialog As FontDialog
+    Friend WithEvents txt_DatosFiscalLocalidad As TextBox
+    Friend WithEvents Label41 As Label
 End Class

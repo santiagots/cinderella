@@ -24,6 +24,7 @@ Public Class frmConfiguracion
         FontDialog.Font = My.Settings.DatosFiscalNombreFantasiaFuente
         txt_DatosFiscalRazonSocial.Text = My.Settings.DatosFiscalRazonSocial
         txt_DatosFiscalDireccion.Text = My.Settings.DatosFiscalDireccion
+        txt_DatosFiscalLocalidad.Text = My.Settings.DatosFiscalLocalidad
         txt_DatosFiscalTelefono.Text = My.Settings.DatosFiscalTel
         txt_DatosFiscalEmail.Text = My.Settings.DatosFiscalEmail
         txt_DatosFiscalCUIT.Text = My.Settings.DatosFiscalCUIT
@@ -145,6 +146,7 @@ Public Class frmConfiguracion
                 My.Settings.DatosFiscalNombreFantasia = txt_DatosFiscalNombreFantasia.Text
                 My.Settings.DatosFiscalRazonSocial = txt_DatosFiscalRazonSocial.Text
                 My.Settings.DatosFiscalDireccion = txt_DatosFiscalDireccion.Text
+                My.Settings.DatosFiscalLocalidad = txt_DatosFiscalLocalidad.Text
                 My.Settings.DatosFiscalTel = txt_DatosFiscalTelefono.Text
                 My.Settings.DatosFiscalEmail = txt_DatosFiscalEmail.Text
                 My.Settings.DatosFiscalCUIT = txt_DatosFiscalCUIT.Text

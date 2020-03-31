@@ -690,6 +690,18 @@ Namespace My
                 Me("DatosFiscalNombreFantasiaFuente") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalLocalidad() As String
+            Get
+                Return CType(Me("DatosFiscalLocalidad"),String)
+            End Get
+            Set
+                Me("DatosFiscalLocalidad") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

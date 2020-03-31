@@ -35,7 +35,7 @@ Partial Public Class DsDatos
     
     Private tablePago As PagoDataTable
     
-    Private tableIva As IvaDataTable
+    Private tableTotales As TotalesDataTable
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
@@ -81,8 +81,8 @@ Partial Public Class DsDatos
             If (Not (ds.Tables("Pago")) Is Nothing) Then
                 MyBase.Tables.Add(New PagoDataTable(ds.Tables("Pago")))
             End If
-            If (Not (ds.Tables("Iva")) Is Nothing) Then
-                MyBase.Tables.Add(New IvaDataTable(ds.Tables("Iva")))
+            If (Not (ds.Tables("Totales")) Is Nothing) Then
+                MyBase.Tables.Add(New TotalesDataTable(ds.Tables("Totales")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -155,9 +155,9 @@ Partial Public Class DsDatos
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
      Global.System.ComponentModel.Browsable(false),  _
      Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property Iva() As IvaDataTable
+    Public ReadOnly Property Totales() As TotalesDataTable
         Get
-            Return Me.tableIva
+            Return Me.tableTotales
         End Get
     End Property
     
@@ -243,8 +243,8 @@ Partial Public Class DsDatos
             If (Not (ds.Tables("Pago")) Is Nothing) Then
                 MyBase.Tables.Add(New PagoDataTable(ds.Tables("Pago")))
             End If
-            If (Not (ds.Tables("Iva")) Is Nothing) Then
-                MyBase.Tables.Add(New IvaDataTable(ds.Tables("Iva")))
+            If (Not (ds.Tables("Totales")) Is Nothing) Then
+                MyBase.Tables.Add(New TotalesDataTable(ds.Tables("Totales")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -308,10 +308,10 @@ Partial Public Class DsDatos
                 Me.tablePago.InitVars
             End If
         End If
-        Me.tableIva = CType(MyBase.Tables("Iva"),IvaDataTable)
+        Me.tableTotales = CType(MyBase.Tables("Totales"),TotalesDataTable)
         If (initTable = true) Then
-            If (Not (Me.tableIva) Is Nothing) Then
-                Me.tableIva.InitVars
+            If (Not (Me.tableTotales) Is Nothing) Then
+                Me.tableTotales.InitVars
             End If
         End If
     End Sub
@@ -334,8 +334,8 @@ Partial Public Class DsDatos
         MyBase.Tables.Add(Me.tableTransaccionItem)
         Me.tablePago = New PagoDataTable()
         MyBase.Tables.Add(Me.tablePago)
-        Me.tableIva = New IvaDataTable()
-        MyBase.Tables.Add(Me.tableIva)
+        Me.tableTotales = New TotalesDataTable()
+        MyBase.Tables.Add(Me.tableTotales)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -370,7 +370,7 @@ Partial Public Class DsDatos
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Private Function ShouldSerializeIva() As Boolean
+    Private Function ShouldSerializeTotales() As Boolean
         Return false
     End Function
     
@@ -448,7 +448,7 @@ Partial Public Class DsDatos
     Public Delegate Sub PagoRowChangeEventHandler(ByVal sender As Object, ByVal e As PagoRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Public Delegate Sub IvaRowChangeEventHandler(ByVal sender As Object, ByVal e As IvaRowChangeEvent)
+    Public Delegate Sub TotalesRowChangeEventHandler(ByVal sender As Object, ByVal e As TotalesRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
@@ -2135,20 +2135,18 @@ Partial Public Class DsDatos
     '''</summary>
     <Global.System.Serializable(),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class IvaDataTable
-        Inherits Global.System.Data.TypedTableBase(Of IvaRow)
+    Partial Public Class TotalesDataTable
+        Inherits Global.System.Data.TypedTableBase(Of TotalesRow)
         
-        Private columnSubtotal As Global.System.Data.DataColumn
+        Private columnDescripcion As Global.System.Data.DataColumn
         
-        Private columnPorcentaje As Global.System.Data.DataColumn
-        
-        Private columnTotalIva As Global.System.Data.DataColumn
+        Private columnMonto As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
             MyBase.New
-            Me.TableName = "Iva"
+            Me.TableName = "Totales"
             Me.BeginInit
             Me.InitClass
             Me.EndInit
@@ -2181,25 +2179,17 @@ Partial Public Class DsDatos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property SubtotalColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property DescripcionColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnSubtotal
+                Return Me.columnDescripcion
             End Get
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property PorcentajeColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property MontoColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnPorcentaje
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property TotalIvaColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnTotalIva
+                Return Me.columnMonto
             End Get
         End Property
         
@@ -2214,44 +2204,44 @@ Partial Public Class DsDatos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As IvaRow
+        Public Default ReadOnly Property Item(ByVal index As Integer) As TotalesRow
             Get
-                Return CType(Me.Rows(index),IvaRow)
+                Return CType(Me.Rows(index),TotalesRow)
             End Get
         End Property
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event IvaRowChanging As IvaRowChangeEventHandler
+        Public Event TotalesRowChanging As TotalesRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event IvaRowChanged As IvaRowChangeEventHandler
+        Public Event TotalesRowChanged As TotalesRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event IvaRowDeleting As IvaRowChangeEventHandler
+        Public Event TotalesRowDeleting As TotalesRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event IvaRowDeleted As IvaRowChangeEventHandler
+        Public Event TotalesRowDeleted As TotalesRowChangeEventHandler
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Sub AddIvaRow(ByVal row As IvaRow)
+        Public Overloads Sub AddTotalesRow(ByVal row As TotalesRow)
             Me.Rows.Add(row)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddIvaRow(ByVal Subtotal As Decimal, ByVal Porcentaje As Decimal, ByVal TotalIva As Decimal) As IvaRow
-            Dim rowIvaRow As IvaRow = CType(Me.NewRow,IvaRow)
-            Dim columnValuesArray() As Object = New Object() {Subtotal, Porcentaje, TotalIva}
-            rowIvaRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowIvaRow)
-            Return rowIvaRow
+        Public Overloads Function AddTotalesRow(ByVal Descripcion As String, ByVal Monto As Decimal) As TotalesRow
+            Dim rowTotalesRow As TotalesRow = CType(Me.NewRow,TotalesRow)
+            Dim columnValuesArray() As Object = New Object() {Descripcion, Monto}
+            rowTotalesRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowTotalesRow)
+            Return rowTotalesRow
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As IvaDataTable = CType(MyBase.Clone,IvaDataTable)
+            Dim cln As TotalesDataTable = CType(MyBase.Clone,TotalesDataTable)
             cln.InitVars
             Return cln
         End Function
@@ -2259,52 +2249,49 @@ Partial Public Class DsDatos
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New IvaDataTable()
+            Return New TotalesDataTable()
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub InitVars()
-            Me.columnSubtotal = MyBase.Columns("Subtotal")
-            Me.columnPorcentaje = MyBase.Columns("Porcentaje")
-            Me.columnTotalIva = MyBase.Columns("TotalIva")
+            Me.columnDescripcion = MyBase.Columns("Descripcion")
+            Me.columnMonto = MyBase.Columns("Monto")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Sub InitClass()
-            Me.columnSubtotal = New Global.System.Data.DataColumn("Subtotal", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnSubtotal)
-            Me.columnPorcentaje = New Global.System.Data.DataColumn("Porcentaje", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPorcentaje)
-            Me.columnTotalIva = New Global.System.Data.DataColumn("TotalIva", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnTotalIva)
+            Me.columnDescripcion = New Global.System.Data.DataColumn("Descripcion", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnDescripcion)
+            Me.columnMonto = New Global.System.Data.DataColumn("Monto", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMonto)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function NewIvaRow() As IvaRow
-            Return CType(Me.NewRow,IvaRow)
+        Public Function NewTotalesRow() As TotalesRow
+            Return CType(Me.NewRow,TotalesRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New IvaRow(builder)
+            Return New TotalesRow(builder)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(IvaRow)
+            Return GetType(TotalesRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanged(e)
-            If (Not (Me.IvaRowChangedEvent) Is Nothing) Then
-                RaiseEvent IvaRowChanged(Me, New IvaRowChangeEvent(CType(e.Row,IvaRow), e.Action))
+            If (Not (Me.TotalesRowChangedEvent) Is Nothing) Then
+                RaiseEvent TotalesRowChanged(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
             End If
         End Sub
         
@@ -2312,8 +2299,8 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanging(e)
-            If (Not (Me.IvaRowChangingEvent) Is Nothing) Then
-                RaiseEvent IvaRowChanging(Me, New IvaRowChangeEvent(CType(e.Row,IvaRow), e.Action))
+            If (Not (Me.TotalesRowChangingEvent) Is Nothing) Then
+                RaiseEvent TotalesRowChanging(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
             End If
         End Sub
         
@@ -2321,8 +2308,8 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleted(e)
-            If (Not (Me.IvaRowDeletedEvent) Is Nothing) Then
-                RaiseEvent IvaRowDeleted(Me, New IvaRowChangeEvent(CType(e.Row,IvaRow), e.Action))
+            If (Not (Me.TotalesRowDeletedEvent) Is Nothing) Then
+                RaiseEvent TotalesRowDeleted(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
             End If
         End Sub
         
@@ -2330,14 +2317,14 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleting(e)
-            If (Not (Me.IvaRowDeletingEvent) Is Nothing) Then
-                RaiseEvent IvaRowDeleting(Me, New IvaRowChangeEvent(CType(e.Row,IvaRow), e.Action))
+            If (Not (Me.TotalesRowDeletingEvent) Is Nothing) Then
+                RaiseEvent TotalesRowDeleting(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
             End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub RemoveIvaRow(ByVal row As IvaRow)
+        Public Sub RemoveTotalesRow(ByVal row As TotalesRow)
             Me.Rows.Remove(row)
         End Sub
         
@@ -2364,7 +2351,7 @@ Partial Public Class DsDatos
             type.Attributes.Add(attribute1)
             Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
             attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "IvaDataTable"
+            attribute2.FixedValue = "TotalesDataTable"
             type.Attributes.Add(attribute2)
             type.Particle = sequence
             Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -3463,97 +3450,70 @@ Partial Public Class DsDatos
     '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
-    Partial Public Class IvaRow
+    Partial Public Class TotalesRow
         Inherits Global.System.Data.DataRow
         
-        Private tableIva As IvaDataTable
+        Private tableTotales As TotalesDataTable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
             MyBase.New(rb)
-            Me.tableIva = CType(Me.Table,IvaDataTable)
+            Me.tableTotales = CType(Me.Table,TotalesDataTable)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property Subtotal() As Decimal
+        Public Property Descripcion() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableIva.SubtotalColumn),Decimal)
+                    Return CType(Me(Me.tableTotales.DescripcionColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Subtotal' in table 'Iva' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Descripcion' in table 'Totales' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableIva.SubtotalColumn) = value
+                Me(Me.tableTotales.DescripcionColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property Porcentaje() As Decimal
+        Public Property Monto() As Decimal
             Get
                 Try 
-                    Return CType(Me(Me.tableIva.PorcentajeColumn),Decimal)
+                    Return CType(Me(Me.tableTotales.MontoColumn),Decimal)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Porcentaje' in table 'Iva' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'Totales' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableIva.PorcentajeColumn) = value
+                Me(Me.tableTotales.MontoColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property TotalIva() As Decimal
-            Get
-                Try 
-                    Return CType(Me(Me.tableIva.TotalIvaColumn),Decimal)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'TotalIva' in table 'Iva' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableIva.TotalIvaColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsSubtotalNull() As Boolean
-            Return Me.IsNull(Me.tableIva.SubtotalColumn)
+        Public Function IsDescripcionNull() As Boolean
+            Return Me.IsNull(Me.tableTotales.DescripcionColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetSubtotalNull()
-            Me(Me.tableIva.SubtotalColumn) = Global.System.Convert.DBNull
+        Public Sub SetDescripcionNull()
+            Me(Me.tableTotales.DescripcionColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsPorcentajeNull() As Boolean
-            Return Me.IsNull(Me.tableIva.PorcentajeColumn)
+        Public Function IsMontoNull() As Boolean
+            Return Me.IsNull(Me.tableTotales.MontoColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetPorcentajeNull()
-            Me(Me.tableIva.PorcentajeColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsTotalIvaNull() As Boolean
-            Return Me.IsNull(Me.tableIva.TotalIvaColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetTotalIvaNull()
-            Me(Me.tableIva.TotalIvaColumn) = Global.System.Convert.DBNull
+        Public Sub SetMontoNull()
+            Me(Me.tableTotales.MontoColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3741,16 +3701,16 @@ Partial Public Class DsDatos
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Public Class IvaRowChangeEvent
+    Public Class TotalesRowChangeEvent
         Inherits Global.System.EventArgs
         
-        Private eventRow As IvaRow
+        Private eventRow As TotalesRow
         
         Private eventAction As Global.System.Data.DataRowAction
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub New(ByVal row As IvaRow, ByVal action As Global.System.Data.DataRowAction)
+        Public Sub New(ByVal row As TotalesRow, ByVal action As Global.System.Data.DataRowAction)
             MyBase.New
             Me.eventRow = row
             Me.eventAction = action
@@ -3758,7 +3718,7 @@ Partial Public Class DsDatos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property Row() As IvaRow
+        Public ReadOnly Property Row() As TotalesRow
             Get
                 Return Me.eventRow
             End Get

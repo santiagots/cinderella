@@ -181,7 +181,7 @@ Namespace Formularios.Facturacion
                 .NumerosFacturas = Numerosfacturas.ToList()
             }
 
-            obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems)
+            obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
             Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada)
@@ -243,7 +243,7 @@ Namespace Formularios.Facturacion
                 .NumerosNotaCredito = Numerosfacturas.ToList()
             }
 
-            ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems)
+            ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
             Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada)
@@ -370,7 +370,7 @@ Namespace Formularios.Facturacion
             End If
         End Sub
 
-        Private Function ObtenerProductoRequest(desdeReserva As Boolean, porcentajeFacturacion As Decimal, tipoCliente As TipoCliente, ventaItems As List(Of VentaItem)) As List(Of ProductoRequest)
+        Private Function ObtenerProductoRequest(desdeReserva As Boolean, porcentajeFacturacion As Decimal, tipoCliente As TipoCliente, condicionIva As CondicionIVA, ventaItems As List(Of VentaItem)) As List(Of ProductoRequest)
 
             Dim request As List(Of ProductoRequest) = New List(Of ProductoRequest)()
 
@@ -390,9 +390,9 @@ Namespace Formularios.Facturacion
                             .Cantidad = ventaItem.Cantidad,
                             .Codigo = ventaItem.Producto.Codigo,
                             .Nombre = ventaItem.Producto.Nombre,
-                            .Monto = ventaItem.MontoProducto.Valor,
-                            .Descuento = ventaItem.TotalDescuento(porcentajeFacturacion, tipoCliente),
-                            .CFT = ventaItem.TotalCFT(porcentajeFacturacion, tipoCliente),
+                            .Monto = ventaItem.TotalMonto(porcentajeFacturacion, tipoCliente, condicionIva),
+                            .Descuento = ventaItem.TotalDescuento(porcentajeFacturacion, tipoCliente, condicionIva),
+                            .CFT = ventaItem.TotalCFT(porcentajeFacturacion, tipoCliente, condicionIva),
                             .IVA = ventaItem.Producto.SubCategoria.IVA})
                 Next
             End If

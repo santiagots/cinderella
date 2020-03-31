@@ -184,6 +184,10 @@ namespace Factura.Device.Printer
             CadenaFinal = CadenaFinal.Replace("é", "‚");    // Reemplazo é.
             CadenaFinal = CadenaFinal.Replace("ú", "£");    // Reemplazo ú.
             CadenaFinal = CadenaFinal.Replace("ñ", "¤");    // Reemplazo ñ.
+            CadenaFinal = CadenaFinal.Replace("+", "");
+            CadenaFinal = CadenaFinal.Replace("-", "");
+            CadenaFinal = CadenaFinal.Replace("*", "");
+            CadenaFinal = CadenaFinal.Replace("/", "");
             return CadenaFinal;
         }
 
@@ -199,7 +203,7 @@ namespace Factura.Device.Printer
             montoAux = (double)monto;
             montoAux = (montoAux * (Math.Pow(10, potencia)));
             SinComas = montoAux.ToString().Replace(",", "");
-            SinPuntos = montoAux.ToString().Replace(".", "");
+            SinPuntos = SinComas.ToString().Replace(".", "");
             return SinPuntos;
         }
 
@@ -210,7 +214,7 @@ namespace Factura.Device.Printer
             montoAux = (double)monto;
             montoAux = (montoAux * (Math.Pow(10, potencia)));
             SinComas = montoAux.ToString().Replace(",", "");
-            SinPuntos = montoAux.ToString().Replace(".", "");
+            SinPuntos = SinComas.ToString().Replace(".", "");
             return SinPuntos;
         }
 
@@ -233,27 +237,14 @@ namespace Factura.Device.Printer
 
         internal decimal ObtenerMontoSegunTipoDeCliente(decimal monto, decimal iva)
         {
-            switch (TipoCliente)
-            {
-                case TipoCliente.Minorista:
-                    return monto;
-                case TipoCliente.Mayorista:
-                    return Math.Round(monto * PorcentajeFacturacion * (1 + iva), 1, MidpointRounding.AwayFromZero);
-                default:
-                    throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
-            }
-        }
-
-        internal decimal ObtenerDescuentoRecargoSegunResponsabilidadIva(decimal monto, decimal iva)
-        {
             switch (ResponsableIvaComprador)
             {
-                case RESPONSABLE_INSCRIPTO:
-                case CONSUMIDOR_FINAL:
-                    return monto * PorcentajeFacturacion;
                 case MONOTRIBUTISTA:
                 case EXENTO:
-                    return Math.Round(monto * PorcentajeFacturacion * (1 + iva), 1, MidpointRounding.AwayFromZero);
+                case CONSUMIDOR_FINAL:
+                    return monto;
+                case RESPONSABLE_INSCRIPTO:
+                    return Math.Round(monto * (1 + iva), 1, MidpointRounding.AwayFromZero);
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
             }

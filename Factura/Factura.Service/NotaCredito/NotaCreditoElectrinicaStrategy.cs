@@ -21,7 +21,7 @@ namespace Common.Service.NotaCredito
                 CondicionIVA = request.CondicionIVA,
                 Cuit = request.Cuit,
                 ImporteNeto = request.Productos.Sum(x => x.Neto) * request.PorcentajeFacturacion,
-                AlicuotasIva = ObtenerAfipAlicuotaIvaRequest(request.TipoCliente, request.Productos, request.PorcentajeFacturacion)
+                AlicuotasIva = ObtenerAfipAlicuotaIvaRequest(request.CondicionIVA, request.Productos, request.PorcentajeFacturacion)
             };
 
             AfipObtenerCAEResponse response = AfipFacturacionElectronicaService.ObtenerCEA(afipObtenerCAERequest);
@@ -34,14 +34,14 @@ namespace Common.Service.NotaCredito
             };
         }
 
-        private List<AfipAlicuotaIvaRequest> ObtenerAfipAlicuotaIvaRequest(TipoCliente tipoCliente, List<ProductoRequest> Productos, decimal PorcentajeFacturacion)
+        private List<AfipAlicuotaIvaRequest> ObtenerAfipAlicuotaIvaRequest(CondicionIVA condicionIva, List<ProductoRequest> Productos, decimal PorcentajeFacturacion)
         {
             List<AfipAlicuotaIvaRequest> alicuotasIva = new List<AfipAlicuotaIvaRequest>();
             List<IGrouping<IVA, ProductoRequest>> grupos = Productos.GroupBy(x => x.IVA).ToList();
 
             foreach (IGrouping<IVA, ProductoRequest> grupo in grupos)
             {
-                decimal monto = ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.Neto), grupo.Key.Valor, tipoCliente);
+                decimal monto = ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.Neto), grupo.Key.Valor, condicionIva);
                 monto = monto * PorcentajeFacturacion;
                 alicuotasIva.Add(new AfipAlicuotaIvaRequest()
                 {
@@ -54,16 +54,18 @@ namespace Common.Service.NotaCredito
             return alicuotasIva;
         }
 
-        internal decimal ObtenerMontoSegunTipoDeCliente(decimal monto, decimal iva, TipoCliente tipoCliente)
+        internal decimal ObtenerMontoSegunTipoDeCliente(decimal monto, decimal iva, CondicionIVA condicionIva)
         {
-            switch (tipoCliente)
+            switch (condicionIva)
             {
-                case TipoCliente.Minorista:
-                    return Math.Round(monto / (1 + iva), 1, MidpointRounding.AwayFromZero);
-                case TipoCliente.Mayorista:
+                case CondicionIVA.Consumidor_Final:
+                case CondicionIVA.Exento:
+                case CondicionIVA.Monotributo:
+                    return Math.Round(monto / (1 + iva), 2, MidpointRounding.AwayFromZero);
+                case CondicionIVA.Responsable_Inscripto:
                     return monto;
                 default:
-                    throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {tipoCliente.ToString()}");
+                    throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {condicionIva.ToString()}");
             }
         }
     }

@@ -58,7 +58,7 @@ namespace Factura.ExternalService
 
             Afip.Wsfev1.FECAERequest feCAERequest = new Afip.Wsfev1.FECAERequest()
             {
-                FeCabReq = ObtenerCabecera(1, request.TipoCliente, request.TipoDocumentoFiscal),
+                FeCabReq = ObtenerCabecera(1, request.CondicionIVA, request.TipoDocumentoFiscal),
                 FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(request.TipoCliente, request.TipoDocumentoFiscal, request.CondicionIVA, request.Cuit, request.ImporteNeto, request.AlicuotasIva) }
             };
 
@@ -91,11 +91,11 @@ namespace Factura.ExternalService
             };
         }
 
-        private static Afip.Wsfev1.FECAECabRequest ObtenerCabecera(int cantidadRegistros, TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal)
+        private static Afip.Wsfev1.FECAECabRequest ObtenerCabecera(int cantidadRegistros, CondicionIVA condicionIVA, TipoDocumentoFiscal tipoDocumentoFiscal)
             => new Afip.Wsfev1.FECAECabRequest()
             {
                 CantReg = cantidadRegistros,
-                CbteTipo = ObtenerTipoComprobante(tipoCliente, tipoDocumentoFiscal),
+                CbteTipo = ObtenerTipoComprobante(condicionIVA, tipoDocumentoFiscal),
                 PtoVta = PUNTO_VENTA
             };
 
@@ -106,7 +106,7 @@ namespace Factura.ExternalService
             request.Concepto = CONCEPTO;
             request.DocTipo = ObtenerTipoDocumento(condicionesIVA);
             request.DocNro = long.Parse(cuit);
-            request.CbteDesde = ObtenerNumeroComprobante(tipoCliente, tipoDocumentoFiscal);
+            request.CbteDesde = ObtenerNumeroComprobante(condicionesIVA, tipoDocumentoFiscal);
             request.CbteHasta = request.CbteDesde;
             request.CbteFch = DateTime.Now.ToString("yyyyMMdd");
             request.MonId = PESOS;
@@ -142,14 +142,14 @@ namespace Factura.ExternalService
             }
         }
 
-        private static int ObtenerNumeroComprobante(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal)
+        private static int ObtenerNumeroComprobante(CondicionIVA condicionesIVA, TipoDocumentoFiscal tipoDocumentoFiscal)
         {
             try
             {
                 Afip.Wsfev1.ServiceSoapClient serviceClient = new Afip.Wsfev1.ServiceSoapClient();
                 Afip.Wsfev1.FERecuperaLastCbteResponse response = serviceClient.FECompUltimoAutorizado(ObtenerAuth(),
                                                                                                         PUNTO_VENTA,
-                                                                                                        ObtenerTipoComprobante(tipoCliente, tipoDocumentoFiscal));
+                                                                                                        ObtenerTipoComprobante(condicionesIVA, tipoDocumentoFiscal));
                 VerificarErrorEnRespuesta(response.Errors);
 
                 return response.CbteNro + 1;
@@ -160,20 +160,24 @@ namespace Factura.ExternalService
             }
         }
 
-        private static int ObtenerTipoComprobante(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal)
+        private static int ObtenerTipoComprobante(CondicionIVA condicionIVA, TipoDocumentoFiscal tipoDocumentoFiscal)
         {
-            switch (tipoCliente)
+            switch (condicionIVA)
             {
-                case TipoCliente.Mayorista when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                case CondicionIVA.Responsable_Inscripto when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
                     return FACTURA_A;
-                case TipoCliente.Mayorista when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                case CondicionIVA.Responsable_Inscripto when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
                     return NOTA_CREDITO_A;
-                case TipoCliente.Minorista when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                case CondicionIVA.Consumidor_Final when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                case CondicionIVA.Monotributo when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                case CondicionIVA.Exento when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
                     return FACTURA_B;
-                case TipoCliente.Minorista when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                case CondicionIVA.Consumidor_Final when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                case CondicionIVA.Monotributo when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                case CondicionIVA.Exento when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
                     return NOTA_CREDITO_B;
                 default:
-                    throw new NegocioException($"Error al realizar la facturación. No se ha podido determinar un tipo de comprobante para el tipo de cliente {tipoCliente} y documento fiscal {tipoDocumentoFiscal}.");
+                    throw new NegocioException($"Error al realizar la facturación. No se ha podido determinar un tipo de comprobante para el tipo de cliente {condicionIVA} y documento fiscal {tipoDocumentoFiscal}.");
             };
         }
 

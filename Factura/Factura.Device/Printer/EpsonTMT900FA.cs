@@ -195,7 +195,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.DescuentoTicket.Cmd);
             commands.Add(EpsonTMT900FACommand.DescuentoTicket.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(descuento, iva), 2));
+            commands.Add(FormatearPrecio(descuento, 2));
             commands.Add(FormatearIVA(iva));
             commands.Add("0");
             commands.Add(GRAVADO);
@@ -210,7 +210,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.RecargoTicket.Cmd);
             commands.Add(EpsonTMT900FACommand.RecargoTicket.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(recargo, iva), 2));
+            commands.Add(FormatearPrecio(recargo, 2));
             commands.Add(FormatearIVA(iva));
             commands.Add("0");
             commands.Add(GRAVADO);
@@ -225,7 +225,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.DescuentoNotaCredito.Cmd);
             commands.Add(EpsonTMT900FACommand.DescuentoNotaCredito.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(descuento, iva), 2));
+            commands.Add(FormatearPrecio(descuento, 2));
             commands.Add(FormatearIVA(iva));
             commands.Add("0");
             commands.Add(GRAVADO);
@@ -240,7 +240,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.RecargoNotaCredito.Cmd);
             commands.Add(EpsonTMT900FACommand.RecargoNotaCredito.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(recargo, iva), 2));
+            commands.Add(FormatearPrecio(recargo, 2));
             commands.Add(FormatearIVA(iva));
             commands.Add("0");
             commands.Add(GRAVADO);
@@ -292,7 +292,7 @@ namespace Factura.Device.Printer
             commands.Add(IMPUESTOINTERNOPORCENTUAL);
             commands.Add("");
             commands.Add("");
-            commands.Add(codigoItem);
+            commands.Add(ReemplazarCaracteres(codigoItem));
             commands.Add(POR_UNIDAD);
             commands.Add(GRAVADO);
             SendData(commands/*, false*/);

@@ -1,5 +1,4 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
-Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Model
@@ -11,7 +10,13 @@ Public Class frmReporteFactura
     Private Venta As Venta
     Private ds As New DataSet
     Private dtProductos As New DataTable
-    Private dtIVAs As New DataTable
+    Private dtTotales As New DataTable
+
+    Private ReadOnly Property CondicionIva As CondicionIVA
+        Get
+            Return If(TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito, Venta.NotaCredito.CondicionIVA, Venta.Factura.CondicionIVA)
+        End Get
+    End Property
 
     Sub New()
         ' This call is required by the designer.
@@ -32,36 +37,30 @@ Public Class frmReporteFactura
 
     Private Sub frmReporteResumenVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim rpt = New ReporteFactura
-        Dim total As Decimal = 0
 
         InicializarTransaccionItemsTable(dtProductos)
-        total += CargarProductos()
+        CargarProductos()
         rpt.Database.Tables("TransaccionItem").SetDataSource(dtProductos)
 
-        If (Venta.TipoCliente = TipoCliente.Mayorista) Then
-            InicializarIVAsTable(dtIVAs)
-            total += CargarIVAs(Venta.VentaItems)
-            rpt.Database.Tables("Iva").SetDataSource(dtIVAs)
-        Else
-            CType(rpt.Subreports(1).ReportDefinition.ReportObjects("lblTotalNeto"), TextObject).ObjectFormat.EnableSuppress = True
-            CType(rpt.Subreports(1).ReportDefinition.ReportObjects("txtTotalNeto"), FieldObject).ObjectFormat.EnableSuppress = True
-            rpt.ReportDefinition.Sections("IvaSection").SectionFormat.EnableSuppress = True
-        End If
+
+        InicializarTotalesTable(dtTotales)
+        CargarTotales()
+        rpt.Database.Tables("Totales").SetDataSource(dtTotales)
 
         Dim codigoFactura As String = ObtenerIdentificadorFactura()
 
         CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
         CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
-        CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = ObtenerNombreFactura(TipoDocumentoFiscal)
+        CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
 
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
-        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion"), TextObject).Text = My.Settings.DatosFiscalDireccion
+        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
+        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaTelefono"), TextObject).Text = My.Settings.DatosFiscalTel
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaEmail"), TextObject).Text = My.Settings.DatosFiscalEmail
 
-        CType(rpt.ReportDefinition.ReportObjects("txtNumeroFactura"), TextObject).Text = ObtenerNumeroFactura()
         CType(rpt.ReportDefinition.ReportObjects("txtFechaEmision"), TextObject).Text = Venta.Factura.Fecha.ToString("dd/MM/yyyy")
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaCuit"), TextObject).Text = My.Settings.DatosFiscalCUIT
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaIIBB"), TextObject).Text = My.Settings.DatosFiscalIIBB
@@ -84,85 +83,96 @@ Public Class frmReporteFactura
         CType(rpt.ReportDefinition.ReportObjects("txtCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CAE, Venta.NotaCredito.CAE)
         CType(rpt.ReportDefinition.ReportObjects("txtVencimientoCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.FechaVencimientoCAE?.ToString("dd/MM/yyyy"), Venta.NotaCredito.FechaVencimientoCAE?.ToString("dd/MM/yyyy"))
 
-        CType(rpt.ReportDefinition.ReportObjects("txtTotal"), TextObject).Text = total.ToString("C2")
-
         CrViewer.ReportSource = rpt
+        CrViewer.SelectionMode = SelectionMode.None
         CrViewer.Refresh()
     End Sub
 
-    Private Function CargarIVAs(VentasItem As IEnumerable(Of VentaItem)) As Decimal
-        Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = VentasItem.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
-        Dim IVATotal As Decimal = 0
+    Private Sub CargarTotales()
+        If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
+            CargarTotalesResponsableInscripto()
+        Else
+            CargarTotalesConsumidorFinal()
+        End If
+    End Sub
 
+    Private Sub CargarTotalesConsumidorFinal()
+        Dim SubTotal As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalMonto(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        AgregarRowPagos("Sub Total", SubTotal)
+
+        Dim Descuento As Decimal = -Venta.VentaItems.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        AgregarRowPagos("Descuento", Descuento)
+
+        Dim Recargos As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        AgregarRowPagos("Recargos", Recargos)
+
+        Dim Total As Decimal = SubTotal + Descuento + Recargos
+
+        AgregarRowPagos("Total", Total)
+    End Sub
+
+
+    Private Sub CargarTotalesResponsableInscripto()
+        Dim Total As Decimal = 0
+
+        Dim SubTotal1 As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalMonto(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        AgregarRowPagos("Sub Total", SubTotal1)
+
+        Dim Descuento As Decimal = -Venta.VentaItems.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        AgregarRowPagos("Descuento", Descuento)
+
+        Dim Recargos As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        AgregarRowPagos("Recargos", Recargos)
+
+        Dim SubTotal2 As Decimal = (SubTotal1 + Descuento + Recargos)
+        Total += SubTotal2
+        AgregarRowPagos("Sub Total", SubTotal2)
+
+        Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.VentaItems.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
         For Each item As IGrouping(Of IVA, VentaItem) In gruposIVAs
-            Dim decuento As Decimal = item.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente))
-            Dim cft As Decimal = item.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente))
-            Dim total As Decimal = item.Select(Function(x) x.Total.Valor).Aggregate(Function(x, y) x + y)
-            Dim monto As Decimal = total - decuento + cft
-
-            Dim montoFinal As MontoProducto = New MontoProducto(monto, monto * item.Key.Valor)
-
-            IVATotal += AgregarRowPagos(montoFinal, item.Key)
+            Dim iva As Decimal = ObtenerMontoIva(item)
+            Total += iva
+            AgregarRowPagos($"IVA {item.Key.Valor.ToString("p")}", iva)
         Next
 
-        Return IVATotal
+        AgregarRowPagos("Total", Total)
+    End Sub
+
+    Private Function ObtenerMontoIva(grupoIva As IGrouping(Of IVA, VentaItem)) As Decimal
+        Dim decuento As Decimal = grupoIva.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        Dim cft As Decimal = grupoIva.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        Dim monto As Decimal = grupoIva.Sum(Function(x) x.TotalMonto(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
+        Dim total As Decimal = monto - decuento + cft
+
+        Return total * grupoIva.Key.Valor
     End Function
 
-    Private Function CargarProductos() As Decimal
-        Dim MontoTotal As Decimal = 0
-
+    Private Sub CargarProductos()
         For Each item As VentaItem In Venta.VentaItems
-            MontoTotal += CargarProducto(item)
-            MontoTotal += CargarProductoDescuento(item)
-            MontoTotal += CargarProductoRecargo(item)
+            CargarProducto(item)
         Next
+    End Sub
 
-        Return MontoTotal
-    End Function
+    Private Sub CargarProducto(item As VentaItem)
+        Dim iva As Decimal = 0
+        Dim monto As Decimal
 
-    Private Function CargarProducto(item As VentaItem) As Decimal
-        If Venta.TipoCliente = Common.Core.Enum.TipoCliente.Minorista Then
-            Return AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, item.MontoProducto.toDecimal(), 0)
+        If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
+            monto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
+            iva = item.MontoProducto.Iva
         Else
-            Return AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, item.MontoProducto.Valor, item.Producto.SubCategoria.IVA.Valor)
-        End If
-    End Function
-
-    Private Function CargarProductoDescuento(item As VentaItem) As Decimal
-        Dim productoDescuento As Decimal = item.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente)
-        If (productoDescuento = 0) Then
-            Return 0
+            monto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
         End If
 
-        If Venta.TipoCliente = Common.Core.Enum.TipoCliente.Minorista Then
-            Return AgregarRowTransaccionItems(item.Producto.Codigo, $"DESCUENTO", 1, -productoDescuento, 0)
-        Else
-            Return AgregarRowTransaccionItems(item.Producto.Codigo, $"DESCUENTO", 1, -productoDescuento, 0)
-        End If
-    End Function
+        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, monto, iva)
+    End Sub
 
-    Private Function CargarProductoRecargo(item As VentaItem) As Decimal
-        Dim productoRecargo As Decimal = item.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente)
-        If (productoRecargo = 0) Then
-            Return 0
-        End If
+    Private Sub InicializarTotalesTable(ByRef dtPagos As DataTable)
+        dtPagos = ds.Tables.Add("Totales")
+        dtPagos.Columns.Add("Descripcion", Type.GetType("System.String"))
+        dtPagos.Columns.Add("Monto", Type.GetType("System.Double"))
 
-        If Venta.TipoCliente = Common.Core.Enum.TipoCliente.Minorista Then
-            Return AgregarRowTransaccionItems(item.Producto.Codigo, $"RECARGO", 1, productoRecargo, 0)
-        Else
-            Return AgregarRowTransaccionItems(item.Producto.Codigo, $"RECARGO", 1, productoRecargo, 0)
-        End If
-    End Function
-
-    Private Sub InicializarIVAsTable(ByRef dtPagos As DataTable)
-        dtPagos = ds.Tables.Add("Iva")
-        dtPagos.Columns.Add("Subtotal", Type.GetType("System.Double"))
-        dtPagos.Columns.Add("Porcentaje", Type.GetType("System.Double"))
-        dtPagos.Columns.Add("TotalIva", Type.GetType("System.Double"))
-
-        dtPagos.Columns("Subtotal").DefaultValue = 0
-        dtPagos.Columns("Porcentaje").DefaultValue = 0
-        dtPagos.Columns("TotalIva").DefaultValue = 0
+        dtPagos.Columns("Monto").DefaultValue = 0
     End Sub
 
     Private Sub InicializarTransaccionItemsTable(ByRef dtTrasnasccionItems As DataTable)
@@ -180,36 +190,31 @@ Public Class frmReporteFactura
         dtTrasnasccionItems.Columns("SubTotal").DefaultValue = 0
     End Sub
 
-    Private Function AgregarRowTransaccionItems(codigo As String, nombre As String, cantidad As Integer, Precio As Double, Iva As Double) As Decimal
+    Private Sub AgregarRowTransaccionItems(codigo As String, nombre As String, cantidad As Integer, Precio As Double, Iva As Double)
         Dim dr As DataRow = dtProductos.NewRow()
         dr(0) = codigo
         dr(1) = nombre
         dr(2) = cantidad
         dr(3) = Iva
-        dr(4) = Precio * Venta.PorcentajeFacturacion
-        dr(5) = (Precio * cantidad) * Venta.PorcentajeFacturacion
+        dr(4) = Precio
+        dr(5) = (dr(4) * cantidad)
 
         dtProductos.Rows.Add(dr)
-        Return dr(5)
-    End Function
+    End Sub
 
-    Private Function AgregarRowPagos(montoProducto As MontoProducto, iva As IVA) As Decimal
-        Dim dr As DataRow = dtIVAs.NewRow()
-        dr(0) = montoProducto.Valor * Venta.PorcentajeFacturacion
-        dr(1) = iva.Valor
-        dr(2) = montoProducto.Iva * Venta.PorcentajeFacturacion
+    Private Sub AgregarRowPagos(descripcion As String, monto As Decimal)
+        Dim dr As DataRow = dtTotales.NewRow()
+        dr(0) = descripcion
+        dr(1) = monto
 
-        dtIVAs.Rows.Add(dr)
-        Return dr(2)
-    End Function
+        dtTotales.Rows.Add(dr)
+    End Sub
 
     Private Function ObtenerLetraFactura() As String
-        Dim condicionIVA As CondicionIVA = If(TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito, Venta.NotaCredito.CondicionIVA, Venta.Factura.CondicionIVA)
-
-        If (condicionIVA = CondicionIVA.Consumidor_Final) Then
-            Return "B"
-        Else
+        If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
             Return "A"
+        Else
+            Return "B"
         End If
     End Function
 
@@ -217,24 +222,22 @@ Public Class frmReporteFactura
         If (tipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
             Return "Factura"
         Else
-            Return "Nota de Crédito"
+            Return "Nota Crédito"
         End If
     End Function
 
     Private Function ObtenerCodigoFactura() As String
-        Dim condicionIVA As CondicionIVA = If(TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito, Venta.NotaCredito.CondicionIVA, Venta.Factura.CondicionIVA)
-
         If TipoDocumentoFiscal = TipoDocumentoFiscal.Factura Then
-            If condicionIVA = CondicionIVA.Consumidor_Final Then
-                Return "06"
-            Else
+            If CondicionIva = CondicionIVA.Responsable_Inscripto Then
                 Return "01"
+            Else
+                Return "06"
             End If
         Else
-            If condicionIVA = CondicionIVA.Consumidor_Final Then
-                Return "08"
-            Else
+            If condicionIVA = CondicionIVA.Responsable_Inscripto Then
                 Return "03"
+            Else
+                Return "08"
             End If
         End If
     End Function
@@ -286,6 +289,4 @@ Public Class frmReporteFactura
         Dim total As Integer = (sumaInpar * 3) + sumaPar
         Return (10 - (total Mod 10)).ToString()
     End Function
-
-
 End Class

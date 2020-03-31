@@ -173,7 +173,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoTicket.CmdExt);
             commands.Add(ReemplazarCaracteres($"DTO. {descripcion}"));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(descuento, iva), 2));
+            commands.Add(FormatearPrecio(descuento, 2));
             SendData(commands/*, false*/);
         }
 
@@ -185,7 +185,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoTicket.CmdExt);
             commands.Add(ReemplazarCaracteres($"AJUSTE {descripcion}"));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(recargo, iva), 2));
+            commands.Add(FormatearPrecio(recargo, 2));
             SendData(commands/*, false*/);
         }
 
@@ -197,7 +197,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.DescuentoNotaCredito.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(descuento, iva), 2));
+            commands.Add(FormatearPrecio(descuento, 2));
             SendData(commands/*, false*/);
         }
 
@@ -209,7 +209,7 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.Cmd);
             commands.Add(EpsonTMU220FIICommand.RecargoNotaCredito.CmdExt);
             commands.Add(ReemplazarCaracteres(descripcion));
-            commands.Add(FormatearPrecio(ObtenerDescuentoRecargoSegunResponsabilidadIva(recargo, iva), 2));
+            commands.Add(FormatearPrecio(recargo, 2));
             SendData(commands/*, false*/);
         }
 

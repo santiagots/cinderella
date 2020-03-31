@@ -174,5 +174,8 @@
     <Setting Name="DatosFiscalNombreFantasiaFuente" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI, 26.25pt, style=Bold</Value>
     </Setting>
+    <Setting Name="DatosFiscalLocalidad" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

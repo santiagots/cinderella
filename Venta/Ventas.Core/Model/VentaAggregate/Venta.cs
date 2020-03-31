@@ -78,7 +78,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
             }
 
-           VentaItems = OrdenarItemsVenta(VentaItems).ToList();
+            OrdenarItemsVenta();
 
            ActualizarPagos();
 
@@ -96,7 +96,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
 
-            VentaItems = OrdenarItemsVenta(VentaItems).ToList();
+            OrdenarItemsVenta();
 
             ActualizarPagos();
 
@@ -219,7 +219,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaItems.Remove(ventaItem);
 
-            VentaItems = OrdenarItemsVenta(VentaItems).ToList();
+            OrdenarItemsVenta();
 
             ActualizarPagos();
 
@@ -315,15 +315,17 @@ namespace Ventas.Core.Model.VentaAggregate
                 return ventaItem.Cantidad;
         }
 
-        private IEnumerable<VentaItem> OrdenarItemsVenta(IEnumerable<VentaItem> itemsVenta)
+        public IEnumerable<VentaItem> OrdenarItemsVenta()
         {
-            IEnumerable<IGrouping<bool, VentaItem>> ventaItemGroup =  itemsVenta.GroupBy(x => x.Cantidad > 0);
+            IEnumerable<IGrouping<bool, VentaItem>> ventaItemGroup = VentaItems.GroupBy(x => x.Cantidad > 0);
 
             List<VentaItem> Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
             List<VentaItem> Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
 
             List<VentaItem> Aux = new List<VentaItem>(Devoluciones);
             Aux.AddRange(Ventas);
+
+            VentaItems = Aux;
 
             return Aux;
         }
