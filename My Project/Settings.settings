@@ -163,10 +163,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DatosFiscalCUIT" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="DatosFiscalIIBB" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="DatosFiscalInicioActividad" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />

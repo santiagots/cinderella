@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Negocio", "Negocio\Negocio.vbproj", "{D0101B76-7CE1-476B-84F3-9E99244C1E88}"
 EndProject
@@ -53,9 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factura.Device", "Factura\F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factura.Core", "Factura\Factura.Core\Factura.Core.csproj", "{FE14CB9D-559D-465F-991D-20B9BCD29222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factura.ExternalService", "Factura.ExternalService\Factura.ExternalService.csproj", "{4D917F74-4921-4255-8A4D-9EE1C91A063F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factura.Data", "Factura.Data\Factura.Data.csproj", "{03F19A1F-1217-4DE7-9455-B4438C252830}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factura.ExternalService", "Factura\Factura.ExternalService\Factura.ExternalService.csproj", "{4D917F74-4921-4255-8A4D-9EE1C91A063F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -497,30 +495,6 @@ Global
 		{4D917F74-4921-4255-8A4D-9EE1C91A063F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4D917F74-4921-4255-8A4D-9EE1C91A063F}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D917F74-4921-4255-8A4D-9EE1C91A063F}.Release|x86.Build.0 = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Debug|x86.Build.0 = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Desarrollo|Any CPU.ActiveCfg = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Desarrollo|Any CPU.Build.0 = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Desarrollo|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Desarrollo|Mixed Platforms.Build.0 = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Desarrollo|x86.ActiveCfg = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Desarrollo|x86.Build.0 = Debug|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Piloto|Any CPU.ActiveCfg = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Piloto|Any CPU.Build.0 = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Piloto|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Piloto|Mixed Platforms.Build.0 = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Piloto|x86.ActiveCfg = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Piloto|x86.Build.0 = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Release|x86.ActiveCfg = Release|Any CPU
-		{03F19A1F-1217-4DE7-9455-B4438C252830}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -542,7 +516,6 @@ Global
 		{4F5C04CB-E485-499D-9843-4FBCE4221C49} = {12C38C3C-5C6E-49E6-855C-E16841B7A287}
 		{FE14CB9D-559D-465F-991D-20B9BCD29222} = {0678664D-56CB-4C7B-999F-C8B369C9A5C7}
 		{4D917F74-4921-4255-8A4D-9EE1C91A063F} = {12C38C3C-5C6E-49E6-855C-E16841B7A287}
-		{03F19A1F-1217-4DE7-9455-B4438C252830} = {12C38C3C-5C6E-49E6-855C-E16841B7A287}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {66C07B46-0028-4BC4-8B90-CFDA0716BCFD}

@@ -64,13 +64,13 @@
       <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Factura.ExternalService\Factura.ExternalService.csproj">
-      <Project>{4D917F74-4921-4255-8A4D-9EE1C91A063F}</Project>
-      <Name>Factura.ExternalService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Factura.Device\Factura.Device.csproj">
       <Project>{4F5C04CB-E485-499D-9843-4FBCE4221C49}</Project>
       <Name>Factura.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factura.ExternalService\Factura.ExternalService.csproj">
+      <Project>{4D917F74-4921-4255-8A4D-9EE1C91A063F}</Project>
+      <Name>Factura.ExternalService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

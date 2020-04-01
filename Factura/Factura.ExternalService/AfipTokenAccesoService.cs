@@ -1,9 +1,6 @@
 ﻿using Common.Core.Exceptions;
 using Common.Core.Helper;
-using Factura.Core.Interfaces;
 using Factura.Core.Model.AfipAgreggate;
-using Factura.Data;
-using Factura.Data.Repository;
 using System;
 using System.Text;
 using System.Xml;
@@ -19,20 +16,7 @@ namespace Factura.ExternalService
         {
             if (AfipTokenAccesoCache == null || !AfipTokenAccesoCache.EsValido())
             {
-                // Verifico si en el dia se genero un token
-                IAfipTokenAccesRepository repository = new AfipTokenAccesRepository(new FacturaContext());
-                AfipTokenAcces afipTokenAccesDB = repository.Obtener(DateTime.Now);
-
-                if (afipTokenAccesDB == null || !afipTokenAccesDB.EsValido())
-                {
-                    AfipTokenAccesoCache = ObtenerLogInTicket(nombreServicio, pathCertificado, passwordCertificado);
-                    repository.Guardar(AfipTokenAccesoCache);
-                }
-                else
-                {
-                    AfipTokenAccesoCache = afipTokenAccesDB;
-                }
-
+                AfipTokenAccesoCache = ObtenerLogInTicket(nombreServicio, pathCertificado, passwordCertificado);
             }
             return AfipTokenAccesoCache;
         }
@@ -67,9 +51,10 @@ namespace Factura.ExternalService
             XmlNode xmlNodoGenerationTime = xmlLoginTicketRequest.SelectSingleNode("//generationTime");
             XmlNode xmlNodoExpirationTime = xmlLoginTicketRequest.SelectSingleNode("//expirationTime");
             XmlNode xmlNodoService = xmlLoginTicketRequest.SelectSingleNode("//service");
-            xmlNodoGenerationTime.InnerText = DateTime.Now.ToString("s");
-            xmlNodoExpirationTime.InnerText = DateTime.Now.AddMinutes(+10).ToString("s");
-            xmlNodoUniqueId.InnerText = DateTime.Now.ToString("MMddhhmmss");
+            DateTime fecha = DateTime.Now;
+            xmlNodoGenerationTime.InnerText = fecha.AddSeconds(-10).ToString("s");
+            xmlNodoExpirationTime.InnerText = fecha.AddMinutes(+10).ToString("s");
+            xmlNodoUniqueId.InnerText = fecha.ToString("MMddhhmmss");
             xmlNodoService.InnerText = nombreServicio;
 
             return xmlLoginTicketRequest;

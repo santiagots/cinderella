@@ -151,7 +151,7 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.Validar(CUIT) Then
+            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.EsValido(CUIT) Then
                 MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
@@ -184,7 +184,7 @@ Namespace Formularios.Facturacion
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
-            Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada)
+            Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica)
             Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
 
             ventaModel.AgregarFactura(ObtenerPuntoVenta,
@@ -210,7 +210,7 @@ Namespace Formularios.Facturacion
                 Return False
             End If
 
-            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.Validar(CUIT) Then
+            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.EsValido(CUIT) Then
                 MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return False
             End If
@@ -246,7 +246,7 @@ Namespace Formularios.Facturacion
             ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
-            Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada)
+            Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica)
             Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest)
 
             ventaModel.AgregarNotaCredito(ObtenerPuntoVenta(),

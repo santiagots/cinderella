@@ -8,6 +8,7 @@ using Common.Core.Exceptions;
 using Common.Core.Constants;
 using Factura.Core.Model.AfipAgreggate;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Factura.ExternalService
 {
@@ -16,9 +17,7 @@ namespace Factura.ExternalService
         //TODO:TOMAR DESDE Settings.vb PARA OBTENER ESTOS VALORS DESDE CONFIGURACION
         public static int PUNTO_VENTA = 1;
         public static int CONCEPTO = 1; //PRODUCTOS
-        public static long CUIT_FACTURACION = 20303932640;
-        public static string PASSWORD_CERTIFICADO = "cinderella";
-        public static string RUTA_CERTIFICADO = "c:\\cinderella.p12";
+        public static long CUIT_FACTURACION;
         public static CondicionIVA CONDICION_IVA = CondicionIVA.Responsable_Inscripto;
 
         private static string NOMBRE_SERVICIO = "wsfe";
@@ -26,7 +25,7 @@ namespace Factura.ExternalService
         //TIPOS COMPROBANTE
         private static int FACTURA_A = 1;
         private static int NOTA_CREDITO_A = 3;
-        private static int FACTURA_B = 7;
+        private static int FACTURA_B = 6;
         private static int NOTA_CREDITO_B = 8;
         private static int FACTURA_C = 11;
         private static int NOTA_CREDITO_C = 13;
@@ -59,12 +58,12 @@ namespace Factura.ExternalService
             Afip.Wsfev1.FECAERequest feCAERequest = new Afip.Wsfev1.FECAERequest()
             {
                 FeCabReq = ObtenerCabecera(1, request.CondicionIVA, request.TipoDocumentoFiscal),
-                FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(request.TipoCliente, request.TipoDocumentoFiscal, request.CondicionIVA, request.Cuit, request.ImporteNeto, request.AlicuotasIva) }
+                FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(request) }
             };
 
             string feCAERequestString = JsonConvert.SerializeObject(feCAERequest);
 
-            Afip.Wsfev1.FECAEResponse feCAEResponse = serviceClient.FECAESolicitar(ObtenerAuth(), feCAERequest);
+            Afip.Wsfev1.FECAEResponse feCAEResponse = serviceClient.FECAESolicitar(ObtenerAuth(request.PasswordCertificado, request.RutaCertificado), feCAERequest);
 
             string feCAEResponseString = JsonConvert.SerializeObject(feCAEResponse);
 
@@ -79,9 +78,9 @@ namespace Factura.ExternalService
             };
         }
 
-        private static Afip.Wsfev1.FEAuthRequest ObtenerAuth()
+        private static Afip.Wsfev1.FEAuthRequest ObtenerAuth(string passwordCertificado, string rutaCertificado)
         {
-            AfipTokenAcces afipTokenAcces = AfipTokenAccesService.Obtener(NOMBRE_SERVICIO, RUTA_CERTIFICADO, PASSWORD_CERTIFICADO);
+            AfipTokenAcces afipTokenAcces = AfipTokenAccesService.Obtener(NOMBRE_SERVICIO, rutaCertificado, passwordCertificado);
 
             return new Afip.Wsfev1.FEAuthRequest()
             {
@@ -99,24 +98,24 @@ namespace Factura.ExternalService
                 PtoVta = PUNTO_VENTA
             };
 
-        private static Afip.Wsfev1.FECAEDetRequest ObtenerDetalle(TipoCliente tipoCliente, TipoDocumentoFiscal tipoDocumentoFiscal, CondicionIVA condicionesIVA, string cuit, decimal importeNeto, List<AfipAlicuotaIvaRequest> alicuotaIva)
+        private static Afip.Wsfev1.FECAEDetRequest ObtenerDetalle(AfipObtenerCAERequest CAErequest)
         {
             Afip.Wsfev1.FECAEDetRequest request = new Afip.Wsfev1.FECAEDetRequest();
 
             request.Concepto = CONCEPTO;
-            request.DocTipo = ObtenerTipoDocumento(condicionesIVA);
-            request.DocNro = long.Parse(cuit);
-            request.CbteDesde = ObtenerNumeroComprobante(condicionesIVA, tipoDocumentoFiscal);
+            request.DocTipo = ObtenerTipoDocumento(CAErequest.CondicionIVA);
+            request.DocNro = long.Parse(CAErequest.Cuit);
+            request.CbteDesde = ObtenerNumeroComprobante(CAErequest.CondicionIVA, CAErequest.TipoDocumentoFiscal, CAErequest.PasswordCertificado, CAErequest.RutaCertificado);
             request.CbteHasta = request.CbteDesde;
             request.CbteFch = DateTime.Now.ToString("yyyyMMdd");
             request.MonId = PESOS;
             request.MonCotiz = PESOS_COTIZACION;
-            request.ImpTotConc = 0;                 //Importe total no grabado
-            request.ImpNeto = (double)importeNeto;  //Importe total neto
-            request.ImpOpEx = 0;                    //Importe total excento
-            request.ImpTrib = 0;                    //Importe total tributo
+            request.ImpTotConc = 0;                             //Importe total no grabado
+            request.ImpNeto = (double)CAErequest.ImporteNeto;   //Importe total neto
+            request.ImpOpEx = 0;                                //Importe total excento
+            request.ImpTrib = 0;                                //Importe total tributo
 
-            AgregarAlicutaIva(alicuotaIva, request);
+            AgregarAlicutaIva(CAErequest.AlicuotasIva, request);
 
             request.ImpTotal = Math.Round(request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib, 2, MidpointRounding.AwayFromZero);
 
@@ -142,12 +141,12 @@ namespace Factura.ExternalService
             }
         }
 
-        private static int ObtenerNumeroComprobante(CondicionIVA condicionesIVA, TipoDocumentoFiscal tipoDocumentoFiscal)
+        private static int ObtenerNumeroComprobante(CondicionIVA condicionesIVA, TipoDocumentoFiscal tipoDocumentoFiscal, string passwordCertificado, string rutaCertificado)
         {
             try
             {
                 Afip.Wsfev1.ServiceSoapClient serviceClient = new Afip.Wsfev1.ServiceSoapClient();
-                Afip.Wsfev1.FERecuperaLastCbteResponse response = serviceClient.FECompUltimoAutorizado(ObtenerAuth(),
+                Afip.Wsfev1.FERecuperaLastCbteResponse response = serviceClient.FECompUltimoAutorizado(ObtenerAuth(passwordCertificado, rutaCertificado),
                                                                                                         PUNTO_VENTA,
                                                                                                         ObtenerTipoComprobante(condicionesIVA, tipoDocumentoFiscal));
                 VerificarErrorEnRespuesta(response.Errors);

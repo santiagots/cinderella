@@ -1,6 +1,9 @@
 ﻿Imports System.Configuration
 Imports System.Net
 Imports System.Net.NetworkInformation
+Imports System.Reflection
+Imports Common.Core.Helper
+Imports Factura.Service.Factura
 Imports Negocio
 
 Public Class frmConfiguracion
@@ -138,26 +141,39 @@ Public Class frmConfiguracion
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
+        If Cb_Sucursales.SelectedValue = 0 OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalNombreFantasia.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalRazonSocial.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalDireccion.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalLocalidad.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalTelefono.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalEmail.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalCUIT.Text) OrElse
+           String.IsNullOrWhiteSpace(txt_DatosFiscalIIBB.Text) Then
+            MessageBox.Show("Debe completar los campos requeridos", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If Not Cuit.EsValido(txt_DatosFiscalCUIT.Text) Then
+            MessageBox.Show("El CUIL ingresado es incorrecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
         Try
-            If Cb_Sucursales.SelectedValue <> 0 AndAlso Not String.IsNullOrEmpty(txt_DatosFiscalNombreFantasia.Text) Then
+            My.Settings.Sucursal = Cb_Sucursales.SelectedValue
+            My.Settings.NombreSucursal = Cb_Sucursales.SelectedItem("Nombre").ToString
+            My.Settings.DatosFiscalNombreFantasia = txt_DatosFiscalNombreFantasia.Text
+            My.Settings.DatosFiscalRazonSocial = txt_DatosFiscalRazonSocial.Text
+            My.Settings.DatosFiscalDireccion = txt_DatosFiscalDireccion.Text
+            My.Settings.DatosFiscalLocalidad = txt_DatosFiscalLocalidad.Text
+            My.Settings.DatosFiscalTel = txt_DatosFiscalTelefono.Text
+            My.Settings.DatosFiscalEmail = txt_DatosFiscalEmail.Text
+            My.Settings.DatosFiscalCUIT = txt_DatosFiscalCUIT.Text
+            My.Settings.DatosFiscalIIBB = txt_DatosFiscalIIBB.Text
+            My.Settings.DatosFiscalInicioActividad = dt_DatosFiscalInicioActividad.Value
+            My.Settings.Save()
 
-                My.Settings.Sucursal = Cb_Sucursales.SelectedValue
-                My.Settings.NombreSucursal = Cb_Sucursales.SelectedItem("Nombre").ToString
-                My.Settings.DatosFiscalNombreFantasia = txt_DatosFiscalNombreFantasia.Text
-                My.Settings.DatosFiscalRazonSocial = txt_DatosFiscalRazonSocial.Text
-                My.Settings.DatosFiscalDireccion = txt_DatosFiscalDireccion.Text
-                My.Settings.DatosFiscalLocalidad = txt_DatosFiscalLocalidad.Text
-                My.Settings.DatosFiscalTel = txt_DatosFiscalTelefono.Text
-                My.Settings.DatosFiscalEmail = txt_DatosFiscalEmail.Text
-                My.Settings.DatosFiscalCUIT = txt_DatosFiscalCUIT.Text
-                My.Settings.DatosFiscalIIBB = txt_DatosFiscalIIBB.Text
-                My.Settings.DatosFiscalInicioActividad = dt_DatosFiscalInicioActividad.Value
-                My.Settings.Save()
-                MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                MessageBox.Show("Debe completar los campos requeridos", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            End If
-
+            MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -570,4 +586,91 @@ Public Class frmConfiguracion
             My.Settings.DatosFiscalNombreFantasiaFuente = FontDialog.Font
         End If
     End Sub
+
+    Private Sub btnObtenerArchivoCSR_Click(sender As Object, e As EventArgs) Handles btnObtenerArchivoCSR.Click
+        If String.IsNullOrWhiteSpace(My.Settings.DatosFiscalCUIT) OrElse String.IsNullOrWhiteSpace(My.Settings.DatosFiscalRazonSocial) OrElse String.IsNullOrWhiteSpace(My.Settings.DatosFiscalNombreFantasia) Then
+            MessageBox.Show("Error al generar el archivo CSR. Verifique que los datos de Razón Social, Nombre Fantasía y CUIT de la solapa Sucursal se encuentren cargados y guardados.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim saveFileDialog As SaveFileDialog = New SaveFileDialog()
+        saveFileDialog.DefaultExt = "csr"
+        saveFileDialog.FileName = "MiPedidoCSR"
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        saveFileDialog.RestoreDirectory = True
+        saveFileDialog.Filter = "Solicitud de firma de certificado (*.csr)|*.csr"
+        saveFileDialog.DefaultExt = "csr"
+        saveFileDialog.AddExtension = True
+
+        If saveFileDialog.ShowDialog() <> DialogResult.OK Then
+            Return
+        End If
+
+        Dim nombreArchivoCSR As String = saveFileDialog.FileName
+        Dim nombreArchivoKey As String = RutaArchivoKeyFacturacionElectronica
+        Dim password As String = FacturarElectrinicaStrategy.PasswordCertificado
+
+        Try
+            Dim argumento As String = $"genrsa -passout pass:{password} -out {nombreArchivoKey} 2048"
+            EjecutarComando("openssl.exe", argumento, ".\Libs")
+
+            argumento = $"req -new -config openssl.cnf -key {nombreArchivoKey} -subj ""/C=AR/O={My.Settings.DatosFiscalRazonSocial}/CN={My.Settings.DatosFiscalNombreFantasia}/serialNumber=CUIT {My.Settings.DatosFiscalCUIT}"" -out ""{nombreArchivoCSR}"""
+            EjecutarComando("openssl.exe", argumento, ".\Libs")
+
+            MessageBox.Show("El archivo se ha generado de forma exitosa", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As Exception
+            Log.Error(ex)
+            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub btnCargarCertificadoAFIP_Click(sender As Object, e As EventArgs) Handles btnCargarCertificadoAFIP.Click
+        Dim openFileDialog As OpenFileDialog = New OpenFileDialog()
+        openFileDialog.DefaultExt = "csr"
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        openFileDialog.RestoreDirectory = True
+        openFileDialog.Filter = "Certificado (*.crt)|*.crt"
+        openFileDialog.DefaultExt = "crt"
+        openFileDialog.AddExtension = True
+
+        If openFileDialog.ShowDialog() <> DialogResult.OK Then
+            Return
+        End If
+
+        Dim nombreArchivoCRT As String = openFileDialog.FileName
+        Dim nombreArchivoKey As String = RutaArchivoKeyFacturacionElectronica
+        Dim nombreArchivoP12 As String = RutaCertificadoFacturacionElectronica
+        Dim password As String = FacturarElectrinicaStrategy.PasswordCertificado
+        Dim info As ProcessStartInfo = New ProcessStartInfo()
+
+        Try
+            Dim argumento As String = $"pkcs12 -export -in ""{nombreArchivoCRT}"" -password pass:{password} -inkey ""{nombreArchivoKey}"" -out ""{nombreArchivoP12}"""
+            EjecutarComando("openssl.exe", argumento, ".\Libs")
+
+            MessageBox.Show("El certificado de la AFIP se ha registrado de forma exitosa", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As Exception
+            Log.Error(ex)
+            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub EjecutarComando(comando As String, argumentos As String, directorio As String)
+        Dim info As ProcessStartInfo = New ProcessStartInfo()
+        info.RedirectStandardOutput = True
+        info.UseShellExecute = False
+        info.CreateNoWindow = True
+        info.WindowStyle = ProcessWindowStyle.Hidden
+        info.FileName = $"{directorio}\{comando}"
+        info.WorkingDirectory = directorio
+        info.Arguments = argumentos
+
+        Dim proc As Process = New Process()
+        proc.StartInfo = info
+        proc.Start()
+        proc.WaitForExit()
+        Dim result As String = proc.StandardOutput.ReadToEnd()
+    End Sub
+
 End Class

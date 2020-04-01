@@ -1,7 +1,7 @@
-﻿
-Imports System.Configuration
+﻿Imports System.Configuration
 Imports Common.Core.Helper
 Imports Factura.Device.Printer
+Imports Factura.ExternalService
 
 Namespace My
 
@@ -24,6 +24,8 @@ Namespace My
                     EpsonPrinter.MODELO_CONTROLADORA_FISCAL = e.NewValue
                 Case NameOf(settings.PuntoVentaFacturacionTicket)
                     EpsonPrinter.PUNTO_VENTA = e.NewValue
+                Case NameOf(settings.DatosFiscalCUIT)
+                    AfipFacturacionElectronicaService.CUIT_FACTURACION = Long.Parse(e.NewValue.ToString().Replace("-", ""))
             End Select
         End Sub
 
@@ -33,6 +35,8 @@ Namespace My
             EpsonPrinter.TIPO_CONEXION = settings.ConexionControladora
             EpsonPrinter.MODELO_CONTROLADORA_FISCAL = settings.ModeloControladora
             EpsonPrinter.PUNTO_VENTA = settings.PuntoVentaFacturacionTicket
+
+            AfipFacturacionElectronicaService.CUIT_FACTURACION = Long.Parse(settings.DatosFiscalCUIT.Replace("-", ""))
         End Sub
     End Class
 End Namespace

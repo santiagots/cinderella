@@ -26,52 +26,52 @@ Namespace Formularios.Facturacion
         End Function
 
         Friend Shared Sub CierreZPorFecha(fechaDesde As Date, fechaHasta As Date)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerCierreZPorFecha(fechaDesde, fechaHasta)
         End Sub
 
         Friend Shared Sub CierreZPorJornada(controladorFiscalJornadaDesde As Integer, controladorFiscalJornadaHasta As Integer)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerCierreZPorJornada(controladorFiscalJornadaDesde, controladorFiscalJornadaHasta)
         End Sub
 
         Friend Shared Sub CintaTestigoDigitalPorFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerCintaTestigoDigitalPorFecha(fechaDesde, fechaHasta, nombre, datos)
         End Sub
 
         Friend Shared Sub CintaTestigoDigitalPorJornada(ControladorFiscalJornadaDesde As Integer, ControladorFiscalJornadaHasta As Integer, ByRef nombre As String, ByRef datos As StringBuilder)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerCintaTestigoDigitalPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
         End Sub
 
         Friend Shared Sub BorradoJornadasMemoriaTransacciones(borradasJornadasHasta As Integer)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.BorradoJornadasMemoriaTransacciones(borradasJornadasHasta)
         End Sub
 
         Friend Shared Sub DuplicadosDocumentosTipoAPorFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerDuplicadosDocumentosTipoAPorFecha(fechaDesde, fechaHasta, nombre, datos)
         End Sub
 
         Friend Shared Sub DuplicadosDocumentosTipoAPorJornada(ControladorFiscalJornadaDesde As Integer, ControladorFiscalJornadaHasta As Integer, ByRef nombre As String, ByRef datos As StringBuilder)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerDuplicadosDocumentosTipoAPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
         End Sub
 
         Friend Shared Sub ResumenTotalesPorRangoDeFecha(fechaDesde As Date, fechaHasta As Date, ByRef nombre As String, ByRef datos As StringBuilder)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerResumenTotalesPorRangoDeFecha(fechaDesde, fechaHasta, nombre, datos)
         End Sub
 
         Friend Shared Sub ResumenTotalesPorRangoDeJornadaFiscal(ControladorFiscalJornadaDesde As Integer, ControladorFiscalJornadaHasta As Integer, ByRef nombre As String, ByRef datos As StringBuilder)
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerResumenTotalesPorRangoDeJornadaFiscal(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta, nombre, datos)
         End Sub
 
         Public Shared Sub CierreZ()
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
             facturar.ObtenerCierreZ()
         End Sub
 
@@ -107,7 +107,7 @@ Namespace Formularios.Facturacion
                                                            ByRef jornadasBorradasDesde As Integer,
                                                            ByRef jornadasBorradasHasta As Integer)
 
-            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket)
+            Dim facturar As FacturarService = New FacturarService(TipoFactura.Ticket, "")
 
             facturar.ObtenerMemoriaTransacciones(cintaTestigoDigitalDisponiblesDesde,
                                                  cintaTestigoDigitalDisponiblesHasta,

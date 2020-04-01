@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.Core.Helper
+﻿namespace Common.Core.Helper
 {
     public class Cuit
     {
@@ -21,7 +15,7 @@ namespace Common.Core.Helper
             return resto == 0 ? 0 : resto == 1 ? 9 : 11 - resto;
         }
 
-        public static bool Validar(string cuit)
+        public static bool EsValido(string cuit)
         {
             cuit = cuit.Replace("-", string.Empty);
 

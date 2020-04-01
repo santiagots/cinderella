@@ -64,11 +64,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj">
+    <ProjectReference Include="..\..\Common\Common.Core\Common.Core.csproj">
       <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
       <Name>Common.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Common.Data\Common.Data.csproj">
+    <ProjectReference Include="..\..\Common\Common.Data\Common.Data.csproj">
       <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
       <Name>Common.Data</Name>
     </ProjectReference>
@@ -76,7 +76,7 @@
       <Project>{03F19A1F-1217-4DE7-9455-B4438C252830}</Project>
       <Name>Factura.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Factura\Factura.Core\Factura.Core.csproj">
+    <ProjectReference Include="..\Factura.Core\Factura.Core.csproj">
       <Project>{FE14CB9D-559D-465F-991D-20B9BCD29222}</Project>
       <Name>Factura.Core</Name>
     </ProjectReference>

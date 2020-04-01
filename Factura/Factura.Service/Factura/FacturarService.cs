@@ -10,7 +10,7 @@ namespace Factura.Service.Factura
     {
         private IFacturarStrategy facturarStrategy;
 
-        public FacturarService(TipoFactura tiposFactura)
+        public FacturarService(TipoFactura tiposFactura, string rutaCertificado)
         {
             switch (tiposFactura)
             {
@@ -21,7 +21,7 @@ namespace Factura.Service.Factura
                     facturarStrategy = new FacturarManualStrategy();
                     break;
                 case TipoFactura.Electronica:
-                    facturarStrategy = new FacturarElectrinicaStrategy();
+                    facturarStrategy = new FacturarElectrinicaStrategy(rutaCertificado);
                     break;
                 default:
                     throw new InvalidOperationException($"El método de facturación {tiposFactura.ToString()} no tiene un una forma de facturación definida.");

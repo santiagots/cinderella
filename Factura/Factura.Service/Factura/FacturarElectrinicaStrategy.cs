@@ -1,19 +1,28 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using System.Text;
-using Factura.Service.Factura.Contracts;
+using Common.Core.Helper;
+using Common.Core.Model;
 using Factura.ExternalService;
 using Factura.ExternalService.Contracts;
 using Factura.Service.Common.Contracts;
-using Common.Core.Model;
+using Factura.Service.Factura.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Factura.Service.Factura
 {
     public class FacturarElectrinicaStrategy : IFacturarStrategy
     {
+        public static string PasswordCertificado = Encriptar.EncriptarMD5("QtS^j]Xog3?sFQJ");
+        public string RutaCertificado;
+
+        public FacturarElectrinicaStrategy(string rutaCertificado)
+        {
+            RutaCertificado = rutaCertificado;
+        }
+
         public void ObtenerCierreZ()
         {
             throw new NegocioException("El metodo de facturación electrónico no se encuentra implementado");
@@ -55,7 +64,9 @@ namespace Factura.Service.Factura
                 CondicionIVA = request.CondicionIVA,
                 Cuit = request.Cuit,
                 ImporteNeto = alicuotasIva.Sum(x => x.Monto),
-                AlicuotasIva = alicuotasIva
+                AlicuotasIva = alicuotasIva,
+                PasswordCertificado = PasswordCertificado,
+                RutaCertificado = RutaCertificado
             };
 
             AfipObtenerCAEResponse response = AfipFacturacionElectronicaService.ObtenerCEA(afipObtenerCAERequest);

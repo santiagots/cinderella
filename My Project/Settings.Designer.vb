@@ -646,7 +646,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
         Public Property DatosFiscalCUIT() As String
             Get
                 Return CType(Me("DatosFiscalCUIT"),String)
@@ -658,7 +658,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
         Public Property DatosFiscalIIBB() As String
             Get
                 Return CType(Me("DatosFiscalIIBB"),String)

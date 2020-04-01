@@ -290,12 +290,6 @@
     <Compile Include="ControlesUsuario\ChequeDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ControlesUsuario\Paginado.Designer.vb">
-      <DependentUpon>Paginado.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ControlesUsuario\Paginado.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="ControlesUsuario\SaldosSucursal.Designer.vb">
       <DependentUpon>SaldosSucursal.vb</DependentUpon>
     </Compile>
@@ -396,6 +390,12 @@
       <DependentUpon>frmBrowser.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios\frmBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmGenerarArchivoCSR.Designer.vb">
+      <DependentUpon>frmGenerarArchivoCSR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmGenerarArchivoCSR.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.Designer.vb">
@@ -1257,9 +1257,6 @@
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
-      <DependentUpon>Paginado.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ControlesUsuario\SaldosSucursal.resx">
       <DependentUpon>SaldosSucursal.vb</DependentUpon>
     </EmbeddedResource>
@@ -1307,6 +1304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ControlesUsuario\VentaDetalle.resx">
       <DependentUpon>VentaDetalle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmGenerarArchivoCSR.resx">
+      <DependentUpon>frmGenerarArchivoCSR.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\InformeVenta\FrmInformeGraficoEgresos.resx">
       <DependentUpon>FrmInformeGraficoEgresos.vb</DependentUpon>
@@ -1707,6 +1707,9 @@
     <None Include="app.Release.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
+    <None Include="Libs\openssl.cnf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="My Project\DataSources\SistemaCinderella.Comunes.SaldoSucursalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel.datasource" />
@@ -1736,6 +1739,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Imagenes\nota_creditoPequeño.png" />
+    <None Include="Imagenes\btn_certificado.png" />
+    <None Include="Imagenes\Archivo.png" />
+    <Content Include="Libs\openssl.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -1992,6 +2000,10 @@
     <ProjectReference Include="Factura\Factura.Device\Factura.Device.csproj">
       <Project>{4F5C04CB-E485-499D-9843-4FBCE4221C49}</Project>
       <Name>Factura.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="Factura\Factura.ExternalService\Factura.ExternalService.csproj">
+      <Project>{4D917F74-4921-4255-8A4D-9EE1C91A063F}</Project>
+      <Name>Factura.ExternalService</Name>
     </ProjectReference>
     <ProjectReference Include="Factura\Factura.Service\Factura.Service.csproj">
       <Project>{841532F4-09EF-4B4B-9D66-59ABED84B770}</Project>

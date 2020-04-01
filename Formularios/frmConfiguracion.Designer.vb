@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmConfiguracion
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmConfiguracion
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmConfiguracion))
         Me.lbl_NombreSucursalActual = New System.Windows.Forms.Label()
@@ -31,6 +31,8 @@ Partial Class frmConfiguracion
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.txt_DatosFiscalLocalidad = New System.Windows.Forms.TextBox()
+        Me.Label41 = New System.Windows.Forms.Label()
         Me.txt_DatosFiscalNombreFantasiaFuente = New System.Windows.Forms.Button()
         Me.txt_DatosFiscalEmail = New System.Windows.Forms.TextBox()
         Me.Label40 = New System.Windows.Forms.Label()
@@ -70,6 +72,15 @@ Partial Class frmConfiguracion
         Me.Cb_ModeloControladora = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
+        Me.Cb_ConexionControladora = New System.Windows.Forms.ComboBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.RExentoSinIvaNo = New System.Windows.Forms.RadioButton()
+        Me.RExentoSinIvaSI = New System.Windows.Forms.RadioButton()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.RContrSI = New System.Windows.Forms.RadioButton()
+        Me.RContrNO = New System.Windows.Forms.RadioButton()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -77,9 +88,6 @@ Partial Class frmConfiguracion
         Me.txt_MontoTopeElectronico = New System.Windows.Forms.TextBox()
         Me.txt_MontoTopeManual = New System.Windows.Forms.TextBox()
         Me.txt_MontoTopeTicket = New System.Windows.Forms.TextBox()
-        Me.Cb_ConexionControladora = New System.Windows.Forms.ComboBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
         Me.txt_MontoMaximoNotaCredito = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
@@ -90,18 +98,19 @@ Partial Class frmConfiguracion
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Btn_Controlador = New System.Windows.Forms.Button()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.RExentoSinIvaNo = New System.Windows.Forms.RadioButton()
-        Me.RExentoSinIvaSI = New System.Windows.Forms.RadioButton()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.RContrSI = New System.Windows.Forms.RadioButton()
-        Me.RContrNO = New System.Windows.Forms.RadioButton()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabSucursal = New System.Windows.Forms.TabPage()
         Me.TabPrecios = New System.Windows.Forms.TabPage()
         Me.TabMail = New System.Windows.Forms.TabPage()
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.btnCargarCertificadoAFIP = New System.Windows.Forms.Button()
+        Me.btnObtenerArchivoCSR = New System.Windows.Forms.Button()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.Label43 = New System.Windows.Forms.Label()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -148,8 +157,6 @@ Partial Class frmConfiguracion
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
         Me.FontDialog = New System.Windows.Forms.FontDialog()
-        Me.txt_DatosFiscalLocalidad = New System.Windows.Forms.TextBox()
-        Me.Label41 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -157,15 +164,17 @@ Partial Class frmConfiguracion
         Me.GroupBox3.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
-        Me.GroupBox9.SuspendLayout()
-        Me.GroupBox7.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabSucursal.SuspendLayout()
         Me.TabPrecios.SuspendLayout()
         Me.TabMail.SuspendLayout()
         Me.TabFacturacion.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.GroupBox10.SuspendLayout()
         Me.TabNotificaciones.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.TabInternet.SuspendLayout()
@@ -284,6 +293,22 @@ Partial Class frmConfiguracion
         Me.GroupBox13.TabIndex = 8
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Datos Fiscales"
+        '
+        'txt_DatosFiscalLocalidad
+        '
+        Me.txt_DatosFiscalLocalidad.Location = New System.Drawing.Point(133, 101)
+        Me.txt_DatosFiscalLocalidad.Name = "txt_DatosFiscalLocalidad"
+        Me.txt_DatosFiscalLocalidad.Size = New System.Drawing.Size(258, 21)
+        Me.txt_DatosFiscalLocalidad.TabIndex = 28
+        '
+        'Label41
+        '
+        Me.Label41.AutoSize = True
+        Me.Label41.Location = New System.Drawing.Point(6, 104)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(80, 15)
+        Me.Label41.TabIndex = 27
+        Me.Label41.Text = "(*) Localidad:"
         '
         'txt_DatosFiscalNombreFantasiaFuente
         '
@@ -617,21 +642,14 @@ Partial Class frmConfiguracion
         Me.GroupBox4.Controls.Add(Me.Cb_ModeloControladora)
         Me.GroupBox4.Controls.Add(Me.Label19)
         Me.GroupBox4.Controls.Add(Me.Label23)
-        Me.GroupBox4.Controls.Add(Me.GroupBox9)
         Me.GroupBox4.Controls.Add(Me.Cb_ConexionControladora)
         Me.GroupBox4.Controls.Add(Me.Label17)
-        Me.GroupBox4.Controls.Add(Me.Label15)
-        Me.GroupBox4.Controls.Add(Me.txt_MontoMaximoNotaCredito)
-        Me.GroupBox4.Controls.Add(Me.Label16)
-        Me.GroupBox4.Controls.Add(Me.GroupBox7)
-        Me.GroupBox4.Controls.Add(Me.Btn_Controlador)
         Me.GroupBox4.Controls.Add(Me.Label5)
         Me.GroupBox4.Controls.Add(Me.Panel1)
         Me.GroupBox4.Controls.Add(Me.Panel2)
-        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox4.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox4.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(416, 456)
+        Me.GroupBox4.Size = New System.Drawing.Size(381, 141)
         Me.GroupBox4.TabIndex = 8
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Configuración de Controlador Fiscal"
@@ -642,9 +660,9 @@ Partial Class frmConfiguracion
         Me.Cb_ModeloControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_ModeloControladora.FormattingEnabled = True
         Me.Cb_ModeloControladora.Items.AddRange(New Object() {"TM-U220AFII", "TM-T900FA"})
-        Me.Cb_ModeloControladora.Location = New System.Drawing.Point(236, 80)
+        Me.Cb_ModeloControladora.Location = New System.Drawing.Point(209, 80)
         Me.Cb_ModeloControladora.Name = "Cb_ModeloControladora"
-        Me.Cb_ModeloControladora.Size = New System.Drawing.Size(172, 23)
+        Me.Cb_ModeloControladora.Size = New System.Drawing.Size(166, 23)
         Me.Cb_ModeloControladora.TabIndex = 30
         '
         'Label19
@@ -665,6 +683,101 @@ Partial Class frmConfiguracion
         Me.Label23.TabIndex = 24
         Me.Label23.Text = "Habilitar Condición ""Exento sin IVA"":"
         '
+        'Cb_ConexionControladora
+        '
+        Me.Cb_ConexionControladora.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Cb_ConexionControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Cb_ConexionControladora.FormattingEnabled = True
+        Me.Cb_ConexionControladora.Items.AddRange(New Object() {"USB", "COM1"})
+        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(209, 109)
+        Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
+        Me.Cb_ConexionControladora.Size = New System.Drawing.Size(166, 23)
+        Me.Cb_ConexionControladora.TabIndex = 22
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(9, 112)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(106, 15)
+        Me.Label17.TabIndex = 21
+        Me.Label17.Text = "Tipo de Conexión:"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(9, 56)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(210, 15)
+        Me.Label5.TabIndex = 1
+        Me.Label5.Text = "La sucursal utiliza Controlador Fiscal:"
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.RExentoSinIvaNo)
+        Me.Panel1.Controls.Add(Me.RExentoSinIvaSI)
+        Me.Panel1.Location = New System.Drawing.Point(221, 20)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(154, 26)
+        Me.Panel1.TabIndex = 27
+        '
+        'RExentoSinIvaNo
+        '
+        Me.RExentoSinIvaNo.AutoSize = True
+        Me.RExentoSinIvaNo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RExentoSinIvaNo.Location = New System.Drawing.Point(108, 2)
+        Me.RExentoSinIvaNo.Name = "RExentoSinIvaNo"
+        Me.RExentoSinIvaNo.Size = New System.Drawing.Size(43, 19)
+        Me.RExentoSinIvaNo.TabIndex = 26
+        Me.RExentoSinIvaNo.Tag = ""
+        Me.RExentoSinIvaNo.Text = "NO"
+        Me.RExentoSinIvaNo.UseVisualStyleBackColor = True
+        '
+        'RExentoSinIvaSI
+        '
+        Me.RExentoSinIvaSI.AutoSize = True
+        Me.RExentoSinIvaSI.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RExentoSinIvaSI.Location = New System.Drawing.Point(11, 3)
+        Me.RExentoSinIvaSI.Name = "RExentoSinIvaSI"
+        Me.RExentoSinIvaSI.Size = New System.Drawing.Size(36, 19)
+        Me.RExentoSinIvaSI.TabIndex = 25
+        Me.RExentoSinIvaSI.Tag = ""
+        Me.RExentoSinIvaSI.Text = "SI"
+        Me.RExentoSinIvaSI.UseVisualStyleBackColor = True
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.RContrSI)
+        Me.Panel2.Controls.Add(Me.RContrNO)
+        Me.Panel2.Location = New System.Drawing.Point(221, 48)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(154, 26)
+        Me.Panel2.TabIndex = 28
+        '
+        'RContrSI
+        '
+        Me.RContrSI.AutoSize = True
+        Me.RContrSI.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RContrSI.Location = New System.Drawing.Point(10, 2)
+        Me.RContrSI.Name = "RContrSI"
+        Me.RContrSI.Size = New System.Drawing.Size(36, 19)
+        Me.RContrSI.TabIndex = 12
+        Me.RContrSI.Tag = ""
+        Me.RContrSI.Text = "SI"
+        Me.RContrSI.UseVisualStyleBackColor = True
+        '
+        'RContrNO
+        '
+        Me.RContrNO.AutoSize = True
+        Me.RContrNO.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RContrNO.Location = New System.Drawing.Point(108, 2)
+        Me.RContrNO.Name = "RContrNO"
+        Me.RContrNO.Size = New System.Drawing.Size(43, 19)
+        Me.RContrNO.TabIndex = 13
+        Me.RContrNO.Tag = ""
+        Me.RContrNO.Text = "NO"
+        Me.RContrNO.UseVisualStyleBackColor = True
+        '
         'GroupBox9
         '
         Me.GroupBox9.Controls.Add(Me.Label6)
@@ -673,9 +786,9 @@ Partial Class frmConfiguracion
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeElectronico)
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeManual)
         Me.GroupBox9.Controls.Add(Me.txt_MontoTopeTicket)
-        Me.GroupBox9.Location = New System.Drawing.Point(12, 138)
+        Me.GroupBox9.Location = New System.Drawing.Point(3, 150)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(396, 113)
+        Me.GroupBox9.Size = New System.Drawing.Size(381, 113)
         Me.GroupBox9.TabIndex = 23
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Monto final tope "
@@ -709,69 +822,39 @@ Partial Class frmConfiguracion
         '
         'txt_MontoTopeElectronico
         '
-        Me.txt_MontoTopeElectronico.Location = New System.Drawing.Point(224, 74)
+        Me.txt_MontoTopeElectronico.Location = New System.Drawing.Point(209, 74)
         Me.txt_MontoTopeElectronico.Name = "txt_MontoTopeElectronico"
         Me.txt_MontoTopeElectronico.Size = New System.Drawing.Size(166, 21)
         Me.txt_MontoTopeElectronico.TabIndex = 17
         '
         'txt_MontoTopeManual
         '
-        Me.txt_MontoTopeManual.Location = New System.Drawing.Point(224, 47)
+        Me.txt_MontoTopeManual.Location = New System.Drawing.Point(209, 47)
         Me.txt_MontoTopeManual.Name = "txt_MontoTopeManual"
         Me.txt_MontoTopeManual.Size = New System.Drawing.Size(166, 21)
         Me.txt_MontoTopeManual.TabIndex = 16
         '
         'txt_MontoTopeTicket
         '
-        Me.txt_MontoTopeTicket.Location = New System.Drawing.Point(224, 20)
+        Me.txt_MontoTopeTicket.Location = New System.Drawing.Point(209, 20)
         Me.txt_MontoTopeTicket.Name = "txt_MontoTopeTicket"
         Me.txt_MontoTopeTicket.Size = New System.Drawing.Size(166, 21)
         Me.txt_MontoTopeTicket.TabIndex = 15
         '
-        'Cb_ConexionControladora
-        '
-        Me.Cb_ConexionControladora.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_ConexionControladora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_ConexionControladora.FormattingEnabled = True
-        Me.Cb_ConexionControladora.Items.AddRange(New Object() {"USB", "COM1"})
-        Me.Cb_ConexionControladora.Location = New System.Drawing.Point(236, 109)
-        Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
-        Me.Cb_ConexionControladora.Size = New System.Drawing.Size(172, 23)
-        Me.Cb_ConexionControladora.TabIndex = 22
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(9, 112)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(106, 15)
-        Me.Label17.TabIndex = 21
-        Me.Label17.Text = "Tipo de Conexión:"
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(6, 270)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(170, 15)
-        Me.Label15.TabIndex = 20
-        Me.Label15.Text = " hasta un monto final total de: "
-        '
         'txt_MontoMaximoNotaCredito
         '
-        Me.txt_MontoMaximoNotaCredito.Location = New System.Drawing.Point(235, 261)
+        Me.txt_MontoMaximoNotaCredito.Location = New System.Drawing.Point(212, 278)
         Me.txt_MontoMaximoNotaCredito.Name = "txt_MontoMaximoNotaCredito"
         Me.txt_MontoMaximoNotaCredito.Size = New System.Drawing.Size(167, 21)
         Me.txt_MontoMaximoNotaCredito.TabIndex = 19
         '
         'Label16
         '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(6, 254)
+        Me.Label16.Location = New System.Drawing.Point(0, 266)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(210, 15)
+        Me.Label16.Size = New System.Drawing.Size(205, 45)
         Me.Label16.TabIndex = 18
-        Me.Label16.Text = "Se posibilita generar notas de crédito"
+        Me.Label16.Text = "Se posibilita generar notas de crédito hasta un monto final total de: "
         '
         'GroupBox7
         '
@@ -781,30 +864,30 @@ Partial Class frmConfiguracion
         Me.GroupBox7.Controls.Add(Me.Label14)
         Me.GroupBox7.Controls.Add(Me.Label13)
         Me.GroupBox7.Controls.Add(Me.Label12)
-        Me.GroupBox7.Location = New System.Drawing.Point(12, 291)
+        Me.GroupBox7.Location = New System.Drawing.Point(3, 305)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(396, 109)
+        Me.GroupBox7.Size = New System.Drawing.Size(381, 109)
         Me.GroupBox7.TabIndex = 17
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Puntos de venta"
         '
         'txt_PuntoVentaElectronica
         '
-        Me.txt_PuntoVentaElectronica.Location = New System.Drawing.Point(224, 74)
+        Me.txt_PuntoVentaElectronica.Location = New System.Drawing.Point(209, 74)
         Me.txt_PuntoVentaElectronica.Name = "txt_PuntoVentaElectronica"
         Me.txt_PuntoVentaElectronica.Size = New System.Drawing.Size(166, 21)
         Me.txt_PuntoVentaElectronica.TabIndex = 18
         '
         'txt_PuntoVentaManual
         '
-        Me.txt_PuntoVentaManual.Location = New System.Drawing.Point(224, 47)
+        Me.txt_PuntoVentaManual.Location = New System.Drawing.Point(209, 47)
         Me.txt_PuntoVentaManual.Name = "txt_PuntoVentaManual"
         Me.txt_PuntoVentaManual.Size = New System.Drawing.Size(166, 21)
         Me.txt_PuntoVentaManual.TabIndex = 17
         '
         'txt_PuntoVentaControladora
         '
-        Me.txt_PuntoVentaControladora.Location = New System.Drawing.Point(224, 20)
+        Me.txt_PuntoVentaControladora.Location = New System.Drawing.Point(209, 20)
         Me.txt_PuntoVentaControladora.Name = "txt_PuntoVentaControladora"
         Me.txt_PuntoVentaControladora.Size = New System.Drawing.Size(166, 21)
         Me.txt_PuntoVentaControladora.TabIndex = 16
@@ -842,88 +925,13 @@ Partial Class frmConfiguracion
         Me.Btn_Controlador.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Controlador.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Controlador.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Controlador.Location = New System.Drawing.Point(308, 406)
+        Me.Btn_Controlador.Location = New System.Drawing.Point(275, 635)
         Me.Btn_Controlador.Name = "Btn_Controlador"
         Me.Btn_Controlador.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Controlador.TabIndex = 11
         Me.Btn_Controlador.Text = "Modificar"
         Me.Btn_Controlador.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Controlador.UseVisualStyleBackColor = True
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(9, 56)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(210, 15)
-        Me.Label5.TabIndex = 1
-        Me.Label5.Text = "La sucursal utiliza Controlador Fiscal:"
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.RExentoSinIvaNo)
-        Me.Panel1.Controls.Add(Me.RExentoSinIvaSI)
-        Me.Panel1.Location = New System.Drawing.Point(236, 20)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(172, 27)
-        Me.Panel1.TabIndex = 27
-        '
-        'RExentoSinIvaNo
-        '
-        Me.RExentoSinIvaNo.AutoSize = True
-        Me.RExentoSinIvaNo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RExentoSinIvaNo.Location = New System.Drawing.Point(123, 3)
-        Me.RExentoSinIvaNo.Name = "RExentoSinIvaNo"
-        Me.RExentoSinIvaNo.Size = New System.Drawing.Size(43, 19)
-        Me.RExentoSinIvaNo.TabIndex = 26
-        Me.RExentoSinIvaNo.Tag = ""
-        Me.RExentoSinIvaNo.Text = "NO"
-        Me.RExentoSinIvaNo.UseVisualStyleBackColor = True
-        '
-        'RExentoSinIvaSI
-        '
-        Me.RExentoSinIvaSI.AutoSize = True
-        Me.RExentoSinIvaSI.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RExentoSinIvaSI.Location = New System.Drawing.Point(11, 3)
-        Me.RExentoSinIvaSI.Name = "RExentoSinIvaSI"
-        Me.RExentoSinIvaSI.Size = New System.Drawing.Size(36, 19)
-        Me.RExentoSinIvaSI.TabIndex = 25
-        Me.RExentoSinIvaSI.Tag = ""
-        Me.RExentoSinIvaSI.Text = "SI"
-        Me.RExentoSinIvaSI.UseVisualStyleBackColor = True
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.RContrSI)
-        Me.Panel2.Controls.Add(Me.RContrNO)
-        Me.Panel2.Location = New System.Drawing.Point(236, 48)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(172, 26)
-        Me.Panel2.TabIndex = 28
-        '
-        'RContrSI
-        '
-        Me.RContrSI.AutoSize = True
-        Me.RContrSI.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RContrSI.Location = New System.Drawing.Point(10, 2)
-        Me.RContrSI.Name = "RContrSI"
-        Me.RContrSI.Size = New System.Drawing.Size(36, 19)
-        Me.RContrSI.TabIndex = 12
-        Me.RContrSI.Tag = ""
-        Me.RContrSI.Text = "SI"
-        Me.RContrSI.UseVisualStyleBackColor = True
-        '
-        'RContrNO
-        '
-        Me.RContrNO.AutoSize = True
-        Me.RContrNO.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RContrNO.Location = New System.Drawing.Point(123, 2)
-        Me.RContrNO.Name = "RContrNO"
-        Me.RContrNO.Size = New System.Drawing.Size(43, 19)
-        Me.RContrNO.TabIndex = 13
-        Me.RContrNO.Tag = ""
-        Me.RContrNO.Text = "NO"
-        Me.RContrNO.UseVisualStyleBackColor = True
         '
         'TabControl1
         '
@@ -976,13 +984,106 @@ Partial Class frmConfiguracion
         '
         'TabFacturacion
         '
-        Me.TabFacturacion.Controls.Add(Me.GroupBox4)
+        Me.TabFacturacion.AutoScroll = True
+        Me.TabFacturacion.Controls.Add(Me.Panel3)
         Me.TabFacturacion.Location = New System.Drawing.Point(4, 24)
         Me.TabFacturacion.Name = "TabFacturacion"
         Me.TabFacturacion.Size = New System.Drawing.Size(416, 456)
         Me.TabFacturacion.TabIndex = 3
         Me.TabFacturacion.Text = "Facturación"
         Me.TabFacturacion.UseVisualStyleBackColor = True
+        '
+        'Panel3
+        '
+        Me.Panel3.AutoScroll = True
+        Me.Panel3.Controls.Add(Me.GroupBox10)
+        Me.Panel3.Controls.Add(Me.GroupBox4)
+        Me.Panel3.Controls.Add(Me.GroupBox9)
+        Me.Panel3.Controls.Add(Me.GroupBox7)
+        Me.Panel3.Controls.Add(Me.Btn_Controlador)
+        Me.Panel3.Controls.Add(Me.Label16)
+        Me.Panel3.Controls.Add(Me.txt_MontoMaximoNotaCredito)
+        Me.Panel3.Location = New System.Drawing.Point(8, 3)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(389, 718)
+        Me.Panel3.TabIndex = 31
+        '
+        'GroupBox10
+        '
+        Me.GroupBox10.Controls.Add(Me.btnCargarCertificadoAFIP)
+        Me.GroupBox10.Controls.Add(Me.btnObtenerArchivoCSR)
+        Me.GroupBox10.Controls.Add(Me.TextBox2)
+        Me.GroupBox10.Controls.Add(Me.TextBox3)
+        Me.GroupBox10.Controls.Add(Me.Label42)
+        Me.GroupBox10.Controls.Add(Me.Label43)
+        Me.GroupBox10.Location = New System.Drawing.Point(3, 420)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(381, 128)
+        Me.GroupBox10.TabIndex = 24
+        Me.GroupBox10.TabStop = False
+        Me.GroupBox10.Text = "Certificado Facturacion Electrónico"
+        '
+        'btnCargarCertificadoAFIP
+        '
+        Me.btnCargarCertificadoAFIP.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCargarCertificadoAFIP.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCargarCertificadoAFIP.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_certificado
+        Me.btnCargarCertificadoAFIP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCargarCertificadoAFIP.Location = New System.Drawing.Point(72, 74)
+        Me.btnCargarCertificadoAFIP.Name = "btnCargarCertificadoAFIP"
+        Me.btnCargarCertificadoAFIP.Size = New System.Drawing.Size(153, 40)
+        Me.btnCargarCertificadoAFIP.TabIndex = 26
+        Me.btnCargarCertificadoAFIP.Text = "Cargar Certificado AFIP"
+        Me.btnCargarCertificadoAFIP.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCargarCertificadoAFIP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnCargarCertificadoAFIP.UseVisualStyleBackColor = True
+        '
+        'btnObtenerArchivoCSR
+        '
+        Me.btnObtenerArchivoCSR.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnObtenerArchivoCSR.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnObtenerArchivoCSR.Image = Global.SistemaCinderella.My.Resources.Recursos.Archivo
+        Me.btnObtenerArchivoCSR.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnObtenerArchivoCSR.Location = New System.Drawing.Point(231, 74)
+        Me.btnObtenerArchivoCSR.Name = "btnObtenerArchivoCSR"
+        Me.btnObtenerArchivoCSR.Size = New System.Drawing.Size(141, 40)
+        Me.btnObtenerArchivoCSR.TabIndex = 25
+        Me.btnObtenerArchivoCSR.Text = "Generar Archivo CSR"
+        Me.btnObtenerArchivoCSR.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnObtenerArchivoCSR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnObtenerArchivoCSR.UseVisualStyleBackColor = True
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(127, 47)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(245, 21)
+        Me.TextBox2.TabIndex = 17
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(127, 20)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(245, 21)
+        Me.TextBox3.TabIndex = 16
+        '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.Location = New System.Drawing.Point(6, 50)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(115, 15)
+        Me.Label42.TabIndex = 1
+        Me.Label42.Text = "Fecha Vencimiento:"
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.Location = New System.Drawing.Point(6, 23)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(97, 15)
+        Me.Label43.TabIndex = 0
+        Me.Label43.Text = "Ruta Certificado:"
         '
         'TabNotificaciones
         '
@@ -1484,22 +1585,6 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
         '
-        'txt_DatosFiscalLocalidad
-        '
-        Me.txt_DatosFiscalLocalidad.Location = New System.Drawing.Point(133, 101)
-        Me.txt_DatosFiscalLocalidad.Name = "txt_DatosFiscalLocalidad"
-        Me.txt_DatosFiscalLocalidad.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalLocalidad.TabIndex = 28
-        '
-        'Label41
-        '
-        Me.Label41.AutoSize = True
-        Me.Label41.Location = New System.Drawing.Point(6, 104)
-        Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(80, 15)
-        Me.Label41.TabIndex = 27
-        Me.Label41.Text = "(*) Localidad:"
-        '
         'frmConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1526,19 +1611,23 @@ Partial Class frmConfiguracion
         Me.Panel5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
+        Me.GroupBox7.ResumeLayout(False)
+        Me.GroupBox7.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.TabSucursal.ResumeLayout(False)
         Me.TabPrecios.ResumeLayout(False)
         Me.TabMail.ResumeLayout(False)
         Me.TabFacturacion.ResumeLayout(False)
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
+        Me.GroupBox10.ResumeLayout(False)
+        Me.GroupBox10.PerformLayout()
         Me.TabNotificaciones.ResumeLayout(False)
         Me.GroupBox5.ResumeLayout(False)
         Me.TabInternet.ResumeLayout(False)
@@ -1606,7 +1695,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txt_MontoMaximoNotaCredito As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents Cb_ConexionControladora As System.Windows.Forms.ComboBox
@@ -1683,4 +1771,12 @@ Partial Class frmConfiguracion
     Friend WithEvents FontDialog As FontDialog
     Friend WithEvents txt_DatosFiscalLocalidad As TextBox
     Friend WithEvents Label41 As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents GroupBox10 As GroupBox
+    Friend WithEvents btnCargarCertificadoAFIP As Button
+    Friend WithEvents btnObtenerArchivoCSR As Button
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Label42 As Label
+    Friend WithEvents Label43 As Label
 End Class
