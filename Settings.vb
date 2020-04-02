@@ -25,7 +25,11 @@ Namespace My
                 Case NameOf(settings.PuntoVentaFacturacionTicket)
                     EpsonPrinter.PUNTO_VENTA = e.NewValue
                 Case NameOf(settings.DatosFiscalCUIT)
-                    AfipFacturacionElectronicaService.CUIT_FACTURACION = Long.Parse(e.NewValue.ToString().Replace("-", ""))
+                    Dim cuit As Long = 0
+                    Long.TryParse(e.NewValue.DatosFiscalCUIT.Replace("-", ""), cuit)
+                    AfipFacturacionElectronicaService.CUIT_FACTURACION = cuit
+                Case NameOf(settings.PuntoVentaFacturacionElectronica)
+                    AfipFacturacionElectronicaService.PUNTO_VENTA = e.NewValue
             End Select
         End Sub
 
@@ -36,7 +40,10 @@ Namespace My
             EpsonPrinter.MODELO_CONTROLADORA_FISCAL = settings.ModeloControladora
             EpsonPrinter.PUNTO_VENTA = settings.PuntoVentaFacturacionTicket
 
-            AfipFacturacionElectronicaService.CUIT_FACTURACION = Long.Parse(settings.DatosFiscalCUIT.Replace("-", ""))
+            Dim cuit As Long = 0
+            Long.TryParse(settings.DatosFiscalCUIT.Replace("-", ""), cuit)
+            AfipFacturacionElectronicaService.CUIT_FACTURACION = cuit
+            AfipFacturacionElectronicaService.PUNTO_VENTA = settings.PuntoVentaFacturacionElectronica
         End Sub
     End Class
 End Namespace
