@@ -10,7 +10,7 @@ namespace Common.Service.NotaCredito
     {
         private INotaCreditoStrategy notaCreditoStrategy;
 
-        public NotaCreditoService(TipoFactura tiposFactura, string rutaCertificado)
+        public NotaCreditoService(TipoFactura tiposFactura, string rutaCertificado, string passwordCertificado)
         {
             switch (tiposFactura)
             {
@@ -21,7 +21,7 @@ namespace Common.Service.NotaCredito
                     notaCreditoStrategy = new NotaCreditoManualStrategy();
                     break;
                 case TipoFactura.Electronica:
-                    notaCreditoStrategy = new NotaCreditoElectrinicaStrategy(rutaCertificado);
+                    notaCreditoStrategy = new NotaCreditoElectrinicaStrategy(rutaCertificado, passwordCertificado);
                     break;
                 default:
                     throw new InvalidOperationException($"El método de facturación {tiposFactura.ToString()} no tiene un una forma de facturación definida.");

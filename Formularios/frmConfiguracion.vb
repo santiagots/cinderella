@@ -93,6 +93,9 @@ Public Class frmConfiguracion
         txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
         txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
 
+        txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
+        txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
+
         'Comprobacion de notificaciones.
         Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
         Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
@@ -147,7 +150,6 @@ Public Class frmConfiguracion
            String.IsNullOrWhiteSpace(txt_DatosFiscalDireccion.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalLocalidad.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalTelefono.Text) OrElse
-           String.IsNullOrWhiteSpace(txt_DatosFiscalEmail.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalCUIT.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalIIBB.Text) Then
             MessageBox.Show("Debe completar los campos requeridos", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -650,6 +652,8 @@ Public Class frmConfiguracion
 
             MessageBox.Show("El certificado de la AFIP se ha registrado de forma exitosa", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+            txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
+            txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
         Catch ex As Exception
             Log.Error(ex)
             MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)

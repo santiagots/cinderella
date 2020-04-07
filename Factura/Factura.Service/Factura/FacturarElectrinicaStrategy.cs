@@ -15,12 +15,13 @@ namespace Factura.Service.Factura
 {
     public class FacturarElectrinicaStrategy : IFacturarStrategy
     {
-        public static string PasswordCertificado = Encriptar.EncriptarMD5("QtS^j]Xog3?sFQJ");
+        public static string PasswordCertificado;
         public string RutaCertificado;
 
-        public FacturarElectrinicaStrategy(string rutaCertificado)
+        public FacturarElectrinicaStrategy(string rutaCertificado, string passwordCertificado)
         {
             RutaCertificado = rutaCertificado;
+            PasswordCertificado = passwordCertificado;
         }
 
         public void ObtenerCierreZ()

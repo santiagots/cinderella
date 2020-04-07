@@ -18,6 +18,12 @@ namespace Common.Core.Helper
             return certificado.NotAfter;
         }
 
+        public static string ObtenerCN(string pathCertificado, string passwordCertificado = "")
+        {
+            X509Certificate2 certificado = ObtieneCertificadoDesdeArchivo(pathCertificado, passwordCertificado);
+            return certificado.Subject;
+        }
+
         private static byte[] FirmaMensaje(byte[] mensaje, X509Certificate2 certificado)
         {
             // Pongo el mensaje en un objeto ContentInfo (requerido para construir el obj SignedCms)

@@ -161,23 +161,39 @@ namespace Factura.ExternalService
 
         private static int ObtenerTipoComprobante(CondicionIVA condicionIVA, TipoDocumentoFiscal tipoDocumentoFiscal)
         {
-            switch (condicionIVA)
+            if (CONDICION_IVA == CondicionIVA.Monotributo)
             {
-                case CondicionIVA.Responsable_Inscripto when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
-                    return FACTURA_A;
-                case CondicionIVA.Responsable_Inscripto when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
-                    return NOTA_CREDITO_A;
-                case CondicionIVA.Consumidor_Final when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
-                case CondicionIVA.Monotributo when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
-                case CondicionIVA.Exento when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
-                    return FACTURA_B;
-                case CondicionIVA.Consumidor_Final when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
-                case CondicionIVA.Monotributo when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
-                case CondicionIVA.Exento when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
-                    return NOTA_CREDITO_B;
-                default:
-                    throw new NegocioException($"Error al realizar la facturación. No se ha podido determinar un tipo de comprobante para el tipo de cliente {condicionIVA} y documento fiscal {tipoDocumentoFiscal}.");
-            };
+                switch (tipoDocumentoFiscal)
+                {
+                    case TipoDocumentoFiscal.Factura:
+                        return FACTURA_C;
+                        
+                    case TipoDocumentoFiscal.NotaCredito:
+                        return NOTA_CREDITO_C;
+                    default:
+                        throw new NegocioException($"Error al realizar la facturación. No se ha podido determinar un tipo de comprobante para el documento fiscal {tipoDocumentoFiscal}.");
+                };
+            }
+            else
+            {
+                switch (condicionIVA)
+                {
+                    case CondicionIVA.Responsable_Inscripto when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                        return FACTURA_A;
+                    case CondicionIVA.Responsable_Inscripto when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                        return NOTA_CREDITO_A;
+                    case CondicionIVA.Consumidor_Final when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                    case CondicionIVA.Monotributo when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                    case CondicionIVA.Exento when tipoDocumentoFiscal == TipoDocumentoFiscal.Factura:
+                        return FACTURA_B;
+                    case CondicionIVA.Consumidor_Final when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                    case CondicionIVA.Monotributo when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                    case CondicionIVA.Exento when tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito:
+                        return NOTA_CREDITO_B;
+                    default:
+                        throw new NegocioException($"Error al realizar la facturación. No se ha podido determinar un tipo de comprobante para el tipo de cliente {condicionIVA} y documento fiscal {tipoDocumentoFiscal}.");
+                };
+            }
         }
 
         private static int ObtenerTipoDocumento(CondicionIVA condicionesIVA)

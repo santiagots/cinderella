@@ -107,8 +107,8 @@ Partial Class frmConfiguracion
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
         Me.btnCargarCertificadoAFIP = New System.Windows.Forms.Button()
         Me.btnObtenerArchivoCSR = New System.Windows.Forms.Button()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.txt_facturacionElectronicaCertificadoVencimiento = New System.Windows.Forms.TextBox()
+        Me.txt_facturacionElectronicaCertificadoNombre = New System.Windows.Forms.TextBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.TabNotificaciones = New System.Windows.Forms.TabPage()
@@ -331,9 +331,9 @@ Partial Class frmConfiguracion
         Me.Label40.AutoSize = True
         Me.Label40.Location = New System.Drawing.Point(6, 158)
         Me.Label40.Name = "Label40"
-        Me.Label40.Size = New System.Drawing.Size(58, 15)
+        Me.Label40.Size = New System.Drawing.Size(42, 15)
         Me.Label40.TabIndex = 24
-        Me.Label40.Text = "(*) Email:"
+        Me.Label40.Text = "Email:"
         '
         'txt_DatosFiscalTelefono
         '
@@ -925,7 +925,7 @@ Partial Class frmConfiguracion
         Me.Btn_Controlador.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Controlador.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Controlador.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Controlador.Location = New System.Drawing.Point(275, 635)
+        Me.Btn_Controlador.Location = New System.Drawing.Point(284, 554)
         Me.Btn_Controlador.Name = "Btn_Controlador"
         Me.Btn_Controlador.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Controlador.TabIndex = 11
@@ -1005,15 +1005,15 @@ Partial Class frmConfiguracion
         Me.Panel3.Controls.Add(Me.txt_MontoMaximoNotaCredito)
         Me.Panel3.Location = New System.Drawing.Point(8, 3)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(389, 718)
+        Me.Panel3.Size = New System.Drawing.Size(389, 603)
         Me.Panel3.TabIndex = 31
         '
         'GroupBox10
         '
         Me.GroupBox10.Controls.Add(Me.btnCargarCertificadoAFIP)
         Me.GroupBox10.Controls.Add(Me.btnObtenerArchivoCSR)
-        Me.GroupBox10.Controls.Add(Me.TextBox2)
-        Me.GroupBox10.Controls.Add(Me.TextBox3)
+        Me.GroupBox10.Controls.Add(Me.txt_facturacionElectronicaCertificadoVencimiento)
+        Me.GroupBox10.Controls.Add(Me.txt_facturacionElectronicaCertificadoNombre)
         Me.GroupBox10.Controls.Add(Me.Label42)
         Me.GroupBox10.Controls.Add(Me.Label43)
         Me.GroupBox10.Location = New System.Drawing.Point(3, 420)
@@ -1053,19 +1053,23 @@ Partial Class frmConfiguracion
         Me.btnObtenerArchivoCSR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnObtenerArchivoCSR.UseVisualStyleBackColor = True
         '
-        'TextBox2
+        'txt_facturacionElectronicaCertificadoVencimiento
         '
-        Me.TextBox2.Location = New System.Drawing.Point(127, 47)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(245, 21)
-        Me.TextBox2.TabIndex = 17
+        Me.txt_facturacionElectronicaCertificadoVencimiento.BackColor = System.Drawing.SystemColors.Window
+        Me.txt_facturacionElectronicaCertificadoVencimiento.Location = New System.Drawing.Point(127, 47)
+        Me.txt_facturacionElectronicaCertificadoVencimiento.Name = "txt_facturacionElectronicaCertificadoVencimiento"
+        Me.txt_facturacionElectronicaCertificadoVencimiento.ReadOnly = True
+        Me.txt_facturacionElectronicaCertificadoVencimiento.Size = New System.Drawing.Size(245, 21)
+        Me.txt_facturacionElectronicaCertificadoVencimiento.TabIndex = 17
         '
-        'TextBox3
+        'txt_facturacionElectronicaCertificadoNombre
         '
-        Me.TextBox3.Location = New System.Drawing.Point(127, 20)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(245, 21)
-        Me.TextBox3.TabIndex = 16
+        Me.txt_facturacionElectronicaCertificadoNombre.BackColor = System.Drawing.SystemColors.Window
+        Me.txt_facturacionElectronicaCertificadoNombre.Location = New System.Drawing.Point(127, 20)
+        Me.txt_facturacionElectronicaCertificadoNombre.Name = "txt_facturacionElectronicaCertificadoNombre"
+        Me.txt_facturacionElectronicaCertificadoNombre.ReadOnly = True
+        Me.txt_facturacionElectronicaCertificadoNombre.Size = New System.Drawing.Size(245, 21)
+        Me.txt_facturacionElectronicaCertificadoNombre.TabIndex = 16
         '
         'Label42
         '
@@ -1081,9 +1085,9 @@ Partial Class frmConfiguracion
         Me.Label43.AutoSize = True
         Me.Label43.Location = New System.Drawing.Point(6, 23)
         Me.Label43.Name = "Label43"
-        Me.Label43.Size = New System.Drawing.Size(97, 15)
+        Me.Label43.Size = New System.Drawing.Size(28, 15)
         Me.Label43.TabIndex = 0
-        Me.Label43.Text = "Ruta Certificado:"
+        Me.Label43.Text = "DN:"
         '
         'TabNotificaciones
         '
@@ -1775,8 +1779,8 @@ Partial Class frmConfiguracion
     Friend WithEvents GroupBox10 As GroupBox
     Friend WithEvents btnCargarCertificadoAFIP As Button
     Friend WithEvents btnObtenerArchivoCSR As Button
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents txt_facturacionElectronicaCertificadoVencimiento As TextBox
+    Friend WithEvents txt_facturacionElectronicaCertificadoNombre As TextBox
     Friend WithEvents Label42 As Label
     Friend WithEvents Label43 As Label
 End Class

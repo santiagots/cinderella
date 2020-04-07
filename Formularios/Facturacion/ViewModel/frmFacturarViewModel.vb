@@ -184,7 +184,7 @@ Namespace Formularios.Facturacion
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
-            Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica)
+            Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
             Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
 
             ventaModel.AgregarFactura(ObtenerPuntoVenta,
@@ -246,7 +246,7 @@ Namespace Formularios.Facturacion
             ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
 
-            Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica)
+            Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
             Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest)
 
             ventaModel.AgregarNotaCredito(ObtenerPuntoVenta(),

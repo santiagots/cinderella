@@ -13,12 +13,13 @@ namespace Common.Service.NotaCredito
 {
     internal class NotaCreditoElectrinicaStrategy : INotaCreditoStrategy
     {
-        public static string PasswordCertificado = Encriptar.EncriptarMD5("QtS^j]Xog3?sFQJ");
+        public static string PasswordCertificado;
         public string RutaCertificado;
 
-        public NotaCreditoElectrinicaStrategy(string rutaCertificado)
+        public NotaCreditoElectrinicaStrategy(string rutaCertificado, string passwordCertificado)
         {
             RutaCertificado = rutaCertificado;
+            PasswordCertificado = passwordCertificado;
         }
         public ObtenerNumeroNotaCretidoResponse ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest request)
         {
@@ -26,7 +27,7 @@ namespace Common.Service.NotaCredito
 
             AfipObtenerCAERequest afipObtenerCAERequest = new AfipObtenerCAERequest()
             {
-                TipoDocumentoFiscal = TipoDocumentoFiscal.Factura,
+                TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito,
                 TipoCliente = request.TipoCliente,
                 CondicionIVA = request.CondicionIVA,
                 Cuit = request.Cuit,
