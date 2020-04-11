@@ -11,6 +11,7 @@ Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports Common.Data.Repository
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Common.Core.Model
+Imports Common.Core.Exceptions
 
 Namespace Formularios.Venta
     Public Class Servicio
@@ -122,6 +123,11 @@ Namespace Formularios.Venta
                 If (empleado.Count = 0) Then
                     empleado = empleadoRepository.ObtenerPorSucursal(idSucursal, tipoEmpleado)
                 End If
+
+                If (empleado.Count = 0) Then
+                    Throw New NegocioException($"La sucursal no tiene configurado un {tipoEmpleado.ToString()}. Por favor, registre un {tipoEmpleado.ToString()} en el menú de empleados o contacte al administrador.")
+                End If
+
             End Using
 
             Return empleado

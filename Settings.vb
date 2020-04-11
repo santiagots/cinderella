@@ -26,7 +26,7 @@ Namespace My
                     EpsonPrinter.PUNTO_VENTA = e.NewValue
                 Case NameOf(settings.DatosFiscalCUIT)
                     Dim cuit As Long = 0
-                    Long.TryParse(e.NewValue.DatosFiscalCUIT.Replace("-", ""), cuit)
+                    Long.TryParse(e.NewValue.Replace("-", ""), cuit)
                     AfipFacturacionElectronicaService.CUIT_FACTURACION = cuit
                 Case NameOf(settings.PuntoVentaFacturacionElectronica)
                     AfipFacturacionElectronicaService.PUNTO_VENTA = e.NewValue

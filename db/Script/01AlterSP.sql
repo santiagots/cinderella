@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-        sql5040.site4now.net.DB_9B1463_cinderellaPiloto    -  This database will be modified
+        (local)\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
 
 to synchronize it with:
 
-        ARCNU434BG8X.CINDERELLA_LOCAL
+        AR-CNU434BG8X.CINDERELLA_LOCAL
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 13.7.7.10021 from Red Gate Software Ltd at 7/2/2020 15:35:06
+Script created by SQL Compare version 13.7.7.10021 from Red Gate Software Ltd at 8/4/2020 19:10:59
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -42,6 +42,17 @@ ALTER TABLE [dbo].[NUEVA_FACTURA] ADD[FechaVencimientoCAE] [datetime] NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Altering [dbo].[NUEVA_NOTA_CREDITO]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+IF COL_LENGTH(N'[dbo].[NUEVA_NOTA_CREDITO]', N'CAE') IS NULL
+ALTER TABLE [dbo].[NUEVA_NOTA_CREDITO] ADD[CAE] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+IF COL_LENGTH(N'[dbo].[NUEVA_NOTA_CREDITO]', N'FechaVencimientoCAE') IS NULL
+ALTER TABLE [dbo].[NUEVA_NOTA_CREDITO] ADD[FechaVencimientoCAE] [datetime] NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Altering [dbo].[NUEVA_VENTA_PAGOS]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
@@ -54,6 +65,13 @@ PRINT N'Adding constraints to [dbo].[NUEVA_VENTA_PAGOS]'
 GO
 IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE name = N'PorcentajeRecargo' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_VENTA_PAGOS]', 'U') AND default_object_id = OBJECT_ID(N'[dbo].[DF_NUEVA_VENTA_PAGOS_PorcentajeRecargo]', 'D'))
 ALTER TABLE [dbo].[NUEVA_VENTA_PAGOS] ADD CONSTRAINT [DF_NUEVA_VENTA_PAGOS_PorcentajeRecargo] DEFAULT ((0)) FOR [PorcentajeRecargo]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating index [NonClusteredIndex-20191211-223923] on [dbo].[NUEVA_VENTA_PAGOS]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'NonClusteredIndex-20191211-223923' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_VENTA_PAGOS]'))
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20191211-223923] ON [dbo].[NUEVA_VENTA_PAGOS] ([IdVenta]) INCLUDE ([CFT], [Descuento], [IVA], [Monto])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -84,24 +102,17 @@ ALTER TABLE [dbo].[PRODUCTOS_SUBCATEGORIAS] ADD[IdIVA] [int] NOT NULL CONSTRAINT
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Creating [dbo].[NUEVA_AFIP_TOKEN_ACCES]'
+PRINT N'Creating index [NonClusteredIndex-20191211-223721] on [dbo].[NUEVA_VENTAS]'
 GO
-IF OBJECT_ID(N'[dbo].[NUEVA_AFIP_TOKEN_ACCES]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_AFIP_TOKEN_ACCES]
-(
-[Id] [bigint] NOT NULL,
-[FechaGeneracion] [datetime] NOT NULL,
-[FechaExpiracion] [datetime] NOT NULL,
-[Firma] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Token] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
-)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'NonClusteredIndex-20191211-223721' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_VENTAS]'))
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20191211-223721] ON [dbo].[NUEVA_VENTAS] ([Anulado], [IdSucursal]) INCLUDE ([Fecha], [Id], [TipoCliente])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Creating primary key [PK_NUEVA_AFIP_TOKEN_ACCES] on [dbo].[NUEVA_AFIP_TOKEN_ACCES]'
+PRINT N'Creating index [NonClusteredIndex-20191212-231147] on [dbo].[NUEVA_VENTA_ITEMS]'
 GO
-IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_AFIP_TOKEN_ACCES]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_AFIP_TOKEN_ACCES]', 'U'))
-ALTER TABLE [dbo].[NUEVA_AFIP_TOKEN_ACCES] ADD CONSTRAINT [PK_NUEVA_AFIP_TOKEN_ACCES] PRIMARY KEY CLUSTERED  ([Id])
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'NonClusteredIndex-20191212-231147' AND object_id = OBJECT_ID(N'[dbo].[NUEVA_VENTA_ITEMS]'))
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20191212-231147] ON [dbo].[NUEVA_VENTA_ITEMS] ([IdProducto])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -109,18 +120,6 @@ PRINT N'Adding foreign keys to [dbo].[PRODUCTOS_SUBCATEGORIAS]'
 GO
 IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PRODUCTOS_SUBCATEGORIAS_NUEVA_IVA]','F') AND parent_object_id = OBJECT_ID(N'[dbo].[PRODUCTOS_SUBCATEGORIAS]', 'U'))
 ALTER TABLE [dbo].[PRODUCTOS_SUBCATEGORIAS] WITH NOCHECK  ADD CONSTRAINT [FK_PRODUCTOS_SUBCATEGORIAS_NUEVA_IVA] FOREIGN KEY ([IdIVA]) REFERENCES [dbo].[NUEVA_IVA] ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Enabling constraints on [dbo].[NUEVA_FACTURA]'
-GO
-ALTER TABLE [dbo].[NUEVA_FACTURA] CHECK CONSTRAINT [FK_NUEVA_FACTURA_NUEVA_VENTAS]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Enabling constraints on [dbo].[NUEVA_VENTA_PAGOS]'
-GO
-ALTER TABLE [dbo].[NUEVA_VENTA_PAGOS] WITH CHECK CHECK CONSTRAINT [FK_NUEVA_VENTA_PAGOS_NUEVA_VENTAS]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

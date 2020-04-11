@@ -194,7 +194,7 @@ Partial Class frmConfiguracion
         Me.lbl_NombreSucursalActual.Location = New System.Drawing.Point(183, 32)
         Me.lbl_NombreSucursalActual.Name = "lbl_NombreSucursalActual"
         Me.lbl_NombreSucursalActual.Size = New System.Drawing.Size(54, 13)
-        Me.lbl_NombreSucursalActual.TabIndex = 2
+        Me.lbl_NombreSucursalActual.TabIndex = 0
         Me.lbl_NombreSucursalActual.Text = "sucursal"
         '
         'lbl_SucursalActual
@@ -214,7 +214,7 @@ Partial Class frmConfiguracion
         Me.Cb_Sucursales.Location = New System.Drawing.Point(140, 70)
         Me.Cb_Sucursales.Name = "Cb_Sucursales"
         Me.Cb_Sucursales.Size = New System.Drawing.Size(258, 23)
-        Me.Cb_Sucursales.TabIndex = 3
+        Me.Cb_Sucursales.TabIndex = 1
         '
         'lbl_NuevaSucursal
         '
@@ -235,7 +235,7 @@ Partial Class frmConfiguracion
         Me.Btn_Actualizar.Location = New System.Drawing.Point(304, 404)
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Actualizar.TabIndex = 4
+        Me.Btn_Actualizar.TabIndex = 2
         Me.Btn_Actualizar.Text = "Modificar"
         Me.Btn_Actualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Actualizar.UseVisualStyleBackColor = True
@@ -253,7 +253,7 @@ Partial Class frmConfiguracion
         Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(410, 450)
-        Me.GroupBox1.TabIndex = 5
+        Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuración de Sucursal"
         '
@@ -299,7 +299,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalLocalidad.Location = New System.Drawing.Point(133, 101)
         Me.txt_DatosFiscalLocalidad.Name = "txt_DatosFiscalLocalidad"
         Me.txt_DatosFiscalLocalidad.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalLocalidad.TabIndex = 28
+        Me.txt_DatosFiscalLocalidad.TabIndex = 4
         '
         'Label41
         '
@@ -315,7 +315,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalNombreFantasiaFuente.Location = New System.Drawing.Point(335, 19)
         Me.txt_DatosFiscalNombreFantasiaFuente.Name = "txt_DatosFiscalNombreFantasiaFuente"
         Me.txt_DatosFiscalNombreFantasiaFuente.Size = New System.Drawing.Size(56, 23)
-        Me.txt_DatosFiscalNombreFantasiaFuente.TabIndex = 26
+        Me.txt_DatosFiscalNombreFantasiaFuente.TabIndex = 1
         Me.txt_DatosFiscalNombreFantasiaFuente.Text = "Fuente"
         Me.txt_DatosFiscalNombreFantasiaFuente.UseVisualStyleBackColor = True
         '
@@ -324,7 +324,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalEmail.Location = New System.Drawing.Point(133, 155)
         Me.txt_DatosFiscalEmail.Name = "txt_DatosFiscalEmail"
         Me.txt_DatosFiscalEmail.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalEmail.TabIndex = 25
+        Me.txt_DatosFiscalEmail.TabIndex = 6
         '
         'Label40
         '
@@ -340,7 +340,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalTelefono.Location = New System.Drawing.Point(133, 128)
         Me.txt_DatosFiscalTelefono.Name = "txt_DatosFiscalTelefono"
         Me.txt_DatosFiscalTelefono.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalTelefono.TabIndex = 23
+        Me.txt_DatosFiscalTelefono.TabIndex = 5
         '
         'Label39
         '
@@ -356,7 +356,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalDireccion.Location = New System.Drawing.Point(133, 74)
         Me.txt_DatosFiscalDireccion.Name = "txt_DatosFiscalDireccion"
         Me.txt_DatosFiscalDireccion.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalDireccion.TabIndex = 21
+        Me.txt_DatosFiscalDireccion.TabIndex = 3
         '
         'Label38
         '
@@ -372,7 +372,7 @@ Partial Class frmConfiguracion
         Me.dt_DatosFiscalInicioActividad.Location = New System.Drawing.Point(133, 239)
         Me.dt_DatosFiscalInicioActividad.Name = "dt_DatosFiscalInicioActividad"
         Me.dt_DatosFiscalInicioActividad.Size = New System.Drawing.Size(258, 21)
-        Me.dt_DatosFiscalInicioActividad.TabIndex = 19
+        Me.dt_DatosFiscalInicioActividad.TabIndex = 9
         '
         'Label37
         '
@@ -388,7 +388,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalIIBB.Location = New System.Drawing.Point(133, 209)
         Me.txt_DatosFiscalIIBB.Name = "txt_DatosFiscalIIBB"
         Me.txt_DatosFiscalIIBB.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalIIBB.TabIndex = 17
+        Me.txt_DatosFiscalIIBB.TabIndex = 8
         '
         'Label27
         '
@@ -404,7 +404,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalCUIT.Location = New System.Drawing.Point(133, 182)
         Me.txt_DatosFiscalCUIT.Name = "txt_DatosFiscalCUIT"
         Me.txt_DatosFiscalCUIT.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalCUIT.TabIndex = 15
+        Me.txt_DatosFiscalCUIT.TabIndex = 7
         '
         'Label26
         '
@@ -420,7 +420,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalRazonSocial.Location = New System.Drawing.Point(133, 47)
         Me.txt_DatosFiscalRazonSocial.Name = "txt_DatosFiscalRazonSocial"
         Me.txt_DatosFiscalRazonSocial.Size = New System.Drawing.Size(258, 21)
-        Me.txt_DatosFiscalRazonSocial.TabIndex = 13
+        Me.txt_DatosFiscalRazonSocial.TabIndex = 2
         '
         'Label25
         '
@@ -436,7 +436,7 @@ Partial Class frmConfiguracion
         Me.txt_DatosFiscalNombreFantasia.Location = New System.Drawing.Point(133, 20)
         Me.txt_DatosFiscalNombreFantasia.Name = "txt_DatosFiscalNombreFantasia"
         Me.txt_DatosFiscalNombreFantasia.Size = New System.Drawing.Size(196, 21)
-        Me.txt_DatosFiscalNombreFantasia.TabIndex = 11
+        Me.txt_DatosFiscalNombreFantasia.TabIndex = 0
         '
         'Label34
         '
@@ -469,7 +469,7 @@ Partial Class frmConfiguracion
         Me.txt_descuentoMinorista.Location = New System.Drawing.Point(185, 114)
         Me.txt_descuentoMinorista.Name = "txt_descuentoMinorista"
         Me.txt_descuentoMinorista.Size = New System.Drawing.Size(219, 21)
-        Me.txt_descuentoMinorista.TabIndex = 12
+        Me.txt_descuentoMinorista.TabIndex = 2
         '
         'Label24
         '
@@ -495,7 +495,7 @@ Partial Class frmConfiguracion
         Me.lbl_NombreListaActual.Location = New System.Drawing.Point(182, 34)
         Me.lbl_NombreListaActual.Name = "lbl_NombreListaActual"
         Me.lbl_NombreListaActual.Size = New System.Drawing.Size(30, 13)
-        Me.lbl_NombreListaActual.TabIndex = 2
+        Me.lbl_NombreListaActual.TabIndex = 0
         Me.lbl_NombreListaActual.Text = "lista"
         '
         'Btn_Precios
@@ -508,7 +508,7 @@ Partial Class frmConfiguracion
         Me.Btn_Precios.Location = New System.Drawing.Point(304, 404)
         Me.Btn_Precios.Name = "Btn_Precios"
         Me.Btn_Precios.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Precios.TabIndex = 4
+        Me.Btn_Precios.TabIndex = 3
         Me.Btn_Precios.Text = "Modificar"
         Me.Btn_Precios.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Precios.UseVisualStyleBackColor = True
@@ -530,7 +530,7 @@ Partial Class frmConfiguracion
         Me.cb_Precios.Location = New System.Drawing.Point(185, 68)
         Me.cb_Precios.Name = "cb_Precios"
         Me.cb_Precios.Size = New System.Drawing.Size(219, 23)
-        Me.cb_Precios.TabIndex = 3
+        Me.cb_Precios.TabIndex = 1
         '
         'GroupBox3
         '
@@ -565,7 +565,7 @@ Partial Class frmConfiguracion
         Me.Panel5.Location = New System.Drawing.Point(119, 89)
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Size = New System.Drawing.Size(170, 27)
-        Me.Panel5.TabIndex = 30
+        Me.Panel5.TabIndex = 2
         '
         'rbUtilizaSSLNo
         '
@@ -596,14 +596,14 @@ Partial Class frmConfiguracion
         Me.txtPort.Location = New System.Drawing.Point(119, 62)
         Me.txtPort.Name = "txtPort"
         Me.txtPort.Size = New System.Drawing.Size(289, 21)
-        Me.txtPort.TabIndex = 10
+        Me.txtPort.TabIndex = 1
         '
         'txtSmtp
         '
         Me.txtSmtp.Location = New System.Drawing.Point(119, 30)
         Me.txtSmtp.Name = "txtSmtp"
         Me.txtSmtp.Size = New System.Drawing.Size(289, 21)
-        Me.txtSmtp.TabIndex = 9
+        Me.txtSmtp.TabIndex = 0
         '
         'Label3
         '
@@ -623,7 +623,7 @@ Partial Class frmConfiguracion
         Me.BtnMailing.Location = New System.Drawing.Point(308, 383)
         Me.BtnMailing.Name = "BtnMailing"
         Me.BtnMailing.Size = New System.Drawing.Size(100, 40)
-        Me.BtnMailing.TabIndex = 4
+        Me.BtnMailing.TabIndex = 3
         Me.BtnMailing.Text = "Modificar"
         Me.BtnMailing.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnMailing.UseVisualStyleBackColor = True
@@ -650,7 +650,7 @@ Partial Class frmConfiguracion
         Me.GroupBox4.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(381, 141)
-        Me.GroupBox4.TabIndex = 8
+        Me.GroupBox4.TabIndex = 0
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Configuración de Controlador Fiscal"
         '
@@ -663,7 +663,7 @@ Partial Class frmConfiguracion
         Me.Cb_ModeloControladora.Location = New System.Drawing.Point(209, 80)
         Me.Cb_ModeloControladora.Name = "Cb_ModeloControladora"
         Me.Cb_ModeloControladora.Size = New System.Drawing.Size(166, 23)
-        Me.Cb_ModeloControladora.TabIndex = 30
+        Me.Cb_ModeloControladora.TabIndex = 2
         '
         'Label19
         '
@@ -692,7 +692,7 @@ Partial Class frmConfiguracion
         Me.Cb_ConexionControladora.Location = New System.Drawing.Point(209, 109)
         Me.Cb_ConexionControladora.Name = "Cb_ConexionControladora"
         Me.Cb_ConexionControladora.Size = New System.Drawing.Size(166, 23)
-        Me.Cb_ConexionControladora.TabIndex = 22
+        Me.Cb_ConexionControladora.TabIndex = 3
         '
         'Label17
         '
@@ -719,7 +719,7 @@ Partial Class frmConfiguracion
         Me.Panel1.Location = New System.Drawing.Point(221, 20)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(154, 26)
-        Me.Panel1.TabIndex = 27
+        Me.Panel1.TabIndex = 0
         '
         'RExentoSinIvaNo
         '
@@ -740,7 +740,7 @@ Partial Class frmConfiguracion
         Me.RExentoSinIvaSI.Location = New System.Drawing.Point(11, 3)
         Me.RExentoSinIvaSI.Name = "RExentoSinIvaSI"
         Me.RExentoSinIvaSI.Size = New System.Drawing.Size(36, 19)
-        Me.RExentoSinIvaSI.TabIndex = 25
+        Me.RExentoSinIvaSI.TabIndex = 0
         Me.RExentoSinIvaSI.Tag = ""
         Me.RExentoSinIvaSI.Text = "SI"
         Me.RExentoSinIvaSI.UseVisualStyleBackColor = True
@@ -752,7 +752,7 @@ Partial Class frmConfiguracion
         Me.Panel2.Location = New System.Drawing.Point(221, 48)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(154, 26)
-        Me.Panel2.TabIndex = 28
+        Me.Panel2.TabIndex = 1
         '
         'RContrSI
         '
@@ -761,7 +761,7 @@ Partial Class frmConfiguracion
         Me.RContrSI.Location = New System.Drawing.Point(10, 2)
         Me.RContrSI.Name = "RContrSI"
         Me.RContrSI.Size = New System.Drawing.Size(36, 19)
-        Me.RContrSI.TabIndex = 12
+        Me.RContrSI.TabIndex = 0
         Me.RContrSI.Tag = ""
         Me.RContrSI.Text = "SI"
         Me.RContrSI.UseVisualStyleBackColor = True
@@ -789,7 +789,7 @@ Partial Class frmConfiguracion
         Me.GroupBox9.Location = New System.Drawing.Point(3, 150)
         Me.GroupBox9.Name = "GroupBox9"
         Me.GroupBox9.Size = New System.Drawing.Size(381, 113)
-        Me.GroupBox9.TabIndex = 23
+        Me.GroupBox9.TabIndex = 1
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Monto final tope "
         '
@@ -825,28 +825,28 @@ Partial Class frmConfiguracion
         Me.txt_MontoTopeElectronico.Location = New System.Drawing.Point(209, 74)
         Me.txt_MontoTopeElectronico.Name = "txt_MontoTopeElectronico"
         Me.txt_MontoTopeElectronico.Size = New System.Drawing.Size(166, 21)
-        Me.txt_MontoTopeElectronico.TabIndex = 17
+        Me.txt_MontoTopeElectronico.TabIndex = 2
         '
         'txt_MontoTopeManual
         '
         Me.txt_MontoTopeManual.Location = New System.Drawing.Point(209, 47)
         Me.txt_MontoTopeManual.Name = "txt_MontoTopeManual"
         Me.txt_MontoTopeManual.Size = New System.Drawing.Size(166, 21)
-        Me.txt_MontoTopeManual.TabIndex = 16
+        Me.txt_MontoTopeManual.TabIndex = 1
         '
         'txt_MontoTopeTicket
         '
         Me.txt_MontoTopeTicket.Location = New System.Drawing.Point(209, 20)
         Me.txt_MontoTopeTicket.Name = "txt_MontoTopeTicket"
         Me.txt_MontoTopeTicket.Size = New System.Drawing.Size(166, 21)
-        Me.txt_MontoTopeTicket.TabIndex = 15
+        Me.txt_MontoTopeTicket.TabIndex = 0
         '
         'txt_MontoMaximoNotaCredito
         '
         Me.txt_MontoMaximoNotaCredito.Location = New System.Drawing.Point(212, 278)
         Me.txt_MontoMaximoNotaCredito.Name = "txt_MontoMaximoNotaCredito"
         Me.txt_MontoMaximoNotaCredito.Size = New System.Drawing.Size(167, 21)
-        Me.txt_MontoMaximoNotaCredito.TabIndex = 19
+        Me.txt_MontoMaximoNotaCredito.TabIndex = 2
         '
         'Label16
         '
@@ -867,7 +867,7 @@ Partial Class frmConfiguracion
         Me.GroupBox7.Location = New System.Drawing.Point(3, 305)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Size = New System.Drawing.Size(381, 109)
-        Me.GroupBox7.TabIndex = 17
+        Me.GroupBox7.TabIndex = 3
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Puntos de venta"
         '
@@ -876,21 +876,21 @@ Partial Class frmConfiguracion
         Me.txt_PuntoVentaElectronica.Location = New System.Drawing.Point(209, 74)
         Me.txt_PuntoVentaElectronica.Name = "txt_PuntoVentaElectronica"
         Me.txt_PuntoVentaElectronica.Size = New System.Drawing.Size(166, 21)
-        Me.txt_PuntoVentaElectronica.TabIndex = 18
+        Me.txt_PuntoVentaElectronica.TabIndex = 2
         '
         'txt_PuntoVentaManual
         '
         Me.txt_PuntoVentaManual.Location = New System.Drawing.Point(209, 47)
         Me.txt_PuntoVentaManual.Name = "txt_PuntoVentaManual"
         Me.txt_PuntoVentaManual.Size = New System.Drawing.Size(166, 21)
-        Me.txt_PuntoVentaManual.TabIndex = 17
+        Me.txt_PuntoVentaManual.TabIndex = 1
         '
         'txt_PuntoVentaControladora
         '
         Me.txt_PuntoVentaControladora.Location = New System.Drawing.Point(209, 20)
         Me.txt_PuntoVentaControladora.Name = "txt_PuntoVentaControladora"
         Me.txt_PuntoVentaControladora.Size = New System.Drawing.Size(166, 21)
-        Me.txt_PuntoVentaControladora.TabIndex = 16
+        Me.txt_PuntoVentaControladora.TabIndex = 0
         '
         'Label14
         '
@@ -928,7 +928,7 @@ Partial Class frmConfiguracion
         Me.Btn_Controlador.Location = New System.Drawing.Point(284, 554)
         Me.Btn_Controlador.Name = "Btn_Controlador"
         Me.Btn_Controlador.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Controlador.TabIndex = 11
+        Me.Btn_Controlador.TabIndex = 5
         Me.Btn_Controlador.Text = "Modificar"
         Me.Btn_Controlador.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Controlador.UseVisualStyleBackColor = True
@@ -948,7 +948,7 @@ Partial Class frmConfiguracion
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(424, 484)
-        Me.TabControl1.TabIndex = 9
+        Me.TabControl1.TabIndex = 0
         '
         'TabSucursal
         '
@@ -1019,7 +1019,7 @@ Partial Class frmConfiguracion
         Me.GroupBox10.Location = New System.Drawing.Point(3, 420)
         Me.GroupBox10.Name = "GroupBox10"
         Me.GroupBox10.Size = New System.Drawing.Size(381, 128)
-        Me.GroupBox10.TabIndex = 24
+        Me.GroupBox10.TabIndex = 4
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Certificado Facturacion Electrónico"
         '
@@ -1032,7 +1032,7 @@ Partial Class frmConfiguracion
         Me.btnCargarCertificadoAFIP.Location = New System.Drawing.Point(72, 74)
         Me.btnCargarCertificadoAFIP.Name = "btnCargarCertificadoAFIP"
         Me.btnCargarCertificadoAFIP.Size = New System.Drawing.Size(153, 40)
-        Me.btnCargarCertificadoAFIP.TabIndex = 26
+        Me.btnCargarCertificadoAFIP.TabIndex = 2
         Me.btnCargarCertificadoAFIP.Text = "Cargar Certificado AFIP"
         Me.btnCargarCertificadoAFIP.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnCargarCertificadoAFIP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -1047,7 +1047,7 @@ Partial Class frmConfiguracion
         Me.btnObtenerArchivoCSR.Location = New System.Drawing.Point(231, 74)
         Me.btnObtenerArchivoCSR.Name = "btnObtenerArchivoCSR"
         Me.btnObtenerArchivoCSR.Size = New System.Drawing.Size(141, 40)
-        Me.btnObtenerArchivoCSR.TabIndex = 25
+        Me.btnObtenerArchivoCSR.TabIndex = 3
         Me.btnObtenerArchivoCSR.Text = "Generar Archivo CSR"
         Me.btnObtenerArchivoCSR.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnObtenerArchivoCSR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -1060,7 +1060,7 @@ Partial Class frmConfiguracion
         Me.txt_facturacionElectronicaCertificadoVencimiento.Name = "txt_facturacionElectronicaCertificadoVencimiento"
         Me.txt_facturacionElectronicaCertificadoVencimiento.ReadOnly = True
         Me.txt_facturacionElectronicaCertificadoVencimiento.Size = New System.Drawing.Size(245, 21)
-        Me.txt_facturacionElectronicaCertificadoVencimiento.TabIndex = 17
+        Me.txt_facturacionElectronicaCertificadoVencimiento.TabIndex = 1
         '
         'txt_facturacionElectronicaCertificadoNombre
         '
@@ -1069,7 +1069,7 @@ Partial Class frmConfiguracion
         Me.txt_facturacionElectronicaCertificadoNombre.Name = "txt_facturacionElectronicaCertificadoNombre"
         Me.txt_facturacionElectronicaCertificadoNombre.ReadOnly = True
         Me.txt_facturacionElectronicaCertificadoNombre.Size = New System.Drawing.Size(245, 21)
-        Me.txt_facturacionElectronicaCertificadoNombre.TabIndex = 16
+        Me.txt_facturacionElectronicaCertificadoNombre.TabIndex = 0
         '
         'Label42
         '
@@ -1133,7 +1133,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionCheques.Location = New System.Drawing.Point(276, 119)
         Me.Cb_TiempoComprobacionCheques.Name = "Cb_TiempoComprobacionCheques"
         Me.Cb_TiempoComprobacionCheques.Size = New System.Drawing.Size(131, 23)
-        Me.Cb_TiempoComprobacionCheques.TabIndex = 8
+        Me.Cb_TiempoComprobacionCheques.TabIndex = 2
         '
         'Label1
         '
@@ -1152,7 +1152,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMovimientos.Location = New System.Drawing.Point(275, 77)
         Me.Cb_TiempoComprobacionMovimientos.Name = "Cb_TiempoComprobacionMovimientos"
         Me.Cb_TiempoComprobacionMovimientos.Size = New System.Drawing.Size(132, 23)
-        Me.Cb_TiempoComprobacionMovimientos.TabIndex = 6
+        Me.Cb_TiempoComprobacionMovimientos.TabIndex = 1
         '
         'BtnNotificaciones
         '
@@ -1164,7 +1164,7 @@ Partial Class frmConfiguracion
         Me.BtnNotificaciones.Location = New System.Drawing.Point(307, 407)
         Me.BtnNotificaciones.Name = "BtnNotificaciones"
         Me.BtnNotificaciones.Size = New System.Drawing.Size(100, 40)
-        Me.BtnNotificaciones.TabIndex = 4
+        Me.BtnNotificaciones.TabIndex = 3
         Me.BtnNotificaciones.Text = "Modificar"
         Me.BtnNotificaciones.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnNotificaciones.UseVisualStyleBackColor = True
@@ -1186,7 +1186,7 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMensajes.Location = New System.Drawing.Point(275, 35)
         Me.Cb_TiempoComprobacionMensajes.Name = "Cb_TiempoComprobacionMensajes"
         Me.Cb_TiempoComprobacionMensajes.Size = New System.Drawing.Size(132, 23)
-        Me.Cb_TiempoComprobacionMensajes.TabIndex = 3
+        Me.Cb_TiempoComprobacionMensajes.TabIndex = 0
         '
         'TabInternet
         '
@@ -1240,7 +1240,7 @@ Partial Class frmConfiguracion
         Me.Cb_HorasSincronizacion.Location = New System.Drawing.Point(238, 158)
         Me.Cb_HorasSincronizacion.Name = "Cb_HorasSincronizacion"
         Me.Cb_HorasSincronizacion.Size = New System.Drawing.Size(171, 23)
-        Me.Cb_HorasSincronizacion.TabIndex = 24
+        Me.Cb_HorasSincronizacion.TabIndex = 3
         '
         'btnVerificarDNS
         '
@@ -1252,7 +1252,7 @@ Partial Class frmConfiguracion
         Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 316)
         Me.btnVerificarDNS.Name = "btnVerificarDNS"
         Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
-        Me.btnVerificarDNS.TabIndex = 22
+        Me.btnVerificarDNS.TabIndex = 6
         Me.btnVerificarDNS.Text = "Verificar DNS"
         Me.btnVerificarDNS.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnVerificarDNS.UseVisualStyleBackColor = True
@@ -1262,7 +1262,7 @@ Partial Class frmConfiguracion
         Me.txt_IpPing.Location = New System.Drawing.Point(237, 204)
         Me.txt_IpPing.Name = "txt_IpPing"
         Me.txt_IpPing.Size = New System.Drawing.Size(170, 21)
-        Me.txt_IpPing.TabIndex = 21
+        Me.txt_IpPing.TabIndex = 4
         '
         'Label33
         '
@@ -1282,7 +1282,7 @@ Partial Class frmConfiguracion
         Me.Cb_TimeOut.Location = New System.Drawing.Point(236, 253)
         Me.Cb_TimeOut.Name = "Cb_TimeOut"
         Me.Cb_TimeOut.Size = New System.Drawing.Size(171, 23)
-        Me.Cb_TimeOut.TabIndex = 20
+        Me.Cb_TimeOut.TabIndex = 5
         '
         'Label32
         '
@@ -1300,7 +1300,7 @@ Partial Class frmConfiguracion
         Me.Rb2.Location = New System.Drawing.Point(364, 68)
         Me.Rb2.Name = "Rb2"
         Me.Rb2.Size = New System.Drawing.Size(43, 19)
-        Me.Rb2.TabIndex = 16
+        Me.Rb2.TabIndex = 1
         Me.Rb2.Text = "NO"
         Me.Rb2.UseVisualStyleBackColor = True
         '
@@ -1311,7 +1311,7 @@ Partial Class frmConfiguracion
         Me.Rb1.Location = New System.Drawing.Point(301, 68)
         Me.Rb1.Name = "Rb1"
         Me.Rb1.Size = New System.Drawing.Size(36, 19)
-        Me.Rb1.TabIndex = 15
+        Me.Rb1.TabIndex = 0
         Me.Rb1.Text = "SI"
         Me.Rb1.UseVisualStyleBackColor = True
         '
@@ -1343,7 +1343,7 @@ Partial Class frmConfiguracion
         Me.BtnInternet.Location = New System.Drawing.Point(307, 407)
         Me.BtnInternet.Name = "BtnInternet"
         Me.BtnInternet.Size = New System.Drawing.Size(100, 40)
-        Me.BtnInternet.TabIndex = 4
+        Me.BtnInternet.TabIndex = 7
         Me.BtnInternet.Text = "Modificar"
         Me.BtnInternet.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnInternet.UseVisualStyleBackColor = True
@@ -1366,7 +1366,7 @@ Partial Class frmConfiguracion
         Me.Cb_SegundosInternet.Location = New System.Drawing.Point(236, 110)
         Me.Cb_SegundosInternet.Name = "Cb_SegundosInternet"
         Me.Cb_SegundosInternet.Size = New System.Drawing.Size(171, 23)
-        Me.Cb_SegundosInternet.TabIndex = 3
+        Me.Cb_SegundosInternet.TabIndex = 2
         '
         'TabHost
         '
@@ -1399,14 +1399,14 @@ Partial Class frmConfiguracion
         Me.txtPuertoHost.Location = New System.Drawing.Point(140, 62)
         Me.txtPuertoHost.Name = "txtPuertoHost"
         Me.txtPuertoHost.Size = New System.Drawing.Size(264, 21)
-        Me.txtPuertoHost.TabIndex = 10
+        Me.txtPuertoHost.TabIndex = 1
         '
         'txtIPHost
         '
         Me.txtIPHost.Location = New System.Drawing.Point(140, 30)
         Me.txtIPHost.Name = "txtIPHost"
         Me.txtIPHost.Size = New System.Drawing.Size(264, 21)
-        Me.txtIPHost.TabIndex = 9
+        Me.txtIPHost.TabIndex = 0
         '
         'Label21
         '
@@ -1426,7 +1426,7 @@ Partial Class frmConfiguracion
         Me.btnModificarHost.Location = New System.Drawing.Point(304, 380)
         Me.btnModificarHost.Name = "btnModificarHost"
         Me.btnModificarHost.Size = New System.Drawing.Size(100, 40)
-        Me.btnModificarHost.TabIndex = 4
+        Me.btnModificarHost.TabIndex = 2
         Me.btnModificarHost.Text = "Modificar"
         Me.btnModificarHost.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarHost.UseVisualStyleBackColor = True
@@ -1481,7 +1481,7 @@ Partial Class frmConfiguracion
         Me.Panel4.Location = New System.Drawing.Point(225, 28)
         Me.Panel4.Name = "Panel4"
         Me.Panel4.Size = New System.Drawing.Size(173, 27)
-        Me.Panel4.TabIndex = 29
+        Me.Panel4.TabIndex = 0
         '
         'ROrdenCompraAutomaticaNo
         '
@@ -1531,7 +1531,7 @@ Partial Class frmConfiguracion
         Me.btnCalcularVentaMensualProducto.Location = New System.Drawing.Point(198, 77)
         Me.btnCalcularVentaMensualProducto.Name = "btnCalcularVentaMensualProducto"
         Me.btnCalcularVentaMensualProducto.Size = New System.Drawing.Size(194, 34)
-        Me.btnCalcularVentaMensualProducto.TabIndex = 12
+        Me.btnCalcularVentaMensualProducto.TabIndex = 2
         Me.btnCalcularVentaMensualProducto.Text = "Calcular Venta Mensual"
         Me.btnCalcularVentaMensualProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnCalcularVentaMensualProducto.UseVisualStyleBackColor = True
@@ -1543,7 +1543,7 @@ Partial Class frmConfiguracion
         Me.txtFechaUltimoCalculoventaMensual.Name = "txtFechaUltimoCalculoventaMensual"
         Me.txtFechaUltimoCalculoventaMensual.ReadOnly = True
         Me.txtFechaUltimoCalculoventaMensual.Size = New System.Drawing.Size(174, 21)
-        Me.txtFechaUltimoCalculoventaMensual.TabIndex = 11
+        Me.txtFechaUltimoCalculoventaMensual.TabIndex = 1
         '
         'Label30
         '
@@ -1572,7 +1572,7 @@ Partial Class frmConfiguracion
         Me.CbPeriodoActualizacionVentaMensual.Location = New System.Drawing.Point(219, 20)
         Me.CbPeriodoActualizacionVentaMensual.Name = "CbPeriodoActualizacionVentaMensual"
         Me.CbPeriodoActualizacionVentaMensual.Size = New System.Drawing.Size(173, 23)
-        Me.CbPeriodoActualizacionVentaMensual.TabIndex = 6
+        Me.CbPeriodoActualizacionVentaMensual.TabIndex = 0
         '
         'btnModificarStock
         '
@@ -1584,7 +1584,7 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.Location = New System.Drawing.Point(304, 404)
         Me.btnModificarStock.Name = "btnModificarStock"
         Me.btnModificarStock.Size = New System.Drawing.Size(100, 40)
-        Me.btnModificarStock.TabIndex = 4
+        Me.btnModificarStock.TabIndex = 1
         Me.btnModificarStock.Text = "Modificar"
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True

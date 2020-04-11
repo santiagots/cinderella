@@ -15,8 +15,8 @@ namespace Factura.Service.Factura
 {
     public class FacturarElectrinicaStrategy : IFacturarStrategy
     {
-        public static string PasswordCertificado;
-        public string RutaCertificado;
+        private static string PasswordCertificado;
+        private string RutaCertificado;
 
         public FacturarElectrinicaStrategy(string rutaCertificado, string passwordCertificado)
         {

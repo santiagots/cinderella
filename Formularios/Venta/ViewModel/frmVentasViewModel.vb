@@ -664,9 +664,9 @@ Namespace Formularios.Venta
             Dim vendedor As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal))
             vendedor.AddRange(encargados)
             _Encargados = New BindingList(Of ModelBase.Empleado)(encargados)
-            EncargadoSeleccionado = _Encargados.First()
+            EncargadoSeleccionado = _Encargados.FirstOrDefault()
             _Vendedores = New BindingList(Of ModelBase.Empleado)(vendedor)
-            VendedoresSeleccionado = _Vendedores.First()
+            VendedoresSeleccionado = _Vendedores.FirstOrDefault()
 
 
             NotifyPropertyChanged(NameOf(Me.Encargados))

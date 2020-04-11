@@ -1,4 +1,5 @@
 ﻿Imports System.Configuration
+Imports System.IO
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Reflection
@@ -93,50 +94,52 @@ Public Class frmConfiguracion
         txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
         txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
 
-        txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
-        txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
+        If (File.Exists(RutaCertificadoFacturacionElectronica)) Then
+            txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
+            txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
+        End If
 
         'Comprobacion de notificaciones.
         Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
-        Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
-        Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
+            Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
+            Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
 
 
-        'Comprobacion de internet.
-        Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
-        Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
-        txt_IpPing.Text = My.Settings.IpPing
-        Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
-        If My.Settings("Internet") Then
-            Rb1.Checked = True
-        Else
-            Rb2.Checked = False
-        End If
+            'Comprobacion de internet.
+            Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
+            Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
+            txt_IpPing.Text = My.Settings.IpPing
+            Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
+            If My.Settings("Internet") Then
+                Rb1.Checked = True
+            Else
+                Rb2.Checked = False
+            End If
 
-        'cargo los valoes del tab Host
-        txtIPHost.Text = My.Settings.IpHost
-        txtPuertoHost.Text = My.Settings.PuertoHost
+            'cargo los valoes del tab Host
+            txtIPHost.Text = My.Settings.IpHost
+            txtPuertoHost.Text = My.Settings.PuertoHost
 
-        'cargo los valoes del tab Stock
-        If My.Settings.GeneracionOrdenCompraAutomatica Then
-            ROrdenCompraAutomaticaSI.Checked = True
-        Else
-            ROrdenCompraAutomaticaNo.Checked = True
-        End If
-        CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
+            'cargo los valoes del tab Stock
+            If My.Settings.GeneracionOrdenCompraAutomatica Then
+                ROrdenCompraAutomaticaSI.Checked = True
+            Else
+                ROrdenCompraAutomaticaNo.Checked = True
+            End If
+            CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
 
-        Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
+            Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
 
-        If (fechaUltimoCalculo.HasValue) Then
-            txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
-        Else
-            txtFechaUltimoCalculoventaMensual.Text = "No calculado"
-        End If
+            If (fechaUltimoCalculo.HasValue) Then
+                txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
+            Else
+                txtFechaUltimoCalculoventaMensual.Text = "No calculado"
+            End If
 
-        EvaluarPermisos()
+            EvaluarPermisos()
 
-        'Cambio el cursor a NORMAL.
-        Me.Cursor = Cursors.Arrow
+            'Cambio el cursor a NORMAL.
+            Me.Cursor = Cursors.Arrow
     End Sub
 
     'Actualizo la sucursal.
@@ -610,10 +613,9 @@ Public Class frmConfiguracion
 
         Dim nombreArchivoCSR As String = saveFileDialog.FileName
         Dim nombreArchivoKey As String = RutaArchivoKeyFacturacionElectronica
-        Dim password As String = FacturarElectrinicaStrategy.PasswordCertificado
 
         Try
-            Dim argumento As String = $"genrsa -passout pass:{password} -out {nombreArchivoKey} 2048"
+            Dim argumento As String = $"genrsa -passout pass:{PasswordCertificadoFacturacionElectronica} -out {nombreArchivoKey} 2048"
             EjecutarComando("openssl.exe", argumento, ".\Libs")
 
             argumento = $"req -new -config openssl.cnf -key {nombreArchivoKey} -subj ""/C=AR/O={My.Settings.DatosFiscalRazonSocial}/CN={My.Settings.DatosFiscalNombreFantasia}/serialNumber=CUIT {My.Settings.DatosFiscalCUIT}"" -out ""{nombreArchivoCSR}"""
@@ -643,11 +645,10 @@ Public Class frmConfiguracion
         Dim nombreArchivoCRT As String = openFileDialog.FileName
         Dim nombreArchivoKey As String = RutaArchivoKeyFacturacionElectronica
         Dim nombreArchivoP12 As String = RutaCertificadoFacturacionElectronica
-        Dim password As String = FacturarElectrinicaStrategy.PasswordCertificado
         Dim info As ProcessStartInfo = New ProcessStartInfo()
 
         Try
-            Dim argumento As String = $"pkcs12 -export -in ""{nombreArchivoCRT}"" -password pass:{password} -inkey ""{nombreArchivoKey}"" -out ""{nombreArchivoP12}"""
+            Dim argumento As String = $"pkcs12 -export -in ""{nombreArchivoCRT}"" -password pass:{PasswordCertificadoFacturacionElectronica} -inkey ""{nombreArchivoKey}"" -out ""{nombreArchivoP12}"""
             EjecutarComando("openssl.exe", argumento, ".\Libs")
 
             MessageBox.Show("El certificado de la AFIP se ha registrado de forma exitosa", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
