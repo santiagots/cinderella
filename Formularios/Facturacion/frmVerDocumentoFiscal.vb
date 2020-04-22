@@ -7,12 +7,12 @@ Imports SistemaCinderella.Formularios.Facturacion
 Public Class frmVerDocumentoFiscal
     Private frmVerFacturaViewModel As frmVerFacturaViewModel
 
-    Sub New(idDocumentoFiscal As Long, tipoDocumentoFiscal As TipoDocumentoFiscal)
+    Sub New(idDocumentoFiscal As Long, TipoCliente As TipoCliente, tipoDocumentoFiscal As TipoDocumentoFiscal)
 
         ' This call is required by the designer.
         InitializeComponent()
 
-        frmVerFacturaViewModel = New frmVerFacturaViewModel(idDocumentoFiscal, tipoDocumentoFiscal)
+        frmVerFacturaViewModel = New frmVerFacturaViewModel(idDocumentoFiscal, TipoCliente, tipoDocumentoFiscal)
     End Sub
 
     Private Sub FrmVerDocumentoFiscal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -24,7 +24,7 @@ Public Class frmVerDocumentoFiscal
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
         Ejecutar(Sub()
-                     Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(frmVerFacturaViewModel.IdDocuemtnoFiscal, frmVerFacturaViewModel.TipoDocumentoFiscal)
+                     Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(frmVerFacturaViewModel.IdDocuemtnoFiscal, frmVerFacturaViewModel.TipoCliente, frmVerFacturaViewModel.TipoDocumentoFiscal)
                      frmReporteResumenReserva.ShowDialog()
                  End Sub)
     End Sub

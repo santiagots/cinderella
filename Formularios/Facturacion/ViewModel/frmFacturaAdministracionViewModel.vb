@@ -208,12 +208,12 @@ Namespace Formularios.Facturacion
         End Function
 
         Friend Sub MostrarFacturaDetalle()
-            Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(_VentaDetalleSeleccionada.Factura.Id, TipoDocumentoFiscal.Factura)
+            Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(_VentaDetalleSeleccionada.Factura.Id, _VentaDetalleSeleccionada.TipoCliente, TipoDocumentoFiscal.Factura)
             frmVerDocumentoFiscal.ShowDialog()
         End Sub
 
         Friend Sub MostrarNotaCreditoDetalle()
-            Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(_VentaDetalleSeleccionada.NotaCredito.Id, TipoDocumentoFiscal.NotaCredito)
+            Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(_VentaDetalleSeleccionada.NotaCredito.Id, _VentaDetalleSeleccionada.TipoCliente, TipoDocumentoFiscal.NotaCredito)
             frmVerDocumentoFiscal.ShowDialog()
         End Sub
 

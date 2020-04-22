@@ -437,13 +437,8 @@ Namespace Formularios.Venta
             producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
             Dim CantidadUnidadesDeProducto As Integer = VentaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
-            Dim stockInsuficienteConfirmacion As Boolean = False
-
-            If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
-                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Id, producto.Codigo, CantidadUnidadesDeProducto)
-                If (Not stockInsuficienteConfirmacion) Then
-                    Exit Sub
-                End If
+            If Not HaySotck(producto, CantidadUnidadesDeProducto) Then
+                Exit Sub
             End If
 
             If (CantidadUnidadesDeProducto = 0) Then
@@ -488,7 +483,23 @@ Namespace Formularios.Venta
 
         End Sub
 
+        Private Function HaySotck(producto As ModelBase.Producto, ByRef CantidadUnidadesDeProducto As Integer) As Boolean
+            Dim stockInsuficienteConfirmacion As Boolean = False
+
+            If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
+                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Id, producto.Codigo, CantidadUnidadesDeProducto)
+            End If
+
+            Return True
+        End Function
+
         Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel)
+            Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo = ventaItemViewModel.Codigo)
+
+            If Not HaySotck(producto, ventaItemViewModel.Cantidad) Then
+                Exit Sub
+            End If
+
             VentaModel.ActualizarVentaItem(ventaItemViewModel.Codigo,
                                            ventaItemViewModel.Monto,
                                            ventaItemViewModel.Cantidad,

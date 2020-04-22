@@ -9,12 +9,14 @@ Namespace Formularios.Facturacion
         Inherits Comunes.Common
 
         Public IdDocuemtnoFiscal As Long
+        Public TipoCliente As TipoCliente
         Public TipoDocumentoFiscal As TipoDocumentoFiscal
 
         Public Property DocumentoFiscalViewModel As DocumentoFiscalViewModel
 
-        Sub New(idDocumentoFiscal As Long, tipoDocumentoFiscal As TipoDocumentoFiscal)
+        Sub New(idDocumentoFiscal As Long, tipoCliente As TipoCliente, tipoDocumentoFiscal As TipoDocumentoFiscal)
             Me.IdDocuemtnoFiscal = idDocumentoFiscal
+            Me.TipoCliente = tipoCliente
             Me.TipoDocumentoFiscal = tipoDocumentoFiscal
         End Sub
 

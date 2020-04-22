@@ -4,11 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.BaseAgreggate;
-using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data.Repository
 {

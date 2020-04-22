@@ -1,12 +1,11 @@
-﻿using System;
-using Common.Core.Constants;
+﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
-using Common.Core.Model;
-using Ventas.Core.Model.ValueObjects;
-using Common.Core.Enum;
+using Common.Core.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ventas.Core.Model.BaseAgreggate;
+using Ventas.Core.Model.ValueObjects;
 
 namespace Ventas.Core.Model.VentaAggregate
 {
@@ -137,7 +136,7 @@ namespace Ventas.Core.Model.VentaAggregate
             decimal montoIva = 0;
 
             if (tipoCliente == TipoCliente.Mayorista)
-                montoIva = Math.Round((monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion, 1, MidpointRounding.AwayFromZero);
+                montoIva = (monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion;
 
             return new MontoPago(monto, decuento, cft, montoIva);
         }
@@ -156,33 +155,59 @@ namespace Ventas.Core.Model.VentaAggregate
         {
             IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal monto = pagos.Sum(x => x.MontoPago.Monto);
-            return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, monto);
+            return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, monto);
         }
 
         public decimal TotalDescuento(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
             IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal descuento = pagos.Sum(x => x.MontoPago.Descuento);
-            return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, descuento);
+            return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, descuento);
         }
         public decimal TotalCFT(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
             IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal cft = pagos.Sum(x => x.MontoPago.CFT);
-            return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, cft);
+            return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
         }
 
-        private decimal CalcularMontoSegunCondicionIva(decimal porcentajeFacturacion, CondicionIVA condicionIva, decimal monto)
+        private decimal CalcularMontoSegunCondicionIva(decimal porcentajeFacturacion, CondicionIVA condicionIva, TipoCliente tipoCliente, decimal monto)
         {
-            //A los Excentos y Monotibutistas hay que agregarle el iva dado que los montos que manejan no tiene IVA pero se les hace factura B 
+
+            if (tipoCliente == TipoCliente.Minorista)
+               return CalcularMontoSegunCondicionIvaMinorista(porcentajeFacturacion, condicionIva, monto);
+            else
+               return CalcularMontoSegunCondicionIvaMayorista(porcentajeFacturacion, condicionIva, monto);
+        }
+
+        private decimal CalcularMontoSegunCondicionIvaMinorista(decimal porcentajeFacturacion, CondicionIVA condicionIva, decimal monto)
+        {
+            //A los Responsable Inscripto hay que quitarle el iva dado que los montos que manejan tiene IVA
             switch (condicionIva)
             {
                 case CondicionIVA.Consumidor_Final:
-                case CondicionIVA.Responsable_Inscripto:
-                    return Math.Round(monto * porcentajeFacturacion, 1, MidpointRounding.AwayFromZero);
                 case CondicionIVA.Monotributo:
                 case CondicionIVA.Exento:
-                    return Math.Round(monto * porcentajeFacturacion * (1 + this.Producto.SubCategoria.IVA.Valor), 1, MidpointRounding.AwayFromZero);
+                    return monto * porcentajeFacturacion;
+                case CondicionIVA.Responsable_Inscripto:
+                    decimal montoSinIva = Monto.ObtenerSinIVA(monto, this.Producto.SubCategoria.IVA.Valor, porcentajeFacturacion);
+                    return montoSinIva;
+                default:
+                    throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIva.ToString()}");
+            }
+        }
+
+        private decimal CalcularMontoSegunCondicionIvaMayorista(decimal porcentajeFacturacion, CondicionIVA condicionIva, decimal monto)
+        {
+            //A los Excentos y Monotibutistas hay que agregarle el iva dado que los montos que manejan no tiene IVA 
+            switch (condicionIva)
+            {
+                case CondicionIVA.Responsable_Inscripto:
+                    return monto * porcentajeFacturacion;
+                case CondicionIVA.Monotributo:
+                case CondicionIVA.Exento:
+                    decimal montoConIva = Monto.ObtenerConIVA(monto, this.Producto.SubCategoria.IVA.Valor, porcentajeFacturacion);
+                    return montoConIva;
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIva.ToString()}");
             }
@@ -190,7 +215,10 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
         {
-            return Math.Round((total / (1 + Producto.SubCategoria.IVA.Valor)) / (1 - PorcentajeBonificacion + porcentajeRecargo), 1, MidpointRounding.AwayFromZero);
+            decimal totalSinIva = Monto.ObtenerSinIVA(total, this.Producto.SubCategoria.IVA.Valor);
+            decimal SubTotal = totalSinIva / (1 - PorcentajeBonificacion + porcentajeRecargo);
+
+            return SubTotal;
         }
 
         internal void ActualizarPorcentajePago()

@@ -146,25 +146,7 @@ Namespace Formularios.Facturacion
         End Sub
 
         Friend Async Function FacturarAsync() As Task(Of Boolean)
-            If (TiposFacturaSeleccionada = TipoFactura.Manual AndAlso Numerosfacturas.Count = 0) Then
-                MessageBox.Show("Error al registrar la factura. Debe ingresar un número de factura.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-
-            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.EsValido(CUIT) Then
-                MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-
-            If ventaModel.TipoCliente = Enums.TipoCliente.Minorista AndAlso HabilitarCUIT AndAlso Not Helper.Dni.Validar(CUIT) Then
-                MessageBox.Show("Error al registrar la factura. El DNI ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-
-            If (HabilitarNombreYAplellido AndAlso String.IsNullOrEmpty(NombreYApellido)) OrElse
-               (HabilitarDireccion AndAlso String.IsNullOrEmpty(Direccion)) OrElse
-               (HabilitarLocalidad AndAlso String.IsNullOrEmpty(Localidad)) Then
-                MessageBox.Show("Error al registrar la factura. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If (Not RequeridosCompletos()) Then
                 Return False
             End If
 
@@ -205,25 +187,7 @@ Namespace Formularios.Facturacion
         End Function
 
         Friend Async Function NotaCreditoAsync() As Task(Of Boolean)
-            If (TiposFacturaSeleccionada = TipoFactura.Manual AndAlso Numerosfacturas.Count = 0) Then
-                MessageBox.Show("Error al registrar la factura. Debe ingresar un número de factura.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-
-            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.EsValido(CUIT) Then
-                MessageBox.Show("Error al registrar la factura. El CUIL ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-
-            If ventaModel.TipoCliente = Enums.TipoCliente.Minorista AndAlso HabilitarCUIT AndAlso Not Helper.Dni.Validar(CUIT) Then
-                MessageBox.Show("Error al registrar la factura. El DNI ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-
-            If (HabilitarNombreYAplellido AndAlso String.IsNullOrEmpty(NombreYApellido)) OrElse
-               (HabilitarDireccion AndAlso String.IsNullOrEmpty(Direccion)) OrElse
-               (HabilitarLocalidad AndAlso String.IsNullOrEmpty(Localidad)) Then
-                MessageBox.Show("Error al registrar la factura. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If (Not RequeridosCompletos()) Then
                 Return False
             End If
 
@@ -263,6 +227,27 @@ Namespace Formularios.Facturacion
 
             Visible = False
             Await FacturarCallBackEvent(True, ventaModel)
+            Return True
+        End Function
+
+        Private Function RequeridosCompletos() As Boolean
+            If (TiposFacturaSeleccionada = TipoFactura.Manual AndAlso Numerosfacturas.Count = 0) Then
+                MessageBox.Show("Error al registrar la factura. Debe ingresar un número de factura.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+
+            If ventaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso HabilitarCUIT AndAlso Not Helper.Cuit.EsValido(CUIT) Then
+                MessageBox.Show("Error al registrar la factura. El CUIL/DNI ingresado es incorrecto o se encuentra vacío.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+
+            If (HabilitarNombreYAplellido AndAlso String.IsNullOrEmpty(NombreYApellido)) OrElse
+               (HabilitarDireccion AndAlso String.IsNullOrEmpty(Direccion)) OrElse
+               (HabilitarLocalidad AndAlso String.IsNullOrEmpty(Localidad)) Then
+                MessageBox.Show("Error al registrar la factura. Debe completar todos los campos obligatorios.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+
             Return True
         End Function
 
@@ -330,6 +315,9 @@ Namespace Formularios.Facturacion
 
             If (tipoCliente = TipoCliente.Minorista) Then
                 CondicionesIVA.Add(CondicionIVA.Consumidor_Final)
+                CondicionesIVA.Add(CondicionIVA.Exento)
+                CondicionesIVA.Add(CondicionIVA.Monotributo)
+                CondicionesIVA.Add(CondicionIVA.Responsable_Inscripto)
             Else
                 CondicionesIVA.Add(CondicionIVA.Exento)
                 CondicionesIVA.Add(CondicionIVA.Monotributo)

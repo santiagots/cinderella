@@ -63,7 +63,7 @@ namespace Ventas.Core.Model.BaseAgreggate
             if (Stock == null)
                 return false;
 
-            return Stock.Cantidad > cantidad;
+            return Stock.Cantidad >= cantidad;
         }
     }
 }

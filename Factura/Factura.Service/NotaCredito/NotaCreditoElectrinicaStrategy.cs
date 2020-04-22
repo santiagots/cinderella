@@ -59,7 +59,7 @@ namespace Common.Service.NotaCredito
                 {
                     Codigo = grupo.Key.Id,
                     Monto = monto,
-                    IvaMonto = Math.Round(monto * grupo.Key.Valor, 2, MidpointRounding.AwayFromZero)
+                    IvaMonto = monto * grupo.Key.Valor
                 });
             }
 
@@ -73,7 +73,8 @@ namespace Common.Service.NotaCredito
                 case CondicionIVA.Consumidor_Final:
                 case CondicionIVA.Monotributo:
                 case CondicionIVA.Exento:
-                    return Math.Round(monto / (1 + iva), 2, MidpointRounding.AwayFromZero);
+                    decimal montoSinIva = Monto.ObtenerSinIVA(monto, iva);
+                    return montoSinIva;
                 case CondicionIVA.Responsable_Inscripto:
                     return monto;
                 default:

@@ -9,6 +9,7 @@ using Common.Core.Constants;
 using Factura.Core.Model.AfipAgreggate;
 using Newtonsoft.Json;
 using System.Reflection;
+using Common.Core.Helper;
 
 namespace Factura.ExternalService
 {
@@ -110,14 +111,14 @@ namespace Factura.ExternalService
             request.CbteFch = DateTime.Now.ToString("yyyyMMdd");
             request.MonId = PESOS;
             request.MonCotiz = PESOS_COTIZACION;
-            request.ImpTotConc = 0;                             //Importe total no grabado
-            request.ImpNeto = (double)CAErequest.ImporteNeto;   //Importe total neto
-            request.ImpOpEx = 0;                                //Importe total excento
-            request.ImpTrib = 0;                                //Importe total tributo
+            request.ImpTotConc = 0;                                             //Importe total no grabado
+            request.ImpNeto = (double)Monto.Redondeo(CAErequest.ImporteNeto);   //Importe total neto
+            request.ImpOpEx = 0;                                                //Importe total excento
+            request.ImpTrib = 0;                                                //Importe total tributo
 
             AgregarAlicutaIva(CAErequest.AlicuotasIva, request);
 
-            request.ImpTotal = Math.Round(request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib, 2, MidpointRounding.AwayFromZero);
+            request.ImpTotal = request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib;
 
             return request;
         }
@@ -133,11 +134,11 @@ namespace Factura.ExternalService
                 request.Iva = alicuotaIva.Select(x => new Afip.Wsfev1.AlicIva()
                 {
                     Id = x.Codigo,
-                    BaseImp = (double)x.Monto,
-                    Importe = (double)x.IvaMonto
+                    BaseImp = (double)Monto.Redondeo(x.Monto),
+                    Importe = (double)Monto.Redondeo(x.IvaMonto)
                 }).ToArray();
-                    
-                request.ImpIVA = Math.Round(alicuotaIva.Sum(x => (double)x.IvaMonto), 2, MidpointRounding.AwayFromZero);
+
+                request.ImpIVA = request.Iva.Sum(x => x.Importe);
             }
         }
 

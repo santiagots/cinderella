@@ -36,7 +36,7 @@ Public Class frmFacturar
                           If (Await facturarViewModel.FacturarAsync()) Then
 
                               If facturarViewModel.TiposFacturaSeleccionada = TipoFactura.Electronica Then
-                                  Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(facturarViewModel.ventaModel.Id, TipoDocumentoFiscal.Factura)
+                                  Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(facturarViewModel.ventaModel.Id, facturarViewModel.ventaModel.TipoCliente, TipoDocumentoFiscal.Factura)
                                   frmReporteResumenReserva.MdiParent = MdiParent
                                   frmReporteResumenReserva.Show()
                               End If

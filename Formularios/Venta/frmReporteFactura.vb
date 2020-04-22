@@ -3,9 +3,11 @@ Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Model
 Imports Common.Core.Enum
+Imports Common.Core.Helper
 
 Public Class frmReporteFactura
 
+    Private TipoCliente As TipoCliente
     Private TipoDocumentoFiscal As TipoDocumentoFiscal
     Private Venta As Venta
     Private ds As New DataSet
@@ -23,10 +25,11 @@ Public Class frmReporteFactura
         InitializeComponent()
     End Sub
 
-    Sub New(idVenta As Long, tipoDocumentoFiscal As TipoDocumentoFiscal)
+    Sub New(idVenta As Long, tipoCliente As TipoCliente, tipoDocumentoFiscal As TipoDocumentoFiscal)
         Me.New
         Me.Venta = Comunes.Servicio.ObtenerVenta(idVenta)
         Me.TipoDocumentoFiscal = tipoDocumentoFiscal
+        Me.TipoCliente = tipoCliente
     End Sub
 
     Sub New(venta As Venta, tipoDocumentoFiscal As TipoDocumentoFiscal)
@@ -155,16 +158,25 @@ Public Class frmReporteFactura
 
     Private Sub CargarProducto(item As VentaItem)
         Dim iva As Decimal = 0
-        Dim monto As Decimal
+        Dim montoProducto As Decimal = 0
 
-        If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
-            monto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
-            iva = item.MontoProducto.Iva
+        If (TipoCliente = TipoCliente.Minorista) Then
+            If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
+                montoProducto = Monto.ObtenerSinIVA(item.MontoProducto.Valor, item.Producto.SubCategoria.IVA.Valor, Venta.PorcentajeFacturacion)
+                iva = montoProducto * item.Producto.SubCategoria.IVA.Valor
+            Else
+                montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
+            End If
         Else
-            monto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
+            If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
+                montoProducto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
+                iva = item.MontoProducto.Iva
+            Else
+                montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
+            End If
         End If
 
-        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, monto, iva)
+        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, Monto.Redondeo(montoProducto), Monto.Redondeo(iva))
     End Sub
 
     Private Sub InicializarTotalesTable(ByRef dtPagos As DataTable)
@@ -234,7 +246,7 @@ Public Class frmReporteFactura
                 Return "06"
             End If
         Else
-            If condicionIVA = CondicionIVA.Responsable_Inscripto Then
+            If CondicionIva = CondicionIVA.Responsable_Inscripto Then
                 Return "03"
             Else
                 Return "08"

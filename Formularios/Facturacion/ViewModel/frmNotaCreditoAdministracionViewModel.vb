@@ -44,7 +44,7 @@ Namespace Formularios.Facturacion
         Friend Async Function MostrarFacturaDetalle(documentoFiscalViewModel As DocumentoFiscalViewModel) As Task
             Dim notaCreditoSeleccionada As Model.NotaCredito = _NotaCredito.FirstOrDefault(Function(x) x.Id = documentoFiscalViewModel.Id)
             Dim ventaModel As Model.Venta = Await Task.Run(Function() Comunes.Servicio.ObtenerVenta(notaCreditoSeleccionada.IdVenta))
-            Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(ventaModel.Factura.Id, TipoDocumentoFiscal.Factura)
+            Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(ventaModel.Factura.Id, ventaModel.TipoCliente, TipoDocumentoFiscal.Factura)
             frmVerDocumentoFiscal.ShowDialog()
         End Function
 

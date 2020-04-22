@@ -1,6 +1,7 @@
 ﻿using Common.Core.Constants;
 using Common.Core.Enum;
 using Common.Core.Exceptions;
+using Common.Core.Helper;
 using EpsonFPHostControlX;
 using System;
 using System.Collections.Generic;
@@ -244,7 +245,8 @@ namespace Factura.Device.Printer
                 case CONSUMIDOR_FINAL:
                     return monto;
                 case RESPONSABLE_INSCRIPTO:
-                    return Math.Round(monto * (1 + iva), 1, MidpointRounding.AwayFromZero);
+                    decimal montoConIva = Monto.ObtenerConIVA(monto, iva);
+                    return Monto.Redondeo(montoConIva);
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de cliente no reconocido {TipoCliente.ToString()}");
             }
