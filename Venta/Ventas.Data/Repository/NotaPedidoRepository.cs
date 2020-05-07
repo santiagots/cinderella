@@ -23,7 +23,9 @@ namespace Ventas.Data.Repository
                                         .OrderBy(x => x.Numero)
                                         .FirstOrDefault();
 
-            if(UltimaNotaPedido == null)
+            notaPedido.NotaPedidoItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
+
+            if (UltimaNotaPedido == null)
                 notaPedido.AgregarNumero(1);
             else
                 notaPedido.AgregarNumero(UltimaNotaPedido.Numero + 1);
