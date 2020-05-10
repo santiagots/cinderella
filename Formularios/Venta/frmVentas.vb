@@ -331,14 +331,18 @@ Public Class frmVentas
     End Sub
 
     Private Sub Btn_NotaPedido_Click(sender As Object, e As EventArgs) Handles Btn_NotaPedido.Click
-        Ejecutar(
-            Sub()
+        EjecutarAsync(
+            Async Function()
                 If MessageBox.Show("¿Desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
                     ventaViewModel.NotaPedido()
+
+                    Dim Funciones As New Funciones
+                    Await Funciones.ActualizarNotasPedidosVentasAsync()
+
                     MessageBox.Show("Los datos se han guardado de forma correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Me.Dispose()
                 End If
-            End Sub)
+            End Function)
     End Sub
 
     Private Sub BtnReserva_Click(sender As Object, e As EventArgs) Handles BtnReserva.Click
