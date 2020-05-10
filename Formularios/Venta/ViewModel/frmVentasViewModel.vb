@@ -493,10 +493,10 @@ Namespace Formularios.Venta
             Return True
         End Function
 
-        Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel)
+        Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel, verificarStock As Boolean)
             Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo = ventaItemViewModel.Codigo)
 
-            If Not HaySotck(producto, ventaItemViewModel.Cantidad) Then
+            If verificarStock AndAlso Not HaySotck(producto, ventaItemViewModel.Cantidad) Then
                 Exit Sub
             End If
 

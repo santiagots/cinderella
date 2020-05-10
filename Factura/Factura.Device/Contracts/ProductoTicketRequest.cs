@@ -1,6 +1,6 @@
-﻿namespace Factura.Device.Printer
+﻿namespace Factura.Device.Contracts
 {
-    public class ProductoPrinter
+    public class ProductoTicketRequest
     {
         public string Codigo { get; set; }
         public string Nombre { get; set; }
@@ -11,7 +11,7 @@
         public decimal Neto { get => Monto - Descuento + CFT; }
         public decimal IVA { get; set; }
 
-        public ProductoPrinter(string codigo, string nombre, int cantidad, decimal monto, decimal descuento, decimal cft, decimal iva)
+        public ProductoTicketRequest(string codigo, string nombre, int cantidad, decimal monto, decimal descuento, decimal cft, decimal iva)
         {
             Codigo = codigo;
             Nombre = nombre;

@@ -201,7 +201,7 @@ namespace Factura.Device.Printer
         {
             string SinComas, SinPuntos;
             double montoAux;
-            montoAux = (double)monto;
+            montoAux = (double)Monto.Redondeo(monto, potencia);
             montoAux = (montoAux * (Math.Pow(10, potencia)));
             SinComas = montoAux.ToString().Replace(",", "");
             SinPuntos = SinComas.ToString().Replace(".", "");

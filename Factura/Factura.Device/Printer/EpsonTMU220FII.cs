@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
+using Factura.Device.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,7 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));
@@ -60,7 +61,7 @@ namespace Factura.Device.Printer
             return CerrarTicket();
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
         {
             AbrirNotaCredito();
             productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));

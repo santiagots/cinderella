@@ -183,7 +183,8 @@ Public Class frmVentas
 
                 Dim columnas As List(Of String) = New List(Of String) From {"ProductosPorcentajeBonificacion", "ProductosMonto", "ProductosCantidad"}
                 If (columnas.Any(Function(x) DG_Productos.Columns(e.ColumnIndex).Name = x)) Then
-                    ventaViewModel.ActualizarItemVenta(DG_Productos.CurrentRow.DataBoundItem)
+                    Dim verificarStock = "ProductosCantidad" = DG_Productos.Columns(e.ColumnIndex).Name
+                    ventaViewModel.ActualizarItemVenta(DG_Productos.CurrentRow.DataBoundItem, verificarStock)
                 End If
             End Sub)
     End Sub

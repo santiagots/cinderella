@@ -4,9 +4,9 @@ namespace Common.Core.Helper
 {
     public class Monto
     {
-        public static decimal Redondeo(decimal monto)
+        public static decimal Redondeo(decimal monto, int decimales = 2)
         {
-            return Math.Round(monto, 2, MidpointRounding.ToEven);
+            return Math.Round(monto, decimales, MidpointRounding.ToEven);
         }
 
         public static decimal ObtenerSinIVA(decimal monto, decimal iva, decimal porcentajeFacturacion = 1)

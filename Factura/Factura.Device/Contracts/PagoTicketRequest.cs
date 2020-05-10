@@ -1,8 +1,8 @@
 ﻿using Common.Core.Enum;
 
-namespace Factura.Device.Printer
+namespace Factura.Device.Contracts
 {
-    public class PagoPrinter
+    public class PagoTicketRequest
     {
         public TipoPago TipoPago { get; set; }
         public int NumeroCuotas { get; set; }
@@ -12,7 +12,7 @@ namespace Factura.Device.Printer
         public decimal IVA { get; set; }
         public decimal Neto(decimal porcentajeFacturacion) => (Monto - Descuento + CFT) * porcentajeFacturacion + IVA;
 
-        public PagoPrinter(TipoPago tipoPago, int numeroCuotas, decimal monto, decimal descuento, decimal cft, decimal iva)
+        public PagoTicketRequest(TipoPago tipoPago, int numeroCuotas, decimal monto, decimal descuento, decimal cft, decimal iva)
         {
             TipoPago = tipoPago;
             NumeroCuotas = numeroCuotas;

@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using Factura.Core.Enum;
+using Factura.Device.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -49,12 +50,12 @@ namespace Factura.Device.Printer
             }
         }
 
-        public int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
         {
             return epsonTM.ObtenreNumeroFactura(productos, pagos);
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
         {
             return epsonTM.ObtenerNumeroNotaCretido(productos, pagos);
         }

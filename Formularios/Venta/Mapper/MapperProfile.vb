@@ -16,9 +16,9 @@ Namespace Formularios.Venta
                 .ForMember(Function(des) des.Anulado, Sub(opt) opt.MapFrom(Function(src) src.Anulado))
 
             CreateMap(Of Model.NotaPedidoAgreggate.NotaPedido, NotaPedidoItemsViewModel)() _
-                 .ForMember(Function(des) des.Vendedor, Sub(opt) opt.MapFrom(Function(src) src.Vendedor.ApellidoYNombre)) _
+                 .ForMember(Function(des) des.Vendedor, Sub(opt) opt.MapFrom(Function(src) If(src.Vendedor IsNot Nothing, src.Vendedor.ApellidoYNombre, ""))) _
                  .ForMember(Function(des) des.MontoTotal, Sub(opt) opt.MapFrom(Function(src) src.MontoTotal.toDecimal())) _
-                 .ForMember(Function(des) des.NombreCliente, Sub(opt) opt.MapFrom(Function(src) If(src.ClienteMinorista IsNot Nothing, src.ClienteMinorista.ApellidoYNombre, src.ClienteMayorista.RazonSocial)))
+                 .ForMember(Function(des) des.NombreCliente, Sub(opt) opt.MapFrom(Function(src) If(src.ClienteMinorista IsNot Nothing, src.ClienteMinorista.ApellidoYNombre, If(src.ClienteMayorista IsNot Nothing, src.ClienteMayorista.RazonSocial, ""))))
         End Sub
     End Class
 End Namespace

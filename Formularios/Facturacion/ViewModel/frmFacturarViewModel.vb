@@ -367,9 +367,9 @@ Namespace Formularios.Facturacion
                     .Cantidad = 1,
                     .Codigo = "senia",
                     .Nombre = "Seña",
-                    .Monto = ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
-                    .Descuento = ventaModel.Pagos.Sum(Function(x) x.MontoPago.Descuento),
-                    .CFT = ventaModel.Pagos.Sum(Function(x) x.MontoPago.CFT),
+                    .MontoUnitario = ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
+                    .DescuentoUnitario = ventaModel.Pagos.Sum(Function(x) x.MontoPago.Descuento),
+                    .CFTUnitario = ventaModel.Pagos.Sum(Function(x) x.MontoPago.CFT),
                     .IVA = Servicio.ObtenerIVA(0.21)})
             Else
                 For Each ventaItem As VentaItem In ventaItems
@@ -378,9 +378,9 @@ Namespace Formularios.Facturacion
                             .Cantidad = ventaItem.Cantidad,
                             .Codigo = ventaItem.Producto.Codigo,
                             .Nombre = ventaItem.Producto.Nombre,
-                            .Monto = ventaItem.TotalMonto(porcentajeFacturacion, tipoCliente, condicionIva),
-                            .Descuento = ventaItem.TotalDescuento(porcentajeFacturacion, tipoCliente, condicionIva),
-                            .CFT = ventaItem.TotalCFT(porcentajeFacturacion, tipoCliente, condicionIva),
+                            .MontoUnitario = ventaItem.TotalMonto(porcentajeFacturacion, tipoCliente, condicionIva) / ventaItem.Cantidad,
+                            .DescuentoUnitario = ventaItem.TotalDescuento(porcentajeFacturacion, tipoCliente, condicionIva) / ventaItem.Cantidad,
+                            .CFTUnitario = ventaItem.TotalCFT(porcentajeFacturacion, tipoCliente, condicionIva) / ventaItem.Cantidad,
                             .IVA = ventaItem.Producto.SubCategoria.IVA})
                 Next
             End If

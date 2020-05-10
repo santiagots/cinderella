@@ -49,13 +49,7 @@ namespace Ventas.Data.Repository
 
         public List<NotaPedido> Obtener(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
         {
-            IQueryable<NotaPedido> notaPedido = _context.NotaPedido
-                                                    .Where(x => !x.Borrado && x.IdSucursal == idSucursal)
-                                                    .Include(x => x.NotaPedidoItems.Select(y => y.Producto))
-                                                    .Include(x => x.Vendedor)
-                                                    .Include(x => x.Encargado)
-                                                    .Include(x => x.ClienteMayorista)
-                                                    .Include(x => x.ClienteMinorista);
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta(idSucursal);
 
             if (estado.HasValue)
                 notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
@@ -78,10 +72,20 @@ namespace Ventas.Data.Repository
             return notaPedido.ToList();
         }
 
+        private IQueryable<NotaPedido> ObtenerConsulta(int idSucursal)
+        {
+            return _context.NotaPedido
+                                                                .Where(x => !x.Borrado && x.IdSucursal == idSucursal)
+                                                                .Include(x => x.NotaPedidoItems.Select(y => y.Producto))
+                                                                .Include(x => x.Vendedor)
+                                                                .Include(x => x.Encargado)
+                                                                .Include(x => x.ClienteMayorista)
+                                                                .Include(x => x.ClienteMinorista);
+        }
+
         public int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado)
         {
-            IQueryable<NotaPedido> notaPedido = _context.NotaPedido
-                                                    .Where(x => !x.Borrado && x.IdSucursal == idSucursal);
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta(idSucursal);
 
             if (estado.HasValue)
                 notaPedido = notaPedido.Where(x => x.Estado == estado.Value);

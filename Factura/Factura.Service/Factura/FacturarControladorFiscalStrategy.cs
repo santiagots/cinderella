@@ -7,6 +7,7 @@ using Common.Core.Exceptions;
 using Factura.Device.Printer;
 using Factura.Service.Factura.Contracts;
 using Factura.Service.Common.Contracts;
+using Factura.Device.Contracts;
 
 namespace Factura.Service.Factura
 {
@@ -132,8 +133,8 @@ namespace Factura.Service.Factura
         {
             using (EpsonPrinter epsonFP = new EpsonPrinter(request.TipoCliente, request.CondicionIVA, request.PorcentajeFacturacion, request.NombreYApellido, request.Direccion, request.Localidad, request.Cuit))
             {
-                List<ProductoPrinter> productos = request.Productos.Select(x => new ProductoPrinter(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.Descuento, x.CFT, x.IVA.Valor)).ToList();
-                List<PagoPrinter> pagos = request.Pagos.Select(x => new PagoPrinter(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
+                List<ProductoTicketRequest> productos = request.Productos.Select(x => new ProductoTicketRequest(x.Codigo, x.Nombre, x.Cantidad, x.MontoUnitario, x.DescuentoUnitario, x.CFTUnitario, x.IVA.Valor)).ToList();
+                List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
                 int numeroFactura = epsonFP.ObtenreNumeroFactura(productos, pagos);
 

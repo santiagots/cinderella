@@ -54,7 +54,7 @@ namespace Common.Service.NotaCredito
 
             foreach (IGrouping<IVA, ProductoRequest> grupo in grupos)
             {
-                decimal monto = ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.Neto), grupo.Key.Valor, condicionIVA);
+                decimal monto = ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.NetoTotal), grupo.Key.Valor, condicionIVA);
                 alicuotasIva.Add(new AfipAlicuotaIvaRequest()
                 {
                     Codigo = grupo.Key.Id,

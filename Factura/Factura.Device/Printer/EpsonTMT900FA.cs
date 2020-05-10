@@ -1,4 +1,5 @@
 ﻿using Common.Core.Enum;
+using Factura.Device.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,16 +52,16 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenreNumeroFactura(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
             productos.ForEach(x => {
                 if (x.Descuento > 0)
-                    DescuentosTicket(x.Nombre, x.Descuento, x.IVA);
+                    DescuentosTicket(x.Nombre, x.Descuento * x.Cantidad, x.IVA);
 
                 if (x.CFT > 0)
-                    RecargosTicket(x.Nombre, x.CFT, x.IVA);
+                    RecargosTicket(x.Nombre, x.CFT * x.Cantidad, x.IVA);
             });
 
             SubtotalTicket();
@@ -70,7 +71,7 @@ namespace Factura.Device.Printer
             return CerrarTicket();
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoPrinter> productos, List<PagoPrinter> pagos)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
         {
             AbrirNotaCredito();
             productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
