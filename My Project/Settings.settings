@@ -147,9 +147,6 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezlltpA6/gQhWzNU089HLhPWu39Kk=</Value>
     </Setting>
-    <Setting Name="Setting1" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="DatosFiscalRazonSocial" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

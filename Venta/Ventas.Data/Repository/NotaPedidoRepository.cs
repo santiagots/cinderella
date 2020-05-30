@@ -23,6 +23,8 @@ namespace Ventas.Data.Repository
                                         .OrderBy(x => x.Numero)
                                         .FirstOrDefault();
 
+            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria
+            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.SubCategoria = null); //pongo null la subcategoria porque sino entra en conflicto cuando varios productos tiene la misma subcategoria
             notaPedido.NotaPedidoItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
 
             if (UltimaNotaPedido == null)

@@ -339,12 +339,12 @@ namespace Ventas.Core.Model.VentaAggregate
                 decimal totalPendientePago = montoProductoPendientePago.toDecimal();
                 if (montoTotal >= totalPendientePago)
                 {
-                    subtotal += ventaItem.CalcularSubtotal(totalPendientePago, porcentajeCft);
+                    subtotal += ventaItem.CalcularSubtotal(totalPendientePago, porcentajeCft, TipoCliente);
                     montoTotal -= totalPendientePago;
                 }
                 else
                 {
-                    subtotal += ventaItem.CalcularSubtotal(montoTotal, porcentajeCft);
+                    subtotal += ventaItem.CalcularSubtotal(montoTotal, porcentajeCft, TipoCliente);
                     montoTotal = 0;
                     break;
                 }

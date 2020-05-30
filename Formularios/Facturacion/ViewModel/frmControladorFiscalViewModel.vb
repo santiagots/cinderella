@@ -1,15 +1,14 @@
 ﻿Imports System.ComponentModel
 Imports AutoMapper
-Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Extension
 Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports System.Configuration
 Imports System.IO
-Imports NPOI.SS.UserModel
-Imports NPOI.XSSF.UserModel
 Imports Common.Core.Exceptions
 Imports System.Text
+Imports OfficeOpenXml
+Imports Common.Core.Helper
 
 Namespace Formularios.Facturacion
 
@@ -140,35 +139,48 @@ Namespace Formularios.Facturacion
         Friend Sub Exportar(archivoRuta As String, nombreSucursal As String)
             Try
                 Dim ruta As String = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings("ExportarFacturas"))
-                Using plantillaStream As FileStream = New FileStream(ruta, FileMode.Open, FileAccess.Read)
-                    Dim tamplateWorckbook As XSSFWorkbook = New XSSFWorkbook(plantillaStream)
+                Using plantilla As ExcelPackage = New ExcelPackage(New FileInfo(ruta))
+                    Log.Info("plantilla")
+                    Dim facturasSheet As ExcelWorksheet = plantilla.Workbook.Worksheets("Facturas")
+                    Log.Info($"facturasSheet {facturasSheet.Name} {facturasSheet.Dimension.ToString()}")
+                    facturasSheet.Cells("B1").Value = nombreSucursal
+                    Log.Info($"nombreSucursal {nombreSucursal}")
+                    Dim index As Integer = 4
 
-                    Dim facturasSheet As ISheet = tamplateWorckbook.GetSheet("Facturas")
+                    'facturasSheet.InsertRow(index, _Facturas.Count)
 
-                    Dim headCell As List(Of ICell) = facturasSheet.GetRow(0).Cells
-                    headCell(1).SetCellValue(nombreSucursal)
+                    For Each factura As DocumentoFiscalViewModel In Facturas.ToList()
+                        If (index <= Facturas.Count) Then
+                            'Copio formato de fila
+                            facturasSheet.Cells(index, 1, index, facturasSheet.Dimension.End.Column).Copy(facturasSheet.Cells(index + 2, 1, index + 2, facturasSheet.Dimension.End.Column))
+                        End If
+                        Log.Info($"-->{index}<--")
+                        Log.Info($"{factura.Numero}")
+                        Log.Info($"{factura.PuntoVenta}")
+                        Log.Info($"{factura.TipoFactura.ToString()}")
+                        Log.Info($"{factura.CondicionIVA.ToString()}")
+                        Log.Info($"{factura.CUIT}")
+                        Log.Info($"{factura.NombreYApellido}")
+                        Log.Info($"{factura.Direccion}")
+                        Log.Info($"{factura.Localidad}")
+                        Log.Info($"{factura.Monto}")
+                        Log.Info($"{factura.Fecha.ToString("yyyy/MM/dd")}")
 
-                    Dim index As Integer = 3
-
-                    For Each factura As Ventas.Core.Model.VentaAggregate.Factura In _Facturas
-                        facturasSheet.CopyRow(index, index + 2)
-                        Dim dataCell As List(Of ICell) = facturasSheet.GetRow(index).Cells
-                        dataCell(0).SetCellValue(factura.NumeroFactura.First.Numero.ToString())
-                        dataCell(1).SetCellValue(factura.PuntoVenta)
-                        dataCell(2).SetCellValue(factura.TipoFactura.ToString())
-                        dataCell(3).SetCellValue(factura.CondicionIVA.ToString())
-                        dataCell(4).SetCellValue(factura.CUIT)
-                        dataCell(5).SetCellValue(factura.NombreYApellido)
-                        dataCell(6).SetCellValue(factura.Direccion)
-                        dataCell(7).SetCellValue(factura.Localidad)
-                        dataCell(8).SetCellValue(factura.Monto)
-                        dataCell(9).SetCellValue(factura.Fecha.ToString("yyyy/MM/dd"))
+                        facturasSheet.Cells(index, 1).Value = factura.Numero
+                        facturasSheet.Cells(index, 2).Value = factura.PuntoVenta
+                        facturasSheet.Cells(index, 3).Value = factura.TipoFactura.ToString()
+                        facturasSheet.Cells(index, 4).Value = factura.CondicionIVA.ToString()
+                        facturasSheet.Cells(index, 5).Value = factura.CUIT
+                        facturasSheet.Cells(index, 6).Value = factura.NombreYApellido
+                        facturasSheet.Cells(index, 7).Value = factura.Direccion
+                        facturasSheet.Cells(index, 8).Value = factura.Localidad
+                        facturasSheet.Cells(index, 9).Value = factura.Monto
+                        facturasSheet.Cells(index, 10).Value = factura.Fecha.ToString("yyyy/MM/dd")
                         index += 1
                     Next
 
-                    Using archivoStream As FileStream = New FileStream(archivoRuta, FileMode.Create, FileAccess.Write)
-                        tamplateWorckbook.Write(archivoStream)
-                    End Using
+                    plantilla.SaveAs(New FileInfo(archivoRuta))
+                    Log.Info($"SaveAs {archivoRuta}")
                 End Using
             Catch ex As IOException
                 Throw New NegocioException("Error al exportar el listado de facturas. Verifique que el archivo no se encuentre abierto.")

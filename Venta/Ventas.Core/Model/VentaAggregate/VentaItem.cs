@@ -213,9 +213,13 @@ namespace Ventas.Core.Model.VentaAggregate
             }
         }
 
-        internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo)
+        internal decimal CalcularSubtotal(decimal total, decimal porcentajeRecargo, TipoCliente tipoCliente)
         {
-            decimal totalSinIva = Monto.ObtenerSinIVA(total, this.Producto.SubCategoria.IVA.Valor);
+            decimal totalSinIva = total;
+
+            if (tipoCliente == TipoCliente.Mayorista)
+                totalSinIva = Monto.ObtenerSinIVA(total, this.Producto.SubCategoria.IVA.Valor);
+            
             decimal SubTotal = totalSinIva / (1 - PorcentajeBonificacion + porcentajeRecargo);
 
             return SubTotal;

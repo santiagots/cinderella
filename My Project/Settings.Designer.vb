@@ -587,18 +587,6 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property Setting1() As String
-            Get
-                Return CType(Me("Setting1"),String)
-            End Get
-            Set
-                Me("Setting1") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property DatosFiscalRazonSocial() As String
             Get
                 Return CType(Me("DatosFiscalRazonSocial"),String)

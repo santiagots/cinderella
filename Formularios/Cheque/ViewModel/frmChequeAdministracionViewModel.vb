@@ -9,6 +9,7 @@ Imports Common.Core.Extension
 Imports Common.Core.Model
 Imports NPOI.SS.UserModel
 Imports NPOI.XSSF.UserModel
+Imports OfficeOpenXml
 Imports Model = Ventas.Core.Model.ChequeAggregate
 
 Namespace Formularios.Cheque
@@ -204,38 +205,36 @@ Namespace Formularios.Cheque
         Friend Sub Exportar(archivoRuta As String, nombreSucursal As String)
             Try
                 Dim ruta As String = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings("ExportarExcelCheque"))
-                Using plantillaStream As FileStream = New FileStream(ruta, FileMode.Open, FileAccess.Read)
-                    Dim tamplateWorckbook As XSSFWorkbook = New XSSFWorkbook(plantillaStream)
+                Using plantilla As ExcelPackage = New ExcelPackage(New FileInfo(ruta))
+                    Dim chequesSheet As ExcelWorksheet = plantilla.Workbook.Worksheets("Cheques")
 
-                    Dim chequesSheet As ISheet = tamplateWorckbook.GetSheet("Cheques")
+                    chequesSheet.Cells("B1").Value = nombreSucursal
 
-                    Dim headCell As List(Of ICell) = chequesSheet.GetRow(0).Cells
-                    headCell(1).SetCellValue(nombreSucursal)
-
-                    Dim index As Integer = 3
+                    Dim index As Integer = 4
 
                     For Each cheque As ChequeAdministracionItemViewModel In Cheques
-                        chequesSheet.CopyRow(index, index + 2)
-                        Dim dataCell As List(Of ICell) = chequesSheet.GetRow(index).Cells
-                        dataCell(0).SetCellValue(cheque.NumeroOrden)
-                        dataCell(1).SetCellValue(If(cheque.MarcaFacturado, "Si", "No"))
-                        dataCell(2).SetCellValue(cheque.ClienteNombre)
-                        dataCell(3).SetCellValue(cheque.LibradorNombre)
-                        dataCell(4).SetCellValue(cheque.BancoEmisor)
-                        dataCell(5).SetCellValue(cheque.NumeroCheque)
-                        dataCell(6).SetCellValue(cheque.Monto)
-                        dataCell(7).SetCellValue(cheque.FechaIngreso.ToString("yyyy/MM/dd"))
-                        dataCell(8).SetCellValue(cheque.FechaDesposito.ToString("yyyy/MM/dd"))
-                        dataCell(9).SetCellValue(cheque.FechaVencimiento.ToString("yyyy/MM/dd"))
-                        dataCell(10).SetCellValue(If(cheque.FechaSalida.HasValue, cheque.FechaSalida.Value.ToString("yyyy/MM/dd"), ""))
-                        dataCell(11).SetCellValue(cheque.Estado.ToString())
-                        dataCell(12).SetCellValue(cheque.DestinoSalida.ToString())
+                        If (index <= Cheques.Count) Then
+                            'Copio formato de fila
+                            chequesSheet.Cells(index, 1, index, chequesSheet.Dimension.End.Column).Copy(chequesSheet.Cells(index + 2, 1, index + 2, chequesSheet.Dimension.End.Column))
+                        End If
+
+                        chequesSheet.Cells(index, 1).Value = cheque.NumeroOrden
+                        chequesSheet.Cells(index, 2).Value = If(cheque.MarcaFacturado, "Si", "No")
+                        chequesSheet.Cells(index, 3).Value = cheque.ClienteNombre
+                        chequesSheet.Cells(index, 4).Value = cheque.LibradorNombre
+                        chequesSheet.Cells(index, 5).Value = cheque.BancoEmisor
+                        chequesSheet.Cells(index, 6).Value = cheque.NumeroCheque
+                        chequesSheet.Cells(index, 7).Value = cheque.Monto
+                        chequesSheet.Cells(index, 8).Value = cheque.FechaIngreso.ToString("yyyy/MM/dd")
+                        chequesSheet.Cells(index, 9).Value = cheque.FechaDesposito.ToString("yyyy/MM/dd")
+                        chequesSheet.Cells(index, 10).Value = cheque.FechaVencimiento.ToString("yyyy/MM/dd")
+                        chequesSheet.Cells(index, 11).Value = If(cheque.FechaSalida.HasValue, cheque.FechaSalida.Value.ToString("yyyy/MM/dd"), "")
+                        chequesSheet.Cells(index, 12).Value = cheque.Estado.ToString()
+                        chequesSheet.Cells(index, 13).Value = cheque.DestinoSalida.ToString()
                         index += 1
                     Next
 
-                    Using archivoStream As FileStream = New FileStream(archivoRuta, FileMode.Create, FileAccess.Write)
-                        tamplateWorckbook.Write(archivoStream)
-                    End Using
+                    plantilla.SaveAs(New FileInfo(archivoRuta))
                 End Using
             Catch ex As IOException
                 Throw New NegocioException("Error al exportar el listado de cheques. Verifique que el archivo no se encuentre abierto.")
