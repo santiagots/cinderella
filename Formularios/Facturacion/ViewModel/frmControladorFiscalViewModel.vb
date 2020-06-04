@@ -140,31 +140,14 @@ Namespace Formularios.Facturacion
             Try
                 Dim ruta As String = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings("ExportarFacturas"))
                 Using plantilla As ExcelPackage = New ExcelPackage(New FileInfo(ruta))
-                    Log.Info("plantilla")
                     Dim facturasSheet As ExcelWorksheet = plantilla.Workbook.Worksheets("Facturas")
-                    Log.Info($"facturasSheet {facturasSheet.Name} {facturasSheet.Dimension.ToString()}")
                     facturasSheet.Cells("B1").Value = nombreSucursal
-                    Log.Info($"nombreSucursal {nombreSucursal}")
                     Dim index As Integer = 4
-
-                    'facturasSheet.InsertRow(index, _Facturas.Count)
-
                     For Each factura As DocumentoFiscalViewModel In Facturas.ToList()
                         If (index <= Facturas.Count) Then
                             'Copio formato de fila
                             facturasSheet.Cells(index, 1, index, facturasSheet.Dimension.End.Column).Copy(facturasSheet.Cells(index + 2, 1, index + 2, facturasSheet.Dimension.End.Column))
                         End If
-                        Log.Info($"-->{index}<--")
-                        Log.Info($"{factura.Numero}")
-                        Log.Info($"{factura.PuntoVenta}")
-                        Log.Info($"{factura.TipoFactura.ToString()}")
-                        Log.Info($"{factura.CondicionIVA.ToString()}")
-                        Log.Info($"{factura.CUIT}")
-                        Log.Info($"{factura.NombreYApellido}")
-                        Log.Info($"{factura.Direccion}")
-                        Log.Info($"{factura.Localidad}")
-                        Log.Info($"{factura.Monto}")
-                        Log.Info($"{factura.Fecha.ToString("yyyy/MM/dd")}")
 
                         facturasSheet.Cells(index, 1).Value = factura.Numero
                         facturasSheet.Cells(index, 2).Value = factura.PuntoVenta
@@ -180,7 +163,6 @@ Namespace Formularios.Facturacion
                     Next
 
                     plantilla.SaveAs(New FileInfo(archivoRuta))
-                    Log.Info($"SaveAs {archivoRuta}")
                 End Using
             Catch ex As IOException
                 Throw New NegocioException("Error al exportar el listado de facturas. Verifique que el archivo no se encuentre abierto.")
