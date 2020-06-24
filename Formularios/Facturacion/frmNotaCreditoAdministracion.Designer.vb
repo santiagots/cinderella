@@ -60,14 +60,13 @@ Partial Class frmNotaCreditoAdministracion
         Me.NombreYApellidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DireccionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LocalidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CondicionIVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Factura = New System.Windows.Forms.DataGridViewImageColumn()
         Me.NotaCreditoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CondicionIVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -420,7 +419,7 @@ Partial Class frmNotaCreditoAdministracion
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DG_NotaCredito.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_NotaCredito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_NotaCredito.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.PuntoVentaDataGridViewTextBoxColumn, Me.CUITDataGridViewTextBoxColumn, Me.NombreYApellidoDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.LocalidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.TipoFacturaDataGridViewTextBoxColumn, Me.CondicionIVADataGridViewTextBoxColumn, Me.Factura})
+        Me.DG_NotaCredito.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.PuntoVentaDataGridViewTextBoxColumn, Me.CUITDataGridViewTextBoxColumn, Me.NombreYApellidoDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.LocalidadDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.TipoFacturaDataGridViewTextBoxColumn, Me.CondicionIVADataGridViewTextBoxColumn, Me.Factura})
         Me.DG_NotaCredito.DataSource = Me.NotaCreditoBindingSource
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
@@ -488,19 +487,26 @@ Partial Class frmNotaCreditoAdministracion
         Me.LocalidadDataGridViewTextBoxColumn.Name = "LocalidadDataGridViewTextBoxColumn"
         Me.LocalidadDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'MontoDataGridViewTextBoxColumn
-        '
-        Me.MontoDataGridViewTextBoxColumn.DataPropertyName = "Monto"
-        Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
-        Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
-        Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
-        '
         'FechaDataGridViewTextBoxColumn
         '
         Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
         Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
         Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
         Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'TipoFacturaDataGridViewTextBoxColumn
+        '
+        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
+        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "T. Factura"
+        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
+        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CondicionIVADataGridViewTextBoxColumn
+        '
+        Me.CondicionIVADataGridViewTextBoxColumn.DataPropertyName = "CondicionIVA"
+        Me.CondicionIVADataGridViewTextBoxColumn.HeaderText = "Condición IVA"
+        Me.CondicionIVADataGridViewTextBoxColumn.Name = "CondicionIVADataGridViewTextBoxColumn"
+        Me.CondicionIVADataGridViewTextBoxColumn.ReadOnly = True
         '
         'Factura
         '
@@ -527,20 +533,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.DataGridViewTextBoxColumn2.HeaderText = "Condición IVA"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Width = 81
-        '
-        'TipoFacturaDataGridViewTextBoxColumn
-        '
-        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "T. Factura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
-        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CondicionIVADataGridViewTextBoxColumn
-        '
-        Me.CondicionIVADataGridViewTextBoxColumn.DataPropertyName = "CondicionIVA"
-        Me.CondicionIVADataGridViewTextBoxColumn.HeaderText = "Condición IVA"
-        Me.CondicionIVADataGridViewTextBoxColumn.Name = "CondicionIVADataGridViewTextBoxColumn"
-        Me.CondicionIVADataGridViewTextBoxColumn.ReadOnly = True
         '
         'frmNotaCreditoAdministracion
         '

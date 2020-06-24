@@ -67,13 +67,16 @@ namespace Factura.Service.Factura
                 ImporteNeto = alicuotasIva.Sum(x => x.Monto),
                 AlicuotasIva = alicuotasIva,
                 PasswordCertificado = PasswordCertificado,
-                RutaCertificado = RutaCertificado
+                RutaCertificado = RutaCertificado 
             };
 
             AfipObtenerCAEResponse response = AfipFacturacionElectronicaService.ObtenerCEA(afipObtenerCAERequest);
 
             return new ObtenerNumeroFacturaResponse()
             {
+                SubTotal = response.Subtotal,
+                Iva = response.Iva,
+                Total = response.Total,
                 CAE = response.Codigo,
                 FechaVencimientoCAE = response.FechaVencimiento,
                 NumeroFactura = new List<int>() { response.NumeroComprobante }
@@ -117,7 +120,7 @@ namespace Factura.Service.Factura
 
             foreach(IGrouping<IVA, ProductoRequest> grupo in grupos)
             {
-                decimal monto = ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.NetoTotal), grupo.Key.Valor, condicionIVA);
+                decimal monto = Monto.ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.NetoTotal), grupo.Key.Valor, condicionIVA);
                 alicuotasIva.Add(new AfipAlicuotaIvaRequest()
                 {
                     Codigo = grupo.Key.Id,
@@ -127,22 +130,6 @@ namespace Factura.Service.Factura
             }
 
             return alicuotasIva;
-        }
-
-        internal decimal ObtenerMontoSegunTipoDeCliente(decimal monto, decimal iva, CondicionIVA condicionIVA)
-        {
-            switch (condicionIVA)
-            {
-                case CondicionIVA.Consumidor_Final:
-                case CondicionIVA.Monotributo:
-                case CondicionIVA.Exento:
-                    decimal montoSinIva = Monto.ObtenerSinIVA(monto, iva);
-                    return montoSinIva;
-                case CondicionIVA.Responsable_Inscripto:
-                    return monto;
-                default:
-                    throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIVA.ToString()}");
-            }
         }
     }
 }

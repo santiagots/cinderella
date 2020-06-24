@@ -28,10 +28,10 @@ namespace Ventas.Data.Repository
                 ventas = ventas.Where(x => x.NumeroNotaCredito.Any(y => y.Numero == numeroNotaCredito));
 
             if (montoDesde.HasValue)
-                ventas = ventas.Where(x => x.Monto >= montoDesde.Value);
+                ventas = ventas.Where(x => x.Total >= montoDesde.Value);
 
             if (montoHasta.HasValue)
-                ventas = ventas.Where(x => x.Monto <= montoHasta.Value);
+                ventas = ventas.Where(x => x.Total <= montoHasta.Value);
 
             if (fechaDesde.HasValue)
                 ventas = ventas.Where(x => DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde.Value).Value);

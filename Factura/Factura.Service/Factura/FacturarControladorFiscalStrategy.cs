@@ -136,9 +136,17 @@ namespace Factura.Service.Factura
                 List<ProductoTicketRequest> productos = request.Productos.Select(x => new ProductoTicketRequest(x.Codigo, x.Nombre, x.Cantidad, x.MontoUnitario, x.DescuentoUnitario, x.CFTUnitario, x.IVA.Valor)).ToList();
                 List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
-                int numeroFactura = epsonFP.ObtenreNumeroFactura(productos, pagos);
+                string TipoFactura = string.Empty;
+                decimal MontoTotal = 0;
+                decimal MontoIvaTotal = 0;
+                decimal MontoVuelto = 0;
 
-                return new ObtenerNumeroFacturaResponse(){
+                int numeroFactura = epsonFP.ObtenreNumeroFactura(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
+
+                return new ObtenerNumeroFacturaResponse() {
+                    SubTotal = MontoTotal - MontoIvaTotal,
+                    Iva = MontoIvaTotal,
+                    Total = MontoTotal,
                     NumeroFactura = new List<int>() { numeroFactura }
                 };
             }

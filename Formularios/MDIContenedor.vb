@@ -609,8 +609,11 @@ Public Class MDIContenedor
 
         'Seteo la cultura del proyecto.
         Dim culture As CultureInfo = New CultureInfo("es-AR", True)
-        culture.NumberFormat.NumberDecimalSeparator = "."
-        System.Threading.Thread.CurrentThread.CurrentCulture = culture
+        culture.NumberFormat.NumberDecimalSeparator = ","
+        culture.NumberFormat.CurrencyDecimalSeparator = ","
+        culture.NumberFormat.CurrencyDecimalDigits = 2
+        CultureInfo.DefaultThreadCurrentCulture = culture
+        CultureInfo.DefaultThreadCurrentUICulture = culture
 
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
 

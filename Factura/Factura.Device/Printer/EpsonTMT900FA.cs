@@ -52,7 +52,7 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
+        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
@@ -68,7 +68,7 @@ namespace Factura.Device.Printer
 
             pagos.ForEach(x => PagarTicket(x.TipoPago, x.NumeroCuotas, x.Neto(PorcentajeFacturacion)));
 
-            return CerrarTicket();
+            return CerrarTicket(out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
         public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
@@ -134,7 +134,7 @@ namespace Factura.Device.Printer
 
 
         // Funcion que Cierra un Tique.
-        public int CerrarTicket()
+        public int CerrarTicket(out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             var commands = new List<string>();
 
@@ -147,7 +147,12 @@ namespace Factura.Device.Printer
             commands.Add("3");
             commands.Add(ColaRemplazo3);
             SendData(commands/*, false*/);
-            return int.Parse(GetExtraField(1));
+            int numeroTicket = int.Parse(GetExtraField(1));
+            TipoFactura = GetExtraField(2);
+            MontoTotal = FormatearPrecio(GetExtraField(3));
+            MontoIvaTotal = FormatearPrecio(GetExtraField(4));
+            MontoVuelto = FormatearPrecio(GetExtraField(5));
+            return numeroTicket;
         }
 
         // Funcion que Cierra un Tique.

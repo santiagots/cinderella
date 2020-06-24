@@ -54,10 +54,10 @@ Partial Class frmCostoFinancieroAdministracion
         Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCostoFinancieroAdministracion))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.BtnAgregar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtBanco = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.BtnAgregar = New System.Windows.Forms.Button()
         Me.DG_costoFinanciero = New System.Windows.Forms.DataGridView()
         Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Habilitado = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -110,9 +110,25 @@ Partial Class frmCostoFinancieroAdministracion
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 16)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(854, 59)
         Me.TableLayoutPanel1.TabIndex = 0
+        '
+        'BtnAgregar
+        '
+        Me.BtnAgregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnAgregar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnAgregar.FlatAppearance.BorderSize = 0
+        Me.BtnAgregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnAgregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
+        Me.BtnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnAgregar.Location = New System.Drawing.Point(757, 9)
+        Me.BtnAgregar.Name = "BtnAgregar"
+        Me.BtnAgregar.Size = New System.Drawing.Size(94, 41)
+        Me.BtnAgregar.TabIndex = 5
+        Me.BtnAgregar.Text = "Agregar"
+        Me.BtnAgregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnAgregar.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -141,22 +157,6 @@ Partial Class frmCostoFinancieroAdministracion
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Agregar Tarjeta"
-        '
-        'BtnAgregar
-        '
-        Me.BtnAgregar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnAgregar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnAgregar.FlatAppearance.BorderSize = 0
-        Me.BtnAgregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnAgregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
-        Me.BtnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnAgregar.Location = New System.Drawing.Point(757, 9)
-        Me.BtnAgregar.Name = "BtnAgregar"
-        Me.BtnAgregar.Size = New System.Drawing.Size(94, 41)
-        Me.BtnAgregar.TabIndex = 5
-        Me.BtnAgregar.Text = "Agregar"
-        Me.BtnAgregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.BtnAgregar.UseVisualStyleBackColor = True
         '
         'DG_costoFinanciero
         '
@@ -187,6 +187,7 @@ Partial Class frmCostoFinancieroAdministracion
         DataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DG_costoFinanciero.DefaultCellStyle = DataGridViewCellStyle27
+        Me.DG_costoFinanciero.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.DG_costoFinanciero.Location = New System.Drawing.Point(12, 96)
         Me.DG_costoFinanciero.MultiSelect = False
         Me.DG_costoFinanciero.Name = "DG_costoFinanciero"

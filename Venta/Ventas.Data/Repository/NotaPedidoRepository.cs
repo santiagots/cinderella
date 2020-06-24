@@ -20,7 +20,7 @@ namespace Ventas.Data.Repository
         {
             NotaPedido UltimaNotaPedido = _context.NotaPedido
                                         .Where(x => x.IdSucursal == notaPedido.IdSucursal)
-                                        .OrderBy(x => x.Numero)
+                                        .OrderByDescending(x => x.Numero)
                                         .FirstOrDefault();
 
             notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria

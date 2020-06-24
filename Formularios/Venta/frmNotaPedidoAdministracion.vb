@@ -37,8 +37,10 @@ Public Class frmNotaPedidoAdministracion
         EjecutarAsync(
             Async Function() As Task
                 If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Eliminar" Then
-                    Await notaPedidoViewModel.EliminarNotaPedidoAsync(dgNotasPedidos.CurrentRow.DataBoundItem)
-                    MessageBox.Show("Se ha eliminado la nota de pedido correctamente", "Administración Nota Pedido", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    If (DialogResult.Yes = MessageBox.Show("¿Está seguro que desea eliminar la Nota de Pedido?", "Administración Nota Pedido", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) Then
+                        Await notaPedidoViewModel.EliminarNotaPedidoAsync(dgNotasPedidos.CurrentRow.DataBoundItem)
+                        MessageBox.Show("Se ha eliminado la nota de pedido correctamente", "Administración Nota Pedido", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
                 End If
                 If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Imprimir" Then
                     notaPedidoViewModel.ImprimirNotaPedido(dgNotasPedidos.CurrentRow.DataBoundItem, Me.MdiParent)

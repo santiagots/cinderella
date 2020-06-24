@@ -176,7 +176,9 @@ Namespace Formularios.Facturacion
                                     Direccion,
                                     Localidad,
                                     CUIT,
-                                    ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
+                                    ObtenerNumeroFacturaResponse.SubTotal,
+                                    ObtenerNumeroFacturaResponse.Iva,
+                                    ObtenerNumeroFacturaResponse.Total,
                                     ObtenerNumeroFacturaResponse.NumeroFactura,
                                     ObtenerNumeroFacturaResponse.CAE,
                                     ObtenerNumeroFacturaResponse.FechaVencimientoCAE)
@@ -220,7 +222,9 @@ Namespace Formularios.Facturacion
                                             Direccion,
                                             Localidad,
                                             CUIT,
-                                            ventaModel.Pagos.Sum(Function(x) x.MontoPago.Monto),
+                                            ObtenerNumeroNotaCretidoResponse.SubTotal,
+                                            ObtenerNumeroNotaCretidoResponse.Iva,
+                                            ObtenerNumeroNotaCretidoResponse.Total,
                                             ObtenerNumeroNotaCretidoResponse.NumeroNotaCredito,
                                             ObtenerNumeroNotaCretidoResponse.CAE,
                                             ObtenerNumeroNotaCretidoResponse.FechaVencimientoCAE)

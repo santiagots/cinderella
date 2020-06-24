@@ -15,13 +15,13 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
     public class NotaPedido : Transaccion
     {
         public int Numero { get; protected set; }
-        public virtual IList<NotaPedidoItem> NotaPedidoItems { get; protected set; }
+        public virtual IList<NotaPedidoItem> NotaPedidoItems { get; protected set; } = new List<NotaPedidoItem>();
         public new int? IdEncargado { get; internal set; }
         public long? IdClienteMinorista { get; protected set; }
         public ClienteMinorista ClienteMinorista { get; internal set; }
         public NotaPedidoEstado Estado { get; protected set; }
         public bool Borrado { get; protected set; }
-        public new MontoProducto MontoTotal { get { return NotaPedidoItems.Select(x => x.MontoProducto * x.Cantidad).Aggregate((x, y) => x + y); } }
+        public new MontoProducto MontoTotal =>  NotaPedidoItems.Count > 0? NotaPedidoItems.Select(x => x.MontoProducto * x.Cantidad).Aggregate((x, y) => x + y): new MontoProducto(0, 0); 
 
         public NotaPedido() : base()
         {

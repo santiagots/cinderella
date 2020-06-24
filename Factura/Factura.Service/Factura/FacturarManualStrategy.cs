@@ -4,6 +4,8 @@ using Common.Core.Enum;
 using Common.Core.Exceptions;
 using System.Text;
 using Factura.Service.Factura.Contracts;
+using System.Linq;
+using Common.Core.Helper;
 
 namespace Factura.Service.Factura
 {
@@ -36,8 +38,20 @@ namespace Factura.Service.Factura
 
         public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(ObtenerNumeroFacturaRequest request)
         {
+            decimal subTotal = 0;
+            decimal iva = 0;
+
+            request.Productos.ForEach(x => {
+                decimal montoSinIva = Monto.ObtenerMontoSegunTipoDeCliente(x.NetoTotal, x.IVA.Valor, request.CondicionIVA);
+                subTotal += montoSinIva;
+                iva += montoSinIva * x.IVA.Valor;
+            });
+                       
             return new ObtenerNumeroFacturaResponse()
             {
+                SubTotal = Monto.Redondeo(subTotal),
+                Iva = Monto.Redondeo(iva),
+                Total = Monto.Redondeo(subTotal + iva),
                 NumeroFactura = request.NumerosFacturas
             };
         }

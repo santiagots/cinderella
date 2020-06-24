@@ -8,11 +8,11 @@ namespace Factura.Device.Printer
 {
     interface IEpsonTM: IDisposable
     {
-        int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos);
+        int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
         int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos);
         void AbrirTicket();
         void AbrirNotaCredito();
-        int CerrarTicket();
+        int CerrarTicket(out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
         int CerrarNotaCredito();
         void SubtotalTicket();
         void SubtotalNotaCredito();

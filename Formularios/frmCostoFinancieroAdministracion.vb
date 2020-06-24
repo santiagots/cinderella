@@ -60,6 +60,7 @@ Public Class frmCostoFinancieroAdministracion
     Private Sub DG_costoFinanciero_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_costoFinanciero.CellFormatting
         'Modifico el formato de las celdas que sea para el registro de porcentajes
         If DG_costoFinanciero.Columns(e.ColumnIndex).Name <> "Habilitado" AndAlso DG_costoFinanciero.Columns(e.ColumnIndex).Name <> "Nombre" AndAlso DG_costoFinanciero.Columns(e.ColumnIndex).Name <> "Eliminar" Then
+            Common.Core.Helper.Log.Info($"Column: {e.ColumnIndex} Row: {e.RowIndex} Value: {e.Value}")
             Dim cell As DataGridViewCell = DG_costoFinanciero.Item(e.ColumnIndex, e.RowIndex)
             Dim Valor As Decimal = 0
             If (cell.IsInEditMode) Then

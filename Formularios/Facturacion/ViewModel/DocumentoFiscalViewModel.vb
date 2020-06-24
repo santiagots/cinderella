@@ -11,7 +11,9 @@ Namespace Formularios.Facturacion
         Public Property Direccion As String
         Public Property Localidad As String
         Public Property CUIT As String
-        Public Property Monto As Decimal
+        Public Property SubTotal As Decimal
+        Public Property Iva As Decimal
+        Public Property Total As Decimal
         Public Property Fecha As DateTime
         Public Property CAE As String
         Public Property FechaVenciminetoCAE As DateTime?

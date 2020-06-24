@@ -208,6 +208,12 @@ namespace Factura.Device.Printer
             return SinPuntos;
         }
 
+        internal decimal FormatearPrecio(string monto, int decimales = 2)
+        {
+            double valor = double.Parse(monto);
+            return (decimal)(valor / Math.Pow(10, decimales));
+        }
+
         internal string FormatearIVA(decimal monto, int potencia = 4)
         {
             string SinComas, SinPuntos;

@@ -69,7 +69,7 @@ Namespace Formularios.Facturacion
 
         Friend Sub CierreZPorFiltro(ControladorFiscalFiltrarPorFecha As Boolean)
             If Me.ControladorFiscalFiltrarPorFecha Then
-                Servicio.CierreZPorFecha(TicketFechaDesde, TicketFechaHasta)
+                Servicio.CierreZPorFecha(ControladorFiscalFechaDesde, ControladorFiscalFechaHasta)
             Else
                 Servicio.CierreZPorJornada(ControladorFiscalJornadaDesde, ControladorFiscalJornadaHasta)
             End If
@@ -149,16 +149,19 @@ Namespace Formularios.Facturacion
                             facturasSheet.Cells(index, 1, index, facturasSheet.Dimension.End.Column).Copy(facturasSheet.Cells(index + 2, 1, index + 2, facturasSheet.Dimension.End.Column))
                         End If
 
-                        facturasSheet.Cells(index, 1).Value = factura.Numero
-                        facturasSheet.Cells(index, 2).Value = factura.PuntoVenta
-                        facturasSheet.Cells(index, 3).Value = factura.TipoFactura.ToString()
-                        facturasSheet.Cells(index, 4).Value = factura.CondicionIVA.ToString()
-                        facturasSheet.Cells(index, 5).Value = factura.CUIT
-                        facturasSheet.Cells(index, 6).Value = factura.NombreYApellido
-                        facturasSheet.Cells(index, 7).Value = factura.Direccion
-                        facturasSheet.Cells(index, 8).Value = factura.Localidad
-                        facturasSheet.Cells(index, 9).Value = factura.Monto
-                        facturasSheet.Cells(index, 10).Value = factura.Fecha.ToString("yyyy/MM/dd")
+                        facturasSheet.Cells(index, 1).Value = factura.Fecha.ToString("yyyy/MM/dd")
+                        facturasSheet.Cells(index, 2).Value = factura.Numero
+                        facturasSheet.Cells(index, 3).Value = factura.PuntoVenta
+                        facturasSheet.Cells(index, 4).Value = factura.TipoFactura.ToString()
+                        facturasSheet.Cells(index, 5).Value = factura.CondicionIVA.ToString()
+                        facturasSheet.Cells(index, 6).Value = factura.CUIT
+                        facturasSheet.Cells(index, 7).Value = factura.NombreYApellido
+                        facturasSheet.Cells(index, 8).Value = factura.Direccion
+                        facturasSheet.Cells(index, 9).Value = factura.Localidad
+                        facturasSheet.Cells(index, 10).Value = factura.SubTotal
+                        facturasSheet.Cells(index, 11).Value = factura.Iva
+                        facturasSheet.Cells(index, 12).Value = factura.Total
+
                         index += 1
                     Next
 

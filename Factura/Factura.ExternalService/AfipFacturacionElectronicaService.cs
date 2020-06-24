@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using Common.Core.Enum;
+using Common.Core.Exceptions;
+using Common.Core.Helper;
+using Factura.Core.Model.AfipAgreggate;
+using Factura.ExternalService.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Common.Core.Enum;
-using Factura.ExternalService.Contracts;
-using Common.Core.Exceptions;
-using Common.Core.Constants;
-using Factura.Core.Model.AfipAgreggate;
-using Newtonsoft.Json;
-using System.Reflection;
-using Common.Core.Helper;
+using System.Linq;
 
 namespace Factura.ExternalService
 {
@@ -62,17 +59,16 @@ namespace Factura.ExternalService
                 FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(request) }
             };
 
-            string feCAERequestString = JsonConvert.SerializeObject(feCAERequest);
-
             Afip.Wsfev1.FECAEResponse feCAEResponse = serviceClient.FECAESolicitar(ObtenerAuth(request.PasswordCertificado, request.RutaCertificado), feCAERequest);
-
-            string feCAEResponseString = JsonConvert.SerializeObject(feCAEResponse);
 
             VerificarErrorEnRespuesta(feCAEResponse.Errors);
             VerificarObservacionesEnRespuesta(feCAEResponse);
 
             return new AfipObtenerCAEResponse()
             {
+                Subtotal = (decimal) feCAERequest.FeDetReq[0].ImpNeto,
+                Iva = (decimal) feCAERequest.FeDetReq[0].ImpIVA,
+                Total = (decimal) feCAERequest.FeDetReq[0].ImpTotal,
                 NumeroComprobante = (int)feCAEResponse.FeDetResp.First().CbteDesde,
                 Codigo = feCAEResponse.FeDetResp.First().CAE,
                 FechaVencimiento = DateTime.ParseExact(feCAEResponse.FeDetResp.First().CAEFchVto, "yyyyMMdd", CultureInfo.InvariantCulture)

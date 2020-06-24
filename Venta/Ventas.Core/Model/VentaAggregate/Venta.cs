@@ -155,24 +155,24 @@ namespace Ventas.Core.Model.VentaAggregate
             IdVendedor = vendedor != null ? vendedor.Id : 0;
         }
 
-        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroFactura, string cae, DateTime? fechaVencimientoCae)
+        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal subTotal, decimal iva, decimal total, List<int> numeroFactura, string cae, DateTime? fechaVencimientoCae)
         {
             if (numeroFactura.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
             if (tipoFactura == TipoFactura.Electronica && string.IsNullOrEmpty(cae))
                 throw new NegocioException($"Error al registrar la factura. No se encuentra un Codigo CAE.");
 
-            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroFactura, cae, fechaVencimientoCae);
+            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, subTotal, iva, total, numeroFactura, cae, fechaVencimientoCae);
         }
 
-        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal monto, List<int> numeroNotaPedido, string cae, DateTime? fechaVencimientoCae)
+        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal subTotal, decimal iva, decimal total, List<int> numeroNotaPedido, string cae, DateTime? fechaVencimientoCae)
         {
             if (numeroNotaPedido.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
             if (tipoFactura == TipoFactura.Electronica && string.IsNullOrEmpty(cae))
                 throw new NegocioException($"Error al registrar la factura. No se encuentra un Codigo CAE.");
 
-            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, monto, numeroNotaPedido, cae, fechaVencimientoCae);
+            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, subTotal, iva, total, numeroNotaPedido, cae, fechaVencimientoCae);
         }
 
         public void AgregarComision(Decimal porcentajeComisionEncargado, Decimal porcentajeComisionVendedor)
