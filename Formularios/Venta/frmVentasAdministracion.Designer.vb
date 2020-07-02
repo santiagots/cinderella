@@ -33,6 +33,16 @@ Partial Class frmVentasAdministracion
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.FrmVentasAdministracionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DG_Ventas = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoClienteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreVendedorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoPagoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NumeroFactura = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VentasBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
@@ -80,16 +90,6 @@ Partial Class frmVentasAdministracion
         Me.BtnEmitirFactura = New System.Windows.Forms.Button()
         Me.VentaDetalle = New SistemaCinderella.VentaDetalle()
         Me.TipoFacturaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoClienteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreVendedorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoPagoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NumeroFactura = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabVentas.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -196,6 +196,98 @@ Partial Class frmVentasAdministracion
         Me.DG_Ventas.Size = New System.Drawing.Size(924, 430)
         Me.DG_Ventas.TabIndex = 0
         '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "Numero"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "N° Venta"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Width = 80
+        '
+        'FechaDataGridViewTextBoxColumn
+        '
+        Me.FechaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
+        Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
+        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
+        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaDataGridViewTextBoxColumn.Width = 66
+        '
+        'TipoClienteDataGridViewTextBoxColumn
+        '
+        Me.TipoClienteDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.TipoClienteDataGridViewTextBoxColumn.DataPropertyName = "TipoCliente"
+        Me.TipoClienteDataGridViewTextBoxColumn.HeaderText = "Tipo Cliente"
+        Me.TipoClienteDataGridViewTextBoxColumn.Name = "TipoClienteDataGridViewTextBoxColumn"
+        Me.TipoClienteDataGridViewTextBoxColumn.ReadOnly = True
+        Me.TipoClienteDataGridViewTextBoxColumn.Width = 97
+        '
+        'NombreClienteMayoristaDataGridViewTextBoxColumn
+        '
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.DataPropertyName = "NombreClienteMayorista"
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.HeaderText = "Cliente"
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.MinimumWidth = 87
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.Name = "NombreClienteMayoristaDataGridViewTextBoxColumn"
+        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'NombreVendedorDataGridViewTextBoxColumn
+        '
+        Me.NombreVendedorDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreVendedorDataGridViewTextBoxColumn.DataPropertyName = "NombreVendedor"
+        Me.NombreVendedorDataGridViewTextBoxColumn.HeaderText = "Vendedor"
+        Me.NombreVendedorDataGridViewTextBoxColumn.MinimumWidth = 86
+        Me.NombreVendedorDataGridViewTextBoxColumn.Name = "NombreVendedorDataGridViewTextBoxColumn"
+        Me.NombreVendedorDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'TipoPagoDataGridViewTextBoxColumn
+        '
+        Me.TipoPagoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.TipoPagoDataGridViewTextBoxColumn.DataPropertyName = "TipoPago"
+        Me.TipoPagoDataGridViewTextBoxColumn.HeaderText = "Forma Pago"
+        Me.TipoPagoDataGridViewTextBoxColumn.Name = "TipoPagoDataGridViewTextBoxColumn"
+        Me.TipoPagoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'MontoTotalDataGridViewTextBoxColumn
+        '
+        Me.MontoTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.MontoTotalDataGridViewTextBoxColumn.DataPropertyName = "MontoTotal"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.MontoTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        Me.MontoTotalDataGridViewTextBoxColumn.HeaderText = "Monto Total"
+        Me.MontoTotalDataGridViewTextBoxColumn.Name = "MontoTotalDataGridViewTextBoxColumn"
+        Me.MontoTotalDataGridViewTextBoxColumn.ReadOnly = True
+        Me.MontoTotalDataGridViewTextBoxColumn.Width = 97
+        '
+        'TipoFacturaDataGridViewTextBoxColumn
+        '
+        Me.TipoFacturaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
+        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "Tipo Factura"
+        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
+        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'NumeroFactura
+        '
+        Me.NumeroFactura.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.NumeroFactura.DataPropertyName = "NumeroFactura"
+        Me.NumeroFactura.HeaderText = "N° Factura"
+        Me.NumeroFactura.Name = "NumeroFactura"
+        Me.NumeroFactura.ReadOnly = True
+        Me.NumeroFactura.Width = 90
+        '
+        'Anulado
+        '
+        Me.Anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Anulado.DataPropertyName = "Anulado"
+        Me.Anulado.HeaderText = "Anulado"
+        Me.Anulado.Name = "Anulado"
+        Me.Anulado.ReadOnly = True
+        Me.Anulado.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Anulado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Anulado.Width = 58
+        '
         'VentasBindingSource
         '
         Me.VentasBindingSource.DataMember = "Ventas"
@@ -205,8 +297,8 @@ Partial Class frmVentasAdministracion
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.btn_Restablecer)
         Me.GroupBox1.Controls.Add(Me.BtnFiltrar)
+        Me.GroupBox1.Controls.Add(Me.btn_Restablecer)
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(10, 6)
@@ -392,7 +484,7 @@ Partial Class frmVentasAdministracion
         'FHasta
         '
         Me.FHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FHasta.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmVentasAdministracionViewModelBindingSource, "NumeroFacturaHasta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "D"))
+        Me.FHasta.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmVentasAdministracionViewModelBindingSource, "FechaHasta", True))
         Me.FHasta.Location = New System.Drawing.Point(221, 42)
         Me.FHasta.Name = "FHasta"
         Me.FHasta.Size = New System.Drawing.Size(212, 21)
@@ -772,98 +864,6 @@ Partial Class frmVentasAdministracion
         Me.VentaDetalle.Name = "VentaDetalle"
         Me.VentaDetalle.Size = New System.Drawing.Size(916, 471)
         Me.VentaDetalle.TabIndex = 0
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.DataGridViewTextBoxColumn1.DataPropertyName = "Numero"
-        Me.DataGridViewTextBoxColumn1.HeaderText = "N° Venta"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DataGridViewTextBoxColumn1.Width = 80
-        '
-        'FechaDataGridViewTextBoxColumn
-        '
-        Me.FechaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
-        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaDataGridViewTextBoxColumn.Width = 66
-        '
-        'TipoClienteDataGridViewTextBoxColumn
-        '
-        Me.TipoClienteDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.TipoClienteDataGridViewTextBoxColumn.DataPropertyName = "TipoCliente"
-        Me.TipoClienteDataGridViewTextBoxColumn.HeaderText = "Tipo Cliente"
-        Me.TipoClienteDataGridViewTextBoxColumn.Name = "TipoClienteDataGridViewTextBoxColumn"
-        Me.TipoClienteDataGridViewTextBoxColumn.ReadOnly = True
-        Me.TipoClienteDataGridViewTextBoxColumn.Width = 97
-        '
-        'NombreClienteMayoristaDataGridViewTextBoxColumn
-        '
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.DataPropertyName = "NombreClienteMayorista"
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.HeaderText = "Cliente"
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.MinimumWidth = 87
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.Name = "NombreClienteMayoristaDataGridViewTextBoxColumn"
-        Me.NombreClienteMayoristaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'NombreVendedorDataGridViewTextBoxColumn
-        '
-        Me.NombreVendedorDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreVendedorDataGridViewTextBoxColumn.DataPropertyName = "NombreVendedor"
-        Me.NombreVendedorDataGridViewTextBoxColumn.HeaderText = "Vendedor"
-        Me.NombreVendedorDataGridViewTextBoxColumn.MinimumWidth = 86
-        Me.NombreVendedorDataGridViewTextBoxColumn.Name = "NombreVendedorDataGridViewTextBoxColumn"
-        Me.NombreVendedorDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'TipoPagoDataGridViewTextBoxColumn
-        '
-        Me.TipoPagoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.TipoPagoDataGridViewTextBoxColumn.DataPropertyName = "TipoPago"
-        Me.TipoPagoDataGridViewTextBoxColumn.HeaderText = "Forma Pago"
-        Me.TipoPagoDataGridViewTextBoxColumn.Name = "TipoPagoDataGridViewTextBoxColumn"
-        Me.TipoPagoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'MontoTotalDataGridViewTextBoxColumn
-        '
-        Me.MontoTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.MontoTotalDataGridViewTextBoxColumn.DataPropertyName = "MontoTotal"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.MontoTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.MontoTotalDataGridViewTextBoxColumn.HeaderText = "Monto Total"
-        Me.MontoTotalDataGridViewTextBoxColumn.Name = "MontoTotalDataGridViewTextBoxColumn"
-        Me.MontoTotalDataGridViewTextBoxColumn.ReadOnly = True
-        Me.MontoTotalDataGridViewTextBoxColumn.Width = 97
-        '
-        'TipoFacturaDataGridViewTextBoxColumn
-        '
-        Me.TipoFacturaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "Tipo Factura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
-        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'NumeroFactura
-        '
-        Me.NumeroFactura.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.NumeroFactura.DataPropertyName = "NumeroFactura"
-        Me.NumeroFactura.HeaderText = "N° Factura"
-        Me.NumeroFactura.Name = "NumeroFactura"
-        Me.NumeroFactura.ReadOnly = True
-        Me.NumeroFactura.Width = 90
-        '
-        'Anulado
-        '
-        Me.Anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Anulado.DataPropertyName = "Anulado"
-        Me.Anulado.HeaderText = "Anulado"
-        Me.Anulado.Name = "Anulado"
-        Me.Anulado.ReadOnly = True
-        Me.Anulado.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Anulado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Anulado.Width = 58
         '
         'frmVentasAdministracion
         '

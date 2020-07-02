@@ -27,7 +27,6 @@ Partial Class frmVerDocumentoFiscal
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.DocumentoFiscalViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -55,6 +54,7 @@ Partial Class frmVerDocumentoFiscal
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
+        Me.DocumentoFiscalViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DocumentoFiscalViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -133,10 +133,6 @@ Partial Class frmVerDocumentoFiscal
         Me.Label14.Size = New System.Drawing.Size(64, 15)
         Me.Label14.TabIndex = 41
         Me.Label14.Text = "EFECTIVO"
-        '
-        'DocumentoFiscalViewModelBindingSource
-        '
-        Me.DocumentoFiscalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel)
         '
         'Label12
         '
@@ -353,7 +349,7 @@ Partial Class frmVerDocumentoFiscal
         '
         Me.lbl_Total.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.lbl_Total.AutoSize = True
-        Me.lbl_Total.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.DocumentoFiscalViewModelBindingSource, "Monto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.lbl_Total.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.DocumentoFiscalViewModelBindingSource, "Total", True))
         Me.lbl_Total.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Total.Location = New System.Drawing.Point(159, 104)
         Me.lbl_Total.Name = "lbl_Total"
@@ -451,6 +447,10 @@ Partial Class frmVerDocumentoFiscal
         Me.Label18.Size = New System.Drawing.Size(50, 13)
         Me.Label18.TabIndex = 47
         Me.Label18.Text = "SubTotal"
+        '
+        'DocumentoFiscalViewModelBindingSource
+        '
+        Me.DocumentoFiscalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel)
         '
         'frmVerDocumentoFiscal
         '

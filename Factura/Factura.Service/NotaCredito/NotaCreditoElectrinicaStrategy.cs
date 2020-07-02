@@ -33,6 +33,8 @@ namespace Common.Service.NotaCredito
                 Cuit = request.Cuit,
                 ImporteNeto = alicuotasIva.Sum(x => x.Monto),
                 AlicuotasIva = alicuotasIva,
+                NumeroFacturaOrigen = request.NumeroFacturaOrigen,
+                PuntoVentaOrigen = request.NumeroFacturaOrigen,
                 PasswordCertificado = PasswordCertificado,
                 RutaCertificado = RutaCertificado
             };
@@ -41,6 +43,9 @@ namespace Common.Service.NotaCredito
 
             return new ObtenerNumeroNotaCretidoResponse()
             {
+                SubTotal = response.Subtotal,
+                Iva = response.Iva,
+                Total = response.Total,
                 CAE = response.Codigo,
                 FechaVencimientoCAE = response.FechaVencimiento,
                 NumeroNotaCredito = new List<int>() { response.NumeroComprobante }

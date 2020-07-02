@@ -1,4 +1,6 @@
-﻿Public NotInheritable Class SplashScreen
+﻿Imports System.Deployment.Application
+
+Public NotInheritable Class SplashScreen
 
     'Este formulario se puede establecer fácilmente como pantalla de presentación para la aplicación desde la ficha "Aplicación"
     '  del Diseñador de proyectos ("Propiedades" bajo el menú "Proyecto").
@@ -26,12 +28,17 @@
         '
         'Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, My.Application.Info.Version.Revision)
 
-        Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
+        If (ApplicationDeployment.IsNetworkDeployed) Then
+            Dim cd As ApplicationDeployment = ApplicationDeployment.CurrentDeployment
+            Version.Text = cd.CurrentVersion.ToString()
+        Else
+            Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
+        End If
 
         'Información de Copyright
         'Copyright.Text = My.Application.Info.Copyright
         ApplicationTitle.Text = "Sistema de Gestión " & My.Settings("Empresa")
-        Copyright.Text = "Copyright Morpheus Estudio"
+            Copyright.Text = "Copyright Morpheus Estudio"
 
 
     End Sub

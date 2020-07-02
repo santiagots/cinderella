@@ -71,7 +71,7 @@ namespace Factura.Device.Printer
             return CerrarTicket(out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirNotaCredito();
             productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
@@ -85,7 +85,7 @@ namespace Factura.Device.Printer
 
             SubtotalNotaCredito();
 
-            return CerrarNotaCredito();
+            return CerrarNotaCredito(out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
         // Funcion que Abre un Tique.
@@ -156,7 +156,7 @@ namespace Factura.Device.Printer
         }
 
         // Funcion que Cierra un Tique.
-        public int CerrarNotaCredito()
+        public int CerrarNotaCredito(out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             var commands = new List<string>();
 
@@ -170,7 +170,12 @@ namespace Factura.Device.Printer
             commands.Add(ColaRemplazo3);
             commands.Add("");
             SendData(commands/*, false*/);
-            return int.Parse(GetExtraField(1));
+            int numeroTicket = int.Parse(GetExtraField(1));
+            TipoFactura = GetExtraField(2);
+            MontoTotal = FormatearPrecio(GetExtraField(3));
+            MontoIvaTotal = FormatearPrecio(GetExtraField(4));
+            MontoVuelto = FormatearPrecio(GetExtraField(5));
+            return numeroTicket;
         }
 
         // Funcion que obtiene el subtotal de un Tique.

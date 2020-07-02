@@ -55,9 +55,9 @@ namespace Factura.Device.Printer
             return epsonTM.ObtenreNumeroFactura(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
-            return epsonTM.ObtenerNumeroNotaCretido(productos, pagos);
+            return epsonTM.ObtenerNumeroNotaCretido(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
         public void CierreZ()

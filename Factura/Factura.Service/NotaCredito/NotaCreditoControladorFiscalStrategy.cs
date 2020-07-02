@@ -15,10 +15,18 @@ namespace Common.Service.NotaCredito
                 List<ProductoTicketRequest> productos = request.Productos.Select(x => new ProductoTicketRequest(x.Codigo, x.Nombre, x.Cantidad, x.MontoUnitario, x.DescuentoUnitario, x.CFTUnitario, x.IVA.Valor)).ToList();
                 List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
-                int numeroNotaCredito = epsonFP.ObtenerNumeroNotaCretido(productos, pagos);
+                string TipoFactura = string.Empty;
+                decimal MontoTotal = 0;
+                decimal MontoIvaTotal = 0;
+                decimal MontoVuelto = 0;
+
+                int numeroNotaCredito = epsonFP.ObtenerNumeroNotaCretido(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
 
                 return new ObtenerNumeroNotaCretidoResponse()
                 {
+                    SubTotal = MontoTotal - MontoIvaTotal,
+                    Iva = MontoIvaTotal,
+                    Total = MontoTotal,
                     NumeroNotaCredito = new List<int>() { numeroNotaCredito }
                 };
             }

@@ -2,6 +2,7 @@
 using Common.Core.Exceptions;
 using Common.Core.Helper;
 using Factura.Core.Model.AfipAgreggate;
+using Factura.ExternalService.Afip.Wsfev1;
 using Factura.ExternalService.Contracts;
 using System;
 using System.Collections.Generic;
@@ -103,6 +104,7 @@ namespace Factura.ExternalService
             request.DocTipo = ObtenerTipoDocumento(CAErequest.CondicionIVA);
             request.DocNro = long.Parse(CAErequest.Cuit);
             request.CbteDesde = ObtenerNumeroComprobante(CAErequest.CondicionIVA, CAErequest.TipoDocumentoFiscal, CAErequest.PasswordCertificado, CAErequest.RutaCertificado);
+            request.CbtesAsoc = ObtenerComprobanteAsociado(CAErequest.CondicionIVA, CAErequest.TipoDocumentoFiscal, CAErequest.PuntoVentaOrigen, CAErequest.NumeroFacturaOrigen);
             request.CbteHasta = request.CbteDesde;
             request.CbteFch = DateTime.Now.ToString("yyyyMMdd");
             request.MonId = PESOS;
@@ -154,6 +156,23 @@ namespace Factura.ExternalService
             {
                 throw new NegocioException($"Error al realizar la facturación. No se pudo obtener el numero de factura.", ex);
             }
+        }
+
+        private static CbteAsoc[] ObtenerComprobanteAsociado(CondicionIVA condicionIVA, TipoDocumentoFiscal tipoDocumentoFiscal, int puntoVentaOrigen, int numeroConprobanteOrigen)
+        {
+            if (tipoDocumentoFiscal == TipoDocumentoFiscal.NotaCredito)
+            {
+                return new CbteAsoc[]{
+                    new CbteAsoc
+                    {
+                        Tipo = ObtenerTipoComprobante(condicionIVA, TipoDocumentoFiscal.Factura),
+                        PtoVta = puntoVentaOrigen,
+                        Nro = numeroConprobanteOrigen
+                    }
+                };
+            }
+            else
+                return null;
         }
 
         private static int ObtenerTipoComprobante(CondicionIVA condicionIVA, TipoDocumentoFiscal tipoDocumentoFiscal)

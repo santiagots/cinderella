@@ -15,6 +15,8 @@ namespace Factura.ExternalService.Contracts
         public string Cuit { get; set; }
         public decimal ImporteNeto { get; set; }
         public List<AfipAlicuotaIvaRequest> AlicuotasIva { get; set; }
+        public int NumeroFacturaOrigen { get; set; }
+        public int PuntoVentaOrigen { get; set; }
         public string PasswordCertificado { get; set; }
         public string RutaCertificado { get; set; }
     }
