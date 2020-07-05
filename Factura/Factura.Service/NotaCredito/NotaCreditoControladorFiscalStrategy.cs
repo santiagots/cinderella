@@ -12,7 +12,16 @@ namespace Common.Service.NotaCredito
         {
             using (EpsonPrinter epsonFP = new EpsonPrinter(request.TipoCliente, request.CondicionIVA, request.PorcentajeFacturacion, request.NombreYApellido, request.Direccion, request.Localidad, request.Cuit, request.NumeroFacturaOrigen.ToString(), request.PuntoVentaOrigen.ToString(), request.CondicionIVAOriginal))
             {
-                List<ProductoTicketRequest> productos = request.Productos.Select(x => new ProductoTicketRequest(x.Codigo, x.Nombre, x.Cantidad, x.MontoUnitario, x.DescuentoUnitario, x.CFTUnitario, x.IVA.Valor)).ToList();
+                //pongo primer los productos con monto positibo y luego con monto negativo porque la controladora no puede operar con mantos negativos
+                List<ProductoTicketRequest> productos = request.Productos
+                    .Where(x => x.Cantidad >= 0)
+                    .Select(x => new ProductoTicketRequest(x.Codigo, x.Nombre, x.Cantidad, x.MontoUnitario, x.DescuentoUnitario, x.CFTUnitario, x.IVA.Valor)).ToList();
+
+                productos.AddRange(
+                    request.Productos
+                    .Where(x => x.Cantidad < 0)
+                    .Select(x => new ProductoTicketRequest(x.Codigo, x.Nombre, x.Cantidad, x.MontoUnitario, x.DescuentoUnitario, x.CFTUnitario, x.IVA.Valor)).ToList());
+
                 List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
                 string TipoFactura = string.Empty;
