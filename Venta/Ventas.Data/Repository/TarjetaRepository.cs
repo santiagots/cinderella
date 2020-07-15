@@ -14,7 +14,7 @@ namespace Ventas.Data.Repository
 
         public IEnumerable<Tarjeta> Obtener()
         {
-            return _context.Tarjeta.Where(x => x.Habilitado).ToList();
+            return _context.Tarjeta.Where(x => x.Habilitado && !x.Eliminado).ToList();
         }
     }
 }

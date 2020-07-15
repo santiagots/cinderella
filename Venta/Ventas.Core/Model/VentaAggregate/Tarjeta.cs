@@ -6,6 +6,7 @@ namespace Ventas.Core.Model.VentaAggregate
     {
         public string Nombre { get; private set; }
         public bool Habilitado { get; private set; }
+        public bool Eliminado { get; private set; }
 
         protected Tarjeta()
         {
