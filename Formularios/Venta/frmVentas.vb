@@ -124,6 +124,10 @@ Public Class frmVentas
 
     Private Sub Cb_FormaPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_FormaPago.SelectedIndexChanged
         Ejecutar(Sub()
+                     If (Cb_FormaPago.SelectedValue Is Nothing) Then
+                         Return
+                     End If
+
                      HabilitarSegunFormaDePago(Cb_FormaPago.SelectedValue)
                      ventaViewModel.FormaPagoChange(Cb_FormaPago.SelectedValue)
                      Cb_Trajeta.SelectedItem = Nothing
@@ -133,12 +137,20 @@ Public Class frmVentas
 
     Private Sub Cb_Trajeta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_Trajeta.SelectedIndexChanged
         Ejecutar(Sub()
+                     If (Cb_Trajeta.SelectedValue Is Nothing) Then
+                         Return
+                     End If
+
                      ventaViewModel.TarjetaChange(Cb_Trajeta.SelectedValue)
                  End Sub)
     End Sub
 
     Private Sub Cb_NroCuota_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_NroCuota.SelectedIndexChanged
         Ejecutar(Sub()
+                     If (Cb_NroCuota.SelectedValue Is Nothing) Then
+                         Return
+                     End If
+
                      If (Cb_NroCuota.SelectedItem IsNot Nothing) Then
                          ventaViewModel.CuotaChange(Cb_NroCuota.SelectedValue)
                          ventaViewModel.ActualizarCostoFinanciero(Cb_NroCuota.SelectedValue)
@@ -334,7 +346,7 @@ Public Class frmVentas
         EjecutarAsync(
             Async Function()
                 If MessageBox.Show("¿Desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                    ventaViewModel.NotaPedido()
+                    Await ventaViewModel.NotaPedidoAsync()
 
                     Dim Funciones As New Funciones
                     Await Funciones.ActualizarNotasPedidosVentasAsync()

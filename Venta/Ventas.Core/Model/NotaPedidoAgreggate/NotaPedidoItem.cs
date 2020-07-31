@@ -29,5 +29,10 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             Cantidad = cantidad;
             FechaEdicion = DateTime.Now;
         }
+
+        internal void AgregarIdNotaPedido(long idNotaPedido)
+        {
+            IdNotaPedido = idNotaPedido;
+        }
     }
 }

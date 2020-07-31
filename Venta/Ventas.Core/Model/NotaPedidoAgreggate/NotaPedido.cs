@@ -41,6 +41,12 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             IdVendedor = idVendedor;
         }
 
+        public void AgregarId(long id)
+        {
+            Id = id;
+            NotaPedidoItems.ToList().ForEach(x => x.AgregarIdNotaPedido(id));
+        }
+
         public void AgregarNumero(int numero)
         {
             Numero = numero;

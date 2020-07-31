@@ -301,8 +301,11 @@ Namespace Formularios.Venta
             If (venta.TipoCliente = Enums.TipoCliente.Mayorista) Then
                 IdClienteMayorista = venta.IdClienteMayorista
                 NombreClienteMayorista = venta.ClienteMayorista.RazonSocial
+                ListaPrecioSeleccionado = IdListaPrecioMayorista
 
                 VentaModel.ActualizarClienteMayorista(IdClienteMayorista)
+            Else
+                ListaPrecioSeleccionado = IdListaPrecioMinorista
             End If
             NotifyPropertyChanged(NameOf(Me.PorcentajeFacturacion))
         End Sub
@@ -354,7 +357,7 @@ Namespace Formularios.Venta
             End If
         End Function
 
-        Friend Sub NotaPedido()
+        Friend Async Function NotaPedidoAsync() As Task
             Dim notaPedido As NotaPedido = Mapper.Map(Of NotaPedido)(VentaModel)
 
             If (Not notaPedido.NotaPedidoItems.Any()) Then
@@ -373,8 +376,14 @@ Namespace Formularios.Venta
                 notaPedido.AgregarClienteMayorista(IdClienteMayorista)
             End If
 
-            Servicio.GuardarNotaPedido(notaPedido)
-        End Sub
+            Await Task.Run(Sub() Servicio.GuardarNotaPedido(notaPedido))
+
+            If (NotaPedidoModel IsNot Nothing) Then 'Si existe es porque esta editando la nota de pedido
+                NotaPedidoModel.Cerrar()
+                Await Task.Run(Sub() Servicio.ActualizarNotaPedido(NotaPedidoModel))
+                Await FinalizarNotaPedidoEvent()
+            End If
+        End Function
 
         Friend Async Function FinalizarVentaAsyn(desdeReserva As Boolean) As Task
             AgregarCheque()

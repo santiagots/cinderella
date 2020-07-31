@@ -58,6 +58,12 @@ namespace Ventas.Core.Model.VentaAggregate
         {
             decimal pendientePago = 0;
 
+            if (Total.Valor == 0)
+            {
+                ActualizarPagos(pago, pago.MontoRestante, 0);
+                return pago.MontoRestante;
+            }
+
             if (PorcentajePago == 0)
                 pendientePago = Total.Valor;
             else
@@ -228,9 +234,12 @@ namespace Ventas.Core.Model.VentaAggregate
         internal void ActualizarPorcentajePago()
         {
             if (Total.Valor == 0)
-                PorcentajePago = 0;
+                PorcentajePago = 1;
             else
-                PorcentajePago = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4, MidpointRounding.AwayFromZero);
+            {
+                decimal porcentajeAux = Math.Round(Pagos.Sum(x => x.Value) / Total.Valor, 4, MidpointRounding.AwayFromZero);
+                PorcentajePago = porcentajeAux > 1 ? 1 : porcentajeAux;
+            }
         }
 
         internal IEnumerable<Pago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)

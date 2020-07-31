@@ -1178,13 +1178,6 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reportes\CrystalReport2.vb">
-      <DependentUpon>CrystalReport2.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Reportes\ReportePrecios.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1822,11 +1815,6 @@
     <Content Include="Imagenes\ventas_admin.png" />
     <None Include="Imagenes\warning-24.png" />
     <Content Include="Plantilla\MailOrdenCompra.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\CrystalReport2.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CrystalReport2.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Reportes\ReporteReservaMinorista.rpt">
