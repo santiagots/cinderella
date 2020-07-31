@@ -317,16 +317,27 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public IEnumerable<VentaItem> OrdenarItemsVenta()
         {
+            List<VentaItem> Ventas = new List<VentaItem>();
+            List<VentaItem> Devoluciones = new List<VentaItem>();
+
             IEnumerable<IGrouping<bool, VentaItem>> ventaItemGroup = VentaItems.GroupBy(x => x.Cantidad > 0);
 
-            List<VentaItem> Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
-            List<VentaItem> Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
+            if (TipoCliente == TipoCliente.Mayorista)
+            {
+
+                Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).ToList();
+                Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).ToList();
+            }
+            else
+            {
+                Ventas = ventaItemGroup.Where(x => x.Key == true).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
+                Devoluciones = ventaItemGroup.Where(x => x.Key == false).SelectMany(x => x).OrderByDescending(x => x.PorcentajeBonificacion).ThenBy(x => x.Cantidad).ThenBy(x => x.Producto.Codigo).ToList();
+            }
 
             List<VentaItem> Aux = new List<VentaItem>(Devoluciones);
             Aux.AddRange(Ventas);
 
             VentaItems = Aux;
-
             return Aux;
         }
 
