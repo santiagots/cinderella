@@ -4,7 +4,7 @@ Public Class frmBuscarClienteMayorista
     Dim NegClientes As New Negocio.NegClienteMayorista
     Dim dsClientes As DataSet
 
-    Public clienteMayorista As ClienteMayorista
+    Public clienteMayorista As Entidades.ClienteMayorista
 
     'Click en Buscar cliente!.
     Private Sub btn_Buscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_Buscar.Click

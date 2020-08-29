@@ -49,7 +49,7 @@ Public Class frmVerComprasCliente
             cmb_CondicionIVA.DisplayMember = "Descripcion"
             cmb_CondicionIVA.ValueMember = "id_CondicionIva"
 
-            Dim cliente As ClienteMayorista = NegClientes.TraerCliente(id_Cliente)
+            Dim cliente As Entidades.ClienteMayorista = NegClientes.TraerCliente(id_Cliente)
             ClienteMayoristaBindingSource.DataSource = cliente
 
             'Me fijo si tiene compras realizadas.

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using Common.Core.Enum;
 using Common.Core.Exceptions;
+using Common.Core.Extension;
 using Common.Core.Interfaces;
 using Common.Core.Model;
 
@@ -44,11 +45,7 @@ namespace Common.Data.Repository
 
             totalItems = subcategoria.Count();
 
-            return subcategoria
-                            .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                            .Skip(itemsPorPagina * (pagina - 1))
-                            .Take(itemsPorPagina)
-                            .ToList();
+            return subcategoria.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalItems).ToList();
         }
 
         public SubCategoria Obtener(int idSubCategoria)

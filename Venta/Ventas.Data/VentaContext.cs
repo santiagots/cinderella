@@ -1,10 +1,8 @@
-﻿using Common.Core.Helper;
+﻿using Common.Core.Enum;
 using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ChequeAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;
@@ -14,13 +12,8 @@ namespace Ventas.Data
 {
     public class VentaContext: CommonContext
     {
-        public VentaContext(bool local = true)
-        : base()
+        public VentaContext(TipoBase local = TipoBase.Local) : base(local)
         {
-            if(local)
-                this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
-            else
-                this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
         }
 
         public DbSet<Cheque> Cheque { get; set; }

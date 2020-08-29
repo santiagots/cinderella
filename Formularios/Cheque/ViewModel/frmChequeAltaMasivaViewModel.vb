@@ -146,7 +146,7 @@ Namespace Formularios.Cheque
         End Function
 
         Private Async Function CargarClienteMayoristaAsync() As Task
-            Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(ChequeDetalle.IdCliente))
+            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(ChequeDetalle.IdCliente))
             ChequeDetalle.ClienteNombre = clienteMayorista.RazonSocial
         End Function
     End Class

@@ -330,7 +330,7 @@ Namespace Formularios.Venta
             Dim frmReservaViewModel As frmReservaViewModel = New frmReservaViewModel(ventaDetalleViewModel)
 
             If (TipoClienteSeleccionado = Enums.TipoCliente.Mayorista) Then
-                Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(IdClienteMayorista))
+                Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(IdClienteMayorista))
                 frmReservaViewModel.ReservaDetalle.Nombre = clienteMayorista.RazonSocial
                 frmReservaViewModel.ReservaDetalle.Apellido = " "
                 frmReservaViewModel.ReservaDetalle.Telefono = clienteMayorista?.DomicilioFacturacion?.Telefono

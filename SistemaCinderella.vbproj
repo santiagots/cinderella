@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>532</ApplicationRevision>
+    <ApplicationRevision>534</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -275,6 +275,12 @@
     <Compile Include="ControlesUsuario\ChequeDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ControlesUsuario\Paginado.Designer.vb">
+      <DependentUpon>Paginado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ControlesUsuario\Paginado.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ControlesUsuario\SaldosSucursal.Designer.vb">
       <DependentUpon>SaldosSucursal.vb</DependentUpon>
     </Compile>
@@ -299,6 +305,17 @@
     <Compile Include="Formularios\Cheque\ViewModel\ChequeDetalleViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAltaMasivaViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAltaViewModel.vb" />
+    <Compile Include="Formularios\Cliente\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaDetalleViewModel.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaItem.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\DireccionViewModel.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaViewModel.vb" />
+    <Compile Include="Formularios\Comun\Comun.Designer.vb">
+      <DependentUpon>Comun.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Comun\Comun.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\DialogInput.Designer.vb">
       <DependentUpon>DialogInput.vb</DependentUpon>
     </Compile>
@@ -561,10 +578,10 @@
     <Compile Include="Formularios\frmCargadorAltaProductos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmClienteMayorista.Designer.vb">
+    <Compile Include="Formularios\Cliente\frmClienteMayorista.Designer.vb">
       <DependentUpon>frmClienteMayorista.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmClienteMayorista.vb">
+    <Compile Include="Formularios\Cliente\frmClienteMayorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\dialogoConexion.Designer.vb">
@@ -1232,8 +1249,13 @@
     <Compile Include="Formularios\Venta\ViewModel\frmVentasViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\NavigatorPreviousItem.png" />
+    <None Include="Resources\NavigatorFirstItem.png" />
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlesUsuario\Paginado.resx">
+      <DependentUpon>Paginado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlesUsuario\SaldosSucursal.resx">
       <DependentUpon>SaldosSucursal.vb</DependentUpon>
@@ -1353,7 +1375,7 @@
     <EmbeddedResource Include="Formularios\frmCargadorAltaProductos.resx">
       <DependentUpon>frmCargadorAltaProductos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmClienteMayorista.resx">
+    <EmbeddedResource Include="Formularios\Cliente\frmClienteMayorista.resx">
       <DependentUpon>frmClienteMayorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\dialogoConexion.resx">
@@ -1685,10 +1707,14 @@
     <None Include="app.Release.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
+    <None Include="Imagenes\NavigatorNextItem.png" />
+    <None Include="Imagenes\NavigatorLastItem.png" />
     <Content Include="Libs\openssl.cnf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="My Project\DataSources\SistemaCinderella.Comunes.SaldoSucursalViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.ClienteMayoristaDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.DocumentoFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmInformacionTransaccionesViewModel.datasource" />
@@ -2496,7 +2522,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Formularios\InformeVenta\Mapper\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,59 +1,78 @@
 ﻿Public Class Paginado
-    Public Property PaginaTamaño As Integer = 1
-    Private TotalElementos_ As Integer
-    Public Property TotalElementos() As Integer
+
+    Private _TotalElementos As Integer = 0
+    Public Event PaginaInicalClick As EventHandler
+    Public Event PaginaAnteriorClick As EventHandler
+    Public Event PaginaSiguienteClick As EventHandler
+    Public Event PaginaFinalClick As EventHandler
+
+    Public ReadOnly Property ElementosPorPagina As Integer
         Get
-            Return TotalElementos_
+            Return My.Settings.PaginacionItemsPagina
+        End Get
+    End Property
+
+    Public Property PaginaActual As Integer = 1
+
+    Public Property TotalElementos As Integer
+        Get
+            Return _TotalElementos
         End Get
         Set(ByVal value As Integer)
-            TotalElementos_ = value
-            ActualizarLeyanda()
+            _TotalElementos = value
+            ActualizarBotones()
+            ActualizarLeyenda()
         End Set
     End Property
-    Public Property OrdenColumna As String
-    Public Property OrdenDireccion As SortOrder
-    Public Property PaginaActual As Integer = 1
+
     Public ReadOnly Property TotalPaginas As Integer
         Get
-            Return TotalElementos_ / PaginaTamaño
+            Return If(TotalElementos Mod ElementosPorPagina > 0, (TotalElementos \ ElementosPorPagina) + 1, TotalElementos \ ElementosPorPagina)
         End Get
     End Property
 
-    Public Event btnInicioClick As EventHandler
-    Public Event btnAnteriorClick As EventHandler
-    Public Event btnProximaClick As EventHandler
-    Public Event btnFinClick As EventHandler
+    Public Property Leyenda As String = "{0} de {1}"
 
-    Private Sub btnInicio_Click(sender As Object, e As EventArgs) Handles btnInicio.Click
+    Private Sub Paginado_Load(ByVal sender As Object, ByVal e As EventArgs)
+        ActualizarLeyenda()
+    End Sub
+
+    Private Sub btnPaginaInical_Click(sender As Object, e As EventArgs) Handles btnPaginaInical.Click
         PaginaActual = 1
-        ActualizarLeyanda()
-        RaiseEvent btnInicioClick(Me, e)
+        RaiseEvent PaginaInicalClick(sender, e)
+        ActualizarBotones()
+        ActualizarLeyenda()
     End Sub
 
-    Private Sub btnAnterior_Click(sender As Object, e As EventArgs) Handles btnAnterior.Click
-        If (PaginaActual - 1 > 0) Then
-            PaginaActual -= 1
-            ActualizarLeyanda()
-            RaiseEvent btnAnteriorClick(Me, e)
-        End If
+    Private Sub btnPaginaAnterior_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnPaginaAnterior.Click
+        PaginaActual -= 1
+        RaiseEvent PaginaAnteriorClick(sender, e)
+        ActualizarBotones()
+        ActualizarLeyenda()
     End Sub
 
-    Private Sub btnProxima_Click(sender As Object, e As EventArgs) Handles btnProxima.Click
-        If (PaginaActual + 1 <= TotalPaginas) Then
-            PaginaActual += 1
-            ActualizarLeyanda()
-            RaiseEvent btnProximaClick(Me, e)
-        End If
+    Private Sub btnPaginaSiguiente_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnPaginaSiguiente.Click
+        PaginaActual += 1
+        RaiseEvent PaginaSiguienteClick(sender, e)
+        ActualizarBotones()
+        ActualizarLeyenda()
     End Sub
 
-    Private Sub btnFin_Click(sender As Object, e As EventArgs) Handles btnFin.Click
+    Private Sub btnPaginaFinal_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnPaginaFinal.Click
         PaginaActual = TotalPaginas
-        ActualizarLeyanda()
-        RaiseEvent btnFinClick(Me, e)
+        RaiseEvent PaginaFinalClick(sender, e)
+        ActualizarBotones()
+        ActualizarLeyenda()
     End Sub
 
-    Private Sub ActualizarLeyanda()
-        lblPaginas.Text = String.Format("Página {0} de {1}", PaginaActual, TotalPaginas)
+    Private Sub ActualizarBotones()
+        btnPaginaInical.Enabled = PaginaActual <> 1 AndAlso TotalPaginas > 1
+        btnPaginaAnterior.Enabled = PaginaActual > 1 AndAlso TotalPaginas > 1
+        btnPaginaSiguiente.Enabled = PaginaActual < TotalPaginas AndAlso TotalPaginas > 1
+        btnPaginaFinal.Enabled = PaginaActual <> TotalPaginas AndAlso TotalPaginas > 1
     End Sub
 
+    Private Sub ActualizarLeyenda()
+        Me.lbTotalPaginas.Text = String.Format(Leyenda, PaginaActual, TotalPaginas)
+    End Sub
 End Class

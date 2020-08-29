@@ -7,6 +7,8 @@ using Ventas.Core.Interfaces;
 using Ventas.Core.Model.NotaPedidoAgreggate;
 using System.Data.Entity;
 using Common.Data.Repository;
+using Ventas.Core.Model.ValueObjects;
+using System.Threading.Tasks;
 
 namespace Ventas.Data.Repository
 {
@@ -83,6 +85,15 @@ namespace Ventas.Data.Repository
                                                                 .Include(x => x.Encargado)
                                                                 .Include(x => x.ClienteMayorista)
                                                                 .Include(x => x.ClienteMinorista);
+        }
+
+        public decimal ObtenerMontoTotalClienteMayorista(int idClienteMatorista)
+        {
+            decimal? MontoTotalClienteMayorista =  _context.NotaPedido.Where(x => !x.Borrado && x.Estado == NotaPedidoEstado.Abierta && x.IdClienteMayorista == idClienteMatorista)
+                                                                      .SelectMany(x => x.NotaPedidoItems)
+                                                                      .Sum(x => (decimal?)(x.MontoProducto.Valor * x.Cantidad));
+
+            return MontoTotalClienteMayorista ?? 0;
         }
 
         public int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado)

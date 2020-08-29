@@ -299,7 +299,7 @@ Namespace Formularios.Facturacion
         End Function
 
         Public Async Function CargarClienteMayoristaAsync() As Task
-            Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(ventaModel.IdClienteMayorista))
+            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(ventaModel.IdClienteMayorista))
             CondicionesIVASeleccionada = clienteMayorista.CondicionIVA
             NombreYApellido = clienteMayorista.RazonSocial
             Direccion = clienteMayorista.DomicilioFacturacion?.Direccion

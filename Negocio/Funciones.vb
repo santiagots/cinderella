@@ -54,6 +54,9 @@ Public Class Funciones
     'End Function
 
     Public Shared Function HayConexionInternet() As Boolean
+#If DEBUG Then
+        Return True
+#Else
         Dim sw As Stopwatch = New Stopwatch()
         sw.Start()
         'Si por configuracion se define que la aplicacion trabaja sin internet 
@@ -83,6 +86,8 @@ Public Class Funciones
             Funciones.HayInternet = False
             Return False
         End If
+#End If
+
     End Function
 
     Private Shared Function CheckForInternetConnection() As Boolean
