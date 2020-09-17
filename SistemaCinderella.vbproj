@@ -305,6 +305,18 @@
     <Compile Include="Formularios\Cheque\ViewModel\ChequeDetalleViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAltaMasivaViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAltaViewModel.vb" />
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.Designer.vb">
+      <DependentUpon>frmClienteMayoristaCuentaCorriente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente2.Designer.vb">
+      <DependentUpon>frmClienteMayoristaCuentaCorriente2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\Cliente\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaDetalleViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaItem.vb" />
@@ -1265,6 +1277,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cheque\frmChequeAltaMasiva.resx">
       <DependentUpon>frmChequeAltaMasiva.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.resx">
+      <DependentUpon>frmClienteMayoristaCuentaCorriente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente2.resx">
+      <DependentUpon>frmClienteMayoristaCuentaCorriente2.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\DialogInput.resx">
       <DependentUpon>DialogInput.vb</DependentUpon>

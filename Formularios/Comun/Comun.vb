@@ -9,10 +9,10 @@ Public Class Comun
             accion()
         Catch ex As NegocioException
             Log.Error(ex)
-            MessageBox.Show(ex.Message, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.UseWaitCursor = False
         End Try
@@ -20,16 +20,16 @@ Public Class Comun
 
     Public Async Sub EjecutarAsync(accion As Func(Of Task))
         Try
-            Me.UseWaitCursor = True
+            Me.Cursor = Cursors.WaitCursor
             Await accion()
         Catch ex As NegocioException
             Log.Error(ex)
-            MessageBox.Show(ex.Message, "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
-            Me.UseWaitCursor = False
+            Me.Cursor = Cursors.Default
         End Try
     End Sub
 End Class

@@ -9,10 +9,11 @@ Namespace Formularios.Cliente
 
         Public Sub New()
             CreateMap(Of ClienteMayorista, ClienteMayoristaDetalleViewModel)() _
-                .ForMember(Function(des) des.ListaPreciosSaleccionada, Sub(opt) opt.MapFrom(Function(src) New KeyValuePair(Of Integer?, String)(src.ListaPrecio, ""))) _
+                .ForMember(Function(des) des.ListaPreciosSaleccionada, Sub(opt) opt.MapFrom(Function(src) New KeyValuePair(Of ListaPrecio, String)(src.ListaPrecio, src.ListaPrecio.Nombre))) _
                 .ForMember(Function(des) des.CondicionesIVASaleccionada, Sub(opt) opt.MapFrom(Function(src) New KeyValuePair(Of CondicionIVA?, String)(src.CondicionIVA, src.CondicionIVA.ToString()))) _
                 .ForPath(Function(des) des.FacturacionId, Sub(opt) opt.MapFrom(Function(src) src.IdDomicilioFacturacion)) _
                 .ForPath(Function(des) des.FacturacionId, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.Id)) _
+                .ForPath(Function(des) des.FacturacionDireccion, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.Direccion)) _
                 .ForPath(Function(des) des.FacturacionProvinciasSaleccionada, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.Provincia)) _
                 .ForPath(Function(des) des.FacturacionProvinciasSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.IdProvincia)) _
                 .ForPath(Function(des) des.FacturacionDistritosSaleccionada, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.Distrito)) _
@@ -21,7 +22,7 @@ Namespace Formularios.Cliente
                 .ForPath(Function(des) des.FacturacionLocalidadesSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.IdLocalidad)) _
                 .ForPath(Function(des) des.FacturacionTelefono, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.Telefono)) _
                 .ForPath(Function(des) des.FacturacionMail, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.Email)) _
-                .ForPath(Function(des) des.FacturacionCodigoPostal, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.CodigoPostal)) _
+                .ForPath(Function(des) des.FacturacionCodigoPostal, Sub(opt) opt.MapFrom(Function(src) src.DomicilioFacturacion.CodigoPostal)) _
                 .ForPath(Function(des) des.EntregaId, Sub(opt) opt.MapFrom(Function(src) src.IdDomicilioEntrega)) _
                 .ForPath(Function(des) des.EntregaId, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.Id)) _
                 .ForPath(Function(des) des.EntregaDireccion, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.Direccion)) _
@@ -33,9 +34,9 @@ Namespace Formularios.Cliente
                 .ForPath(Function(des) des.EntregaLocalidadesSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.IdLocalidad)) _
                 .ForPath(Function(des) des.EntregaCodigoPostal, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.CodigoPostal)) _
                 .ReverseMap() _
+                    .ForMember(Function(des) des.IdListaPrecio, Sub(opt) opt.MapFrom(Function(src) src.ListaPreciosSaleccionada.Key.Id)) _
                     .ForMember(Function(des) des.ListaPrecio, Sub(opt) opt.MapFrom(Function(src) src.ListaPreciosSaleccionada.Key)) _
                     .ForMember(Function(des) des.CondicionIVA, Sub(opt) opt.MapFrom(Function(src) src.CondicionesIVASaleccionada.Key))
-
         End Sub
     End Class
 End Namespace

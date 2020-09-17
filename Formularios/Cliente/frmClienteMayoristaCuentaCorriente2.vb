@@ -1,0 +1,3 @@
+﻿Public Class frmClienteMayoristaCuentaCorriente2
+
+End Class

@@ -23,7 +23,6 @@ namespace Ventas.Data
         public DbSet<Comision> Comision { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
         public DbSet<Factura> Factura  { get; set; }
-        public DbSet<ListaPrecio> ListaPrecio { get; set; }
         public DbSet<NumeroFactura> NumeroFactura { get; set; }
         public DbSet<NumeroNotaCredito> NumeroNotaCredito { get; set; }
         public DbSet<Pago> Pago { get; set; }
@@ -142,8 +141,6 @@ namespace Ventas.Data
             modelBuilder.Entity<Empleado>().ToTable("EMPLEADOS");
             modelBuilder.Entity<Empleado>().Property(t => t.Id).HasColumnName("id_Empleado");
             modelBuilder.Entity<Empleado>().Property(t => t.Tipo).HasColumnName("id_TipoEmpleado");
-
-            modelBuilder.Entity<ListaPrecio>().ToTable("LISTA_PRECIO");
 
             modelBuilder.Entity<Precio>().ToTable("PRECIOS");
             modelBuilder.Entity<Precio>().Property(t => t.Id).HasColumnName("id_Precio");

@@ -14,6 +14,7 @@ Imports SistemaCinderella.Formularios.Reserva
 Imports Common.Core.Model
 Imports SistemaCinderella.Formularios.Facturacion
 Imports SistemaCinderella.Comunes
+Imports Common.Data.Service
 
 Namespace Formularios.Venta
     Public Class frmVentasViewModel
@@ -82,8 +83,8 @@ Namespace Formularios.Venta
 
         Public Property ListaPrecioSeleccionado As Integer
 
-        Private _ListaPrecio As BindingList(Of ListaPrecio)
-        Public ReadOnly Property ListaPrecio As BindingList(Of ListaPrecio)
+        Private _ListaPrecio As BindingList(Of Common.Core.Model.ListaPrecio)
+        Public ReadOnly Property ListaPrecio As BindingList(Of Common.Core.Model.ListaPrecio)
             Get
                 Return _ListaPrecio
             End Get
@@ -709,7 +710,7 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function CargarListaPrecioAsync() As Task
-            Dim listaPrecio As IList(Of ListaPrecio) = Await Task.Run(Function() Servicio.ObtenerListaPrecio())
+            Dim listaPrecio As IList(Of ListaPrecio) = Await ListaPrecioService.ObtenerAsync()
             _ListaPrecio = New BindingList(Of ListaPrecio)(listaPrecio)
 
             NotifyPropertyChanged(NameOf(Me.ListaPrecio))

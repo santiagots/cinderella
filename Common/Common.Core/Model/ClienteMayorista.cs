@@ -8,11 +8,12 @@ namespace Common.Core.Model
         public string Nombre { get; set; }
         public string Cuit { get; set; }
         public CondicionIVA CondicionIVA { get; set; }
-        public int Comision { get; set; }
-        public int Bonificacion { get; set; }
-        public int Lista { get; set; }
+        public decimal PorcentajeComision { get; set; }
+        public decimal PorcentajeBonificacion { get; set; }
+        public decimal PorcentajeLista { get; set; }
         public string CondicionPago { get; set; }
-        public int ListaPrecio { get; set; }
+        public int IdListaPrecio { get; set; }
+        public ListaPrecio ListaPrecio { get; set; }
         public int? IdDomicilioFacturacion { get; set; }
         public Domicilio DomicilioFacturacion { get; set; }
         public int? IdDomicilioEntrega { get; set; }

@@ -23,7 +23,9 @@ Partial Class frmClienteMayorista
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmClienteMayorista))
         Me.tabControl = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
@@ -53,19 +55,19 @@ Partial Class frmClienteMayorista
         Me.Label45 = New System.Windows.Forms.Label()
         Me.Label46 = New System.Windows.Forms.Label()
         Me.Label47 = New System.Windows.Forms.Label()
-        Me.txt_Comision_Buscar = New System.Windows.Forms.TextBox()
-        Me.ModificacionClienteMayoristaDetalleBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.txt_Bonificacion_Buscar = New System.Windows.Forms.TextBox()
-        Me.txt_Lista_Buscar = New System.Windows.Forms.TextBox()
         Me.txt_Direccion_Buscar = New System.Windows.Forms.TextBox()
+        Me.ModificacionClienteMayoristaDetalleBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.txt_Telefono_Buscar = New System.Windows.Forms.TextBox()
         Me.cmb_ListaPrecio_Buscar = New System.Windows.Forms.ComboBox()
-        Me.FiltroListasPreciosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ModificacionClienteListasPreciosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.cmb_CondicionIVA_Buscar = New System.Windows.Forms.ComboBox()
-        Me.FiltroCondicionesIVABindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ModificacionClienteCondicionesIVABindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.cmb_Corredor_Buscar = New System.Windows.Forms.ComboBox()
         Me.CorredoresBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.txt_Mail_Buscar = New System.Windows.Forms.TextBox()
+        Me.PercentUpDown5 = New Controles.PercentUpDown()
+        Me.PercentUpDown6 = New Controles.PercentUpDown()
+        Me.PercentUpDown7 = New Controles.PercentUpDown()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
         Me.btn_Buscar = New System.Windows.Forms.Button()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
@@ -78,8 +80,10 @@ Partial Class frmClienteMayorista
         Me.cmb_Corredor_Filtro = New System.Windows.Forms.ComboBox()
         Me.Label53 = New System.Windows.Forms.Label()
         Me.cmb_CondicionIVA_Filtro = New System.Windows.Forms.ComboBox()
+        Me.FiltroCondicionesIVABindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label54 = New System.Windows.Forms.Label()
         Me.cmb_ListaPrecios_Filtro = New System.Windows.Forms.ComboBox()
+        Me.FiltroListasPreciosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label50 = New System.Windows.Forms.Label()
         Me.Label55 = New System.Windows.Forms.Label()
         Me.cmb_Empresa_Filtro = New System.Windows.Forms.ComboBox()
@@ -132,7 +136,7 @@ Partial Class frmClienteMayorista
         Me.cmb_Empresa = New System.Windows.Forms.ComboBox()
         Me.lbl_ListaPrecio = New System.Windows.Forms.Label()
         Me.cb_ListaPrecios = New System.Windows.Forms.ComboBox()
-        Me.ListasPreciosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.AltaClienteListasPreciosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.lbl_Observaciones = New System.Windows.Forms.Label()
         Me.txt_CondicionPago = New System.Windows.Forms.TextBox()
@@ -144,19 +148,19 @@ Partial Class frmClienteMayorista
         Me.Label22 = New System.Windows.Forms.Label()
         Me.txt_Cuit = New System.Windows.Forms.MaskedTextBox()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.txt_Lista = New System.Windows.Forms.TextBox()
         Me.cmb_Corredor = New System.Windows.Forms.ComboBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.txt_Comision = New System.Windows.Forms.TextBox()
-        Me.txt_Bonificacion = New System.Windows.Forms.TextBox()
         Me.txt_Nombre = New System.Windows.Forms.TextBox()
         Me.cb_CondicionIva = New System.Windows.Forms.ComboBox()
-        Me.CondicionesIVABindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.AltaClienteCondicionesIVABindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.txt_Transporte = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.lbl_CondicionIva = New System.Windows.Forms.Label()
+        Me.PercentUpDown2 = New Controles.PercentUpDown()
+        Me.PercentUpDown3 = New Controles.PercentUpDown()
+        Me.PercentUpDown4 = New Controles.PercentUpDown()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
@@ -218,11 +222,8 @@ Partial Class frmClienteMayorista
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txt_Cuit_Mod = New System.Windows.Forms.MaskedTextBox()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.txt_Lista_Mod = New System.Windows.Forms.TextBox()
         Me.cmb_Corredor_Mod = New System.Windows.Forms.ComboBox()
         Me.Label34 = New System.Windows.Forms.Label()
-        Me.txt_Comision_Mod = New System.Windows.Forms.TextBox()
-        Me.txt_Bonificacion_Mod = New System.Windows.Forms.TextBox()
         Me.txt_Nombre_Mod = New System.Windows.Forms.TextBox()
         Me.cb_CondicionIva_Mod = New System.Windows.Forms.ComboBox()
         Me.txt_Transporte_Mod = New System.Windows.Forms.TextBox()
@@ -230,12 +231,13 @@ Partial Class frmClienteMayorista
         Me.Label36 = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.Label38 = New System.Windows.Forms.Label()
+        Me.txt_Comision_Mod = New Controles.PercentUpDown()
+        Me.txt_Lista_Mod = New Controles.PercentUpDown()
+        Me.PercentUpDown1 = New Controles.PercentUpDown()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
-        Me.Btn_Eliminar = New System.Windows.Forms.Button()
         Me.Btn_Modificar = New System.Windows.Forms.Button()
         Me.DataGridViewImageColumn1 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.ErrorCliente = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.ToolCliente = New System.Windows.Forms.ToolTip(Me.components)
         Me.tabControl.SuspendLayout()
         Me.TbListado.SuspendLayout()
@@ -246,11 +248,16 @@ Partial Class frmClienteMayorista
         Me.GroupBox5.SuspendLayout()
         Me.TableLayoutPanel16.SuspendLayout()
         CType(Me.ModificacionClienteMayoristaDetalleBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FiltroListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FiltroCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ModificacionClienteListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ModificacionClienteCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CorredoresBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Buscar.SuspendLayout()
         Me.TableLayoutPanel15.SuspendLayout()
+        CType(Me.FiltroCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FiltroListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmpresasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HabilitadosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbAlta.SuspendLayout()
@@ -269,10 +276,13 @@ Partial Class frmClienteMayorista
         CType(Me.AltaClienteFacturacionProvinciasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
-        CType(Me.ListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.AltaClienteListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        CType(Me.CondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.AltaClienteCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbMod.SuspendLayout()
         Me.GB_Modificacion.SuspendLayout()
         Me.TableLayoutPanel18.SuspendLayout()
@@ -291,7 +301,9 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel12.SuspendLayout()
         Me.TableLayoutPanel13.SuspendLayout()
         Me.TableLayoutPanel14.SuspendLayout()
-        CType(Me.ErrorCliente, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txt_Comision_Mod, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txt_Lista_Mod, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PercentUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tabControl
@@ -384,8 +396,8 @@ Partial Class frmClienteMayorista
         Me.DG_Clientes.ReadOnly = True
         Me.DG_Clientes.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Clientes.RowHeadersVisible = False
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DG_Clientes.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DG_Clientes.RowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DG_Clientes.RowTemplate.Height = 30
         Me.DG_Clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Clientes.ShowCellErrors = False
@@ -425,6 +437,8 @@ Partial Class frmClienteMayorista
         '
         Me.NotaPedidoMontoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.NotaPedidoMontoDataGridViewTextBoxColumn.DataPropertyName = "NotaPedidoMonto"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.NotaPedidoMontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
         Me.NotaPedidoMontoDataGridViewTextBoxColumn.HeaderText = "N. Pedido"
         Me.NotaPedidoMontoDataGridViewTextBoxColumn.Name = "NotaPedidoMontoDataGridViewTextBoxColumn"
         Me.NotaPedidoMontoDataGridViewTextBoxColumn.ReadOnly = True
@@ -435,6 +449,8 @@ Partial Class frmClienteMayorista
         '
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.DataPropertyName = "CuentaCorrienteMonto"
+        DataGridViewCellStyle3.Format = "C2"
+        Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.HeaderText = "Cta. Cte."
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.Name = "CuentaCorrienteMontoDataGridViewTextBoxColumn"
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.ReadOnly = True
@@ -478,6 +494,7 @@ Partial Class frmClienteMayorista
         'txt_TotalSaldoCuentaCorriente
         '
         Me.txt_TotalSaldoCuentaCorriente.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_TotalSaldoCuentaCorriente.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmClienteMayoristaViewModelBindingSource, "FiltroTotalSaldo", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "C2"))
         Me.txt_TotalSaldoCuentaCorriente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_TotalSaldoCuentaCorriente.Location = New System.Drawing.Point(558, 503)
         Me.txt_TotalSaldoCuentaCorriente.MaxLength = 255
@@ -520,15 +537,15 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel16.Controls.Add(Me.Label45, 0, 0)
         Me.TableLayoutPanel16.Controls.Add(Me.Label46, 0, 3)
         Me.TableLayoutPanel16.Controls.Add(Me.Label47, 3, 4)
-        Me.TableLayoutPanel16.Controls.Add(Me.txt_Comision_Buscar, 4, 0)
-        Me.TableLayoutPanel16.Controls.Add(Me.txt_Bonificacion_Buscar, 1, 1)
-        Me.TableLayoutPanel16.Controls.Add(Me.txt_Lista_Buscar, 4, 1)
         Me.TableLayoutPanel16.Controls.Add(Me.txt_Direccion_Buscar, 1, 3)
         Me.TableLayoutPanel16.Controls.Add(Me.txt_Telefono_Buscar, 4, 4)
         Me.TableLayoutPanel16.Controls.Add(Me.cmb_ListaPrecio_Buscar, 1, 2)
         Me.TableLayoutPanel16.Controls.Add(Me.cmb_CondicionIVA_Buscar, 4, 2)
         Me.TableLayoutPanel16.Controls.Add(Me.cmb_Corredor_Buscar, 1, 0)
         Me.TableLayoutPanel16.Controls.Add(Me.txt_Mail_Buscar, 1, 4)
+        Me.TableLayoutPanel16.Controls.Add(Me.PercentUpDown5, 1, 1)
+        Me.TableLayoutPanel16.Controls.Add(Me.PercentUpDown6, 4, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.PercentUpDown7, 4, 1)
         Me.TableLayoutPanel16.Location = New System.Drawing.Point(12, 20)
         Me.TableLayoutPanel16.Name = "TableLayoutPanel16"
         Me.TableLayoutPanel16.RowCount = 5
@@ -630,43 +647,6 @@ Partial Class frmClienteMayorista
         Me.Label47.TabIndex = 84
         Me.Label47.Text = "Teléfono"
         '
-        'txt_Comision_Buscar
-        '
-        Me.txt_Comision_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Comision_Buscar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Comision", True))
-        Me.txt_Comision_Buscar.Location = New System.Drawing.Point(540, 4)
-        Me.txt_Comision_Buscar.MaxLength = 255
-        Me.txt_Comision_Buscar.Name = "txt_Comision_Buscar"
-        Me.txt_Comision_Buscar.ReadOnly = True
-        Me.txt_Comision_Buscar.Size = New System.Drawing.Size(211, 21)
-        Me.txt_Comision_Buscar.TabIndex = 87
-        '
-        'ModificacionClienteMayoristaDetalleBindingSource
-        '
-        Me.ModificacionClienteMayoristaDetalleBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Cliente.ClienteMayoristaDetalleViewModel)
-        '
-        'txt_Bonificacion_Buscar
-        '
-        Me.txt_Bonificacion_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Bonificacion_Buscar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Bonificacion", True))
-        Me.txt_Bonificacion_Buscar.Location = New System.Drawing.Point(143, 34)
-        Me.txt_Bonificacion_Buscar.MaxLength = 255
-        Me.txt_Bonificacion_Buscar.Name = "txt_Bonificacion_Buscar"
-        Me.txt_Bonificacion_Buscar.ReadOnly = True
-        Me.txt_Bonificacion_Buscar.Size = New System.Drawing.Size(211, 21)
-        Me.txt_Bonificacion_Buscar.TabIndex = 88
-        '
-        'txt_Lista_Buscar
-        '
-        Me.txt_Lista_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Lista_Buscar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Lista", True))
-        Me.txt_Lista_Buscar.Location = New System.Drawing.Point(540, 34)
-        Me.txt_Lista_Buscar.MaxLength = 255
-        Me.txt_Lista_Buscar.Name = "txt_Lista_Buscar"
-        Me.txt_Lista_Buscar.ReadOnly = True
-        Me.txt_Lista_Buscar.Size = New System.Drawing.Size(211, 21)
-        Me.txt_Lista_Buscar.TabIndex = 89
-        '
         'txt_Direccion_Buscar
         '
         Me.txt_Direccion_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -677,6 +657,10 @@ Partial Class frmClienteMayorista
         Me.txt_Direccion_Buscar.ReadOnly = True
         Me.txt_Direccion_Buscar.Size = New System.Drawing.Size(211, 21)
         Me.txt_Direccion_Buscar.TabIndex = 90
+        '
+        'ModificacionClienteMayoristaDetalleBindingSource
+        '
+        Me.ModificacionClienteMayoristaDetalleBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Cliente.ClienteMayoristaDetalleViewModel)
         '
         'txt_Telefono_Buscar
         '
@@ -694,7 +678,7 @@ Partial Class frmClienteMayorista
         Me.cmb_ListaPrecio_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmb_ListaPrecio_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cmb_ListaPrecio_Buscar.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.ModificacionClienteMayoristaDetalleBindingSource, "ListaPreciosSaleccionada", True))
-        Me.cmb_ListaPrecio_Buscar.DataSource = Me.FiltroListasPreciosBindingSource
+        Me.cmb_ListaPrecio_Buscar.DataSource = Me.ModificacionClienteListasPreciosBindingSource
         Me.cmb_ListaPrecio_Buscar.DisplayMember = "Value"
         Me.cmb_ListaPrecio_Buscar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_ListaPrecio_Buscar.Enabled = False
@@ -705,17 +689,17 @@ Partial Class frmClienteMayorista
         Me.cmb_ListaPrecio_Buscar.TabIndex = 93
         Me.cmb_ListaPrecio_Buscar.ValueMember = "Key"
         '
-        'FiltroListasPreciosBindingSource
+        'ModificacionClienteListasPreciosBindingSource
         '
-        Me.FiltroListasPreciosBindingSource.DataMember = "FiltroListasPrecios"
-        Me.FiltroListasPreciosBindingSource.DataSource = Me.FrmClienteMayoristaViewModelBindingSource
+        Me.ModificacionClienteListasPreciosBindingSource.DataMember = "ListasPrecios"
+        Me.ModificacionClienteListasPreciosBindingSource.DataSource = Me.ModificacionClienteMayoristaDetalleBindingSource
         '
         'cmb_CondicionIVA_Buscar
         '
         Me.cmb_CondicionIVA_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmb_CondicionIVA_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cmb_CondicionIVA_Buscar.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.ModificacionClienteMayoristaDetalleBindingSource, "CondicionesIVASaleccionada", True))
-        Me.cmb_CondicionIVA_Buscar.DataSource = Me.FiltroCondicionesIVABindingSource
+        Me.cmb_CondicionIVA_Buscar.DataSource = Me.ModificacionClienteCondicionesIVABindingSource
         Me.cmb_CondicionIVA_Buscar.DisplayMember = "Value"
         Me.cmb_CondicionIVA_Buscar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_CondicionIVA_Buscar.Enabled = False
@@ -726,10 +710,10 @@ Partial Class frmClienteMayorista
         Me.cmb_CondicionIVA_Buscar.TabIndex = 94
         Me.cmb_CondicionIVA_Buscar.ValueMember = "Key"
         '
-        'FiltroCondicionesIVABindingSource
+        'ModificacionClienteCondicionesIVABindingSource
         '
-        Me.FiltroCondicionesIVABindingSource.DataMember = "FiltroCondicionesIVA"
-        Me.FiltroCondicionesIVABindingSource.DataSource = Me.FrmClienteMayoristaViewModelBindingSource
+        Me.ModificacionClienteCondicionesIVABindingSource.DataMember = "CondicionesIVA"
+        Me.ModificacionClienteCondicionesIVABindingSource.DataSource = Me.ModificacionClienteMayoristaDetalleBindingSource
         '
         'cmb_Corredor_Buscar
         '
@@ -762,6 +746,42 @@ Partial Class frmClienteMayorista
         Me.txt_Mail_Buscar.ReadOnly = True
         Me.txt_Mail_Buscar.Size = New System.Drawing.Size(211, 21)
         Me.txt_Mail_Buscar.TabIndex = 91
+        '
+        'PercentUpDown5
+        '
+        Me.PercentUpDown5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown5.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.ModificacionClienteMayoristaDetalleBindingSource, "PorcentajeBonificacion", True))
+        Me.PercentUpDown5.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown5.Location = New System.Drawing.Point(143, 34)
+        Me.PercentUpDown5.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown5.Name = "PercentUpDown5"
+        Me.PercentUpDown5.Size = New System.Drawing.Size(211, 21)
+        Me.PercentUpDown5.TabIndex = 96
+        Me.PercentUpDown5.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'PercentUpDown6
+        '
+        Me.PercentUpDown6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown6.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.ModificacionClienteMayoristaDetalleBindingSource, "PorcentajeComision", True))
+        Me.PercentUpDown6.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown6.Location = New System.Drawing.Point(540, 4)
+        Me.PercentUpDown6.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown6.Name = "PercentUpDown6"
+        Me.PercentUpDown6.Size = New System.Drawing.Size(211, 21)
+        Me.PercentUpDown6.TabIndex = 97
+        Me.PercentUpDown6.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'PercentUpDown7
+        '
+        Me.PercentUpDown7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown7.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.ModificacionClienteMayoristaDetalleBindingSource, "PorcentajeLista", True))
+        Me.PercentUpDown7.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown7.Location = New System.Drawing.Point(540, 34)
+        Me.PercentUpDown7.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown7.Name = "PercentUpDown7"
+        Me.PercentUpDown7.Size = New System.Drawing.Size(211, 21)
+        Me.PercentUpDown7.TabIndex = 98
+        Me.PercentUpDown7.Value = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'GB_Buscar
         '
@@ -923,12 +943,16 @@ Partial Class frmClienteMayorista
         Me.cmb_CondicionIVA_Filtro.DataSource = Me.FiltroCondicionesIVABindingSource
         Me.cmb_CondicionIVA_Filtro.DisplayMember = "Value"
         Me.cmb_CondicionIVA_Filtro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmb_CondicionIVA_Filtro.FormattingEnabled = True
         Me.cmb_CondicionIVA_Filtro.Location = New System.Drawing.Point(565, 34)
         Me.cmb_CondicionIVA_Filtro.Name = "cmb_CondicionIVA_Filtro"
         Me.cmb_CondicionIVA_Filtro.Size = New System.Drawing.Size(194, 23)
         Me.cmb_CondicionIVA_Filtro.TabIndex = 24
         Me.cmb_CondicionIVA_Filtro.ValueMember = "Key"
+        '
+        'FiltroCondicionesIVABindingSource
+        '
+        Me.FiltroCondicionesIVABindingSource.DataMember = "CondicionesIVA"
+        Me.FiltroCondicionesIVABindingSource.DataSource = Me.FrmClienteMayoristaViewModelBindingSource
         '
         'Label54
         '
@@ -954,6 +978,11 @@ Partial Class frmClienteMayorista
         Me.cmb_ListaPrecios_Filtro.Size = New System.Drawing.Size(194, 23)
         Me.cmb_ListaPrecios_Filtro.TabIndex = 26
         Me.cmb_ListaPrecios_Filtro.ValueMember = "Key"
+        '
+        'FiltroListasPreciosBindingSource
+        '
+        Me.FiltroListasPreciosBindingSource.DataMember = "ListasPrecios"
+        Me.FiltroListasPreciosBindingSource.DataSource = Me.FrmClienteMayoristaViewModelBindingSource
         '
         'Label50
         '
@@ -1561,7 +1590,7 @@ Partial Class frmClienteMayorista
         Me.cb_ListaPrecios.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_ListaPrecios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_ListaPrecios.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.AltaClienteMayoristaDetalleBindingSource, "ListaPreciosSaleccionada", True))
-        Me.cb_ListaPrecios.DataSource = Me.ListasPreciosBindingSource
+        Me.cb_ListaPrecios.DataSource = Me.AltaClienteListasPreciosBindingSource
         Me.cb_ListaPrecios.DisplayMember = "Value"
         Me.cb_ListaPrecios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_ListaPrecios.FormattingEnabled = True
@@ -1571,10 +1600,10 @@ Partial Class frmClienteMayorista
         Me.cb_ListaPrecios.TabIndex = 12
         Me.cb_ListaPrecios.ValueMember = "Key"
         '
-        'ListasPreciosBindingSource
+        'AltaClienteListasPreciosBindingSource
         '
-        Me.ListasPreciosBindingSource.DataMember = "ListasPrecios"
-        Me.ListasPreciosBindingSource.DataSource = Me.FrmClienteMayoristaViewModelBindingSource
+        Me.AltaClienteListasPreciosBindingSource.DataMember = "ListasPrecios"
+        Me.AltaClienteListasPreciosBindingSource.DataSource = Me.AltaClienteMayoristaDetalleBindingSource
         '
         'TableLayoutPanel2
         '
@@ -1631,11 +1660,8 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel1.Controls.Add(Me.Label22, 0, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Cuit, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Button1, 2, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Lista, 4, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.cmb_Corredor, 1, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label23, 3, 4)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Comision, 4, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.txt_Bonificacion, 1, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Nombre, 4, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.cb_CondicionIva, 4, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Transporte, 1, 3)
@@ -1643,6 +1669,9 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel1.Controls.Add(Me.Label21, 3, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label19, 3, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_CondicionIva, 3, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.PercentUpDown2, 1, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.PercentUpDown3, 4, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.PercentUpDown4, 4, 2)
         Me.TableLayoutPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -1725,16 +1754,6 @@ Partial Class frmClienteMayorista
         Me.Button1.TabIndex = 75
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'txt_Lista
-        '
-        Me.txt_Lista.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Lista.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.AltaClienteMayoristaDetalleBindingSource, "Lista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Lista.Location = New System.Drawing.Point(541, 131)
-        Me.txt_Lista.MaxLength = 255
-        Me.txt_Lista.Name = "txt_Lista"
-        Me.txt_Lista.Size = New System.Drawing.Size(212, 21)
-        Me.txt_Lista.TabIndex = 9
-        '
         'cmb_Corredor
         '
         Me.cmb_Corredor.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1760,26 +1779,6 @@ Partial Class frmClienteMayorista
         Me.Label23.TabIndex = 79
         Me.Label23.Text = "Lista % (*)"
         '
-        'txt_Comision
-        '
-        Me.txt_Comision.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Comision.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.AltaClienteMayoristaDetalleBindingSource, "Comision", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Comision.Location = New System.Drawing.Point(541, 64)
-        Me.txt_Comision.MaxLength = 255
-        Me.txt_Comision.Name = "txt_Comision"
-        Me.txt_Comision.Size = New System.Drawing.Size(212, 21)
-        Me.txt_Comision.TabIndex = 6
-        '
-        'txt_Bonificacion
-        '
-        Me.txt_Bonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Bonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.AltaClienteMayoristaDetalleBindingSource, "Bonificacion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Bonificacion.Location = New System.Drawing.Point(143, 131)
-        Me.txt_Bonificacion.MaxLength = 255
-        Me.txt_Bonificacion.Name = "txt_Bonificacion"
-        Me.txt_Bonificacion.Size = New System.Drawing.Size(212, 21)
-        Me.txt_Bonificacion.TabIndex = 8
-        '
         'txt_Nombre
         '
         Me.txt_Nombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1795,7 +1794,7 @@ Partial Class frmClienteMayorista
         Me.cb_CondicionIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_CondicionIva.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_CondicionIva.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.AltaClienteMayoristaDetalleBindingSource, "CondicionesIVASaleccionada", True))
-        Me.cb_CondicionIva.DataSource = Me.CondicionesIVABindingSource
+        Me.cb_CondicionIva.DataSource = Me.AltaClienteCondicionesIVABindingSource
         Me.cb_CondicionIva.DisplayMember = "Value"
         Me.cb_CondicionIva.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_CondicionIva.Location = New System.Drawing.Point(541, 34)
@@ -1804,10 +1803,10 @@ Partial Class frmClienteMayorista
         Me.cb_CondicionIva.TabIndex = 4
         Me.cb_CondicionIva.ValueMember = "Key"
         '
-        'CondicionesIVABindingSource
+        'AltaClienteCondicionesIVABindingSource
         '
-        Me.CondicionesIVABindingSource.DataMember = "CondicionesIVA"
-        Me.CondicionesIVABindingSource.DataSource = Me.FrmClienteMayoristaViewModelBindingSource
+        Me.AltaClienteCondicionesIVABindingSource.DataMember = "CondicionesIVA"
+        Me.AltaClienteCondicionesIVABindingSource.DataSource = Me.AltaClienteMayoristaDetalleBindingSource
         '
         'txt_Transporte
         '
@@ -1859,6 +1858,42 @@ Partial Class frmClienteMayorista
         Me.lbl_CondicionIva.TabIndex = 22
         Me.lbl_CondicionIva.Text = "Condición de IVA (*)"
         '
+        'PercentUpDown2
+        '
+        Me.PercentUpDown2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown2.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.AltaClienteMayoristaDetalleBindingSource, "PorcentajeBonificacion", True))
+        Me.PercentUpDown2.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown2.Location = New System.Drawing.Point(143, 131)
+        Me.PercentUpDown2.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown2.Name = "PercentUpDown2"
+        Me.PercentUpDown2.Size = New System.Drawing.Size(212, 21)
+        Me.PercentUpDown2.TabIndex = 80
+        Me.PercentUpDown2.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'PercentUpDown3
+        '
+        Me.PercentUpDown3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown3.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.AltaClienteMayoristaDetalleBindingSource, "PorcentajeLista", True))
+        Me.PercentUpDown3.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown3.Location = New System.Drawing.Point(541, 131)
+        Me.PercentUpDown3.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown3.Name = "PercentUpDown3"
+        Me.PercentUpDown3.Size = New System.Drawing.Size(212, 21)
+        Me.PercentUpDown3.TabIndex = 81
+        Me.PercentUpDown3.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'PercentUpDown4
+        '
+        Me.PercentUpDown4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown4.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.AltaClienteMayoristaDetalleBindingSource, "PorcentajeComision", True))
+        Me.PercentUpDown4.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown4.Location = New System.Drawing.Point(541, 64)
+        Me.PercentUpDown4.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown4.Name = "PercentUpDown4"
+        Me.PercentUpDown4.Size = New System.Drawing.Size(212, 21)
+        Me.PercentUpDown4.TabIndex = 82
+        Me.PercentUpDown4.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
         'Label17
         '
         Me.Label17.AutoSize = True
@@ -1908,7 +1943,6 @@ Partial Class frmClienteMayorista
         Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel13)
         Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel14)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Cancelar)
-        Me.GB_Modificacion.Controls.Add(Me.Btn_Eliminar)
         Me.GB_Modificacion.Controls.Add(Me.Btn_Modificar)
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(10, 6)
@@ -1945,11 +1979,12 @@ Partial Class frmClienteMayorista
         '
         'chk_Habilitado_Mod
         '
-        Me.chk_Habilitado_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chk_Habilitado_Mod.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.chk_Habilitado_Mod.AutoSize = True
+        Me.chk_Habilitado_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ModificacionClienteMayoristaDetalleBindingSource, "Habilitado", True))
         Me.chk_Habilitado_Mod.Location = New System.Drawing.Point(143, 13)
         Me.chk_Habilitado_Mod.Name = "chk_Habilitado_Mod"
-        Me.chk_Habilitado_Mod.Size = New System.Drawing.Size(237, 14)
+        Me.chk_Habilitado_Mod.Size = New System.Drawing.Size(15, 14)
         Me.chk_Habilitado_Mod.TabIndex = 125
         Me.chk_Habilitado_Mod.UseVisualStyleBackColor = True
         '
@@ -2460,7 +2495,7 @@ Partial Class frmClienteMayorista
         Me.cb_ListaPrecios_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_ListaPrecios_Mod.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cb_ListaPrecios_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.ModificacionClienteMayoristaDetalleBindingSource, "ListaPreciosSaleccionada", True))
-        Me.cb_ListaPrecios_Mod.DataSource = Me.ListasPreciosBindingSource
+        Me.cb_ListaPrecios_Mod.DataSource = Me.ModificacionClienteListasPreciosBindingSource
         Me.cb_ListaPrecios_Mod.DisplayMember = "Value"
         Me.cb_ListaPrecios_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_ListaPrecios_Mod.FormattingEnabled = True
@@ -2526,11 +2561,8 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel14.Controls.Add(Me.Label33, 0, 4)
         Me.TableLayoutPanel14.Controls.Add(Me.txt_Cuit_Mod, 1, 1)
         Me.TableLayoutPanel14.Controls.Add(Me.Button2, 2, 3)
-        Me.TableLayoutPanel14.Controls.Add(Me.txt_Lista_Mod, 4, 4)
         Me.TableLayoutPanel14.Controls.Add(Me.cmb_Corredor_Mod, 1, 2)
         Me.TableLayoutPanel14.Controls.Add(Me.Label34, 3, 4)
-        Me.TableLayoutPanel14.Controls.Add(Me.txt_Comision_Mod, 4, 2)
-        Me.TableLayoutPanel14.Controls.Add(Me.txt_Bonificacion_Mod, 1, 4)
         Me.TableLayoutPanel14.Controls.Add(Me.txt_Nombre_Mod, 4, 0)
         Me.TableLayoutPanel14.Controls.Add(Me.cb_CondicionIva_Mod, 4, 1)
         Me.TableLayoutPanel14.Controls.Add(Me.txt_Transporte_Mod, 1, 3)
@@ -2538,6 +2570,9 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel14.Controls.Add(Me.Label36, 3, 2)
         Me.TableLayoutPanel14.Controls.Add(Me.Label37, 3, 0)
         Me.TableLayoutPanel14.Controls.Add(Me.Label38, 3, 1)
+        Me.TableLayoutPanel14.Controls.Add(Me.txt_Comision_Mod, 4, 2)
+        Me.TableLayoutPanel14.Controls.Add(Me.txt_Lista_Mod, 4, 4)
+        Me.TableLayoutPanel14.Controls.Add(Me.PercentUpDown1, 1, 4)
         Me.TableLayoutPanel14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TableLayoutPanel14.Location = New System.Drawing.Point(6, 20)
         Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
@@ -2621,16 +2656,6 @@ Partial Class frmClienteMayorista
         Me.ToolCliente.SetToolTip(Me.Button2, "Buscar transporte")
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'txt_Lista_Mod
-        '
-        Me.txt_Lista_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Lista_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Lista", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Lista_Mod.Location = New System.Drawing.Point(541, 131)
-        Me.txt_Lista_Mod.MaxLength = 255
-        Me.txt_Lista_Mod.Name = "txt_Lista_Mod"
-        Me.txt_Lista_Mod.Size = New System.Drawing.Size(212, 21)
-        Me.txt_Lista_Mod.TabIndex = 108
-        '
         'cmb_Corredor_Mod
         '
         Me.cmb_Corredor_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2656,26 +2681,6 @@ Partial Class frmClienteMayorista
         Me.Label34.TabIndex = 79
         Me.Label34.Text = "Lista % (*)"
         '
-        'txt_Comision_Mod
-        '
-        Me.txt_Comision_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Comision_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Comision", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Comision_Mod.Location = New System.Drawing.Point(541, 64)
-        Me.txt_Comision_Mod.MaxLength = 255
-        Me.txt_Comision_Mod.Name = "txt_Comision_Mod"
-        Me.txt_Comision_Mod.Size = New System.Drawing.Size(212, 21)
-        Me.txt_Comision_Mod.TabIndex = 105
-        '
-        'txt_Bonificacion_Mod
-        '
-        Me.txt_Bonificacion_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Bonificacion_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Bonificacion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
-        Me.txt_Bonificacion_Mod.Location = New System.Drawing.Point(143, 131)
-        Me.txt_Bonificacion_Mod.MaxLength = 255
-        Me.txt_Bonificacion_Mod.Name = "txt_Bonificacion_Mod"
-        Me.txt_Bonificacion_Mod.Size = New System.Drawing.Size(212, 21)
-        Me.txt_Bonificacion_Mod.TabIndex = 107
-        '
         'txt_Nombre_Mod
         '
         Me.txt_Nombre_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2690,8 +2695,8 @@ Partial Class frmClienteMayorista
         '
         Me.cb_CondicionIva_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cb_CondicionIva_Mod.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cb_CondicionIva_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.ModificacionClienteMayoristaDetalleBindingSource, "CondicionesIVASaleccionada", True))
-        Me.cb_CondicionIva_Mod.DataSource = Me.CondicionesIVABindingSource
+        Me.cb_CondicionIva_Mod.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.ModificacionClienteMayoristaDetalleBindingSource, "CondicionesIVASaleccionada", True))
+        Me.cb_CondicionIva_Mod.DataSource = Me.ModificacionClienteCondicionesIVABindingSource
         Me.cb_CondicionIva_Mod.DisplayMember = "Value"
         Me.cb_CondicionIva_Mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_CondicionIva_Mod.FormattingEnabled = True
@@ -2751,6 +2756,42 @@ Partial Class frmClienteMayorista
         Me.Label38.TabIndex = 22
         Me.Label38.Text = "Condición de IVA (*)"
         '
+        'txt_Comision_Mod
+        '
+        Me.txt_Comision_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Comision_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.ModificacionClienteMayoristaDetalleBindingSource, "PorcentajeComision", True))
+        Me.txt_Comision_Mod.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.txt_Comision_Mod.Location = New System.Drawing.Point(541, 64)
+        Me.txt_Comision_Mod.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.txt_Comision_Mod.Name = "txt_Comision_Mod"
+        Me.txt_Comision_Mod.Size = New System.Drawing.Size(212, 21)
+        Me.txt_Comision_Mod.TabIndex = 130
+        Me.txt_Comision_Mod.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'txt_Lista_Mod
+        '
+        Me.txt_Lista_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_Lista_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.ModificacionClienteMayoristaDetalleBindingSource, "PorcentajeLista", True))
+        Me.txt_Lista_Mod.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.txt_Lista_Mod.Location = New System.Drawing.Point(541, 131)
+        Me.txt_Lista_Mod.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.txt_Lista_Mod.Name = "txt_Lista_Mod"
+        Me.txt_Lista_Mod.Size = New System.Drawing.Size(212, 21)
+        Me.txt_Lista_Mod.TabIndex = 131
+        Me.txt_Lista_Mod.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'PercentUpDown1
+        '
+        Me.PercentUpDown1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PercentUpDown1.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.ModificacionClienteMayoristaDetalleBindingSource, "PorcentajeBonificacion", True))
+        Me.PercentUpDown1.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.PercentUpDown1.Location = New System.Drawing.Point(143, 131)
+        Me.PercentUpDown1.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.PercentUpDown1.Name = "PercentUpDown1"
+        Me.PercentUpDown1.Size = New System.Drawing.Size(212, 21)
+        Me.PercentUpDown1.TabIndex = 132
+        Me.PercentUpDown1.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
         'Btn_Cancelar
         '
         Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2758,7 +2799,7 @@ Partial Class frmClienteMayorista
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(450, 650)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(556, 650)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 128
@@ -2766,22 +2807,6 @@ Partial Class frmClienteMayorista
         Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolCliente.SetToolTip(Me.Btn_Cancelar, "Descarta los cambios y vuelve al listado de clientes")
         Me.Btn_Cancelar.UseVisualStyleBackColor = True
-        '
-        'Btn_Eliminar
-        '
-        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
-        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(556, 650)
-        Me.Btn_Eliminar.Name = "Btn_Eliminar"
-        Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
-        Me.Btn_Eliminar.TabIndex = 127
-        Me.Btn_Eliminar.Text = "Eliminar"
-        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolCliente.SetToolTip(Me.Btn_Eliminar, "Haz click aquí para eliminar el cliente")
-        Me.Btn_Eliminar.UseVisualStyleBackColor = True
         '
         'Btn_Modificar
         '
@@ -2820,13 +2845,6 @@ Partial Class frmClienteMayorista
         Me.DataGridViewImageColumn2.ToolTipText = "Eliminar Perfil"
         Me.DataGridViewImageColumn2.Width = 60
         '
-        'ErrorCliente
-        '
-        Me.ErrorCliente.BlinkRate = 200
-        Me.ErrorCliente.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
-        Me.ErrorCliente.ContainerControl = Me
-        Me.ErrorCliente.RightToLeft = True
-        '
         'ToolCliente
         '
         Me.ToolCliente.IsBalloon = True
@@ -2856,12 +2874,17 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel16.ResumeLayout(False)
         Me.TableLayoutPanel16.PerformLayout()
         CType(Me.ModificacionClienteMayoristaDetalleBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FiltroListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FiltroCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ModificacionClienteListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ModificacionClienteCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CorredoresBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Buscar.ResumeLayout(False)
         Me.TableLayoutPanel15.ResumeLayout(False)
         Me.TableLayoutPanel15.PerformLayout()
+        CType(Me.FiltroCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FiltroListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmpresasBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HabilitadosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbAlta.ResumeLayout(False)
@@ -2885,12 +2908,15 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel6.PerformLayout()
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
-        CType(Me.ListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.AltaClienteListasPreciosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        CType(Me.CondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.AltaClienteCondicionesIVABindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbMod.ResumeLayout(False)
         Me.GB_Modificacion.ResumeLayout(False)
         Me.TableLayoutPanel18.ResumeLayout(False)
@@ -2916,7 +2942,9 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel13.PerformLayout()
         Me.TableLayoutPanel14.ResumeLayout(False)
         Me.TableLayoutPanel14.PerformLayout()
-        CType(Me.ErrorCliente, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txt_Comision_Mod, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txt_Lista_Mod, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PercentUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2957,9 +2985,7 @@ Partial Class frmClienteMayorista
     Friend WithEvents cb_CondicionIva As System.Windows.Forms.ComboBox
     Friend WithEvents lbl_CondicionIva As System.Windows.Forms.Label
     Friend WithEvents lbl_ListaPrecio As System.Windows.Forms.Label
-    Friend WithEvents ErrorCliente As System.Windows.Forms.ErrorProvider
     Friend WithEvents btn_Buscar As System.Windows.Forms.Button
-    Friend WithEvents Btn_Eliminar As System.Windows.Forms.Button
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents btn_Restablecer As System.Windows.Forms.Button
     Friend WithEvents ToolCliente As System.Windows.Forms.ToolTip
@@ -3045,11 +3071,8 @@ Partial Class frmClienteMayorista
     Friend WithEvents Label33 As Label
     Friend WithEvents txt_Cuit_Mod As MaskedTextBox
     Friend WithEvents Button2 As Button
-    Friend WithEvents txt_Lista_Mod As TextBox
     Friend WithEvents cmb_Corredor_Mod As ComboBox
     Friend WithEvents Label34 As Label
-    Friend WithEvents txt_Comision_Mod As TextBox
-    Friend WithEvents txt_Bonificacion_Mod As TextBox
     Friend WithEvents txt_Nombre_Mod As TextBox
     Friend WithEvents cb_CondicionIva_Mod As ComboBox
     Friend WithEvents txt_Transporte_Mod As TextBox
@@ -3057,9 +3080,6 @@ Partial Class frmClienteMayorista
     Friend WithEvents Label36 As Label
     Friend WithEvents Label37 As Label
     Friend WithEvents Label38 As Label
-    Friend WithEvents txt_Lista As TextBox
-    Friend WithEvents txt_Comision As TextBox
-    Friend WithEvents txt_Bonificacion As TextBox
     Friend WithEvents TableLayoutPanel15 As TableLayoutPanel
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents TableLayoutPanel16 As TableLayoutPanel
@@ -3073,9 +3093,6 @@ Partial Class frmClienteMayorista
     Friend WithEvents Label46 As Label
     Friend WithEvents Label47 As Label
     Friend WithEvents txt_Mail_Buscar As TextBox
-    Friend WithEvents txt_Comision_Buscar As TextBox
-    Friend WithEvents txt_Bonificacion_Buscar As TextBox
-    Friend WithEvents txt_Lista_Buscar As TextBox
     Friend WithEvents txt_Direccion_Buscar As TextBox
     Friend WithEvents txt_Telefono_Buscar As TextBox
     Friend WithEvents cmb_ListaPrecio_Buscar As ComboBox
@@ -3139,6 +3156,19 @@ Partial Class frmClienteMayorista
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents DG_Clientes As DataGridView
     Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents AltaClienteListasPreciosBindingSource As BindingSource
+    Friend WithEvents AltaClienteCondicionesIVABindingSource As BindingSource
+    Friend WithEvents ModificacionClienteListasPreciosBindingSource As BindingSource
+    Friend WithEvents ModificacionClienteCondicionesIVABindingSource As BindingSource
+    Friend WithEvents txt_Comision_Mod As Controles.PercentUpDown
+    Friend WithEvents txt_Lista_Mod As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown1 As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown2 As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown3 As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown4 As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown5 As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown6 As Controles.PercentUpDown
+    Friend WithEvents PercentUpDown7 As Controles.PercentUpDown
     Friend WithEvents Id As DataGridViewTextBoxColumn
     Friend WithEvents RazonSocialDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CuitDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -3146,6 +3176,4 @@ Partial Class frmClienteMayorista
     Friend WithEvents CuentaCorrienteMontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
     Friend WithEvents Eliminar As DataGridViewImageColumn
-    Friend WithEvents ListasPreciosBindingSource As BindingSource
-    Friend WithEvents CondicionesIVABindingSource As BindingSource
 End Class

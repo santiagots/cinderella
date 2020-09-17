@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using System.Data.Entity;
+﻿using Common.Core.Enum;
+using Common.Core.Extension;
 using Common.Core.Interfaces;
 using Common.Core.Model;
 using System.Collections.Generic;
-using System;
-using Common.Core.Enum;
-using Common.Core.Extension;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Common.Data.Repository
@@ -16,7 +15,7 @@ namespace Common.Data.Repository
         {
         }
 
-        public Task<List<ClienteMayorista>> BuscarAsync(string razonSocial, string cuit, CondicionIVA? condicionIva, int? listaPrecio, int? idCorredor, int? idEmpresa, bool? habilitado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public Task<List<ClienteMayorista>> BuscarAsync(string razonSocial, string cuit, CondicionIVA? condicionIva, int? IdlistaPrecio, int? idCorredor, int? idEmpresa, bool? habilitado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             IQueryable<ClienteMayorista> ClientesMayoristas = ObtenerConsulta();
 
@@ -29,8 +28,8 @@ namespace Common.Data.Repository
             if (condicionIva != null)
                 ClientesMayoristas = ClientesMayoristas.Where(x => x.CondicionIVA == condicionIva);
 
-            if (listaPrecio != null)
-                ClientesMayoristas = ClientesMayoristas.Where(x => x.ListaPrecio == listaPrecio);
+            if (IdlistaPrecio != null)
+                ClientesMayoristas = ClientesMayoristas.Where(x => x.IdListaPrecio == IdlistaPrecio);
 
             if (habilitado != null)
                 ClientesMayoristas = ClientesMayoristas.Where(x => x.Habilitado == habilitado);
@@ -40,13 +39,7 @@ namespace Common.Data.Repository
 
         public Task GuardarAsync(ClienteMayorista cliente)
         {
-            cliente.DomicilioEntrega.Localidad = (Localidad)_context.Attach(cliente.DomicilioEntrega.Localidad);
-            cliente.DomicilioEntrega.Distrito = (Distrito)_context.Attach(cliente.DomicilioEntrega.Distrito);
-            cliente.DomicilioEntrega.Provincia = (Provincia)_context.Attach(cliente.DomicilioEntrega.Provincia);
-
-            cliente.DomicilioFacturacion.Localidad = (Localidad)_context.Attach(cliente.DomicilioFacturacion.Localidad);
-            cliente.DomicilioFacturacion.Distrito = (Distrito)_context.Attach(cliente.DomicilioFacturacion.Distrito);
-            cliente.DomicilioFacturacion.Provincia = (Provincia)_context.Attach(cliente.DomicilioFacturacion.Provincia);
+            AttachCliente(ref cliente);
 
             _context.ClienteMayorista.Add(cliente);
 
@@ -55,6 +48,8 @@ namespace Common.Data.Repository
 
         public Task ActualizarAsync(ClienteMayorista cliente)
         {
+            AttachCliente(ref cliente);
+
             _context.Entry(cliente.DomicilioFacturacion).State = EntityState.Modified;
             _context.Entry(cliente.DomicilioEntrega).State = EntityState.Modified;
             _context.Entry(cliente).State = EntityState.Modified;
@@ -70,6 +65,7 @@ namespace Common.Data.Repository
         private IQueryable<ClienteMayorista> ObtenerConsulta()
         {
             return _context.ClienteMayorista
+                                    .Include(x => x.ListaPrecio)
                                     .Include(x => x.DomicilioFacturacion)
                                     .Include(x => x.DomicilioFacturacion.Localidad)
                                     .Include(x => x.DomicilioFacturacion.Provincia)
@@ -78,6 +74,19 @@ namespace Common.Data.Repository
                                     .Include(x => x.DomicilioEntrega.Localidad)
                                     .Include(x => x.DomicilioEntrega.Provincia)
                                     .Include(x => x.DomicilioEntrega.Distrito);
+        }
+
+        private void AttachCliente(ref ClienteMayorista cliente)
+        {
+            cliente.ListaPrecio = (ListaPrecio)_context.Attach(cliente.ListaPrecio);
+
+            cliente.DomicilioEntrega.Localidad = (Localidad)_context.Attach(cliente.DomicilioEntrega.Localidad);
+            cliente.DomicilioEntrega.Distrito = (Distrito)_context.Attach(cliente.DomicilioEntrega.Distrito);
+            cliente.DomicilioEntrega.Provincia = (Provincia)_context.Attach(cliente.DomicilioEntrega.Provincia);
+
+            cliente.DomicilioFacturacion.Localidad = (Localidad)_context.Attach(cliente.DomicilioFacturacion.Localidad);
+            cliente.DomicilioFacturacion.Distrito = (Distrito)_context.Attach(cliente.DomicilioFacturacion.Distrito);
+            cliente.DomicilioFacturacion.Provincia = (Provincia)_context.Attach(cliente.DomicilioFacturacion.Provincia);
         }
     }
 }

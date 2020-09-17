@@ -1,4 +1,5 @@
-﻿using Common.Core.Interfaces;
+﻿using Common.Core.Enum;
+using Common.Core.Interfaces;
 using Common.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,30 @@ namespace Common.Data.Repository
 	                              ,G.id_Lista as IdGrupo
                                   ,G.ListaPrecio as Grupo
                             FROM LISTA_PRECIO P INNER JOIN LISTA_GRUPO G ON P.Id_ListaGrupo = G.id_Lista";
+
+            return _context.ListaPrecio.SqlQuery(sql).ToListAsync();
+        }
+
+        public Task<List<ListaPrecio>> ObtenerMayoristaAsync()
+        {
+            string sql = @" SELECT P.id_Lista as Id
+                                    ,P.ListaPrecio as Nombre
+	                                ,G.id_Lista as IdGrupo
+                                    ,G.ListaPrecio as Grupo
+                            FROM LISTA_PRECIO P INNER JOIN LISTA_GRUPO G ON P.Id_ListaGrupo = G.id_Lista
+                            WHERE G.id_Lista = 3";
+
+            return _context.ListaPrecio.SqlQuery(sql).ToListAsync();
+        }
+
+        public Task<List<ListaPrecio>> ObtenerMinoristaAsync()
+        {
+            string sql = @" SELECT P.id_Lista as Id
+                                    ,P.ListaPrecio as Nombre
+	                                ,G.id_Lista as IdGrupo
+                                    ,G.ListaPrecio as Grupo
+                            FROM LISTA_PRECIO P INNER JOIN LISTA_GRUPO G ON P.Id_ListaGrupo = G.id_Lista
+                            WHERE G.id_Lista <> 3";
 
             return _context.ListaPrecio.SqlQuery(sql).ToListAsync();
         }

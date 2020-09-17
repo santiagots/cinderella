@@ -4,20 +4,21 @@ Imports Common.Core.Model
 
 Namespace Formularios.Cliente
     Public Class ClienteMayoristaDetalleViewModel
-
         Public Property Id As Integer
         Public Property RazonSocial As String
         Public Property Nombre As String
         Public Property Cuit As String
+        Public Property CondicionesIVA As BindingList(Of KeyValuePair(Of CondicionIVA?, String)) = New BindingList(Of KeyValuePair(Of CondicionIVA?, String))()
         Public Property CondicionesIVASaleccionada As KeyValuePair(Of CondicionIVA?, String) = New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Seleccione una opción")
         Public Property CorredorSaleccionada As KeyValuePair(Of Integer?, String) = New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción")
-        Public Property Comision As Decimal 
+        Public Property PorcentajeComision As Decimal
         Public Property Transporte As String
-        Public Property Bonificacion As Decimal
-        Public Property Lista As Decimal
+        Public Property PorcentajeBonificacion As Decimal
+        Public Property PorcentajeLista As Decimal
         Public Property CondicionPago As String
         Public Property EmpresaSaleccionada As KeyValuePair(Of Integer?, String) = New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción")
-        Public Property ListaPreciosSaleccionada As KeyValuePair(Of Integer?, String) = New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción")
+        Public Property ListasPrecios As BindingList(Of KeyValuePair(Of ListaPrecio, String)) = New BindingList(Of KeyValuePair(Of ListaPrecio, String))()
+        Public Property ListaPreciosSaleccionada As KeyValuePair(Of ListaPrecio, String) = New KeyValuePair(Of ListaPrecio, String)(Nothing, "Seleccione una opción")
         Public Property Observaciones As String
         Public Property FacturacionId As Integer
         Public Property FacturacionDireccion As String
@@ -39,5 +40,6 @@ Namespace Formularios.Cliente
         Public Property EntregaDistritosSaleccionada As Distrito
         Public Property EntregaLocalidadesSaleccionada As Localidad
         Public Property EntregaCodigoPostal As String
+        Public Property Habilitado As String
     End Class
 End Namespace

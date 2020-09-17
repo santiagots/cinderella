@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -551,16 +551,6 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True")>  _
-        Public ReadOnly Property Conexion() As String
-            Get
-                Return CType(Me("Conexion"),String)
-            End Get
-        End Property
-        
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
@@ -571,17 +561,6 @@ Namespace My
             Set
                 Me("PaginacionItemsPagina") = value
             End Set
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezl"& _ 
-            "ltpA6/gQhWzNU089HLhPWu39Kk=")>  _
-        Public ReadOnly Property ConexionRemoto() As String
-            Get
-                Return CType(Me("ConexionRemoto"),String)
-            End Get
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
@@ -689,6 +668,28 @@ Namespace My
             Set
                 Me("DatosFiscalLocalidad") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLExpress;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=Tru"& _ 
+            "e")>  _
+        Public ReadOnly Property Conexion() As String
+            Get
+                Return CType(Me("Conexion"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Iy89GDWEcf1GV7hEpCd5XEt0/ONcS73B3qkW50wonWRDCAbXpIhrvR6TEXIJBFNGYu/5QLG2wYvQd5/Xg"& _ 
+            "ydTylaLBTvrc2oMEkvtz9Ml4TQ=")>  _
+        Public ReadOnly Property ConexionRemoto() As String
+            Get
+                Return CType(Me("ConexionRemoto"),String)
+            End Get
         End Property
     End Class
 End Namespace

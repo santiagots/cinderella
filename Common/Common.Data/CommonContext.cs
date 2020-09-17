@@ -62,8 +62,12 @@ namespace Common.Data
 
             modelBuilder.Entity<ClienteMayorista>().ToTable("CLIENTEMAYORISTA");
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.Id).HasColumnName("id_Cliente");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.PorcentajeBonificacion).HasColumnName("Bonificacion");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.PorcentajeComision).HasColumnName("Comision");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.PorcentajeLista).HasColumnName("Lista");
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.CondicionIVA).HasColumnName("id_CondicionIva");
-            modelBuilder.Entity<ClienteMayorista>().Property(t => t.ListaPrecio).HasColumnName("id_ListaPrecio");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdListaPrecio).HasColumnName("id_ListaPrecio");
+            modelBuilder.Entity<ClienteMayorista>().HasRequired(v => v.ListaPrecio).WithMany().HasForeignKey(x => x.IdListaPrecio);
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDomicilioFacturacion).HasColumnName("id_DireccionFacturacion");
             modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDomicilioFacturacion);
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDomicilioEntrega).HasColumnName("id_DireccionEntrega");
@@ -97,6 +101,8 @@ namespace Common.Data
             modelBuilder.Entity<Distrito>().Property(t => t.IdProvincia).HasColumnName("id_Provincia");
 
             modelBuilder.Entity<ListaPrecio>().ToTable("LISTA_PRECIO");
+            modelBuilder.Entity<ListaPrecio>().Property(t => t.Id).HasColumnName("id_Lista");
+            modelBuilder.Entity<ListaPrecio>().Property(t => t.Nombre).HasColumnName("ListaPrecio");
 
             modelBuilder.Entity<Localidad>().ToTable("LOCALIDADES");
             modelBuilder.Entity<Localidad>().Property(t => t.Id).HasColumnName("id_Localidad");

@@ -11,10 +11,10 @@ Public Class frmClienteMayorista
         EjecutarAsync(Async Function() As Task
                           FrmClienteMayoristaViewModelBindingSource.DataSource = frmClienteMayoristaViewModel
                           frmClienteMayoristaViewModel.ElementosPorPagina = Paginado.ElementosPorPagina
-                          Await frmClienteMayoristaViewModel.BuscarAsync()
+                          Await frmClienteMayoristaViewModel.CargarListaPreciosAsync()
                           Await frmClienteMayoristaViewModel.CargarProvinciasAsync()
+                          Await frmClienteMayoristaViewModel.BuscarAsync()
                           AltaClienteMayoristaDetalleBindingSource.DataSource = frmClienteMayoristaViewModel.AltaClientes
-                          ModificacionClienteMayoristaDetalleBindingSource.DataSource = frmClienteMayoristaViewModel.ModificacionClientes
                       End Function)
     End Sub
 
@@ -27,12 +27,16 @@ Public Class frmClienteMayorista
     Private Sub Btn_Agregar_Click(sender As Object, e As EventArgs) Handles Btn_Agregar.Click
         EjecutarAsync(Async Function() As Task
                           Await frmClienteMayoristaViewModel.GuardarAsync()
+                          Await frmClienteMayoristaViewModel.BuscarAsync()
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
                       End Function)
     End Sub
 
     Private Sub Btn_Modificar_Click(sender As Object, e As EventArgs) Handles Btn_Modificar.Click
         EjecutarAsync(Async Function() As Task
                           Await frmClienteMayoristaViewModel.ActualizarAsync()
+                          Await frmClienteMayoristaViewModel.BuscarAsync()
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
                       End Function)
     End Sub
 
@@ -160,13 +164,20 @@ Public Class frmClienteMayorista
                       End Function)
     End Sub
 
-    Private Sub DG_Clientes_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Clientes.CellClick
+    Private Sub DG_Clientes_SelectionChanged(sender As Object, e As EventArgs) Handles DG_Clientes.SelectionChanged
         EjecutarAsync(Async Function() As Task
+                          If (DG_Clientes.CurrentRow Is Nothing) Then
+                              Return
+                          End If
 
                           Dim cliente As ClienteMayoristaItem = CType(DG_Clientes.CurrentRow.DataBoundItem, ClienteMayoristaItem)
                           Await frmClienteMayoristaViewModel.CargarClienteAsync(cliente.ClienteMayorista)
                           ModificacionClienteMayoristaDetalleBindingSource.DataSource = frmClienteMayoristaViewModel.ModificacionClientes
+                      End Function)
+    End Sub
 
+    Private Sub DG_Clientes_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Clientes.CellClick
+        EjecutarAsync(Async Function() As Task
                           If DG_Clientes.Columns(e.ColumnIndex).Name = "Eliminar" Then
                               Dim respuesta As DialogResult = MessageBox.Show("¿Está seguro que desea eliminar la reserva?", "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
                               If respuesta = DialogResult.Yes Then
@@ -228,20 +239,11 @@ Public Class frmClienteMayorista
             tabControl.TabPages.Remove(TbAlta)
         End If
 
-        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Eliminar)) Then
-            Btn_Eliminar.Enabled = True
-            DG_Clientes.Columns("Eliminar").Visible = True
-        Else
-            Btn_Eliminar.Enabled = False
-            DG_Clientes.Columns("Eliminar").Visible = False
-        End If
-
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Modificar)) Then
             DG_Clientes.Columns("Modificar").Visible = True
         Else
             tabControl.TabPages.Remove(TbMod)
             DG_Clientes.Columns("Modificar").Visible = False
-            'RemoveHandler DG_Clientes.CellDoubleClick, AddressOf DG_Clientes_CellDoubleClick
         End If
     End Sub
 End Class

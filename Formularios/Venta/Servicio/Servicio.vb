@@ -152,16 +152,6 @@ Namespace Formularios.Venta
             Return costoFinanciero
         End Function
 
-        Public Shared Function ObtenerListaPrecio() As IList(Of ListaPrecio)
-            Dim listaPrecio As IList(Of ListaPrecio) = New List(Of ListaPrecio)
-            Using context As VentaContext = New VentaContext()
-                Dim listaPrecioRepository As IListaPrecioRepository = New ListaPrecioRepository(context)
-                listaPrecio = listaPrecioRepository.Obtener()
-            End Using
-
-            Return listaPrecio
-        End Function
-
         Public Shared Function ObtenerListaProductos() As IList(Of ModelBase.Producto)
             Dim listaProducto As IList(Of ModelBase.Producto) = New List(Of ModelBase.Producto)
             Using context As VentaContext = New VentaContext()

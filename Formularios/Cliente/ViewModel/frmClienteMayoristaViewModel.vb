@@ -6,20 +6,21 @@ Imports Common.Data.Service
 Imports Common.Core.Extension
 Imports Ventas.Data.Service
 Imports AutoMapper
+Imports Common.Core.Exceptions
+Imports Common.Core.Helper
 
 Namespace Formularios.Cliente
     Public Class frmClienteMayoristaViewModel
         Inherits Comunes.Common
 
+        Private ListaPrecio As BindingList(Of KeyValuePair(Of ListaPrecio, String))
         Private Provincias As BindingList(Of KeyValuePair(Of Provincia, String))
 
-        Public Property Habilitados As List(Of KeyValuePair(Of Boolean?, String)) = New List(Of KeyValuePair(Of Boolean?, String))()
-        Public Property FiltroCondicionesIVA As List(Of KeyValuePair(Of CondicionIVA?, String)) = New List(Of KeyValuePair(Of CondicionIVA?, String))()
-        Public Property CondicionesIVA As List(Of KeyValuePair(Of CondicionIVA?, String)) = New List(Of KeyValuePair(Of CondicionIVA?, String))()
-        Public Property Corredores As List(Of KeyValuePair(Of Integer?, String)) = New List(Of KeyValuePair(Of Integer?, String))()
-        Public Property Empresas As List(Of KeyValuePair(Of Integer?, String)) = New List(Of KeyValuePair(Of Integer?, String))()
-        Public Property FiltroListasPrecios As List(Of KeyValuePair(Of Integer?, String)) = New List(Of KeyValuePair(Of Integer?, String))()
-        Public Property ListasPrecios As List(Of KeyValuePair(Of Integer?, String)) = New List(Of KeyValuePair(Of Integer?, String))()
+        Public Property Habilitados As BindingList(Of KeyValuePair(Of Boolean?, String)) = New BindingList(Of KeyValuePair(Of Boolean?, String))()
+        Public Property CondicionesIVA As BindingList(Of KeyValuePair(Of CondicionIVA?, String)) = New BindingList(Of KeyValuePair(Of CondicionIVA?, String))()
+        Public Property Corredores As BindingList(Of KeyValuePair(Of Integer?, String)) = New BindingList(Of KeyValuePair(Of Integer?, String))()
+        Public Property Empresas As BindingList(Of KeyValuePair(Of Integer?, String)) = New BindingList(Of KeyValuePair(Of Integer?, String))()
+        Public Property ListasPrecios As BindingList(Of KeyValuePair(Of ListaPrecio, String)) = New BindingList(Of KeyValuePair(Of ListaPrecio, String))()
 
         Public Property FiltroRazonSocial As String
         Public Property FiltroCuit As String
@@ -27,7 +28,7 @@ Namespace Formularios.Cliente
         Public Property FiltroHabilitadoSaleccionada As KeyValuePair(Of Boolean?, String) = New KeyValuePair(Of Boolean?, String)(Nothing, "Todos")
         Public Property FiltroCorredorSaleccionada As KeyValuePair(Of Integer?, String) = New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción")
         Public Property FiltroCondicionesIVASaleccionada As KeyValuePair(Of CondicionIVA?, String) = New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Todos")
-        Public Property FiltroListaPreciosSaleccionada As KeyValuePair(Of Integer?, String) = New KeyValuePair(Of Integer?, String)(Nothing, "Todos")
+        Public Property FiltroListaPreciosSaleccionada As KeyValuePair(Of ListaPrecio, String) = New KeyValuePair(Of ListaPrecio, String)(Nothing, "Todos")
         Public Property FiltroClientes As BindingList(Of ClienteMayoristaItem) = New BindingList(Of ClienteMayoristaItem)()
         Public Property AltaClientes As ClienteMayoristaDetalleViewModel = New ClienteMayoristaDetalleViewModel()
         Public Property ModificacionClientes As ClienteMayoristaDetalleViewModel = New ClienteMayoristaDetalleViewModel()
@@ -46,7 +47,6 @@ Namespace Formularios.Cliente
         Sub New()
             CargarEmpresas()
             CargarCorredores()
-            CargarPrecios()
             CargarCondicionesIva()
             CargarHabilitado()
         End Sub
@@ -56,7 +56,7 @@ Namespace Formularios.Cliente
                                                                                                     FiltroRazonSocial,
                                                                                                     FiltroCuit,
                                                                                                     FiltroCondicionesIVASaleccionada.Key,
-                                                                                                    FiltroListaPreciosSaleccionada.Key,
+                                                                                                    FiltroListaPreciosSaleccionada.Key?.Id,
                                                                                                     FiltroCorredorSaleccionada.Key,
                                                                                                     FiltroEmpresaSaleccionada.Key,
                                                                                                     FiltroHabilitadoSaleccionada.Key,
@@ -78,11 +78,13 @@ Namespace Formularios.Cliente
         End Function
 
         Friend Async Function GuardarAsync() As Task
+            ValidarRequeridos(AltaClientes)
             Dim clientes As ClienteMayorista = Mapper.Map(Of ClienteMayorista)(AltaClientes)
             Await ClienteMayoristaService.GuardarAsync(TipoBase.Remota, clientes)
         End Function
 
         Friend Async Function ActualizarAsync() As Task
+            ValidarRequeridos(ModificacionClientes)
             Dim clientes As ClienteMayorista = Mapper.Map(Of ClienteMayorista)(ModificacionClientes)
             Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clientes)
         End Function
@@ -94,21 +96,15 @@ Namespace Formularios.Cliente
         End Sub
 
         Private Sub CargarCondicionesIva()
-            FiltroCondicionesIVA.AddRange([Enum](Of CondicionIVA).ToKeyValuePairList().Where(Function(x) x.Key <> CondicionIVA.Consumidor_Final))
-            FiltroCondicionesIVA.Insert(0, New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Todos"))
+            Dim keyValueCondicionesIVA As List(Of KeyValuePair(Of CondicionIVA?, String)) = [Enum](Of CondicionIVA).ToKeyValuePairList()
+            keyValueCondicionesIVA.Insert(0, New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Todos"))
 
-            CondicionesIVA.AddRange([Enum](Of CondicionIVA).ToKeyValuePairList().Where(Function(x) x.Key <> CondicionIVA.Consumidor_Final))
-            CondicionesIVA.Insert(0, New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Seleccione una opción"))
-        End Sub
+            CondicionesIVA = New BindingList(Of KeyValuePair(Of CondicionIVA?, String))(keyValueCondicionesIVA)
 
-        Private Sub CargarPrecios()
-            FiltroListasPrecios.Add(New KeyValuePair(Of Integer?, String)(Nothing, "Todos"))
-            FiltroListasPrecios.Add(New KeyValuePair(Of Integer?, String)(5, "Mayorista"))
-            FiltroListasPrecios.Add(New KeyValuePair(Of Integer?, String)(6, "Alternativo"))
+            keyValueCondicionesIVA = [Enum](Of CondicionIVA).ToKeyValuePairList()
+            keyValueCondicionesIVA.Insert(0, New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Seleccione una opción"))
 
-            ListasPrecios.Add(New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción"))
-            ListasPrecios.Add(New KeyValuePair(Of Integer?, String)(5, "Mayorista"))
-            ListasPrecios.Add(New KeyValuePair(Of Integer?, String)(6, "Alternativo"))
+            AltaClientes.CondicionesIVA = New BindingList(Of KeyValuePair(Of CondicionIVA?, String))(keyValueCondicionesIVA)
         End Sub
 
         Private Sub CargarCorredores()
@@ -118,6 +114,20 @@ Namespace Formularios.Cliente
         Private Sub CargarEmpresas()
             Empresas.Add(New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción"))
         End Sub
+
+        Public Async Function CargarListaPreciosAsync() As Task
+            Dim listaPrecioModel As List(Of ListaPrecio) = Await ListaPrecioService.ObtenerMayoristaAsync()
+
+            Dim keyValueListaPrecio As List(Of KeyValuePair(Of ListaPrecio, String)) = listaPrecioModel.Select(Function(x) New KeyValuePair(Of ListaPrecio, String)(x, x.Nombre)).ToList()
+            keyValueListaPrecio.Insert(0, New KeyValuePair(Of ListaPrecio, String)(Nothing, "Todos"))
+
+            ListasPrecios = New BindingList(Of KeyValuePair(Of ListaPrecio, String))(keyValueListaPrecio)
+
+            keyValueListaPrecio = listaPrecioModel.Select(Function(x) New KeyValuePair(Of ListaPrecio, String)(x, x.Nombre)).ToList()
+            keyValueListaPrecio.Insert(0, New KeyValuePair(Of ListaPrecio, String)(Nothing, "Seleccione una opción"))
+
+            AltaClientes.ListasPrecios = New BindingList(Of KeyValuePair(Of ListaPrecio, String))(keyValueListaPrecio)
+        End Function
 
         Public Async Function CargarProvinciasAsync() As Task
             Dim provinciasModel As List(Of Provincia) = Await DomicilioService.ObtenerProvinciaAsync()
@@ -158,10 +168,11 @@ Namespace Formularios.Cliente
         End Function
 
         Friend Async Function CargarClienteAsync(clienteMayorista As ClienteMayorista) As Task
-
             ModificacionClientes = Mapper.Map(Of ClienteMayoristaDetalleViewModel)(clienteMayorista)
 
-            Await CargarProvinciasAsync()
+            ModificacionClientes.CondicionesIVA = New BindingList(Of KeyValuePair(Of CondicionIVA?, String))(AltaClientes.CondicionesIVA)
+
+            ModificacionClientes.ListasPrecios = New BindingList(Of KeyValuePair(Of ListaPrecio, String))(AltaClientes.ListasPrecios)
 
             ModificacionClientes.EntregaProvincias = Provincias
             ModificacionClientes.FacturacionProvincias = Provincias
@@ -172,5 +183,31 @@ Namespace Formularios.Cliente
             ModificacionClientes.EntregaDistritos = Await CargarDistritoAsync(clienteMayorista.DomicilioEntrega?.Provincia)
             ModificacionClientes.EntregaLocalidades = Await CargarLocalidadAsync(clienteMayorista.DomicilioEntrega?.Distrito)
         End Function
+
+        Private Sub ValidarRequeridos(clienteMayoristaDetalleViewModel As ClienteMayoristaDetalleViewModel)
+
+            Dim hayError As Boolean = False
+
+            hayError = String.IsNullOrEmpty(clienteMayoristaDetalleViewModel.RazonSocial) OrElse hayError
+            hayError = String.IsNullOrEmpty(clienteMayoristaDetalleViewModel.Nombre) OrElse hayError
+            hayError = String.IsNullOrEmpty(clienteMayoristaDetalleViewModel.Cuit) OrElse hayError
+            hayError = Not clienteMayoristaDetalleViewModel.CondicionesIVASaleccionada.Key.HasValue OrElse hayError
+            hayError = clienteMayoristaDetalleViewModel.ListaPreciosSaleccionada.Key Is Nothing OrElse hayError
+            hayError = String.IsNullOrEmpty(clienteMayoristaDetalleViewModel.FacturacionDireccion) OrElse hayError
+            hayError = clienteMayoristaDetalleViewModel.FacturacionProvinciasSaleccionada Is Nothing OrElse hayError
+            hayError = clienteMayoristaDetalleViewModel.FacturacionDistritosSaleccionada Is Nothing OrElse hayError
+            hayError = clienteMayoristaDetalleViewModel.EntregaLocalidadesSaleccionada Is Nothing OrElse hayError
+            hayError = String.IsNullOrEmpty(clienteMayoristaDetalleViewModel.FacturacionCodigoPostal) OrElse hayError
+
+            If (hayError) Then
+                Throw New NegocioException(My.Resources.ErrorCamposRequeridos)
+            End If
+
+            If Not Cuit.EsValido(clienteMayoristaDetalleViewModel.Cuit) Then
+                Throw New NegocioException(My.Resources.ErrorCuitInvalido)
+            End If
+        End Sub
+
+
     End Class
 End Namespace

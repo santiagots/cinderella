@@ -65,7 +65,6 @@
     <Compile Include="Interfaces\ITarjetaRepository.cs" />
     <Compile Include="Interfaces\ICostoFinancieroRepository.cs" />
     <Compile Include="Interfaces\IEmpleadoRepository.cs" />
-    <Compile Include="Interfaces\IListaPrecioRepository.cs" />
     <Compile Include="Interfaces\IProductoRepository.cs" />
     <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="Model\BaseAgreggate\DocumentoFiscal.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Model\VentaAggregate\Tarjeta.cs" />
     <Compile Include="Model\VentaAggregate\CostoFinanciero.cs" />
     <Compile Include="Model\BaseAgreggate\Empleado.cs" />
-    <Compile Include="Model\VentaAggregate\ListaPrecio.cs" />
     <Compile Include="Model\VentaAggregate\Pago.cs" />
     <Compile Include="Model\BaseAgreggate\Precio.cs" />
     <Compile Include="Model\BaseAgreggate\Sucursal.cs" />

@@ -73,7 +73,6 @@
     <Compile Include="Repository\TarjetaRepository.cs" />
     <Compile Include="Repository\CostoFinancieroRepository.cs" />
     <Compile Include="Repository\EmpleadoRepository.cs" />
-    <Compile Include="Repository\ListaPrecioRepository.cs" />
     <Compile Include="Repository\ProductoRepository.cs" />
     <Compile Include="Service\NotaPedidoService.cs" />
     <Compile Include="VentaContext.cs" />
