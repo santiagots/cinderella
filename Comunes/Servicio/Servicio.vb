@@ -6,6 +6,7 @@ Imports Ventas.Core.Interfaces
 Imports Common.Core.Interfaces
 Imports Common.Data
 Imports Ventas.Core.Model.VentaAggregate
+Imports System.Threading.Tasks
 
 Namespace Comunes
     Public Class Servicio
@@ -37,17 +38,10 @@ Namespace Comunes
             End Using
         End Function
 
-        Friend Shared Function ObtenerVenta(idVenta As Long) As Venta
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.Obtener(idVenta)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerClienteMayorista(id As Integer) As Object
+        Friend Shared Function ObtenerClienteMayorista(id As Integer) As Task(Of ClienteMayorista)
             Using context As CommonContext = New CommonContext()
                 Dim clienteMayoristaRepository As IClienteMayoristaRepository = New ClienteMayoristaRepository(context)
-                Return clienteMayoristaRepository.Obtener(id)
+                Return clienteMayoristaRepository.ObtenerAsync(id)
             End Using
         End Function
 

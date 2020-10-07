@@ -56,7 +56,7 @@ namespace Common.Data.Repository
             return _context.SaveChangesAsync();
         }
 
-        public Task<ClienteMayorista> Obtener(int id)
+        public Task<ClienteMayorista> ObtenerAsync(int id)
         {
             return ObtenerConsulta()
                         .FirstOrDefaultAsync(x => x.Id == id);

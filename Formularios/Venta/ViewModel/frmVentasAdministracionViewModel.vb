@@ -7,6 +7,7 @@ Imports Common.Core.Extension
 Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.Formularios.Facturacion
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Ventas.Data.Service
 Imports Model = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Venta
@@ -15,7 +16,7 @@ Namespace Formularios.Venta
 
         Private IdSucursal As Integer
         Private VentaModelSeleccionada As Model.Venta
-        Private VentasPorAnular As List(Of Tuple(Of Model.Venta, Boolean, String))
+        Private VentasPorAnular As List(Of Tuple(Of Model.Venta, Boolean, String)) = New List(Of Tuple(Of Model.Venta, Boolean, String))
         Private MdiParent As Form
 
         Public Property NumeroFacturaDesde As Integer?
@@ -53,7 +54,7 @@ Namespace Formularios.Venta
             End Get
         End Property
 
-        Public Property Ventas As BindingList(Of VentaAdministracionItemViewModel)
+        Public Property Ventas As BindingList(Of VentaAdministracionItemViewModel) = New BindingList(Of VentaAdministracionItemViewModel)()
 
         Public ReadOnly Property VentaDetalleSeleccionada As VentaDetalleViewModel
             Get
@@ -106,11 +107,15 @@ Namespace Formularios.Venta
         Public Sub New(idSucursal As Integer, mdiParent As Form)
             Me.IdSucursal = idSucursal
             Visible = True
-            Ventas = New BindingList(Of VentaAdministracionItemViewModel)()
             VentaModelSeleccionada = New Model.Venta(Me.IdSucursal)
-            VentasPorAnular = New List(Of Tuple(Of Model.Venta, Boolean, String))
             Me.MdiParent = mdiParent
             Inicializar()
+        End Sub
+
+        Public Sub New(venta As Model.Venta, mdiParent As Form)
+            Visible = True
+            VentaModelSeleccionada = venta
+            Me.MdiParent = mdiParent
         End Sub
 
         Friend Async Function AnularAsync() As Task
@@ -131,7 +136,7 @@ Namespace Formularios.Venta
         End Function
 
         Friend Async Function CargarVentaAsync(ventaAdministracionItemViewModel As VentaAdministracionItemViewModel) As Task
-            VentaModelSeleccionada = Await Task.Run(Function() Comunes.Servicio.ObtenerVenta(ventaAdministracionItemViewModel.Id))
+            VentaModelSeleccionada = Await VentaService.ObtenerAsync(TipoBase.Local, ventaAdministracionItemViewModel.Id)
             MotivoAnulacion = VentaModelSeleccionada.MotivoAnulado
             FechaAnulacion = VentaModelSeleccionada.FechaAnulado
 

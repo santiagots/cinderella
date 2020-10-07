@@ -71,13 +71,6 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Function ObtenerSucursal(idSucursal As Integer) As ModelBase.Sucursal
-            Using context As VentaContext = New VentaContext()
-                Dim sucursalRepository As IRepository(Of ModelBase.Sucursal) = New Repository(Of ModelBase.Sucursal)(context)
-                Return sucursalRepository.GetById(idSucursal)
-            End Using
-        End Function
-
         Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fecha As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Decimal
             Using context As VentaContext = New VentaContext()
                 Dim ventaRepository As IVentaRepository = New VentaRepository(context)
@@ -111,45 +104,6 @@ Namespace Formularios.Venta
                 Dim NotaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
                 Return NotaPedidoRepository.ObtenerCantidad(idSucursal, estado)
             End Using
-        End Function
-
-        Public Shared Function ObtenerEmpleados(tipoEmpleado As TipoEmpleado, idSucursal As Integer) As IList(Of ModelBase.Empleado)
-
-            Dim empleado As IList(Of ModelBase.Empleado) = New List(Of ModelBase.Empleado)
-            Using context As VentaContext = New VentaContext()
-                Dim empleadoRepository As IEmpleadoRepository = New EmpleadoRepository(context)
-                empleado = empleadoRepository.ObtenerPresentes(idSucursal, tipoEmpleado)
-
-                If (empleado.Count = 0) Then
-                    empleado = empleadoRepository.ObtenerPorSucursal(idSucursal, tipoEmpleado)
-                End If
-
-                If (empleado.Count = 0) Then
-                    Throw New NegocioException($"La sucursal no tiene configurado un {tipoEmpleado.ToString()}. Por favor, registre un {tipoEmpleado.ToString()} en el menú de empleados o contacte al administrador.")
-                End If
-
-            End Using
-
-            Return empleado
-        End Function
-
-        Public Shared Function ObtenerTarjetas() As IList(Of Tarjeta)
-            Dim banco As IList(Of Tarjeta) = New List(Of Tarjeta)
-            Using context As VentaContext = New VentaContext()
-                Dim bancoRepository As ITarjetaRepository = New TarjetaRepository(context)
-                banco = bancoRepository.Obtener()
-            End Using
-
-            Return banco
-        End Function
-
-        Public Shared Function ObtenerCuotas(idBanco As Integer) As IList(Of CostoFinanciero)
-            Dim costoFinanciero As IList(Of CostoFinanciero) = New List(Of CostoFinanciero)
-            Using context As VentaContext = New VentaContext()
-                Dim bancoRepository As ICostoFinancieroRepository = New CostoFinancieroRepository(context)
-                costoFinanciero = bancoRepository.Obtener(idBanco)
-            End Using
-            Return costoFinanciero
         End Function
 
         Public Shared Function ObtenerListaProductos() As IList(Of ModelBase.Producto)

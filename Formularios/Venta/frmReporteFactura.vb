@@ -4,8 +4,9 @@ Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Model
 Imports Common.Core.Enum
 Imports Common.Core.Helper
+Imports Ventas.Data.Service
 
-Public Class frmReporteFactura
+Public Class frmReporteDocumentoPago
 
     Private TipoCliente As TipoCliente
     Private TipoDocumentoFiscal As TipoDocumentoFiscal
@@ -27,7 +28,7 @@ Public Class frmReporteFactura
 
     Sub New(idVenta As Long, tipoCliente As TipoCliente, tipoDocumentoFiscal As TipoDocumentoFiscal)
         Me.New
-        Me.Venta = Comunes.Servicio.ObtenerVenta(idVenta)
+        Me.Venta = VentaService.Obtener(TipoBase.Local, idVenta)
         Me.TipoDocumentoFiscal = tipoDocumentoFiscal
         Me.TipoCliente = tipoCliente
     End Sub

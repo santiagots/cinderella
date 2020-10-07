@@ -55,9 +55,11 @@
     <Compile Include="Interfaces\IChequeRepository.cs" />
     <Compile Include="Interfaces\ICierreCajaRepository.cs" />
     <Compile Include="Interfaces\IClienteMinoristaRepository.cs" />
+    <Compile Include="Interfaces\IDocumentoDePagoRepository.cs" />
     <Compile Include="Interfaces\IEstadoCuentaSucursal.cs" />
     <Compile Include="Interfaces\IFacturaRepository.cs" />
     <Compile Include="Interfaces\IInformeVentaRepository.cs" />
+    <Compile Include="Interfaces\IMovimientoRepository.cs" />
     <Compile Include="Interfaces\INotaCreditoRepository.cs" />
     <Compile Include="Interfaces\INotaPedidoRepository.cs" />
     <Compile Include="Interfaces\IReservaRepository.cs" />
@@ -69,9 +71,13 @@
     <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="Model\BaseAgreggate\DocumentoFiscal.cs" />
     <Compile Include="Model\BaseAgreggate\Domicilio.cs" />
+    <Compile Include="Model\BaseAgreggate\Pago.cs" />
     <Compile Include="Model\BaseAgreggate\TransaccionItem.cs" />
     <Compile Include="Model\BaseAgreggate\Transaccion.cs" />
     <Compile Include="Model\BaseAgreggate\ClienteMinorista.cs" />
+    <Compile Include="Model\CuentaCorrienteAggregate\DocumentoDePagoPago.cs" />
+    <Compile Include="Model\CuentaCorrienteAggregate\Movimiento.cs" />
+    <Compile Include="Model\CuentaCorrienteAggregate\DocumentoDePago.cs" />
     <Compile Include="Model\InformeAggregate\InformeVentaEgresos.cs" />
     <Compile Include="Model\InformeAggregate\InformeVentaPorProducto.cs" />
     <Compile Include="Model\InformeAggregate\InformeVentaPorFecha.cs" />
@@ -82,7 +88,7 @@
     <Compile Include="Model\ValueObjects\Egreso.cs" />
     <Compile Include="Model\ValueObjects\Ingreso.cs" />
     <Compile Include="Model\ValueObjects\MontoPago.cs" />
-    <Compile Include="Model\ValueObjects\decimal.cs" />
+    <Compile Include="Model\ValueObjects\MontoProducto.cs" />
     <Compile Include="Model\ValueObjects\CostoProducto.cs" />
     <Compile Include="Model\ChequeAgreggate\Cheque.cs" />
     <Compile Include="Model\ValueObjects\SucursalSaldos.cs" />
@@ -97,7 +103,7 @@
     <Compile Include="Model\VentaAggregate\Tarjeta.cs" />
     <Compile Include="Model\VentaAggregate\CostoFinanciero.cs" />
     <Compile Include="Model\BaseAgreggate\Empleado.cs" />
-    <Compile Include="Model\VentaAggregate\Pago.cs" />
+    <Compile Include="Model\VentaAggregate\VentaPago.cs" />
     <Compile Include="Model\BaseAgreggate\Precio.cs" />
     <Compile Include="Model\BaseAgreggate\Sucursal.cs" />
     <Compile Include="Model\VentaAggregate\VentaItem.cs" />

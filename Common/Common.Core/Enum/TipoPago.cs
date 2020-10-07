@@ -13,6 +13,7 @@ namespace Common.Core.Enum
         TarjetaDébito = 3,
         Cheque = 4,
         Deposito = 5,
-        Bonificacion = 6
+        Bonificacion = 6,
+        CuentaCorriente = 7
     }
 }

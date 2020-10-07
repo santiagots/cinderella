@@ -5,6 +5,7 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports SistemaCinderella.Comunes
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Ventas.Data.Service
 Imports Model = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Facturacion
@@ -143,7 +144,7 @@ Namespace Formularios.Facturacion
 
         Friend Async Function CargarVentaAsync(documentoFiscalViewModel As DocumentoFiscalViewModel) As Task
             Dim facturaSeleccionada As Model.Factura = _Facturas.FirstOrDefault(Function(x) x.Id = documentoFiscalViewModel.Id)
-            _VentaDetalleSeleccionada = Await Task.Run(Function() Comunes.Servicio.ObtenerVenta(facturaSeleccionada.IdVenta))
+            _VentaDetalleSeleccionada = Await VentaService.ObtenerAsync(TipoBase.Local, facturaSeleccionada.IdVenta)
 
             MotivoAnulacion = _VentaDetalleSeleccionada.MotivoAnulado
             FechaAnulacion = _VentaDetalleSeleccionada.FechaAnulado

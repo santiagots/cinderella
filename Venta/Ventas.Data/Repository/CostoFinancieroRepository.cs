@@ -1,8 +1,7 @@
 ﻿using Common.Data.Repository;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.VentaAggregate;
@@ -15,9 +14,9 @@ namespace Ventas.Data.Repository
         {
         }
 
-        public IEnumerable<CostoFinanciero> Obtener(int idTarjeta)
+        public Task<List<CostoFinanciero>> Obtener(int idTarjeta)
         {
-            return _context.CostoFinanciero.Where(x => x.IdTarjeta == idTarjeta).ToList();
+            return _context.CostoFinanciero.Where(x => x.IdTarjeta == idTarjeta).ToListAsync();
         }
     }
 }

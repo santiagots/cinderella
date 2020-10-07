@@ -15,7 +15,7 @@ namespace Ventas.Core.Model.VentaAggregate
         private decimal PorcentajeBonificacionMinorista;
         private MontoProducto MontoProductoMayorista;
         private decimal PorcentajeBonificacionMayorista;
-        internal Dictionary<Pago, decimal> Pagos { get; private set; }
+        internal Dictionary<VentaPago, decimal> Pagos { get; private set; }
         public long IdVenta { get; private set; }
         public virtual Venta Venta { get; private set; }
         public bool EsDevolucion { get; private set; }
@@ -32,12 +32,12 @@ namespace Ventas.Core.Model.VentaAggregate
         }
         public VentaItem(): base()
         {
-            Pagos = new Dictionary<Pago, decimal>();
+            Pagos = new Dictionary<VentaPago, decimal>();
         }
 
         internal VentaItem(long idVenta, Producto producto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
         {
-            Pagos = new Dictionary<Pago, decimal>();
+            Pagos = new Dictionary<VentaPago, decimal>();
             IdVenta = idVenta;
             IdProducto = producto.Id;
             Producto = producto;
@@ -54,7 +54,7 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajeBonificacionMayorista = porcentajeBonificacionMayorista;
         }
 
-        internal decimal AgregarPago(Pago pago, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        internal decimal AgregarPago(VentaPago pago, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
             decimal pendientePago = 0;
 
@@ -91,7 +91,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         internal void QuitarPago(long id)
         {
-            Pago pago = Pagos.FirstOrDefault(x => x.Key.Id == id).Key;
+            VentaPago pago = Pagos.FirstOrDefault(x => x.Key.Id == id).Key;
             if(pago != null)
                 Pagos.Remove(pago);
             ActualizarPorcentajePago();
@@ -159,20 +159,20 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public decimal TotalMonto(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal monto = pagos.Sum(x => x.MontoPago.Monto);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, monto);
         }
 
         public decimal TotalDescuento(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal descuento = pagos.Sum(x => x.MontoPago.Descuento);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, descuento);
         }
         public decimal TotalCFT(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<Pago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal cft = pagos.Sum(x => x.MontoPago.CFT);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
         }
@@ -242,20 +242,20 @@ namespace Ventas.Core.Model.VentaAggregate
             }
         }
 
-        internal IEnumerable<Pago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        internal IEnumerable<VentaPago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
-            List<Pago> pagos = new List<Pago>();
+            List<VentaPago> pagos = new List<VentaPago>();
 
-            foreach (KeyValuePair<Pago, decimal> montoPorPago in this.Pagos)
+            foreach (KeyValuePair<VentaPago, decimal> montoPorPago in this.Pagos)
             {
                 MontoPago montoPago = ObtenerMontoPago(montoPorPago.Value, montoPorPago.Key.PorcentajeRecargo, porcentajeFacturacion, tipoCliente, montoPorPago.Key.TipoPago);
-                pagos.Add(new Pago(montoPorPago.Key.IdVenta, montoPorPago.Key.TipoPago, montoPorPago.Key.Tarjeta, montoPorPago.Key.NumeroCuotas, montoPorPago.Key.PorcentajeRecargo, montoPago.Monto, 0, montoPago.Descuento, montoPago.CFT, montoPago.IVA));
+                pagos.Add(new VentaPago(montoPorPago.Key.IdVenta, montoPorPago.Key.TipoPago, montoPorPago.Key.Tarjeta, montoPorPago.Key.NumeroCuotas, montoPorPago.Key.PorcentajeRecargo, montoPago.Monto, 0, montoPago.Descuento, montoPago.CFT, montoPago.IVA));
             }
 
             return pagos;
         }
 
-        private void ActualizarPagos(Pago pago, decimal resto, decimal abonado)
+        private void ActualizarPagos(VentaPago pago, decimal resto, decimal abonado)
         {
             if (Pagos.ContainsKey(pago))
             {

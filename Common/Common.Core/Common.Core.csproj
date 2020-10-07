@@ -64,7 +64,6 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Enum\CondicionesIVA.cs" />
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
-    <Compile Include="Enum\DireccionOrdenamiento.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
     <Compile Include="Enum\OrdenarDireccion.cs" />
     <Compile Include="Enum\TipoBase.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
     <Compile Include="Enum\TipoEmpleado.cs" />
     <Compile Include="Enum\TipoFactura.cs" />
+    <Compile Include="Enum\TipoMovimientoCuentaCorriente.cs" />
     <Compile Include="Enum\TipoPago.cs" />
     <Compile Include="Exceptions\NegocioException.cs" />
     <Compile Include="Extension\DateTimeExtensions.cs" />

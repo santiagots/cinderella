@@ -39,10 +39,21 @@ Namespace Formularios.Cliente
             End Get
         End Property
         Public Property OrdenadoPor As String = "Id"
-        Public Property DireccionOrdenamiento As DireccionOrdenamiento
+        Public Property DireccionOrdenamiento As OrdenadoDireccion
         Public Property PaginaActual As Integer = 1
         Public Property ElementosPorPagina As Integer
         Public Property TotalElementos As Integer
+
+        Dim _Visible As Boolean = True
+        Public Property Visible As Boolean
+            Set(value As Boolean)
+                _Visible = value
+                NotifyPropertyChanged(NameOf(Me.Visible))
+            End Set
+            Get
+                Return _Visible
+            End Get
+        End Property
 
         Sub New()
             CargarEmpresas()
@@ -163,10 +174,6 @@ Namespace Formularios.Cliente
             Return New BindingList(Of KeyValuePair(Of Localidad, String))(keyValueLocalidades)
         End Function
 
-        Friend Function EliminarAsync(clienteMayoristaItem As ClienteMayoristaItem) As Task
-            Throw New NotImplementedException()
-        End Function
-
         Friend Async Function CargarClienteAsync(clienteMayorista As ClienteMayorista) As Task
             ModificacionClientes = Mapper.Map(Of ClienteMayoristaDetalleViewModel)(clienteMayorista)
 
@@ -207,7 +214,5 @@ Namespace Formularios.Cliente
                 Throw New NegocioException(My.Resources.ErrorCuitInvalido)
             End If
         End Sub
-
-
     End Class
 End Namespace

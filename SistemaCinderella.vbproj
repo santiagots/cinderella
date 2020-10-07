@@ -311,16 +311,20 @@
     <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente2.Designer.vb">
-      <DependentUpon>frmClienteMayoristaCuentaCorriente2.vb</DependentUpon>
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaDocumentoPago.Designer.vb">
+      <DependentUpon>frmClienteMayoristaDocumentoPago.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente2.vb">
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaDocumentoPago.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\Cliente\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaDocumentoPagoItem.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaDetalleViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaItem.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\CuentaCorrienteMovimientosItem.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\DireccionViewModel.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaDocumentoPagoViewModel.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaCuentaCorrienteViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaViewModel.vb" />
     <Compile Include="Formularios\Comun\Comun.Designer.vb">
       <DependentUpon>Comun.vb</DependentUpon>
@@ -1171,6 +1175,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\ReporteDocumentoPago.vb">
+      <DependentUpon>ReporteDocumentoPago.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reportes\ReporteFactura.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1261,6 +1271,8 @@
     <Compile Include="Formularios\Venta\ViewModel\frmVentasViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaCuentaCorrientePagoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaCuentaCorrienteViewModel.datasource" />
     <None Include="Resources\NavigatorPreviousItem.png" />
     <None Include="Resources\NavigatorFirstItem.png" />
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
@@ -1281,8 +1293,8 @@
     <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.resx">
       <DependentUpon>frmClienteMayoristaCuentaCorriente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente2.resx">
-      <DependentUpon>frmClienteMayoristaCuentaCorriente2.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaDocumentoPago.resx">
+      <DependentUpon>frmClienteMayoristaDocumentoPago.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\DialogInput.resx">
       <DependentUpon>DialogInput.vb</DependentUpon>
@@ -1702,6 +1714,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Imagenes\adelantos.png" />
+    <EmbeddedResource Include="Reportes\ReporteDocumentoPago.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteDocumentoPago.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReporteFactura.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReporteFactura.vb</LastGenOutput>

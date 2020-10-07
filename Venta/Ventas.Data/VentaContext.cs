@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ChequeAggregate;
+using Ventas.Core.Model.CuentaCorrienteAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;
 using Ventas.Core.Model.VentaAggregate;
 
@@ -21,11 +22,13 @@ namespace Ventas.Data
         public DbSet<CierreCaja> CierreCaja { get; set; }
         public DbSet<CostoFinanciero> CostoFinanciero { get; set; }
         public DbSet<Comision> Comision { get; set; }
+        public DbSet<DocumentoDePago> DocumentoDePago { get; set; }
+        public DbSet<DocumentoDePagoPago> DocumentoDePagoPago { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
         public DbSet<Factura> Factura  { get; set; }
         public DbSet<NumeroFactura> NumeroFactura { get; set; }
         public DbSet<NumeroNotaCredito> NumeroNotaCredito { get; set; }
-        public DbSet<Pago> Pago { get; set; }
+        public DbSet<VentaPago> VentaPago { get; set; }
         public DbSet<Precio> Precio { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Reserva> Reserva { get; set; }
@@ -37,7 +40,9 @@ namespace Ventas.Data
         public DbSet<NotaPedido> NotaPedido { get; set; }
         public DbSet<NotaPedidoItem> NotaPedidoItem { get; set; }
         public DbSet<NotaCredito> NotaCredito { get; set; }
+        public DbSet<Movimiento> Movimiento { get; set; }
 
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -63,6 +68,31 @@ namespace Ventas.Data
 
             modelBuilder.Entity<Comision>().ToTable("NUEVA_COMISION");
             modelBuilder.Entity<Comision>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<DocumentoDePago>().ToTable("NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO");
+            modelBuilder.Entity<DocumentoDePago>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<DocumentoDePago>().Property(t => t.PagoTotal.Monto).HasColumnName("PagoMontoTotal");
+            modelBuilder.Entity<DocumentoDePago>().Property(t => t.PagoTotal.Descuento).HasColumnName("PagoDescuentoTotal");
+            modelBuilder.Entity<DocumentoDePago>().Property(t => t.PagoTotal.CFT).HasColumnName("PagoCFTTotal");
+            modelBuilder.Entity<DocumentoDePago>().Property(t => t.PagoTotal.IVA).HasColumnName("PagoIVATotal");
+            modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.MontoTotal);
+            modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.PorcentajeFacturacion);
+            modelBuilder.Entity<DocumentoDePago>().HasMany(v => v.Pagos).WithRequired(t => t.DocumentoDePago).HasForeignKey(x => x.IdDocumentoDePago);
+            modelBuilder.Entity<DocumentoDePago>().HasRequired(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
+            modelBuilder.Entity<DocumentoDePago>().HasRequired(v => v.Encargado).WithMany().HasForeignKey(x => x.IdEncargado);
+            modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.IdVendedor);
+            modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.Vendedor);
+            modelBuilder.Entity<DocumentoDePago>().HasRequired(v => v.Sucursal).WithMany().HasForeignKey(x => x.IdSucursal);
+
+            modelBuilder.Entity<DocumentoDePagoPago>().ToTable("NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO");
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.Monto).HasColumnName("Monto");
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.PorcentajeRecargo).HasPrecision((int)18, (int)4);
+            modelBuilder.Entity<DocumentoDePagoPago>().Ignore(t => t.MontoRestante);
+            modelBuilder.Entity<DocumentoDePagoPago>().Ignore(t => t.Habilitado);
 
             modelBuilder.Entity<Factura>().ToTable("NUEVA_FACTURA");
             modelBuilder.Entity<Factura>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -98,15 +128,15 @@ namespace Ventas.Data
             modelBuilder.Entity<Venta>().HasOptional(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
             modelBuilder.Entity<Venta>().HasRequired(v => v.Sucursal).WithMany().HasForeignKey(x => x.IdSucursal);
 
-            modelBuilder.Entity<Pago>().ToTable("NUEVA_VENTA_PAGOS");
-            modelBuilder.Entity<Pago>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            modelBuilder.Entity<Pago>().Property(t => t.MontoPago.Monto).HasColumnName("Monto");
-            modelBuilder.Entity<Pago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
-            modelBuilder.Entity<Pago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
-            modelBuilder.Entity<Pago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
-            modelBuilder.Entity<Pago>().Property(t => t.PorcentajeRecargo).HasPrecision(18, 4);
-            modelBuilder.Entity<Pago>().Ignore(t => t.MontoRestante);
-            modelBuilder.Entity<Pago>().Ignore(t => t.Habilitado);
+            modelBuilder.Entity<VentaPago>().ToTable("NUEVA_VENTA_PAGOS");
+            modelBuilder.Entity<VentaPago>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.Monto).HasColumnName("Monto");
+            modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
+            modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
+            modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
+            modelBuilder.Entity<VentaPago>().Property(t => t.PorcentajeRecargo).HasPrecision((int)18, (int)4);
+            modelBuilder.Entity<VentaPago>().Ignore(t => t.MontoRestante);
+            modelBuilder.Entity<VentaPago>().Ignore(t => t.Habilitado);
 
             modelBuilder.Entity<Reserva>().ToTable("NUEVA_RESERVA");
             modelBuilder.Entity<Reserva>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -137,6 +167,11 @@ namespace Ventas.Data
             modelBuilder.Entity<NotaPedidoItem>().Property(t => t.MontoProducto.Valor).HasColumnName("Monto");
             modelBuilder.Entity<NotaPedidoItem>().Property(t => t.MontoProducto.Iva).HasColumnName("Iva");
             modelBuilder.Entity<NotaPedidoItem>().HasRequired(v => v.Producto).WithMany().HasForeignKey(x => x.IdProducto);
+
+            modelBuilder.Entity<Movimiento>().ToTable("NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO");
+            modelBuilder.Entity<Movimiento>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<Movimiento>().HasRequired(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
+            modelBuilder.Entity<Movimiento>().HasRequired(v => v.Sucursal).WithMany().HasForeignKey(x => x.IdSucursal);
 
             modelBuilder.Entity<Empleado>().ToTable("EMPLEADOS");
             modelBuilder.Entity<Empleado>().Property(t => t.Id).HasColumnName("id_Empleado");

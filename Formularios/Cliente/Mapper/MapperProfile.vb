@@ -1,6 +1,8 @@
 ﻿Imports AutoMapper
 Imports Common.Core.Model
 Imports Common.Core.Enum
+Imports CuentaCorrienteModelo = CuentaCorriente.Core.Model.CuentaCorrienteAggregate
+Imports Ventas.Core.Model.CuentaCorrienteAggregate
 
 Namespace Formularios.Cliente
 
@@ -37,6 +39,13 @@ Namespace Formularios.Cliente
                     .ForMember(Function(des) des.IdListaPrecio, Sub(opt) opt.MapFrom(Function(src) src.ListaPreciosSaleccionada.Key.Id)) _
                     .ForMember(Function(des) des.ListaPrecio, Sub(opt) opt.MapFrom(Function(src) src.ListaPreciosSaleccionada.Key)) _
                     .ForMember(Function(des) des.CondicionIVA, Sub(opt) opt.MapFrom(Function(src) src.CondicionesIVASaleccionada.Key))
+
+            CreateMap(Of DocumentoDePagoPago, ClienteMayoristaDocumentoPagoItem)() _
+                .ForMember(Function(des) des.Id, Sub(opt) opt.MapFrom(Function(src) src.Id)) _
+                .ForMember(Function(des) des.Descripcion, Sub(opt) opt.MapFrom(Function(src) src.ToString())) _
+                .ForMember(Function(des) des.Monto, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Monto)) _
+                .ForMember(Function(des) des.Cft, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.CFT)) _
+                .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Total))
         End Sub
     End Class
 End Namespace

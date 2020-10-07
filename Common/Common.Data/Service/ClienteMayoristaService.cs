@@ -2,7 +2,6 @@
 using Common.Core.Interfaces;
 using Common.Core.Model;
 using Common.Data.Repository;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,6 +25,12 @@ namespace Common.Data.Service
         {
             IClienteMayoristaRepository ClienteMayoristaRepository = new ClienteMayoristaRepository(new CommonContext(tipoBase));
             return ClienteMayoristaRepository.ActualizarAsync(cliente);
+        }
+
+        public static Task<ClienteMayorista> ObtenerAsync(TipoBase tipoBase, int id)
+        {
+            IClienteMayoristaRepository ClienteMayoristaRepository = new ClienteMayoristaRepository(new CommonContext(tipoBase));
+            return ClienteMayoristaRepository.ObtenerAsync(id);
         }
     }
 }

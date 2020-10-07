@@ -15,6 +15,8 @@ Imports Common.Core.Model
 Imports SistemaCinderella.Formularios.Facturacion
 Imports SistemaCinderella.Comunes
 Imports Common.Data.Service
+Imports Ventas.Data.Service
+Imports Ventas.Core.Model.CuentaCorrienteAggregate
 
 Namespace Formularios.Venta
     Public Class frmVentasViewModel
@@ -242,7 +244,7 @@ Namespace Formularios.Venta
             CargarDatosBasicosTransaccion(ReservaModel.VentaReserva)
             CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of ModelBase.TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
 
-            For Each pago As Pago In reserva.VentaReserva.Pagos
+            For Each pago As VentaPago In reserva.VentaReserva.Pagos
                 VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Monto, 0, 0, TipoPago.Bonificacion, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
             Next
 
@@ -312,13 +314,14 @@ Namespace Formularios.Venta
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMayorista()
-            CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.Cheque, Enums.TipoPago.Deposito})
+
+            CargarFormaPago(New List(Of TipoPago)(TipoPagoService.Obtener(Enums.TipoCliente.Mayorista)))
             VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMinorista()
-            CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.TarjetaCrédito, Enums.TipoPago.TarjetaDébito})
+            CargarFormaPago(New List(Of TipoPago)(TipoPagoService.Obtener(Enums.TipoCliente.Minorista)))
             VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
             QuitarClienteMayorista()
@@ -402,16 +405,16 @@ Namespace Formularios.Venta
         End Function
 
         Friend Async Function GuardarAsync() As Task
-            'registrar cheque
-            Dim taskAgregarComisiones As Task = AgregarComisiones()
-            Dim taskActualizarStock As Task = ActualizarStock()
-            Await Task.WhenAll(taskAgregarComisiones, taskActualizarStock)
-
             Dim codigoVentaSucursal As String = SucursalModel.CodigoVenta
             Dim cantidadVentas As Integer = Await Task.Run(Function() Servicio.CantidadVentas(IdSucursal))
-            VentaModel.GenerarNumeroVenta(cantidadVentas + 1, codigoVentaSucursal)
+            VentaModel.GenerarNumero(cantidadVentas + 1, codigoVentaSucursal)
 
             Await Task.Run(Sub() Servicio.GuardarVenta(VentaModel))
+
+            Dim taskAgregarComisiones As Task = AgregarComisiones()
+            Dim taskActualizarStock As Task = ActualizarStock()
+            Dim taskRegistrarMovimiento As Task = RegistrarMovimiento()
+            Await Task.WhenAll(taskAgregarComisiones, taskActualizarStock, taskRegistrarMovimiento)
 
             'Armar presupuesto
 
@@ -681,8 +684,8 @@ Namespace Formularios.Venta
 
 
         Private Async Function CargarEmpleadosAsync() As Task
-            Dim encargados As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Encargado, IdSucursal))
-            Dim vendedor As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal))
+            Dim encargados As List(Of ModelBase.Empleado) = Await EmpleadoService.ObtenerEmpleados(Enums.TipoEmpleado.Encargado, IdSucursal)
+            Dim vendedor As List(Of ModelBase.Empleado) = Await EmpleadoService.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal)
             vendedor.AddRange(encargados)
             _Encargados = New BindingList(Of ModelBase.Empleado)(encargados)
             EncargadoSeleccionado = _Encargados.FirstOrDefault()
@@ -697,12 +700,12 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function CargarSucursalAsync() As Task
-            SucursalModel = Await Task.Run(Function() Servicio.ObtenerSucursal(IdSucursal))
+            SucursalModel = Await SucursalService.Obtener(IdSucursal)
         End Function
 
         Private Async Function CargarTarjetasAsync() As Task
-            Dim tarjetas As IList(Of Tarjeta) = Await Task.Run(Function() Servicio.ObtenerTarjetas())
-            Dim costoFinanciero As IList(Of CostoFinanciero) = Await Task.Run(Function() Servicio.ObtenerCuotas(tarjetas.FirstOrDefault()?.Id))
+            Dim tarjetas As IList(Of Tarjeta) = Await TarjetaService.ObtenerAsync()
+            Dim costoFinanciero As IList(Of CostoFinanciero) = Await CostoFinancieroService.ObtenerAsync(tarjetas.FirstOrDefault()?.Id)
 
             _Tarjeta = New BindingList(Of KeyValuePair(Of Tarjeta, String))(tarjetas.Select(Function(x) New KeyValuePair(Of Tarjeta, String)(x, x.Nombre)).ToList)
 
@@ -739,7 +742,7 @@ Namespace Formularios.Venta
                 Return
             End If
 
-            Dim costoFinanciero As IList(Of CostoFinanciero) = Await Task.Run(Function() Servicio.ObtenerCuotas(banco.Id))
+            Dim costoFinanciero As IList(Of CostoFinanciero) = Await CostoFinancieroService.ObtenerAsync(banco.Id)
             _Cuota = New BindingList(Of KeyValuePair(Of CostoFinanciero, String))(costoFinanciero.Select(Function(x) New KeyValuePair(Of CostoFinanciero, String)(x, x.NumeroCuota)).ToList)
 
             NotifyPropertyChanged(NameOf(Me.Cuota))
@@ -771,7 +774,7 @@ Namespace Formularios.Venta
         End Function
 
         Private Sub AgregarCheque()
-            Dim cheques As List(Of Pago) = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
+            Dim cheques As List(Of VentaPago) = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
             If (cheques.Any()) Then
                 Dim frmChequeAltaMasiva As frmChequeAltaMasiva = New frmChequeAltaMasiva(cheques.Sum(Function(x) x.MontoPago.Total), IdClienteMayorista)
                 frmChequeAltaMasiva.ShowDialog()
@@ -812,6 +815,14 @@ Namespace Formularios.Venta
             Next
 
             Return Task.Run(Sub() Servicio.ActualizarStock(stocksVenta))
+        End Function
+
+        Private Async Function RegistrarMovimiento() As Task
+            Dim saldo As Decimal = Await MovimientoService.ObtenerSaldoAsync(TipoBase.Remota, IdClienteMayorista)
+            Dim movimiento As Movimiento = New Movimiento(IdSucursal, IdClienteMayorista, TipoMovimientoCuentaCorriente.Venta, VentaModel.Numero, VentaModel.Id, saldo)
+            movimiento.registrarCredito(VentaModel.PagoTotalEntrega.Monto)
+            movimiento.registrarDebito(VentaModel.PagoTotal.Monto)
+            Await MovimientoService.GuardarAsync(TipoBase.Remota, movimiento)
         End Function
 
         Private Function ObtenerCambioEnProductosPorReserva() As List(Of KeyValuePair(Of String, Integer))

@@ -1,23 +1,21 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
-using Common.Core.Model;
-using Common.Core.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ventas.Core.Model.ValueObjects;
-using System;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ChequeAggregate;
+using Ventas.Core.Model.ValueObjects;
 
 namespace Ventas.Core.Model.VentaAggregate
 {
-    public class Venta: Transaccion
+    public class Venta : Transaccion
     {
         public string Numero { get; protected set; }
         public virtual List<Comision> Comisiones { get; protected set; }
-        public virtual IList<Pago> Pagos { get; protected set; }
-        public virtual IList<Cheque> Cheques { get; protected set; }
-        public virtual IList<VentaItem> VentaItems { get; protected set; }
+        public virtual List<VentaPago> Pagos { get; protected set; }
+        public virtual List<Cheque> Cheques { get; protected set; }
+        public virtual List<VentaItem> VentaItems { get; protected set; }
         public virtual NotaCredito NotaCredito { get; protected set; }
         public virtual Factura Factura { get; protected set; }
         public bool Anulado { get; protected set; }
@@ -25,6 +23,7 @@ namespace Ventas.Core.Model.VentaAggregate
         public DateTime? FechaAnulado { get; protected set; }
         public int CantidadTotal { get; private set; }
         public MontoPago PagoTotal { get; private set; }
+        public MontoPago PagoTotalEntrega => Pagos.Where(x => x.TipoPago != TipoPago.CuentaCorriente).Select(x => x.MontoPago).Aggregate((x, y) => x + y);
         public bool EstaPaga { get { return !VentaItems.Any(x => x.PorcentajePago != 1); } }
 
         internal Venta()
@@ -35,7 +34,7 @@ namespace Ventas.Core.Model.VentaAggregate
         {
             IdSucursal = idSucursal;
             VentaItems = new List<VentaItem>();
-            Pagos = new List<Pago>();
+            Pagos = new List<VentaPago>();
             Cheques = new List<Cheque>();
             MontoTotal = new MontoProducto(0, 0);
             PagoTotal = new MontoPago(0, 0, 0, 0);
@@ -45,7 +44,7 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajeFacturacion = 1;
         }
 
-        public void GenerarNumeroVenta(int cantidadVentas, string codigoVentaSucursal)
+        public void GenerarNumero (int cantidadVentas, string codigoVentaSucursal)
         {
             string facturada = Factura == null ? "N" : "S";
             Numero = $"{codigoVentaSucursal}{facturada}{Fecha.ToString("yyyyMMdd")}{cantidadVentas.ToString("D9")}";
@@ -124,7 +123,7 @@ namespace Ventas.Core.Model.VentaAggregate
             if(monto == 0 && descuento == 0 && cft == 0 && iva == 0)
                 throw new NegocioException("Error al registrar el pago. El monto o el descuento o el CFT o el IVA debe ser mayor a cero.");
 
-            Pago pago = new Pago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, monto, monto, descuento, cft, iva, habilitado);
+            VentaPago pago = new VentaPago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, monto, monto, descuento, cft, iva, habilitado);
 
             if (pago.MontoPago.Total < 0)
                 throw new NegocioException("Error al registrar el pago. El total debe ser mayor a cero.");
@@ -189,7 +188,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public void CorregirPago(long idPago)
         {
-            Pago pago = Pagos.FirstOrDefault(x => x.Id == idPago);
+            VentaPago pago = Pagos.FirstOrDefault(x => x.Id == idPago);
             pago.Corregir();
             
 
@@ -371,7 +370,7 @@ namespace Ventas.Core.Model.VentaAggregate
                 ventaItems.QuitarPagos();
             }
 
-            foreach (Pago pago in Pagos)
+            foreach (VentaPago pago in Pagos)
             {
                 pago.ActualizarMontoRestante(pago.MontoPago.Monto);
                 pago.ActualizarIva(0);
@@ -408,7 +407,6 @@ namespace Ventas.Core.Model.VentaAggregate
                 PagoTotal = new MontoPago(0, 0, 0, 0);
             else
                 PagoTotal = Pagos.Select(x => x.MontoPago).Aggregate((x, y) => x + y);
-
         }
     }
 }

@@ -177,25 +177,27 @@ Public Class frmClienteMayorista
     End Sub
 
     Private Sub DG_Clientes_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Clientes.CellClick
-        EjecutarAsync(Async Function() As Task
-                          If DG_Clientes.Columns(e.ColumnIndex).Name = "Eliminar" Then
-                              Dim respuesta As DialogResult = MessageBox.Show("¿Está seguro que desea eliminar la reserva?", "Administración de Reservas", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
-                              If respuesta = DialogResult.Yes Then
-                                  Await frmClienteMayoristaViewModel.EliminarAsync(DG_Clientes.CurrentRow.DataBoundItem)
-                              End If
-                          End If
+        Ejecutar(Sub()
+                     If DG_Clientes.Columns(e.ColumnIndex).Name = "CuentaCorriente" Then
+                         CargarCuentaCorriente(DG_Clientes.CurrentRow.DataBoundItem, Me.MdiParent)
+                     End If
+                     If DG_Clientes.Columns(e.ColumnIndex).Name = "Modificar" Then
+                         tabControl.SelectedTab = TbMod
+                     End If
+                 End Sub)
+    End Sub
 
-                          If DG_Clientes.Columns(e.ColumnIndex).Name = "Modificar" Then
-                              tabControl.SelectedTab = TbMod
-                          End If
-                      End Function)
+    Private Sub DG_Clientes_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Clientes.CellDoubleClick
+        Ejecutar(Sub()
+                     CargarCuentaCorriente(DG_Clientes.CurrentRow.DataBoundItem, Me.MdiParent)
+                 End Sub)
     End Sub
 
     Private Sub DG_Clientes_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DG_Clientes.ColumnHeaderMouseClick
         EjecutarAsync(Async Function() As Task
                           If (DG_Clientes.Columns(e.ColumnIndex).SortMode <> DataGridViewColumnSortMode.NotSortable) Then
                               frmClienteMayoristaViewModel.OrdenadoPor = DG_Clientes.Columns(e.ColumnIndex).DataPropertyName
-                              frmClienteMayoristaViewModel.DireccionOrdenamiento = If(frmClienteMayoristaViewModel.DireccionOrdenamiento = DireccionOrdenamiento.Asc, DireccionOrdenamiento.Desc, DireccionOrdenamiento.Asc)
+                              frmClienteMayoristaViewModel.DireccionOrdenamiento = If(frmClienteMayoristaViewModel.DireccionOrdenamiento = OrdenadoDireccion.ASC, OrdenadoDireccion.DESC, OrdenadoDireccion.ASC)
 
                               Await frmClienteMayoristaViewModel.BuscarAsync()
 
@@ -228,6 +230,20 @@ Public Class frmClienteMayorista
     Private Sub Paginado_PaginaSiguienteClick(sender As Object, e As EventArgs) Handles Paginado.PaginaSiguienteClick
         EjecutarAsync(Async Function() As Task
                           frmClienteMayoristaViewModel.PaginaActual += 1
+                          Await frmClienteMayoristaViewModel.BuscarAsync()
+                      End Function)
+    End Sub
+
+    Friend Sub CargarCuentaCorriente(clienteMayoristaItem As ClienteMayoristaItem, mdiParent As Form)
+        Dim frmClienteMayoristaCuentaCorriente As frmClienteMayoristaCuentaCorriente = New frmClienteMayoristaCuentaCorriente(clienteMayoristaItem.ClienteMayorista, AddressOf CargarCuentaCorrienteCallback)
+        frmClienteMayoristaCuentaCorriente.MdiParent = mdiParent
+        frmClienteMayoristaCuentaCorriente.Show()
+        Hide()
+    End Sub
+
+    Public Sub CargarCuentaCorrienteCallback()
+        EjecutarAsync(Async Function() As Task
+                          Show()
                           Await frmClienteMayoristaViewModel.BuscarAsync()
                       End Function)
     End Sub

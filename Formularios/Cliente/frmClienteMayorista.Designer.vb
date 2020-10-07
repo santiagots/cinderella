@@ -39,8 +39,8 @@ Partial Class frmClienteMayorista
         Me.CuitDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NotaPedidoMontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CuentaCorriente = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.AltaClienteFiltroClientesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label49 = New System.Windows.Forms.Label()
         Me.txt_TotalSaldoCuentaCorriente = New System.Windows.Forms.TextBox()
@@ -386,7 +386,7 @@ Partial Class frmClienteMayorista
         Me.DG_Clientes.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.ColumnHeadersHeight = 30
-        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Id, Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn, Me.NotaPedidoMontoDataGridViewTextBoxColumn, Me.CuentaCorrienteMontoDataGridViewTextBoxColumn, Me.Modificar, Me.Eliminar})
+        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Id, Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn, Me.NotaPedidoMontoDataGridViewTextBoxColumn, Me.CuentaCorrienteMontoDataGridViewTextBoxColumn, Me.CuentaCorriente, Me.Modificar})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Clientes.DataSource = Me.AltaClienteFiltroClientesBindingSource
         Me.DG_Clientes.Dock = System.Windows.Forms.DockStyle.Fill
@@ -457,6 +457,15 @@ Partial Class frmClienteMayorista
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn.Width = 58
         '
+        'CuentaCorriente
+        '
+        Me.CuentaCorriente.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CuentaCorriente.HeaderText = ""
+        Me.CuentaCorriente.Image = Global.SistemaCinderella.My.Resources.Recursos.adelantos
+        Me.CuentaCorriente.Name = "CuentaCorriente"
+        Me.CuentaCorriente.ReadOnly = True
+        Me.CuentaCorriente.Width = 5
+        '
         'Modificar
         '
         Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -465,15 +474,6 @@ Partial Class frmClienteMayorista
         Me.Modificar.Name = "Modificar"
         Me.Modificar.ReadOnly = True
         Me.Modificar.Width = 5
-        '
-        'Eliminar
-        '
-        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Eliminar.HeaderText = ""
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        Me.Eliminar.Width = 5
         '
         'AltaClienteFiltroClientesBindingSource
         '
@@ -3174,6 +3174,6 @@ Partial Class frmClienteMayorista
     Friend WithEvents CuitDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents NotaPedidoMontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CuentaCorrienteMontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CuentaCorriente As DataGridViewImageColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
-    Friend WithEvents Eliminar As DataGridViewImageColumn
 End Class

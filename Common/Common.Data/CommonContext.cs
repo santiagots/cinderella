@@ -15,6 +15,9 @@ namespace Common.Data
         public CommonContext(TipoBase tipoBase = TipoBase.Local)
         : base()
         {
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+
             Database.Log = sql => Debug.Write(sql);
             if (tipoBase == TipoBase.Local)
                 this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;

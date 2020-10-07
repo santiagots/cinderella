@@ -205,23 +205,23 @@ Public Class NegClienteMayorista
         With cliente
             .Bonificacion = row("Bonificacion")
             .Comision = row("Comision")
-            .CondicionPago = row("CondicionPago")
+            .CondicionPago = If(row("CondicionPago") Is DBNull.Value, "", row("CondicionPago"))
             .Cuit = row("Cuit")
             .Habilitado = row("Habilitado")
             .Id = row("id_Cliente")
             .IdCondicionIva = row("id_CondicionIva")
-            .IdCorredor = row("Id_Corredor")
+            .IdCorredor = If(row("Id_Corredor") Is DBNull.Value, 0, row("Id_Corredor"))
             .IdDireccionEntrega = If(row("id_DireccionEntrega") Is DBNull.Value, 0, row("id_DireccionEntrega"))
             .IdDireccionFacturacion = row("id_DireccionFacturacion")
-            .IdEmpresa = row("id_Empresa")
+            .IdEmpresa = If(row("id_Empresa") Is DBNull.Value, 0, row("id_Empresa"))
             .IdListaPrecio = row("id_ListaPrecio")
             .Lista = row("Lista")
             .Nombre = row("Nombre")
-            .Observaciones = row("Observaciones")
+            .Observaciones = If(row("Observaciones") Is DBNull.Value, "", row("Observaciones"))
             .RazonSocial = row("RazonSocial")
             .SaldoCuentaCorriente = 0
             .SaldoNotaPedido = row("SaldoNotaPedido")
-            .Transporte = row("Transporte")
+            .Transporte = If(row("Transporte") Is DBNull.Value, "", row("Transporte"))
         End With
         Return cliente
     End Function

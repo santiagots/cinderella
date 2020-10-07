@@ -15,6 +15,7 @@ Imports Factura.Service.Factura.Contracts
 Imports Factura.Service.Common.Contracts
 Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Core.Model.ValueObjects
+Imports Ventas.Core.Model.BaseAgreggate
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -164,7 +165,7 @@ Namespace Formularios.Facturacion
             }
 
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
-            obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
+            obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
 
             Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
             Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
@@ -210,7 +211,7 @@ Namespace Formularios.Facturacion
             }
 
             ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
-            ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, ventaModel.VentaItems, ventaModel.Pagos)
+            ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
 
             Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
             Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest)
@@ -391,23 +392,9 @@ Namespace Formularios.Facturacion
             Return request
         End Function
 
-        Private Function ObtenerPagoRequest(pordentajeFacturacion As Decimal, tipoCliente As TipoCliente, itemVenta As List(Of VentaItem), pagos As List(Of Pago)) As List(Of PagoRequest)
+        Private Function ObtenerPagoRequest(pagos As List(Of VentaPago)) As List(Of PagoRequest)
 
             Dim request As List(Of PagoRequest) = New List(Of PagoRequest)()
-
-            'Dim pagos As List(Of Pago) = itemVenta.SelectMany(Of Pago)(Function(x) x.ObtenerPagosDeProducto(pordentajeFacturacion, tipoCliente)).ToList()
-
-            'request = pagos.GroupBy(Function(x) New With {Key x.TipoPago, Key x.NumeroCuotas}) _
-            '                .Select(Function(y) New PagoRequest() With {
-            '                    .TipoPago = y.Key.TipoPago,
-            '                    .NumeroCuotas = y.Key.NumeroCuotas,
-            '                    .Monto = y.Sum(Function(z) z.MontoPago.Monto),
-            '                    .Descuento = y.Sum(Function(z) z.MontoPago.Descuento),
-            '                    .CFT = y.Sum(Function(z) z.MontoPago.CFT),
-            '                    .IVA = y.Sum(Function(z) z.MontoPago.IVA)
-            '                    }).ToList()
-
-            'Return request
 
             pagos.ForEach(Sub(x) request.Add(New PagoRequest() With {
                                         .Monto = x.MontoPago.Monto,

@@ -6,6 +6,7 @@ Imports Common.Core.Enum
 Imports Ventas.Core.Enum
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Ventas.Data.Service
 
 Namespace Formularios.Venta
     Public Class frmNotaPedidoAdministracionViewModel
@@ -121,7 +122,8 @@ Namespace Formularios.Venta
         End Sub
 
         Private Async Function CargarEmpleadosAsync() As Task
-            Dim vendedores As List(Of Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(TipoEmpleado.Vendedor, IdSucursal))
+
+            Dim vendedores As List(Of Empleado) = Await EmpleadoService.ObtenerEmpleados(TipoEmpleado.Vendedor, IdSucursal)
             Dim vendedoresAux As List(Of KeyValuePair(Of Empleado, String)) = vendedores.Select(Function(x) New KeyValuePair(Of Empleado, String)(x, x.ApellidoYNombre)).ToList()
             vendedoresAux.Insert(0, New KeyValuePair(Of Empleado, String)(Nothing, "Todos"))
             _Vendedores = New BindingList(Of KeyValuePair(Of Empleado, String))(vendedoresAux)

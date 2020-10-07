@@ -1,10 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ventas.Core.Model.ValueObjects;
 
 namespace Ventas.Core.Model.BaseAgreggate
@@ -19,7 +15,7 @@ namespace Ventas.Core.Model.BaseAgreggate
         public int IdVendedor { get; internal set; }
         public virtual Empleado Vendedor { get; internal set; }
         public decimal PorcentajeFacturacion { get; internal set; }
-        public int? IdClienteMayorista { get; internal set; }
+        public int IdClienteMayorista { get; internal set; }
         public ClienteMayorista ClienteMayorista { get; protected set; }
         public DateTime Fecha { get; internal set; }
         public DateTime FechaEdicion { get; internal set; }
