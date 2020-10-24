@@ -78,6 +78,7 @@ namespace Ventas.Data
             modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.MontoTotal);
             modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.PorcentajeFacturacion);
             modelBuilder.Entity<DocumentoDePago>().HasMany(v => v.Pagos).WithRequired(t => t.DocumentoDePago).HasForeignKey(x => x.IdDocumentoDePago);
+            modelBuilder.Entity<DocumentoDePago>().HasMany(v => v.Cheques).WithOptional(t => t.DocumentoDePago).HasForeignKey(x => x.IdDocumentoDePago);
             modelBuilder.Entity<DocumentoDePago>().HasRequired(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
             modelBuilder.Entity<DocumentoDePago>().HasRequired(v => v.Encargado).WithMany().HasForeignKey(x => x.IdEncargado);
             modelBuilder.Entity<DocumentoDePago>().Ignore(t => t.IdVendedor);
@@ -170,7 +171,6 @@ namespace Ventas.Data
 
             modelBuilder.Entity<Movimiento>().ToTable("NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO");
             modelBuilder.Entity<Movimiento>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            modelBuilder.Entity<Movimiento>().HasRequired(v => v.ClienteMayorista).WithMany().HasForeignKey(x => x.IdClienteMayorista);
             modelBuilder.Entity<Movimiento>().HasRequired(v => v.Sucursal).WithMany().HasForeignKey(x => x.IdSucursal);
 
             modelBuilder.Entity<Empleado>().ToTable("EMPLEADOS");

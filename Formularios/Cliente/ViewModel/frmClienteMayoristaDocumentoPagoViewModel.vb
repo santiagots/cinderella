@@ -3,11 +3,13 @@ Imports System.Threading.Tasks
 Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
+Imports Common.Core.Model
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
 Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data.Service
+Imports Common.Data.Service
 
 Namespace Formularios.Cliente
     Public Class frmClienteMayoristaDocumentoPagoViewModel
@@ -67,6 +69,7 @@ Namespace Formularios.Cliente
 
         Public Property HabilitarPagos As Boolean
         Public Property HabilitarAnular As Boolean
+        Public Property HabilitarImprimir As Boolean
         Public Property MotivoAnulacion As String
         Public ReadOnly Property FechaAnulacion As DateTime?
             Get
@@ -102,14 +105,16 @@ Namespace Formularios.Cliente
             End Get
         End Property
 
-        Public Sub New(idSucursal As Integer, idClienteMayorista As Integer)
+        Public Sub New(idSucursal As Integer, clienteMayorista As ClienteMayorista)
             Me.HabilitarPagos = True
+            Me.HabilitarImprimir = False
             Me.HabilitarAnular = False
-            DocumentoDePagoModel = New DocumentoDePago(idSucursal, idClienteMayorista)
+            DocumentoDePagoModel = New DocumentoDePago(idSucursal, clienteMayorista)
         End Sub
 
         Public Sub New(documentoDePago As DocumentoDePago)
             Me.HabilitarPagos = False
+            Me.HabilitarImprimir = True
             Me.HabilitarAnular = Not documentoDePago.Anulado
             Me.MotivoAnulacion = documentoDePago.MotivoAnulado
             Me.DocumentoDePagoModel = documentoDePago
@@ -148,6 +153,8 @@ Namespace Formularios.Cliente
         Friend Async Function AnularAsync() As Task
             DocumentoDePagoModel.Anular(MotivoAnulacion + $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
             Await DocumentoDePagoService.ActualizarAsync(TipoBase.Remota, DocumentoDePagoModel)
+
+            Await ActualizarMontoCuentaCorrienteAsync(TipoAccionCuentaCorriente.Débito)
         End Function
 
         Friend Sub AgregarPago()
@@ -202,23 +209,13 @@ Namespace Formularios.Cliente
             AgregarCheque()
 
             Await GuardarDocumentoDePagoAsync()
-            Await RegistrarMovimientoAsync()
+            Await ActualizarMontoCuentaCorrienteAsync(TipoAccionCuentaCorriente.Crédito)
         End Function
 
-        Private Async Function GuardarDocumentoDePagoAsync() As Task
-            Dim codigoVentaSucursal As String = SucursalModel.CodigoVenta
-            Dim cantidadVentas As Integer = Await DocumentoDePagoService.CantidadAsync(TipoBase.Remota, DocumentoDePagoModel.IdSucursal)
-            DocumentoDePagoModel.GenerarNumero(cantidadVentas + 1, codigoVentaSucursal)
-
-            Await DocumentoDePagoService.GuardarAsync(TipoBase.Remota, DocumentoDePagoModel)
-        End Function
-
-        Private Async Function RegistrarMovimientoAsync() As Task
-            Dim saldo As Decimal = Await MovimientoService.ObtenerSaldoAsync(TipoBase.Remota, DocumentoDePagoModel.IdClienteMayorista)
-            Dim movimiento As Movimiento = New Movimiento(DocumentoDePagoModel.IdSucursal, DocumentoDePagoModel.IdClienteMayorista, TipoMovimientoCuentaCorriente.Deposito, DocumentoDePagoModel.Numero, DocumentoDePagoModel.Id, saldo)
-            movimiento.registrarCredito(DocumentoDePagoModel.PagoTotal.Monto)
-            Await MovimientoService.GuardarAsync(TipoBase.Remota, movimiento)
-        End Function
+        Friend Sub ImprimirMovimiento()
+            Dim frmReporteDocumentoPagol As frmReporteDocumentoPagol = New frmReporteDocumentoPagol(DocumentoDePagoModel.Id)
+            frmReporteDocumentoPagol.ShowDialog()
+        End Sub
 
         Friend Sub CalcularPagoDesdeSubtotal(subtotal As Decimal)
             Dim motoAPagar As MontoPago = DocumentoDePagoModel.ObtenerMontoPagoDesdeSubtotal(subtotal, CuotaCft)
@@ -229,6 +226,37 @@ Namespace Formularios.Cliente
             Dim motoAPagar As MontoPago = DocumentoDePagoModel.ObtenerMontoPagoDesdeTotal(total, CuotaCft)
             ActualizarPago(motoAPagar)
         End Sub
+
+        Private Async Function GuardarDocumentoDePagoAsync() As Task
+            Dim codigoVentaSucursal As String = SucursalModel.CodigoVenta
+            Dim cantidadVentas As Integer = Await DocumentoDePagoService.CantidadAsync(TipoBase.Remota, DocumentoDePagoModel.IdSucursal)
+            DocumentoDePagoModel.GenerarNumero(cantidadVentas + 1, codigoVentaSucursal)
+
+            Await DocumentoDePagoService.GuardarAsync(TipoBase.Remota, DocumentoDePagoModel)
+        End Function
+
+        Private Async Function ActualizarMontoCuentaCorrienteAsync(tipoAccionCuentaCorriente As TipoAccionCuentaCorriente) As Task
+
+            Dim monto As Decimal = DocumentoDePagoModel.Pagos.Sum(Function(x) x.MontoPago.Monto)
+
+            If (tipoAccionCuentaCorriente = TipoAccionCuentaCorriente.Crédito) Then
+                DocumentoDePagoModel.ClienteMayorista.AcreditarSaldoCuentaCorriente(monto)
+            Else
+                DocumentoDePagoModel.ClienteMayorista.DebitarSaldoCuentaCorriente(monto)
+            End If
+
+            Dim movimiento As Movimiento = New Movimiento(DocumentoDePagoModel.IdSucursal,
+                                                          DocumentoDePagoModel.ClienteMayorista.Id,
+                                                          monto,
+                                                          DocumentoDePagoModel.ClienteMayorista.MontoCuentaCorriente,
+                                                          TipoMovimientoCuentaCorriente.Depósito,
+                                                          tipoAccionCuentaCorriente,
+                                                          DocumentoDePagoModel.Numero,
+                                                          DocumentoDePagoModel.Id)
+
+            Await MovimientoService.GuardarAsync(TipoBase.Remota, movimiento)
+            Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, DocumentoDePagoModel.ClienteMayorista)
+        End Function
 
         Private Sub ActualizarPago(montoPago As MontoPago)
             _Subtotal = montoPago.Monto

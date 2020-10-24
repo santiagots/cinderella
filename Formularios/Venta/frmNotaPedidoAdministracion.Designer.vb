@@ -1,9 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmNotaPedidoAdministracion
-    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +19,7 @@ Partial Class frmNotaPedidoAdministracion
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -67,6 +66,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.dgNotasPedidos = New System.Windows.Forms.DataGridView()
+        Me.Paginado = New SistemaCinderella.Paginado()
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TipoClienteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VendedorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -376,7 +376,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbTipoVenta.DisplayMember = "Value"
         Me.cmbTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbTipoVenta.FormattingEnabled = True
-        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 34)
+        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 33)
         Me.cmbTipoVenta.Name = "cmbTipoVenta"
         Me.cmbTipoVenta.Size = New System.Drawing.Size(283, 23)
         Me.cmbTipoVenta.TabIndex = 426
@@ -404,7 +404,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbVendedor.DisplayMember = "Value"
         Me.cmbVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbVendedor.FormattingEnabled = True
-        Me.cmbVendedor.Location = New System.Drawing.Point(612, 4)
+        Me.cmbVendedor.Location = New System.Drawing.Point(612, 3)
         Me.cmbVendedor.Name = "cmbVendedor"
         Me.cmbVendedor.Size = New System.Drawing.Size(283, 23)
         Me.cmbVendedor.TabIndex = 430
@@ -423,7 +423,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cbEstado.DisplayMember = "Value"
         Me.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbEstado.FormattingEnabled = True
-        Me.cbEstado.Location = New System.Drawing.Point(143, 3)
+        Me.cbEstado.Location = New System.Drawing.Point(143, 4)
         Me.cbEstado.Name = "cbEstado"
         Me.cbEstado.Size = New System.Drawing.Size(283, 23)
         Me.cbEstado.TabIndex = 438
@@ -570,7 +570,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.DataBindings.Add(New System.Windows.Forms.Binding("Visible", Me.NotaPedidoBindingSource, "SinResultados", True))
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(231, 404)
+        Me.lbl_Msg.Location = New System.Drawing.Point(231, 375)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(472, 29)
         Me.lbl_Msg.TabIndex = 20
@@ -594,8 +594,20 @@ Partial Class frmNotaPedidoAdministracion
         Me.dgNotasPedidos.Name = "dgNotasPedidos"
         Me.dgNotasPedidos.ReadOnly = True
         Me.dgNotasPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgNotasPedidos.Size = New System.Drawing.Size(910, 484)
+        Me.dgNotasPedidos.Size = New System.Drawing.Size(910, 455)
         Me.dgNotasPedidos.TabIndex = 21
+        '
+        'Paginado
+        '
+        Me.Paginado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Paginado.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.NotaPedidoBindingSource, "NotasPedidosTotalElementos", True))
+        Me.Paginado.Leyenda = "{0} de {1}"
+        Me.Paginado.Location = New System.Drawing.Point(12, 623)
+        Me.Paginado.Name = "Paginado"
+        Me.Paginado.PaginaActual = 1
+        Me.Paginado.Size = New System.Drawing.Size(209, 23)
+        Me.Paginado.TabIndex = 22
+        Me.Paginado.TotalElementos = 0
         '
         'NumeroDataGridViewTextBoxColumn
         '
@@ -604,16 +616,18 @@ Partial Class frmNotaPedidoAdministracion
         Me.NumeroDataGridViewTextBoxColumn.HeaderText = "Numero"
         Me.NumeroDataGridViewTextBoxColumn.Name = "NumeroDataGridViewTextBoxColumn"
         Me.NumeroDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NumeroDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         Me.NumeroDataGridViewTextBoxColumn.Width = 69
         '
         'TipoClienteDataGridViewTextBoxColumn
         '
         Me.TipoClienteDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.TipoClienteDataGridViewTextBoxColumn.DataPropertyName = "TipoCliente"
-        Me.TipoClienteDataGridViewTextBoxColumn.HeaderText = "TipoCliente"
+        Me.TipoClienteDataGridViewTextBoxColumn.HeaderText = "Tipo Cliente"
         Me.TipoClienteDataGridViewTextBoxColumn.Name = "TipoClienteDataGridViewTextBoxColumn"
         Me.TipoClienteDataGridViewTextBoxColumn.ReadOnly = True
-        Me.TipoClienteDataGridViewTextBoxColumn.Width = 85
+        Me.TipoClienteDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
+        Me.TipoClienteDataGridViewTextBoxColumn.Width = 88
         '
         'VendedorDataGridViewTextBoxColumn
         '
@@ -622,6 +636,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.VendedorDataGridViewTextBoxColumn.HeaderText = "Vendedor"
         Me.VendedorDataGridViewTextBoxColumn.Name = "VendedorDataGridViewTextBoxColumn"
         Me.VendedorDataGridViewTextBoxColumn.ReadOnly = True
+        Me.VendedorDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         '
         'TotalDataGridViewTextBoxColumn
         '
@@ -632,7 +647,8 @@ Partial Class frmNotaPedidoAdministracion
         Me.TotalDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
         Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
-        Me.TotalDataGridViewTextBoxColumn.Width = 62
+        Me.TotalDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.TotalDataGridViewTextBoxColumn.Width = 43
         '
         'FechaDataGridViewTextBoxColumn
         '
@@ -641,6 +657,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
         Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
         Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.FechaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         Me.FechaDataGridViewTextBoxColumn.Width = 62
         '
         'EstadoDataGridViewTextBoxColumn
@@ -650,15 +667,17 @@ Partial Class frmNotaPedidoAdministracion
         Me.EstadoDataGridViewTextBoxColumn.HeaderText = "Estado"
         Me.EstadoDataGridViewTextBoxColumn.Name = "EstadoDataGridViewTextBoxColumn"
         Me.EstadoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.EstadoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         Me.EstadoDataGridViewTextBoxColumn.Width = 65
         '
         'NombreClienteDataGridViewTextBoxColumn
         '
         Me.NombreClienteDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.NombreClienteDataGridViewTextBoxColumn.DataPropertyName = "NombreCliente"
-        Me.NombreClienteDataGridViewTextBoxColumn.HeaderText = "NombreCliente"
+        Me.NombreClienteDataGridViewTextBoxColumn.HeaderText = "Nombre Cliente"
         Me.NombreClienteDataGridViewTextBoxColumn.Name = "NombreClienteDataGridViewTextBoxColumn"
         Me.NombreClienteDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NombreClienteDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Eliminar
         '
@@ -683,6 +702,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(934, 750)
+        Me.Controls.Add(Me.Paginado)
         Me.Controls.Add(Me.lbl_Msg)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
@@ -753,6 +773,7 @@ Partial Class frmNotaPedidoAdministracion
     Friend WithEvents dgNotasPedidos As DataGridView
     Friend WithEvents cbEstado As ComboBox
     Friend WithEvents EstadoBindingSource As BindingSource
+    Friend WithEvents Paginado As Paginado
     Friend WithEvents NumeroDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents TipoClienteDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents VendedorDataGridViewTextBoxColumn As DataGridViewTextBoxColumn

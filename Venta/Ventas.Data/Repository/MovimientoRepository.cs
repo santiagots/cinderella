@@ -1,6 +1,7 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Extension;
 using Common.Data.Repository;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace Ventas.Data.Repository
         {
         }
 
-        public Task<List<Movimiento>> ObtenerMovimientosAsync(int idClienteMayorista, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public Task<List<Movimiento>> ObtenerMovimientosAsync(int idClienteMayorista, DateTime fechaDesde, DateTime fechaHasta, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             return _context.Movimiento
                            .Include(x => x.Sucursal)
-                           .Where(x => x.IdClienteMayorista == idClienteMayorista)
+                           .Where(x => x.IdClienteMayorista == idClienteMayorista &&
+                                    DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
+                                    DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
                            .Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos).ToListAsync();
         }
 

@@ -6,7 +6,7 @@ Imports Common.Core.Enum
 Imports Common.Core.Helper
 Imports Ventas.Data.Service
 
-Public Class frmReporteDocumentoPago
+Public Class frmReporteFactura
 
     Private TipoCliente As TipoCliente
     Private TipoDocumentoFiscal As TipoDocumentoFiscal
@@ -21,7 +21,7 @@ Public Class frmReporteDocumentoPago
         End Get
     End Property
 
-    Sub New()
+    Private Sub New()
         ' This call is required by the designer.
         InitializeComponent()
     End Sub

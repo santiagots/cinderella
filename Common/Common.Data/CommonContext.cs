@@ -49,6 +49,8 @@ namespace Common.Data
 
         public Entity<T> Attach<T>(Entity<T> entity)
         {
+            if (entity == null) return null;
+
             if (!this.IsAttached(entity))
                 this.Entry(entity).State = EntityState.Unchanged;
 

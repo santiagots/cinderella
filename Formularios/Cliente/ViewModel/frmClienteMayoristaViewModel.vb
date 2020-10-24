@@ -77,12 +77,7 @@ Namespace Formularios.Cliente
                                                                                                     ElementosPorPagina,
                                                                                                     TotalElementos)
 
-            Dim ClienteMayoristaItemLista As List(Of ClienteMayoristaItem) = New List(Of ClienteMayoristaItem)
-
-            For Each ciente As ClienteMayorista In clientes
-                Dim montoTotalNotaPedidoPendientes As Decimal = Await Task.Run(Function() NotaPedidoService.ObtenerMontoTotalClienteMayorista(TipoBase.Remota, ciente.Id))
-                ClienteMayoristaItemLista.Add(New ClienteMayoristaItem(ciente, montoTotalNotaPedidoPendientes, 0))
-            Next
+            Dim ClienteMayoristaItemLista As List(Of ClienteMayoristaItem) = clientes.Select(Function(x) New ClienteMayoristaItem(x)).ToList()
 
             FiltroClientes = New BindingList(Of ClienteMayoristaItem)(ClienteMayoristaItemLista)
             NotifyPropertyChanged(NameOf(Me.FiltroClientes))

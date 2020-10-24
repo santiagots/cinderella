@@ -1,7 +1,5 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Enum
-Imports Common.Core.Exceptions
-Imports Common.Core.Helper
 Imports Negocio
 Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.Formularios.Facturacion
@@ -11,6 +9,7 @@ Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.VentaAggregate
 
 Public Class frmVentas
+    Inherits Comun
 
     Private Reserva As Reserva
     Private NotaPedido As NotaPedido
@@ -364,10 +363,10 @@ Public Class frmVentas
     End Sub
 
     Private Sub Btn_BuscarCliente_Click(sender As Object, e As EventArgs) Handles Btn_BuscarCliente.Click
-        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
         frmBuscarClienteMayorista.ShowDialog()
-        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
-            ventaViewModel.ClienteMayoristaChange(frmBuscarClienteMayorista.clienteMayorista.Id, frmBuscarClienteMayorista.clienteMayorista.RazonSocial, frmBuscarClienteMayorista.clienteMayorista.Bonificacion / 100)
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
+            ventaViewModel.ClienteMayoristaChange(frmBuscarClienteMayorista.ClienteMayorista)
         End If
     End Sub
 
@@ -416,33 +415,5 @@ Public Class frmVentas
         ventaViewModel.FormaPagoSeleccionado = Cb_FormaPago.SelectedValue
         Cb_Trajeta.Enabled = tipoPago = TipoPago.TarjetaCrédito OrElse tipoPago = TipoPago.TarjetaDébito
         Cb_NroCuota.Enabled = tipoPago = TipoPago.TarjetaCrédito
-    End Sub
-
-    Private Sub Ejecutar(accion As Action)
-        Try
-            accion()
-        Catch ex As NegocioException
-            ventaViewModel.Visible = True
-            Log.Error(ex)
-            MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            ventaViewModel.Visible = True
-            Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Async Sub EjecutarAsync(accion As Func(Of Task))
-        Try
-            Await accion()
-        Catch ex As NegocioException
-            ventaViewModel.Visible = True
-            Log.Error(ex)
-            MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            ventaViewModel.Visible = True
-            Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
     End Sub
 End Class

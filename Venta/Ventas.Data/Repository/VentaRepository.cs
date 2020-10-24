@@ -88,6 +88,9 @@ namespace Ventas.Data.Repository
 
         public void Guardar(Venta venta)
         {
+            if(venta.ClienteMayorista != null)
+                _context.Entry(venta.ClienteMayorista).State = EntityState.Unchanged;
+
             _context.Entry(venta.Encargado).State = EntityState.Unchanged;
             _context.Entry(venta.Vendedor).State = EntityState.Unchanged;
             venta.VentaItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria

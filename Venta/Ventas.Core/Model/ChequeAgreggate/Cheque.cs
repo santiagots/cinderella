@@ -2,10 +2,7 @@
 using Common.Core.Exceptions;
 using Common.Core.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Ventas.Core.Model.CuentaCorrienteAggregate;
 using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Core.Model.ChequeAggregate
@@ -15,6 +12,8 @@ namespace Ventas.Core.Model.ChequeAggregate
         public int IdSucursal { get; internal set; }
         public long? IdVenta { get; internal set; }
         public virtual Venta Venta { get; internal set; }
+        public long? IdDocumentoDePago { get; internal set; }
+        public virtual DocumentoDePago DocumentoDePago { get; internal set; }
         public int NumeroOrden { get; internal set; }
         public int NumeroCheque { get; internal set; }
         public bool MarcaFacturado { get; internal set; }
@@ -84,6 +83,11 @@ namespace Ventas.Core.Model.ChequeAggregate
             : this(idSucursal, numeroOrden, numeroCheque, marcaFacturado, monto, idBancoEmisor, idCliente, clienteNombre, idLibrador, libradorNombre, fechaIngreso, fechaDesposito, fechaVencimiento, fechaSalida, detalleSalida, estado, destinoSalida)
         {
             Id = id;
+        }
+
+        public override string ToString()
+        {
+            return $"Nro. {NumeroCheque} Librador {LibradorNombre} Banco {BancoEmisor.Nombre} F.Dep. {FechaDesposito.ToShortDateString()} F.Ing. {FechaIngreso.ToShortDateString()}";
         }
     }
 }

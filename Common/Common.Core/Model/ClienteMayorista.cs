@@ -1,4 +1,6 @@
 ﻿using Common.Core.Enum;
+using System;
+using System.Reflection;
 
 namespace Common.Core.Model
 {
@@ -19,6 +21,18 @@ namespace Common.Core.Model
         public int? IdDomicilioEntrega { get; set; }
         public Domicilio DomicilioEntrega { get; set; }
         public string Observaciones { get; set; }
+        public decimal MontoCuentaCorriente { get; set; }
+        public decimal MontoNotasPedido { get; set; }
         public bool Habilitado { get; set; }
+
+        public void DebitarSaldoCuentaCorriente(decimal monto)
+        {
+            MontoCuentaCorriente -= monto;
+        }
+
+        public void AcreditarSaldoCuentaCorriente(decimal monto)
+        {
+            MontoCuentaCorriente += monto;
+        }
     }
 }

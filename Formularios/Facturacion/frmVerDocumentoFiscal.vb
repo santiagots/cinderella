@@ -24,7 +24,7 @@ Public Class frmVerDocumentoFiscal
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
         Ejecutar(Sub()
-                     Dim frmReporteResumenReserva As frmReporteDocumentoPago = New frmReporteDocumentoPago(frmVerFacturaViewModel.IdDocuemtnoFiscal, frmVerFacturaViewModel.TipoCliente, frmVerFacturaViewModel.TipoDocumentoFiscal)
+                     Dim frmReporteResumenReserva As frmReporteFactura = New frmReporteFactura(frmVerFacturaViewModel.IdDocuemtnoFiscal, frmVerFacturaViewModel.TipoCliente, frmVerFacturaViewModel.TipoDocumentoFiscal)
                      frmReporteResumenReserva.ShowDialog()
                  End Sub)
     End Sub

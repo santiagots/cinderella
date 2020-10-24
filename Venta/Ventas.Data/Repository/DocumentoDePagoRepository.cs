@@ -26,6 +26,7 @@ namespace Ventas.Data.Repository
 
         public Task GuardarAsync(DocumentoDePago documentoDePago)
         {
+            _context.Entry(documentoDePago.ClienteMayorista).State = EntityState.Unchanged;
             _context.Entry(documentoDePago.Encargado).State = EntityState.Unchanged;
 
             _context.DocumentoDePago.Add(documentoDePago);
@@ -42,8 +43,14 @@ namespace Ventas.Data.Repository
             return _context.DocumentoDePago
                 .Include(x => x.Sucursal)
                 .Include(x => x.Encargado)
-                .Include(x => x.ClienteMayorista)
+                .Include(x => x.ClienteMayorista.DomicilioEntrega.Distrito)
+                .Include(x => x.ClienteMayorista.DomicilioEntrega.Localidad)
+                .Include(x => x.ClienteMayorista.DomicilioEntrega.Provincia)
+                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Distrito)
+                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Localidad)
+                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Provincia)
                 .Include(x => x.Pagos)
+                .Include(x => x.Cheques.Select(y => y.BancoEmisor))
                 .FirstOrDefaultAsync(x => x.Id == idDocumentoDePago);
         }
     }

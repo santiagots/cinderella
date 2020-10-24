@@ -1,6 +1,7 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
 using Common.Core.Helper;
+using Common.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,22 +17,19 @@ namespace Ventas.Core.Model.CuentaCorrienteAggregate
         public bool Anulado { get; protected set; }
         public string MotivoAnulado { get; protected set; }
         public DateTime? FechaAnulado { get; protected set; }
-        public virtual List<DocumentoDePagoPago> Pagos { get; protected set; }
-        public virtual List<Cheque> Cheques { get; protected set; }
-        public MontoPago PagoTotal { get; private set; }
+        public virtual List<DocumentoDePagoPago> Pagos { get; protected set; } = new List<DocumentoDePagoPago>();
+        public virtual List<Cheque> Cheques { get; protected set; } = new List<Cheque>();
+        public MontoPago PagoTotal { get; private set; } = new MontoPago(0, 0, 0, 0);
 
         internal DocumentoDePago()
         {
         }
 
-        public DocumentoDePago(int idSucursal, int idClienteMayorista) : base(true)
+        public DocumentoDePago(int idSucursal, ClienteMayorista clienteMayorista) : base(true)
         {
             IdSucursal = idSucursal;
-            IdClienteMayorista = idClienteMayorista;
-            Pagos = new List<DocumentoDePagoPago>();
-            Cheques = new List<Cheque>();
-            MontoTotal = new MontoProducto(0, 0);
-            PagoTotal = new MontoPago(0, 0, 0, 0);
+            IdClienteMayorista = clienteMayorista.Id;
+            ClienteMayorista = clienteMayorista;
             Fecha = DateTime.Now;
             FechaEdicion = DateTime.Now;
             PorcentajeFacturacion = 1;

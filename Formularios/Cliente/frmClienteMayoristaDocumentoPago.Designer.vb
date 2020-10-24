@@ -82,6 +82,7 @@ Partial Class frmClienteMayoristaDocumentoPago
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
         Me.BtnAnular = New System.Windows.Forms.Button()
+        Me.btnImprimir = New System.Windows.Forms.Button()
         Me.GB_Pagos.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
@@ -559,7 +560,7 @@ Partial Class frmClienteMayoristaDocumentoPago
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(741, 534)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(635, 534)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 35)
         Me.Btn_Cancelar.TabIndex = 3
@@ -743,11 +744,28 @@ Partial Class frmClienteMayoristaDocumentoPago
         Me.BtnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnAnular.UseVisualStyleBackColor = True
         '
+        'btnImprimir
+        '
+        Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnImprimir.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnImprimir.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmClienteMayoristaCuentaCorrientePagoViewModelBindingSource, "HabilitarImprimir", True))
+        Me.btnImprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnImprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
+        Me.btnImprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnImprimir.Location = New System.Drawing.Point(741, 534)
+        Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(100, 35)
+        Me.btnImprimir.TabIndex = 18
+        Me.btnImprimir.Text = "Imprimir"
+        Me.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnImprimir.UseVisualStyleBackColor = True
+        '
         'frmClienteMayoristaDocumentoPago
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(954, 581)
+        Me.Controls.Add(Me.btnImprimir)
         Me.Controls.Add(Me.Gb_Anulado)
         Me.Controls.Add(Me.Gb_Vendedor)
         Me.Controls.Add(Me.Btn_Cancelar)
@@ -836,4 +854,5 @@ Partial Class frmClienteMayoristaDocumentoPago
     Friend WithEvents TotalDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents QuitarTotal As DataGridViewTextBoxColumn
     Friend WithEvents dgvPagosTotal As DataGridView
+    Friend WithEvents btnImprimir As Button
 End Class

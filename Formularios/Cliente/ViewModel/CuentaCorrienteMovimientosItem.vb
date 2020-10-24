@@ -23,21 +23,21 @@ Namespace Formularios.Cliente
             End Get
         End Property
 
+        Public ReadOnly Property TipoAccionCuentaCorriente As TipoAccionCuentaCorriente
+            Get
+                Return Movimiento.TipoAccionCuentaCorriente
+            End Get
+        End Property
+
         Public ReadOnly Property NumeroComprobante As String
             Get
                 Return Movimiento.NumeroComprobante
             End Get
         End Property
 
-        Public ReadOnly Property Debito As Decimal
+        Public ReadOnly Property Monto As Decimal
             Get
-                Return Movimiento.Debito
-            End Get
-        End Property
-
-        Public ReadOnly Property Credito As Decimal
-            Get
-                Return Movimiento.Credito
+                Return Movimiento.Monto
             End Get
         End Property
 

@@ -66,6 +66,7 @@
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
     <Compile Include="Enum\OrdenarDireccion.cs" />
+    <Compile Include="Enum\TipoAccionCuentaCorriente.cs" />
     <Compile Include="Enum\TipoBase.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />

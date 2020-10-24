@@ -92,13 +92,6 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Function ObtenerNotaPedido(idSucursal As Integer, estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, tipoPago As TipoPago?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As IList(Of NotaPedido)
-            Using context As VentaContext = New VentaContext()
-                Dim NotaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-                Return NotaPedidoRepository.Obtener(idSucursal, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente)
-            End Using
-        End Function
-
         Public Shared Function ObtenerCantidadNotaPedido(idSucursal As Integer, estado As NotaPedidoEstado?) As Integer
             Using context As VentaContext = New VentaContext()
                 Dim NotaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)

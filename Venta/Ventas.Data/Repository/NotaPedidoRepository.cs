@@ -9,6 +9,8 @@ using System.Data.Entity;
 using Common.Data.Repository;
 using Ventas.Core.Model.ValueObjects;
 using System.Threading.Tasks;
+using Ventas.Core.Model.CuentaCorrienteAggregate;
+using Common.Core.Extension;
 
 namespace Ventas.Data.Repository
 {
@@ -51,9 +53,10 @@ namespace Ventas.Data.Repository
             _context.SaveChanges();
         }
 
-        public List<NotaPedido> Obtener(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
+        public Task<List<NotaPedido>> ObtenerAsync(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
-            IQueryable<NotaPedido> notaPedido = ObtenerConsulta(idSucursal);
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
+                                                    .Where(x => x.IdSucursal == idSucursal);
 
             if (estado.HasValue)
                 notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
@@ -73,18 +76,30 @@ namespace Ventas.Data.Repository
             if (!string.IsNullOrWhiteSpace(nombreCliente))
                 notaPedido = notaPedido.Where(x => x.ClienteMinorista.Apellido.Contains(nombreCliente) || x.ClienteMinorista.Nombre.Contains(nombreCliente) || x.ClienteMayorista.RazonSocial.Contains(nombreCliente));
 
-            return notaPedido.ToList();
+            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
+                             .ToListAsync();
         }
 
-        private IQueryable<NotaPedido> ObtenerConsulta(int idSucursal)
+        public Task<List<NotaPedido>> ObtenerAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        {
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta().Where(x => x.ClienteMayorista.Id == idClienteMayorista);
+
+            if (estado.HasValue)
+                notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
+
+            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
+                             .ToListAsync();
+        }
+
+        private IQueryable<NotaPedido> ObtenerConsulta()
         {
             return _context.NotaPedido
-                                                                .Where(x => !x.Borrado && x.IdSucursal == idSucursal)
-                                                                .Include(x => x.NotaPedidoItems.Select(y => y.Producto))
-                                                                .Include(x => x.Vendedor)
-                                                                .Include(x => x.Encargado)
-                                                                .Include(x => x.ClienteMayorista)
-                                                                .Include(x => x.ClienteMinorista);
+                            .Where(x => !x.Borrado)
+                            .Include(x => x.NotaPedidoItems.Select(y => y.Producto))
+                            .Include(x => x.Vendedor)
+                            .Include(x => x.Encargado)
+                            .Include(x => x.ClienteMayorista)
+                            .Include(x => x.ClienteMinorista);
         }
 
         public decimal ObtenerMontoTotalClienteMayorista(int idClienteMatorista)
@@ -98,7 +113,8 @@ namespace Ventas.Data.Repository
 
         public int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado)
         {
-            IQueryable<NotaPedido> notaPedido = ObtenerConsulta(idSucursal);
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
+                                                    .Where(x => x.IdSucursal == idSucursal);
 
             if (estado.HasValue)
                 notaPedido = notaPedido.Where(x => x.Estado == estado.Value);

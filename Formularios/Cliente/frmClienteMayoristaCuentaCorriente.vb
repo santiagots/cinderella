@@ -22,17 +22,30 @@ Public Class frmClienteMayoristaCuentaCorriente
     Private Sub frmClienteMayoristaCuentaCorriente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EjecutarAsync(Async Function() As Task
                           FrmClienteMayoristaCuentaCorrienteViewModelBindingSource.DataSource = frmClienteMayoristaCuentaCorrienteViewModel
-                          frmClienteMayoristaCuentaCorrienteViewModel.MovimientosElementosPorPagina = Paginado.ElementosPorPagina
-                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarAsync()
+                          frmClienteMayoristaCuentaCorrienteViewModel.MovimientosElementosPorPagina = PaginadoMovimientos.ElementosPorPagina
+                          frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosElementosPorPagina = PaginadoNotaPedido.ElementosPorPagina
+
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarNotasPedidoAsync()
                       End Function)
     End Sub
 
     Private Sub btnPagoDocumento_Click(sender As Object, e As EventArgs) Handles btnPagoDocumento.Click
         EjecutarAsync(Async Function() As Task
-                          Dim frmClienteMayoristaCuentaCorrientePago As frmClienteMayoristaDocumentoPago = New frmClienteMayoristaDocumentoPago(frmClienteMayoristaCuentaCorrienteViewModel.IdClienteMayorista)
+                          Dim frmClienteMayoristaCuentaCorrientePago As frmClienteMayoristaDocumentoPago = New frmClienteMayoristaDocumentoPago(frmClienteMayoristaCuentaCorrienteViewModel.ClienteMayorista)
                           frmClienteMayoristaCuentaCorrientePago.ShowDialog()
-                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarAsync()
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
                       End Function)
+    End Sub
+
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
+        EjecutarAsync(Async Function() As Task
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
+                      End Function)
+    End Sub
+
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        Ejecutar(Sub() frmClienteMayoristaCuentaCorrienteViewModel.ImprimirCuenta())
     End Sub
 
     Private Sub frmClienteMayoristaCuentaCorriente_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
@@ -50,34 +63,102 @@ Public Class frmClienteMayoristaCuentaCorriente
                           If dgvMovimientos.Columns(e.ColumnIndex).Name = "Detalle" Then
                               Await frmClienteMayoristaCuentaCorrienteViewModel.CargarDetalleMovimientoAsync(dgvMovimientos.CurrentRow.DataBoundItem)
                           End If
+                          If dgvMovimientos.Columns(e.ColumnIndex).Name = "Imprimir" Then
+                              frmClienteMayoristaCuentaCorrienteViewModel.ImprimirMovimiento(dgvMovimientos.CurrentRow.DataBoundItem)
+                          End If
                       End Function)
     End Sub
 
-    Private Sub Paginado_PaginaAnteriorClick(sender As Object, e As EventArgs) Handles Paginado.PaginaAnteriorClick
+    Private Sub PaginadoMovimientos_PaginaAnteriorClick(sender As Object, e As EventArgs) Handles PaginadoMovimientos.PaginaAnteriorClick
         EjecutarAsync(Async Function() As Task
                           frmClienteMayoristaCuentaCorrienteViewModel.MovimientosPaginaActual += -1
-                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarAsync()
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
                       End Function)
     End Sub
 
-    Private Sub Paginado_PaginaFinalClick(sender As Object, e As EventArgs) Handles Paginado.PaginaFinalClick
+    Private Sub PaginadoMovimientos_PaginaFinalClick(sender As Object, e As EventArgs) Handles PaginadoMovimientos.PaginaFinalClick
         EjecutarAsync(Async Function() As Task
-                          frmClienteMayoristaCuentaCorrienteViewModel.MovimientosPaginaActual = Paginado.TotalPaginas
-                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarAsync()
+                          frmClienteMayoristaCuentaCorrienteViewModel.MovimientosPaginaActual = PaginadoMovimientos.TotalPaginas
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
                       End Function)
     End Sub
 
-    Private Sub Paginado_PaginaInicalClick(sender As Object, e As EventArgs) Handles Paginado.PaginaInicalClick
+    Private Sub PaginadoMovimientos_PaginaInicalClick(sender As Object, e As EventArgs) Handles PaginadoMovimientos.PaginaInicalClick
         EjecutarAsync(Async Function() As Task
                           frmClienteMayoristaCuentaCorrienteViewModel.MovimientosPaginaActual = 1
-                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarAsync()
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
                       End Function)
     End Sub
 
-    Private Sub Paginado_PaginaSiguienteClick(sender As Object, e As EventArgs) Handles Paginado.PaginaSiguienteClick
+    Private Sub PaginadoMovimientos_PaginaSiguienteClick(sender As Object, e As EventArgs) Handles PaginadoMovimientos.PaginaSiguienteClick
         EjecutarAsync(Async Function() As Task
                           frmClienteMayoristaCuentaCorrienteViewModel.MovimientosPaginaActual += 1
-                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarAsync()
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarMovimientosAsync()
                       End Function)
+    End Sub
+
+    Private Sub PaginadoNotaPedido_PaginaAnteriorClick(sender As Object, e As EventArgs) Handles PaginadoNotaPedido.PaginaAnteriorClick
+        EjecutarAsync(Async Function() As Task
+                          frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosPaginaActual += -1
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarNotasPedidoAsync()
+                      End Function)
+    End Sub
+
+    Private Sub PaginadoNotaPedido_PaginaFinalClick(sender As Object, e As EventArgs) Handles PaginadoNotaPedido.PaginaFinalClick
+        EjecutarAsync(Async Function() As Task
+                          frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosPaginaActual = PaginadoNotaPedido.TotalPaginas
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarNotasPedidoAsync()
+                      End Function)
+    End Sub
+
+    Private Sub PaginadoNotaPedido_PaginaInicalClick(sender As Object, e As EventArgs) Handles PaginadoNotaPedido.PaginaInicalClick
+        EjecutarAsync(Async Function() As Task
+                          frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosPaginaActual = 1
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarNotasPedidoAsync()
+                      End Function)
+    End Sub
+
+    Private Sub PaginadoNotaPedido_PaginaSiguienteClick(sender As Object, e As EventArgs) Handles PaginadoNotaPedido.PaginaSiguienteClick
+        EjecutarAsync(Async Function() As Task
+                          frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosPaginaActual += 1
+                          Await frmClienteMayoristaCuentaCorrienteViewModel.CargarNotasPedidoAsync()
+                      End Function)
+    End Sub
+
+    Private Sub dgvNotasPedidos_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvNotasPedidos.ColumnHeaderMouseClick
+        EjecutarAsync(Async Function() As Task
+                          If (dgvNotasPedidos.Columns(e.ColumnIndex).SortMode <> DataGridViewColumnSortMode.NotSortable) Then
+
+                              Select Case dgvNotasPedidos.Columns(e.ColumnIndex).HeaderText
+                                  Case "Numero"
+                                      frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosOrdenadoPor = "Numero"
+                                  Case "Vendedor"
+                                      frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosOrdenadoPor = "Vendedor.Apellido"
+                                  Case "Fecha"
+                                      frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosOrdenadoPor = "Fecha"
+                                  Case "Estado"
+                                      frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosOrdenadoPor = "Estado"
+                              End Select
+
+                              frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosDireccionOrdenamiento = If(frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosDireccionOrdenamiento = OrdenadoDireccion.ASC, OrdenadoDireccion.DESC, OrdenadoDireccion.ASC)
+                              Await frmClienteMayoristaCuentaCorrienteViewModel.CargarNotasPedidoAsync()
+
+                              dgvNotasPedidos.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = If(frmClienteMayoristaCuentaCorrienteViewModel.NotasPedidosDireccionOrdenamiento = OrdenadoDireccion.ASC, SortOrder.Ascending, SortOrder.Descending)
+                          End If
+                      End Function)
+    End Sub
+
+    Private Sub dgvMovimientos_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvMovimientos.CellFormatting
+        Ejecutar(Sub()
+
+                     Dim CuentaCorrienteMovimientosItem As CuentaCorrienteMovimientosItem = dgvMovimientos.Rows(e.RowIndex).DataBoundItem
+                     If (CuentaCorrienteMovimientosItem.Monto >= 0) Then
+                         e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
+                         e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
+                     Else
+                         e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
+                         e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
+                     End If
+                 End Sub)
     End Sub
 End Class

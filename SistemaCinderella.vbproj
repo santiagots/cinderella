@@ -152,14 +152,15 @@
       <HintPath>packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AxShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="CodigoBarras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dlls\CodigoBarras.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -305,6 +306,12 @@
     <Compile Include="Formularios\Cheque\ViewModel\ChequeDetalleViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAltaMasivaViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAltaViewModel.vb" />
+    <Compile Include="Formularios\Cliente\frmReporteDocumentoPago.Designer.vb">
+      <DependentUpon>frmReporteDocumentoPago.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Cliente\frmReporteDocumentoPago.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.Designer.vb">
       <DependentUpon>frmClienteMayoristaCuentaCorriente.vb</DependentUpon>
     </Compile>
@@ -317,15 +324,23 @@
     <Compile Include="Formularios\Cliente\frmClienteMayoristaDocumentoPago.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\Cliente\frmReporteMovimientosCuentaCorriente.Designer.vb">
+      <DependentUpon>frmReporteMovimientosCuentaCorriente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Cliente\frmReporteMovimientosCuentaCorriente.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\Cliente\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaDocumentoPagoItem.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaDetalleViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\ClienteMayoristaItem.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\CuentaCorrienteMovimientosItem.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\DireccionViewModel.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaBuscarViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaDocumentoPagoViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaCuentaCorrienteViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\frmClienteMayoristaViewModel.vb" />
+    <Compile Include="Formularios\Cliente\ViewModel\CuentaCorrienteNotaPedidoItems.vb" />
     <Compile Include="Formularios\Comun\Comun.Designer.vb">
       <DependentUpon>Comun.vb</DependentUpon>
     </Compile>
@@ -516,10 +531,10 @@
     <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmBuscarClienteMayorista.Designer.vb">
-      <DependentUpon>frmBuscarClienteMayorista.vb</DependentUpon>
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaBuscar.Designer.vb">
+      <DependentUpon>frmClienteMayoristaBuscar.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmBuscarClienteMayorista.vb">
+    <Compile Include="Formularios\Cliente\frmClienteMayoristaBuscar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmBuscarCodigoProducto.Designer.vb">
@@ -1178,8 +1193,8 @@
     <Compile Include="Reportes\ReporteDocumentoPago.vb">
       <DependentUpon>ReporteDocumentoPago.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReporteFactura.vb">
       <AutoGen>True</AutoGen>
@@ -1187,35 +1202,41 @@
       <DependentUpon>ReporteFactura.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\ReporteMovimientoCuentaCorriente.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteMovimientoCuentaCorriente.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\ReporteReservaMinorista.vb">
       <DependentUpon>ReporteReservaMinorista.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReporteReservaMayorista.vb">
       <DependentUpon>ReporteReservaMayorista.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReporteNotaPedidoMayorista.vb">
       <DependentUpon>ReporteNotaPedidoMayorista.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReporteNotaPedidoMinorista.vb">
       <DependentUpon>ReporteNotaPedidoMinorista.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReportePrecios2.vb">
       <DependentUpon>ReportePrecios2.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReportePrecios.vb">
       <AutoGen>True</AutoGen>
@@ -1226,8 +1247,8 @@
     <Compile Include="Reportes\ReporteResumenVenta.vb">
       <DependentUpon>ReporteResumenVenta.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReportePresupuesto.vb">
       <AutoGen>True</AutoGen>
@@ -1271,6 +1292,8 @@
     <Compile Include="Formularios\Venta\ViewModel\frmVentasViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmBuscarClienteMayoristaViewModel1.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaCuentaCorrientePagoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaCuentaCorrienteViewModel.datasource" />
     <None Include="Resources\NavigatorPreviousItem.png" />
@@ -1290,11 +1313,17 @@
     <EmbeddedResource Include="Formularios\Cheque\frmChequeAltaMasiva.resx">
       <DependentUpon>frmChequeAltaMasiva.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Cliente\frmReporteDocumentoPago.resx">
+      <DependentUpon>frmReporteDocumentoPago.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaCuentaCorriente.resx">
       <DependentUpon>frmClienteMayoristaCuentaCorriente.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaDocumentoPago.resx">
       <DependentUpon>frmClienteMayoristaDocumentoPago.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Cliente\frmReporteMovimientosCuentaCorriente.resx">
+      <DependentUpon>frmReporteMovimientosCuentaCorriente.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\DialogInput.resx">
       <DependentUpon>DialogInput.vb</DependentUpon>
@@ -1366,8 +1395,8 @@
     <EmbeddedResource Include="Formularios\Venta\frmBuscarClienteMinorista.resx">
       <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmBuscarClienteMayorista.resx">
-      <DependentUpon>frmBuscarClienteMayorista.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaBuscar.resx">
+      <DependentUpon>frmClienteMayoristaBuscar.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmBuscarCodigoProducto.resx">
       <DependentUpon>frmBuscarCodigoProducto.vb</DependentUpon>
@@ -1721,6 +1750,10 @@
     <EmbeddedResource Include="Reportes\ReporteFactura.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReporteFactura.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReporteMovimientoCuentaCorriente.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteMovimientoCuentaCorriente.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReporteTransaccion.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -2203,16 +2236,6 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
-    <PublishFile Include="CrystalDecisions.CrystalReports.Engine">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ClientDoc">
       <Visible>False</Visible>
       <Group>
@@ -2324,36 +2347,6 @@
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.XmlSerialize">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.ReportSource">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.Shared">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.Windows.Forms">
       <Visible>False</Visible>
       <Group>
       </Group>

@@ -4,9 +4,12 @@ Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Extension
+Imports Common.Core.Model
+Imports Common.Data.Service
 Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.Formularios.Facturacion
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Ventas.Core.Model.CuentaCorrienteAggregate
 Imports Ventas.Data.Service
 Imports Model = Ventas.Core.Model.VentaAggregate
 
@@ -123,11 +126,20 @@ Namespace Formularios.Venta
                 Throw New NegocioException("Error al anular la venta. No se encuentra una venta seleccionada")
             End If
 
+            Dim MontoPagoCuentaCorriente As Decimal = VentaModelSeleccionada.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
+            Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
+
+            If (base = TipoBase.Local AndAlso VentaModelSeleccionada.Pagos.Any(Function(x) x.TipoPago = TipoPago.CuentaCorriente)) Then
+                Throw New NegocioException("Error al anular la venta. No es posible anular una venta con alguno de sus pagos con cuenta corriente estado em modo OFF LINE. Por favor, vuelva a intentar en modo ON LINE.")
+            End If
+
             If (VentaModelSeleccionada.Factura IsNot Nothing) Then
                 Await GenerarNotaCredito()
             Else
                 Await AnularVentaAsync(VentaModelSeleccionada)
             End If
+
+            Await RegistrarMovimiento(VentaModelSeleccionada)
         End Function
 
         Friend Async Function RestablecerAsync() As Task
@@ -202,8 +214,6 @@ Namespace Formularios.Venta
                 VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, False, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
             End If
 
-
-
             NotaCredito(VentasPorAnular.First())
         End Function
 
@@ -235,6 +245,31 @@ Namespace Formularios.Venta
             Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
             Await BuscarAsync()
             MessageBox.Show("Se ha anulado la venta de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Function
+
+        Private Async Function RegistrarMovimiento(venta As Model.Venta) As Task
+            Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
+            Dim saldo As Decimal = If(VariablesGlobales.HayConexion, venta.ClienteMayorista.MontoCuentaCorriente, 0)
+
+            Dim monto As Decimal = venta.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
+
+            If (monto > 0) Then
+                Dim clienteMayorista As ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Remota, venta.ClienteMayorista.Id)
+                clienteMayorista.AcreditarSaldoCuentaCorriente(monto)
+                saldo = clienteMayorista.MontoCuentaCorriente
+                Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clienteMayorista)
+            End If
+
+            Dim movimiento As Movimiento = New Movimiento(venta.IdSucursal,
+                                                          venta.ClienteMayorista.Id,
+                                                          monto,
+                                                          saldo,
+                                                          TipoMovimientoCuentaCorriente.Venta,
+                                                          TipoAccionCuentaCorriente.Crédito,
+                                                          venta.Numero,
+                                                          venta.Id)
+
+            Await MovimientoService.GuardarAsync(TipoBase.Remota, movimiento)
         End Function
 
         Public Async Function BuscarAsync() As Task

@@ -23,13 +23,19 @@ Namespace Formularios.Cliente
         End Property
 
         Public ReadOnly Property NotaPedidoMonto As Decimal
+            Get
+                Return ClienteMayorista.MontoNotasPedido
+            End Get
+        End Property
 
         Public ReadOnly Property CuentaCorrienteMonto As Decimal
+            Get
+                Return ClienteMayorista.MontoCuentaCorriente
+            End Get
+        End Property
 
-        Sub New(clienteMayorista As ClienteMayorista, notaPedidoMonto As Decimal, cuentaCorrienteMonto As Decimal)
+        Sub New(clienteMayorista As ClienteMayorista)
             Me.ClienteMayorista = clienteMayorista
-            Me.NotaPedidoMonto = notaPedidoMonto
-            Me.CuentaCorrienteMonto = cuentaCorrienteMonto
         End Sub
 
     End Class

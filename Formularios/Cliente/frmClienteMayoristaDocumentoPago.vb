@@ -1,5 +1,6 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Enum
+Imports Common.Core.Model
 Imports SistemaCinderella.Formularios.Cliente
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
 
@@ -8,13 +9,13 @@ Public Class frmClienteMayoristaDocumentoPago
 
     Dim frmClienteMayoristaCuentaCorrientePagoViewModel As frmClienteMayoristaDocumentoPagoViewModel
 
-    Sub New(idClienteMayorista As Integer)
+    Sub New(clienteMayorista As ClienteMayorista)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        frmClienteMayoristaCuentaCorrientePagoViewModel = New frmClienteMayoristaDocumentoPagoViewModel(My.Settings.Sucursal, idClienteMayorista)
+        frmClienteMayoristaCuentaCorrientePagoViewModel = New frmClienteMayoristaDocumentoPagoViewModel(My.Settings.Sucursal, clienteMayorista)
     End Sub
 
     Sub New(documentoDePagoModel As DocumentoDePago)
@@ -47,10 +48,17 @@ Public Class frmClienteMayoristaDocumentoPago
         Me.Close()
     End Sub
 
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        frmClienteMayoristaCuentaCorrientePagoViewModel.ImprimirMovimiento()
+    End Sub
+
     Private Sub Btn_Finalizar_Click(sender As Object, e As EventArgs) Handles Btn_Finalizar.Click
         EjecutarAsync(Async Function() As Task
                           Await frmClienteMayoristaCuentaCorrientePagoViewModel.GuardarAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          If MessageBox.Show("¿Desea imprimir un comprobante del documento de pago?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
+                              frmClienteMayoristaCuentaCorrientePagoViewModel.ImprimirMovimiento()
+                          End If
                           Me.Close()
                       End Function)
     End Sub

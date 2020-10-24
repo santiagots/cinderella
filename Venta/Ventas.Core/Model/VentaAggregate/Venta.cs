@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
+using Common.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,6 @@ namespace Ventas.Core.Model.VentaAggregate
         public DateTime? FechaAnulado { get; protected set; }
         public int CantidadTotal { get; private set; }
         public MontoPago PagoTotal { get; private set; }
-        public MontoPago PagoTotalEntrega => Pagos.Where(x => x.TipoPago != TipoPago.CuentaCorriente).Select(x => x.MontoPago).Aggregate((x, y) => x + y);
         public bool EstaPaga { get { return !VentaItems.Any(x => x.PorcentajePago != 1); } }
 
         internal Venta()
@@ -104,11 +104,6 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarTotalesVenta();
         }
 
-        public void ActualizarClienteMayorista(int idClienteMayorista)
-        {
-            IdClienteMayorista = idClienteMayorista;
-        }
-
         public void ActualizarPorcentajeFacturacion(decimal porcentajeFacturacion)
         {
             PorcentajeFacturacion = porcentajeFacturacion;
@@ -140,6 +135,12 @@ namespace Ventas.Core.Model.VentaAggregate
         public void AgregarCheque(Cheque cheque)
         {
             Cheques.Add(cheque);
+        }
+
+        public void AgregarClienteMayorista(ClienteMayorista clienteMayorista)
+        {
+            ClienteMayorista = clienteMayorista;
+            IdClienteMayorista = clienteMayorista.Id;
         }
 
         public void AgregarEncargado(Empleado encargado)
@@ -225,6 +226,12 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarTotalesPago();
 
             ActualizarTotalesVenta();
+        }
+
+        public void QuitarClienteMayorista()
+        {
+            ClienteMayorista = null;
+            IdClienteMayorista = null;
         }
 
         public void ModificarTipoCliente(TipoCliente tipoCliente)
