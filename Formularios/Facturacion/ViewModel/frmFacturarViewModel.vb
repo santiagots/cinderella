@@ -16,6 +16,7 @@ Imports Factura.Service.Common.Contracts
 Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Common.Data.Service
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -300,7 +301,7 @@ Namespace Formularios.Facturacion
         End Function
 
         Public Async Function CargarClienteMayoristaAsync() As Task
-            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(ventaModel.IdClienteMayorista))
+            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, ventaModel.IdClienteMayorista)
             CondicionesIVASeleccionada = clienteMayorista.CondicionIVA
             NombreYApellido = clienteMayorista.RazonSocial
             Direccion = clienteMayorista.DomicilioFacturacion?.Direccion

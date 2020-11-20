@@ -248,6 +248,25 @@ Public Class frmClienteMayorista
                       End Function)
     End Sub
 
+    Private Sub DG_Clientes_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles DG_Clientes.CellFormatting
+        Ejecutar(Sub()
+
+                     Dim ClienteMayoristaItem As ClienteMayoristaItem = DG_Clientes.Rows(e.RowIndex).DataBoundItem
+
+                     If (ClienteMayoristaItem.CuentaCorrienteMonto = 0) Then
+                         Return
+                     End If
+
+                     If (ClienteMayoristaItem.CuentaCorrienteMonto > 0) Then
+                         e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
+                         e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
+                     Else
+                         e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
+                         e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
+                     End If
+                 End Sub)
+    End Sub
+
     Sub EvaluarPermisos()
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Mayorista_Crear)) Then
 

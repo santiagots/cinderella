@@ -553,7 +553,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
         Public Property PaginacionItemsPagina() As Integer
             Get
                 Return CType(Me("PaginacionItemsPagina"),Integer)

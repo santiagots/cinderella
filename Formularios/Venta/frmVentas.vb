@@ -103,7 +103,7 @@ Public Class frmVentas
             End Sub)
     End Sub
 
-    Private Sub Cb_TipoCliente_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoCliente.SelectedIndexChanged
+    Private Sub Cb_TipoCliente_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Cb_TipoCliente.SelectionChangeCommitted
         Ejecutar(
             Sub()
                 If (Cb_TipoCliente.SelectedValue Is Nothing) Then
@@ -121,7 +121,7 @@ Public Class frmVentas
             End Sub)
     End Sub
 
-    Private Sub Cb_FormaPago_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_FormaPago.SelectedIndexChanged
+    Private Sub Cb_FormaPago_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Cb_FormaPago.SelectionChangeCommitted
         Ejecutar(Sub()
                      If (Cb_FormaPago.SelectedValue Is Nothing) Then
                          Return
@@ -134,7 +134,7 @@ Public Class frmVentas
                  End Sub)
     End Sub
 
-    Private Sub Cb_Trajeta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_Trajeta.SelectedIndexChanged
+    Private Sub Cb_Trajeta_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Cb_Trajeta.SelectionChangeCommitted
         Ejecutar(Sub()
                      If (Cb_Trajeta.SelectedValue Is Nothing) Then
                          Return
@@ -144,7 +144,7 @@ Public Class frmVentas
                  End Sub)
     End Sub
 
-    Private Sub Cb_NroCuota_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_NroCuota.SelectedIndexChanged
+    Private Sub Cb_NroCuota_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Cb_NroCuota.SelectionChangeCommitted
         Ejecutar(Sub()
                      If (Cb_NroCuota.SelectedValue Is Nothing) Then
                          Return

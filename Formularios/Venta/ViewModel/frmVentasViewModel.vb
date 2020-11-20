@@ -416,17 +416,13 @@ Namespace Formularios.Venta
             Dim cantidadVentas As Integer = Await Task.Run(Function() Servicio.CantidadVentas(IdSucursal))
             VentaModel.GenerarNumero(cantidadVentas + 1, codigoVentaSucursal)
 
-            Await Task.Run(Sub() Servicio.GuardarVenta(VentaModel))
-
             Dim tasks As List(Of Task) = New List(Of Task)()
             tasks.Add(AgregarComisiones())
             tasks.Add(ActualizarStock())
-
-            If (VentaModel.TipoCliente = Enums.TipoCliente.Mayorista) Then
-                tasks.Add(RegistrarMovimiento())
-            End If
-
+            tasks.Add(RegistrarMovimiento())
             Await Task.WhenAll(tasks)
+
+            Await Task.Run(Sub() Servicio.GuardarVenta(VentaModel))
 
             'Armar presupuesto
 
@@ -732,8 +728,9 @@ Namespace Formularios.Venta
         Private Sub CargarFormaPago(formasPagos As List(Of TipoPago))
             _FormaPago = New BindingList(Of TipoPago)(formasPagos)
 
-            If (Not VariablesGlobales.HayConexion) Then
+            If (_FormaPago.Contains(TipoPago.CuentaCorriente) AndAlso Not VariablesGlobales.HayConexion) Then
                 _FormaPago.Remove(TipoPago.CuentaCorriente)
+                MessageBox.Show("No se dispone de conexión a Internet, la forma de pago CUENTA CORRIENTE no está disponible para su uso. En caso de ser necesaria vuelva a intentar cuando disponga de accesos a Internet.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
 
             NotifyPropertyChanged(NameOf(Me.FormaPago))
@@ -833,6 +830,10 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function RegistrarMovimiento() As Task
+            If (VentaModel.TipoCliente <> Enums.TipoCliente.Mayorista) Then
+                Return
+            End If
+
             Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
             Dim saldo As Decimal = If(VariablesGlobales.HayConexion, VentaModel.ClienteMayorista.MontoCuentaCorriente, 0)
 
@@ -854,7 +855,7 @@ Namespace Formularios.Venta
                                                           VentaModel.Numero,
                                                           VentaModel.Id)
 
-            Await MovimientoService.GuardarAsync(TipoBase.Remota, movimiento)
+            Await MovimientoService.GuardarAsync(base, movimiento)
         End Function
 
         Private Function ObtenerCambioEnProductosPorReserva() As List(Of KeyValuePair(Of String, Integer))

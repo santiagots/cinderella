@@ -150,15 +150,30 @@ Public Class frmClienteMayoristaCuentaCorriente
 
     Private Sub dgvMovimientos_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvMovimientos.CellFormatting
         Ejecutar(Sub()
-
                      Dim CuentaCorrienteMovimientosItem As CuentaCorrienteMovimientosItem = dgvMovimientos.Rows(e.RowIndex).DataBoundItem
-                     If (CuentaCorrienteMovimientosItem.Monto >= 0) Then
-                         e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
-                         e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
-                     Else
-                         e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
-                         e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
-                     End If
+
+                     MostrarIconoImprimir(e, CuentaCorrienteMovimientosItem)
+                     ColorearCeldaPorMontoEnCuentaCorriente(e, CuentaCorrienteMovimientosItem)
                  End Sub)
+    End Sub
+
+    Private Sub MostrarIconoImprimir(ByRef e As DataGridViewCellFormattingEventArgs, CuentaCorrienteMovimientosItem As CuentaCorrienteMovimientosItem)
+        If (CuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = Common.Core.Enum.TipoMovimientoCuentaCorriente.Venta AndAlso dgvMovimientos.Columns(e.ColumnIndex).Name = "Imprimir") Then
+            e.Value = New Bitmap(1, 1)
+        End If
+    End Sub
+
+    Private Sub ColorearCeldaPorMontoEnCuentaCorriente(ByRef e As DataGridViewCellFormattingEventArgs, CuentaCorrienteMovimientosItem As CuentaCorrienteMovimientosItem)
+        If (CuentaCorrienteMovimientosItem.Monto = 0) Then
+            Return
+        End If
+
+        If (CuentaCorrienteMovimientosItem.Monto > 0) Then
+            e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
+            e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
+        Else
+            e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
+            e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
+        End If
     End Sub
 End Class

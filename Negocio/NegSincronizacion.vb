@@ -282,6 +282,9 @@ Public Class NegSincronizacion
         respuesta.Add(EmpleadosRegistrosAusentes())
         respuesta.Add(EmpleadosRegistrosTarde())
         respuesta.Add(CierreCaja()) 'nuevo
+        respuesta.Add(ClienteMayoristaDocumentoPago()) 'nuevo
+        respuesta.Add(ClienteMayoristaDocumentoPagoPago()) 'nuevo
+        respuesta.Add(ClienteMayoristaMovimiento()) 'nuevo
         respuesta.Add(MovimientosCajas())
         respuesta.Add(MovimientosCajaFuerte())
         respuesta.Add(Adicionales())
@@ -378,6 +381,56 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function ClienteMayoristaDocumentoPago() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+
+        Return tabla
+    End Function
+
+    Private Shared Function ClienteMayoristaDocumentoPagoPago() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO"
+
+        tabla.SQLObtenerDatosLocal = "select P.* 
+                                        from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO P 
+                                        inner join NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO D on P.IdDocumentoDePago = D.Id  
+                                        where D.FechaEdicion >= '{0}' AND D.IdSucursal = {1}"
+
+        tabla.SQLObtenerDatosRemoto = "select P.* 
+                                        from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO P 
+                                        inner join NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO D on P.IdDocumentoDePago = D.Id  
+                                        where D.FechaEdicion >= '{0}' AND D.IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+
+        Return tabla
+    End Function
+
+    Private Shared Function ClienteMayoristaMovimiento() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "Fecha"
+        tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+
         Return tabla
     End Function
 
