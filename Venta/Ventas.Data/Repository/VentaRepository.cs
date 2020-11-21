@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using Common.Core.Enum;
 using Common.Data.Repository;
+using System.Threading.Tasks;
 
 namespace Ventas.Data.Repository
 {
@@ -48,7 +49,7 @@ namespace Ventas.Data.Repository
             return venta;
         }
 
-        public decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        private decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
             IQueryable<VentaPago> pagos = _context.VentaPago.Where(x => x.Venta.Anulado == false &&
                                                     x.Venta.IdSucursal == idSucursal &&
@@ -76,9 +77,14 @@ namespace Ventas.Data.Repository
             return resultado ?? 0;
         }
 
-        public decimal ObtenerTotal(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
-            return ObtenerTotal(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente);
+            return Task.Run(() => ObtenerTotal(idSucursal, fechaDesde, fechaHasta, facturado, tipoPago, tipoCliente));
+        }
+
+        public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        {
+            return Task.Run(() => ObtenerTotal(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente));
         }
 
         public int Cantidad(int idSucursal)
@@ -179,6 +185,11 @@ namespace Ventas.Data.Repository
                                  .Include(x => x.Pagos)
                                  .Include(x => x.Factura)
                                  .Include(x => x.Factura.NumeroFactura);
+        }
+
+        public Task<Venta> ObtenerAsync(TipoBase tipoBase, long idVenta)
+        {
+            throw new NotImplementedException();
         }
     }
 }

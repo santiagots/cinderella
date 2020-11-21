@@ -1,4 +1,6 @@
-﻿using Common.Data.Repository;
+﻿using Common.Core.Enum;
+using Common.Data.Repository;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +54,34 @@ namespace Ventas.Data.Repository
                 .Include(x => x.Pagos)
                 .Include(x => x.Cheques.Select(y => y.BancoEmisor))
                 .FirstOrDefaultAsync(x => x.Id == idDocumentoDePago);
+        }
+
+        private decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago)
+        {
+            IQueryable<DocumentoDePagoPago> pagos = _context.DocumentoDePago.Where(x => x.Anulado == false &&
+                                                                                x.IdSucursal == idSucursal &&
+                                                                                DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
+                                                                                DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
+                                                                            .SelectMany(x => x.Pagos);
+
+            if (tipoPago.HasValue)
+                pagos = pagos.Where(x => x.TipoPago == tipoPago.Value);
+            else
+                pagos = pagos.Where(x => x.TipoPago != TipoPago.Bonificacion);
+
+            decimal? resultado = pagos.Sum(x => (decimal?)(x.MontoPago.Monto - x.MontoPago.Descuento + x.MontoPago.IVA + x.MontoPago.CFT));
+
+            return resultado ?? 0;
+        }
+
+        public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fechaDesde, DateTime fechahasta, TipoPago? tipoPago)
+        {
+            return Task.Run(() => ObtenerTotal(idSucursal, fechaDesde, fechahasta, tipoPago));
+        }
+
+        public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fecha, TipoPago? tipoPago)
+        {
+            return Task.Run(() => ObtenerTotal(idSucursal, fecha, fecha, tipoPago));
         }
     }
 }

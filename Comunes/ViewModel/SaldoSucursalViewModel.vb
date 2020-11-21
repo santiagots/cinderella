@@ -15,6 +15,8 @@ Namespace Comunes
 
         Public Property VentaDebito As Decimal
 
+        Public Property VentaCuentaCorriente As Decimal
+
         Public Property VentaFacturado As Decimal
 
         Public Property VentaSinFacturar As Decimal
@@ -23,7 +25,11 @@ Namespace Comunes
 
         Public Property VentaMayorista As Decimal
 
-        Public Property VentaTotal As Decimal
+        Public ReadOnly Property VentaTotal As Decimal
+            Get
+                Return VentaEfectivo + VentaCheque + VentaCredito + VentaDebito + VentaCuentaCorriente + VentaDeposito
+            End Get
+        End Property
 
         Public Property CajaInical As Decimal
 

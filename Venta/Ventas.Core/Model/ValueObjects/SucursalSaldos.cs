@@ -7,12 +7,14 @@ namespace Ventas.Core.Model.ValueObjects
     {
         public Ingreso Ingreso { get; protected set; }
         public Egreso Egreso { get; protected set; }
+        public SucursalPagos SucursalPagos { get; protected set; }
         public decimal TotalCajaFuerte { get; protected set; }
 
-        public SucursalSaldo(Ingreso ingreso, Egreso egreso, decimal totalCajaFuerte)
+        public SucursalSaldo(Ingreso ingreso, Egreso egreso, SucursalPagos sucursalPagos, decimal totalCajaFuerte)
         {
             Ingreso = ingreso;
             Egreso = egreso;
+            SucursalPagos = sucursalPagos;
             TotalCajaFuerte = totalCajaFuerte;
         }
 
