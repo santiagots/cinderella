@@ -1,5 +1,4 @@
-﻿Imports System.Data
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 Imports System.Configuration
 Imports System.Threading
 Imports System.Reflection
@@ -15,7 +14,7 @@ Public Class Conexion
 
     Public Function ConectarLocal()
         Try
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
+            CadenaConexion = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
             miconexion = New SqlConnection
             miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
@@ -32,7 +31,7 @@ Public Class Conexion
 
     Public Function ConectarRemoto()
         Try
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+            CadenaConexion = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
             miconexionRemoto = New SqlConnection
             miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
             miconexionRemoto.Open()
@@ -40,6 +39,18 @@ Public Class Conexion
             Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.ToString())
         End Try
         Return miconexionRemoto
+    End Function
+
+    Public Function EstaDisponible(stringConexion As String) As Boolean
+        Try
+            miconexionRemoto = New SqlConnection
+            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(stringConexion)
+            miconexionRemoto.Open()
+            miconexionRemoto.Close()
+            Return True
+        Catch ex As Exception
+            Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.ToString())
+        End Try
     End Function
 
     Public Sub DesconectarRemoto()
@@ -83,4 +94,24 @@ Public Class Conexion
         Thread.Sleep(10)
         Return Int64.Parse(String.Format("{0}{1}", idSucursal.ToString(), DateTime.Now.ToString("yyyMMddhhmmssfff")))
     End Function
+
+    Public Sub GuardarStringDeConexion(nombre As String, stringConexion As String)
+        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        Dim connectionString = config.ConnectionStrings.ConnectionStrings(nombre)
+        'config.ConnectionStrings.SectionInformation.AllowExeDefinition = ConfigurationAllowExeDefinition.MachineToLocalUser
+
+        If connectionString Is Nothing Then
+            config.ConnectionStrings.ConnectionStrings.Add(New ConnectionStringSettings With {
+                .Name = nombre,
+                .ConnectionString = stringConexion,
+                .ProviderName = "System.Data.SqlClient"
+            })
+            config.Save(ConfigurationSaveMode.Modified)
+        Else
+            connectionString.ConnectionString = stringConexion
+        End If
+
+        config.Save(ConfigurationSaveMode.Modified)
+        ConfigurationManager.RefreshSection("connectionStrings")
+    End Sub
 End Class

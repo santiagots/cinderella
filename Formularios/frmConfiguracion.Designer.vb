@@ -122,6 +122,9 @@ Partial Class frmConfiguracion
         Me.Cb_TiempoComprobacionMensajes = New System.Windows.Forms.ComboBox()
         Me.TabInternet = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.btnVerificarBase = New System.Windows.Forms.Button()
+        Me.txt_StringDeConexion = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.Cb_HorasSincronizacion = New System.Windows.Forms.ComboBox()
         Me.btnVerificarDNS = New System.Windows.Forms.Button()
@@ -1200,6 +1203,9 @@ Partial Class frmConfiguracion
         '
         'GroupBox6
         '
+        Me.GroupBox6.Controls.Add(Me.btnVerificarBase)
+        Me.GroupBox6.Controls.Add(Me.txt_StringDeConexion)
+        Me.GroupBox6.Controls.Add(Me.Label15)
         Me.GroupBox6.Controls.Add(Me.Label36)
         Me.GroupBox6.Controls.Add(Me.Cb_HorasSincronizacion)
         Me.GroupBox6.Controls.Add(Me.btnVerificarDNS)
@@ -1222,13 +1228,46 @@ Partial Class frmConfiguracion
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Configuración de Internet"
         '
+        'btnVerificarBase
+        '
+        Me.btnVerificarBase.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btnVerificarBase.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnVerificarBase.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVerificarBase.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
+        Me.btnVerificarBase.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnVerificarBase.Location = New System.Drawing.Point(266, 167)
+        Me.btnVerificarBase.Name = "btnVerificarBase"
+        Me.btnVerificarBase.Size = New System.Drawing.Size(138, 40)
+        Me.btnVerificarBase.TabIndex = 26
+        Me.btnVerificarBase.Text = "Verificar Base"
+        Me.btnVerificarBase.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnVerificarBase.UseVisualStyleBackColor = True
+        '
+        'txt_StringDeConexion
+        '
+        Me.txt_StringDeConexion.Location = New System.Drawing.Point(149, 96)
+        Me.txt_StringDeConexion.Multiline = True
+        Me.txt_StringDeConexion.Name = "txt_StringDeConexion"
+        Me.txt_StringDeConexion.Size = New System.Drawing.Size(255, 65)
+        Me.txt_StringDeConexion.TabIndex = 25
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(9, 96)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(134, 15)
+        Me.Label15.TabIndex = 24
+        Me.Label15.Text = "Conexión base remota:"
+        '
         'Label36
         '
-        Me.Label36.Location = New System.Drawing.Point(8, 158)
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(3, 263)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(200, 36)
+        Me.Label36.Size = New System.Drawing.Size(193, 15)
         Me.Label36.TabIndex = 23
-        Me.Label36.Text = "Período de Sincronización ( en horas )"
+        Me.Label36.Text = "Período de Sincronización (horas)"
         Me.Label36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Cb_HorasSincronizacion
@@ -1237,7 +1276,7 @@ Partial Class frmConfiguracion
         Me.Cb_HorasSincronizacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_HorasSincronizacion.FormattingEnabled = True
         Me.Cb_HorasSincronizacion.Items.AddRange(New Object() {"1", "2", "4", "8"})
-        Me.Cb_HorasSincronizacion.Location = New System.Drawing.Point(238, 158)
+        Me.Cb_HorasSincronizacion.Location = New System.Drawing.Point(233, 255)
         Me.Cb_HorasSincronizacion.Name = "Cb_HorasSincronizacion"
         Me.Cb_HorasSincronizacion.Size = New System.Drawing.Size(171, 23)
         Me.Cb_HorasSincronizacion.TabIndex = 3
@@ -1249,7 +1288,7 @@ Partial Class frmConfiguracion
         Me.btnVerificarDNS.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnVerificarDNS.Image = Global.SistemaCinderella.My.Resources.Recursos.Internet_32
         Me.btnVerificarDNS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnVerificarDNS.Location = New System.Drawing.Point(269, 316)
+        Me.btnVerificarDNS.Location = New System.Drawing.Point(266, 340)
         Me.btnVerificarDNS.Name = "btnVerificarDNS"
         Me.btnVerificarDNS.Size = New System.Drawing.Size(141, 40)
         Me.btnVerificarDNS.TabIndex = 6
@@ -1259,16 +1298,17 @@ Partial Class frmConfiguracion
         '
         'txt_IpPing
         '
-        Me.txt_IpPing.Location = New System.Drawing.Point(237, 204)
+        Me.txt_IpPing.Location = New System.Drawing.Point(233, 284)
         Me.txt_IpPing.Name = "txt_IpPing"
-        Me.txt_IpPing.Size = New System.Drawing.Size(170, 21)
+        Me.txt_IpPing.Size = New System.Drawing.Size(171, 21)
         Me.txt_IpPing.TabIndex = 4
         '
         'Label33
         '
-        Me.Label33.Location = New System.Drawing.Point(6, 245)
+        Me.Label33.AutoSize = True
+        Me.Label33.Location = New System.Drawing.Point(3, 319)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(212, 36)
+        Me.Label33.Size = New System.Drawing.Size(209, 15)
         Me.Label33.TabIndex = 19
         Me.Label33.Text = "Tiempo de espera (en milisegundos)"
         Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1279,18 +1319,19 @@ Partial Class frmConfiguracion
         Me.Cb_TimeOut.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_TimeOut.FormattingEnabled = True
         Me.Cb_TimeOut.Items.AddRange(New Object() {"500", "1000", "2000", "3000", "5000"})
-        Me.Cb_TimeOut.Location = New System.Drawing.Point(236, 253)
+        Me.Cb_TimeOut.Location = New System.Drawing.Point(233, 311)
         Me.Cb_TimeOut.Name = "Cb_TimeOut"
         Me.Cb_TimeOut.Size = New System.Drawing.Size(171, 23)
         Me.Cb_TimeOut.TabIndex = 5
         '
         'Label32
         '
-        Me.Label32.Location = New System.Drawing.Point(6, 204)
+        Me.Label32.AutoSize = True
+        Me.Label32.Location = New System.Drawing.Point(3, 290)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(212, 36)
+        Me.Label32.Size = New System.Drawing.Size(205, 15)
         Me.Label32.TabIndex = 17
-        Me.Label32.Text = "IP de DNS para verificar acceso a internet"
+        Me.Label32.Text = "IP de DNS verificar acceso a internet"
         Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Rb2
@@ -1350,11 +1391,12 @@ Partial Class frmConfiguracion
         '
         'Label10
         '
-        Me.Label10.Location = New System.Drawing.Point(6, 110)
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(3, 234)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(212, 36)
+        Me.Label10.Size = New System.Drawing.Size(216, 15)
         Me.Label10.TabIndex = 3
-        Me.Label10.Text = "Período de Comprobación ( en segundos )"
+        Me.Label10.Text = "Período de Comprobación (segundos)"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Cb_SegundosInternet
@@ -1363,7 +1405,7 @@ Partial Class frmConfiguracion
         Me.Cb_SegundosInternet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_SegundosInternet.FormattingEnabled = True
         Me.Cb_SegundosInternet.Items.AddRange(New Object() {"5", "10", "15", "30", "60"})
-        Me.Cb_SegundosInternet.Location = New System.Drawing.Point(236, 110)
+        Me.Cb_SegundosInternet.Location = New System.Drawing.Point(233, 226)
         Me.Cb_SegundosInternet.Name = "Cb_SegundosInternet"
         Me.Cb_SegundosInternet.Size = New System.Drawing.Size(171, 23)
         Me.Cb_SegundosInternet.TabIndex = 2
@@ -1783,4 +1825,7 @@ Partial Class frmConfiguracion
     Friend WithEvents txt_facturacionElectronicaCertificadoNombre As TextBox
     Friend WithEvents Label42 As Label
     Friend WithEvents Label43 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents btnVerificarBase As Button
+    Friend WithEvents txt_StringDeConexion As TextBox
 End Class

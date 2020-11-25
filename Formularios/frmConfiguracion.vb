@@ -2,9 +2,8 @@
 Imports System.IO
 Imports System.Net
 Imports System.Net.NetworkInformation
-Imports System.Reflection
 Imports Common.Core.Helper
-Imports Factura.Service.Factura
+Imports Datos
 Imports Negocio
 
 Public Class frmConfiguracion
@@ -101,45 +100,46 @@ Public Class frmConfiguracion
 
         'Comprobacion de notificaciones.
         Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
-            Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
-            Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
+        Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
+        Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
 
 
-            'Comprobacion de internet.
-            Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
-            Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
-            txt_IpPing.Text = My.Settings.IpPing
-            Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
-            If My.Settings("Internet") Then
-                Rb1.Checked = True
-            Else
-                Rb2.Checked = False
-            End If
+        'Comprobacion de internet.
+        txt_StringDeConexion.Text = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+        Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
+        Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
+        txt_IpPing.Text = My.Settings.IpPing
+        Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
+        If My.Settings("Internet") Then
+            Rb1.Checked = True
+        Else
+            Rb2.Checked = False
+        End If
 
-            'cargo los valoes del tab Host
-            txtIPHost.Text = My.Settings.IpHost
-            txtPuertoHost.Text = My.Settings.PuertoHost
+        'cargo los valoes del tab Host
+        txtIPHost.Text = My.Settings.IpHost
+        txtPuertoHost.Text = My.Settings.PuertoHost
 
-            'cargo los valoes del tab Stock
-            If My.Settings.GeneracionOrdenCompraAutomatica Then
-                ROrdenCompraAutomaticaSI.Checked = True
-            Else
-                ROrdenCompraAutomaticaNo.Checked = True
-            End If
-            CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
+        'cargo los valoes del tab Stock
+        If My.Settings.GeneracionOrdenCompraAutomatica Then
+            ROrdenCompraAutomaticaSI.Checked = True
+        Else
+            ROrdenCompraAutomaticaNo.Checked = True
+        End If
+        CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
 
-            Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
+        Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
 
-            If (fechaUltimoCalculo.HasValue) Then
-                txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
-            Else
-                txtFechaUltimoCalculoventaMensual.Text = "No calculado"
-            End If
+        If (fechaUltimoCalculo.HasValue) Then
+            txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
+        Else
+            txtFechaUltimoCalculoventaMensual.Text = "No calculado"
+        End If
 
-            EvaluarPermisos()
+        EvaluarPermisos()
 
-            'Cambio el cursor a NORMAL.
-            Me.Cursor = Cursors.Arrow
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
     End Sub
 
     'Actualizo la sucursal.
@@ -304,6 +304,11 @@ Public Class frmConfiguracion
     Private Sub BtnInternet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnInternet.Click
         'Cambio el cursor a "WAIT"
         Try
+            If (Rb1.Checked AndAlso String.IsNullOrEmpty(txt_StringDeConexion.Text)) Then
+                MessageBox.Show("Debe ingresar un valor en el campo de Conexión base remota.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+
             If (Cb_SegundosInternet.SelectedItem Is Nothing) Then
                 MessageBox.Show("Debe seleccionar una opción en Período de Comprobación.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Return
@@ -337,6 +342,9 @@ Public Class frmConfiguracion
             My.Settings.IpTimeOut = Cb_TimeOut.SelectedItem
             My.Settings.Save()
 
+            Dim conexion As New Datos.Conexion
+            conexion.GuardarStringDeConexion("SistemaCinderella.My.MySettings.ConexionRemoto", txt_StringDeConexion.Text)
+
             Negocio.Funciones.Ip = My.Settings.IpPing
             Negocio.Funciones.TimeOut = My.Settings.IpTimeOut
 
@@ -365,6 +373,7 @@ Public Class frmConfiguracion
             Rb1.Checked = True
         End If
 
+        txt_StringDeConexion.Enabled = Rb1.Checked
         Cb_SegundosInternet.Enabled = Rb1.Checked
         Cb_HorasSincronizacion.Enabled = Rb1.Checked
         txt_IpPing.Enabled = Rb1.Checked
@@ -678,4 +687,10 @@ Public Class frmConfiguracion
         Dim result As String = proc.StandardOutput.ReadToEnd()
     End Sub
 
+    Private Sub btnVerificarBase_Click(sender As Object, e As EventArgs) Handles btnVerificarBase.Click
+        Dim conexion As New Datos.Conexion
+        If (conexion.EstaDisponible(txt_StringDeConexion.Text)) Then
+            MessageBox.Show("Conexión a la base de datos exitosa.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
 End Class
