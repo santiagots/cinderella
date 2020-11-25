@@ -1,6 +1,8 @@
 ﻿using Common.Data.Repository;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.VentaAggregate;
 
@@ -12,9 +14,9 @@ namespace Ventas.Data.Repository
         {
         }
 
-        public IEnumerable<Tarjeta> Obtener()
+        public Task<List<Tarjeta>> Obtener()
         {
-            return _context.Tarjeta.Where(x => x.Habilitado && !x.Eliminado).ToList();
+            return _context.Tarjeta.Where(x => x.Habilitado && !x.Eliminado).ToListAsync();
         }
     }
 }

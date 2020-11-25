@@ -1,12 +1,9 @@
-﻿Imports Negocio
-Imports Entidades
-Imports System.Linq
-Imports System.Threading.Tasks
-Imports Common.Core.Exceptions
+﻿Imports System.Threading.Tasks
+Imports Common.Core.Enum
 Imports SistemaCinderella.Formularios.Venta
-Imports Common.Core.Helper
 
 Public Class frmNotaPedidoAdministracion
+    Inherits Comun
 
     Public notaPedidoViewModel As frmNotaPedidoAdministracionViewModel
 
@@ -15,6 +12,7 @@ Public Class frmNotaPedidoAdministracion
                           notaPedidoViewModel = New frmNotaPedidoAdministracionViewModel(My.Settings.Sucursal)
 
                           NotaPedidoBindingSource.DataSource = notaPedidoViewModel
+                          notaPedidoViewModel.NotasPedidosElementosPorPagina = Paginado.ElementosPorPagina
                           Await notaPedidoViewModel.CargarDatosAsync()
                       End Function)
         Me.DataBindings.Add(New Binding("Visible", Me.NotaPedidoBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
@@ -52,28 +50,56 @@ Public Class frmNotaPedidoAdministracion
         Ejecutar(Sub() notaPedidoViewModel.CargarVenta(dgNotasPedidos.CurrentRow.DataBoundItem, Me.MdiParent))
     End Sub
 
-    Private Sub Ejecutar(accion As Action)
-        Try
-            accion()
-        Catch ex As NegocioException
-            Log.Error(ex)
-            MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración Nota Pedido", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+    Private Sub Paginado_PaginaAnteriorClick(sender As Object, e As EventArgs) Handles Paginado.PaginaAnteriorClick
+        EjecutarAsync(Async Function() As Task
+                          notaPedidoViewModel.NotasPedidosPaginaActual += -1
+                          Await notaPedidoViewModel.Buscar()
+                      End Function)
     End Sub
 
-    Private Async Sub EjecutarAsync(accion As Func(Of Task))
-        Try
-            Await accion()
-        Catch ex As NegocioException
-            Log.Error(ex)
-            MessageBox.Show(ex.Message, "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Administración Nota Pedido", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+    Private Sub Paginado_PaginaFinalClick(sender As Object, e As EventArgs) Handles Paginado.PaginaFinalClick
+        EjecutarAsync(Async Function() As Task
+                          notaPedidoViewModel.NotasPedidosPaginaActual = Paginado.TotalPaginas
+                          Await notaPedidoViewModel.Buscar()
+                      End Function)
     End Sub
 
+    Private Sub Paginado_PaginaInicalClick(sender As Object, e As EventArgs) Handles Paginado.PaginaInicalClick
+        EjecutarAsync(Async Function() As Task
+                          notaPedidoViewModel.NotasPedidosPaginaActual = 1
+                          Await notaPedidoViewModel.Buscar()
+                      End Function)
+    End Sub
+
+    Private Sub Paginado_PaginaSiguienteClick(sender As Object, e As EventArgs) Handles Paginado.PaginaSiguienteClick
+        EjecutarAsync(Async Function() As Task
+                          notaPedidoViewModel.NotasPedidosPaginaActual += 1
+                          Await notaPedidoViewModel.Buscar()
+                      End Function)
+    End Sub
+
+    Private Sub dgNotasPedidos_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgNotasPedidos.ColumnHeaderMouseClick
+        EjecutarAsync(Async Function() As Task
+                          If (dgNotasPedidos.Columns(e.ColumnIndex).SortMode <> DataGridViewColumnSortMode.NotSortable) Then
+
+                              Select Case dgNotasPedidos.Columns(e.ColumnIndex).HeaderText
+                                  Case "Numero"
+                                      notaPedidoViewModel.NotasPedidosOrdenadoPor = "Numero"
+                                  Case "Tipo Cliente"
+                                      notaPedidoViewModel.NotasPedidosOrdenadoPor = "TipoCliente"
+                                  Case "Vendedor"
+                                      notaPedidoViewModel.NotasPedidosOrdenadoPor = "Vendedor.Apellido"
+                                  Case "Fecha"
+                                      notaPedidoViewModel.NotasPedidosOrdenadoPor = "Fecha"
+                                  Case "Estado"
+                                      notaPedidoViewModel.NotasPedidosOrdenadoPor = "Estado"
+                              End Select
+
+                              notaPedidoViewModel.NotasPedidosDireccionOrdenamiento = If(notaPedidoViewModel.NotasPedidosDireccionOrdenamiento = OrdenadoDireccion.ASC, OrdenadoDireccion.DESC, OrdenadoDireccion.ASC)
+                              Await notaPedidoViewModel.Buscar()
+
+                              dgNotasPedidos.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = If(notaPedidoViewModel.NotasPedidosDireccionOrdenamiento = OrdenadoDireccion.ASC, SortOrder.Ascending, SortOrder.Descending)
+                          End If
+                      End Function)
+    End Sub
 End Class

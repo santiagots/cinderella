@@ -63,28 +63,28 @@ Public Class frmChequesAltaMasiva
 
     Private Sub Btn_Buscar_Cliente_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Cliente.Click
         Me.Cursor = Cursors.WaitCursor
-        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
         frmBuscarClienteMayorista.ShowDialog()
 
-        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
             ClienteID.Clear()
             ClienteNombre.Clear()
-            ClienteID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
-            ClienteNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
+            ClienteID.Text = frmBuscarClienteMayorista.ClienteMayorista.Id
+            ClienteNombre.Text = frmBuscarClienteMayorista.ClienteMayorista.RazonSocial
         End If
         Me.Cursor = Cursors.Arrow
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.Cursor = Cursors.WaitCursor
-        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
         frmBuscarClienteMayorista.ShowDialog()
 
-        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
             LibradorID.Clear()
             LibradorNombre.Clear()
-            LibradorID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
-            LibradorNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
+            LibradorID.Text = frmBuscarClienteMayorista.ClienteMayorista.Id
+            LibradorNombre.Text = frmBuscarClienteMayorista.ClienteMayorista.RazonSocial
         End If
         Me.Cursor = Cursors.Arrow
     End Sub

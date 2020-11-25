@@ -116,7 +116,7 @@ Public Class frmNotaCredito
         'Si la facturacion es para un cliente 
         If (id_Cliente <> 0) Then
             'cargo de forma automatica la infomacion del cliente
-            Dim cliente As ClienteMayorista = NegCliente.TraerCliente(id_Cliente)
+            Dim cliente As Entidades.ClienteMayorista = NegCliente.TraerCliente(id_Cliente)
             Dim direccion As Direccion = NegDireccion.Consulta(cliente.IdDireccionFacturacion)
             'Si el cliente es "responsable inscripto" selecciono dicha opcion en caso contrario selecciono "consumidor final"
             Cb_IVA.SelectedValue = cliente.IdCondicionIva

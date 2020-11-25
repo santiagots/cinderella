@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using Common.Core.Enum;
 using Common.Data.Repository;
+using System.Threading.Tasks;
 
 namespace Ventas.Data.Repository
 {
@@ -39,6 +40,8 @@ namespace Ventas.Data.Repository
                             .Include(x => x.NotaCredito.NumeroNotaCredito)
                             .FirstOrDefault(x => x.Id == idVenta);
 
+            if (venta == null) return null;
+
             //fuerzo el ordenamiento pq puede recuperarse en otro orden al guardado
             venta.OrdenarItemsVenta();
             //fuerzo la registracion de los pagos a cada producto
@@ -46,9 +49,9 @@ namespace Ventas.Data.Repository
             return venta;
         }
 
-        public decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        private decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
-            IQueryable<Pago> pagos = _context.Pago.Where(x => x.Venta.Anulado == false &&
+            IQueryable<VentaPago> pagos = _context.VentaPago.Where(x => x.Venta.Anulado == false &&
                                                     x.Venta.IdSucursal == idSucursal &&
                                                     DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
                                                     DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
@@ -74,9 +77,14 @@ namespace Ventas.Data.Repository
             return resultado ?? 0;
         }
 
-        public decimal ObtenerTotal(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
-            return ObtenerTotal(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente);
+            return Task.Run(() => ObtenerTotal(idSucursal, fechaDesde, fechaHasta, facturado, tipoPago, tipoCliente));
+        }
+
+        public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        {
+            return Task.Run(() => ObtenerTotal(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente));
         }
 
         public int Cantidad(int idSucursal)
@@ -86,6 +94,9 @@ namespace Ventas.Data.Repository
 
         public void Guardar(Venta venta)
         {
+            if(venta.ClienteMayorista != null)
+                _context.Entry(venta.ClienteMayorista).State = EntityState.Unchanged;
+
             _context.Entry(venta.Encargado).State = EntityState.Unchanged;
             _context.Entry(venta.Vendedor).State = EntityState.Unchanged;
             venta.VentaItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria
@@ -174,6 +185,11 @@ namespace Ventas.Data.Repository
                                  .Include(x => x.Pagos)
                                  .Include(x => x.Factura)
                                  .Include(x => x.Factura.NumeroFactura);
+        }
+
+        public Task<Venta> ObtenerAsync(TipoBase tipoBase, long idVenta)
+        {
+            throw new NotImplementedException();
         }
     }
 }

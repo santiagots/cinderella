@@ -5,6 +5,8 @@ Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Enum
 Imports SistemaCinderella.Formularios.MovimientoDetalle
 Imports System.ComponentModel
+Imports Ventas.Data.Service
+Imports Ventas.Core.Model.ValueObjects
 
 Namespace Formularios.SucursalSaldo
     Public Class frmResumenDiarioViewModel
@@ -286,7 +288,9 @@ Namespace Formularios.SucursalSaldo
             Dim Saldo As Task(Of Ventas.Core.Model.ValueObjects.SucursalSaldo) = Task.Run(Function() Servicio.CargarSaldoAsync(IdSucursal, Fecha))
             Dim totalCarteraCheque As Task(Of Decimal) = Task.Run(Function() Cheque.Servicio.TotalCarteraCheque(IdSucursal))
 
-            Await Task.WhenAll(CargarResumenVentaAsync(), Saldo, totalCarteraCheque)
+            Await Task.WhenAll(Saldo, totalCarteraCheque)
+
+            CargarResumenVentaAsync(Saldo.Result.SucursalPagos)
 
             Saldos.CajaInical = Saldo.Result.Ingreso.CajaInicial
             Saldos.RecibidosSucursal = Saldo.Result.Ingreso.RecibidosSucursal
@@ -310,7 +314,6 @@ Namespace Formularios.SucursalSaldo
             Me.DisponibleCheque = totalCarteraCheque.Result
             Me.DisponibleEfectivo = Saldo.Result.Disponible
 
-
             NotifyPropertyChanged(NameOf(Me.TotalCajaFuerte))
             NotifyPropertyChanged(NameOf(Me.CajaChica))
             NotifyPropertyChanged(NameOf(Me.DisponibleCheque))
@@ -321,30 +324,17 @@ Namespace Formularios.SucursalSaldo
             Facturacion.Servicio.CierreZ()
         End Sub
 
-        Private Async Function CargarResumenVentaAsync() As Task
-            Dim efectivo As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, TipoPago.Efectivo, Nothing))
-            Dim cheques As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, TipoPago.Cheque, Nothing))
-            Dim credito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, TipoPago.TarjetaCrédito, Nothing))
-            Dim debito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, TipoPago.TarjetaDébito, Nothing))
-            Dim deposito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, TipoPago.Deposito, Nothing))
-            Dim facturado As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, True, Nothing, Nothing))
-            Dim sinFacturar As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, False, Nothing, Nothing))
-            Dim minorista As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, Nothing, TipoCliente.Minorista))
-            Dim mayorista As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, Nothing, TipoCliente.Mayorista))
-            Dim total As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, Fecha, Nothing, Nothing, Nothing))
-
-            Await Task.WhenAll(efectivo, cheques, credito, credito, minorista, mayorista, facturado, sinFacturar, total)
-
-            Saldos.VentaEfectivo = efectivo.Result
-            Saldos.VentaCheque = cheques.Result
-            Saldos.VentaCredito = credito.Result
-            Saldos.VentaDeposito = deposito.Result
-            Saldos.VentaDebito = debito.Result
-            Saldos.VentaFacturado = facturado.Result
-            Saldos.VentaSinFacturar = sinFacturar.Result
-            Saldos.VentaMinorista = minorista.Result
-            Saldos.VentaMayorista = mayorista.Result
-            Saldos.VentaTotal = total.Result
-        End Function
+        Private Sub CargarResumenVentaAsync(sucursalPagos As SucursalPagos)
+            Saldos.VentaEfectivo = sucursalPagos.Efectivo
+            Saldos.VentaCheque = sucursalPagos.Cheque
+            Saldos.VentaCredito = sucursalPagos.Credito
+            Saldos.VentaDeposito = sucursalPagos.Deposito
+            Saldos.VentaDebito = sucursalPagos.Debito
+            Saldos.VentaCuentaCorriente = sucursalPagos.CuentaCorriente
+            Saldos.VentaFacturado = sucursalPagos.FacturadoVenta
+            Saldos.VentaSinFacturar = sucursalPagos.SinFacturarVenta
+            Saldos.VentaMinorista = sucursalPagos.MinoristaVenta
+            Saldos.VentaMayorista = sucursalPagos.MayoristaVenta
+        End Sub
     End Class
 End Namespace

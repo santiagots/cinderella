@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
@@ -65,10 +66,15 @@
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\CategoriaRepository.cs" />
     <Compile Include="Repository\ClienteMayoristaRepository.cs" />
+    <Compile Include="Repository\DomicilioRepository.cs" />
     <Compile Include="Repository\FeriadoRepository.cs" />
     <Compile Include="Repository\IVARepository.cs" />
+    <Compile Include="Repository\ListaPrecioRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\SubCategoriaRepository.cs" />
+    <Compile Include="Service\ClienteMayoristaService.cs" />
+    <Compile Include="Service\DomicilioService.cs" />
+    <Compile Include="Service\ListaPrecioService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

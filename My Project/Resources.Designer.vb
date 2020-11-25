@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -58,6 +58,42 @@ Namespace My.Resources
             Set
                 resourceCulture = value
             End Set
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Los datos se han borrado de forma correcta..
+        '''</summary>
+        Public ReadOnly Property BorradoOk() As String
+            Get
+                Return ResourceManager.GetString("BorradoOk", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Debe completar todos los campos requeridos..
+        '''</summary>
+        Public ReadOnly Property ErrorCamposRequeridos() As String
+            Get
+                Return ResourceManager.GetString("ErrorCamposRequeridos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to El CUIL ingresado es incorrecto..
+        '''</summary>
+        Public ReadOnly Property ErrorCuitInvalido() As String
+            Get
+                Return ResourceManager.GetString("ErrorCuitInvalido", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Los datos se han guardado de forma correcta..
+        '''</summary>
+        Public ReadOnly Property GuardadoOk() As String
+            Get
+                Return ResourceManager.GetString("GuardadoOk", resourceCulture)
+            End Get
         End Property
     End Module
 End Namespace

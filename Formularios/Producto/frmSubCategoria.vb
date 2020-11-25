@@ -150,9 +150,9 @@ Public Class frmSubCategoria
                 cabeceraText = "IVA"
         End Select
 
-        Dim comuna As DataGridViewColumn = datagridview.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.HeaderText = cabeceraText).FirstOrDefault()
+        Dim columna As DataGridViewColumn = datagridview.Columns.Cast(Of DataGridViewColumn).Where(Function(x) x.HeaderText = cabeceraText).FirstOrDefault()
 
-        comuna.HeaderCell.SortGlyphDirection = If(OrdenadoDireccion = OrdenadoDireccion.ASC, SortOrder.Ascending, SortOrder.Descending)
+        columna.HeaderCell.SortGlyphDirection = If(OrdenadoDireccion = OrdenadoDireccion.ASC, SortOrder.Ascending, SortOrder.Descending)
         datagridview.Refresh()
     End Sub
 

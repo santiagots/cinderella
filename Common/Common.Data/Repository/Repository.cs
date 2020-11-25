@@ -4,6 +4,7 @@ using Common.Core.Interfaces;
 using System.Data.Entity;
 using Common.Core.Model;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Common.Data.Repository
 {
@@ -29,6 +30,11 @@ namespace Common.Data.Repository
         public TEntity GetById(long id)
         {
             return _dbSet.Find(id);
+        }
+
+        public Task<TEntity> GetByIdAsync(long id)
+        {
+            return _dbSet.FindAsync(id);
         }
 
         public void Insert(TEntity entity)

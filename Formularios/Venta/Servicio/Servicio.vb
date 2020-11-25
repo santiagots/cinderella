@@ -71,27 +71,6 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Function ObtenerSucursal(idSucursal As Integer) As ModelBase.Sucursal
-            Using context As VentaContext = New VentaContext()
-                Dim sucursalRepository As IRepository(Of ModelBase.Sucursal) = New Repository(Of ModelBase.Sucursal)(context)
-                Return sucursalRepository.GetById(idSucursal)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fecha As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Decimal
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.ObtenerTotal(idSucursal, fecha, facturado, tipoPago, tipoCliente)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerTotalVentas(idSucursal As Integer, fechaDesde As DateTime, fechaHasta As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Decimal
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.ObtenerTotal(idSucursal, fechaDesde, fechaHasta, facturado, tipoPago, tipoCliente)
-            End Using
-        End Function
-
         Friend Shared Sub GuardarReserva(reservaModel As Model.Reserva)
             Using context As VentaContext = New VentaContext()
                 Dim reservaRepository As IReservaRepository = New ReservaRepository(context)
@@ -99,67 +78,11 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Function ObtenerNotaPedido(idSucursal As Integer, estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, tipoPago As TipoPago?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As IList(Of NotaPedido)
-            Using context As VentaContext = New VentaContext()
-                Dim NotaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-                Return NotaPedidoRepository.Obtener(idSucursal, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente)
-            End Using
-        End Function
-
         Public Shared Function ObtenerCantidadNotaPedido(idSucursal As Integer, estado As NotaPedidoEstado?) As Integer
             Using context As VentaContext = New VentaContext()
                 Dim NotaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
                 Return NotaPedidoRepository.ObtenerCantidad(idSucursal, estado)
             End Using
-        End Function
-
-        Public Shared Function ObtenerEmpleados(tipoEmpleado As TipoEmpleado, idSucursal As Integer) As IList(Of ModelBase.Empleado)
-
-            Dim empleado As IList(Of ModelBase.Empleado) = New List(Of ModelBase.Empleado)
-            Using context As VentaContext = New VentaContext()
-                Dim empleadoRepository As IEmpleadoRepository = New EmpleadoRepository(context)
-                empleado = empleadoRepository.ObtenerPresentes(idSucursal, tipoEmpleado)
-
-                If (empleado.Count = 0) Then
-                    empleado = empleadoRepository.ObtenerPorSucursal(idSucursal, tipoEmpleado)
-                End If
-
-                If (empleado.Count = 0) Then
-                    Throw New NegocioException($"La sucursal no tiene configurado un {tipoEmpleado.ToString()}. Por favor, registre un {tipoEmpleado.ToString()} en el menú de empleados o contacte al administrador.")
-                End If
-
-            End Using
-
-            Return empleado
-        End Function
-
-        Public Shared Function ObtenerTarjetas() As IList(Of Tarjeta)
-            Dim banco As IList(Of Tarjeta) = New List(Of Tarjeta)
-            Using context As VentaContext = New VentaContext()
-                Dim bancoRepository As ITarjetaRepository = New TarjetaRepository(context)
-                banco = bancoRepository.Obtener()
-            End Using
-
-            Return banco
-        End Function
-
-        Public Shared Function ObtenerCuotas(idBanco As Integer) As IList(Of CostoFinanciero)
-            Dim costoFinanciero As IList(Of CostoFinanciero) = New List(Of CostoFinanciero)
-            Using context As VentaContext = New VentaContext()
-                Dim bancoRepository As ICostoFinancieroRepository = New CostoFinancieroRepository(context)
-                costoFinanciero = bancoRepository.Obtener(idBanco)
-            End Using
-            Return costoFinanciero
-        End Function
-
-        Public Shared Function ObtenerListaPrecio() As IList(Of ListaPrecio)
-            Dim listaPrecio As IList(Of ListaPrecio) = New List(Of ListaPrecio)
-            Using context As VentaContext = New VentaContext()
-                Dim listaPrecioRepository As IListaPrecioRepository = New ListaPrecioRepository(context)
-                listaPrecio = listaPrecioRepository.Obtener()
-            End Using
-
-            Return listaPrecio
         End Function
 
         Public Shared Function ObtenerListaProductos() As IList(Of ModelBase.Producto)

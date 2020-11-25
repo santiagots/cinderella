@@ -35,7 +35,9 @@ Partial Public Class DsDatos
     
     Private tablePago As PagoDataTable
     
-    Private tableTotales As TotalesDataTable
+    Private tableCheque As ChequeDataTable
+    
+    Private tableMovimientoCuentaCorriente As MovimientoCuentaCorrienteDataTable
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
@@ -81,8 +83,11 @@ Partial Public Class DsDatos
             If (Not (ds.Tables("Pago")) Is Nothing) Then
                 MyBase.Tables.Add(New PagoDataTable(ds.Tables("Pago")))
             End If
-            If (Not (ds.Tables("Totales")) Is Nothing) Then
-                MyBase.Tables.Add(New TotalesDataTable(ds.Tables("Totales")))
+            If (Not (ds.Tables("Cheque")) Is Nothing) Then
+                MyBase.Tables.Add(New ChequeDataTable(ds.Tables("Cheque")))
+            End If
+            If (Not (ds.Tables("MovimientoCuentaCorriente")) Is Nothing) Then
+                MyBase.Tables.Add(New MovimientoCuentaCorrienteDataTable(ds.Tables("MovimientoCuentaCorriente")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -155,9 +160,19 @@ Partial Public Class DsDatos
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
      Global.System.ComponentModel.Browsable(false),  _
      Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property Totales() As TotalesDataTable
+    Public ReadOnly Property Cheque() As ChequeDataTable
         Get
-            Return Me.tableTotales
+            Return Me.tableCheque
+        End Get
+    End Property
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
+     Global.System.ComponentModel.Browsable(false),  _
+     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+    Public ReadOnly Property MovimientoCuentaCorriente() As MovimientoCuentaCorrienteDataTable
+        Get
+            Return Me.tableMovimientoCuentaCorriente
         End Get
     End Property
     
@@ -243,8 +258,11 @@ Partial Public Class DsDatos
             If (Not (ds.Tables("Pago")) Is Nothing) Then
                 MyBase.Tables.Add(New PagoDataTable(ds.Tables("Pago")))
             End If
-            If (Not (ds.Tables("Totales")) Is Nothing) Then
-                MyBase.Tables.Add(New TotalesDataTable(ds.Tables("Totales")))
+            If (Not (ds.Tables("Cheque")) Is Nothing) Then
+                MyBase.Tables.Add(New ChequeDataTable(ds.Tables("Cheque")))
+            End If
+            If (Not (ds.Tables("MovimientoCuentaCorriente")) Is Nothing) Then
+                MyBase.Tables.Add(New MovimientoCuentaCorrienteDataTable(ds.Tables("MovimientoCuentaCorriente")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -308,10 +326,16 @@ Partial Public Class DsDatos
                 Me.tablePago.InitVars
             End If
         End If
-        Me.tableTotales = CType(MyBase.Tables("Totales"),TotalesDataTable)
+        Me.tableCheque = CType(MyBase.Tables("Cheque"),ChequeDataTable)
         If (initTable = true) Then
-            If (Not (Me.tableTotales) Is Nothing) Then
-                Me.tableTotales.InitVars
+            If (Not (Me.tableCheque) Is Nothing) Then
+                Me.tableCheque.InitVars
+            End If
+        End If
+        Me.tableMovimientoCuentaCorriente = CType(MyBase.Tables("MovimientoCuentaCorriente"),MovimientoCuentaCorrienteDataTable)
+        If (initTable = true) Then
+            If (Not (Me.tableMovimientoCuentaCorriente) Is Nothing) Then
+                Me.tableMovimientoCuentaCorriente.InitVars
             End If
         End If
     End Sub
@@ -334,8 +358,10 @@ Partial Public Class DsDatos
         MyBase.Tables.Add(Me.tableTransaccionItem)
         Me.tablePago = New PagoDataTable()
         MyBase.Tables.Add(Me.tablePago)
-        Me.tableTotales = New TotalesDataTable()
-        MyBase.Tables.Add(Me.tableTotales)
+        Me.tableCheque = New ChequeDataTable()
+        MyBase.Tables.Add(Me.tableCheque)
+        Me.tableMovimientoCuentaCorriente = New MovimientoCuentaCorrienteDataTable()
+        MyBase.Tables.Add(Me.tableMovimientoCuentaCorriente)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -370,7 +396,13 @@ Partial Public Class DsDatos
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Private Function ShouldSerializeTotales() As Boolean
+    Private Function ShouldSerializeCheque() As Boolean
+        Return false
+    End Function
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Private Function ShouldSerializeMovimientoCuentaCorriente() As Boolean
         Return false
     End Function
     
@@ -448,7 +480,10 @@ Partial Public Class DsDatos
     Public Delegate Sub PagoRowChangeEventHandler(ByVal sender As Object, ByVal e As PagoRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Public Delegate Sub TotalesRowChangeEventHandler(ByVal sender As Object, ByVal e As TotalesRowChangeEvent)
+    Public Delegate Sub ChequeRowChangeEventHandler(ByVal sender As Object, ByVal e As ChequeRowChangeEvent)
+    
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Public Delegate Sub MovimientoCuentaCorrienteRowChangeEventHandler(ByVal sender As Object, ByVal e As MovimientoCuentaCorrienteRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
@@ -2135,18 +2170,26 @@ Partial Public Class DsDatos
     '''</summary>
     <Global.System.Serializable(),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class TotalesDataTable
-        Inherits Global.System.Data.TypedTableBase(Of TotalesRow)
+    Partial Public Class ChequeDataTable
+        Inherits Global.System.Data.TypedTableBase(Of ChequeRow)
         
-        Private columnDescripcion As Global.System.Data.DataColumn
+        Private columnNumero As Global.System.Data.DataColumn
         
-        Private columnMonto As Global.System.Data.DataColumn
+        Private columnLibrador As Global.System.Data.DataColumn
+        
+        Private columnBanco As Global.System.Data.DataColumn
+        
+        Private columnFechaDeposito As Global.System.Data.DataColumn
+        
+        Private columnFechaIngreso As Global.System.Data.DataColumn
+        
+        Private columnImporte As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
             MyBase.New
-            Me.TableName = "Totales"
+            Me.TableName = "Cheque"
             Me.BeginInit
             Me.InitClass
             Me.EndInit
@@ -2179,17 +2222,49 @@ Partial Public Class DsDatos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property DescripcionColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property NumeroColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnDescripcion
+                Return Me.columnNumero
             End Get
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property MontoColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property LibradorColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnMonto
+                Return Me.columnLibrador
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property BancoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBanco
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property FechaDepositoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnFechaDeposito
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property FechaIngresoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnFechaIngreso
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property ImporteColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnImporte
             End Get
         End Property
         
@@ -2204,44 +2279,44 @@ Partial Public Class DsDatos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As TotalesRow
+        Public Default ReadOnly Property Item(ByVal index As Integer) As ChequeRow
             Get
-                Return CType(Me.Rows(index),TotalesRow)
+                Return CType(Me.Rows(index),ChequeRow)
             End Get
         End Property
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event TotalesRowChanging As TotalesRowChangeEventHandler
+        Public Event ChequeRowChanging As ChequeRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event TotalesRowChanged As TotalesRowChangeEventHandler
+        Public Event ChequeRowChanged As ChequeRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event TotalesRowDeleting As TotalesRowChangeEventHandler
+        Public Event ChequeRowDeleting As ChequeRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event TotalesRowDeleted As TotalesRowChangeEventHandler
+        Public Event ChequeRowDeleted As ChequeRowChangeEventHandler
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Sub AddTotalesRow(ByVal row As TotalesRow)
+        Public Overloads Sub AddChequeRow(ByVal row As ChequeRow)
             Me.Rows.Add(row)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddTotalesRow(ByVal Descripcion As String, ByVal Monto As Decimal) As TotalesRow
-            Dim rowTotalesRow As TotalesRow = CType(Me.NewRow,TotalesRow)
-            Dim columnValuesArray() As Object = New Object() {Descripcion, Monto}
-            rowTotalesRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowTotalesRow)
-            Return rowTotalesRow
+        Public Overloads Function AddChequeRow(ByVal Numero As String, ByVal Librador As String, ByVal Banco As String, ByVal FechaDeposito As String, ByVal FechaIngreso As String, ByVal Importe As Decimal) As ChequeRow
+            Dim rowChequeRow As ChequeRow = CType(Me.NewRow,ChequeRow)
+            Dim columnValuesArray() As Object = New Object() {Numero, Librador, Banco, FechaDeposito, FechaIngreso, Importe}
+            rowChequeRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowChequeRow)
+            Return rowChequeRow
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As TotalesDataTable = CType(MyBase.Clone,TotalesDataTable)
+            Dim cln As ChequeDataTable = CType(MyBase.Clone,ChequeDataTable)
             cln.InitVars
             Return cln
         End Function
@@ -2249,49 +2324,61 @@ Partial Public Class DsDatos
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New TotalesDataTable()
+            Return New ChequeDataTable()
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub InitVars()
-            Me.columnDescripcion = MyBase.Columns("Descripcion")
-            Me.columnMonto = MyBase.Columns("Monto")
+            Me.columnNumero = MyBase.Columns("Numero")
+            Me.columnLibrador = MyBase.Columns("Librador")
+            Me.columnBanco = MyBase.Columns("Banco")
+            Me.columnFechaDeposito = MyBase.Columns("FechaDeposito")
+            Me.columnFechaIngreso = MyBase.Columns("FechaIngreso")
+            Me.columnImporte = MyBase.Columns("Importe")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Sub InitClass()
-            Me.columnDescripcion = New Global.System.Data.DataColumn("Descripcion", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnDescripcion)
-            Me.columnMonto = New Global.System.Data.DataColumn("Monto", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnMonto)
+            Me.columnNumero = New Global.System.Data.DataColumn("Numero", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnNumero)
+            Me.columnLibrador = New Global.System.Data.DataColumn("Librador", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnLibrador)
+            Me.columnBanco = New Global.System.Data.DataColumn("Banco", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBanco)
+            Me.columnFechaDeposito = New Global.System.Data.DataColumn("FechaDeposito", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnFechaDeposito)
+            Me.columnFechaIngreso = New Global.System.Data.DataColumn("FechaIngreso", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnFechaIngreso)
+            Me.columnImporte = New Global.System.Data.DataColumn("Importe", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnImporte)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function NewTotalesRow() As TotalesRow
-            Return CType(Me.NewRow,TotalesRow)
+        Public Function NewChequeRow() As ChequeRow
+            Return CType(Me.NewRow,ChequeRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New TotalesRow(builder)
+            Return New ChequeRow(builder)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(TotalesRow)
+            Return GetType(ChequeRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanged(e)
-            If (Not (Me.TotalesRowChangedEvent) Is Nothing) Then
-                RaiseEvent TotalesRowChanged(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
+            If (Not (Me.ChequeRowChangedEvent) Is Nothing) Then
+                RaiseEvent ChequeRowChanged(Me, New ChequeRowChangeEvent(CType(e.Row,ChequeRow), e.Action))
             End If
         End Sub
         
@@ -2299,8 +2386,8 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanging(e)
-            If (Not (Me.TotalesRowChangingEvent) Is Nothing) Then
-                RaiseEvent TotalesRowChanging(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
+            If (Not (Me.ChequeRowChangingEvent) Is Nothing) Then
+                RaiseEvent ChequeRowChanging(Me, New ChequeRowChangeEvent(CType(e.Row,ChequeRow), e.Action))
             End If
         End Sub
         
@@ -2308,8 +2395,8 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleted(e)
-            If (Not (Me.TotalesRowDeletedEvent) Is Nothing) Then
-                RaiseEvent TotalesRowDeleted(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
+            If (Not (Me.ChequeRowDeletedEvent) Is Nothing) Then
+                RaiseEvent ChequeRowDeleted(Me, New ChequeRowChangeEvent(CType(e.Row,ChequeRow), e.Action))
             End If
         End Sub
         
@@ -2317,14 +2404,14 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleting(e)
-            If (Not (Me.TotalesRowDeletingEvent) Is Nothing) Then
-                RaiseEvent TotalesRowDeleting(Me, New TotalesRowChangeEvent(CType(e.Row,TotalesRow), e.Action))
+            If (Not (Me.ChequeRowDeletingEvent) Is Nothing) Then
+                RaiseEvent ChequeRowDeleting(Me, New ChequeRowChangeEvent(CType(e.Row,ChequeRow), e.Action))
             End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub RemoveTotalesRow(ByVal row As TotalesRow)
+        Public Sub RemoveChequeRow(ByVal row As ChequeRow)
             Me.Rows.Remove(row)
         End Sub
         
@@ -2351,7 +2438,324 @@ Partial Public Class DsDatos
             type.Attributes.Add(attribute1)
             Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
             attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "TotalesDataTable"
+            attribute2.FixedValue = "ChequeDataTable"
+            type.Attributes.Add(attribute2)
+            type.Particle = sequence
+            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+            If xs.Contains(dsSchema.TargetNamespace) Then
+                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Try 
+                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                    dsSchema.Write(s1)
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                    Do While schemas.MoveNext
+                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                        s2.SetLength(0)
+                        schema.Write(s2)
+                        If (s1.Length = s2.Length) Then
+                            s1.Position = 0
+                            s2.Position = 0
+                            
+                            Do While ((s1.Position <> s1.Length)  _
+                                        AndAlso (s1.ReadByte = s2.ReadByte))
+                                
+                                
+                            Loop
+                            If (s1.Position = s1.Length) Then
+                                Return type
+                            End If
+                        End If
+                        
+                    Loop
+                Finally
+                    If (Not (s1) Is Nothing) Then
+                        s1.Close
+                    End If
+                    If (Not (s2) Is Nothing) Then
+                        s2.Close
+                    End If
+                End Try
+            End If
+            xs.Add(dsSchema)
+            Return type
+        End Function
+    End Class
+    
+    '''<summary>
+    '''Represents the strongly named DataTable class.
+    '''</summary>
+    <Global.System.Serializable(),  _
+     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+    Partial Public Class MovimientoCuentaCorrienteDataTable
+        Inherits Global.System.Data.TypedTableBase(Of MovimientoCuentaCorrienteRow)
+        
+        Private columnSucursal As Global.System.Data.DataColumn
+        
+        Private columnFecha As Global.System.Data.DataColumn
+        
+        Private columnTipoMovimiento As Global.System.Data.DataColumn
+        
+        Private columnNumeroComprabante As Global.System.Data.DataColumn
+        
+        Private columnMonto As Global.System.Data.DataColumn
+        
+        Private columnSaldo As Global.System.Data.DataColumn
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub New()
+            MyBase.New
+            Me.TableName = "MovimientoCuentaCorriente"
+            Me.BeginInit
+            Me.InitClass
+            Me.EndInit
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub New(ByVal table As Global.System.Data.DataTable)
+            MyBase.New
+            Me.TableName = table.TableName
+            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                Me.CaseSensitive = table.CaseSensitive
+            End If
+            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                Me.Locale = table.Locale
+            End If
+            If (table.Namespace <> table.DataSet.Namespace) Then
+                Me.Namespace = table.Namespace
+            End If
+            Me.Prefix = table.Prefix
+            Me.MinimumCapacity = table.MinimumCapacity
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+            MyBase.New(info, context)
+            Me.InitVars
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SucursalColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSucursal
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property FechaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnFecha
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property TipoMovimientoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTipoMovimiento
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property NumeroComprabanteColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnNumeroComprabante
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property MontoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMonto
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property SaldoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnSaldo
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false)>  _
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return Me.Rows.Count
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Default ReadOnly Property Item(ByVal index As Integer) As MovimientoCuentaCorrienteRow
+            Get
+                Return CType(Me.Rows(index),MovimientoCuentaCorrienteRow)
+            End Get
+        End Property
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event MovimientoCuentaCorrienteRowChanging As MovimientoCuentaCorrienteRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event MovimientoCuentaCorrienteRowChanged As MovimientoCuentaCorrienteRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event MovimientoCuentaCorrienteRowDeleting As MovimientoCuentaCorrienteRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Event MovimientoCuentaCorrienteRowDeleted As MovimientoCuentaCorrienteRowChangeEventHandler
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overloads Sub AddMovimientoCuentaCorrienteRow(ByVal row As MovimientoCuentaCorrienteRow)
+            Me.Rows.Add(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overloads Function AddMovimientoCuentaCorrienteRow(ByVal Sucursal As String, ByVal Fecha As Date, ByVal TipoMovimiento As String, ByVal NumeroComprabante As String, ByVal Monto As Decimal, ByVal Saldo As Decimal) As MovimientoCuentaCorrienteRow
+            Dim rowMovimientoCuentaCorrienteRow As MovimientoCuentaCorrienteRow = CType(Me.NewRow,MovimientoCuentaCorrienteRow)
+            Dim columnValuesArray() As Object = New Object() {Sucursal, Fecha, TipoMovimiento, NumeroComprabante, Monto, Saldo}
+            rowMovimientoCuentaCorrienteRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowMovimientoCuentaCorrienteRow)
+            Return rowMovimientoCuentaCorrienteRow
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Overrides Function Clone() As Global.System.Data.DataTable
+            Dim cln As MovimientoCuentaCorrienteDataTable = CType(MyBase.Clone,MovimientoCuentaCorrienteDataTable)
+            cln.InitVars
+            Return cln
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+            Return New MovimientoCuentaCorrienteDataTable()
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub InitVars()
+            Me.columnSucursal = MyBase.Columns("Sucursal")
+            Me.columnFecha = MyBase.Columns("Fecha")
+            Me.columnTipoMovimiento = MyBase.Columns("TipoMovimiento")
+            Me.columnNumeroComprabante = MyBase.Columns("NumeroComprabante")
+            Me.columnMonto = MyBase.Columns("Monto")
+            Me.columnSaldo = MyBase.Columns("Saldo")
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Private Sub InitClass()
+            Me.columnSucursal = New Global.System.Data.DataColumn("Sucursal", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSucursal)
+            Me.columnFecha = New Global.System.Data.DataColumn("Fecha", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnFecha)
+            Me.columnTipoMovimiento = New Global.System.Data.DataColumn("TipoMovimiento", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTipoMovimiento)
+            Me.columnNumeroComprabante = New Global.System.Data.DataColumn("NumeroComprabante", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnNumeroComprabante)
+            Me.columnMonto = New Global.System.Data.DataColumn("Monto", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMonto)
+            Me.columnSaldo = New Global.System.Data.DataColumn("Saldo", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnSaldo)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function NewMovimientoCuentaCorrienteRow() As MovimientoCuentaCorrienteRow
+            Return CType(Me.NewRow,MovimientoCuentaCorrienteRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+            Return New MovimientoCuentaCorrienteRow(builder)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Function GetRowType() As Global.System.Type
+            Return GetType(MovimientoCuentaCorrienteRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanged(e)
+            If (Not (Me.MovimientoCuentaCorrienteRowChangedEvent) Is Nothing) Then
+                RaiseEvent MovimientoCuentaCorrienteRowChanged(Me, New MovimientoCuentaCorrienteRowChangeEvent(CType(e.Row,MovimientoCuentaCorrienteRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanging(e)
+            If (Not (Me.MovimientoCuentaCorrienteRowChangingEvent) Is Nothing) Then
+                RaiseEvent MovimientoCuentaCorrienteRowChanging(Me, New MovimientoCuentaCorrienteRowChangeEvent(CType(e.Row,MovimientoCuentaCorrienteRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleted(e)
+            If (Not (Me.MovimientoCuentaCorrienteRowDeletedEvent) Is Nothing) Then
+                RaiseEvent MovimientoCuentaCorrienteRowDeleted(Me, New MovimientoCuentaCorrienteRowChangeEvent(CType(e.Row,MovimientoCuentaCorrienteRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleting(e)
+            If (Not (Me.MovimientoCuentaCorrienteRowDeletingEvent) Is Nothing) Then
+                RaiseEvent MovimientoCuentaCorrienteRowDeleting(Me, New MovimientoCuentaCorrienteRowChangeEvent(CType(e.Row,MovimientoCuentaCorrienteRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub RemoveMovimientoCuentaCorrienteRow(ByVal row As MovimientoCuentaCorrienteRow)
+            Me.Rows.Remove(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+            Dim ds As DsDatos = New DsDatos()
+            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+            any1.MinOccurs = New Decimal(0)
+            any1.MaxOccurs = Decimal.MaxValue
+            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any1)
+            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+            any2.MinOccurs = New Decimal(1)
+            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any2)
+            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute1.Name = "namespace"
+            attribute1.FixedValue = ds.Namespace
+            type.Attributes.Add(attribute1)
+            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute2.Name = "tableTypeName"
+            attribute2.FixedValue = "MovimientoCuentaCorrienteDataTable"
             type.Attributes.Add(attribute2)
             type.Particle = sequence
             Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -3450,30 +3854,255 @@ Partial Public Class DsDatos
     '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
-    Partial Public Class TotalesRow
+    Partial Public Class ChequeRow
         Inherits Global.System.Data.DataRow
         
-        Private tableTotales As TotalesDataTable
+        Private tableCheque As ChequeDataTable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
             MyBase.New(rb)
-            Me.tableTotales = CType(Me.Table,TotalesDataTable)
+            Me.tableCheque = CType(Me.Table,ChequeDataTable)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property Descripcion() As String
+        Public Property Numero() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableTotales.DescripcionColumn),String)
+                    Return CType(Me(Me.tableCheque.NumeroColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Descripcion' in table 'Totales' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Numero' in table 'Cheque' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableTotales.DescripcionColumn) = value
+                Me(Me.tableCheque.NumeroColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Librador() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableCheque.LibradorColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Librador' in table 'Cheque' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableCheque.LibradorColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Banco() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableCheque.BancoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Banco' in table 'Cheque' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableCheque.BancoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property FechaDeposito() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableCheque.FechaDepositoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'FechaDeposito' in table 'Cheque' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableCheque.FechaDepositoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property FechaIngreso() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableCheque.FechaIngresoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'FechaIngreso' in table 'Cheque' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableCheque.FechaIngresoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Importe() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableCheque.ImporteColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Importe' in table 'Cheque' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableCheque.ImporteColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsNumeroNull() As Boolean
+            Return Me.IsNull(Me.tableCheque.NumeroColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetNumeroNull()
+            Me(Me.tableCheque.NumeroColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsLibradorNull() As Boolean
+            Return Me.IsNull(Me.tableCheque.LibradorColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetLibradorNull()
+            Me(Me.tableCheque.LibradorColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsBancoNull() As Boolean
+            Return Me.IsNull(Me.tableCheque.BancoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetBancoNull()
+            Me(Me.tableCheque.BancoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsFechaDepositoNull() As Boolean
+            Return Me.IsNull(Me.tableCheque.FechaDepositoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetFechaDepositoNull()
+            Me(Me.tableCheque.FechaDepositoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsFechaIngresoNull() As Boolean
+            Return Me.IsNull(Me.tableCheque.FechaIngresoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetFechaIngresoNull()
+            Me(Me.tableCheque.FechaIngresoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsImporteNull() As Boolean
+            Return Me.IsNull(Me.tableCheque.ImporteColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetImporteNull()
+            Me(Me.tableCheque.ImporteColumn) = Global.System.Convert.DBNull
+        End Sub
+    End Class
+    
+    '''<summary>
+    '''Represents strongly named DataRow class.
+    '''</summary>
+    Partial Public Class MovimientoCuentaCorrienteRow
+        Inherits Global.System.Data.DataRow
+        
+        Private tableMovimientoCuentaCorriente As MovimientoCuentaCorrienteDataTable
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+            MyBase.New(rb)
+            Me.tableMovimientoCuentaCorriente = CType(Me.Table,MovimientoCuentaCorrienteDataTable)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Sucursal() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableMovimientoCuentaCorriente.SucursalColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Sucursal' in table 'MovimientoCuentaCorriente' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMovimientoCuentaCorriente.SucursalColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Fecha() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableMovimientoCuentaCorriente.FechaColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Fecha' in table 'MovimientoCuentaCorriente' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMovimientoCuentaCorriente.FechaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property TipoMovimiento() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableMovimientoCuentaCorriente.TipoMovimientoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'TipoMovimiento' in table 'MovimientoCuentaCorriente' is DBN"& _ 
+                            "ull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMovimientoCuentaCorriente.TipoMovimientoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property NumeroComprabante() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableMovimientoCuentaCorriente.NumeroComprabanteColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'NumeroComprabante' in table 'MovimientoCuentaCorriente' is "& _ 
+                            "DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMovimientoCuentaCorriente.NumeroComprabanteColumn) = value
             End Set
         End Property
         
@@ -3482,38 +4111,101 @@ Partial Public Class DsDatos
         Public Property Monto() As Decimal
             Get
                 Try 
-                    Return CType(Me(Me.tableTotales.MontoColumn),Decimal)
+                    Return CType(Me(Me.tableMovimientoCuentaCorriente.MontoColumn),Decimal)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'Totales' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'MovimientoCuentaCorriente' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableTotales.MontoColumn) = value
+                Me(Me.tableMovimientoCuentaCorriente.MontoColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsDescripcionNull() As Boolean
-            Return Me.IsNull(Me.tableTotales.DescripcionColumn)
+        Public Property Saldo() As Decimal
+            Get
+                Try 
+                    Return CType(Me(Me.tableMovimientoCuentaCorriente.SaldoColumn),Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Saldo' in table 'MovimientoCuentaCorriente' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableMovimientoCuentaCorriente.SaldoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSucursalNull() As Boolean
+            Return Me.IsNull(Me.tableMovimientoCuentaCorriente.SucursalColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetDescripcionNull()
-            Me(Me.tableTotales.DescripcionColumn) = Global.System.Convert.DBNull
+        Public Sub SetSucursalNull()
+            Me(Me.tableMovimientoCuentaCorriente.SucursalColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsFechaNull() As Boolean
+            Return Me.IsNull(Me.tableMovimientoCuentaCorriente.FechaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetFechaNull()
+            Me(Me.tableMovimientoCuentaCorriente.FechaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTipoMovimientoNull() As Boolean
+            Return Me.IsNull(Me.tableMovimientoCuentaCorriente.TipoMovimientoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTipoMovimientoNull()
+            Me(Me.tableMovimientoCuentaCorriente.TipoMovimientoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsNumeroComprabanteNull() As Boolean
+            Return Me.IsNull(Me.tableMovimientoCuentaCorriente.NumeroComprabanteColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetNumeroComprabanteNull()
+            Me(Me.tableMovimientoCuentaCorriente.NumeroComprabanteColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsMontoNull() As Boolean
-            Return Me.IsNull(Me.tableTotales.MontoColumn)
+            Return Me.IsNull(Me.tableMovimientoCuentaCorriente.MontoColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetMontoNull()
-            Me(Me.tableTotales.MontoColumn) = Global.System.Convert.DBNull
+            Me(Me.tableMovimientoCuentaCorriente.MontoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsSaldoNull() As Boolean
+            Return Me.IsNull(Me.tableMovimientoCuentaCorriente.SaldoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetSaldoNull()
+            Me(Me.tableMovimientoCuentaCorriente.SaldoColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3701,16 +4393,16 @@ Partial Public Class DsDatos
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Public Class TotalesRowChangeEvent
+    Public Class ChequeRowChangeEvent
         Inherits Global.System.EventArgs
         
-        Private eventRow As TotalesRow
+        Private eventRow As ChequeRow
         
         Private eventAction As Global.System.Data.DataRowAction
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub New(ByVal row As TotalesRow, ByVal action As Global.System.Data.DataRowAction)
+        Public Sub New(ByVal row As ChequeRow, ByVal action As Global.System.Data.DataRowAction)
             MyBase.New
             Me.eventRow = row
             Me.eventAction = action
@@ -3718,7 +4410,43 @@ Partial Public Class DsDatos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property Row() As TotalesRow
+        Public ReadOnly Property Row() As ChequeRow
+            Get
+                Return Me.eventRow
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+            Get
+                Return Me.eventAction
+            End Get
+        End Property
+    End Class
+    
+    '''<summary>
+    '''Row event argument class
+    '''</summary>
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+    Public Class MovimientoCuentaCorrienteRowChangeEvent
+        Inherits Global.System.EventArgs
+        
+        Private eventRow As MovimientoCuentaCorrienteRow
+        
+        Private eventAction As Global.System.Data.DataRowAction
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub New(ByVal row As MovimientoCuentaCorrienteRow, ByVal action As Global.System.Data.DataRowAction)
+            MyBase.New
+            Me.eventRow = row
+            Me.eventAction = action
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property Row() As MovimientoCuentaCorrienteRow
             Get
                 Return Me.eventRow
             End Get

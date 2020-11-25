@@ -3,13 +3,14 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports SistemaCinderella.Formularios.Venta
+Imports Model = Ventas.Core.Model.VentaAggregate
 
 Public Class frmVentasAdministracion
 
     Private ventasAdministracionViewModel As frmVentasAdministracionViewModel
+    Private ventaVerDetalle As Model.Venta
 
     Sub New()
-
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -20,16 +21,34 @@ Public Class frmVentasAdministracion
         AddHandler txtMontoHasta.DataBindings(0).Parse, AddressOf NullParseHandler
     End Sub
 
+    Sub New(venta As Model.Venta)
+        ' This call is required by the designer.
+        InitializeComponent()
+        ventaVerDetalle = venta
+        ' Add any initialization after the InitializeComponent() call.
+    End Sub
+
     Private Sub frmVentasAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EjecutarAsync(Async Function() As Task
-                          EvaluarPermisos()
-                          ventasAdministracionViewModel = New frmVentasAdministracionViewModel(My.Settings.Sucursal, Me.MdiParent)
-                          FrmVentasAdministracionViewModelBindingSource.DataSource = ventasAdministracionViewModel
-                          VentaDetalle.VentaDetalleBindingSource.DataSource = ventasAdministracionViewModel.VentaDetalleSeleccionada
-                          Await ventasAdministracionViewModel.BuscarAsync()
-                          lbFormaPago.ClearSelected()
-                          lbTipoCliente.ClearSelected()
-                          lbTipoFactura.ClearSelected()
+
+                          If (ventaVerDetalle Is Nothing) Then
+                              ventasAdministracionViewModel = New frmVentasAdministracionViewModel(My.Settings.Sucursal, Me.MdiParent)
+                              FrmVentasAdministracionViewModelBindingSource.DataSource = ventasAdministracionViewModel
+                              VentaDetalle.VentaDetalleBindingSource.DataSource = ventasAdministracionViewModel.VentaDetalleSeleccionada
+                              EvaluarPermisos()
+                              Await ventasAdministracionViewModel.BuscarAsync()
+                              lbFormaPago.ClearSelected()
+                              lbTipoCliente.ClearSelected()
+                              lbTipoFactura.ClearSelected()
+                          Else
+                              ventasAdministracionViewModel = New frmVentasAdministracionViewModel(ventaVerDetalle, Me.MdiParent)
+                              FrmVentasAdministracionViewModelBindingSource.DataSource = ventasAdministracionViewModel
+                              VentaDetalle.VentaDetalleBindingSource.DataSource = ventasAdministracionViewModel.VentaDetalleSeleccionada
+                              RemoveHandler TabVentas.Selected, AddressOf TabVentas_Selected
+                              TabVentas.TabPages.Remove(TbListado)
+                              TabVentas.SelectedTab = TbDetalle
+                          End If
+
                       End Function)
         Me.DataBindings.Add(New Binding("Visible", Me.FrmVentasAdministracionViewModelBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
     End Sub

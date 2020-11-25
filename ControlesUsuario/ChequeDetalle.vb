@@ -5,20 +5,20 @@ Imports Ventas.Core.Model.VentaAggregate
 
 Public Class ChequeDetalle
     Private Sub Btn_Buscar_Cliente_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Cliente.Click
-        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
         frmBuscarClienteMayorista.ShowDialog()
-        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
-            ClienteID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
-            ClienteNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
+            ClienteID.Text = frmBuscarClienteMayorista.ClienteMayorista.Id
+            ClienteNombre.Text = frmBuscarClienteMayorista.ClienteMayorista.RazonSocial
         End If
     End Sub
 
     Private Sub Btn_Buscar_Librador_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Librador.Click
-        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
         frmBuscarClienteMayorista.ShowDialog()
-        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
-            LibradorID.Text = frmBuscarClienteMayorista.clienteMayorista.Id
-            LibradorNombre.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
+            LibradorID.Text = frmBuscarClienteMayorista.ClienteMayorista.Id
+            LibradorNombre.Text = frmBuscarClienteMayorista.ClienteMayorista.RazonSocial
         End If
     End Sub
 

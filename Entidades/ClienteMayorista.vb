@@ -5,11 +5,11 @@
     Public Property Nombre As String
     Public Property Cuit As String
     Public Property IdCondicionIva As Integer
-    Public Property Comision As Integer?
+    Public Property Comision As Decimal?
     Public Property IdCorredor As Integer
     Public Property Transporte As String
-    Public Property Bonificacion As Integer?
-    Public Property Lista As Integer?
+    Public Property Bonificacion As Decimal?
+    Public Property Lista As Decimal?
     Public Property CondicionPago As String
     Public Property IdEmpresa As Integer
     Public Property IdListaPrecio As Integer

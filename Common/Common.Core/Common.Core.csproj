@@ -46,6 +46,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -63,13 +66,17 @@
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
     <Compile Include="Enum\OrdenarDireccion.cs" />
+    <Compile Include="Enum\TipoAccionCuentaCorriente.cs" />
+    <Compile Include="Enum\TipoBase.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
     <Compile Include="Enum\TipoEmpleado.cs" />
     <Compile Include="Enum\TipoFactura.cs" />
+    <Compile Include="Enum\TipoMovimientoCuentaCorriente.cs" />
     <Compile Include="Enum\TipoPago.cs" />
     <Compile Include="Exceptions\NegocioException.cs" />
     <Compile Include="Extension\DateTimeExtensions.cs" />
+    <Compile Include="Extension\Paginado.cs" />
     <Compile Include="Extension\ToList.cs" />
     <Compile Include="Helper\CertificadosX509.cs" />
     <Compile Include="Helper\Cuit.cs" />
@@ -80,8 +87,10 @@
     <Compile Include="Helper\Monto.cs" />
     <Compile Include="Interfaces\ICategoriaRepository.cs" />
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
+    <Compile Include="Interfaces\IDomicilioRepository.cs" />
     <Compile Include="Interfaces\IIVARepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
+    <Compile Include="Interfaces\IListaPrecioRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubCategoriaRepository.cs" />
     <Compile Include="Model\Banco.cs" />
@@ -92,6 +101,7 @@
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Feriado.cs" />
     <Compile Include="Model\IVA.cs" />
+    <Compile Include="Model\ListaPrecio.cs" />
     <Compile Include="Model\Localidad.cs" />
     <Compile Include="Model\Provincia.cs" />
     <Compile Include="Model\SubCategoria.cs" />

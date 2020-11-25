@@ -1,13 +1,13 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
-Imports SistemaCinderella.Comunes
-Imports SistemaCinderella.Formularios.MovimientoDetalle
-Imports MovimientoDetalle = SistemaCinderella.Formularios.MovimientoDetalle
-Imports ModelVenta = Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Enum
-Imports Ventas.Core.Model.ValueObjects
-Imports Ventas.Core.Model.VentaAggregate
+Imports SistemaCinderella.Comunes
+Imports Model = Ventas.Core.Model.ValueObjects
+Imports SistemaCinderella.Formularios.MovimientoDetalle
 Imports Ventas.Core.Enum
+Imports Ventas.Core.Model.VentaAggregate
+Imports Ventas.Data.Service
+Imports Ventas.Core.Model.ValueObjects
 
 Namespace Formularios.SucursalSaldo
 
@@ -40,16 +40,15 @@ Namespace Formularios.SucursalSaldo
         End Sub
 
         Public Async Function CargarSaldoAsync() As Task
-            Dim Saldo As Task(Of Ventas.Core.Model.ValueObjects.SucursalSaldo) = Task.Run(Function() Formularios.SucursalSaldo.Servicio.CargarSaldoAsync(IdSucursal, FechaHasta))
+            Dim Saldo As Model.SucursalSaldo = Await Task.Run(Function() Servicio.CargarSaldoAsync(IdSucursal, FechaHasta))
 
-            Await Task.WhenAll(CargarResumenVentaAsync(), Saldo)
+            CargarResumenVentaAsync(Saldo.SucursalPagos)
+            CargarIngresos(Saldo.Ingreso)
+            CargarEgresos(Saldo.Egreso)
 
-            CargarIngresos()
-            CargarEgresos()
-
-            Me.Saldo = Saldo.Result.Total
-            Me.Disponible = Saldo.Result.Disponible
-            Me.TotalCajaFuerte = Saldo.Result.TotalCajaFuerte
+            Me.Saldo = Saldo.Total
+            Me.Disponible = Saldo.Disponible
+            Me.TotalCajaFuerte = Saldo.TotalCajaFuerte
 
             NotifyPropertyChanged(NameOf(Me.Saldo))
             NotifyPropertyChanged(NameOf(Me.Disponible))
@@ -199,80 +198,46 @@ Namespace Formularios.SucursalSaldo
             frmMoviminetoDetalle.ShowDialog()
         End Sub
 
-        Private Async Function CargarResumenVentaAsync() As Task
-            Dim efectivo As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Efectivo, Nothing))
-            Dim cheques As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Cheque, Nothing))
-            Dim credito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaCrédito, Nothing))
-            Dim debito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaDébito, Nothing))
-            Dim deposito As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Deposito, Nothing))
-            Dim facturado As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, True, Nothing, Nothing))
-            Dim sinFacturar As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, False, Nothing, Nothing))
-            Dim minorista As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, TipoCliente.Minorista))
-            Dim mayorista As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, TipoCliente.Mayorista))
-            Dim total As Task(Of Decimal) = Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, Nothing))
+        Private Sub CargarResumenVentaAsync(sucursalPagos As SucursalPagos)
+            Saldos.VentaEfectivo = sucursalPagos.Efectivo
+            Saldos.VentaCheque = sucursalPagos.Cheque
+            Saldos.VentaCredito = sucursalPagos.Credito
+            Saldos.VentaDeposito = sucursalPagos.Deposito
+            Saldos.VentaDebito = sucursalPagos.Debito
+            Saldos.VentaCuentaCorriente = sucursalPagos.CuentaCorriente
+            Saldos.VentaFacturado = sucursalPagos.FacturadoVenta
+            Saldos.VentaSinFacturar = sucursalPagos.SinFacturarVenta
+            Saldos.VentaMinorista = sucursalPagos.MinoristaVenta
+            Saldos.VentaMayorista = sucursalPagos.MayoristaVenta
+        End Sub
 
-            Await Task.WhenAll(efectivo, cheques, credito, credito, minorista, mayorista, facturado, sinFacturar, total)
+        Private Sub CargarIngresos(ingresos As Model.Ingreso)
 
-            Saldos.VentaEfectivo = efectivo.Result
-            Saldos.VentaCheque = cheques.Result
-            Saldos.VentaCredito = credito.Result
-            Saldos.VentaDeposito = deposito.Result
-            Saldos.VentaDebito = debito.Result
-            Saldos.VentaFacturado = facturado.Result
-            Saldos.VentaSinFacturar = sinFacturar.Result
-            Saldos.VentaMinorista = minorista.Result
-            Saldos.VentaMayorista = mayorista.Result
-        End Function
+            Saldos.CajaInical = ingresos.CajaInicial
+            Saldos.RecibidosSucursal = ingresos.RecibidosSucursal
+            Saldos.SobranteCaja = ingresos.SobranteCaja
+            Saldos.EgresoCajaFuerte = ingresos.EgresosCajaFuerte
+            Saldos.AporteSocios = ingresos.AporteSocios
 
-        Private Sub CargarIngresos()
-            Dim recibidosSucursal As Decimal = NegMov.ObtenerTotalMovEgreso(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"), "Ingresos")
-            Dim egresoCajaFuerte As Decimal = NegMov.ObtenerTotalMovCajaFuerte(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"), 1)
-            Dim aporteSocios As Decimal = NegMov.TotalMovAporte(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"))
-            Dim ventaTotal As Decimal = Venta.Servicio.ObtenerTotalVentas(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, Nothing)
-            Dim cierreCajaAnterior As CierreCaja = Servicio.ObtenerCierreCaja(IdSucursal, FechaHasta.AddDays(-1))
-            Dim sobranteCaja As Decimal = Servicio.ObtenerTotalDiferenciaCierreCaja(IdSucursal, FechaDesde, FechaHasta, CierreCajaSituacion.SobranteDinero)
-
-            Dim cajaInicial As Decimal = If(cierreCajaAnterior = Nothing, 0, cierreCajaAnterior.Monto)
-
-            Saldos.VentaTotal = ventaTotal
-            Saldos.CajaInical = cajaInicial
-            Saldos.RecibidosSucursal = recibidosSucursal
-            Saldos.SobranteCaja = sobranteCaja
-            Saldos.EgresoCajaFuerte = egresoCajaFuerte
-            Saldos.AporteSocios = aporteSocios
-
-            TotalIngreso = ventaTotal + recibidosSucursal + sobranteCaja + egresoCajaFuerte + aporteSocios
+            TotalIngreso = Saldos.VentaTotal + Saldos.RecibidosSucursal + Saldos.SobranteCaja + Saldos.EgresoCajaFuerte + Saldos.AporteSocios
 
             NotifyPropertyChanged(NameOf(Me.TotalIngreso))
         End Sub
 
-        Private Sub CargarEgresos()
-            Dim devoluciones As Decimal = CType(NegDev.TotalDevolucionesEfectivo(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim mercaderia As Decimal = CType(NegMov.ConsultarTotalGastoMercaderia(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim sueldos As Decimal = CType(NegEmp.ObtenerSueldosSucursal(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim sueldosAdelantos As Decimal = CType(NegAdel.ObtenerAdelantosSucursal(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim gastosEgresos As Decimal = CType(NegMov.TotalMovEgresosGastos(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim gastosMovimientos As Decimal = CType(NegMov.TotalMovGastos(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim impuestosEgresos As Decimal = CType(NegMov.TotalMovEgresosImpuesto(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim impuestosMovimientos As Decimal = CType(NegMov.TotalMovImpuesto(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim enviosSucursales As Decimal = CType(NegMov.ObtenerTotalMovEgreso(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"), "Egresos"), Decimal)
-            Dim pendienteAutorizacion As Decimal = CType(NegMov.ObtenerTotalMovEgreso(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"), "EgresosPendientes"), Decimal)
-            Dim ingresosCajaFuerte As Decimal = CType(NegMov.ObtenerTotalMovCajaFuerte(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"), 2), Decimal)
-            Dim retiroSocios As Decimal = CType(NegMov.TotalMovRetiro(IdSucursal, FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd")), Decimal)
-            Dim faltanteCaja As Decimal = Servicio.ObtenerTotalDiferenciaCierreCaja(IdSucursal, FechaDesde, FechaHasta, CierreCajaSituacion.FaltanteDinero)
+        Private Sub CargarEgresos(egresos As Model.Egreso)
 
-            Saldos.Devoluciones = devoluciones
-            Saldos.Mercaderia = mercaderia
-            Saldos.Sueldos = sueldos + sueldosAdelantos
-            Saldos.Gastos = gastosEgresos + gastosMovimientos
-            Saldos.Impuestos = impuestosEgresos + impuestosMovimientos
-            Saldos.EnviosSucursales = enviosSucursales
-            Saldos.PendienteAutorizacion = pendienteAutorizacion
-            Saldos.FaltanteCaja = Math.Abs(faltanteCaja)
-            Saldos.IngresosCajaFuerte = ingresosCajaFuerte
-            Saldos.RetiroSocios = retiroSocios
+            Saldos.Devoluciones = egresos.Devoluciones
+            Saldos.Mercaderia = egresos.Mercaderias
+            Saldos.Sueldos = egresos.Sueldos
+            Saldos.Gastos = egresos.Gastos
+            Saldos.Impuestos = egresos.Impuestos
+            Saldos.EnviosSucursales = egresos.EnviosSucursales
+            Saldos.PendienteAutorizacion = egresos.PendientesAutorizacion
+            Saldos.FaltanteCaja = egresos.FaltanteCaja
+            Saldos.IngresosCajaFuerte = egresos.IngresoCajaFuerte
+            Saldos.RetiroSocios = egresos.RetirosSocios
 
-            TotalEgresos = devoluciones + mercaderia + sueldos + sueldosAdelantos + gastosEgresos + gastosMovimientos + impuestosEgresos + impuestosMovimientos + enviosSucursales + faltanteCaja + ingresosCajaFuerte + retiroSocios
+            TotalEgresos = Saldos.Devoluciones + Saldos.Mercaderia + Saldos.Sueldos + Saldos.Gastos + Saldos.Impuestos + Saldos.EnviosSucursales + Saldos.FaltanteCaja + Saldos.IngresosCajaFuerte + Saldos.RetiroSocios
 
             NotifyPropertyChanged(NameOf(Me.TotalEgresos))
         End Sub

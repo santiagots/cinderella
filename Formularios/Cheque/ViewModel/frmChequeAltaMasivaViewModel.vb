@@ -5,6 +5,7 @@ Imports Common.Core
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Model
+Imports Common.Data.Service
 Imports Model = Ventas.Core.Model.ChequeAggregate
 
 Namespace Formularios.Cheque
@@ -146,7 +147,7 @@ Namespace Formularios.Cheque
         End Function
 
         Private Async Function CargarClienteMayoristaAsync() As Task
-            Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(ChequeDetalle.IdCliente))
+            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, ChequeDetalle.IdCliente)
             ChequeDetalle.ClienteNombre = clienteMayorista.RazonSocial
         End Function
     End Class

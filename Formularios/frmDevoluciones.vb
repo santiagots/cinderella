@@ -488,21 +488,21 @@ Public Class frmDevoluciones
     'Si desea buscar un cliente mayorista se visualiza el formulario.
     Private Sub Btn_BuscarCliente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_BuscarCliente.Click
         Me.Cursor = Cursors.WaitCursor
-        Dim frmBuscarClienteMayorista As frmBuscarClienteMayorista = New frmBuscarClienteMayorista()
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
         frmBuscarClienteMayorista.ShowDialog()
 
 
-        If frmBuscarClienteMayorista.clienteMayorista IsNot Nothing Then
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
             txt_id_Cliente.Clear()
             txt_RazonSocial.Clear()
-            txt_id_Cliente.Text = frmBuscarClienteMayorista.clienteMayorista.Id
-            txt_RazonSocial.Text = frmBuscarClienteMayorista.clienteMayorista.RazonSocial
-            Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.clienteMayorista.IdListaPrecio
-            txt_PorcentajeBonificacion.Text = frmBuscarClienteMayorista.clienteMayorista.Bonificacion
+            txt_id_Cliente.Text = frmBuscarClienteMayorista.ClienteMayorista.Id
+            txt_RazonSocial.Text = frmBuscarClienteMayorista.ClienteMayorista.RazonSocial
+            Cb_ListaPrecio.SelectedValue = frmBuscarClienteMayorista.ClienteMayorista.IdListaPrecio
+            txt_PorcentajeBonificacion.Text = frmBuscarClienteMayorista.ClienteMayorista.PorcentajeBonificacion * 100
 
-            PorcentajeFacturacionIngresado = If(frmBuscarClienteMayorista.clienteMayorista.Lista = 0, 100, frmBuscarClienteMayorista.clienteMayorista.Lista)
+            PorcentajeFacturacionIngresado = If(frmBuscarClienteMayorista.ClienteMayorista.PorcentajeLista = 0, 100, frmBuscarClienteMayorista.ClienteMayorista.ListaPrecio)
             If Cb_TipoPago.SelectedValue = 1 Then
-                txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado
+                txt_PorcentajeFacturacion.Text = PorcentajeFacturacionIngresado * 100
             End If
 
             ActualizarMontosGrillaYTotales()

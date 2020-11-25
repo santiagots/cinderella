@@ -6,6 +6,7 @@ Imports Common.Core.Enum
 Imports Ventas.Core.Enum
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Ventas.Data.Service
 
 Namespace Formularios.Venta
     Public Class frmNotaPedidoAdministracionViewModel
@@ -77,6 +78,12 @@ Namespace Formularios.Venta
             End Get
         End Property
 
+        Public Property NotasPedidosOrdenadoPor As String = "Fecha"
+        Public Property NotasPedidosDireccionOrdenamiento As OrdenadoDireccion = OrdenadoDireccion.DESC
+        Public Property NotasPedidosPaginaActual As Integer = 1
+        Public Property NotasPedidosElementosPorPagina As Integer
+        Public Property NotasPedidosTotalElementos As Integer
+
         Sub New(IdSucursal As Integer)
             Me.IdSucursal = IdSucursal
             Visible = True
@@ -84,7 +91,7 @@ Namespace Formularios.Venta
         End Sub
 
         Public Async Function Buscar() As Task
-            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, Nothing, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
+            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
         Public Sub CargarVenta(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
@@ -97,7 +104,7 @@ Namespace Formularios.Venta
 
         Public Async Function CargarVentaCallback() As Task
             Visible = True
-            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, Nothing, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
+            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
         Public Async Function CargarDatosAsync() As Task
@@ -121,15 +128,16 @@ Namespace Formularios.Venta
         End Sub
 
         Private Async Function CargarEmpleadosAsync() As Task
-            Dim vendedores As List(Of Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(TipoEmpleado.Vendedor, IdSucursal))
+
+            Dim vendedores As List(Of Empleado) = Await EmpleadoService.ObtenerEmpleados(TipoEmpleado.Vendedor, IdSucursal)
             Dim vendedoresAux As List(Of KeyValuePair(Of Empleado, String)) = vendedores.Select(Function(x) New KeyValuePair(Of Empleado, String)(x, x.ApellidoYNombre)).ToList()
             vendedoresAux.Insert(0, New KeyValuePair(Of Empleado, String)(Nothing, "Todos"))
             _Vendedores = New BindingList(Of KeyValuePair(Of Empleado, String))(vendedoresAux)
             NotifyPropertyChanged(NameOf(Me.Vendedores))
         End Function
 
-        Private Async Function CargarNotaPedidoAsync(estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, tipoPago As TipoPago?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As Task
-            _NotaPedidosItems = Await Task.Run(Function() Servicio.ObtenerNotaPedido(IdSucursal, estado, tipoCliente, tipoPago, fechaDesde, fechaHasta, IdVendedor, nombreCliente))
+        Private Async Function CargarNotaPedidoAsync(estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As Task
+            _NotaPedidosItems = Await NotaPedidoService.ObtenerAsync(IdSucursal, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
             NotifyPropertyChanged(NameOf(Me.NotaPedidosItems))
         End Function
 

@@ -64,6 +64,8 @@
     <Compile Include="Repository\ChequeRepository.cs" />
     <Compile Include="Repository\CierreCajaRepository.cs" />
     <Compile Include="Repository\ClienteMinoristaRepository.cs" />
+    <Compile Include="Repository\DocumentoDePagoRepository.cs" />
+    <Compile Include="Repository\MovimientoRepository.cs" />
     <Compile Include="Repository\FacturaRepository.cs" />
     <Compile Include="Repository\InformeVentaRepository.cs" />
     <Compile Include="Repository\NotaCreditoRepository.cs" />
@@ -73,8 +75,16 @@
     <Compile Include="Repository\TarjetaRepository.cs" />
     <Compile Include="Repository\CostoFinancieroRepository.cs" />
     <Compile Include="Repository\EmpleadoRepository.cs" />
-    <Compile Include="Repository\ListaPrecioRepository.cs" />
     <Compile Include="Repository\ProductoRepository.cs" />
+    <Compile Include="Service\CostoFinancieroService.cs" />
+    <Compile Include="Service\DocumentoDePagoService.cs" />
+    <Compile Include="Service\EmpleadoService.cs" />
+    <Compile Include="Service\SucursalService.cs" />
+    <Compile Include="Service\TipoPagoService.cs" />
+    <Compile Include="Service\MovimientoService.cs" />
+    <Compile Include="Service\NotaPedidoService.cs" />
+    <Compile Include="Service\TarjetaService.cs" />
+    <Compile Include="Service\VentaService.cs" />
     <Compile Include="VentaContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\VentaRepository.cs" />
@@ -87,10 +97,6 @@
     <ProjectReference Include="..\..\Common\Common.Data\Common.Data.csproj">
       <Project>{FB58F971-FF75-4FF7-8B90-53290A8DA46F}</Project>
       <Name>Common.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entidades\Entidades.vbproj">
-      <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
-      <Name>Entidades</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ventas.Core\Ventas.Core.csproj">
       <Project>{2F8F3F48-9EC8-4F64-8565-5A15CF49E570}</Project>

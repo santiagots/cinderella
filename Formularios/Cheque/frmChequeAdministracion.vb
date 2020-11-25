@@ -81,16 +81,19 @@ Public Class frmChequeAdministracion
 
         'Si el cheque esta en fecha para ser cobrado lo resalto en verde
         If (cheque.Estado <> EstadoCheque.Salido AndAlso cheque.FechaDesposito.Date = Date.Now) Then
-            e.CellStyle.BackColor = System.Drawing.Color.Green
+            e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
+            e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
         End If
 
         'Si el cheque esta vencido o faltan 7 dias para su vencimiento lo resalto en rojo
         If (cheque.Estado <> EstadoCheque.Salido AndAlso cheque.FechaVencimiento.Date < Date.Now.AddDays(7).Date) Then
-            e.CellStyle.BackColor = Color.FromArgb(255, 255, 75, 58)
+            e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
+            e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
 
             'Si el cheque esta en fecha para ser cobrado lo resalto en verde
         ElseIf (cheque.Estado <> EstadoCheque.Salido AndAlso cheque.FechaDesposito.Date <= Date.Now) Then
-            e.CellStyle.BackColor = Color.FromArgb(255, 0, 205, 106)
+            e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
+            e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
         End If
     End Sub
 

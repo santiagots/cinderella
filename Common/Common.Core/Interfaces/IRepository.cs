@@ -10,6 +10,7 @@ namespace Common.Core.Interfaces
     {
         IEnumerable<TEntity> List();
         TEntity GetById(long id);
+        Task<TEntity> GetByIdAsync(long id);
         void Insert(TEntity entity);
         void Update(TEntity entity);
         void Delete(long id);

@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BorradoOk" xml:space="preserve">
+    <value>Los datos se han borrado de forma correcta.</value>
+  </data>
+  <data name="ErrorCamposRequeridos" xml:space="preserve">
+    <value>Debe completar todos los campos requeridos.</value>
+  </data>
+  <data name="ErrorCuitInvalido" xml:space="preserve">
+    <value>El CUIL ingresado es incorrecto.</value>
+  </data>
+  <data name="GuardadoOk" xml:space="preserve">
+    <value>Los datos se han guardado de forma correcta.</value>
+  </data>
 </root>

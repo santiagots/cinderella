@@ -1,26 +1,61 @@
-﻿using Common.Core.Model;
+﻿using Common.Core.Enum;
+using Common.Core.Helper;
+using Common.Core.Model;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Common.Data
 {
     public class CommonContext : DbContext
     {
-        public CommonContext()
-        : base("SistemaCinderella.My.MySettings.Conexion")
+        public CommonContext(TipoBase tipoBase = TipoBase.Local)
+        : base()
         {
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+
             Database.Log = sql => Debug.Write(sql);
+            if (tipoBase == TipoBase.Local)
+                this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
+            else
+                this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
         }
 
         public DbSet<Banco> Banco { get; set; }
         public DbSet<ClienteMayorista> ClienteMayorista { get; set; }
         public DbSet<Feriado> Feriado { get; set; }
         public DbSet<Domicilio> Domicilio { get; set; }
+        public DbSet<Provincia> Provincia { get; set; }
+        public DbSet<Distrito> Distrito { get; set; }
+        public DbSet<ListaPrecio> ListaPrecio { get; set; }
+        public DbSet<Localidad> Localidad { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<IVA> IVA { get; set; }
+
+        public bool IsAttached<T>(Entity<T> entity) 
+        {
+           return this.Set(entity.GetType()).Local.Cast<Entity<T>>().Any(e => e.Id.Equals(entity.Id));
+        }
+
+        public Entity<T> GetAttached<T>(Entity<T> entity)
+        {
+            return this.Set(entity.GetType()).Local.Cast<Entity<T>>().FirstOrDefault(e => e.Id.Equals(entity.Id));
+        }
+
+        public Entity<T> Attach<T>(Entity<T> entity)
+        {
+            if (entity == null) return null;
+
+            if (!this.IsAttached(entity))
+                this.Entry(entity).State = EntityState.Unchanged;
+
+            return GetAttached(entity);
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,9 +67,16 @@ namespace Common.Data
 
             modelBuilder.Entity<ClienteMayorista>().ToTable("CLIENTEMAYORISTA");
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.Id).HasColumnName("id_Cliente");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.PorcentajeBonificacion).HasColumnName("Bonificacion");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.PorcentajeComision).HasColumnName("Comision");
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.PorcentajeLista).HasColumnName("Lista");
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.CondicionIVA).HasColumnName("id_CondicionIva");
-            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDireccionFacturacion).HasColumnName("id_DireccionFacturacion");
-            modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDireccionFacturacion);
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdListaPrecio).HasColumnName("id_ListaPrecio");
+            modelBuilder.Entity<ClienteMayorista>().HasRequired(v => v.ListaPrecio).WithMany().HasForeignKey(x => x.IdListaPrecio);
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDomicilioFacturacion).HasColumnName("id_DireccionFacturacion");
+            modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDomicilioFacturacion);
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDomicilioEntrega).HasColumnName("id_DireccionEntrega");
+            modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioEntrega).WithMany().HasForeignKey(x => x.IdDomicilioEntrega);
 
             modelBuilder.Entity<Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
             modelBuilder.Entity<Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
@@ -61,10 +103,16 @@ namespace Common.Data
 
             modelBuilder.Entity<Distrito>().ToTable("DEPARTAMENTOS");
             modelBuilder.Entity<Distrito>().Property(t => t.Id).HasColumnName("id_Departamento");
+            modelBuilder.Entity<Distrito>().Property(t => t.IdProvincia).HasColumnName("id_Provincia");
+
+            modelBuilder.Entity<ListaPrecio>().ToTable("LISTA_PRECIO");
+            modelBuilder.Entity<ListaPrecio>().Property(t => t.Id).HasColumnName("id_Lista");
+            modelBuilder.Entity<ListaPrecio>().Property(t => t.Nombre).HasColumnName("ListaPrecio");
 
             modelBuilder.Entity<Localidad>().ToTable("LOCALIDADES");
             modelBuilder.Entity<Localidad>().Property(t => t.Id).HasColumnName("id_Localidad");
-
+            modelBuilder.Entity<Localidad>().Property(t => t.IdDepartamente).HasColumnName("id_Departamento");
+            
             modelBuilder.Entity<Provincia>().ToTable("PROVINCIAS");
             modelBuilder.Entity<Provincia>().Property(t => t.Id).HasColumnName("id_Provincia");
 

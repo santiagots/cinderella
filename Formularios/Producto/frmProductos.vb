@@ -229,10 +229,6 @@ Public Class frmProductos
         TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
     End Sub
 
-    Private Sub Categoria_SelectionChangeCommitted(ByVal sender As Object, ByVal e As System.EventArgs) Handles cb_Categoria.SelectionChangeCommitted, cb_Categoria_mod.SelectionChangeCommitted
-
-    End Sub
-
     'abro el open dialog para que seleccione una foto.
     Private Sub btn_Open_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_Open.Click, btn_Open_mod.Click
         Cargar.Title = "Seleccione una Fotografía" 'Título de la ventana que se abrirá para seleccionar el archivo.

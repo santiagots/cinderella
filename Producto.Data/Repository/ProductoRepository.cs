@@ -8,6 +8,7 @@ using Producto.Core.Interfaces;
 using Modelo = Producto.Core.Model.ProductoAgreggate;
 using Common.Core.Exceptions;
 using Common.Data.Repository;
+using Common.Core.Extension;
 
 namespace Producto.Data.Repository
 {
@@ -44,11 +45,8 @@ namespace Producto.Data.Repository
             if (!String.IsNullOrEmpty(nombre))
                 productos = productos.Where(x => x.Nombre.Contains(nombre));
 
-            return productos
-                            .OrderBy($"{ordenadoPor} {ordenarDireccion.ToString()}")
-                            .Skip(itemsPorPagina * (pagina - 1))
-                            .Take(itemsPorPagina)
-                            .ToList();
+            int totalElementos = 0;
+            return productos.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos).ToList();
         }
 
         public int BuscarTotal(string codigo, string nombre)

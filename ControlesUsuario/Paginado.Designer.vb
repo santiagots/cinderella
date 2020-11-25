@@ -22,105 +22,101 @@ Partial Class Paginado
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btnProxima = New System.Windows.Forms.Button()
-        Me.btnAnterior = New System.Windows.Forms.Button()
-        Me.btnInicio = New System.Windows.Forms.Button()
-        Me.btnFin = New System.Windows.Forms.Button()
-        Me.lblPaginas = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel11.SuspendLayout()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.btnPaginaInical = New System.Windows.Forms.ToolStripButton()
+        Me.btnPaginaAnterior = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.lbTotalPaginas = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.btnPaginaSiguiente = New System.Windows.Forms.ToolStripButton()
+        Me.btnPaginaFinal = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'TableLayoutPanel11
+        'ToolStrip1
         '
-        Me.TableLayoutPanel11.ColumnCount = 5
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.55556!))
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
-        Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
-        Me.TableLayoutPanel11.Controls.Add(Me.btnProxima, 3, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.btnAnterior, 1, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.btnInicio, 0, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.btnFin, 4, 0)
-        Me.TableLayoutPanel11.Controls.Add(Me.lblPaginas, 2, 0)
-        Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel11.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
-        Me.TableLayoutPanel11.RowCount = 1
-        Me.TableLayoutPanel11.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel11.Size = New System.Drawing.Size(642, 30)
-        Me.TableLayoutPanel11.TabIndex = 4
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnPaginaInical, Me.btnPaginaAnterior, Me.ToolStripSeparator1, Me.lbTotalPaginas, Me.ToolStripSeparator2, Me.btnPaginaSiguiente, Me.btnPaginaFinal})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ToolStrip1.Size = New System.Drawing.Size(209, 25)
+        Me.ToolStrip1.TabIndex = 0
+        Me.ToolStrip1.Text = "ToolStrip1"
         '
-        'btnProxima
+        'btnPaginaInical
         '
-        Me.btnProxima.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnProxima.Location = New System.Drawing.Point(501, 3)
-        Me.btnProxima.Name = "btnProxima"
-        Me.btnProxima.Size = New System.Drawing.Size(65, 23)
-        Me.btnProxima.TabIndex = 4
-        Me.btnProxima.Text = ">"
-        Me.btnProxima.UseVisualStyleBackColor = True
+        Me.btnPaginaInical.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnPaginaInical.Image = Global.SistemaCinderella.My.Resources.Recursos.NavigatorFirstItem
+        Me.btnPaginaInical.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnPaginaInical.Name = "btnPaginaInical"
+        Me.btnPaginaInical.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.btnPaginaInical.Size = New System.Drawing.Size(23, 22)
+        Me.btnPaginaInical.Text = "ToolStripButton1"
+        Me.btnPaginaInical.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'btnAnterior
+        'btnPaginaAnterior
         '
-        Me.btnAnterior.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.btnAnterior.Location = New System.Drawing.Point(74, 3)
-        Me.btnAnterior.Name = "btnAnterior"
-        Me.btnAnterior.Size = New System.Drawing.Size(65, 23)
-        Me.btnAnterior.TabIndex = 2
-        Me.btnAnterior.Text = "<"
-        Me.btnAnterior.UseVisualStyleBackColor = True
+        Me.btnPaginaAnterior.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnPaginaAnterior.Image = Global.SistemaCinderella.My.Resources.Recursos.NavigatorPreviousItem
+        Me.btnPaginaAnterior.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnPaginaAnterior.Name = "btnPaginaAnterior"
+        Me.btnPaginaAnterior.Size = New System.Drawing.Size(23, 22)
+        Me.btnPaginaAnterior.Text = "ToolStripButton2"
         '
-        'btnInicio
+        'ToolStripSeparator1
         '
-        Me.btnInicio.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btnInicio.Location = New System.Drawing.Point(3, 3)
-        Me.btnInicio.Name = "btnInicio"
-        Me.btnInicio.Size = New System.Drawing.Size(65, 23)
-        Me.btnInicio.TabIndex = 1
-        Me.btnInicio.Text = "<<"
-        Me.btnInicio.UseVisualStyleBackColor = True
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
         '
-        'btnFin
+        'lbTotalPaginas
         '
-        Me.btnFin.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.btnFin.Location = New System.Drawing.Point(572, 3)
-        Me.btnFin.Name = "btnFin"
-        Me.btnFin.Size = New System.Drawing.Size(67, 23)
-        Me.btnFin.TabIndex = 0
-        Me.btnFin.Text = ">>"
-        Me.btnFin.UseVisualStyleBackColor = True
+        Me.lbTotalPaginas.Name = "lbTotalPaginas"
+        Me.lbTotalPaginas.Size = New System.Drawing.Size(54, 22)
+        Me.lbTotalPaginas.Text = "{0} de {1}"
         '
-        'lblPaginas
+        'ToolStripSeparator2
         '
-        Me.lblPaginas.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblPaginas.AutoSize = True
-        Me.lblPaginas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPaginas.Location = New System.Drawing.Point(145, 7)
-        Me.lblPaginas.Name = "lblPaginas"
-        Me.lblPaginas.Size = New System.Drawing.Size(350, 16)
-        Me.lblPaginas.TabIndex = 5
-        Me.lblPaginas.Text = "Página {0} de {1} "
-        Me.lblPaginas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
+        'btnPaginaSiguiente
+        '
+        Me.btnPaginaSiguiente.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnPaginaSiguiente.Image = Global.SistemaCinderella.My.Resources.Recursos.NavigatorNextItem
+        Me.btnPaginaSiguiente.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnPaginaSiguiente.Name = "btnPaginaSiguiente"
+        Me.btnPaginaSiguiente.Size = New System.Drawing.Size(23, 22)
+        Me.btnPaginaSiguiente.Text = "ToolStripButton4"
+        '
+        'btnPaginaFinal
+        '
+        Me.btnPaginaFinal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnPaginaFinal.Image = Global.SistemaCinderella.My.Resources.Recursos.NavigatorLastItem
+        Me.btnPaginaFinal.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnPaginaFinal.Name = "btnPaginaFinal"
+        Me.btnPaginaFinal.Size = New System.Drawing.Size(23, 22)
+        Me.btnPaginaFinal.Text = "ToolStripButton5"
         '
         'Paginado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.TableLayoutPanel11)
+        Me.Controls.Add(Me.ToolStrip1)
         Me.Name = "Paginado"
-        Me.Size = New System.Drawing.Size(642, 30)
-        Me.TableLayoutPanel11.ResumeLayout(False)
-        Me.TableLayoutPanel11.PerformLayout()
+        Me.Size = New System.Drawing.Size(209, 23)
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents TableLayoutPanel11 As TableLayoutPanel
-    Friend WithEvents btnProxima As Button
-    Friend WithEvents btnAnterior As Button
-    Friend WithEvents btnInicio As Button
-    Friend WithEvents btnFin As Button
-    Friend WithEvents lblPaginas As Label
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents btnPaginaInical As ToolStripButton
+    Friend WithEvents btnPaginaAnterior As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents lbTotalPaginas As ToolStripLabel
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents btnPaginaSiguiente As ToolStripButton
+    Friend WithEvents btnPaginaFinal As ToolStripButton
 End Class

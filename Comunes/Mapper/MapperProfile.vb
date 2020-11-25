@@ -55,7 +55,7 @@ Namespace Comunes
                  .ForMember(Function(des) des.PorcentajeBonificacion, Sub(opt) opt.MapFrom(Function(src) src.PorcentajeBonificacion)) _
                  .ForMember(Function(des) des.PorcentajePago, Sub(opt) opt.MapFrom(Function(src) src.PorcentajePago))
 
-            CreateMap(Of Model.Pago, PagoViewModel)() _
+            CreateMap(Of Model.VentaPago, PagoViewModel)() _
                  .ForMember(Function(des) des.CFT, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.CFT)) _
                  .ForMember(Function(des) des.Descripcion, Sub(opt) opt.MapFrom(Function(src) src.ToString())) _
                  .ForMember(Function(des) des.Descuento, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Descuento)) _

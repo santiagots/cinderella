@@ -7,6 +7,7 @@ Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Enum
 Imports Ventas.Data
 Imports Ventas.Data.Repository
+Imports Ventas.Data.Service
 
 Namespace Formularios.SucursalSaldo
     Public Class Servicio
@@ -60,17 +61,18 @@ Namespace Formularios.SucursalSaldo
         Friend Shared Async Function CargarSaldoAsync(idSucursal As Integer, fecha As DateTime) As Task(Of ValueObjects.SucursalSaldo)
             Dim ingreso As Ingreso = Await CargarIngresosAsync(idSucursal, fecha)
             Dim egreso As Egreso = Await CargarEgresosAsync(idSucursal, fecha)
+            Dim sucursalPagos As SucursalPagos = Await CargarSucursalPagosAsync(idSucursal, fecha)
 
             Dim totalCajaFuerte As Decimal = Await Task.Run(Function() NegMov.ConsultarTotalCajaFuerte(idSucursal, fecha.ToString("yyyy/MM/dd")))
 
-            Return New ValueObjects.SucursalSaldo(ingreso, egreso, totalCajaFuerte)
+            Return New ValueObjects.SucursalSaldo(ingreso, egreso, sucursalPagos, totalCajaFuerte)
         End Function
 
         Private Shared Async Function CargarIngresosAsync(idSucursal As Integer, fecha As DateTime) As Task(Of Ingreso)
             Dim recibidosSucursal As Double = Await Task.Run(Function() NegMov.ObtenerTotalMovEgreso(idSucursal, fecha.ToString("yyyy/MM/dd"), fecha.ToString("yyyy/MM/dd"), "Ingresos"))
             Dim egresoCajaFuerte As Double = Await Task.Run(Function() NegMov.ObtenerTotalMovCajaFuerte(idSucursal, fecha.ToString("yyyy/MM/dd"), fecha.ToString("yyyy/MM/dd"), 1))
             Dim aporteSocios As Double = Await Task.Run(Function() NegMov.TotalMovAporte(idSucursal, fecha.ToString("yyyy/MM/dd"), fecha.ToString("yyyy/MM/dd")))
-            Dim totalEfectivo As Decimal = Await Task.Run(Function() Venta.Servicio.ObtenerTotalVentas(idSucursal, fecha, Nothing, TipoPago.Efectivo, Nothing))
+            Dim totalEfectivo As Decimal = Await VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.Efectivo, Nothing)
             Dim cierreCajaAnterior As CierreCaja = Await Task.Run(Function() Servicio.ObtenerCierreCaja(idSucursal, fecha.AddDays(-1)))
 
             Dim cajaInicial As Decimal = If(cierreCajaAnterior = Nothing, 0, cierreCajaAnterior.Monto)
@@ -100,5 +102,31 @@ Namespace Formularios.SucursalSaldo
             Return New Egreso(devoluciones, mercaderia, sueldos + sueldosAdelantos, gastosEgresos + gastosMovimientos, impuestosEgresos + impuestosMovimientos, enviosSucursales, faltanteCaja, pendienteAutorizacion, ingresosCajaFuerte, retiroSocios)
         End Function
 
+        Private Shared Async Function CargarSucursalPagosAsync(idSucursal, fecha) As Task(Of SucursalPagos)
+            Dim tareas As Dictionary(Of String, Task(Of Decimal)) = New Dictionary(Of String, Task(Of Decimal))()
+
+            tareas.Add("efectivoVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.Efectivo, Nothing))
+            tareas.Add("chequesVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.Cheque, Nothing))
+            tareas.Add("creditoVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.TarjetaCrédito, Nothing))
+            tareas.Add("debitoVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.TarjetaDébito, Nothing))
+            tareas.Add("depositoVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.Deposito, Nothing))
+            tareas.Add("efectivoCtaCte", DocumentoDePagoService.ObtenerTotalAsync(idSucursal, fecha, TipoPago.Efectivo))
+            tareas.Add("chequesCtaCte", DocumentoDePagoService.ObtenerTotalAsync(idSucursal, fecha, TipoPago.Cheque))
+            tareas.Add("creditoCtaCte", DocumentoDePagoService.ObtenerTotalAsync(idSucursal, fecha, TipoPago.TarjetaCrédito))
+            tareas.Add("debitoCtaCte", DocumentoDePagoService.ObtenerTotalAsync(idSucursal, fecha, TipoPago.TarjetaDébito))
+            tareas.Add("depositoCtaCte", DocumentoDePagoService.ObtenerTotalAsync(idSucursal, fecha, TipoPago.Deposito))
+            tareas.Add("cuentaCorrienteVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, TipoPago.CuentaCorriente, Nothing))
+            tareas.Add("facturadoVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, True, Nothing, Nothing))
+            tareas.Add("sinFacturarVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, False, Nothing, Nothing))
+            tareas.Add("minoristaVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, Nothing, TipoCliente.Minorista))
+            tareas.Add("mayoristaVenta", VentaService.ObtenerTotalAsync(idSucursal, fecha, Nothing, Nothing, TipoCliente.Mayorista))
+
+            Await Task.WhenAll(tareas.Select(Function(x) x.Value).ToArray())
+
+            Dim totalFormaPagoEnVentas As TotalFormaPago = New TotalFormaPago(tareas("efectivoVenta").Result, tareas("chequesVenta").Result, tareas("creditoVenta").Result, tareas("debitoVenta").Result, tareas("depositoVenta").Result, tareas("cuentaCorrienteVenta").Result)
+            Dim totalFormaPagoEnCuentaCorriente As TotalFormaPago = New TotalFormaPago(tareas("efectivoCtaCte").Result, tareas("chequesCtaCte").Result, tareas("creditoCtaCte").Result, tareas("debitoCtaCte").Result, tareas("depositoCtaCte").Result, 0)
+
+            Return New SucursalPagos(totalFormaPagoEnVentas, totalFormaPagoEnCuentaCorriente, tareas("facturadoVenta").Result, tareas("sinFacturarVenta").Result, tareas("minoristaVenta").Result, tareas("mayoristaVenta").Result)
+        End Function
     End Class
 End Namespace

@@ -43,6 +43,8 @@ Partial Class frmResumenDiario
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.lbl_Total_Caja_Fuerte = New System.Windows.Forms.Label()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.lbl_DispoEfect = New System.Windows.Forms.Label()
         Me.GB_Monto = New System.Windows.Forms.GroupBox()
         Me.lbl_Saldo = New System.Windows.Forms.Label()
         Me.GB_Caja = New System.Windows.Forms.GroupBox()
@@ -54,8 +56,6 @@ Partial Class frmResumenDiario
         Me.Label7 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.lbl_DispoCheq = New System.Windows.Forms.Label()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.lbl_DispoEfect = New System.Windows.Forms.Label()
         Me.SaldosSucursal = New SistemaCinderella.SaldosSucursal()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -63,10 +63,10 @@ Partial Class frmResumenDiario
         Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.GB_Monto.SuspendLayout()
         Me.GB_Caja.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel6
@@ -290,7 +290,7 @@ Partial Class frmResumenDiario
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
         Me.TableLayoutPanel5.Size = New System.Drawing.Size(962, 100)
         Me.TableLayoutPanel5.TabIndex = 76
         '
@@ -316,6 +316,29 @@ Partial Class frmResumenDiario
         Me.lbl_Total_Caja_Fuerte.TabIndex = 0
         Me.lbl_Total_Caja_Fuerte.Text = "$ 100.000.-"
         Me.lbl_Total_Caja_Fuerte.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.lbl_DispoEfect)
+        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox4.Location = New System.Drawing.Point(827, 3)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(132, 94)
+        Me.GroupBox4.TabIndex = 68
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Disp. Efectivo"
+        '
+        'lbl_DispoEfect
+        '
+        Me.lbl_DispoEfect.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmResumenDiarioViewModelBindingSource, "DisponibleEfectivo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.lbl_DispoEfect.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbl_DispoEfect.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_DispoEfect.Location = New System.Drawing.Point(3, 16)
+        Me.lbl_DispoEfect.Name = "lbl_DispoEfect"
+        Me.lbl_DispoEfect.Size = New System.Drawing.Size(126, 75)
+        Me.lbl_DispoEfect.TabIndex = 0
+        Me.lbl_DispoEfect.Text = "$ 100.000.-"
+        Me.lbl_DispoEfect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GB_Monto
         '
@@ -451,29 +474,6 @@ Partial Class frmResumenDiario
         Me.lbl_DispoCheq.Text = "$ 100.000.-"
         Me.lbl_DispoCheq.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.lbl_DispoEfect)
-        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox4.Location = New System.Drawing.Point(827, 3)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(132, 94)
-        Me.GroupBox4.TabIndex = 68
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Disp. Efectivo"
-        '
-        'lbl_DispoEfect
-        '
-        Me.lbl_DispoEfect.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmResumenDiarioViewModelBindingSource, "DisponibleEfectivo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
-        Me.lbl_DispoEfect.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lbl_DispoEfect.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_DispoEfect.Location = New System.Drawing.Point(3, 16)
-        Me.lbl_DispoEfect.Name = "lbl_DispoEfect"
-        Me.lbl_DispoEfect.Size = New System.Drawing.Size(126, 75)
-        Me.lbl_DispoEfect.TabIndex = 0
-        Me.lbl_DispoEfect.Text = "$ 100.000.-"
-        Me.lbl_DispoEfect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'SaldosSucursal
         '
         Me.SaldosSucursal.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -503,11 +503,11 @@ Partial Class frmResumenDiario
         Me.GroupBox2.PerformLayout()
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
         Me.GB_Monto.ResumeLayout(False)
         Me.GB_Caja.ResumeLayout(False)
         Me.GB_Caja.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

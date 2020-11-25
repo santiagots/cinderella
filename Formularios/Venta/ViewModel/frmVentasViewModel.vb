@@ -14,6 +14,9 @@ Imports SistemaCinderella.Formularios.Reserva
 Imports Common.Core.Model
 Imports SistemaCinderella.Formularios.Facturacion
 Imports SistemaCinderella.Comunes
+Imports Common.Data.Service
+Imports Ventas.Data.Service
+Imports Ventas.Core.Model.CuentaCorrienteAggregate
 
 Namespace Formularios.Venta
     Public Class frmVentasViewModel
@@ -33,6 +36,7 @@ Namespace Formularios.Venta
         Private FinalizarVentaEvent As FinalizarDelegate
         Private FinalizarNotaPedidoEvent As FinalizarDelegateAsync
         Private VentaModel As Model.Venta
+        Private ClienteMayoristaModel As Model.Venta
         Private SucursalModel As ModelBase.Sucursal
         Private ReservaModel As Model.Reserva
         Private NotaPedidoModel As NotaPedido
@@ -70,9 +74,17 @@ Namespace Formularios.Venta
         End Property
         Public ReadOnly Property Vendedores As BindingList(Of ModelBase.Empleado)
 
-        Public Property IdClienteMayorista As Integer
+        Public ReadOnly Property IdClienteMayorista As Integer
+            Get
+                Return If(VentaModel.ClienteMayorista Is Nothing, 0, VentaModel.ClienteMayorista.Id)
+            End Get
+        End Property
 
-        Public Property NombreClienteMayorista As String
+        Public ReadOnly Property NombreClienteMayorista As String
+            Get
+                Return VentaModel.ClienteMayorista?.RazonSocial
+            End Get
+        End Property
 
         Public Property PorcentajeFacturacion As Decimal
 
@@ -82,8 +94,8 @@ Namespace Formularios.Venta
 
         Public Property ListaPrecioSeleccionado As Integer
 
-        Private _ListaPrecio As BindingList(Of ListaPrecio)
-        Public ReadOnly Property ListaPrecio As BindingList(Of ListaPrecio)
+        Private _ListaPrecio As BindingList(Of Common.Core.Model.ListaPrecio)
+        Public ReadOnly Property ListaPrecio As BindingList(Of Common.Core.Model.ListaPrecio)
             Get
                 Return _ListaPrecio
             End Get
@@ -241,7 +253,7 @@ Namespace Formularios.Venta
             CargarDatosBasicosTransaccion(ReservaModel.VentaReserva)
             CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of ModelBase.TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
 
-            For Each pago As Pago In reserva.VentaReserva.Pagos
+            For Each pago As VentaPago In reserva.VentaReserva.Pagos
                 VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Monto, 0, 0, TipoPago.Bonificacion, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
             Next
 
@@ -299,11 +311,9 @@ Namespace Formularios.Venta
             EncargadoSeleccionado = If(venta.IdEncargado > 0, venta.Encargado, Encargados.First())
             VendedoresSeleccionado = venta.Vendedor
             If (venta.TipoCliente = Enums.TipoCliente.Mayorista) Then
-                IdClienteMayorista = venta.IdClienteMayorista
-                NombreClienteMayorista = venta.ClienteMayorista.RazonSocial
                 ListaPrecioSeleccionado = IdListaPrecioMayorista
 
-                VentaModel.ActualizarClienteMayorista(IdClienteMayorista)
+                VentaModel.AgregarClienteMayorista(venta.ClienteMayorista)
             Else
                 ListaPrecioSeleccionado = IdListaPrecioMinorista
             End If
@@ -311,13 +321,14 @@ Namespace Formularios.Venta
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMayorista()
-            CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.Cheque, Enums.TipoPago.Deposito})
+
+            CargarFormaPago(New List(Of TipoPago)(TipoPagoService.Obtener(Enums.TipoCliente.Mayorista)))
             VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
         End Sub
 
         Friend Sub ConfigurarVentaParaClienteMinorista()
-            CargarFormaPago(New List(Of Enums.TipoPago)() From {Enums.TipoPago.Efectivo, Enums.TipoPago.TarjetaCrédito, Enums.TipoPago.TarjetaDébito})
+            CargarFormaPago(New List(Of TipoPago)(TipoPagoService.Obtener(Enums.TipoCliente.Minorista)))
             VentaModel.ModificarTipoCliente(TipoClienteSeleccionado)
             CalcularPendientePago()
             QuitarClienteMayorista()
@@ -330,7 +341,7 @@ Namespace Formularios.Venta
             Dim frmReservaViewModel As frmReservaViewModel = New frmReservaViewModel(ventaDetalleViewModel)
 
             If (TipoClienteSeleccionado = Enums.TipoCliente.Mayorista) Then
-                Dim clienteMayorista As ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(IdClienteMayorista))
+                Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(IdClienteMayorista))
                 frmReservaViewModel.ReservaDetalle.Nombre = clienteMayorista.RazonSocial
                 frmReservaViewModel.ReservaDetalle.Apellido = " "
                 frmReservaViewModel.ReservaDetalle.Telefono = clienteMayorista?.DomicilioFacturacion?.Telefono
@@ -401,14 +412,15 @@ Namespace Formularios.Venta
         End Function
 
         Friend Async Function GuardarAsync() As Task
-            'registrar cheque
-            Dim taskAgregarComisiones As Task = AgregarComisiones()
-            Dim taskActualizarStock As Task = ActualizarStock()
-            Await Task.WhenAll(taskAgregarComisiones, taskActualizarStock)
-
             Dim codigoVentaSucursal As String = SucursalModel.CodigoVenta
             Dim cantidadVentas As Integer = Await Task.Run(Function() Servicio.CantidadVentas(IdSucursal))
-            VentaModel.GenerarNumeroVenta(cantidadVentas + 1, codigoVentaSucursal)
+            VentaModel.GenerarNumero(cantidadVentas + 1, codigoVentaSucursal)
+
+            Dim tasks As List(Of Task) = New List(Of Task)()
+            tasks.Add(AgregarComisiones())
+            tasks.Add(ActualizarStock())
+            tasks.Add(RegistrarMovimiento())
+            Await Task.WhenAll(tasks)
 
             Await Task.Run(Sub() Servicio.GuardarVenta(VentaModel))
 
@@ -594,14 +606,12 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.TotalPago))
         End Sub
 
-        Friend Sub ClienteMayoristaChange(idClienteMayorista As Integer, nombreClienteMayorista As String, porcentajeBonificacion As Decimal)
-            Me.IdClienteMayorista = idClienteMayorista
-            Me.NombreClienteMayorista = nombreClienteMayorista
-            Me.PorcentajeBonificacion = porcentajeBonificacion
+        Friend Sub ClienteMayoristaChange(clienteMayorista As ClienteMayorista)
+            Me.PorcentajeBonificacion = clienteMayorista.PorcentajeBonificacion
+            VentaModel.AgregarClienteMayorista(clienteMayorista)
+
             NotifyPropertyChanged(NameOf(Me.IdClienteMayorista))
             NotifyPropertyChanged(NameOf(Me.NombreClienteMayorista))
-
-            VentaModel.ActualizarClienteMayorista(idClienteMayorista)
         End Sub
 
         Friend Sub PorcentajeFacturacionChange(porcentajeFacturacion As Decimal)
@@ -680,8 +690,8 @@ Namespace Formularios.Venta
 
 
         Private Async Function CargarEmpleadosAsync() As Task
-            Dim encargados As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Encargado, IdSucursal))
-            Dim vendedor As List(Of ModelBase.Empleado) = Await Task.Run(Function() Servicio.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal))
+            Dim encargados As List(Of ModelBase.Empleado) = Await EmpleadoService.ObtenerEmpleados(Enums.TipoEmpleado.Encargado, IdSucursal)
+            Dim vendedor As List(Of ModelBase.Empleado) = Await EmpleadoService.ObtenerEmpleados(Enums.TipoEmpleado.Vendedor, IdSucursal)
             vendedor.AddRange(encargados)
             _Encargados = New BindingList(Of ModelBase.Empleado)(encargados)
             EncargadoSeleccionado = _Encargados.FirstOrDefault()
@@ -696,12 +706,12 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function CargarSucursalAsync() As Task
-            SucursalModel = Await Task.Run(Function() Servicio.ObtenerSucursal(IdSucursal))
+            SucursalModel = Await SucursalService.Obtener(IdSucursal)
         End Function
 
         Private Async Function CargarTarjetasAsync() As Task
-            Dim tarjetas As IList(Of Tarjeta) = Await Task.Run(Function() Servicio.ObtenerTarjetas())
-            Dim costoFinanciero As IList(Of CostoFinanciero) = Await Task.Run(Function() Servicio.ObtenerCuotas(tarjetas.FirstOrDefault()?.Id))
+            Dim tarjetas As IList(Of Tarjeta) = Await TarjetaService.ObtenerAsync()
+            Dim costoFinanciero As IList(Of CostoFinanciero) = Await CostoFinancieroService.ObtenerAsync(tarjetas.FirstOrDefault()?.Id)
 
             _Tarjeta = New BindingList(Of KeyValuePair(Of Tarjeta, String))(tarjetas.Select(Function(x) New KeyValuePair(Of Tarjeta, String)(x, x.Nombre)).ToList)
 
@@ -709,14 +719,20 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function CargarListaPrecioAsync() As Task
-            Dim listaPrecio As IList(Of ListaPrecio) = Await Task.Run(Function() Servicio.ObtenerListaPrecio())
+            Dim listaPrecio As IList(Of ListaPrecio) = Await ListaPrecioService.ObtenerAsync()
             _ListaPrecio = New BindingList(Of ListaPrecio)(listaPrecio)
 
             NotifyPropertyChanged(NameOf(Me.ListaPrecio))
         End Function
 
-        Private Sub CargarFormaPago(formasPagos As List(Of Enums.TipoPago))
-            _FormaPago = New BindingList(Of Enums.TipoPago)(formasPagos)
+        Private Sub CargarFormaPago(formasPagos As List(Of TipoPago))
+            _FormaPago = New BindingList(Of TipoPago)(formasPagos)
+
+            If (_FormaPago.Contains(TipoPago.CuentaCorriente) AndAlso Not VariablesGlobales.HayConexion) Then
+                _FormaPago.Remove(TipoPago.CuentaCorriente)
+                MessageBox.Show("No se dispone de conexión a Internet, la forma de pago CUENTA CORRIENTE no está disponible para su uso. En caso de ser necesaria vuelva a intentar cuando disponga de accesos a Internet.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+
             NotifyPropertyChanged(NameOf(Me.FormaPago))
         End Sub
 
@@ -738,7 +754,7 @@ Namespace Formularios.Venta
                 Return
             End If
 
-            Dim costoFinanciero As IList(Of CostoFinanciero) = Await Task.Run(Function() Servicio.ObtenerCuotas(banco.Id))
+            Dim costoFinanciero As IList(Of CostoFinanciero) = Await CostoFinancieroService.ObtenerAsync(banco.Id)
             _Cuota = New BindingList(Of KeyValuePair(Of CostoFinanciero, String))(costoFinanciero.Select(Function(x) New KeyValuePair(Of CostoFinanciero, String)(x, x.NumeroCuota)).ToList)
 
             NotifyPropertyChanged(NameOf(Me.Cuota))
@@ -770,7 +786,7 @@ Namespace Formularios.Venta
         End Function
 
         Private Sub AgregarCheque()
-            Dim cheques As List(Of Pago) = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
+            Dim cheques As List(Of VentaPago) = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
             If (cheques.Any()) Then
                 Dim frmChequeAltaMasiva As frmChequeAltaMasiva = New frmChequeAltaMasiva(cheques.Sum(Function(x) x.MontoPago.Total), IdClienteMayorista)
                 frmChequeAltaMasiva.ShowDialog()
@@ -813,6 +829,35 @@ Namespace Formularios.Venta
             Return Task.Run(Sub() Servicio.ActualizarStock(stocksVenta))
         End Function
 
+        Private Async Function RegistrarMovimiento() As Task
+            If (VentaModel.TipoCliente <> Enums.TipoCliente.Mayorista) Then
+                Return
+            End If
+
+            Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
+            Dim saldo As Decimal = If(VariablesGlobales.HayConexion, VentaModel.ClienteMayorista.MontoCuentaCorriente, 0)
+
+            Dim monto As Decimal = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
+
+            If (monto > 0) Then
+                Dim clienteMayorista As ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Remota, VentaModel.ClienteMayorista.Id)
+                clienteMayorista.DebitarSaldoCuentaCorriente(monto)
+                saldo = clienteMayorista.MontoCuentaCorriente
+                Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clienteMayorista)
+            End If
+
+            Dim movimiento As Movimiento = New Movimiento(VentaModel.IdSucursal,
+                                                          VentaModel.ClienteMayorista.Id,
+                                                          monto,
+                                                          saldo,
+                                                          TipoMovimientoCuentaCorriente.Venta,
+                                                          TipoAccionCuentaCorriente.Débito,
+                                                          VentaModel.Numero,
+                                                          VentaModel.Id)
+
+            Await MovimientoService.GuardarAsync(base, movimiento)
+        End Function
+
         Private Function ObtenerCambioEnProductosPorReserva() As List(Of KeyValuePair(Of String, Integer))
             Dim productos As List(Of KeyValuePair(Of String, Integer)) = New List(Of KeyValuePair(Of String, Integer))()
 
@@ -852,8 +897,6 @@ Namespace Formularios.Venta
             PorcentajeFacturacion = 1
             PorcentajeBonificacion = 0
             TipoClienteSeleccionado = tipoCliente
-            IdClienteMayorista = 0
-            NombreClienteMayorista = String.Empty
             FormaPagoSeleccionado = TipoPago.Efectivo
 
             _TipoCliente = New BindingList(Of Enums.TipoCliente)([Enum](Of Enums.TipoCliente).ToList())
@@ -868,8 +911,7 @@ Namespace Formularios.Venta
         End Sub
 
         Private Sub QuitarClienteMayorista()
-            IdClienteMayorista = 0
-            NombreClienteMayorista = String.Empty
+            VentaModel.QuitarClienteMayorista()
         End Sub
 
     End Class

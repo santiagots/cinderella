@@ -402,8 +402,8 @@ namespace Ventas.Data.Repository
             return total ?? 0;
         }
 
-        private IQueryable<Pago> InformeVentaFiltrarPagos(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta) =>
-            _context.Pago.Where(x => x.Venta.Anulado == false &&
+        private IQueryable<VentaPago> InformeVentaFiltrarPagos(IEnumerable<int> idSucursales, DateTime fechaDesde, DateTime fechaHasta) =>
+            _context.VentaPago.Where(x => x.Venta.Anulado == false &&
                                idSucursales.Contains(x.Venta.IdSucursal) &&
                                DbFunctions.TruncateTime(x.Venta.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
                                DbFunctions.TruncateTime(x.Venta.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
