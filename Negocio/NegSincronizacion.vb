@@ -16,39 +16,6 @@ Public Class NegSincronizacion
     Dim conexionRemoto As SqlConnection
     Dim encripta As New ClsEncriptacion
 
-
-    Public Function ProbarConectarLocal()
-        Dim estado As Boolean
-        estado = False
-        Try
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
-            miconexion = New SqlConnection
-            miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
-            miconexion.Open()
-            estado = True
-            miconexion.Dispose()
-        Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos local." & ex.Message)
-        End Try
-        Return estado
-    End Function
-
-    Public Function ProbarConectarRemoto()
-        Dim estado As Boolean
-        estado = False
-        Try
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
-            conexionRemoto = New SqlConnection
-            conexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
-            conexionRemoto.Open()
-            estado = True
-            conexionRemoto.Dispose()
-        Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.Message)
-        End Try
-        Return estado
-    End Function
-
     Public Function Sincronizar(ByVal Tabla As String) As Integer
         Dim estado As Integer = 0
 

@@ -165,6 +165,12 @@ Public Class frmSucursalesSaldo
                       End Function)
     End Sub
 
+    Private Sub SaldosSucursal_BtnSinFacturadoClick(sender As Object, e As EventArgs) Handles SaldosSucursal.BtnSinFacturadoClick
+        EjecutarAsync(Async Function() As Task
+                          Await frmSucursalesSaldoViewModel.MostrarTotalVentaSinFacturadoAsync()
+                      End Function)
+    End Sub
+
     Private Sub SaldosSucursal_BtnMayoristaClick(sender As Object, e As EventArgs) Handles SaldosSucursal.BtnMayoristaClick
         EjecutarAsync(Async Function() As Task
                           Await frmSucursalesSaldoViewModel.MostrarTotalVentaMayoristaAsync()
@@ -214,4 +220,6 @@ Public Class frmSucursalesSaldo
             MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Resumen Diario", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+
 End Class

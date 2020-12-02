@@ -1,5 +1,6 @@
 ﻿using Common.Core.Enum;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.CuentaCorrienteAggregate;
@@ -19,6 +20,18 @@ namespace Ventas.Data.Service
         {
             IDocumentoDePagoRepository documentoDePagoRepository = new DocumentoDePagoRepository(new VentaContext(tipoBase));
             return documentoDePagoRepository.GuardarAsync(documentoDePago);
+        }
+
+        public static Task<List<DocumentoDePago>> BuscarAsync(TipoBase tipoBase, int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago)
+        {
+            IDocumentoDePagoRepository documentoDePagoRepository = new DocumentoDePagoRepository(new VentaContext(tipoBase));
+            return documentoDePagoRepository.BuscarAsync(idSucursal, fechaDesde, fechaHasta, tipoPago);
+        }
+
+        public static Task<List<DocumentoDePago>> BuscarAsync(TipoBase tipoBase, int idSucursal, DateTime fecha, TipoPago? tipoPago)
+        {
+            IDocumentoDePagoRepository documentoDePagoRepository = new DocumentoDePagoRepository(new VentaContext(tipoBase));
+            return documentoDePagoRepository.BuscarAsync(idSucursal, fecha, fecha, tipoPago);
         }
 
         public static Task<int> CantidadAsync(TipoBase tipoBase, int idSucursal)

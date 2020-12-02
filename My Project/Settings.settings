@@ -166,13 +166,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=.\SQLExpress;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True</Value>
     </Setting>
-    <Setting Name="ConexionRemoto" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Iy89GDWEcf1GV7hEpCd5XEt0/ONcS73B3qkW50wonWRDCAbXpIhrvR6TEXIJBFNGYu/5QLG2wYvQd5/XgydTylaLBTvrc2oMEkvtz9Ml4TQ=&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Iy89GDWEcf1GV7hEpCd5XEt0/ONcS73B3qkW50wonWRDCAbXpIhrvR6TEXIJBFNGYu/5QLG2wYvQd5/XgydTylaLBTvrc2oMEkvtz9Ml4TQ=</Value>
+    <Setting Name="ConexionRemoto" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

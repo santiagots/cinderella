@@ -4,15 +4,15 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Configuration;
 using Common.Data;
 using Common.Core.Helper;
+using Common.Core.Enum;
 
 namespace Producto.Data
 {
     public class ProductoContext : CommonContext
     {
         public ProductoContext()
-        : base()
+        : base(TipoBase.Remota)
         {
-            this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
         }
 
         public DbSet<Model.Producto> Producto { get; set; }

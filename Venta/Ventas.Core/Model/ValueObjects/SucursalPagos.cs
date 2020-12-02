@@ -19,6 +19,8 @@
             MayoristaVenta = mayoristaVenta;
         }
 
+        public decimal VentaTotal => TotalFormaPagoEnVentas.Total;
+        public decimal CuentaCorrienteTotal => TotalFormaPagoEnCuentaCorriente.Total;
         public decimal Efectivo => TotalFormaPagoEnVentas.Efectivo + TotalFormaPagoEnCuentaCorriente.Efectivo;
         public decimal Cheque => TotalFormaPagoEnVentas.Cheque + TotalFormaPagoEnCuentaCorriente.Cheque;
         public decimal Deposito => TotalFormaPagoEnVentas.Deposito + TotalFormaPagoEnCuentaCorriente.Deposito;

@@ -4,17 +4,20 @@ Imports System.Threading
 Imports System.Reflection
 
 Public Class Conexion
+
+    Public Shared STRING_CONEXION_BASE_REMOTA As String
+    Public Shared STRING_CONEXION_BASE_LOCAL As String = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
+
     Private CadenaConexion As String
     Dim miconexion As SqlConnection
     Dim miconexionRemoto As SqlConnection
-    Dim encripta As New EncriptacionHelper
     Dim com As New SqlCommand
     Dim da As New SqlDataAdapter
     Dim ds As DataSet
 
     Public Function ConectarLocal()
         Try
-            CadenaConexion = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
+            CadenaConexion = STRING_CONEXION_BASE_LOCAL
             miconexion = New SqlConnection
             miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
@@ -31,9 +34,9 @@ Public Class Conexion
 
     Public Function ConectarRemoto()
         Try
-            CadenaConexion = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+            CadenaConexion = STRING_CONEXION_BASE_REMOTA
             miconexionRemoto = New SqlConnection
-            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
+            miconexionRemoto.ConnectionString = EncriptacionHelper.DesencriptarMD5(CadenaConexion)
             miconexionRemoto.Open()
         Catch ex As Exception
             Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.ToString())
@@ -41,15 +44,15 @@ Public Class Conexion
         Return miconexionRemoto
     End Function
 
-    Public Function EstaDisponible(stringConexion As String) As Boolean
+    Public Shared Function EstaDisponible(stringConexion As String, encriptado As Boolean) As Boolean
         Try
-            miconexionRemoto = New SqlConnection
-            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(stringConexion)
+            Dim miconexionRemoto As SqlConnection = New SqlConnection()
+            miconexionRemoto.ConnectionString = If(encriptado, EncriptacionHelper.DesencriptarMD5(stringConexion), stringConexion)
             miconexionRemoto.Open()
             miconexionRemoto.Close()
             Return True
         Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.ToString())
+            Return False
         End Try
     End Function
 
@@ -95,23 +98,4 @@ Public Class Conexion
         Return Int64.Parse(String.Format("{0}{1}", idSucursal.ToString(), DateTime.Now.ToString("yyyMMddhhmmssfff")))
     End Function
 
-    Public Sub GuardarStringDeConexion(nombre As String, stringConexion As String)
-        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
-        Dim connectionString = config.ConnectionStrings.ConnectionStrings(nombre)
-        'config.ConnectionStrings.SectionInformation.AllowExeDefinition = ConfigurationAllowExeDefinition.MachineToLocalUser
-
-        If connectionString Is Nothing Then
-            config.ConnectionStrings.ConnectionStrings.Add(New ConnectionStringSettings With {
-                .Name = nombre,
-                .ConnectionString = stringConexion,
-                .ProviderName = "System.Data.SqlClient"
-            })
-            config.Save(ConfigurationSaveMode.Modified)
-        Else
-            connectionString.ConnectionString = stringConexion
-        End If
-
-        config.Save(ConfigurationSaveMode.Modified)
-        ConfigurationManager.RefreshSection("connectionStrings")
-    End Sub
 End Class

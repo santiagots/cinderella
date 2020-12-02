@@ -2,12 +2,13 @@
 Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports SistemaCinderella.Comunes
-Imports Model = Ventas.Core.Model.ValueObjects
 Imports SistemaCinderella.Formularios.MovimientoDetalle
-Imports Ventas.Core.Enum
-Imports Ventas.Core.Model.VentaAggregate
-Imports Ventas.Data.Service
 Imports Ventas.Core.Model.ValueObjects
+Imports Ventas.Data.Service
+Imports Model = Ventas.Core.Model.ValueObjects
+Imports ventaModel = Ventas.Core.Model.VentaAggregate
+Imports ctaCteModel = Ventas.Core.Model.CuentaCorrienteAggregate
+Imports AutoMapper
 
 Namespace Formularios.SucursalSaldo
 
@@ -40,7 +41,7 @@ Namespace Formularios.SucursalSaldo
         End Sub
 
         Public Async Function CargarSaldoAsync() As Task
-            Dim Saldo As Model.SucursalSaldo = Await Task.Run(Function() Servicio.CargarSaldoAsync(IdSucursal, FechaHasta))
+            Dim Saldo As Model.SucursalSaldo = Await Task.Run(Function() Servicio.CargarSaldoAsync(IdSucursal, FechaDesde, FechaHasta))
 
             CargarResumenVentaAsync(Saldo.SucursalPagos)
             CargarIngresos(Saldo.Ingreso)
@@ -90,6 +91,17 @@ Namespace Formularios.SucursalSaldo
             MostrarMovimiento(titulo, pendienteAutorizacion)
         End Function
 
+        Friend Async Function MostrarTotalVentaMovimientoAsync(titulo As String, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Task
+            Dim ventas As List(Of ventaModel.Venta) = Await VentaService.BuscarAsync(IdSucursal, FechaDesde, FechaHasta, facturado, tipoPago, tipoCliente)
+            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, FechaDesde, FechaHasta, tipoPago)
+
+            Dim ventasMovimiento As List(Of MovimientoVenta) = New List(Of MovimientoVenta)()
+            ventasMovimiento.AddRange(Mapper.Map(Of List(Of MovimientoVenta))(ventas))
+            ventasMovimiento.AddRange(Mapper.Map(Of List(Of MovimientoVenta))(documentosPago))
+
+            MostrarMovimiento(titulo, ventasMovimiento)
+        End Function
+
         Public Async Function MostrarEfectivoEgresosAsyn() As Task
             Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoEgreso) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerEgresos(IdSucursal, FechaDesde, FechaHasta, "Egresos"))
             Dim titulo As String = $"Egresos registrados entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
@@ -97,57 +109,43 @@ Namespace Formularios.SucursalSaldo
         End Function
 
         Friend Async Function MostrarTotalVentaAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, Nothing))
-            Dim titulo As String = $"Ventas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaEfectivoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Efectivo, Nothing))
-            Dim titulo As String = $"Ventas en efectivo registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en efectivo registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.Efectivo, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaChequeAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Cheque, Nothing))
-            Dim titulo As String = $"Ventas en cheque registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en cheque registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.Cheque, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaDepositoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.Deposito, Nothing))
-            Dim titulo As String = $"Ventas en deposito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en deposito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.Deposito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaCreditoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaCrédito, Nothing))
-            Dim titulo As String = $"Ventas en tarjeta crédito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta crédito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.TarjetaCrédito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaDebitoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, TipoPago.TarjetaDébito, Nothing))
-            Dim titulo As String = $"Ventas en tarjeta debito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta debito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.TarjetaDébito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaFacturadoAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, True, Nothing, Nothing))
-            Dim titulo As String = $"Ventas en tarjeta debito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas facturadas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", True, Nothing, Nothing)
+        End Function
+
+        Friend Async Function MostrarTotalVentaSinFacturadoAsync() As Task
+            Await MostrarTotalVentaMovimientoAsync($"Ventas no facturadas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", False, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaMayoristaAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, TipoCliente.Mayorista))
-            Dim titulo As String = $"Ventas mayoristas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas mayoristas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, Nothing, TipoCliente.Mayorista)
         End Function
 
         Friend Async Function MostrarTotalVentaMinoristaAsync() As Task
-            Dim efectivoEgresos As List(Of MovimientoDetalle.MovimientoVenta) = Await Task.Run(Function() MovimientoDetalle.Servicio.ObtenerVenta(IdSucursal, FechaDesde, FechaHasta, Nothing, Nothing, TipoCliente.Minorista))
-            Dim titulo As String = $"Ventas minorista registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }"
-            MostrarMovimiento(titulo, efectivoEgresos)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas minorista registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, Nothing, TipoCliente.Mayorista)
         End Function
 
         Friend Async Function MostrarFaltanteCajaAsync() As Task
@@ -199,6 +197,7 @@ Namespace Formularios.SucursalSaldo
         End Sub
 
         Private Sub CargarResumenVentaAsync(sucursalPagos As SucursalPagos)
+            Saldos.VentaTotal = sucursalPagos.VentaTotal
             Saldos.VentaEfectivo = sucursalPagos.Efectivo
             Saldos.VentaCheque = sucursalPagos.Cheque
             Saldos.VentaCredito = sucursalPagos.Credito

@@ -1,6 +1,5 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
-using Common.Core.Helper;
 using Common.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -33,6 +32,7 @@ namespace Ventas.Core.Model.CuentaCorrienteAggregate
             Fecha = DateTime.Now;
             FechaEdicion = DateTime.Now;
             PorcentajeFacturacion = 1;
+            TipoCliente = TipoCliente.Mayorista;
         }
 
         public void Anular(string motivo)

@@ -96,7 +96,7 @@ Partial Class SaldosSucursal
         Me.Btn_Retiro = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Btn_CtaCte = New System.Windows.Forms.Button()
         Me.txt_VentasCtaCte = New System.Windows.Forms.TextBox()
         Me.txt_VentasDebito = New System.Windows.Forms.TextBox()
         Me.txt_VentasCredito = New System.Windows.Forms.TextBox()
@@ -1071,7 +1071,7 @@ Partial Class SaldosSucursal
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.Button8, 2, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.Btn_CtaCte, 2, 4)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasCtaCte, 1, 4)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasDebito, 1, 3)
         Me.TableLayoutPanel3.Controls.Add(Me.txt_VentasCredito, 1, 2)
@@ -1119,19 +1119,19 @@ Partial Class SaldosSucursal
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(189, 261)
         Me.TableLayoutPanel3.TabIndex = 87
         '
-        'Button8
+        'Btn_CtaCte
         '
-        Me.Button8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button8.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button8.FlatAppearance.BorderSize = 0
-        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button8.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
-        Me.Button8.Location = New System.Drawing.Point(168, 108)
-        Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(18, 17)
-        Me.Button8.TabIndex = 107
-        Me.Button8.Tag = "Ver Detalle"
-        Me.Button8.UseVisualStyleBackColor = True
+        Me.Btn_CtaCte.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_CtaCte.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_CtaCte.FlatAppearance.BorderSize = 0
+        Me.Btn_CtaCte.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Btn_CtaCte.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
+        Me.Btn_CtaCte.Location = New System.Drawing.Point(168, 108)
+        Me.Btn_CtaCte.Name = "Btn_CtaCte"
+        Me.Btn_CtaCte.Size = New System.Drawing.Size(18, 17)
+        Me.Btn_CtaCte.TabIndex = 107
+        Me.Btn_CtaCte.Tag = "Ver Detalle"
+        Me.Btn_CtaCte.UseVisualStyleBackColor = True
         '
         'txt_VentasCtaCte
         '
@@ -1582,7 +1582,7 @@ Partial Class SaldosSucursal
     Friend WithEvents Btn_SinFacturado As Button
     Friend WithEvents txt_TotalSinFacturado As TextBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents Button8 As Button
+    Friend WithEvents Btn_CtaCte As Button
     Friend WithEvents txt_VentasCtaCte As TextBox
     Friend WithEvents Label9 As Label
 End Class

@@ -7,7 +7,7 @@ Public Class EncriptacionHelper
     Private Shared m_strInitVector As String = "@1B2c3D4e5F6g7H8"      '--- must be 16 bytes
     Private Shared m_intKeySize As Integer = 256                       '--- can be 192 or 128
 
-    Function EncriptarMD5(ByVal plainText As String) As String
+    Public Shared Function EncriptarMD5(ByVal plainText As String) As String
 
         Dim strReturn As String = String.Empty
         Dim p_strSaltValue As String = "P@SSW@RD@09"
@@ -103,7 +103,7 @@ Public Class EncriptacionHelper
 
     End Function
 
-    Public Function DesencriptarMD5(ByVal cipherText As String) As String
+    Public Shared Function DesencriptarMD5(ByVal cipherText As String) As String
 
         Dim strReturn As String = String.Empty
         Dim p_strSaltValue As String = "P@SSW@RD@09"

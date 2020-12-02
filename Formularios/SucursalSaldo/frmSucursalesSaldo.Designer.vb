@@ -362,7 +362,7 @@ Partial Class frmSucursalesSaldo
         Me.SaldosSucursal.Size = New System.Drawing.Size(962, 248)
         Me.SaldosSucursal.TabIndex = 0
         '
-        'frmSucursalesSaldo2
+        'frmSucursalesSaldo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -371,7 +371,7 @@ Partial Class frmSucursalesSaldo
         Me.Controls.Add(Me.SaldosSucursal)
         Me.Controls.Add(Me.GroupBox2)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "frmSucursalesSaldo2"
+        Me.Name = "frmSucursalesSaldo"
         Me.Text = "Estado de Cuenta de Sucursal"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()

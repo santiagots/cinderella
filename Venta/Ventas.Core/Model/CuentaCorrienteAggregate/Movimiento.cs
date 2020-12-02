@@ -1,8 +1,6 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Ventas.Core.Model.BaseAgreggate;
 
 namespace Ventas.Core.Model.CuentaCorrienteAggregate

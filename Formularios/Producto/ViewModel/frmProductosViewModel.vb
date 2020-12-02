@@ -21,7 +21,7 @@ Namespace Formularios.Producto
         Public Property FiltroPorCodigo As Boolean
         Public Property FiltroPorNombre As Boolean
         Public Property Filtro As String
-        Public Property Productos As BindingList(Of ProductoItemViewModel)
+        Public Property Productos As BindingList(Of ProductoItemViewModel) = New BindingList(Of ProductoItemViewModel)
         Public Property ListaProductos As BindingList(Of ProductoItemViewModel)()
         Public Property ProductoNuevo As ProductoDetalleViewModel
         Public Property ProductoDetalle As ProductoDetalleViewModel
@@ -30,9 +30,9 @@ Namespace Formularios.Producto
                 Return TotalProductos = 0
             End Get
         End Property
-        Public Property Categorias As BindingList(Of Categoria)
-        Public Property SubCategorias As BindingList(Of SubCategoria)
-        Public Property Provedores As BindingList(Of Model.Proveedor)
+        Public Property Categorias As BindingList(Of Categoria) = New BindingList(Of Categoria)
+        Public Property SubCategorias As BindingList(Of SubCategoria) = New BindingList(Of SubCategoria)
+        Public Property Provedores As BindingList(Of Model.Proveedor) = New BindingList(Of Model.Proveedor)
         Public Property ProductosOrdenadoDireccion As OrdenadoDireccion
         Public Property ProductosOrdenadoPor As String
 
@@ -189,6 +189,11 @@ Namespace Formularios.Producto
 
         Public Async Function LimpiarProductoNuevo() As Task
             ProductoNuevo = New ProductoDetalleViewModel()
+
+            If (Not Categorias.Any()) Then
+                Return
+            End If
+
             ProductoNuevo.Categoria = Categorias.First()
             Await CargarSubcategoriasAsync(ProductoNuevo.Categoria.Id)
             ProductoNuevo.Proveedor = Provedores.First()
@@ -197,7 +202,7 @@ Namespace Formularios.Producto
         Private Async Function CargarCategoriasAsync() As Task
             Dim categoriaModel As IList(Of Categoria) = Await Task.Run(Function() Servicio.ObtenerCategorias())
 
-            Me.ProductoNuevo.Categoria = categoriaModel.First()
+            Me.ProductoNuevo.Categoria = categoriaModel.FirstOrDefault()
             Me.Categorias = New BindingList(Of Categoria)(categoriaModel)
             NotifyPropertyChanged(NameOf(Me.Categorias))
         End Function
@@ -211,7 +216,7 @@ Namespace Formularios.Producto
         Private Async Function CargarProveedoresAsync() As Task
             Dim proveedoresModel As IList(Of Model.Proveedor) = Await Task.Run(Function() Servicio.ObtenerProveedores())
 
-            Me.ProductoNuevo.Proveedor = proveedoresModel.First()
+            Me.ProductoNuevo.Proveedor = proveedoresModel.FirstOrDefault()
             Me.Provedores = New BindingList(Of Model.Proveedor)(proveedoresModel)
             NotifyPropertyChanged(NameOf(Me.Provedores))
         End Function

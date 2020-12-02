@@ -1,26 +1,16 @@
-﻿Imports Common.Core.Enum
+﻿Imports Common.Core.Interfaces
+Imports Common.Data
+Imports Common.Data.Repository
+Imports Ventas.Core.Enum
 Imports Ventas.Core.Interfaces
-Imports Model = Ventas.Core.Model.VentaAggregate
+Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
-Imports Ventas.Core.Model.VentaAggregate
-Imports Common.Data
-Imports Common.Core.Interfaces
-Imports Ventas.Core.Enum
+Imports Model = Ventas.Core.Model.VentaAggregate
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
-Imports Common.Data.Repository
-Imports Ventas.Core.Model.NotaPedidoAgreggate
-Imports Common.Core.Model
-Imports Common.Core.Exceptions
 
 Namespace Formularios.Venta
     Public Class Servicio
-        Public Shared Function BuscarVenta(idSucursal As Integer, numeroFacturaDesde As Integer?, numeroFacturaHasta As Integer?, montoDesde As Decimal?, montoHasta As Decimal?, fechaDesde As DateTime?, fechaHasta As DateTime?, anulado As Boolean?, tiposFacturas As IEnumerable(Of TipoFactura), tiposPagos As IEnumerable(Of TipoPago), tiposClientes As IEnumerable(Of TipoCliente)) As IEnumerable(Of Model.Venta)
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Return ventaRepository.Buscar(idSucursal, numeroFacturaDesde, numeroFacturaHasta, montoDesde, montoHasta, fechaDesde, fechaHasta, anulado, tiposFacturas, tiposPagos, tiposClientes)
-            End Using
-        End Function
 
         Public Shared Sub ActualizarStock(stocks As List(Of ModelBase.Stock))
             Using context As VentaContext = New VentaContext()

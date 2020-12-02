@@ -149,22 +149,6 @@ Namespace Formularios.MovimientoDetalle
             End Using
         End Function
 
-        Friend Shared Function ObtenerVenta(idSucursal As Integer, fechaDesde As DateTime, fechaHasta As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As List(Of MovimientoVenta)
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Dim venta As List(Of ModelVenta.Venta) = ventaRepository.Buscar(idSucursal, fechaDesde, fechaHasta, facturado, tipoPago, tipoCliente)
-                Return Mapper.Map(Of List(Of MovimientoVenta))(venta)
-            End Using
-        End Function
-
-        Friend Shared Function ObtenerVenta(idSucursal As Integer, fecha As DateTime, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As List(Of MovimientoVenta)
-            Using context As VentaContext = New VentaContext()
-                Dim ventaRepository As IVentaRepository = New VentaRepository(context)
-                Dim venta As List(Of ModelVenta.Venta) = ventaRepository.Buscar(idSucursal, fecha, facturado, tipoPago, tipoCliente)
-                Return Mapper.Map(Of List(Of MovimientoVenta))(venta)
-            End Using
-        End Function
-
     End Class
 
 End Namespace

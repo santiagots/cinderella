@@ -8,6 +8,7 @@
         public decimal Debito { get; protected set; }
         public decimal Deposito { get; protected set; }
         public decimal CuentaCorriente { get; protected set; }
+        public decimal Total => Efectivo + Cheque + Credito + Debito + Deposito + CuentaCorriente;
 
         public TotalFormaPago(decimal efectivo, decimal cheque, decimal credito, decimal debito, decimal deposito, decimal cuentaCorriente)
         {

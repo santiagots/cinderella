@@ -105,7 +105,7 @@ Public Class frmConfiguracion
 
 
         'Comprobacion de internet.
-        txt_StringDeConexion.Text = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+        txt_StringDeConexion.Text = My.Settings.ConexionRemoto
         Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
         Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
         txt_IpPing.Text = My.Settings.IpPing
@@ -329,6 +329,11 @@ Public Class frmConfiguracion
                 Return
             End If
 
+            If (Not Conexion.EstaDisponible(txt_StringDeConexion.Text, True)) Then
+                MessageBox.Show("No se han podido modificar los valors debido a que hubo un error en la conexión a la base de datos. Por favor, verifique que el valor sea correcto y tener acceso a internet.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+
             Me.Cursor = Cursors.WaitCursor
 
             If Rb1.Checked Then
@@ -336,14 +341,12 @@ Public Class frmConfiguracion
             Else
                 My.Settings.Internet = False
             End If
+            My.Settings.ConexionRemoto = txt_StringDeConexion.Text
             My.Settings.TemporizadorInternet = (Cb_SegundosInternet.SelectedItem * 1000)
             My.Settings.TemporizadorSincronizacion = (Cb_HorasSincronizacion.SelectedItem * 3600000)
             My.Settings.IpPing = txt_IpPing.Text
             My.Settings.IpTimeOut = Cb_TimeOut.SelectedItem
             My.Settings.Save()
-
-            Dim conexion As New Datos.Conexion
-            conexion.GuardarStringDeConexion("SistemaCinderella.My.MySettings.ConexionRemoto", txt_StringDeConexion.Text)
 
             Negocio.Funciones.Ip = My.Settings.IpPing
             Negocio.Funciones.TimeOut = My.Settings.IpTimeOut
@@ -379,6 +382,7 @@ Public Class frmConfiguracion
         txt_IpPing.Enabled = Rb1.Checked
         Cb_TimeOut.Enabled = Rb1.Checked
         btnVerificarDNS.Enabled = Rb1.Checked
+        btnVerificarBase.Enabled = Rb1.Checked
     End Sub
 
     Private Sub txt_PuntoVentaControladora_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaControladora.KeyPress
@@ -688,9 +692,11 @@ Public Class frmConfiguracion
     End Sub
 
     Private Sub btnVerificarBase_Click(sender As Object, e As EventArgs) Handles btnVerificarBase.Click
-        Dim conexion As New Datos.Conexion
-        If (conexion.EstaDisponible(txt_StringDeConexion.Text)) Then
+        If (Conexion.EstaDisponible(txt_StringDeConexion.Text, True)) Then
             MessageBox.Show("Conexión a la base de datos exitosa.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBox.Show("Hubo un error en la conexión a la base de datos. Por favor, verifique que el valor sea correcto y tener acceso a internet.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
         End If
     End Sub
 End Class

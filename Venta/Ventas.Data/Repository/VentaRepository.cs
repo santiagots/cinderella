@@ -106,7 +106,7 @@ namespace Ventas.Data.Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<Venta> Buscar(int idSucursal, int? numeroFacturaDesde, int? numeroFacturaHasta, decimal? montoDesde, decimal? montoHasta, DateTime? fechaDesde, DateTime? fechaHasta, bool? anulado, IEnumerable<TipoFactura> tiposFacturas, IEnumerable<TipoPago> tiposPagos, IEnumerable<TipoCliente> tiposClientes)
+        public Task<List<Venta>> BuscarAsync(int idSucursal, int? numeroFacturaDesde, int? numeroFacturaHasta, decimal? montoDesde, decimal? montoHasta, DateTime? fechaDesde, DateTime? fechaHasta, bool? anulado, IEnumerable<TipoFactura> tiposFacturas, IEnumerable<TipoPago> tiposPagos, IEnumerable<TipoCliente> tiposClientes)
         {
             IQueryable<Venta> ventas = ObtenerContextoVentaReducido()
                                                         .Where(x => x.Sucursal.Id == idSucursal);
@@ -142,10 +142,10 @@ namespace Ventas.Data.Repository
                 ventas = ventas.Where(x => tiposClientes.Contains(x.TipoCliente));
 
 
-            return ventas.OrderByDescending(x => x.Fecha).ToList();
+            return ventas.OrderByDescending(x => x.Fecha).ToListAsync();
         }
 
-        public IEnumerable<Venta> Buscar(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        public Task<List<Venta>> BuscarAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
             IQueryable<Venta> ventas = ObtenerContextoVentaReducido()
                                                         .Where(x => x.Anulado == false &&
@@ -169,12 +169,12 @@ namespace Ventas.Data.Repository
             else
                 ventas = ventas.Where(x => x.Pagos.Any(y => y.TipoPago != TipoPago.Bonificacion));
 
-            return ventas.OrderByDescending(x => x.Fecha).ToList();
+            return ventas.OrderByDescending(x => x.Fecha).ToListAsync();
         }
 
-        public IEnumerable<Venta> Buscar(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
+        public Task<List<Venta>> BuscarAsync(int idSucursal, DateTime fecha, bool? facturado, TipoPago? tipoPago, TipoCliente? tipoCliente)
         {
-            return Buscar(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente);
+            return BuscarAsync(idSucursal, fecha, fecha, facturado, tipoPago, tipoCliente);
         }
 
         private IQueryable<Venta> ObtenerContextoVentaReducido()

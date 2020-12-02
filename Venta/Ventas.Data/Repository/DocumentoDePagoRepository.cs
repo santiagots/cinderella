@@ -1,6 +1,7 @@
 ﻿using Common.Core.Enum;
 using Common.Data.Repository;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,21 @@ namespace Ventas.Data.Repository
             return _context.SaveChangesAsync();
         }
 
+        public Task<List<DocumentoDePago>> BuscarAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago)
+        {
+            IQueryable<DocumentoDePago> documentoDePagos = Includes().Where(x => x.Anulado == false &&
+                                                                                x.IdSucursal == idSucursal &&
+                                                                                DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
+                                                                                DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
+
+            if (tipoPago.HasValue)
+                documentoDePagos = documentoDePagos.Where(x => x.Pagos.Any(y => y.TipoPago == tipoPago.Value));
+            else
+                documentoDePagos = documentoDePagos.Where(x => x.Pagos.Any(y => y.TipoPago != TipoPago.Bonificacion));
+
+            return documentoDePagos.OrderByDescending(x => x.Fecha).ToListAsync();
+        }
+
         public Task<int> CantidadAsync(int idSucursal)
         {
             return _context.DocumentoDePago.CountAsync(x => x.IdSucursal == idSucursal);
@@ -42,18 +58,7 @@ namespace Ventas.Data.Repository
 
         public Task<DocumentoDePago> ObtenerAsync(long idDocumentoDePago)
         {
-            return _context.DocumentoDePago
-                .Include(x => x.Sucursal)
-                .Include(x => x.Encargado)
-                .Include(x => x.ClienteMayorista.DomicilioEntrega.Distrito)
-                .Include(x => x.ClienteMayorista.DomicilioEntrega.Localidad)
-                .Include(x => x.ClienteMayorista.DomicilioEntrega.Provincia)
-                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Distrito)
-                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Localidad)
-                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Provincia)
-                .Include(x => x.Pagos)
-                .Include(x => x.Cheques.Select(y => y.BancoEmisor))
-                .FirstOrDefaultAsync(x => x.Id == idDocumentoDePago);
+            return Includes().FirstOrDefaultAsync(x => x.Id == idDocumentoDePago);
         }
 
         private decimal ObtenerTotal(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago)
@@ -82,6 +87,20 @@ namespace Ventas.Data.Repository
         public Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fecha, TipoPago? tipoPago)
         {
             return Task.Run(() => ObtenerTotal(idSucursal, fecha, fecha, tipoPago));
+        }
+
+        private IQueryable<DocumentoDePago> Includes() {
+            return _context.DocumentoDePago
+                .Include(x => x.Sucursal)
+                .Include(x => x.Encargado)
+                .Include(x => x.ClienteMayorista.DomicilioEntrega.Distrito)
+                .Include(x => x.ClienteMayorista.DomicilioEntrega.Localidad)
+                .Include(x => x.ClienteMayorista.DomicilioEntrega.Provincia)
+                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Distrito)
+                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Localidad)
+                .Include(x => x.ClienteMayorista.DomicilioFacturacion.Provincia)
+                .Include(x => x.Pagos)
+                .Include(x => x.Cheques.Select(y => y.BancoEmisor));
         }
     }
 }

@@ -681,15 +681,16 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Iy89GDWEcf1GV7hEpCd5XEt0/ONcS73B3qkW50wonWRDCAbXpIhrvR6TEXIJBFNGYu/5QLG2wYvQd5/Xg"& _ 
-            "ydTylaLBTvrc2oMEkvtz9Ml4TQ=")>  _
-        Public ReadOnly Property ConexionRemoto() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ConexionRemoto() As String
             Get
                 Return CType(Me("ConexionRemoto"),String)
             End Get
+            Set
+                Me("ConexionRemoto") = value
+            End Set
         End Property
     End Class
 End Namespace

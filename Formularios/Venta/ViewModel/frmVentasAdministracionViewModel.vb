@@ -278,7 +278,7 @@ Namespace Formularios.Venta
             Dim tiposCliente As List(Of TipoCliente) = TiposClientesSeleccionado?.Select(Function(x) x.Key.Value).ToList()
             Dim anulado As Boolean? = If(AnuladoSi <> AnuladoNo, AnuladoSi, CType(Nothing, Boolean?))
 
-            Dim ventasModel As List(Of Model.Venta) = Await Task.Run(Function() Servicio.BuscarVenta(IdSucursal, NumeroFacturaDesde, NumeroFacturaHasta, MontoDesde, MontoHasta, FechaDesde, FechaHasta, anulado, tiposFactura, tiposPago, tiposCliente))
+            Dim ventasModel As List(Of Model.Venta) = Await VentaService.BuscarAsync(IdSucursal, NumeroFacturaDesde, NumeroFacturaHasta, MontoDesde, MontoHasta, FechaDesde, FechaHasta, anulado, tiposFactura, tiposPago, tiposCliente)
             Ventas = New BindingList(Of VentaAdministracionItemViewModel)(Mapper.Map(Of List(Of VentaAdministracionItemViewModel))(ventasModel))
             NotifyPropertyChanged(NameOf(Me.Ventas))
         End Function

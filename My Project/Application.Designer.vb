@@ -49,11 +49,6 @@ Namespace My
                                   x.AddProfile(Of Servicios.MapperProfile)()
                               End Sub)
 
-            'Establesco si la aplicacion va a conectarse a internet para acceder a la base de datos
-            Negocio.Funciones.SistemaConConexioInternet = My.Settings.Internet
-            Negocio.Funciones.Ip = My.Settings.IpPing
-            Negocio.Funciones.TimeOut = My.Settings.IpTimeOut
-
             Try
                 Dim rutaBaseDatos As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DB")
                 Datos.ConfigurarBaseDatos.Iniciar(Assembly.GetExecutingAssembly.GetName().Name, rutaBaseDatos)

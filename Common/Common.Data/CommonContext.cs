@@ -1,4 +1,5 @@
 ﻿using Common.Core.Enum;
+using Common.Core.Exceptions;
 using Common.Core.Helper;
 using Common.Core.Model;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,6 +13,10 @@ namespace Common.Data
 {
     public class CommonContext : DbContext
     {
+        public static string STRING_CONEXION_BASE_LOCAL = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
+
+        public static string STRING_CONEXION_BASE_REMOTA;
+
         public CommonContext(TipoBase tipoBase = TipoBase.Local)
         : base()
         {
@@ -20,9 +25,13 @@ namespace Common.Data
 
             Database.Log = sql => Debug.Write(sql);
             if (tipoBase == TipoBase.Local)
-                this.Database.Connection.ConnectionString = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
+                this.Database.Connection.ConnectionString = STRING_CONEXION_BASE_LOCAL;
             else
-                this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.ConexionRemoto"].ConnectionString);
+            {
+                if (string.IsNullOrWhiteSpace(STRING_CONEXION_BASE_REMOTA))
+                    throw new NegocioException("Error al conectarse a la base de datos, la cadena de conexión está vacío. Verifique que se encuentra configurado");
+                this.Database.Connection.ConnectionString = Encriptar.DesencriptarMD5(STRING_CONEXION_BASE_REMOTA);
+            }
         }
 
         public DbSet<Banco> Banco { get; set; }

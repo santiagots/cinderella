@@ -10,55 +10,10 @@ Public Class Funciones
 
     Public Shared ActualizarEstadoConexionInternet As Action(Of Boolean)
 
-    'Public Shared Function HayConexionInternet() As Boolean
-    '    Dim Url As New System.Uri("http://www.google.com")
-    '    Dim peticion As System.Net.WebRequest
-    '    Dim respuesta As System.Net.WebResponse
-
-    '    If (Not sistemaConConexioInternet) Then
-    '        If (actualizarEstadoConexionInternet IsNot Nothing) Then
-    '            actualizarEstadoConexionInternet(False)
-    '        End If
-    '        Return False
-    '    End If
-    '    Dim sw As Stopwatch = New Stopwatch()
-    '    sw.Start()
-
-    '    Try
-    '        'Creamos la peticion
-    '        peticion = System.Net.WebRequest.Create(Url)
-
-    '        'POnemos un tiempo limite
-    '        peticion.Timeout = 5000
-
-    '        'ejecutamos la peticion
-    '        respuesta = peticion.GetResponse
-    '        respuesta.Close()
-    '        peticion = Nothing
-    '        Debug.WriteLine(String.Format("Test internet OK {0}", sw.ElapsedMilliseconds))
-    '        If (actualizarEstadoConexionInternet IsNot Nothing) Then
-    '            actualizarEstadoConexionInternet(True)
-    '        End If
-
-    '        Return True
-    '    Catch ex As Exception
-    '        'si ocurre un error, devolvemos error
-    '        Debug.WriteLine(String.Format("Test internet NO {0}", sw.ElapsedMilliseconds))
-    '        If (actualizarEstadoConexionInternet IsNot Nothing) Then
-    '            actualizarEstadoConexionInternet(False)
-    '        End If
-
-    '        peticion = Nothing
-    '        Return False
-    '    End Try
-    'End Function
-
     Public Shared Function HayConexionInternet() As Boolean
 #If DEBUG Then
-        Return True
+        Return Datos.Conexion.EstaDisponible(Datos.Conexion.STRING_CONEXION_BASE_REMOTA, True)
 #Else
-        Dim sw As Stopwatch = New Stopwatch()
-        sw.Start()
         'Si por configuracion se define que la aplicacion trabaja sin internet 
         If (Not SistemaConConexioInternet) Then
             'muestro el estado del MIDContenedor sin acceso a internet
@@ -69,12 +24,11 @@ Public Class Funciones
             Return False
         End If
 
-        If CheckForInternetConnection() Then
+        If CheckForInternetConnection() AndAlso Datos.Conexion.EstaDisponible(Datos.Conexion.STRING_CONEXION_BASE_REMOTA, True) Then
             'Actualizo el estado del MIDContenedor para mostrar que se tiene acceso a internet
             If (ActualizarEstadoConexionInternet IsNot Nothing) Then
                 ActualizarEstadoConexionInternet(True)
             End If
-            Debug.WriteLine(String.Format("conexion OK {0}", sw.ElapsedMilliseconds))
             Funciones.HayInternet = True
             Return True
         Else
@@ -82,7 +36,6 @@ Public Class Funciones
             If (ActualizarEstadoConexionInternet IsNot Nothing) Then
                 ActualizarEstadoConexionInternet(False)
             End If
-            Debug.WriteLine(String.Format("conexion NO {0}", sw.ElapsedMilliseconds))
             Funciones.HayInternet = False
             Return False
         End If
@@ -108,24 +61,5 @@ Public Class Funciones
             Return False
         End Try
     End Function
-
-    'Private Shared Function CheckForInternetConnection() As Boolean
-    '    Dim sw As Stopwatch = New Stopwatch()
-    '    sw.Start()
-    '    Try
-    '        Using client = New WebClient()
-    '            Using stream = client.OpenRead("http://www.google.com")
-    '                sw.Stop()
-    '                Debug.WriteLine("Hay internet " + sw.ElapsedMilliseconds.ToString())
-    '                Return True
-    '            End Using
-    '        End Using
-    '    Catch
-    '        sw.Stop()
-    '        Debug.WriteLine("NO Hay internet " + sw.ElapsedMilliseconds.ToString())
-    '        Return False
-    '    End Try
-    'End Function
-
 End Class
 

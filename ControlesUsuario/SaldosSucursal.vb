@@ -38,6 +38,8 @@
 
     Public Event BtnDepositoClick As EventHandler
 
+    Public Event BtnCtaCteClick As EventHandler
+
     Public Event BtnFacturadoClick As EventHandler
 
     Public Event BtnSinFacturadoClick As EventHandler
@@ -121,6 +123,10 @@
 
     Private Sub Btn_Deposito_Click(sender As Object, e As EventArgs) Handles Btn_Deposito.Click
         RaiseEvent BtnDepositoClick(Me, e)
+    End Sub
+
+    Private Sub Btn_CtaCte_Click(sender As Object, e As EventArgs) Handles Btn_CtaCte.Click
+        RaiseEvent BtnCtaCteClick(Me, e)
     End Sub
 
     Private Sub Btn_Facturado_Click(sender As Object, e As EventArgs) Handles Btn_Facturado.Click

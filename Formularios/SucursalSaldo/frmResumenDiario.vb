@@ -208,6 +208,12 @@ Public Class frmResumenDiario
                       End Function)
     End Sub
 
+    Private Sub SaldosSucursal_BtnCtaCteClick(sender As Object, e As EventArgs) Handles SaldosSucursal.BtnCtaCteClick
+        EjecutarAsync(Async Function() As Task
+                          Await frmResumenDiarioViewModel.MostrarTotalVentaCtaCteAsync()
+                      End Function)
+    End Sub
+
     Private Sub SaldosSucursal_BtnFacturadoClick(sender As Object, e As EventArgs) Handles SaldosSucursal.BtnFacturadoClick
         EjecutarAsync(Async Function() As Task
                           Await frmResumenDiarioViewModel.MostrarTotalVentaFacturadoAsync()

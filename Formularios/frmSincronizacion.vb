@@ -15,8 +15,8 @@ Public Class frmSincronizacion
         ' This call is required by the designer.
         InitializeComponent()
 
-        conexionRemota = negSincronizacion.ProbarConectarRemoto
-        conexionLocal = negSincronizacion.ProbarConectarLocal
+        conexionRemota = Conexion.EstaDisponible(Conexion.STRING_CONEXION_BASE_REMOTA, True)
+        conexionLocal = Conexion.EstaDisponible(Conexion.STRING_CONEXION_BASE_LOCAL, False)
 
     End Sub
 
