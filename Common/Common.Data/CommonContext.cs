@@ -35,6 +35,7 @@ namespace Common.Data
         }
 
         public DbSet<Banco> Banco { get; set; }
+        public DbSet<CuentaBancaria> CuentaBancaria { get; set; }
         public DbSet<ClienteMayorista> ClienteMayorista { get; set; }
         public DbSet<Feriado> Feriado { get; set; }
         public DbSet<Domicilio> Domicilio { get; set; }
@@ -73,6 +74,9 @@ namespace Common.Data
             modelBuilder.Entity<Banco>().ToTable("BANCOS");
             modelBuilder.Entity<Banco>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<Banco>().Property(t => t.Id).HasColumnName("BancoId");
+
+            modelBuilder.Entity<CuentaBancaria>().ToTable("NUEVA_CUENTABANCARIA");
+            modelBuilder.Entity<CuentaBancaria>().HasRequired(v => v.Banco).WithMany().HasForeignKey(x => x.IdBanco);
 
             modelBuilder.Entity<ClienteMayorista>().ToTable("CLIENTEMAYORISTA");
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.Id).HasColumnName("id_Cliente");

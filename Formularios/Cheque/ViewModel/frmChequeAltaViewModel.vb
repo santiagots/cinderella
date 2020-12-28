@@ -2,6 +2,7 @@
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Model
+Imports Common.Data.Service
 Imports Model = Ventas.Core.Model.ChequeAggregate
 
 Namespace Formularios.Cheque
@@ -25,7 +26,7 @@ Namespace Formularios.Cheque
         End Function
 
         Public Async Function CargarBancosAsync() As Task
-            Dim Bancos As List(Of Banco) = Await Task.Run(Function() Comunes.Servicio.ObtenerBancos())
+            Dim Bancos As List(Of Banco) = Await BancoService.ObtenerAsync(TipoBase.Local)
             Bancos.ForEach(Sub(x) ChequeDetalle.BancosEmisores.Add(New KeyValuePair(Of Integer?, String)(x.Id, x.Nombre)))
             ChequeDetalle.BancosEmisores.Insert(0, New KeyValuePair(Of Integer?, String)(Nothing, "Selecciones una opción"))
             NotifyPropertyChanged(NameOf(Me.ChequeDetalle))

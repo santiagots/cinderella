@@ -593,6 +593,12 @@ Public Class MDIContenedor
             CostoFinancieroToolStripMenuItem.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_CuentaBancaria_Administración)) Then
+            CuentasBancariasToolStripMenuItem.Visible = True
+        Else
+            CuentasBancariasToolStripMenuItem.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_Informes)) Then
             InformesToolStripMenuItem.Visible = True
         Else
@@ -1798,6 +1804,17 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmInformeVentas).MdiParent = Me
             Funciones.ControlInstancia(frmInformeVentas).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub CuentasBancariasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CuentasBancariasToolStripMenuItem.Click
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmCuentaBancarias).MdiParent = Me
+            Funciones.ControlInstancia(frmCuentaBancarias).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

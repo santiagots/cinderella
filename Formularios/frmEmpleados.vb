@@ -162,10 +162,10 @@ Public Class frmEmpleados
                 EEmpleados.FechaIngreso = FechaIngreso.Value
                 EEmpleados.FechaNacimiento = FechaNacimiento.Value
                 EEmpleados.id_Usuario = cb_Usuario.SelectedValue
+                EEmpleados.id_Sucursal = id_Sucursal
+
                 If VariablesGlobales.objUsuario.id_Perfil = 1 Then 'si es administrador
                     EEmpleados.Sucursales = CheckSucursales
-                Else
-                    EEmpleados.id_Sucursal = id_Sucursal
                 End If
 
                 If chk_Habilitado.Checked = True Then

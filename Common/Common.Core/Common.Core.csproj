@@ -85,8 +85,10 @@
     <Compile Include="Helper\IdGenerator.cs" />
     <Compile Include="Helper\Log.cs" />
     <Compile Include="Helper\Monto.cs" />
+    <Compile Include="Interfaces\IBancoRepository.cs" />
     <Compile Include="Interfaces\ICategoriaRepository.cs" />
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
+    <Compile Include="Interfaces\ICuentaBancariaRepository.cs" />
     <Compile Include="Interfaces\IDomicilioRepository.cs" />
     <Compile Include="Interfaces\IIVARepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Model\Banco.cs" />
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\ClienteMayorista.cs" />
+    <Compile Include="Model\CuentaBancaria.cs" />
     <Compile Include="Model\Distrito.cs" />
     <Compile Include="Model\Domicilio.cs" />
     <Compile Include="Model\Entity.cs" />

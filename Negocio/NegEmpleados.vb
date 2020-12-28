@@ -68,7 +68,7 @@ Public Class NegEmpleados
             cmd.CommandType = CommandType.StoredProcedure
             cmd.CommandText = "sp_Empleados_Alta"
             With cmd.Parameters
-                .AddWithValue("@id_Sucursal", 2)
+                .AddWithValue("@id_Sucursal", eempleados.id_Sucursal)
                 .AddWithValue("@id_TipoEmpleado", eempleados.id_TipoEmpleado)
                 .AddWithValue("@Nombre", eempleados.Nombre)
                 .AddWithValue("@Apellido", eempleados.Apellido)

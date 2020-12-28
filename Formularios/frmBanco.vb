@@ -31,8 +31,8 @@ Public Class frmBanco
             MessageBox.Show("Se ha encontrado un error al agregar el banco. Por favor, vuelva a intentar más tarde o contáctese con el Administrador ", "Administración de bancos", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
+        txtNombre.Clear()
         MessageBox.Show("El banco se agrego correctamente.", "Administración de bancos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
     End Sub
 
     Private Sub BtnActualizar_Click(sender As Object, e As EventArgs) Handles BtnActualizar.Click
@@ -76,5 +76,9 @@ Public Class frmBanco
 
     Private Sub txtNombre_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNombre.KeyPress
         chkHabilitado.Checked = True
+    End Sub
+
+    Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
+        Close()
     End Sub
 End Class

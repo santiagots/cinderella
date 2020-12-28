@@ -1,6 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
+Imports Common.Core.Enum
 Imports Common.Core.Model
+Imports Common.Data.Service
 Imports Ventas.Core.Model.VentaAggregate
 
 Public Class ChequeDetalle
@@ -30,7 +32,7 @@ Public Class ChequeDetalle
 
     Private Async Function CargarBancosAsync() As Task
         Dim BancosEmisores As BindingList(Of KeyValuePair(Of Integer?, String)) = New BindingList(Of KeyValuePair(Of Integer?, String))()
-        Dim Bancos As List(Of Banco) = Await Task.Run(Function() Comunes.Servicio.ObtenerBancos())
+        Dim Bancos As List(Of Banco) = Await BancoService.ObtenerAsync(TipoBase.Local)
         Bancos.ForEach(Sub(x) BancosEmisores.Add(New KeyValuePair(Of Integer?, String)(x.Id, x.Nombre)))
         BancosEmisores.Insert(0, New KeyValuePair(Of Integer?, String)(Nothing, "Selecciones una opción"))
         BancosEmisoresBindingSource.DataSource = BancosEmisores

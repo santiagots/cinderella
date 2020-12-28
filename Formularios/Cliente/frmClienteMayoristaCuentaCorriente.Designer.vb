@@ -42,16 +42,6 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.FDesde = New System.Windows.Forms.DateTimePicker()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.dgvMovimientos = New System.Windows.Forms.DataGridView()
-        Me.MovimientosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.btnImprimir = New System.Windows.Forms.Button()
-        Me.btnPagoDocumento = New System.Windows.Forms.Button()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.dgvNotasPedidos = New System.Windows.Forms.DataGridView()
-        Me.NotasPedidosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.PaginadoMovimientos = New SistemaCinderella.Paginado()
-        Me.btnBuscar = New System.Windows.Forms.Button()
-        Me.PaginadoNotaPedido = New SistemaCinderella.Paginado()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Sucursal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TipoMovimientoCuentaCorriente = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -61,11 +51,21 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.SaldoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Detalle = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Imprimir = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.MovimientosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.btnImprimir = New System.Windows.Forms.Button()
+        Me.btnPagoDocumento = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dgvNotasPedidos = New System.Windows.Forms.DataGridView()
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VendedorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MontoTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FechaDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EstadoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NotasPedidosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.PaginadoMovimientos = New SistemaCinderella.Paginado()
+        Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.PaginadoNotaPedido = New SistemaCinderella.Paginado()
         Me.GroupBox5.SuspendLayout()
         Me.TableLayoutPanel16.SuspendLayout()
         CType(Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -115,7 +115,7 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.TableLayoutPanel16.Name = "TableLayoutPanel16"
         Me.TableLayoutPanel16.RowCount = 1
         Me.TableLayoutPanel16.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31.0!))
-        Me.TableLayoutPanel16.Size = New System.Drawing.Size(641, 31)
+        Me.TableLayoutPanel16.Size = New System.Drawing.Size(749, 31)
         Me.TableLayoutPanel16.TabIndex = 0
         '
         'Label41
@@ -123,7 +123,7 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.Label41.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label41.AutoSize = True
         Me.Label41.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Label41.Location = New System.Drawing.Point(172, 7)
+        Me.Label41.Location = New System.Drawing.Point(198, 7)
         Me.Label41.Name = "Label41"
         Me.Label41.Size = New System.Drawing.Size(100, 16)
         Me.Label41.TabIndex = 75
@@ -145,7 +145,7 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.Label1.Location = New System.Drawing.Point(422, 7)
+        Me.Label1.Location = New System.Drawing.Point(489, 7)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(89, 16)
         Me.Label1.TabIndex = 99
@@ -159,7 +159,7 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.TextBox1.MaxLength = 255
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(63, 21)
+        Me.TextBox1.Size = New System.Drawing.Size(89, 21)
         Me.TextBox1.TabIndex = 0
         '
         'FrmClienteMayoristaCuentaCorrienteViewModelBindingSource
@@ -170,22 +170,22 @@ Partial Class frmClienteMayoristaCuentaCorriente
         '
         Me.TextBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "RazonSocial", True))
-        Me.TextBox2.Location = New System.Drawing.Point(282, 5)
+        Me.TextBox2.Location = New System.Drawing.Point(308, 5)
         Me.TextBox2.MaxLength = 255
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
-        Me.TextBox2.Size = New System.Drawing.Size(104, 21)
+        Me.TextBox2.Size = New System.Drawing.Size(145, 21)
         Me.TextBox2.TabIndex = 1
         '
         'TextBox3
         '
         Me.TextBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "Saldo", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "C2"))
-        Me.TextBox3.Location = New System.Drawing.Point(532, 5)
+        Me.TextBox3.Location = New System.Drawing.Point(599, 5)
         Me.TextBox3.MaxLength = 255
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.ReadOnly = True
-        Me.TextBox3.Size = New System.Drawing.Size(106, 21)
+        Me.TextBox3.Size = New System.Drawing.Size(147, 21)
         Me.TextBox3.TabIndex = 2
         '
         'GroupBox1
@@ -298,133 +298,6 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.dgvMovimientos.Size = New System.Drawing.Size(761, 310)
         Me.dgvMovimientos.TabIndex = 0
         '
-        'MovimientosBindingSource
-        '
-        Me.MovimientosBindingSource.DataMember = "Movimientos"
-        Me.MovimientosBindingSource.DataSource = Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource
-        '
-        'btnImprimir
-        '
-        Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnImprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnImprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
-        Me.btnImprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnImprimir.Location = New System.Drawing.Point(576, 469)
-        Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(100, 40)
-        Me.btnImprimir.TabIndex = 3
-        Me.btnImprimir.Text = "Imprimir"
-        Me.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnImprimir.UseVisualStyleBackColor = True
-        '
-        'btnPagoDocumento
-        '
-        Me.btnPagoDocumento.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnPagoDocumento.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnPagoDocumento.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPagoDocumento.Image = Global.SistemaCinderella.My.Resources.Recursos.Precios
-        Me.btnPagoDocumento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnPagoDocumento.Location = New System.Drawing.Point(433, 469)
-        Me.btnPagoDocumento.Name = "btnPagoDocumento"
-        Me.btnPagoDocumento.Size = New System.Drawing.Size(137, 40)
-        Me.btnPagoDocumento.TabIndex = 4
-        Me.btnPagoDocumento.Text = "Pago de Doc."
-        Me.btnPagoDocumento.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnPagoDocumento.UseVisualStyleBackColor = True
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.dgvNotasPedidos)
-        Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 515)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(770, 207)
-        Me.GroupBox2.TabIndex = 5
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Notas de Pedido"
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.BackColor = System.Drawing.SystemColors.AppWorkspace
-        Me.Label2.DataBindings.Add(New System.Windows.Forms.Binding("Visible", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "NotasPedidoSinResultados", True))
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(232, 72)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(307, 76)
-        Me.Label2.TabIndex = 92
-        Me.Label2.Text = "No se han encontrado notas de pedido."
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'dgvNotasPedidos
-        '
-        Me.dgvNotasPedidos.AllowUserToAddRows = False
-        Me.dgvNotasPedidos.AllowUserToDeleteRows = False
-        Me.dgvNotasPedidos.AllowUserToResizeColumns = False
-        Me.dgvNotasPedidos.AllowUserToResizeRows = False
-        Me.dgvNotasPedidos.AutoGenerateColumns = False
-        Me.dgvNotasPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvNotasPedidos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.VendedorDataGridViewTextBoxColumn, Me.MontoTotalDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn1, Me.EstadoDataGridViewTextBoxColumn})
-        Me.dgvNotasPedidos.DataSource = Me.NotasPedidosBindingSource
-        Me.dgvNotasPedidos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvNotasPedidos.Location = New System.Drawing.Point(3, 17)
-        Me.dgvNotasPedidos.Name = "dgvNotasPedidos"
-        Me.dgvNotasPedidos.ReadOnly = True
-        Me.dgvNotasPedidos.RowHeadersVisible = False
-        Me.dgvNotasPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvNotasPedidos.Size = New System.Drawing.Size(764, 187)
-        Me.dgvNotasPedidos.TabIndex = 0
-        '
-        'NotasPedidosBindingSource
-        '
-        Me.NotasPedidosBindingSource.DataMember = "NotasPedidos"
-        Me.NotasPedidosBindingSource.DataSource = Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource
-        '
-        'PaginadoMovimientos
-        '
-        Me.PaginadoMovimientos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PaginadoMovimientos.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "MovimientosTotalElementos", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.PaginadoMovimientos.Leyenda = "{0} de {1}"
-        Me.PaginadoMovimientos.Location = New System.Drawing.Point(12, 467)
-        Me.PaginadoMovimientos.Name = "PaginadoMovimientos"
-        Me.PaginadoMovimientos.PaginaActual = 1
-        Me.PaginadoMovimientos.Size = New System.Drawing.Size(209, 23)
-        Me.PaginadoMovimientos.TabIndex = 2
-        Me.PaginadoMovimientos.TotalElementos = 0
-        '
-        'btnBuscar
-        '
-        Me.btnBuscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnBuscar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnBuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnBuscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
-        Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnBuscar.Location = New System.Drawing.Point(682, 469)
-        Me.btnBuscar.Name = "btnBuscar"
-        Me.btnBuscar.Size = New System.Drawing.Size(100, 40)
-        Me.btnBuscar.TabIndex = 6
-        Me.btnBuscar.Text = "Buscar"
-        Me.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnBuscar.UseVisualStyleBackColor = True
-        '
-        'PaginadoNotaPedido
-        '
-        Me.PaginadoNotaPedido.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.PaginadoNotaPedido.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "NotasPedidosTotalElementos", True))
-        Me.PaginadoNotaPedido.Leyenda = "{0} de {1}"
-        Me.PaginadoNotaPedido.Location = New System.Drawing.Point(15, 725)
-        Me.PaginadoNotaPedido.Name = "PaginadoNotaPedido"
-        Me.PaginadoNotaPedido.PaginaActual = 1
-        Me.PaginadoNotaPedido.Size = New System.Drawing.Size(209, 23)
-        Me.PaginadoNotaPedido.TabIndex = 7
-        Me.PaginadoNotaPedido.TotalElementos = 0
-        '
         'FechaDataGridViewTextBoxColumn
         '
         Me.FechaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -517,6 +390,89 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.Imprimir.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Imprimir.Width = 5
         '
+        'MovimientosBindingSource
+        '
+        Me.MovimientosBindingSource.DataMember = "Movimientos"
+        Me.MovimientosBindingSource.DataSource = Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource
+        '
+        'btnImprimir
+        '
+        Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnImprimir.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnImprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnImprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
+        Me.btnImprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnImprimir.Location = New System.Drawing.Point(576, 469)
+        Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(100, 40)
+        Me.btnImprimir.TabIndex = 3
+        Me.btnImprimir.Text = "Imprimir"
+        Me.btnImprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnImprimir.UseVisualStyleBackColor = True
+        '
+        'btnPagoDocumento
+        '
+        Me.btnPagoDocumento.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnPagoDocumento.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnPagoDocumento.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPagoDocumento.Image = Global.SistemaCinderella.My.Resources.Recursos.Precios
+        Me.btnPagoDocumento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnPagoDocumento.Location = New System.Drawing.Point(433, 469)
+        Me.btnPagoDocumento.Name = "btnPagoDocumento"
+        Me.btnPagoDocumento.Size = New System.Drawing.Size(137, 40)
+        Me.btnPagoDocumento.TabIndex = 4
+        Me.btnPagoDocumento.Text = "Pago de Doc."
+        Me.btnPagoDocumento.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnPagoDocumento.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.Label2)
+        Me.GroupBox2.Controls.Add(Me.dgvNotasPedidos)
+        Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Location = New System.Drawing.Point(12, 515)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(770, 207)
+        Me.GroupBox2.TabIndex = 5
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Notas de Pedido"
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.Label2.DataBindings.Add(New System.Windows.Forms.Binding("Visible", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "NotasPedidoSinResultados", True))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(232, 72)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(307, 76)
+        Me.Label2.TabIndex = 92
+        Me.Label2.Text = "No se han encontrado notas de pedido."
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'dgvNotasPedidos
+        '
+        Me.dgvNotasPedidos.AllowUserToAddRows = False
+        Me.dgvNotasPedidos.AllowUserToDeleteRows = False
+        Me.dgvNotasPedidos.AllowUserToResizeColumns = False
+        Me.dgvNotasPedidos.AllowUserToResizeRows = False
+        Me.dgvNotasPedidos.AutoGenerateColumns = False
+        Me.dgvNotasPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvNotasPedidos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.VendedorDataGridViewTextBoxColumn, Me.MontoTotalDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn1, Me.EstadoDataGridViewTextBoxColumn})
+        Me.dgvNotasPedidos.DataSource = Me.NotasPedidosBindingSource
+        Me.dgvNotasPedidos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvNotasPedidos.Location = New System.Drawing.Point(3, 17)
+        Me.dgvNotasPedidos.Name = "dgvNotasPedidos"
+        Me.dgvNotasPedidos.ReadOnly = True
+        Me.dgvNotasPedidos.RowHeadersVisible = False
+        Me.dgvNotasPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvNotasPedidos.Size = New System.Drawing.Size(764, 187)
+        Me.dgvNotasPedidos.TabIndex = 0
+        '
         'NumeroDataGridViewTextBoxColumn
         '
         Me.NumeroDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -566,6 +522,50 @@ Partial Class frmClienteMayoristaCuentaCorriente
         Me.EstadoDataGridViewTextBoxColumn.ReadOnly = True
         Me.EstadoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         Me.EstadoDataGridViewTextBoxColumn.Width = 70
+        '
+        'NotasPedidosBindingSource
+        '
+        Me.NotasPedidosBindingSource.DataMember = "NotasPedidos"
+        Me.NotasPedidosBindingSource.DataSource = Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource
+        '
+        'PaginadoMovimientos
+        '
+        Me.PaginadoMovimientos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PaginadoMovimientos.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "MovimientosTotalElementos", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.PaginadoMovimientos.Leyenda = "{0} de {1}"
+        Me.PaginadoMovimientos.Location = New System.Drawing.Point(12, 467)
+        Me.PaginadoMovimientos.Name = "PaginadoMovimientos"
+        Me.PaginadoMovimientos.PaginaActual = 1
+        Me.PaginadoMovimientos.Size = New System.Drawing.Size(209, 23)
+        Me.PaginadoMovimientos.TabIndex = 2
+        Me.PaginadoMovimientos.TotalElementos = 0
+        '
+        'btnBuscar
+        '
+        Me.btnBuscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnBuscar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnBuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnBuscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnBuscar.Location = New System.Drawing.Point(682, 469)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(100, 40)
+        Me.btnBuscar.TabIndex = 6
+        Me.btnBuscar.Text = "Buscar"
+        Me.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnBuscar.UseVisualStyleBackColor = True
+        '
+        'PaginadoNotaPedido
+        '
+        Me.PaginadoNotaPedido.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.PaginadoNotaPedido.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.FrmClienteMayoristaCuentaCorrienteViewModelBindingSource, "NotasPedidosTotalElementos", True))
+        Me.PaginadoNotaPedido.Leyenda = "{0} de {1}"
+        Me.PaginadoNotaPedido.Location = New System.Drawing.Point(15, 725)
+        Me.PaginadoNotaPedido.Name = "PaginadoNotaPedido"
+        Me.PaginadoNotaPedido.PaginaActual = 1
+        Me.PaginadoNotaPedido.Size = New System.Drawing.Size(209, 23)
+        Me.PaginadoNotaPedido.TabIndex = 7
+        Me.PaginadoNotaPedido.TotalElementos = 0
         '
         'frmClienteMayoristaCuentaCorriente
         '

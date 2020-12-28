@@ -32,12 +32,12 @@ Partial Class frmBanco
         Me.BtnActualizar = New System.Windows.Forms.Button()
         Me.btnAgregar = New System.Windows.Forms.Button()
         Me.dgvBancos = New System.Windows.Forms.DataGridView()
-        Me.BancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Btn_Salir = New System.Windows.Forms.Button()
         Me.TarjetaId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BancoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Btn_Salir = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgvBancos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BancoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -140,6 +140,29 @@ Partial Class frmBanco
         Me.dgvBancos.Size = New System.Drawing.Size(318, 165)
         Me.dgvBancos.TabIndex = 3
         '
+        'TarjetaId
+        '
+        Me.TarjetaId.DataPropertyName = "BancoId"
+        Me.TarjetaId.HeaderText = "TarjetaId"
+        Me.TarjetaId.Name = "TarjetaId"
+        Me.TarjetaId.Visible = False
+        '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.FillWeight = 149.2386!
+        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'HabilitadoDataGridViewCheckBoxColumn
+        '
+        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.FillWeight = 50.76142!
+        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
+        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
+        '
         'BancoBindingSource
         '
         Me.BancoBindingSource.DataSource = GetType(Entidades.Tarjeta)
@@ -171,29 +194,6 @@ Partial Class frmBanco
         Me.Btn_Salir.Text = "Salir"
         Me.Btn_Salir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Salir.UseVisualStyleBackColor = True
-        '
-        'TarjetaId
-        '
-        Me.TarjetaId.DataPropertyName = "BancoId"
-        Me.TarjetaId.HeaderText = "TarjetaId"
-        Me.TarjetaId.Name = "TarjetaId"
-        Me.TarjetaId.Visible = False
-        '
-        'NombreDataGridViewTextBoxColumn
-        '
-        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.FillWeight = 149.2386!
-        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
-        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'HabilitadoDataGridViewCheckBoxColumn
-        '
-        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.FillWeight = 50.76142!
-        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
-        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
         '
         'frmBanco
         '

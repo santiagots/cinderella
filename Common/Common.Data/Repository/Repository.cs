@@ -48,6 +48,11 @@ namespace Common.Data.Repository
             return _dbSet.ToList();
         }
 
+        public Task<List<TEntity>> ListAsync()
+        {
+            return _dbSet.ToListAsync();
+        }
+
         public void Update(TEntity entity)
         {
             _dbSet.Attach(entity);

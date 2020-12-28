@@ -126,5 +126,6 @@
     Administración_Presupuesto_Administración_Visualizar = 617
     Administración_Presupuesto_Administración_Detalle_Anular = 618
     Administración_CostoFinanciero_Administración = 619
+    Administración_CuentaBancaria_Administración = 622
 
 End Enum

@@ -104,7 +104,9 @@ Partial Class frmClienteMayoristaDocumentoPago
         '
         'GB_Pagos
         '
-        Me.GB_Pagos.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.GB_Pagos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Pagos.Controls.Add(Me.TableLayoutPanel3)
         Me.GB_Pagos.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmClienteMayoristaCuentaCorrientePagoViewModelBindingSource, "HabilitarPagos", True))
         Me.GB_Pagos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

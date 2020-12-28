@@ -93,6 +93,7 @@ Partial Class MDIContenedor
         Me.PresupuestoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdministracionToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.CostoFinancieroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CuentasBancariasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PlanillasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.SucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -228,7 +229,7 @@ Partial Class MDIContenedor
         '
         'ToolsMenu
         '
-        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas, Me.PresupuestoToolStripMenuItem, Me.CostoFinancieroToolStripMenuItem})
+        Me.ToolsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_AromasMenu, Me.Btn_ColoresMenu, Me.Btn_ClientesMenu, Me.Btn_EmpleadosMenu, Me.Btn_EtiquetasMenu, Me.Btn_FeriadosMenu, Me.Btn_MaterialesMenu, Me.Btn_ProductosMenu, Me.Btn_ProveedoresMenu, Me.Btn_StockMenu, Me.Btn_SucursalesMenu, Me.Btn_VentasMenu, Me.Btn_Facturas, Me.Btn_DevolucionesMenu, Me.Btn_NotaCredito, Me.MovimientosToolStripMenuItem, Me.ChequesToolStripMenuItem, Me.NotaPedidoToolStripMenuItem, Me.Btn_Reservas, Me.PresupuestoToolStripMenuItem, Me.CostoFinancieroToolStripMenuItem, Me.CuentasBancariasToolStripMenuItem})
         Me.ToolsMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Menu
         Me.ToolsMenu.Name = "ToolsMenu"
         Me.ToolsMenu.Size = New System.Drawing.Size(116, 20)
@@ -678,6 +679,13 @@ Partial Class MDIContenedor
         Me.CostoFinancieroToolStripMenuItem.Name = "CostoFinancieroToolStripMenuItem"
         Me.CostoFinancieroToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CostoFinancieroToolStripMenuItem.Text = "Costo Financiero"
+        '
+        'CuentasBancariasToolStripMenuItem
+        '
+        Me.CuentasBancariasToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.banco
+        Me.CuentasBancariasToolStripMenuItem.Name = "CuentasBancariasToolStripMenuItem"
+        Me.CuentasBancariasToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CuentasBancariasToolStripMenuItem.Text = "Cuentas Bancarias"
         '
         'Btn_PlanillasMenu
         '
@@ -1458,4 +1466,5 @@ Partial Class MDIContenedor
     Friend WithEvents TemporizadorSoncronizacion As Timer
     Friend WithEvents InformesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VentasToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CuentasBancariasToolStripMenuItem As ToolStripMenuItem
 End Class

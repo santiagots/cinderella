@@ -7,6 +7,7 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Extension
 Imports Common.Core.Model
+Imports Common.Data.Service
 Imports NPOI.SS.UserModel
 Imports NPOI.XSSF.UserModel
 Imports OfficeOpenXml
@@ -155,7 +156,7 @@ Namespace Formularios.Cheque
         End Function
 
         Public Async Function CargarBancosAsync() As Task
-            Dim Bancos As List(Of Banco) = Await Task.Run(Function() Comunes.Servicio.ObtenerBancos())
+            Dim Bancos As List(Of Banco) = Await BancoService.ObtenerAsync(TipoBase.Local)
             Bancos.ForEach(Sub(x) BancosEmisores.Add(New KeyValuePair(Of Integer?, String)(x.Id, x.Nombre)))
             BancosEmisores.Insert(0, New KeyValuePair(Of Integer?, String)(Nothing, "Selecciones una opción"))
             NotifyPropertyChanged(NameOf(Me.BancosEmisores))

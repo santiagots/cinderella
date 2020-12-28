@@ -23,14 +23,9 @@ namespace Ventas.Core.Model.ValueObjects
             AporteSocios = aporteSocios;
         }
 
-        public decimal Total()
+        public decimal Total()  
         {
             return TotalEfectivoVentas + TotalEfectivoCuentaCorriente + SobranteCaja + CajaInicial + RecibidosSucursal + EgresosCajaFuerte + AporteSocios;
-        }
-
-        public decimal Disponible()
-        {
-            return TotalEfectivoVentas + SobranteCaja + CajaInicial + RecibidosSucursal + AporteSocios;
         }
 
         protected override bool EqualsCore(Ingreso other)

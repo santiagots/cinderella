@@ -120,6 +120,12 @@
   <data name="BorradoOk" xml:space="preserve">
     <value>Los datos se han borrado de forma correcta.</value>
   </data>
+  <data name="ComboOpcionSelecioneUnaOpcion" xml:space="preserve">
+    <value>Seleccione una opción</value>
+  </data>
+  <data name="ComboOpcionTodos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
   <data name="ErrorCamposRequeridos" xml:space="preserve">
     <value>Debe completar todos los campos requeridos.</value>
   </data>

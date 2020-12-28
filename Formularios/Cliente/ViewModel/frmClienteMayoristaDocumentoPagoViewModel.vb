@@ -136,8 +136,6 @@ Namespace Formularios.Cliente
 
         Public Async Function CargarEmpleadosAsync() As Task
             Dim encargados As List(Of Empleado) = Await EmpleadoService.ObtenerEmpleados(TipoEmpleado.Encargado, DocumentoDePagoModel.IdSucursal)
-            Dim vendedor As List(Of Empleado) = Await EmpleadoService.ObtenerEmpleados(TipoEmpleado.Vendedor, DocumentoDePagoModel.IdSucursal)
-            vendedor.AddRange(encargados)
             _Encargados = New BindingList(Of Empleado)(encargados)
             EncargadoSeleccionado = _Encargados.FirstOrDefault()
 

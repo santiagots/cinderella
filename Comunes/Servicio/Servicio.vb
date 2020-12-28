@@ -31,13 +31,6 @@ Namespace Comunes
             End Using
         End Sub
 
-        Friend Shared Function ObtenerBancos() As IList(Of Banco)
-            Using context As CommonContext = New CommonContext()
-                Dim repository As Repository(Of Banco) = New Repository(Of Banco)(context)
-                Return repository.List()
-            End Using
-        End Function
-
         Friend Shared Function ObtenerClienteMayorista(id As Integer) As Task(Of ClienteMayorista)
             Using context As CommonContext = New CommonContext()
                 Dim clienteMayoristaRepository As IClienteMayoristaRepository = New ClienteMayoristaRepository(context)

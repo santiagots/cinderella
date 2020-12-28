@@ -70,6 +70,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Seleccione una opción.
+        '''</summary>
+        Public ReadOnly Property ComboOpcionSelecioneUnaOpcion() As String
+            Get
+                Return ResourceManager.GetString("ComboOpcionSelecioneUnaOpcion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Todos.
+        '''</summary>
+        Public ReadOnly Property ComboOpcionTodos() As String
+            Get
+                Return ResourceManager.GetString("ComboOpcionTodos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Debe completar todos los campos requeridos..
         '''</summary>
         Public ReadOnly Property ErrorCamposRequeridos() As String
