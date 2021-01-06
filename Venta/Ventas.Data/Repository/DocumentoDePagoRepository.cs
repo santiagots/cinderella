@@ -31,6 +31,7 @@ namespace Ventas.Data.Repository
         {
             _context.Entry(documentoDePago.ClienteMayorista).State = EntityState.Unchanged;
             _context.Entry(documentoDePago.Encargado).State = EntityState.Unchanged;
+            documentoDePago.Pagos.Where(x => x.TipoPago == TipoPago.Deposito).ToList().ForEach(x => _context.Entry(x.CuentaBancaria).State = EntityState.Unchanged);
 
             _context.DocumentoDePago.Add(documentoDePago);
             return _context.SaveChangesAsync();
@@ -99,7 +100,7 @@ namespace Ventas.Data.Repository
                 .Include(x => x.ClienteMayorista.DomicilioFacturacion.Distrito)
                 .Include(x => x.ClienteMayorista.DomicilioFacturacion.Localidad)
                 .Include(x => x.ClienteMayorista.DomicilioFacturacion.Provincia)
-                .Include(x => x.Pagos)
+                .Include(x => x.Pagos.Select(y => y.CuentaBancaria.Banco))
                 .Include(x => x.Cheques.Select(y => y.BancoEmisor));
         }
     }

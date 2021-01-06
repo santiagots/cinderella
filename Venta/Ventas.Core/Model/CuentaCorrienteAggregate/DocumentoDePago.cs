@@ -48,12 +48,15 @@ namespace Ventas.Core.Model.CuentaCorrienteAggregate
             FechaAnulado = DateTime.Now;
         }
 
-        public void AgregaPago(decimal monto, decimal cft, TipoPago formaPagoSeleccionado, decimal cuotaCft, string tarjeta, int numeroCuota)
+        public void AgregaPago(decimal monto, decimal cft, TipoPago formaPagoSeleccionado, decimal cuotaCft, string tarjeta, int numeroCuota, IEnumerable<Cheque> cheques, CuentaBancaria cuentaBancaria)
         {
             if (monto == 0 && cft == 0)
                 throw new NegocioException("Error al registrar el pago. El monto o el CFT debe ser mayor a cero.");
 
-            DocumentoDePagoPago pago = new DocumentoDePagoPago(Id, formaPagoSeleccionado, tarjeta, numeroCuota, cuotaCft, monto, cft);
+            int[] numeroOrdenCheques = cheques != null ? cheques.Select(x => x.NumeroOrden).ToArray() : null;
+            DocumentoDePagoPago pago = new DocumentoDePagoPago(Id, formaPagoSeleccionado, tarjeta, numeroCuota, cuotaCft, monto, cft, numeroOrdenCheques, cuentaBancaria);
+
+            Cheques.AddRange(cheques);
 
             if (pago.MontoPago.Total < 0)
                 throw new NegocioException("Error al registrar el pago. El total debe ser mayor a cero.");

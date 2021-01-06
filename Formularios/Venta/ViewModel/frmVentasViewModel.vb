@@ -1,22 +1,23 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
-Imports Model = Ventas.Core.Model.VentaAggregate
-Imports Ventas.Core.Model.VentaAggregate
-Imports Enums = Common.Core.Enum
-Imports Common.Core.Extension
-Imports Common.Core.Exceptions
-Imports Ventas.Core.Model.ValueObjects
-Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports AutoMapper
-Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Common.Core.Enum
-Imports SistemaCinderella.Formularios.Reserva
+Imports Common.Core.Exceptions
+Imports Common.Core.Extension
 Imports Common.Core.Model
-Imports SistemaCinderella.Formularios.Facturacion
-Imports SistemaCinderella.Comunes
 Imports Common.Data.Service
-Imports Ventas.Data.Service
+Imports SistemaCinderella.Comunes
+Imports SistemaCinderella.Formularios.Facturacion
+Imports SistemaCinderella.Formularios.Reserva
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
+Imports Ventas.Core.Model.NotaPedidoAgreggate
+Imports Ventas.Core.Model.ValueObjects
+Imports Ventas.Core.Model.VentaAggregate
+Imports Ventas.Data.Service
+Imports Enums = Common.Core.Enum
+Imports ModelBase = Ventas.Core.Model.BaseAgreggate
+Imports ModelCheque = Ventas.Core.Model.ChequeAggregate
+Imports ModelVenta = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Venta
     Public Class frmVentasViewModel
@@ -25,7 +26,7 @@ Namespace Formularios.Venta
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
         Public Delegate Function StockInsuficienteDelegate(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
-        Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As Model.Venta) As Task
+        Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As ModelVenta.Venta) As Task
         Public Delegate Function FinalizarDelegateAsync() As Task
         Public Delegate Sub FinalizarDelegate()
 
@@ -35,10 +36,10 @@ Namespace Formularios.Venta
         Private FacturarCallBackEvent As FacturarDelegateCallBackAsync
         Private FinalizarVentaEvent As FinalizarDelegate
         Private FinalizarNotaPedidoEvent As FinalizarDelegateAsync
-        Private VentaModel As Model.Venta
-        Private ClienteMayoristaModel As Model.Venta
+        Private VentaModel As ModelVenta.Venta
+        Private ClienteMayoristaModel As ModelVenta.Venta
         Private SucursalModel As ModelBase.Sucursal
-        Private ReservaModel As Model.Reserva
+        Private ReservaModel As ModelVenta.Reserva
         Private NotaPedidoModel As NotaPedido
         Private ReadOnly IdListaPrecioMinorista As Integer
         Private ReadOnly IdListaPrecioMayorista As Integer
@@ -74,9 +75,9 @@ Namespace Formularios.Venta
         End Property
         Public ReadOnly Property Vendedores As BindingList(Of ModelBase.Empleado)
 
-        Public ReadOnly Property IdClienteMayorista As Integer
+        Public ReadOnly Property IdClienteMayorista As Integer?
             Get
-                Return If(VentaModel.ClienteMayorista Is Nothing, 0, VentaModel.ClienteMayorista.Id)
+                Return VentaModel.ClienteMayorista?.Id
             End Get
         End Property
 
@@ -189,7 +190,25 @@ Namespace Formularios.Venta
 
         Public ReadOnly Property HabilitarVenta As Boolean
             Get
-                Return VentaModel.EstaPaga And TotalPago.First.Resto = 0 And ((TipoClienteSeleccionado = Enums.TipoCliente.Mayorista AndAlso IdClienteMayorista > 0) OrElse TipoClienteSeleccionado = Enums.TipoCliente.Minorista)
+                Return VentaModel.EstaPaga And TotalPago.First.Resto = 0 And ((TipoClienteSeleccionado = Enums.TipoCliente.Mayorista AndAlso IdClienteMayorista.HasValue) OrElse TipoClienteSeleccionado = Enums.TipoCliente.Minorista)
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarReserva As Boolean
+            Get
+                Return ReservaModel Is Nothing
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarNotaPedido As Boolean
+            Get
+                Return NotaPedidoModel Is Nothing
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarTipoCliente As Boolean
+            Get
+                Return NotaPedidoModel Is Nothing AndAlso ReservaModel Is Nothing
             End Get
         End Property
 
@@ -216,6 +235,12 @@ Namespace Formularios.Venta
             End Get
         End Property
 
+        Public ReadOnly Property EsClienteMayorista As Integer
+            Get
+                Return VentaModel.TipoCliente = Enums.TipoCliente.Mayorista
+            End Get
+        End Property
+
         Public Sub New(IdSucursal As Integer, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate, facturar As FacturarDelegate, finalizarVentaEvent As FinalizarDelegate, finalizarNotaPedidoEvent As FinalizarDelegateAsync)
             Me.IdListaPrecioMinorista = idListaPrecioMinorista
             Me.IdListaPrecioMayorista = idListaPrecioMayorista
@@ -226,7 +251,7 @@ Namespace Formularios.Venta
             Me.FinalizarVentaEvent = finalizarVentaEvent
             Me.FinalizarNotaPedidoEvent = finalizarNotaPedidoEvent
 
-            Inicializar(New Model.Venta(IdSucursal), tipoCliente, idListaPrecioMinorista, idListaPrecioMayorista)
+            Inicializar(New ModelVenta.Venta(IdSucursal), tipoCliente, idListaPrecioMinorista, idListaPrecioMayorista)
         End Sub
 
         Friend Sub CargarNotaPedido(notaPedido As NotaPedido)
@@ -247,14 +272,14 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.TotalPago))
         End Sub
 
-        Friend Sub CargarReserva(reserva As Model.Reserva)
+        Friend Sub CargarReserva(reserva As ModelVenta.Reserva)
             ReservaModel = reserva
             ReservaModel.Entregar(VentaModel)
             CargarDatosBasicosTransaccion(ReservaModel.VentaReserva)
             CargarProductosEnVenta(ReservaModel.VentaReserva.VentaItems.Cast(Of ModelBase.TransaccionItem)().ToList(), ReservaModel.VentaReserva.TipoCliente)
 
             For Each pago As VentaPago In reserva.VentaReserva.Pagos
-                VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Monto, 0, 0, TipoPago.Bonificacion, pago.PorcentajeRecargo, ReservaModel.VentaReserva.PorcentajeFacturacion, ReservaModel.VentaReserva.TipoCliente, pago.Tarjeta, pago.NumeroCuotas, False)
+                VentaModel.AgregaPago(pago.MontoPago.Monto, pago.MontoPago.Monto, 0, 0, TipoPago.Bonificacion, pago.PorcentajeRecargo, pago.Tarjeta, pago.NumeroCuotas, pago.NumeroOrdenCheques, pago.CuentaBancaria, False)
             Next
 
             CalcularPendientePago()
@@ -314,8 +339,10 @@ Namespace Formularios.Venta
                 ListaPrecioSeleccionado = IdListaPrecioMayorista
 
                 VentaModel.AgregarClienteMayorista(venta.ClienteMayorista)
+                CargarFormaPago(New List(Of TipoPago)(TipoPagoService.Obtener(Enums.TipoCliente.Mayorista)))
             Else
                 ListaPrecioSeleccionado = IdListaPrecioMinorista
+                CargarFormaPago(New List(Of TipoPago)(TipoPagoService.Obtener(Enums.TipoCliente.Minorista)))
             End If
             NotifyPropertyChanged(NameOf(Me.PorcentajeFacturacion))
         End Sub
@@ -341,7 +368,11 @@ Namespace Formularios.Venta
             Dim frmReservaViewModel As frmReservaViewModel = New frmReservaViewModel(ventaDetalleViewModel)
 
             If (TipoClienteSeleccionado = Enums.TipoCliente.Mayorista) Then
-                Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await Task.Run(Function() Comunes.Servicio.ObtenerClienteMayorista(IdClienteMayorista))
+                If (Not IdClienteMayorista.HasValue) Then
+                    Throw New NegocioException("No se encuentra un cliente mayorista seleccionado. Debe seleccionar un cliente mayorista para generar una reserva.")
+                End If
+
+                Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, VentaModel.IdClienteMayorista)
                 frmReservaViewModel.ReservaDetalle.Nombre = clienteMayorista.RazonSocial
                 frmReservaViewModel.ReservaDetalle.Apellido = " "
                 frmReservaViewModel.ReservaDetalle.Telefono = clienteMayorista?.DomicilioFacturacion?.Telefono
@@ -354,7 +385,7 @@ Namespace Formularios.Venta
             If (frmReserva.ShowDialog() = DialogResult.OK) Then
                 Await FinalizarVentaAsyn(True)
 
-                ReservaModel = New Model.Reserva(
+                ReservaModel = New ModelVenta.Reserva(
                                      IdSucursal,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Nombre,
                                      frmReserva.FrmReservaViewModel.ReservaDetalle.Apellido,
@@ -381,7 +412,7 @@ Namespace Formularios.Venta
                     notaPedido.AgregarClienteMinorista(frmDatosClienteMinorista.ClienteMinorista.Id)
                 End If
             Else
-                If (IdClienteMayorista = 0) Then
+                If (Not IdClienteMayorista.HasValue) Then
                     Throw New NegocioException("No se encuentra un cliente mayorista seleccionado. Debe seleccionar un cliente mayorista para generar una nota de pedido.")
                 End If
                 notaPedido.AgregarClienteMayorista(IdClienteMayorista)
@@ -397,8 +428,6 @@ Namespace Formularios.Venta
         End Function
 
         Friend Async Function FinalizarVentaAsyn(desdeReserva As Boolean) As Task
-            AgregarCheque()
-
             If (PorcentajeFacturacion > 0) Then
                 Try
                     FacturarEvent(New frmFacturarViewModel(VentaModel, FacturarCallBackEvent, TipoDocumentoFiscal.Factura, desdeReserva))
@@ -439,7 +468,7 @@ Namespace Formularios.Venta
             End If
         End Function
 
-        Friend Async Function FacturarAsync(facturar As Boolean, ventas As Model.Venta) As Task
+        Friend Async Function FacturarAsync(facturar As Boolean, ventas As ModelVenta.Venta) As Task
             Visible = True
             If (facturar) Then
                 Await GuardarAsync()
@@ -596,9 +625,19 @@ Namespace Formularios.Venta
         End Sub
 
         Friend Sub AgregarPago()
+            Dim cheques As List(Of ModelCheque.Cheque) = New List(Of ModelCheque.Cheque)
+            Dim cuentaBancaria As Common.Core.Model.CuentaBancaria = Nothing
+
+            Select Case FormaPagoSeleccionado
+                Case TipoPago.Cheque
+                    cheques = ObtenerCheque(Total)
+                Case TipoPago.Deposito
+                    cuentaBancaria = ObtenerCuentaBancaria()
+            End Select
+
             Dim numeroCuota As Integer = If(CuotaSeleccionado?.NumeroCuota, 0)
             Dim tarjeta As String = If(TarjetaSeleccionada?.Nombre, "")
-            VentaModel.AgregaPago(Subtotal, Descuento, Cft, Iva, FormaPagoSeleccionado, CuotaCft, PorcentajeFacturacion, TipoClienteSeleccionado, tarjeta, numeroCuota)
+            VentaModel.AgregaPago(Subtotal, Descuento, Cft, Iva, FormaPagoSeleccionado, CuotaCft, tarjeta, numeroCuota, cheques, cuentaBancaria)
 
             CalcularPendientePago()
 
@@ -785,23 +824,35 @@ Namespace Formularios.Venta
             VentaModel.AgregarComision(porcentajeComicionEncargado, porcentajeComicionVendedor)
         End Function
 
-        Private Sub AgregarCheque()
-            Dim cheques As List(Of VentaPago) = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
-            If (cheques.Any()) Then
-                Dim frmChequeAltaMasiva As frmChequeAltaMasiva = New frmChequeAltaMasiva(cheques.Sum(Function(x) x.MontoPago.Total), IdClienteMayorista)
-                frmChequeAltaMasiva.ShowDialog()
+        Private Function ObtenerCheque(monto As Decimal) As List(Of ModelCheque.Cheque)
+            Dim frmChequeAltaMasiva As frmChequeAltaMasiva
+            Dim ultimoNumeroDeOrden As ModelCheque.Cheque = VentaModel.Cheques.OrderByDescending(Function(x) x.NumeroOrden).FirstOrDefault()
 
-                If (frmChequeAltaMasiva.DialogResult <> DialogResult.OK) Then
-                    Throw New NegocioException("Error al finalizar la venta. No se encuentran cheques registrados.")
-                End If
-
-                If Not frmChequeAltaMasiva.ChequesModel.Any() Then
-                    Throw New NegocioException("Error al finalizar la venta. No se encuentran cheques registrados.")
-                End If
-
-                frmChequeAltaMasiva.ChequesModel.ForEach(Sub(x) VentaModel.AgregarCheque(x))
+            If (IdClienteMayorista.HasValue) Then
+                frmChequeAltaMasiva = New frmChequeAltaMasiva(monto, ultimoNumeroDeOrden?.NumeroOrden, IdClienteMayorista)
+            Else
+                frmChequeAltaMasiva = New frmChequeAltaMasiva(monto, ultimoNumeroDeOrden?.NumeroOrden)
             End If
-        End Sub
+
+            frmChequeAltaMasiva.ShowDialog()
+
+            If (frmChequeAltaMasiva.DialogResult <> DialogResult.OK OrElse Not frmChequeAltaMasiva.ChequesModel.Any()) Then
+                Throw New NegocioException("No se encuentran cheques registrados. Por favor, para agregar la forma de pago CHEQUE debe registrar al menos un cheque.")
+            End If
+
+            Return frmChequeAltaMasiva.ChequesModel
+        End Function
+
+        Private Function ObtenerCuentaBancaria() As Common.Core.Model.CuentaBancaria
+            Dim frmCuentaBancariasBuscar As frmCuentaBancariasBuscar = New frmCuentaBancariasBuscar()
+            frmCuentaBancariasBuscar.ShowDialog()
+
+            If (frmCuentaBancariasBuscar.DialogResult <> DialogResult.OK OrElse frmCuentaBancariasBuscar.CuentasBancariaSeleccionada Is Nothing) Then
+                Throw New NegocioException("No se seleccionó una cuenta bancaria. Por favor, para agregar la forma de pago CUENTA debe seleccionar una cuenta bancaria.")
+            End If
+
+            Return frmCuentaBancariasBuscar.CuentasBancariaSeleccionada
+        End Function
 
         Private Function ActualizarStock() As Task
 
@@ -891,7 +942,7 @@ Namespace Formularios.Venta
             Return producto
         End Function
 
-        Private Sub Inicializar(venta As Model.Venta, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer)
+        Private Sub Inicializar(venta As ModelVenta.Venta, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer)
             Visible = True
             VentaModel = venta
             PorcentajeFacturacion = 1

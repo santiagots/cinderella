@@ -353,8 +353,16 @@
     <Compile Include="Formularios\CuentaBancaria\frmCuentaBancarias.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\CuentaBancaria\frmCuentaBancariasBuscar.Designer.vb">
+      <DependentUpon>frmCuentaBancariasBuscar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\CuentaBancaria\frmCuentaBancariasBuscar.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\CuentaBancaria\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\CuentaBancaria\ViewModel\CuentaBancariaItem.vb" />
     <Compile Include="Formularios\CuentaBancaria\ViewModel\CuentaBancariaViewModel.vb" />
+    <Compile Include="Formularios\CuentaBancaria\ViewModel\frmCuentaBancariasBuscarViewModel.vb" />
     <Compile Include="Formularios\CuentaBancaria\ViewModel\frmCuentaBancariasViewModel.vb" />
     <Compile Include="Formularios\DialogInput.Designer.vb">
       <DependentUpon>DialogInput.vb</DependentUpon>
@@ -1307,6 +1315,7 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmClienteMayoristaCuentaCorrienteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaBancariaViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaCorrienteViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasViewModel.datasource" />
     <None Include="Resources\NavigatorPreviousItem.png" />
     <None Include="Resources\NavigatorFirstItem.png" />
@@ -1339,6 +1348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\CuentaBancaria\frmCuentaBancarias.resx">
       <DependentUpon>frmCuentaBancarias.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\CuentaBancaria\frmCuentaBancariasBuscar.resx">
+      <DependentUpon>frmCuentaBancariasBuscar.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\DialogInput.resx">
       <DependentUpon>DialogInput.vb</DependentUpon>

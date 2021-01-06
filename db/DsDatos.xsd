@@ -102,6 +102,21 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Deposito" msprop:Generator_TableClassName="DepositoDataTable" msprop:Generator_TableVarName="tableDeposito" msprop:Generator_RowChangedName="DepositoRowChanged" msprop:Generator_TablePropName="Deposito" msprop:Generator_RowDeletingName="DepositoRowDeleting" msprop:Generator_RowChangingName="DepositoRowChanging" msprop:Generator_RowEvHandlerName="DepositoRowChangeEventHandler" msprop:Generator_RowDeletedName="DepositoRowDeleted" msprop:Generator_RowClassName="DepositoRow" msprop:Generator_UserTableName="Deposito" msprop:Generator_RowEvArgName="DepositoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Numero" msprop:Generator_ColumnVarNameInTable="columnNumero" msprop:Generator_ColumnPropNameInRow="Numero" msprop:Generator_ColumnPropNameInTable="NumeroColumn" msprop:Generator_UserColumnName="Numero" type="xs:string" minOccurs="0" />
+              <xs:element name="Banco" msdata:Caption="Librador" msprop:Generator_ColumnVarNameInTable="columnBanco" msprop:Generator_ColumnPropNameInRow="Banco" msprop:Generator_ColumnPropNameInTable="BancoColumn" msprop:Generator_UserColumnName="Banco" type="xs:string" minOccurs="0" />
+              <xs:element name="CBU" msdata:Caption="Banco" msprop:Generator_ColumnVarNameInTable="columnCBU" msprop:Generator_ColumnPropNameInRow="CBU" msprop:Generator_ColumnPropNameInTable="CBUColumn" msprop:Generator_UserColumnName="CBU" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroCuenta" msdata:Caption="FechaDeposito" msprop:Generator_ColumnVarNameInTable="columnNumeroCuenta" msprop:Generator_ColumnPropNameInRow="NumeroCuenta" msprop:Generator_ColumnPropNameInTable="NumeroCuentaColumn" msprop:Generator_UserColumnName="NumeroCuenta" type="xs:string" minOccurs="0" />
+              <xs:element name="Alias" msdata:Caption="FechaIngreso" msprop:Generator_ColumnVarNameInTable="columnAlias" msprop:Generator_ColumnPropNameInRow="_Alias" msprop:Generator_ColumnPropNameInTable="AliasColumn" msprop:Generator_UserColumnName="Alias" type="xs:string" minOccurs="0" />
+              <xs:element name="Titular" msdata:Caption="Importe" msprop:Generator_ColumnVarNameInTable="columnTitular" msprop:Generator_ColumnPropNameInRow="Titular" msprop:Generator_ColumnPropNameInTable="TitularColumn" msprop:Generator_UserColumnName="Titular" type="xs:string" minOccurs="0" />
+              <xs:element name="CUIT" msprop:Generator_ColumnVarNameInTable="columnCUIT" msprop:Generator_ColumnPropNameInRow="CUIT" msprop:Generator_ColumnPropNameInTable="CUITColumn" msprop:Generator_UserColumnName="CUIT" type="xs:string" minOccurs="0" />
+              <xs:element name="EsCuentaCorriente" msprop:Generator_ColumnVarNameInTable="columnEsCuentaCorriente" msprop:Generator_ColumnPropNameInRow="EsCuentaCorriente" msprop:Generator_ColumnPropNameInTable="EsCuentaCorrienteColumn" msprop:Generator_UserColumnName="EsCuentaCorriente" type="xs:string" minOccurs="0" />
+              <xs:element name="Importe" msprop:Generator_ColumnVarNameInTable="columnImporte" msprop:Generator_ColumnPropNameInRow="Importe" msprop:Generator_ColumnPropNameInTable="ImporteColumn" msprop:Generator_UserColumnName="Importe" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

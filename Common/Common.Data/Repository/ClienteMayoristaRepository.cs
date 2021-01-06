@@ -50,9 +50,12 @@ namespace Common.Data.Repository
         {
             AttachCliente(ref cliente);
 
-            _context.Entry(cliente.DomicilioFacturacion).State = EntityState.Modified;
-            _context.Entry(cliente.DomicilioEntrega).State = EntityState.Modified;
-            _context.Entry(cliente).State = EntityState.Modified;
+            if(cliente.DomicilioFacturacion != null)
+                _context.Entry(cliente.DomicilioFacturacion).State = EntityState.Modified;
+            if (cliente.DomicilioEntrega != null)
+                _context.Entry(cliente.DomicilioEntrega).State = EntityState.Modified;
+            if (cliente != null)
+               _context.Entry(cliente).State = EntityState.Modified;
             return _context.SaveChangesAsync();
         }
 

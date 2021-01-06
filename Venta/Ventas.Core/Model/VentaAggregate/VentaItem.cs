@@ -249,7 +249,7 @@ namespace Ventas.Core.Model.VentaAggregate
             foreach (KeyValuePair<VentaPago, decimal> montoPorPago in this.Pagos)
             {
                 MontoPago montoPago = ObtenerMontoPago(montoPorPago.Value, montoPorPago.Key.PorcentajeRecargo, porcentajeFacturacion, tipoCliente, montoPorPago.Key.TipoPago);
-                pagos.Add(new VentaPago(montoPorPago.Key.IdVenta, montoPorPago.Key.TipoPago, montoPorPago.Key.Tarjeta, montoPorPago.Key.NumeroCuotas, montoPorPago.Key.PorcentajeRecargo, montoPago.Monto, 0, montoPago.Descuento, montoPago.CFT, montoPago.IVA));
+                pagos.Add(new VentaPago(montoPorPago.Key.IdVenta, montoPorPago.Key.TipoPago, montoPorPago.Key.Tarjeta, montoPorPago.Key.NumeroCuotas, montoPorPago.Key.PorcentajeRecargo, montoPorPago.Key.NumeroOrdenCheques, montoPorPago.Key.CuentaBancaria, montoPago.Monto, 0, montoPago.Descuento, montoPago.CFT, montoPago.IVA));
             }
 
             return pagos;

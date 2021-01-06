@@ -7,6 +7,7 @@ using System.Data.Entity;
 using Common.Core.Enum;
 using Common.Data.Repository;
 using System.Threading.Tasks;
+using Common.Core.Model;
 
 namespace Ventas.Data.Repository
 {
@@ -30,7 +31,7 @@ namespace Ventas.Data.Repository
                             .Include(x => x.Vendedor)
                             .Include(x => x.ClienteMayorista)
                             .Include(x => x.Comisiones)
-                            .Include(x => x.Pagos)
+                            .Include(x => x.Pagos.Select(y => y.CuentaBancaria.Banco))
                             .Include(x => x.Cheques)
                             .Include(x => x.VentaItems)
                             .Include(x => x.VentaItems.Select(y => y.Producto.SubCategoria.IVA))
@@ -99,9 +100,10 @@ namespace Ventas.Data.Repository
 
             _context.Entry(venta.Encargado).State = EntityState.Unchanged;
             _context.Entry(venta.Vendedor).State = EntityState.Unchanged;
-            venta.VentaItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria
-            venta.VentaItems.ToList().ForEach(x => x.Producto.SubCategoria = null); //pongo null la subcategoria porque sino entra en conflicto cuando varios productos tiene la misma subcategoria
+            venta.VentaItems.ToList().ForEach(x => x.Producto.Categoria = (Categoria)_context.Attach(x.Producto.Categoria));
+            venta.VentaItems.ToList().ForEach(x => x.Producto.SubCategoria = (SubCategoria)_context.Attach(x.Producto.SubCategoria));
             venta.VentaItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
+            venta.Pagos.Where(x => x.TipoPago == TipoPago.Deposito).ToList().ForEach(x => _context.Entry(x.CuentaBancaria).State = EntityState.Unchanged);
             _context.Venta.Add(venta);
             _context.SaveChanges();
         }

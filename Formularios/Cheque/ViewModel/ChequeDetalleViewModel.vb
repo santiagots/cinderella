@@ -10,7 +10,7 @@ Namespace Formularios.Cheque
         Property NumeroCheque As Integer
         Property MarcaFacturado As Boolean
         Property FechaIngreso As DateTime
-        Property IdCliente As Integer
+        Property IdCliente As Integer?
         Property ClienteNombre As String
         Property IdLibrador As Integer
         Property LibradorNombre As String

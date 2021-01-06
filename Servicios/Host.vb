@@ -21,7 +21,6 @@ Public Class Host
         Id_Sucursal = id_Suc
         Id_GrupoPrecio = id_Precio
         DecuentoClienteMinorista = decuentoMinorista
-
     End Sub
 
 

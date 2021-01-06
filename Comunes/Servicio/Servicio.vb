@@ -31,13 +31,6 @@ Namespace Comunes
             End Using
         End Sub
 
-        Friend Shared Function ObtenerClienteMayorista(id As Integer) As Task(Of ClienteMayorista)
-            Using context As CommonContext = New CommonContext()
-                Dim clienteMayoristaRepository As IClienteMayoristaRepository = New ClienteMayoristaRepository(context)
-                Return clienteMayoristaRepository.ObtenerAsync(id)
-            End Using
-        End Function
-
         Friend Shared Function ObtenerReservaPorIdVenta(idVenta As Long) As Reserva
             Using context As VentaContext = New VentaContext()
                 Dim reservaRepository As IReservaRepository = New ReservaRepository(context)

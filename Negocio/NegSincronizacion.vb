@@ -237,6 +237,7 @@ Public Class NegSincronizacion
         respuesta.Add(New Tabla() With {.Nombre = "TARJETAS", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "COSTOFINANCIERO", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_IVA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_CUENTABANCARIA", .Sincronizar = New SinClaveUnicaSincronizar()})
 
         Return respuesta
     End Function

@@ -316,6 +316,7 @@ Partial Class frmVentas
         Me.Gb_ClienteMayorista.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_ClienteMayorista.Controls.Add(Me.TableLayoutPanel6)
+        Me.Gb_ClienteMayorista.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.VentaViewModelBindingSource, "EsClienteMayorista", True))
         Me.Gb_ClienteMayorista.Enabled = False
         Me.Gb_ClienteMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Gb_ClienteMayorista.Location = New System.Drawing.Point(12, 77)
@@ -569,6 +570,7 @@ Partial Class frmVentas
         Me.Cb_TipoCliente.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_TipoCliente.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Cb_TipoCliente.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.VentaViewModelBindingSource, "TipoClienteSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.Cb_TipoCliente.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.VentaViewModelBindingSource, "HabilitarTipoCliente", True))
         Me.Cb_TipoCliente.DataSource = Me.TipoClienteBindingSource
         Me.Cb_TipoCliente.DisplayMember = "Key"
         Me.Cb_TipoCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -596,6 +598,7 @@ Partial Class frmVentas
         '
         Me.BtnReserva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnReserva.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnReserva.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.VentaViewModelBindingSource, "HabilitarReserva", True))
         Me.BtnReserva.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtnReserva.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.BtnReserva.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -612,6 +615,7 @@ Partial Class frmVentas
         '
         Me.Btn_NotaPedido.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Btn_NotaPedido.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_NotaPedido.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.VentaViewModelBindingSource, "HabilitarNotaPedido", True))
         Me.Btn_NotaPedido.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_NotaPedido.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_NotaPedido.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft

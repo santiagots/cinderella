@@ -63,8 +63,8 @@ Public Class frmCuentaBancarias
                          Return
                      End If
 
-                     Dim cuentaBancariaViewModel As CuentaBancariaViewModel = CType(DG_CuentasBancarias.CurrentRow.DataBoundItem, CuentaBancariaViewModel)
-                     frmCuentaBancariasViewModel.Cargar(cuentaBancariaViewModel)
+                     Dim cuentaBancariaItem As CuentaBancariaItem = CType(DG_CuentasBancarias.CurrentRow.DataBoundItem, CuentaBancariaItem)
+                     frmCuentaBancariasViewModel.Cargar(cuentaBancariaItem)
                      ModificacionCuentaBancariaViewModelBindingSource.DataSource = frmCuentaBancariasViewModel.CuentaBancariaModificar
                  End Sub)
     End Sub

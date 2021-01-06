@@ -109,7 +109,7 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajeFacturacion = porcentajeFacturacion;
         }
 
-        public void AgregaPago(decimal monto, decimal descuento, decimal cft, decimal iva, TipoPago tipoPago, decimal porcentajeCft, decimal porcentajeFacturacion, TipoCliente tipoCliente, string trajeta, int numeroCuotas, bool habilitado = true)
+        public void AgregaPago(decimal monto, decimal descuento, decimal cft, decimal iva, TipoPago tipoPago, decimal porcentajeCft, string trajeta, int numeroCuotas, IEnumerable<Cheque> cheques, CuentaBancaria cuentaBancaria, bool habilitado = true)
         {
             if (VentaItems.Count == 0)
                 throw new NegocioException("Error al registrar el pago. No se encuentran productos registrados en la venta.");
@@ -118,7 +118,11 @@ namespace Ventas.Core.Model.VentaAggregate
             if(monto == 0 && descuento == 0 && cft == 0 && iva == 0)
                 throw new NegocioException("Error al registrar el pago. El monto o el descuento o el CFT o el IVA debe ser mayor a cero.");
 
-            VentaPago pago = new VentaPago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, monto, monto, descuento, cft, iva, habilitado);
+            int[] numeroOrdenCheques = cheques != null ? cheques.Select(x => x.NumeroOrden).ToArray() : null;
+
+            VentaPago pago = new VentaPago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, numeroOrdenCheques, cuentaBancaria, monto, monto, descuento, cft, iva, habilitado);
+
+            Cheques.AddRange(cheques);
 
             if (pago.MontoPago.Total < 0)
                 throw new NegocioException("Error al registrar el pago. El total debe ser mayor a cero.");
@@ -130,11 +134,6 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarPagos();
 
             ActualizarTotalesPago();
-        }
-
-        public void AgregarCheque(Cheque cheque)
-        {
-            Cheques.Add(cheque);
         }
 
         public void AgregarClienteMayorista(ClienteMayorista clienteMayorista)
@@ -199,8 +198,20 @@ namespace Ventas.Core.Model.VentaAggregate
         public void QuitarPago(long idPago)
         {
             VentaItems.ToList().ForEach(x => x.QuitarPago(idPago));
-            Pagos.Remove(Pagos.FirstOrDefault(x => x.Id == idPago));
+
+            VentaPago pago = Pagos.FirstOrDefault(x => x.Id == idPago);
+            Pagos.Remove(pago);
+
+            if (pago.TipoPago == TipoPago.Cheque)
+                QuitarChequeDesdePago(pago);
+
             ActualizarTotalesPago();
+        }
+
+        private void QuitarChequeDesdePago(VentaPago pago)
+        {
+            foreach (int numeroOrdenCheque in pago.NumeroOrdenCheques)
+                Cheques.Remove(Cheques.FirstOrDefault(y => y.NumeroCheque == numeroOrdenCheque));             
         }
 
         public void QuitarPagos()

@@ -11,6 +11,7 @@ using Ventas.Core.Model.ValueObjects;
 using System.Threading.Tasks;
 using Ventas.Core.Model.CuentaCorrienteAggregate;
 using Common.Core.Extension;
+using Common.Core.Model;
 
 namespace Ventas.Data.Repository
 {
@@ -27,8 +28,8 @@ namespace Ventas.Data.Repository
                                         .OrderByDescending(x => x.Numero)
                                         .FirstOrDefault();
 
-            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.Categoria = null); //pongo null la categoria porque sino entra en conflicto cuando varios productos tiene la misma categoria
-            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.SubCategoria = null); //pongo null la subcategoria porque sino entra en conflicto cuando varios productos tiene la misma subcategoria
+            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.Categoria = (Categoria)_context.Attach(x.Producto.Categoria));
+            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.SubCategoria = (SubCategoria)_context.Attach(x.Producto.SubCategoria));
             notaPedido.NotaPedidoItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
 
             if (UltimaNotaPedido == null)
@@ -41,6 +42,9 @@ namespace Ventas.Data.Repository
 
             if (notaPedido.Vendedor != null)
                 _context.Entry(notaPedido.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
+
+            if (notaPedido.ClienteMayorista != null)
+                _context.Entry(notaPedido.ClienteMayorista).State = System.Data.Entity.EntityState.Unchanged;
 
             _context.NotaPedido.Add(notaPedido);
             _context.SaveChanges();

@@ -91,7 +91,10 @@ namespace Ventas.Data
             modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
             modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
             modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
+            modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.NumeroOrdenChequesData).HasColumnName("NumeroOrdenCheques");
             modelBuilder.Entity<DocumentoDePagoPago>().Property(t => t.PorcentajeRecargo).HasPrecision((int)18, (int)4);
+            modelBuilder.Entity<DocumentoDePagoPago>().HasOptional(v => v.CuentaBancaria).WithMany().HasForeignKey(x => x.IdCuentaBancaria);
+            modelBuilder.Entity<DocumentoDePagoPago>().Ignore(t => t.NumeroOrdenCheques);
             modelBuilder.Entity<DocumentoDePagoPago>().Ignore(t => t.MontoRestante);
             modelBuilder.Entity<DocumentoDePagoPago>().Ignore(t => t.Habilitado);
 
@@ -135,7 +138,10 @@ namespace Ventas.Data
             modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.Descuento).HasColumnName("Descuento");
             modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.CFT).HasColumnName("CFT");
             modelBuilder.Entity<VentaPago>().Property(t => t.MontoPago.IVA).HasColumnName("IVA");
+            modelBuilder.Entity<VentaPago>().Property(t => t.NumeroOrdenChequesData).HasColumnName("NumeroOrdenCheques");
             modelBuilder.Entity<VentaPago>().Property(t => t.PorcentajeRecargo).HasPrecision((int)18, (int)4);
+            modelBuilder.Entity<VentaPago>().HasOptional(v => v.CuentaBancaria).WithMany().HasForeignKey(x => x.IdCuentaBancaria);
+            modelBuilder.Entity<VentaPago>().Ignore(t => t.NumeroOrdenCheques);
             modelBuilder.Entity<VentaPago>().Ignore(t => t.MontoRestante);
             modelBuilder.Entity<VentaPago>().Ignore(t => t.Habilitado);
 

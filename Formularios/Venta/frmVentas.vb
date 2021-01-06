@@ -15,7 +15,7 @@ Public Class frmVentas
     Private NotaPedido As NotaPedido
     Private FinalizarDelegate As FinalizarDelegateAsync
     Private ventaViewModel As frmVentasViewModel
-    Private Errores As NegManejadorErrores
+    Private Errores As NegManejadorErrores = New NegManejadorErrores()
 
     Public Sub New()
         ' This call is required by the designer.
@@ -57,7 +57,6 @@ Public Class frmVentas
                               ventaViewModel.CargarReserva(Reserva)
                           End If
 
-                          Errores = New NegManejadorErrores()
                           HabilitarSegunFormaDePago(TipoPago.Efectivo)
                       End Function)
         Me.DataBindings.Add(New Binding("Visible", Me.VentaViewModelBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
@@ -82,7 +81,9 @@ Public Class frmVentas
     End Sub
 
     Private Sub btnAgregaPago_Click(sender As Object, e As EventArgs) Handles btnAgregaPago.Click
-        Ejecutar(Sub() ventaViewModel.AgregarPago())
+        Ejecutar(Sub()
+                     ventaViewModel.AgregarPago()
+                 End Sub)
     End Sub
 
     Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown
@@ -113,10 +114,8 @@ Public Class frmVentas
                 ventaViewModel.TipoClienteChange(Cb_TipoCliente.SelectedValue)
                 If (Cb_TipoCliente.SelectedValue = Common.Core.Enum.TipoCliente.Mayorista) Then
                     ventaViewModel.ConfigurarVentaParaClienteMayorista()
-                    Gb_ClienteMayorista.Enabled = True
                 Else
                     ventaViewModel.ConfigurarVentaParaClienteMinorista()
-                    Gb_ClienteMayorista.Enabled = False
                 End If
             End Sub)
     End Sub

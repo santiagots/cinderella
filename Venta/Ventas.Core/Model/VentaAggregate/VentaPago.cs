@@ -1,4 +1,5 @@
 ﻿using Common.Core.Enum;
+using Common.Core.Model;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ValueObjects;
 
@@ -13,8 +14,8 @@ namespace Ventas.Core.Model.VentaAggregate
         {
         }
 
-        public VentaPago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal porcentajeRecargo, decimal monto, decimal montoRestante, decimal descuento, decimal cft, decimal iva, bool habilitado = true): 
-            base(tipoPago, tarjeta, numeroCuotas, porcentajeRecargo, monto, montoRestante, descuento, cft, iva, habilitado)
+        public VentaPago(long idVenta, TipoPago tipoPago, string tarjeta, int numeroCuotas, decimal porcentajeRecargo, int[] numeroOrdenesCheques, CuentaBancaria cuentaBancaria, decimal monto, decimal montoRestante, decimal descuento, decimal cft, decimal iva, bool habilitado = true): 
+            base(tipoPago, tarjeta, numeroCuotas, porcentajeRecargo, numeroOrdenesCheques, cuentaBancaria, monto, montoRestante, descuento, cft, iva, habilitado)
         {
             IdVenta = idVenta;
         }

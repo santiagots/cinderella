@@ -10,6 +10,7 @@ Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data.Service
 Imports Common.Data.Service
+Imports ModelCheque = Ventas.Core.Model.ChequeAggregate
 
 Namespace Formularios.Cliente
     Public Class frmClienteMayoristaDocumentoPagoViewModel
@@ -158,7 +159,17 @@ Namespace Formularios.Cliente
         Friend Sub AgregarPago()
             Dim numeroCuota As Integer = If(CuotaSeleccionado?.NumeroCuota, 0)
             Dim tarjeta As String = If(TarjetaSeleccionada?.Nombre, "")
-            DocumentoDePagoModel.AgregaPago(Subtotal, Cft, FormaPagoSeleccionado, CuotaCft, tarjeta, numeroCuota)
+            Dim cheques As List(Of ModelCheque.Cheque) = New List(Of ModelCheque.Cheque)
+            Dim cuentaBancaria As Common.Core.Model.CuentaBancaria = Nothing
+
+            Select Case FormaPagoSeleccionado
+                Case TipoPago.Cheque
+                    Cheques = ObtenerCheque(Total)
+                Case TipoPago.Deposito
+                    cuentaBancaria = ObtenerCuentaBancaria()
+            End Select
+
+            DocumentoDePagoModel.AgregaPago(Subtotal, Cft, FormaPagoSeleccionado, CuotaCft, tarjeta, numeroCuota, cheques, cuentaBancaria)
 
             _Subtotal = 0
             _Cft = 0
@@ -204,8 +215,6 @@ Namespace Formularios.Cliente
         End Sub
 
         Friend Async Function GuardarAsync() As Task
-            AgregarCheque()
-
             Await GuardarDocumentoDePagoAsync()
             Await ActualizarMontoCuentaCorrienteAsync(TipoAccionCuentaCorriente.Crédito)
         End Function
@@ -266,22 +275,30 @@ Namespace Formularios.Cliente
             NotifyPropertyChanged(NameOf(Me.Total))
         End Sub
 
-        Private Sub AgregarCheque()
-            Dim cheques As List(Of DocumentoDePagoPago) = DocumentoDePagoModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.Cheque).ToList()
-            If (cheques.Any()) Then
-                Dim frmChequeAltaMasiva As frmChequeAltaMasiva = New frmChequeAltaMasiva(cheques.Sum(Function(x) x.MontoPago.Total), DocumentoDePagoModel.IdClienteMayorista)
-                frmChequeAltaMasiva.ShowDialog()
+        Private Function ObtenerCheque(monto As Decimal) As List(Of ModelCheque.Cheque)
 
-                If (frmChequeAltaMasiva.DialogResult <> DialogResult.OK) Then
-                    Throw New NegocioException("Error al finalizar el documento de pago. No se encuentran cheques registrados.")
-                End If
+            Dim ultimoNumeroDeOrden As ModelCheque.Cheque = DocumentoDePagoModel.Cheques.OrderByDescending(Function(x) x.NumeroOrden).FirstOrDefault()
 
-                If Not frmChequeAltaMasiva.ChequesModel.Any() Then
-                    Throw New NegocioException("Error al finalizar el documento de pago. No se encuentran cheques registrados.")
-                End If
+            Dim frmChequeAltaMasiva As frmChequeAltaMasiva
+            frmChequeAltaMasiva = New frmChequeAltaMasiva(monto, ultimoNumeroDeOrden?.NumeroOrden, DocumentoDePagoModel.ClienteMayorista.Id)
+            frmChequeAltaMasiva.ShowDialog()
 
-                frmChequeAltaMasiva.ChequesModel.ForEach(Sub(x) DocumentoDePagoModel.AgregarCheque(x))
+            If (frmChequeAltaMasiva.DialogResult <> DialogResult.OK OrElse Not frmChequeAltaMasiva.ChequesModel.Any()) Then
+                Throw New NegocioException("No se encuentran cheques registrados. Por favor, para agregar la forma de pago CHEQUE debe registrar al menos un cheque.")
             End If
-        End Sub
+
+            Return frmChequeAltaMasiva.ChequesModel
+        End Function
+
+        Private Function ObtenerCuentaBancaria() As Common.Core.Model.CuentaBancaria
+            Dim frmCuentaBancariasBuscar As frmCuentaBancariasBuscar = New frmCuentaBancariasBuscar()
+            frmCuentaBancariasBuscar.ShowDialog()
+
+            If (frmCuentaBancariasBuscar.DialogResult <> DialogResult.OK OrElse frmCuentaBancariasBuscar.CuentasBancariaSeleccionada Is Nothing) Then
+                Throw New NegocioException("No se seleccionó una cuenta bancaria. Por favor, para agregar la forma de pago CUENTA debe seleccionar una cuenta bancaria.")
+            End If
+
+            Return frmCuentaBancariasBuscar.CuentasBancariaSeleccionada
+        End Function
     End Class
 End Namespace

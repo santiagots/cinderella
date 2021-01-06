@@ -18,14 +18,14 @@ Namespace Formularios.CuentaBancaria
         Public Property Habilitados As BindingList(Of KeyValuePair(Of Boolean?, String)) = New BindingList(Of KeyValuePair(Of Boolean?, String))
         Public Property HabilitadosSeleccionado As KeyValuePair(Of Boolean?, String)
 
-        Public Property CuentasBancariasListado As BindingList(Of CuentaBancariaViewModel) = New BindingList(Of CuentaBancariaViewModel)
+        Public Property CuentasBancariasListado As BindingList(Of CuentaBancariaItem) = New BindingList(Of CuentaBancariaItem)
         Public Property CuentaBancariaAlta As CuentaBancariaViewModel = New CuentaBancariaViewModel()
         Public Property CuentaBancariaModificar As CuentaBancariaViewModel = New CuentaBancariaViewModel()
 
         Friend Async Function BuscarAsync() As Task
             CuentasBancariasListado.Clear()
             Dim cuentasBancarias As List(Of Model.CuentaBancaria) = Await CuentaBancariaService.ObtenerAsync(TipoBase.Remota, BancoBusquedaSeleccionado.Key?.Id, HabilitadosSeleccionado.Key)
-            cuentasBancarias.ForEach(Sub(x) CuentasBancariasListado.Add(Mapper.Map(Of CuentaBancariaViewModel)(x)))
+            cuentasBancarias.ForEach(Sub(x) CuentasBancariasListado.Add(New CuentaBancariaItem(x)))
         End Function
 
         Friend Async Function CargarBancosAsync() As Task
@@ -62,8 +62,10 @@ Namespace Formularios.CuentaBancaria
             Await CuentaBancariaService.ActualizarAsync(TipoBase.Remota, cuentaBancaria)
         End Function
 
-        Friend Sub Cargar(cuentaBancariaViewModel As CuentaBancariaViewModel)
-            CuentaBancariaModificar = cuentaBancariaViewModel
+        Friend Sub Cargar(cuentaBancariaViewModel As CuentaBancariaItem)
+            CuentaBancariaModificar = Mapper.Map(Of CuentaBancariaViewModel)(cuentaBancariaViewModel.CuentaBancaria)
+            CuentaBancariaModificar.Bancos.Add(New KeyValuePair(Of Model.Banco, String)(Nothing, My.Resources.ComboOpcionSelecioneUnaOpcion))
+            bancosModel.ForEach(Sub(x) CuentaBancariaModificar.Bancos.Add(New KeyValuePair(Of Model.Banco, String)(x, x.Nombre)))
         End Sub
 
         Private Sub ValidarRequeridos(cuentaBancariaViewModel As CuentaBancariaViewModel)

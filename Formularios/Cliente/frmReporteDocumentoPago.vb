@@ -10,6 +10,7 @@ Public Class frmReporteDocumentoPagol
 
     Private IdDocumentoPago As Long
     Private dtPagos As New DataTable
+    Private dtDepositos As New DataTable
     Private dtCheques As New DataTable
 
     Sub New(idDocumentoPago As Long)
@@ -24,14 +25,23 @@ Public Class frmReporteDocumentoPagol
                           Dim rpt = New ReporteDocumentoPago
 
                           Dim documentoDePago As DocumentoDePago = Await DocumentoDePagoService.ObtenerAsync(TipoBase.Remota, IdDocumentoPago)
-                          Dim pagosSinCheques As List(Of DocumentoDePagoPago) = documentoDePago.Pagos.Where(Function(x) x.TipoPago <> TipoPago.Cheque).ToList()
+                          Dim pagosSinChequesSinDepositos As List(Of DocumentoDePagoPago) = documentoDePago.Pagos.Where(Function(x) x.TipoPago <> TipoPago.Cheque AndAlso x.TipoPago <> TipoPago.Deposito).ToList()
+                          Dim pagosConDepositos As List(Of DocumentoDePagoPago) = documentoDePago.Pagos.Where(Function(x) x.TipoPago = TipoPago.Deposito).ToList()
 
-                          If (pagosSinCheques.Count > 0) Then
+                          If (pagosSinChequesSinDepositos.Count > 0) Then
                               InicializarPagosTable()
-                              pagosSinCheques.ForEach(Sub(x) CargarPagos(x))
+                              pagosSinChequesSinDepositos.ForEach(Sub(x) CargarPagos(x))
                               rpt.Database.Tables("Pago").SetDataSource(dtPagos)
                           Else
                               rpt.ReportDefinition.Sections("PagosSection").SectionFormat.EnableSuppress = True
+                          End If
+
+                          If (pagosConDepositos.Count > 0) Then
+                              InicializarDepositosTable()
+                              pagosConDepositos.ForEach(Sub(x) CargarDepositos(x))
+                              rpt.Database.Tables("Deposito").SetDataSource(dtDepositos)
+                          Else
+                              rpt.ReportDefinition.Sections("DepositosSection").SectionFormat.EnableSuppress = True
                           End If
 
                           If (documentoDePago.Cheques.Count > 0) Then
@@ -59,7 +69,7 @@ Public Class frmReporteDocumentoPagol
 
                           CType(rpt.ReportDefinition.ReportObjects("txtClienteNombre"), TextObject).Text = documentoDePago.ClienteMayorista.RazonSocial
                           CType(rpt.ReportDefinition.ReportObjects("txtClienteDNI"), TextObject).Text = documentoDePago.ClienteMayorista.Cuit
-                          CType(rpt.ReportDefinition.ReportObjects("txtClienteDomicilio"), TextObject).Text = $"{documentoDePago.ClienteMayorista.DomicilioFacturacion.Direccion} - {documentoDePago.ClienteMayorista.DomicilioFacturacion.Localidad}"
+                          CType(rpt.ReportDefinition.ReportObjects("txtClienteDomicilio"), TextObject).Text = $"{documentoDePago.ClienteMayorista.DomicilioFacturacion.Direccion} - {documentoDePago.ClienteMayorista.DomicilioFacturacion.Localidad.Descripcion}"
                           CType(rpt.ReportDefinition.ReportObjects("txtClienteCondicionIva"), TextObject).Text = documentoDePago.ClienteMayorista.CondicionIVA.ToString()
                           CType(rpt.ReportDefinition.ReportObjects("txtTotal"), TextObject).Text = documentoDePago.PagoTotal.Total.ToString("c2")
                           CType(rpt.ReportDefinition.ReportObjects("txtFirmaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
@@ -79,6 +89,21 @@ Public Class frmReporteDocumentoPagol
         dr(3) = pago.MontoPago.Total
 
         dtPagos.Rows.Add(dr)
+    End Sub
+
+    Private Sub CargarDepositos(pago As DocumentoDePagoPago)
+        Dim dr As DataRow = dtDepositos.NewRow()
+        dr(0) = pago.Id
+        dr(1) = pago.CuentaBancaria.Banco.Nombre
+        dr(2) = pago.CuentaBancaria.CBU
+        dr(3) = pago.CuentaBancaria.NumeroCuenta
+        dr(4) = pago.CuentaBancaria.CBUAlias
+        dr(5) = pago.CuentaBancaria.Titular
+        dr(6) = pago.CuentaBancaria.CUIT
+        dr(7) = If(pago.CuentaBancaria.EsCuentaCorriente, "Si", "No")
+        dr(8) = pago.MontoPago.Total
+
+        dtDepositos.Rows.Add(dr)
     End Sub
 
     Private Sub CargarCheque(cheque As Cheque)
@@ -103,6 +128,21 @@ Public Class frmReporteDocumentoPagol
         dtPagos.Columns("Subtotal").DefaultValue = 0
         dtPagos.Columns("CFT").DefaultValue = 0
         dtPagos.Columns("Total").DefaultValue = 0
+    End Sub
+
+    Private Sub InicializarDepositosTable()
+        dtDepositos = New DataTable("DepositosItems")
+        dtDepositos.Columns.Add("Numero", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("Banco", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("CBU", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("NumeroCuenta", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("Alias", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("Titular", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("CUIT", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("EsCuentaCorriente", Type.GetType("System.String"))
+        dtDepositos.Columns.Add("Importe", Type.GetType("System.Double"))
+
+        dtDepositos.Columns("Importe").DefaultValue = 0
     End Sub
 
     Private Sub InicializarChequesTable()

@@ -46,9 +46,6 @@ Partial Class frmClienteMayoristaBuscar
         '
         'GB_Clientes
         '
-        Me.GB_Clientes.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Clientes.Controls.Add(Me.lbl_Msg)
         Me.GB_Clientes.Controls.Add(Me.Btn_Limpiar)
         Me.GB_Clientes.Controls.Add(Me.Label2)
@@ -57,10 +54,11 @@ Partial Class frmClienteMayoristaBuscar
         Me.GB_Clientes.Controls.Add(Me.btn_Buscar)
         Me.GB_Clientes.Controls.Add(Me.Label1)
         Me.GB_Clientes.Controls.Add(Me.txt_Buscar)
+        Me.GB_Clientes.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GB_Clientes.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GB_Clientes.Location = New System.Drawing.Point(12, 12)
+        Me.GB_Clientes.Location = New System.Drawing.Point(0, 0)
         Me.GB_Clientes.Name = "GB_Clientes"
-        Me.GB_Clientes.Size = New System.Drawing.Size(570, 354)
+        Me.GB_Clientes.Size = New System.Drawing.Size(594, 378)
         Me.GB_Clientes.TabIndex = 1
         Me.GB_Clientes.TabStop = False
         Me.GB_Clientes.Text = "Buscar Cliente"
@@ -75,7 +73,7 @@ Partial Class frmClienteMayoristaBuscar
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(99, 207)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(374, 35)
+        Me.lbl_Msg.Size = New System.Drawing.Size(398, 59)
         Me.lbl_Msg.TabIndex = 13
         Me.lbl_Msg.Text = "No se han encontrado clientes."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -91,7 +89,7 @@ Partial Class frmClienteMayoristaBuscar
         Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
         Me.Btn_Limpiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Limpiar.Location = New System.Drawing.Point(376, 65)
+        Me.Btn_Limpiar.Location = New System.Drawing.Point(400, 65)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
         Me.Btn_Limpiar.Size = New System.Drawing.Size(97, 40)
         Me.Btn_Limpiar.TabIndex = 10
@@ -141,7 +139,7 @@ Partial Class frmClienteMayoristaBuscar
         Me.DG_Clientes.ReadOnly = True
         Me.DG_Clientes.RowHeadersVisible = False
         Me.DG_Clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Clientes.Size = New System.Drawing.Size(555, 227)
+        Me.DG_Clientes.Size = New System.Drawing.Size(579, 251)
         Me.DG_Clientes.TabIndex = 3
         '
         'IdDataGridViewTextBoxColumn
@@ -182,7 +180,7 @@ Partial Class frmClienteMayoristaBuscar
         Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Buscar.Location = New System.Drawing.Point(479, 65)
+        Me.btn_Buscar.Location = New System.Drawing.Point(503, 65)
         Me.btn_Buscar.Name = "btn_Buscar"
         Me.btn_Buscar.Size = New System.Drawing.Size(85, 40)
         Me.btn_Buscar.TabIndex = 2
@@ -206,7 +204,7 @@ Partial Class frmClienteMayoristaBuscar
         Me.txt_Buscar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmClienteMayoristaBuscarViewModelBindingSource, "RazonSocial", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_Buscar.Location = New System.Drawing.Point(91, 75)
         Me.txt_Buscar.Name = "txt_Buscar"
-        Me.txt_Buscar.Size = New System.Drawing.Size(279, 21)
+        Me.txt_Buscar.Size = New System.Drawing.Size(303, 21)
         Me.txt_Buscar.TabIndex = 1
         Me.ToolCliente.SetToolTip(Me.txt_Buscar, "Usted puede realizar una busqueda por palabra completa  o parte de ella.")
         '

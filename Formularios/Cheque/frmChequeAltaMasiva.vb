@@ -13,11 +13,18 @@ Public Class frmChequeAltaMasiva
         End Get
     End Property
 
-    Sub New(totalAPagar As Decimal, idClienteMayorista As Integer)
+    Sub New(totalAPagar As Decimal, ultimoNumeroDeOrden As Integer?, idClienteMayorista As Integer)
         ' This call is required by the designer.
         InitializeComponent()
 
-        frmChequeAltaMasivaViewModel = New frmChequeAltaMasivaViewModel(My.Settings.Sucursal, totalAPagar, idClienteMayorista)
+        frmChequeAltaMasivaViewModel = New frmChequeAltaMasivaViewModel(My.Settings.Sucursal, totalAPagar, ultimoNumeroDeOrden, idClienteMayorista)
+    End Sub
+
+    Sub New(totalAPagar As Decimal, ultimoNumeroDeOrden As Integer?)
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        frmChequeAltaMasivaViewModel = New frmChequeAltaMasivaViewModel(My.Settings.Sucursal, totalAPagar, ultimoNumeroDeOrden)
     End Sub
 
     Private Sub frmChequeAltaMasiva_Load(sender As Object, e As EventArgs) Handles MyBase.Load

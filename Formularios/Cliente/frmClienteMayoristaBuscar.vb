@@ -34,7 +34,7 @@ Public Class frmClienteMayoristaBuscar
         Ejecutar(Sub()
                      Dim clienteMayoristaItem As ClienteMayoristaItem = DG_Clientes.CurrentRow.DataBoundItem
                      ClienteMayorista = clienteMayoristaItem.ClienteMayorista
-                     Close()
+                     Me.DialogResult = DialogResult.OK
                  End Sub)
     End Sub
 

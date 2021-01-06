@@ -42,13 +42,19 @@ Namespace Formularios.Cheque
             End Get
         End Property
 
-        Public Sub New(idSucursal As Integer, totalAPagar As Decimal, idClienteMayorista As Integer)
+        Public Sub New(idSucursal As Integer, totalAPagar As Decimal, ultimoNumeroDeOrden As Integer?, idClienteMayorista As Integer)
+            Me.New(idSucursal, totalAPagar, ultimoNumeroDeOrden)
+
+            ChequeDetalle.IdCliente = idClienteMayorista
+        End Sub
+
+        Public Sub New(idSucursal As Integer, totalAPagar As Decimal, ultimoNumeroDeOrden As Integer?)
             Me.IdSucursal = idSucursal
             _ChequesModel = New List(Of Model.Cheque)()
             Cheques = New BindingList(Of ChequeAdministracionItemViewModel)()
             ChequeDetalle = New ChequeDetalleViewModel()
             ChequeDetalle.Monto = totalAPagar
-            ChequeDetalle.IdCliente = idClienteMayorista
+            ChequeDetalle.NumeroOrden = If(Not ultimoNumeroDeOrden.HasValue, 0, ultimoNumeroDeOrden + 1)
             Me.TotalAPagar = totalAPagar
         End Sub
 
@@ -142,13 +148,17 @@ Namespace Formularios.Cheque
         End Function
 
         Private Async Function CargarUltimoNumeroDeOrdenAsync() As Task
-            Dim ultimoNumeroDeOrden As Integer = Await Task.Run(Function() Servicio.ObtenerUltimoNumeroDeOrden(IdSucursal))
-            ChequeDetalle.NumeroOrden = ultimoNumeroDeOrden + 1
+            If (ChequeDetalle.NumeroOrden = 0) Then
+                Dim ultimoNumeroDeOrden As Integer = Await Task.Run(Function() Servicio.ObtenerUltimoNumeroDeOrden(IdSucursal))
+                ChequeDetalle.NumeroOrden = ultimoNumeroDeOrden + 1
+            End If
         End Function
 
         Private Async Function CargarClienteMayoristaAsync() As Task
-            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, ChequeDetalle.IdCliente)
-            ChequeDetalle.ClienteNombre = clienteMayorista.RazonSocial
+            If (ChequeDetalle.IdCliente.HasValue) Then
+                Dim clienteMayorista As ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, ChequeDetalle.IdCliente)
+                ChequeDetalle.ClienteNombre = clienteMayorista.RazonSocial
+            End If
         End Function
     End Class
 End Namespace
