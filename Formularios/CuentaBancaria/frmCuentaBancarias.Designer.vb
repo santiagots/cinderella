@@ -28,6 +28,7 @@ Partial Class frmCuentaBancarias
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCuentaBancarias))
         Me.TabCuentasBancarias = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
+        Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
@@ -39,6 +40,16 @@ Partial Class frmCuentaBancarias
         Me.Label7 = New System.Windows.Forms.Label()
         Me.btnBuscar = New System.Windows.Forms.Button()
         Me.DG_CuentasBancarias = New System.Windows.Forms.DataGridView()
+        Me.BancoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CBUDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CBUAliasDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TitularDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CUITDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.CuentasBancariasListadoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TbAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -85,16 +96,6 @@ Partial Class frmCuentaBancarias
         Me.cbBancoModificacion = New System.Windows.Forms.ComboBox()
         Me.BancosModificacionBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Btn_Modificar = New System.Windows.Forms.Button()
-        Me.CuentasBancariasListadoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.BancoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CBUDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CBUAliasDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TitularDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CUITDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabCuentasBancarias.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -103,6 +104,7 @@ Partial Class frmCuentaBancarias
         CType(Me.HabilitadosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BancosBusquedaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_CuentasBancarias, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CuentasBancariasListadoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbAlta.SuspendLayout()
         Me.GB_Alta.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -115,7 +117,6 @@ Partial Class frmCuentaBancarias
         CType(Me.ModificacionCuentaBancariaViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel5.SuspendLayout()
         CType(Me.BancosModificacionBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CuentasBancariasListadoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabCuentasBancarias
@@ -133,6 +134,7 @@ Partial Class frmCuentaBancarias
         '
         'TbListado
         '
+        Me.TbListado.Controls.Add(Me.lbl_Msg)
         Me.TbListado.Controls.Add(Me.GroupBox1)
         Me.TbListado.Controls.Add(Me.DG_CuentasBancarias)
         Me.TbListado.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -143,6 +145,21 @@ Partial Class frmCuentaBancarias
         Me.TbListado.TabIndex = 0
         Me.TbListado.Text = "Cuentas"
         Me.TbListado.UseVisualStyleBackColor = True
+        '
+        'lbl_Msg
+        '
+        Me.lbl_Msg.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.DataBindings.Add(New System.Windows.Forms.Binding("Visible", Me.FrmCuentaBancariasViewModelBindingSource, "SinResultados", True))
+        Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Msg.Location = New System.Drawing.Point(153, 283)
+        Me.lbl_Msg.Name = "lbl_Msg"
+        Me.lbl_Msg.Size = New System.Drawing.Size(398, 59)
+        Me.lbl_Msg.TabIndex = 14
+        Me.lbl_Msg.Text = "No se han encontrado cuentas bancarias."
+        Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GroupBox1
         '
@@ -164,7 +181,7 @@ Partial Class frmCuentaBancarias
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.44445!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.ComboBox2, 4, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.ComboBox1, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Label9, 0, 0)
@@ -187,9 +204,9 @@ Partial Class frmCuentaBancarias
         Me.ComboBox2.DisplayMember = "Value"
         Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(356, 12)
+        Me.ComboBox2.Location = New System.Drawing.Point(353, 12)
         Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(157, 21)
+        Me.ComboBox2.Size = New System.Drawing.Size(154, 21)
         Me.ComboBox2.TabIndex = 1
         Me.ComboBox2.ValueMember = "Key"
         '
@@ -212,7 +229,7 @@ Partial Class frmCuentaBancarias
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Location = New System.Drawing.Point(78, 12)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(157, 21)
+        Me.ComboBox1.Size = New System.Drawing.Size(154, 21)
         Me.ComboBox1.TabIndex = 0
         Me.ComboBox1.ValueMember = "Key"
         '
@@ -235,7 +252,7 @@ Partial Class frmCuentaBancarias
         '
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(281, 16)
+        Me.Label7.Location = New System.Drawing.Point(278, 16)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(69, 13)
         Me.Label7.TabIndex = 3
@@ -267,7 +284,6 @@ Partial Class frmCuentaBancarias
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DG_CuentasBancarias.AutoGenerateColumns = False
         Me.DG_CuentasBancarias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_CuentasBancarias.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_CuentasBancarias.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
@@ -305,8 +321,96 @@ Partial Class frmCuentaBancarias
         Me.DG_CuentasBancarias.RowHeadersVisible = False
         Me.DG_CuentasBancarias.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.DG_CuentasBancarias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_CuentasBancarias.Size = New System.Drawing.Size(698, 470)
+        Me.DG_CuentasBancarias.Size = New System.Drawing.Size(698, 493)
         Me.DG_CuentasBancarias.TabIndex = 1
+        '
+        'BancoDataGridViewTextBoxColumn
+        '
+        Me.BancoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.BancoDataGridViewTextBoxColumn.DataPropertyName = "Banco"
+        Me.BancoDataGridViewTextBoxColumn.HeaderText = "Banco"
+        Me.BancoDataGridViewTextBoxColumn.Name = "BancoDataGridViewTextBoxColumn"
+        Me.BancoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.BancoDataGridViewTextBoxColumn.Width = 63
+        '
+        'CBUDataGridViewTextBoxColumn
+        '
+        Me.CBUDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CBUDataGridViewTextBoxColumn.DataPropertyName = "CBU"
+        Me.CBUDataGridViewTextBoxColumn.HeaderText = "CBU"
+        Me.CBUDataGridViewTextBoxColumn.Name = "CBUDataGridViewTextBoxColumn"
+        Me.CBUDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "NumeroCuenta"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Nro. Cuenta"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Width = 89
+        '
+        'CBUAliasDataGridViewTextBoxColumn
+        '
+        Me.CBUAliasDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CBUAliasDataGridViewTextBoxColumn.DataPropertyName = "CBUAlias"
+        Me.CBUAliasDataGridViewTextBoxColumn.HeaderText = "Alias"
+        Me.CBUAliasDataGridViewTextBoxColumn.Name = "CBUAliasDataGridViewTextBoxColumn"
+        Me.CBUAliasDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CBUAliasDataGridViewTextBoxColumn.Width = 54
+        '
+        'TitularDataGridViewTextBoxColumn
+        '
+        Me.TitularDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.TitularDataGridViewTextBoxColumn.DataPropertyName = "Titular"
+        Me.TitularDataGridViewTextBoxColumn.HeaderText = "Titular"
+        Me.TitularDataGridViewTextBoxColumn.Name = "TitularDataGridViewTextBoxColumn"
+        Me.TitularDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CUITDataGridViewTextBoxColumn
+        '
+        Me.CUITDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CUITDataGridViewTextBoxColumn.DataPropertyName = "CUIT"
+        Me.CUITDataGridViewTextBoxColumn.HeaderText = "CUIT"
+        Me.CUITDataGridViewTextBoxColumn.Name = "CUITDataGridViewTextBoxColumn"
+        Me.CUITDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CUITDataGridViewTextBoxColumn.Width = 57
+        '
+        'EsCuentaCorrienteDataGridViewCheckBoxColumn
+        '
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.DataPropertyName = "EsCuentaCorriente"
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.FalseValue = ""
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.HeaderText = "Cta. Cte."
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.Name = "EsCuentaCorrienteDataGridViewCheckBoxColumn"
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.ReadOnly = True
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.TrueValue = ""
+        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.Width = 54
+        '
+        'HabilitadoDataGridViewCheckBoxColumn
+        '
+        Me.HabilitadoDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
+        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
+        Me.HabilitadoDataGridViewCheckBoxColumn.Width = 60
+        '
+        'Modificar
+        '
+        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Modificar.FillWeight = 60.34863!
+        Me.Modificar.HeaderText = ""
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Modificar.Width = 5
+        '
+        'CuentasBancariasListadoBindingSource
+        '
+        Me.CuentasBancariasListadoBindingSource.DataMember = "CuentasBancariasListado"
+        Me.CuentasBancariasListadoBindingSource.DataSource = Me.FrmCuentaBancariasViewModelBindingSource
         '
         'TbAlta
         '
@@ -541,7 +645,7 @@ Partial Class frmCuentaBancarias
         Me.cbBancoAlta.DisplayMember = "Value"
         Me.cbBancoAlta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbBancoAlta.FormattingEnabled = True
-        Me.cbBancoAlta.Location = New System.Drawing.Point(3, 6)
+        Me.cbBancoAlta.Location = New System.Drawing.Point(3, 5)
         Me.cbBancoAlta.Name = "cbBancoAlta"
         Me.cbBancoAlta.Size = New System.Drawing.Size(367, 23)
         Me.cbBancoAlta.TabIndex = 0
@@ -824,7 +928,7 @@ Partial Class frmCuentaBancarias
         Me.cbBancoModificacion.DisplayMember = "Value"
         Me.cbBancoModificacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbBancoModificacion.FormattingEnabled = True
-        Me.cbBancoModificacion.Location = New System.Drawing.Point(3, 6)
+        Me.cbBancoModificacion.Location = New System.Drawing.Point(3, 5)
         Me.cbBancoModificacion.Name = "cbBancoModificacion"
         Me.cbBancoModificacion.Size = New System.Drawing.Size(367, 23)
         Me.cbBancoModificacion.TabIndex = 0
@@ -851,94 +955,6 @@ Partial Class frmCuentaBancarias
         Me.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Modificar.UseVisualStyleBackColor = False
         '
-        'CuentasBancariasListadoBindingSource
-        '
-        Me.CuentasBancariasListadoBindingSource.DataMember = "CuentasBancariasListado"
-        Me.CuentasBancariasListadoBindingSource.DataSource = Me.FrmCuentaBancariasViewModelBindingSource
-        '
-        'BancoDataGridViewTextBoxColumn
-        '
-        Me.BancoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.BancoDataGridViewTextBoxColumn.DataPropertyName = "Banco"
-        Me.BancoDataGridViewTextBoxColumn.HeaderText = "Banco"
-        Me.BancoDataGridViewTextBoxColumn.Name = "BancoDataGridViewTextBoxColumn"
-        Me.BancoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.BancoDataGridViewTextBoxColumn.Width = 63
-        '
-        'CBUDataGridViewTextBoxColumn
-        '
-        Me.CBUDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.CBUDataGridViewTextBoxColumn.DataPropertyName = "CBU"
-        Me.CBUDataGridViewTextBoxColumn.HeaderText = "CBU"
-        Me.CBUDataGridViewTextBoxColumn.Name = "CBUDataGridViewTextBoxColumn"
-        Me.CBUDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.DataGridViewTextBoxColumn1.DataPropertyName = "NumeroCuenta"
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Nro. Cuenta"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DataGridViewTextBoxColumn1.Width = 89
-        '
-        'CBUAliasDataGridViewTextBoxColumn
-        '
-        Me.CBUAliasDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.CBUAliasDataGridViewTextBoxColumn.DataPropertyName = "CBUAlias"
-        Me.CBUAliasDataGridViewTextBoxColumn.HeaderText = "Alias"
-        Me.CBUAliasDataGridViewTextBoxColumn.Name = "CBUAliasDataGridViewTextBoxColumn"
-        Me.CBUAliasDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CBUAliasDataGridViewTextBoxColumn.Width = 54
-        '
-        'TitularDataGridViewTextBoxColumn
-        '
-        Me.TitularDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.TitularDataGridViewTextBoxColumn.DataPropertyName = "Titular"
-        Me.TitularDataGridViewTextBoxColumn.HeaderText = "Titular"
-        Me.TitularDataGridViewTextBoxColumn.Name = "TitularDataGridViewTextBoxColumn"
-        Me.TitularDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CUITDataGridViewTextBoxColumn
-        '
-        Me.CUITDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.CUITDataGridViewTextBoxColumn.DataPropertyName = "CUIT"
-        Me.CUITDataGridViewTextBoxColumn.HeaderText = "CUIT"
-        Me.CUITDataGridViewTextBoxColumn.Name = "CUITDataGridViewTextBoxColumn"
-        Me.CUITDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CUITDataGridViewTextBoxColumn.Width = 57
-        '
-        'EsCuentaCorrienteDataGridViewCheckBoxColumn
-        '
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.DataPropertyName = "EsCuentaCorriente"
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.FalseValue = ""
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.HeaderText = "Cta. Cte."
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.Name = "EsCuentaCorrienteDataGridViewCheckBoxColumn"
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.ReadOnly = True
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.TrueValue = ""
-        Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.Width = 54
-        '
-        'HabilitadoDataGridViewCheckBoxColumn
-        '
-        Me.HabilitadoDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
-        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
-        Me.HabilitadoDataGridViewCheckBoxColumn.Width = 60
-        '
-        'Modificar
-        '
-        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Modificar.FillWeight = 60.34863!
-        Me.Modificar.HeaderText = ""
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Modificar.Width = 5
-        '
         'frmCuentaBancarias
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -957,6 +973,7 @@ Partial Class frmCuentaBancarias
         CType(Me.HabilitadosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BancosBusquedaBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DG_CuentasBancarias, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CuentasBancariasListadoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbAlta.ResumeLayout(False)
         Me.GB_Alta.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
@@ -971,7 +988,6 @@ Partial Class frmCuentaBancarias
         CType(Me.ModificacionCuentaBancariaViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel5.ResumeLayout(False)
         CType(Me.BancosModificacionBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CuentasBancariasListadoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1046,4 +1062,5 @@ Partial Class frmCuentaBancarias
     Friend WithEvents EsCuentaCorrienteDataGridViewCheckBoxColumn As DataGridViewCheckBoxColumn
     Friend WithEvents HabilitadoDataGridViewCheckBoxColumn As DataGridViewCheckBoxColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
+    Friend WithEvents lbl_Msg As Label
 End Class

@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>17</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.3.4.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -542,12 +542,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\SucursalSaldo\ViewModel\frmSucursalesSaldoViewModel.vb" />
-    <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.Designer.vb">
-      <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Formularios\Cliente\frmClienteMayoristaBuscar.Designer.vb">
       <DependentUpon>frmClienteMayoristaBuscar.vb</DependentUpon>
     </Compile>
@@ -606,6 +600,12 @@
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios\Facturacion\frmControladorFiscal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.Designer.vb">
+      <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Venta\frmBuscarClienteMinorista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\Venta\frmDatosClienteMinorista.Designer.vb">
@@ -1419,9 +1419,6 @@
     <EmbeddedResource Include="Formularios\SucursalSaldo\frmSucursalesSaldo.resx">
       <DependentUpon>frmSucursalesSaldo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Venta\frmBuscarClienteMinorista.resx">
-      <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cliente\frmClienteMayoristaBuscar.resx">
       <DependentUpon>frmClienteMayoristaBuscar.vb</DependentUpon>
     </EmbeddedResource>
@@ -1451,6 +1448,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Facturacion\frmControladorFiscal.resx">
       <DependentUpon>frmControladorFiscal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Venta\frmBuscarClienteMinorista.resx">
+      <DependentUpon>frmBuscarClienteMinorista.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Venta\frmDatosClienteMinorista.resx">
       <DependentUpon>frmDatosClienteMinorista.vb</DependentUpon>

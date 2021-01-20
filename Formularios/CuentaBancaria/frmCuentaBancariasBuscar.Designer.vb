@@ -29,9 +29,6 @@ Partial Class frmCuentaBancariasBuscar
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.Btn_Limpiar = New System.Windows.Forms.Button()
         Me.DG_CuentasBancarias = New System.Windows.Forms.DataGridView()
-        Me.CuentasBancariasListadoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.btn_Buscar = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.BancoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CBUDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NumeroCuentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -39,6 +36,9 @@ Partial Class frmCuentaBancariasBuscar
         Me.TitularDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CUITDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EsCuentaCorrienteDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.CuentasBancariasListadoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.btn_Buscar = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.GB_Clientes.SuspendLayout()
         CType(Me.BancosBusquedaBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FrmCuentaBancariasBuscarViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,7 +98,7 @@ Partial Class frmCuentaBancariasBuscar
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(398, 59)
         Me.lbl_Msg.TabIndex = 13
-        Me.lbl_Msg.Text = "No se han encontrado bancos."
+        Me.lbl_Msg.Text = "No se han encontrado cuentas bancarias."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Btn_Limpiar
@@ -139,35 +139,6 @@ Partial Class frmCuentaBancariasBuscar
         Me.DG_CuentasBancarias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_CuentasBancarias.Size = New System.Drawing.Size(579, 296)
         Me.DG_CuentasBancarias.TabIndex = 3
-        '
-        'CuentasBancariasListadoBindingSource
-        '
-        Me.CuentasBancariasListadoBindingSource.DataMember = "CuentasBancariasListado"
-        Me.CuentasBancariasListadoBindingSource.DataSource = Me.FrmCuentaBancariasBuscarViewModelBindingSource
-        '
-        'btn_Buscar
-        '
-        Me.btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
-        Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Buscar.Location = New System.Drawing.Point(503, 20)
-        Me.btn_Buscar.Name = "btn_Buscar"
-        Me.btn_Buscar.Size = New System.Drawing.Size(85, 40)
-        Me.btn_Buscar.TabIndex = 2
-        Me.btn_Buscar.Text = "Buscar"
-        Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_Buscar.UseVisualStyleBackColor = True
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(8, 33)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(42, 15)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Banco"
         '
         'BancoDataGridViewTextBoxColumn
         '
@@ -229,6 +200,35 @@ Partial Class frmCuentaBancariasBuscar
         Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.Name = "EsCuentaCorrienteDataGridViewCheckBoxColumn"
         Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.ReadOnly = True
         Me.EsCuentaCorrienteDataGridViewCheckBoxColumn.Width = 58
+        '
+        'CuentasBancariasListadoBindingSource
+        '
+        Me.CuentasBancariasListadoBindingSource.DataMember = "CuentasBancariasListado"
+        Me.CuentasBancariasListadoBindingSource.DataSource = Me.FrmCuentaBancariasBuscarViewModelBindingSource
+        '
+        'btn_Buscar
+        '
+        Me.btn_Buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
+        Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Buscar.Location = New System.Drawing.Point(503, 20)
+        Me.btn_Buscar.Name = "btn_Buscar"
+        Me.btn_Buscar.Size = New System.Drawing.Size(85, 40)
+        Me.btn_Buscar.TabIndex = 2
+        Me.btn_Buscar.Text = "Buscar"
+        Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_Buscar.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(8, 33)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(42, 15)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Banco"
         '
         'frmCuentaBancariasBuscar
         '

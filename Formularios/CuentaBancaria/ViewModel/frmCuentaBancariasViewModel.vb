@@ -22,10 +22,17 @@ Namespace Formularios.CuentaBancaria
         Public Property CuentaBancariaAlta As CuentaBancariaViewModel = New CuentaBancariaViewModel()
         Public Property CuentaBancariaModificar As CuentaBancariaViewModel = New CuentaBancariaViewModel()
 
+        Public ReadOnly Property SinResultados As Boolean
+            Get
+                Return Not CuentasBancariasListado.Any()
+            End Get
+        End Property
         Friend Async Function BuscarAsync() As Task
             CuentasBancariasListado.Clear()
             Dim cuentasBancarias As List(Of Model.CuentaBancaria) = Await CuentaBancariaService.ObtenerAsync(TipoBase.Remota, BancoBusquedaSeleccionado.Key?.Id, HabilitadosSeleccionado.Key)
             cuentasBancarias.ForEach(Sub(x) CuentasBancariasListado.Add(New CuentaBancariaItem(x)))
+
+            NotifyPropertyChanged(NameOf(Me.SinResultados))
         End Function
 
         Friend Async Function CargarBancosAsync() As Task
