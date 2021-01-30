@@ -221,7 +221,7 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarTotalesPago();
         }
 
-        public void QuitarVentaItem(string codigoProducto, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        public void QuitarVentaItem(string codigoProducto)
         {
             VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
 

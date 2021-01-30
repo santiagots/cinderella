@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ventas.Core.Enum;
 using Ventas.Core.Interfaces;
-using Ventas.Core.Model.CuentaCorrienteAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;
 using Ventas.Data.Repository;
 
@@ -12,6 +11,18 @@ namespace Ventas.Data.Service
 {
     public class NotaPedidoService
     {
+        public static Task ActualizarAsync(NotaPedido notaPedidoModel)
+        {
+            INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
+            return NotaPedidoRepository.ActualizarAsync(notaPedidoModel);
+        }
+
+        public static Task GuardarAsync(NotaPedido notaPedidoModel)
+        {
+            INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
+            return NotaPedidoRepository.GuardarAsync(notaPedidoModel);
+        }
+
         public static Task<List<NotaPedido>> ObtenerAsync(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());

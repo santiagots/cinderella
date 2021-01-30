@@ -269,7 +269,10 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Comunes\Mapper\MapperProfile.vb" />
     <Compile Include="Comunes\Servicio\Servicio.vb" />
+    <Compile Include="Comunes\ViewModel\PagoViewModel.vb" />
     <Compile Include="Comunes\ViewModel\SaldoSucursalViewModel.vb" />
+    <Compile Include="Comunes\ViewModel\VentaDetalleViewModel.vb" />
+    <Compile Include="Comunes\ViewModel\VentaItemViewModel.vb" />
     <Compile Include="ControlesUsuario\ChequeDetalle.Designer.vb">
       <DependentUpon>ChequeDetalle.vb</DependentUpon>
     </Compile>
@@ -503,14 +506,30 @@
     <Compile Include="Formularios\Producto\ViewModel\ProductoItemViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\ProductoDetalleViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\SubcategoriaItemViewModel.vb" />
-    <Compile Include="Formularios\Reserva\Mapper\MapperProfile.vb" />
-    <Compile Include="Formularios\Reserva\Servicio\Servicio.vb" />
     <Compile Include="ControlesUsuario\VentaDetalle.Designer.vb">
       <DependentUpon>VentaDetalle.vb</DependentUpon>
     </Compile>
     <Compile Include="ControlesUsuario\VentaDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Formularios\Reserva\frmReserva.Designer.vb">
+      <DependentUpon>frmReserva.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Reserva\frmReserva.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Reserva\frmReservaAdministracion.Designer.vb">
+      <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Reserva\frmReservaAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Reserva\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\Reserva\Servicio\Servicio.vb" />
+    <Compile Include="Formularios\Reserva\ViewModel\frmReservaAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Reserva\ViewModel\frmReservaViewModel.vb" />
+    <Compile Include="Formularios\Reserva\ViewModel\ReservaAdministracionItemsViewModel.vb" />
+    <Compile Include="Formularios\Reserva\ViewModel\ReservaDetalleViewModel.vb" />
     <Compile Include="Formularios\SucursalSaldo\frmCierreCaja.Designer.vb">
       <DependentUpon>frmCierreCaja.vb</DependentUpon>
     </Compile>
@@ -986,18 +1005,6 @@
     <Compile Include="Formularios\frmReporteResumenVenta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Reserva\frmReserva.Designer.vb">
-      <DependentUpon>frmReserva.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\Reserva\frmReserva.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\Reserva\frmReservaAdministracion.Designer.vb">
-      <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\Reserva\frmReservaAdministracion.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Formularios\frmSincronizacion.Designer.vb">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
     </Compile>
@@ -1056,6 +1063,12 @@
       <DependentUpon>frmUsuarios.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios\frmUsuarios.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Venta\frmNotaPedidoDetalle.Designer.vb">
+      <DependentUpon>frmNotaPedidoDetalle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Venta\frmNotaPedidoDetalle.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\Venta\frmVentas.Designer.vb">
@@ -1165,6 +1178,7 @@
     <Compile Include="Formularios\Facturacion\ViewModel\DocumentoFiscalViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmFacturaAdministracionViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmNotaCreditoAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmNotaPedidoDetalleViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmVentasAdministracionViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmVerDocumentoFiscalViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\VentaAdministracionItemViewModel.vb" />
@@ -1295,17 +1309,10 @@
     <Compile Include="Comunes\ViewModel\Common.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmBuscarClienteMinoristaViewModel.vb" />
     <Compile Include="Formularios\Cheque\ViewModel\frmChequeAdministracionViewModel.vb" />
-    <Compile Include="Formularios\Reserva\ViewModel\frmReservaViewModel.vb" />
-    <Compile Include="Formularios\Reserva\ViewModel\frmReservaAdministracionViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\NotaPedidoItemsViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmFacturarViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\frmProductosViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmNotaPedidoAdministracionViewModel.vb" />
-    <Compile Include="Comunes\ViewModel\PagoViewModel.vb" />
-    <Compile Include="Formularios\Reserva\ViewModel\ReservaAdministracionItemsViewModel.vb" />
-    <Compile Include="Formularios\Reserva\ViewModel\ReservaDetalleViewModel.vb" />
-    <Compile Include="Comunes\ViewModel\VentaDetalleViewModel.vb" />
-    <Compile Include="Comunes\ViewModel\VentaItemViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmVentasViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -1317,6 +1324,7 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaCorrienteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmNotaPedidoDetalleViewModel.datasource" />
     <None Include="Resources\NavigatorPreviousItem.png" />
     <None Include="Resources\NavigatorFirstItem.png" />
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
@@ -1406,6 +1414,12 @@
     <EmbeddedResource Include="Formularios\MovimientoDetalle\frmMoviminetoDetalle.resx">
       <DependentUpon>frmMoviminetoDetalle.vb</DependentUpon>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Reserva\frmReserva.resx">
+      <DependentUpon>frmReserva.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Reserva\frmReservaAdministracion.resx">
+      <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\SucursalSaldo\frmCierreCaja.resx">
       <DependentUpon>frmCierreCaja.vb</DependentUpon>
@@ -1645,12 +1659,6 @@
     <EmbeddedResource Include="Formularios\frmReporteResumenVenta.resx">
       <DependentUpon>frmReporteResumenVenta.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Reserva\frmReserva.resx">
-      <DependentUpon>frmReserva.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Reserva\frmReservaAdministracion.resx">
-      <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmSincronizacion.resx">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
     </EmbeddedResource>
@@ -1680,6 +1688,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmUsuarios.resx">
       <DependentUpon>frmUsuarios.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Venta\frmNotaPedidoDetalle.resx">
+      <DependentUpon>frmNotaPedidoDetalle.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Venta\frmVentas.resx">
       <DependentUpon>frmVentas.vb</DependentUpon>

@@ -421,8 +421,8 @@ Namespace Formularios.Venta
             Await Task.Run(Sub() Servicio.GuardarNotaPedido(notaPedido))
 
             If (NotaPedidoModel IsNot Nothing) Then 'Si existe es porque esta editando la nota de pedido
-                NotaPedidoModel.Cerrar()
-                Await Task.Run(Sub() Servicio.ActualizarNotaPedido(NotaPedidoModel))
+                NotaPedidoModel.VentaFinalizada("", VariablesGlobales.objUsuario.Usuario)
+                Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
                 Await FinalizarNotaPedidoEvent()
             End If
         End Function
@@ -462,8 +462,8 @@ Namespace Formularios.Venta
             End If
 
             If (NotaPedidoModel IsNot Nothing) Then
-                NotaPedidoModel.Cerrar()
-                Await Task.Run(Sub() Servicio.ActualizarNotaPedido(NotaPedidoModel))
+                NotaPedidoModel.VentaFinalizada("", VariablesGlobales.objUsuario.Usuario)
+                Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
                 Await FinalizarNotaPedidoEvent()
             End If
         End Function
@@ -492,7 +492,7 @@ Namespace Formularios.Venta
             End If
 
             If (CantidadUnidadesDeProducto = 0) Then
-                VentaModel.QuitarVentaItem(producto.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
+                VentaModel.QuitarVentaItem(producto.Codigo)
             Else
                 Dim montoProducto As MontoProducto = producto.ObtenerMonto(ListaPrecioSeleccionado, TipoClienteSeleccionado, PorcentajeFacturacion)
 
@@ -564,7 +564,7 @@ Namespace Formularios.Venta
         End Sub
 
         Friend Sub QuitarItemVenta(ventaItemViewModel As VentaItemViewModel)
-            VentaModel.QuitarVentaItem(ventaItemViewModel.Codigo, PorcentajeFacturacion, TipoClienteSeleccionado)
+            VentaModel.QuitarVentaItem(ventaItemViewModel.Codigo)
 
             CalcularPendientePago()
 

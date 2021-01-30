@@ -66,7 +66,6 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.dgNotasPedidos = New System.Windows.Forms.DataGridView()
-        Me.Paginado = New SistemaCinderella.Paginado()
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TipoClienteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VendedorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -76,6 +75,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.NombreClienteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Imprimir = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Paginado = New SistemaCinderella.Paginado()
         CType(Me.NotaPedidosItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NotaPedidoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -376,7 +376,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbTipoVenta.DisplayMember = "Value"
         Me.cmbTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbTipoVenta.FormattingEnabled = True
-        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 33)
+        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 34)
         Me.cmbTipoVenta.Name = "cmbTipoVenta"
         Me.cmbTipoVenta.Size = New System.Drawing.Size(283, 23)
         Me.cmbTipoVenta.TabIndex = 426
@@ -404,7 +404,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbVendedor.DisplayMember = "Value"
         Me.cmbVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbVendedor.FormattingEnabled = True
-        Me.cmbVendedor.Location = New System.Drawing.Point(612, 3)
+        Me.cmbVendedor.Location = New System.Drawing.Point(612, 4)
         Me.cmbVendedor.Name = "cmbVendedor"
         Me.cmbVendedor.Size = New System.Drawing.Size(283, 23)
         Me.cmbVendedor.TabIndex = 430
@@ -423,7 +423,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cbEstado.DisplayMember = "Value"
         Me.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbEstado.FormattingEnabled = True
-        Me.cbEstado.Location = New System.Drawing.Point(143, 4)
+        Me.cbEstado.Location = New System.Drawing.Point(143, 3)
         Me.cbEstado.Name = "cbEstado"
         Me.cbEstado.Size = New System.Drawing.Size(283, 23)
         Me.cbEstado.TabIndex = 438
@@ -597,18 +597,6 @@ Partial Class frmNotaPedidoAdministracion
         Me.dgNotasPedidos.Size = New System.Drawing.Size(910, 455)
         Me.dgNotasPedidos.TabIndex = 21
         '
-        'Paginado
-        '
-        Me.Paginado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Paginado.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.NotaPedidoBindingSource, "NotasPedidosTotalElementos", True))
-        Me.Paginado.Leyenda = "{0} de {1}"
-        Me.Paginado.Location = New System.Drawing.Point(12, 623)
-        Me.Paginado.Name = "Paginado"
-        Me.Paginado.PaginaActual = 1
-        Me.Paginado.Size = New System.Drawing.Size(209, 23)
-        Me.Paginado.TabIndex = 22
-        Me.Paginado.TotalElementos = 0
-        '
         'NumeroDataGridViewTextBoxColumn
         '
         Me.NumeroDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
@@ -696,6 +684,18 @@ Partial Class frmNotaPedidoAdministracion
         Me.Imprimir.Name = "Imprimir"
         Me.Imprimir.ReadOnly = True
         Me.Imprimir.Width = 5
+        '
+        'Paginado
+        '
+        Me.Paginado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Paginado.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.NotaPedidoBindingSource, "NotasPedidosTotalElementos", True))
+        Me.Paginado.Leyenda = "{0} de {1}"
+        Me.Paginado.Location = New System.Drawing.Point(12, 623)
+        Me.Paginado.Name = "Paginado"
+        Me.Paginado.PaginaActual = 1
+        Me.Paginado.Size = New System.Drawing.Size(209, 23)
+        Me.Paginado.TabIndex = 22
+        Me.Paginado.TotalElementos = 0
         '
         'frmNotaPedidoAdministracion
         '

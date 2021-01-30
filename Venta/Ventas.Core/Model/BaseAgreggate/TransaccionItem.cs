@@ -1,12 +1,6 @@
-﻿using Common.Core.Constants;
-using Common.Core.Enum;
-using Common.Core.Helper;
+﻿using Common.Core.Enum;
 using Common.Core.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ventas.Core.Model.ValueObjects;
 
 namespace Ventas.Core.Model.BaseAgreggate
@@ -40,6 +34,13 @@ namespace Ventas.Core.Model.BaseAgreggate
             Cantidad = cantidad;
             PorcentajeBonificacion = porcentajeBonificacion;
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
+        }
+
+        internal void ActualizarMontoProducto(MontoProducto monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            Cantidad = cantidad;
+            PorcentajeBonificacion = porcentajeBonificacion;
+            MontoProducto = monto;
         }
     }
 }

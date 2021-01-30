@@ -96,9 +96,9 @@ Namespace Formularios.Venta
 
         Public Sub CargarVenta(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Id = notaPedidoItem.Id)
-            Dim frmVentas As frmVentas = New frmVentas(notaPedido, AddressOf CargarVentaCallback)
-            frmVentas.MdiParent = MdiParent
-            frmVentas.Show()
+            Dim frmNotaPedidoDetalle As frmNotaPedidoDetalle = New frmNotaPedidoDetalle(notaPedido, AddressOf CargarVentaCallback)
+            frmNotaPedidoDetalle.MdiParent = MdiParent
+            frmNotaPedidoDetalle.Show()
             Visible = False
         End Sub
 
@@ -144,7 +144,7 @@ Namespace Formularios.Venta
         Public Async Function EliminarNotaPedidoAsync(notaPedidoItem As NotaPedidoItemsViewModel) As Task
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Numero = notaPedidoItem.Numero)
             notaPedido.Eliminar()
-            Servicio.ActualizarNotaPedido(notaPedido)
+            Await NotaPedidoService.ActualizarAsync(notaPedido)
             Await Buscar()
         End Function
 

@@ -9,7 +9,7 @@ namespace Ventas.Core.Interfaces
 {
     public interface INotaPedidoRepository
     {
-        void Guardar(NotaPedido notaPedido);
+        Task GuardarAsync(NotaPedido notaPedido);
 
         Task<List<NotaPedido>> ObtenerAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos);
 
@@ -17,8 +17,8 @@ namespace Ventas.Core.Interfaces
 
         decimal ObtenerMontoTotalClienteMayorista(int idClienteMatorista);
 
-        int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado);
-        
-        void Actualizar(NotaPedido notaPedido);
+        int ObtenerCantidad(int idSucursal, List<NotaPedidoEstado> estado);
+
+        Task ActualizarAsync(NotaPedido notaPedidoModel);
     }
 }

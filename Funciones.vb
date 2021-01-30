@@ -182,7 +182,8 @@ Public Class Funciones
     End Sub
 
     Async Function ActualizarNotasPedidosVentasAsync() As Task
-        Dim notasPedidoAbiertas As Integer = Await Task.Run(Function() Formularios.Venta.Servicio.ObtenerCantidadNotaPedido(My.Settings.Sucursal, NotaPedidoEstado.Abierta))
+        Dim estados As List(Of NotaPedidoEstado) = New List(Of NotaPedidoEstado) From {NotaPedidoEstado.Ingresada, NotaPedidoEstado.Venta, NotaPedidoEstado.Envio}
+        Dim notasPedidoAbiertas As Integer = Await Task.Run(Function() Formularios.Venta.Servicio.ObtenerCantidadNotaPedido(My.Settings.Sucursal, estados))
 
         If notasPedidoAbiertas >= 1 Then
             MDIContenedor.Menu_NotaPedidoVenta.Text = "(" & notasPedidoAbiertas & ") Notas de pedidos"

@@ -40,7 +40,7 @@ Public Class Servicio
     Friend Shared Sub GuardarNotaPedido(notaPedidoModel As PedidoModelNota.NotaPedido)
         Using context As VentaContext = New VentaContext()
             Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-            notaPedidoRepository.Guardar(notaPedidoModel)
+            notaPedidoRepository.GuardarAsync(notaPedidoModel)
         End Using
     End Sub
 

@@ -21,16 +21,19 @@ namespace Ventas.Data.Repository
         {
         }
 
-        public void Guardar(NotaPedido notaPedido)
+        public Task GuardarAsync(NotaPedido notaPedido)
         {
             NotaPedido UltimaNotaPedido = _context.NotaPedido
                                         .Where(x => x.IdSucursal == notaPedido.IdSucursal)
                                         .OrderByDescending(x => x.Numero)
                                         .FirstOrDefault();
 
-            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.Categoria = (Categoria)_context.Attach(x.Producto.Categoria));
-            notaPedido.NotaPedidoItems.ToList().ForEach(x => x.Producto.SubCategoria = (SubCategoria)_context.Attach(x.Producto.SubCategoria));
-            notaPedido.NotaPedidoItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
+            foreach (NotaPedidoItem notaPedidoItem in notaPedido.NotaPedidoItems)
+            {
+                notaPedidoItem.Producto.Categoria = (Categoria)_context.Attach(notaPedidoItem.Producto.Categoria);
+                notaPedidoItem.Producto.SubCategoria = (SubCategoria)_context.Attach(notaPedidoItem.Producto.SubCategoria);
+                _context.Entry(notaPedidoItem.Producto).State = EntityState.Unchanged;
+            }
 
             if (UltimaNotaPedido == null)
                 notaPedido.AgregarNumero(1);
@@ -38,23 +41,39 @@ namespace Ventas.Data.Repository
                 notaPedido.AgregarNumero(UltimaNotaPedido.Numero + 1);
 
             if(notaPedido.Encargado != null)
-                _context.Entry(notaPedido.Encargado).State = System.Data.Entity.EntityState.Unchanged;
+                _context.Entry(notaPedido.Encargado).State = EntityState.Unchanged;
 
             if (notaPedido.Vendedor != null)
-                _context.Entry(notaPedido.Vendedor).State = System.Data.Entity.EntityState.Unchanged;
+                _context.Entry(notaPedido.Vendedor).State = EntityState.Unchanged;
 
             if (notaPedido.ClienteMayorista != null)
-                _context.Entry(notaPedido.ClienteMayorista).State = System.Data.Entity.EntityState.Unchanged;
+                _context.Entry(notaPedido.ClienteMayorista).State = EntityState.Unchanged;
 
             _context.NotaPedido.Add(notaPedido);
-            _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
 
-        public void Actualizar(NotaPedido notaPedido)
+        public Task ActualizarAsync(NotaPedido notaPedido)
         {
-            _context.NotaPedido.Attach(notaPedido);
+            foreach (NotaPedidoItem notaPedidoItem in notaPedido.NotaPedidoItems)
+            {
+                _context.Entry(notaPedidoItem).State = notaPedidoItem.Id > 0 ? EntityState.Modified : EntityState.Added;
+                notaPedidoItem.Producto.Categoria = (Categoria)_context.Attach(notaPedidoItem.Producto.Categoria);
+                notaPedidoItem.Producto.SubCategoria = (SubCategoria)_context.Attach(notaPedidoItem.Producto.SubCategoria);
+                _context.Entry(notaPedidoItem.Producto).State = EntityState.Unchanged;
+            }
+
+            if (notaPedido.Encargado != null)
+                _context.Entry(notaPedido.Encargado).State = EntityState.Unchanged;
+
+            if (notaPedido.Vendedor != null)
+                _context.Entry(notaPedido.Vendedor).State = EntityState.Unchanged;
+
+            if (notaPedido.ClienteMayorista != null)
+                _context.Entry(notaPedido.ClienteMayorista).State = EntityState.Unchanged;
+
             _context.Entry(notaPedido).State = EntityState.Modified;
-            _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
 
         public Task<List<NotaPedido>> ObtenerAsync(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
@@ -108,20 +127,20 @@ namespace Ventas.Data.Repository
 
         public decimal ObtenerMontoTotalClienteMayorista(int idClienteMatorista)
         {
-            decimal? MontoTotalClienteMayorista =  _context.NotaPedido.Where(x => !x.Borrado && x.Estado == NotaPedidoEstado.Abierta && x.IdClienteMayorista == idClienteMatorista)
+            decimal? MontoTotalClienteMayorista =  _context.NotaPedido.Where(x => !x.Borrado && x.Estado != NotaPedidoEstado.Cerrada && x.IdClienteMayorista == idClienteMatorista)
                                                                       .SelectMany(x => x.NotaPedidoItems)
                                                                       .Sum(x => (decimal?)(x.MontoProducto.Valor * x.Cantidad));
 
             return MontoTotalClienteMayorista ?? 0;
         }
 
-        public int ObtenerCantidad(int idSucursal, NotaPedidoEstado? estado)
+        public int ObtenerCantidad(int idSucursal, List<NotaPedidoEstado> estado)
         {
             IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
                                                     .Where(x => x.IdSucursal == idSucursal);
 
-            if (estado.HasValue)
-                notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
+            if (estado.Count > 0)
+                notaPedido = notaPedido.Where(x => estado.Contains(x.Estado));
 
             return notaPedido.Count();
         }

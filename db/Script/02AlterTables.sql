@@ -36,5 +36,11 @@ BEGIN
 	insert into [REL_PERFILES_PATENTES] (id_Perfil, id_Patente) values(1, 622)
 END
 
+--Cargo un valor por defecto en la nueva columna "Borrado" de la tabla [NUEVA_NOTA_PEDIDO_ITEMS]
+IF EXISTS (SELECT * FROM [NUEVA_NOTA_PEDIDO_ITEMS] WHERE Borrado is null) 
+BEGIN
+	update [dbo].[NUEVA_NOTA_PEDIDO_ITEMS] set Borrado = 0
+END
+
 COMMIT TRANSACTION
 GO

@@ -39,7 +39,7 @@ Public Class frmVentas
                                             My.Settings.Sucursal,
                                             Common.Core.Enum.TipoCliente.Minorista,
                                             My.Settings.ListaPrecio,
-                                            5,
+                                            My.Settings.ListaPrecioMayorista,
                                             AddressOf CargarNombreYCodigoDeProductosEvent,
                                             AddressOf StockInsuficienteEvent,
                                             AddressOf FacturarEvent,
@@ -414,5 +414,9 @@ Public Class frmVentas
         ventaViewModel.FormaPagoSeleccionado = Cb_FormaPago.SelectedValue
         Cb_Trajeta.Enabled = tipoPago = TipoPago.TarjetaCrédito OrElse tipoPago = TipoPago.TarjetaDébito
         Cb_NroCuota.Enabled = tipoPago = TipoPago.TarjetaCrédito
+    End Sub
+
+    Private Sub Btn_Cancelar_Click(sender As Object, e As EventArgs) Handles Btn_Cancelar.Click
+        Me.Close()
     End Sub
 End Class

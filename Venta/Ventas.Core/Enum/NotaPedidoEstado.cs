@@ -2,7 +2,9 @@
 {
     public enum NotaPedidoEstado
     {
-        Abierta,
+        Ingresada,
+        Venta,
+        Envio,
         Cerrada
     }
 }

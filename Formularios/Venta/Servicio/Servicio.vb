@@ -19,13 +19,6 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Sub ActualizarNotaPedido(notaPedido As NotaPedido)
-            Using context As VentaContext = New VentaContext()
-                Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-                notaPedidoRepository.Actualizar(notaPedido)
-            End Using
-        End Sub
-
         Public Shared Function BuscarClienteMinorista(nombre As String, apellido As String) As IList(Of ModelBase.ClienteMinorista)
             Using context As VentaContext = New VentaContext()
                 Dim clienteMinoristaRepository As IClienteMinoristaRepository = New ClienteMinoristaRepository(context)
@@ -50,7 +43,7 @@ Namespace Formularios.Venta
         Friend Shared Sub GuardarNotaPedido(notaPedidoModel As NotaPedido)
             Using context As VentaContext = New VentaContext()
                 Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-                notaPedidoRepository.Guardar(notaPedidoModel)
+                notaPedidoRepository.GuardarAsync(notaPedidoModel)
             End Using
         End Sub
 
@@ -68,10 +61,10 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Public Shared Function ObtenerCantidadNotaPedido(idSucursal As Integer, estado As NotaPedidoEstado?) As Integer
+        Public Shared Function ObtenerCantidadNotaPedido(idSucursal As Integer, estados As List(Of NotaPedidoEstado)) As Integer
             Using context As VentaContext = New VentaContext()
                 Dim NotaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-                Return NotaPedidoRepository.ObtenerCantidad(idSucursal, estado)
+                Return NotaPedidoRepository.ObtenerCantidad(idSucursal, estados)
             End Using
         End Function
 
