@@ -40,13 +40,6 @@ Namespace Formularios.Venta
             End Using
         End Sub
 
-        Friend Shared Sub GuardarNotaPedido(notaPedidoModel As NotaPedido)
-            Using context As VentaContext = New VentaContext()
-                Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-                notaPedidoRepository.GuardarAsync(notaPedidoModel)
-            End Using
-        End Sub
-
         Public Shared Sub GuardarClienteMinorista(clienteMinorista As ModelBase.ClienteMinorista)
             Using context As VentaContext = New VentaContext()
                 Dim clienteMinoristaRepository As IClienteMinoristaRepository = New ClienteMinoristaRepository(context)

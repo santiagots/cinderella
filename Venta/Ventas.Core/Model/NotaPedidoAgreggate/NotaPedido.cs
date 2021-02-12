@@ -89,18 +89,28 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             }
         }
 
+        public void Actualizar(string comentario, string usuario)
+        {
+            Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, Estado);
+            FechaEdicion = DateTime.Now;
+        }
+
         public void ArmadoFinalizado(string comentario, string usuario)
         {
             NotaPedidoEstado nuevoEstado = NotaPedidoEstado.Venta;
+
+            if (TipoCliente == TipoCliente.Minorista)
+                throw new NegocioException($"Las notas de pedido para los clientes minoristas no pueden cambiar al estado {nuevoEstado}");
+
             Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, nuevoEstado);
             Estado = nuevoEstado;
             FechaEdicion = DateTime.Now;
         }
 
-        public void VentaFinalizada(string comentario, string usuario)
+        public void VentaFinalizada(string usuario)
         {
-            NotaPedidoEstado nuevoEstado = NotaPedidoEstado.Envio;
-            Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, nuevoEstado);
+            NotaPedidoEstado nuevoEstado = TipoCliente == TipoCliente.Mayorista? NotaPedidoEstado.Envio : NotaPedidoEstado.Cerrada;
+            Comentarios += Environment.NewLine + ObtenerComentario(usuario, Estado, nuevoEstado);
             Estado = nuevoEstado;
             FechaEdicion = DateTime.Now;
         }
@@ -108,6 +118,10 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         public void EnvioFinalizado(string comentario, string usuario)
         {
             NotaPedidoEstado nuevoEstado = NotaPedidoEstado.Cerrada;
+
+            if (TipoCliente == TipoCliente.Minorista)
+                throw new NegocioException($"Las notas de pedido para los clientes minoristas no pueden cambiar al estado {nuevoEstado}");
+
             Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, nuevoEstado);
             Estado = nuevoEstado;
             FechaEdicion = DateTime.Now;
@@ -147,9 +161,14 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             Borrado = true;
         }
 
+        private string ObtenerComentario(string usuario, NotaPedidoEstado estadoOriginal, NotaPedidoEstado estadoNuevo)
+        {
+            return ObtenerComentario(string.Empty, usuario, estadoOriginal, estadoNuevo);
+        }
+
         private string ObtenerComentario(string nuevoComentario, string usuario, NotaPedidoEstado estadoOriginal, NotaPedidoEstado estadoNuevo)
         {
-            nuevoComentario = !string.IsNullOrWhiteSpace(nuevoComentario) ? Environment.NewLine + nuevoComentario : string.Empty;
+            nuevoComentario = !string.IsNullOrWhiteSpace(nuevoComentario) ? $"{Environment.NewLine}{nuevoComentario}" : string.Empty;
 
             nuevoComentario = $"-- {DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString()} Usuario:{usuario} Cambio estado:{estadoOriginal} -> {estadoNuevo}  --{nuevoComentario}";
             return nuevoComentario;

@@ -30,29 +30,25 @@ Partial Class frmNotaPedidoAdministracion
         Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label31 = New System.Windows.Forms.Label()
-        Me.chkSinSalida = New System.Windows.Forms.CheckBox()
-        Me.chkDepositado = New System.Windows.Forms.CheckBox()
-        Me.chkPasado = New System.Windows.Forms.CheckBox()
-        Me.chkDevuelto = New System.Windows.Forms.CheckBox()
-        Me.chkOtros = New System.Windows.Forms.CheckBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btn_Restablecer = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.dtFechaAltaDesde = New System.Windows.Forms.DateTimePicker()
         Me.dtFechaAltaHasta = New System.Windows.Forms.DateTimePicker()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.cmbTipoVenta = New System.Windows.Forms.ComboBox()
         Me.TipoClienteBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.cbEstado = New System.Windows.Forms.ComboBox()
+        Me.EstadoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.txtNombreCliente = New System.Windows.Forms.TextBox()
         Me.cmbVendedor = New System.Windows.Forms.ComboBox()
         Me.VendedoresBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.cbEstado = New System.Windows.Forms.ComboBox()
-        Me.EstadoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TipoPagoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
@@ -80,11 +76,11 @@ Partial Class frmNotaPedidoAdministracion
         CType(Me.NotaPedidoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.TipoClienteBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.VendedoresBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EstadoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel4.SuspendLayout()
+        CType(Me.VendedoresBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TipoPagoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
@@ -105,7 +101,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(472, 37)
+        Me.Label12.Location = New System.Drawing.Point(475, 7)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(134, 16)
         Me.Label12.TabIndex = 32
@@ -132,7 +128,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(3, 37)
+        Me.Label1.Location = New System.Drawing.Point(3, 67)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(134, 16)
         Me.Label1.TabIndex = 112
@@ -143,131 +139,186 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(472, 7)
+        Me.Label3.Location = New System.Drawing.Point(475, 37)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(134, 16)
         Me.Label3.TabIndex = 142
         Me.Label3.Text = "Vendedor"
-        '
-        'Label31
-        '
-        Me.Label31.AutoSize = True
-        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label31.Location = New System.Drawing.Point(8, 192)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(110, 16)
-        Me.Label31.TabIndex = 423
-        Me.Label31.Text = "Destino Salida"
-        '
-        'chkSinSalida
-        '
-        Me.chkSinSalida.AutoSize = True
-        Me.chkSinSalida.Checked = True
-        Me.chkSinSalida.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkSinSalida.Location = New System.Drawing.Point(154, 192)
-        Me.chkSinSalida.Name = "chkSinSalida"
-        Me.chkSinSalida.Size = New System.Drawing.Size(82, 19)
-        Me.chkSinSalida.TabIndex = 420
-        Me.chkSinSalida.Text = "Sin Salida"
-        Me.chkSinSalida.UseVisualStyleBackColor = True
-        '
-        'chkDepositado
-        '
-        Me.chkDepositado.AutoSize = True
-        Me.chkDepositado.Checked = True
-        Me.chkDepositado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkDepositado.Location = New System.Drawing.Point(241, 192)
-        Me.chkDepositado.Name = "chkDepositado"
-        Me.chkDepositado.Size = New System.Drawing.Size(89, 19)
-        Me.chkDepositado.TabIndex = 421
-        Me.chkDepositado.Text = "Depositado"
-        Me.chkDepositado.UseVisualStyleBackColor = True
-        '
-        'chkPasado
-        '
-        Me.chkPasado.AutoSize = True
-        Me.chkPasado.Checked = True
-        Me.chkPasado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkPasado.Location = New System.Drawing.Point(336, 192)
-        Me.chkPasado.Name = "chkPasado"
-        Me.chkPasado.Size = New System.Drawing.Size(68, 19)
-        Me.chkPasado.TabIndex = 422
-        Me.chkPasado.Text = "Pasado"
-        Me.chkPasado.UseVisualStyleBackColor = True
-        '
-        'chkDevuelto
-        '
-        Me.chkDevuelto.AutoSize = True
-        Me.chkDevuelto.Checked = True
-        Me.chkDevuelto.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkDevuelto.Location = New System.Drawing.Point(410, 192)
-        Me.chkDevuelto.Name = "chkDevuelto"
-        Me.chkDevuelto.Size = New System.Drawing.Size(74, 19)
-        Me.chkDevuelto.TabIndex = 424
-        Me.chkDevuelto.Text = "Devuelto"
-        Me.chkDevuelto.UseVisualStyleBackColor = True
-        '
-        'chkOtros
-        '
-        Me.chkOtros.AutoSize = True
-        Me.chkOtros.Checked = True
-        Me.chkOtros.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkOtros.Location = New System.Drawing.Point(490, 192)
-        Me.chkOtros.Name = "chkOtros"
-        Me.chkOtros.Size = New System.Drawing.Size(55, 19)
-        Me.chkOtros.TabIndex = 425
-        Me.chkOtros.Text = "Otros"
-        Me.chkOtros.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
-        Me.GroupBox1.Controls.Add(Me.chkOtros)
-        Me.GroupBox1.Controls.Add(Me.chkDevuelto)
-        Me.GroupBox1.Controls.Add(Me.chkPasado)
-        Me.GroupBox1.Controls.Add(Me.chkDepositado)
-        Me.GroupBox1.Controls.Add(Me.chkSinSalida)
-        Me.GroupBox1.Controls.Add(Me.Label31)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(910, 144)
+        Me.GroupBox1.Size = New System.Drawing.Size(910, 166)
         Me.GroupBox1.TabIndex = 18
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filtrar Nota Pedido"
         '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel1.ColumnCount = 5
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel4, 4, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 1, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label9, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label8, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.cmbTipoVenta, 1, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label3, 3, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.txtNombreCliente, 4, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.cmbVendedor, 4, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label12, 3, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.cbEstado, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
+        Me.TableLayoutPanel1.Controls.Add(Me.TextBox1, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label8, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 1, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.cmbTipoVenta, 1, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label9, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.cbEstado, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel4, 4, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label12, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtNombreCliente, 4, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label3, 3, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.cmbVendedor, 4, 1)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 3
+        Me.TableLayoutPanel1.RowCount = 4
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(898, 116)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(904, 146)
         Me.TableLayoutPanel1.TabIndex = 21
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.NotaPedidoBindingSource, "Numero", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "N0"))
+        Me.TextBox1.Location = New System.Drawing.Point(143, 4)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(286, 21)
+        Me.TextBox1.TabIndex = 430
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(3, 7)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(134, 16)
+        Me.Label2.TabIndex = 438
+        Me.Label2.Text = "Numero"
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(3, 110)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(134, 16)
+        Me.Label8.TabIndex = 435
+        Me.Label8.Text = "Fecha Alta"
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel3.ColumnCount = 3
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.dtFechaAltaDesde, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.dtFechaAltaHasta, 2, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label24, 1, 0)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(143, 101)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(286, 33)
+        Me.TableLayoutPanel3.TabIndex = 22
+        '
+        'dtFechaAltaDesde
+        '
+        Me.dtFechaAltaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtFechaAltaDesde.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.NotaPedidoBindingSource, "FechaDesde", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "d"))
+        Me.dtFechaAltaDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFechaAltaDesde.Location = New System.Drawing.Point(3, 6)
+        Me.dtFechaAltaDesde.Name = "dtFechaAltaDesde"
+        Me.dtFechaAltaDesde.Size = New System.Drawing.Size(127, 21)
+        Me.dtFechaAltaDesde.TabIndex = 432
+        '
+        'dtFechaAltaHasta
+        '
+        Me.dtFechaAltaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtFechaAltaHasta.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.NotaPedidoBindingSource, "FechaHasta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "d"))
+        Me.dtFechaAltaHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFechaAltaHasta.Location = New System.Drawing.Point(156, 6)
+        Me.dtFechaAltaHasta.Name = "dtFechaAltaHasta"
+        Me.dtFechaAltaHasta.Size = New System.Drawing.Size(127, 21)
+        Me.dtFechaAltaHasta.TabIndex = 433
+        '
+        'Label24
+        '
+        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(136, 8)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(14, 16)
+        Me.Label24.TabIndex = 436
+        Me.Label24.Text = "-"
+        '
+        'cmbTipoVenta
+        '
+        Me.cmbTipoVenta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmbTipoVenta.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.NotaPedidoBindingSource, "TipoClienteSeleccionado", True))
+        Me.cmbTipoVenta.DataSource = Me.TipoClienteBindingSource
+        Me.cmbTipoVenta.DisplayMember = "Value"
+        Me.cmbTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbTipoVenta.FormattingEnabled = True
+        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 63)
+        Me.cmbTipoVenta.Name = "cmbTipoVenta"
+        Me.cmbTipoVenta.Size = New System.Drawing.Size(286, 23)
+        Me.cmbTipoVenta.TabIndex = 426
+        Me.cmbTipoVenta.ValueMember = "Key"
+        '
+        'TipoClienteBindingSource
+        '
+        Me.TipoClienteBindingSource.DataMember = "TipoCliente"
+        Me.TipoClienteBindingSource.DataSource = Me.NotaPedidoBindingSource
+        '
+        'Label9
+        '
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(3, 37)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(134, 16)
+        Me.Label9.TabIndex = 437
+        Me.Label9.Text = "Estado"
+        '
+        'cbEstado
+        '
+        Me.cbEstado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbEstado.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.NotaPedidoBindingSource, "EstadoSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.cbEstado.DataSource = Me.EstadoBindingSource
+        Me.cbEstado.DisplayMember = "Value"
+        Me.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbEstado.FormattingEnabled = True
+        Me.cbEstado.Location = New System.Drawing.Point(143, 34)
+        Me.cbEstado.Name = "cbEstado"
+        Me.cbEstado.Size = New System.Drawing.Size(286, 23)
+        Me.cbEstado.TabIndex = 438
+        Me.cbEstado.ValueMember = "Key"
+        '
+        'EstadoBindingSource
+        '
+        Me.EstadoBindingSource.DataMember = "Estado"
+        Me.EstadoBindingSource.DataSource = Me.NotaPedidoBindingSource
         '
         'TableLayoutPanel4
         '
@@ -277,8 +328,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.BtnFiltrar, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.btn_Restablecer, 1, 0)
-        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(612, 63)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(615, 93)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -297,103 +347,13 @@ Partial Class frmNotaPedidoAdministracion
         Me.btn_Restablecer.Text = "Restablecer Busqueda"
         Me.btn_Restablecer.UseVisualStyleBackColor = True
         '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.ColumnCount = 3
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.dtFechaAltaDesde, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.dtFechaAltaHasta, 2, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Label24, 1, 0)
-        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(143, 63)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(283, 50)
-        Me.TableLayoutPanel3.TabIndex = 22
-        '
-        'dtFechaAltaDesde
-        '
-        Me.dtFechaAltaDesde.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtFechaAltaDesde.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.NotaPedidoBindingSource, "FechaDesde", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "d"))
-        Me.dtFechaAltaDesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFechaAltaDesde.Location = New System.Drawing.Point(3, 14)
-        Me.dtFechaAltaDesde.Name = "dtFechaAltaDesde"
-        Me.dtFechaAltaDesde.Size = New System.Drawing.Size(125, 21)
-        Me.dtFechaAltaDesde.TabIndex = 432
-        '
-        'dtFechaAltaHasta
-        '
-        Me.dtFechaAltaHasta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtFechaAltaHasta.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.NotaPedidoBindingSource, "FechaHasta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "d"))
-        Me.dtFechaAltaHasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFechaAltaHasta.Location = New System.Drawing.Point(154, 14)
-        Me.dtFechaAltaHasta.Name = "dtFechaAltaHasta"
-        Me.dtFechaAltaHasta.Size = New System.Drawing.Size(126, 21)
-        Me.dtFechaAltaHasta.TabIndex = 433
-        '
-        'Label24
-        '
-        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label24.AutoSize = True
-        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(134, 17)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(14, 16)
-        Me.Label24.TabIndex = 436
-        Me.Label24.Text = "-"
-        '
-        'Label9
-        '
-        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(3, 7)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(134, 16)
-        Me.Label9.TabIndex = 437
-        Me.Label9.Text = "Estado"
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(3, 80)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(134, 16)
-        Me.Label8.TabIndex = 435
-        Me.Label8.Text = "Fecha Alta"
-        '
-        'cmbTipoVenta
-        '
-        Me.cmbTipoVenta.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmbTipoVenta.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.NotaPedidoBindingSource, "TipoClienteSeleccionado", True))
-        Me.cmbTipoVenta.DataSource = Me.TipoClienteBindingSource
-        Me.cmbTipoVenta.DisplayMember = "Value"
-        Me.cmbTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbTipoVenta.FormattingEnabled = True
-        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 34)
-        Me.cmbTipoVenta.Name = "cmbTipoVenta"
-        Me.cmbTipoVenta.Size = New System.Drawing.Size(283, 23)
-        Me.cmbTipoVenta.TabIndex = 426
-        Me.cmbTipoVenta.ValueMember = "Key"
-        '
-        'TipoClienteBindingSource
-        '
-        Me.TipoClienteBindingSource.DataMember = "TipoCliente"
-        Me.TipoClienteBindingSource.DataSource = Me.NotaPedidoBindingSource
-        '
         'txtNombreCliente
         '
         Me.txtNombreCliente.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtNombreCliente.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.NotaPedidoBindingSource, "NombreCliente", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txtNombreCliente.Location = New System.Drawing.Point(612, 34)
+        Me.txtNombreCliente.Location = New System.Drawing.Point(615, 4)
         Me.txtNombreCliente.Name = "txtNombreCliente"
-        Me.txtNombreCliente.Size = New System.Drawing.Size(283, 21)
+        Me.txtNombreCliente.Size = New System.Drawing.Size(286, 21)
         Me.txtNombreCliente.TabIndex = 429
         '
         'cmbVendedor
@@ -404,9 +364,9 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbVendedor.DisplayMember = "Value"
         Me.cmbVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbVendedor.FormattingEnabled = True
-        Me.cmbVendedor.Location = New System.Drawing.Point(612, 4)
+        Me.cmbVendedor.Location = New System.Drawing.Point(615, 33)
         Me.cmbVendedor.Name = "cmbVendedor"
-        Me.cmbVendedor.Size = New System.Drawing.Size(283, 23)
+        Me.cmbVendedor.Size = New System.Drawing.Size(286, 23)
         Me.cmbVendedor.TabIndex = 430
         Me.cmbVendedor.ValueMember = "Key"
         '
@@ -414,25 +374,6 @@ Partial Class frmNotaPedidoAdministracion
         '
         Me.VendedoresBindingSource.DataMember = "Vendedores"
         Me.VendedoresBindingSource.DataSource = Me.NotaPedidoBindingSource
-        '
-        'cbEstado
-        '
-        Me.cbEstado.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cbEstado.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.NotaPedidoBindingSource, "EstadoSeleccionado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbEstado.DataSource = Me.EstadoBindingSource
-        Me.cbEstado.DisplayMember = "Value"
-        Me.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbEstado.FormattingEnabled = True
-        Me.cbEstado.Location = New System.Drawing.Point(143, 3)
-        Me.cbEstado.Name = "cbEstado"
-        Me.cbEstado.Size = New System.Drawing.Size(283, 23)
-        Me.cbEstado.TabIndex = 438
-        Me.cbEstado.ValueMember = "Key"
-        '
-        'EstadoBindingSource
-        '
-        Me.EstadoBindingSource.DataMember = "Estado"
-        Me.EstadoBindingSource.DataSource = Me.NotaPedidoBindingSource
         '
         'TipoPagoBindingSource
         '
@@ -570,7 +511,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.lbl_Msg.DataBindings.Add(New System.Windows.Forms.Binding("Visible", Me.NotaPedidoBindingSource, "SinResultados", True))
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(231, 375)
+        Me.lbl_Msg.Location = New System.Drawing.Point(231, 386)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(472, 29)
         Me.lbl_Msg.TabIndex = 20
@@ -589,12 +530,12 @@ Partial Class frmNotaPedidoAdministracion
         Me.dgNotasPedidos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.TipoClienteDataGridViewTextBoxColumn, Me.VendedorDataGridViewTextBoxColumn, Me.TotalDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.EstadoDataGridViewTextBoxColumn, Me.NombreClienteDataGridViewTextBoxColumn, Me.Eliminar, Me.Imprimir})
         Me.dgNotasPedidos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dgNotasPedidos.DataSource = Me.NotaPedidosItemsBindingSource
-        Me.dgNotasPedidos.Location = New System.Drawing.Point(12, 162)
+        Me.dgNotasPedidos.Location = New System.Drawing.Point(12, 184)
         Me.dgNotasPedidos.MultiSelect = False
         Me.dgNotasPedidos.Name = "dgNotasPedidos"
         Me.dgNotasPedidos.ReadOnly = True
         Me.dgNotasPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgNotasPedidos.Size = New System.Drawing.Size(910, 455)
+        Me.dgNotasPedidos.Size = New System.Drawing.Size(910, 433)
         Me.dgNotasPedidos.TabIndex = 21
         '
         'NumeroDataGridViewTextBoxColumn
@@ -713,15 +654,14 @@ Partial Class frmNotaPedidoAdministracion
         CType(Me.NotaPedidosItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NotaPedidoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
         CType(Me.TipoClienteBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.VendedoresBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EstadoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        CType(Me.VendedoresBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TipoPagoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
@@ -735,12 +675,6 @@ Partial Class frmNotaPedidoAdministracion
     Friend WithEvents BtnFiltrar As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label31 As System.Windows.Forms.Label
-    Friend WithEvents chkSinSalida As System.Windows.Forms.CheckBox
-    Friend WithEvents chkDepositado As System.Windows.Forms.CheckBox
-    Friend WithEvents chkPasado As System.Windows.Forms.CheckBox
-    Friend WithEvents chkDevuelto As System.Windows.Forms.CheckBox
-    Friend WithEvents chkOtros As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents txtNombreCliente As System.Windows.Forms.TextBox
     Friend WithEvents cmbTipoVenta As System.Windows.Forms.ComboBox
@@ -783,4 +717,6 @@ Partial Class frmNotaPedidoAdministracion
     Friend WithEvents NombreClienteDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents Imprimir As DataGridViewImageColumn
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label2 As Label
 End Class

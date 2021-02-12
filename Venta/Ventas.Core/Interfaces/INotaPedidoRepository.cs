@@ -13,7 +13,7 @@ namespace Ventas.Core.Interfaces
 
         Task<List<NotaPedido>> ObtenerAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos);
 
-        Task<List<NotaPedido>> ObtenerAsync(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos);
+        Task<List<NotaPedido>> ObtenerAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos);
 
         decimal ObtenerMontoTotalClienteMayorista(int idClienteMatorista);
 

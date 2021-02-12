@@ -418,10 +418,10 @@ Namespace Formularios.Venta
                 notaPedido.AgregarClienteMayorista(IdClienteMayorista)
             End If
 
-            Await Task.Run(Sub() Servicio.GuardarNotaPedido(notaPedido))
+            Await NotaPedidoService.GuardarAsync(notaPedido)
 
             If (NotaPedidoModel IsNot Nothing) Then 'Si existe es porque esta editando la nota de pedido
-                NotaPedidoModel.VentaFinalizada("", VariablesGlobales.objUsuario.Usuario)
+                NotaPedidoModel.VentaFinalizada(VariablesGlobales.objUsuario.Usuario)
                 Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
                 Await FinalizarNotaPedidoEvent()
             End If
@@ -462,7 +462,7 @@ Namespace Formularios.Venta
             End If
 
             If (NotaPedidoModel IsNot Nothing) Then
-                NotaPedidoModel.VentaFinalizada("", VariablesGlobales.objUsuario.Usuario)
+                NotaPedidoModel.VentaFinalizada(VariablesGlobales.objUsuario.Usuario)
                 Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
                 Await FinalizarNotaPedidoEvent()
             End If

@@ -88,6 +88,7 @@ Partial Class frmNotaPedidoDetalle
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.Btn_Guardar = New System.Windows.Forms.Button()
         CType(Me.FrmNotaPedidoDetalleViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -223,7 +224,7 @@ Partial Class frmNotaPedidoDetalle
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(12, 447)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(930, 69)
+        Me.GroupBox2.Size = New System.Drawing.Size(933, 92)
         Me.GroupBox2.TabIndex = 35
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "COMENTARIOS"
@@ -231,11 +232,12 @@ Partial Class frmNotaPedidoDetalle
         'TextBox1
         '
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Comentario", True))
-        Me.TextBox1.Location = New System.Drawing.Point(3, 21)
+        Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox1.Location = New System.Drawing.Point(3, 17)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(927, 42)
+        Me.TextBox1.Size = New System.Drawing.Size(927, 72)
         Me.TextBox1.TabIndex = 0
         '
         'GroupBox3
@@ -244,9 +246,9 @@ Partial Class frmNotaPedidoDetalle
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.Controls.Add(Me.TextBox2)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(15, 522)
+        Me.GroupBox3.Location = New System.Drawing.Point(15, 545)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(930, 165)
+        Me.GroupBox3.Size = New System.Drawing.Size(930, 142)
         Me.GroupBox3.TabIndex = 36
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "HISTORIAL COMENTARIOS"
@@ -254,11 +256,13 @@ Partial Class frmNotaPedidoDetalle
         'TextBox2
         '
         Me.TextBox2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HistorialComentarios", True))
-        Me.TextBox2.Location = New System.Drawing.Point(3, 21)
+        Me.TextBox2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox2.Enabled = False
+        Me.TextBox2.Location = New System.Drawing.Point(3, 17)
         Me.TextBox2.Multiline = True
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox2.Size = New System.Drawing.Size(927, 138)
+        Me.TextBox2.Size = New System.Drawing.Size(924, 122)
         Me.TextBox2.TabIndex = 0
         '
         'TableLayoutPanel2
@@ -603,6 +607,7 @@ Partial Class frmNotaPedidoDetalle
         Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
         Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
         Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
+        Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
         '
         'NombreDataGridViewTextBoxColumn
         '
@@ -610,12 +615,14 @@ Partial Class frmNotaPedidoDetalle
         Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
         Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
         Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
         '
         'CantidadDataGridViewTextBoxColumn
         '
         Me.CantidadDataGridViewTextBoxColumn.DataPropertyName = "Cantidad"
         Me.CantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad"
         Me.CantidadDataGridViewTextBoxColumn.Name = "CantidadDataGridViewTextBoxColumn"
+        Me.CantidadDataGridViewTextBoxColumn.ReadOnly = True
         '
         'MontoDataGridViewTextBoxColumn
         '
@@ -624,6 +631,7 @@ Partial Class frmNotaPedidoDetalle
         Me.MontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
         Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
+        Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
         '
         'IvaDataGridViewTextBoxColumn
         '
@@ -632,6 +640,7 @@ Partial Class frmNotaPedidoDetalle
         Me.IvaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
         Me.IvaDataGridViewTextBoxColumn.HeaderText = "Iva"
         Me.IvaDataGridViewTextBoxColumn.Name = "IvaDataGridViewTextBoxColumn"
+        Me.IvaDataGridViewTextBoxColumn.ReadOnly = True
         '
         'TotalDataGridViewTextBoxColumn
         '
@@ -640,6 +649,7 @@ Partial Class frmNotaPedidoDetalle
         Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
         Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
         Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
+        Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
         '
         'PorcentajeBonificacionDataGridViewTextBoxColumn
         '
@@ -648,6 +658,7 @@ Partial Class frmNotaPedidoDetalle
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.HeaderText = "% Bonif."
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn"
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.ReadOnly = True
         '
         'ProductosQuitar
         '
@@ -749,12 +760,29 @@ Partial Class frmNotaPedidoDetalle
         Me.PictureBox2.TabIndex = 80
         Me.PictureBox2.TabStop = False
         '
+        'Btn_Guardar
+        '
+        Me.Btn_Guardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Guardar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Guardar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarModificar", True))
+        Me.Btn_Guardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Guardar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.Btn_Guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Guardar.Location = New System.Drawing.Point(232, 693)
+        Me.Btn_Guardar.Name = "Btn_Guardar"
+        Me.Btn_Guardar.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Guardar.TabIndex = 82
+        Me.Btn_Guardar.Text = "Modificar"
+        Me.Btn_Guardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Guardar.UseVisualStyleBackColor = True
+        '
         'frmNotaPedidoDetalle
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Btn_Cancelar
         Me.ClientSize = New System.Drawing.Size(954, 737)
+        Me.Controls.Add(Me.Btn_Guardar)
         Me.Controls.Add(Me.Btn_Imprimir)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.PictureBox1)
@@ -837,14 +865,6 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents FrmNotaPedidoDetalleViewModelBindingSource As BindingSource
     Friend WithEvents NotaPedidoItemsBindingSource As BindingSource
     Friend WithEvents TotalNotaPedidoItemsBindingSource As BindingSource
-    Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents CantidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents ProductosQuitar As DataGridViewImageColumn
     Friend WithEvents CodigoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents CantidadDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
@@ -853,4 +873,13 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents TotalDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents Quitar As DataGridViewTextBoxColumn
+    Friend WithEvents Btn_Guardar As Button
+    Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CantidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosQuitar As DataGridViewImageColumn
 End Class

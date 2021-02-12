@@ -23,10 +23,10 @@ namespace Ventas.Data.Service
             return NotaPedidoRepository.GuardarAsync(notaPedidoModel);
         }
 
-        public static Task<List<NotaPedido>> ObtenerAsync(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public static Task<List<NotaPedido>> ObtenerAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
-            return NotaPedidoRepository.ObtenerAsync(idSucursal, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
+            return NotaPedidoRepository.ObtenerAsync(idSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
         }
 
         public static Task<List<NotaPedido>> ObtenerAsync(TipoBase tipoBase, int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)

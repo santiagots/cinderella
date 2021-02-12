@@ -57,29 +57,24 @@ namespace Ventas.Data.Repository
         {
             foreach (NotaPedidoItem notaPedidoItem in notaPedido.NotaPedidoItems)
             {
-                _context.Entry(notaPedidoItem).State = notaPedidoItem.Id > 0 ? EntityState.Modified : EntityState.Added;
-                notaPedidoItem.Producto.Categoria = (Categoria)_context.Attach(notaPedidoItem.Producto.Categoria);
-                notaPedidoItem.Producto.SubCategoria = (SubCategoria)_context.Attach(notaPedidoItem.Producto.SubCategoria);
-                _context.Entry(notaPedidoItem.Producto).State = EntityState.Unchanged;
+                if (notaPedidoItem.NotaPedido == null) //si la nata de pedido que contiene el item es null quiere decir que se agrego el item
+                    _context.Entry(notaPedidoItem).State = EntityState.Added;
             }
 
-            if (notaPedido.Encargado != null)
-                _context.Entry(notaPedido.Encargado).State = EntityState.Unchanged;
+            List<Type> TypeToUpdate = new List<Type> { typeof(NotaPedido), typeof(NotaPedidoItem) };
 
-            if (notaPedido.Vendedor != null)
-                _context.Entry(notaPedido.Vendedor).State = EntityState.Unchanged;
+            _context.AttachRecursive(notaPedido, TypeToUpdate);
 
-            if (notaPedido.ClienteMayorista != null)
-                _context.Entry(notaPedido.ClienteMayorista).State = EntityState.Unchanged;
-
-            _context.Entry(notaPedido).State = EntityState.Modified;
             return _context.SaveChangesAsync();
         }
 
-        public Task<List<NotaPedido>> ObtenerAsync(int idSucursal, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public Task<List<NotaPedido>> ObtenerAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
                                                     .Where(x => x.IdSucursal == idSucursal);
+
+            if (numero.HasValue)
+                notaPedido = notaPedido.Where(x => x.Numero == numero.Value);
 
             if (estado.HasValue)
                 notaPedido = notaPedido.Where(x => x.Estado == estado.Value);

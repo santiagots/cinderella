@@ -2,12 +2,17 @@
 using Common.Core.Exceptions;
 using Common.Core.Helper;
 using Common.Core.Model;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Common.Data
 {
@@ -62,9 +67,66 @@ namespace Common.Data
             if (entity == null) return null;
 
             if (!this.IsAttached(entity))
-                this.Entry(entity).State = EntityState.Unchanged;
+                this.Entry(entity).State = EntityState.Modified;
 
             return GetAttached(entity);
+        }
+
+        public void AttachRecursive<T>(Entity<T> entity, List<Type> TypeToUpdate)
+        {
+            List<object> entitys = GetAllEntitys(entity, new List<object>());
+
+            foreach (var item in entitys.Reverse<object>())
+            {
+                if (TypeToUpdate.Any(x => x.Equals(item.GetType())))
+                {
+                    DbEntityEntry dbEntityEntry = ChangeTracker.Entries().FirstOrDefault(e => e.Entity.Equals(item));
+
+                    if (dbEntityEntry == null || dbEntityEntry?.State != EntityState.Added)
+                        this.Entry(item).State = EntityState.Modified;
+                }
+                else
+                {
+                    DbEntityEntry dbEntityEntry = this.Entry(item);
+                    dbEntityEntry.State = EntityState.Detached;
+                }
+            }
+        }
+
+        public List<object> GetAllEntitys(object entity, List<object> entitys)
+        {
+            //Si la entidad es null o si ya esta agregada en el listado retrno la lista.
+            if (entity == null || entitys.Any(x =>  ReferenceEquals(x, entity))) return entitys;
+
+            //Si la entidad es una clase y tiene la propiedad ID la agrego a la lista.
+            if (entity.GetType().IsClass && entity.GetType().GetProperty("Id") != null)
+                entitys.Add(entity);
+
+            //Reviso las propiedades de la entidad para agregar las entidades hijas
+            PropertyInfo[] properties = entity.GetType().GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                //Si la propiedad es del tipo Enumerado
+                if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                {
+                    IList list = property.GetValue(entity, null) as IList;
+
+                    if (list == null) return entitys;
+
+                    //Recorro el enumerado obteniendo todas las entiedades hijas
+                    foreach (object item in list)
+                        GetAllEntitys(item, entitys);
+                }
+                //Si la propiedad es una clase y tiene la propiedad ID
+                if (property.PropertyType.IsClass && property.PropertyType.GetProperty("Id") != null)
+                {
+                    object value = property.GetValue(entity, null);
+                    //Obteniendo todas las entiedades hijas
+                    GetAllEntitys(value, entitys);
+                }
+            }
+
+            return entitys;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

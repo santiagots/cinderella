@@ -24,8 +24,9 @@ Namespace Formularios.Venta
         Public Property FiltrarPorFecha As Boolean
         Public Property VendedoresSeleccionado As KeyValuePair(Of Empleado, String)
         Public ReadOnly Property Vendedores As BindingList(Of KeyValuePair(Of Empleado, String))
-
+        Public Property Numero As Integer?
         Public Property NombreCliente As String
+
         Public ReadOnly Property Cantidad As Integer
             Get
                 Return _NotaPedidosItems.Count()
@@ -91,20 +92,27 @@ Namespace Formularios.Venta
         End Sub
 
         Public Async Function Buscar() As Task
-            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
+            Await CargarNotaPedidoAsync(Numero, EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
         Public Sub CargarVenta(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Id = notaPedidoItem.Id)
-            Dim frmNotaPedidoDetalle As frmNotaPedidoDetalle = New frmNotaPedidoDetalle(notaPedido, AddressOf CargarVentaCallback)
-            frmNotaPedidoDetalle.MdiParent = MdiParent
-            frmNotaPedidoDetalle.Show()
+            Dim form As Form
+
+            If (notaPedido.TipoCliente = Common.Core.Enum.TipoCliente.Mayorista.Mayorista) Then
+                form = New frmNotaPedidoDetalle(notaPedido, AddressOf CargarVentaCallback)
+            Else
+                form = New frmVentas(notaPedido, AddressOf CargarVentaCallback)
+            End If
+
+            form.MdiParent = MdiParent
+            form.Show()
             Visible = False
         End Sub
 
         Public Async Function CargarVentaCallback() As Task
             Visible = True
-            Await CargarNotaPedidoAsync(EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
+            Await CargarNotaPedidoAsync(Numero, EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
         Public Async Function CargarDatosAsync() As Task
@@ -136,8 +144,9 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.Vendedores))
         End Function
 
-        Private Async Function CargarNotaPedidoAsync(estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As Task
-            _NotaPedidosItems = Await NotaPedidoService.ObtenerAsync(IdSucursal, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
+        Private Async Function CargarNotaPedidoAsync(numero As Integer?, estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As Task
+
+            _NotaPedidosItems = Await NotaPedidoService.ObtenerAsync(IdSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
             NotifyPropertyChanged(NameOf(Me.NotaPedidosItems))
         End Function
 

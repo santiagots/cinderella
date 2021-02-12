@@ -102,6 +102,12 @@ Namespace Formularios.Venta
             End Get
         End Property
 
+        Public ReadOnly Property HabilitarModificar As Boolean
+            Get
+                Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada
+            End Get
+        End Property
+
         Public ReadOnly Property HabilitarArmado As Boolean
             Get
                 Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada
@@ -136,10 +142,10 @@ Namespace Formularios.Venta
             Me.StockInsuficienteEvent = stockInsuficiente
         End Sub
 
-        Friend Sub AgregaItemNotaPedido(esDevolucion As Boolean)
+        Friend Sub AgregaItemNotaPedido()
             Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
                                                                                             OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
-                                                                                            OrElse x.CodigoBarra.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
+                                                                                        OrElse x.CodigoBarra.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
 
             If (producto Is Nothing) Then
                 Throw New NegocioException("El producto ingresado no existe")
@@ -147,7 +153,7 @@ Namespace Formularios.Venta
 
             producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
-            Dim CantidadUnidadesDeProducto As Integer = NotaPedidoModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
+            Dim CantidadUnidadesDeProducto As Integer = NotaPedidoModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + 1
             If Not HaySotck(producto, CantidadUnidadesDeProducto) Then
                 Exit Sub
             End If
@@ -197,6 +203,11 @@ Namespace Formularios.Venta
 
                 CargarProductoNombreyCodigoEvent(NombreCodigoProductos)
             End If
+        End Function
+
+        Friend Async Function GuardarFinalizadoAsync() As Task
+            NotaPedidoModel.ArmadoFinalizado(Comentario, VariablesGlobales.objUsuario.Usuario)
+            Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
         End Function
 
         Friend Async Function ArmadoFinalizadoAsync() As Task

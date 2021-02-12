@@ -8,7 +8,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
     public class NotaPedidoItem : TransaccionItem
     {
         public long IdNotaPedido { get; private set; }
-        public virtual NotaPedido NotaPedido { get; private set; }
+        public virtual NotaPedido NotaPedido { get; set; }
         public bool Borrado { get; private set; }
 
         public NotaPedidoItem() : base()

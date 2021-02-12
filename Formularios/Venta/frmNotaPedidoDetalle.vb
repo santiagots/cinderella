@@ -34,7 +34,7 @@ Public Class frmNotaPedidoDetalle
 
     Private Sub Btn_Agregar_Click(sender As Object, e As EventArgs) Handles Btn_Agregar.Click
         Ejecutar(Sub()
-                     NotaPedidoDetalleViewModel.AgregaItemNotaPedido(False)
+                     NotaPedidoDetalleViewModel.AgregaItemNotaPedido()
                      Btn_Agregar.Focus()
                  End Sub)
     End Sub
@@ -58,10 +58,19 @@ Public Class frmNotaPedidoDetalle
             End Sub)
     End Sub
 
+    Private Sub Btn_Guardar_Click(sender As Object, e As EventArgs) Handles Btn_Guardar.Click
+        EjecutarAsync(Async Function() As Task
+                          Await NotaPedidoDetalleViewModel.GuardarFinalizadoAsync()
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          Close()
+                      End Function)
+    End Sub
+
     Private Sub Btn_Armado_Click(sender As Object, e As EventArgs) Handles Btn_Armado.Click
         EjecutarAsync(Async Function() As Task
                           Await NotaPedidoDetalleViewModel.ArmadoFinalizadoAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          Close()
                       End Function)
     End Sub
 
@@ -77,7 +86,17 @@ Public Class frmNotaPedidoDetalle
         EjecutarAsync(Async Function() As Task
                           Await NotaPedidoDetalleViewModel.EnvioFinalizadoAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          Close()
                       End Function)
+    End Sub
+
+    Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown
+        Ejecutar(
+            Sub()
+                If (e.KeyData = Keys.Enter) Then
+                    NotaPedidoDetalleViewModel.AgregaItemNotaPedido()
+                End If
+            End Sub)
     End Sub
 
     Public Function StockInsuficienteEvent(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean

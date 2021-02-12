@@ -31,7 +31,7 @@ Public Class frmNotaPedidoAdministracion
     End Sub
 
 
-    Private Sub dgNotasPedidos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgNotasPedidos.CellContentClick
+    Private Sub dgNotasPedidos_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgNotasPedidos.CellClick
         EjecutarAsync(
             Async Function() As Task
                 If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Eliminar" Then
@@ -46,7 +46,7 @@ Public Class frmNotaPedidoAdministracion
             End Function)
     End Sub
 
-    Private Sub dgNotasPedidos_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgNotasPedidos.CellContentDoubleClick
+    Private Sub dgNotasPedidos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgNotasPedidos.CellDoubleClick
         Ejecutar(Sub() notaPedidoViewModel.CargarVenta(dgNotasPedidos.CurrentRow.DataBoundItem, Me.MdiParent))
     End Sub
 
