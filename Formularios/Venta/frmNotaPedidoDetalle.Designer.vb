@@ -127,7 +127,7 @@ Partial Class frmNotaPedidoDetalle
         '
         'Btn_Cancelar
         '
-        Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Btn_Cancelar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Cancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -147,7 +147,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(698, 5)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(705, 5)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Agregar.TabIndex = 8
@@ -161,7 +161,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Cambiar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Cambiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Cambios_32
         Me.Btn_Cambiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cambiar.Location = New System.Drawing.Point(808, 5)
+        Me.Btn_Cambiar.Location = New System.Drawing.Point(815, 5)
         Me.Btn_Cambiar.Name = "Btn_Cambiar"
         Me.Btn_Cambiar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Cambiar.TabIndex = 9
@@ -203,7 +203,7 @@ Partial Class frmNotaPedidoDetalle
         '
         'Btn_Imprimir
         '
-        Me.Btn_Imprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Imprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Btn_Imprimir.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Imprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Imprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
@@ -292,6 +292,7 @@ Partial Class frmNotaPedidoDetalle
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox3, 1, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox8, 5, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Label4, 4, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 2
@@ -478,6 +479,8 @@ Partial Class frmNotaPedidoDetalle
         '
         'TableLayoutPanel3
         '
+        Me.TableLayoutPanel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.DG_ProductosTotales, 0, 3)
@@ -699,7 +702,6 @@ Partial Class frmNotaPedidoDetalle
         '
         'TableLayoutPanel4
         '
-        Me.TableLayoutPanel4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel4.ColumnCount = 4
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -710,11 +712,12 @@ Partial Class frmNotaPedidoDetalle
         Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_CodigoBarra, 1, 0)
         Me.TableLayoutPanel4.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(6, 17)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(911, 44)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(918, 44)
         Me.TableLayoutPanel4.TabIndex = 30
         '
         'lbl_CodigoBarra
@@ -737,11 +740,12 @@ Partial Class frmNotaPedidoDetalle
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_CodigoBarra.Location = New System.Drawing.Point(123, 11)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(565, 21)
+        Me.txt_CodigoBarra.Size = New System.Drawing.Size(572, 21)
         Me.txt_CodigoBarra.TabIndex = 7
         '
         'PictureBox1
         '
+        Me.PictureBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackgroundImage = Global.SistemaCinderella.My.Resources.Recursos.Ingreso_32
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.PictureBox1.Location = New System.Drawing.Point(659, 693)
@@ -752,6 +756,7 @@ Partial Class frmNotaPedidoDetalle
         '
         'PictureBox2
         '
+        Me.PictureBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox2.BackgroundImage = Global.SistemaCinderella.My.Resources.Recursos.Ingreso_32
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.PictureBox2.Location = New System.Drawing.Point(805, 693)
@@ -762,7 +767,7 @@ Partial Class frmNotaPedidoDetalle
         '
         'Btn_Guardar
         '
-        Me.Btn_Guardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Guardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Btn_Guardar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Guardar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarModificar", True))
         Me.Btn_Guardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
