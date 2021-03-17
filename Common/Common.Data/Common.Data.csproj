@@ -65,7 +65,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BancoRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
-    <Compile Include="Repository\CategoriaRepository.cs" />
     <Compile Include="Repository\ClienteMayoristaRepository.cs" />
     <Compile Include="Repository\CuentaBancariaRepository.cs" />
     <Compile Include="Repository\DomicilioRepository.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="Repository\IVARepository.cs" />
     <Compile Include="Repository\ListaPrecioRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
-    <Compile Include="Repository\SubCategoriaRepository.cs" />
     <Compile Include="Service\BancoService.cs" />
     <Compile Include="Service\ClienteMayoristaService.cs" />
     <Compile Include="Service\CuentaBancariaService.cs" />

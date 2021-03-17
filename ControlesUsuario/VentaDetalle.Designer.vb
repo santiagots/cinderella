@@ -140,6 +140,7 @@ Partial Class VentaDetalle
         Me.DataGridView4.Location = New System.Drawing.Point(3, 373)
         Me.DataGridView4.Name = "DataGridView4"
         Me.DataGridView4.ReadOnly = True
+        Me.DataGridView4.RowHeadersVisible = False
         Me.DataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView4.Size = New System.Drawing.Size(894, 24)
         Me.DataGridView4.TabIndex = 77
@@ -295,6 +296,7 @@ Partial Class VentaDetalle
         Me.DataGridView2.Location = New System.Drawing.Point(3, 262)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.ReadOnly = True
+        Me.DataGridView2.RowHeadersVisible = False
         Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView2.Size = New System.Drawing.Size(894, 24)
         Me.DataGridView2.TabIndex = 75

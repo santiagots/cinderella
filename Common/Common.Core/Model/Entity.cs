@@ -1,14 +1,20 @@
-﻿using Common.Core.Helper;
+﻿using Common.Core.Enum;
+using Common.Core.Helper;
+using Common.Core.Interfaces;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Core.Model
 {
-    public abstract class Entity<T>
+    public abstract class Entity<T>: IEntity
     {
         [Key]
         public T Id { get; protected set; }
 
-        public Entity(bool GenerarId = false)
+        [NotMapped]
+        public EstadoEntidad EstadoEntidad { get; set; }
+
+    public Entity(bool GenerarId = false)
         {
             if (GenerarId && Id.GetType() == typeof(long))
                 Id = (T)(object)IdGenerator.ObtenerId();

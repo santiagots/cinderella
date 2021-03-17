@@ -279,7 +279,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbTipoVenta.DisplayMember = "Value"
         Me.cmbTipoVenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbTipoVenta.FormattingEnabled = True
-        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 63)
+        Me.cmbTipoVenta.Location = New System.Drawing.Point(143, 64)
         Me.cmbTipoVenta.Name = "cmbTipoVenta"
         Me.cmbTipoVenta.Size = New System.Drawing.Size(286, 23)
         Me.cmbTipoVenta.TabIndex = 426
@@ -309,7 +309,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cbEstado.DisplayMember = "Value"
         Me.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbEstado.FormattingEnabled = True
-        Me.cbEstado.Location = New System.Drawing.Point(143, 34)
+        Me.cbEstado.Location = New System.Drawing.Point(143, 33)
         Me.cbEstado.Name = "cbEstado"
         Me.cbEstado.Size = New System.Drawing.Size(286, 23)
         Me.cbEstado.TabIndex = 438
@@ -364,7 +364,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.cmbVendedor.DisplayMember = "Value"
         Me.cmbVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbVendedor.FormattingEnabled = True
-        Me.cmbVendedor.Location = New System.Drawing.Point(615, 33)
+        Me.cmbVendedor.Location = New System.Drawing.Point(615, 34)
         Me.cmbVendedor.Name = "cmbVendedor"
         Me.cmbVendedor.Size = New System.Drawing.Size(286, 23)
         Me.cmbVendedor.TabIndex = 430
@@ -464,7 +464,7 @@ Partial Class frmNotaPedidoAdministracion
         'txtCantidad
         '
         Me.txtCantidad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCantidad.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.NotaPedidoBindingSource, "Cantidad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txtCantidad.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.NotaPedidoBindingSource, "NotasPedidosTotalElementos", True))
         Me.txtCantidad.Location = New System.Drawing.Point(155, 4)
         Me.txtCantidad.Name = "txtCantidad"
         Me.txtCantidad.ReadOnly = True

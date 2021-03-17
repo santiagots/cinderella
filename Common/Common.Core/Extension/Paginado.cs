@@ -1,6 +1,5 @@
 ﻿using Common.Core.Enum;
 using System.Linq;
-using System.Linq.Dynamic;
 
 namespace Common.Core.Extension
 {
@@ -10,10 +9,20 @@ namespace Common.Core.Extension
         {
             totalElementos = consulta.Count();
 
-            return consulta
-                        .OrderBy($"{ordenadoPor} {ordenadoDireccion}")
-                        .Skip(elementosPorPagina * (pagina - 1))
-                        .Take(elementosPorPagina);
+            if (ordenadoDireccion == OrdenadoDireccion.ASC)
+            {
+                return consulta
+                            .OrderByDynamic(x => $"x.{ordenadoPor}")
+                            .Skip(elementosPorPagina * (pagina - 1))
+                            .Take(elementosPorPagina);
+            }
+            else
+            {
+                return consulta
+                            .OrderByDescendingDynamic(x => $"x.{ordenadoPor}")
+                            .Skip(elementosPorPagina * (pagina - 1))
+                            .Take(elementosPorPagina);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
         Ingresada,
         Venta,
         Envio,
-        Cerrada
+        Cerrada,
+        Anulada,
     }
 }

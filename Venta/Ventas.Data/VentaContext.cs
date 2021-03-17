@@ -1,4 +1,5 @@
 ﻿using Common.Core.Enum;
+using Common.Core.Model;
 using Common.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -17,6 +18,7 @@ namespace Ventas.Data
         {
         }
 
+        public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Cheque> Cheque { get; set; }
         public DbSet<ClienteMinorista> ClienteMinorista { get; set; }
         public DbSet<CierreCaja> CierreCaja { get; set; }
@@ -33,6 +35,7 @@ namespace Ventas.Data
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Reserva> Reserva { get; set; }
         public DbSet<Sucursal> Sucursal { get; set; }
+        public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Stock> Stock { get; set; }
         public DbSet<Tarjeta> Tarjeta { get; set; }
         public DbSet<Venta> Venta { get; set; }
@@ -68,6 +71,16 @@ namespace Ventas.Data
 
             modelBuilder.Entity<Comision>().ToTable("NUEVA_COMISION");
             modelBuilder.Entity<Comision>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
+            modelBuilder.Entity<Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
+            modelBuilder.Entity<Categoria>().Ignore(t => t.SubCategorias);
+
+            modelBuilder.Entity<SubCategoria>().ToTable("PRODUCTOS_SUBCATEGORIAS");
+            modelBuilder.Entity<SubCategoria>().Property(t => t.Id).HasColumnName("id_Subcategoria");
+            modelBuilder.Entity<SubCategoria>().Ignore(t => t.IdCategoria);
+            modelBuilder.Entity<SubCategoria>().Ignore(t => t.Categoria);
+            modelBuilder.Entity<SubCategoria>().HasRequired(v => v.IVA).WithMany().HasForeignKey(x => x.IdIVA);
 
             modelBuilder.Entity<DocumentoDePago>().ToTable("NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO");
             modelBuilder.Entity<DocumentoDePago>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);

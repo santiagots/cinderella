@@ -1,6 +1,7 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
 using Common.Core.Helper;
+using Common.Core.Interfaces;
 using Common.Core.Model;
 using System;
 using System.Collections;
@@ -48,8 +49,6 @@ namespace Common.Data
         public DbSet<Distrito> Distrito { get; set; }
         public DbSet<ListaPrecio> ListaPrecio { get; set; }
         public DbSet<Localidad> Localidad { get; set; }
-        public DbSet<Categoria> Categoria { get; set; }
-        public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<IVA> IVA { get; set; }
 
         public bool IsAttached<T>(Entity<T> entity) 
@@ -72,31 +71,24 @@ namespace Common.Data
             return GetAttached(entity);
         }
 
-        public void AttachRecursive<T>(Entity<T> entity, List<Type> TypeToUpdate)
+        public void AttachRecursive<T>(Entity<T> entity)
         {
             List<object> entitys = GetAllEntitys(entity, new List<object>());
 
-            foreach (var item in entitys.Reverse<object>())
-            {
-                if (TypeToUpdate.Any(x => x.Equals(item.GetType())))
-                {
-                    DbEntityEntry dbEntityEntry = ChangeTracker.Entries().FirstOrDefault(e => e.Entity.Equals(item));
+            object uniqueEntity = SetEntitys(entity, entitys, new List<object>());
 
-                    if (dbEntityEntry == null || dbEntityEntry?.State != EntityState.Added)
-                        this.Entry(item).State = EntityState.Modified;
-                }
-                else
-                {
-                    DbEntityEntry dbEntityEntry = this.Entry(item);
-                    dbEntityEntry.State = EntityState.Detached;
-                }
+            this.Entry(uniqueEntity).State = GetState(((IEntity)entity).EstadoEntidad);
+
+            foreach (var item in ChangeTracker.Entries())
+            {
+                item.State = GetState(((IEntity)item.Entity).EstadoEntidad);
             }
         }
 
         public List<object> GetAllEntitys(object entity, List<object> entitys)
         {
             //Si la entidad es null o si ya esta agregada en el listado retrno la lista.
-            if (entity == null || entitys.Any(x =>  ReferenceEquals(x, entity))) return entitys;
+            if (entity == null || entitys.Any(x =>  Equals(x, entity))) return entitys;
 
             //Si la entidad es una clase y tiene la propiedad ID la agrego a la lista.
             if (entity.GetType().IsClass && entity.GetType().GetProperty("Id") != null)
@@ -129,6 +121,59 @@ namespace Common.Data
             return entitys;
         }
 
+        public object SetEntitys(object entity, List<object> entitys, List<object> entitysProcessed)
+        {
+            //Si la entidad es null o si ya esta agregada en el listado retrno la lista.
+            if ((entity == null || entitysProcessed.Any(x => ReferenceEquals(x, entity)))) 
+                return entity;
+
+            entitysProcessed.Add(entity);
+
+            //Reviso las propiedades de la entidad para agregar las entidades hijas
+            PropertyInfo[] properties = entity.GetType().GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                object value = property.GetValue(entity, null);
+
+                //Si la propiedad es del tipo Enumerado
+                if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                {
+                    IList list = property.GetValue(entity, null) as IList;
+
+                    if (list == null) return null;
+
+                    //Recorro el enumerado obteniendo todas las entiedades hijas
+                    foreach (object item in list)
+                        SetEntitys(item, entitys, entitysProcessed);
+                }
+                //Si la propiedad es una clase y tiene la propiedad ID
+                if (property.PropertyType.IsClass && property.PropertyType.GetProperty("Id") != null)
+                {
+                    //Obteniendo todas las entiedades hijas
+                    SetEntitys(value, entitys, entitysProcessed);
+
+                    //Actualizo la referencia de la propiedad a una misma entidad
+                    object referenceIqualsEntity = entitys.FirstOrDefault(x => x.Equals(value));
+                    property.SetValue(entity, referenceIqualsEntity);
+                }
+            }
+
+            return entity;
+        }
+
+        private EntityState GetState(EstadoEntidad estado)
+        {
+            switch (estado) 
+            {
+                case EstadoEntidad.SinCambios: return EntityState.Detached;
+                case EstadoEntidad.Nuevo: return EntityState.Added;
+                case EstadoEntidad.Borrado: return EntityState.Deleted;
+                case EstadoEntidad.Modificado: return EntityState.Modified;
+                default:
+                    throw new InvalidOperationException($"El tipo de datos {estado} no pudo ser convertido.");
+            }
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -152,15 +197,6 @@ namespace Common.Data
             modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDomicilioFacturacion);
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDomicilioEntrega).HasColumnName("id_DireccionEntrega");
             modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioEntrega).WithMany().HasForeignKey(x => x.IdDomicilioEntrega);
-
-            modelBuilder.Entity<Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
-            modelBuilder.Entity<Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
-            modelBuilder.Entity<Categoria>().HasMany(v => v.SubCategorias).WithRequired(t => t.Categoria).HasForeignKey(x => x.IdCategoria);
-
-            modelBuilder.Entity<SubCategoria>().ToTable("PRODUCTOS_SUBCATEGORIAS");
-            modelBuilder.Entity<SubCategoria>().Property(t => t.Id).HasColumnName("id_Subcategoria");
-            modelBuilder.Entity<SubCategoria>().Property(t => t.IdCategoria).HasColumnName("id_Categoria");
-            modelBuilder.Entity<SubCategoria>().HasRequired(v => v.IVA).WithMany().HasForeignKey(x => x.IdIVA);
 
             modelBuilder.Entity<Feriado>().ToTable("FERIADOS");
             modelBuilder.Entity<Feriado>().Property(t => t.Id).HasColumnName("id_Feriado");

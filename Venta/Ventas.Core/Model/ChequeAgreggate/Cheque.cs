@@ -71,7 +71,7 @@ namespace Ventas.Core.Model.ChequeAggregate
             FechaIngreso = fechaIngreso;
             FechaDesposito = fechaDesposito;
             FechaVencimiento = fechaVencimiento;
-            FechaSalida = fechaSalida == DateTime.MinValue? (DateTime?) null: fechaSalida;
+            FechaSalida = fechaSalida == DateTime.MinValue ? (DateTime?)null : fechaSalida;
             DetalleSalida = detalleSalida;
             Estado = estado;
             DestinoSalida = destinoSalida;
@@ -79,7 +79,7 @@ namespace Ventas.Core.Model.ChequeAggregate
             FechaEdicion = DateTime.Now;
         }
 
-        public Cheque(long id, int idSucursal, int numeroOrden, int numeroCheque, bool marcaFacturado, decimal monto, int? idBancoEmisor, int idCliente, string clienteNombre, int idLibrador, string libradorNombre, DateTime fechaIngreso, DateTime fechaDesposito, DateTime fechaVencimiento, DateTime? fechaSalida, string detalleSalida, EstadoCheque estado, DestinoSalidaCheque destinoSalida) 
+        public Cheque(long id, int idSucursal, int numeroOrden, int numeroCheque, bool marcaFacturado, decimal monto, int? idBancoEmisor, int idCliente, string clienteNombre, int idLibrador, string libradorNombre, DateTime fechaIngreso, DateTime fechaDesposito, DateTime fechaVencimiento, DateTime? fechaSalida, string detalleSalida, EstadoCheque estado, DestinoSalidaCheque destinoSalida)
             : this(idSucursal, numeroOrden, numeroCheque, marcaFacturado, monto, idBancoEmisor, idCliente, clienteNombre, idLibrador, libradorNombre, fechaIngreso, fechaDesposito, fechaVencimiento, fechaSalida, detalleSalida, estado, destinoSalida)
         {
             Id = id;

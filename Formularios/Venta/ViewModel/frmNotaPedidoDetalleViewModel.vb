@@ -108,9 +108,24 @@ Namespace Formularios.Venta
             End Get
         End Property
 
+        Public ReadOnly Property HabilitarAnular As Boolean
+            Get
+                Return NotaPedidoModel.Estado <> NotaPedidoEstado.Anulada AndAlso
+                                (NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada OrElse
+                                 NotaPedidoModel.Estado = NotaPedidoEstado.Venta OrElse
+                                 NotaPedidoModel.Estado = NotaPedidoEstado.Envio)
+            End Get
+        End Property
+
         Public ReadOnly Property HabilitarArmado As Boolean
             Get
                 Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada
+            End Get
+        End Property
+
+        Public ReadOnly Property HabilitarVolverAArmado As Boolean
+            Get
+                Return NotaPedidoModel.Estado = NotaPedidoEstado.Venta
             End Get
         End Property
 
@@ -128,11 +143,11 @@ Namespace Formularios.Venta
 
         Public ReadOnly Property HabilitarEdicionDeProductos As Boolean
             Get
-                Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada
+                Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada OrElse NotaPedidoEstado.Venta
             End Get
         End Property
 
-        Public Property Comentario As String
+        Public Property Comentario As String = String.Empty
 
         Sub New(idSucursal As Integer, notaPedido As NotaPedido, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate)
             Me.IdSucursal = idSucursal
@@ -144,7 +159,7 @@ Namespace Formularios.Venta
 
         Friend Sub AgregaItemNotaPedido()
             Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
-                                                                                            OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
+                                                                                        OrElse x.Nombre.ToUpper() = NombreCodigoProductoBusqueda.ToUpper() _
                                                                                         OrElse x.CodigoBarra.ToUpper() = NombreCodigoProductoBusqueda.ToUpper())
 
             If (producto Is Nothing) Then
@@ -175,7 +190,7 @@ Namespace Formularios.Venta
 
             NombreCodigoProductoBusqueda = String.Empty
 
-            Comentario += $"Se agrega el producto {producto.Codigo}.{Environment.NewLine}"
+            AgregarComentario($"Se agrega el producto {producto.Codigo}.")
 
             NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
             NotifyPropertyChanged(NameOf(Me.TotalNotaPedidoItems))
@@ -183,9 +198,29 @@ Namespace Formularios.Venta
 
         End Sub
 
+        Friend Sub ActualizarItemNotaPedido(ventaItemViewModel As VentaItemViewModel, verificarStock As Boolean)
+            Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo = ventaItemViewModel.Codigo)
+
+            If verificarStock AndAlso Not HaySotck(producto, ventaItemViewModel.Cantidad) Then
+                Exit Sub
+            End If
+
+            NotaPedidoModel.ActualizaNotaPedidoItem(ventaItemViewModel.Codigo,
+                                               ventaItemViewModel.Monto,
+                                               ventaItemViewModel.Cantidad,
+                                               ventaItemViewModel.PorcentajeBonificacion,
+                                               PorcentajeFacturacion,
+                                               TipoCliente)
+
+            AgregarComentario($"Se modifica el producto {producto.Codigo}.")
+
+            NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
+            NotifyPropertyChanged(NameOf(Me.TotalNotaPedidoItems))
+        End Sub
+
         Friend Sub QuitarItemNotaPedido(ventaItemViewModel As VentaItemViewModel)
 
-            Comentario += $"Se quita el producto {ventaItemViewModel.Codigo}.{Environment.NewLine}"
+            AgregarComentario($"Se quita el producto {ventaItemViewModel.Codigo}.")
 
             NotaPedidoModel.QuitarNotaPedidoItems(ventaItemViewModel.Codigo)
             NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
@@ -205,8 +240,13 @@ Namespace Formularios.Venta
             End If
         End Function
 
+        Friend Async Function Anular() As Task
+            NotaPedidoModel.Anular(Comentario, VariablesGlobales.objUsuario.Usuario)
+            Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
+        End Function
+
         Friend Async Function GuardarFinalizadoAsync() As Task
-            NotaPedidoModel.ArmadoFinalizado(Comentario, VariablesGlobales.objUsuario.Usuario)
+            NotaPedidoModel.Actualizar(Comentario, VariablesGlobales.objUsuario.Usuario)
             Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
         End Function
 
@@ -239,6 +279,11 @@ Namespace Formularios.Venta
             frmReporteResumenReserva.Show()
         End Sub
 
+        Friend Async Function VolverAEstadoIngresadoAsync() As Task
+            NotaPedidoModel.VolverAIngresada(Comentario, VariablesGlobales.objUsuario.Usuario)
+            Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
+        End Function
+
         Private Function GuardarProductoCompletoEnListaDeProductos(producto As ModelBase.Producto) As ModelBase.Producto
             If (producto.Stock Is Nothing) Then
                 Dim productoCompleto As ModelBase.Producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
@@ -258,5 +303,12 @@ Namespace Formularios.Venta
 
             Return True
         End Function
+
+        Private Sub AgregarComentario(nuevoComentario As String)
+            nuevoComentario = If(Not String.IsNullOrWhiteSpace(Comentario), Environment.NewLine, String.Empty) + nuevoComentario
+            If (Not Comentario.Contains(nuevoComentario)) Then
+                Comentario += nuevoComentario
+            End If
+        End Sub
     End Class
 End Namespace

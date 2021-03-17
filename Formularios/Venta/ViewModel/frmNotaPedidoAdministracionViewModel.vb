@@ -27,33 +27,11 @@ Namespace Formularios.Venta
         Public Property Numero As Integer?
         Public Property NombreCliente As String
 
-        Public ReadOnly Property Cantidad As Integer
-            Get
-                Return _NotaPedidosItems.Count()
-            End Get
-        End Property
+        Public Property ValorPromedio As Decimal
 
-        Public ReadOnly Property ValorPromedio As Decimal
-            Get
-                If (NotaPedidosItems.Any()) Then
-                    Return _NotaPedidosItems.Average(Function(x) x.MontoTotal.toDecimal())
-                Else
-                    Return 0
-                End If
-            End Get
-        End Property
+        Public Property TotalSinIVA As Decimal
 
-        Public ReadOnly Property TotalSinIVA As Decimal
-            Get
-                Return _NotaPedidosItems.Sum(Function(x) x.MontoTotal.Valor)
-            End Get
-        End Property
-
-        Public ReadOnly Property Total As Decimal
-            Get
-                Return _NotaPedidosItems.Sum(Function(x) x.MontoTotal.toDecimal())
-            End Get
-        End Property
+        Public Property Total As Decimal
 
         Public ReadOnly Property SinResultados() As Boolean
             Get
@@ -95,6 +73,20 @@ Namespace Formularios.Venta
             Await CargarNotaPedidoAsync(Numero, EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
+        Public Async Function BuscarTotales() As Task
+            Dim montoTotal As Decimal? = Await NotaPedidoService.ObtenerMontoTotal(IdSucursal, Numero, EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
+            Dim montoTotalSinIva As Decimal? = Await NotaPedidoService.ObtenerMontoTotalSinIva(IdSucursal, Numero, EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
+
+            ValorPromedio = If(NotasPedidosTotalElementos > 0, montoTotal / NotasPedidosTotalElementos, 0)
+            TotalSinIVA = If(montoTotalSinIva.HasValue, montoTotalSinIva.Value, 0)
+            Total = If(montoTotal.HasValue, montoTotal.Value, 0)
+
+            NotifyPropertyChanged(NameOf(Me.ValorPromedio))
+            NotifyPropertyChanged(NameOf(Me.TotalSinIVA))
+            NotifyPropertyChanged(NameOf(Me.Total))
+
+        End Function
+
         Public Sub CargarVenta(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Id = notaPedidoItem.Id)
             Dim form As Form
@@ -118,6 +110,7 @@ Namespace Formularios.Venta
         Public Async Function CargarDatosAsync() As Task
             Dim tareas As List(Of Task) = New List(Of Task)()
             tareas.Add(Buscar())
+            tareas.Add(BuscarTotales())
             tareas.Add(CargarEmpleadosAsync())
             Await Task.WhenAll(tareas)
         End Function
@@ -172,7 +165,7 @@ Namespace Formularios.Venta
             frmReporteResumenReserva.Show()
         End Sub
 
-        Private Sub Inicializar()
+        Public Sub Inicializar()
             FechaDesde = DateTime.Today
             FechaHasta = DateTime.Today
             VendedoresSeleccionado = New KeyValuePair(Of Empleado, String)(Nothing, "Todos")
@@ -185,11 +178,6 @@ Namespace Formularios.Venta
 
             _NotaPedidosItems = New List(Of NotaPedido)()
         End Sub
-
-        Public Async Function RestablecerAsync() As Task
-            Inicializar()
-            Await Buscar()
-        End Function
 
     End Class
 End Namespace

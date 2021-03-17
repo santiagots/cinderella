@@ -21,12 +21,15 @@ Public Class frmNotaPedidoAdministracion
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click
         EjecutarAsync(Async Function() As Task
                           Await notaPedidoViewModel.Buscar()
+                          Await notaPedidoViewModel.BuscarTotales()
                       End Function)
     End Sub
 
     Private Sub btn_Restablecer_Click(sender As Object, e As EventArgs) Handles btn_Restablecer.Click
         EjecutarAsync(Async Function() As Task
-                          Await notaPedidoViewModel.RestablecerAsync()
+                          notaPedidoViewModel.Inicializar()
+                          Await notaPedidoViewModel.Buscar()
+                          Await notaPedidoViewModel.BuscarTotales()
                       End Function)
     End Sub
 
@@ -34,14 +37,15 @@ Public Class frmNotaPedidoAdministracion
     Private Sub dgNotasPedidos_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgNotasPedidos.CellClick
         EjecutarAsync(
             Async Function() As Task
-                If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Eliminar" Then
+                Dim notaPedido As NotaPedidoItemsViewModel = dgNotasPedidos.CurrentRow.DataBoundItem
+                If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Eliminar" AndAlso notaPedido.TipoCliente = TipoCliente.Minorista Then
                     If (DialogResult.Yes = MessageBox.Show("¿Está seguro que desea eliminar la Nota de Pedido?", "Administración Nota Pedido", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) Then
-                        Await notaPedidoViewModel.EliminarNotaPedidoAsync(dgNotasPedidos.CurrentRow.DataBoundItem)
+                        Await notaPedidoViewModel.EliminarNotaPedidoAsync(notaPedido)
                         MessageBox.Show("Se ha eliminado la nota de pedido correctamente", "Administración Nota Pedido", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     End If
                 End If
                 If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Imprimir" Then
-                    notaPedidoViewModel.ImprimirNotaPedido(dgNotasPedidos.CurrentRow.DataBoundItem, Me.MdiParent)
+                    notaPedidoViewModel.ImprimirNotaPedido(notaPedido, Me.MdiParent)
                 End If
             End Function)
     End Sub
@@ -101,5 +105,14 @@ Public Class frmNotaPedidoAdministracion
                               dgNotasPedidos.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = If(notaPedidoViewModel.NotasPedidosDireccionOrdenamiento = OrdenadoDireccion.ASC, SortOrder.Ascending, SortOrder.Descending)
                           End If
                       End Function)
+    End Sub
+
+    Private Sub dgNotasPedidos_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgNotasPedidos.CellFormatting
+
+        Dim notaPedido As NotaPedidoItemsViewModel = notaPedidoViewModel.NotaPedidosItems(e.RowIndex)
+
+        If (notaPedido.TipoCliente = TipoCliente.Mayorista AndAlso dgNotasPedidos.Columns(e.ColumnIndex).Name = "Eliminar") Then
+            e.Value = New Bitmap(1, 1)
+        End If
     End Sub
 End Class

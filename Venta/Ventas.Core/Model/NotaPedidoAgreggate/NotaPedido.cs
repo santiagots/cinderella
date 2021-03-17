@@ -76,7 +76,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
 
         public void AgregaNotaPedidoItem(Producto producto, MontoProducto monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
-            NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == producto.Codigo);
+            NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == producto.Codigo && !x.Borrado);
 
             if (notaPedidoItem == null)
             {
@@ -89,9 +89,37 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             }
         }
 
+        public void ActualizaNotaPedidoItem(string codigoProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            if (porcentajeBonificacion > 1)
+                porcentajeBonificacion = 1;
+
+            NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
+
+            notaPedidoItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+        }
+
         public void Actualizar(string comentario, string usuario)
         {
-            Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, Estado);
+            if (TipoCliente == TipoCliente.Minorista)
+                throw new NegocioException($"Las notas de pedido para los clientes minoristas no pueden ser actualizadas.");
+
+            Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario);
+            FechaEdicion = DateTime.Now;
+        }
+
+        public void Anular(string comentario, string usuario)
+        {
+            NotaPedidoEstado nuevoEstado = NotaPedidoEstado.Anulada;
+
+            if (TipoCliente == TipoCliente.Minorista)
+                throw new NegocioException($"Las notas de pedido para los clientes minoristas no pueden cambiar al estado {nuevoEstado}");
+
+            if (string.IsNullOrEmpty(comentario))
+                throw new NegocioException("Error al anular la nota de pedido. Debe ingresar un motivo para anular una nota de pedido.");
+
+            Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, nuevoEstado);
+            Estado = nuevoEstado;
             FechaEdicion = DateTime.Now;
         }
 
@@ -101,6 +129,21 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
 
             if (TipoCliente == TipoCliente.Minorista)
                 throw new NegocioException($"Las notas de pedido para los clientes minoristas no pueden cambiar al estado {nuevoEstado}");
+
+            Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, nuevoEstado);
+            Estado = nuevoEstado;
+            FechaEdicion = DateTime.Now;
+        }
+
+        public void VolverAIngresada(string comentario, string usuario)
+        {
+            NotaPedidoEstado nuevoEstado = NotaPedidoEstado.Ingresada;
+
+            if (TipoCliente == TipoCliente.Minorista)
+                throw new NegocioException($"Las notas de pedido para los clientes minoristas no pueden cambiar al estado {nuevoEstado}");
+
+            if (string.IsNullOrEmpty(comentario))
+                throw new NegocioException($"Error cambiar el estado de la nota de pedido al estado {nuevoEstado}. Debe ingresar un motivo para cambiar el estado de una nota de pedido.");
 
             Comentarios += Environment.NewLine + ObtenerComentario(comentario, usuario, Estado, nuevoEstado);
             Estado = nuevoEstado;
@@ -129,7 +172,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
 
         public int ObtenerCantidadDeUnidadesDeProducto(string codigoProducto)
         {
-            NotaPedidoItem notaPedidoItems = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
+            NotaPedidoItem notaPedidoItems = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto && !x.Borrado);
             if (notaPedidoItems == null)
                 return 0;
             else
@@ -161,6 +204,14 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             Borrado = true;
         }
 
+        private string ObtenerComentario(string nuevoComentario, string usuario)
+        {
+            nuevoComentario = !string.IsNullOrWhiteSpace(nuevoComentario) ? $"{nuevoComentario}" : string.Empty;
+
+            nuevoComentario = $"--{DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString()} Usuario:{usuario} Modificada{Environment.NewLine}{nuevoComentario}";
+            return nuevoComentario;
+        }
+
         private string ObtenerComentario(string usuario, NotaPedidoEstado estadoOriginal, NotaPedidoEstado estadoNuevo)
         {
             return ObtenerComentario(string.Empty, usuario, estadoOriginal, estadoNuevo);
@@ -168,9 +219,9 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
 
         private string ObtenerComentario(string nuevoComentario, string usuario, NotaPedidoEstado estadoOriginal, NotaPedidoEstado estadoNuevo)
         {
-            nuevoComentario = !string.IsNullOrWhiteSpace(nuevoComentario) ? $"{Environment.NewLine}{nuevoComentario}" : string.Empty;
+            nuevoComentario = !string.IsNullOrWhiteSpace(nuevoComentario) ? $"{nuevoComentario}" : string.Empty;
 
-            nuevoComentario = $"-- {DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString()} Usuario:{usuario} Cambio estado:{estadoOriginal} -> {estadoNuevo}  --{nuevoComentario}";
+            nuevoComentario = $"--{DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString()} Usuario:{usuario} Cambio estado:{estadoOriginal} -> {estadoNuevo}{Environment.NewLine}{nuevoComentario}";
             return nuevoComentario;
         }
     }

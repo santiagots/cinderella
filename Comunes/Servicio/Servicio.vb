@@ -1,12 +1,7 @@
-﻿Imports Ventas.Data
-Imports Common.Data.Repository
-Imports Common.Core.Model
-Imports Ventas.Data.Repository
-Imports Ventas.Core.Interfaces
-Imports Common.Core.Interfaces
-Imports Common.Data
+﻿Imports Ventas.Core.Interfaces
 Imports Ventas.Core.Model.VentaAggregate
-Imports System.Threading.Tasks
+Imports Ventas.Data
+Imports Ventas.Data.Repository
 
 Namespace Comunes
     Public Class Servicio

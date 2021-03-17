@@ -1,13 +1,12 @@
-﻿using Ventas.Core.Model.VentaAggregate;
-using Ventas.Core.Interfaces;
+﻿using Common.Core.Enum;
+using Common.Data.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
-using Common.Core.Enum;
-using Common.Data.Repository;
+using System.Linq;
 using System.Threading.Tasks;
-using Common.Core.Model;
+using Ventas.Core.Interfaces;
+using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data.Repository
 {
@@ -19,7 +18,9 @@ namespace Ventas.Data.Repository
 
         public void Actualizar(Venta venta)
         {
-            _context.Entry(venta).State = System.Data.Entity.EntityState.Modified;
+            venta.EstadoEntidad = EstadoEntidad.Modificado;
+            
+            _context.AttachRecursive(venta);
             _context.SaveChanges();
         }
 
@@ -95,16 +96,16 @@ namespace Ventas.Data.Repository
 
         public void Guardar(Venta venta)
         {
-            if(venta.ClienteMayorista != null)
-                _context.Entry(venta.ClienteMayorista).State = EntityState.Unchanged;
+            venta.EstadoEntidad = EstadoEntidad.Nuevo;
+            venta.VentaItems.ForEach(x => x.EstadoEntidad = EstadoEntidad.Nuevo);
+            venta.Comisiones.ForEach(x => x.EstadoEntidad = EstadoEntidad.Nuevo);
+            venta.Pagos.ForEach(x => x.EstadoEntidad = EstadoEntidad.Nuevo);
+            venta.Cheques.ForEach(x => x.EstadoEntidad = EstadoEntidad.Nuevo);
+            if(venta.NotaCredito != null) venta.NotaCredito.EstadoEntidad = EstadoEntidad.Nuevo;
+            if(venta.Factura != null) venta.Factura.EstadoEntidad = EstadoEntidad.Nuevo;
 
-            _context.Entry(venta.Encargado).State = EntityState.Unchanged;
-            _context.Entry(venta.Vendedor).State = EntityState.Unchanged;
-            venta.VentaItems.ToList().ForEach(x => x.Producto.Categoria = (Categoria)_context.Attach(x.Producto.Categoria));
-            venta.VentaItems.ToList().ForEach(x => x.Producto.SubCategoria = (SubCategoria)_context.Attach(x.Producto.SubCategoria));
-            venta.VentaItems.ToList().ForEach(x => _context.Entry(x.Producto).State = EntityState.Unchanged);
-            venta.Pagos.Where(x => x.TipoPago == TipoPago.Deposito).ToList().ForEach(x => _context.Entry(x.CuentaBancaria).State = EntityState.Unchanged);
-            _context.Venta.Add(venta);
+            _context.AttachRecursive(venta);
+
             _context.SaveChanges();
         }
 
@@ -181,7 +182,8 @@ namespace Ventas.Data.Repository
 
         private IQueryable<Venta> ObtenerContextoVentaReducido()
         {
-            return _context.Venta.Include(x => x.ClienteMayorista)
+            return _context.Venta.AsNoTracking()
+                                 .Include(x => x.ClienteMayorista)
                                  .Include(x => x.Vendedor)
                                  .Include(x => x.Encargado)
                                  .Include(x => x.Pagos)

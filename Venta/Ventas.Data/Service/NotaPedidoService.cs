@@ -34,5 +34,17 @@ namespace Ventas.Data.Service
             INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext(tipoBase));
             return NotaPedidoRepository.ObtenerAsync(idClienteMayorista, estado, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
         }
+
+        public static Task<decimal?> ObtenerMontoTotal(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
+        {
+            INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
+            return NotaPedidoRepository.ObtenerMontoTotal(idSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente);
+        }
+
+        public static Task<decimal?> ObtenerMontoTotalSinIva(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
+        {
+            INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
+            return NotaPedidoRepository.ObtenerMontoTotalSinIva(idSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente);
+        }
     }
 }

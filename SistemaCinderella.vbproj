@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>20</ApplicationRevision>
+    <ApplicationRevision>21</ApplicationRevision>
     <ApplicationVersion>1.3.4.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1814,6 +1814,7 @@
     </None>
     <None Include="Imagenes\NavigatorNextItem.png" />
     <None Include="Imagenes\NavigatorLastItem.png" />
+    <None Include="Imagenes\btn_standby_32.png" />
     <Content Include="Libs\openssl.cnf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

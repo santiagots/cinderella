@@ -35,7 +35,6 @@ Partial Class frmNotaPedidoDetalle
         Me.FrmNotaPedidoDetalleViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Btn_Agregar = New System.Windows.Forms.Button()
-        Me.Btn_Cambiar = New System.Windows.Forms.Button()
         Me.Btn_Venta = New System.Windows.Forms.Button()
         Me.Btn_Envio = New System.Windows.Forms.Button()
         Me.Btn_Imprimir = New System.Windows.Forms.Button()
@@ -74,11 +73,11 @@ Partial Class frmNotaPedidoDetalle
         Me.DG_Productos = New SistemaCinderella.CustomDataGrid()
         Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CantidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductosCantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductosMonto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.IvaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductosPorcentajeBonificacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductosQuitar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.NotaPedidoItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -89,6 +88,8 @@ Partial Class frmNotaPedidoDetalle
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Btn_Guardar = New System.Windows.Forms.Button()
+        Me.btnAnular = New System.Windows.Forms.Button()
+        Me.Btn_Volver_Armado = New System.Windows.Forms.Button()
         CType(Me.FrmNotaPedidoDetalleViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -113,9 +114,9 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Armado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Armado.Image = Global.SistemaCinderella.My.Resources.Recursos.Proveedores_2
         Me.Btn_Armado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Armado.Location = New System.Drawing.Point(552, 693)
+        Me.Btn_Armado.Location = New System.Drawing.Point(541, 693)
         Me.Btn_Armado.Name = "Btn_Armado"
-        Me.Btn_Armado.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Armado.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Armado.TabIndex = 17
         Me.Btn_Armado.Text = "Armado"
         Me.Btn_Armado.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -135,7 +136,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Btn_Cancelar.Location = New System.Drawing.Point(18, 693)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
-        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Cancelar.TabIndex = 16
         Me.Btn_Cancelar.Text = "Cancelar"
         Me.Btn_Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -147,27 +148,13 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(705, 5)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(815, 5)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Agregar.TabIndex = 8
         Me.Btn_Agregar.Text = "Agregar"
         Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Agregar.UseVisualStyleBackColor = True
-        '
-        'Btn_Cambiar
-        '
-        Me.Btn_Cambiar.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.Btn_Cambiar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Cambiar.Image = Global.SistemaCinderella.My.Resources.Recursos.Cambios_32
-        Me.Btn_Cambiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cambiar.Location = New System.Drawing.Point(815, 5)
-        Me.Btn_Cambiar.Name = "Btn_Cambiar"
-        Me.Btn_Cambiar.Size = New System.Drawing.Size(100, 34)
-        Me.Btn_Cambiar.TabIndex = 9
-        Me.Btn_Cambiar.Text = "Cambiar"
-        Me.Btn_Cambiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Cambiar.UseVisualStyleBackColor = True
         '
         'Btn_Venta
         '
@@ -177,9 +164,9 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Venta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Venta.Image = Global.SistemaCinderella.My.Resources.Recursos.Precios
         Me.Btn_Venta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Venta.Location = New System.Drawing.Point(699, 693)
+        Me.Btn_Venta.Location = New System.Drawing.Point(687, 693)
         Me.Btn_Venta.Name = "Btn_Venta"
-        Me.Btn_Venta.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Venta.Size = New System.Drawing.Size(112, 39)
         Me.Btn_Venta.TabIndex = 77
         Me.Btn_Venta.Text = "Vender"
         Me.Btn_Venta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -195,7 +182,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Envio.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Btn_Envio.Location = New System.Drawing.Point(845, 693)
         Me.Btn_Envio.Name = "Btn_Envio"
-        Me.Btn_Envio.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Envio.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Envio.TabIndex = 78
         Me.Btn_Envio.Text = "Enviado"
         Me.Btn_Envio.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -208,9 +195,9 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Imprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Imprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
         Me.Btn_Imprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Imprimir.Location = New System.Drawing.Point(124, 693)
+        Me.Btn_Imprimir.Location = New System.Drawing.Point(230, 693)
         Me.Btn_Imprimir.Name = "Btn_Imprimir"
-        Me.Btn_Imprimir.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Imprimir.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Imprimir.TabIndex = 81
         Me.Btn_Imprimir.Text = "Imprimir"
         Me.Btn_Imprimir.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -222,9 +209,9 @@ Partial Class frmNotaPedidoDetalle
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.TextBox1)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 447)
+        Me.GroupBox2.Location = New System.Drawing.Point(550, 447)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(933, 92)
+        Me.GroupBox2.Size = New System.Drawing.Size(395, 195)
         Me.GroupBox2.TabIndex = 35
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "COMENTARIOS"
@@ -237,18 +224,18 @@ Partial Class frmNotaPedidoDetalle
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(927, 72)
+        Me.TextBox1.Size = New System.Drawing.Size(389, 175)
         Me.TextBox1.TabIndex = 0
         '
         'GroupBox3
         '
-        Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.Controls.Add(Me.TextBox2)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(15, 545)
+        Me.GroupBox3.Location = New System.Drawing.Point(15, 447)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(930, 142)
+        Me.GroupBox3.Size = New System.Drawing.Size(529, 236)
         Me.GroupBox3.TabIndex = 36
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "HISTORIAL COMENTARIOS"
@@ -257,12 +244,12 @@ Partial Class frmNotaPedidoDetalle
         '
         Me.TextBox2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HistorialComentarios", True))
         Me.TextBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox2.Enabled = False
         Me.TextBox2.Location = New System.Drawing.Point(3, 17)
         Me.TextBox2.Multiline = True
         Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.ReadOnly = True
         Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox2.Size = New System.Drawing.Size(924, 122)
+        Me.TextBox2.Size = New System.Drawing.Size(523, 216)
         Me.TextBox2.TabIndex = 0
         '
         'TableLayoutPanel2
@@ -593,7 +580,7 @@ Partial Class frmNotaPedidoDetalle
         Me.DG_Productos.AutoGenerateColumns = False
         Me.DG_Productos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.IvaDataGridViewTextBoxColumn, Me.TotalDataGridViewTextBoxColumn, Me.PorcentajeBonificacionDataGridViewTextBoxColumn, Me.ProductosQuitar})
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.ProductosCantidad, Me.ProductosMonto, Me.IvaDataGridViewTextBoxColumn, Me.TotalDataGridViewTextBoxColumn, Me.ProductosPorcentajeBonificacion, Me.ProductosQuitar})
         Me.DG_Productos.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.DG_Productos.DataSource = Me.NotaPedidoItemsBindingSource
         Me.DG_Productos.Dock = System.Windows.Forms.DockStyle.Fill
@@ -620,21 +607,19 @@ Partial Class frmNotaPedidoDetalle
         Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
         Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'CantidadDataGridViewTextBoxColumn
+        'ProductosCantidad
         '
-        Me.CantidadDataGridViewTextBoxColumn.DataPropertyName = "Cantidad"
-        Me.CantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad"
-        Me.CantidadDataGridViewTextBoxColumn.Name = "CantidadDataGridViewTextBoxColumn"
-        Me.CantidadDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ProductosCantidad.DataPropertyName = "Cantidad"
+        Me.ProductosCantidad.HeaderText = "Cantidad"
+        Me.ProductosCantidad.Name = "ProductosCantidad"
         '
-        'MontoDataGridViewTextBoxColumn
+        'ProductosMonto
         '
-        Me.MontoDataGridViewTextBoxColumn.DataPropertyName = "Monto"
+        Me.ProductosMonto.DataPropertyName = "Monto"
         DataGridViewCellStyle5.Format = "c2"
-        Me.MontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
-        Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
-        Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
-        Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ProductosMonto.DefaultCellStyle = DataGridViewCellStyle5
+        Me.ProductosMonto.HeaderText = "Monto"
+        Me.ProductosMonto.Name = "ProductosMonto"
         '
         'IvaDataGridViewTextBoxColumn
         '
@@ -654,14 +639,13 @@ Partial Class frmNotaPedidoDetalle
         Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
         Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'PorcentajeBonificacionDataGridViewTextBoxColumn
+        'ProductosPorcentajeBonificacion
         '
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.DataPropertyName = "PorcentajeBonificacion"
+        Me.ProductosPorcentajeBonificacion.DataPropertyName = "PorcentajeBonificacion"
         DataGridViewCellStyle8.Format = "p"
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.HeaderText = "% Bonif."
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn"
-        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ProductosPorcentajeBonificacion.DefaultCellStyle = DataGridViewCellStyle8
+        Me.ProductosPorcentajeBonificacion.HeaderText = "% Bonif."
+        Me.ProductosPorcentajeBonificacion.Name = "ProductosPorcentajeBonificacion"
         '
         'ProductosQuitar
         '
@@ -702,13 +686,12 @@ Partial Class frmNotaPedidoDetalle
         '
         'TableLayoutPanel4
         '
-        Me.TableLayoutPanel4.ColumnCount = 4
+        Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Btn_Agregar, 2, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Cambiar, 3, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_CodigoBarra, 1, 0)
         Me.TableLayoutPanel4.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
@@ -740,7 +723,7 @@ Partial Class frmNotaPedidoDetalle
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_CodigoBarra.Location = New System.Drawing.Point(123, 11)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(572, 21)
+        Me.txt_CodigoBarra.Size = New System.Drawing.Size(682, 21)
         Me.txt_CodigoBarra.TabIndex = 7
         '
         'PictureBox1
@@ -748,7 +731,7 @@ Partial Class frmNotaPedidoDetalle
         Me.PictureBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackgroundImage = Global.SistemaCinderella.My.Resources.Recursos.Ingreso_32
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.PictureBox1.Location = New System.Drawing.Point(659, 693)
+        Me.PictureBox1.Location = New System.Drawing.Point(647, 697)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(34, 35)
         Me.PictureBox1.TabIndex = 79
@@ -773,13 +756,46 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Guardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Guardar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Guardar.Location = New System.Drawing.Point(232, 693)
+        Me.Btn_Guardar.Location = New System.Drawing.Point(336, 693)
         Me.Btn_Guardar.Name = "Btn_Guardar"
-        Me.Btn_Guardar.Size = New System.Drawing.Size(100, 35)
+        Me.Btn_Guardar.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Guardar.TabIndex = 82
         Me.Btn_Guardar.Text = "Modificar"
         Me.Btn_Guardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Guardar.UseVisualStyleBackColor = True
+        '
+        'btnAnular
+        '
+        Me.btnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnAnular.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnAnular.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarAnular", True))
+        Me.btnAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAnular.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_standby_32
+        Me.btnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAnular.Location = New System.Drawing.Point(124, 693)
+        Me.btnAnular.Name = "btnAnular"
+        Me.btnAnular.Size = New System.Drawing.Size(100, 39)
+        Me.btnAnular.TabIndex = 83
+        Me.btnAnular.Text = "Anular"
+        Me.btnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnAnular.UseVisualStyleBackColor = True
+        '
+        'Btn_Volver_Armado
+        '
+        Me.Btn_Volver_Armado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Volver_Armado.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Volver_Armado.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarVolverAArmado", True))
+        Me.Btn_Volver_Armado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Volver_Armado.Image = Global.SistemaCinderella.My.Resources.Recursos.Egreso_32
+        Me.Btn_Volver_Armado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Volver_Armado.Location = New System.Drawing.Point(687, 645)
+        Me.Btn_Volver_Armado.Margin = New System.Windows.Forms.Padding(3, 0, 3, 0)
+        Me.Btn_Volver_Armado.Name = "Btn_Volver_Armado"
+        Me.Btn_Volver_Armado.Size = New System.Drawing.Size(112, 45)
+        Me.Btn_Volver_Armado.TabIndex = 84
+        Me.Btn_Volver_Armado.Text = "Volver a Ingresada"
+        Me.Btn_Volver_Armado.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.Btn_Volver_Armado.UseVisualStyleBackColor = True
         '
         'frmNotaPedidoDetalle
         '
@@ -787,6 +803,9 @@ Partial Class frmNotaPedidoDetalle
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Btn_Cancelar
         Me.ClientSize = New System.Drawing.Size(954, 737)
+        Me.Controls.Add(Me.Btn_Volver_Armado)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.btnAnular)
         Me.Controls.Add(Me.Btn_Guardar)
         Me.Controls.Add(Me.Btn_Imprimir)
         Me.Controls.Add(Me.PictureBox2)
@@ -795,7 +814,6 @@ Partial Class frmNotaPedidoDetalle
         Me.Controls.Add(Me.Btn_Venta)
         Me.Controls.Add(Me.TableLayoutPanel3)
         Me.Controls.Add(Me.GroupBox3)
-        Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.Btn_Cancelar)
         Me.Controls.Add(Me.Btn_Armado)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -854,7 +872,6 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents Gb_Producto As GroupBox
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents Btn_Agregar As Button
-    Friend WithEvents Btn_Cambiar As Button
     Friend WithEvents lbl_CodigoBarra As Label
     Friend WithEvents txt_CodigoBarra As TextBox
     Friend WithEvents GroupBox1 As GroupBox
@@ -879,12 +896,14 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents Quitar As DataGridViewTextBoxColumn
     Friend WithEvents Btn_Guardar As Button
+    Friend WithEvents btnAnular As Button
     Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents CantidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosCantidad As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosMonto As DataGridViewTextBoxColumn
     Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosPorcentajeBonificacion As DataGridViewTextBoxColumn
     Friend WithEvents ProductosQuitar As DataGridViewImageColumn
+    Friend WithEvents Btn_Volver_Armado As Button
 End Class

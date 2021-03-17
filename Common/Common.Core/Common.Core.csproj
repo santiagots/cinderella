@@ -37,6 +37,12 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.4.6.7\lib\net45\NLog.dll</HintPath>
@@ -59,12 +65,22 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Z.EntityFramework.Extensions, Version=5.1.19.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.EntityFramework.Extensions.5.1.19\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=5.1.19.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.EntityFramework.Plus.EF6.5.1.19\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.Expressions.Eval, Version=4.0.32.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.Expressions.Eval.4.0.32\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Enum\CondicionesIVA.cs" />
     <Compile Include="Enum\DestinoSalidaCheque.cs" />
     <Compile Include="Enum\EstadoCheque.cs" />
+    <Compile Include="Enum\EstadoEntidad.cs" />
     <Compile Include="Enum\OrdenarDireccion.cs" />
     <Compile Include="Enum\TipoAccionCuentaCorriente.cs" />
     <Compile Include="Enum\TipoBase.cs" />
@@ -90,6 +106,7 @@
     <Compile Include="Interfaces\IClienteMayoristaRepository.cs" />
     <Compile Include="Interfaces\ICuentaBancariaRepository.cs" />
     <Compile Include="Interfaces\IDomicilioRepository.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IIVARepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
     <Compile Include="Interfaces\IListaPrecioRepository.cs" />
@@ -112,6 +129,7 @@
     <Compile Include="ValueObjects\ValueObjects.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

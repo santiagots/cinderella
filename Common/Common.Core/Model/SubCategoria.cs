@@ -6,9 +6,9 @@ namespace Common.Core.Model
     public class SubCategoria : Entity<int>
     {
         public int IdCategoria { get; private set; }
-        public virtual Categoria Categoria { get; private set; }
+        public Categoria Categoria { get; private set; }
         public int IdIVA { get; private set; }
-        public virtual IVA IVA { get; private set; }
+        public IVA IVA { get; private set; }
         public string Descripcion { get; protected set; }
         public bool Habilitado { get; protected set; }
 

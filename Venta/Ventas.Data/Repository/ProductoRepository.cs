@@ -5,6 +5,7 @@ using Ventas.Core.Interfaces;
 using Common.Core.Exceptions;
 using Ventas.Core.Model.BaseAgreggate;
 using Common.Data.Repository;
+using Z.EntityFramework.Plus;
 
 namespace Ventas.Data.Repository
 {
@@ -36,10 +37,10 @@ namespace Ventas.Data.Repository
         {
             return _context
                         .Producto
-                        .Include(x => x.Precios)
-                        .Include(x => x.Categoria)
-                        .Include(x => x.SubCategoria)
-                        .Include(x => x.SubCategoria.IVA);
+                        .IncludeOptimized(x => x.Precios)
+                        .IncludeOptimized(x => x.Categoria)
+                        .IncludeOptimized(x => x.SubCategoria)
+                        .IncludeOptimized(x => x.SubCategoria.IVA);
         }
 
         public Producto ObtenerPorCodigo(int idSucursal, string codigo)

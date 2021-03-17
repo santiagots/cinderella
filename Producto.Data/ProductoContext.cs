@@ -1,10 +1,9 @@
 ﻿using System.Data.Entity;
 using Model = Producto.Core.Model.ProductoAgreggate;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Configuration;
 using Common.Data;
-using Common.Core.Helper;
 using Common.Core.Enum;
+using Common.Core.Model;
 
 namespace Producto.Data
 {
@@ -15,6 +14,8 @@ namespace Producto.Data
         {
         }
 
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Model.Producto> Producto { get; set; }
         public DbSet<Model.Proveedor> Proveedor { get; set; }
         public DbSet<Model.Precio> Precio { get; set; }
@@ -24,6 +25,15 @@ namespace Producto.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
+            modelBuilder.Entity<Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
+            modelBuilder.Entity<Categoria>().HasMany(v => v.SubCategorias).WithRequired(t => t.Categoria).HasForeignKey(x => x.IdCategoria);
+
+            modelBuilder.Entity<SubCategoria>().ToTable("PRODUCTOS_SUBCATEGORIAS");
+            modelBuilder.Entity<SubCategoria>().Property(t => t.Id).HasColumnName("id_Subcategoria");
+            modelBuilder.Entity<SubCategoria>().Property(t => t.IdCategoria).HasColumnName("id_Categoria");
+            modelBuilder.Entity<SubCategoria>().HasRequired(v => v.IVA).WithMany().HasForeignKey(x => x.IdIVA);
 
             modelBuilder.Entity<Model.Producto>().ToTable("PRODUCTOS");
             modelBuilder.Entity<Model.Producto>().Property(t => t.Id).HasColumnName("id_Producto");

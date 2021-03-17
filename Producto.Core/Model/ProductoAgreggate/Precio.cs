@@ -1,9 +1,4 @@
 ﻿using Common.Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Producto.Core.Model.ProductoAgreggate
 {
@@ -21,6 +16,7 @@ namespace Producto.Core.Model.ProductoAgreggate
         {
             IdLista = idLista;
             Monto = monto;
+            Habilitado = true;
         }
 
         public Precio(int idPrecio, int idProducto, int idLista, decimal monto): this(idLista, monto)

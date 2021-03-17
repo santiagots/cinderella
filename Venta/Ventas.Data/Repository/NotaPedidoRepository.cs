@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Common.Core.Enum;
+using Common.Core.Extension;
+using Common.Data.Repository;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using Common.Core.Enum;
+using System.Threading.Tasks;
 using Ventas.Core.Enum;
 using Ventas.Core.Interfaces;
 using Ventas.Core.Model.NotaPedidoAgreggate;
-using System.Data.Entity;
-using Common.Data.Repository;
-using Ventas.Core.Model.ValueObjects;
-using System.Threading.Tasks;
-using Ventas.Core.Model.CuentaCorrienteAggregate;
-using Common.Core.Extension;
-using Common.Core.Model;
+using Z.EntityFramework.Plus;
 
 namespace Ventas.Data.Repository
 {
@@ -28,44 +26,47 @@ namespace Ventas.Data.Repository
                                         .OrderByDescending(x => x.Numero)
                                         .FirstOrDefault();
 
-            foreach (NotaPedidoItem notaPedidoItem in notaPedido.NotaPedidoItems)
-            {
-                notaPedidoItem.Producto.Categoria = (Categoria)_context.Attach(notaPedidoItem.Producto.Categoria);
-                notaPedidoItem.Producto.SubCategoria = (SubCategoria)_context.Attach(notaPedidoItem.Producto.SubCategoria);
-                _context.Entry(notaPedidoItem.Producto).State = EntityState.Unchanged;
-            }
-
             if (UltimaNotaPedido == null)
                 notaPedido.AgregarNumero(1);
             else
                 notaPedido.AgregarNumero(UltimaNotaPedido.Numero + 1);
 
-            if(notaPedido.Encargado != null)
-                _context.Entry(notaPedido.Encargado).State = EntityState.Unchanged;
+            notaPedido.EstadoEntidad = EstadoEntidad.Nuevo;
+            foreach (NotaPedidoItem notaPedidoItem in notaPedido.NotaPedidoItems)
+                notaPedidoItem.EstadoEntidad = EstadoEntidad.Nuevo;
 
-            if (notaPedido.Vendedor != null)
-                _context.Entry(notaPedido.Vendedor).State = EntityState.Unchanged;
+            _context.AttachRecursive(notaPedido);
 
-            if (notaPedido.ClienteMayorista != null)
-                _context.Entry(notaPedido.ClienteMayorista).State = EntityState.Unchanged;
-
-            _context.NotaPedido.Add(notaPedido);
             return _context.SaveChangesAsync();
         }
 
         public Task ActualizarAsync(NotaPedido notaPedido)
         {
+            notaPedido.EstadoEntidad = EstadoEntidad.Modificado;
+
             foreach (NotaPedidoItem notaPedidoItem in notaPedido.NotaPedidoItems)
             {
                 if (notaPedidoItem.NotaPedido == null) //si la nata de pedido que contiene el item es null quiere decir que se agrego el item
-                    _context.Entry(notaPedidoItem).State = EntityState.Added;
+                    notaPedidoItem.EstadoEntidad = EstadoEntidad.Nuevo;
+                else
+                    notaPedidoItem.EstadoEntidad = EstadoEntidad.Modificado;
             }
 
-            List<Type> TypeToUpdate = new List<Type> { typeof(NotaPedido), typeof(NotaPedidoItem) };
-
-            _context.AttachRecursive(notaPedido, TypeToUpdate);
+            _context.AttachRecursive(notaPedido);
 
             return _context.SaveChangesAsync();
+        }
+
+        public Task<NotaPedido> Obtener(long idNotaPedido)
+        {
+            return _context.NotaPedido
+                           .IncludeFilter(x => x.NotaPedidoItems.Where(y => !y.Borrado))
+                           .IncludeFilter(x => x.NotaPedidoItems.Select(y => y.Producto.SubCategoria.IVA))
+                           .IncludeFilter(x => x.Vendedor)
+                           .IncludeFilter(x => x.Encargado)
+                           .IncludeFilter(x => x.ClienteMayorista)
+                           .IncludeFilter(x => x.ClienteMinorista)
+                           .FirstOrDefaultAsync(x => x.Id == idNotaPedido);
         }
 
         public Task<List<NotaPedido>> ObtenerAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
@@ -73,6 +74,70 @@ namespace Ventas.Data.Repository
             IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
                                                     .Where(x => x.IdSucursal == idSucursal);
 
+            notaPedido = Filtrar(numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, notaPedido);
+
+            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
+                             .ToListAsync();
+        }
+
+        public Task<List<NotaPedido>> ObtenerAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        {
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta().Where(x => x.ClienteMayorista.Id == idClienteMayorista);
+
+            if (estado.HasValue)
+                notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
+
+            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
+                             .ToListAsync();
+        }
+
+        public int ObtenerCantidad(int idSucursal, List<NotaPedidoEstado> estado)
+        {
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
+                                                    .Where(x => x.IdSucursal == idSucursal);
+
+            if (estado.Count > 0)
+                notaPedido = notaPedido.Where(x => estado.Contains(x.Estado));
+
+            return notaPedido.Count();
+        }
+
+        public Task<decimal?> ObtenerMontoTotalSinIva(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
+        {
+            IQueryable<NotaPedido> notaPedido = _context.NotaPedido.Where(x => !x.Borrado && x.IdSucursal == idSucursal);
+
+            notaPedido = Filtrar(numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, notaPedido);
+
+            return notaPedido.SelectMany(x => x.NotaPedidoItems.Where(y => !y.Borrado))
+                             .SumAsync(x => (decimal?)(x.MontoProducto.Valor * x.Cantidad));
+        }
+
+        public Task<decimal?> ObtenerMontoTotal(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)
+        {
+            IQueryable<NotaPedido> notaPedido = _context.NotaPedido.Where(x => !x.Borrado && x.IdSucursal == idSucursal);
+
+            notaPedido = Filtrar(numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, notaPedido);
+
+            return notaPedido.SelectMany(x => x.NotaPedidoItems.Where(y => !y.Borrado))
+                             .SumAsync(x => (decimal?)((x.MontoProducto.Valor + x.MontoProducto.Iva) * x.Cantidad));
+        }
+
+        private IQueryable<NotaPedido> ObtenerConsulta()
+        {
+            return _context.NotaPedido
+                            .Where(x => !x.Borrado)
+                           .IncludeFilter(x => x.NotaPedidoItems.Where(y => !y.Borrado))
+                           .IncludeFilter(x => x.NotaPedidoItems.Select(y => y.Producto))
+                           .IncludeFilter(x => x.NotaPedidoItems.Select(y => y.Producto.SubCategoria))
+                           .IncludeFilter(x => x.NotaPedidoItems.Select(y => y.Producto.SubCategoria.IVA))
+                           .IncludeFilter(x => x.Vendedor)
+                           .IncludeFilter(x => x.Encargado)
+                           .IncludeFilter(x => x.ClienteMayorista)
+                           .IncludeFilter(x => x.ClienteMinorista);
+        }
+
+        private static IQueryable<NotaPedido> Filtrar(int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, IQueryable<NotaPedido> notaPedido)
+        {
             if (numero.HasValue)
                 notaPedido = notaPedido.Where(x => x.Numero == numero.Value);
 
@@ -93,51 +158,7 @@ namespace Ventas.Data.Repository
 
             if (!string.IsNullOrWhiteSpace(nombreCliente))
                 notaPedido = notaPedido.Where(x => x.ClienteMinorista.Apellido.Contains(nombreCliente) || x.ClienteMinorista.Nombre.Contains(nombreCliente) || x.ClienteMayorista.RazonSocial.Contains(nombreCliente));
-
-            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
-                             .ToListAsync();
-        }
-
-        public Task<List<NotaPedido>> ObtenerAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
-        {
-            IQueryable<NotaPedido> notaPedido = ObtenerConsulta().Where(x => x.ClienteMayorista.Id == idClienteMayorista);
-
-            if (estado.HasValue)
-                notaPedido = notaPedido.Where(x => x.Estado == estado.Value);
-
-            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
-                             .ToListAsync();
-        }
-
-        private IQueryable<NotaPedido> ObtenerConsulta()
-        {
-            return _context.NotaPedido
-                            .Where(x => !x.Borrado)
-                            .Include(x => x.NotaPedidoItems.Select(y => y.Producto))
-                            .Include(x => x.Vendedor)
-                            .Include(x => x.Encargado)
-                            .Include(x => x.ClienteMayorista)
-                            .Include(x => x.ClienteMinorista);
-        }
-
-        public decimal ObtenerMontoTotalClienteMayorista(int idClienteMatorista)
-        {
-            decimal? MontoTotalClienteMayorista =  _context.NotaPedido.Where(x => !x.Borrado && x.Estado != NotaPedidoEstado.Cerrada && x.IdClienteMayorista == idClienteMatorista)
-                                                                      .SelectMany(x => x.NotaPedidoItems)
-                                                                      .Sum(x => (decimal?)(x.MontoProducto.Valor * x.Cantidad));
-
-            return MontoTotalClienteMayorista ?? 0;
-        }
-
-        public int ObtenerCantidad(int idSucursal, List<NotaPedidoEstado> estado)
-        {
-            IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
-                                                    .Where(x => x.IdSucursal == idSucursal);
-
-            if (estado.Count > 0)
-                notaPedido = notaPedido.Where(x => estado.Contains(x.Estado));
-
-            return notaPedido.Count();
+            return notaPedido;
         }
     }
 }

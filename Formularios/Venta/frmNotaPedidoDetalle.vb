@@ -1,4 +1,5 @@
 ﻿Imports System.Threading.Tasks
+Imports Negocio
 Imports SistemaCinderella.Formularios.Venta
 Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
 Imports Ventas.Core.Model.NotaPedidoAgreggate
@@ -8,6 +9,7 @@ Public Class frmNotaPedidoDetalle
 
     Private NotaPedidoDetalleViewModel As frmNotaPedidoDetalleViewModel
     Private FinalizarDelegate As FinalizarDelegateAsync
+    Private Errores As NegManejadorErrores = New NegManejadorErrores()
 
     Sub New(notaPedido As NotaPedido, finalizarDelegate As FinalizarDelegateAsync)
 
@@ -74,6 +76,14 @@ Public Class frmNotaPedidoDetalle
                       End Function)
     End Sub
 
+    Private Sub Btn_Volver_Armado_Click(sender As Object, e As EventArgs) Handles Btn_Volver_Armado.Click
+        EjecutarAsync(Async Function() As Task
+                          Await NotaPedidoDetalleViewModel.VolverAEstadoIngresadoAsync()
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          Close()
+                      End Function)
+    End Sub
+
     Private Sub Btn_Venta_Click(sender As Object, e As EventArgs) Handles Btn_Venta.Click
         Ejecutar(Sub()
                      NotaPedidoDetalleViewModel.RealizarVenta(FinalizarDelegate, Me.MdiParent)
@@ -85,6 +95,14 @@ Public Class frmNotaPedidoDetalle
     Private Sub Btn_Envio_Click(sender As Object, e As EventArgs) Handles Btn_Envio.Click
         EjecutarAsync(Async Function() As Task
                           Await NotaPedidoDetalleViewModel.EnvioFinalizadoAsync()
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          Close()
+                      End Function)
+    End Sub
+
+    Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
+        EjecutarAsync(Async Function() As Task
+                          Await NotaPedidoDetalleViewModel.Anular()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
                           Close()
                       End Function)
@@ -116,5 +134,124 @@ Public Class frmNotaPedidoDetalle
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
         Ejecutar(Sub() NotaPedidoDetalleViewModel.ImprimirNotaPedido(Me.MdiParent))
+    End Sub
+
+    Private Sub DG_Productos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Productos.CellEndEdit
+        Ejecutar(
+            Sub()
+                If DG_Productos.Columns(e.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
+                    DG_Productos.CurrentCell.Style.Format = String.Format("P")
+                    DG_Productos.CurrentCell.Value = DG_Productos.CurrentCell.Value / 100
+                End If
+
+                Dim columnas As List(Of String) = New List(Of String) From {"ProductosPorcentajeBonificacion", "ProductosMonto", "ProductosCantidad"}
+                If (columnas.Any(Function(x) DG_Productos.Columns(e.ColumnIndex).Name = x)) Then
+                    Dim verificarStock = "ProductosCantidad" = DG_Productos.Columns(e.ColumnIndex).Name
+                    NotaPedidoDetalleViewModel.ActualizarItemNotaPedido(DG_Productos.CurrentRow.DataBoundItem, verificarStock)
+                End If
+            End Sub)
+    End Sub
+
+    'Sobresalto la celda que se está editando.
+    Private Sub DG_Productos_EditingControlShowing(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles DG_Productos.EditingControlShowing
+        RemoveHandler e.Control.KeyPress, New KeyPressEventHandler(AddressOf moneda_KeyPress)
+        RemoveHandler e.Control.LostFocus, New EventHandler(AddressOf moneda_LostFocus)
+        RemoveHandler e.Control.KeyPress, New KeyPressEventHandler(AddressOf cantidad_KeyPress)
+        RemoveHandler e.Control.LostFocus, New EventHandler(AddressOf cantidad_LostFocus)
+
+        If DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name = "ProductosMonto" Then
+            'agrego los eventos al control TextBox 
+            Dim textBox As TextBox = TryCast(e.Control, TextBox)
+            If textBox IsNot Nothing Then
+                AddHandler textBox.KeyPress, New KeyPressEventHandler(AddressOf moneda_KeyPress)
+                AddHandler textBox.LostFocus, New EventHandler(AddressOf moneda_LostFocus)
+            End If
+        End If
+
+        If DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name = "ProductosCantidad" Then
+            'agrego los eventos al control TextBox 
+            Dim textBox As TextBox = TryCast(e.Control, TextBox)
+            If textBox IsNot Nothing Then
+                AddHandler textBox.KeyPress, New KeyPressEventHandler(AddressOf cantidad_KeyPress)
+                AddHandler textBox.LostFocus, New EventHandler(AddressOf cantidad_LostFocus)
+            End If
+        End If
+
+        If DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
+            'agrego los eventos al control TextBox 
+            Dim textBox As TextBox = TryCast(e.Control, TextBox)
+            If textBox IsNot Nothing Then
+                AddHandler textBox.KeyPress, New KeyPressEventHandler(AddressOf moneda_KeyPress)
+                AddHandler textBox.LostFocus, New EventHandler(AddressOf cantidad_LostFocus)
+            End If
+        End If
+
+        ' Obtenemos el estilo de la celda actual
+        Dim style As DataGridViewCellStyle = e.CellStyle
+        ' Mientras se edita la celda, aumentaremos la fuente
+        ' y rellenaremos el color de fondo de la celda actual.
+        With style
+            .Font = New Font(style.Font.FontFamily, 10, FontStyle.Bold)
+            .BackColor = Color.Red
+            .ForeColor = Color.White
+        End With
+    End Sub
+
+    Private Sub moneda_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs)
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        If txt.Text.Trim = "" Then
+            txt.Text = "0"
+        End If
+    End Sub
+
+    Private Sub moneda_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+        End If
+
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(Errores.SoloCurrency(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub cantidad_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+        End If
+
+        Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
+        KeyAscii = CShort(Errores.SoloNumeros(KeyAscii))
+        If KeyAscii = 0 Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub cantidad_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs)
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        If txt.Text.Trim = "" Then
+            txt.Text = "0"
+        End If
+    End Sub
+
+    Private Sub DG_Productos_KeyPressEnter(sender As Object, e As KeyEventArgs) Handles DG_Productos.KeyPressEnter
+        If (String.IsNullOrEmpty(DG_Productos.CurrentCell.EditedFormattedValue)) Then
+
+            Dim nombreColumna As String = DG_Productos.Columns(DG_Productos.CurrentCell.ColumnIndex).Name
+
+            If (nombreColumna = "ProductosCantidad") Then
+                DG_Productos.CurrentCell.Value = 1
+            End If
+            If (nombreColumna = "ProductosMonto" OrElse nombreColumna = "ProductosPorcentajeBonificacion") Then
+                DG_Productos.CurrentCell.Value = 0
+            End If
+        End If
+
+        DG_Productos.NotifyCurrentCellDirty(True)
+        DG_Productos.EndEdit()
+        DG_Productos.NotifyCurrentCellDirty(False)
+
+        txt_CodigoBarra.Focus()
     End Sub
 End Class

@@ -37,11 +37,9 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             FechaEdicion = DateTime.Now;
         }
 
-        internal void AgregarIdNotaPedido(long idNotaPedido)
+        internal void Borrar()
         {
-            IdNotaPedido = idNotaPedido;
+            Borrado = true;
         }
-
-        internal void Borrar() => Borrado = true;
     }
 }
