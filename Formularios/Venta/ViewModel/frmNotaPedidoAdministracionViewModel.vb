@@ -46,14 +46,14 @@ Namespace Formularios.Venta
             End Get
         End Property
 
-        Dim _Visible As Boolean
-        Public Property Visible As Boolean
-            Set(value As Boolean)
-                _Visible = value
-                NotifyPropertyChanged(NameOf(Me.Visible))
+        Dim _FormState As FormWindowState
+        Public Property FormState As FormWindowState
+            Set(value As FormWindowState)
+                _FormState = value
+                NotifyPropertyChanged(NameOf(Me.FormState))
             End Set
             Get
-                Return _Visible
+                Return _FormState
             End Get
         End Property
 
@@ -65,7 +65,7 @@ Namespace Formularios.Venta
 
         Sub New(IdSucursal As Integer)
             Me.IdSucursal = IdSucursal
-            Visible = True
+            FormState = FormWindowState.Normal
             Inicializar()
         End Sub
 
@@ -92,18 +92,17 @@ Namespace Formularios.Venta
             Dim form As Form
 
             If (notaPedido.TipoCliente = Common.Core.Enum.TipoCliente.Mayorista.Mayorista) Then
-                form = New frmNotaPedidoDetalle(notaPedido, AddressOf CargarVentaCallback)
+                form = New frmNotaPedidoDetalle(notaPedido, AddressOf ActualizarPantallaCallback)
             Else
-                form = New frmVentas(notaPedido, AddressOf CargarVentaCallback)
+                form = New frmVentas(notaPedido, AddressOf ActualizarPantallaCallback)
+                FormState = FormWindowState.Minimized
             End If
-
             form.MdiParent = MdiParent
             form.Show()
-            Visible = False
         End Sub
 
-        Public Async Function CargarVentaCallback() As Task
-            Visible = True
+        Public Async Function ActualizarPantallaCallback() As Task
+            FormState = If(FormState = FormWindowState.Minimized, FormWindowState.Normal, FormState)
             Await CargarNotaPedidoAsync(Numero, EstadoSeleccionado.Key, TipoClienteSeleccionado.Key, FechaDesde, FechaHasta, VendedoresSeleccionado.Key?.Id, NombreCliente)
         End Function
 
@@ -139,7 +138,7 @@ Namespace Formularios.Venta
 
         Private Async Function CargarNotaPedidoAsync(numero As Integer?, estado As NotaPedidoEstado?, tipoCliente As TipoCliente?, fechaDesde As DateTime, fechaHasta As DateTime, IdVendedor As Integer?, nombreCliente As String) As Task
 
-            _NotaPedidosItems = Await NotaPedidoService.ObtenerAsync(IdSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
+            _NotaPedidosItems = Await NotaPedidoService.BuscarAsync(IdSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, IdVendedor, nombreCliente, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
             NotifyPropertyChanged(NameOf(Me.NotaPedidosItems))
         End Function
 

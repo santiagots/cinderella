@@ -648,6 +648,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dgNotasPedidos)
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("WindowState", Me.NotaPedidoBindingSource, "FormState", True))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmNotaPedidoAdministracion"
         Me.Text = "Administracion Nota Pedido"

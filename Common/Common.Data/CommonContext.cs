@@ -165,7 +165,7 @@ namespace Common.Data
         {
             switch (estado) 
             {
-                case EstadoEntidad.SinCambios: return EntityState.Detached;
+                case EstadoEntidad.SinCambios: return EntityState.Unchanged;
                 case EstadoEntidad.Nuevo: return EntityState.Added;
                 case EstadoEntidad.Borrado: return EntityState.Deleted;
                 case EstadoEntidad.Modificado: return EntityState.Modified;

@@ -16,6 +16,7 @@ Public Class Funciones
                 formulario = New Form
             Else
                 formulario.BringToFront()
+                formulario.WindowState = If(formulario.WindowState = FormWindowState.Minimized, FormWindowState.Normal, formulario.WindowState)
             End If
             Return formulario
         End Get

@@ -23,16 +23,22 @@ namespace Ventas.Data.Service
             return NotaPedidoRepository.GuardarAsync(notaPedidoModel);
         }
 
-        public static Task<List<NotaPedido>> ObtenerAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public static Task<NotaPedido> ObtenerAsync(long idNotaPedido)
         {
             INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
-            return NotaPedidoRepository.ObtenerAsync(idSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
+            return NotaPedidoRepository.ObtenerAsync(idNotaPedido);
         }
 
-        public static Task<List<NotaPedido>> ObtenerAsync(TipoBase tipoBase, int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public static Task<List<NotaPedido>> BuscarAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        {
+            INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
+            return NotaPedidoRepository.BuscarAsync(idSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
+        }
+
+        public static Task<List<NotaPedido>> BuscarAsync(TipoBase tipoBase, int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext(tipoBase));
-            return NotaPedidoRepository.ObtenerAsync(idClienteMayorista, estado, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
+            return NotaPedidoRepository.BuscarAsync(idClienteMayorista, estado, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
         }
 
         public static Task<decimal?> ObtenerMontoTotal(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente)

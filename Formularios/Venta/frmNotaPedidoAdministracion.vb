@@ -15,7 +15,6 @@ Public Class frmNotaPedidoAdministracion
                           notaPedidoViewModel.NotasPedidosElementosPorPagina = Paginado.ElementosPorPagina
                           Await notaPedidoViewModel.CargarDatosAsync()
                       End Function)
-        Me.DataBindings.Add(New Binding("Visible", Me.NotaPedidoBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
     End Sub
 
     Private Sub BtnFiltrar_Click(sender As Object, e As EventArgs) Handles BtnFiltrar.Click

@@ -399,7 +399,7 @@ Namespace Formularios.Venta
             End If
         End Function
 
-        Friend Async Function NotaPedidoAsync() As Task
+        Friend Async Function NotaPedidoAsync() As Task(Of Boolean)
             Dim notaPedido As NotaPedido = Mapper.Map(Of NotaPedido)(VentaModel)
 
             If (Not notaPedido.NotaPedidoItems.Any()) Then
@@ -408,9 +408,10 @@ Namespace Formularios.Venta
 
             If TipoClienteSeleccionado = Enums.TipoCliente.Minorista Then
                 Dim frmDatosClienteMinorista As frmDatosClienteMinorista = New frmDatosClienteMinorista()
-                If (frmDatosClienteMinorista.ShowDialog() = DialogResult.OK) Then
-                    notaPedido.AgregarClienteMinorista(frmDatosClienteMinorista.ClienteMinorista.Id)
+                If (frmDatosClienteMinorista.ShowDialog() <> DialogResult.OK) Then
+                    Return False
                 End If
+                notaPedido.AgregarClienteMinorista(frmDatosClienteMinorista.ClienteMinorista.Id)
             Else
                 If (Not IdClienteMayorista.HasValue) Then
                     Throw New NegocioException("No se encuentra un cliente mayorista seleccionado. Debe seleccionar un cliente mayorista para generar una nota de pedido.")
@@ -425,6 +426,7 @@ Namespace Formularios.Venta
                 Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
                 Await FinalizarNotaPedidoEvent()
             End If
+            Return True
         End Function
 
         Friend Async Function FinalizarVentaAsyn(desdeReserva As Boolean) As Task

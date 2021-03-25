@@ -94,6 +94,8 @@ Namespace Formularios.Venta
             End Get
         End Property
 
+        Public Property PorcentajeBonificacion As Decimal
+
         Public Property NombreCodigoProductoBusqueda As String
 
         Public ReadOnly Property HistorialComentarios As String
@@ -149,7 +151,19 @@ Namespace Formularios.Venta
 
         Public Property Comentario As String = String.Empty
 
+        Dim _Visible As Boolean
+        Public Property Visible As Boolean
+            Set(value As Boolean)
+                _Visible = value
+                NotifyPropertyChanged(NameOf(Me.Visible))
+            End Set
+            Get
+                Return _Visible
+            End Get
+        End Property
+
         Sub New(idSucursal As Integer, notaPedido As NotaPedido, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate)
+            Visible = True
             Me.IdSucursal = idSucursal
             NotaPedidoModel = notaPedido
             IdPrecioLista = If(notaPedido.TipoCliente = TipoCliente.Mayorista, idListaPrecioMayorista, idListaPrecioMinorista)
@@ -253,17 +267,39 @@ Namespace Formularios.Venta
         Friend Async Function ArmadoFinalizadoAsync() As Task
             NotaPedidoModel.ArmadoFinalizado(Comentario, VariablesGlobales.objUsuario.Usuario)
             Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
+
+            Comentario = String.Empty
+
+            NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
         End Function
 
-        Friend Sub RealizarVenta(cargarVentaCallback As FinalizarDelegateAsync, mdiParent As Form)
-            Dim frmVentas As frmVentas = New frmVentas(NotaPedidoModel, cargarVentaCallback)
+        Friend Sub PorcentajeBonificacionChange(porcentajeBonificacion As Decimal)
+            If (Me.PorcentajeBonificacion <> porcentajeBonificacion) Then
+                Me.PorcentajeBonificacion = porcentajeBonificacion
+
+                For Each notaPedidoItem As NotaPedidoItem In NotaPedidoModel.NotaPedidoItems
+                    NotaPedidoModel.ActualizaNotaPedidoItem(notaPedidoItem.Producto.Codigo, notaPedidoItem.MontoProducto.Valor, notaPedidoItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoCliente)
+                    AgregarComentario($"Se modifica el producto {notaPedidoItem.Producto.Codigo}.")
+                Next
+
+                NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
+            End If
+        End Sub
+
+        Friend Sub RealizarVenta(mdiParent As Form)
+            Dim frmVentas As frmVentas = New frmVentas(NotaPedidoModel, AddressOf RealizarVentaCallback)
             frmVentas.MdiParent = mdiParent
             frmVentas.Show()
+            Visible = False
         End Sub
 
         Friend Async Function EnvioFinalizadoAsync() As Task
             NotaPedidoModel.EnvioFinalizado(Comentario, VariablesGlobales.objUsuario.Usuario)
             Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
+
+            Comentario = String.Empty
+
+            NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
         End Function
 
         Friend Sub ImprimirNotaPedido(MdiParent As Form)
@@ -282,6 +318,10 @@ Namespace Formularios.Venta
         Friend Async Function VolverAEstadoIngresadoAsync() As Task
             NotaPedidoModel.VolverAIngresada(Comentario, VariablesGlobales.objUsuario.Usuario)
             Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
+
+            Comentario = String.Empty
+
+            NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
         End Function
 
         Private Function GuardarProductoCompletoEnListaDeProductos(producto As ModelBase.Producto) As ModelBase.Producto
@@ -310,5 +350,12 @@ Namespace Formularios.Venta
                 Comentario += nuevoComentario
             End If
         End Sub
+
+        Public Async Function RealizarVentaCallback() As Task
+            Visible = True
+            NotaPedidoModel = Await NotaPedidoService.ObtenerAsync(NotaPedidoModel.Id)
+
+            NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
+        End Function
     End Class
 End Namespace

@@ -263,12 +263,15 @@ Public Class frmVentas
     Private Sub moneda_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
         If e.KeyChar = ChrW(Keys.Enter) Then
             e.Handled = True
-            Btn_Finalizar.Focus()
         End If
+
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        Dim texto As String = txt.Text + e.KeyChar
+        Dim cantidadComas = texto.Count(Function(x) x = ",")
 
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(Errores.SoloCurrency(KeyAscii))
-        If KeyAscii = 0 Then
+        If KeyAscii = 0 OrElse cantidadComas > 1 Then
             e.Handled = True
         End If
     End Sub
@@ -344,13 +347,14 @@ Public Class frmVentas
         EjecutarAsync(
             Async Function()
                 If MessageBox.Show("¿Desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                    Await ventaViewModel.NotaPedidoAsync()
+                    If (Await ventaViewModel.NotaPedidoAsync()) Then
 
-                    Dim Funciones As New Funciones
-                    Await Funciones.ActualizarNotasPedidosVentasAsync()
+                        Dim Funciones As New Funciones
+                        Await Funciones.ActualizarNotasPedidosVentasAsync()
 
-                    MessageBox.Show("Los datos se han guardado de forma correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Me.Dispose()
+                        MessageBox.Show("Los datos se han guardado de forma correcta.", "Registro de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Me.Dispose()
+                    End If
                 End If
             End Function)
     End Sub

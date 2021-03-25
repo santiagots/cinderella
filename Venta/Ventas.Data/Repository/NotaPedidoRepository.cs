@@ -57,19 +57,12 @@ namespace Ventas.Data.Repository
             return _context.SaveChangesAsync();
         }
 
-        public Task<NotaPedido> Obtener(long idNotaPedido)
+        public Task<NotaPedido> ObtenerAsync(long idNotaPedido)
         {
-            return _context.NotaPedido
-                           .IncludeFilter(x => x.NotaPedidoItems.Where(y => !y.Borrado))
-                           .IncludeFilter(x => x.NotaPedidoItems.Select(y => y.Producto.SubCategoria.IVA))
-                           .IncludeFilter(x => x.Vendedor)
-                           .IncludeFilter(x => x.Encargado)
-                           .IncludeFilter(x => x.ClienteMayorista)
-                           .IncludeFilter(x => x.ClienteMinorista)
-                           .FirstOrDefaultAsync(x => x.Id == idNotaPedido);
+            return ObtenerConsulta().FirstOrDefaultAsync(x => x.Id == idNotaPedido);
         }
 
-        public Task<List<NotaPedido>> ObtenerAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public Task<List<NotaPedido>> BuscarAsync(int idSucursal, int? numero, NotaPedidoEstado? estado, TipoCliente? tipoCliente, DateTime? fechaDesde, DateTime? fechaHasta, int? idVendedor, string nombreCliente, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
                                                     .Where(x => x.IdSucursal == idSucursal);
@@ -80,7 +73,7 @@ namespace Ventas.Data.Repository
                              .ToListAsync();
         }
 
-        public Task<List<NotaPedido>> ObtenerAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public Task<List<NotaPedido>> BuscarAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             IQueryable<NotaPedido> notaPedido = ObtenerConsulta().Where(x => x.ClienteMayorista.Id == idClienteMayorista);
 

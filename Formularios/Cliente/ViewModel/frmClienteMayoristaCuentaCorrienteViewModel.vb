@@ -77,7 +77,7 @@ Namespace Formularios.Cliente
         Friend Async Function CargarNotasPedidoAsync() As Task
             NotasPedidos.Clear()
 
-            Dim NotasPedidosModel As List(Of NotaPedido) = Await NotaPedidoService.ObtenerAsync(TipoBase.Remota, IdClienteMayorista, Nothing, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
+            Dim NotasPedidosModel As List(Of NotaPedido) = Await NotaPedidoService.BuscarAsync(TipoBase.Remota, IdClienteMayorista, Nothing, NotasPedidosOrdenadoPor, NotasPedidosDireccionOrdenamiento, NotasPedidosPaginaActual, NotasPedidosElementosPorPagina, NotasPedidosTotalElementos)
             NotasPedidosModel.ForEach(Sub(x) NotasPedidos.Add(New CuentaCorrienteNotaPedidoItems(x)))
             NotifyPropertyChanged(NameOf(Me.NotasPedidos))
         End Function

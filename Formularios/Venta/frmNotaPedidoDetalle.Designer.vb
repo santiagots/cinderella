@@ -83,8 +83,10 @@ Partial Class frmNotaPedidoDetalle
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Gb_Producto = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_PorcentajeBonificacion = New Controles.PercentUpDown()
         Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
+        Me.Label33 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Btn_Guardar = New System.Windows.Forms.Button()
@@ -102,6 +104,7 @@ Partial Class frmNotaPedidoDetalle
         Me.GroupBox1.SuspendLayout()
         Me.Gb_Producto.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
+        CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -148,7 +151,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(815, 5)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(625, 5)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Agregar.TabIndex = 8
@@ -686,14 +689,17 @@ Partial Class frmNotaPedidoDetalle
         '
         'TableLayoutPanel4
         '
-        Me.TableLayoutPanel4.ColumnCount = 3
+        Me.TableLayoutPanel4.ColumnCount = 5
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_PorcentajeBonificacion, 4, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Btn_Agregar, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_CodigoBarra, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Label33, 3, 0)
         Me.TableLayoutPanel4.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 17)
@@ -702,6 +708,19 @@ Partial Class frmNotaPedidoDetalle
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(918, 44)
         Me.TableLayoutPanel4.TabIndex = 30
+        '
+        'txt_PorcentajeBonificacion
+        '
+        Me.txt_PorcentajeBonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeBonificacion", True))
+        Me.txt_PorcentajeBonificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_PorcentajeBonificacion.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.txt_PorcentajeBonificacion.Location = New System.Drawing.Point(826, 11)
+        Me.txt_PorcentajeBonificacion.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.txt_PorcentajeBonificacion.Name = "txt_PorcentajeBonificacion"
+        Me.txt_PorcentajeBonificacion.Size = New System.Drawing.Size(89, 21)
+        Me.txt_PorcentajeBonificacion.TabIndex = 11
+        Me.txt_PorcentajeBonificacion.Value = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'lbl_CodigoBarra
         '
@@ -723,8 +742,19 @@ Partial Class frmNotaPedidoDetalle
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_CodigoBarra.Location = New System.Drawing.Point(123, 11)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(682, 21)
+        Me.txt_CodigoBarra.Size = New System.Drawing.Size(492, 21)
         Me.txt_CodigoBarra.TabIndex = 7
+        '
+        'Label33
+        '
+        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.Location = New System.Drawing.Point(731, 14)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(89, 15)
+        Me.Label33.TabIndex = 9
+        Me.Label33.Text = "Bonificación"
         '
         'PictureBox1
         '
@@ -837,6 +867,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Gb_Producto.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
+        CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -906,4 +937,6 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents ProductosPorcentajeBonificacion As DataGridViewTextBoxColumn
     Friend WithEvents ProductosQuitar As DataGridViewImageColumn
     Friend WithEvents Btn_Volver_Armado As Button
+    Friend WithEvents Label33 As Label
+    Friend WithEvents txt_PorcentajeBonificacion As Controles.PercentUpDown
 End Class

@@ -24,7 +24,7 @@ Public Class frmNotaPedidoDetalle
             My.Settings.ListaPrecio,
             My.Settings.ListaPrecioMayorista,
             AddressOf CargarNombreYCodigoDeProductosEvent,
-        AddressOf StockInsuficienteEvent)
+            AddressOf StockInsuficienteEvent)
     End Sub
 
     Private Sub frmNotaPedidoDetalle_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -32,6 +32,8 @@ Public Class frmNotaPedidoDetalle
                           FrmNotaPedidoDetalleViewModelBindingSource.DataSource = NotaPedidoDetalleViewModel
                           Await NotaPedidoDetalleViewModel.CargarProductoNombreYCodigoAsync()
                       End Function)
+
+        Me.DataBindings.Add(New Binding("Visible", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
     End Sub
 
     Private Sub Btn_Agregar_Click(sender As Object, e As EventArgs) Handles Btn_Agregar.Click
@@ -72,7 +74,6 @@ Public Class frmNotaPedidoDetalle
         EjecutarAsync(Async Function() As Task
                           Await NotaPedidoDetalleViewModel.ArmadoFinalizadoAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                          Close()
                       End Function)
     End Sub
 
@@ -80,15 +81,12 @@ Public Class frmNotaPedidoDetalle
         EjecutarAsync(Async Function() As Task
                           Await NotaPedidoDetalleViewModel.VolverAEstadoIngresadoAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                          Close()
                       End Function)
     End Sub
 
     Private Sub Btn_Venta_Click(sender As Object, e As EventArgs) Handles Btn_Venta.Click
         Ejecutar(Sub()
-                     NotaPedidoDetalleViewModel.RealizarVenta(FinalizarDelegate, Me.MdiParent)
-                     FinalizarDelegate = Nothing
-                     Close()
+                     NotaPedidoDetalleViewModel.RealizarVenta(Me.MdiParent)
                  End Sub)
     End Sub
 
@@ -96,7 +94,6 @@ Public Class frmNotaPedidoDetalle
         EjecutarAsync(Async Function() As Task
                           Await NotaPedidoDetalleViewModel.EnvioFinalizadoAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                          Close()
                       End Function)
     End Sub
 
@@ -134,6 +131,13 @@ Public Class frmNotaPedidoDetalle
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
         Ejecutar(Sub() NotaPedidoDetalleViewModel.ImprimirNotaPedido(Me.MdiParent))
+    End Sub
+
+    Private Sub DG_Productos_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles DG_Productos.CellBeginEdit
+        If DG_Productos.Columns(e.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
+            DG_Productos.CurrentCell.Style.Format = String.Format("N2")
+            DG_Productos.CurrentCell.Value = DG_Productos.CurrentCell.Value * 100
+        End If
     End Sub
 
     Private Sub DG_Productos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Productos.CellEndEdit
@@ -209,9 +213,13 @@ Public Class frmNotaPedidoDetalle
             e.Handled = True
         End If
 
+        Dim txt As TextBox = TryCast(sender, TextBox)
+        Dim texto As String = txt.Text + e.KeyChar
+        Dim cantidadComas = texto.Count(Function(x) x = ",")
+
         Dim KeyAscii As Short = CShort(Asc(e.KeyChar))
         KeyAscii = CShort(Errores.SoloCurrency(KeyAscii))
-        If KeyAscii = 0 Then
+        If KeyAscii = 0 OrElse cantidadComas > 1 Then
             e.Handled = True
         End If
     End Sub
@@ -233,6 +241,10 @@ Public Class frmNotaPedidoDetalle
         If txt.Text.Trim = "" Then
             txt.Text = "0"
         End If
+    End Sub
+
+    Private Sub txt_PorcentajeBonificacion_ValueChanged(sender As Object, e As EventArgs) Handles txt_PorcentajeBonificacion.ValueChanged
+        Ejecutar(Sub() NotaPedidoDetalleViewModel?.PorcentajeBonificacionChange(txt_PorcentajeBonificacion.Value))
     End Sub
 
     Private Sub DG_Productos_KeyPressEnter(sender As Object, e As KeyEventArgs) Handles DG_Productos.KeyPressEnter
