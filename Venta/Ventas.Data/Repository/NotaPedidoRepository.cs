@@ -73,6 +73,21 @@ namespace Ventas.Data.Repository
                              .ToListAsync();
         }
 
+        public Task<List<NotaPedido>> BuscarAsync(int idSucursal, int? idProducto, List<NotaPedidoEstado> estados, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        {
+            IQueryable<NotaPedido> notaPedido = ObtenerConsulta()
+                                                    .Where(x => x.IdSucursal == idSucursal);
+
+            if (idProducto.HasValue)
+                notaPedido = notaPedido.Where(x => x.NotaPedidoItems.Any(y => y.IdProducto == idProducto.Value));
+
+            if (estados.Any())
+                notaPedido = notaPedido.Where(x => estados.Contains(x.Estado));
+
+            return notaPedido.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos)
+                             .ToListAsync();
+        }
+
         public Task<List<NotaPedido>> BuscarAsync(int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             IQueryable<NotaPedido> notaPedido = ObtenerConsulta().Where(x => x.ClienteMayorista.Id == idClienteMayorista);

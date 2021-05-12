@@ -35,6 +35,12 @@ namespace Ventas.Data.Service
             return NotaPedidoRepository.BuscarAsync(idSucursal, numero, estado, tipoCliente, fechaDesde, fechaHasta, idVendedor, nombreCliente, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
         }
 
+        public static Task<List<NotaPedido>> BuscarAsync(int idSucursal, int? idProducto, List<NotaPedidoEstado> estados, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        {
+            INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext());
+            return NotaPedidoRepository.BuscarAsync(idSucursal, idProducto, estados, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina,out totalElementos);
+        }
+
         public static Task<List<NotaPedido>> BuscarAsync(TipoBase tipoBase, int idClienteMayorista, NotaPedidoEstado? estado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             INotaPedidoRepository NotaPedidoRepository = new NotaPedidoRepository(new VentaContext(tipoBase));

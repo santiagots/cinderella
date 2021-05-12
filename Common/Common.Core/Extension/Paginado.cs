@@ -24,5 +24,23 @@ namespace Common.Core.Extension
                             .Take(elementosPorPagina);
             }
         }
+
+        public static IQueryable<T> Paginar<T>(this IQueryable<T> consulta, string ordenadoPor, OrdenadoDireccion ordenadoDireccion, int pagina, int elementosPorPagina)
+        {
+            if (ordenadoDireccion == OrdenadoDireccion.ASC)
+            {
+                return consulta
+                            .OrderByDynamic(x => $"x.{ordenadoPor}")
+                            .Skip(elementosPorPagina * (pagina - 1))
+                            .Take(elementosPorPagina);
+            }
+            else
+            {
+                return consulta
+                            .OrderByDescendingDynamic(x => $"x.{ordenadoPor}")
+                            .Skip(elementosPorPagina * (pagina - 1))
+                            .Take(elementosPorPagina);
+            }
+        }
     }
 }

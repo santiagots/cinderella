@@ -297,7 +297,7 @@ Namespace Formularios.Venta
 
             For Each transaccionItem As ModelBase.TransaccionItem In transaccionItems
                 Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = transaccionItem.Producto.Codigo.ToUpper())
-                producto = GuardarProductoCompletoEnListaDeProductos(producto)
+                producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
 
                 If tipoCliente = TipoCliente.Minorista Then
                     montoProductoMinorista = transaccionItem.MontoProducto
@@ -486,7 +486,7 @@ Namespace Formularios.Venta
                 Throw New NegocioException("El producto ingresado no existe")
             End If
 
-            producto = GuardarProductoCompletoEnListaDeProductos(producto)
+            producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
 
             Dim CantidadUnidadesDeProducto As Integer = VentaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
             If Not HaySotck(producto, CantidadUnidadesDeProducto) Then
@@ -932,16 +932,6 @@ Namespace Formularios.Venta
             Next
 
             Return productos
-        End Function
-
-        Private Function GuardarProductoCompletoEnListaDeProductos(producto As ModelBase.Producto) As ModelBase.Producto
-            If (producto.Stock Is Nothing) Then
-                Dim productoCompleto As ModelBase.Producto = Servicio.ObtenerProductoCompleto(IdSucursal, producto.Id)
-                Productos(Productos.IndexOf(producto)) = productoCompleto
-                producto = productoCompleto
-            End If
-
-            Return producto
         End Function
 
         Private Sub Inicializar(venta As ModelVenta.Venta, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer)

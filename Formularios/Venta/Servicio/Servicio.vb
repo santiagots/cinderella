@@ -1,4 +1,5 @@
-﻿Imports Common.Core.Interfaces
+﻿Imports Common.Core.Enum
+Imports Common.Core.Interfaces
 Imports Common.Data
 Imports Common.Data.Repository
 Imports Ventas.Core.Enum

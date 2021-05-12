@@ -787,7 +787,7 @@ Public Class MDIContenedor
                 If proveedor.DiaPreferentePedido = diaSemana Then
                     'Obtengo los productos en sotck de este proveedor
                     Dim stocks As List(Of Entidades.Stock) = negStock.ListadoStock(My.Settings.Sucursal, proveedor.id_Proveedor)
-                    For Each stock As Stock In stocks
+                    For Each stock As Entidades.Stock In stocks
                         'Verifico si tiene faltante de stock
                         If stock.Stock_Actual < stock.Stock_Minimo Then
                             'Creo el pedido

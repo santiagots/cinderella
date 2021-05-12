@@ -145,7 +145,7 @@ Namespace Formularios.Venta
 
         Public ReadOnly Property HabilitarEdicionDeProductos As Boolean
             Get
-                Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada OrElse NotaPedidoEstado.Venta
+                Return NotaPedidoModel.Estado = NotaPedidoEstado.Ingresada OrElse NotaPedidoModel.Estado = NotaPedidoEstado.Venta
             End Get
         End Property
 

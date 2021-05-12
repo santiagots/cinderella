@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Deployment.Application
 Imports System.IO
+Imports System.Text
 Imports Common.Core.Helper
 Imports Microsoft.SqlServer.Management.Common
 Imports Microsoft.SqlServer.Management.Smo
@@ -48,7 +49,7 @@ Public Class ConfigurarBaseDatos
             Dim conexion As Conexion = New Conexion()
 
             For Each scriptFile As String In scriptFiles
-                Dim script As String = File.ReadAllText(scriptFile)
+                Dim script As String = File.ReadAllText(scriptFile, Encoding.GetEncoding("iso-8859-1"))
 
                 Dim conn As SqlConnection = conexion.ConectarLocal()
                 Dim server As Server = New Server(New ServerConnection(conn))

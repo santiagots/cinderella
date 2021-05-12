@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +49,7 @@ namespace Common.Data
         public DbSet<ListaPrecio> ListaPrecio { get; set; }
         public DbSet<Localidad> Localidad { get; set; }
         public DbSet<IVA> IVA { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         public bool IsAttached<T>(Entity<T> entity) 
         {
@@ -229,6 +229,17 @@ namespace Common.Data
 
             modelBuilder.Entity<IVA>().ToTable("NUEVA_IVA");
             modelBuilder.Entity<IVA>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<Usuario>().ToTable("USUARIOS");
+            modelBuilder.Entity<Usuario>().Property(t => t.Id).HasColumnName("id_Usuario");
+            modelBuilder.Entity<Usuario>().Property(t => t.UsuarioNombre).HasColumnName("Usuario");
+            modelBuilder.Entity<Usuario>().Property(t => t.Password).HasColumnName("PWD");
+            modelBuilder.Entity<Usuario>().Property(t => t.Nombre).HasColumnName("Nombre");
+            modelBuilder.Entity<Usuario>().Property(t => t.Apellido).HasColumnName("Apellido");
+            modelBuilder.Entity<Usuario>().Property(t => t.Mail).HasColumnName("Mail");
+            modelBuilder.Entity<Usuario>().Property(t => t.Fecha).HasColumnName("Fecha");
+            modelBuilder.Entity<Usuario>().Property(t => t.Habilitado).HasColumnName("Habilitado");
+            modelBuilder.Entity<Usuario>().Property(t => t.IdPerfil).HasColumnName("id_Perfil");
 
             base.OnModelCreating(modelBuilder);
         }

@@ -46,9 +46,11 @@ Partial Class frmMoviminetoDetalle(Of T)
         '
         Me.dgvMovimientosDetalle.AllowUserToAddRows = False
         Me.dgvMovimientosDetalle.AllowUserToDeleteRows = False
+        Me.dgvMovimientosDetalle.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvMovimientosDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvMovimientosDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvMovimientosDetalle.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvMovimientosDetalle.Location = New System.Drawing.Point(3, 16)
         Me.dgvMovimientosDetalle.Name = "dgvMovimientosDetalle"
         Me.dgvMovimientosDetalle.ReadOnly = True

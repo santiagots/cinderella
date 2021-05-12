@@ -7,6 +7,7 @@ Imports Microsoft.Office.Interop
 Imports Datos
 Imports System.Threading.Tasks
 Imports Ventas.Core.Enum
+Imports Common.Core.Enum
 
 Public Class Funciones
 

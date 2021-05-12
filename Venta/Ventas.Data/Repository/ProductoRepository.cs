@@ -6,6 +6,7 @@ using Common.Core.Exceptions;
 using Ventas.Core.Model.BaseAgreggate;
 using Common.Data.Repository;
 using Z.EntityFramework.Plus;
+using Common.Core.Enum;
 
 namespace Ventas.Data.Repository
 {
@@ -23,12 +24,24 @@ namespace Ventas.Data.Repository
             if (producto == null)
                 throw new NegocioException($"El producto con id {idProducto} no existe.");
 
+            //Obtengo el stock del producto
             Stock stock = _context.Stock.FirstOrDefault(x => x.IdSucursal == idSucursal && x.IdProducto == producto.Id);
 
             if (stock == null)
+            {
                 stock = new Stock(idSucursal, idProducto, 0, 0, 0, 0);
+            }
+            else
+            {
+                //Obtengo las reservas del producto
+                var cantidadReservas = _context.NotaPedidoItem
+                                        .Where(x => !x.Borrado && (x.NotaPedido.Estado == NotaPedidoEstado.Ingresada || x.NotaPedido.Estado == NotaPedidoEstado.Venta) && x.IdProducto == producto.Id)
+                                        .Sum(x => x.Cantidad);
 
-            producto.Stock = stock;
+                stock.Disminuir(cantidadReservas);
+            }
+
+                producto.Stock = stock;
 
             return producto;
         }

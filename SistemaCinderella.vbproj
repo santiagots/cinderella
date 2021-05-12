@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>22</ApplicationRevision>
+    <ApplicationRevision>30</ApplicationRevision>
     <ApplicationVersion>1.3.4.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -162,10 +162,10 @@
     <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
@@ -530,6 +530,19 @@
     <Compile Include="Formularios\Reserva\ViewModel\frmReservaViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\ReservaAdministracionItemsViewModel.vb" />
     <Compile Include="Formularios\Reserva\ViewModel\ReservaDetalleViewModel.vb" />
+    <Compile Include="Formularios\Stock\frmStockEnNotaPedido.Designer.vb">
+      <DependentUpon>frmStockEnNotaPedido.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Stock\frmStockEnNotaPedido.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Stock\ViewModel\frmStockEnNotaPedidoViewModel.vb" />
+    <Compile Include="Formularios\Stock\ViewModel\frmStockBitacoraViewModel.vb" />
+    <Compile Include="Formularios\Stock\ViewModel\frmStockMotivoViewModel.vb" />
+    <Compile Include="Formularios\Stock\ViewModel\frmStockViewModel.vb" />
+    <Compile Include="Formularios\Stock\ViewModel\StockBitacoraItemViewModel.vb" />
+    <Compile Include="Formularios\Stock\ViewModel\StockEnNotaPedidoItemViewModel.vb" />
+    <Compile Include="Formularios\Stock\ViewModel\StockItemViewModel.vb" />
     <Compile Include="Formularios\SucursalSaldo\frmCierreCaja.Designer.vb">
       <DependentUpon>frmCierreCaja.vb</DependentUpon>
     </Compile>
@@ -1011,16 +1024,16 @@
     <Compile Include="Formularios\frmSincronizacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmStock.Designer.vb">
+    <Compile Include="Formularios\Stock\frmStock.Designer.vb">
       <DependentUpon>frmStock.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmStock.vb">
+    <Compile Include="Formularios\Stock\frmStock.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmStockBitacora.Designer.vb">
+    <Compile Include="Formularios\Stock\frmStockBitacora.Designer.vb">
       <DependentUpon>frmStockBitacora.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmStockBitacora.vb">
+    <Compile Include="Formularios\Stock\frmStockBitacora.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmStockIngreso.Designer.vb">
@@ -1041,10 +1054,10 @@
     <Compile Include="Formularios\frmStockMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmStockMotivo.Designer.vb">
-      <DependentUpon>frmStockMotivo.vb</DependentUpon>
+    <Compile Include="Formularios\Stock\frmStockMotivoBorrado.Designer.vb">
+      <DependentUpon>frmStockMotivoBorrado.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmStockMotivo.vb">
+    <Compile Include="Formularios\Stock\frmStockMotivoBorrado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmOrdenCompra.Designer.vb">
@@ -1324,6 +1337,12 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaCorrienteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockBitacoraViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockMotivoViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.StockBitacoraItemViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.StockEnNotaPedidoItemViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.StockItemViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmNotaPedidoDetalleViewModel.datasource" />
     <None Include="Resources\NavigatorPreviousItem.png" />
     <None Include="Resources\NavigatorFirstItem.png" />
@@ -1420,6 +1439,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Reserva\frmReservaAdministracion.resx">
       <DependentUpon>frmReservaAdministracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Stock\frmStockEnNotaPedido.resx">
+      <DependentUpon>frmStockEnNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\SucursalSaldo\frmCierreCaja.resx">
       <DependentUpon>frmCierreCaja.vb</DependentUpon>
@@ -1662,10 +1684,10 @@
     <EmbeddedResource Include="Formularios\frmSincronizacion.resx">
       <DependentUpon>frmSincronizacion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmStock.resx">
+    <EmbeddedResource Include="Formularios\Stock\frmStock.resx">
       <DependentUpon>frmStock.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmStockBitacora.resx">
+    <EmbeddedResource Include="Formularios\Stock\frmStockBitacora.resx">
       <DependentUpon>frmStockBitacora.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmStockIngreso.resx">
@@ -1677,8 +1699,8 @@
     <EmbeddedResource Include="Formularios\frmStockMasiva.resx">
       <DependentUpon>frmStockMasiva.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmStockMotivo.resx">
-      <DependentUpon>frmStockMotivo.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\Stock\frmStockMotivoBorrado.resx">
+      <DependentUpon>frmStockMotivoBorrado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmOrdenCompra.resx">
       <DependentUpon>frmOrdenCompra.vb</DependentUpon>
@@ -2129,6 +2151,14 @@
     <ProjectReference Include="Servicios\Servicios.vbproj">
       <Project>{59afdba5-8c7e-4c73-8a37-a7aabd4fec7f}</Project>
       <Name>Servicios</Name>
+    </ProjectReference>
+    <ProjectReference Include="Stock\Stock.Core\Stock.Core.csproj">
+      <Project>{8b77857b-68c0-4457-9611-a25b24f97308}</Project>
+      <Name>Stock.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Stock\Stock.Data\Stock.Data.csproj">
+      <Project>{4791449d-f1bc-460a-a618-5416cc7634b0}</Project>
+      <Name>Stock.Data</Name>
     </ProjectReference>
     <ProjectReference Include="Venta\Ventas.Core\Ventas.Core.csproj">
       <Project>{2f8f3f48-9ec8-4f64-8565-5a15cf49e570}</Project>
@@ -2616,8 +2646,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

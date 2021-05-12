@@ -1,4 +1,4 @@
-﻿namespace Ventas.Core.Enum
+﻿namespace Common.Core.Enum
 {
     public enum NotaPedidoEstado
     {

@@ -149,6 +149,7 @@ Partial Class frmNotaPedidoDetalle
         '
         Me.Btn_Agregar.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Agregar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Btn_Agregar.Location = New System.Drawing.Point(625, 5)
@@ -222,6 +223,7 @@ Partial Class frmNotaPedidoDetalle
         'TextBox1
         '
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Comentario", True))
+        Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TextBox1.Location = New System.Drawing.Point(3, 17)
         Me.TextBox1.Multiline = True
@@ -713,6 +715,7 @@ Partial Class frmNotaPedidoDetalle
         '
         Me.txt_PorcentajeBonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeBonificacion", True))
+        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.txt_PorcentajeBonificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_PorcentajeBonificacion.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
         Me.txt_PorcentajeBonificacion.Location = New System.Drawing.Point(826, 11)
@@ -739,6 +742,7 @@ Partial Class frmNotaPedidoDetalle
         Me.txt_CodigoBarra.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.txt_CodigoBarra.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txt_CodigoBarra.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "NombreCodigoProductoBusqueda", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txt_CodigoBarra.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_CodigoBarra.Location = New System.Drawing.Point(123, 11)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"

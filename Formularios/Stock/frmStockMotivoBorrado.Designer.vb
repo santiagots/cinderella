@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmStockMotivo
-    Inherits System.Windows.Forms.Form
+Partial Class frmStockMotivoBorrado
+    Inherits Comun
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -22,9 +22,11 @@ Partial Class frmStockMotivo
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmStockMotivo))
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmStockMotivoBorrado))
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.lbl_Usuario2 = New System.Windows.Forms.Label()
+        Me.FrmStockMotivoViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.lbl_Fecha2 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -33,6 +35,7 @@ Partial Class frmStockMotivo
         Me.btnAceptar = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.GroupBox3.SuspendLayout()
+        CType(Me.FrmStockMotivoViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox3
@@ -52,15 +55,21 @@ Partial Class frmStockMotivo
         'lbl_Usuario2
         '
         Me.lbl_Usuario2.AutoSize = True
+        Me.lbl_Usuario2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockMotivoViewModelBindingSource, "UsuarioNombre", True))
         Me.lbl_Usuario2.Location = New System.Drawing.Point(87, 48)
         Me.lbl_Usuario2.Name = "lbl_Usuario2"
         Me.lbl_Usuario2.Size = New System.Drawing.Size(42, 15)
         Me.lbl_Usuario2.TabIndex = 5
         Me.lbl_Usuario2.Text = "- - - - - "
         '
+        'FrmStockMotivoViewModelBindingSource
+        '
+        Me.FrmStockMotivoViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Stock.frmStockMotivoViewModel)
+        '
         'lbl_Fecha2
         '
         Me.lbl_Fecha2.AutoSize = True
+        Me.lbl_Fecha2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockMotivoViewModelBindingSource, "Fecha", True))
         Me.lbl_Fecha2.Location = New System.Drawing.Point(87, 20)
         Me.lbl_Fecha2.Name = "lbl_Fecha2"
         Me.lbl_Fecha2.Size = New System.Drawing.Size(39, 15)
@@ -96,6 +105,7 @@ Partial Class frmStockMotivo
         '
         'txt_Motivo
         '
+        Me.txt_Motivo.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockMotivoViewModelBindingSource, "Motivo", True))
         Me.txt_Motivo.Location = New System.Drawing.Point(91, 78)
         Me.txt_Motivo.Multiline = True
         Me.txt_Motivo.Name = "txt_Motivo"
@@ -150,6 +160,7 @@ Partial Class frmStockMotivo
         Me.Text = "Confirmación de la eliminación de stock"
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
+        CType(Me.FrmStockMotivoViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -162,4 +173,5 @@ Partial Class frmStockMotivo
     Friend WithEvents txt_Motivo As System.Windows.Forms.TextBox
     Friend WithEvents btnAceptar As System.Windows.Forms.Button
     Friend WithEvents btnCancelar As System.Windows.Forms.Button
+    Friend WithEvents FrmStockMotivoViewModelBindingSource As BindingSource
 End Class

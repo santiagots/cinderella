@@ -18,7 +18,7 @@ Public Class frmOrdenCompraProductoRepetido
         txtNombre.Text = OrdenCompraDetalle.Nombre
 
         Dim proveedor As Proveedores = NegProveedor.TraerProveedor(OrdenCompra.First.idProveedor)
-        Dim stock As Stock = NegStock.TraerStockProducto(OrdenCompraDetalle.idProducto, My.Settings.Sucursal)
+        Dim stock As Entidades.Stock = NegStock.TraerStockProducto(OrdenCompraDetalle.idProducto, My.Settings.Sucursal)
         Dim StockYaPedido As Integer = OrdenCompra.SelectMany(Function(x) x.Detalles).Where(Function(x) x.Codigo = OrdenCompraDetalle.Codigo).Sum(Function(x) x.Cantidad).ToString()
 
         txtTotalPedido.Text = StockYaPedido

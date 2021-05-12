@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Enum\CierreCajaEstado.cs" />
     <Compile Include="Enum\CierreCajaSituacion.cs" />
-    <Compile Include="Enum\NotaPedidoEstado.cs" />
     <Compile Include="Enum\ReservaMetodoEntrega.cs" />
     <Compile Include="Interfaces\IChequeRepository.cs" />
     <Compile Include="Interfaces\ICierreCajaRepository.cs" />
@@ -125,6 +124,9 @@
       <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

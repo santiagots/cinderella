@@ -1,4 +1,5 @@
-﻿Imports Ventas.Core.Enum
+﻿Imports Common.Core.Enum
+Imports Ventas.Core.Enum
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 
 Namespace Formularios.Cliente

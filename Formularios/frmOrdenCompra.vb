@@ -701,8 +701,8 @@ Public Class frmOrdenCompra
             Dim proveedor As Proveedores = NegProveedor.TraerProveedor(ordenCompra.idProveedor)
 
             'Obtengo los productos en sotck de este proveedor
-            Dim stocks As List(Of Stock) = NegStock.ListadoStock(My.Settings.Sucursal, ordenCompra.idProveedor)
-            For Each stock As Stock In stocks
+            Dim stocks As List(Of Entidades.Stock) = NegStock.ListadoStock(My.Settings.Sucursal, ordenCompra.idProveedor)
+            For Each stock As Entidades.Stock In stocks
                 'Verifico si tiene faltante de stock
                 If stock.Stock_Actual < stock.Stock_Minimo Then
                     Dim producto As Productos = NegProductos.TraerProducto(stock.id_Producto)
