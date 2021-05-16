@@ -338,7 +338,7 @@ Namespace Formularios.Venta
             Dim stockInsuficienteConfirmacion As Boolean = False
 
             If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
-                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Id, producto.Codigo, CantidadUnidadesDeProducto)
+                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Cantidad)
             End If
 
             Return True

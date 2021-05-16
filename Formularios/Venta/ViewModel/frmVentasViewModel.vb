@@ -24,7 +24,7 @@ Namespace Formularios.Venta
         Inherits Comunes.Common
 
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
-        Public Delegate Function StockInsuficienteDelegate(idProducto As Integer, codigoProducto As String, ByRef stockCargado As Integer) As Boolean
+        Public Delegate Function StockInsuficienteDelegate(codigoProducto As String, stockCargado As Integer, stockDisponible As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
         Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As ModelVenta.Venta) As Task
         Public Delegate Function FinalizarDelegateAsync() As Task
@@ -539,7 +539,7 @@ Namespace Formularios.Venta
             Dim stockInsuficienteConfirmacion As Boolean = False
 
             If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
-                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Id, producto.Codigo, CantidadUnidadesDeProducto)
+                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Cantidad)
             End If
 
             Return True

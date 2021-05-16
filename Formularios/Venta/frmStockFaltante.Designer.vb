@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmStockFaltante
-    Inherits System.Windows.Forms.Form
+    Inherits Comun
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -22,6 +22,7 @@ Partial Class frmStockFaltante
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmStockFaltante))
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnCargar = New System.Windows.Forms.Button()
@@ -29,7 +30,9 @@ Partial Class frmStockFaltante
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.txtStock = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.FrmStockFaltanteViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1.SuspendLayout()
+        CType(Me.FrmStockFaltanteViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnCancelar
@@ -69,7 +72,7 @@ Partial Class frmStockFaltante
         Me.lblMensaje.Name = "lblMensaje"
         Me.lblMensaje.Size = New System.Drawing.Size(294, 83)
         Me.lblMensaje.TabIndex = 8
-        Me.lblMensaje.Text = "No hay stock suficiente del artículo con código {0}, el stock actual es de {1} un" & _
+        Me.lblMensaje.Text = "No hay stock suficiente del artículo con código {0}, el stock actual es de {1} un" &
     "idades. Que cantidad de unidades desea cargar a la venta?"
         '
         'GroupBox1
@@ -86,6 +89,7 @@ Partial Class frmStockFaltante
         'txtStock
         '
         Me.txtStock.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtStock.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockFaltanteViewModelBindingSource, "StockIngresado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
         Me.txtStock.Location = New System.Drawing.Point(125, 103)
         Me.txtStock.Name = "txtStock"
         Me.txtStock.Size = New System.Drawing.Size(175, 21)
@@ -99,6 +103,10 @@ Partial Class frmStockFaltante
         Me.Label2.Size = New System.Drawing.Size(108, 15)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Unidades a cargar"
+        '
+        'FrmStockFaltanteViewModelBindingSource
+        '
+        Me.FrmStockFaltanteViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.frmStockFaltanteViewModel)
         '
         'frmStockFaltante
         '
@@ -121,6 +129,7 @@ Partial Class frmStockFaltante
         Me.Text = "Stock Faltante"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.FrmStockFaltanteViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -130,4 +139,5 @@ Partial Class frmStockFaltante
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents txtStock As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents FrmStockFaltanteViewModelBindingSource As BindingSource
 End Class

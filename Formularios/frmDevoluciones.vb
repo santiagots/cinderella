@@ -387,10 +387,11 @@ Public Class frmDevoluciones
             'Verifico si hay stock disponible de la cantidad ingresada del producto
             If (Not NegStock.ComprobarStock(DG_Productos("ID", e.RowIndex).Value, DG_Productos(e.ColumnIndex, e.RowIndex).Value.ToString(), id_Sucursal)) Then
                 'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
-                Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(DG_Productos("ID", e.RowIndex).Value, DG_Productos("CODIGO", e.RowIndex).Value, id_Sucursal, DG_Productos(e.ColumnIndex, e.RowIndex).Value)
+                'Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(DG_Productos("ID", e.RowIndex).Value, DG_Productos("CODIGO", e.RowIndex).Value, id_Sucursal, DG_Productos(e.ColumnIndex, e.RowIndex).Value)
+                Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante()
                 'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
                 If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
-                    DG_Productos(e.ColumnIndex, e.RowIndex).Value = frmStockFaltante.stockCargado
+                    DG_Productos(e.ColumnIndex, e.RowIndex).Value = frmStockFaltante.StockIngresado
                 Else
                     DG_Productos(e.ColumnIndex, e.RowIndex).Value = ProductoCantidadAnterior
                     Return
@@ -656,10 +657,11 @@ Public Class frmDevoluciones
                             'Seteo el cursor.
                             Me.Cursor = Cursors.Arrow
                             'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
-                            Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value + 1)
+                            'Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value + 1)
+                            Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante()
                             'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
                             If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
-                                DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value = frmStockFaltante.stockCargado
+                                DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value = frmStockFaltante.StockIngresado
                                 DG_Productos.Rows(i).Cells.Item("SUBTOTAL").Value = (DG_Productos.Rows(i).Cells.Item("CANTIDAD").Value * DG_Productos.Rows(i).Cells.Item("PRECIO").Value)
                                 CalcularTotales()
                                 Return
@@ -691,10 +693,11 @@ Public Class frmDevoluciones
                     'Seteo el cursor.
                     Me.Cursor = Cursors.Arrow
                     'Si no hay producto muestro un mensaje de alerta para que el usuario decida que hacer
-                    Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, 1)
+                    'Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante(EntProducto.id_Producto, EntProducto.Codigo, id_Sucursal, 1)
+                    Dim frmStockFaltante As frmStockFaltante = New frmStockFaltante()
                     'Si retorna Ok es porque el usuario decidio cargar una cantidad de productos
                     If (frmStockFaltante.ShowDialog() = Windows.Forms.DialogResult.OK) Then
-                        cantidad = frmStockFaltante.stockCargado
+                        cantidad = frmStockFaltante.StockIngresado
                     Else
                         Return
                     End If

@@ -1042,10 +1042,10 @@
     <Compile Include="Formularios\frmStockIngreso.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmStockFaltante.Designer.vb">
+    <Compile Include="Formularios\Venta\frmStockFaltante.Designer.vb">
       <DependentUpon>frmStockFaltante.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmStockFaltante.vb">
+    <Compile Include="Formularios\Venta\frmStockFaltante.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmStockMasiva.Designer.vb">
@@ -1192,6 +1192,7 @@
     <Compile Include="Formularios\Facturacion\ViewModel\frmFacturaAdministracionViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmNotaCreditoAdministracionViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmNotaPedidoDetalleViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmStockFaltanteViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmVentasAdministracionViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmVerDocumentoFiscalViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\VentaAdministracionItemViewModel.vb" />
@@ -1344,6 +1345,7 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.StockEnNotaPedidoItemViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.StockItemViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmNotaPedidoDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmStockFaltanteViewModel.datasource" />
     <None Include="Resources\NavigatorPreviousItem.png" />
     <None Include="Resources\NavigatorFirstItem.png" />
     <EmbeddedResource Include="ControlesUsuario\ChequeDetalle.resx">
@@ -1693,7 +1695,7 @@
     <EmbeddedResource Include="Formularios\frmStockIngreso.resx">
       <DependentUpon>frmStockIngreso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmStockFaltante.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmStockFaltante.resx">
       <DependentUpon>frmStockFaltante.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmStockMasiva.resx">
