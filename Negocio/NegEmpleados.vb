@@ -7,7 +7,7 @@ Public Class NegEmpleados
     Dim ClsFunciones As New Funciones
 
     'Funcion para consultar un empleado.
-    Public Function TraerEmpleadoPorIdEmpleado(ByVal id_Empleado As Integer)
+    Public Function TraerEmpleadoPorIdEmpleado(ByVal id_Empleado As Integer) As Empleados
         Dim dsEmpleado As New DataSet
         Dim entEmpleado As New Entidades.Empleados
 
@@ -27,11 +27,7 @@ Public Class NegEmpleados
         Dim dsEmpleado As New DataSet
         Dim entEmpleado As New Entidades.Empleados
 
-        If (Funciones.HayInternet) Then
-            dsEmpleado = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
-        Else
-            dsEmpleado = clsDatos.ConsultarBaseLocal("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
-        End If
+        dsEmpleado = clsDatos.ConsultarBaseLocal("execute sp_Empleados_Detalle_Por_Usuario @id_Usuario=" & id_Usuario)
 
         If dsEmpleado.Tables(0).Rows.Count <> 0 Then
             entEmpleado = ObtenerEmpleadoFromDataRow(dsEmpleado)
@@ -72,7 +68,7 @@ Public Class NegEmpleados
             cmd.CommandType = CommandType.StoredProcedure
             cmd.CommandText = "sp_Empleados_Alta"
             With cmd.Parameters
-                .AddWithValue("@id_Sucursal", 2)
+                .AddWithValue("@id_Sucursal", eempleados.id_Sucursal)
                 .AddWithValue("@id_TipoEmpleado", eempleados.id_TipoEmpleado)
                 .AddWithValue("@Nombre", eempleados.Nombre)
                 .AddWithValue("@Apellido", eempleados.Apellido)
@@ -93,6 +89,7 @@ Public Class NegEmpleados
                 .AddWithValue("@Observaciones", eempleados.Observaciones)
                 .AddWithValue("@Habilitado", eempleados.Habilitado)
                 .AddWithValue("@id_Usuario", eempleados.id_Usuario)
+                .AddWithValue("@fechaAlta", DateTime.Now)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -301,38 +298,22 @@ Public Class NegEmpleados
 
     'Funcion para listar todos los Vendedores por sucursal.
     Function ListadoVendedoresSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Vendedores_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion para listar todos los Encargados por sucursal.
     Function ListadoEncargadosSucursal(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Encargados_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal @id_Sucursal=" & id_Sucursal)
     End Function
 
     'Funcion para listar todos los Vendedores por sucursal que asistieron en el dia.
     Function ListadoVendedoresSucursalAsistencia(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Vendedores_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Vendedores_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
     End Function
 
     'Funcion para listar todos los Encargados por sucursal que asistieron en el dia.
     Function ListadoEncargadosSucursalAsistencia(ByVal id_Sucursal As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Empleados_Encargados_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_Encargados_ListadoSucursal_Asistencia @id_Sucursal=" & id_Sucursal & ", @fecha='" & Date.Now.ToString("yyyy-MM-dd") & "'")
     End Function
 
     'Obtiene la sumatoria de todos los sueldos de la sucursal.
@@ -460,35 +441,23 @@ Public Class NegEmpleados
 
     'Funcion que returna el detalle de sueldo depositados en un periodo de tiempo.
     Function SueldoDepositadoDetalleSucursal(ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As DataSet
-        Dim ds As DataSet
-        Dim SueldoDepositado As Integer = 0
 
-        If (Funciones.HayInternet) Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Empleados_SueldoDepositado_SucursalListado @id_Sucursal=" & id_Sucursal & ", @FechaDesde='" & FechaDesde & "', @FechaHasta='" & FechaHasta & "'")
 
-        Return ds
     End Function
     'Funcion para insertar un adelanto.
     Function AltaDeposito(ByVal eDeposito As Entidades.Depositos) As String
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        eDeposito.id_Deposito = clsDatos.ObtenerCalveUnica(eDeposito.id_Sucursal)
+        eDeposito.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaDeposito(eDeposito, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaDeposito(eDeposito, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -501,6 +470,7 @@ Public Class NegEmpleados
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Empleados_SueldoDepositadoAlta"
         With cmd.Parameters
+            .AddWithValue("@id_Deposito", eDeposito.id_Deposito)
             .AddWithValue("@id_Empleado", eDeposito.id_Empleado)
             .AddWithValue("@id_Sucursal", eDeposito.id_Sucursal)
             .AddWithValue("@Monto", eDeposito.Monto)
@@ -508,6 +478,7 @@ Public Class NegEmpleados
             .AddWithValue("@Mes", eDeposito.Mes)
             .AddWithValue("@Anio", eDeposito.Anio)
             .AddWithValue("@Habilitado", eDeposito.Habilitado)
+            .AddWithValue("@FechaEdicion", eDeposito.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -521,19 +492,13 @@ Public Class NegEmpleados
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
+        Dim Id_Deuda As Int64 = clsDatos.ObtenerCalveUnica(id_Sucursal)
+        Dim Fecha_Edicion As DateTime = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = ActualizarDeuda(id_Empleado, id_Sucursal, Monto, Fecha, cmd)
+            msg = ActualizarDeuda(Id_Deuda, id_Empleado, id_Sucursal, Monto, Fecha, Fecha_Edicion, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = ActualizarDeuda(id_Empleado, id_Sucursal, Monto, Fecha, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -542,14 +507,16 @@ Public Class NegEmpleados
         End Try
     End Function
 
-    Private Shared Function ActualizarDeuda(id_Empleado As Integer, id_Sucursal As Integer, Monto As Double, Fecha As Date, ByRef cmd As SqlCommand) As String
+    Private Shared Function ActualizarDeuda(id_Deuda As Int64, id_Empleado As Integer, id_Sucursal As Integer, Monto As Double, Fecha As Date, FechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Deuda_Actualizar"
         With cmd.Parameters
+            .AddWithValue("@id_Deuda", id_Deuda)
             .AddWithValue("@id_Empleado", id_Empleado)
             .AddWithValue("@id_Sucursal", id_Sucursal)
             .AddWithValue("@Monto", Monto)
             .AddWithValue("@Fecha", Fecha)
+            .AddWithValue("@FechaEdicion", FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -559,15 +526,9 @@ Public Class NegEmpleados
     End Function
 
     Function ObtenerEstadoCuenta(ByVal id_Empleado As Integer, ByVal id_Sucursal As Integer, ByVal FechaDesde As String, ByVal FechaHasta As String) As EstadoCuenta
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim cmd As New SqlCommand
 
-        'Conecto
-        If (HayInternet) Then
-            cmd.Connection = clsDatos.ConectarRemoto()
-        Else
-            cmd.Connection = clsDatos.ConectarLocal()
-        End If
+        cmd.Connection = clsDatos.ConectarLocal()
 
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Empleado_Obtener_Estado_Cuenta"
@@ -627,13 +588,7 @@ Public Class NegEmpleados
         cmd.Parameters.Add(Deuda)
 
         cmd.ExecuteNonQuery()
-
-        'Desconecto
-        If (HayInternet) Then
-            clsDatos.DesconectarRemoto()
-        Else
-            clsDatos.DesconectarLocal()
-        End If
+        clsDatos.DesconectarLocal()
 
         Dim estadoCuenta As EstadoCuenta = New EstadoCuenta()
 
@@ -689,11 +644,7 @@ Public Class NegEmpleados
         Dim HayInternet As Boolean = Funciones.HayInternet
 
         'Conecto
-        If (HayInternet) Then
-            cmd.Connection = clsDatos.ConectarRemoto()
-        Else
-            cmd.Connection = clsDatos.ConectarLocal()
-        End If
+        cmd.Connection = clsDatos.ConectarLocal()
 
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Deuda_UltimaDeuda"
@@ -708,13 +659,7 @@ Public Class NegEmpleados
         cmd.Parameters.Add(fecha)
 
         cmd.ExecuteNonQuery()
-
-        'Desconecto
-        If (HayInternet) Then
-            clsDatos.DesconectarRemoto()
-        Else
-            clsDatos.DesconectarLocal()
-        End If
+        clsDatos.DesconectarLocal()
 
         If IsDBNull(fecha.Value) Then
             Return Nothing
@@ -745,7 +690,7 @@ Public Class NegEmpleados
         entEmpleado.Telefono = dsEmpleado.Tables(0).Rows(0).Item("Telefono").ToString
         entEmpleado.Telefono2 = dsEmpleado.Tables(0).Rows(0).Item("Telefono2").ToString
         entEmpleado.Mail = dsEmpleado.Tables(0).Rows(0).Item("Mail").ToString
-        entEmpleado.Habilitado = dsEmpleado.Tables(0).Rows(0).Item("Habilitado").ToString
+        entEmpleado.Habilitado = dsEmpleado.Tables(0).Rows(0).Item("Habilitado")
         entEmpleado.Fecha = dsEmpleado.Tables(0).Rows(0).Item("Fecha").ToString
         entEmpleado.FechaNacimiento = dsEmpleado.Tables(0).Rows(0).Item("FechaNacimiento").ToString
         entEmpleado.FechaIngreso = dsEmpleado.Tables(0).Rows(0).Item("FechaIngreso").ToString

@@ -6,14 +6,14 @@ Public Class NegPresupuesto
     Dim ClsFunciones As New Funciones
 
     'Funcion que inserta un nuevo registro en la tabla presupuesto.
-    Public Function Alta(ByVal Presupuesto As Entidades.Presupuesto, DetallePresupuesto As List(Of Entidades.Presupuesto_Detalle)) As Integer
+    Public Function Alta(ByVal Presupuesto As Entidades.Presupuesto, DetallePresupuesto As List(Of Entidades.Presupuesto_Detalle)) As Int64
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim dt As DataTable = New DataTable()
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim IdPresupuesto As Integer = 0
 
         'Cargo el detalle de la devolucion en un Tabla para pasarla por un campo al SP
+        dt.Columns.Add("id_Detalle", Type.GetType("System.Int64"))
         dt.Columns.Add("id_Producto", Type.GetType("System.Int32"))
         dt.Columns.Add("Cantidad", Type.GetType("System.Int32"))
         dt.Columns.Add("Precio", Type.GetType("System.Double"))
@@ -21,34 +21,30 @@ Public Class NegPresupuesto
         dt.Columns.Add("Monto", Type.GetType("System.Double"))
 
         For Each item As Entidades.Presupuesto_Detalle In DetallePresupuesto
-            dt.Rows.Add(item.id_Producto, item.Cantidad, item.Precio, item.Iva, item.Monto)
+            dt.Rows.Add(ClsDatos.ObtenerCalveUnica(Presupuesto.id_Sucursal), item.id_Producto, item.Cantidad, item.Precio, item.Iva, item.Monto)
         Next
+
+        Presupuesto.id_Presupuesto = ClsDatos.ObtenerCalveUnica(Presupuesto.id_Sucursal)
+        Presupuesto.FechaEdcion = DateTime.Now
 
         Try
             cmd.Connection = ClsDatos.ConectarLocal()
-            IdPresupuesto = Alta(Presupuesto, cmd, dt)
+            Alta(Presupuesto, cmd, dt)
             ClsDatos.DesconectarLocal()
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = ClsDatos.ConectarRemoto()
-                IdPresupuesto = Alta(Presupuesto, cmd, dt)
-                ClsDatos.DesconectarRemoto()
-            End If
-
             'retorno valor
-            Return IdPresupuesto
+            Return Presupuesto.id_Presupuesto
         Catch ex As Exception
             Return False
         End Try
     End Function
 
-    Private Shared Function Alta(Presupuesto As Entidades.Presupuesto, ByRef cmd As SqlCommand, dt As DataTable) As Integer
+    Private Shared Sub Alta(Presupuesto As Entidades.Presupuesto, ByRef cmd As SqlCommand, dt As DataTable)
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Presupuesto_Alta"
         With cmd.Parameters
-            .AddWithValue("@id_venta", Presupuesto.id_venta)
+            .AddWithValue("@id_Presupuesto", Presupuesto.id_Presupuesto)
+            .AddWithValue("@id_venta", Presupuesto.id_Venta)
             .AddWithValue("@id_ClienteMayorista", Presupuesto.id_ClienteMayorista)
             .AddWithValue("@id_ClienteMinorista", Presupuesto.id_ClienteMinorista)
             .AddWithValue("@id_Empleado", Presupuesto.id_Empleado)
@@ -63,6 +59,7 @@ Public Class NegPresupuesto
             .AddWithValue("@Subtotal", Presupuesto.SubTotal)
             .AddWithValue("@Descuento", Presupuesto.Descuento)
             .AddWithValue("@CostoFinanciero", Presupuesto.CostoFinanciero)
+            .AddWithValue("@FechaEdicion", Presupuesto.FechaEdcion)
         End With
 
         'Declaro el tipo de dato para el detalle de la venta
@@ -70,28 +67,17 @@ Public Class NegPresupuesto
         param.SqlDbType = SqlDbType.Structured
         param.TypeName = "dbo.VENTA_DETALLE_TYPE"
 
-        Dim respuesta As New SqlParameter("@Id_Presupuesto", SqlDbType.Int, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-
-        Return respuesta.Value
-    End Function
+    End Sub
 
     'Funcion para consultar un detalle de un presupuesto
-    Public Function TraerDetalle(ByVal presupuestoID As Integer) As List(Of Presupuesto_Detalle)
+    Public Function TraerDetalle(ByVal presupuestoID As Int64) As List(Of Presupuesto_Detalle)
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of Presupuesto_Detalle) = New List(Of Presupuesto_Detalle)()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Detalle @PresupuestoId=" & presupuestoID)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
@@ -108,14 +94,8 @@ Public Class NegPresupuesto
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As List(Of Presupuesto) = New List(Of Presupuesto)()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_Sucursal @SucursalId=" & SucursalId)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows
@@ -130,24 +110,17 @@ Public Class NegPresupuesto
     Public Sub Anula(presupuesto As Presupuesto)
         'Declaro variables
         Dim cmd As New SqlCommand
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim IdPresupuesto As Integer = 0
 
         If (presupuesto.DescripcionAnulado = "") Then
             presupuesto.DescripcionAnulado = "No se ingreso el motivo."
         End If
 
+        presupuesto.FechaEdcion = DateTime.Now
+
         cmd.Connection = ClsDatos.ConectarLocal()
         Anular(presupuesto, cmd)
         ClsDatos.DesconectarLocal()
-
-        If HayInternet Then
-            cmd = New SqlCommand()
-            cmd.Connection = ClsDatos.ConectarRemoto()
-            Anular(presupuesto, cmd)
-            ClsDatos.DesconectarRemoto()
-        End If
-
 
     End Sub
 
@@ -158,6 +131,7 @@ Public Class NegPresupuesto
         With cmd.Parameters
             .AddWithValue("@id_Presupuesto", Presupuesto.id_Presupuesto)
             .AddWithValue("@Descripcion", Presupuesto.DescripcionAnulado)
+            .AddWithValue("@FechaEdicion", Presupuesto.FechaEdcion)
         End With
         cmd.ExecuteNonQuery()
     End Sub
@@ -208,19 +182,13 @@ Public Class NegPresupuesto
         Return presupuestoDetalle
     End Function
 
-    Public Function TraerPresupuestoPorVenta(idVenta As Integer) As Presupuesto
+    Public Function TraerPresupuestoPorVenta(idVenta As Int64) As Presupuesto
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim dsNotaPedidos As DataSet
         Dim respuesta As Presupuesto = New Presupuesto()
-        Dim HayInternet As Boolean = Funciones.HayInternet
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsNotaPedidos = ClsDatos.ConsultarBaseRemoto("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
-        Else
-            dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
-        End If
+        dsNotaPedidos = ClsDatos.ConsultarBaseLocal("execute sp_Presupuesto_Consulta_venta @VentaId=" & idVenta)
 
         If dsNotaPedidos.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsNotaPedidos.Tables(0).Rows

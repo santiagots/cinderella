@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Entidades
+
 Public Class NegSucursales
     Dim ClsDatos As New Datos.Conexion
     Dim ClsFunciones As New Funciones
@@ -39,7 +41,6 @@ Public Class NegSucursales
                 Sucursal.id_Provincia = row.Item("id_Provincia").ToString
                 Sucursal.id_Localidad = row.Item("id_Localidad").ToString
                 Sucursal.id_Distrito = row.Item("id_Departamento").ToString
-                Sucursal.id_ListaGrupoPrecio = row.Item("id_ListaGrupoPrecio").ToString
                 Sucursal.ComisionEncargado = CDbl(row.Item("Comision_Encargado"))
                 Sucursal.ComisionVendedor = CDbl(row.Item("Comision_Vendedor"))
                 Sucursal.ComisionEncargadoFeriado = CDbl(row.Item("Comision_Encargado_Feriado"))
@@ -47,6 +48,7 @@ Public Class NegSucursales
                 Sucursal.ComisionEncargadoMayor = CDbl(row.Item("Comision_Encargado_Mayor"))
                 Sucursal.ComisionVendedorMayor = CDbl(row.Item("Comision_Vendedor_Mayor"))
                 Sucursal.CodigoVenta = row.Item("Codigo_Venta").ToString
+                Sucursal.Mail = row.Item("Mail").ToString
 
                 Sucursales.Add(Sucursal)
             Next
@@ -58,9 +60,9 @@ Public Class NegSucursales
 
 
     'Funcion para consultar una sucursal determinada.
-    Public Function TraerSucursal(ByVal id_Sucursal As Integer)
+    Public Function TraerSucursal(ByVal id_Sucursal As Integer) As Sucursales
         Dim dsSucursal As New DataSet
-        Dim entSucursal As New Entidades.Sucursales
+        Dim entSucursal As New Sucursales
 
         If Funciones.HayInternet Then
             dsSucursal = ClsDatos.ConsultarBaseRemoto("execute sp_Sucursal_Detalle @id_Sucursal=" & id_Sucursal)
@@ -78,7 +80,6 @@ Public Class NegSucursales
             entSucursal.id_Provincia = dsSucursal.Tables(0).Rows(0).Item("id_Provincia").ToString
             entSucursal.id_Localidad = dsSucursal.Tables(0).Rows(0).Item("id_Localidad").ToString
             entSucursal.id_Distrito = dsSucursal.Tables(0).Rows(0).Item("id_Departamento").ToString
-            entSucursal.id_ListaGrupoPrecio = dsSucursal.Tables(0).Rows(0).Item("id_ListaGrupoPrecio").ToString
             entSucursal.ComisionEncargado = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado"))
             entSucursal.ComisionVendedor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Vendedor"))
             entSucursal.ComisionEncargadoFeriado = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado_Feriado"))
@@ -86,6 +87,7 @@ Public Class NegSucursales
             entSucursal.ComisionEncargadoMayor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Encargado_Mayor"))
             entSucursal.ComisionVendedorMayor = CDbl(dsSucursal.Tables(0).Rows(0).Item("Comision_Vendedor_Mayor"))
             entSucursal.CodigoVenta = dsSucursal.Tables(0).Rows(0).Item("Codigo_Venta").ToString
+            entSucursal.Mail = dsSucursal.Tables(0).Rows(0).Item("Mail").ToString
         End If
         Return entSucursal
     End Function
@@ -112,9 +114,8 @@ Public Class NegSucursales
                 .AddWithValue("@id_Provincia", esucursales.id_Provincia)
                 .AddWithValue("@id_Departamento", esucursales.id_Distrito)
                 .AddWithValue("@id_Localidad", esucursales.id_Localidad)
-                .AddWithValue("@id_ListaGrupoPrecio", esucursales.id_ListaGrupoPrecio)
+                .AddWithValue("@ComisionEncargado", esucursales.id_Localidad)
                 .AddWithValue("@ComisionVendedor", esucursales.ComisionVendedor)
-                .AddWithValue("@ComisionEncargado", esucursales.ComisionEncargado)
                 .AddWithValue("@ComisionVendedorFeriado", esucursales.ComisionVendedorFeriado)
                 .AddWithValue("@ComisionEncargadoFeriado", esucursales.ComisionEncargadoFeriado)
                 .AddWithValue("@ComisionVendedorMayor", esucursales.ComisionVendedorMayor)
@@ -122,6 +123,7 @@ Public Class NegSucursales
                 .AddWithValue("@CodigoPostal", esucursales.Codigo_Postal)
                 .AddWithValue("@Telefono", esucursales.Telefono)
                 .AddWithValue("@CodigoVenta", esucursales.CodigoVenta)
+                .AddWithValue("@Mail", esucursales.Mail)
                 .AddWithValue("@Habilitado", esucursales.Habilitado)
             End With
 
@@ -132,11 +134,6 @@ Public Class NegSucursales
 
             'desconecto la bdd
             ClsDatos.ConectarRemoto()
-
-            'Creo las patentes de la sucursal
-            Dim id_Sucursal As Integer = 0
-            id_Sucursal = UltimaSucursal()
-            ClsDatos.ConsultarBaseRemoto("execute sp_Sucursales_AltaPatentes @Nombre='" & esucursales.Nombre & "', @id_Sucursal=" & id_Sucursal)
 
             'muestro el mensaje
             Return respuesta.Value
@@ -166,7 +163,6 @@ Public Class NegSucursales
                 .AddWithValue("@id_Provincia", esucursales.id_Provincia)
                 .AddWithValue("@id_Departamento", esucursales.id_Distrito)
                 .AddWithValue("@id_Localidad", esucursales.id_Localidad)
-                .AddWithValue("@id_ListaGrupoPrecio", esucursales.id_ListaGrupoPrecio)
                 .AddWithValue("@CodigoPostal", esucursales.Codigo_Postal)
                 .AddWithValue("@ComisionVendedor", esucursales.ComisionVendedor)
                 .AddWithValue("@ComisionEncargado", esucursales.ComisionEncargado)
@@ -176,6 +172,7 @@ Public Class NegSucursales
                 .AddWithValue("@ComisionEncargadoMayor", esucursales.ComisionEncargadoMayor)
                 .AddWithValue("@Telefono", esucursales.Telefono)
                 .AddWithValue("@CodigoVenta", esucursales.CodigoVenta)
+                .AddWithValue("@Mail", esucursales.Mail)
                 .AddWithValue("@Habilitado", esucursales.Habilitado)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)

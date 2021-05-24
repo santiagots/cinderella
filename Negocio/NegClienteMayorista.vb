@@ -32,11 +32,7 @@ Public Class NegClienteMayorista
         Dim dsCliente As New DataSet
         Dim clientes As List(Of Entidades.ClienteMayorista) = New List(Of ClienteMayorista)()
 
-        If (Funciones.HayInternet) Then
-            dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_ClienteMayorista_Razon_Social @RazonSocial='" & RazonSocial & "'")
-        Else
-            dsCliente = clsDatos.ConsultarBaseLocal("execute sp_ClienteMayorista_Razon_Social @RazonSocial='" & RazonSocial & "'")
-        End If
+        dsCliente = clsDatos.ConsultarBaseLocal("execute sp_ClienteMayorista_Razon_Social @RazonSocial='" & RazonSocial & "'")
 
         'Lleno la Entidad Clientes.
         If dsCliente.Tables(0).Rows.Count <> 0 Then
@@ -80,6 +76,63 @@ Public Class NegClienteMayorista
         cmd.ExecuteNonQuery()
         clsDatos.DesconectarRemoto()
     End Sub
+
+    'Funcion para insertar un cliente.
+    Function AltaClienteConsumidorFinal(ByVal ecliente As Entidades.ConsumidorFinal, ByVal idSucursal As Integer) As Int64
+        'Declaro variables
+        Dim cmd As New SqlCommand
+        Try
+            ecliente.id = clsDatos.ObtenerCalveUnica(idSucursal)
+            cmd.Connection = clsDatos.ConectarLocal()
+            AltaClienteConsumidorFinal(ecliente, cmd)
+            clsDatos.ConectarLocal()
+
+            If (Funciones.HayInternet) Then
+                cmd = New SqlCommand()
+                cmd.Connection = clsDatos.ConectarRemoto()
+                AltaClienteConsumidorFinal(ecliente, cmd)
+                clsDatos.ConectarRemoto()
+            End If
+
+            Return ecliente.id
+
+        Catch ex As Exception
+            Return ex.Message
+        End Try
+    End Function
+
+    Private Shared Sub AltaClienteConsumidorFinal(ecliente As ConsumidorFinal, ByRef cmd As SqlCommand)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "sp_Clientes_ConsumidorFinal_Alta"
+        With cmd.Parameters
+            .AddWithValue("@id", ecliente.id)
+            .AddWithValue("@nombre", ecliente.Nombre)
+            .AddWithValue("@apellido", ecliente.Apellido)
+            .AddWithValue("@email", ecliente.Email)
+        End With
+
+        cmd.ExecuteNonQuery()
+    End Sub
+
+    Public Function ConsultaClienteConsumidorFinal(ByVal id_Cliente As Integer) As ConsumidorFinal
+        Dim dsCliente As New DataSet
+
+        If (Funciones.HayInternet) Then
+            dsCliente = clsDatos.ConsultarBaseRemoto("execute sp_Clientes_ConsumidorFinal_Consulta @id_Cliente=" & id_Cliente)
+        Else
+            dsCliente = clsDatos.ConsultarBaseLocal("execute sp_Clientes_ConsumidorFinal_Consulta @id_Cliente=" & id_Cliente)
+        End If
+
+        Dim clienteMinorista As ConsumidorFinal = New ConsumidorFinal()
+
+        If dsCliente.Tables(0).Rows.Count > 0 Then
+            clienteMinorista.Apellido = dsCliente.Tables(0).Rows(0)("Apellido")
+            clienteMinorista.Nombre = dsCliente.Tables(0).Rows(0)("Nombre")
+            clienteMinorista.Email = dsCliente.Tables(0).Rows(0)("Email")
+        End If
+
+        Return clienteMinorista
+    End Function
 
     'Funcion para modificar un cliente.
     Sub ModificacionCliente(ByVal cliente As Entidades.ClienteMayorista)
@@ -152,23 +205,23 @@ Public Class NegClienteMayorista
         With cliente
             .Bonificacion = row("Bonificacion")
             .Comision = row("Comision")
-            .CondicionPago = row("CondicionPago")
+            .CondicionPago = If(row("CondicionPago") Is DBNull.Value, "", row("CondicionPago"))
             .Cuit = row("Cuit")
             .Habilitado = row("Habilitado")
             .Id = row("id_Cliente")
             .IdCondicionIva = row("id_CondicionIva")
-            .IdCorredor = row("Id_Corredor")
+            .IdCorredor = If(row("Id_Corredor") Is DBNull.Value, 0, row("Id_Corredor"))
             .IdDireccionEntrega = If(row("id_DireccionEntrega") Is DBNull.Value, 0, row("id_DireccionEntrega"))
             .IdDireccionFacturacion = row("id_DireccionFacturacion")
-            .IdEmpresa = row("id_Empresa")
+            .IdEmpresa = If(row("id_Empresa") Is DBNull.Value, 0, row("id_Empresa"))
             .IdListaPrecio = row("id_ListaPrecio")
             .Lista = row("Lista")
             .Nombre = row("Nombre")
-            .Observaciones = row("Observaciones")
+            .Observaciones = If(row("Observaciones") Is DBNull.Value, "", row("Observaciones"))
             .RazonSocial = row("RazonSocial")
-            .SaldoCuentaCorriente = row("SaldoCuentaCorriente")
+            .SaldoCuentaCorriente = 0
             .SaldoNotaPedido = row("SaldoNotaPedido")
-            .Transporte = row("Transporte")
+            .Transporte = If(row("Transporte") Is DBNull.Value, "", row("Transporte"))
         End With
         Return cliente
     End Function

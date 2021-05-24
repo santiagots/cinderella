@@ -6,11 +6,7 @@
 
     'Funcion que lista los tipos de pago permitidos en el sistema.
     Function ListadoTiposPagos() As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_TipoPagos_Listado")
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_TipoPagos_Listado")
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_TipoPagos_Listado")
     End Function
 
     'Funcion que lista los tipos de pago permitidos en el sistema utilizando memoria cache.

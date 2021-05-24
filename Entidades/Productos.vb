@@ -228,33 +228,6 @@ Public Class Productos
         End Set
     End Property
 
-    Public Property Aromas() As System.Windows.Forms.CheckedListBox
-        Get
-            Return Aromas_
-        End Get
-        Set(ByVal value As System.Windows.Forms.CheckedListBox)
-            Aromas_ = value
-        End Set
-    End Property
-
-    Public Property Materiales() As System.Windows.Forms.CheckedListBox
-        Get
-            Return Materiales_
-        End Get
-        Set(ByVal value As System.Windows.Forms.CheckedListBox)
-            Materiales_ = value
-        End Set
-    End Property
-
-    Public Property Colores() As System.Windows.Forms.CheckedListBox
-        Get
-            Return Colores_
-        End Get
-        Set(ByVal value As System.Windows.Forms.CheckedListBox)
-            Colores_ = value
-        End Set
-    End Property
-
     Public Property EliminarFoto() As Boolean
         Get
             Return EliminarFoto_

@@ -3,6 +3,8 @@ Imports System.Data.SqlClient
 Imports Datos
 Imports System.Linq
 Imports System.Collections.Generic
+Imports System.IO
+Imports System.Reflection
 
 Public Class NegSincronizacion
     Dim objUsuario As Entidades.Usuario
@@ -11,41 +13,8 @@ Public Class NegSincronizacion
     Dim negFunciones As New Negocio.Funciones
     Private CadenaConexion As String
     Dim miconexion As SqlConnection
-    Dim miconexionRemoto As SqlConnection
+    Dim conexionRemoto As SqlConnection
     Dim encripta As New ClsEncriptacion
-
-
-    Public Function ProbarConectarLocal()
-        Dim estado As Boolean
-        estado = False
-        Try
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
-            miconexion = New SqlConnection
-            miconexion.ConnectionString = CadenaConexion
-            miconexion.Open()
-            estado = True
-            miconexion.Dispose()
-        Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos local." & ex.Message)
-        End Try
-        Return estado
-    End Function
-
-    Public Function ProbarConectarRemoto()
-        Dim estado As Boolean
-        estado = False
-        Try
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
-            miconexionRemoto = New SqlConnection
-            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
-            miconexionRemoto.Open()
-            estado = True
-            miconexionRemoto.Dispose()
-        Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Error conectando con la base de datos remota." & ex.Message)
-        End Try
-        Return estado
-    End Function
 
     Public Function Sincronizar(ByVal Tabla As String) As Integer
         Dim estado As Integer = 0
@@ -53,21 +22,21 @@ Public Class NegSincronizacion
         Try
             'conexion remota
             CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
-            miconexionRemoto = New SqlConnection
-            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
-            miconexionRemoto.Open()
+            conexionRemoto = New SqlConnection
+            conexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
+            conexionRemoto.Open()
 
             'conexion local
             CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
             miconexion = New SqlConnection
-            miconexion.ConnectionString = CadenaConexion
+            miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
 
             Dim transaccion As SqlTransaction
             transaccion = miconexion.BeginTransaction()
 
             ' obtengo los datos a copiar.
-            Dim commandSourceData As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM " + Tabla, miconexionRemoto)
+            Dim commandSourceData As SqlDataAdapter = New SqlDataAdapter("SELECT * FROM " + Tabla, conexionRemoto)
             Dim ds As DataSet = New DataSet()
             commandSourceData.Fill(ds)
 
@@ -97,11 +66,11 @@ Public Class NegSincronizacion
         Catch ex As Exception
             Windows.Forms.MessageBox.Show("Se produjo un error sincronizando los datos de " & Tabla & ": " & ex.Message, "Actualizacion fallida")
             miconexion.Dispose()
-            miconexionRemoto.Dispose()
+            conexionRemoto.Dispose()
 
         Finally
             miconexion.Dispose()
-            miconexionRemoto.Dispose()
+            conexionRemoto.Dispose()
         End Try
 
         Return estado
@@ -139,205 +108,6 @@ Public Class NegSincronizacion
         clsDatos.ConectarRemoto()
     End Sub
 
-    Public Function SincronizarLocalARemota(ByRef Tabla As Tabla, valorBusqueda As String) As Integer
-
-        If (ActualizarClaves(Tabla, valorBusqueda)) Then
-            Return SincronizarARemota(Tabla, valorBusqueda)
-        End If
-
-        Return 2
-    End Function
-
-
-    Private Function ActualizarClaves(ByRef Tabla As Tabla, valorBusqueda As String) As Boolean
-        Dim Respuesta As IList(Of DataTable) = New List(Of DataTable)
-        Dim tablaLocal As DataTable
-        Dim tablaRemota As DataTable
-
-        If (Not String.IsNullOrEmpty(Tabla.ColumnaSeleccion)) Then
-
-            'Selecciono todas las filas de la base local 
-            tablaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
-
-            'Selecciono todas las filas de la base remota
-            tablaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
-        Else
-
-            'Selecciono todas las filas de la base local 
-            tablaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0}", Tabla.Nombre)), DataSet).Tables(0)
-
-            'Selecciono todas las filas de la base remota
-            tablaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0}", Tabla.Nombre)), DataSet).Tables(0)
-
-        End If
-        Dim ClavePrimaria As String = Tabla.ClavePrimaria
-
-        'Obtengo un listado de todos los ID de la base remota
-        Dim ListaIdBaseRemota As List(Of Integer) = tablaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
-        Dim ListaIdBaseLocal As List(Of Integer) = tablaLocal.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
-
-        'Si la base de datos remota tiene mas datos que la base de datos local no tengo que actualizar mis valores locales. Esta situacion solo se da cuando el sistema tiene datos remoto y por algun motivo la base de datos local esta bacia 
-        If (ListaIdBaseRemota.Count > ListaIdBaseLocal.Count Or ListaIdBaseLocal.Count = 0) Then
-            Return False
-        End If
-
-        'Obtengo el ultimo ID de la base remota
-        Dim ultimoValor As Integer = ObtenerUltimoIdBaseRemota(Tabla.Nombre)
-
-        'Recorro todas las rows de la base local
-        For Each rowLocal As DataRow In tablaLocal.Rows
-            'Si el ID de la base local no exite en la base remota quiere decir que esta row fue generada en modo offline
-            If Not ListaIdBaseRemota.Contains(rowLocal(Tabla.ClavePrimaria)) Then
-
-                Tabla.IdAcualizados.Add(New KeyValuePair(Of Integer, Integer)(rowLocal(Tabla.ClavePrimaria), ultimoValor))
-
-                'Por lo tanto tengo que actualizar su ID con el ultimo ID de la base remota
-                rowLocal(Tabla.ClavePrimaria) = ultimoValor
-                ultimoValor += 1
-            End If
-        Next
-
-        Tabla.TablaActualizada = tablaLocal
-
-        'Recorro todas las tablas relacionadas a la actualizada para actualizar sus IDs y claves foraneas
-        For Each tablaForanea As Tabla In Tabla.TablaRelacionada
-            ActualizarClavesForaneas(ListaIdBaseLocal, ListaIdBaseRemota, Tabla.IdAcualizados, tablaForanea)
-        Next
-
-        Return True
-
-    End Function
-
-    Private Sub ActualizarClavesForaneas(IdForaneosLocal As List(Of Integer), IdForaneosRemota As List(Of Integer), IdActualizados As IList(Of KeyValuePair(Of Integer, Integer)), ByRef TablaForanea As Tabla)
-
-        'Selecciono todas las filas de la base local 
-        Dim tablaForaneaLocal As DataTable
-        If (IdForaneosLocal.Count = 0) Then
-            tablaForaneaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0}", TablaForanea.Nombre)), DataSet).Tables(0)
-        Else
-            tablaForaneaLocal = CType(clsDatos.ConsultarBaseLocal(String.Format("select * from {0} where {1} in ({2})", TablaForanea.Nombre, TablaForanea.ColumnaSeleccion, String.Join(",", IdForaneosLocal))), DataSet).Tables(0)
-        End If
-
-        'Selecciono todas las filas de la base remota
-        Dim tablaForaneaRemota As DataTable
-        If (IdForaneosRemota.Count = 0) Then
-            tablaForaneaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0}", TablaForanea.Nombre)), DataSet).Tables(0)
-        Else
-            tablaForaneaRemota = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} in ({2})", TablaForanea.Nombre, TablaForanea.ColumnaSeleccion, String.Join(",", IdForaneosRemota))), DataSet).Tables(0)
-        End If
-
-        Dim ClavePrimaria As String = TablaForanea.ClavePrimaria
-
-        'Obtengo un listado de todos los ID de la base remota
-        Dim tablaForaneaRemotaListaPrimariKey As List(Of Integer) = tablaForaneaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
-
-        'Obtengo el ultimo ID de la base remota
-        Dim ultimoValor As Integer = ObtenerUltimoIdBaseRemota(TablaForanea.Nombre)
-
-        'Recorro todas las rows de la base local
-        For Each rowLocal As DataRow In tablaForaneaLocal.Rows
-            'Si el ID de la base local no exite en la base remota quiere decir que esta row fue generada en modo offline
-            If Not tablaForaneaRemotaListaPrimariKey.Contains(rowLocal(TablaForanea.ClavePrimaria)) Then
-                TablaForanea.IdAcualizados.Add(New KeyValuePair(Of Integer, Integer)(rowLocal(TablaForanea.ClavePrimaria), ultimoValor))
-                'Por lo tanto tengo que actualizar su ID con el ultimo ID de la base remota
-                rowLocal(TablaForanea.ClavePrimaria) = ultimoValor
-                ultimoValor += 1
-            End If
-        Next
-
-        'Actualizo las claves foranesa de las rows
-        For Each claveForanea As String In TablaForanea.ClaveForanea
-            For Each IdForaneoActualizado As KeyValuePair(Of Integer, Integer) In IdActualizados
-                Dim rows As DataRow() = tablaForaneaLocal.Select(String.Format("{0} = {1}", claveForanea, IdForaneoActualizado.Key))
-                For Each row As DataRow In rows
-                    row(claveForanea) = IdForaneoActualizado.Value
-                Next
-            Next
-        Next
-        TablaForanea.TablaActualizada = tablaForaneaLocal
-
-    End Sub
-
-    Private Function SincronizarARemota(Tabla As Tabla, valorBusqueda As String) As Integer
-        Dim estado As Integer = 0
-
-        Try
-            'conexion remota
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
-            miconexionRemoto = New SqlConnection
-            miconexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
-            miconexionRemoto.Open()
-
-            Dim transaccion As SqlTransaction
-            transaccion = miconexionRemoto.BeginTransaction()
-
-            'Selecciono todas las filas de la base remota
-            Dim tablaRemota As DataTable = CType(clsDatos.ConsultarBaseRemoto(String.Format("select * from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda)), DataSet).Tables(0)
-
-            Dim ClavePrimaria As String = Tabla.ClavePrimaria
-            Dim ListaIdBaseRemota As List(Of Integer) = tablaRemota.Rows.Cast(Of DataRow).Select(Function(x) CType(x(ClavePrimaria), Integer)).ToList()
-
-            Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} = {2}", Tabla.Nombre, Tabla.ColumnaSeleccion, valorBusqueda), miconexionRemoto, transaccion)
-            commandEliminoData.ExecuteNonQuery()
-
-            'copio los datos a base local
-            Dim BulkCopy As New SqlBulkCopy(miconexionRemoto, SqlBulkCopyOptions.KeepIdentity, transaccion)
-            BulkCopy.DestinationTableName = Tabla.Nombre
-
-            Try
-                BulkCopy.WriteToServer(Tabla.TablaActualizada)
-
-                'Recorro todas las tablas relacionadas para sincronizar
-                For Each tablaForanea As Tabla In Tabla.TablaRelacionada
-
-                    SincronizarForanea(tablaForanea, ListaIdBaseRemota, transaccion)
-                Next
-
-                transaccion.Commit()
-                BulkCopy.Close()
-                estado = 1
-            Catch ex As Exception
-                transaccion.Rollback()
-                BulkCopy.Close()
-            End Try
-
-        Catch ex As Exception
-            Windows.Forms.MessageBox.Show("Se produjo un error sincronizando los datos de " & Tabla.Nombre & ": " & ex.Message, "Actualizacion fallida")
-            miconexionRemoto.Dispose()
-
-        Finally
-            miconexionRemoto.Dispose()
-        End Try
-
-        Return estado
-    End Function
-
-    Private Sub SincronizarForanea(TablaForanea As Tabla, IdForaneosRemota As List(Of Integer), transaccion As SqlTransaction)
-        For Each claveForanea As String In TablaForanea.ClaveForanea
-            If (IdForaneosRemota.Count <> 0) Then
-                Dim commandEliminoData As SqlCommand = New SqlCommand(String.Format("Delete from {0} where {1} in ({2})", TablaForanea.Nombre, claveForanea, String.Join(",", IdForaneosRemota)), miconexionRemoto, transaccion)
-                commandEliminoData.ExecuteNonQuery()
-            End If
-        Next
-
-        'copio los datos a base local
-        Using BulkCopy As New SqlBulkCopy(miconexionRemoto, SqlBulkCopyOptions.KeepIdentity, transaccion)
-            BulkCopy.DestinationTableName = TablaForanea.Nombre
-            BulkCopy.WriteToServer(TablaForanea.TablaActualizada)
-        End Using
-    End Sub
-
-    Function ObtenerUltimoIdBaseRemota(nombreTabla As String) As Integer
-        Dim ds As DataSet
-        ds = clsDatos.ConsultarBaseRemoto(String.Format("Select IDENT_CURRENT('{0}') as id", nombreTabla))
-
-        If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id")) > 0 Then
-            Return ds.Tables(0).Rows(0).Item("id") + 1
-        Else
-            Return 1
-        End If
-    End Function
-
     Sub AltaSincronizacion(ByVal idSucursal As Integer)
         'Declaro variables
         Dim cmd As New SqlCommand
@@ -361,6 +131,7 @@ Public Class NegSincronizacion
         cmd.CommandText = "sp_Sincronizacion_Alta"
         With cmd.Parameters
             .AddWithValue("@id_Sucursal", idSucursal)
+            .AddWithValue("@fecha", DateTime.Now)
         End With
 
         cmd.ExecuteNonQuery()
@@ -406,11 +177,82 @@ Public Class NegSincronizacion
         End If
     End Function
 
+    Public Function GetTablas() As List(Of Tabla)
+        Dim tablas As List(Of Tabla) = New List(Of Tabla)
+        tablas.AddRange(GetInformacionTablasLocales())
+        tablas.AddRange(GetInformacionTablasRemotas())
+
+        Return tablas
+    End Function
+
+    Public Function GetInformacionTablasRemotas() As List(Of Tabla)
+        Dim respuesta As List(Of Tabla) = New List(Of Tabla)
+
+        respuesta.Add(New Tabla() With {.Nombre = "REL_USUARIOS_PERFILES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "SUCURSALES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "AROMAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "SUELDOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "BANCOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "TIPOS_COMISIONES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "TIPOS_EGRESOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "TIPOS_PAGO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "CLIENTEMAYORISTA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "TIPOS_VENTAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "COLORES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "USUARIOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "USUARIOS_MENSAJES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "CONDICIONES_IVA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "CONSUMIDORFINAL", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "DEPARTAMENTOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "EMPLEADOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "EMPLEADOS_TIPOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "FERIADOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "LISTA_GRUPO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "LISTA_PRECIO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "LOCALIDADES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MATERIALES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS_EGRESOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS_MERCADERIAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS_SECCIONES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS_SUBTIPOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS_TIPOEGRESO_TIPOGASTO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "MOVIMIENTOS_TIPOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PATENTES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PATENTES_GRUPO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PERFILES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PRECIOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PRODUCTOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PRODUCTOS_CATEGORIAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PRODUCTOS_SUBCATEGORIAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PROVEEDORES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "PROVINCIAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "REL_EMPLEADOS_SUCURSALES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "REL_PERFILES_PATENTES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "REL_PRODUCTOS_AROMAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "REL_PRODUCTOS_COLORES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "REL_PRODUCTOS_MATERIALES", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "SINCORNIZACION", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "CLIENTEMINORISTA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "TARJETAS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "COSTOFINANCIERO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_IVA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_CUENTABANCARIA", .Sincronizar = New SinClaveUnicaSincronizar()})
+
+        Return respuesta
+    End Function
+
     Public Function GetInformacionTablasLocales() As List(Of Tabla)
         Dim respuesta As List(Of Tabla) = New List(Of Tabla)
 
         respuesta.Add(EmpleadosRegistros())
-        respuesta.Add(CajaInicial())
+        respuesta.Add(EmpleadosRegistrosPresentes())
+        respuesta.Add(EmpleadosRegistrosAusentes())
+        respuesta.Add(EmpleadosRegistrosTarde())
+        respuesta.Add(CierreCaja()) 'nuevo
+        respuesta.Add(ClienteMayoristaDocumentoPago()) 'nuevo
+        respuesta.Add(ClienteMayoristaDocumentoPagoPago()) 'nuevo
+        respuesta.Add(ClienteMayoristaMovimiento()) 'nuevo
         respuesta.Add(MovimientosCajas())
         respuesta.Add(MovimientosCajaFuerte())
         respuesta.Add(Adicionales())
@@ -424,449 +266,665 @@ Public Class NegSincronizacion
         respuesta.Add(MovimientoGastos())
         respuesta.Add(CuentaCorriente())
         respuesta.Add(Mercaderia())
-        respuesta.Add(Ventas())
-        respuesta.Add(Presupuesto())
-        respuesta.Add(Notapedido())
-        respuesta.Add(Facturacion())
-        respuesta.Add(Notacredito())
-        respuesta.Add(Devolucion())
-        respuesta.Add(MovimientoImpuesto())
-        respuesta.Add(Cheque())
-        respuesta.Add(MoviminetoRetiro())
+        respuesta.Add(MercaderiaDetalle())
+        respuesta.Add(Ventas()) 'nuevo
+        respuesta.Add(VentasItems()) 'nuevo
+        respuesta.Add(VentasPagos()) 'nuevo
+        respuesta.Add(OrdenCompra())
+        respuesta.Add(OrdenCompraDetalle())
+        respuesta.Add(Comisiones()) 'nuevo
         respuesta.Add(Senia())
+        respuesta.Add(Presupuesto())
+        respuesta.Add(PresupuestoDetalle())
+        respuesta.Add(Reserva()) 'nuevo
+        respuesta.Add(Notapedido()) 'nuevo
+        respuesta.Add(NotapedidoItems()) 'nuevo
+        respuesta.Add(Factura()) 'nuevo
+        respuesta.Add(NumeroFactura()) 'nuevo
+        respuesta.Add(Notacredito()) 'nuevo
+        respuesta.Add(NumeroNotacredito()) 'nuevo
+        respuesta.Add(Devolucion())
+        respuesta.Add(DevolucionDetalle())
+        respuesta.Add(MovimientoImpuesto())
+        respuesta.Add(Cheque()) 'nuevo
+        respuesta.Add(MoviminetoRetiro())
 
         Return respuesta
     End Function
 
     Private Shared Function EmpleadosRegistros() As Tabla
-        Dim tablaRegistro As Tabla = New Tabla()
-        tablaRegistro.Nombre = "EMPLEADOS_REGISTROS"
-        tablaRegistro.ClavePrimaria = "id_Registro"
-        tablaRegistro.ColumnaSeleccion = "id_Sucursal"
-        tablaRegistro.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tablaRegistro.TablaRelacionada = New List(Of Tabla)
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "id_Registro"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "EMPLEADOS_REGISTROS"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
 
-        Dim tablaRelRegistroEmpleados As Tabla = New Tabla()
-        tablaRelRegistroEmpleados.Nombre = "REL_REGISTRO_EMPLEADOS"
-        tablaRelRegistroEmpleados.ClavePrimaria = "id_Auto"
-        tablaRelRegistroEmpleados.ColumnaSeleccion = "id_Registro"
-        tablaRelRegistroEmpleados.ClaveForanea = New String() {"id_Registro"}
-        tablaRelRegistroEmpleados.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-
-        tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleados)
-
-        Dim tablaRelRegistroEmpleadosAusentes As Tabla = New Tabla()
-        tablaRelRegistroEmpleadosAusentes.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
-        tablaRelRegistroEmpleadosAusentes.ClavePrimaria = "id_Auto"
-        tablaRelRegistroEmpleadosAusentes.ColumnaSeleccion = "id_Registro"
-        tablaRelRegistroEmpleadosAusentes.ClaveForanea = New String() {"id_Registro"}
-        tablaRelRegistroEmpleadosAusentes.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-
-        tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleadosAusentes)
-
-        Dim tablaRelRegistroEmpleadosTarde As Tabla = New Tabla()
-        tablaRelRegistroEmpleadosTarde.Nombre = "REL_REGISTRO_EMPLEADOS_TARDE"
-        tablaRelRegistroEmpleadosTarde.ClavePrimaria = "id_Auto"
-        tablaRelRegistroEmpleadosTarde.ColumnaSeleccion = "id_Registro"
-        tablaRelRegistroEmpleadosTarde.ClaveForanea = New String() {"id_Registro"}
-        tablaRelRegistroEmpleadosTarde.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-
-        tablaRegistro.TablaRelacionada.Add(tablaRelRegistroEmpleadosTarde)
-
-        Return tablaRegistro
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
     End Function
 
-    Private Shared Function CajaInicial() As Tabla
+    Private Shared Function EmpleadosRegistrosPresentes() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "CAJA_INICIAL"
-        tabla.ClavePrimaria = "id_Caja"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClavePrimaria = "id_Auto"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "REL_REGISTRO_EMPLEADOS"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function EmpleadosRegistrosAusentes() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "id_Auto"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function EmpleadosRegistrosTarde() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "id_Auto"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "REL_REGISTRO_EMPLEADOS_TARDE"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function CierreCaja() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_CIERRE_CAJA"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function ClienteMayoristaDocumentoPago() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+
+        Return tabla
+    End Function
+
+    Private Shared Function ClienteMayoristaDocumentoPagoPago() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO"
+
+        tabla.SQLObtenerDatosLocal = "select P.* 
+                                        from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO P 
+                                        inner join NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO D on P.IdDocumentoDePago = D.Id  
+                                        where D.FechaEdicion >= '{0}' AND D.IdSucursal = {1}"
+
+        tabla.SQLObtenerDatosRemoto = "select P.* 
+                                        from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO P 
+                                        inner join NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO D on P.IdDocumentoDePago = D.Id  
+                                        where D.FechaEdicion >= '{0}' AND D.IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+
+        Return tabla
+    End Function
+
+    Private Shared Function ClienteMayoristaMovimiento() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "Fecha"
+        tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function MovimientosCajas() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MOVIMIENTOS_CAJA"
+
         tabla.ClavePrimaria = "id_Movimiento"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MOVIMIENTOS_CAJA"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function MovimientosCajaFuerte() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MOVIMIENTOS_CAJA_FUERTE"
+
         tabla.ClavePrimaria = "id_Movimiento"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MOVIMIENTOS_CAJA_FUERTE"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function Adicionales() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "ADICIONALES"
+
         tabla.ClavePrimaria = "id_Adicional"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "ADICIONALES"
+        tabla.SQLObtenerDatosLocal = "select * from ADICIONALES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from ADICIONALES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function EmpleadoRecibo() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "EMPLEADOS_RECIBOS"
+
         tabla.ClavePrimaria = "id_Recibo"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "EMPLEADOS_RECIBOS"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function MovimientoAporte() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MOVIMIENTOS_APORTE"
+
         tabla.ClavePrimaria = "id_Movimiento"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MOVIMIENTOS_APORTE"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function EmpleadoDeposito() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "EMPLEADOS_DEPOSITOS"
+
         tabla.ClavePrimaria = "id_Deposito"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "EMPLEADOS_DEPOSITOS"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
 
     Private Shared Function Deuda() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "DEUDA"
-        tabla.ClavePrimaria = "id_Deuda"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "id_Deuda"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "DEUDA"
+        tabla.SQLObtenerDatosLocal = "select * from DEUDA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from DEUDA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
+
     End Function
 
     Private Shared Function Adelanto() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "ADELANTOS"
-        tabla.ClavePrimaria = "id_Adelanto"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "id_Adelanto"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "ADELANTOS"
+        tabla.SQLObtenerDatosLocal = "select * from ADELANTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from ADELANTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function Stock() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "STOCK"
-        tabla.ClavePrimaria = "id_Stock"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "id_Stock"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "STOCK"
+        tabla.SQLObtenerDatosLocal = "select * from STOCK where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from STOCK where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function StockBitacora() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "STOCK_BITACORA"
-        tabla.ClavePrimaria = "id_Bitacora"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "id_Bitacora"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "STOCK_BITACORA"
+        tabla.SQLObtenerDatosLocal = "select * from STOCK_BITACORA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from STOCK_BITACORA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function MovimientoGastos() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MOVIMIENTOS_GASTOS"
-        tabla.ClavePrimaria = "id_Movimiento"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MOVIMIENTOS_GASTOS"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function CuentaCorriente() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "CUENTA_CORRIENTE"
-        tabla.ClavePrimaria = "id_Registro"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "id_Registro"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "CUENTA_CORRIENTE"
+        tabla.SQLObtenerDatosLocal = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function Mercaderia() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MERCADERIAS"
+
         tabla.ClavePrimaria = "id_Mercaderia"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MERCADERIAS"
+        tabla.SQLObtenerDatosLocal = "select * from MERCADERIAS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MERCADERIAS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
 
-        Dim tablaRelelacionada As Tabla = New Tabla()
-        tablaRelelacionada.Nombre = "MERCADERIAS_DETALLE"
-        tablaRelelacionada.ClavePrimaria = "id_Detalle"
-        tablaRelelacionada.ColumnaSeleccion = "id_Mercaderia"
-        tablaRelelacionada.ClaveForanea = New String() {"id_Mercaderia"}
-        tablaRelelacionada.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
 
-        tabla.TablaRelacionada.Add(tablaRelelacionada)
+    Private Shared Function MercaderiaDetalle() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id_Detalle"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MERCADERIAS_DETALLE"
+        tabla.SQLObtenerDatosLocal = "Select D.* 
+                                        From MERCADERIAS M 
+                                        INNER Join MERCADERIAS_DETALLE D ON D.id_Mercaderia = M.id_Mercaderia
+                                        where D.Fecha_Edicion >= '{0}' and M.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select D.* 
+                                        From MERCADERIAS M 
+                                        INNER Join MERCADERIAS_DETALLE D ON D.id_Mercaderia = M.id_Mercaderia
+                                        where D.Fecha_Edicion >= '{0}' and M.id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function Ventas() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "VENTAS"
-        tabla.ClavePrimaria = "id_Venta"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim tablaRelelacionada1 As Tabla = New Tabla()
-        tablaRelelacionada1.Nombre = "VENTAS_DETALLE"
-        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
-        tablaRelelacionada1.ColumnaSeleccion = "id_Venta"
-        tablaRelelacionada1.ClaveForanea = New String() {"id_Venta"}
-        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_VENTAS"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_VENTAS where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_VENTAS where FechaEdicion >= '{0}' AND IdSucursal = {1}"
 
-        tabla.TablaRelacionada.Add(tablaRelelacionada1)
-
-        Dim tablaRelelacionada2 As Tabla = New Tabla()
-        tablaRelelacionada2.Nombre = "COMISIONES"
-        tablaRelelacionada2.ClavePrimaria = "id_Comision"
-        tablaRelelacionada2.ColumnaSeleccion = "id_Venta"
-        tablaRelelacionada2.ClaveForanea = New String() {"id_Venta"}
-        tablaRelelacionada2.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-
-        tabla.TablaRelacionada.Add(tablaRelelacionada2)
-
-        Dim tablaRelelacionada3 As Tabla = New Tabla()
-        tablaRelelacionada3.Nombre = "SENIA"
-        tablaRelelacionada3.ClavePrimaria = "id_Senia"
-        tablaRelelacionada3.ColumnaSeleccion = "id_Venta_Senia"
-        tablaRelelacionada3.ClaveForanea = New String() {"id_Venta_Senia", "id_Venta_Retiro"}
-        tablaRelelacionada3.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-
-        tabla.TablaRelacionada.Add(tablaRelelacionada3)
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
-    Private Shared Function Presupuesto() As Tabla
+    Private Shared Function VentasItems() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "PRESUPUESTO"
-        tabla.ClavePrimaria = "id_Presupuesto"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim tablaRelelacionada1 As Tabla = New Tabla()
-        tablaRelelacionada1.Nombre = "PRESUPUESTO_DETALLE"
-        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
-        tablaRelelacionada1.ColumnaSeleccion = "id_Presupuesto"
-        tablaRelelacionada1.ClaveForanea = New String() {"id_Presupuesto"}
-        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_VENTA_ITEMS"
+        tabla.SQLObtenerDatosLocal = "Select D.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_VENTA_ITEMS D ON V.Id = D.IdVenta
+                                        where D.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select D.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_VENTA_ITEMS D ON V.Id = D.IdVenta
+                                        where D.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
 
-        tabla.TablaRelacionada.Add(tablaRelelacionada1)
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
-    Private Shared Function Notapedido() As Tabla
+    Private Shared Function VentasPagos() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "NOTAPEDIDO"
-        tabla.ClavePrimaria = "id_NotaPedido"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim tablaRelelacionada1 As Tabla = New Tabla()
-        tablaRelelacionada1.Nombre = "NOTAPEDIDO_DETALLE"
-        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
-        tablaRelelacionada1.ColumnaSeleccion = "id_NotaPedido"
-        tablaRelelacionada1.ClaveForanea = New String() {"id_NotaPedido"}
-        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_VENTA_PAGOS"
+        tabla.SQLObtenerDatosLocal = "Select P.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_VENTA_PAGOS P ON V.Id = P.IdVenta
+                                        where P.FechaEdicion >= '{0}' and V.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select P.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_VENTA_PAGOS P ON V.Id = P.IdVenta
+                                        where P.FechaEdicion >= '{0}' and V.idSucursal = {1}"
 
-        tabla.TablaRelacionada.Add(tablaRelelacionada1)
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
-    Private Shared Function Facturacion() As Tabla
+    Private Shared Function OrdenCompra() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "FACTURACION"
-        tabla.ClavePrimaria = "id_Facturacion"
-        tabla.ColumnaSeleccion = "Id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "idOrdenCompra"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "ORDEN_COMPRA"
+        tabla.SQLObtenerDatosLocal = "select * from ORDEN_COMPRA where FechaEdicion >= '{0}' AND idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from ORDEN_COMPRA where FechaEdicion >= '{0}' AND idSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
-    Private Shared Function Notacredito() As Tabla
+    Private Shared Function OrdenCompraDetalle() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "NOTACREDITO"
-        tabla.ClavePrimaria = "id_NotaCredito"
-        tabla.ColumnaSeleccion = "Id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
+        tabla.ClavePrimaria = "idOrdenCompraDetalle"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "ORDEN_COMPRA_DETALLE"
+        tabla.SQLObtenerDatosLocal = "Select OCD.* 
+                                        From ORDEN_COMPRA  OC
+                                        INNER Join ORDEN_COMPRA_DETALLE OCD ON OC.idOrdenCompra = OCD.idOrdenCompra
+                                        where OCD.FechaEdicion >= '{0}' and OC.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select OCD.* 
+                                        From ORDEN_COMPRA  OC
+                                        INNER Join ORDEN_COMPRA_DETALLE OCD ON OC.idOrdenCompra = OCD.idOrdenCompra
+                                        where OCD.FechaEdicion >= '{0}' and OC.idSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
-    Private Shared Function Devolucion() As Tabla
+    Private Shared Function Comisiones() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "DEVOLUCIONES"
-        tabla.ClavePrimaria = "id_Devolucion"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
 
-        Dim tablaRelelacionada1 As Tabla = New Tabla()
-        tablaRelelacionada1.Nombre = "DEVOLUCIONES_DETALLE"
-        tablaRelelacionada1.ClavePrimaria = "id_Detalle"
-        tablaRelelacionada1.ColumnaSeleccion = "id_Devolucion"
-        tablaRelelacionada1.ClaveForanea = New String() {"id_Devolucion"}
-        tablaRelelacionada1.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_COMISION"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_COMISION where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_COMISION where FechaEdicion >= '{0}' AND IdSucursal = {1}"
 
-        tabla.TablaRelacionada.Add(tablaRelelacionada1)
-        Return tabla
-    End Function
-
-    Private Shared Function MovimientoImpuesto() As Tabla
-        Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MOVIMIENTOS_IMPUESTOS"
-        tabla.ClavePrimaria = "id_Movimiento"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
-
-        Return tabla
-    End Function
-
-    Private Shared Function Cheque() As Tabla
-        Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "CHEQUE"
-        tabla.ClavePrimaria = "id_Cheque"
-        tabla.ColumnaSeleccion = "SucursalId"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
-
-        Return tabla
-    End Function
-
-    Private Shared Function MoviminetoRetiro() As Tabla
-        Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "MOVIMIENTOS_RETIROS"
-        tabla.ClavePrimaria = "id_Movimiento"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
-
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
 
     Private Shared Function Senia() As Tabla
         Dim tabla As Tabla = New Tabla()
-        tabla.Nombre = "SENIA"
+
         tabla.ClavePrimaria = "id_Senia"
-        tabla.ColumnaSeleccion = "id_Sucursal"
-        tabla.IdAcualizados = New List(Of KeyValuePair(Of Integer, Integer))
-        tabla.TablaRelacionada = New List(Of Tabla)
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "SENIA"
+        tabla.SQLObtenerDatosLocal = "select * from SENIA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from SENIA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Presupuesto() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id_Presupuesto"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "PRESUPUESTO"
+        tabla.SQLObtenerDatosLocal = "select * from PRESUPUESTO where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from PRESUPUESTO where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function PresupuestoDetalle() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id_Detalle"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "PRESUPUESTO_DETALLE"
+        tabla.SQLObtenerDatosLocal = "Select D.* 
+                                        From PRESUPUESTO P
+                                        INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
+                                        where D.Fecha_Edicion >= '{0}' and P.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select D.* 
+                                        From PRESUPUESTO P
+                                        INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
+                                        where D.Fecha_Edicion >= '{0}' and P.id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Reserva() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_RESERVA"
+        tabla.SQLObtenerDatosLocal = "Select * from NUEVA_RESERVA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_RESERVA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Notapedido() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_NOTA_PEDIDO"
+        tabla.SQLObtenerDatosLocal = "Select * from NUEVA_NOTA_PEDIDO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_NOTA_PEDIDO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function NotapedidoItems() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_NOTA_PEDIDO_ITEMS"
+        tabla.SQLObtenerDatosLocal = "Select D.* 
+                                        From NUEVA_NOTA_PEDIDO T 
+                                        INNER Join NUEVA_NOTA_PEDIDO_ITEMS D ON D.IdNotaPedido = T.Id
+                                        where D.FechaEdicion >= '{0}' and T.IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select D.* 
+                                        From NUEVA_NOTA_PEDIDO T 
+                                        INNER Join NUEVA_NOTA_PEDIDO_ITEMS D ON D.IdNotaPedido = T.Id
+                                        where D.FechaEdicion >= '{0}' and T.IdSucursal = {1}"
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Factura() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "Fecha"
+        tabla.Nombre = "NUEVA_FACTURA"
+        tabla.SQLObtenerDatosLocal = "Select F.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
+                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select F.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
+                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function NumeroFactura() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "Numero"
+        tabla.Nombre = "NUEVA_NUMERO_FACTURA"
+        tabla.SQLObtenerDatosLocal = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
+                                        INNER Join NUEVA_NUMERO_FACTURA N ON F.Id = N.IdFactura
+                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
+                                        INNER Join NUEVA_NUMERO_FACTURA N ON F.Id = N.IdFactura
+                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Notacredito() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "Fecha"
+        tabla.Nombre = "NUEVA_NOTA_CREDITO"
+        tabla.SQLObtenerDatosLocal = "Select C.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
+                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select C.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
+                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function NumeroNotacredito() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "Numero"
+        tabla.Nombre = "NUEVA_NUMERO_NOTA_CREDITO"
+        tabla.SQLObtenerDatosLocal = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
+                                        INNER Join NUEVA_NUMERO_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
+                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
+                                        INNER Join NUEVA_NUMERO_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
+                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Devolucion() As Tabla
+
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "id_Devolucion"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "DEVOLUCIONES"
+        tabla.SQLObtenerDatosLocal = "Select * from DEVOLUCIONES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from DEVOLUCIONES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function DevolucionDetalle() As Tabla
+
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "id_Detalle"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "DEVOLUCIONES_DETALLE"
+        tabla.SQLObtenerDatosLocal = "Select DE.* 
+                                        From DEVOLUCIONES D 
+                                        INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
+                                        where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"
+
+        tabla.SQLObtenerDatosRemoto = "Select DE.* 
+                                        From DEVOLUCIONES D 
+                                        INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
+                                        where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function MovimientoImpuesto() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MOVIMIENTOS_IMPUESTOS"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Cheque() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_CHEQUE"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CHEQUE where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CHEQUE where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function MoviminetoRetiro() As Tabla
+
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "id_Movimiento"
+        tabla.ClaveSincronizacion = "Fecha_Edicion"
+        tabla.Nombre = "MOVIMIENTOS_RETIROS"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
 
         Return tabla
     End Function
-End Class
 
-Public Class Tabla
-    Private _Nombre As String
-    Public Property Nombre() As String
-        Get
-            Return _Nombre
-        End Get
-        Set(ByVal value As String)
-            _Nombre = value
-        End Set
-    End Property
-
-    Private _ColumnaSeleccion As String
-    Public Property ColumnaSeleccion() As String
-        Get
-            Return _ColumnaSeleccion
-        End Get
-        Set(ByVal value As String)
-            _ColumnaSeleccion = value
-        End Set
-    End Property
-
-    Private _ClavePrimaria As String
-    Public Property ClavePrimaria() As String
-        Get
-            Return _ClavePrimaria
-        End Get
-        Set(ByVal value As String)
-            _ClavePrimaria = value
-        End Set
-    End Property
-
-    Private _ClaveForanea As String()
-    Public Property ClaveForanea() As String()
-        Get
-            Return _ClaveForanea
-        End Get
-        Set(ByVal value As String())
-            _ClaveForanea = value
-        End Set
-    End Property
-
-    Private _IdActualizados As IList(Of KeyValuePair(Of Integer, Integer))
-    Public Property IdAcualizados() As IList(Of KeyValuePair(Of Integer, Integer))
-        Get
-            Return _IdActualizados
-        End Get
-        Set(ByVal value As IList(Of KeyValuePair(Of Integer, Integer)))
-            _IdActualizados = value
-        End Set
-    End Property
-
-    Private _TablaActualizada As DataTable
-    Public Property TablaActualizada() As DataTable
-        Get
-            Return _TablaActualizada
-        End Get
-        Set(ByVal value As DataTable)
-            _TablaActualizada = value
-        End Set
-    End Property
-
-    Private _TablaRelacionada As IList(Of Tabla)
-    Public Property TablaRelacionada() As IList(Of Tabla)
-        Get
-            Return _TablaRelacionada
-        End Get
-        Set(ByVal value As IList(Of Tabla))
-            _TablaRelacionada = value
-        End Set
-    End Property
 End Class

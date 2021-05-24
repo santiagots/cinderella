@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2F8F3F48-9EC8-4F64-8565-5A15CF49E570}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ventas.Core</RootNamespace>
+    <AssemblyName>Ventas.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ValueObjects\MontoPago.cs" />
+    <Compile Include="Model\ValueObjects\MontoProducto.cs" />
+    <Compile Include="Model\ValueObjects\CostoProducto.cs" />
+    <Compile Include="Model\VentaAggregate\Banco.cs" />
+    <Compile Include="Model\VentaAggregate\Pago.cs" />
+    <Compile Include="Model\VentaAggregate\PagoCheque.cs" />
+    <Compile Include="Model\VentaAggregate\PagoCredito.cs" />
+    <Compile Include="Model\VentaAggregate\PagoDebito.cs" />
+    <Compile Include="Model\VentaAggregate\PagoDeposito.cs" />
+    <Compile Include="Model\VentaAggregate\PagoEfectivo.cs" />
+    <Compile Include="Model\VentaAggregate\VentaItem.cs" />
+    <Compile Include="Model\VentaAggregate\Producto.cs" />
+    <Compile Include="Model\VentaAggregate\Venta.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Model\Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cinderella\AccesoDatos\AccesoDatos.csproj">
+      <Project>{74F74DE6-3EC0-4373-BE05-6870A1405657}</Project>
+      <Name>AccesoDatos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cinderella\Common.Core\Common.Core.csproj">
+      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cinderella\Entidades\Entidades.vbproj">
+      <Project>{9F729C51-E2DE-49E8-9C49-DCF6BEFDCAAB}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

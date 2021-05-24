@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -29,7 +29,7 @@ Namespace My
     Private Shared addedHandlerLockObject As New Object
 
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
-    Private Shared Sub AutoSaveSettings(ByVal sender As Global.System.Object, ByVal e As Global.System.EventArgs)
+    Private Shared Sub AutoSaveSettings(sender As Global.System.Object, e As Global.System.EventArgs)
         If My.Application.SaveMySettingsOnExit Then
             My.Settings.Save()
         End If
@@ -395,7 +395,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("34"),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2"),  _
          Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
         Public Property Sucursal() As Integer
             Get
@@ -408,7 +408,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Nueva Sucursal"),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Av. Corrientes"),  _
          Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
         Public Property NombreSucursal() As String
             Get
@@ -419,35 +419,262 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60p"& _ 
-            "KA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv"& _ 
-            "+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q==")>  _
-        Public ReadOnly Property ConexionRemoto() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("300000")>  _
+        Public Property TemporizadorOrdenesCompra() As String
             Get
-                Return CType(Me("ConexionRemoto"),String)
+                Return CType(Me("TemporizadorOrdenesCompra"),String)
             End Get
+            Set
+                Me("TemporizadorOrdenesCompra") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property GeneracionOrdenCompraAutomatica() As Boolean
+            Get
+                Return CType(Me("GeneracionOrdenCompraAutomatica"),Boolean)
+            End Get
+            Set
+                Me("GeneracionOrdenCompraAutomatica") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("30")>  _
+        Public Property PeriodoCaulculoVentaMensual() As String
+            Get
+                Return CType(Me("PeriodoCaulculoVentaMensual"),String)
+            End Get
+            Set
+                Me("PeriodoCaulculoVentaMensual") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property MailSLL() As Boolean
+            Get
+                Return CType(Me("MailSLL"),Boolean)
+            End Get
+            Set
+                Me("MailSLL") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("8.8.8.8")>  _
+        Public Property IpPing() As String
+            Get
+                Return CType(Me("IpPing"),String)
+            End Get
+            Set
+                Me("IpPing") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2000")>  _
+        Public Property IpTimeOut() As Integer
+            Get
+                Return CType(Me("IpTimeOut"),Integer)
+            End Get
+            Set
+                Me("IpTimeOut") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Cinderella")>  _
+        Public Property DatosFiscalNombreFantasia() As String
+            Get
+                Return CType(Me("DatosFiscalNombreFantasia"),String)
+            End Get
+            Set
+                Me("DatosFiscalNombreFantasia") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("7200000")>  _
+        Public Property TemporizadorSincronizacion() As String
+            Get
+                Return CType(Me("TemporizadorSincronizacion"),String)
+            End Get
+            Set
+                Me("TemporizadorSincronizacion") = value
+            End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
-        Public Property TemporizadorActualizacionMemoriaCache() As Integer
+        Public Property TemporizadorActualizacionMemoriaCache() As String
             Get
-                Return CType(Me("TemporizadorActualizacionMemoriaCache"),Integer)
+                Return CType(Me("TemporizadorActualizacionMemoriaCache"),String)
             End Get
             Set
                 Me("TemporizadorActualizacionMemoriaCache") = value
             End Set
         End Property
         
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property UsarMemoriaCache() As String
+            Get
+                Return CType(Me("UsarMemoriaCache"),String)
+            End Get
+            Set
+                Me("UsarMemoriaCache") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property ModeloControladora() As Integer
+            Get
+                Return CType(Me("ModeloControladora"),Integer)
+            End Get
+            Set
+                Me("ModeloControladora") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property PaginacionItemsPagina() As Integer
+            Get
+                Return CType(Me("PaginacionItemsPagina"),Integer)
+            End Get
+            Set
+                Me("PaginacionItemsPagina") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalRazonSocial() As String
+            Get
+                Return CType(Me("DatosFiscalRazonSocial"),String)
+            End Get
+            Set
+                Me("DatosFiscalRazonSocial") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalDireccion() As String
+            Get
+                Return CType(Me("DatosFiscalDireccion"),String)
+            End Get
+            Set
+                Me("DatosFiscalDireccion") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalTel() As String
+            Get
+                Return CType(Me("DatosFiscalTel"),String)
+            End Get
+            Set
+                Me("DatosFiscalTel") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalEmail() As String
+            Get
+                Return CType(Me("DatosFiscalEmail"),String)
+            End Get
+            Set
+                Me("DatosFiscalEmail") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property DatosFiscalCUIT() As String
+            Get
+                Return CType(Me("DatosFiscalCUIT"),String)
+            End Get
+            Set
+                Me("DatosFiscalCUIT") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property DatosFiscalIIBB() As String
+            Get
+                Return CType(Me("DatosFiscalIIBB"),String)
+            End Get
+            Set
+                Me("DatosFiscalIIBB") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property DatosFiscalInicioActividad() As Date
+            Get
+                Return CType(Me("DatosFiscalInicioActividad"),Date)
+            End Get
+            Set
+                Me("DatosFiscalInicioActividad") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Segoe UI, 26.25pt, style=Bold")>  _
+        Public Property DatosFiscalNombreFantasiaFuente() As Global.System.Drawing.Font
+            Get
+                Return CType(Me("DatosFiscalNombreFantasiaFuente"),Global.System.Drawing.Font)
+            End Get
+            Set
+                Me("DatosFiscalNombreFantasiaFuente") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DatosFiscalLocalidad() As String
+            Get
+                Return CType(Me("DatosFiscalLocalidad"),String)
+            End Get
+            Set
+                Me("DatosFiscalLocalidad") = value
+            End Set
+        End Property
+        
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf"& _ 
-            ";Integrated Security=True;User Instance=True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLExpress;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=Tru"& _ 
+            "e")>  _
         Public ReadOnly Property Conexion() As String
             Get
                 Return CType(Me("Conexion"),String)
@@ -456,13 +683,25 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property UsarMemoriaCache() As Boolean
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ConexionRemoto() As String
             Get
-                Return CType(Me("UsarMemoriaCache"),Boolean)
+                Return CType(Me("ConexionRemoto"),String)
             End Get
             Set
-                Me("UsarMemoriaCache") = value
+                Me("ConexionRemoto") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
+        Public Property ListaPrecioMayorista() As Integer
+            Get
+                Return CType(Me("ListaPrecioMayorista"),Integer)
+            End Get
+            Set
+                Me("ListaPrecioMayorista") = value
             End Set
         End Property
     End Class

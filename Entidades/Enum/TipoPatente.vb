@@ -90,6 +90,7 @@
     Planillas_SueldoEmpleados_Visualizar = 91
     Planillas_SueldoEmpleados_Exportar = 93
     Planillas_Listasdeprecios = 94
+    Planillas_Informes = 621
     Seguridad = 95
     Seguridad_Perfiles_Visualizar = 96
     Seguridad_Perfiles_Crear = 97
@@ -125,4 +126,6 @@
     Administración_Presupuesto_Administración_Visualizar = 617
     Administración_Presupuesto_Administración_Detalle_Anular = 618
     Administración_CostoFinanciero_Administración = 619
+    Administración_CuentaBancaria_Administración = 622
+
 End Enum

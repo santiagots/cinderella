@@ -11,6 +11,9 @@ Public Class NegCuentaCorriente
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        ECuenta.id_Registro = clsDatos.ObtenerCalveUnica(ECuenta.id_Sucursal)
+        ECuenta.FechaEdicion = DateTime.Now
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaCuentaCorriente(ECuenta, cmd)
@@ -19,7 +22,7 @@ Public Class NegCuentaCorriente
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                AltaCuentaCorriente(ECuenta, cmd)
+                msg = AltaCuentaCorriente(ECuenta, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -34,33 +37,19 @@ Public Class NegCuentaCorriente
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_CuentaCorriente_Alta"
         With cmd.Parameters
+            .AddWithValue("@id_Registro", ECuenta.id_Registro)
             .AddWithValue("@id_Sucursal", ECuenta.id_Sucursal)
             .AddWithValue("@id_Proveedor", ECuenta.id_Proveedor)
             .AddWithValue("@Fecha", ECuenta.Fecha)
             .AddWithValue("@id_Mercaderia", ECuenta.id_Mercaderia)
             .AddWithValue("@Monto", ECuenta.Monto)
+            .AddWithValue("@FechaEdicion", ECuenta.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.Int, 11)
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
         Return respuesta.Value
-    End Function
-
-    'Funcion que obtiene el ultimo id de la tabla.
-    Function ObtenerUltimoID()
-        Dim ds As DataSet
-        If (Funciones.HayInternet) Then
-            ds = clsDatos.ConsultarBaseRemoto("Select IDENT_CURRENT('CUENTA_CORRIENTE') as id_Registro")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("Select IDENT_CURRENT('CUENTA_CORRIENTE')  as id_Registro")
-        End If
-
-        If ds.Tables(0).Rows.Count = 1 And CInt(ds.Tables(0).Rows(0).Item("id_Registro")) > 0 Then
-            Return ds.Tables(0).Rows(0).Item("id_Registro").ToString
-        Else
-            Return 1
-        End If
     End Function
 
     'Funcion para listar las cuentas corrientes por proveedores

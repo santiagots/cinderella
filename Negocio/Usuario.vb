@@ -52,7 +52,7 @@ Public Class Usuario
                 entUsuario.Usuario = dsUsuario.Tables(0).Rows(0).Item("Usuario")
                 entUsuario.id_Usuario = dsUsuario.Tables(0).Rows(0).Item("id_Usuario")
                 entUsuario.Mail = dsUsuario.Tables(0).Rows(0).Item("Mail")
-                entUsuario.Habilitado = dsUsuario.Tables(0).Rows(0).Item("Habilitado").ToString
+                entUsuario.Habilitado = If(dsUsuario.Tables(0).Rows(0).Item("Habilitado"), 1, 0)
                 entUsuario.id_Perfil = dsUsuario.Tables(0).Rows(0).Item("id_Perfil").ToString
             End If
         Catch ex As Exception

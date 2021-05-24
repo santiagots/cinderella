@@ -6,23 +6,17 @@ Public Class NegCheque
 
 
     'Funcion que inserta un nuevo registro en la tabla CHEQUES.
-    Public Shared Function AltaCheque(ByVal Cheque As Entidades.Cheque) As Integer
+    Public Shared Function AltaCheque(ByVal Cheque As Entidades.Cheque) As Int64
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
-        Dim idCheque As Integer
         Dim dsCheques As DataSet
         Dim Cheques As List(Of Cheque) = New List(Of Cheque)
 
         Try
-            'Conecto a la bdd.
-            If (HayInternet) Then
-                dsCheques = clsDatos.ConsultarBaseRemoto("execute sp_Cheques_Consulta_Librados_Cheque_Banco @Libreador='" & Cheque.LibradorNombre & "', @NumeroCheque=" & Cheque.NumeroCheque.ToString & ", @IdBanco=" & Cheque.BancoEmisorId.ToString)
-            Else
-                dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Librados_Cheque_Banco @Libreador='" & Cheque.LibradorNombre & "', @NumeroCheque=" & Cheque.NumeroCheque.ToString & ", @IdBanco=" & Cheque.BancoEmisorId.ToString)
-            End If
+
+            dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Librados_Cheque_Banco @Libreador='" & Cheque.LibradorNombre & "', @NumeroCheque=" & Cheque.NumeroCheque.ToString & ", @IdBanco=" & Cheque.BancoEmisorId.ToString)
 
             If dsCheques.Tables(0).Rows.Count > 0 Then
                 For Each row As DataRow In dsCheques.Tables(0).Rows
@@ -36,45 +30,36 @@ Public Class NegCheque
 
                 'El cheque existe en la base entonces solo actualizo el estado a reingresado 
                 ChequeReingreso.Estado = ChequeEstado.Reingresado
+                ChequeReingreso.FechaEdicion = DateTime.Now
 
                 cmd.Connection = clsDatos.ConectarLocal()
                 ModificarCheque(ChequeReingreso, cmd)
                 clsDatos.DesconectarLocal()
 
-                If HayInternet Then
-                    cmd = New SqlCommand()
-                    cmd.Connection = clsDatos.ConectarRemoto()
-                    ModificarCheque(ChequeReingreso, cmd)
-                    clsDatos.DesconectarRemoto()
-                End If
                 Return ChequeReingreso.IdCheque
             Else
                 'El cheque no existe en la base entonces lo doy de alta en la base con estado ingresado 
+                Cheque.IdCheque = clsDatos.ObtenerCalveUnica(Cheque.SucursalId)
+                Cheque.FechaEdicion = DateTime.Now
+
                 cmd.Connection = clsDatos.ConectarLocal()
-                idCheque = AltaCheque(Cheque, cmd)
+                AltaCheque(Cheque, cmd)
                 clsDatos.DesconectarLocal()
 
-                If HayInternet Then
-                    cmd = New SqlCommand()
-                    cmd.Connection = clsDatos.ConectarRemoto()
-                    idCheque = AltaCheque(Cheque, cmd)
-                    clsDatos.DesconectarRemoto()
-                Else
-
-                End If
-                'retorno valor
-                Return idCheque
             End If
+            'retorno valor
+            Return Cheque.IdCheque
         Catch ex As Exception
             Return False
         End Try
     End Function
 
-    Private Shared Function AltaCheque(Cheque As Cheque, ByRef cmd As SqlCommand)
+    Private Shared Sub AltaCheque(Cheque As Cheque, ByRef cmd As SqlCommand)
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Cheques_Alta"
         With cmd.Parameters
+            .AddWithValue("@idCheque", Cheque.IdCheque)
             .AddWithValue("@BancoEmisorId", Cheque.BancoEmisorId)
             .AddWithValue("@ClienteId", Cheque.ClienteId)
             .AddWithValue("@ClienteNombre", Cheque.ClienteNombre)
@@ -88,35 +73,26 @@ Public Class NegCheque
             .AddWithValue("@NumeroCheque", Cheque.NumeroCheque)
             .AddWithValue("@NumeroOrden", Cheque.NumeroOrden)
             .AddWithValue("@SucursalId", Cheque.SucursalId)
+            .AddWithValue("@Fecha_Edicion", Cheque.FechaEdicion)
         End With
 
-        'Respuesta del stored.
-        Dim respuesta As New SqlParameter("@IdCheque", SqlDbType.Int, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-    End Function
+    End Sub
 
     'Funcion que inserta un nuevo registro en la tabla CHEQUES.
     Public Shared Function ModificacionCheque(ByVal Cheque As Entidades.Cheque) As String
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
+
+        Cheque.FechaEdicion = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = ModificarCheque(Cheque, cmd)
             clsDatos.DesconectarLocal()
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = ModificarCheque(Cheque, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -147,6 +123,7 @@ Public Class NegCheque
             .AddWithValue("@SucursalId", Cheque.SucursalId)
             .AddWithValue("@Estado", Cheque.Estado)
             .AddWithValue("@DestinoSalida", Cheque.DestinoSalida)
+            .AddWithValue("@FechaEdicion", Cheque.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -155,25 +132,18 @@ Public Class NegCheque
         Return respuesta.Value
     End Function
 
-    Public Shared Function EleminarCheque(ByVal idCheque As Integer) As String
+    Public Shared Function EleminarCheque(ByVal idCheque As Int64) As String
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
+        Dim fechaEdicion As DateTime = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EleminarCheque(idCheque, cmd)
+            msg = EleminarCheque(idCheque, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
-
-            If HayInternet Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EleminarCheque(idCheque, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'retorno valor
             Return msg
@@ -182,12 +152,13 @@ Public Class NegCheque
         End Try
     End Function
 
-    Private Shared Function EleminarCheque(idCheque As Integer, ByRef cmd As SqlCommand) As String
+    Private Shared Function EleminarCheque(idCheque As Int64, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         'Cargo y ejecuto el stored.
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Cheques_Eliminar"
         With cmd.Parameters
             .AddWithValue("@IdCheque", idCheque)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -200,18 +171,12 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
         Dim respuesta As Cheque = New Cheque()
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsCheques = clsDatos.ConsultarBaseRemoto("execute sp_Cheques_Consulta @NumeroOrden=" & NumeroOrden & ", @SucursalId=" & SucursalId)
-        Else
-            dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta @NumeroOrden=" & NumeroOrden & ", @SucursalId=" & SucursalId)
-        End If
+        dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta @NumeroOrden=" & NumeroOrden & ", @SucursalId=" & SucursalId)
 
         If dsCheques.Tables(0).Rows.Count > 0 Then
             respuesta = GetChequeFromRow(dsCheques.Tables(0).Rows(0))
@@ -225,18 +190,13 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
+
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
         Dim respuesta As List(Of Cheque) = New List(Of Cheque)()
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsCheques = clsDatos.ConsultarBaseRemoto("execute sp_Cheques_Consulta_Sucursal @SucursalId=" & SucursalId)
-        Else
-            dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Sucursal @SucursalId=" & SucursalId)
-        End If
+        dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Sucursal @SucursalId=" & SucursalId)
 
         If dsCheques.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsCheques.Tables(0).Rows
@@ -248,22 +208,16 @@ Public Class NegCheque
         Return respuesta
     End Function
 
-    Public Shared Function TraerCheque(ByVal ChequeId As Integer) As Cheque
+    Public Shared Function TraerCheque(ByVal ChequeId As Int64) As Cheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
         Dim respuesta As Cheque = New Cheque()
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsCheques = clsDatos.ConsultarBaseRemoto("execute sp_Cheques_Consulta_Id @Id=" & ChequeId)
-        Else
-            dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Id @Id=" & ChequeId)
-        End If
+        dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Id @Id=" & ChequeId)
 
         'retorno valor
         If (dsCheques.Tables(0).Rows.Count > 0) Then
@@ -276,18 +230,12 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
         Dim respuesta As List(Of Cheque) = New List(Of Cheque)()
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsCheques = clsDatos.ConsultarBaseRemoto("execute sp_Cheques_Listado")
-        Else
-            dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Listado")
-        End If
+        dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Listado")
 
         If dsCheques.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsCheques.Tables(0).Rows
@@ -303,18 +251,12 @@ Public Class NegCheque
         'Declaro variables
         Dim cmd As SqlCommand = New SqlCommand()
         Dim ClsFunciones As New Funciones
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim clsDatos As New Datos.Conexion
         Dim msg As String = ""
         Dim dsCheques As DataSet
         Dim respuesta As List(Of Cheque) = New List(Of Cheque)()
 
-        'Conecto a la bdd.
-        If (HayInternet) Then
-            dsCheques = clsDatos.ConsultarBaseRemoto("execute sp_Cheques_Consulta_Librados_Cheque_Banco @Libreador='" & Librador & "', @NumeroCheque=" & NumeroCheque.ToString & ", @IdBanco=" & IdBanco.ToString)
-        Else
-            dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Librados_Cheque_Banco @Libreador='" & Librador & "', @NumeroCheque=" & NumeroCheque.ToString & ", @IdBanco=" & IdBanco.ToString)
-        End If
+        dsCheques = clsDatos.ConsultarBaseLocal("execute sp_Cheques_Consulta_Librados_Cheque_Banco @Libreador='" & Librador & "', @NumeroCheque=" & NumeroCheque.ToString & ", @IdBanco=" & IdBanco.ToString)
 
         If dsCheques.Tables(0).Rows.Count > 0 Then
             For Each row As DataRow In dsCheques.Tables(0).Rows

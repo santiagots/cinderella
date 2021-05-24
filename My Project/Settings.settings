@@ -90,32 +90,87 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="Sucursal" Roaming="true" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">34</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="NombreSucursal" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Nueva Sucursal</Value>
+      <Value Profile="(Default)">Av. Corrientes</Value>
     </Setting>
-    <Setting Name="ConexionRemoto" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60pKA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q==&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">MUJlWTL3h8TeIbYMkW6b0M6lkOHZplDncL2KCy+0GwZuXpv8ib9FZ9h5qkRqpJ/q/ZgSa5tU700bze60pKA2+rIk5QgntigBgMQp12Kq6XDdzAJiOX/Rq6sKiYRi71+12HLnxWtkop8lYe2GtOd0GFL+5ZP/vwVGv+NO90gKWm3KbyYrNs2A8lywSMbpivz9MCNDVrNFfOwwWIUAVdqa/Q==</Value>
+    <Setting Name="TemporizadorOrdenesCompra" Type="System.String" Scope="User">
+      <Value Profile="(Default)">300000</Value>
     </Setting>
-    <Setting Name="TemporizadorActualizacionMemoriaCache" Type="System.Int32" Scope="User">
+    <Setting Name="GeneracionOrdenCompraAutomatica" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PeriodoCaulculoVentaMensual" Type="System.String" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="MailSLL" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IpPing" Type="System.String" Scope="User">
+      <Value Profile="(Default)">8.8.8.8</Value>
+    </Setting>
+    <Setting Name="IpTimeOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2000</Value>
+    </Setting>
+    <Setting Name="DatosFiscalNombreFantasia" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Cinderella</Value>
+    </Setting>
+    <Setting Name="TemporizadorSincronizacion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">7200000</Value>
+    </Setting>
+    <Setting Name="TemporizadorActualizacionMemoriaCache" Type="System.String" Scope="User">
       <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="UsarMemoriaCache" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ModeloControladora" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PaginacionItemsPagina" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="DatosFiscalRazonSocial" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalDireccion" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalTel" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalEmail" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalCUIT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DatosFiscalIIBB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DatosFiscalInicioActividad" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatosFiscalNombreFantasiaFuente" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 26.25pt, style=Bold</Value>
+    </Setting>
+    <Setting Name="DatosFiscalLocalidad" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Conexion" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=.\SQLExpress;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\db\CINDERELLA_LOCAL.mdf;Integrated Security=True;User Instance=True</Value>
+      <Value Profile="(Default)">Data Source=.\SQLExpress;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True</Value>
     </Setting>
-    <Setting Name="UsarMemoriaCache" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="ConexionRemoto" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ListaPrecioMayorista" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>
 </SettingsFile>

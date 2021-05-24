@@ -9,9 +9,9 @@
     </sectionGroup>
   </configSections>
   <connectionStrings>
-    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=TAMBOURS7;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
+    <add name="SistemaCinderella.My.MySettings.Conexion" connectionString="Data Source=Localhost;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=True"
       providerName="System.Data.SqlClient" />
-    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="yC78dwbJx/9GTilE0S/KCsZ/diDH9bux/XsEjp/D7F14DVmYDWfkFjBvA3DDuMFgrMcWh3bwarkvbDN5wpaVVRQjWKX+kmpVEq5HYEpzVjc="
+    <add name="SistemaCinderella.My.MySettings.ConexionRemoto" connectionString="dqxgkq/GGutBEzBqe8fWB/46V9GSRFmxGDDgA6X0EQ5g3qwtKA4PIxG/uqJBma7OD/3+woYRf03OaAezlltpA6/gQhWzNU089HLhPWu39Kk="
       providerName="System.Data.SqlClient" />
   </connectionStrings>
   <system.diagnostics>
@@ -35,7 +35,8 @@
     </sharedListeners>
   </system.diagnostics>
   <appSettings>
-    <add key="ExportarExcelPlantilla" value="Plantilla\Template.xlsx" />
+    <add key="ExportarExcelPlantillaProducto" value="Plantilla\TemplateProducto.xlsx" />
+    <add key="ExportarExcelPlantillaProductoSucursal" value="Plantilla\TemplateProductoSucursal.xlsx" />
     <add key="ClientSettingsProvider.ServiceUri" value="" />
   </appSettings>
   <applicationSettings>
@@ -51,11 +52,8 @@
       </setting>
     </SistemaCinderella.My.MySettings>
   </applicationSettings>
-  <userSettings>
+<userSettings>
     <SistemaCinderella.My.MySettings>
-      <setting name="Sucursal" serializeAs="String">
-        <value>2</value>
-      </setting>
       <setting name="NombreListaPrecio" serializeAs="String">
         <value>Público Tigre</value>
       </setting>
@@ -88,9 +86,6 @@
       </setting>
       <setting name="Internet" serializeAs="String">
         <value>True</value>
-      </setting>
-      <setting name="NombreSucursal" serializeAs="String">
-        <value>Av. Corrientes</value>
       </setting>
       <setting name="PuntoVentaFacturacionManual" serializeAs="String">
         <value>1</value>
@@ -134,21 +129,48 @@
       <setting name="HabilitarExentoSinIVA" serializeAs="String">
         <value>NO</value>
       </setting>
+      <setting name="DescuentoMinorista" serializeAs="String">
+        <value>10</value>
+      </setting>
+      <setting name="TemporizadorActualizacionMemoriaCache" serializeAs="String">
+        <value>15</value>
+      </setting>
+      <setting name="UsarMemoriaCache" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="Sucursal" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="NombreSucursal" serializeAs="String">
+        <value>Av. Corrientes</value>
+      </setting>
+      <setting name="TemporizadorOrdenesCompra" serializeAs="String">
+        <value>300000</value>
+      </setting>
+      <setting name="GeneracionOrdenCompraAutomatica" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="PeriodoCaulculoVentaMensual" serializeAs="String">
+        <value>30</value>
+      </setting>
+	  <setting name="MailSLL" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="IpPing" serializeAs="String">
+        <value>8.8.8.8</value>
+      </setting>
+      <setting name="IpTimeOut" serializeAs="String">
+        <value>2000</value>
+      </setting>
+      <setting name="RazonSocial" serializeAs="String">
+        <value>Cinderella</value>
+      </setting>
+      <setting name="TemporizadorSincronizacion" serializeAs="String">
+        <value>7200000</value>
+      </setting>
     </SistemaCinderella.My.MySettings>
   </userSettings>
   <startup useLegacyV2RuntimeActivationPolicy="true">
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
   </startup>
-  <system.web>
-    <membership defaultProvider="ClientAuthenticationMembershipProvider">
-      <providers>
-        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
-      </providers>
-    </membership>
-    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
-      <providers>
-        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
-      </providers>
-    </roleManager>
-  </system.web>
 </configuration>

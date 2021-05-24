@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	p{{
+    font-family: arial, sans-serif;
+	color:black;
+	font-size: 14px;
+	}}
+</style>
+</head>
+<body>
+	<p>
+		Estimados,<br/><br/>
+
+		Por medio del presente les hacemos llegar la Orden de Compra correspondiente a la sucursal {0}.<br/><br/>
+
+		Les solicitamos tengan a bien enviarnos a la brevedad información relativa a:<br/><br/>
+
+		-Disponibilidad de los productos pedidos.<br/>
+		-Día estimado de entrega.<br/>
+		-Otras cuestiones a ser consideradas.<br/><br/>
+
+		Para ello, tengan a bien responder al presente mail con la información requerida.<br/><br/>
+
+		Sin más, los saludamos muy atentamente,<br/><br/>
+
+		El equipo de Cinderella Decoración, sucursal {0}.
+	</p>
+</body>
+</html>

@@ -9,6 +9,7 @@ Imports System.Data.OleDb
 Imports System.IO
 Imports System.Linq
 Imports System.Threading
+Imports System.Globalization
 
 Public Enum Fortmats
     Texto
@@ -27,7 +28,7 @@ Public Class NegProductos
     Dim con As New Conexion
     Dim ClsFunciones As New Funciones
 
-    Const MaxRowsData As Integer = 9999
+    Const NewRowsData As Integer = 500
     Const MinRowsData As Integer = 2
 
     Private Shared ListaProductosCache As DataSet
@@ -66,9 +67,9 @@ Public Class NegProductos
             entProducto.Codigo = dsProducto.Tables(0).Rows(0).Item("Codigo").ToString
             entProducto.CodigoBarra = dsProducto.Tables(0).Rows(0).Item("CodigoBarra").ToString
             entProducto.Foto = dsProducto.Tables(0).Rows(0).Item("Foto").ToString
-            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado").ToString
-            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad").ToString
-            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb").ToString
+            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado")
+            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad")
+            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb")
         End If
 
         If (HayInternet) Then
@@ -106,7 +107,7 @@ Public Class NegProductos
     End Function
 
     'Funcion para consultar un producto.
-    Public Function TraerProductoPorCodigo(ByVal Codigo As String)
+    Public Function TraerProductoPorCodigo(ByVal Codigo As String) As Entidades.Productos
         Dim daProducto As New SqlDataAdapter
         Dim dsProducto As New DataSet
         Dim sqlcomando As New SqlCommand
@@ -138,9 +139,9 @@ Public Class NegProductos
             entProducto.Codigo = dsProducto.Tables(0).Rows(0).Item("Codigo").ToString
             entProducto.CodigoBarra = dsProducto.Tables(0).Rows(0).Item("CodigoBarra").ToString
             entProducto.Foto = dsProducto.Tables(0).Rows(0).Item("Foto").ToString
-            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado").ToString
-            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad").ToString
-            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb").ToString
+            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado")
+            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad")
+            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb")
         End If
 
         If (HayInternet) Then
@@ -209,9 +210,9 @@ Public Class NegProductos
             entProducto.Codigo = dsProducto.Tables(0).Rows(0).Item("Codigo").ToString
             entProducto.CodigoBarra = dsProducto.Tables(0).Rows(0).Item("CodigoBarra").ToString
             entProducto.Foto = dsProducto.Tables(0).Rows(0).Item("Foto").ToString
-            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado").ToString
-            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad").ToString
-            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb").ToString
+            entProducto.Habilitado = dsProducto.Tables(0).Rows(0).Item("Habilitado")
+            entProducto.Novedad = dsProducto.Tables(0).Rows(0).Item("Novedad")
+            entProducto.SubirWeb = dsProducto.Tables(0).Rows(0).Item("SubirWeb")
         End If
 
         If (HayInternet) Then
@@ -367,9 +368,6 @@ Public Class NegProductos
         Dim cmd As New SqlCommand
         Dim msg As String = ""
         Dim id_Producto As Integer
-        Dim id_Material As Integer
-        Dim id_Aroma As Integer
-        Dim id_Color As Integer
         Dim nombre_nuevo As String = ""
         If eproductos.Foto <> "" Then
             Dim ext As String = IO.Path.GetExtension(IO.Path.GetFileName(eproductos.Foto))
@@ -394,6 +392,7 @@ Public Class NegProductos
                 .AddWithValue("@Habilitado", eproductos.Habilitado)
                 .AddWithValue("@Novedad", eproductos.Novedad)
                 .AddWithValue("@SubirWeb", eproductos.SubirWeb)
+                .AddWithValue("@fecha", DateTime.Now)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -425,66 +424,6 @@ Public Class NegProductos
             cmd12.ExecuteNonQuery()
             'desconecto la bdd
             clsDatos.DesconectarRemoto()
-
-            'inserto los materiales para el producto
-            For Each iten In eproductos.Materiales.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Material = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosMateriales_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@id_Material", id_Material)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los aromas para el producto
-            For Each iten In eproductos.Aromas.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Aroma = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosAromas_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@id_Aroma", id_Aroma)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los colores para el producto
-            For Each iten In eproductos.Colores.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Color = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosColores_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", id_Producto)
-                    .AddWithValue("@id_Color", id_Color)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
 
             'inserto los precios
             For i = 1 To 6
@@ -532,7 +471,7 @@ Public Class NegProductos
         End Try
     End Function
 
-    Private Function ArmarCodigoBarras(id_Producto As String) As String
+    Public Function ArmarCodigoBarras(id_Producto As String) As String
         Dim CodigoBarra As String = ""
         Dim CodigoProducto As String = ""
 
@@ -581,6 +520,7 @@ Public Class NegProductos
                 .AddWithValue("@Habilitado", eproductos.Habilitado)
                 .AddWithValue("@Novedad", eproductos.Novedad)
                 .AddWithValue("@SubirWeb", eproductos.SubirWeb)
+                .AddWithValue("@fecha", DateTime.Now)
             End With
 
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
@@ -716,9 +656,6 @@ Public Class NegProductos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim id_Material As Integer
-        Dim id_Aroma As Integer
-        Dim id_Color As Integer
         Dim nombre_nuevo As String = ""
 
         'Traigo el producto para utilizar su codigo asi se obtiene la foto a eliminar.
@@ -779,55 +716,6 @@ Public Class NegProductos
             'desconecto la bdd
             clsDatos.DesconectarRemoto()
 
-
-            'ELIMINO TODOS LOS MATERIALES DEL PRODUCTO
-            'conecto la bdd
-            Dim cmd3 As New SqlCommand
-            cmd3.Connection = clsDatos.ConectarRemoto()
-            cmd3.CommandType = CommandType.StoredProcedure
-            cmd3.CommandText = "sp_ProductosMateriales_Eliminar"
-            With cmd3.Parameters
-                .AddWithValue("@id_Producto", eproductos.id_Producto)
-            End With
-            Dim respuesta3 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta3.Direction = ParameterDirection.Output
-            cmd3.Parameters.Add(respuesta3)
-            cmd3.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
-
-            'ELIMINO TODOS LOS AROMAS DEL PRODUCTO
-            'conecto la bdd
-            Dim cmd4 As New SqlCommand
-            cmd4.Connection = clsDatos.ConectarRemoto()
-            cmd4.CommandType = CommandType.StoredProcedure
-            cmd4.CommandText = "sp_ProductosAromas_Eliminar"
-            With cmd4.Parameters
-                .AddWithValue("@id_Producto", eproductos.id_Producto)
-            End With
-            Dim respuesta4 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta4.Direction = ParameterDirection.Output
-            cmd4.Parameters.Add(respuesta4)
-            cmd4.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
-
-            'ELIMINO TODOS LOS COLORES DEL PRODUCTO
-            'conecto la bdd
-            Dim cmd5 As New SqlCommand
-            cmd5.Connection = clsDatos.ConectarRemoto()
-            cmd5.CommandType = CommandType.StoredProcedure
-            cmd5.CommandText = "sp_ProductosColores_Eliminar"
-            With cmd5.Parameters
-                .AddWithValue("@id_Producto", eproductos.id_Producto)
-            End With
-            Dim respuesta5 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-            respuesta5.Direction = ParameterDirection.Output
-            cmd5.Parameters.Add(respuesta5)
-            cmd5.ExecuteNonQuery()
-            'desconecto la bdd
-            clsDatos.DesconectarRemoto()
-
             'ELIMINO TODOS LOS PRECIOS DEL PRODUCTO
             'conecto la bdd
             Dim cmd6 As New SqlCommand
@@ -843,66 +731,6 @@ Public Class NegProductos
             cmd6.ExecuteNonQuery()
             'desconecto la bdd
             clsDatos.DesconectarRemoto()
-
-            'inserto los materiales para el producto
-            For Each iten In eproductos.Materiales.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Material = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosMateriales_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", eproductos.id_Producto)
-                    .AddWithValue("@id_Material", id_Material)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los aromas para el producto
-            For Each iten In eproductos.Aromas.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Aroma = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosAromas_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", eproductos.id_Producto)
-                    .AddWithValue("@id_Aroma", id_Aroma)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
-
-            'inserto los colores para el producto
-            For Each iten In eproductos.Colores.CheckedItems
-                'conecto la bdd
-                Dim cmd2 As New SqlCommand
-                cmd2.Connection = clsDatos.ConectarRemoto()
-                id_Color = DirectCast(iten.Row, System.Data.DataRow).ItemArray(0)
-                cmd2.CommandType = CommandType.StoredProcedure
-                cmd2.CommandText = "sp_ProductosColores_Alta"
-                With cmd2.Parameters
-                    .AddWithValue("@id_Producto", eproductos.id_Producto)
-                    .AddWithValue("@id_Color", id_Color)
-                End With
-                Dim respuesta2 As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-                respuesta2.Direction = ParameterDirection.Output
-                cmd2.Parameters.Add(respuesta2)
-                cmd2.ExecuteNonQuery()
-                'desconecto la bdd
-                clsDatos.DesconectarRemoto()
-            Next
 
             'inserto los precios
             For i = 1 To 6
@@ -1008,6 +836,7 @@ Public Class NegProductos
     'Funcion para eliminar un producto.
     Function EliminarProducto(ByVal id_Producto As Integer) As String
         Dim cmd As New SqlCommand
+        Dim fechaEdicion As DateTime = DateTime.Now()
 
         'Traigo el producto para utilizar su codigo asi se obtiene la foto a eliminar.
         objProducto = TraerProducto(id_Producto)
@@ -1018,6 +847,7 @@ Public Class NegProductos
             cmd.CommandText = "sp_Productos_Eliminar"
             With cmd.Parameters
                 .AddWithValue("@id_Producto", id_Producto)
+                .AddWithValue("@FechaEdicion", fechaEdicion)
             End With
             Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
             respuesta.Direction = ParameterDirection.Output
@@ -1058,9 +888,9 @@ Public Class NegProductos
 
 #Region "Funciones Listados"
     'Funcion para listar todos los productos.
-    Function ListadoProductos() As DataSet
+    Function ListadoProductos(UsarBaseLocal As Boolean) As DataSet
 
-        If (Funciones.HayInternet) Then
+        If (Not UsarBaseLocal AndAlso Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_Listado")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_Listado")
@@ -1068,8 +898,8 @@ Public Class NegProductos
     End Function
 
     'Funcion para listar todos los productos.
-    Function ListadoProductosBuscadores() As DataSet
-        If (Funciones.HayInternet) Then
+    Function ListadoProductosBuscadores(UsarBaseLocal As Boolean) As DataSet
+        If (Not UsarBaseLocal AndAlso Funciones.HayInternet) Then
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoBuscadores")
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadores")
@@ -1093,6 +923,15 @@ Public Class NegProductos
             Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoBuscadoresPorProveedor @id_Proveedor=" & id_Proveedor)
         Else
             Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadoresPorProveedor @id_Proveedor=" & id_Proveedor)
+        End If
+    End Function
+
+    'Funcion para listar todos los productos dependiendo de un proveedor.
+    Function ListadoBuscadoresPorSucursalYProveedor(ByVal id_Proveedor As Integer, ByVal id_Sucursal As Integer) As DataSet
+        If (Funciones.HayInternet) Then
+            Return clsDatos.ConsultarBaseRemoto("execute sp_Productos_ListadoBuscadoresPorSucursalYProveedor @id_Proveedor=" & id_Proveedor & ", @id_Sucursal=" & id_Sucursal)
+        Else
+            Return clsDatos.ConsultarBaseLocal("execute sp_Productos_ListadoBuscadoresPorSucursalYProveedor @id_Proveedor=" & id_Proveedor & ", @id_Sucursal=" & id_Sucursal)
         End If
     End Function
 
@@ -1168,11 +1007,14 @@ Public Class NegProductos
                 generoArchivo = CrearExcel(nombreArchivo, nombrePlantilla, dsProductos, dsCategoria, dsSubCategoria, dsProveedor, xlApp, xlWorkBook, xlWorkSheet, misValue)
                 Exit For
             Catch ex As System.Runtime.InteropServices.COMException
+                LogHelper.WriteLog("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
                 Dim result As UInt32
                 If UInt32.TryParse(ex.ErrorCode, result) AndAlso result = &H80010001UI Then
                     reintentos += 1
                     System.Threading.Thread.Sleep(1000)
                 End If
+            Catch ex As Exception
+                LogHelper.WriteLog("ERROR Metodo: ExportarExcel" + Environment.NewLine + ex.ToString())
             End Try
         Next
 
@@ -1197,24 +1039,30 @@ Public Class NegProductos
         xlWorkBook = xlApp.Workbooks.Add(System.IO.Path.GetFullPath(nombrePlantilla))
         xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
 
+        Dim cExcelCulture As CultureInfo = New CultureInfo(xlApp.LanguageSettings.LanguageID(Microsoft.Office.Core.MsoAppLanguageID.msoLanguageIDUI))
+
         xlWorkSheet.Name = "Productos"
 
         AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
+
+        Dim MaxRowsData = dsProductos.Tables(0).Rows.Count + NewRowsData
+
+        AgregarEstilo(xlWorkSheet, MaxRowsData)
 
         '//Oculto la primera columan ya que en esta se eunetra el ID del producto y no debe ser modificado
         xlWorkSheet.Range("A1").EntireColumn.Hidden = True
 
         '//Agrego la validacion de combos para el cargado de la categoria
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D")
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Categorias", "D", MaxRowsData)
 
         '//Agrego la validacion de combos anidados para el cargado de la SubCategoria
-        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D2")
+        AgregarValidacionPorComboAnidados(xlWorkBook, xlWorkSheet, dsSubCategoria, "SubCategorias", "E", "D", MaxRowsData, cExcelCulture)
 
         '//Agrego la validacion de combos para el cargado de los porveedores
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F")
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsProveedor.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Porveedores", "F", MaxRowsData)
 
         '//Agrego la validacion de combos para el cargado de Habilitado
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R")
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R", MaxRowsData)
 
         Return True
     End Function
@@ -1237,7 +1085,6 @@ Public Class NegProductos
         Next
 
 
-
         Dim startCell As Excel.Range = CType(xlWorkSheet.Cells(1, 1), Excel.Range)
         Dim endCell As Excel.Range = CType(xlWorkSheet.Cells(dsProductos.Tables(0).Rows.Count + 1, dsProductos.Tables(0).Columns.Count), Excel.Range)
         Dim writeRange As Excel.Range = xlWorkSheet.Range(startCell, endCell)
@@ -1245,7 +1092,15 @@ Public Class NegProductos
         writeRange.Columns.AutoFit()
     End Sub
 
-    Private Sub AgregarValidacionPorCombo(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, options As String(), Name As String, Column As String)
+    Private Sub AgregarEstilo(xlWorkSheet As Excel.Worksheet, RowCount As Integer)
+        Dim Range As Excel.Range = xlWorkSheet.Range("2:3")
+        Range.Copy(Type.Missing)
+
+        Dim Range2 As Excel.Range = xlWorkSheet.Range(String.Format("2:{0}", RowCount.ToString()))
+        Range2.PasteSpecial(Excel.XlPasteType.xlPasteFormats, Excel.XlPasteSpecialOperation.xlPasteSpecialOperationNone, False, False)
+    End Sub
+
+    Private Sub AgregarValidacionPorCombo(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, options As String(), Name As String, Column As String, RowCount As Integer)
 
         Dim sheetValidation = xlWorkBook.Sheets.Add()
         sheetValidation.Name = Name
@@ -1259,7 +1114,7 @@ Public Class NegProductos
 
         xlWorkBook.Names.Add(Name.Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(1), options.Length)))
 
-        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + MaxRowsData.ToString())
+        Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
         Dim lookupValues = String.Format("={0}", Name)
 
         validatingCellsRange.Validation.Delete()
@@ -1267,27 +1122,60 @@ Public Class NegProductos
         validatingCellsRange.Validation.InCellDropdown = True
     End Sub
 
-    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String)
+    Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, Name As String, Column As String, Relacionado As String, RowCount As Integer, excelCulture As CultureInfo)
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\LogExcel.txt"), True)
+            outputFile.WriteLine($"Private Sub AgregarValidacionPorComboAnidados(xlWorkBook As Excel.Workbook, xlWorkSheet As Excel.Worksheet, dsSubCategoria As DataSet, {Name} As String, {Column} As String, {Relacionado} As String, {RowCount} As Integer, {excelCulture.Name} As CultureInfo)")
 
-        Dim sheetValidation = xlWorkBook.Sheets.Add()
-        sheetValidation.Name = Name
-        sheetValidation.Visible = False
+            Dim sheetValidation = xlWorkBook.Sheets.Add()
 
-        Dim categorias = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(r) r.ItemArray(0).ToString()).Distinct().ToArray()
+            outputFile.WriteLine($"heetValidation.Name = {Name}")
+            sheetValidation.Name = Name
 
-        For i As Integer = 0 To categorias.Length - 1
+            outputFile.WriteLine($"sheetValidation.Visible = False")
+            sheetValidation.Visible = False
 
-            Dim subCategorias As String() = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Where(Function(r) r.ItemArray(0).ToString() = categorias(i)).Select(Function(y) y.ItemArray(1).ToString()).ToArray()
-            Dim j As Integer = 0
+            Dim categorias = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Select(Function(r) r.ItemArray(0).ToString()).Distinct().ToArray()
 
-            For Each subcategoria As String In subCategorias
-                j = j + 1
-                Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
-                sheetValidation.Range(Cell).Value = subcategoria
+            For i As Integer = 0 To categorias.Length - 1
 
+                Dim subCategorias As String() = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow).Where(Function(r) r.ItemArray(0).ToString() = categorias(i)).Select(Function(y) y.ItemArray(1).ToString()).ToArray()
+                Dim j As Integer = 0
+
+                For Each subcategoria As String In subCategorias
+                    j = j + 1
+                    Dim Cell As String = String.Format("{0}{1}", IntToLetters(i + 1), j)
+                    outputFile.WriteLine($"sheetValidation.Range(Cell).Value = {Cell} {subcategoria}")
+                    sheetValidation.Range(Cell).Value = subcategoria
+
+                Next
+
+                outputFile.WriteLine($"xlWorkBook.Names.Add({categorias(i)}")
+                xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
             Next
-            xlWorkBook.Names.Add(categorias(i).Replace(" ", "_"), sheetValidation.Range(String.Format("{0}1:{0}{1}", IntToLetters(i + 1), j)))
-        Next
+
+            'outputFile.WriteLine($"xlWorkSheet.Range({Column + MinRowsData.ToString()}, {Column + RowCount.ToString()})")
+            'Dim validatingCellsRange As Excel.Range = xlWorkSheet.Range(Column + MinRowsData.ToString(), Column + RowCount.ToString())
+            'Dim lookupValues = String.Empty
+            'If (excelCulture.Name.Contains("ES")) Then
+            '    lookupValues = String.Format("=INDIRECTO(SUSTITUIR({0}{1};"" "";""_""))", Relacionado, MinRowsData)
+            'Else
+            '    lookupValues = String.Format("=INDIRECT(SUBSTITUTE({0}{1};"" "";""_""))", Relacionado, MinRowsData)
+            'End If
+
+            'outputFile.WriteLine(lookupValues)
+
+            'outputFile.WriteLine("validatingCellsRange.Validation.Delete()")
+            'validatingCellsRange.Validation.Delete()
+
+            'outputFile.WriteLine("validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues)")
+            'validatingCellsRange.Validation.Add(Excel.XlDVType.xlValidateList, Excel.XlDVAlertStyle.xlValidAlertStop, Excel.XlFormatConditionOperator.xlBetween, lookupValues, Type.Missing)
+
+            'outputFile.WriteLine("validatingCellsRange.Validation.InCellDropdown = True")
+            'validatingCellsRange.Validation.InCellDropdown = True
+            'validatingCellsRange.Validation.IgnoreBlank = True
+
+        End Using
     End Sub
 
     Private Function IntToLetters(value As Integer) As String
@@ -1314,7 +1202,6 @@ Public Class NegProductos
     End Sub
 #End Region
 
-
 #Region "Funciones Importar Excel"
     Function ImportarExcel(fileName As String, ByRef DatosConError As DataTable) As String
 
@@ -1326,166 +1213,166 @@ Public Class NegProductos
         Dim sourceData As DataTable
 
         Dim encripta As New ClsEncriptacion()
-        Try
-            Using conn As SqlConnection = New SqlConnection()
+        Using conn As SqlConnection = New SqlConnection()
 
-                conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
-                conn.Open()
+            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.Open()
 
-                RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
+            RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
 
-                Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM PRECIOS", conn)
-                Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsBackUp, "PRECIOS")
+            Dim cmd As SqlCommand = New SqlCommand("SELECT * FROM PRECIOS", conn)
+            Dim adapter As SqlDataAdapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "PRECIOS")
 
-                cmd = New SqlCommand("SELECT * FROM  STOCK", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsBackUp, "STOCK")
+            cmd = New SqlCommand("SELECT * FROM  STOCK", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "STOCK")
 
-                cmd = New SqlCommand("SELECT * FROM PRODUCTOS", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsBackUp, "PRODUCTOS")
+            cmd = New SqlCommand("SELECT * FROM PRODUCTOS", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsBackUp, "PRODUCTOS")
 
-                'Guardo la informacion de la tabla antes de ser actualizada
-                dsBackUp.WriteXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")
+            'Guardo la informacion de la tabla antes de ser actualizada
+            dsBackUp.WriteXml(AppDomain.CurrentDomain.BaseDirectory + "\ProductosBKP.xml")
 
-                cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM PRODUCTOS_CATEGORIAS", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsCategoria)
+            cmd = New SqlCommand("SELECT id_Categoria as Id, Descripcion FROM PRODUCTOS_CATEGORIAS", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsCategoria)
 
-                cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM PRODUCTOS_SUBCATEGORIAS", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsSubCategoria)
+            cmd = New SqlCommand("SELECT id_Subcategoria as Id, Descripcion FROM PRODUCTOS_SUBCATEGORIAS", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsSubCategoria)
 
-                cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM PROVEEDORES", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsProveedor)
+            cmd = New SqlCommand("SELECT id_Proveedor as Id, RazonSocial FROM PROVEEDORES", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProveedor)
 
 
-                cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
-                adapter = New SqlDataAdapter(cmd)
-                adapter.Fill(dsProductos)
-            End Using
-
-        Catch ex As Exception
-            Throw New Exception("Se ha producido un error al armando el BackUp de seguridad. Por favor, intente más tarde.")
-        End Try
+            cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProductos)
+        End Using
 
         Dim DatosEliminados As List(Of DataRow)
         Dim DatosActualizados As List(Of DataRow)
         Dim DatosNuevos As List(Of DataRow)
 
-        Try
-            RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
-            sourceData = GetDataFormExcel(fileName, "Productos").Tables(0)
+        RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
+        sourceData = GetDataFormExcel(fileName, "Productos").Tables(0)
 
-            If Not (verificarColumnasExcel(sourceData)) Then
-                Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
-            End If
+        If Not (verificarColumnasExcel(sourceData)) Then
+            Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
+        End If
 
-            DatosConError = dsProductos.Tables(0).Clone()
-            DatosConError.Columns.Add("Descripcion_Error")
+        DatosConError = dsProductos.Tables(0).Clone()
+        DatosConError.Columns.Add("Descripcion_Error")
 
-            RaiseEvent UpdateProgress(3, "Validando informacion del Excel...")
-            'Obtengo las filas eliminadas 
-            DatosEliminados = obtenerFilasEliminadas(dsProductos.Tables(0), sourceData)
+        RaiseEvent UpdateProgress(3, "Validando informacion del Excel...")
+        'Obtengo las filas eliminadas 
+        DatosEliminados = obtenerFilasEliminadas(dsProductos.Tables(0), sourceData)
 
-            'Eliminos las filar que tiene un mismo codigo y lo inserto como error
-            sourceData = ElmininarFilasComMismoValor(sourceData, DatosConError, "Codigo")
+        'Eliminos las filar que tiene un mismo codigo y lo inserto como error
+        sourceData = ElmininarFilasComMismoValor(sourceData, DatosConError, "Codigo")
 
-            'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
-            DatosActualizados = obtenerFilasModificadas(dsProductos, sourceData)
+        'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
+        DatosActualizados = obtenerFilasModificadas(dsProductos, sourceData)
 
-            'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
-            DatosNuevos = sourceData.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
+        'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
+        DatosNuevos = sourceData.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
 
-            'Verifico que estos productos nuevos no se encuentren en la base de datos
-            DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
+        'Verifico que estos productos nuevos no se encuentren en la base de datos
+        DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
 
-            'De las filas modificadas verifico que esten bien cargadas
-            DatosActualizados = ValidarDatosVacios(DatosActualizados, DatosConError)
+        'De las filas modificadas verifico que esten bien cargadas
+        DatosActualizados = ValidarDatosVacios(DatosActualizados, DatosConError)
 
-            'De las filas nuevas verifico que esten bien cargadas
-            DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
+        'De las filas nuevas verifico que esten bien cargadas
+        DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
 
-        Catch ex As Exception
-            Throw New Exception("Se ha producido un error al armando el BackUp de seguridad. Por favor, intente más tarde.")
-        End Try
 
         Dim productos As List(Of String) = New List(Of String)
-        Try
-            Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
-            'Armo sentiencias Delete
-            productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo))
-            'Armo sentiencias Update
-            productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo))
-            'Armo sentiencias Insert
-            productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo))
+        Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
-        Catch ex As Exception
-            Throw New Exception("Se ha producido un error al obtener la información del Excel. Por favor, verifique que el formato de los montos sea el correcto y que los campos de Categoría, Subcategoría y Proveedor se encuentren dados de alta en la aplicación y sean correctos.")
-        End Try
+        'Armo sentiencias Delete
+        productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo, DatosConError))
+        'Armo sentiencias Update
+        productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo, DatosConError))
+        'Armo sentiencias Insert
+        productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo, DatosConError))
 
-        If (productos.Count > 0) Then
-            Using conn As SqlConnection = New SqlConnection()
-
-                conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
-                conn.Open()
-                Using tran As SqlTransaction = conn.BeginTransaction()
-
-                    Try
-                        For i = 0 To productos.Count Step 200
-                            Dim cantidad As Integer = If(i + 200 > productos.Count, productos.Count, i + 200)
-                            RaiseEvent UpdateProgress(4, String.Format("Actualizando informacion en la base de datos {0} de {1}", cantidad.ToString(), productos.Count.ToString()))
-                            Dim sql As String = productos.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
-                            Dim cmd As SqlCommand = New SqlCommand(sql, conn)
-                            cmd.Transaction = tran
-                            cmd.ExecuteNonQuery()
-                        Next
-                        tran.Commit()
-                    Catch ex As SqlException
-                        Throw New Exception("Se ha producido un error en la conexión a la base de datos. Por favor, intente más tarde.")
-                        tran.Rollback()
-                    Catch ex As Exception
-                        Throw New Exception("Se ha producido un error en la importación de la información. Por favor, intente más tarde.")
-                        tran.Rollback()
-                        Throw
-                    End Try
-                End Using
-            End Using
-            If (DatosConError.Rows.Count = 0) Then
-                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos y se han eliminado {2} productos.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count)
-            Else
-                Return String.Format("Se han cargado {0} nuevos productos, se han actualizaron {1} productos, se han eliminado {2} productos y se encontrar {3} productos con errores para ser importados.", DatosNuevos.Count, DatosActualizados.Count, DatosEliminados.Count, DatosConError.Rows.Count)
-            End If
-
-        Else
-            If (DatosConError.Rows.Count = 0) Then
-                Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
-            Else
-                Return String.Format("Se encontrar {0} productos con errores para ser importados.", DatosConError.Rows.Count)
-            End If
+        If (DatosConError.Rows.Count > 0) Then
+            Return $"No se ha podido importar el listado de productos, se han encontrar {DatosConError.Rows.Count} productos con errores. Por favor, verifique los errores y vuelva a intentarlo."
         End If
+
+        If (productos.Count = 0) Then
+            Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
+        End If
+
+        Using conn As SqlConnection = New SqlConnection()
+            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.Open()
+            Using tran As SqlTransaction = conn.BeginTransaction()
+
+                Try
+                    For i = 0 To productos.Count Step 200
+                        Dim cantidad As Integer = If(i + 200 > productos.Count, productos.Count, i + 200)
+                        RaiseEvent UpdateProgress(4, String.Format("Actualizando informacion en la base de datos {0} de {1}", cantidad.ToString(), productos.Count.ToString()))
+                        Dim sql As String = productos.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
+                        Dim cmd As SqlCommand = New SqlCommand(sql, conn)
+                        cmd.Transaction = tran
+                        cmd.ExecuteNonQuery()
+                    Next
+                    tran.Commit()
+                Catch ex As Exception
+                    tran.Rollback()
+                    Throw
+                End Try
+            End Using
+        End Using
+
+        Return $"Se han cargado {DatosNuevos.Count} nuevos productos, se han actualizaron {DatosActualizados.Count} productos y se han eliminado {DatosEliminados.Count} productos."
     End Function
 
-    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer) As List(Of String)
+    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer, ByRef DatosConError As DataTable) As List(Of String)
         Dim i As Integer = 0
         Dim sql As List(Of String) = New List(Of String)
         Dim codigoBarras As String
+        Dim mensajeError As String
 
         Do While (i < Datos.Count)
+            mensajeError = String.Empty
+
             'Obtengo el codigo de la Categoria ingresada
             Dim categoriaDescripcion As String = Datos(i)("Categoria").ToString()
-            Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = categoriaDescripcion).FirstOrDefault()
+            Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = categoriaDescripcion.ToUpper()).FirstOrDefault()
+
+            If (categoria Is Nothing) Then
+                mensajeError += $"La categoria '{categoriaDescripcion}' no existe. Verifique que la categoria se encuentre registrado o ingrese una categoria valido.{Environment.NewLine}"
+            End If
 
             'Obtengo el codigo de la SubCategoria ingresada
             Dim subCategoriaDescripcion As String = Datos(i)("SubCategoria").ToString()
-            Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = subCategoriaDescripcion).FirstOrDefault()
+            Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = subCategoriaDescripcion.ToUpper()).FirstOrDefault()
+
+            If (subCategoria Is Nothing) Then
+                mensajeError += $"El subcategoria '{subCategoriaDescripcion}' no existe. Verifique que la subcategoria se encuentre registrado o ingrese una subcategoria valido.{Environment.NewLine}"
+            End If
 
             'Obtengo el codigo de la Proveedor ingresada
             Dim ProveedorDescripcion As String = Datos(i)("Proveedor").ToString()
-            Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString() = ProveedorDescripcion).FirstOrDefault()
+            Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = ProveedorDescripcion.ToUpper()).FirstOrDefault()
+
+            If (Proveedor Is Nothing) Then
+                mensajeError += $"El proveedor '{ProveedorDescripcion}' no existe. Verifique que el proveedor se encuentre registrado o ingrese un proveedor valido.{Environment.NewLine}"
+            End If
+
+            If (Not String.IsNullOrEmpty(mensajeError)) Then
+                DatosConError.ImportRow(Datos(i))
+                DatosConError.Rows.Item(DatosConError.Rows.Count - 1)("Descripcion_Error") = mensajeError
+                i = (i + 1)
+                Continue Do
+            End If
 
             'Obtengo el codigo de Habilitacion
             Dim habilitado As Integer = If(Datos(i)(17).ToString() = "Si", 1, 0)
@@ -1562,8 +1449,8 @@ Public Class NegProductos
             datos.Columns(4).ColumnName <> "SubCategoria" Or datos.Columns(5).ColumnName <> "Proveedor" Or
             datos.Columns(6).ColumnName <> "Origen" Or datos.Columns(7).ColumnName <> "Tamaño" Or
             datos.Columns(8).ColumnName <> "Costo" Or datos.Columns(9).ColumnName <> "CodigoBarra" Or
-            datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Tarjeta_Tigre" Or
-            datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Tarjeta_Capital" Or
+            datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Desc_Tigre" Or
+            datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Desc_Capital" Or
             datos.Columns(14).ColumnName <> "Mayorista" Or datos.Columns(15).ColumnName <> "Alternativa" Or
             datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Then
             Return False

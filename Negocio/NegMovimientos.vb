@@ -49,47 +49,6 @@ Public Class NegMovimientos
         Return ds
     End Function
 
-    'Funcion para insertar un Gasto.
-    Function ConsultaSaldo(ByVal idSucursal As Integer, ByVal fecha As String) As Double
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
-        Try
-            'Conecto
-            If (HayInternet) Then
-                cmd.Connection = clsDatos.ConectarRemoto()
-            Else
-                cmd.Connection = clsDatos.ConectarLocal()
-            End If
-
-            cmd.CommandType = CommandType.StoredProcedure
-            cmd.CommandText = "sp_MovSaldo_Total"
-            With cmd.Parameters
-                .AddWithValue("@id_Sucursal", idSucursal)
-                .AddWithValue("@Fecha", fecha)
-            End With
-
-            Dim respuesta As New SqlParameter("@Monto", SqlDbType.Float)
-            respuesta.Direction = ParameterDirection.Output
-            cmd.Parameters.Add(respuesta)
-            cmd.ExecuteNonQuery()
-
-            'Desconecto
-            If (HayInternet) Then
-                clsDatos.DesconectarRemoto()
-            Else
-                clsDatos.DesconectarLocal()
-            End If
-
-            'muestro el mensaje
-            Return respuesta.Value
-        Catch ex As Exception
-            Return ex.Message
-        End Try
-    End Function
-
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarMovimiento(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal id_Seccion As Integer, ByVal id_Tipo As Integer) As Double
         Dim ds As New DataSet
@@ -107,29 +66,8 @@ Public Class NegMovimientos
     End Function
 
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
-    Function ConsultarTotalMovimiento(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal id_Seccion As Integer) As Double
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ConsultarTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Seccion='" & id_Seccion & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ConsultarTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @id_Seccion='" & id_Seccion & "'")
-        End If
-
-        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
-            Return ds.Tables(0).Rows(0).Item("Suma").ToString
-        Else
-            Return 0
-        End If
-    End Function
-
-    'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarTotalGastoMercaderia(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_MercaderiaTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_MercaderiaTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
+        Dim ds As DataSet = clsDatos.ConsultarBaseLocal("execute sp_Movimientos_MercaderiaTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
             Return ds.Tables(0).Rows(0).Item("Suma").ToString
@@ -140,12 +78,7 @@ Public Class NegMovimientos
 
     'Consulto si existen montos de un tipo de movimiento de un determinado rango de fechas.
     Function ConsultarTotalCajaFuerte(ByVal id_Sucursal As Integer, ByVal Fecha As String) As Double
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
-        End If
+        Dim ds As DataSet = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerSumaTotal @id_Sucursal=" & id_Sucursal & ", @Fecha='" & Fecha & "'")
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Total").ToString <> "" Then
             Return ds.Tables(0).Rows(0).Item("Total").ToString
@@ -172,11 +105,7 @@ Public Class NegMovimientos
 
     'Obtiene los tipos de movimientos dependiendo de la seccion enviada.
     Function ListadoTiposMov(ByVal id_Seccion As Integer) As DataSet
-        If (Funciones.HayInternet) Then
-            Return clsDatos.ConsultarBaseRemoto("execute sp_Movimientos_ListadoTiposMov @id_Seccion = " & id_Seccion)
-        Else
-            Return clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ListadoTiposMov @id_Seccion = " & id_Seccion)
-        End If
+        Return clsDatos.ConsultarBaseLocal("execute sp_Movimientos_ListadoTiposMov @id_Seccion = " & id_Seccion)
     End Function
 
     'Obtiene los subtipos de movimientos dependiendo de la seccion y el tipo enviado.
@@ -193,19 +122,17 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eImpuesto.id_Movimiento = 0) Then
+            eImpuesto.id_Movimiento = clsDatos.ObtenerCalveUnica(eImpuesto.id_Sucursal)
+        End If
+        eImpuesto.FechaEdicion = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaMovImpuesto(eImpuesto, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaMovImpuesto(eImpuesto, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -223,58 +150,12 @@ Public Class NegMovimientos
             .AddWithValue("@id_Sucursal", eImpuesto.id_Sucursal)
             .AddWithValue("@Monto", eImpuesto.Monto)
             .AddWithValue("@Fecha", eImpuesto.Fecha)
+            .AddWithValue("@FechaEdicion", eImpuesto.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
         cmd.Parameters.Add(respuesta)
         cmd.ExecuteNonQuery()
-        Return respuesta.Value
-    End Function
-
-    'Funcion para insertar una Dif. de Caja.
-    Function AltaMovCaja(ByVal eCaja As Entidades.MovCaja) As String
-        'Declaro variables
-        Dim cmd As New SqlCommand
-        Dim respuesta As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
-
-        Try
-            cmd.Connection = clsDatos.ConectarLocal()
-            respuesta = AltaMovCaja(eCaja, cmd)
-            clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = AltaMovCaja(eCaja, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
-
-
-            'muestro el mensaje
-            Return respuesta
-        Catch ex As Exception
-            Return ex.Message
-        End Try
-    End Function
-
-    Private Shared Function AltaMovCaja(eCaja As Entidades.MovCaja, ByRef cmd As SqlCommand) As String
-        cmd.CommandType = CommandType.StoredProcedure
-        cmd.CommandText = "sp_MovCaja_Alta"
-        With cmd.Parameters
-            .AddWithValue("@id_Movimiento", eCaja.id_Movimiento)
-            .AddWithValue("@id_Usuario", eCaja.id_Usuario)
-            .AddWithValue("@id_Tipo", eCaja.id_Tipo)
-            .AddWithValue("@id_Sucursal", eCaja.id_Sucursal)
-            .AddWithValue("@Monto", eCaja.Monto)
-            .AddWithValue("@Descripcion", eCaja.Descripcion)
-            .AddWithValue("@Fecha", eCaja.Fecha)
-        End With
-        Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
-        respuesta.Direction = ParameterDirection.Output
-        cmd.Parameters.Add(respuesta)
-        cmd.ExecuteNonQuery()
-
         Return respuesta.Value
     End Function
 
@@ -283,20 +164,18 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
         Dim respuesta As String
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eCaja.id_Movimiento = 0) Then
+            eCaja.id_Movimiento = clsDatos.ObtenerCalveUnica(eCaja.id_Sucursal)
+        End If
+        eCaja.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             respuesta = AltaMovCajaFuerte(eCaja, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                respuesta = AltaMovCajaFuerte(eCaja, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return respuesta
@@ -315,6 +194,7 @@ Public Class NegMovimientos
             .AddWithValue("@Monto", eCaja.Monto)
             .AddWithValue("@Descripcion", eCaja.Descripcion)
             .AddWithValue("@Fecha", eCaja.Fecha)
+            .AddWithValue("@FechaEdicion", eCaja.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -331,17 +211,16 @@ Public Class NegMovimientos
         Dim msg As String = ""
         Dim HayInternet As Boolean = Funciones.HayInternet
 
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eRetiro.id_Movimiento = 0) Then
+            eRetiro.id_Movimiento = clsDatos.ObtenerCalveUnica(eRetiro.id_Sucursal)
+        End If
+        eRetiro.FechaEdicion = DateTime.Now()
+
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaMovRetiro(eRetiro, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaMovRetiro(eRetiro, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -363,6 +242,7 @@ Public Class NegMovimientos
             .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
             .AddWithValue("@id_Cheque", eRetiro.IdCheque)
             .AddWithValue("@Fecha", eRetiro.Fecha)
+            .AddWithValue("@FechaEdicion", eRetiro.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -376,19 +256,17 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eRetiro.id_Movimiento = 0) Then
+            eRetiro.id_Movimiento = clsDatos.ObtenerCalveUnica(eRetiro.id_Sucursal)
+        End If
+        eRetiro.FechaEdicion = DateTime.Now()
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaMovAporte(eRetiro, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaMovAporte(eRetiro, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -410,6 +288,7 @@ Public Class NegMovimientos
             .AddWithValue("@id_Tipo_Pago", eRetiro.IdTipoPago)
             .AddWithValue("@id_Cheque", eRetiro.IdCheque)
             .AddWithValue("@Fecha", eRetiro.Fecha)
+            .AddWithValue("@FechaEdicion", eRetiro.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -423,19 +302,23 @@ Public Class NegMovimientos
         'Declaro variables
         Dim cmd As New SqlCommand
         Dim msg As String = ""
-        Dim HayInternet As Boolean = Funciones.HayInternet
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eGasto.id_Movimiento = 0) Then
+            eGasto.id_Movimiento = clsDatos.ObtenerCalveUnica(eGasto.id_Sucursal)
+        End If
+
+        'Si el Id del movimiento es 0 quiere decir que es un alta y se tiene que generar un ID
+        If (eGasto.id_Registro = 0) Then
+            eGasto.id_Registro = clsDatos.ObtenerCalveUnica(eGasto.id_Registro)
+        End If
+
+        eGasto.FechaEdicion = DateTime.Now
 
         Try
             cmd.Connection = clsDatos.ConectarLocal()
             msg = AltaMovGasto(eGasto, cmd)
             clsDatos.DesconectarLocal()
-
-            If (HayInternet) Then
-                cmd = New SqlCommand()
-                cmd.Connection = clsDatos.ConectarRemoto()
-                msg = AltaMovGasto(eGasto, cmd)
-                clsDatos.DesconectarRemoto()
-            End If
 
             'muestro el mensaje
             Return msg
@@ -455,6 +338,8 @@ Public Class NegMovimientos
             .AddWithValue("@Monto", eGasto.Monto)
             .AddWithValue("@Fecha", eGasto.Fecha)
             .AddWithValue("@SoloLectura", eGasto.SoloLectura)
+            .AddWithValue("@Observaciones", eGasto.Observaciones)
+            .AddWithValue("@FechaEdicion", eGasto.FechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -503,6 +388,7 @@ Public Class NegMovimientos
             .AddWithValue("@Descripcion", eEgreso.Descripcion)
             .AddWithValue("@Aceptado", eEgreso.Aceptado)
             .AddWithValue("@Fecha", eEgreso.Fecha)
+            .AddWithValue("@FechaSys", DateTime.Now)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -582,17 +468,17 @@ Public Class NegMovimientos
         Dim cmd As New SqlCommand
         Dim HayInternet As Boolean = Funciones.HayInternet
         Dim msg As String = ""
+        Dim fechaEdicion As DateTime = DateTime.Now()
 
         Try
-
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, cmd)
+            msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
 
             If (HayInternet) Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, cmd)
+                msg = EliminarMovEgresoMercaderia(id_Movimiento, id_Sucursal, fechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -602,12 +488,13 @@ Public Class NegMovimientos
         End Try
     End Function
 
-    Private Shared Function EliminarMovEgresoMercaderia(id_Movimiento As Integer, id_Sucursal As Integer, ByRef cmd As SqlCommand) As String
+    Private Shared Function EliminarMovEgresoMercaderia(id_Movimiento As Integer, id_Sucursal As Integer, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_MovEgreso_EliminarMercaderia"
         With cmd.Parameters
             .AddWithValue("@id_Movimiento", id_Movimiento)
             .AddWithValue("@id_Sucursal", id_Sucursal)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -618,12 +505,13 @@ Public Class NegMovimientos
     End Function
 
     'Function para eliminar un movimiento del sistema.
-    Function EliminarMovimiento(ByVal id_Movimiento As Integer, ByVal id_Sucursal As Integer, ByVal Tipo As Integer, Optional ByVal id_Registro As Integer = 0)
+    Function EliminarMovimiento(ByVal id_Movimiento As Int64, ByVal id_Sucursal As Integer, ByVal Tipo As Integer, Optional ByVal id_Registro As Int64 = 0)
         Try
             Dim EsMercaderia As Integer = 0
             Dim HayInternet As Boolean = Funciones.HayInternet
             Dim cmd As New SqlCommand
             Dim msg As String = ""
+            Dim fechaEdicion As DateTime = DateTime.Now()
 
             'Si es un egreso.
             If Tipo = 2 Then
@@ -667,13 +555,13 @@ Public Class NegMovimientos
 
             cmd = New SqlCommand()
             cmd.Connection = clsDatos.ConectarLocal()
-            msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, cmd)
+            msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, fechaEdicion, cmd)
             clsDatos.DesconectarLocal()
 
             If HayInternet Then
                 cmd = New SqlCommand()
                 cmd.Connection = clsDatos.ConectarRemoto()
-                msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, cmd)
+                msg = EliminarMovimiento(id_Movimiento, id_Sucursal, Tipo, id_Registro, EsMercaderia, fechaEdicion, cmd)
                 clsDatos.DesconectarRemoto()
             End If
 
@@ -683,7 +571,7 @@ Public Class NegMovimientos
         End Try
     End Function
 
-    Private Function EliminarMovimiento(id_Movimiento As Integer, id_Sucursal As Integer, Tipo As Integer, id_Registro As Integer, EsMercaderia As Integer, ByRef cmd As SqlCommand) As String
+    Private Function EliminarMovimiento(id_Movimiento As Int64, id_Sucursal As Integer, Tipo As Integer, id_Registro As Int64, EsMercaderia As Integer, fechaEdicion As DateTime, ByRef cmd As SqlCommand) As String
         cmd.CommandType = CommandType.StoredProcedure
         cmd.CommandText = "sp_Movimientos_Eliminar"
         With cmd.Parameters
@@ -692,6 +580,7 @@ Public Class NegMovimientos
             .AddWithValue("@id_Sucursal", id_Sucursal)
             .AddWithValue("@EsMercaderia", EsMercaderia)
             .AddWithValue("@Tipo", Tipo)
+            .AddWithValue("@FechaEdicion", fechaEdicion)
         End With
         Dim respuesta As New SqlParameter("@msg", SqlDbType.VarChar, 255)
         respuesta.Direction = ParameterDirection.Output
@@ -702,44 +591,22 @@ Public Class NegMovimientos
 
     'Obtener un listado de Dif. de Caja.
     Function ObtenerMovCaja(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCaja_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCaja_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovCaja_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
     End Function
 
     Function ObtenerDifCaja(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovDiferencia_Obtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovDiferencia_Obtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovDiferencia_Obtener @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Obtener un listado de Caja Fuerte.
     Function ObtenerMovCajaFuerte(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
     End Function
 
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovCaja(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As String) As Double
         Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCaja_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCaja_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
-        End If
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovCaja_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
             Return ds.Tables(0).Rows(0).Item("Suma").ToString
@@ -750,12 +617,7 @@ Public Class NegMovimientos
 
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovCajaFuerte(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As Integer) As Double
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovCajaFuerte_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
-        End If
+        Dim ds As DataSet = clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
             Return ds.Tables(0).Rows(0).Item("Suma").ToString
@@ -764,13 +626,18 @@ Public Class NegMovimientos
         End If
     End Function
 
+    'Obtengo el movimiento de un determinado rango de fechas.
+    Function ObtenerMovCajaFuerteFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As Integer)
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovCajaFuerte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
+    End Function
+
     'Obtengo el monto total de un determinado rango de fechas.
     Function ObtenerTotalMovEgreso(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String, ByVal Tipo As String) As Double
         Dim ds As New DataSet
         If Funciones.HayInternet Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerTotal @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "', @Tipo='" & Tipo & "'")
         End If
 
         If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
@@ -782,24 +649,12 @@ Public Class NegMovimientos
 
     'Obtener un listado de Gastos.
     Function ObtenerMovGasto(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovGasto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovGasto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovGasto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
     End Function
 
     'Obtener un listado de Impuestos.
     Function ObtenerMovImpuesto(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovImpuesto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovImpuesto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovImpuesto_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
     End Function
 
     'Obtener un listado de Impuestos.
@@ -824,26 +679,39 @@ Public Class NegMovimientos
         Return ds
     End Function
 
+    'Obtiene el total de gastos por rango de fechas
+    Function TotalMovGastos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
+        Dim ds As New DataSet
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovGastos_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
+        Else
+            Return 0
+        End If
+    End Function
+
+    'Obtiene el total de gastos por rango de fechas
+    Function TotalMovImpuesto(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
+        Dim ds As New DataSet
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovImpuesto_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
+        Else
+            Return 0
+        End If
+    End Function
+
+
     'Obtener un listado de Retiros de socios por rango de fechas.
     Function ObtenerMovRetiroFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovRetiro_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Obtener un listado de Retiros de socios por rango de fechas.
     Function ObtenerMovAporteFecha(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovAporte_ObtenerPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
     End Function
 
     'Obtener un listado de diferencias de caja por rango de fechas.
@@ -903,47 +771,48 @@ Public Class NegMovimientos
 
     'Obtener un listado de Retiro de Socio.
     Function ObtenerMovRetiro(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
-        End If
-        Return ds
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
     End Function
 
     'Obtener un listado de Aporte de Socio.
     Function ObtenerMovAporte(ByVal id_Sucursal As Integer, ByVal Anio As Integer, ByVal Mes As Integer)
+        Return clsDatos.ConsultarBaseLocal("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
+    End Function
+
+    'Obtiene el total de aportes por rango de fechas
+    Function TotalMovAporte(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
         Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
         Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_MovAporte_Obtener @id_Sucursal=" & id_Sucursal & ", @Anio=" & Anio & ", @Mes=" & Mes)
+            Return 0
         End If
-        Return ds
+    End Function
+
+    'Obtiene el total de retiros por rango de fechas
+    Function TotalMovRetiro(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
+        Dim ds As New DataSet
+        ds = clsDatos.ConsultarBaseLocal("execute sp_MovRetiro_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
+        Else
+            Return 0
+        End If
     End Function
 
     'Obtener un movimiento determinado.
-    Function ObtenerMov(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal Tipo As String)
+    Function ObtenerMov(ByVal id_Movimiento As Int64, ByVal id_sucursal As Integer, ByVal Tipo As String)
         Dim ds As New DataSet
-        If Funciones.HayInternet Then
+        If Funciones.HayInternet And Tipo = "Egreso" Then
             ds = clsDatos.ConsultarBaseRemoto("execute sp_Mov_ObtenerDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
         Else
             ds = clsDatos.ConsultarBaseLocal("execute sp_Mov_ObtenerDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
         End If
         Return ds
     End Function
-
-    Function ObtenerMovDestino(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal Tipo As String)
-        Dim ds As New DataSet
-        If Funciones.HayInternet Then
-            ds = clsDatos.ConsultarBaseRemoto("execute sp_Mov_ObtenerDestinoDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
-        Else
-            ds = clsDatos.ConsultarBaseLocal("execute sp_Mov_ObtenerDestinoDetalle @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal & ", @Tipo=" & Tipo)
-        End If
-        Return ds
-    End Function
-
 
     'Obtener un movimiento determinado.
     Function ObtenerMovEgresoDetalle(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer, ByVal id_sucursalDestino As Integer)
@@ -965,6 +834,51 @@ Public Class NegMovimientos
             ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerMercaderia @id_Movimiento=" & id_Movimiento & ", @id_sucursal=" & id_sucursal)
         End If
         Return ds
+    End Function
+
+    'Obtiene el detalle de un egreso por ID
+    Function ObtenerMovEgresoPorId(ByVal id_Movimiento As Integer, ByVal id_sucursal As Integer)
+        Dim ds As New DataSet
+        If Funciones.HayInternet Then
+            ds = clsDatos.ConsultarBaseRemoto("execute sp_MovEgreso_ObtenerPorId @id_Movimiento=" & id_Movimiento & ", @id_Sucursal=" & id_sucursal)
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_ObtenerPorId @id_Movimiento=" & id_Movimiento & ", @id_Sucursal=" & id_sucursal)
+        End If
+        Return ds
+    End Function
+
+    'Obtiene el total de gastos por egresos por rango de fechas
+    Function TotalMovEgresosGastos(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
+        Dim ds As New DataSet
+
+        If Funciones.HayInternet Then
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_Gastos_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_Gastos_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
+        Else
+            Return 0
+        End If
+    End Function
+
+    'Obtiene el total de gastos por egresos por rango de fechas
+    Function TotalMovEgresosImpuesto(ByVal id_Sucursal As Integer, ByVal FDesde As String, ByVal FHasta As String) As Double
+        Dim ds As New DataSet
+
+        If Funciones.HayInternet Then
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_Impuesto_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        Else
+            ds = clsDatos.ConsultarBaseLocal("execute sp_MovEgreso_Impuesto_TotalPorFecha @id_Sucursal=" & id_Sucursal & ", @FDesde='" & FDesde & "', @FHasta='" & FHasta & "'")
+        End If
+
+        If ds.Tables(0).Rows.Count = 1 And ds.Tables(0).Rows(0).Item("Suma").ToString <> "" Then
+            Return ds.Tables(0).Rows(0).Item("Suma").ToString
+        Else
+            Return 0
+        End If
     End Function
 
     'Obtener notificaciones.
@@ -1051,6 +965,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
                 eGasto.Monto = -Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1062,6 +977,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = 20
                 eGasto.Fecha = Now
                 eGasto.Monto = Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1080,6 +996,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = Relacio("id_TipoGasto")
                 eGasto.Fecha = Now
                 eGasto.Monto = -Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1091,6 +1008,7 @@ Public Class NegMovimientos
                 eGasto.id_Tipo = Relacio("id_TipoGasto")
                 eGasto.Fecha = Now
                 eGasto.Monto = Monto
+                eGasto.Observaciones = "Gasto por movimiento de mercadería entre sucursales."
                 eGasto.SoloLectura = True
 
                 AltaMovGasto(eGasto)
@@ -1109,6 +1027,7 @@ Public Class NegMovimientos
         With cmd.Parameters
             .AddWithValue("@id_Movimiento", id_Movimiento)
             .AddWithValue("@id_Sucursal", id_SucursalConect)
+            .AddWithValue("@fecha", DateTime.Now)
         End With
 
         'Respuesta del stored.
