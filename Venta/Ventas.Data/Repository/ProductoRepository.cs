@@ -34,11 +34,12 @@ namespace Ventas.Data.Repository
             else
             {
                 //Obtengo las reservas del producto
-                var cantidadReservas = _context.NotaPedidoItem
+                int? cantidadReservas = _context.NotaPedidoItem
                                         .Where(x => !x.Borrado && (x.NotaPedido.Estado == NotaPedidoEstado.Ingresada || x.NotaPedido.Estado == NotaPedidoEstado.Venta) && x.IdProducto == producto.Id)
-                                        .Sum(x => x.Cantidad);
+                                        .Sum(x => (int?)x.Cantidad);
 
-                stock.Disminuir(cantidadReservas);
+                if(cantidadReservas.HasValue)
+                    stock.Disminuir(cantidadReservas.Value);
             }
 
                 producto.Stock = stock;
