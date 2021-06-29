@@ -72,12 +72,14 @@
     <Compile Include="Repository\IVARepository.cs" />
     <Compile Include="Repository\ListaPrecioRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\TrasporteRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Service\BancoService.cs" />
     <Compile Include="Service\ClienteMayoristaService.cs" />
     <Compile Include="Service\CuentaBancariaService.cs" />
     <Compile Include="Service\DomicilioService.cs" />
     <Compile Include="Service\ListaPrecioService.cs" />
+    <Compile Include="Service\TrasporteService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
   </ItemGroup>
   <ItemGroup>

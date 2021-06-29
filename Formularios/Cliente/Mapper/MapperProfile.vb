@@ -1,7 +1,6 @@
 ﻿Imports AutoMapper
 Imports Common.Core.Model
 Imports Common.Core.Enum
-Imports CuentaCorrienteModelo = CuentaCorriente.Core.Model.CuentaCorrienteAggregate
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
 
 Namespace Formularios.Cliente
@@ -35,10 +34,13 @@ Namespace Formularios.Cliente
                 .ForPath(Function(des) des.EntregaLocalidadesSaleccionada, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.Localidad)) _
                 .ForPath(Function(des) des.EntregaLocalidadesSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.IdLocalidad)) _
                 .ForPath(Function(des) des.EntregaCodigoPostal, Sub(opt) opt.MapFrom(Function(src) src.DomicilioEntrega.CodigoPostal)) _
-                .ReverseMap() _
+                .ForPath(Function(des) des.IdTransporte, Sub(opt) opt.MapFrom(Function(src) src.IdTransporte)) _
+                .ForPath(Function(des) des.Transporte, Sub(opt) opt.MapFrom(Function(src) src.Transporte.RazonSocial)) _
+            .ReverseMap() _
                     .ForMember(Function(des) des.IdListaPrecio, Sub(opt) opt.MapFrom(Function(src) src.ListaPreciosSaleccionada.Key.Id)) _
                     .ForMember(Function(des) des.ListaPrecio, Sub(opt) opt.MapFrom(Function(src) src.ListaPreciosSaleccionada.Key)) _
-                    .ForMember(Function(des) des.CondicionIVA, Sub(opt) opt.MapFrom(Function(src) src.CondicionesIVASaleccionada.Key))
+                    .ForMember(Function(des) des.CondicionIVA, Sub(opt) opt.MapFrom(Function(src) src.CondicionesIVASaleccionada.Key)) _
+                    .ForMember(Function(des) des.Transporte, Sub(opt) opt.Ignore())
 
             CreateMap(Of DocumentoDePagoPago, ClienteMayoristaDocumentoPagoItem)() _
                 .ForMember(Function(des) des.Id, Sub(opt) opt.MapFrom(Function(src) src.Id)) _
@@ -46,6 +48,23 @@ Namespace Formularios.Cliente
                 .ForMember(Function(des) des.Monto, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Monto)) _
                 .ForMember(Function(des) des.Cft, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.CFT)) _
                 .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.MontoPago.Total))
+
+            CreateMap(Of Transporte, TransporteViewModel)() _
+                .ForMember(Function(des) des.Id, Sub(opt) opt.MapFrom(Function(src) src.Id)) _
+                .ForMember(Function(des) des.RazonSocial, Sub(opt) opt.MapFrom(Function(src) src.RazonSocial)) _
+                .ForMember(Function(des) des.CUIT, Sub(opt) opt.MapFrom(Function(src) src.Cuit)) _
+                .ForMember(Function(des) des.Habilitado, Sub(opt) opt.MapFrom(Function(src) src.Habilitado)) _
+                .ForPath(Function(des) des.IdDireccion, Sub(opt) opt.MapFrom(Function(src) src.IdDomicilio)) _
+                .ForPath(Function(des) des.IdDireccion, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.Id)) _
+                .ForPath(Function(des) des.Direccion, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.Direccion)) _
+                .ForPath(Function(des) des.ProvinciasSaleccionada, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.Provincia)) _
+                .ForPath(Function(des) des.ProvinciasSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.IdProvincia)) _
+                .ForPath(Function(des) des.DistritosSaleccionada, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.Distrito)) _
+                .ForPath(Function(des) des.DistritosSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.IdDistrito)) _
+                .ForPath(Function(des) des.LocalidadesSaleccionada, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.Localidad)) _
+                .ForPath(Function(des) des.LocalidadesSaleccionada.Id, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.IdLocalidad)) _
+                .ForPath(Function(des) des.CodigoPostal, Sub(opt) opt.MapFrom(Function(src) src.Domicilio.CodigoPostal)) _
+                .ReverseMap()
         End Sub
     End Class
 End Namespace

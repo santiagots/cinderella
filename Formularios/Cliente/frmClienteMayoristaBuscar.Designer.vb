@@ -115,7 +115,7 @@ Partial Class frmClienteMayoristaBuscar
         Me.lbl_informacion.Name = "lbl_informacion"
         Me.lbl_informacion.Size = New System.Drawing.Size(528, 15)
         Me.lbl_informacion.TabIndex = 6
-        Me.lbl_informacion.Text = "Por favor, complete el siguiente campo con la razon social del cliente y luego pr" &
+        Me.lbl_informacion.Text = "Por favor, complete el siguiente campo con la razón social del cliente y luego pr" &
     "esione ""Buscar""."
         '
         'DG_Clientes
@@ -193,9 +193,9 @@ Partial Class frmClienteMayoristaBuscar
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(8, 78)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(77, 15)
+        Me.Label1.Size = New System.Drawing.Size(80, 15)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "RazonSocial"
+        Me.Label1.Text = "Razón Social"
         '
         'txt_Buscar
         '

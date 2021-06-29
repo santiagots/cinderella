@@ -90,6 +90,12 @@ Public Class MDIContenedor
             ClienteMayoristaToolStripMenuItem.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Cliente_Trasporte)) Then
+            TransporteToolStripMenuItem.Visible = True
+        Else
+            TransporteToolStripMenuItem.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Visualizar) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_Anular) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Devoluciones_Administración_Detalle_NotaCrédito) Or
@@ -1815,6 +1821,17 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmCuentaBancarias).MdiParent = Me
             Funciones.ControlInstancia(frmCuentaBancarias).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub TransporteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TransporteToolStripMenuItem.Click
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmTransporte).MdiParent = Me
+            Funciones.ControlInstancia(frmTransporte).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

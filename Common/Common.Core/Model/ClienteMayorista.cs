@@ -23,6 +23,8 @@ namespace Common.Core.Model
         public string Observaciones { get; set; }
         public decimal MontoCuentaCorriente { get; set; }
         public decimal MontoNotasPedido { get; set; }
+        public int? IdTransporte { get; set; }
+        public Transporte Transporte { get; set; }
         public bool Habilitado { get; set; }
 
         public void DebitarSaldoCuentaCorriente(decimal monto)

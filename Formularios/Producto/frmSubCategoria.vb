@@ -31,14 +31,14 @@ Public Class frmSubCategoria
     Private Sub Btn_Agregar_Click(sender As Object, e As EventArgs) Handles Btn_Agregar.Click
         EjecutarAsync(Async Function() As Task
                           Await frmSubCategoriaViewModel.AgregarSubcategoriaAsync()
-                          MessageBox.Show("Los datos se han guardado de forma correcta", "Administración de Subcategorías", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
                       End Function)
     End Sub
 
     Private Sub Btn_Modificar_Click(sender As Object, e As EventArgs) Handles Btn_Modificar.Click
         EjecutarAsync(Async Function() As Task
                           Await frmSubCategoriaViewModel.ActualizarSubcategoriaAsync()
-                          MessageBox.Show("Los datos se han actualizado de forma correcta", "Administración de Subcategorías", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
                       End Function)
     End Sub
 

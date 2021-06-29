@@ -8,6 +8,7 @@ using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ChequeAggregate;
 using Ventas.Core.Model.CuentaCorrienteAggregate;
 using Ventas.Core.Model.NotaPedidoAgreggate;
+using Ventas.Core.Model.RemitoAgreggate;
 using Ventas.Core.Model.VentaAggregate;
 
 namespace Ventas.Data
@@ -44,8 +45,9 @@ namespace Ventas.Data
         public DbSet<NotaPedidoItem> NotaPedidoItem { get; set; }
         public DbSet<NotaCredito> NotaCredito { get; set; }
         public DbSet<Movimiento> Movimiento { get; set; }
+        public DbSet<Remito> Remito { get; set; }
 
-        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -210,6 +212,19 @@ namespace Ventas.Data
             modelBuilder.Entity<Producto>().HasRequired(t => t.Categoria).WithMany().HasForeignKey(x => x.IdCategoria);
             modelBuilder.Entity<Producto>().HasRequired(t => t.SubCategoria).WithMany().HasForeignKey(x => x.IdSubcategoria);
             modelBuilder.Entity<Producto>().Ignore(t => t.Stock);
+
+            modelBuilder.Entity<Remito>().ToTable("NUEVA_REMITOS");
+            modelBuilder.Entity<Remito>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<Remito>().HasRequired(v => v.Venta).WithMany().HasForeignKey(x => x.IdVenta);
+            modelBuilder.Entity<Remito>().HasMany(v => v.RemitoItems).WithRequired(t => t.Remito).HasForeignKey(x => x.IdRemito);
+            modelBuilder.Entity<Remito>().Ignore(t => t.MontoTotal);
+
+            modelBuilder.Entity<RemitoItem>().ToTable("NUEVA_REMITO_ITEMS");
+            modelBuilder.Entity<RemitoItem>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<RemitoItem>().Property(t => t.Cantidad).HasColumnName("Cantidad");
+            modelBuilder.Entity<RemitoItem>().Property(t => t.Monto.Valor).HasColumnName("Monto");
+            modelBuilder.Entity<RemitoItem>().Property(t => t.Monto.Iva).HasColumnName("Iva");
+            modelBuilder.Entity<RemitoItem>().Ignore(t => t.Total);
 
             modelBuilder.Entity<Sucursal>().ToTable("SUCURSALES");
             modelBuilder.Entity<Sucursal>().Property(t => t.Id).HasColumnName("id_Sucursal");

@@ -38,6 +38,7 @@ Namespace Formularios.Cliente
                 Return Not FiltroClientes.Any()
             End Get
         End Property
+
         Public Property OrdenadoPor As String = "Id"
         Public Property DireccionOrdenamiento As OrdenadoDireccion
         Public Property PaginaActual As Integer = 1
@@ -208,6 +209,16 @@ Namespace Formularios.Cliente
             If Not Cuit.EsValido(clienteMayoristaDetalleViewModel.Cuit) Then
                 Throw New NegocioException(My.Resources.ErrorCuitInvalido)
             End If
+        End Sub
+
+        Friend Sub AltaTransporte(transporteModel As Transporte)
+            AltaClientes.IdTransporte = transporteModel.Id
+            AltaClientes.Transporte = transporteModel.RazonSocial
+        End Sub
+
+        Friend Sub ModificacionTransporte(transporteModel As Transporte)
+            ModificacionClientes.IdTransporte = transporteModel.Id
+            ModificacionClientes.Transporte = transporteModel.RazonSocial
         End Sub
     End Class
 End Namespace

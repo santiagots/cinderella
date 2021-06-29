@@ -5,6 +5,7 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports SistemaCinderella.Comunes
 Imports Ventas.Core.Model.BaseAgreggate
+Imports Ventas.Core.Model.RemitoAgreggate
 Imports Ventas.Data.Service
 Imports Model = Ventas.Core.Model.VentaAggregate
 
@@ -172,6 +173,19 @@ Namespace Formularios.Facturacion
             frmFacturarNueva.MdiParent = MdiParent
             frmFacturarNueva.Show()
         End Sub
+
+        Friend Async Function RemitoAsync() As Task
+            Dim frmRemitoDetalle As frmRemito
+            Dim remitoModel As Remito = Await RemitoService.ObtenerPorVentaAsync(_VentaDetalleSeleccionada.Id)
+            If (remitoModel IsNot Nothing) Then
+                frmRemitoDetalle = New frmRemito(remitoModel, _VentaDetalleSeleccionada)
+            Else
+                frmRemitoDetalle = New frmRemito(_VentaDetalleSeleccionada)
+            End If
+
+            frmRemitoDetalle.MdiParent = MdiParent
+            frmRemitoDetalle.Show()
+        End Function
 
         Private Async Function GenerarNotaCredito() As Task
             VentasPorAnular.Add(New Tuple(Of Model.Venta, String)(_VentaDetalleSeleccionada, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))

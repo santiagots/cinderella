@@ -117,6 +117,15 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Bultos" msprop:Generator_TableClassName="BultosDataTable" msprop:Generator_TableVarName="tableBultos" msprop:Generator_RowChangedName="BultosRowChanged" msprop:Generator_TablePropName="Bultos" msprop:Generator_RowDeletingName="BultosRowDeleting" msprop:Generator_RowChangingName="BultosRowChanging" msprop:Generator_RowEvHandlerName="BultosRowChangeEventHandler" msprop:Generator_RowDeletedName="BultosRowDeleted" msprop:Generator_RowClassName="BultosRow" msprop:Generator_UserTableName="Bultos" msprop:Generator_RowEvArgName="BultosRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Numero" msprop:Generator_ColumnVarNameInTable="columnNumero" msprop:Generator_ColumnPropNameInRow="Numero" msprop:Generator_ColumnPropNameInTable="NumeroColumn" msprop:Generator_UserColumnName="Numero" type="xs:int" minOccurs="0" />
+              <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:int" minOccurs="0" />
+              <xs:element name="IncluyeFactura" msprop:Generator_ColumnVarNameInTable="columnIncluyeFactura" msprop:Generator_ColumnPropNameInRow="IncluyeFactura" msprop:Generator_ColumnPropNameInTable="IncluyeFacturaColumn" msprop:Generator_UserColumnName="IncluyeFactura" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

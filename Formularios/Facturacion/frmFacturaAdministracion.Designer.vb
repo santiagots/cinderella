@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmFacturaAdministracion
-    Inherits System.Windows.Forms.Form
+    Inherits Comun
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -71,6 +71,7 @@ Partial Class frmFacturaAdministracion
         Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
         Me.BtnAnular = New System.Windows.Forms.Button()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
+        Me.BtnRemito = New System.Windows.Forms.Button()
         Me.BtnNotaCreditoDetalle = New System.Windows.Forms.Button()
         Me.BtnFacturaDetalle = New System.Windows.Forms.Button()
         Me.btnReporteVenta = New System.Windows.Forms.Button()
@@ -106,13 +107,14 @@ Partial Class frmFacturaAdministracion
         Me.DG_facturas.MultiSelect = False
         Me.DG_facturas.Name = "DG_facturas"
         Me.DG_facturas.ReadOnly = True
+        Me.DG_facturas.RowHeadersVisible = False
         Me.DG_facturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_facturas.Size = New System.Drawing.Size(928, 485)
         Me.DG_facturas.TabIndex = 0
         '
         'NumeroDataGridViewTextBoxColumn
         '
-        Me.NumeroDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.NumeroDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.NumeroDataGridViewTextBoxColumn.DataPropertyName = "Numero"
         Me.NumeroDataGridViewTextBoxColumn.HeaderText = "Numero"
         Me.NumeroDataGridViewTextBoxColumn.Name = "NumeroDataGridViewTextBoxColumn"
@@ -121,7 +123,7 @@ Partial Class frmFacturaAdministracion
         '
         'PuntoVenta
         '
-        Me.PuntoVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.PuntoVenta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.PuntoVenta.DataPropertyName = "PuntoVenta"
         Me.PuntoVenta.HeaderText = "P. Venta"
         Me.PuntoVenta.Name = "PuntoVenta"
@@ -130,7 +132,7 @@ Partial Class frmFacturaAdministracion
         '
         'TipoFacturaDataGridViewTextBoxColumn
         '
-        Me.TipoFacturaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.TipoFacturaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
         Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "T. Factura"
         Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
@@ -139,7 +141,7 @@ Partial Class frmFacturaAdministracion
         '
         'CondicionIVADataGridViewTextBoxColumn
         '
-        Me.CondicionIVADataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.CondicionIVADataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CondicionIVADataGridViewTextBoxColumn.DataPropertyName = "CondicionIVA"
         Me.CondicionIVADataGridViewTextBoxColumn.HeaderText = "Condición IVA"
         Me.CondicionIVADataGridViewTextBoxColumn.Name = "CondicionIVADataGridViewTextBoxColumn"
@@ -148,7 +150,7 @@ Partial Class frmFacturaAdministracion
         '
         'CUITDataGridViewTextBoxColumn
         '
-        Me.CUITDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.CUITDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CUITDataGridViewTextBoxColumn.DataPropertyName = "CUIT"
         Me.CUITDataGridViewTextBoxColumn.HeaderText = "CUIT"
         Me.CUITDataGridViewTextBoxColumn.Name = "CUITDataGridViewTextBoxColumn"
@@ -165,23 +167,25 @@ Partial Class frmFacturaAdministracion
         '
         'DireccionDataGridViewTextBoxColumn
         '
-        Me.DireccionDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DireccionDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.DireccionDataGridViewTextBoxColumn.DataPropertyName = "Direccion"
         Me.DireccionDataGridViewTextBoxColumn.HeaderText = "Dirección"
         Me.DireccionDataGridViewTextBoxColumn.Name = "DireccionDataGridViewTextBoxColumn"
         Me.DireccionDataGridViewTextBoxColumn.ReadOnly = True
+        Me.DireccionDataGridViewTextBoxColumn.Width = 84
         '
         'LocalidadDataGridViewTextBoxColumn
         '
-        Me.LocalidadDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.LocalidadDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.LocalidadDataGridViewTextBoxColumn.DataPropertyName = "Localidad"
         Me.LocalidadDataGridViewTextBoxColumn.HeaderText = "Localidad"
         Me.LocalidadDataGridViewTextBoxColumn.Name = "LocalidadDataGridViewTextBoxColumn"
         Me.LocalidadDataGridViewTextBoxColumn.ReadOnly = True
+        Me.LocalidadDataGridViewTextBoxColumn.Width = 86
         '
         'FechaDataGridViewTextBoxColumn
         '
-        Me.FechaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.FechaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
         Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
         Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
@@ -635,6 +639,7 @@ Partial Class frmFacturaAdministracion
         Me.lblcontenedor.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblcontenedor.Controls.Add(Me.BtnRemito)
         Me.lblcontenedor.Controls.Add(Me.BtnNotaCreditoDetalle)
         Me.lblcontenedor.Controls.Add(Me.BtnFacturaDetalle)
         Me.lblcontenedor.Controls.Add(Me.btnReporteVenta)
@@ -647,6 +652,21 @@ Partial Class frmFacturaAdministracion
         Me.lblcontenedor.TabIndex = 1
         Me.lblcontenedor.TabStop = False
         Me.lblcontenedor.Text = "Información de la venta realizada."
+        '
+        'BtnRemito
+        '
+        Me.BtnRemito.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnRemito.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnRemito.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnRemito.Image = Global.SistemaCinderella.My.Resources.Recursos.Planilla
+        Me.BtnRemito.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnRemito.Location = New System.Drawing.Point(375, 497)
+        Me.BtnRemito.Name = "BtnRemito"
+        Me.BtnRemito.Size = New System.Drawing.Size(90, 27)
+        Me.BtnRemito.TabIndex = 23
+        Me.BtnRemito.Text = "Remito"
+        Me.BtnRemito.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnRemito.UseVisualStyleBackColor = True
         '
         'BtnNotaCreditoDetalle
         '
@@ -796,6 +816,7 @@ Partial Class frmFacturaAdministracion
     Friend WithEvents BtnAnular As Button
     Friend WithEvents FrmFacturaAdministracionViewModelBindingSource As BindingSource
     Friend WithEvents FacturasBindingSource As BindingSource
+    Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents NumeroDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents PuntoVenta As DataGridViewTextBoxColumn
     Friend WithEvents TipoFacturaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -804,6 +825,6 @@ Partial Class frmFacturaAdministracion
     Friend WithEvents NombreYApellidoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DireccionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents LocalidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents FechaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents BtnRemito As Button
 End Class

@@ -1,5 +1,6 @@
 ﻿Imports AutoMapper
 Imports Model = Ventas.Core.Model.VentaAggregate
+Imports Ventas.Core.Model.RemitoAgreggate
 
 Namespace Formularios.Facturacion
     Public Class MapperProfile

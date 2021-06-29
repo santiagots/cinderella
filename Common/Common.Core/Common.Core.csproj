@@ -116,6 +116,7 @@
     <Compile Include="Interfaces\IListaPrecioRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubCategoriaRepository.cs" />
+    <Compile Include="Interfaces\ITrasporteRepository.cs" />
     <Compile Include="Interfaces\IUsuarioRepository.cs" />
     <Compile Include="Model\Banco.cs" />
     <Compile Include="Model\Categoria.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Model\Localidad.cs" />
     <Compile Include="Model\Provincia.cs" />
     <Compile Include="Model\SubCategoria.cs" />
+    <Compile Include="Model\Transporte.cs" />
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ValueObjects.cs" />

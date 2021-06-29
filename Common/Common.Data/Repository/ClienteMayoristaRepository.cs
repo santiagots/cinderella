@@ -69,6 +69,11 @@ namespace Common.Data.Repository
         {
             return _context.ClienteMayorista
                                     .Include(x => x.ListaPrecio)
+                                    .Include(x => x.Transporte)
+                                    .Include(x => x.Transporte.Domicilio)
+                                    .Include(x => x.Transporte.Domicilio.Localidad)
+                                    .Include(x => x.Transporte.Domicilio.Provincia)
+                                    .Include(x => x.Transporte.Domicilio.Distrito)
                                     .Include(x => x.DomicilioFacturacion)
                                     .Include(x => x.DomicilioFacturacion.Localidad)
                                     .Include(x => x.DomicilioFacturacion.Provincia)

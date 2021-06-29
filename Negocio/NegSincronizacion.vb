@@ -204,8 +204,9 @@ Public Class NegSincronizacion
         respuesta.Add(New Tabla() With {.Nombre = "CONDICIONES_IVA", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "CONSUMIDORFINAL", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "DEPARTAMENTOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "DEPARTAMENTOS", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "EMPLEADOS", .Sincronizar = New SinClaveUnicaSincronizar()})
-        respuesta.Add(New Tabla() With {.Nombre = "EMPLEADOS_TIPOS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "DIRECCION", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "FERIADOS", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "LISTA_GRUPO", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "LISTA_PRECIO", .Sincronizar = New SinClaveUnicaSincronizar()})
@@ -238,6 +239,7 @@ Public Class NegSincronizacion
         respuesta.Add(New Tabla() With {.Nombre = "COSTOFINANCIERO", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_IVA", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_CUENTABANCARIA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_TRANSPORTE", .Sincronizar = New SinClaveUnicaSincronizar()})
 
         Return respuesta
     End Function
@@ -288,6 +290,8 @@ Public Class NegSincronizacion
         respuesta.Add(MovimientoImpuesto())
         respuesta.Add(Cheque()) 'nuevo
         respuesta.Add(MoviminetoRetiro())
+        respuesta.Add(Remito())
+        respuesta.Add(RemitoItems())
 
         Return respuesta
     End Function
@@ -624,6 +628,40 @@ Public Class NegSincronizacion
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_VENTA_ITEMS D ON V.Id = D.IdVenta
                                         where D.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function Remito() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_REMITOS"
+        tabla.SQLObtenerDatosLocal = "select R.* from NUEVA_REMITOS R INNER Join NUEVA_VENTAS V ON R.IdVenta = V.Id where R.FechaEdicion >= '{0}' AND V.IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "select R.* from NUEVA_REMITOS R INNER Join NUEVA_VENTAS V ON R.IdVenta = V.Id where R.FechaEdicion >= '{0}' AND V.IdSucursal = {1}"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function RemitoItems() As Tabla
+        Dim tabla As Tabla = New Tabla()
+
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_REMITO_ITEMS"
+        tabla.SQLObtenerDatosLocal = "Select RI.* 
+		                            from NUEVA_REMITO_ITEMS RI
+                                    INNER Join NUEVA_REMITOS R ON RI.IdRemito = R.Id
+                                    INNER Join NUEVA_VENTAS V ON V.Id = R.IdVenta
+                                    where RI.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+        tabla.SQLObtenerDatosRemoto = "Select RI.* 
+		                            from NUEVA_REMITO_ITEMS RI
+                                    INNER Join NUEVA_REMITOS R ON RI.IdRemito = R.Id
+                                    INNER Join NUEVA_VENTAS V ON V.Id = R.IdVenta
+                                    where RI.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla

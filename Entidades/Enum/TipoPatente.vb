@@ -4,6 +4,7 @@
     Administración_Cliente_Mayorista_Crear = 3
     Administración_Cliente_Mayorista_Modificar = 4
     Administración_Cliente_Mayorista_Eliminar = 607
+    Administración_Cliente_Trasporte = 623
     Administración_Empleados_Administración_Visualizar = 6
     Administración_Empleados_Administración_Crear = 7
     Administración_Empleados_Administración_Modificar = 8

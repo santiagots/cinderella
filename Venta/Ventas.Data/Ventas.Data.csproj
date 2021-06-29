@@ -79,6 +79,7 @@
     <Compile Include="Repository\InformeVentaRepository.cs" />
     <Compile Include="Repository\NotaCreditoRepository.cs" />
     <Compile Include="Repository\NotaPedidoRepository.cs" />
+    <Compile Include="Repository\RemitoRepository.cs" />
     <Compile Include="Repository\ReservaRepository.cs" />
     <Compile Include="Repository\StockRepository.cs" />
     <Compile Include="Repository\TarjetaRepository.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Service\CostoFinancieroService.cs" />
     <Compile Include="Service\DocumentoDePagoService.cs" />
     <Compile Include="Service\EmpleadoService.cs" />
+    <Compile Include="Service\RemitoService.cs" />
     <Compile Include="Service\SucursalService.cs" />
     <Compile Include="Service\TipoPagoService.cs" />
     <Compile Include="Service\MovimientoService.cs" />
@@ -115,6 +117,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

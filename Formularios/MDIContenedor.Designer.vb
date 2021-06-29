@@ -37,6 +37,7 @@ Partial Class MDIContenedor
         Me.Btn_ColoresMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_ClientesMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClienteMayoristaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TransporteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_EmpleadosMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdmDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VisualizaciónDeSaldoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -254,7 +255,7 @@ Partial Class MDIContenedor
         '
         'Btn_ClientesMenu
         '
-        Me.Btn_ClientesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClienteMayoristaToolStripMenuItem})
+        Me.Btn_ClientesMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClienteMayoristaToolStripMenuItem, Me.TransporteToolStripMenuItem})
         Me.Btn_ClientesMenu.Image = Global.SistemaCinderella.My.Resources.Recursos.Clientes
         Me.Btn_ClientesMenu.Name = "Btn_ClientesMenu"
         Me.Btn_ClientesMenu.Size = New System.Drawing.Size(180, 22)
@@ -265,8 +266,15 @@ Partial Class MDIContenedor
         '
         Me.ClienteMayoristaToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Sucursal
         Me.ClienteMayoristaToolStripMenuItem.Name = "ClienteMayoristaToolStripMenuItem"
-        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
+        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ClienteMayoristaToolStripMenuItem.Text = "Mayorista"
+        '
+        'TransporteToolStripMenuItem
+        '
+        Me.TransporteToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Transporte_32
+        Me.TransporteToolStripMenuItem.Name = "TransporteToolStripMenuItem"
+        Me.TransporteToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TransporteToolStripMenuItem.Text = "Transporte"
         '
         'Btn_EmpleadosMenu
         '
@@ -1467,4 +1475,5 @@ Partial Class MDIContenedor
     Friend WithEvents InformesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VentasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CuentasBancariasToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TransporteToolStripMenuItem As ToolStripMenuItem
 End Class

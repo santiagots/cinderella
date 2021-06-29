@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmVentasAdministracion
-    Inherits System.Windows.Forms.Form
+    Inherits Comun
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -45,8 +45,8 @@ Partial Class frmVentasAdministracion
         Me.Anulado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VentasBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.BtnFiltrar = New System.Windows.Forms.Button()
+        Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -308,18 +308,6 @@ Partial Class frmVentasAdministracion
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filtrar ventas."
         '
-        'btn_Restablecer
-        '
-        Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restablecer.Location = New System.Drawing.Point(730, 187)
-        Me.btn_Restablecer.Name = "btn_Restablecer"
-        Me.btn_Restablecer.Size = New System.Drawing.Size(94, 41)
-        Me.btn_Restablecer.TabIndex = 9
-        Me.btn_Restablecer.Text = "Restablecer Busqueda"
-        Me.btn_Restablecer.UseVisualStyleBackColor = True
-        '
         'BtnFiltrar
         '
         Me.BtnFiltrar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -335,6 +323,18 @@ Partial Class frmVentasAdministracion
         Me.BtnFiltrar.Text = "Buscar"
         Me.BtnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnFiltrar.UseVisualStyleBackColor = True
+        '
+        'btn_Restablecer
+        '
+        Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Restablecer.Location = New System.Drawing.Point(730, 187)
+        Me.btn_Restablecer.Name = "btn_Restablecer"
+        Me.btn_Restablecer.Size = New System.Drawing.Size(94, 41)
+        Me.btn_Restablecer.TabIndex = 9
+        Me.btn_Restablecer.Text = "Restablecer Busqueda"
+        Me.btn_Restablecer.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel2
         '

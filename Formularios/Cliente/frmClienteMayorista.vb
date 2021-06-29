@@ -40,6 +40,26 @@ Public Class frmClienteMayorista
                       End Function)
     End Sub
 
+    Private Sub Btn_BuscarTransporte_Click(sender As Object, e As EventArgs) Handles Btn_BuscarTransporte.Click
+        Ejecutar(Sub()
+                     Dim frmTransporteBuscar As frmTransporteBuscar = New frmTransporteBuscar(TipoBase.Remota)
+                     If (frmTransporteBuscar.ShowDialog = DialogResult.OK) Then
+                         frmClienteMayoristaViewModel.AltaTransporte(frmTransporteBuscar.TransporteModel)
+                         AltaClienteMayoristaDetalleBindingSource.ResetBindings(False)
+                     End If
+                 End Sub)
+    End Sub
+
+    Private Sub Btn_BuscarTransporte_Mod_Click(sender As Object, e As EventArgs) Handles Btn_BuscarTransporte_Mod.Click
+        Ejecutar(Sub()
+                     Dim frmTransporteBuscar As frmTransporteBuscar = New frmTransporteBuscar(TipoBase.Remota)
+                     If (frmTransporteBuscar.ShowDialog = DialogResult.OK) Then
+                         frmClienteMayoristaViewModel.ModificacionTransporte(frmTransporteBuscar.TransporteModel)
+                         ModificacionClienteMayoristaDetalleBindingSource.ResetBindings(False)
+                     End If
+                 End Sub)
+    End Sub
+
     Private Sub cb_Provincia_Facturacion_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cb_Provincia_Facturacion.SelectionChangeCommitted
         EjecutarAsync(Async Function() As Task
                           If cb_Provincia_Facturacion.SelectedItem Is Nothing Then

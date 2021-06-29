@@ -50,6 +50,7 @@ namespace Common.Data
         public DbSet<Localidad> Localidad { get; set; }
         public DbSet<IVA> IVA { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Transporte> Transporte { get; set; }
 
         public bool IsAttached<T>(Entity<T> entity) 
         {
@@ -197,6 +198,8 @@ namespace Common.Data
             modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioFacturacion).WithMany().HasForeignKey(x => x.IdDomicilioFacturacion);
             modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdDomicilioEntrega).HasColumnName("id_DireccionEntrega");
             modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.DomicilioEntrega).WithMany().HasForeignKey(x => x.IdDomicilioEntrega);
+            modelBuilder.Entity<ClienteMayorista>().Property(t => t.IdTransporte).HasColumnName("id_Transporte");
+            modelBuilder.Entity<ClienteMayorista>().HasOptional(v => v.Transporte).WithMany().HasForeignKey(x => x.IdTransporte);
 
             modelBuilder.Entity<Feriado>().ToTable("FERIADOS");
             modelBuilder.Entity<Feriado>().Property(t => t.Id).HasColumnName("id_Feriado");
@@ -240,6 +243,9 @@ namespace Common.Data
             modelBuilder.Entity<Usuario>().Property(t => t.Fecha).HasColumnName("Fecha");
             modelBuilder.Entity<Usuario>().Property(t => t.Habilitado).HasColumnName("Habilitado");
             modelBuilder.Entity<Usuario>().Property(t => t.IdPerfil).HasColumnName("id_Perfil");
+
+            modelBuilder.Entity<Transporte>().ToTable("NUEVA_TRANSPORTE");
+            modelBuilder.Entity<Transporte>().HasOptional(v => v.Domicilio).WithMany().HasForeignKey(x => x.IdDomicilio);
 
             base.OnModelCreating(modelBuilder);
         }

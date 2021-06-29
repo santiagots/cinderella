@@ -32,14 +32,15 @@ Partial Class frmBuscarClienteMinorista
         Me.Btn_Limpiar = New System.Windows.Forms.Button()
         Me.lbl_informacion = New System.Windows.Forms.Label()
         Me.DG_Clientes = New System.Windows.Forms.DataGridView()
-        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DireccionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TelefonoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClientesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btn_Buscar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtApellido = New System.Windows.Forms.TextBox()
         Me.ToolCliente = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DireccionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TelefonoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GB_Clientes.SuspendLayout()
         CType(Me.FrmBuscarClienteMinoristaViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_Clientes, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -90,7 +91,7 @@ Partial Class frmBuscarClienteMinorista
         '
         'FrmBuscarClienteMinoristaViewModelBindingSource
         '
-        Me.FrmBuscarClienteMinoristaViewModelBindingSource.DataSource = GetType(Formularios.Venta.frmBuscarClienteMinoristaViewModel)
+        Me.FrmBuscarClienteMinoristaViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Venta.frmBuscarClienteMinoristaViewModel)
         '
         'lbl_Msg
         '
@@ -147,37 +148,17 @@ Partial Class frmBuscarClienteMinorista
         Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DG_Clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NombreDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.TelefonoDataGridViewTextBoxColumn})
+        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Id, Me.NombreDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.TelefonoDataGridViewTextBoxColumn})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Clientes.DataSource = Me.ClientesBindingSource
         Me.DG_Clientes.Location = New System.Drawing.Point(9, 129)
         Me.DG_Clientes.MultiSelect = False
         Me.DG_Clientes.Name = "DG_Clientes"
         Me.DG_Clientes.ReadOnly = True
+        Me.DG_Clientes.RowHeadersVisible = False
         Me.DG_Clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Clientes.Size = New System.Drawing.Size(555, 251)
         Me.DG_Clientes.TabIndex = 3
-        '
-        'NombreDataGridViewTextBoxColumn
-        '
-        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "ApellidoYNombre"
-        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
-        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'DireccionDataGridViewTextBoxColumn
-        '
-        Me.DireccionDataGridViewTextBoxColumn.DataPropertyName = "Direccion"
-        Me.DireccionDataGridViewTextBoxColumn.HeaderText = "Direccion"
-        Me.DireccionDataGridViewTextBoxColumn.Name = "DireccionDataGridViewTextBoxColumn"
-        Me.DireccionDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'TelefonoDataGridViewTextBoxColumn
-        '
-        Me.TelefonoDataGridViewTextBoxColumn.DataPropertyName = "Telefono"
-        Me.TelefonoDataGridViewTextBoxColumn.HeaderText = "Telefono"
-        Me.TelefonoDataGridViewTextBoxColumn.Name = "TelefonoDataGridViewTextBoxColumn"
-        Me.TelefonoDataGridViewTextBoxColumn.ReadOnly = True
         '
         'ClientesBindingSource
         '
@@ -225,6 +206,36 @@ Partial Class frmBuscarClienteMinorista
         Me.ToolCliente.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolCliente.ToolTipTitle = "Ayuda"
         '
+        'Id
+        '
+        Me.Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Id.DataPropertyName = "Id"
+        Me.Id.HeaderText = "Cód."
+        Me.Id.Name = "Id"
+        Me.Id.ReadOnly = True
+        Me.Id.Width = 57
+        '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "ApellidoYNombre"
+        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'DireccionDataGridViewTextBoxColumn
+        '
+        Me.DireccionDataGridViewTextBoxColumn.DataPropertyName = "Direccion"
+        Me.DireccionDataGridViewTextBoxColumn.HeaderText = "Direccion"
+        Me.DireccionDataGridViewTextBoxColumn.Name = "DireccionDataGridViewTextBoxColumn"
+        Me.DireccionDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'TelefonoDataGridViewTextBoxColumn
+        '
+        Me.TelefonoDataGridViewTextBoxColumn.DataPropertyName = "Telefono"
+        Me.TelefonoDataGridViewTextBoxColumn.HeaderText = "Telefono"
+        Me.TelefonoDataGridViewTextBoxColumn.Name = "TelefonoDataGridViewTextBoxColumn"
+        Me.TelefonoDataGridViewTextBoxColumn.ReadOnly = True
+        '
         'frmBuscarClienteMinorista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -255,8 +266,9 @@ Partial Class frmBuscarClienteMinorista
     Friend WithEvents txtNombre As TextBox
     Friend WithEvents DG_Clientes As DataGridView
     Friend WithEvents FrmBuscarClienteMinoristaViewModelBindingSource As BindingSource
+    Friend WithEvents ClientesBindingSource As BindingSource
+    Friend WithEvents Id As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DireccionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents TelefonoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents ClientesBindingSource As BindingSource
 End Class

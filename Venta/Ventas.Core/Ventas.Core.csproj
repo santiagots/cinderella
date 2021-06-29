@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IMovimientoRepository.cs" />
     <Compile Include="Interfaces\INotaCreditoRepository.cs" />
     <Compile Include="Interfaces\INotaPedidoRepository.cs" />
+    <Compile Include="Interfaces\IRemitoRepository.cs" />
     <Compile Include="Interfaces\IReservaRepository.cs" />
     <Compile Include="Interfaces\IStockRepository.cs" />
     <Compile Include="Interfaces\ITarjetaRepository.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Interfaces\IProductoRepository.cs" />
     <Compile Include="Interfaces\IVentaRepository.cs" />
     <Compile Include="Model\BaseAgreggate\DocumentoFiscal.cs" />
-    <Compile Include="Model\BaseAgreggate\Domicilio.cs" />
     <Compile Include="Model\BaseAgreggate\Pago.cs" />
     <Compile Include="Model\BaseAgreggate\TransaccionItem.cs" />
     <Compile Include="Model\BaseAgreggate\Transaccion.cs" />
@@ -84,6 +84,8 @@
     <Compile Include="Model\InformeAggregate\InformeVentaPorTipoVenta.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedido.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedidoItem.cs" />
+    <Compile Include="Model\RemitoAgreggate\Remito.cs" />
+    <Compile Include="Model\RemitoAgreggate\RemitoItem.cs" />
     <Compile Include="Model\ValueObjects\Egreso.cs" />
     <Compile Include="Model\ValueObjects\Ingreso.cs" />
     <Compile Include="Model\ValueObjects\MontoPago.cs" />

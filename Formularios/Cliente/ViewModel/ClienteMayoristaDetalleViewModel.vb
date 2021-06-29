@@ -12,6 +12,7 @@ Namespace Formularios.Cliente
         Public Property CondicionesIVASaleccionada As KeyValuePair(Of CondicionIVA?, String) = New KeyValuePair(Of CondicionIVA?, String)(Nothing, "Seleccione una opción")
         Public Property CorredorSaleccionada As KeyValuePair(Of Integer?, String) = New KeyValuePair(Of Integer?, String)(Nothing, "Seleccione una opción")
         Public Property PorcentajeComision As Decimal
+        Public Property IdTransporte As Integer
         Public Property Transporte As String
         Public Property PorcentajeBonificacion As Decimal
         Public Property PorcentajeLista As Decimal

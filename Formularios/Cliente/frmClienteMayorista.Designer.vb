@@ -147,7 +147,7 @@ Partial Class frmClienteMayorista
         Me.lbl_Transporte = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.txt_Cuit = New System.Windows.Forms.MaskedTextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Btn_BuscarTransporte = New System.Windows.Forms.Button()
         Me.cmb_Corredor = New System.Windows.Forms.ComboBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txt_Nombre = New System.Windows.Forms.TextBox()
@@ -221,7 +221,7 @@ Partial Class frmClienteMayorista
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txt_Cuit_Mod = New System.Windows.Forms.MaskedTextBox()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Btn_BuscarTransporte_Mod = New System.Windows.Forms.Button()
         Me.cmb_Corredor_Mod = New System.Windows.Forms.ComboBox()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.txt_Nombre_Mod = New System.Windows.Forms.TextBox()
@@ -1659,7 +1659,7 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Transporte, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.Label22, 0, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Cuit, 1, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Button1, 2, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Btn_BuscarTransporte, 2, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.cmb_Corredor, 1, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label23, 3, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Nombre, 4, 0)
@@ -1745,14 +1745,14 @@ Partial Class frmClienteMayorista
         Me.txt_Cuit.TabIndex = 3
         Me.txt_Cuit.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         '
-        'Button1
+        'Btn_BuscarTransporte
         '
-        Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
-        Me.Button1.Location = New System.Drawing.Point(361, 93)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(33, 28)
-        Me.Button1.TabIndex = 75
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Btn_BuscarTransporte.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.Btn_BuscarTransporte.Location = New System.Drawing.Point(361, 93)
+        Me.Btn_BuscarTransporte.Name = "Btn_BuscarTransporte"
+        Me.Btn_BuscarTransporte.Size = New System.Drawing.Size(33, 28)
+        Me.Btn_BuscarTransporte.TabIndex = 75
+        Me.Btn_BuscarTransporte.UseVisualStyleBackColor = True
         '
         'cmb_Corredor
         '
@@ -1812,6 +1812,7 @@ Partial Class frmClienteMayorista
         '
         Me.txt_Transporte.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Transporte.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.AltaClienteMayoristaDetalleBindingSource, "Transporte", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txt_Transporte.Enabled = False
         Me.txt_Transporte.Location = New System.Drawing.Point(143, 96)
         Me.txt_Transporte.MaxLength = 255
         Me.txt_Transporte.Name = "txt_Transporte"
@@ -2560,7 +2561,7 @@ Partial Class frmClienteMayorista
         Me.TableLayoutPanel14.Controls.Add(Me.Label31, 0, 3)
         Me.TableLayoutPanel14.Controls.Add(Me.Label33, 0, 4)
         Me.TableLayoutPanel14.Controls.Add(Me.txt_Cuit_Mod, 1, 1)
-        Me.TableLayoutPanel14.Controls.Add(Me.Button2, 2, 3)
+        Me.TableLayoutPanel14.Controls.Add(Me.Btn_BuscarTransporte_Mod, 2, 3)
         Me.TableLayoutPanel14.Controls.Add(Me.cmb_Corredor_Mod, 1, 2)
         Me.TableLayoutPanel14.Controls.Add(Me.Label34, 3, 4)
         Me.TableLayoutPanel14.Controls.Add(Me.txt_Nombre_Mod, 4, 0)
@@ -2646,15 +2647,15 @@ Partial Class frmClienteMayorista
         Me.txt_Cuit_Mod.TabIndex = 102
         Me.txt_Cuit_Mod.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         '
-        'Button2
+        'Btn_BuscarTransporte_Mod
         '
-        Me.Button2.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
-        Me.Button2.Location = New System.Drawing.Point(361, 93)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(33, 28)
-        Me.Button2.TabIndex = 129
-        Me.ToolCliente.SetToolTip(Me.Button2, "Buscar transporte")
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.Btn_BuscarTransporte_Mod.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.Btn_BuscarTransporte_Mod.Location = New System.Drawing.Point(361, 93)
+        Me.Btn_BuscarTransporte_Mod.Name = "Btn_BuscarTransporte_Mod"
+        Me.Btn_BuscarTransporte_Mod.Size = New System.Drawing.Size(33, 28)
+        Me.Btn_BuscarTransporte_Mod.TabIndex = 129
+        Me.ToolCliente.SetToolTip(Me.Btn_BuscarTransporte_Mod, "Buscar transporte")
+        Me.Btn_BuscarTransporte_Mod.UseVisualStyleBackColor = True
         '
         'cmb_Corredor_Mod
         '
@@ -2710,6 +2711,7 @@ Partial Class frmClienteMayorista
         '
         Me.txt_Transporte_Mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Transporte_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ModificacionClienteMayoristaDetalleBindingSource, "Transporte", True))
+        Me.txt_Transporte_Mod.Enabled = False
         Me.txt_Transporte_Mod.Location = New System.Drawing.Point(143, 96)
         Me.txt_Transporte_Mod.MaxLength = 255
         Me.txt_Transporte_Mod.Name = "txt_Transporte_Mod"
@@ -2994,7 +2996,7 @@ Partial Class frmClienteMayorista
     Friend WithEvents txt_Nombre As TextBox
     Friend WithEvents Label19 As Label
     Friend WithEvents Label22 As Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Btn_BuscarTransporte As Button
     Friend WithEvents Label21 As Label
     Friend WithEvents cmb_Corredor As ComboBox
     Friend WithEvents Label20 As Label
@@ -3070,7 +3072,7 @@ Partial Class frmClienteMayorista
     Friend WithEvents Label31 As Label
     Friend WithEvents Label33 As Label
     Friend WithEvents txt_Cuit_Mod As MaskedTextBox
-    Friend WithEvents Button2 As Button
+    Friend WithEvents Btn_BuscarTransporte_Mod As Button
     Friend WithEvents cmb_Corredor_Mod As ComboBox
     Friend WithEvents Label34 As Label
     Friend WithEvents txt_Nombre_Mod As TextBox

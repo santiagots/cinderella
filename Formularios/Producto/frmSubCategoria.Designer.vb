@@ -242,6 +242,7 @@ Partial Class frmSubCategoria
         Me.BindingNavigatorPositionItem.AccessibleName = "Position"
         Me.BindingNavigatorPositionItem.AutoSize = False
         Me.BindingNavigatorPositionItem.Enabled = False
+        Me.BindingNavigatorPositionItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.BindingNavigatorPositionItem.Name = "BindingNavigatorPositionItem"
         Me.BindingNavigatorPositionItem.Size = New System.Drawing.Size(50, 23)
         Me.BindingNavigatorPositionItem.Text = "0"
@@ -803,6 +804,7 @@ Partial Class frmSubCategoria
         Me.ToolStripTextBox1.AccessibleName = "Position"
         Me.ToolStripTextBox1.AutoSize = False
         Me.ToolStripTextBox1.Enabled = False
+        Me.ToolStripTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripTextBox1.Name = "ToolStripTextBox1"
         Me.ToolStripTextBox1.Size = New System.Drawing.Size(50, 23)
         Me.ToolStripTextBox1.Text = "0"
@@ -843,7 +845,7 @@ Partial Class frmSubCategoria
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.44445!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Button2, 5, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.ComboBox3, 0, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.Label10, 0, 1)
@@ -884,9 +886,9 @@ Partial Class frmSubCategoria
         Me.ComboBox3.DisplayMember = "Value"
         Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(83, 42)
+        Me.ComboBox3.Location = New System.Drawing.Point(83, 41)
         Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(162, 23)
+        Me.ComboBox3.Size = New System.Drawing.Size(161, 23)
         Me.ComboBox3.TabIndex = 9
         Me.ComboBox3.ValueMember = "Key"
         '
@@ -904,7 +906,7 @@ Partial Class frmSubCategoria
         '
         Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(293, 7)
+        Me.Label11.Location = New System.Drawing.Point(291, 7)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(74, 15)
         Me.Label11.TabIndex = 1
@@ -914,9 +916,9 @@ Partial Class frmSubCategoria
         '
         Me.TextBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmSubCategoriaViewModelBindingSource, "BuscarNombre", True))
-        Me.TextBox2.Location = New System.Drawing.Point(373, 4)
+        Me.TextBox2.Location = New System.Drawing.Point(371, 4)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(162, 21)
+        Me.TextBox2.Size = New System.Drawing.Size(161, 21)
         Me.TextBox2.TabIndex = 2
         '
         'ComboBox4
@@ -927,9 +929,9 @@ Partial Class frmSubCategoria
         Me.ComboBox4.DisplayMember = "Value"
         Me.ComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox4.FormattingEnabled = True
-        Me.ComboBox4.Location = New System.Drawing.Point(83, 4)
+        Me.ComboBox4.Location = New System.Drawing.Point(83, 3)
         Me.ComboBox4.Name = "ComboBox4"
-        Me.ComboBox4.Size = New System.Drawing.Size(162, 23)
+        Me.ComboBox4.Size = New System.Drawing.Size(161, 23)
         Me.ComboBox4.TabIndex = 7
         Me.ComboBox4.ValueMember = "Key"
         '
@@ -951,7 +953,7 @@ Partial Class frmSubCategoria
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox2.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.FrmSubCategoriaViewModelBindingSource, "BuscarHabilitada", True))
-        Me.CheckBox2.Location = New System.Drawing.Point(373, 33)
+        Me.CheckBox2.Location = New System.Drawing.Point(371, 33)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(15, 39)
         Me.CheckBox2.TabIndex = 11
@@ -961,7 +963,7 @@ Partial Class frmSubCategoria
         '
         Me.Label13.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(293, 45)
+        Me.Label13.Location = New System.Drawing.Point(291, 45)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(74, 15)
         Me.Label13.TabIndex = 3

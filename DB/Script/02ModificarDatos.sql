@@ -36,6 +36,21 @@ BEGIN
 	insert into [REL_PERFILES_PATENTES] (id_Perfil, id_Patente) values(1, 622)
 END
 
+--Agregado patente para cliente trasporte
+IF NOT EXISTS (SELECT * FROM [PATENTES] WHERE [id_Patente] = 623) 
+BEGIN
+	SET IDENTITY_INSERT [dbo].[PATENTES] ON
+	INSERT [dbo].[PATENTES] ([id_Patente], [Descripcion], [Id_Grupo]) VALUES (623, N'Administración -> Cliente -> Transporte', 1)
+	SET IDENTITY_INSERT [dbo].[PATENTES] OFF
+END
+
+--Agregado la pantante cliente trasporte al perfil Administracion
+IF NOT EXISTS (SELECT * FROM [REL_PERFILES_PATENTES] WHERE id_Perfil = 1 and id_Patente = 623) 
+BEGIN
+	insert into [REL_PERFILES_PATENTES] (id_Perfil, id_Patente) values(1, 623)
+END
+
+
 --Cargo un valor por defecto en la nueva columna "Borrado" de la tabla [NUEVA_NOTA_PEDIDO_ITEMS]
 IF EXISTS (SELECT * FROM [NUEVA_NOTA_PEDIDO_ITEMS] WHERE Borrado is null) 
 BEGIN
