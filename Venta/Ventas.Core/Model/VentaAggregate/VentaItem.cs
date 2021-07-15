@@ -192,9 +192,9 @@ namespace Ventas.Core.Model.VentaAggregate
             switch (condicionIva)
             {
                 case CondicionIVA.Consumidor_Final:
-                case CondicionIVA.Monotributo:
                 case CondicionIVA.Exento:
                     return monto * porcentajeFacturacion;
+                case CondicionIVA.Monotributo:
                 case CondicionIVA.Responsable_Inscripto:
                     decimal montoSinIva = Monto.ObtenerSinIVA(monto, this.Producto.SubCategoria.IVA.Valor, porcentajeFacturacion);
                     return montoSinIva;
@@ -209,8 +209,8 @@ namespace Ventas.Core.Model.VentaAggregate
             switch (condicionIva)
             {
                 case CondicionIVA.Responsable_Inscripto:
-                    return monto * porcentajeFacturacion;
                 case CondicionIVA.Monotributo:
+                    return monto * porcentajeFacturacion;
                 case CondicionIVA.Exento:
                     decimal montoConIva = Monto.ObtenerConIVA(monto, this.Producto.SubCategoria.IVA.Valor, porcentajeFacturacion);
                     return montoConIva;
