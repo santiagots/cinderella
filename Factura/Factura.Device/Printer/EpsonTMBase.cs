@@ -53,16 +53,16 @@ namespace Factura.Device.Printer
         internal const string LIBRETA_ENROLAMIENTO = "E";
 
 
-        internal static string DescripcionExtra1 = "";
-        internal static string DescripcionExtra2 = "";
-        internal static string DescripcionExtra3 = "";
-        internal static string DescripcionExtra4 = "";
-        internal static string ColaRemplazo1 = "Gracias por su compra.";
-        internal static string ColaRemplazo2 = "";
-        internal static string ColaRemplazo3 = "";
-        internal static string LineaRemitoAsociados1 = "";
-        internal static string LineaRemitoAsociados2 = "";
-        internal static string LineaRemitoAsociados3 = "";
+        internal string DescripcionExtra1 = "";
+        internal string DescripcionExtra2 = "";
+        internal string DescripcionExtra3 = "";
+        internal string DescripcionExtra4 = "";
+        internal string ColaRemplazo1 = "Gracias por su compra.";
+        internal string ColaRemplazo2 = "";
+        internal string ColaRemplazo3 = "";
+        internal string LineaRemitoAsociados1 = "";
+        internal string LineaRemitoAsociados2 = "";
+        internal string LineaRemitoAsociados3 = "";
         private EpsonFPHostControl oEpsonFP;
 
         internal string NombreComprador1;
@@ -232,7 +232,8 @@ namespace Factura.Device.Printer
                 case CondicionIVA.Consumidor_Final:
                     return CONSUMIDOR_FINAL;
                 case CondicionIVA.Monotributo:
-                    return MONOTRIBUTISTA;
+                    //return MONOTRIBUTISTA;
+                    return RESPONSABLE_INSCRIPTO;
                 case CondicionIVA.Responsable_Inscripto:
                     return RESPONSABLE_INSCRIPTO;
                 case CondicionIVA.Exento:

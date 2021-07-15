@@ -2,6 +2,10 @@
 {
     internal class EpsonTMT900FACommand
     {
+        internal static EpsonCommand ConfigurarLineaEncabezado = new EpsonCommand("\x5\x8", "\x0\x0");
+
+        internal static EpsonCommand ConfigurarLineaCola = new EpsonCommand("\x5\xA", "\x0\x0");
+
         internal static EpsonCommand CierreDeCaja = new EpsonCommand("\x8\x2", "\x0\x1");
 
         internal static EpsonCommand CierreZ = new EpsonCommand("\x8\x1", "\x0\x0");

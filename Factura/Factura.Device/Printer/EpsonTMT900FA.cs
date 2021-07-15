@@ -21,14 +21,40 @@ namespace Factura.Device.Printer
             switch (condicionesIVA)
             {
                 case CondicionIVA.Consumidor_Final:
+                    ConfigurarLineaEncabezado(11, string.Empty);
+                    ConfigurarLineaEncabezado(12, string.Empty);
+
+                    ConfigurarLineaCola(4, string.Empty);
+                    ConfigurarLineaCola(5, string.Empty);
+
                     TipoDocumentoComprador = DNI;
                     NumeroDocumentoComprador = cuit;
                     ResponsableIvaComprador = CONSUMIDOR_FINAL;
                     break;
                 case CondicionIVA.Monotributo:
+                    ConfigurarLineaEncabezado(11, "RECEPTOR DEL COMPROBANTE");
+                    ConfigurarLineaEncabezado(12, "RESPONSABLE MONOTRIBUTO");
+
+                    ColaRemplazo1 =        "El crédito fiscal discriminado en el pre";
+                    ColaRemplazo2 =        "sente comprobante, sólo podrá ser comput";
+                    ColaRemplazo3 =        "ado a efectos del Régimen de Sostenimien";
+                    ConfigurarLineaCola(4, "to e Inclusión Fiscal para Pequeños Cont");
+                    ConfigurarLineaCola(5, "ribuyentes de la Ley N 27.618");
+
+                    LineaRemitoAsociados1 = "903-00001-00000001";
+                    TipoDocumentoComprador = CUIT;
+                    NumeroDocumentoComprador = cuit;
+                    ResponsableIvaComprador = ObtenerResponsableIvaComprador(condicionesIVA);
+                    break;
                 case CondicionIVA.Responsable_Inscripto:
                 case CondicionIVA.Exento:
                 default:
+                    ConfigurarLineaEncabezado(11, string.Empty);
+                    ConfigurarLineaEncabezado(12, string.Empty);
+
+                    ConfigurarLineaCola(4, string.Empty);
+                    ConfigurarLineaCola(5, string.Empty);
+
                     LineaRemitoAsociados1 = "903-00001-00000001";
                     TipoDocumentoComprador = CUIT;
                     NumeroDocumentoComprador = cuit;
@@ -52,7 +78,7 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
@@ -141,11 +167,11 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.CerraTicket.Cmd);
             commands.Add(EpsonTMT900FACommand.CerraTicket.CmdExt);
             commands.Add("1");
-            commands.Add(ColaRemplazo1);
+            commands.Add(ReemplazarCaracteres(ColaRemplazo1));
             commands.Add("2");
-            commands.Add(ColaRemplazo2);
+            commands.Add(ReemplazarCaracteres(ColaRemplazo2));
             commands.Add("3");
-            commands.Add(ColaRemplazo3);
+            commands.Add(ReemplazarCaracteres(ColaRemplazo3));
             SendData(commands/*, false*/);
             int numeroTicket = int.Parse(GetExtraField(1));
             TipoFactura = GetExtraField(2);
@@ -163,11 +189,11 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.CerraNotaCredito.Cmd);
             commands.Add(EpsonTMT900FACommand.CerraNotaCredito.CmdExt);
             commands.Add("1");
-            commands.Add(ColaRemplazo1);
+            commands.Add(ReemplazarCaracteres(ColaRemplazo1));
             commands.Add("2");
-            commands.Add(ColaRemplazo2);
+            commands.Add(ReemplazarCaracteres(ColaRemplazo2));
             commands.Add("3");
-            commands.Add(ColaRemplazo3);
+            commands.Add(ReemplazarCaracteres(ColaRemplazo3));
             commands.Add("");
             SendData(commands/*, false*/);
             int numeroTicket = int.Parse(GetExtraField(1));
@@ -410,6 +436,28 @@ namespace Factura.Device.Printer
             commands.Add(EpsonTMT900FACommand.CierrZFinalizarReporte.CmdExt);
             SendData(commands);
 
+        }
+
+        public void ConfigurarLineaEncabezado(int numeroDeColaDeLinea, string texto)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMT900FACommand.ConfigurarLineaEncabezado.Cmd);
+            commands.Add(EpsonTMT900FACommand.ConfigurarLineaEncabezado.CmdExt);
+            commands.Add(numeroDeColaDeLinea.ToString());
+            commands.Add(ReemplazarCaracteres(texto));
+            SendData(commands);
+        }
+
+        public void ConfigurarLineaCola(int numeroDeColaDeLinea, string texto)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMT900FACommand.ConfigurarLineaCola.Cmd);
+            commands.Add(EpsonTMT900FACommand.ConfigurarLineaCola.CmdExt);
+            commands.Add(numeroDeColaDeLinea.ToString());
+            commands.Add(ReemplazarCaracteres(texto));
+            SendData(commands);
         }
 
         public void CintaTestigoDigitalPorFecha(DateTime fechaDesde, DateTime fechaHasta, out string nombreArchivo, out StringBuilder datos)
