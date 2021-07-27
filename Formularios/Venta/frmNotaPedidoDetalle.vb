@@ -1,11 +1,14 @@
 ﻿Imports System.Threading.Tasks
 Imports Negocio
+Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.Formularios.Venta
 Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 
 Public Class frmNotaPedidoDetalle
     Inherits Comun
+
+    Private ventaItemViewModelEdicion As VentaItemViewModel = New VentaItemViewModel()
 
     Private NotaPedidoDetalleViewModel As frmNotaPedidoDetalleViewModel
     Private FinalizarDelegate As FinalizarDelegateAsync
@@ -134,6 +137,8 @@ Public Class frmNotaPedidoDetalle
     End Sub
 
     Private Sub DG_Productos_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles DG_Productos.CellBeginEdit
+        ventaItemViewModelEdicion = DirectCast(DG_Productos.CurrentRow.DataBoundItem, VentaItemViewModel).Copiar()
+
         If DG_Productos.Columns(e.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
             DG_Productos.CurrentCell.Style.Format = String.Format("N2")
             DG_Productos.CurrentCell.Value = DG_Productos.CurrentCell.Value * 100
@@ -146,6 +151,10 @@ Public Class frmNotaPedidoDetalle
                 If DG_Productos.Columns(e.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
                     DG_Productos.CurrentCell.Style.Format = String.Format("P")
                     DG_Productos.CurrentCell.Value = DG_Productos.CurrentCell.Value / 100
+                End If
+
+                If (ventaItemViewModelEdicion.Equals(DG_Productos.CurrentRow.DataBoundItem)) Then
+                    Return
                 End If
 
                 Dim columnas As List(Of String) = New List(Of String) From {"ProductosPorcentajeBonificacion", "ProductosMonto", "ProductosCantidad"}

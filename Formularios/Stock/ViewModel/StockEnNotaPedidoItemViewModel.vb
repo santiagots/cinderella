@@ -4,7 +4,12 @@ Imports Ventas.Core.Model.NotaPedidoAgreggate
 Namespace Formularios.Stock
     Public Class StockEnNotaPedidoItemViewModel
         Private IdProducto As Integer
-        Private NotaPedido As NotaPedido
+        Private _NotaPedido As NotaPedido
+        Public ReadOnly Property NotaPedido As NotaPedido
+            Get
+                Return _NotaPedido
+            End Get
+        End Property
 
         Public ReadOnly Property Fecha As Date
             Get
@@ -39,7 +44,7 @@ Namespace Formularios.Stock
 
         Public Sub New(idProducto As Integer, notaPedido As NotaPedido)
             Me.IdProducto = idProducto
-            Me.NotaPedido = notaPedido
+            Me._NotaPedido = notaPedido
         End Sub
     End Class
 End Namespace

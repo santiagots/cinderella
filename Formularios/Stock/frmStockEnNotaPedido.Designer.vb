@@ -26,10 +26,11 @@ Partial Class frmStockEnNotaPedido
         Me.GroupBox = New System.Windows.Forms.GroupBox()
         Me.dgvMovimientosDetalle = New System.Windows.Forms.DataGridView()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClienteDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CantidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Detalle = New System.Windows.Forms.DataGridViewImageColumn()
         Me.StockEnNotaPedidoItemViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.Paginado = New SistemaCinderella.Paginado()
@@ -63,13 +64,14 @@ Partial Class frmStockEnNotaPedido
         Me.dgvMovimientosDetalle.AutoGenerateColumns = False
         Me.dgvMovimientosDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvMovimientosDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvMovimientosDetalle.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Fecha, Me.ClienteDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.Estado, Me.NumeroNotaPedidoDataGridViewTextBoxColumn})
+        Me.dgvMovimientosDetalle.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Fecha, Me.NumeroNotaPedidoDataGridViewTextBoxColumn, Me.ClienteDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.Estado, Me.Detalle})
         Me.dgvMovimientosDetalle.DataSource = Me.StockEnNotaPedidoItemViewModelBindingSource
         Me.dgvMovimientosDetalle.Location = New System.Drawing.Point(3, 16)
         Me.dgvMovimientosDetalle.MultiSelect = False
         Me.dgvMovimientosDetalle.Name = "dgvMovimientosDetalle"
         Me.dgvMovimientosDetalle.ReadOnly = True
         Me.dgvMovimientosDetalle.RowHeadersVisible = False
+        Me.dgvMovimientosDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvMovimientosDetalle.Size = New System.Drawing.Size(612, 540)
         Me.dgvMovimientosDetalle.TabIndex = 0
         '
@@ -81,6 +83,16 @@ Partial Class frmStockEnNotaPedido
         Me.Fecha.Name = "Fecha"
         Me.Fecha.ReadOnly = True
         Me.Fecha.Width = 62
+        '
+        'NumeroNotaPedidoDataGridViewTextBoxColumn
+        '
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.DataPropertyName = "NumeroNotaPedido"
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.HeaderText = "Nro. N. Pedido"
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.MinimumWidth = 105
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.Name = "NumeroNotaPedidoDataGridViewTextBoxColumn"
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.Width = 105
         '
         'ClienteDataGridViewTextBoxColumn
         '
@@ -108,14 +120,14 @@ Partial Class frmStockEnNotaPedido
         Me.Estado.ReadOnly = True
         Me.Estado.Width = 65
         '
-        'NumeroNotaPedidoDataGridViewTextBoxColumn
+        'Detalle
         '
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.DataPropertyName = "NumeroNotaPedido"
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.HeaderText = "Nro. Nota Pedido"
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.Name = "NumeroNotaPedidoDataGridViewTextBoxColumn"
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.NumeroNotaPedidoDataGridViewTextBoxColumn.Width = 105
+        Me.Detalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Detalle.HeaderText = ""
+        Me.Detalle.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.Detalle.Name = "Detalle"
+        Me.Detalle.ReadOnly = True
+        Me.Detalle.Width = 5
         '
         'StockEnNotaPedidoItemViewModelBindingSource
         '
@@ -170,10 +182,11 @@ Partial Class frmStockEnNotaPedido
     Friend WithEvents dgvMovimientosDetalle As DataGridView
     Friend WithEvents btnCancelar As Button
     Friend WithEvents StockEnNotaPedidoItemViewModelBindingSource As BindingSource
+    Friend WithEvents Paginado As Paginado
     Friend WithEvents Fecha As DataGridViewTextBoxColumn
+    Friend WithEvents NumeroNotaPedidoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents ClienteDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CantidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Estado As DataGridViewTextBoxColumn
-    Friend WithEvents NumeroNotaPedidoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents Paginado As Paginado
+    Friend WithEvents Detalle As DataGridViewImageColumn
 End Class

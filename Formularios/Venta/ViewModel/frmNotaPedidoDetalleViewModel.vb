@@ -215,6 +215,10 @@ Namespace Formularios.Venta
         Friend Sub ActualizarItemNotaPedido(ventaItemViewModel As VentaItemViewModel, verificarStock As Boolean)
             Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo = ventaItemViewModel.Codigo)
 
+            If (producto.Stock Is Nothing) Then
+                producto = GuardarProductoCompletoEnListaDeProductos(producto)
+            End If
+
             If verificarStock AndAlso Not HaySotck(producto, ventaItemViewModel.Cantidad) Then
                 Exit Sub
             End If
@@ -345,8 +349,8 @@ Namespace Formularios.Venta
         End Function
 
         Private Sub AgregarComentario(nuevoComentario As String)
-            nuevoComentario = If(Not String.IsNullOrWhiteSpace(Comentario), Environment.NewLine, String.Empty) + nuevoComentario
             If (Not Comentario.Contains(nuevoComentario)) Then
+                nuevoComentario = If(Not String.IsNullOrWhiteSpace(Comentario), Environment.NewLine, String.Empty) + nuevoComentario
                 Comentario += nuevoComentario
             End If
         End Sub

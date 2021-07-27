@@ -14,8 +14,6 @@ Public Class NotaPedido
 
     Sub AgregarNotaPedido(ByVal notaPedido As EntidadNotaPedido, ByVal EntConsumidorFinal As EntidadConsumidorFinal) Implements INotaPedido.AgregarNotaPedido
         Try
-            Log.Info(JsonConvert.SerializeObject(notaPedido))
-
             Dim notaPedidoModel As NotaPedidoModel.NotaPedido = New NotaPedidoModel.NotaPedido(notaPedido.IdSucursal)
             notaPedidoModel.AgregarVendedor(notaPedido.IdEmpleado)
             notaPedidoModel.AgregarTipoCliente(notaPedido.TipoCliente)

@@ -11,6 +11,7 @@ Imports Ventas.Core.Model.VentaAggregate
 Public Class frmVentas
     Inherits Comun
 
+    Private ventaItemViewModelEdicion As VentaItemViewModel = New VentaItemViewModel()
     Private Reserva As Reserva
     Private NotaPedido As NotaPedido
     Private FinalizarDelegate As FinalizarDelegateAsync
@@ -177,6 +178,8 @@ Public Class frmVentas
     End Sub
 
     Private Sub DG_Productos_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles DG_Productos.CellBeginEdit
+        ventaItemViewModelEdicion = DirectCast(DG_Productos.CurrentRow.DataBoundItem, VentaItemViewModel).Copiar()
+
         If DG_Productos.Columns(e.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
             DG_Productos.CurrentCell.Style.Format = String.Format("N2")
             DG_Productos.CurrentCell.Value = DG_Productos.CurrentCell.Value * 100
@@ -189,6 +192,10 @@ Public Class frmVentas
                 If DG_Productos.Columns(e.ColumnIndex).Name = "ProductosPorcentajeBonificacion" Then
                     DG_Productos.CurrentCell.Style.Format = String.Format("P")
                     DG_Productos.CurrentCell.Value = DG_Productos.CurrentCell.Value / 100
+                End If
+
+                If (ventaItemViewModelEdicion.Equals(DG_Productos.CurrentRow.DataBoundItem)) Then
+                    Return
                 End If
 
                 Dim columnas As List(Of String) = New List(Of String) From {"ProductosPorcentajeBonificacion", "ProductosMonto", "ProductosCantidad"}

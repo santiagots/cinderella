@@ -74,7 +74,7 @@ namespace Ventas.Core.Model.VentaAggregate
             }
             else
             {
-                ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+                ventaItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
             }
 
             OrdenarItemsVenta();
@@ -93,7 +93,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
 
-            ventaItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+            ventaItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
 
             OrdenarItemsVenta();
 

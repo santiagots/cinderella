@@ -494,11 +494,11 @@ Partial Class frmRemito
         '
         Me.Cb_IVA.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_IVA.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_IVA.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.FrmRemitoDetalleViewModelBindingSource, "ClienteCondicionIvaSeleccionada", True))
+        Me.Cb_IVA.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.FrmRemitoDetalleViewModelBindingSource, "ClienteCondicionIvaSeleccionada", True))
         Me.Cb_IVA.DataSource = Me.ClienteCondicionIvaBindingSource
         Me.Cb_IVA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_IVA.FormattingEnabled = True
-        Me.Cb_IVA.Location = New System.Drawing.Point(143, 34)
+        Me.Cb_IVA.Location = New System.Drawing.Point(143, 33)
         Me.Cb_IVA.Name = "Cb_IVA"
         Me.Cb_IVA.Size = New System.Drawing.Size(236, 23)
         Me.Cb_IVA.TabIndex = 30

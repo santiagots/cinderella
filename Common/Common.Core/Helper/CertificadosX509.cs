@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Pkcs;
+using Common.Core.Exceptions;
 
 namespace Common.Core.Helper
 {
@@ -45,14 +46,22 @@ namespace Common.Core.Helper
 
         private static X509Certificate2 ObtieneCertificadoDesdeArchivo(string pathCertificado, string passwordCertificado)
         {
+
             X509Certificate2 objCert = new X509Certificate2();
-            if (!string.IsNullOrWhiteSpace(passwordCertificado))
+            try
             {
-                objCert.Import(File.ReadAllBytes(pathCertificado), passwordCertificado, X509KeyStorageFlags.PersistKeySet);
+                if (!string.IsNullOrWhiteSpace(passwordCertificado))
+                {
+                    objCert.Import(File.ReadAllBytes(pathCertificado), passwordCertificado, X509KeyStorageFlags.PersistKeySet);
+                }
+                else
+                {
+                    objCert.Import(File.ReadAllBytes(pathCertificado));
+                }
             }
-            else
+            catch
             {
-                objCert.Import(File.ReadAllBytes(pathCertificado));
+                throw new NegocioException("Se ha producido un error al obtener los datos del certificado. Por favor, verifique que el mismo este correcto o que se encuentre la clave provada del mismo. En caso de que el error persista genere un nuevo certificado en la AFIP.");
             }
             return objCert;
         }

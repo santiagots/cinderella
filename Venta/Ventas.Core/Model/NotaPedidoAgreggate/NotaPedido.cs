@@ -70,7 +70,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             }
             else
             {
-                notaPedidoItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+                notaPedidoItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
             }
             else
             {
-                notaPedidoItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+                notaPedidoItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
 
             NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
 
-            notaPedidoItem.ActualizarMontoProducto(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
+            notaPedidoItem.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
         }
 
         public void Actualizar(string comentario, string usuario)

@@ -29,14 +29,14 @@ namespace Ventas.Core.Model.BaseAgreggate
                 return new MontoProducto(monto, monto * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion);
         }
 
-        internal void ActualizarMontoProducto(decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        internal void Actualizar(decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
             Cantidad = cantidad;
             PorcentajeBonificacion = porcentajeBonificacion;
             MontoProducto = ObtenerMontoProducto(monto, porcentajeFacturacion, tipoCliente);
         }
 
-        internal void ActualizarMontoProducto(MontoProducto monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        internal void Actualizar(MontoProducto monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
         {
             Cantidad = cantidad;
             PorcentajeBonificacion = porcentajeBonificacion;

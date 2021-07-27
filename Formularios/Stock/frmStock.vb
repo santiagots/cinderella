@@ -96,11 +96,17 @@ Public Class frmStock
 
                           If DG_Stock.Columns(e.ColumnIndex).Name = "Reservado" Then
                               Dim StockItemViewModel As StockItemViewModel = DG_Stock.CurrentRow.DataBoundItem
-                              Dim FrmStockEnNotaPedido As frmStockEnNotaPedido = New frmStockEnNotaPedido(StockItemViewModel.Stock.IdProducto)
+                              Dim FrmStockEnNotaPedido As frmStockEnNotaPedido = New frmStockEnNotaPedido(StockItemViewModel.Stock.IdProducto, Me.MdiParent, AddressOf ActualizarPantallaCallback)
                               FrmStockEnNotaPedido.ShowDialog()
                           End If
                       End Function)
     End Sub
+
+    Public Async Function ActualizarPantallaCallback() As Task
+        EjecutarAsync(Async Function() As Task
+                          Await frmStockViewModel.BuscarAsync()
+                      End Function)
+    End Function
 
     Private Sub TabStock_Selected(sender As Object, e As TabControlEventArgs) Handles TabStock.Selected
         Ejecutar(Sub()

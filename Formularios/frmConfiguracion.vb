@@ -664,13 +664,13 @@ Public Class frmConfiguracion
             Dim argumento As String = $"pkcs12 -export -in ""{nombreArchivoCRT}"" -password pass:{PasswordCertificadoFacturacionElectronica} -inkey ""{nombreArchivoKey}"" -out ""{nombreArchivoP12}"""
             EjecutarComando("openssl.exe", argumento, ".\Libs")
 
-            MessageBox.Show("El certificado de la AFIP se ha registrado de forma exitosa", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
             txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
             txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
+
+            MessageBox.Show("El certificado de la AFIP se ha registrado de forma exitosa", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             Log.Error(ex)
-            MessageBox.Show("Error al realizar la accion. Por favor, intente mas tarde o consulte con el administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error al obtener los datos del certificado. Por favor, verifique que el mismo este correcto o que se encuentre la clave provada del mismo. En caso de que el error persista genere un nuevo certificado en la AFIP.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
