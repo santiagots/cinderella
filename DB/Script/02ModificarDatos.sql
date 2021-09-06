@@ -58,23 +58,25 @@ BEGIN
 END
 
 --Altualizo los valores de la tabla STOCK_BITACORA de string a su correspondiente enum
-IF EXISTS (SELECT * FROM [STOCK_BITACORA] WHERE Accion = 'Alta') 
+IF EXISTS (select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where DATA_TYPE = 'varchar' and TABLE_NAME = 'STOCK_BITACORA' and COLUMN_NAME = 'Alta')
 BEGIN
-	update [dbo].[STOCK_BITACORA] set Accion = 0
-	WHERE Accion = 'Alta'
-END
+	IF EXISTS (SELECT * FROM [STOCK_BITACORA] WHERE Accion = 'Alta') 
+	BEGIN
+		update [dbo].[STOCK_BITACORA] set Accion = 0
+		WHERE Accion = 'Alta'
+	END
 
-IF EXISTS (SELECT * FROM [STOCK_BITACORA] WHERE Accion = 'Modificación') 
-BEGIN
-	update [dbo].[STOCK_BITACORA] set Accion = 1
-	WHERE Accion = 'Modificación'
-END
+	IF EXISTS (SELECT * FROM [STOCK_BITACORA] WHERE Accion = 'Modificación') 
+	BEGIN
+		update [dbo].[STOCK_BITACORA] set Accion = 1
+		WHERE Accion = 'Modificación'
+	END
 
-IF EXISTS (SELECT * FROM [STOCK_BITACORA] WHERE Accion = 'Eliminación') 
-BEGIN
-	update [dbo].[STOCK_BITACORA] set Accion = 2
-	WHERE Accion = 'Eliminación'
+	IF EXISTS (SELECT * FROM [STOCK_BITACORA] WHERE Accion = 'Eliminación') 
+	BEGIN
+		update [dbo].[STOCK_BITACORA] set Accion = 2
+		WHERE Accion = 'Eliminación'
+	END
 END
-
 COMMIT TRANSACTION
 GO

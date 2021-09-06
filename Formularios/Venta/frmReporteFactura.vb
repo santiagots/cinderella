@@ -1,12 +1,32 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
-Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Core.Model
 Imports Common.Core.Enum
 Imports Common.Core.Helper
 Imports Ventas.Data.Service
+Imports QRCoder
+Imports System.Drawing.Imaging
+Imports System.IO
+Imports System.Reflection
+Imports Ventas.Core.Model.BaseAgreggate
+Imports Factura.Core.Enum
+Imports Factura.Core.Helper
+Imports Newtonsoft.Json
 
 Public Class frmReporteFactura
+
+    Private Const CODIGO_FACTURA_A = "01"
+    Private Const CODIGO_FACTURA_B = "06"
+    Private Const CODIGO_NOTA_CREDITO_A = "03"
+    Private Const CODIGO_NOTA_CREDITO_B = "08"
+
+    Private Const LETRA_FACTURA_A = "A"
+    Private Const LETRA_FACTURA_B = "B"
+
+    Private Const LEYENDA_FACTURA = "Factura"
+    Private Const LEYENDA_NOTA_CREDITO = "Nota Crédito"
+
+    Private Const LEYENDA_MONOTRIBUTO = "El crédito fiscal discriminado en el presente comprobante, sólo podrá ser computado a efectos del Régimen de Sostenimiento e Inclusión Fiscal para Pequeños Contribuyentes de la Ley N 27.618"
 
     Private TipoCliente As TipoCliente
     Private TipoDocumentoFiscal As TipoDocumentoFiscal
@@ -14,6 +34,8 @@ Public Class frmReporteFactura
     Private ds As New DataSet
     Private dtProductos As New DataTable
     Private dtTotales As New DataTable
+
+    Private RutaImagenCodigoQR As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RQ.png")
 
     Private ReadOnly Property CondicionIva As CondicionIVA
         Get
@@ -51,8 +73,6 @@ Public Class frmReporteFactura
         CargarTotales()
         rpt.Database.Tables("Totales").SetDataSource(dtTotales)
 
-        Dim codigoFactura As String = ObtenerIdentificadorFactura()
-
         CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
         CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
         CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
@@ -82,22 +102,32 @@ Public Class frmReporteFactura
             CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
         End If
 
-        CType(rpt.ReportDefinition.ReportObjects("txtCodigoBarras"), TextObject).Text = codigoFactura
-        CType(rpt.ReportDefinition.ReportObjects("txtIdentificadorFactura"), TextObject).Text = codigoFactura
+        If CondicionIva = CondicionIVA.Monotributo Then
+            CType(rpt.ReportDefinition.ReportObjects("txtComantarios"), TextObject).Text = LEYENDA_MONOTRIBUTO
+        End If
+
         CType(rpt.ReportDefinition.ReportObjects("txtCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CAE, Venta.NotaCredito.CAE)
         CType(rpt.ReportDefinition.ReportObjects("txtVencimientoCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.FechaVencimientoCAE?.ToString("dd/MM/yyyy"), Venta.NotaCredito.FechaVencimientoCAE?.ToString("dd/MM/yyyy"))
+
+
+        rpt.SetParameterValue("rutaImagen", GenerarQRFactura())
 
         CrViewer.ReportSource = rpt
         CrViewer.SelectionMode = SelectionMode.None
         CrViewer.Refresh()
     End Sub
 
+
+
     Private Sub CargarTotales()
-        If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
-            CargarTotalesResponsableInscripto()
-        Else
-            CargarTotalesConsumidorFinal()
-        End If
+        Select Case CondicionIva
+            Case CondicionIVA.Responsable_Inscripto
+            Case CondicionIVA.Monotributo
+                CargarTotalesResponsableInscripto()
+            Case CondicionIVA.Consumidor_Final
+            Case CondicionIVA.Exento
+                CargarTotalesConsumidorFinal()
+        End Select
     End Sub
 
     Private Sub CargarTotalesConsumidorFinal()
@@ -162,21 +192,26 @@ Public Class frmReporteFactura
         Dim montoProducto As Decimal = 0
 
         If (TipoCliente = TipoCliente.Minorista) Then
-            If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
-                montoProducto = Monto.ObtenerSinIVA(item.MontoProducto.Valor, item.Producto.SubCategoria.IVA.Valor, Venta.PorcentajeFacturacion)
-                iva = montoProducto * item.Producto.SubCategoria.IVA.Valor
-            Else
-                montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
-            End If
+            Select Case CondicionIva
+                Case CondicionIVA.Responsable_Inscripto
+                Case CondicionIVA.Monotributo
+                    montoProducto = Monto.ObtenerSinIVA(item.MontoProducto.Valor, item.Producto.SubCategoria.IVA.Valor, Venta.PorcentajeFacturacion)
+                    iva = montoProducto * item.Producto.SubCategoria.IVA.Valor
+                Case CondicionIVA.Consumidor_Final
+                Case CondicionIVA.Exento
+                    montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
+            End Select
         Else
-            If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
-                montoProducto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
-                iva = item.MontoProducto.Iva
-            Else
-                montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
-            End If
+            Select Case CondicionIva
+                Case CondicionIVA.Responsable_Inscripto
+                Case CondicionIVA.Monotributo
+                    montoProducto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
+                    iva = item.MontoProducto.Iva
+                Case CondicionIVA.Consumidor_Final
+                Case CondicionIVA.Exento
+                    montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
+            End Select
         End If
-
         AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, Monto.Redondeo(montoProducto), Monto.Redondeo(iva))
     End Sub
 
@@ -224,34 +259,43 @@ Public Class frmReporteFactura
     End Sub
 
     Private Function ObtenerLetraFactura() As String
-        If (CondicionIva = CondicionIVA.Responsable_Inscripto) Then
-            Return "A"
-        Else
-            Return "B"
-        End If
+        Select Case CondicionIva
+            Case CondicionIVA.Responsable_Inscripto
+            Case CondicionIVA.Monotributo
+                Return LETRA_FACTURA_A
+            Case CondicionIVA.Consumidor_Final
+            Case CondicionIVA.Exento
+                Return LETRA_FACTURA_B
+        End Select
     End Function
 
     Private Function ObtenerNombreFactura(tipoDocumentoFiscal As TipoDocumentoFiscal) As String
         If (tipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
-            Return "Factura"
+            Return LEYENDA_FACTURA
         Else
-            Return "Nota Crédito"
+            Return LEYENDA_NOTA_CREDITO
         End If
     End Function
 
     Private Function ObtenerCodigoFactura() As String
         If TipoDocumentoFiscal = TipoDocumentoFiscal.Factura Then
-            If CondicionIva = CondicionIVA.Responsable_Inscripto Then
-                Return "01"
-            Else
-                Return "06"
-            End If
+            Select Case CondicionIva
+                Case CondicionIVA.Responsable_Inscripto
+                Case CondicionIVA.Monotributo
+                    Return CODIGO_FACTURA_A
+                Case CondicionIVA.Consumidor_Final
+                Case CondicionIVA.Exento
+                    Return CODIGO_FACTURA_B
+            End Select
         Else
-            If CondicionIva = CondicionIVA.Responsable_Inscripto Then
-                Return "03"
-            Else
-                Return "08"
-            End If
+            Select Case CondicionIva
+                Case CondicionIVA.Responsable_Inscripto
+                Case CondicionIVA.Monotributo
+                    Return CODIGO_NOTA_CREDITO_A
+                Case CondicionIVA.Consumidor_Final
+                Case CondicionIVA.Exento
+                    Return CODIGO_NOTA_CREDITO_B
+            End Select
         End If
     End Function
 
@@ -263,43 +307,59 @@ Public Class frmReporteFactura
         End If
     End Function
 
-    Private Function ObtenerIdentificadorFactura() As String
-        Dim cuitEmisor As String = My.Settings.DatosFiscalCUIT
-        Dim puntoVenta As String = My.Settings.PuntoVentaFacturacionElectronica
-        Dim codigoTipoFactura As String = ObtenerCodigoFactura()
-        Dim Cae As String = If(TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito, Venta.NotaCredito.CAE, Venta.Factura.CAE)
-        Dim fechaVencimientoCae As Date = If(TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito, Venta.NotaCredito.FechaVencimientoCAE, Venta.Factura.FechaVencimientoCAE)
+    Private Function GenerarQRFactura() As String
+        Dim QRDatos As String = ObtenerQRDatos()
 
-        Dim codigoFactura As String = $"{cuitEmisor}{codigoTipoFactura}{puntoVenta}{Cae}{fechaVencimientoCae.ToString("yyyyMMdd")}"
-        Dim codigoFacturaSoloNumeros As String = ObtenerSoloNumeros(codigoFactura)
-        Dim digitoFerificador As String = ObtenerDigitoVerificador(codigoFacturaSoloNumeros)
-        Return $"{codigoFacturaSoloNumeros}{digitoFerificador}"
+        Dim qrGenerator As QRCodeGenerator = New QRCodeGenerator()
+        Dim QRCodeData As QRCodeData = qrGenerator.CreateQrCode(QRDatos, QRCodeGenerator.ECCLevel.L)
+        Dim QRCode As QRCode = New QRCode(QRCodeData)
+        Dim qrCodeImage As Bitmap = QRCode.GetGraphic(20, Color.Black, Color.White, True)
+
+        Using memory As MemoryStream = New MemoryStream()
+            Using fs As FileStream = New FileStream(RutaImagenCodigoQR, FileMode.Create, FileAccess.ReadWrite)
+
+                qrCodeImage.Save(memory, ImageFormat.Png)
+                Dim bytes As Byte() = memory.ToArray()
+                fs.Write(bytes, 0, bytes.Length)
+
+            End Using
+        End Using
+        Return RutaImagenCodigoQR
     End Function
 
-    Private Function ObtenerSoloNumeros(texto As String)
-        Dim textoSoloNumeros As String = ""
+    Private Function ObtenerQRDatos() As String
 
-        For Each caracter As Char In texto.ToCharArray()
-            If Char.IsDigit(caracter) Then
-                textoSoloNumeros += caracter
-            End If
-        Next
+        Dim documento As DocumentoFiscal
+        Dim numeroConprobante As Integer = 0
+        If (TipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
+            documento = Venta.Factura
+            numeroConprobante = Venta.Factura.NumeroFactura.First().Numero
+        Else
+            documento = Venta.NotaCredito
+            numeroConprobante = Venta.NotaCredito.NumeroNotaCredito.First().Numero
+        End If
 
-        Return textoSoloNumeros
+        Dim qrDatos = New With {
+                                    .ver = 1,
+                                    .fecha = documento.Fecha.ToString("yyyy-MM-dd"),
+                                    .Cuit = AfipFacturacionElectronicaConstantes.CUIT_FACTURACION,
+                                    .ptoVta = documento.PuntoVenta,
+                                    .tipoCmp = AfipFacturacionElectronica.ObtenerTipoComprobante(Nothing, documento.CondicionIVA, TipoDocumentoFiscal),
+                                    .nroCmp = numeroConprobante,
+                                    .importe = documento.Total,
+                                    .moneda = AfipFacturacionElectronicaConstantes.PESOS,
+                                    .ctz = AfipFacturacionElectronicaConstantes.PESOS_COTIZACION,
+                                    .tipoDocRec = AfipFacturacionElectronica.ObtenerTipoDocumento(documento.CondicionIVA),
+                                    .nroDocRec = Long.Parse(documento.CUIT),
+                                    .tipoCodAut = AfipFacturacionElectronicaConstantes.COMPROBANTE_AUTORIZADO_POR_CAE,
+                                    .codAut = Long.Parse(documento.CAE)
+                                }
+
+        Return Base64Encode(JsonConvert.SerializeObject(qrDatos))
     End Function
 
-    Private Function ObtenerDigitoVerificador(facturaCodigo As String) As String
-        Dim digitosCodigo As Char() = facturaCodigo.ToCharArray()
-        Dim sumaPar As Integer = 0
-        Dim sumaInpar As Integer = 0
-        For i = 0 To digitosCodigo.Length - 1
-            If ((i + 1) Mod 2 = 0) Then
-                sumaPar += Integer.Parse(digitosCodigo(i))
-            Else
-                sumaInpar += Integer.Parse(digitosCodigo(i))
-            End If
-        Next
-        Dim total As Integer = (sumaInpar * 3) + sumaPar
-        Return (10 - (total Mod 10)).ToString()
+    Private Function Base64Encode(plainText As String) As String
+        Dim plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText)
+        Return Convert.ToBase64String(plainTextBytes)
     End Function
 End Class

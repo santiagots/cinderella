@@ -103,6 +103,7 @@ namespace Ventas.Data.Repository
             venta.Cheques.ForEach(x => x.EstadoEntidad = EstadoEntidad.Nuevo);
             if(venta.NotaCredito != null) venta.NotaCredito.EstadoEntidad = EstadoEntidad.Nuevo;
             if(venta.Factura != null) venta.Factura.EstadoEntidad = EstadoEntidad.Nuevo;
+            if(venta.Factura != null && venta.Factura.NumeroFactura != null) venta.Factura.NumeroFactura.ForEach(x => x.EstadoEntidad = EstadoEntidad.Nuevo);
 
             _context.AttachRecursive(venta);
 

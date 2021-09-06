@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports Common.Core.Helper
 Imports Common.Data
+Imports Factura.Core.Enum
 Imports Factura.Device.Printer
 Imports Factura.ExternalService
 
@@ -30,9 +31,9 @@ Namespace My
                 Case NameOf(settings.DatosFiscalCUIT)
                     Dim cuit As Long = 0
                     Long.TryParse(e.NewValue.Replace("-", ""), cuit)
-                    AfipFacturacionElectronicaService.CUIT_FACTURACION = cuit
+                    AfipFacturacionElectronicaConstantes.CUIT_FACTURACION = cuit
                 Case NameOf(settings.PuntoVentaFacturacionElectronica)
-                    AfipFacturacionElectronicaService.PUNTO_VENTA = e.NewValue
+                    AfipFacturacionElectronicaConstantes.PUNTO_VENTA = e.NewValue
 
                 Case NameOf(settings.ConexionRemoto)
                     Datos.Conexion.STRING_CONEXION_BASE_REMOTA = e.NewValue.ToString()
@@ -64,8 +65,8 @@ Namespace My
 
             Dim cuit As Long = 0
             Long.TryParse(settings.DatosFiscalCUIT.Replace("-", ""), cuit)
-            AfipFacturacionElectronicaService.CUIT_FACTURACION = cuit
-            AfipFacturacionElectronicaService.PUNTO_VENTA = settings.PuntoVentaFacturacionElectronica
+            AfipFacturacionElectronicaConstantes.CUIT_FACTURACION = cuit
+            AfipFacturacionElectronicaConstantes.PUNTO_VENTA = settings.PuntoVentaFacturacionElectronica
         End Sub
     End Class
 End Namespace

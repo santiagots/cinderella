@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\AfipFacturacionElectronicaConstantes.cs" />
     <Compile Include="Enum\ModeloControladoraFiscal.cs" />
+    <Compile Include="Helper\AfipFacturacionElectronica.cs" />
     <Compile Include="Interfaces\IAfipTokenAccesRepository.cs" />
     <Compile Include="Model\AfipAgreggate\AfipTokenAcces.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

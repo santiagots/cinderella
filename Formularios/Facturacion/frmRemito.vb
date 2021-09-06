@@ -43,7 +43,9 @@ Public Class frmRemito
 
                           frmRemitoDetalleViewModel.ImprimirRemito()
 
-                          If (MessageBox.Show("¿Desea imprimir las etiquetas para los bultos?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                          If (frmRemitoDetalleViewModel.CantidadBultos > 0 AndAlso
+                              MessageBox.Show("¿Desea imprimir las etiquetas para los bultos?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+
                               frmRemitoDetalleViewModel.ImprimirBulto()
                           End If
                       End Function)

@@ -25,10 +25,10 @@ namespace Common.Core.Helper
             switch (condicionIVA)
             {
                 case CondicionIVA.Consumidor_Final:
-                case CondicionIVA.Monotributo:
                 case CondicionIVA.Exento:
                     decimal montoSinIva = Monto.ObtenerSinIVA(monto, iva);
                     return montoSinIva;
+                case CondicionIVA.Monotributo:
                 case CondicionIVA.Responsable_Inscripto:
                     return monto;
                 default:

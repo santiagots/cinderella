@@ -14,8 +14,6 @@ Imports Factura.Service.NotaCredito.Contracts
 Imports Factura.Service.Factura.Contracts
 Imports Factura.Service.Common.Contracts
 Imports Ventas.Core.Model.VentaAggregate
-Imports Ventas.Core.Model.ValueObjects
-Imports Ventas.Core.Model.BaseAgreggate
 Imports Common.Data.Service
 
 Namespace Formularios.Facturacion

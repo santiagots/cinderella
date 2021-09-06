@@ -22,7 +22,7 @@ Partial Class frmReporteFactura
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReporteTransaccion))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReporteFactura))
         Me.CrViewer = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
         Me.SuspendLayout()
         '
@@ -32,6 +32,9 @@ Partial Class frmReporteFactura
         Me.CrViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.CrViewer.Cursor = System.Windows.Forms.Cursors.Default
         Me.CrViewer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CrViewer.EnableDrillDown = False
+        Me.CrViewer.EnableRefresh = False
+        Me.CrViewer.EnableToolTips = False
         Me.CrViewer.Location = New System.Drawing.Point(0, 0)
         Me.CrViewer.Name = "CrViewer"
         Me.CrViewer.ShowCloseButton = False
@@ -42,14 +45,14 @@ Partial Class frmReporteFactura
         Me.CrViewer.TabIndex = 0
         Me.CrViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
-        'frmReporteTransaccion
+        'frmReporteFactura
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(794, 572)
         Me.Controls.Add(Me.CrViewer)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "frmReporteTransaccion"
+        Me.Name = "frmReporteFactura"
         Me.Text = "Venta"
         Me.ResumeLayout(False)
 
