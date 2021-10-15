@@ -59,7 +59,7 @@ namespace Common.Service.NotaCredito
 
             foreach (IGrouping<IVA, ProductoRequest> grupo in grupos)
             {
-                decimal monto = ObtenerMontoSegunTipoDeCliente(grupo.Sum(y => y.NetoTotal), grupo.Key.Valor, condicionIVA);
+                decimal monto = Monto.ObtenerMontoSinIvaSegunTipoDeCliente(grupo.Sum(y => y.NetoTotal), grupo.Key.Valor, condicionIVA);
                 alicuotasIva.Add(new AfipAlicuotaIvaRequest()
                 {
                     Codigo = grupo.Key.Id,
@@ -69,22 +69,6 @@ namespace Common.Service.NotaCredito
             }
 
             return alicuotasIva;
-        }
-
-        internal decimal ObtenerMontoSegunTipoDeCliente(decimal monto, decimal iva, CondicionIVA condicionIVA)
-        {
-            switch (condicionIVA)
-            {
-                case CondicionIVA.Consumidor_Final:
-                case CondicionIVA.Monotributo:
-                case CondicionIVA.Exento:
-                    decimal montoSinIva = Monto.ObtenerSinIVA(monto, iva);
-                    return montoSinIva;
-                case CondicionIVA.Responsable_Inscripto:
-                    return monto;
-                default:
-                    throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIVA.ToString()}");
-            }
         }
     }
 }

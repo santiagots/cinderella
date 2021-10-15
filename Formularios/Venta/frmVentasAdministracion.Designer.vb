@@ -79,10 +79,11 @@ Partial Class frmVentasAdministracion
         Me.Label19 = New System.Windows.Forms.Label()
         Me.TbDetalle = New System.Windows.Forms.TabPage()
         Me.Gb_Anulado = New System.Windows.Forms.GroupBox()
+        Me.BtnAnularProducto = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtDescripcionAnular = New System.Windows.Forms.TextBox()
-        Me.BtnAnular = New System.Windows.Forms.Button()
+        Me.BtnAnularVenta = New System.Windows.Forms.Button()
         Me.lblcontenedor = New System.Windows.Forms.GroupBox()
         Me.BtnNotaCreditoDetalle = New System.Windows.Forms.Button()
         Me.BtnFacturaDetalle = New System.Windows.Forms.Button()
@@ -714,10 +715,11 @@ Partial Class frmVentasAdministracion
         '
         Me.Gb_Anulado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Gb_Anulado.Controls.Add(Me.BtnAnularProducto)
         Me.Gb_Anulado.Controls.Add(Me.TextBox1)
         Me.Gb_Anulado.Controls.Add(Me.Label1)
         Me.Gb_Anulado.Controls.Add(Me.txtDescripcionAnular)
-        Me.Gb_Anulado.Controls.Add(Me.BtnAnular)
+        Me.Gb_Anulado.Controls.Add(Me.BtnAnularVenta)
         Me.Gb_Anulado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.Gb_Anulado.Location = New System.Drawing.Point(10, 548)
         Me.Gb_Anulado.Name = "Gb_Anulado"
@@ -725,6 +727,22 @@ Partial Class frmVentasAdministracion
         Me.Gb_Anulado.TabIndex = 16
         Me.Gb_Anulado.TabStop = False
         Me.Gb_Anulado.Text = "Anular Venta - Motivo"
+        '
+        'BtnAnularProducto
+        '
+        Me.BtnAnularProducto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnAnularProducto.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnAnularProducto.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmVentasAdministracionViewModelBindingSource, "HabilitarAnular", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.BtnAnularProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnAnularProducto.Image = Global.SistemaCinderella.My.Resources.Recursos.Desconectado
+        Me.BtnAnularProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnAnularProducto.Location = New System.Drawing.Point(784, 115)
+        Me.BtnAnularProducto.Name = "BtnAnularProducto"
+        Me.BtnAnularProducto.Size = New System.Drawing.Size(138, 27)
+        Me.BtnAnularProducto.TabIndex = 18
+        Me.BtnAnularProducto.Text = "Anular Producto"
+        Me.BtnAnularProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnAnularProducto.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
@@ -758,21 +776,21 @@ Partial Class frmVentasAdministracion
         Me.txtDescripcionAnular.Size = New System.Drawing.Size(913, 88)
         Me.txtDescripcionAnular.TabIndex = 15
         '
-        'BtnAnular
+        'BtnAnularVenta
         '
-        Me.BtnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnAnular.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BtnAnular.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmVentasAdministracionViewModelBindingSource, "HabilitarAnular", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.BtnAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnAnular.Image = Global.SistemaCinderella.My.Resources.Recursos.Desconectado
-        Me.BtnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BtnAnular.Location = New System.Drawing.Point(844, 114)
-        Me.BtnAnular.Name = "BtnAnular"
-        Me.BtnAnular.Size = New System.Drawing.Size(78, 27)
-        Me.BtnAnular.TabIndex = 14
-        Me.BtnAnular.Text = "Anular"
-        Me.BtnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.BtnAnular.UseVisualStyleBackColor = True
+        Me.BtnAnularVenta.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BtnAnularVenta.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnAnularVenta.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmVentasAdministracionViewModelBindingSource, "HabilitarAnular", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.BtnAnularVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnAnularVenta.Image = Global.SistemaCinderella.My.Resources.Recursos.Desconectado
+        Me.BtnAnularVenta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BtnAnularVenta.Location = New System.Drawing.Point(660, 115)
+        Me.BtnAnularVenta.Name = "BtnAnularVenta"
+        Me.BtnAnularVenta.Size = New System.Drawing.Size(118, 27)
+        Me.BtnAnularVenta.TabIndex = 14
+        Me.BtnAnularVenta.Text = "Anular Venta"
+        Me.BtnAnularVenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnAnularVenta.UseVisualStyleBackColor = True
         '
         'lblcontenedor
         '
@@ -860,6 +878,8 @@ Partial Class frmVentasAdministracion
         Me.VentaDetalle.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.VentaDetalle.ColumnaFacturarVisible = True
+        Me.VentaDetalle.ColumnaSeleccionarVisible = True
         Me.VentaDetalle.Location = New System.Drawing.Point(6, 20)
         Me.VentaDetalle.Name = "VentaDetalle"
         Me.VentaDetalle.Size = New System.Drawing.Size(916, 471)
@@ -911,7 +931,7 @@ Partial Class frmVentasAdministracion
     Friend WithEvents lblcontenedor As System.Windows.Forms.GroupBox
     Friend WithEvents Gb_Anulado As System.Windows.Forms.GroupBox
     Friend WithEvents txtDescripcionAnular As System.Windows.Forms.TextBox
-    Friend WithEvents BtnAnular As System.Windows.Forms.Button
+    Friend WithEvents BtnAnularVenta As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents BtnFiltrar As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label
@@ -968,4 +988,5 @@ Partial Class frmVentasAdministracion
     Friend WithEvents TipoFacturaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents NumeroFactura As DataGridViewTextBoxColumn
     Friend WithEvents Anulado As DataGridViewTextBoxColumn
+    Friend WithEvents BtnAnularProducto As Button
 End Class

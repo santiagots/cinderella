@@ -233,7 +233,7 @@ Namespace Formularios.Facturacion
         End Sub
 
         Public Async Function AnularVentaAsync(venta As Model.Venta) As Task
-            venta.Anular(MotivoAnulacion + $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
+            venta.Anular(MotivoAnulacion, $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
             Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
             MessageBox.Show("Se ha anulado la venta de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Function

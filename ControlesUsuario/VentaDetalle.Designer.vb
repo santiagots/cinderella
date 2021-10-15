@@ -60,7 +60,8 @@ Partial Class VentaDetalle
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalDataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PagosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.DG_ProductosTotales = New System.Windows.Forms.DataGridView()
+        Me.TotalSeleccionada = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CantidadDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -68,6 +69,8 @@ Partial Class VentaDetalle
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalFacturar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalAnulada = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalVentaItemBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox7 = New System.Windows.Forms.TextBox()
@@ -84,7 +87,9 @@ Partial Class VentaDetalle
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.VentaItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Seleccionada = New SistemaCinderella.DataGridViewCheckBoxHeaderColumn()
         Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CantidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -92,17 +97,18 @@ Partial Class VentaDetalle
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.VentaItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Facturar = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Anulada = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TotalPagoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VentaDetalleBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PagosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TotalVentaItemBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VentaItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -112,9 +118,9 @@ Partial Class VentaDetalle
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.DataGridView4, 0, 4)
         Me.TableLayoutPanel3.Controls.Add(Me.DataGridView3, 0, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.DataGridView2, 0, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.DG_ProductosTotales, 0, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel2, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.DataGridView1, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.DG_Productos, 0, 1)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
@@ -283,23 +289,33 @@ Partial Class VentaDetalle
         Me.PagosBindingSource.DataMember = "Pagos"
         Me.PagosBindingSource.DataSource = Me.VentaDetalleBindingSource
         '
-        'DataGridView2
+        'DG_ProductosTotales
         '
-        Me.DataGridView2.AllowUserToAddRows = False
-        Me.DataGridView2.AllowUserToDeleteRows = False
-        Me.DataGridView2.AutoGenerateColumns = False
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.ColumnHeadersVisible = False
-        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn1, Me.NombreDataGridViewTextBoxColumn1, Me.CantidadDataGridViewTextBoxColumn1, Me.MontoDataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.TotalDataGridViewTextBoxColumn1, Me.PorcentajeBonificacionDataGridViewTextBoxColumn1})
-        Me.DataGridView2.DataSource = Me.TotalVentaItemBindingSource
-        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView2.Location = New System.Drawing.Point(3, 262)
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.ReadOnly = True
-        Me.DataGridView2.RowHeadersVisible = False
-        Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView2.Size = New System.Drawing.Size(894, 24)
-        Me.DataGridView2.TabIndex = 75
+        Me.DG_ProductosTotales.AllowUserToAddRows = False
+        Me.DG_ProductosTotales.AllowUserToDeleteRows = False
+        Me.DG_ProductosTotales.AutoGenerateColumns = False
+        Me.DG_ProductosTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DG_ProductosTotales.ColumnHeadersVisible = False
+        Me.DG_ProductosTotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TotalSeleccionada, Me.CodigoDataGridViewTextBoxColumn1, Me.NombreDataGridViewTextBoxColumn1, Me.CantidadDataGridViewTextBoxColumn1, Me.MontoDataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.TotalDataGridViewTextBoxColumn1, Me.PorcentajeBonificacionDataGridViewTextBoxColumn1, Me.TotalFacturar, Me.TotalAnulada})
+        Me.DG_ProductosTotales.DataSource = Me.TotalVentaItemBindingSource
+        Me.DG_ProductosTotales.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DG_ProductosTotales.Location = New System.Drawing.Point(3, 262)
+        Me.DG_ProductosTotales.Name = "DG_ProductosTotales"
+        Me.DG_ProductosTotales.ReadOnly = True
+        Me.DG_ProductosTotales.RowHeadersVisible = False
+        Me.DG_ProductosTotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DG_ProductosTotales.Size = New System.Drawing.Size(894, 24)
+        Me.DG_ProductosTotales.TabIndex = 75
+        '
+        'TotalSeleccionada
+        '
+        Me.TotalSeleccionada.HeaderText = "Seleccionada"
+        Me.TotalSeleccionada.MinimumWidth = 25
+        Me.TotalSeleccionada.Name = "TotalSeleccionada"
+        Me.TotalSeleccionada.ReadOnly = True
+        Me.TotalSeleccionada.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.TotalSeleccionada.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.TotalSeleccionada.Width = 25
         '
         'CodigoDataGridViewTextBoxColumn1
         '
@@ -357,6 +373,25 @@ Partial Class VentaDetalle
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn1"
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.ReadOnly = True
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn1.Width = 85
+        '
+        'TotalFacturar
+        '
+        Me.TotalFacturar.HeaderText = "Factura"
+        Me.TotalFacturar.MinimumWidth = 30
+        Me.TotalFacturar.Name = "TotalFacturar"
+        Me.TotalFacturar.ReadOnly = True
+        Me.TotalFacturar.Width = 30
+        '
+        'TotalAnulada
+        '
+        Me.TotalAnulada.DataPropertyName = "Anulada"
+        Me.TotalAnulada.HeaderText = "Anulada"
+        Me.TotalAnulada.MinimumWidth = 35
+        Me.TotalAnulada.Name = "TotalAnulada"
+        Me.TotalAnulada.ReadOnly = True
+        Me.TotalAnulada.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.TotalAnulada.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.TotalAnulada.Width = 35
         '
         'TotalVentaItemBindingSource
         '
@@ -551,22 +586,36 @@ Partial Class VentaDetalle
         Me.TextBox1.Size = New System.Drawing.Size(162, 20)
         Me.TextBox1.TabIndex = 70
         '
-        'DataGridView1
+        'DG_Productos
         '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AutoGenerateColumns = False
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.DataGridViewTextBoxColumn1, Me.TotalDataGridViewTextBoxColumn, Me.PorcentajeBonificacionDataGridViewTextBoxColumn})
-        Me.DataGridView1.DataSource = Me.VentaItemsBindingSource
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 73)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.RowHeadersVisible = False
-        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(894, 183)
-        Me.DataGridView1.TabIndex = 74
+        Me.DG_Productos.AllowUserToAddRows = False
+        Me.DG_Productos.AllowUserToDeleteRows = False
+        Me.DG_Productos.AutoGenerateColumns = False
+        Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Seleccionada, Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.CantidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.DataGridViewTextBoxColumn1, Me.TotalDataGridViewTextBoxColumn, Me.PorcentajeBonificacionDataGridViewTextBoxColumn, Me.Facturar, Me.Anulada})
+        Me.DG_Productos.DataSource = Me.VentaItemsBindingSource
+        Me.DG_Productos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DG_Productos.Location = New System.Drawing.Point(3, 73)
+        Me.DG_Productos.Name = "DG_Productos"
+        Me.DG_Productos.RowHeadersVisible = False
+        Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DG_Productos.Size = New System.Drawing.Size(894, 183)
+        Me.DG_Productos.TabIndex = 74
+        '
+        'VentaItemsBindingSource
+        '
+        Me.VentaItemsBindingSource.DataMember = "VentaItems"
+        Me.VentaItemsBindingSource.DataSource = Me.VentaDetalleBindingSource
+        '
+        'Seleccionada
+        '
+        Me.Seleccionada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Seleccionada.DataPropertyName = "Seleccionada"
+        Me.Seleccionada.HeaderText = ""
+        Me.Seleccionada.MinimumWidth = 25
+        Me.Seleccionada.Name = "Seleccionada"
+        Me.Seleccionada.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Seleccionada.Width = 25
         '
         'CodigoDataGridViewTextBoxColumn
         '
@@ -574,6 +623,7 @@ Partial Class VentaDetalle
         Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
         Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
         Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CodigoDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CodigoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CodigoDataGridViewTextBoxColumn.Width = 75
         '
@@ -584,6 +634,7 @@ Partial Class VentaDetalle
         Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
         Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
         Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        Me.NombreDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.NombreDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'CantidadDataGridViewTextBoxColumn
@@ -592,6 +643,7 @@ Partial Class VentaDetalle
         Me.CantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad"
         Me.CantidadDataGridViewTextBoxColumn.Name = "CantidadDataGridViewTextBoxColumn"
         Me.CantidadDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CantidadDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CantidadDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CantidadDataGridViewTextBoxColumn.Width = 75
         '
@@ -603,6 +655,7 @@ Partial Class VentaDetalle
         Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
         Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.MontoDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.MontoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'DataGridViewTextBoxColumn1
@@ -613,6 +666,7 @@ Partial Class VentaDetalle
         Me.DataGridViewTextBoxColumn1.HeaderText = "Iva"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'TotalDataGridViewTextBoxColumn
@@ -623,6 +677,7 @@ Partial Class VentaDetalle
         Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
         Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
         Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
+        Me.TotalDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.TotalDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'PorcentajeBonificacionDataGridViewTextBoxColumn
@@ -633,13 +688,30 @@ Partial Class VentaDetalle
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.HeaderText = "% Bonif."
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Name = "PorcentajeBonificacionDataGridViewTextBoxColumn"
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.ReadOnly = True
+        Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.PorcentajeBonificacionDataGridViewTextBoxColumn.Width = 85
         '
-        'VentaItemsBindingSource
+        'Facturar
         '
-        Me.VentaItemsBindingSource.DataMember = "VentaItems"
-        Me.VentaItemsBindingSource.DataSource = Me.VentaDetalleBindingSource
+        Me.Facturar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Facturar.DataPropertyName = "Facturar"
+        Me.Facturar.HeaderText = "Fta."
+        Me.Facturar.MinimumWidth = 30
+        Me.Facturar.Name = "Facturar"
+        Me.Facturar.ReadOnly = True
+        Me.Facturar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Facturar.Width = 30
+        '
+        'Anulada
+        '
+        Me.Anulada.DataPropertyName = "Anulada"
+        Me.Anulada.HeaderText = "Anul."
+        Me.Anulada.MinimumWidth = 35
+        Me.Anulada.Name = "Anulada"
+        Me.Anulada.ReadOnly = True
+        Me.Anulada.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Anulada.Width = 35
         '
         'VentaDetalle
         '
@@ -654,11 +726,11 @@ Partial Class VentaDetalle
         CType(Me.VentaDetalleBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PagosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TotalVentaItemBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.VentaItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -691,8 +763,8 @@ Partial Class VentaDetalle
     Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DataGridView4 As DataGridView
     Friend WithEvents DataGridView3 As DataGridView
-    Friend WithEvents DataGridView2 As DataGridView
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents DG_ProductosTotales As DataGridView
+    Friend WithEvents DG_Productos As DataGridView
     Friend WithEvents DescripcionDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents MontoDataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents DescuentoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
@@ -705,6 +777,7 @@ Partial Class VentaDetalle
     Friend WithEvents CFTDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents TotalDataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents TotalSeleccionada As DataGridViewTextBoxColumn
     Friend WithEvents CodigoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents CantidadDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
@@ -712,6 +785,9 @@ Partial Class VentaDetalle
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents TotalDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents TotalFacturar As DataGridViewTextBoxColumn
+    Friend WithEvents TotalAnulada As DataGridViewTextBoxColumn
+    Friend WithEvents Seleccionada As DataGridViewCheckBoxHeaderColumn
     Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CantidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -719,4 +795,6 @@ Partial Class VentaDetalle
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents PorcentajeBonificacionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents Facturar As DataGridViewCheckBoxColumn
+    Friend WithEvents Anulada As DataGridViewCheckBoxColumn
 End Class

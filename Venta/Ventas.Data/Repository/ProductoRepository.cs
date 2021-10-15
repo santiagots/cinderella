@@ -24,12 +24,19 @@ namespace Ventas.Data.Repository
             if (producto == null)
                 throw new NegocioException($"El producto con id {idProducto} no existe.");
 
+            producto.Stock = ObtenerStock(idSucursal, producto);
+
+            return producto;
+        }
+
+        private Stock ObtenerStock(int idSucursal, Producto producto)
+        {
             //Obtengo el stock del producto
             Stock stock = _context.Stock.FirstOrDefault(x => x.IdSucursal == idSucursal && x.IdProducto == producto.Id);
 
             if (stock == null)
             {
-                stock = new Stock(idSucursal, idProducto, 0, 0, 0, 0);
+                stock = new Stock(idSucursal, producto.Id, 0, 0, 0, 0);
             }
             else
             {
@@ -38,13 +45,11 @@ namespace Ventas.Data.Repository
                                         .Where(x => !x.Borrado && (x.NotaPedido.Estado == NotaPedidoEstado.Ingresada || x.NotaPedido.Estado == NotaPedidoEstado.Venta) && x.IdProducto == producto.Id)
                                         .Sum(x => (int?)x.Cantidad);
 
-                if(cantidadReservas.HasValue)
-                    stock.Disminuir(cantidadReservas.Value);
+                if (cantidadReservas.HasValue)
+                    stock.CargarReserva(cantidadReservas.Value);
             }
 
-                producto.Stock = stock;
-
-            return producto;
+             return stock;
         }
 
         private IQueryable<Producto> ObtenerConsulta()
@@ -64,12 +69,7 @@ namespace Ventas.Data.Repository
             if (producto == null)
                 throw new NegocioException($"El producto con código {codigo} no existe.");
 
-            Stock stock = _context.Stock.FirstOrDefault(x => x.IdSucursal == idSucursal && x.IdProducto == producto.Id);
-
-            if (stock == null)
-                stock = new Stock(idSucursal, producto.Id, 0, 0, 0, 0);
-
-            producto.Stock = stock;
+            producto.Stock = ObtenerStock(idSucursal, producto);
 
             return producto;
         }
@@ -81,12 +81,7 @@ namespace Ventas.Data.Repository
             if (producto == null)
                 throw new NegocioException($"El producto con el código de barras {codigoBarra} no existe.");
 
-            Stock stock = _context.Stock.FirstOrDefault(x => x.IdSucursal == idSucursal && x.IdProducto == producto.Id);
-
-            if (stock == null)
-                stock = new Stock(idSucursal, producto.Id, 0, 0, 0, 0);
-
-            producto.Stock = stock;
+            producto.Stock = ObtenerStock(idSucursal, producto);
 
             return producto;
         }

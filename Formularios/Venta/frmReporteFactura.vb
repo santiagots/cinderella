@@ -12,6 +12,7 @@ Imports Ventas.Core.Model.BaseAgreggate
 Imports Factura.Core.Enum
 Imports Factura.Core.Helper
 Imports Newtonsoft.Json
+Imports Ventas.Core.Model.ValueObjects
 
 Public Class frmReporteFactura
 
@@ -65,104 +66,130 @@ Public Class frmReporteFactura
         Dim rpt = New ReporteFactura
 
         InicializarTransaccionItemsTable(dtProductos)
-        CargarProductos()
-        rpt.Database.Tables("TransaccionItem").SetDataSource(dtProductos)
-
-
         InicializarTotalesTable(dtTotales)
-        CargarTotales()
-        rpt.Database.Tables("Totales").SetDataSource(dtTotales)
 
-        CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
-        CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
-        CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
-
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
-        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
-        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaTelefono"), TextObject).Text = My.Settings.DatosFiscalTel
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaEmail"), TextObject).Text = My.Settings.DatosFiscalEmail
-
-        CType(rpt.ReportDefinition.ReportObjects("txtFechaEmision"), TextObject).Text = Venta.Factura.Fecha.ToString("dd/MM/yyyy")
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaCuit"), TextObject).Text = My.Settings.DatosFiscalCUIT
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaIIBB"), TextObject).Text = My.Settings.DatosFiscalIIBB
-        CType(rpt.ReportDefinition.ReportObjects("txtInicioActividad"), TextObject).Text = My.Settings.DatosFiscalInicioActividad.ToString("dd/MM/yyyy")
-
-        CType(rpt.ReportDefinition.ReportObjects("txtClienteNombre"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.NombreYApellido, Venta.NotaCredito.NombreYApellido)
-        CType(rpt.ReportDefinition.ReportObjects("txtClienteDNI"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CUIT, Venta.NotaCredito.CUIT)
-        CType(rpt.ReportDefinition.ReportObjects("txtClienteDomicilio"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, $"{Venta.Factura.Direccion} - {Venta.Factura.Localidad}", $"{Venta.NotaCredito.Direccion} - {Venta.NotaCredito.Localidad}")
-        CType(rpt.ReportDefinition.ReportObjects("txtClienteCondicionIva"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CondicionIVA.ToString(), Venta.NotaCredito.CondicionIVA.ToString())
-
-        If TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito Then
-            CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).Text = $"{Venta.Factura.PuntoVenta.ToString().PadLeft(4, "0")} - {Venta.Factura.NumeroFactura.First().Numero.ToString().PadLeft(8, "0")}"
+        If (TipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
+            CargarProductosVenta()
+            CargarTotalesVenta()
         Else
-            CType(rpt.ReportDefinition.ReportObjects("lblComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
-            CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
+            CargarProductosNotaCredito()
+            CargarTotalesNotaCredito()
         End If
 
-        If CondicionIva = CondicionIVA.Monotributo Then
-            CType(rpt.ReportDefinition.ReportObjects("txtComantarios"), TextObject).Text = LEYENDA_MONOTRIBUTO
-        End If
+        rpt.Database.Tables("TransaccionItem").SetDataSource(dtProductos)
+            rpt.Database.Tables("Totales").SetDataSource(dtTotales)
 
-        CType(rpt.ReportDefinition.ReportObjects("txtCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CAE, Venta.NotaCredito.CAE)
-        CType(rpt.ReportDefinition.ReportObjects("txtVencimientoCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.FechaVencimientoCAE?.ToString("dd/MM/yyyy"), Venta.NotaCredito.FechaVencimientoCAE?.ToString("dd/MM/yyyy"))
+            CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
+            CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
+            CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
+
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
+            CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
+            CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaTelefono"), TextObject).Text = My.Settings.DatosFiscalTel
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaEmail"), TextObject).Text = My.Settings.DatosFiscalEmail
+
+            CType(rpt.ReportDefinition.ReportObjects("txtFechaEmision"), TextObject).Text = Venta.Factura.Fecha.ToString("dd/MM/yyyy")
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaCuit"), TextObject).Text = My.Settings.DatosFiscalCUIT
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaIIBB"), TextObject).Text = My.Settings.DatosFiscalIIBB
+            CType(rpt.ReportDefinition.ReportObjects("txtInicioActividad"), TextObject).Text = My.Settings.DatosFiscalInicioActividad.ToString("dd/MM/yyyy")
+
+            CType(rpt.ReportDefinition.ReportObjects("txtClienteNombre"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.NombreYApellido, Venta.NotaCredito.NombreYApellido)
+            CType(rpt.ReportDefinition.ReportObjects("txtClienteDNI"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CUIT, Venta.NotaCredito.CUIT)
+            CType(rpt.ReportDefinition.ReportObjects("txtClienteDomicilio"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, $"{Venta.Factura.Direccion} - {Venta.Factura.Localidad}", $"{Venta.NotaCredito.Direccion} - {Venta.NotaCredito.Localidad}")
+            CType(rpt.ReportDefinition.ReportObjects("txtClienteCondicionIva"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CondicionIVA.ToString(), Venta.NotaCredito.CondicionIVA.ToString())
+
+            If TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito Then
+                CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).Text = $"{Venta.Factura.PuntoVenta.ToString().PadLeft(4, "0")} - {Venta.Factura.NumeroFactura.First().Numero.ToString().PadLeft(8, "0")}"
+            Else
+                CType(rpt.ReportDefinition.ReportObjects("lblComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
+                CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
+            End If
+
+            If CondicionIva = CondicionIVA.Monotributo Then
+                CType(rpt.ReportDefinition.ReportObjects("txtComantarios"), TextObject).Text = LEYENDA_MONOTRIBUTO
+            End If
+
+            CType(rpt.ReportDefinition.ReportObjects("txtCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CAE, Venta.NotaCredito.CAE)
+            CType(rpt.ReportDefinition.ReportObjects("txtVencimientoCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.FechaVencimientoCAE?.ToString("dd/MM/yyyy"), Venta.NotaCredito.FechaVencimientoCAE?.ToString("dd/MM/yyyy"))
 
 
-        rpt.SetParameterValue("rutaImagen", GenerarQRFactura())
+            rpt.SetParameterValue("rutaImagen", GenerarQRFactura())
 
-        CrViewer.ReportSource = rpt
-        CrViewer.SelectionMode = SelectionMode.None
-        CrViewer.Refresh()
+            CrViewer.ReportSource = rpt
+            CrViewer.SelectionMode = SelectionMode.None
+            CrViewer.Refresh()
     End Sub
 
 
-
-    Private Sub CargarTotales()
+    Private Sub CargarTotalesVenta()
         Select Case CondicionIva
-            Case CondicionIVA.Responsable_Inscripto
-            Case CondicionIVA.Monotributo
-                CargarTotalesResponsableInscripto()
-            Case CondicionIVA.Consumidor_Final
-            Case CondicionIVA.Exento
-                CargarTotalesConsumidorFinal()
+            Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
+                CargarTotalesResponsableInscriptoVenta()
+            Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
+                CargarTotalesConsumidorFinalVenta()
         End Select
     End Sub
 
-    Private Sub CargarTotalesConsumidorFinal()
-        Dim SubTotal As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalMonto(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        AgregarRowPagos("Sub Total", SubTotal)
+    Private Sub CargarTotalesNotaCredito()
+        Select Case CondicionIva
+            Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
+                CargarTotalesResponsableInscriptoNotaCredito()
+            Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
+                CargarTotalesConsumidorFinalNotaCredito()
+        End Select
+    End Sub
 
-        Dim Descuento As Decimal = -Venta.VentaItems.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        AgregarRowPagos("Descuento", Descuento)
+    Private Sub CargarTotalesConsumidorFinalVenta()
+        Dim totalFacturado As MontoPago = Venta.TotalFacturable(CondicionIva)
 
-        Dim Recargos As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        AgregarRowPagos("Recargos", Recargos)
+        AgregarRowPagos("Sub Total", totalFacturado.Monto)
+        AgregarRowPagos("Descuento", -totalFacturado.Descuento)
+        AgregarRowPagos("Recargos", totalFacturado.CFT)
+        AgregarRowPagos("Total", totalFacturado.Total)
+    End Sub
 
-        Dim Total As Decimal = SubTotal + Descuento + Recargos
+    Private Sub CargarTotalesConsumidorFinalNotaCredito()
+        Dim totalFacturado As MontoPago = Venta.TotalAnuladoYFacturados(CondicionIva)
+
+        AgregarRowPagos("Sub Total", totalFacturado.Monto)
+        AgregarRowPagos("Descuento", -totalFacturado.Descuento)
+        AgregarRowPagos("Recargos", totalFacturado.CFT)
+        AgregarRowPagos("Total", totalFacturado.Total)
+    End Sub
+
+
+    Private Sub CargarTotalesResponsableInscriptoVenta()
+        Dim totalFacturado As MontoPago = Venta.TotalFacturable(CondicionIva)
+        Dim Total As Decimal = totalFacturado.Monto - totalFacturado.Descuento + totalFacturado.CFT
+
+        AgregarRowPagos("Sub Total", totalFacturado.Monto)
+        AgregarRowPagos("Descuento", -totalFacturado.Descuento)
+        AgregarRowPagos("Recargos", totalFacturado.CFT)
+        AgregarRowPagos("Sub Total", Total)
+
+        Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.ObtenerItemsVentaFacturados.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
+        For Each item As IGrouping(Of IVA, VentaItem) In gruposIVAs
+            Dim iva As Decimal = ObtenerMontoIva(item)
+            Total += iva
+            AgregarRowPagos($"IVA {item.Key.Valor.ToString("p")}", iva)
+        Next
 
         AgregarRowPagos("Total", Total)
     End Sub
 
+    Private Sub CargarTotalesResponsableInscriptoNotaCredito()
+        Dim totalFacturado As MontoPago = Venta.TotalAnuladoYFacturados(CondicionIva)
+        Dim Total As Decimal = totalFacturado.Monto - totalFacturado.Descuento + totalFacturado.CFT
 
-    Private Sub CargarTotalesResponsableInscripto()
-        Dim Total As Decimal = 0
+        AgregarRowPagos("Sub Total", totalFacturado.Monto)
+        AgregarRowPagos("Descuento", -totalFacturado.Descuento)
+        AgregarRowPagos("Recargos", totalFacturado.CFT)
+        AgregarRowPagos("Sub Total", Total)
 
-        Dim SubTotal1 As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalMonto(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        AgregarRowPagos("Sub Total", SubTotal1)
-
-        Dim Descuento As Decimal = -Venta.VentaItems.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        AgregarRowPagos("Descuento", Descuento)
-
-        Dim Recargos As Decimal = Venta.VentaItems.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        AgregarRowPagos("Recargos", Recargos)
-
-        Dim SubTotal2 As Decimal = (SubTotal1 + Descuento + Recargos)
-        Total += SubTotal2
-        AgregarRowPagos("Sub Total", SubTotal2)
-
-        Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.VentaItems.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
+        Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.ObtenerItemsVentaAnuladasYFacturados.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
         For Each item As IGrouping(Of IVA, VentaItem) In gruposIVAs
             Dim iva As Decimal = ObtenerMontoIva(item)
             Total += iva
@@ -181,8 +208,14 @@ Public Class frmReporteFactura
         Return total * grupoIva.Key.Valor
     End Function
 
-    Private Sub CargarProductos()
-        For Each item As VentaItem In Venta.VentaItems
+    Private Sub CargarProductosVenta()
+        For Each item As VentaItem In Venta.ObtenerItemsVentaFacturados
+            CargarProducto(item)
+        Next
+    End Sub
+
+    Private Sub CargarProductosNotaCredito()
+        For Each item As VentaItem In Venta.ObtenerItemsVentaAnuladasYFacturados
             CargarProducto(item)
         Next
     End Sub
@@ -193,22 +226,18 @@ Public Class frmReporteFactura
 
         If (TipoCliente = TipoCliente.Minorista) Then
             Select Case CondicionIva
-                Case CondicionIVA.Responsable_Inscripto
-                Case CondicionIVA.Monotributo
+                Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
                     montoProducto = Monto.ObtenerSinIVA(item.MontoProducto.Valor, item.Producto.SubCategoria.IVA.Valor, Venta.PorcentajeFacturacion)
                     iva = montoProducto * item.Producto.SubCategoria.IVA.Valor
-                Case CondicionIVA.Consumidor_Final
-                Case CondicionIVA.Exento
+                Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
                     montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
             End Select
         Else
             Select Case CondicionIva
-                Case CondicionIVA.Responsable_Inscripto
-                Case CondicionIVA.Monotributo
+                Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
                     montoProducto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
                     iva = item.MontoProducto.Iva
-                Case CondicionIVA.Consumidor_Final
-                Case CondicionIVA.Exento
+                Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
                     montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
             End Select
         End If
@@ -260,11 +289,9 @@ Public Class frmReporteFactura
 
     Private Function ObtenerLetraFactura() As String
         Select Case CondicionIva
-            Case CondicionIVA.Responsable_Inscripto
-            Case CondicionIVA.Monotributo
+            Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
                 Return LETRA_FACTURA_A
-            Case CondicionIVA.Consumidor_Final
-            Case CondicionIVA.Exento
+            Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
                 Return LETRA_FACTURA_B
         End Select
     End Function
@@ -280,20 +307,16 @@ Public Class frmReporteFactura
     Private Function ObtenerCodigoFactura() As String
         If TipoDocumentoFiscal = TipoDocumentoFiscal.Factura Then
             Select Case CondicionIva
-                Case CondicionIVA.Responsable_Inscripto
-                Case CondicionIVA.Monotributo
+                Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
                     Return CODIGO_FACTURA_A
-                Case CondicionIVA.Consumidor_Final
-                Case CondicionIVA.Exento
+                Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
                     Return CODIGO_FACTURA_B
             End Select
         Else
             Select Case CondicionIva
-                Case CondicionIVA.Responsable_Inscripto
-                Case CondicionIVA.Monotributo
+                Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
                     Return CODIGO_NOTA_CREDITO_A
-                Case CondicionIVA.Consumidor_Final
-                Case CondicionIVA.Exento
+                Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
                     Return CODIGO_NOTA_CREDITO_B
             End Select
         End If

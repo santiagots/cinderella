@@ -173,6 +173,7 @@ namespace Ventas.Data
             modelBuilder.Entity<VentaItem>().HasRequired(v => v.Producto).WithMany().HasForeignKey(x => x.IdProducto);
             modelBuilder.Entity<VentaItem>().Ignore(t => t.Total);
             modelBuilder.Entity<VentaItem>().Ignore(t => t.PorcentajePago);
+            modelBuilder.Entity<VentaItem>().Ignore(t => t.Seleccionado);
 
             modelBuilder.Entity<NotaPedido>().ToTable("NUEVA_NOTA_PEDIDO");
             modelBuilder.Entity<NotaPedido>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
@@ -252,6 +253,7 @@ namespace Ventas.Data
             modelBuilder.Entity<Stock>().Property(t => t.Modificado).HasColumnName("Modificado");
             modelBuilder.Entity<Stock>().Property(t => t.MotivoModificacion).HasColumnName("Motivo_Mod");
             modelBuilder.Entity<Stock>().Property(t => t.VentaMensual).HasColumnName("Venta_Mensual");
+            modelBuilder.Entity<Stock>().Ignore(t => t.Reservado);
 
             modelBuilder.Entity<Tarjeta>().ToTable("TARJETAS")
                 .Property(t => t.Id).HasColumnName("TarjetaId");

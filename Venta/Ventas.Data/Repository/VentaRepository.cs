@@ -19,7 +19,8 @@ namespace Ventas.Data.Repository
         public void Actualizar(Venta venta)
         {
             venta.EstadoEntidad = EstadoEntidad.Modificado;
-            
+            venta.VentaItems.ForEach(x => x.EstadoEntidad = EstadoEntidad.Modificado);
+
             _context.AttachRecursive(venta);
             _context.SaveChanges();
         }

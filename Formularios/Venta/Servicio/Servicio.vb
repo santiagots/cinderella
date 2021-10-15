@@ -2,9 +2,7 @@
 Imports Common.Core.Interfaces
 Imports Common.Data
 Imports Common.Data.Repository
-Imports Ventas.Core.Enum
 Imports Ventas.Core.Interfaces
-Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
 Imports Model = Ventas.Core.Model.VentaAggregate

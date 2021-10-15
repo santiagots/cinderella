@@ -1,4 +1,5 @@
 ﻿using Common.Core.Enum;
+using Common.Core.Exceptions;
 using Factura.Service.NotaCredito.Contracts;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace Common.Service.NotaCredito
 
         public ObtenerNumeroNotaCretidoResponse ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest request)
         {
+            if (request.Productos == null || request.Productos.Count == 0)
+                throw new NegocioException($"Error al generar la nota de crédito. No se encuentran productos para generar la nota de crédito.");
             return notaCreditoStrategy.ObtenerNumeroNotaCretido(request);
         }
     }

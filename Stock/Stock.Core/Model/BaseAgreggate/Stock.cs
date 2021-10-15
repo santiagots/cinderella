@@ -16,7 +16,7 @@ namespace Stock.Core.Model.BaseAgreggate
         public int Optimo { get; private set; }
         public int VentaMensual { get; private set; }
         public int Reservado { get; private set; }
-        public int Restante => Cantidad - Reservado;
+        public int Disponible => Cantidad - Reservado;
         public bool Habilitado { get; private set; }
         public string MotivoModificacion { get; private set; }
         public int? IdUsuario { get; private set; }

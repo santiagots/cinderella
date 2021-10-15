@@ -44,6 +44,9 @@ Namespace Comunes
                 .ForMember(Function(des) des.Nombre, Sub(opt) opt.MapFrom(Function(src) src.Producto.Nombre)) _
                 .ForMember(Function(des) des.PorcentajeBonificacion, Sub(opt) opt.MapFrom(Function(src) src.PorcentajeBonificacion)) _
                 .ForMember(Function(des) des.PorcentajePago, Sub(opt) opt.MapFrom(Function(src) src.PorcentajePago)) _
+                .ForMember(Function(des) des.Facturar, Sub(opt) opt.MapFrom(Function(src) src.Facturada)) _
+                .ForMember(Function(des) des.Anulada, Sub(opt) opt.MapFrom(Function(src) src.Anulada)) _
+                .ForMember(Function(des) des.Seleccionado, Sub(opt) opt.MapFrom(Function(src) src.Seleccionado)) _
                 .ForMember(Function(des) des.Total, Sub(opt) opt.MapFrom(Function(src) src.Total().toDecimal()))
 
             CreateMap(Of Model.NotaPedidoAgreggate.NotaPedidoItem, VentaItemViewModel)() _

@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 22/6/2021 08:19:07
+Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 7/10/2021 20:18:57
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,110 +24,17 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Altering [dbo].[CLIENTEMAYORISTA]'
+PRINT N'Altering [dbo].[NUEVA_VENTA_ITEMS]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-IF COL_LENGTH(N'[dbo].[CLIENTEMAYORISTA]', N'id_Transporte') IS NULL
-ALTER TABLE [dbo].[CLIENTEMAYORISTA] ADD[id_Transporte] [int] NULL
+IF COL_LENGTH(N'[dbo].[NUEVA_VENTA_ITEMS]', N'Anulada') IS NULL
+ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] ADD[Anulada] [bit] NOT NULL CONSTRAINT [DF_NUEVA_VENTA_ITEMS_Anulada] DEFAULT ((0))
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Creating [dbo].[NUEVA_REMITOS]'
-GO
-IF OBJECT_ID(N'[dbo].[NUEVA_REMITOS]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_REMITOS]
-(
-[Id] [bigint] NOT NULL,
-[IdVenta] [bigint] NOT NULL,
-[Numero] [int] NOT NULL,
-[CondicionIVA] [int] NOT NULL,
-[NombreYApellido] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[CUIT] [varchar] (25) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Direccion] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[Localidad] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[RazonSocialTransporte] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[DireccionTransporte] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[LocalidadTransporte] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[CantidadBultos] [int] NOT NULL,
-[IncluyeFactura] [bit] NOT NULL,
-[DespachoImportacion] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[FechaEdicion] [datetime] NOT NULL,
-[Borrado] [bit] NOT NULL
-)
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating primary key [PK_NUEVA_REMITOS] on [dbo].[NUEVA_REMITOS]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_REMITOS]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_REMITOS]', 'U'))
-ALTER TABLE [dbo].[NUEVA_REMITOS] ADD CONSTRAINT [PK_NUEVA_REMITOS] PRIMARY KEY CLUSTERED  ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating [dbo].[NUEVA_REMITO_ITEMS]'
-GO
-IF OBJECT_ID(N'[dbo].[NUEVA_REMITO_ITEMS]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_REMITO_ITEMS]
-(
-[Id] [bigint] NOT NULL,
-[IdRemito] [bigint] NOT NULL,
-[Codigo] [varchar] (25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Nombre] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Cantidad] [int] NOT NULL,
-[Monto] [numeric] (18, 2) NOT NULL,
-[Iva] [numeric] (18, 2) NOT NULL,
-[FechaEdicion] [datetime] NOT NULL
-)
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating primary key [PK_NUEVA_REMITO_ITEMS] on [dbo].[NUEVA_REMITO_ITEMS]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_REMITO_ITEMS]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_REMITO_ITEMS]', 'U'))
-ALTER TABLE [dbo].[NUEVA_REMITO_ITEMS] ADD CONSTRAINT [PK_NUEVA_REMITO_ITEMS] PRIMARY KEY CLUSTERED  ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating [dbo].[NUEVA_TRANSPORTE]'
-GO
-IF OBJECT_ID(N'[dbo].[NUEVA_TRANSPORTE]', 'U') IS NULL
-CREATE TABLE [dbo].[NUEVA_TRANSPORTE]
-(
-[Id] [int] NOT NULL IDENTITY(1, 1),
-[RazonSocial] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Cuit] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Habilitado] [bit] NOT NULL CONSTRAINT [DF_NUEVA_TRANSPORTE_Habilitado] DEFAULT ((1)),
-[IdDomicilio] [int] NULL
-)
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Creating primary key [PK_NUEVA_TRANSPORTE] on [dbo].[NUEVA_TRANSPORTE]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_TRANSPORTE]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_TRANSPORTE]', 'U'))
-ALTER TABLE [dbo].[NUEVA_TRANSPORTE] ADD CONSTRAINT [PK_NUEVA_TRANSPORTE] PRIMARY KEY CLUSTERED  ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_REMITO_ITEMS]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_REMITO_ITEMS_NUEVA_REMITOS]','F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_REMITO_ITEMS]', 'U'))
-ALTER TABLE [dbo].[NUEVA_REMITO_ITEMS] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_REMITO_ITEMS_NUEVA_REMITOS] FOREIGN KEY ([IdRemito]) REFERENCES [dbo].[NUEVA_REMITOS] ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_REMITOS]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_REMITOS_NUEVA_VENTAS]','F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_REMITOS]', 'U'))
-ALTER TABLE [dbo].[NUEVA_REMITOS] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_REMITOS_NUEVA_VENTAS] FOREIGN KEY ([IdVenta]) REFERENCES [dbo].[NUEVA_VENTAS] ([Id])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Adding foreign keys to [dbo].[NUEVA_TRANSPORTE]'
-GO
-IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_NUEVA_TRANSPORTE_DIRECCION]','F') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_TRANSPORTE]', 'U'))
-ALTER TABLE [dbo].[NUEVA_TRANSPORTE] WITH NOCHECK  ADD CONSTRAINT [FK_NUEVA_TRANSPORTE_DIRECCION] FOREIGN KEY ([IdDomicilio]) REFERENCES [dbo].[DIRECCION] ([id_Direccion])
+IF (COL_LENGTH(N'[dbo].[NUEVA_VENTA_ITEMS]', N'EsFacturable') IS NOT NULL) AND (COL_LENGTH(N'[dbo].[NUEVA_VENTA_ITEMS]', N'Facturada') IS NULL)
+EXEC sp_rename N'[dbo].[NUEVA_VENTA_ITEMS].[EsFacturable]', N'Facturada', N'COLUMN'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

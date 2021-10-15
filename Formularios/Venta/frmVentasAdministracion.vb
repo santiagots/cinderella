@@ -1,7 +1,5 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Enum
-Imports Common.Core.Exceptions
-Imports Common.Core.Helper
 Imports SistemaCinderella.Formularios.Venta
 Imports Model = Ventas.Core.Model.VentaAggregate
 
@@ -99,11 +97,22 @@ Public Class frmVentasAdministracion
         Ejecutar(Sub() ventasAdministracionViewModel.Imprimir())
     End Sub
 
-    Private Sub BtnAnular_Click(sender As Object, e As EventArgs) Handles BtnAnular.Click
+    Private Sub BtnAnularVenta_Click(sender As Object, e As EventArgs) Handles BtnAnularVenta.Click
         EjecutarAsync(Async Function() As Task
                           Dim respuesta As DialogResult = MessageBox.Show("¿Está seguro que desea anular la venta?", "Administración de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                           If respuesta = DialogResult.Yes Then
-                              Await ventasAdministracionViewModel.AnularAsync()
+                              Await ventasAdministracionViewModel.AnularVentaAsync()
+                              VentaDetalle.VentaDetalleBindingSource.ResetBindings(False)
+                          End If
+                      End Function)
+    End Sub
+
+    Private Sub BtnAnularProducto_Click(sender As Object, e As EventArgs) Handles BtnAnularProducto.Click
+        EjecutarAsync(Async Function() As Task
+                          Dim respuesta As DialogResult = MessageBox.Show("¿Está seguro que desea anular el/los productos?", "Administración de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                          If respuesta = DialogResult.Yes Then
+                              Await ventasAdministracionViewModel.AnularProductosAsync()
+                              VentaDetalle.VentaDetalleBindingSource.ResetBindings(False)
                           End If
                       End Function)
     End Sub
@@ -142,6 +151,14 @@ Public Class frmVentasAdministracion
                       End Function)
     End Sub
 
+    Private Sub VentaDetalle_VentaItemModificada(sender As Object, e As VentaItemModificadoEventArgs) Handles VentaDetalle.VentaItemModificada
+        ventasAdministracionViewModel.SeleccionarProducto(e.VentaItemViewModel)
+    End Sub
+
+    Private Sub VentaDetalle_VentaItemSeleccionadas(sender As Object, e As VentaItemSeleccionadasEventArgs) Handles VentaDetalle.VentaItemSeleccionadas
+        ventasAdministracionViewModel.SeleccionarProductoTodos(e.Seleccionada)
+    End Sub
+
     Private Sub EvaluarPermisos()
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Visualizar)) Then
 
@@ -151,9 +168,9 @@ Public Class frmVentasAdministracion
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Anular)) Then
-            BtnAnular.Enabled = True
+            BtnAnularVenta.Enabled = True
         Else
-            BtnAnular.Enabled = False
+            BtnAnularVenta.Enabled = False
         End If
 
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Ventas_Administración_Detalle_Facturar)) Then

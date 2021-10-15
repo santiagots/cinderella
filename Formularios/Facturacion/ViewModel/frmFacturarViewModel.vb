@@ -15,6 +15,7 @@ Imports Factura.Service.Factura.Contracts
 Imports Factura.Service.Common.Contracts
 Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Data.Service
+Imports Ventas.Core.Model.ValueObjects
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -43,7 +44,7 @@ Namespace Formularios.Facturacion
         Public Property Iva As Decimal
         Public Property Total As Decimal
         Public Property CondicionesIVA As BindingList(Of Enums.CondicionIVA)
-        Public Property CondicionesIVASeleccionada As Enums.CondicionIVA
+        Public Property CondicionesIVASeleccionada As Enums.CondicionIVA = CondicionIVA.Consumidor_Final
         Public Property NombreYApellido As String
         Public Property Direccion As String
         Public Property Localidad As String
@@ -163,7 +164,7 @@ Namespace Formularios.Facturacion
                 .NumerosFacturas = Numerosfacturas.ToList()
             }
 
-            obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
+            obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(ventaModel.ObtenerItemsVentaSeleccionados(), desdeReserva, CondicionesIVASeleccionada)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
 
             Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
@@ -209,7 +210,7 @@ Namespace Formularios.Facturacion
                 .NumerosNotaCredito = Numerosfacturas.ToList()
             }
 
-            ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(desdeReserva, ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, CondicionesIVASeleccionada, ventaModel.VentaItems)
+            ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(ventaModel.ObtenerItemsVentaSeleccionadosYFacturados(), desdeReserva, CondicionesIVASeleccionada)
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
 
             Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
@@ -266,11 +267,11 @@ Namespace Formularios.Facturacion
 
         Friend Sub CondicionesIVAChange(condicionesIVA As Enums.CondicionIVA)
             CondicionesIVASeleccionada = condicionesIVA
+            CargarMontos()
             NotifyPropertyChanged(NameOf(Me.CondicionesIVASeleccionada))
         End Sub
 
         Public Async Function CargarDatosAsync() As Task
-            CargarMontos()
             Dim tareas As List(Of Task) = New List(Of Task)()
 
             If (ventaModel.TipoCliente = Enums.TipoCliente.Mayorista) Then
@@ -279,15 +280,33 @@ Namespace Formularios.Facturacion
 
             tareas.Add(CargarNumeroFacturaAsync())
             Await Task.WhenAll(tareas)
+
+            CargarMontos()
         End Function
 
         Public Sub CargarMontos()
-            _Fecha = DateTime.Now()
-            _Subtotal = ventaModel.PagoTotal.Monto * ventaModel.PorcentajeFacturacion
-            _Descuento = ventaModel.PagoTotal.Descuento * ventaModel.PorcentajeFacturacion
-            _CostoFinanciero = ventaModel.PagoTotal.CFT * ventaModel.PorcentajeFacturacion
-            _Iva = ventaModel.PagoTotal.IVA
-            _Total = (ventaModel.PagoTotal.Monto - ventaModel.PagoTotal.Descuento + ventaModel.PagoTotal.CFT) * ventaModel.PorcentajeFacturacion + ventaModel.PagoTotal.IVA
+            Fecha = DateTime.Now()
+
+            Dim MontoTotalPagoFacturable As MontoPago = New MontoPago(0, 0, 0, 0)
+
+            If (tipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
+                MontoTotalPagoFacturable = ventaModel.TotalSeleccionado(CondicionesIVASeleccionada)
+            Else
+                MontoTotalPagoFacturable = ventaModel.TotalSeleccionadosYFacturados(CondicionesIVASeleccionada)
+            End If
+
+            Subtotal = MontoTotalPagoFacturable.Monto
+            Descuento = MontoTotalPagoFacturable.Descuento
+            CostoFinanciero = MontoTotalPagoFacturable.CFT
+            Iva = MontoTotalPagoFacturable.IVA
+            Total = MontoTotalPagoFacturable.Total
+
+            NotifyPropertyChanged(NameOf(Me.Subtotal))
+            NotifyPropertyChanged(NameOf(Me.Descuento))
+            NotifyPropertyChanged(NameOf(Me.CostoFinanciero))
+            NotifyPropertyChanged(NameOf(Me.Iva))
+            NotifyPropertyChanged(NameOf(Me.Total))
+
         End Sub
 
         Public Async Function CargarNumeroFacturaAsync() As Task
@@ -362,7 +381,7 @@ Namespace Formularios.Facturacion
             End If
         End Sub
 
-        Private Function ObtenerProductoRequest(desdeReserva As Boolean, porcentajeFacturacion As Decimal, tipoCliente As TipoCliente, condicionIva As CondicionIVA, ventaItems As List(Of VentaItem)) As List(Of ProductoRequest)
+        Private Function ObtenerProductoRequest(ventaItems As List(Of VentaItem), desdeReserva As Boolean, condicionIva As CondicionIVA) As List(Of ProductoRequest)
 
             Dim request As List(Of ProductoRequest) = New List(Of ProductoRequest)()
 
@@ -378,13 +397,15 @@ Namespace Formularios.Facturacion
             Else
                 For Each ventaItem As VentaItem In ventaItems
 
+                    Dim montoPago As MontoPago = ventaItem.TotalPago(ventaModel.PorcentajeFacturacion, ventaModel.TipoCliente, condicionIva)
+
                     request.Add(New ProductoRequest() With {
                             .Cantidad = ventaItem.Cantidad,
                             .Codigo = ventaItem.Producto.Codigo,
                             .Nombre = ventaItem.Producto.Nombre,
-                            .MontoUnitario = ventaItem.TotalMonto(porcentajeFacturacion, tipoCliente, condicionIva) / ventaItem.Cantidad,
-                            .DescuentoUnitario = ventaItem.TotalDescuento(porcentajeFacturacion, tipoCliente, condicionIva) / ventaItem.Cantidad,
-                            .CFTUnitario = ventaItem.TotalCFT(porcentajeFacturacion, tipoCliente, condicionIva) / ventaItem.Cantidad,
+                            .MontoUnitario = montoPago.Monto / ventaItem.Cantidad,
+                            .DescuentoUnitario = montoPago.Descuento / ventaItem.Cantidad,
+                            .CFTUnitario = montoPago.CFT / ventaItem.Cantidad,
                             .IVA = ventaItem.Producto.SubCategoria.IVA})
                 Next
             End If

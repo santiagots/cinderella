@@ -12,15 +12,15 @@ namespace Common.Core.Helper
 
         public static decimal ObtenerSinIVA(decimal monto, decimal iva, decimal porcentajeFacturacion = 1)
         {
-            return monto / (porcentajeFacturacion * (1 + iva));
+            return (monto / (1 + iva)) * porcentajeFacturacion;
         }
 
         public static decimal ObtenerConIVA(decimal monto, decimal iva, decimal porcentajeFacturacion = 1)
         {
-            return monto * (porcentajeFacturacion * (1 + iva));
+            return (monto * (1 + iva)) * porcentajeFacturacion;
         }
 
-        public static decimal ObtenerMontoSegunTipoDeCliente(decimal monto, decimal iva, CondicionIVA condicionIVA)
+        public static decimal ObtenerMontoSinIvaSegunTipoDeCliente(decimal monto, decimal iva, CondicionIVA condicionIVA)
         {
             switch (condicionIVA)
             {

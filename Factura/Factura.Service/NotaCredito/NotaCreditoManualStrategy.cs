@@ -11,7 +11,7 @@ namespace Common.Service.NotaCredito
             decimal iva = 0;
 
             request.Productos.ForEach(x => {
-                decimal montoSinIva = Monto.ObtenerMontoSegunTipoDeCliente(x.NetoTotal, x.IVA.Valor, request.CondicionIVA);
+                decimal montoSinIva = Monto.ObtenerMontoSinIvaSegunTipoDeCliente(x.NetoTotal, x.IVA.Valor, request.CondicionIVA);
                 subTotal += montoSinIva;
                 iva += montoSinIva * x.IVA.Valor;
             });

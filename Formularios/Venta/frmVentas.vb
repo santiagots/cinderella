@@ -21,6 +21,10 @@ Public Class frmVentas
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
+
+        Dim DatagridViewCheckBoxHeaderCell As DatagridViewCheckBoxHeaderCell = DG_Productos.Columns("Seleccionado").HeaderCell
+        DatagridViewCheckBoxHeaderCell.Checked = True
+        AddHandler DatagridViewCheckBoxHeaderCell.OnCheckBoxClicked, New CheckBoxClickedHandler(AddressOf datagridViewCheckBoxHeaderCell_OnCheckBoxClicked)
     End Sub
 
     Public Sub New(notaPedido As NotaPedido, finalizarDelegate As FinalizarDelegateAsync)
@@ -198,11 +202,26 @@ Public Class frmVentas
                     Return
                 End If
 
-                Dim columnas As List(Of String) = New List(Of String) From {"ProductosPorcentajeBonificacion", "ProductosMonto", "ProductosCantidad"}
+                Dim columnas As List(Of String) = New List(Of String) From {"ProductosPorcentajeBonificacion", "ProductosMonto", "ProductosCantidad", "Seleccionado"}
                 If (columnas.Any(Function(x) DG_Productos.Columns(e.ColumnIndex).Name = x)) Then
                     Dim verificarStock = "ProductosCantidad" = DG_Productos.Columns(e.ColumnIndex).Name
                     ventaViewModel.ActualizarItemVenta(DG_Productos.CurrentRow.DataBoundItem, verificarStock)
                 End If
+            End Sub)
+    End Sub
+
+    ''Fuerzo la ejecucion del EndEdit en el click del checkbox facturar
+    Private Sub DG_Productos_OnCellMouseUp(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DG_Productos.CellMouseUp
+        If e.ColumnIndex = DG_Productos.Columns("Seleccionado").Index Then
+            DG_Productos.EndEdit()
+            DG_Productos_CellEndEdit(Nothing, New DataGridViewCellEventArgs(e.ColumnIndex, e.RowIndex))
+        End If
+    End Sub
+
+    Private Sub datagridViewCheckBoxHeaderCell_OnCheckBoxClicked(columnIndex As Integer, seleccionado As Boolean)
+        Ejecutar(
+            Sub()
+                ventaViewModel.ActualizarEstadoSeleccionadoItemsVenta(seleccionado)
             End Sub)
     End Sub
 

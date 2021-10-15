@@ -14,6 +14,8 @@ namespace Ventas.Core.Model.BaseAgreggate
         public int Cantidad { get; private set; }
         public int Minimo { get; private set; }
         public int Optimo { get; private set; }
+        public int Reservado { get; private set; }
+        public int Disponible => Cantidad - Reservado;
         public bool Habilitado { get; private set; }
         public string MotivoModificacion { get; private set; }
         public int IdUsuario { get; private set; }
@@ -53,6 +55,11 @@ namespace Ventas.Core.Model.BaseAgreggate
         public void Agregar(int cantidad)
         {
             Cantidad += cantidad;
+        }
+
+        public void CargarReserva(int reserva)
+        {
+            Reservado = reserva;
         }
     }
 }

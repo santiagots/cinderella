@@ -57,7 +57,7 @@ Namespace Formularios.Reserva
         End Sub
 
         Public Async Function AnularVentaYEliminarReservaAsync(venta As Model.Venta) As Task
-            venta.Anular($"Venta anulada por borrado de reserva ({VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre})")
+            venta.Anular("Venta anulada por borrado de reserva", $"{VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
             Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
 
             Await Task.Run(Function() Servicio.EliminarReserva(reservaModel.Id))

@@ -1,7 +1,7 @@
 ﻿using Common.Core.Enum;
+using Common.Core.Exceptions;
 using Factura.Service.Factura.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Factura.Service.Factura
@@ -30,6 +30,9 @@ namespace Factura.Service.Factura
 
         public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(ObtenerNumeroFacturaRequest request)
         {
+            if(request.Productos == null || request.Productos.Count == 0)
+                throw new NegocioException($"Error al generar la factura. No se encuentran productos a facturar.");
+
             return facturarStrategy.ObtenerNumeroFactura(request);
         }
 

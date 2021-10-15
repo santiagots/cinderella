@@ -50,7 +50,7 @@ namespace Ventas.Core.Model.VentaAggregate
             Numero = $"{codigoVentaSucursal}{facturada}{Fecha.ToString("yyyyMMdd")}{cantidadVentas.ToString("D9")}";
         }
 
-        public void Anular(string motivo)
+        public void Anular(string motivo, string usuario)
         {
             if (Anulado)
                 throw new NegocioException("Error al anular la venta. La venta ya se encuentra anulada.");
@@ -58,18 +58,37 @@ namespace Ventas.Core.Model.VentaAggregate
             if (string.IsNullOrWhiteSpace(motivo))
                 throw new NegocioException("Error al anular la venta. Debe ingresar un motivo para anular una venta.");
 
+            VentaItems.ForEach(x => x.Anular());
+
             Anulado = true;
-            MotivoAnulado = motivo;
+            MotivoAnulado = $"{DateTime.Now.ToString()} - {usuario.ToString()} - {motivo}";
             FechaAnulado = DateTime.Now;
         }
 
-        public void AgregaVentaItem(Producto producto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
+        public void AnularProductos(List<VentaItem> ventaItem, string usuario)
+        {
+            if (Anulado)
+                throw new NegocioException("Error al anular el/los productos. La venta se encuentra anulada.");
+
+            if (ventaItem == null || ventaItem.Count == 0)
+                throw new NegocioException("Error al anular el/los productos. No se encuentran productos a anular.");
+
+            if (ventaItem.Any(x => x.Anulada))
+                throw new NegocioException("Error al anular el/los productos. Al menos uno de los productos a anular ya se encuentra anulado.");
+
+
+            ventaItem.ForEach(x => x.Anular());
+
+            MotivoAnulado = $"{DateTime.Now.ToString()} - {usuario.ToString()} - Anulación de Productos: {string.Join(", ", ventaItem.Select(x => x.Producto.Nombre).ToList())}{Environment.NewLine}";
+        }
+
+        public void AgregaVentaItem(Producto producto, decimal monto, int cantidad, bool esDevolucion, bool seleccionado, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista)
         {
             VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == producto.Codigo);
 
             if (ventaItem == null)
             {
-                ventaItem = new VentaItem(Id, producto, monto, cantidad, esDevolucion, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
+                ventaItem = new VentaItem(Id, producto, monto, cantidad, esDevolucion, seleccionado, porcentajeBonificacion, porcentajeFacturacion, tipoCliente, montoProductoMinorista, porcentajeBonificacionMinorista, montoProductoMayorista, porcentajeBonificacionMayorista);
                 VentaItems.Add(ventaItem);
             }
             else
@@ -79,11 +98,11 @@ namespace Ventas.Core.Model.VentaAggregate
 
             OrdenarItemsVenta();
 
-           ActualizarPagos();
+            ActualizarPagos();
 
-           ActualizarTotalesPago();
+            ActualizarTotalesPago();
 
-           ActualizarTotalesVenta();
+            ActualizarTotalesVenta();
         }
 
         public void ActualizarVentaItem(string codigoProducto, decimal monto, int cantidad, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
@@ -102,6 +121,13 @@ namespace Ventas.Core.Model.VentaAggregate
             ActualizarTotalesPago();
 
             ActualizarTotalesVenta();
+        }
+
+        public void SeleccionarVentaItem(string codigoProducto, bool seleccionado)
+        {
+            VentaItem ventaItem = VentaItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
+
+            ventaItem.Seleccionar(seleccionado);
         }
 
         public void ActualizarPorcentajeFacturacion(decimal porcentajeFacturacion)
@@ -160,6 +186,8 @@ namespace Ventas.Core.Model.VentaAggregate
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
             if (tipoFactura == TipoFactura.Electronica && string.IsNullOrEmpty(cae))
                 throw new NegocioException($"Error al registrar la factura. No se encuentra un Codigo CAE.");
+
+            ObtenerItemsVentaSeleccionados().ToList().ForEach(x => x.MarcarComoFacturado());
 
             Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, subTotal, iva, total, numeroFactura, cae, fechaVencimientoCae);
         }
@@ -358,6 +386,26 @@ namespace Ventas.Core.Model.VentaAggregate
             return Aux;
         }
 
+        public IEnumerable<VentaItem> ObtenerItemsVentaFacturados()
+        {
+            return VentaItems.Where(x => x.Facturada).ToList();
+        }
+
+        public IEnumerable<VentaItem> ObtenerItemsVentaSeleccionados()
+        {
+            return VentaItems.Where(x => x.Seleccionado).ToList();
+        }
+
+        public IEnumerable<VentaItem> ObtenerItemsVentaAnuladasYFacturados()
+        {
+            return VentaItems.Where(x => x.Anulada && x.Facturada).ToList();
+        }
+
+        public IEnumerable<VentaItem> ObtenerItemsVentaSeleccionadosYFacturados()
+        {
+            return VentaItems.Where(x => x.Seleccionado && x.Facturada).ToList();
+        }
+
         private decimal CalcularSubtota(decimal montoTotal, decimal porcentajeCft)
         {
             decimal subtotal = 0;
@@ -425,6 +473,87 @@ namespace Ventas.Core.Model.VentaAggregate
                 PagoTotal = new MontoPago(0, 0, 0, 0);
             else
                 PagoTotal = Pagos.Select(x => x.MontoPago).Aggregate((x, y) => x + y);
+        }
+
+        public MontoPago TotalFacturable(CondicionIVA condicionIva)
+        {
+            MontoPago MontoTotalPagoFacturable = new MontoPago(0, 0, 0, 0);
+            
+            foreach (var item in ObtenerItemsVentaFacturados())
+            {
+                MontoTotalPagoFacturable += item.TotalPago(PorcentajeFacturacion, TipoCliente, condicionIva);
+            }
+            return MontoTotalPagoFacturable;
+        }
+
+        public MontoPago TotalSeleccionado(CondicionIVA condicionIva)
+        {
+            MontoPago MontoTotalPagoSeleccionados = new MontoPago(0, 0, 0, 0);
+
+            foreach (var item in ObtenerItemsVentaSeleccionados())
+            {
+                MontoTotalPagoSeleccionados += item.TotalPago(PorcentajeFacturacion, TipoCliente, condicionIva);
+            }
+            return MontoTotalPagoSeleccionados;
+        }
+
+        public MontoPago TotalSeleccionadosYFacturados(CondicionIVA condicionIva)
+        {
+            MontoPago MontoTotalPagoSeleccionados = new MontoPago(0, 0, 0, 0);
+
+            foreach (var item in ObtenerItemsVentaSeleccionadosYFacturados())
+            {
+                MontoTotalPagoSeleccionados += item.TotalPago(PorcentajeFacturacion, TipoCliente, condicionIva);
+            }
+            return MontoTotalPagoSeleccionados;
+        }
+
+        public MontoPago TotalAnuladoYFacturados(CondicionIVA condicionIva)
+        {
+            MontoPago MontoTotalPagoFacturable = new MontoPago(0, 0, 0, 0);
+
+            foreach (var item in ObtenerItemsVentaAnuladasYFacturados())
+            {
+                MontoTotalPagoFacturable += item.TotalPago(PorcentajeFacturacion, TipoCliente, condicionIva);
+            }
+            return MontoTotalPagoFacturable;
+        }
+
+
+        public MontoPago TotalFacturable()
+        {
+            if (TipoCliente == TipoCliente.Minorista)
+                return TotalFacturable(CondicionIVA.Consumidor_Final);
+            else
+                return TotalFacturable(CondicionIVA.Responsable_Inscripto);
+
+        }
+
+        public MontoPago TotalSeleccionado()
+        {
+            if (TipoCliente == TipoCliente.Minorista)
+                return TotalSeleccionado(CondicionIVA.Consumidor_Final);
+            else
+                return TotalSeleccionado(CondicionIVA.Responsable_Inscripto);
+
+        }
+
+        public MontoPago TotalSeleccionadosYFacturados()
+        {
+            if (TipoCliente == TipoCliente.Minorista)
+                return TotalSeleccionadosYFacturados(CondicionIVA.Consumidor_Final);
+            else
+                return TotalSeleccionadosYFacturados(CondicionIVA.Responsable_Inscripto);
+
+        }
+
+        public MontoPago TotalAnuladoYFacturados()
+        {
+            if (TipoCliente == TipoCliente.Minorista)
+                return TotalAnuladoYFacturados(CondicionIVA.Consumidor_Final);
+            else
+                return TotalAnuladoYFacturados(CondicionIVA.Responsable_Inscripto);
+
         }
     }
 }

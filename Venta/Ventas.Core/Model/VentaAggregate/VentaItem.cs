@@ -19,6 +19,9 @@ namespace Ventas.Core.Model.VentaAggregate
         public long IdVenta { get; private set; }
         public virtual Venta Venta { get; private set; }
         public bool EsDevolucion { get; private set; }
+        public bool Facturada { get; private set; }
+        public bool Anulada { get; private set; }
+        public bool Seleccionado { get; private set; }
         private decimal _PorcentajePago;
         public decimal PorcentajePago
         {
@@ -35,7 +38,7 @@ namespace Ventas.Core.Model.VentaAggregate
             Pagos = new Dictionary<VentaPago, decimal>();
         }
 
-        internal VentaItem(long idVenta, Producto producto, decimal monto, int cantidad, bool esDevolucion, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
+        internal VentaItem(long idVenta, Producto producto, decimal monto, int cantidad, bool esDevolucion, bool seleccionado,  decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente, decimal montoProductoMinorista, decimal porcentajeBonificacionMinorista, decimal montoProductoMayorista, decimal porcentajeBonificacionMayorista) : base(true)
         {
             Pagos = new Dictionary<VentaPago, decimal>();
             IdVenta = idVenta;
@@ -46,12 +49,24 @@ namespace Ventas.Core.Model.VentaAggregate
             PorcentajePago = 0;
             Cantidad = cantidad;
             EsDevolucion = esDevolucion;
+            Seleccionado = seleccionado;
             FechaEdicion = DateTime.Now;
 
             MontoProductoMinorista = ObtenerMontoProducto(montoProductoMinorista, 1, TipoCliente.Minorista);
             PorcentajeBonificacionMinorista = porcentajeBonificacionMinorista;
             MontoProductoMayorista = ObtenerMontoProducto(montoProductoMayorista, 1, TipoCliente.Mayorista);
             PorcentajeBonificacionMayorista = porcentajeBonificacionMayorista;
+        }
+
+        internal void Anular()
+        {
+            Anulada = true;
+        }
+
+        internal void Actualizar(decimal monto, int cantidad, bool esFacturable, decimal porcentajeBonificacion, decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        {
+            Facturada = esFacturable;
+            base.Actualizar(monto, cantidad, porcentajeBonificacion, porcentajeFacturacion, tipoCliente);
         }
 
         internal decimal AgregarPago(VentaPago pago, decimal porcentajeRecargo, decimal porcentajeFacturacion, TipoCliente tipoCliente)
@@ -95,6 +110,11 @@ namespace Ventas.Core.Model.VentaAggregate
             if(pago != null)
                 Pagos.Remove(pago);
             ActualizarPorcentajePago();
+        }
+
+        internal void Seleccionar(bool seleccionado)
+        {
+            Seleccionado = seleccionado;
         }
 
         internal void QuitarPagos()
@@ -141,7 +161,7 @@ namespace Ventas.Core.Model.VentaAggregate
             decimal cft = monto * porcentajeRecargo;
             decimal montoIva = 0;
 
-            if (tipoCliente == TipoCliente.Mayorista)
+            if (tipoCliente == TipoCliente.Mayorista && Seleccionado)
                 montoIva = (monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion;
 
             return new MontoPago(monto, decuento, cft, montoIva);
@@ -152,9 +172,26 @@ namespace Ventas.Core.Model.VentaAggregate
             return Total * (1 - PorcentajePago);
         }
 
-        internal MontoProducto TotalPago()
+
+        public MontoPago TotalPago(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            return Total * PorcentajePago;
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            decimal monto = pagos.Sum(x => x.MontoPago.Monto);
+            decimal descuento = pagos.Sum(x => x.MontoPago.Descuento);
+            decimal cft = pagos.Sum(x => x.MontoPago.CFT);
+            decimal iva = pagos.Sum(x => x.MontoPago.IVA);
+
+            monto = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, monto);
+            descuento = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, descuento);
+            cft = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
+            iva = CalculaIvaSegunCondicionIvaMayorista(condicionIva, iva);
+
+            return new MontoPago(monto, descuento, cft, iva);
+        }
+
+        internal void MarcarComoFacturado()
+        {
+            Facturada = true;
         }
 
         public decimal TotalMonto(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
@@ -175,6 +212,24 @@ namespace Ventas.Core.Model.VentaAggregate
             IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
             decimal cft = pagos.Sum(x => x.MontoPago.CFT);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
+        }
+
+        public decimal TotalIVA(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
+        {
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            decimal iva = pagos.Sum(x => x.MontoPago.IVA);
+
+            switch (condicionIva)
+            {
+                case CondicionIVA.Consumidor_Final:
+                case CondicionIVA.Exento:
+                    return 0;
+                case CondicionIVA.Monotributo:
+                case CondicionIVA.Responsable_Inscripto:
+                    return iva;
+                default:
+                    throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIva.ToString()}");
+            }
         }
 
         private decimal CalcularMontoSegunCondicionIva(decimal porcentajeFacturacion, CondicionIVA condicionIva, TipoCliente tipoCliente, decimal monto)
@@ -212,8 +267,24 @@ namespace Ventas.Core.Model.VentaAggregate
                 case CondicionIVA.Monotributo:
                     return monto * porcentajeFacturacion;
                 case CondicionIVA.Exento:
+                case CondicionIVA.Consumidor_Final:
                     decimal montoConIva = Monto.ObtenerConIVA(monto, this.Producto.SubCategoria.IVA.Valor, porcentajeFacturacion);
                     return montoConIva;
+                default:
+                    throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIva.ToString()}");
+            }
+        }
+
+        private decimal CalculaIvaSegunCondicionIvaMayorista(CondicionIVA condicionIva, decimal iva)
+        {
+            switch (condicionIva)
+            {
+                case CondicionIVA.Consumidor_Final:
+                case CondicionIVA.Exento:
+                    return 0;
+                case CondicionIVA.Monotributo:
+                case CondicionIVA.Responsable_Inscripto:
+                    return iva;
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIva.ToString()}");
             }

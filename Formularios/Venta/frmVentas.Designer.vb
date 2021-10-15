@@ -127,6 +127,16 @@ Partial Class frmVentas
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txtCuotaCFT = New System.Windows.Forms.TextBox()
         Me.DG_Productos = New SistemaCinderella.CustomDataGrid()
+        Me.VentaItemBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DG_ProductosTotales = New SistemaCinderella.CustomDataGrid()
+        Me.TotalVentaItemBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
+        Me.ListaPrecioBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Seleccionado = New SistemaCinderella.DataGridViewCheckBoxHeaderColumn()
         Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductosCantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -136,8 +146,7 @@ Partial Class frmVentas
         Me.ProductosPorcentajeBonificacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PorcentajePagoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductosQuitar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.VentaItemBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DG_ProductosTotales = New SistemaCinderella.CustomDataGrid()
+        Me.TotalSeleccionado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CantidadDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -147,13 +156,6 @@ Partial Class frmVentas
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PorcentajePagoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TotalVentaItemBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
-        Me.ListaPrecioBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.VentaViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Gb_Producto.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -1216,7 +1218,7 @@ Partial Class frmVentas
         Me.DG_Productos.AutoGenerateColumns = False
         Me.DG_Productos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.ProductosCantidad, Me.ProductosMonto, Me.IvaDataGridViewTextBoxColumn, Me.TotalDataGridViewTextBoxColumn, Me.ProductosPorcentajeBonificacion, Me.PorcentajePagoDataGridViewTextBoxColumn, Me.ProductosQuitar})
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Seleccionado, Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.ProductosCantidad, Me.ProductosMonto, Me.IvaDataGridViewTextBoxColumn, Me.TotalDataGridViewTextBoxColumn, Me.ProductosPorcentajeBonificacion, Me.PorcentajePagoDataGridViewTextBoxColumn, Me.ProductosQuitar})
         Me.DG_Productos.DataSource = Me.VentaItemBindingSource
         Me.DG_Productos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_Productos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
@@ -1226,80 +1228,6 @@ Partial Class frmVentas
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_Productos.Size = New System.Drawing.Size(924, 186)
         Me.DG_Productos.TabIndex = 32
-        '
-        'CodigoDataGridViewTextBoxColumn
-        '
-        Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
-        Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
-        Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
-        Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'NombreDataGridViewTextBoxColumn
-        '
-        Me.NombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
-        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'ProductosCantidad
-        '
-        Me.ProductosCantidad.DataPropertyName = "Cantidad"
-        Me.ProductosCantidad.HeaderText = "Cantidad"
-        Me.ProductosCantidad.Name = "ProductosCantidad"
-        Me.ProductosCantidad.Width = 75
-        '
-        'ProductosMonto
-        '
-        Me.ProductosMonto.DataPropertyName = "Monto"
-        DataGridViewCellStyle13.Format = "C"
-        Me.ProductosMonto.DefaultCellStyle = DataGridViewCellStyle13
-        Me.ProductosMonto.HeaderText = "Monto"
-        Me.ProductosMonto.Name = "ProductosMonto"
-        '
-        'IvaDataGridViewTextBoxColumn
-        '
-        Me.IvaDataGridViewTextBoxColumn.DataPropertyName = "Iva"
-        DataGridViewCellStyle14.Format = "C"
-        Me.IvaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle14
-        Me.IvaDataGridViewTextBoxColumn.HeaderText = "Iva"
-        Me.IvaDataGridViewTextBoxColumn.Name = "IvaDataGridViewTextBoxColumn"
-        Me.IvaDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'TotalDataGridViewTextBoxColumn
-        '
-        Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
-        DataGridViewCellStyle15.Format = "C"
-        Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle15
-        Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
-        Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
-        Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'ProductosPorcentajeBonificacion
-        '
-        Me.ProductosPorcentajeBonificacion.DataPropertyName = "PorcentajeBonificacion"
-        DataGridViewCellStyle16.Format = "P"
-        Me.ProductosPorcentajeBonificacion.DefaultCellStyle = DataGridViewCellStyle16
-        Me.ProductosPorcentajeBonificacion.HeaderText = "% Bonif."
-        Me.ProductosPorcentajeBonificacion.Name = "ProductosPorcentajeBonificacion"
-        Me.ProductosPorcentajeBonificacion.Width = 75
-        '
-        'PorcentajePagoDataGridViewTextBoxColumn
-        '
-        Me.PorcentajePagoDataGridViewTextBoxColumn.DataPropertyName = "PorcentajePago"
-        DataGridViewCellStyle17.Format = "P"
-        Me.PorcentajePagoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle17
-        Me.PorcentajePagoDataGridViewTextBoxColumn.HeaderText = "% Pago"
-        Me.PorcentajePagoDataGridViewTextBoxColumn.Name = "PorcentajePagoDataGridViewTextBoxColumn"
-        Me.PorcentajePagoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.PorcentajePagoDataGridViewTextBoxColumn.Width = 75
-        '
-        'ProductosQuitar
-        '
-        Me.ProductosQuitar.HeaderText = ""
-        Me.ProductosQuitar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.ProductosQuitar.Name = "ProductosQuitar"
-        Me.ProductosQuitar.Width = 30
         '
         'VentaItemBindingSource
         '
@@ -1314,7 +1242,7 @@ Partial Class frmVentas
         Me.DG_ProductosTotales.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.DG_ProductosTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_ProductosTotales.ColumnHeadersVisible = False
-        Me.DG_ProductosTotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn1, Me.NombreDataGridViewTextBoxColumn1, Me.CantidadDataGridViewTextBoxColumn1, Me.MontoDataGridViewTextBoxColumn2, Me.IvaDataGridViewTextBoxColumn2, Me.TotalDataGridViewTextBoxColumn2, Me.Column1, Me.PorcentajePagoDataGridViewTextBoxColumn1, Me.Column2})
+        Me.DG_ProductosTotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.TotalSeleccionado, Me.CodigoDataGridViewTextBoxColumn1, Me.NombreDataGridViewTextBoxColumn1, Me.CantidadDataGridViewTextBoxColumn1, Me.MontoDataGridViewTextBoxColumn2, Me.IvaDataGridViewTextBoxColumn2, Me.TotalDataGridViewTextBoxColumn2, Me.Column1, Me.PorcentajePagoDataGridViewTextBoxColumn1, Me.Column2})
         Me.DG_ProductosTotales.DataSource = Me.TotalVentaItemBindingSource
         Me.DG_ProductosTotales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_ProductosTotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
@@ -1326,78 +1254,6 @@ Partial Class frmVentas
         Me.DG_ProductosTotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DG_ProductosTotales.Size = New System.Drawing.Size(924, 24)
         Me.DG_ProductosTotales.TabIndex = 33
-        '
-        'CodigoDataGridViewTextBoxColumn1
-        '
-        Me.CodigoDataGridViewTextBoxColumn1.HeaderText = "Codigo"
-        Me.CodigoDataGridViewTextBoxColumn1.Name = "CodigoDataGridViewTextBoxColumn1"
-        Me.CodigoDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'NombreDataGridViewTextBoxColumn1
-        '
-        Me.NombreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreDataGridViewTextBoxColumn1.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn1.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn1.Name = "NombreDataGridViewTextBoxColumn1"
-        Me.NombreDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'CantidadDataGridViewTextBoxColumn1
-        '
-        Me.CantidadDataGridViewTextBoxColumn1.DataPropertyName = "Cantidad"
-        Me.CantidadDataGridViewTextBoxColumn1.HeaderText = "Cantidad"
-        Me.CantidadDataGridViewTextBoxColumn1.Name = "CantidadDataGridViewTextBoxColumn1"
-        Me.CantidadDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.CantidadDataGridViewTextBoxColumn1.Width = 75
-        '
-        'MontoDataGridViewTextBoxColumn2
-        '
-        Me.MontoDataGridViewTextBoxColumn2.DataPropertyName = "Monto"
-        DataGridViewCellStyle18.Format = "C"
-        Me.MontoDataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle18
-        Me.MontoDataGridViewTextBoxColumn2.HeaderText = "Monto"
-        Me.MontoDataGridViewTextBoxColumn2.Name = "MontoDataGridViewTextBoxColumn2"
-        Me.MontoDataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'IvaDataGridViewTextBoxColumn2
-        '
-        Me.IvaDataGridViewTextBoxColumn2.DataPropertyName = "Iva"
-        DataGridViewCellStyle19.Format = "C"
-        Me.IvaDataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle19
-        Me.IvaDataGridViewTextBoxColumn2.HeaderText = "Iva"
-        Me.IvaDataGridViewTextBoxColumn2.Name = "IvaDataGridViewTextBoxColumn2"
-        Me.IvaDataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'TotalDataGridViewTextBoxColumn2
-        '
-        Me.TotalDataGridViewTextBoxColumn2.DataPropertyName = "Total"
-        DataGridViewCellStyle20.Format = "C"
-        Me.TotalDataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle20
-        Me.TotalDataGridViewTextBoxColumn2.HeaderText = "Total"
-        Me.TotalDataGridViewTextBoxColumn2.Name = "TotalDataGridViewTextBoxColumn2"
-        Me.TotalDataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "% Bonif."
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        Me.Column1.Width = 75
-        '
-        'PorcentajePagoDataGridViewTextBoxColumn1
-        '
-        DataGridViewCellStyle21.Format = "P"
-        Me.PorcentajePagoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle21
-        Me.PorcentajePagoDataGridViewTextBoxColumn1.HeaderText = "% Pago"
-        Me.PorcentajePagoDataGridViewTextBoxColumn1.Name = "PorcentajePagoDataGridViewTextBoxColumn1"
-        Me.PorcentajePagoDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.PorcentajePagoDataGridViewTextBoxColumn1.Width = 75
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = ""
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        Me.Column2.Width = 30
         '
         'TotalVentaItemBindingSource
         '
@@ -1482,6 +1338,167 @@ Partial Class frmVentas
         Me.Label4.Size = New System.Drawing.Size(44, 15)
         Me.Label4.TabIndex = 1
         Me.Label4.Text = "Lista"
+        '
+        'Seleccionado
+        '
+        Me.Seleccionado.DataPropertyName = "Seleccionado"
+        Me.Seleccionado.HeaderText = ""
+        Me.Seleccionado.Name = "Seleccionado"
+        Me.Seleccionado.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Seleccionado.Width = 30
+        '
+        'CodigoDataGridViewTextBoxColumn
+        '
+        Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
+        Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
+        Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProductosCantidad
+        '
+        Me.ProductosCantidad.DataPropertyName = "Cantidad"
+        Me.ProductosCantidad.HeaderText = "Cantidad"
+        Me.ProductosCantidad.Name = "ProductosCantidad"
+        Me.ProductosCantidad.Width = 75
+        '
+        'ProductosMonto
+        '
+        Me.ProductosMonto.DataPropertyName = "Monto"
+        DataGridViewCellStyle13.Format = "C"
+        Me.ProductosMonto.DefaultCellStyle = DataGridViewCellStyle13
+        Me.ProductosMonto.HeaderText = "Monto"
+        Me.ProductosMonto.Name = "ProductosMonto"
+        '
+        'IvaDataGridViewTextBoxColumn
+        '
+        Me.IvaDataGridViewTextBoxColumn.DataPropertyName = "Iva"
+        DataGridViewCellStyle14.Format = "C"
+        Me.IvaDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle14
+        Me.IvaDataGridViewTextBoxColumn.HeaderText = "Iva"
+        Me.IvaDataGridViewTextBoxColumn.Name = "IvaDataGridViewTextBoxColumn"
+        Me.IvaDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'TotalDataGridViewTextBoxColumn
+        '
+        Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
+        DataGridViewCellStyle15.Format = "C"
+        Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle15
+        Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
+        Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
+        Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProductosPorcentajeBonificacion
+        '
+        Me.ProductosPorcentajeBonificacion.DataPropertyName = "PorcentajeBonificacion"
+        DataGridViewCellStyle16.Format = "P"
+        Me.ProductosPorcentajeBonificacion.DefaultCellStyle = DataGridViewCellStyle16
+        Me.ProductosPorcentajeBonificacion.HeaderText = "% Bonif."
+        Me.ProductosPorcentajeBonificacion.Name = "ProductosPorcentajeBonificacion"
+        Me.ProductosPorcentajeBonificacion.Width = 75
+        '
+        'PorcentajePagoDataGridViewTextBoxColumn
+        '
+        Me.PorcentajePagoDataGridViewTextBoxColumn.DataPropertyName = "PorcentajePago"
+        DataGridViewCellStyle17.Format = "P"
+        Me.PorcentajePagoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle17
+        Me.PorcentajePagoDataGridViewTextBoxColumn.HeaderText = "% Pago"
+        Me.PorcentajePagoDataGridViewTextBoxColumn.Name = "PorcentajePagoDataGridViewTextBoxColumn"
+        Me.PorcentajePagoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.PorcentajePagoDataGridViewTextBoxColumn.Width = 75
+        '
+        'ProductosQuitar
+        '
+        Me.ProductosQuitar.HeaderText = ""
+        Me.ProductosQuitar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.ProductosQuitar.Name = "ProductosQuitar"
+        Me.ProductosQuitar.Width = 30
+        '
+        'TotalSeleccionado
+        '
+        Me.TotalSeleccionado.HeaderText = "TotalSeleccionado"
+        Me.TotalSeleccionado.Name = "TotalSeleccionado"
+        Me.TotalSeleccionado.ReadOnly = True
+        Me.TotalSeleccionado.Width = 30
+        '
+        'CodigoDataGridViewTextBoxColumn1
+        '
+        Me.CodigoDataGridViewTextBoxColumn1.HeaderText = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn1.Name = "CodigoDataGridViewTextBoxColumn1"
+        Me.CodigoDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'NombreDataGridViewTextBoxColumn1
+        '
+        Me.NombreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreDataGridViewTextBoxColumn1.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn1.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn1.Name = "NombreDataGridViewTextBoxColumn1"
+        Me.NombreDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'CantidadDataGridViewTextBoxColumn1
+        '
+        Me.CantidadDataGridViewTextBoxColumn1.DataPropertyName = "Cantidad"
+        Me.CantidadDataGridViewTextBoxColumn1.HeaderText = "Cantidad"
+        Me.CantidadDataGridViewTextBoxColumn1.Name = "CantidadDataGridViewTextBoxColumn1"
+        Me.CantidadDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.CantidadDataGridViewTextBoxColumn1.Width = 75
+        '
+        'MontoDataGridViewTextBoxColumn2
+        '
+        Me.MontoDataGridViewTextBoxColumn2.DataPropertyName = "Monto"
+        DataGridViewCellStyle18.Format = "C"
+        Me.MontoDataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle18
+        Me.MontoDataGridViewTextBoxColumn2.HeaderText = "Monto"
+        Me.MontoDataGridViewTextBoxColumn2.Name = "MontoDataGridViewTextBoxColumn2"
+        Me.MontoDataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'IvaDataGridViewTextBoxColumn2
+        '
+        Me.IvaDataGridViewTextBoxColumn2.DataPropertyName = "Iva"
+        DataGridViewCellStyle19.Format = "C"
+        Me.IvaDataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle19
+        Me.IvaDataGridViewTextBoxColumn2.HeaderText = "Iva"
+        Me.IvaDataGridViewTextBoxColumn2.Name = "IvaDataGridViewTextBoxColumn2"
+        Me.IvaDataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'TotalDataGridViewTextBoxColumn2
+        '
+        Me.TotalDataGridViewTextBoxColumn2.DataPropertyName = "Total"
+        DataGridViewCellStyle20.Format = "C"
+        Me.TotalDataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle20
+        Me.TotalDataGridViewTextBoxColumn2.HeaderText = "Total"
+        Me.TotalDataGridViewTextBoxColumn2.Name = "TotalDataGridViewTextBoxColumn2"
+        Me.TotalDataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "% Bonif."
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.Width = 75
+        '
+        'PorcentajePagoDataGridViewTextBoxColumn1
+        '
+        DataGridViewCellStyle21.Format = "P"
+        Me.PorcentajePagoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle21
+        Me.PorcentajePagoDataGridViewTextBoxColumn1.HeaderText = "% Pago"
+        Me.PorcentajePagoDataGridViewTextBoxColumn1.Name = "PorcentajePagoDataGridViewTextBoxColumn1"
+        Me.PorcentajePagoDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.PorcentajePagoDataGridViewTextBoxColumn1.Width = 75
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = ""
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.Width = 30
         '
         'frmVentas
         '
@@ -1623,15 +1640,6 @@ Partial Class frmVentas
     Friend WithEvents TotalPagoBindingSource As BindingSource
     Friend WithEvents txt_PorcentajeBonificacion As Controles.PercentUpDown
     Friend WithEvents txt_PorcentajeFacturacion As Controles.PercentUpDown
-    Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents ProductosCantidad As DataGridViewTextBoxColumn
-    Friend WithEvents ProductosMonto As DataGridViewTextBoxColumn
-    Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents ProductosPorcentajeBonificacion As DataGridViewTextBoxColumn
-    Friend WithEvents PorcentajePagoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents ProductosQuitar As DataGridViewImageColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents MontoDataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents DescuentoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
@@ -1650,6 +1658,18 @@ Partial Class frmVentas
     Friend WithEvents Resto As DataGridViewTextBoxColumn
     Friend WithEvents PagoQuitar As DataGridViewImageColumn
     Friend WithEvents PagoCorregir As DataGridViewImageColumn
+    Friend WithEvents Facturar As DataGridViewCheckBoxHeaderColumn
+    Friend WithEvents Seleccionado As DataGridViewCheckBoxHeaderColumn
+    Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosCantidad As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosMonto As DataGridViewTextBoxColumn
+    Friend WithEvents IvaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TotalDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosPorcentajeBonificacion As DataGridViewTextBoxColumn
+    Friend WithEvents PorcentajePagoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductosQuitar As DataGridViewImageColumn
+    Friend WithEvents TotalSeleccionado As DataGridViewTextBoxColumn
     Friend WithEvents CodigoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents NombreDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents CantidadDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn

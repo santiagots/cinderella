@@ -22,7 +22,7 @@ Namespace Formularios.Stock
 
         Public Property Reservado As Integer
 
-        Public Property Restante As Integer
+        Public Property Disponible As Integer
 
         Public Property Habilitado As Boolean
 
@@ -62,7 +62,7 @@ Namespace Formularios.Stock
             Me.Actual = stock.Cantidad
             Me.VentaMensual = stock.VentaMensual
             Me.Reservado = stock.Reservado
-            Me.Restante = stock.Restante
+            Me.Disponible = stock.Disponible
             Me.Habilitado = stock.Habilitado
             Me.NuevaModificacionFecha = Date.Now
             Me.NuevaModificacionUsuario = nombreUsuario
@@ -82,7 +82,7 @@ Namespace Formularios.Stock
             Me.Optimo = 0
             Me.Actual = 0
             Me.Reservado = 0
-            Me.Restante = 0
+            Me.Disponible = 0
             Me.VentaMensual = 0
             Me.Habilitado = True
         End Sub

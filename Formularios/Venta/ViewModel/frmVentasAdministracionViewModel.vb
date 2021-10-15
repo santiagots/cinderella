@@ -12,6 +12,7 @@ Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
 Imports Ventas.Data.Service
 Imports Model = Ventas.Core.Model.VentaAggregate
+Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 
 Namespace Formularios.Venta
     Public Class frmVentasAdministracionViewModel
@@ -121,25 +122,38 @@ Namespace Formularios.Venta
             Me.MdiParent = mdiParent
         End Sub
 
-        Friend Async Function AnularAsync() As Task
+        Friend Async Function AnularVentaAsync() As Task
             If (VentaModelSeleccionada.Id <= 0) Then
                 Throw New NegocioException("Error al anular la venta. No se encuentra una venta seleccionada")
             End If
 
-            Dim MontoPagoCuentaCorriente As Decimal = VentaModelSeleccionada.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
-            Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
-
-            If (base = TipoBase.Local AndAlso VentaModelSeleccionada.Pagos.Any(Function(x) x.TipoPago = TipoPago.CuentaCorriente)) Then
-                Throw New NegocioException("Error al anular la venta. No es posible anular una venta con alguno de sus pagos con cuenta corriente estado em modo OFF LINE. Por favor, vuelva a intentar en modo ON LINE.")
+            If (VariablesGlobales.HayConexion = TipoBase.Local AndAlso VentaModelSeleccionada.TipoCliente = TipoCliente.Mayorista) Then
+                Throw New NegocioException("Error al anular la venta. No es posible anular una venta a clientes mayoristas estando em modo OFF LINE. Por favor, vuelva a intentar en modo ON LINE.")
             End If
 
+            'selecciono todos los productos
+            For Each VentaItemViewModel As Model.VentaItem In VentaModelSeleccionada.VentaItems
+                VentaModelSeleccionada.SeleccionarVentaItem(VentaItemViewModel.Producto.Codigo, True)
+            Next
+
             If (VentaModelSeleccionada.Factura IsNot Nothing) Then
-                Await GenerarNotaCredito()
+                Await GenerarNotaCreditoVenta()
             Else
                 Await AnularVentaAsync(VentaModelSeleccionada)
             End If
+        End Function
 
-            Await RegistrarMovimiento(VentaModelSeleccionada)
+        Friend Async Function AnularProductosAsync() As Task
+
+            If (VentaModelSeleccionada.ObtenerItemsVentaSeleccionados().Count <= 0) Then
+                Throw New NegocioException("Error al anular el/los productos. No se encuentra productos a anular")
+            End If
+
+            If (VentaModelSeleccionada.ObtenerItemsVentaSeleccionadosYFacturados().Count > 0) Then
+                GenerarNotaCreditoProductos()
+            Else
+                Await AnularVentaAsync(VentaModelSeleccionada)
+            End If
         End Function
 
         Friend Async Function RestablecerAsync() As Task
@@ -189,6 +203,21 @@ Namespace Formularios.Venta
             frmFacturarNueva.Show()
         End Sub
 
+        Friend Sub SeleccionarProducto(ventaItemViewModel As VentaItemViewModel)
+            VentaModelSeleccionada.SeleccionarVentaItem(ventaItemViewModel.Codigo, ventaItemViewModel.Seleccionado)
+
+            NotifyPropertyChanged(NameOf(Me.VentaDetalleSeleccionada))
+        End Sub
+
+        Friend Sub SeleccionarProductoTodos(seleccionar As Boolean)
+
+            For Each VentaItemViewModel As Model.VentaItem In VentaModelSeleccionada.VentaItems
+                VentaModelSeleccionada.SeleccionarVentaItem(VentaItemViewModel.Producto.Codigo, seleccionar)
+            Next
+
+            NotifyPropertyChanged(NameOf(Me.VentaDetalleSeleccionada))
+        End Sub
+
         Friend Sub MostrarFacturaDetalle()
             Dim frmVerDocumentoFiscal As frmVerDocumentoFiscal = New frmVerDocumentoFiscal(VentaModelSeleccionada.Factura.Id, VentaModelSeleccionada.TipoCliente, TipoDocumentoFiscal.Factura)
             frmVerDocumentoFiscal.ShowDialog()
@@ -199,7 +228,7 @@ Namespace Formularios.Venta
             frmVerDocumentoFiscal.ShowDialog()
         End Sub
 
-        Private Async Function GenerarNotaCredito() As Task
+        Private Async Function GenerarNotaCreditoVenta() As Task
             Dim reserva As Model.Reserva = Await Task.Run(Function() Comunes.Servicio.ObtenerReservaPorIdVenta(VentaModelSeleccionada.Id))
 
             If (reserva IsNot Nothing) Then
@@ -214,6 +243,11 @@ Namespace Formularios.Venta
                 VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, False, "La venta se encuentra facturada, ¿Desea realizar una nota de crédito?"))
             End If
 
+            NotaCredito(VentasPorAnular.First())
+        End Function
+
+        Private Function GenerarNotaCreditoProductos()
+            VentasPorAnular.Add(New Tuple(Of Model.Venta, Boolean, String)(VentaModelSeleccionada, False, "Algunos productos se encuentran facturados, ¿Desea realizar una nota de crédito?"))
             NotaCredito(VentasPorAnular.First())
         End Function
 
@@ -241,17 +275,39 @@ Namespace Formularios.Venta
         End Function
 
         Public Async Function AnularVentaAsync(venta As Model.Venta) As Task
-            venta.Anular(MotivoAnulacion + $" {VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
+            'Si el total de items seleccionados es igual al total de items de la venta se tiene que anular toda la venta
+            Dim ventaCompleta As Boolean = venta.ObtenerItemsVentaSeleccionados().Count = venta.VentaItems.Count
+
+            If (ventaCompleta) Then
+                venta.Anular(MotivoAnulacion, $"{VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
+            Else
+                Dim productoAnular As List(Of Model.VentaItem) = venta.ObtenerItemsVentaSeleccionados()
+                venta.AnularProductos(productoAnular, $"{VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
+            End If
+
             Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
+            Await Task.Run(Sub() ActualizarStock(venta.VentaItems))
+
+            If (VentaModelSeleccionada.TipoCliente = TipoCliente.Mayorista) Then
+                Await AcreditarSaldoEnCuentaCorriente(VentaModelSeleccionada, ventaCompleta)
+            End If
+
             Await BuscarAsync()
-            MessageBox.Show("Se ha anulado la venta de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            NotifyPropertyChanged(NameOf(Me.VentaDetalleSeleccionada))
+
+            MessageBox.Show(My.Resources.GuardadoOk, "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Function
 
-        Private Async Function RegistrarMovimiento(venta As Model.Venta) As Task
-            Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
+        Private Async Function AcreditarSaldoEnCuentaCorriente(venta As Model.Venta, ventaCompleta As Boolean) As Task
             Dim saldo As Decimal = If(VariablesGlobales.HayConexion, venta.ClienteMayorista.MontoCuentaCorriente, 0)
+            Dim monto As Decimal = 0
 
-            Dim monto As Decimal = venta.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
+            If (ventaCompleta) Then
+                monto = venta.PagoTotal.Total
+            Else
+                monto = venta.TotalSeleccionado().Total
+            End If
 
             If (monto > 0) Then
                 Dim clienteMayorista As ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Remota, venta.ClienteMayorista.Id)
@@ -281,6 +337,22 @@ Namespace Formularios.Venta
             Dim ventasModel As List(Of Model.Venta) = Await VentaService.BuscarAsync(IdSucursal, NumeroFacturaDesde, NumeroFacturaHasta, MontoDesde, MontoHasta, FechaDesde, FechaHasta, anulado, tiposFactura, tiposPago, tiposCliente)
             Ventas = New BindingList(Of VentaAdministracionItemViewModel)(Mapper.Map(Of List(Of VentaAdministracionItemViewModel))(ventasModel))
             NotifyPropertyChanged(NameOf(Me.Ventas))
+        End Function
+
+        Private Function ActualizarStock(VentaItems As List(Of Model.VentaItem)) As Task
+            Dim stocksVenta As List(Of ModelBase.Stock) = New List(Of ModelBase.Stock)
+
+            For Each ventaItem As Model.VentaItem In VentaItems
+                Dim productoCompleto As ModelBase.Producto = Servicio.ObtenerProductoCompleto(IdSucursal, ventaItem.Producto.Id)
+
+                If (ventaItem.Cantidad > 0) Then
+                    productoCompleto.Stock.Agregar(Math.Abs(ventaItem.Cantidad))
+                End If
+
+                stocksVenta.Add(productoCompleto.Stock)
+            Next
+
+            Return Task.Run(Sub() Servicio.ActualizarStock(stocksVenta))
         End Function
 
         Private Sub Inicializar()

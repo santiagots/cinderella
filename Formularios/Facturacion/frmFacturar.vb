@@ -73,11 +73,11 @@ Public Class frmFacturar
         Ejecutar(Sub() facturarViewModel.QuitarNumeroFacturaManual(FacturasList.SelectedItem))
     End Sub
 
-    Private Sub Cb_TipoFacturacion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoFacturacion.SelectedIndexChanged
+    Private Sub Cb_TipoFacturacion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_TipoFacturacion.SelectionChangeCommitted
         Ejecutar(Sub() facturarViewModel.TipoFacturacionChange(Cb_TipoFacturacion.SelectedItem))
     End Sub
 
-    Private Sub Cb_IVA_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_IVA.SelectedIndexChanged
+    Private Sub Cb_IVA_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cb_IVA.SelectionChangeCommitted
         Ejecutar(Sub() facturarViewModel.CondicionesIVAChange(Cb_IVA.SelectedItem))
     End Sub
 

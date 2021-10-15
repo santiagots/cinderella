@@ -317,6 +317,7 @@ Namespace Formularios.Venta
                                            transaccionItem.MontoProducto.Valor,
                                            transaccionItem.Cantidad,
                                            False,
+                                           True,
                                            transaccionItem.PorcentajeBonificacion,
                                            PorcentajeFacturacion,
                                            tipoCliente,
@@ -516,6 +517,7 @@ Namespace Formularios.Venta
                                     montoProducto.Valor,
                                     CantidadUnidadesDeProducto,
                                     esDevolucion,
+                                    True,
                                     porcentejeBonificacion,
                                     PorcentajeFacturacion,
                                     TipoClienteSeleccionado,
@@ -539,7 +541,7 @@ Namespace Formularios.Venta
             Dim stockInsuficienteConfirmacion As Boolean = False
 
             If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
-                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Cantidad)
+                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Disponible)
             End If
 
             Return True
@@ -559,6 +561,22 @@ Namespace Formularios.Venta
                                            PorcentajeFacturacion,
                                            TipoClienteSeleccionado)
 
+            VentaModel.SeleccionarVentaItem(ventaItemViewModel.Codigo,
+                                           ventaItemViewModel.Seleccionado)
+
+            CalcularPendientePago()
+
+            NotifyPropertyChanged(NameOf(Me.VentaItems))
+            NotifyPropertyChanged(NameOf(Me.TotalVentaItem))
+        End Sub
+
+        Friend Sub ActualizarEstadoSeleccionadoItemsVenta(seleccionado As Boolean)
+
+            For Each VentaItemViewModel As VentaItem In VentaModel.VentaItems
+                VentaModel.SeleccionarVentaItem(VentaItemViewModel.Producto.Codigo,
+                               seleccionado)
+            Next
+
             CalcularPendientePago()
 
             NotifyPropertyChanged(NameOf(Me.VentaItems))
@@ -576,7 +594,12 @@ Namespace Formularios.Venta
 
         Friend Sub ActualizarPorcentaBonificacionYPorcentajeFacturacion()
             For Each ventaItem As VentaItem In VentaModel.VentaItems
-                VentaModel.ActualizarVentaItem(ventaItem.Producto.Codigo, ventaItem.MontoProducto.Valor, ventaItem.Cantidad, PorcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+                VentaModel.ActualizarVentaItem(ventaItem.Producto.Codigo,
+                                               ventaItem.MontoProducto.Valor,
+                                               ventaItem.Cantidad,
+                                               PorcentajeBonificacion,
+                                               PorcentajeFacturacion,
+                                               TipoClienteSeleccionado)
             Next
             CalcularPendientePago()
         End Sub
@@ -685,7 +708,11 @@ Namespace Formularios.Venta
                 For Each ventaItem As VentaItem In VentaModel.VentaItems
                     Dim monto As Decimal = VentaModel.ObtenerMontoPorTipoDeCliente(ventaItem.Producto.Codigo, TipoClienteSeleccionado)
                     Dim porcentajeBonificacion As Decimal = VentaModel.ObtenerPorcentajeBonificacionPorTipoDeCliente(ventaItem.Producto.Codigo, TipoClienteSeleccionado)
-                    VentaModel.ActualizarVentaItem(ventaItem.Producto.Codigo, monto, ventaItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoClienteSeleccionado)
+                    VentaModel.ActualizarVentaItem(ventaItem.Producto.Codigo,
+                                                   monto, ventaItem.Cantidad,
+                                                   porcentajeBonificacion,
+                                                   PorcentajeFacturacion,
+                                                   TipoClienteSeleccionado)
                 Next
                 CalcularPendientePago()
             End If

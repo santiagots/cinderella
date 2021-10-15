@@ -1033,8 +1033,8 @@ Partial Class frmStock
         'Restante
         '
         Me.Restante.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Restante.DataPropertyName = "Restante"
-        Me.Restante.HeaderText = "Restante"
+        Me.Restante.DataPropertyName = "Disponible"
+        Me.Restante.HeaderText = "Disponible"
         Me.Restante.Name = "Restante"
         Me.Restante.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
