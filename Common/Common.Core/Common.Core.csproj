@@ -89,12 +89,15 @@
     <Compile Include="Enum\TipoAccionCuentaCorriente.cs" />
     <Compile Include="Enum\TipoBase.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
+    <Compile Include="Enum\TipoConexionBaseLocal.cs" />
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
     <Compile Include="Enum\TipoEmpleado.cs" />
     <Compile Include="Enum\TipoFactura.cs" />
     <Compile Include="Enum\TipoMovimientoCuentaCorriente.cs" />
     <Compile Include="Enum\TipoPago.cs" />
     <Compile Include="Exceptions\NegocioException.cs" />
+    <Compile Include="Extension\DataTableExtensions.cs" />
+    <Compile Include="Extension\ExceptionExtensions.cs" />
     <Compile Include="Extension\DateTimeExtensions.cs" />
     <Compile Include="Extension\Paginado.cs" />
     <Compile Include="Extension\ToList.cs" />

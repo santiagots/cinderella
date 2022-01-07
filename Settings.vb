@@ -35,6 +35,10 @@ Namespace My
                 Case NameOf(settings.PuntoVentaFacturacionElectronica)
                     AfipFacturacionElectronicaConstantes.PUNTO_VENTA = e.NewValue
 
+                Case NameOf(settings.Conexion)
+                    Datos.Conexion.STRING_CONEXION_BASE_LOCAL = e.NewValue.ToString()
+                    CommonContext.STRING_CONEXION_BASE_LOCAL = e.NewValue.ToString()
+
                 Case NameOf(settings.ConexionRemoto)
                     Datos.Conexion.STRING_CONEXION_BASE_REMOTA = e.NewValue.ToString()
                     CommonContext.STRING_CONEXION_BASE_REMOTA = e.NewValue.ToString()
@@ -55,6 +59,9 @@ Namespace My
             EpsonPrinter.TIPO_CONEXION = settings.ConexionControladora
             EpsonPrinter.MODELO_CONTROLADORA_FISCAL = settings.ModeloControladora
             EpsonPrinter.PUNTO_VENTA = settings.PuntoVentaFacturacionTicket.ToString()
+
+            Datos.Conexion.STRING_CONEXION_BASE_LOCAL = If(Not String.IsNullOrEmpty(settings.Conexion), settings.Conexion, ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString())
+            CommonContext.STRING_CONEXION_BASE_LOCAL = If(Not String.IsNullOrEmpty(settings.Conexion), settings.Conexion, ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString())
 
             Datos.Conexion.STRING_CONEXION_BASE_REMOTA = settings.ConexionRemoto
             CommonContext.STRING_CONEXION_BASE_REMOTA = settings.ConexionRemoto

@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Threading.Tasks
 Imports Common.Core.Enum
+Imports Common.Core.Helper
 Imports Datos
 Imports SistemaCinderella.Formularios.Stock
 
@@ -247,7 +248,7 @@ Public Class frmStock
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Stock", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            LogHelper.WriteLog("ERROR Metodo: ExportarExcelStock" + Environment.NewLine + ex.ToString())
+            Log.Error(ex)
         End Try
     End Sub
 
@@ -299,7 +300,7 @@ Public Class frmStock
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se ha producido un error en la importación de la información. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            LogHelper.WriteLog("ERROR Metodo: ImportarExcel" + Environment.NewLine + ex.ToString())
+            Log.Error(ex)
         End Try
     End Sub
 End Class

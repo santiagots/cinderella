@@ -2,11 +2,15 @@
 Imports System.Configuration
 Imports System.Threading
 Imports System.Reflection
+Imports Microsoft.SqlServer.Management.Smo
+Imports Microsoft.SqlServer.Management.Common
+Imports Common.Core.Extension
+Imports Common.Core.Helper
 
 Public Class Conexion
 
     Public Shared STRING_CONEXION_BASE_REMOTA As String
-    Public Shared STRING_CONEXION_BASE_LOCAL As String = ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
+    Public Shared STRING_CONEXION_BASE_LOCAL As String
 
     Private CadenaConexion As String
     Dim miconexion As SqlConnection
@@ -44,7 +48,7 @@ Public Class Conexion
         Return miconexionRemoto
     End Function
 
-    Public Shared Function EstaDisponible(stringConexion As String, encriptado As Boolean) As Boolean
+    Public Shared Function EstaDisponible(stringConexion As String, encriptado As Boolean, Optional ByRef mensajeError As String = "") As Boolean
         Try
             Dim miconexionRemoto As SqlConnection = New SqlConnection()
             miconexionRemoto.ConnectionString = If(encriptado, EncriptacionHelper.DesencriptarMD5(stringConexion), stringConexion)
@@ -52,6 +56,7 @@ Public Class Conexion
             miconexionRemoto.Close()
             Return True
         Catch ex As Exception
+            mensajeError = ex.Message
             Return False
         End Try
     End Function
@@ -98,4 +103,45 @@ Public Class Conexion
         Return Int64.Parse(String.Format("{0}{1}", idSucursal.ToString(), DateTime.Now.ToString("yyyMMddhhmmssfff")))
     End Function
 
+    Public Shared Function CrearBaseDatos(stringConeccion As String, nombreBaseDatos As String, Optional ByRef mensajeError As String = "")
+        Try
+            Dim coneccionDestino As ServerConnection = New ServerConnection(New SqlConnection(stringConeccion))
+            Dim serverDestino As Server = New Server(coneccionDestino)
+
+            Dim baseDatosDestino As Database = New Database(serverDestino, nombreBaseDatos)
+            baseDatosDestino.Create()
+        Catch ex As Exception
+            Log.Info($"stringConeccion: {stringConeccion} nombreBaseDatos: {nombreBaseDatos}")
+            Log.Error(ex)
+            mensajeError = ex.GetFullMessage()
+            Return False
+        End Try
+        Return True
+    End Function
+
+    Public Shared Function CopiarEsquemaBaseDatos(stringConeccionBaseOrigen As String, stringConeccionBaseDestino As String, nombreBaseDatosOrigen As String, nombreBaseDatosDestino As String, Optional ByRef mensajeError As String = "")
+        Try
+            Dim coneccionOrigen As ServerConnection = New ServerConnection(New SqlConnection(stringConeccionBaseOrigen))
+            Dim serverOrigen As Server = New Server(coneccionOrigen)
+
+            Dim coneccionDestino As ServerConnection = New ServerConnection(New SqlConnection(stringConeccionBaseDestino))
+            Dim serverDestino As Server = New Server(coneccionDestino)
+
+            Dim transfer As Transfer = New Transfer(serverOrigen.Databases(nombreBaseDatosOrigen))
+            transfer.CopyAllObjects = True
+            transfer.CopyAllUsers = True
+            transfer.Options.WithDependencies = True
+            transfer.DestinationDatabase = nombreBaseDatosDestino
+            transfer.DestinationServer = serverDestino.Name
+            transfer.DestinationLoginSecure = True
+            transfer.CopySchema = True
+            transfer.CopyData = False
+            transfer.Options.ContinueScriptingOnError = False
+            transfer.TransferData()
+        Catch ex As Exception
+            mensajeError = ex.Message
+            Return False
+        End Try
+        Return True
+    End Function
 End Class

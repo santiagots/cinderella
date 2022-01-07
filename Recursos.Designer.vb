@@ -517,6 +517,46 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend Shared ReadOnly Property conectar_basedatos() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("conectar basedatos", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend Shared ReadOnly Property configurar_basedatos() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("configurar basedatos", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend Shared ReadOnly Property Crear_Base() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Crear Base", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend Shared ReadOnly Property Descargar_Base() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Descargar Base", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend Shared ReadOnly Property Desconectado() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Desconectado", resourceCulture)

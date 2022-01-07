@@ -14,132 +14,135 @@ Public Class frmConfiguracion
 
     'Load del formulario.
     Private Sub frmConfiguracion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'Cambio el cursor a "WAIT"
-        Me.Cursor = Cursors.WaitCursor
+        Try
+            'Cambio el cursor a "WAIT"
+            Me.Cursor = Cursors.WaitCursor
 
-        'Sucursal Cargada en el app.config.
-        lbl_NombreSucursalActual.Text = My.Settings("NombreSucursal")
+            'Sucursal Cargada en el app.config.
+            lbl_NombreSucursalActual.Text = My.Settings("NombreSucursal")
 
-        'Lista de Precios cargada en el app.config.
-        lbl_NombreListaActual.Text = My.Settings("NombreListaPrecio")
+            'Lista de Precios cargada en el app.config.
+            lbl_NombreListaActual.Text = My.Settings("NombreListaPrecio")
 
-        txt_DatosFiscalNombreFantasia.Text = My.Settings.DatosFiscalNombreFantasia
-        FontDialog.Font = My.Settings.DatosFiscalNombreFantasiaFuente
-        txt_DatosFiscalRazonSocial.Text = My.Settings.DatosFiscalRazonSocial
-        txt_DatosFiscalDireccion.Text = My.Settings.DatosFiscalDireccion
-        txt_DatosFiscalLocalidad.Text = My.Settings.DatosFiscalLocalidad
-        txt_DatosFiscalTelefono.Text = My.Settings.DatosFiscalTel
-        txt_DatosFiscalEmail.Text = My.Settings.DatosFiscalEmail
-        txt_DatosFiscalCUIT.Text = My.Settings.DatosFiscalCUIT
-        txt_DatosFiscalIIBB.Text = My.Settings.DatosFiscalIIBB
-        dt_DatosFiscalInicioActividad.Value = If(My.Settings.DatosFiscalInicioActividad = Date.MinValue, Date.Now, My.Settings.DatosFiscalInicioActividad)
+            txt_DatosFiscalNombreFantasia.Text = My.Settings.DatosFiscalNombreFantasia
+            FontDialog.Font = My.Settings.DatosFiscalNombreFantasiaFuente
+            txt_DatosFiscalRazonSocial.Text = My.Settings.DatosFiscalRazonSocial
+            txt_DatosFiscalDireccion.Text = My.Settings.DatosFiscalDireccion
+            txt_DatosFiscalLocalidad.Text = My.Settings.DatosFiscalLocalidad
+            txt_DatosFiscalTelefono.Text = My.Settings.DatosFiscalTel
+            txt_DatosFiscalEmail.Text = My.Settings.DatosFiscalEmail
+            txt_DatosFiscalCUIT.Text = My.Settings.DatosFiscalCUIT
+            txt_DatosFiscalIIBB.Text = My.Settings.DatosFiscalIIBB
+            dt_DatosFiscalInicioActividad.Value = If(My.Settings.DatosFiscalInicioActividad = Date.MinValue, Date.Now, My.Settings.DatosFiscalInicioActividad)
 
-        'Cargo el listado de sucursales.
-        If (NSucursales.ListadoSucursales().Tables.Count <> 0) Then
-            Cb_Sucursales.DataSource = NSucursales.ListadoSucursales().Tables(0)
-            Cb_Sucursales.DisplayMember = "Nombre"
-            Cb_Sucursales.ValueMember = "id_Sucursal"
-            Cb_Sucursales.SelectedValue = My.Settings("Sucursal")
-            Cb_Sucursales.Refresh()
-        End If
+            'Cargo el listado de sucursales.
+            If (NSucursales.ListadoSucursales().Tables.Count <> 0) Then
+                Cb_Sucursales.DataSource = NSucursales.ListadoSucursales().Tables(0)
+                Cb_Sucursales.DisplayMember = "Nombre"
+                Cb_Sucursales.ValueMember = "id_Sucursal"
+                Cb_Sucursales.SelectedValue = My.Settings("Sucursal")
+                Cb_Sucursales.Refresh()
+            End If
 
-        If (Not Negocio.Funciones.HayInternet) Then
-            Cb_Sucursales.Enabled = False
-        End If
+            If (Not Negocio.Funciones.HayInternet) Then
+                Cb_Sucursales.Enabled = False
+            End If
 
-        'Cargo el listado de Precios.
-        If (NListas.ListadoGrupoPrecios().Tables.Count <> 0) Then
-            cb_Precios.DataSource = NListas.ListadoGrupoPrecios().Tables(0)
-            cb_Precios.DisplayMember = "ListaPrecio"
-            cb_Precios.ValueMember = "id_Lista"
-            cb_Precios.SelectedValue = My.Settings("ListaPrecio")
-            cb_Precios.Refresh()
-        End If
+            'Cargo el listado de Precios.
+            If (NListas.ListadoGrupoPrecios().Tables.Count <> 0) Then
+                cb_Precios.DataSource = NListas.ListadoGrupoPrecios().Tables(0)
+                cb_Precios.DisplayMember = "ListaPrecio"
+                cb_Precios.ValueMember = "id_Lista"
+                cb_Precios.SelectedValue = My.Settings("ListaPrecio")
+                cb_Precios.Refresh()
+            End If
 
-        txt_descuentoMinorista.Text = My.Settings("DescuentoMinorista")
+            txt_descuentoMinorista.Text = My.Settings("DescuentoMinorista")
 
-        'Cargo los valores de Mailing.
-        txtPort.Text = My.Settings("MailPort")
-        txtSmtp.Text = My.Settings("MailHost")
+            'Cargo los valores de Mailing.
+            txtPort.Text = My.Settings("MailPort")
+            txtSmtp.Text = My.Settings("MailHost")
 
-        If My.Settings.MailSLL Then
-            rbUtilizaSSLSi.Checked = True
-        Else
-            rbUtilizaSSLNo.Checked = True
-        End If
+            If My.Settings.MailSLL Then
+                rbUtilizaSSLSi.Checked = True
+            Else
+                rbUtilizaSSLNo.Checked = True
+            End If
 
-        'Cargo los valores del Controlador.
-        If My.Settings("ControladorStatus") = "SI" Then
-            RContrSI.Checked = True
-        Else
-            RContrNO.Checked = True
-        End If
+            'Cargo los valores del Controlador.
+            If My.Settings("ControladorStatus") = "SI" Then
+                RContrSI.Checked = True
+            Else
+                RContrNO.Checked = True
+            End If
 
-        If My.Settings("HabilitarExentoSinIVA") = "SI" Then
-            RExentoSinIvaSI.Checked = True
-        Else
-            RExentoSinIvaNo.Checked = True
-        End If
+            If My.Settings("HabilitarExentoSinIVA") = "SI" Then
+                RExentoSinIvaSI.Checked = True
+            Else
+                RExentoSinIvaNo.Checked = True
+            End If
 
-        Cb_ModeloControladora.SelectedIndex = My.Settings.ModeloControladora
-        Cb_ConexionControladora.SelectedItem = My.Settings.ConexionControladora.ToString()
-        txt_MontoTopeTicket.Text = My.Settings.MontoTopeFaturacionTicket
-        txt_MontoTopeManual.Text = My.Settings.MontoTopeFacturacionManual
-        txt_MontoTopeElectronico.Text = My.Settings.MontoTopeFacturacionElectronica
+            Cb_ModeloControladora.SelectedIndex = My.Settings.ModeloControladora
+            Cb_ConexionControladora.SelectedItem = My.Settings.ConexionControladora.ToString()
+            txt_MontoTopeTicket.Text = My.Settings.MontoTopeFaturacionTicket
+            txt_MontoTopeManual.Text = My.Settings.MontoTopeFacturacionManual
+            txt_MontoTopeElectronico.Text = My.Settings.MontoTopeFacturacionElectronica
 
-        txt_MontoMaximoNotaCredito.Text = My.Settings("MontoMaximoNotaCredito")
+            txt_MontoMaximoNotaCredito.Text = My.Settings("MontoMaximoNotaCredito")
 
-        txt_PuntoVentaElectronica.Text = My.Settings.PuntoVentaFacturacionElectronica
-        txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
-        txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
+            txt_PuntoVentaElectronica.Text = My.Settings.PuntoVentaFacturacionElectronica
+            txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
+            txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
 
-        If (File.Exists(RutaCertificadoFacturacionElectronica)) Then
-            txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
-            txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
-        End If
+            If (File.Exists(RutaCertificadoFacturacionElectronica)) Then
+                txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
+                txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
+            End If
 
-        'Comprobacion de notificaciones.
-        Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
-        Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
-        Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
+            'Comprobacion de notificaciones.
+            Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
+            Cb_TiempoComprobacionMovimientos.SelectedItem = CStr(CInt((My.Settings("TemporizadorMovimientos") / 60000)))
+            Cb_TiempoComprobacionCheques.SelectedItem = CStr(CInt((My.Settings("TemporizadorCheques") / 60000)))
 
 
-        'Comprobacion de internet.
-        txt_StringDeConexion.Text = My.Settings.ConexionRemoto
-        Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
-        Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
-        txt_IpPing.Text = My.Settings.IpPing
-        Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
-        If My.Settings("Internet") Then
-            Rb1.Checked = True
-        Else
-            Rb2.Checked = False
-        End If
+            'Comprobacion de internet.
+            Cb_SegundosInternet.SelectedItem = CStr(CInt((My.Settings("TemporizadorInternet") / 1000)))
+            Cb_HorasSincronizacion.SelectedItem = CStr(CInt((My.Settings("TemporizadorSincronizacion") / 3600000)))
+            txt_IpPing.Text = My.Settings.IpPing
+            Cb_TimeOut.SelectedItem = My.Settings.IpTimeOut.ToString()
+            If My.Settings("Internet") Then
+                Rb1.Checked = True
+            Else
+                Rb2.Checked = False
+            End If
 
-        'cargo los valoes del tab Host
-        txtIPHost.Text = My.Settings.IpHost
-        txtPuertoHost.Text = My.Settings.PuertoHost
+            'cargo los valoes del tab Host
+            txtIPHost.Text = My.Settings.IpHost
+            txtPuertoHost.Text = My.Settings.PuertoHost
 
-        'cargo los valoes del tab Stock
-        If My.Settings.GeneracionOrdenCompraAutomatica Then
-            ROrdenCompraAutomaticaSI.Checked = True
-        Else
-            ROrdenCompraAutomaticaNo.Checked = True
-        End If
-        CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
+            'cargo los valoes del tab Stock
+            If My.Settings.GeneracionOrdenCompraAutomatica Then
+                ROrdenCompraAutomaticaSI.Checked = True
+            Else
+                ROrdenCompraAutomaticaNo.Checked = True
+            End If
+            CbPeriodoActualizacionVentaMensual.SelectedItem = My.Settings.PeriodoCaulculoVentaMensual
 
-        Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
+            Dim fechaUltimoCalculo As Date? = NStock.ObtenerUltimoCalculoVentaMensual(My.Settings.Sucursal)
 
-        If (fechaUltimoCalculo.HasValue) Then
-            txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
-        Else
-            txtFechaUltimoCalculoventaMensual.Text = "No calculado"
-        End If
+            If (fechaUltimoCalculo.HasValue) Then
+                txtFechaUltimoCalculoventaMensual.Text = fechaUltimoCalculo.Value.ToString("yyyy/MM/dd")
+            Else
+                txtFechaUltimoCalculoventaMensual.Text = "No calculado"
+            End If
 
-        EvaluarPermisos()
-
-        'Cambio el cursor a NORMAL.
-        Me.Cursor = Cursors.Arrow
+            EvaluarPermisos()
+        Catch ex As Exception
+            MessageBox.Show("Se ha encontrado un error obtener la configuración. Por favor, Comuníqueselo al administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Finally
+            'Cambio el cursor a NORMAL.
+            Me.Cursor = Cursors.Arrow
+        End Try
     End Sub
 
     'Actualizo la sucursal.
@@ -304,11 +307,6 @@ Public Class frmConfiguracion
     Private Sub BtnInternet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnInternet.Click
         'Cambio el cursor a "WAIT"
         Try
-            If (Rb1.Checked AndAlso String.IsNullOrEmpty(txt_StringDeConexion.Text)) Then
-                MessageBox.Show("Debe ingresar un valor en el campo de Conexión base remota.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                Return
-            End If
-
             If (Cb_SegundosInternet.SelectedItem Is Nothing) Then
                 MessageBox.Show("Debe seleccionar una opción en Período de Comprobación.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Return
@@ -329,11 +327,6 @@ Public Class frmConfiguracion
                 Return
             End If
 
-            If (Not Conexion.EstaDisponible(txt_StringDeConexion.Text, True)) Then
-                MessageBox.Show("No se han podido modificar los valors debido a que hubo un error en la conexión a la base de datos. Por favor, verifique que el valor sea correcto y tener acceso a internet.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                Return
-            End If
-
             Me.Cursor = Cursors.WaitCursor
 
             If Rb1.Checked Then
@@ -341,7 +334,6 @@ Public Class frmConfiguracion
             Else
                 My.Settings.Internet = False
             End If
-            My.Settings.ConexionRemoto = txt_StringDeConexion.Text
             My.Settings.TemporizadorInternet = (Cb_SegundosInternet.SelectedItem * 1000)
             My.Settings.TemporizadorSincronizacion = (Cb_HorasSincronizacion.SelectedItem * 3600000)
             My.Settings.IpPing = txt_IpPing.Text
@@ -376,13 +368,11 @@ Public Class frmConfiguracion
             Rb1.Checked = True
         End If
 
-        txt_StringDeConexion.Enabled = Rb1.Checked
         Cb_SegundosInternet.Enabled = Rb1.Checked
         Cb_HorasSincronizacion.Enabled = Rb1.Checked
         txt_IpPing.Enabled = Rb1.Checked
         Cb_TimeOut.Enabled = Rb1.Checked
         btnVerificarDNS.Enabled = Rb1.Checked
-        btnVerificarBase.Enabled = Rb1.Checked
     End Sub
 
     Private Sub txt_PuntoVentaControladora_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_PuntoVentaControladora.KeyPress
@@ -691,12 +681,8 @@ Public Class frmConfiguracion
         Dim result As String = proc.StandardOutput.ReadToEnd()
     End Sub
 
-    Private Sub btnVerificarBase_Click(sender As Object, e As EventArgs) Handles btnVerificarBase.Click
-        If (Conexion.EstaDisponible(txt_StringDeConexion.Text, True)) Then
-            MessageBox.Show("Conexión a la base de datos exitosa.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            MessageBox.Show("Hubo un error en la conexión a la base de datos. Por favor, verifique que el valor sea correcto y tener acceso a internet.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-            Return
-        End If
+    Private Sub btn_ConfigurarBaseDatos_Click(sender As Object, e As EventArgs) Handles btn_ConfigurarBaseDatos.Click
+        Dim frmConfiguracionBaseDatos As frmConfiguracionBaseDatos = New frmConfiguracionBaseDatos()
+        frmConfiguracionBaseDatos.ShowDialog()
     End Sub
 End Class

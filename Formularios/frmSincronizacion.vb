@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Threading.Tasks
+Imports Common.Core.Helper
 Imports Datos
 Imports Negocio
 
@@ -109,7 +110,7 @@ Public Class frmSincronizacion
         Catch ex As Exception
             transaccionLocal.Rollback()
             transaccionRemota.Rollback()
-            LogHelper.WriteLog(String.Format("ERROR Metodo: RegistrarDatosARemoto - Tabla {0}", nombreTabla) + Environment.NewLine + ex.ToString())
+            Log.Error(ex)
             Throw
         Finally
             conexionRemota.Close()

@@ -7,6 +7,7 @@ Imports System.Drawing.Imaging
 Imports Entidades
 Imports System.ComponentModel
 Imports Datos
+Imports Common.Core.Helper
 
 Public Class frmReporteEtiquetas
     Public MostrarPrecios As Boolean
@@ -105,7 +106,7 @@ Public Class frmReporteEtiquetas
             CrViewer.ReportSource = rpt
             CrViewer.Refresh()
         Catch ex As Exception
-            LogHelper.WriteLog(ex.ToString())
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Administración de Etiquetas", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub

@@ -670,17 +670,6 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=.\SQLExpress;Initial Catalog=CINDERELLA_LOCAL;Integrated Security=Tru"& _ 
-            "e")>  _
-        Public ReadOnly Property Conexion() As String
-            Get
-                Return CType(Me("Conexion"),String)
-            End Get
-        End Property
-        
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
@@ -702,6 +691,30 @@ Namespace My
             End Get
             Set
                 Me("ListaPrecioMayorista") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property TipoConexionBaseLocal() As Integer
+            Get
+                Return CType(Me("TipoConexionBaseLocal"),Integer)
+            End Get
+            Set
+                Me("TipoConexionBaseLocal") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property Conexion() As String
+            Get
+                Return CType(Me("Conexion"),String)
+            End Get
+            Set
+                Me("Conexion") = value
             End Set
         End Property
     End Class

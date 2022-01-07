@@ -40,7 +40,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationRevision>20</ApplicationRevision>
     <ApplicationVersion>1.3.5.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -382,6 +382,14 @@
     <Compile Include="Formularios\Comun\Comun.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\Comun\frmConfiguracionBaseDatos.Designer.vb">
+      <DependentUpon>frmConfiguracionBaseDatos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Comun\frmConfiguracionBaseDatos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Comun\ViewModel\frmConfiguracionBaseDatosViewModel.vb" />
+    <Compile Include="Formularios\Comun\ViewModel\ServidorBaseDatos.vb" />
     <Compile Include="Formularios\CuentaBancaria\frmCuentaBancarias.Designer.vb">
       <DependentUpon>frmCuentaBancarias.vb</DependentUpon>
     </Compile>
@@ -1403,6 +1411,7 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmTransporteBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmTrasporteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.TransporteViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comun.frmConfiguracionBaseDatosViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaBancariaViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaCorrienteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasBuscarViewModel.datasource" />
@@ -1450,6 +1459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cliente\frmTransporteBuscar.resx">
       <DependentUpon>frmTransporteBuscar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Comun\frmConfiguracionBaseDatos.resx">
+      <DependentUpon>frmConfiguracionBaseDatos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\CuentaBancaria\frmCuentaBancarias.resx">
       <DependentUpon>frmCuentaBancarias.vb</DependentUpon>
@@ -1933,6 +1945,10 @@
     <None Include="Imagenes\NavigatorLastItem.png" />
     <None Include="Imagenes\btn_standby_32.png" />
     <None Include="Imagenes\Transporte_32.png" />
+    <None Include="Imagenes\Descargar Base.png" />
+    <None Include="Imagenes\Crear Base.png" />
+    <None Include="Imagenes\conectar basedatos.png" />
+    <None Include="Imagenes\configurar basedatos.png" />
     <Content Include="Libs\openssl.cnf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

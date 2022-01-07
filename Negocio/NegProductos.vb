@@ -10,6 +10,7 @@ Imports System.IO
 Imports System.Linq
 Imports System.Threading
 Imports System.Globalization
+Imports Common.Core.Helper
 
 Public Enum Fortmats
     Texto
@@ -996,14 +997,14 @@ Public Class NegProductos
                 generoArchivo = CrearExcel(nombreArchivo, nombrePlantilla, dsProductos, dsCategoria, dsSubCategoria, dsProveedor, xlApp, xlWorkBook, xlWorkSheet, misValue)
                 Exit For
             Catch ex As System.Runtime.InteropServices.COMException
-                LogHelper.WriteLog("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
+                Log.Info("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
                 Dim result As UInt32
                 If UInt32.TryParse(ex.ErrorCode, result) AndAlso result = &H80010001UI Then
                     reintentos += 1
                     System.Threading.Thread.Sleep(1000)
                 End If
             Catch ex As Exception
-                LogHelper.WriteLog("ERROR Metodo: ExportarExcel" + Environment.NewLine + ex.ToString())
+                Log.Error(ex)
             End Try
         Next
 

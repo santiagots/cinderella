@@ -675,26 +675,51 @@ Public Class MDIContenedor
             VerificarEstadoCaja()
         Catch ex As Exception
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha encontrado un error obtener el estado de la caja diaria. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha encontrado un error al obtener el estado de la caja diaria. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
         'Funcion que ejecuta en segundo plano procesos pesados que no hacen al correcto inicio de la aplicacion
         bgwEjecutarEnSegundoPlano.RunWorkerAsync()
 
-        'Actualizo los mensajes del usuario
-        Funciones.ActualizarMensajes()
+        Try
+            'Actualizo los mensajes del usuario
+            Funciones.ActualizarMensajes()
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al obtener actualizar los mensajes. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
-        'Obtengo las notificaciones
-        Funciones.ActualizarNotificaciones()
+        Try
+            'Obtengo las notificaciones
+            Funciones.ActualizarNotificaciones()
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al obtener las notificaciones. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
-        'Obtengo los Cheuqes a Vencer notificaciones
-        Funciones.ActualizarChequesVencer()
+        Try
+            'Obtengo los Cheuqes a Vencer notificaciones
+            Funciones.ActualizarChequesVencer()
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error obtener los cheques vencidos. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
-        'Obtengo las Notas de pedidos por ventas
-        Funciones.ActualizarNotasPedidosVentasAsync()
+        Try
+            'Obtengo las Notas de pedidos por ventas
+            Funciones.ActualizarNotasPedidosVentasAsync()
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error obtener las notas de pedidos. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
-        'Obtengo las Notas de pedidos por stock
-        Funciones.ActualizarOrdenesCompra()
+        Try
+            'Obtengo las Notas de pedidos por stock
+            Funciones.ActualizarOrdenesCompra()
+        Catch ex As Exception
+            Me.Cursor = Cursors.Arrow
+            MessageBox.Show("Se ha encontrado un error al actualizar las ordenes de compra. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
         'Setea el nombre de la aplicacion.
         Me.Text = "Sistema de Gestion " & My.Settings.Empresa & " - " & My.Settings.NombreSucursal
@@ -703,8 +728,10 @@ Public Class MDIContenedor
         Temporizador.Interval = My.Settings.TemporizadorInternet
         Temporizador.Enabled = True
 
-        TemporizadorSoncronizacion.Interval = My.Settings.TemporizadorSincronizacion
-        TemporizadorSoncronizacion.Enabled = True
+        If (My.Settings.TemporizadorSincronizacion > 0) Then
+            TemporizadorSoncronizacion.Interval = My.Settings.TemporizadorSincronizacion
+            TemporizadorSoncronizacion.Enabled = True
+        End If
 
         'seteo el icono.
         Dim icono As System.Drawing.Icon
@@ -1493,6 +1520,8 @@ Public Class MDIContenedor
         'para sincronizar el sistema es necesario esta online
         If (Not Negocio.Funciones.HayConexionInternet) Then
             dialogoConexion.ShowDialog()
+        ElseIf (My.Settings.TemporizadorSincronizacion = 0) Then
+            MessageBox.Show("El proceso de sincronización entre bases de datos se encuentra deshabilitado. Por favor, Comuníqueselo al administrador. ", "Sistema Cinderella", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Else
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmSincronizacion).MdiParent = Me

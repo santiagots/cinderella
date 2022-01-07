@@ -155,7 +155,6 @@
     <Compile Include="Sincronizar\Interfaces\Sincronizar.vb" />
     <Compile Include="Tabla.vb" />
     <Compile Include="Utils\EncriptacionHelper.vb" />
-    <Compile Include="Utils\LogHelper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

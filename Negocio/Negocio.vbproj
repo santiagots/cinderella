@@ -188,6 +188,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj">
+      <Project>{FC33C392-4689-4CE9-93DD-CDAB4A65C04C}</Project>
+      <Name>Common.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Datos\Datos.vbproj">
       <Project>{031B7818-3E58-477F-BFAD-17166F3026AF}</Project>
       <Name>Datos</Name>

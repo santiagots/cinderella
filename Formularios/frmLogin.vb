@@ -1,4 +1,5 @@
-﻿Imports Datos
+﻿Imports Common.Core.Helper
+Imports Datos
 Imports Negocio
 
 Public Class frmLogin
@@ -75,7 +76,7 @@ Public Class frmLogin
             RestaurarControlesLogin()
             Me.Cursor = Cursors.Arrow
             MessageBox.Show("Se produjo un error en el acceso al sistema. Contacte al administrador.", "Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            LogHelper.WriteLog("ERROR Metodo: LogIn" + Environment.NewLine + ex.ToString())
+            Log.Error(ex)
         End Try
     End Sub
 

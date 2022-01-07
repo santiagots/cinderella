@@ -1,8 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports Datos
-Imports System.Linq
-Imports System.Collections.Generic
-Imports System.Text
+Imports Common.Core.Extension
 
 Public Class ClaveUnicaSincronizar
     Implements Sincronizar
@@ -19,12 +16,10 @@ Public Class ClaveUnicaSincronizar
 
     Public Sub sincronizarALocal(UltimaFechasSincronizacion As DataTable, Tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
         Dim fecha As Date
+        Dim DatosSincronizar As DataTable = New DataTable()
+        Dim DatosLocal As DataTable
+        Dim DatosRemoto As DataTable
         Try
-            Dim DatosSincronizar As DataTable = New DataTable()
-
-            Dim DatosLocal As DataTable
-            Dim DatosRemoto As DataTable
-
             If (UltimaFechasSincronizacion.Rows.Count > 0) Then
                 'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
                 fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
@@ -73,19 +68,18 @@ Public Class ClaveUnicaSincronizar
                 BulkCopy.Close()
             End If
         Catch ex As Exception
-            Throw New Exception(String.Format("DATOS UltimaFechasSincronizacion {0}  fecha {1}", UltimaFechasSincronizacion.Rows.Count.ToString(), fecha), ex)
+            Throw New Exception($"Fecha: {fecha} Tabla: {Tabla.Nombre} {Environment.NewLine} {DatosSincronizar.ToCVS()}", ex)
         End Try
 
     End Sub
 
     Public Sub sincronizarARemota(UltimaFechasSincronizacion As DataTable, tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
         Dim fecha As Date
+        Dim DatosSincronizar As DataTable = New DataTable()
+        Dim DatosLocal As DataTable
+        Dim DatosRemoto As DataTable
+
         Try
-            Dim DatosSincronizar As DataTable = New DataTable()
-
-            Dim DatosLocal As DataTable
-            Dim DatosRemoto As DataTable
-
             If (UltimaFechasSincronizacion.Rows.Count > 0) Then
                 'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
                 fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
@@ -99,8 +93,9 @@ Public Class ClaveUnicaSincronizar
                 DatosSincronizar = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
             End If
 
-            If DatosSincronizar.Rows.Count > 0 Then
+            Dim Res As String = String.Join(Environment.NewLine, DatosSincronizar.Rows.OfType(Of DataRow)().Select(Function(x) String.Join(" ; ", x.ItemArray)))
 
+            If DatosSincronizar.Rows.Count > 0 Then
                 'elimino los valores de la base remota
                 Dim listaIdRow As List(Of DataRow) = DatosSincronizar.Rows.Cast(Of DataRow).Select(Function(x) x).ToList()
 
@@ -137,7 +132,7 @@ Public Class ClaveUnicaSincronizar
                 BulkCopy.Close()
             End If
         Catch ex As Exception
-            Throw New Exception(String.Format("DATOS UltimaFechasSincronizacion {0}  fecha {1}", UltimaFechasSincronizacion.Rows.Count.ToString(), fecha), ex)
+            Throw New Exception($"Fecha: {fecha} Tabla: {tabla.Nombre} {Environment.NewLine} {DatosSincronizar.ToCVS()}", ex)
         End Try
     End Sub
 

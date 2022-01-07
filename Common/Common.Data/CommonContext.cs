@@ -18,7 +18,7 @@ namespace Common.Data
 {
     public class CommonContext : DbContext
     {
-        public static string STRING_CONEXION_BASE_LOCAL = ConfigurationManager.ConnectionStrings["SistemaCinderella.My.MySettings.Conexion"].ConnectionString;
+        public static string STRING_CONEXION_BASE_LOCAL;
 
         public static string STRING_CONEXION_BASE_REMOTA;
 

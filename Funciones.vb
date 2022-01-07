@@ -8,6 +8,7 @@ Imports Datos
 Imports System.Threading.Tasks
 Imports Ventas.Core.Enum
 Imports Common.Core.Enum
+Imports Common.Core.Helper
 
 Public Class Funciones
 
@@ -57,7 +58,7 @@ Public Class Funciones
                 'Sonidito.
                 SystemSounds.Asterisk.Play()
 
-                LogHelper.WriteLog("ERROR Metodo: ActualizarEstado Conexión a Internet")
+                Log.Info("ActualizarEstado Conexión a Internet")
             Else
                 MDIContenedor.Conectado.Text = "Sin Conexión a Internet"
                 MDIContenedor.Conectado.Image = My.Resources.Recursos.NoInternet_32
@@ -73,7 +74,7 @@ Public Class Funciones
                 'Sonidito.
                 SystemSounds.Exclamation.Play()
 
-                LogHelper.WriteLog("ERROR Metodo: ActualizarEstado Sin Conexión a Internet")
+                Log.Info("ActualizarEstado Sin Conexión a Internet")
             End If
 
         End If

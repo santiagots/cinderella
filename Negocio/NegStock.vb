@@ -4,6 +4,7 @@ Imports Datos
 Imports Microsoft.Office.Interop
 Imports System.Globalization
 Imports System.Data.OleDb
+Imports Common.Core.Helper
 
 Public Class NegStock
     Dim clsDatos As New Datos.Conexion
@@ -548,14 +549,14 @@ Public Class NegStock
                 generoArchivo = CrearExcelStock(nombreArchivo, nombrePlantilla, dsStock, xlApp, xlWorkBook, xlWorkSheet, misValue)
                 Exit For
             Catch ex As System.Runtime.InteropServices.COMException
-                LogHelper.WriteLog("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
+                Log.Info("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
                 Dim result As UInt32
                 If UInt32.TryParse(ex.ErrorCode, result) AndAlso result = &H80010001UI Then
                     reintentos += 1
                     System.Threading.Thread.Sleep(1000)
                 End If
             Catch ex As Exception
-                LogHelper.WriteLog("ERROR Metodo: ExportarExcel" + Environment.NewLine + ex.ToString())
+                Log.Error(ex)
             End Try
         Next
 
