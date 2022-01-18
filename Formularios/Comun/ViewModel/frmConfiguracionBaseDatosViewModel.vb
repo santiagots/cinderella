@@ -145,7 +145,7 @@ Namespace Formularios.Comun
 
                 Return stringConeccion.ToString()
             Else
-                Return ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString()
+                Return ConfigurationManager.ConnectionStrings("default").ToString()
             End If
         End Function
 

@@ -1205,7 +1205,7 @@ Public Class NegProductos
         Dim encripta As New ClsEncriptacion()
         Using conn As SqlConnection = New SqlConnection()
 
-            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.ConnectionString = Conexion.STRING_CONEXION_BASE_REMOTA
             conn.Open()
 
             RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
@@ -1300,7 +1300,7 @@ Public Class NegProductos
         End If
 
         Using conn As SqlConnection = New SqlConnection()
-            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.ConnectionString = Conexion.STRING_CONEXION_BASE_REMOTA
             conn.Open()
             Using tran As SqlTransaction = conn.BeginTransaction()
 
@@ -1584,7 +1584,7 @@ Public Class NegProductos
 
         Using conn As SqlConnection = New SqlConnection()
 
-            conn.ConnectionString = encripta.DesencriptarMD5(ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString())
+            conn.ConnectionString = Conexion.STRING_CONEXION_BASE_REMOTA
             conn.Open()
             Using tran As SqlTransaction = conn.BeginTransaction()
 

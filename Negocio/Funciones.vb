@@ -11,10 +11,7 @@ Public Class Funciones
     Public Shared ActualizarEstadoConexionInternet As Action(Of Boolean)
 
     Public Shared Function HayConexionInternet() As Boolean
-#If DEBUG Then
-        HayInternet = True
-        Return Datos.Conexion.EstaDisponible(Datos.Conexion.STRING_CONEXION_BASE_REMOTA, True)
-#Else
+
         'Si por configuracion se define que la aplicacion trabaja sin internet 
         If (Not SistemaConConexioInternet) Then
             'muestro el estado del MIDContenedor sin acceso a internet
@@ -40,7 +37,7 @@ Public Class Funciones
             Funciones.HayInternet = False
             Return False
         End If
-#End If
+
 
     End Function
 

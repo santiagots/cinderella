@@ -60,8 +60,8 @@ Namespace My
             EpsonPrinter.MODELO_CONTROLADORA_FISCAL = settings.ModeloControladora
             EpsonPrinter.PUNTO_VENTA = settings.PuntoVentaFacturacionTicket.ToString()
 
-            Datos.Conexion.STRING_CONEXION_BASE_LOCAL = If(Not String.IsNullOrEmpty(settings.Conexion), settings.Conexion, ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString())
-            CommonContext.STRING_CONEXION_BASE_LOCAL = If(Not String.IsNullOrEmpty(settings.Conexion), settings.Conexion, ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString())
+            Datos.Conexion.STRING_CONEXION_BASE_LOCAL = If(Not String.IsNullOrEmpty(settings.Conexion), settings.Conexion, ConfigurationManager.ConnectionStrings("default").ToString())
+            CommonContext.STRING_CONEXION_BASE_LOCAL = If(Not String.IsNullOrEmpty(settings.Conexion), settings.Conexion, ConfigurationManager.ConnectionStrings("default").ToString())
 
             Datos.Conexion.STRING_CONEXION_BASE_REMOTA = settings.ConexionRemoto
             CommonContext.STRING_CONEXION_BASE_REMOTA = settings.ConexionRemoto

@@ -21,13 +21,13 @@ Public Class NegSincronizacion
 
         Try
             'conexion remota
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.ConexionRemoto").ToString
+            CadenaConexion = Conexion.STRING_CONEXION_BASE_REMOTA
             conexionRemoto = New SqlConnection
             conexionRemoto.ConnectionString = encripta.DesencriptarMD5(CadenaConexion)
             conexionRemoto.Open()
 
             'conexion local
-            CadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings("SistemaCinderella.My.MySettings.Conexion").ToString
+            CadenaConexion = Conexion.STRING_CONEXION_BASE_LOCAL
             miconexion = New SqlConnection
             miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()
