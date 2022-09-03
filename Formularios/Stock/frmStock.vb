@@ -2,8 +2,8 @@
 Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports Common.Core.Helper
-Imports Datos
 Imports SistemaCinderella.Formularios.Stock
+Imports Model = Stock.Core.Model.BaseAgreggate
 
 Public Class frmStock
 
@@ -12,9 +12,26 @@ Public Class frmStock
     Dim NegStock As New Negocio.NegStock
     Dim NegProductos As New Negocio.NegProductos
 
+    Dim FiltroCodigoNombre As String
+    Dim ModoEdicion As Boolean = True
+
+    Public Property StockSeleccionado As Model.Stock
+
+
+    Sub New()
+        ' This call is required by the designer.
+        InitializeComponent()
+    End Sub
+
+    Sub New(modoEdicion As Boolean, filtroCodigoNombre As String)
+        Me.New()
+        Me.ModoEdicion = modoEdicion
+        Me.FiltroCodigoNombre = filtroCodigoNombre
+    End Sub
+
     Private Sub frmStock_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         EjecutarAsync(Async Function() As Task
-                          frmStockViewModel = New frmStockViewModel(My.Settings.Sucursal)
+                          frmStockViewModel = New frmStockViewModel(My.Settings.Sucursal, ModoEdicion, FiltroCodigoNombre)
                           frmStockViewModel.ElementosPorPagina = Paginado.ElementosPorPagina
 
                           FrmStockViewModelBindingSource.DataSource = frmStockViewModel
@@ -25,6 +42,13 @@ Public Class frmStock
 
                           CargarNombreYCodigoDeProductos(txt_Codigo, frmStockViewModel.NombreCodigoProductos)
                           CargarNombreYCodigoDeProductos(txt_Codigo_mod, frmStockViewModel.NombreCodigoProductos)
+
+                          If (Not frmStockViewModel.ModoEdicion) Then
+                              TabStock.TabPages.Remove(TabAlta)
+                              TabStock.TabPages.Remove(TabModificacion)
+                              DG_Stock.Columns("Eliminar").Visible = False
+                              DG_Stock.Columns("Modificar").Visible = False
+                          End If
                       End Function)
     End Sub
 
@@ -73,7 +97,13 @@ Public Class frmStock
 
     'doble click en el datagrid.
     Private Sub DG_Stock_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Stock.CellDoubleClick
-        TabStock.SelectedTab = TabModificacion
+        If (frmStockViewModel.ModoEdicion) Then
+            TabStock.SelectedTab = TabModificacion
+        Else
+            Dim stock As StockItemViewModel = DG_Stock.CurrentRow.DataBoundItem
+            StockSeleccionado = stock.Stock
+            Me.DialogResult = DialogResult.OK
+        End If
     End Sub
 
     Private Sub DG_Stock_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Stock.CellContentClick

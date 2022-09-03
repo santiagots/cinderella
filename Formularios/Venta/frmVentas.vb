@@ -47,6 +47,7 @@ Public Class frmVentas
                                             My.Settings.ListaPrecioMayorista,
                                             AddressOf CargarNombreYCodigoDeProductosEvent,
                                             AddressOf StockInsuficienteEvent,
+                                            AddressOf CantidadUnidadesProductoEvent,
                                             AddressOf FacturarEvent,
                                             AddressOf TerminarVentaEvent,
                                             FinalizarDelegate)
@@ -63,6 +64,8 @@ Public Class frmVentas
                           End If
 
                           HabilitarSegunFormaDePago(TipoPago.Efectivo)
+
+                          Me.ActiveControl = txt_CodigoBarra
                       End Function)
         Me.DataBindings.Add(New Binding("Visible", Me.VentaViewModelBindingSource, "Visible", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
     End Sub
@@ -81,6 +84,14 @@ Public Class frmVentas
                  End Sub)
     End Sub
 
+    Private Sub Btn_Buscar_Click(sender As Object, e As EventArgs) Handles Btn_Buscar.Click
+        Ejecutar(Sub()
+                     If (ventaViewModel.BuscarItemVenta()) Then
+                         txt_CodigoBarra.Focus()
+                     End If
+                 End Sub)
+    End Sub
+
     Private Sub btnRecargarPago_Click(sender As Object, e As EventArgs) Handles btnRecargarPago.Click
         Ejecutar(Sub() ventaViewModel.CalcularPendientePago())
     End Sub
@@ -92,6 +103,15 @@ Public Class frmVentas
     End Sub
 
     Private Sub txt_CodigoBarra_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_CodigoBarra.KeyDown
+        Ejecutar(
+            Sub()
+                If (e.KeyData = Keys.Enter) Then
+                    ventaViewModel.AgregaItemVenta(False)
+                End If
+            End Sub)
+    End Sub
+
+    Private Sub txt_Cantidad_KeyDown(sender As Object, e As KeyEventArgs)
         Ejecutar(
             Sub()
                 If (e.KeyData = Keys.Enter) Then
@@ -414,6 +434,20 @@ Public Class frmVentas
     End Sub
 
     Public Function StockInsuficienteEvent(codigoProducto As String, stockCargado As Integer, stockDisponible As Integer) As Boolean
+        Dim form As frmStockFaltante = New frmStockFaltante(codigoProducto, stockCargado, stockDisponible)
+        form.ShowDialog()
+        stockCargado = form.StockIngresado
+        Return form.DialogResult = DialogResult.OK
+    End Function
+
+    Public Function CantidadUnidadesProductoEvent(codigoProducto As String, ByRef cantidadUnidades As Integer) As Boolean
+        Dim form As frmCantidadUnidadesProducto = New frmCantidadUnidadesProducto(codigoProducto)
+        form.ShowDialog()
+        cantidadUnidades = form.CantidadUnidades
+        Return form.DialogResult = DialogResult.OK
+    End Function
+
+    Public Function CantidadProductosEvent(codigoProducto As String, stockCargado As Integer, stockDisponible As Integer) As Boolean
         Dim form As frmStockFaltante = New frmStockFaltante(codigoProducto, stockCargado, stockDisponible)
         form.ShowDialog()
         stockCargado = form.StockIngresado

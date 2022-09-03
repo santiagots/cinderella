@@ -1,16 +1,11 @@
-﻿Imports Excel = Microsoft.Office.Interop.Excel
-Imports Entidades
+﻿Imports System.Data.OleDb
 Imports System.Data.SqlClient
-Imports Datos
-Imports System.Configuration
-Imports System.Windows.Forms
-Imports System.Text
-Imports System.Data.OleDb
-Imports System.IO
-Imports System.Linq
-Imports System.Threading
 Imports System.Globalization
+Imports System.IO
+Imports System.Text
 Imports Common.Core.Helper
+Imports Datos
+Imports Excel = Microsoft.Office.Interop.Excel
 
 Public Enum Fortmats
     Texto
@@ -1205,7 +1200,7 @@ Public Class NegProductos
         Dim encripta As New ClsEncriptacion()
         Using conn As SqlConnection = New SqlConnection()
 
-            conn.ConnectionString = Conexion.STRING_CONEXION_BASE_REMOTA
+            conn.ConnectionString = encripta.DesencriptarMD5(Conexion.STRING_CONEXION_BASE_REMOTA)
             conn.Open()
 
             RaiseEvent UpdateProgress(1, "Armando BackUp de seguridad...")
@@ -1300,7 +1295,7 @@ Public Class NegProductos
         End If
 
         Using conn As SqlConnection = New SqlConnection()
-            conn.ConnectionString = Conexion.STRING_CONEXION_BASE_REMOTA
+            conn.ConnectionString = EncriptacionHelper.DesencriptarMD5(Conexion.STRING_CONEXION_BASE_REMOTA)
             conn.Open()
             Using tran As SqlTransaction = conn.BeginTransaction()
 
@@ -1584,7 +1579,7 @@ Public Class NegProductos
 
         Using conn As SqlConnection = New SqlConnection()
 
-            conn.ConnectionString = Conexion.STRING_CONEXION_BASE_REMOTA
+            conn.ConnectionString = EncriptacionHelper.DesencriptarMD5(Conexion.STRING_CONEXION_BASE_REMOTA)
             conn.Open()
             Using tran As SqlTransaction = conn.BeginTransaction()
 

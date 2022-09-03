@@ -7,30 +7,32 @@ Public Class ClaveUnicaSincronizar
     Dim clsDatos As New Datos.Conexion
     Dim encripta As New EncriptacionHelper
 
-    Public Sub procesar(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.procesar
-        'Verifico que exista una ultima sincornizacion
-        Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionLocal, String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = {0}", valorBusqueda), transaccionLocal).Tables(0)
-        sincronizarARemota(UltimaFechasSincronizacion, tabla, valorBusqueda, conexionLocal, conexionRemota, transaccionRemota, transaccionLocal)
-        sincronizarALocal(UltimaFechasSincronizacion, tabla, valorBusqueda, conexionLocal, conexionRemota, transaccionRemota, transaccionLocal)
+    Private Shared UltimaFechaSincronizacion As Date?
+
+    Public Sub procesar(tabla As Tabla, sucursal As Integer, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.procesar
+        Dim UltimaFechaSincronizacion As Date? = ObtenerUltimaFechaSincronizacion(conexionLocal, sucursal, transaccionLocal)
+
+        sincronizarARemota(UltimaFechaSincronizacion, tabla, sucursal, conexionLocal, conexionRemota, transaccionRemota, transaccionLocal)
+        sincronizarALocal(UltimaFechaSincronizacion, tabla, sucursal, conexionLocal, conexionRemota, transaccionRemota, transaccionLocal)
     End Sub
 
-    Public Sub sincronizarALocal(UltimaFechasSincronizacion As DataTable, Tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
-        Dim fecha As Date
+    Public Sub sincronizarALocal(UltimaFechaSincronizacion As Date?, Tabla As Tabla, sucursal As Integer, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
         Dim DatosSincronizar As DataTable = New DataTable()
         Dim DatosLocal As DataTable
         Dim DatosRemoto As DataTable
         Try
-            If (UltimaFechasSincronizacion.Rows.Count > 0) Then
+            'Verifico que exista una ultima sincornizacion
+            If (UltimaFechaSincronizacion.HasValue) Then
                 'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
-                fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
-                DatosLocal = ejecutarSQL(conexionLocal, String.Format(Tabla.SQLObtenerDatosRemoto, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
-                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(Tabla.SQLObtenerDatosRemoto, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionRemota).Tables(0)
+                DatosLocal = ejecutarSQL(conexionLocal, Tabla.SQLObtenerDatosRemoto, UltimaFechaSincronizacion, sucursal, transaccionLocal).Tables(0)
+                DatosRemoto = ejecutarSQL(conexionRemota, Tabla.SQLObtenerDatosRemoto, UltimaFechaSincronizacion, sucursal, transaccionRemota).Tables(0)
 
                 'obtengo todos los registros que fueron agregados o modificados
                 DatosSincronizar = ObtenerDatos(DatosRemoto, DatosLocal, Tabla.ClavePrimaria, Tabla.ClaveSincronizacion)
             Else
                 'Selecciono todas las filas de lo sultimos 3 meses la base remota
-                DatosSincronizar = ejecutarSQL(conexionRemota, String.Format("SELECT * FROM {0} WHERE {1} >= {2}", Tabla.Nombre, Tabla.ClaveSincronizacion, DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")), transaccionRemota).Tables(0)
+                Dim consulta As String = String.Format("SELECT * FROM {0} WHERE {1} >= @UltimaActualizacion", Tabla.Nombre, Tabla.ClaveSincronizacion)
+                DatosSincronizar = ejecutarSQL(conexionRemota, consulta, DateTime.Now.AddMonths(-3), Nothing, transaccionRemota).Tables(0)
             End If
 
             If DatosSincronizar.Rows.Count > 0 Then
@@ -68,29 +70,28 @@ Public Class ClaveUnicaSincronizar
                 BulkCopy.Close()
             End If
         Catch ex As Exception
-            Throw New Exception($"Fecha: {fecha} Tabla: {Tabla.Nombre} {Environment.NewLine} {DatosSincronizar.ToCVS()}", ex)
+            Throw New Exception($"Fecha: {UltimaFechaSincronizacion} Tabla: {Tabla.Nombre} {Environment.NewLine} {DatosSincronizar.ToCVS()}", ex)
         End Try
 
     End Sub
 
-    Public Sub sincronizarARemota(UltimaFechasSincronizacion As DataTable, tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
-        Dim fecha As Date
+    Public Sub sincronizarARemota(UltimaFechaSincronizacion As Date?, tabla As Tabla, sucursal As Integer, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction)
         Dim DatosSincronizar As DataTable = New DataTable()
         Dim DatosLocal As DataTable
         Dim DatosRemoto As DataTable
 
         Try
-            If (UltimaFechasSincronizacion.Rows.Count > 0) Then
+            'Verifico que exista una ultima sincornizacion
+            If (UltimaFechaSincronizacion.HasValue) Then
                 'Selecciono todas las filas de la base local y remota desde la ultima sincronizacion
-                fecha = UltimaFechasSincronizacion.Rows(0)("FECHA")
-                DatosLocal = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
-                DatosRemoto = ejecutarSQL(conexionRemota, String.Format(tabla.SQLObtenerDatosLocal, fecha.ToString("yyyy-MM-dd"), valorBusqueda), transaccionRemota).Tables(0)
+                DatosLocal = ejecutarSQL(conexionLocal, tabla.SQLObtenerDatosLocal, UltimaFechaSincronizacion, sucursal, transaccionLocal).Tables(0)
+                DatosRemoto = ejecutarSQL(conexionRemota, tabla.SQLObtenerDatosLocal, UltimaFechaSincronizacion, sucursal, transaccionRemota).Tables(0)
 
                 'obtengo todos los registros que fueron agregados o modificados
                 DatosSincronizar = ObtenerDatos(DatosLocal, DatosRemoto, tabla.ClavePrimaria, tabla.ClaveSincronizacion)
             Else
                 'Selecciono todas las filas de lo ultimo 6 meses la base local que pertenecen a la sucursal
-                DatosSincronizar = ejecutarSQL(conexionLocal, String.Format(tabla.SQLObtenerDatosLocal, DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd"), valorBusqueda), transaccionLocal).Tables(0)
+                DatosSincronizar = ejecutarSQL(conexionLocal, tabla.SQLObtenerDatosLocal, DateTime.Now.AddMonths(-6), sucursal, transaccionLocal).Tables(0)
             End If
 
             Dim Res As String = String.Join(Environment.NewLine, DatosSincronizar.Rows.OfType(Of DataRow)().Select(Function(x) String.Join(" ; ", x.ItemArray)))
@@ -132,13 +133,30 @@ Public Class ClaveUnicaSincronizar
                 BulkCopy.Close()
             End If
         Catch ex As Exception
-            Throw New Exception($"Fecha: {fecha} Tabla: {tabla.Nombre} {Environment.NewLine} {DatosSincronizar.ToCVS()}", ex)
+            Throw New Exception($"Fecha: {UltimaFechaSincronizacion} Tabla: {tabla.Nombre} {Environment.NewLine} {DatosSincronizar.ToCVS()}", ex)
         End Try
     End Sub
 
-    Private Function ejecutarSQL(conexion As SqlConnection, consulta As String, transaction As SqlTransaction) As DataSet
+    Private Function ejecutarSQL(conexion As SqlConnection, consulta As String, ultimaActualizacion As Date?, sucursal As Integer?, transaction As SqlTransaction) As DataSet
         Dim ds As DataSet = New DataSet()
-        Dim da As SqlDataAdapter = New SqlDataAdapter(consulta, conexion)
+
+        'Dim da As SqlDataAdapter = New SqlDataAdapter(consulta, conexion)
+        'If (transaction IsNot Nothing) Then
+        '    da.SelectCommand.Transaction = transaction
+        'End If
+        'da.Fill(ds)
+
+        Dim command As SqlCommand = New SqlCommand(consulta, conexion)
+
+        If (ultimaActualizacion.HasValue) Then
+            command.Parameters.Add("@UltimaActualizacion", SqlDbType.DateTime).Value = ultimaActualizacion.Value
+        End If
+
+        If (sucursal.HasValue) Then
+            command.Parameters.Add("@Sucursal", SqlDbType.Int).Value = sucursal.Value
+        End If
+
+        Dim da As SqlDataAdapter = New SqlDataAdapter(command)
         If (transaction IsNot Nothing) Then
             da.SelectCommand.Transaction = transaction
         End If
@@ -162,5 +180,20 @@ Public Class ClaveUnicaSincronizar
         Next
 
         Return tablaDiferencias
+    End Function
+
+    Private Function ObtenerUltimaFechaSincronizacion(conexionLocal As SqlConnection, sucursal As Integer, transaccionLocal As SqlTransaction) As Date?
+
+        If (Not UltimaFechaSincronizacion.HasValue) Then
+
+            Dim consultaUltimaActualizacion As String = String.Format("SELECT FECHA FROM SINCORNIZACION WHERE id_Sucursal = @Sucursal")
+            Dim UltimaFechasSincronizacion As DataTable = ejecutarSQL(conexionLocal, consultaUltimaActualizacion, Nothing, sucursal, transaccionLocal).Tables(0)
+            Dim fecha As Date?
+            If (UltimaFechasSincronizacion.Rows.Count > 0) Then
+                UltimaFechaSincronizacion = UltimaFechasSincronizacion.Rows(0)("FECHA")
+            End If
+        End If
+
+        Return UltimaFechaSincronizacion
     End Function
 End Class

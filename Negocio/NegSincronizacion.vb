@@ -301,8 +301,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Registro"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "EMPLEADOS_REGISTROS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_REGISTROS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -313,8 +313,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS"
-        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= @UltimaActualizacion AND ER.id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= @UltimaActualizacion AND ER.id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -325,8 +325,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS_AUSENTES"
-        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= @UltimaActualizacion AND ER.id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_AUSENTES AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= @UltimaActualizacion AND ER.id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -337,8 +337,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Auto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "REL_REGISTRO_EMPLEADOS_TARDE"
-        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= '{0}' AND ER.id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= @UltimaActualizacion AND ER.id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select R.* from EMPLEADOS_REGISTROS AS ER INNER JOIN REL_REGISTRO_EMPLEADOS_TARDE AS R ON ER.id_Registro = R.id_Registro where R.Fecha_Edicion >= @UltimaActualizacion AND ER.id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -349,8 +349,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_CIERRE_CAJA"
-        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CIERRE_CAJA where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -362,8 +362,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO"
-        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -380,12 +380,12 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "select P.* 
                                         from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO P 
                                         inner join NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO D on P.IdDocumentoDePago = D.Id  
-                                        where D.FechaEdicion >= '{0}' AND D.IdSucursal = {1}"
+                                        where D.FechaEdicion >= @UltimaActualizacion AND D.IdSucursal = @Sucursal"
 
         tabla.SQLObtenerDatosRemoto = "select P.* 
                                         from NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_PAGO P 
                                         inner join NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO D on P.IdDocumentoDePago = D.Id  
-                                        where D.FechaEdicion >= '{0}' AND D.IdSucursal = {1}"
+                                        where D.FechaEdicion >= @UltimaActualizacion AND D.IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -398,8 +398,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id"
         tabla.ClaveSincronizacion = "Fecha"
         tabla.Nombre = "NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO"
-        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CLIENTE_MAYORISTA_MOVIMIENTO where Fecha >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -412,8 +412,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_CAJA"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -426,8 +426,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_CAJA_FUERTE"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_CAJA_FUERTE where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -440,8 +440,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Adicional"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "ADICIONALES"
-        tabla.SQLObtenerDatosLocal = "select * from ADICIONALES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from ADICIONALES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from ADICIONALES where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from ADICIONALES where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -454,8 +454,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Recibo"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "EMPLEADOS_RECIBOS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_RECIBOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -468,8 +468,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_APORTE"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_APORTE where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -482,8 +482,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Deposito"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "EMPLEADOS_DEPOSITOS"
-        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from EMPLEADOS_DEPOSITOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 
@@ -496,8 +496,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Deuda"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "DEUDA"
-        tabla.SQLObtenerDatosLocal = "select * from DEUDA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from DEUDA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from DEUDA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from DEUDA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -510,8 +510,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Adelanto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "ADELANTOS"
-        tabla.SQLObtenerDatosLocal = "select * from ADELANTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from ADELANTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from ADELANTOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from ADELANTOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -523,8 +523,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Stock"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "STOCK"
-        tabla.SQLObtenerDatosLocal = "select * from STOCK where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from STOCK where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from STOCK where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from STOCK where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -536,8 +536,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Bitacora"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "STOCK_BITACORA"
-        tabla.SQLObtenerDatosLocal = "select * from STOCK_BITACORA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from STOCK_BITACORA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from STOCK_BITACORA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from STOCK_BITACORA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -549,8 +549,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_GASTOS"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_GASTOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -562,8 +562,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Registro"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "CUENTA_CORRIENTE"
-        tabla.SQLObtenerDatosLocal = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from CUENTA_CORRIENTE where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -575,8 +575,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Mercaderia"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MERCADERIAS"
-        tabla.SQLObtenerDatosLocal = "select * from MERCADERIAS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MERCADERIAS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MERCADERIAS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MERCADERIAS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -591,11 +591,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From MERCADERIAS M 
                                         INNER Join MERCADERIAS_DETALLE D ON D.id_Mercaderia = M.id_Mercaderia
-                                        where D.Fecha_Edicion >= '{0}' and M.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= @UltimaActualizacion and M.id_Sucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From MERCADERIAS M 
                                         INNER Join MERCADERIAS_DETALLE D ON D.id_Mercaderia = M.id_Mercaderia
-                                        where D.Fecha_Edicion >= '{0}' and M.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= @UltimaActualizacion and M.id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -607,8 +607,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_VENTAS"
-        tabla.SQLObtenerDatosLocal = "select * from NUEVA_VENTAS where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_VENTAS where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_VENTAS where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_VENTAS where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -623,11 +623,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_VENTA_ITEMS D ON V.Id = D.IdVenta
-                                        where D.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+                                        where D.FechaEdicion >= @UltimaActualizacion and V.IdSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_VENTA_ITEMS D ON V.Id = D.IdVenta
-                                        where D.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+                                        where D.FechaEdicion >= @UltimaActualizacion and V.IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -639,8 +639,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_REMITOS"
-        tabla.SQLObtenerDatosLocal = "select R.* from NUEVA_REMITOS R INNER Join NUEVA_VENTAS V ON R.IdVenta = V.Id where R.FechaEdicion >= '{0}' AND V.IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select R.* from NUEVA_REMITOS R INNER Join NUEVA_VENTAS V ON R.IdVenta = V.Id where R.FechaEdicion >= '{0}' AND V.IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select R.* from NUEVA_REMITOS R INNER Join NUEVA_VENTAS V ON R.IdVenta = V.Id where R.FechaEdicion >= @UltimaActualizacion AND V.IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select R.* from NUEVA_REMITOS R INNER Join NUEVA_VENTAS V ON R.IdVenta = V.Id where R.FechaEdicion >= @UltimaActualizacion AND V.IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -656,12 +656,12 @@ Public Class NegSincronizacion
 		                            from NUEVA_REMITO_ITEMS RI
                                     INNER Join NUEVA_REMITOS R ON RI.IdRemito = R.Id
                                     INNER Join NUEVA_VENTAS V ON V.Id = R.IdVenta
-                                    where RI.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+                                    where RI.FechaEdicion >= @UltimaActualizacion and V.IdSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select RI.* 
 		                            from NUEVA_REMITO_ITEMS RI
                                     INNER Join NUEVA_REMITOS R ON RI.IdRemito = R.Id
                                     INNER Join NUEVA_VENTAS V ON V.Id = R.IdVenta
-                                    where RI.FechaEdicion >= '{0}' and V.IdSucursal = {1}"
+                                    where RI.FechaEdicion >= @UltimaActualizacion and V.IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -676,11 +676,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select P.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_VENTA_PAGOS P ON V.Id = P.IdVenta
-                                        where P.FechaEdicion >= '{0}' and V.idSucursal = {1}"
+                                        where P.FechaEdicion >= @UltimaActualizacion and V.idSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select P.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_VENTA_PAGOS P ON V.Id = P.IdVenta
-                                        where P.FechaEdicion >= '{0}' and V.idSucursal = {1}"
+                                        where P.FechaEdicion >= @UltimaActualizacion and V.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -692,8 +692,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "idOrdenCompra"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "ORDEN_COMPRA"
-        tabla.SQLObtenerDatosLocal = "select * from ORDEN_COMPRA where FechaEdicion >= '{0}' AND idSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from ORDEN_COMPRA where FechaEdicion >= '{0}' AND idSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from ORDEN_COMPRA where FechaEdicion >= @UltimaActualizacion AND idSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from ORDEN_COMPRA where FechaEdicion >= @UltimaActualizacion AND idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -708,11 +708,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select OCD.* 
                                         From ORDEN_COMPRA  OC
                                         INNER Join ORDEN_COMPRA_DETALLE OCD ON OC.idOrdenCompra = OCD.idOrdenCompra
-                                        where OCD.FechaEdicion >= '{0}' and OC.idSucursal = {1}"
+                                        where OCD.FechaEdicion >= @UltimaActualizacion and OC.idSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select OCD.* 
                                         From ORDEN_COMPRA  OC
                                         INNER Join ORDEN_COMPRA_DETALLE OCD ON OC.idOrdenCompra = OCD.idOrdenCompra
-                                        where OCD.FechaEdicion >= '{0}' and OC.idSucursal = {1}"
+                                        where OCD.FechaEdicion >= @UltimaActualizacion and OC.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -724,8 +724,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_COMISION"
-        tabla.SQLObtenerDatosLocal = "select * from NUEVA_COMISION where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_COMISION where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_COMISION where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_COMISION where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -737,8 +737,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Senia"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "SENIA"
-        tabla.SQLObtenerDatosLocal = "select * from SENIA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from SENIA where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from SENIA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from SENIA where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -750,8 +750,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Presupuesto"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "PRESUPUESTO"
-        tabla.SQLObtenerDatosLocal = "select * from PRESUPUESTO where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from PRESUPUESTO where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from PRESUPUESTO where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from PRESUPUESTO where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -766,11 +766,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From PRESUPUESTO P
                                         INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
-                                        where D.Fecha_Edicion >= '{0}' and P.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= @UltimaActualizacion and P.id_Sucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From PRESUPUESTO P
                                         INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
-                                        where D.Fecha_Edicion >= '{0}' and P.id_Sucursal = {1}"
+                                        where D.Fecha_Edicion >= @UltimaActualizacion and P.id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -781,8 +781,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_RESERVA"
-        tabla.SQLObtenerDatosLocal = "Select * from NUEVA_RESERVA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_RESERVA where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from NUEVA_RESERVA where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_RESERVA where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -793,8 +793,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_NOTA_PEDIDO"
-        tabla.SQLObtenerDatosLocal = "Select * from NUEVA_NOTA_PEDIDO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_NOTA_PEDIDO where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from NUEVA_NOTA_PEDIDO where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_NOTA_PEDIDO where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -808,11 +808,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select D.* 
                                         From NUEVA_NOTA_PEDIDO T 
                                         INNER Join NUEVA_NOTA_PEDIDO_ITEMS D ON D.IdNotaPedido = T.Id
-                                        where D.FechaEdicion >= '{0}' and T.IdSucursal = {1}"
+                                        where D.FechaEdicion >= @UltimaActualizacion and T.IdSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
                                         From NUEVA_NOTA_PEDIDO T 
                                         INNER Join NUEVA_NOTA_PEDIDO_ITEMS D ON D.IdNotaPedido = T.Id
-                                        where D.FechaEdicion >= '{0}' and T.IdSucursal = {1}"
+                                        where D.FechaEdicion >= @UltimaActualizacion and T.IdSucursal = @Sucursal"
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
     End Function
@@ -825,11 +825,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select F.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
-                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where F.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select F.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
-                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where F.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -844,12 +844,12 @@ Public Class NegSincronizacion
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
                                         INNER Join NUEVA_NUMERO_FACTURA N ON F.Id = N.IdFactura
-                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where F.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select N.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
                                         INNER Join NUEVA_NUMERO_FACTURA N ON F.Id = N.IdFactura
-                                        where F.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where F.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -863,11 +863,11 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select C.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
-                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select C.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
-                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -882,12 +882,12 @@ Public Class NegSincronizacion
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
                                         INNER Join NUEVA_NUMERO_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
-                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select N.* 
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
                                         INNER Join NUEVA_NUMERO_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
-                                        where C.Fecha >= '{0}' and V.idSucursal = {1}"
+                                        where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -899,8 +899,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Devolucion"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "DEVOLUCIONES"
-        tabla.SQLObtenerDatosLocal = "Select * from DEVOLUCIONES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from DEVOLUCIONES where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "Select * from DEVOLUCIONES where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from DEVOLUCIONES where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -915,12 +915,12 @@ Public Class NegSincronizacion
         tabla.SQLObtenerDatosLocal = "Select DE.* 
                                         From DEVOLUCIONES D 
                                         INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
-                                        where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"
+                                        where DE.Fecha_Edicion >= @UltimaActualizacion and D.id_Sucursal = @Sucursal"
 
         tabla.SQLObtenerDatosRemoto = "Select DE.* 
                                         From DEVOLUCIONES D 
                                         INNER Join DEVOLUCIONES_DETALLE DE ON DE.id_Devolucion = D.id_Devolucion
-                                        where DE.Fecha_Edicion >= '{0}' and D.id_Sucursal = {1}"
+                                        where DE.Fecha_Edicion >= @UltimaActualizacion and D.id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -931,8 +931,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_IMPUESTOS"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_IMPUESTOS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -943,8 +943,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "Id"
         tabla.ClaveSincronizacion = "FechaEdicion"
         tabla.Nombre = "NUEVA_CHEQUE"
-        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CHEQUE where FechaEdicion >= '{0}' AND IdSucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CHEQUE where FechaEdicion >= '{0}' AND IdSucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_CHEQUE where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_CHEQUE where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -957,8 +957,8 @@ Public Class NegSincronizacion
         tabla.ClavePrimaria = "id_Movimiento"
         tabla.ClaveSincronizacion = "Fecha_Edicion"
         tabla.Nombre = "MOVIMIENTOS_RETIROS"
-        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
-        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= '{0}' AND id_Sucursal = {1}"
+        tabla.SQLObtenerDatosLocal = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from MOVIMIENTOS_RETIROS where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
 

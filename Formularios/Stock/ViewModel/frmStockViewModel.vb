@@ -34,11 +34,15 @@ Namespace Formularios.Stock
 
         Public Property NombreCodigoProductos As List(Of String)
 
-        Sub New(IdSucursal As Integer)
+        Public Property ModoEdicion As Boolean
+
+        Sub New(IdSucursal As Integer, modoEdicion As Boolean, filtroCodigoNombre As String)
             Me.IdSucursal = IdSucursal
             AltaStock = New StockItemViewModel(VariablesGlobales.objUsuario.Nombre)
             ModificacionStock = New StockItemViewModel(VariablesGlobales.objUsuario.Nombre)
             Stocks = New BindingList(Of StockItemViewModel)()
+            FiltroPorCodigoNombre = filtroCodigoNombre
+            Me.ModoEdicion = modoEdicion
         End Sub
 
         Friend Async Function AltaAsync() As Task

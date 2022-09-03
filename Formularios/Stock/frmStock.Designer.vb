@@ -29,6 +29,17 @@ Partial Class frmStock
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.FrmStockViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DG_Stock = New System.Windows.Forms.DataGridView()
+        Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CategoriaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ActualDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Reservado = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.Restante = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MinimoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OptimoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.VentaMensualDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.StocksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Paginado = New SistemaCinderella.Paginado()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
@@ -97,17 +108,6 @@ Partial Class frmStock
         Me.ToolStock = New System.Windows.Forms.ToolTip(Me.components)
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CategoriaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ActualDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Reservado = New System.Windows.Forms.DataGridViewLinkColumn()
-        Me.Restante = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MinimoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.OptimoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.VentaMensualDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabStock.SuspendLayout()
         Me.TabListado.SuspendLayout()
         CType(Me.FrmStockViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -200,6 +200,96 @@ Partial Class frmStock
         Me.DG_Stock.Size = New System.Drawing.Size(978, 462)
         Me.DG_Stock.TabIndex = 24
         '
+        'CodigoDataGridViewTextBoxColumn
+        '
+        Me.CodigoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
+        Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
+        Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CodigoDataGridViewTextBoxColumn.Width = 71
+        '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CategoriaDataGridViewTextBoxColumn
+        '
+        Me.CategoriaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CategoriaDataGridViewTextBoxColumn.DataPropertyName = "Categoria"
+        Me.CategoriaDataGridViewTextBoxColumn.HeaderText = "Categoria"
+        Me.CategoriaDataGridViewTextBoxColumn.Name = "CategoriaDataGridViewTextBoxColumn"
+        Me.CategoriaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CategoriaDataGridViewTextBoxColumn.Width = 85
+        '
+        'ActualDataGridViewTextBoxColumn
+        '
+        Me.ActualDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.ActualDataGridViewTextBoxColumn.DataPropertyName = "Actual"
+        Me.ActualDataGridViewTextBoxColumn.HeaderText = "Actual"
+        Me.ActualDataGridViewTextBoxColumn.Name = "ActualDataGridViewTextBoxColumn"
+        '
+        'Reservado
+        '
+        Me.Reservado.ActiveLinkColor = System.Drawing.Color.Black
+        Me.Reservado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Reservado.DataPropertyName = "Reservado"
+        Me.Reservado.HeaderText = "Reservado"
+        Me.Reservado.LinkColor = System.Drawing.Color.Black
+        Me.Reservado.Name = "Reservado"
+        Me.Reservado.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Reservado.VisitedLinkColor = System.Drawing.Color.Black
+        '
+        'Restante
+        '
+        Me.Restante.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Restante.DataPropertyName = "Disponible"
+        Me.Restante.HeaderText = "Disponible"
+        Me.Restante.Name = "Restante"
+        Me.Restante.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'MinimoDataGridViewTextBoxColumn
+        '
+        Me.MinimoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.MinimoDataGridViewTextBoxColumn.DataPropertyName = "Minimo"
+        Me.MinimoDataGridViewTextBoxColumn.HeaderText = "Minimo"
+        Me.MinimoDataGridViewTextBoxColumn.Name = "MinimoDataGridViewTextBoxColumn"
+        '
+        'OptimoDataGridViewTextBoxColumn
+        '
+        Me.OptimoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.OptimoDataGridViewTextBoxColumn.DataPropertyName = "Optimo"
+        Me.OptimoDataGridViewTextBoxColumn.HeaderText = "Optimo"
+        Me.OptimoDataGridViewTextBoxColumn.Name = "OptimoDataGridViewTextBoxColumn"
+        '
+        'VentaMensualDataGridViewTextBoxColumn
+        '
+        Me.VentaMensualDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.VentaMensualDataGridViewTextBoxColumn.DataPropertyName = "VentaMensual"
+        Me.VentaMensualDataGridViewTextBoxColumn.HeaderText = "Vta. Mensual"
+        Me.VentaMensualDataGridViewTextBoxColumn.Name = "VentaMensualDataGridViewTextBoxColumn"
+        Me.VentaMensualDataGridViewTextBoxColumn.Width = 110
+        '
+        'Modificar
+        '
+        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Modificar.HeaderText = ""
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.Width = 5
+        '
+        'Eliminar
+        '
+        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Eliminar.HeaderText = ""
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.Width = 5
+        '
         'StocksBindingSource
         '
         Me.StocksBindingSource.DataMember = "Stocks"
@@ -273,6 +363,7 @@ Partial Class frmStock
         '
         Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Restablecer.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
         Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Restablecer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btn_Restablecer.Location = New System.Drawing.Point(753, 3)
@@ -287,6 +378,8 @@ Partial Class frmStock
         '
         Me.btn_Importar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Importar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Importar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
+        Me.btn_Importar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
         Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
         Me.btn_Importar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -313,6 +406,7 @@ Partial Class frmStock
         '
         Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
         Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
         Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -985,96 +1079,6 @@ Partial Class frmStock
         'OpenFileDialog
         '
         Me.OpenFileDialog.FileName = "OpenFileDialog"
-        '
-        'CodigoDataGridViewTextBoxColumn
-        '
-        Me.CodigoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
-        Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
-        Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
-        Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CodigoDataGridViewTextBoxColumn.Width = 71
-        '
-        'NombreDataGridViewTextBoxColumn
-        '
-        Me.NombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
-        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'CategoriaDataGridViewTextBoxColumn
-        '
-        Me.CategoriaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.CategoriaDataGridViewTextBoxColumn.DataPropertyName = "Categoria"
-        Me.CategoriaDataGridViewTextBoxColumn.HeaderText = "Categoria"
-        Me.CategoriaDataGridViewTextBoxColumn.Name = "CategoriaDataGridViewTextBoxColumn"
-        Me.CategoriaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CategoriaDataGridViewTextBoxColumn.Width = 85
-        '
-        'ActualDataGridViewTextBoxColumn
-        '
-        Me.ActualDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.ActualDataGridViewTextBoxColumn.DataPropertyName = "Actual"
-        Me.ActualDataGridViewTextBoxColumn.HeaderText = "Actual"
-        Me.ActualDataGridViewTextBoxColumn.Name = "ActualDataGridViewTextBoxColumn"
-        '
-        'Reservado
-        '
-        Me.Reservado.ActiveLinkColor = System.Drawing.Color.Black
-        Me.Reservado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Reservado.DataPropertyName = "Reservado"
-        Me.Reservado.HeaderText = "Reservado"
-        Me.Reservado.LinkColor = System.Drawing.Color.Black
-        Me.Reservado.Name = "Reservado"
-        Me.Reservado.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Reservado.VisitedLinkColor = System.Drawing.Color.Black
-        '
-        'Restante
-        '
-        Me.Restante.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Restante.DataPropertyName = "Disponible"
-        Me.Restante.HeaderText = "Disponible"
-        Me.Restante.Name = "Restante"
-        Me.Restante.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'MinimoDataGridViewTextBoxColumn
-        '
-        Me.MinimoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.MinimoDataGridViewTextBoxColumn.DataPropertyName = "Minimo"
-        Me.MinimoDataGridViewTextBoxColumn.HeaderText = "Minimo"
-        Me.MinimoDataGridViewTextBoxColumn.Name = "MinimoDataGridViewTextBoxColumn"
-        '
-        'OptimoDataGridViewTextBoxColumn
-        '
-        Me.OptimoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.OptimoDataGridViewTextBoxColumn.DataPropertyName = "Optimo"
-        Me.OptimoDataGridViewTextBoxColumn.HeaderText = "Optimo"
-        Me.OptimoDataGridViewTextBoxColumn.Name = "OptimoDataGridViewTextBoxColumn"
-        '
-        'VentaMensualDataGridViewTextBoxColumn
-        '
-        Me.VentaMensualDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.VentaMensualDataGridViewTextBoxColumn.DataPropertyName = "VentaMensual"
-        Me.VentaMensualDataGridViewTextBoxColumn.HeaderText = "Vta. Mensual"
-        Me.VentaMensualDataGridViewTextBoxColumn.Name = "VentaMensualDataGridViewTextBoxColumn"
-        Me.VentaMensualDataGridViewTextBoxColumn.Width = 110
-        '
-        'Modificar
-        '
-        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Modificar.HeaderText = ""
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.Width = 5
-        '
-        'Eliminar
-        '
-        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Eliminar.HeaderText = ""
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.Width = 5
         '
         'frmStock
         '

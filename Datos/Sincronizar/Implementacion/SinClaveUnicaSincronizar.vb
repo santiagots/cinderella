@@ -4,7 +4,7 @@ Imports Common.Core.Extension
 Public Class SinClaveUnicaSincronizar
     Implements Sincronizar
 
-    Public Sub procesar(tabla As Tabla, valorBusqueda As String, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.procesar
+    Public Sub procesar(tabla As Tabla, sucursal As Integer, conexionLocal As SqlConnection, conexionRemota As SqlConnection, transaccionRemota As SqlTransaction, transaccionLocal As SqlTransaction) Implements Sincronizar.procesar
         Dim datos As DataTable = New DataTable()
         Try
             ' obtengo los datos a copiar.

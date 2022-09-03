@@ -25,6 +25,7 @@ Namespace Formularios.Venta
 
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
         Public Delegate Function StockInsuficienteDelegate(codigoProducto As String, stockCargado As Integer, stockDisponible As Integer) As Boolean
+        Public Delegate Function CantidadUnidadesProductoDelegate(codigoProducto As String, ByRef cantidadUnidades As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
         Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As ModelVenta.Venta) As Task
         Public Delegate Function FinalizarDelegateAsync() As Task
@@ -32,6 +33,7 @@ Namespace Formularios.Venta
 
         Private CargarProductoNombreyCodigoEvent As CargarProductoNombreyCodigoDelegate
         Private StockInsuficienteEvent As StockInsuficienteDelegate
+        Private CantidadUnidadesProductoEvent As CantidadUnidadesProductoDelegate
         Private FacturarEvent As FacturarDelegate
         Private FacturarCallBackEvent As FacturarDelegateCallBackAsync
         Private FinalizarVentaEvent As FinalizarDelegate
@@ -241,11 +243,12 @@ Namespace Formularios.Venta
             End Get
         End Property
 
-        Public Sub New(IdSucursal As Integer, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate, facturar As FacturarDelegate, finalizarVentaEvent As FinalizarDelegate, finalizarNotaPedidoEvent As FinalizarDelegateAsync)
+        Public Sub New(IdSucursal As Integer, tipoCliente As Enums.TipoCliente, idListaPrecioMinorista As Integer, idListaPrecioMayorista As Integer, cargarProductoNombreyCodigo As CargarProductoNombreyCodigoDelegate, stockInsuficiente As StockInsuficienteDelegate, cantidadUnidadesProducto As CantidadUnidadesProductoDelegate, facturar As FacturarDelegate, finalizarVentaEvent As FinalizarDelegate, finalizarNotaPedidoEvent As FinalizarDelegateAsync)
             Me.IdListaPrecioMinorista = idListaPrecioMinorista
             Me.IdListaPrecioMayorista = idListaPrecioMayorista
             Me.CargarProductoNombreyCodigoEvent = cargarProductoNombreyCodigo
             Me.StockInsuficienteEvent = stockInsuficiente
+            Me.CantidadUnidadesProductoEvent = cantidadUnidadesProducto
             Me.FacturarEvent = facturar
             Me.FacturarCallBackEvent = AddressOf FacturarAsync
             Me.FinalizarVentaEvent = finalizarVentaEvent
@@ -489,7 +492,13 @@ Namespace Formularios.Venta
 
             producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
-            Dim CantidadUnidadesDeProducto As Integer = VentaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -1, 1)
+            Dim unidadesProducto As Integer = 0
+
+            If (Not CantidadUnidadesProductoEvent(producto.Codigo, unidadesProducto)) Then
+                Return
+            End If
+
+            Dim CantidadUnidadesDeProducto As Integer = VentaModel.ObtenerCantidadDeUnidadesDeProducto(producto.Codigo) + If(esDevolucion, -unidadesProducto, unidadesProducto)
             If Not HaySotck(producto, CantidadUnidadesDeProducto) Then
                 Exit Sub
             End If
@@ -536,6 +545,17 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.NombreCodigoProductoBusqueda))
 
         End Sub
+
+        Friend Function BuscarItemVenta() As Boolean
+            Dim frmStock As frmStock = New frmStock(False, NombreCodigoProductoBusqueda)
+            If (frmStock.ShowDialog() = DialogResult.OK) Then
+                NombreCodigoProductoBusqueda = frmStock.StockSeleccionado.Producto.Codigo
+                NotifyPropertyChanged(NameOf(Me.NombreCodigoProductoBusqueda))
+                Return True
+            Else
+                Return False
+            End If
+        End Function
 
         Private Function HaySotck(producto As ModelBase.Producto, ByRef CantidadUnidadesDeProducto As Integer) As Boolean
             Dim stockInsuficienteConfirmacion As Boolean = False
@@ -910,7 +930,7 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function RegistrarMovimiento() As Task
-            If (VentaModel.TipoCliente <> Enums.TipoCliente.Mayorista) Then
+            If (TipoClienteSeleccionado <> Enums.TipoCliente.Mayorista) Then
                 Return
             End If
 
@@ -924,9 +944,8 @@ Namespace Formularios.Venta
                 clienteMayorista.DebitarSaldoCuentaCorriente(monto)
                 saldo = clienteMayorista.MontoCuentaCorriente
                 Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clienteMayorista)
-            End If
 
-            Dim movimiento As Movimiento = New Movimiento(VentaModel.IdSucursal,
+                Dim movimiento As Movimiento = New Movimiento(VentaModel.IdSucursal,
                                                           VentaModel.ClienteMayorista.Id,
                                                           monto,
                                                           saldo,
@@ -935,7 +954,8 @@ Namespace Formularios.Venta
                                                           VentaModel.Numero,
                                                           VentaModel.Id)
 
-            Await MovimientoService.GuardarAsync(base, movimiento)
+                Await MovimientoService.GuardarAsync(base, movimiento)
+            End If
         End Function
 
         Private Function ObtenerCambioEnProductosPorReserva() As List(Of KeyValuePair(Of String, Integer))
