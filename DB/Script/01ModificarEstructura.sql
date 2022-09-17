@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-        SQL5090.site4now.net.DB_9B1463_cinderella    -  This database will be modified
+        (local)\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
 
 to synchronize it with:
 
-        (local)\SQLEXPRESS.CINDERELLA_LOCAL
+        sql5090.site4now.net.DB_9B1463_cinderellaProd
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 7/10/2021 20:18:57
+Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 9/17/2022 6:55:37 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -28,13 +28,17 @@ PRINT N'Altering [dbo].[NUEVA_VENTA_ITEMS]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-IF COL_LENGTH(N'[dbo].[NUEVA_VENTA_ITEMS]', N'Anulada') IS NULL
-ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] ADD[Anulada] [bit] NOT NULL CONSTRAINT [DF_NUEVA_VENTA_ITEMS_Anulada] DEFAULT ((0))
+ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] ADD
+[Facturada] [bit] NOT NULL CONSTRAINT [DF_NUEVA_VENTA_ITEMS_EsFacturable] DEFAULT ((1)),
+[Anulada] [bit] NOT NULL CONSTRAINT [DF_NUEVA_VENTA_ITEMS_Anulada] DEFAULT ((0))
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-IF (COL_LENGTH(N'[dbo].[NUEVA_VENTA_ITEMS]', N'EsFacturable') IS NOT NULL) AND (COL_LENGTH(N'[dbo].[NUEVA_VENTA_ITEMS]', N'Facturada') IS NULL)
-EXEC sp_rename N'[dbo].[NUEVA_VENTA_ITEMS].[EsFacturable]', N'Facturada', N'COLUMN'
+PRINT N'Disabling constraints on [dbo].[NUEVA_VENTA_ITEMS]'
+GO
+ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] NOCHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_NUEVA_VENTAS]
+GO
+ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] NOCHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_PRODUCTOS]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
