@@ -378,7 +378,6 @@ Partial Class frmStock
         '
         Me.btn_Importar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Importar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Importar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
         Me.btn_Importar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
         Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel

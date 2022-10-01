@@ -641,7 +641,7 @@ Public Class NegStock
                     Dim idBitacora As String = clsDatos.ObtenerCalveUnica(idSucursal).ToString()
                     'Doy de alta la bitacora
                     Dim bitacora As String = String.Format("INSERT INTO STOCK_BITACORA ([id_Bitacora],[id_Producto],[id_Sucursal],[id_Stock],[Accion],[Stock_Minimo_Ant],[Stock_Actual_Ant],[Stock_Optimo_Ant],[Stock_Minimo],[Stock_Actual],[Stock_Optimo],[Fecha],[Motivo],[id_Usuario],[Usuario],[Habilitado],[Fecha_Edicion],[Venta_Mensual_Ant],[Venta_Mensual]) VALUES({0},{1},{2},{3},'{4}',{5},{6},{7},{8},{9},{10},'{11}','{12}',{13},'{14}',{15},'{16}',{17},{18})",
-                             idBitacora, dato("id_producto"), idSucursal, stockActual("id_stock"), "Modificación", stockActual("Stock_Minimo"), stockActual("Stock_Actual"), stockActual("Stock_Optimo"), dato("StockMinimo"), dato("StockActual"), dato("StockOptimo"), fecha, motivo, idUsuario, usuario, "0", fecha, stockActual("Venta_Mensual"), dato("VentaMensual"))
+                             idBitacora, dato("id_producto"), idSucursal, stockActual("id_stock"), "1", stockActual("Stock_Minimo"), stockActual("Stock_Actual"), stockActual("Stock_Optimo"), dato("StockMinimo"), dato("StockActual"), dato("StockOptimo"), fecha, motivo, idUsuario, usuario, "0", fecha, stockActual("Venta_Mensual"), dato("VentaMensual"))
 
                     bitacoras.Add(bitacora)
 
@@ -659,7 +659,7 @@ Public Class NegStock
 
                 'Doy de alta la bitacora
                 Dim bitacora = String.Format("INSERT INTO STOCK_BITACORA ([id_Bitacora],[id_Producto],[id_Sucursal],[id_Stock],[Accion],[Stock_Minimo_Ant],[Stock_Actual_Ant],[Stock_Optimo_Ant],[Stock_Minimo],[Stock_Actual],[Stock_Optimo],[Fecha],[Motivo],[id_Usuario],[Usuario],[Habilitado],[Fecha_Edicion],[Venta_Mensual_Ant],[Venta_Mensual]) VALUES({0},{1},{2},{3},'{4}',{5},{6},{7},{8},{9},{10},'{11}','{12}',{13},'{14}',{15},'{16}',{17},{18})",
-                             idBitacora, dato("id_producto"), idSucursal, idStock.ToString(), "Alta", "0", "0", "0", dato("StockMinimo"), dato("StockActual"), dato("StockOptimo"), fecha, motivo, idUsuario, usuario, "0", fecha, "0", dato("VentaMensual"))
+                             idBitacora, dato("id_producto"), idSucursal, idStock.ToString(), "0", "0", "0", "0", dato("StockMinimo"), dato("StockActual"), dato("StockOptimo"), fecha, motivo, idUsuario, usuario, "0", fecha, "0", dato("VentaMensual"))
 
                 bitacoras.Add(bitacora)
 

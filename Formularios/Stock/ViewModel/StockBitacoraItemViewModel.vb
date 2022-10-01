@@ -72,7 +72,7 @@ Namespace Formularios.Stock
 
         Public ReadOnly Property Accion As String
             Get
-                Return Bitacora.Accion
+                Return Bitacora.Accion.ToString()
             End Get
         End Property
 
