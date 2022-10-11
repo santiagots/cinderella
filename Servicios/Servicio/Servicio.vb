@@ -4,6 +4,7 @@ Imports BaseModel = Ventas.Core.Model.BaseAgreggate
 Imports PedidoModelNota = Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Data
 Imports Ventas.Data.Repository
+Imports Ventas.Data.Service
 
 Public Class Servicio
     Public Shared Function ObtenerListaProductos() As IList(Of BaseModel.Producto)
@@ -37,10 +38,10 @@ Public Class Servicio
         End Using
     End Function
 
-    Friend Shared Sub GuardarNotaPedido(notaPedidoModel As PedidoModelNota.NotaPedido)
+    Friend Shared Async Sub GuardarNotaPedido(notaPedidoModel As PedidoModelNota.NotaPedido)
         Using context As VentaContext = New VentaContext()
             Dim notaPedidoRepository As INotaPedidoRepository = New NotaPedidoRepository(context)
-            notaPedidoRepository.GuardarAsync(notaPedidoModel)
+            Await notaPedidoRepository.GuardarAsync(notaPedidoModel)
         End Using
     End Sub
 

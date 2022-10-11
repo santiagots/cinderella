@@ -4,6 +4,7 @@ Imports BaseModel = Ventas.Core.Model.BaseAgreggate
 Imports Entidades
 Imports Common.Core.Helper
 Imports Newtonsoft.Json
+Imports Ventas.Data.Service
 
 <ServiceBehavior(IncludeExceptionDetailInFaults:=True, UseSynchronizationContext:=False)>
 Public Class NotaPedido
@@ -12,7 +13,7 @@ Public Class NotaPedido
     Public Delegate Function NuevaNotaPedidoDelegate() As Task
     Public Shared AgregarNotaPedidoService As NuevaNotaPedidoDelegate
 
-    Sub AgregarNotaPedido(ByVal notaPedido As EntidadNotaPedido, ByVal EntConsumidorFinal As EntidadConsumidorFinal) Implements INotaPedido.AgregarNotaPedido
+    Async Sub AgregarNotaPedido(ByVal notaPedido As EntidadNotaPedido, ByVal EntConsumidorFinal As EntidadConsumidorFinal) Implements INotaPedido.AgregarNotaPedido
         Try
             Dim notaPedidoModel As NotaPedidoModel.NotaPedido = New NotaPedidoModel.NotaPedido(notaPedido.IdSucursal)
             notaPedidoModel.AgregarVendedor(notaPedido.IdEmpleado)
@@ -37,7 +38,7 @@ Public Class NotaPedido
             'Doy de alta el consumidor final y lo relaciono a la nota de pedido
             Dim consumidorFinal As Entidades.ConsumidorFinal = New Entidades.ConsumidorFinal()
 
-            Servicio.GuardarNotaPedido(notaPedidoModel)
+            Await NotaPedidoService.GuardarAsync(notaPedidoModel)
 
             AgregarNotaPedidoService()
         Catch ex As Exception
