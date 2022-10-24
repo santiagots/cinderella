@@ -256,6 +256,10 @@ Public Class frmNotaPedidoDetalle
         Ejecutar(Sub() NotaPedidoDetalleViewModel?.PorcentajeBonificacionChange(txt_PorcentajeBonificacion.Value))
     End Sub
 
+    Private Sub txt_PorcentajeFacturacion_ValueChanged(sender As Object, e As EventArgs) Handles txt_PorcentajeFacturacion.ValueChanged
+        Ejecutar(Sub() NotaPedidoDetalleViewModel?.PorcentajeFacturacionChange(txt_PorcentajeFacturacion.Value))
+    End Sub
+
     Private Sub DG_Productos_KeyPressEnter(sender As Object, e As KeyEventArgs) Handles DG_Productos.KeyPressEnter
         If (String.IsNullOrEmpty(DG_Productos.CurrentCell.EditedFormattedValue)) Then
 

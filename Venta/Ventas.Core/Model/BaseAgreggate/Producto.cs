@@ -50,7 +50,7 @@ namespace Ventas.Core.Model.BaseAgreggate
             Precio precio = Precios.Where(x => x.IdLista == idPrecioLista + 1 && x.Habilitado).FirstOrDefault();
 
             if (precio == null)
-                throw new NegocioException($" El producto {Nombre} no tiene una bonificacion para la lista de precio con id {idPrecioLista}");
+                return 0;
 
             if (tipoCliente == TipoCliente.Minorista)
                 return precio.Monto;

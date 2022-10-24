@@ -6,6 +6,7 @@ using System.Linq;
 using Ventas.Core.Enum;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ValueObjects;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Ventas.Core.Model.NotaPedidoAgreggate
 {
@@ -93,6 +94,11 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         {
             if (porcentajeBonificacion > 1)
                 porcentajeBonificacion = 1;
+
+            if (porcentajeFacturacion > 1)
+                porcentajeFacturacion = 1;
+
+            this.PorcentajeFacturacion = porcentajeFacturacion;
 
             NotaPedidoItem notaPedidoItem = NotaPedidoItems.FirstOrDefault(x => x.Producto.Codigo == codigoProducto);
 

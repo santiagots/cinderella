@@ -12,6 +12,10 @@ Public Class frmConfiguracion
     Dim NegErrores As New NegManejadorErrores
     Dim NStock As New NegStock
 
+
+    Private Const CodigoListaProcioMayorista = 5
+    Private Const CodigoListaProcioAlternativo = 6
+
     'Load del formulario.
     Private Sub frmConfiguracion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Try
@@ -198,7 +202,9 @@ Public Class frmConfiguracion
         Try
             If cb_Precios.SelectedValue <> 0 And Not String.IsNullOrEmpty(txt_descuentoMinorista.Text) Then
                 My.Settings.ListaPrecio = cb_Precios.SelectedValue
+                My.Settings.ListaPrecioMayorista = If(My.Settings.ListaPrecio = CodigoListaProcioAlternativo, CodigoListaProcioAlternativo, CodigoListaProcioMayorista)
                 My.Settings.NombreListaPrecio = cb_Precios.SelectedItem("ListaPrecio").ToString
+
                 My.Settings.DescuentoMinorista = txt_descuentoMinorista.Text
                 My.Settings.Save()
                 MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)

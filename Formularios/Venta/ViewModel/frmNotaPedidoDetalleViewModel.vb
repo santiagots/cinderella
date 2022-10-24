@@ -55,12 +55,6 @@ Namespace Formularios.Venta
             End Get
         End Property
 
-        Public ReadOnly Property PorcentajeFacturacion As Decimal
-            Get
-                Return NotaPedidoModel.PorcentajeFacturacion
-            End Get
-        End Property
-
         Public ReadOnly Property Vendedor As String
             Get
                 Return NotaPedidoModel.Vendedor.ApellidoYNombre
@@ -95,6 +89,8 @@ Namespace Formularios.Venta
         End Property
 
         Public Property PorcentajeBonificacion As Decimal
+
+        Public Property PorcentajeFacturacion As Decimal
 
         Public Property NombreCodigoProductoBusqueda As String
 
@@ -166,6 +162,7 @@ Namespace Formularios.Venta
             Visible = True
             Me.IdSucursal = idSucursal
             NotaPedidoModel = notaPedido
+            PorcentajeFacturacion = NotaPedidoModel.PorcentajeFacturacion
             IdPrecioLista = If(notaPedido.TipoCliente = TipoCliente.Mayorista, idListaPrecioMayorista, idListaPrecioMinorista)
             Me.CargarProductoNombreyCodigoEvent = cargarProductoNombreyCodigo
             Me.StockInsuficienteEvent = stockInsuficiente
@@ -282,7 +279,20 @@ Namespace Formularios.Venta
                 Me.PorcentajeBonificacion = porcentajeBonificacion
 
                 For Each notaPedidoItem As NotaPedidoItem In NotaPedidoModel.NotaPedidoItems
-                    NotaPedidoModel.ActualizaNotaPedidoItem(notaPedidoItem.Producto.Codigo, notaPedidoItem.MontoProducto.Valor, notaPedidoItem.Cantidad, porcentajeBonificacion, PorcentajeFacturacion, TipoCliente)
+                    NotaPedidoModel.ActualizaNotaPedidoItem(notaPedidoItem.Producto.Codigo, notaPedidoItem.MontoProducto.Valor, notaPedidoItem.Cantidad, Me.PorcentajeBonificacion, Me.PorcentajeFacturacion, TipoCliente)
+                    AgregarComentario($"Se modifica el producto {notaPedidoItem.Producto.Codigo}.")
+                Next
+
+                NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
+            End If
+        End Sub
+
+        Friend Sub PorcentajeFacturacionChange(porcentajeFacturacion As Decimal)
+            If (Me.PorcentajeFacturacion <> porcentajeFacturacion) Then
+                Me.PorcentajeFacturacion = porcentajeFacturacion
+
+                For Each notaPedidoItem As NotaPedidoItem In NotaPedidoModel.NotaPedidoItems
+                    NotaPedidoModel.ActualizaNotaPedidoItem(notaPedidoItem.Producto.Codigo, notaPedidoItem.MontoProducto.Valor, notaPedidoItem.Cantidad, Me.PorcentajeBonificacion, Me.PorcentajeFacturacion, TipoCliente)
                     AgregarComentario($"Se modifica el producto {notaPedidoItem.Producto.Codigo}.")
                 Next
 
@@ -358,6 +368,10 @@ Namespace Formularios.Venta
         Public Async Function RealizarVentaCallback() As Task
             Visible = True
             NotaPedidoModel = Await NotaPedidoService.ObtenerAsync(NotaPedidoModel.Id)
+
+            For Each notaPedidoItem As NotaPedidoItem In NotaPedidoModel.NotaPedidoItems
+                NotaPedidoModel.ActualizaNotaPedidoItem(notaPedidoItem.Producto.Codigo, notaPedidoItem.MontoProducto.Valor, notaPedidoItem.Cantidad, Me.PorcentajeBonificacion, Me.PorcentajeFacturacion, TipoCliente)
+            Next
 
             NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
         End Function
