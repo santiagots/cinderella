@@ -275,6 +275,8 @@ namespace Factura.Device.Printer
                     return "20";
                 case TipoPago.TarjetaDébito:
                     return "21";
+                case TipoPago.CuentaCorriente:
+                    return "6";
                 default:
                     throw new InvalidOperationException($"Error al realizar la facturación. Tipo de forma de pago no reconocido {tipoPago.ToString()}");
             }

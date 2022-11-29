@@ -255,7 +255,7 @@ Partial Class frmFacturar
         Me.lbl_TotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_TotalMinorista.Location = New System.Drawing.Point(149, 162)
         Me.lbl_TotalMinorista.Name = "lbl_TotalMinorista"
-        Me.lbl_TotalMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_TotalMinorista.Size = New System.Drawing.Size(72, 16)
         Me.lbl_TotalMinorista.TabIndex = 3
         Me.lbl_TotalMinorista.Text = "$ 120.00.-"
         '
@@ -289,7 +289,7 @@ Partial Class frmFacturar
         Me.lbl_CostoFinancieroMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_CostoFinancieroMinorista.Location = New System.Drawing.Point(149, 100)
         Me.lbl_CostoFinancieroMinorista.Name = "lbl_CostoFinancieroMinorista"
-        Me.lbl_CostoFinancieroMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_CostoFinancieroMinorista.Size = New System.Drawing.Size(72, 16)
         Me.lbl_CostoFinancieroMinorista.TabIndex = 23
         Me.lbl_CostoFinancieroMinorista.Text = "$ 120.00.-"
         '
@@ -312,7 +312,7 @@ Partial Class frmFacturar
         Me.lbl_IvaMayorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_IvaMayorista.Location = New System.Drawing.Point(149, 131)
         Me.lbl_IvaMayorista.Name = "lbl_IvaMayorista"
-        Me.lbl_IvaMayorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_IvaMayorista.Size = New System.Drawing.Size(72, 16)
         Me.lbl_IvaMayorista.TabIndex = 3
         Me.lbl_IvaMayorista.Text = "$ 120.00.-"
         '
@@ -345,7 +345,7 @@ Partial Class frmFacturar
         Me.lbl_DescuentoMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_DescuentoMinorista.Location = New System.Drawing.Point(149, 69)
         Me.lbl_DescuentoMinorista.Name = "lbl_DescuentoMinorista"
-        Me.lbl_DescuentoMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_DescuentoMinorista.Size = New System.Drawing.Size(72, 16)
         Me.lbl_DescuentoMinorista.TabIndex = 19
         Me.lbl_DescuentoMinorista.Text = "$ 120.00.-"
         '
@@ -378,7 +378,7 @@ Partial Class frmFacturar
         Me.lbl_SubtotalMinorista.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_SubtotalMinorista.Location = New System.Drawing.Point(149, 38)
         Me.lbl_SubtotalMinorista.Name = "lbl_SubtotalMinorista"
-        Me.lbl_SubtotalMinorista.Size = New System.Drawing.Size(73, 16)
+        Me.lbl_SubtotalMinorista.Size = New System.Drawing.Size(72, 16)
         Me.lbl_SubtotalMinorista.TabIndex = 21
         Me.lbl_SubtotalMinorista.Text = "$ 120.00.-"
         '

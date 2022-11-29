@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Negocio", "Negocio\Negocio.vbproj", "{D0101B76-7CE1-476B-84F3-9E99244C1E88}"
 EndProject
@@ -146,26 +146,26 @@ Global
 		{031B7818-3E58-477F-BFAD-17166F3026AF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{031B7818-3E58-477F-BFAD-17166F3026AF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{031B7818-3E58-477F-BFAD-17166F3026AF}.Release|x86.ActiveCfg = Release|Any CPU
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|Any CPU.Build.0 = Debug|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|x86.ActiveCfg = Debug|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Debug|x86.Build.0 = Debug|x86
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|Any CPU.ActiveCfg = Desarrollo|Any CPU
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|Any CPU.Build.0 = Desarrollo|Any CPU
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|Any CPU.ActiveCfg = Desarrollo|x86
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|Any CPU.Build.0 = Desarrollo|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|Mixed Platforms.ActiveCfg = Desarrollo|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|Mixed Platforms.Build.0 = Desarrollo|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|x86.ActiveCfg = Desarrollo|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Desarrollo|x86.Build.0 = Desarrollo|x86
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|Any CPU.ActiveCfg = Piloto|Any CPU
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|Any CPU.Build.0 = Piloto|Any CPU
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|Any CPU.ActiveCfg = Piloto|x86
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|Any CPU.Build.0 = Piloto|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|Mixed Platforms.ActiveCfg = Piloto|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|Mixed Platforms.Build.0 = Piloto|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|x86.ActiveCfg = Piloto|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Piloto|x86.Build.0 = Piloto|x86
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|Any CPU.ActiveCfg = Release|x86
+		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|Any CPU.Build.0 = Release|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|Mixed Platforms.Build.0 = Release|x86
 		{ED800F09-E2A4-45A3-BC9A-FEC1FD670368}.Release|x86.ActiveCfg = Release|x86

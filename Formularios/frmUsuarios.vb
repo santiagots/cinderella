@@ -358,17 +358,18 @@
                         Dim dsUsuarios As New DataSet
                         dsUsuarios = NUsuarios.ListadoUsuariosCompleto()
                         If dsUsuarios.Tables(0).Rows.Count > 0 Then
-                            DG_Buscador.DataSource = dsUsuarios.Tables(0)
-                            DG_Buscador.AutoGenerateColumns = False
-                            DG_Buscador.ColumnHeadersVisible = True
-                            DG_Buscador.Columns("Habilitado_bus").DisplayIndex = 5
-                            DG_Buscador.Columns("Eliminar_bus").DisplayIndex = 5
-                            DG_Buscador.Refresh()
+                            DG_Usuarios.DataSource = dsUsuarios.Tables(0)
+                            DG_Usuarios.AutoGenerateColumns = False
+                            DG_Usuarios.ColumnHeadersVisible = True
+                            DG_Usuarios.Columns("Habilitado").DisplayIndex = 6
+                            DG_Usuarios.Columns("Modificar").DisplayIndex = 6
+                            DG_Usuarios.Columns("Eliminar").DisplayIndex = 6
+                            DG_Usuarios.Refresh()
                             lbl_Msg2.Visible = False
                         Else
-                            DG_Buscador.DataSource = Nothing
-                            DG_Buscador.ColumnHeadersVisible = False
-                            DG_Buscador.Refresh()
+                            DG_Usuarios.DataSource = Nothing
+                            DG_Usuarios.ColumnHeadersVisible = False
+                            DG_Usuarios.Refresh()
                             lbl_Msg2.Visible = True
                         End If
                     End If

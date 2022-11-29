@@ -239,7 +239,7 @@ Namespace Formularios.Venta
 
         Public ReadOnly Property EsClienteMayorista As Integer
             Get
-                Return VentaModel.TipoCliente = Enums.TipoCliente.Mayorista
+                Return VentaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso Me.NotaPedidoModel Is Nothing
             End Get
         End Property
 
@@ -336,6 +336,9 @@ Namespace Formularios.Venta
 
         Private Sub CargarDatosBasicosTransaccion(venta As ModelBase.Transaccion)
             TipoClienteSeleccionado = venta.TipoCliente
+            VentaModel.ModificarTipoCliente(venta.TipoCliente)
+            VentaModel.ActualizarPorcentajeFacturacion(venta.PorcentajeFacturacion)
+
             PorcentajeFacturacion = venta.PorcentajeFacturacion
             EncargadoSeleccionado = If(venta.IdEncargado > 0, venta.Encargado, Encargados.First())
             VendedoresSeleccionado = venta.Vendedor
@@ -564,7 +567,7 @@ Namespace Formularios.Venta
                 stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Disponible)
             End If
 
-            Return True
+            Return stockInsuficienteConfirmacion
         End Function
 
         Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel, verificarStock As Boolean)

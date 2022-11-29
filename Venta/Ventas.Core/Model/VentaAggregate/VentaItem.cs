@@ -167,6 +167,28 @@ namespace Ventas.Core.Model.VentaAggregate
             return new MontoPago(monto, decuento, cft, montoIva);
         }
 
+        internal MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, CondicionIVA condicionIVA, TipoPago formaPago)
+        {
+            if (formaPago == TipoPago.Bonificacion)
+                return new MontoPago(0, monto, 0, 0);
+
+            //Si el porcentaje de recargo es mayor a cero no se tiene que hacer descuento
+            decimal porcentajeBonificacion;
+            if (!AplicarBonificacion(formaPago))
+                porcentajeBonificacion = 0;
+            else
+                porcentajeBonificacion = PorcentajeBonificacion;
+
+            decimal decuento = monto * porcentajeBonificacion;
+            decimal cft = monto * porcentajeRecargo;
+            decimal montoIva = 0;
+
+            if (condicionIVA == CondicionIVA.Monotributo || condicionIVA== CondicionIVA.Responsable_Inscripto)
+                montoIva = (monto - decuento + cft) * Producto.SubCategoria.IVA.Valor * porcentajeFacturacion;
+
+            return new MontoPago(monto, decuento, cft, montoIva);
+        }
+
         internal MontoProducto PendientePago()
         {
             return Total * (1 - PorcentajePago);
@@ -175,7 +197,7 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public MontoPago TotalPago(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, condicionIva);
             decimal monto = pagos.Sum(x => x.MontoPago.Monto);
             decimal descuento = pagos.Sum(x => x.MontoPago.Descuento);
             decimal cft = pagos.Sum(x => x.MontoPago.CFT);
@@ -184,7 +206,7 @@ namespace Ventas.Core.Model.VentaAggregate
             monto = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, monto);
             descuento = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, descuento);
             cft = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
-            iva = CalculaIvaSegunCondicionIvaMayorista(condicionIva, iva);
+            iva = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, iva);
 
             return new MontoPago(monto, descuento, cft, iva);
         }
@@ -196,40 +218,22 @@ namespace Ventas.Core.Model.VentaAggregate
 
         public decimal TotalMonto(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, condicionIva);
             decimal monto = pagos.Sum(x => x.MontoPago.Monto);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, monto);
         }
 
         public decimal TotalDescuento(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, condicionIva);
             decimal descuento = pagos.Sum(x => x.MontoPago.Descuento);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, descuento);
         }
         public decimal TotalCFT(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
         {
-            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
+            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, condicionIva);
             decimal cft = pagos.Sum(x => x.MontoPago.CFT);
             return CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
-        }
-
-        public decimal TotalIVA(decimal porcentajeFacturacion, TipoCliente tipoCliente, CondicionIVA condicionIva)
-        {
-            IEnumerable<VentaPago> pagos = ObtenerPagosDeProducto(porcentajeFacturacion, tipoCliente);
-            decimal iva = pagos.Sum(x => x.MontoPago.IVA);
-
-            switch (condicionIva)
-            {
-                case CondicionIVA.Consumidor_Final:
-                case CondicionIVA.Exento:
-                    return 0;
-                case CondicionIVA.Monotributo:
-                case CondicionIVA.Responsable_Inscripto:
-                    return iva;
-                default:
-                    throw new InvalidOperationException($"Error al realizar la facturación. Condición IVA no reconocido {condicionIva.ToString()}");
-            }
         }
 
         private decimal CalcularMontoSegunCondicionIva(decimal porcentajeFacturacion, CondicionIVA condicionIva, TipoCliente tipoCliente, decimal monto)
@@ -313,13 +317,13 @@ namespace Ventas.Core.Model.VentaAggregate
             }
         }
 
-        internal IEnumerable<VentaPago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, TipoCliente tipoCliente)
+        internal IEnumerable<VentaPago> ObtenerPagosDeProducto(decimal porcentajeFacturacion, CondicionIVA condicionIVA)
         {
             List<VentaPago> pagos = new List<VentaPago>();
 
             foreach (KeyValuePair<VentaPago, decimal> montoPorPago in this.Pagos)
             {
-                MontoPago montoPago = ObtenerMontoPago(montoPorPago.Value, montoPorPago.Key.PorcentajeRecargo, porcentajeFacturacion, tipoCliente, montoPorPago.Key.TipoPago);
+                MontoPago montoPago = ObtenerMontoPago(montoPorPago.Value, montoPorPago.Key.PorcentajeRecargo, porcentajeFacturacion, condicionIVA, montoPorPago.Key.TipoPago);
                 pagos.Add(new VentaPago(montoPorPago.Key.IdVenta, montoPorPago.Key.TipoPago, montoPorPago.Key.Tarjeta, montoPorPago.Key.NumeroCuotas, montoPorPago.Key.PorcentajeRecargo, montoPorPago.Key.NumeroOrdenCheques, montoPorPago.Key.CuentaBancaria, montoPago.Monto, 0, montoPago.Descuento, montoPago.CFT, montoPago.IVA));
             }
 
