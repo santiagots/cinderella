@@ -561,13 +561,13 @@ Namespace Formularios.Venta
         End Function
 
         Private Function HaySotck(producto As ModelBase.Producto, ByRef CantidadUnidadesDeProducto As Integer) As Boolean
-            Dim stockInsuficienteConfirmacion As Boolean = False
+            Dim hayStock As Boolean = True
 
             If (CantidadUnidadesDeProducto > 0 AndAlso Not producto.HayStock(CantidadUnidadesDeProducto)) Then
-                stockInsuficienteConfirmacion = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Disponible)
+                hayStock = StockInsuficienteEvent(producto.Codigo, CantidadUnidadesDeProducto, producto.Stock.Disponible)
             End If
 
-            Return stockInsuficienteConfirmacion
+            Return hayStock
         End Function
 
         Friend Sub ActualizarItemVenta(ventaItemViewModel As VentaItemViewModel, verificarStock As Boolean)
