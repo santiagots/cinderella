@@ -16,12 +16,6 @@ namespace Ventas.Data.Service
             return movimientoRepository.ObtenerMovimientosAsync(idCuentaCorriente, fechaDesde, fechaHasta, ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos);
         }
 
-        public static Task<decimal> ObtenerSaldoAsync(TipoBase tipoBase, int idCuentaCorriente)
-        {
-            IMovimientoRepository movimientoRepository = new MovimientoRepository(new VentaContext(tipoBase));
-            return movimientoRepository.ObtenerSaldoAsync(idCuentaCorriente);
-        }
-
         public static Task GuardarAsync(TipoBase tipoBase, Movimiento movimiento)
         {
             IMovimientoRepository movimientoRepository = new MovimientoRepository(new VentaContext(tipoBase));

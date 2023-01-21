@@ -256,7 +256,7 @@ Namespace Formularios.Cliente
                                                           DocumentoDePagoModel.ClienteMayorista.Id,
                                                           monto,
                                                           DocumentoDePagoModel.ClienteMayorista.MontoCuentaCorriente,
-                                                          TipoMovimientoCuentaCorriente.Depósito,
+                                                          TipoMovimientoCuentaCorriente.DepósitoOnLine,
                                                           tipoAccionCuentaCorriente,
                                                           DocumentoDePagoModel.Numero,
                                                           DocumentoDePagoModel.Id)

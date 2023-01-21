@@ -55,8 +55,12 @@ Public Class frmStockEnNotaPedido
             form = New frmVentas(stockEnNotaPedidoItemViewModel.NotaPedido, ActualizarPantallaCallback)
         End If
 
-        form.MdiParent = MdiParent
-        form.Show()
+        If (MdiParent IsNot Nothing) Then
+            form.MdiParent = MdiParent
+            form.Show()
+        Else
+            form.ShowDialog()
+        End If
     End Sub
 
 End Class

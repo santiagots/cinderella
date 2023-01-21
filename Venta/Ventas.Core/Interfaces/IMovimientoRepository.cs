@@ -9,7 +9,6 @@ namespace Ventas.Core.Interfaces
     public interface IMovimientoRepository
     {
         Task<List<Movimiento>> ObtenerMovimientosAsync(int idClienteMayorista, DateTime fechaDesde, DateTime fechaHasta, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos);
-        Task<decimal> ObtenerSaldoAsync(int idClienteMayorista);
         Task GuardarAsync(Movimiento movimiento);
     }
 }

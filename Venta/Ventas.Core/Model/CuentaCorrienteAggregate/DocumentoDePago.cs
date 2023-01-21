@@ -64,6 +64,19 @@ namespace Ventas.Core.Model.CuentaCorrienteAggregate
             ActualizarTotalesPago();
         }
 
+        public void AgregaPago(decimal monto, decimal cft, TipoPago formaPagoSeleccionado, decimal cuotaCft, string tarjeta, int numeroCuota, int[] numeroOrdenCheques, CuentaBancaria cuentaBancaria)
+        {
+            if (monto == 0 && cft == 0)
+                throw new NegocioException("Error al registrar el pago. El monto o el CFT debe ser mayor a cero.");
+
+            DocumentoDePagoPago pago = new DocumentoDePagoPago(Id, formaPagoSeleccionado, tarjeta, numeroCuota, cuotaCft, monto, cft, numeroOrdenCheques, cuentaBancaria);
+
+            if (pago.MontoPago.Total < 0)
+                throw new NegocioException("Error al registrar el pago. El total debe ser mayor a cero.");
+            Pagos.Add(pago);
+            ActualizarTotalesPago();
+        }
+
         public void QuitarPago(long id)
         {
             Pagos.Remove(Pagos.FirstOrDefault(x => x.Id == id));

@@ -27,15 +27,6 @@ namespace Ventas.Data.Repository
                            .Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos).ToListAsync();
         }
 
-        public Task<decimal> ObtenerSaldoAsync(int idClienteMayorista)
-        {
-            return _context.Movimiento
-                                    .Where(x => x.IdClienteMayorista == idClienteMayorista)
-                                    .OrderByDescending(x => x.Fecha)
-                                    .Select(x => x.Saldo)
-                                    .FirstOrDefaultAsync(); 
-        }
-
         public Task GuardarAsync(Movimiento movimiento)
         {
             _context.Movimiento.Add(movimiento);

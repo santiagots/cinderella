@@ -83,7 +83,9 @@ Namespace Formularios.Cliente
         End Function
 
         Friend Async Function CargarDetalleMovimientoAsync(cuentaCorrienteMovimientosItem As CuentaCorrienteMovimientosItem) As Task
-            If (cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = TipoMovimientoCuentaCorriente.Depósito) Then
+            If (cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = TipoMovimientoCuentaCorriente.DepósitoOnLine OrElse
+                cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = TipoMovimientoCuentaCorriente.DepósitoOffLine) Then
+
                 Dim documentoDePago As DocumentoDePago = Await DocumentoDePagoService.ObtenerAsync(TipoBase.Remota, cuentaCorrienteMovimientosItem.Movimiento.IdComprobante)
                 If (documentoDePago Is Nothing) Then
                     Throw New NegocioException("No se ha encontrado el detalle de movimiento. Por favor sincronice los datos y vuelva a intentar más tarde.")
@@ -92,7 +94,9 @@ Namespace Formularios.Cliente
                 Dim frmClienteMayoristaCuentaCorrientePago As frmClienteMayoristaDocumentoPago = New frmClienteMayoristaDocumentoPago(documentoDePago)
                 frmClienteMayoristaCuentaCorrientePago.ShowDialog()
 
-            ElseIf (cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = TipoMovimientoCuentaCorriente.Venta) Then
+            ElseIf (cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = TipoMovimientoCuentaCorriente.VentaOnLine OrElse
+                cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = TipoMovimientoCuentaCorriente.VentaOffLine) Then
+
                 Dim venta As Modelo.Venta = Await VentaService.ObtenerAsync(TipoBase.Remota, cuentaCorrienteMovimientosItem.Movimiento.IdComprobante)
                 If (venta Is Nothing) Then
                     Throw New NegocioException("No se ha encontrado el detalle de movimiento. Por favor sincronice los datos y vuelva a intentar más tarde.")
@@ -113,9 +117,11 @@ Namespace Formularios.Cliente
             Dim frmReporte As Form
 
             Select Case cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente
-                Case TipoMovimientoCuentaCorriente.Depósito
+                Case TipoMovimientoCuentaCorriente.DepósitoOnLine
+                Case TipoMovimientoCuentaCorriente.DepósitoOffLine
                     frmReporte = New frmReporteDocumentoPagol(cuentaCorrienteMovimientosItem.Movimiento.IdComprobante)
-                Case TipoMovimientoCuentaCorriente.Venta
+                Case TipoMovimientoCuentaCorriente.VentaOnLine
+                Case TipoMovimientoCuentaCorriente.VentaOffLine
                     Throw New NotImplementedException()
                 Case Else
                     Throw New InvalidOperationException()

@@ -320,7 +320,7 @@ Namespace Formularios.Venta
                                                           venta.ClienteMayorista.Id,
                                                           monto,
                                                           saldo,
-                                                          TipoMovimientoCuentaCorriente.Venta,
+                                                          TipoMovimientoCuentaCorriente.VentaOnLine,
                                                           TipoAccionCuentaCorriente.Crédito,
                                                           venta.Numero,
                                                           venta.Id)

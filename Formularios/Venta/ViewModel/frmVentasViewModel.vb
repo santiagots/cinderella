@@ -4,6 +4,7 @@ Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Extension
+Imports Common.Core.Helper
 Imports Common.Core.Model
 Imports Common.Data.Service
 Imports SistemaCinderella.Comunes
@@ -938,27 +939,64 @@ Namespace Formularios.Venta
             End If
 
             Dim base As TipoBase = If(VariablesGlobales.HayConexion, TipoBase.Remota, TipoBase.Local)
-            Dim saldo As Decimal = If(VariablesGlobales.HayConexion, VentaModel.ClienteMayorista.MontoCuentaCorriente, 0)
 
-            Dim monto As Decimal = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
+            Dim montoPagoCuentaCorriente As Decimal = VentaModel.Pagos.Where(Function(x) x.TipoPago = TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
+            Dim montoOtrosPagos As Decimal = VentaModel.Pagos.Where(Function(x) x.TipoPago <> TipoPago.CuentaCorriente).Sum(Function(x) x.MontoPago.Total)
 
-            If (monto > 0) Then
+            Dim saldoCuentaCorrietneCliente As Decimal = 0
+            If (VariablesGlobales.HayConexion) Then
                 Dim clienteMayorista As ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Remota, VentaModel.ClienteMayorista.Id)
-                clienteMayorista.DebitarSaldoCuentaCorriente(monto)
-                saldo = clienteMayorista.MontoCuentaCorriente
-                Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clienteMayorista)
+                saldoCuentaCorrietneCliente = clienteMayorista.MontoCuentaCorriente
 
-                Dim movimiento As Movimiento = New Movimiento(VentaModel.IdSucursal,
-                                                          VentaModel.ClienteMayorista.Id,
-                                                          monto,
-                                                          saldo,
-                                                          TipoMovimientoCuentaCorriente.Venta,
-                                                          TipoAccionCuentaCorriente.Débito,
-                                                          VentaModel.Numero,
-                                                          VentaModel.Id)
+                'actualizo el saldo del cliente en la CC si se pago con CC
+                If (montoPagoCuentaCorriente > 0) Then
+                    clienteMayorista.DebitarSaldoCuentaCorriente(montoPagoCuentaCorriente)
+                    Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clienteMayorista)
+                End If
 
-                Await MovimientoService.GuardarAsync(base, movimiento)
             End If
+
+            'registro la venta como debito en la CC del cliente
+            Dim movimiento As Movimiento = New Movimiento(VentaModel.IdSucursal,
+                                                        VentaModel.ClienteMayorista.Id,
+                                                        VentaModel.PagoTotal.Total,
+                                                        If(VariablesGlobales.HayConexion, saldoCuentaCorrietneCliente - VentaModel.PagoTotal.Total, Nothing),
+                                                        If(VariablesGlobales.HayConexion, TipoMovimientoCuentaCorriente.VentaOnLine, TipoMovimientoCuentaCorriente.VentaOffLine),
+                                                        TipoAccionCuentaCorriente.Débito,
+                                                        VentaModel.Numero,
+                                                        VentaModel.Id)
+
+            Await MovimientoService.GuardarAsync(base, movimiento)
+
+            'Si se realizo algun pago que no sea CC se registran estos pago como credito
+            If (montoOtrosPagos) Then
+                Dim documentoDePago As DocumentoDePago = Await ObtenerDocumentoPago(base)
+
+                Await DocumentoDePagoService.GuardarAsync(base, documentoDePago)
+
+                Dim movimientoDeposito As Movimiento = New Movimiento(VentaModel.IdSucursal,
+                                                             VentaModel.ClienteMayorista.Id,
+                                                             montoOtrosPagos,
+                                                             If(VariablesGlobales.HayConexion, saldoCuentaCorrietneCliente - montoPagoCuentaCorriente, Nothing),
+                                                             If(VariablesGlobales.HayConexion, TipoMovimientoCuentaCorriente.DepósitoOnLine, TipoMovimientoCuentaCorriente.DepósitoOffLine),
+                                                             TipoAccionCuentaCorriente.Crédito,
+                                                             documentoDePago.Numero,
+                                                             documentoDePago.Id)
+
+                Await MovimientoService.GuardarAsync(base, movimientoDeposito)
+            End If
+        End Function
+
+        Private Async Function ObtenerDocumentoPago(base As TipoBase) As Task(Of DocumentoDePago)
+            Dim documentoDePago As DocumentoDePago = New DocumentoDePago(VentaModel.IdSucursal, VentaModel.ClienteMayorista)
+            documentoDePago.AgregarEncargado(VentaModel.Encargado)
+
+            VentaModel.Pagos.Where(Function(x) x.TipoPago <> TipoPago.CuentaCorriente).ToList().ForEach(
+                Sub(x) documentoDePago.AgregaPago(x.MontoPago.Total, x.MontoPago.CFT, x.TipoPago, 0, x.Tarjeta, x.NumeroCuotas, x.NumeroOrdenCheques, x.CuentaBancaria))
+
+            Dim cantidadVentas As Integer = Await DocumentoDePagoService.CantidadAsync(base, VentaModel.IdSucursal)
+            documentoDePago.GenerarNumero(cantidadVentas + 1, SucursalModel.CodigoVenta)
+            Return documentoDePago
         End Function
 
         Private Function ObtenerCambioEnProductosPorReserva() As List(Of KeyValuePair(Of String, Integer))

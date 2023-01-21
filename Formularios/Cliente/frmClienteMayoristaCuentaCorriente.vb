@@ -158,7 +158,10 @@ Public Class frmClienteMayoristaCuentaCorriente
     End Sub
 
     Private Sub MostrarIconoImprimir(ByRef e As DataGridViewCellFormattingEventArgs, CuentaCorrienteMovimientosItem As CuentaCorrienteMovimientosItem)
-        If (CuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = Common.Core.Enum.TipoMovimientoCuentaCorriente.Venta AndAlso dgvMovimientos.Columns(e.ColumnIndex).Name = "Imprimir") Then
+        If ((CuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = Common.Core.Enum.TipoMovimientoCuentaCorriente.VentaOnLine OrElse
+            CuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = Common.Core.Enum.TipoMovimientoCuentaCorriente.VentaOffLine) AndAlso
+            dgvMovimientos.Columns(e.ColumnIndex).Name = "Imprimir") Then
+
             e.Value = New Bitmap(1, 1)
         End If
     End Sub
@@ -168,12 +171,14 @@ Public Class frmClienteMayoristaCuentaCorriente
             Return
         End If
 
-        If (CuentaCorrienteMovimientosItem.Monto > 0) Then
-            e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
-            e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
-        Else
-            e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
-            e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
+        If (CuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = Common.Core.Enum.TipoMovimientoCuentaCorriente.VentaOnLine OrElse CuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente = Common.Core.Enum.TipoMovimientoCuentaCorriente.DepósitoOnLine) Then
+            If (CuentaCorrienteMovimientosItem.Monto > 0) Then
+                e.CellStyle.BackColor = VariablesGlobales.colorFondoOk
+                e.CellStyle.ForeColor = VariablesGlobales.colorTextoOk
+            Else
+                e.CellStyle.BackColor = VariablesGlobales.colorFondoAlerta
+                e.CellStyle.ForeColor = VariablesGlobales.colorTextoAlerta
+            End If
         End If
     End Sub
 End Class

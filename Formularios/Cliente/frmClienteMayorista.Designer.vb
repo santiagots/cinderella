@@ -337,6 +337,8 @@ Partial Class frmClienteMayorista
         '
         'Paginado
         '
+        Me.Paginado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Paginado.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.FrmClienteMayoristaViewModelBindingSource, "TotalElementos", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Paginado.Leyenda = "{0} de {1}"
         Me.Paginado.Location = New System.Drawing.Point(11, 472)
@@ -353,6 +355,9 @@ Partial Class frmClienteMayorista
         '
         'GroupBox6
         '
+        Me.GroupBox6.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox6.Controls.Add(Me.lbl_Msg)
         Me.GroupBox6.Controls.Add(Me.DG_Clientes)
         Me.GroupBox6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
