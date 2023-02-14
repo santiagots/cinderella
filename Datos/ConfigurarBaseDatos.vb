@@ -22,6 +22,7 @@ Public Class ConfigurarBaseDatos
         Else
             DefinirDataDirectory(rutaDestinoBaseDatos)
         End If
+
     End Sub
 
     Private Shared Sub InstalarBaseDatos(rutaDestinoBaseDatos As String, rutaEjecucionAplicacion As String, nombresArchivos As String())
@@ -50,6 +51,12 @@ Public Class ConfigurarBaseDatos
 
             For Each scriptFile As String In scriptFiles
                 Dim script As String = File.ReadAllText(scriptFile, Encoding.GetEncoding("iso-8859-1"))
+
+                Log.Info("Base local" + Conexion.STRING_CONEXION_BASE_LOCAL)
+                Log.Info("Base remota" + Conexion.STRING_CONEXION_BASE_LOCAL)
+                Log.Info("--SCRIPT--")
+                Log.Info(script)
+
 
                 Dim conn As SqlConnection = conexion.ConectarLocal()
                 Dim server As Server = New Server(New ServerConnection(conn))

@@ -5,11 +5,11 @@ Run this script on:
 
 to synchronize it with:
 
-        sql5090.site4now.net.DB_9B1463_cinderellaProd
+        (local)\SQLEXPRESS.Cinderella
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 9/17/2022 6:55:37 PM
+Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 2/13/2023 5:30:29 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,21 +24,62 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Altering [dbo].[NUEVA_VENTA_ITEMS]'
+PRINT N'Altering [dbo].[NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] ADD
-[Facturada] [bit] NOT NULL CONSTRAINT [DF_NUEVA_VENTA_ITEMS_EsFacturable] DEFAULT ((1)),
-[Anulada] [bit] NOT NULL CONSTRAINT [DF_NUEVA_VENTA_ITEMS_Anulada] DEFAULT ((0))
+IF COL_LENGTH(N'[dbo].[NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO]', N'TipoAccion') IS NULL
+ALTER TABLE [dbo].[NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO] ADD[TipoAccion] [int] NOT NULL CONSTRAINT [DF_NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_TipoAccion] DEFAULT ((0))
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Disabling constraints on [dbo].[NUEVA_VENTA_ITEMS]'
+PRINT N'Altering [dbo].[sp_EliminarUsuarios]'
 GO
-ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] NOCHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_NUEVA_VENTAS]
+IF OBJECT_ID(N'[dbo].[sp_EliminarUsuarios]', 'P') IS NOT NULL
+EXEC sp_executesql N'-- =============================================
+-- Author:		Morpheus
+-- Create date: 25/08/11
+-- Description:	Baja de usuario del sistema.
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_EliminarUsuarios]
+	@idusu AS INTEGER,  
+    @msg AS VARCHAR(100) OUTPUT
+AS
+BEGIN
+Begin Tran t_BajaUsuario
+    Begin Try
+		DELETE dbo.REL_USUARIOS_PERFILES where id_Usuario=@idusu 
+		DELETE dbo.USUARIOS where id_Usuario=@idusu 
+        SET @msg = ''El Usuario se ha eliminado correctamente.''
+        COMMIT TRAN t_BajaUsuario
+    End try
+    Begin Catch
+        SET @msg = ''Ocurrio un Error: '' + ERROR_MESSAGE() + '' en la línea '' + CONVERT(NVARCHAR(255), ERROR_LINE() ) + ''.''
+        Rollback TRAN t_BajaUsuario
+    End Catch
+END
+
+
+
+
+'
 GO
-ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] NOCHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_PRODUCTOS]
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[NUEVA_DOCUMENTO_PAGO]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+IF COL_LENGTH(N'[dbo].[NUEVA_DOCUMENTO_PAGO]', N'TipoAccion') IS NULL
+ALTER TABLE [dbo].[NUEVA_DOCUMENTO_PAGO] ADD[TipoAccion] [int] NOT NULL CONSTRAINT [DF_NUEVA_DOCUMENTO_PAGO_TipoAccion] DEFAULT ((0))
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Enabling constraints on [dbo].[NUEVA_VENTA_ITEMS]'
+GO
+ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] CHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_NUEVA_VENTAS]
+GO
+ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] CHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_PRODUCTOS]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

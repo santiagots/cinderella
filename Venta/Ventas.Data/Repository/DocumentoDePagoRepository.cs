@@ -37,7 +37,7 @@ namespace Ventas.Data.Repository
             return _context.SaveChangesAsync();
         }
 
-        public Task<List<DocumentoDePago>> BuscarAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago)
+        public Task<List<DocumentoDePago>> BuscarAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago, TipoAccionDocumentoPago? tipoAccion)
         {
             IQueryable<DocumentoDePago> documentoDePagos = Includes().Where(x => x.Anulado == false &&
                                                                                 x.IdSucursal == idSucursal &&
@@ -48,6 +48,9 @@ namespace Ventas.Data.Repository
                 documentoDePagos = documentoDePagos.Where(x => x.Pagos.Any(y => y.TipoPago == tipoPago.Value));
             else
                 documentoDePagos = documentoDePagos.Where(x => x.Pagos.Any(y => y.TipoPago != TipoPago.Bonificacion));
+
+            if (tipoAccion.HasValue)
+                documentoDePagos = documentoDePagos.Where(x => x.TipoAccion == TipoAccionDocumentoPago.MovimientoFondos);
 
             return documentoDePagos.OrderByDescending(x => x.Fecha).ToListAsync();
         }
@@ -67,7 +70,8 @@ namespace Ventas.Data.Repository
             IQueryable<DocumentoDePagoPago> pagos = _context.DocumentoDePago.Where(x => x.Anulado == false &&
                                                                                 x.IdSucursal == idSucursal &&
                                                                                 DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value &&
-                                                                                DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value)
+                                                                                DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value &&
+                                                                                x.TipoAccion == TipoAccionDocumentoPago.MovimientoFondos)
                                                                             .SelectMany(x => x.Pagos);
 
             if (tipoPago.HasValue)

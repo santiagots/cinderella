@@ -9,7 +9,6 @@ Option Explicit On
 '     se vuelve a generar el código.
 ' </auto-generated>
 '------------------------------------------------------------------------------
-
 Imports System.IO
 Imports System.Reflection
 Imports AutoMapper
@@ -55,6 +54,7 @@ Namespace My
                 Datos.ConfigurarBaseDatos.Iniciar(Assembly.GetExecutingAssembly.GetName().Name, rutaBaseDatos)
             Catch ex As Exception
                 MessageBox.Show(ex.ToString())
+                Common.Core.Helper.Log.Error(ex)
             End Try
 
             Me.MainForm = Global.SistemaCinderella.frmLogin

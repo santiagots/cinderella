@@ -157,9 +157,14 @@ Namespace Formularios.SucursalSaldo
             MostrarMovimiento(titulo, efectivoEgreso)
         End Function
 
-        Friend Async Function MostrarTotalVentaMovimientoAsync(titulo As String, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Task
+        Friend Async Function MostrarTotalVentaMovimientoAsync(titulo As String, facturado As Boolean?, incluirDocumentoPago As Boolean, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Task
             Dim ventas As List(Of ventaModel.Venta) = Await VentaService.BuscarAsync(IdSucursal, Fecha, facturado, tipoPago, tipoCliente)
-            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, Fecha, tipoPago)
+
+            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = New List(Of ctaCteModel.DocumentoDePago)()
+
+            If incluirDocumentoPago Then
+                documentosPago = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, Fecha, tipoPago, TipoAccionDocumentoPago.MovimientoFondos)
+            End If
 
             Dim ventasMovimiento As List(Of MovimientoVenta) = New List(Of MovimientoVenta)()
             ventasMovimiento.AddRange(Mapper.Map(Of List(Of MovimientoVenta))(ventas))
@@ -169,32 +174,32 @@ Namespace Formularios.SucursalSaldo
         End Function
 
         Friend Async Function MostrarTotalVentaAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas registradas en { Fecha.ToShortDateString() }", Nothing, Nothing, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas registradas en { Fecha.ToShortDateString() }", Nothing, False, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaEfectivoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en efectivo registradas en { Fecha.ToShortDateString() }", Nothing, TipoPago.Efectivo, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en efectivo registradas en { Fecha.ToShortDateString() }", Nothing, True, TipoPago.Efectivo, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaChequeAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en cheque registradas en { Fecha.ToShortDateString() }", Nothing, TipoPago.Cheque, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en cheque registradas en { Fecha.ToShortDateString() }", Nothing, True, TipoPago.Cheque, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaDepositoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en deposito registradas en { Fecha.ToShortDateString() }", Nothing, TipoPago.Deposito, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en deposito registradas en { Fecha.ToShortDateString() }", Nothing, True, TipoPago.Deposito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaCreditoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta crédito registradas en { Fecha.ToShortDateString() }", Nothing, TipoPago.TarjetaCrédito, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta crédito registradas en { Fecha.ToShortDateString() }", Nothing, True, TipoPago.TarjetaCrédito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaDebitoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta debito registradas en { Fecha.ToShortDateString() }", Nothing, TipoPago.TarjetaDébito, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta debito registradas en { Fecha.ToShortDateString() }", Nothing, True, TipoPago.TarjetaDébito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaCtaCteAsync() As Task
             Dim ventas As List(Of ventaModel.Venta) = Await VentaService.BuscarAsync(IdSucursal, Fecha, Nothing, TipoPago.CuentaCorriente, Nothing)
-            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, Fecha, Nothing)
+            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, Fecha, Nothing, TipoAccionDocumentoPago.MovimientoFondos)
 
             Dim ventasMovimiento As List(Of MovimientoVenta) = New List(Of MovimientoVenta)()
             ventasMovimiento.AddRange(Mapper.Map(Of List(Of MovimientoVenta))(ventas))
@@ -208,19 +213,19 @@ Namespace Formularios.SucursalSaldo
         End Function
 
         Friend Async Function MostrarTotalVentaFacturadoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas facturadas registradas en { Fecha.ToShortDateString() }", True, Nothing, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas facturadas registradas en { Fecha.ToShortDateString() }", True, True, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaSinFacturarAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas sin facturar registradas en { Fecha.ToShortDateString() }", False, Nothing, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas sin facturar registradas en { Fecha.ToShortDateString() }", False, True, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaMayoristaAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas mayoristas registradas en { Fecha.ToShortDateString() }", False, Nothing, TipoCliente.Mayorista)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas mayoristas registradas en { Fecha.ToShortDateString() }", False, True, Nothing, TipoCliente.Mayorista)
         End Function
 
         Friend Async Function MostrarTotalVentaMinoristaAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas minorista registradas en { Fecha.ToShortDateString() }", False, Nothing, TipoCliente.Minorista)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas minorista registradas en { Fecha.ToShortDateString() }", False, True, Nothing, TipoCliente.Minorista)
         End Function
 
         Friend Async Function MostrarFaltanteCajaAsync() As Task

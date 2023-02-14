@@ -9,7 +9,7 @@ namespace Ventas.Core.Interfaces
     public interface IDocumentoDePagoRepository
     {
         Task GuardarAsync(DocumentoDePago documentoDePago);
-        Task<List<DocumentoDePago>> BuscarAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago);
+        Task<List<DocumentoDePago>> BuscarAsync(int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago, TipoAccionDocumentoPago? tipoAccion);
         Task<int> CantidadAsync(int idSucursal);
         Task<DocumentoDePago> ObtenerAsync(long idDocumentoDePago);
         Task<decimal> ObtenerTotalAsync(int idSucursal, DateTime fecha, TipoPago? tipoPago);

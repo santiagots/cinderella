@@ -19,12 +19,13 @@ namespace Ventas.Core.Model.CuentaCorrienteAggregate
         public virtual List<DocumentoDePagoPago> Pagos { get; protected set; } = new List<DocumentoDePagoPago>();
         public virtual List<Cheque> Cheques { get; protected set; } = new List<Cheque>();
         public MontoPago PagoTotal { get; private set; } = new MontoPago(0, 0, 0, 0);
+        public TipoAccionDocumentoPago TipoAccion { get; private set; }
 
         internal DocumentoDePago()
         {
         }
 
-        public DocumentoDePago(int idSucursal, ClienteMayorista clienteMayorista) : base(true)
+        public DocumentoDePago(int idSucursal, ClienteMayorista clienteMayorista, TipoAccionDocumentoPago tipoAccion) : base(true)
         {
             IdSucursal = idSucursal;
             IdClienteMayorista = clienteMayorista.Id;
@@ -33,6 +34,7 @@ namespace Ventas.Core.Model.CuentaCorrienteAggregate
             FechaEdicion = DateTime.Now;
             PorcentajeFacturacion = 1;
             TipoCliente = TipoCliente.Mayorista;
+            TipoAccion = tipoAccion;
         }
 
         public void Anular(string motivo)

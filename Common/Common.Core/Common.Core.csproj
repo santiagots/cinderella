@@ -87,6 +87,7 @@
     <Compile Include="Enum\NotaPedidoEstado.cs" />
     <Compile Include="Enum\OrdenarDireccion.cs" />
     <Compile Include="Enum\TipoAccionCuentaCorriente.cs" />
+    <Compile Include="Enum\TipoAccionDocumentoPago.cs" />
     <Compile Include="Enum\TipoBase.cs" />
     <Compile Include="Enum\TipoCliente.cs" />
     <Compile Include="Enum\TipoConexionBaseLocal.cs" />

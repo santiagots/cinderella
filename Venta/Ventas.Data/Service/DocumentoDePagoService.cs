@@ -22,16 +22,16 @@ namespace Ventas.Data.Service
             return documentoDePagoRepository.GuardarAsync(documentoDePago);
         }
 
-        public static Task<List<DocumentoDePago>> BuscarAsync(TipoBase tipoBase, int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago)
+        public static Task<List<DocumentoDePago>> BuscarAsync(TipoBase tipoBase, int idSucursal, DateTime fechaDesde, DateTime fechaHasta, TipoPago? tipoPago, TipoAccionDocumentoPago? tipoAccion)
         {
             IDocumentoDePagoRepository documentoDePagoRepository = new DocumentoDePagoRepository(new VentaContext(tipoBase));
-            return documentoDePagoRepository.BuscarAsync(idSucursal, fechaDesde, fechaHasta, tipoPago);
+            return documentoDePagoRepository.BuscarAsync(idSucursal, fechaDesde, fechaHasta, tipoPago, tipoAccion);
         }
 
-        public static Task<List<DocumentoDePago>> BuscarAsync(TipoBase tipoBase, int idSucursal, DateTime fecha, TipoPago? tipoPago)
+        public static Task<List<DocumentoDePago>> BuscarAsync(TipoBase tipoBase, int idSucursal, DateTime fecha, TipoPago? tipoPago, TipoAccionDocumentoPago? tipoAccion)
         {
             IDocumentoDePagoRepository documentoDePagoRepository = new DocumentoDePagoRepository(new VentaContext(tipoBase));
-            return documentoDePagoRepository.BuscarAsync(idSucursal, fecha, fecha, tipoPago);
+            return documentoDePagoRepository.BuscarAsync(idSucursal, fecha, fecha, tipoPago, tipoAccion);
         }
 
         public static Task<int> CantidadAsync(TipoBase tipoBase, int idSucursal)

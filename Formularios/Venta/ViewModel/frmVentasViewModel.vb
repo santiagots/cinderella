@@ -988,7 +988,7 @@ Namespace Formularios.Venta
         End Function
 
         Private Async Function ObtenerDocumentoPago(base As TipoBase) As Task(Of DocumentoDePago)
-            Dim documentoDePago As DocumentoDePago = New DocumentoDePago(VentaModel.IdSucursal, VentaModel.ClienteMayorista)
+            Dim documentoDePago As DocumentoDePago = New DocumentoDePago(VentaModel.IdSucursal, VentaModel.ClienteMayorista, TipoAccionDocumentoPago.SinMovimientoFondos)
             documentoDePago.AgregarEncargado(VentaModel.Encargado)
 
             VentaModel.Pagos.Where(Function(x) x.TipoPago <> TipoPago.CuentaCorriente).ToList().ForEach(

@@ -110,7 +110,7 @@ Namespace Formularios.Cliente
             Me.HabilitarPagos = True
             Me.HabilitarImprimir = False
             Me.HabilitarAnular = False
-            DocumentoDePagoModel = New DocumentoDePago(idSucursal, clienteMayorista)
+            DocumentoDePagoModel = New DocumentoDePago(idSucursal, clienteMayorista, TipoAccionDocumentoPago.MovimientoFondos)
         End Sub
 
         Public Sub New(documentoDePago As DocumentoDePago)

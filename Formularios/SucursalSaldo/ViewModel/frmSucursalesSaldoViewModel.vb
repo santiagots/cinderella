@@ -91,9 +91,14 @@ Namespace Formularios.SucursalSaldo
             MostrarMovimiento(titulo, pendienteAutorizacion)
         End Function
 
-        Friend Async Function MostrarTotalVentaMovimientoAsync(titulo As String, facturado As Boolean?, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Task
+        Friend Async Function MostrarTotalVentaMovimientoAsync(titulo As String, facturado As Boolean?, incluirDocumentoPago As Boolean, tipoPago As TipoPago?, tipoCliente As TipoCliente?) As Task
             Dim ventas As List(Of ventaModel.Venta) = Await VentaService.BuscarAsync(IdSucursal, FechaDesde, FechaHasta, facturado, tipoPago, tipoCliente)
-            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, FechaDesde, FechaHasta, tipoPago)
+
+            Dim documentosPago As List(Of ctaCteModel.DocumentoDePago) = New List(Of ctaCteModel.DocumentoDePago)()
+
+            If incluirDocumentoPago Then
+                documentosPago = Await DocumentoDePagoService.BuscarAsync(TipoBase.Local, IdSucursal, FechaDesde, FechaHasta, tipoPago, TipoAccionDocumentoPago.MovimientoFondos)
+            End If
 
             Dim ventasMovimiento As List(Of MovimientoVenta) = New List(Of MovimientoVenta)()
             ventasMovimiento.AddRange(Mapper.Map(Of List(Of MovimientoVenta))(ventas))
@@ -109,43 +114,43 @@ Namespace Formularios.SucursalSaldo
         End Function
 
         Friend Async Function MostrarTotalVentaAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, Nothing, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, False, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaEfectivoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en efectivo registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.Efectivo, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en efectivo registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, TipoPago.Efectivo, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaChequeAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en cheque registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.Cheque, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en cheque registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, TipoPago.Cheque, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaDepositoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en deposito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.Deposito, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en deposito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, TipoPago.Deposito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaCreditoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta crédito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.TarjetaCrédito, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta crédito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, TipoPago.TarjetaCrédito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaTarjetaDebitoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta debito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, TipoPago.TarjetaDébito, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas en tarjeta debito registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, TipoPago.TarjetaDébito, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaFacturadoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas facturadas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", True, Nothing, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas facturadas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", True, True, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaSinFacturadoAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas no facturadas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", False, Nothing, Nothing)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas no facturadas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", False, True, Nothing, Nothing)
         End Function
 
         Friend Async Function MostrarTotalVentaMayoristaAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas mayoristas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, Nothing, TipoCliente.Mayorista)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas mayoristas registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, Nothing, TipoCliente.Mayorista)
         End Function
 
         Friend Async Function MostrarTotalVentaMinoristaAsync() As Task
-            Await MostrarTotalVentaMovimientoAsync($"Ventas minorista registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, Nothing, TipoCliente.Mayorista)
+            Await MostrarTotalVentaMovimientoAsync($"Ventas minorista registradas entre el { FechaDesde.ToShortDateString() } hasta el { FechaHasta.ToShortDateString() }", Nothing, True, Nothing, TipoCliente.Mayorista)
         End Function
 
         Friend Async Function MostrarFaltanteCajaAsync() As Task
