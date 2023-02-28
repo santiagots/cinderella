@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-        (local)\SQLEXPRESS.C:\USERS\STAMBOUR\APPDATA\LOCAL\SISTEMACINDERELLADESARROLLO\CINDERELLA_LOCAL.MDF    -  This database will be modified
+        sql5090.site4now.net.DB_9B1463_cinderella    -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 2/13/2023 5:30:29 PM
+Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 2/18/2023 5:47:29 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,62 +24,44 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Altering [dbo].[NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO]'
+PRINT N'Altering [dbo].[sp_OrdenCompra_Eliminar]'
 GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-IF COL_LENGTH(N'[dbo].[NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO]', N'TipoAccion') IS NULL
-ALTER TABLE [dbo].[NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO] ADD[TipoAccion] [int] NOT NULL CONSTRAINT [DF_NUEVA_CLIENTE_MAYORISTA_DOCUMENTO_PAGO_TipoAccion] DEFAULT ((0))
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Altering [dbo].[sp_EliminarUsuarios]'
-GO
-IF OBJECT_ID(N'[dbo].[sp_EliminarUsuarios]', 'P') IS NOT NULL
-EXEC sp_executesql N'-- =============================================
--- Author:		Morpheus
--- Create date: 25/08/11
--- Description:	Baja de usuario del sistema.
--- =============================================
-ALTER PROCEDURE [dbo].[sp_EliminarUsuarios]
-	@idusu AS INTEGER,  
-    @msg AS VARCHAR(100) OUTPUT
+IF OBJECT_ID(N'[dbo].[sp_OrdenCompra_Eliminar]', 'P') IS NOT NULL
+EXEC sp_executesql N'
+ALTER PROCEDURE [dbo].[sp_OrdenCompra_Eliminar]
+	@idOrdenCompra AS BIGINT,
+    @msg AS INT OUTPUT
 AS
+	
 BEGIN
-Begin Tran t_BajaUsuario
+Begin Tran t_Eliminar
     Begin Try
-		DELETE dbo.REL_USUARIOS_PERFILES where id_Usuario=@idusu 
-		DELETE dbo.USUARIOS where id_Usuario=@idusu 
-        SET @msg = ''El Usuario se ha eliminado correctamente.''
-        COMMIT TRAN t_BajaUsuario
+
+		BEGIN
+
+			UPDATE ORDEN_COMPRA
+			SET Borrado = 1, FechaEdicion = GETDATE()
+			where idOrdenCompra = @idOrdenCompra
+
+			UPDATE ORDEN_COMPRA_DETALLE
+			SET borrado = 1, FechaEdicion = GETDATE()
+			WHERE idOrdenCompra = @idOrdenCompra
+		
+			SET @msg = 1
+			COMMIT TRAN t_Eliminar
+		END
+			
     End try
     Begin Catch
-        SET @msg = ''Ocurrio un Error: '' + ERROR_MESSAGE() + '' en la línea '' + CONVERT(NVARCHAR(255), ERROR_LINE() ) + ''.''
-        Rollback TRAN t_BajaUsuario
+		BEGIN
+			SET @msg = 0
+			Rollback TRAN t_Eliminar
+		END
+
     End Catch
 END
 
-
-
-
 '
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Altering [dbo].[NUEVA_DOCUMENTO_PAGO]'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-IF COL_LENGTH(N'[dbo].[NUEVA_DOCUMENTO_PAGO]', N'TipoAccion') IS NULL
-ALTER TABLE [dbo].[NUEVA_DOCUMENTO_PAGO] ADD[TipoAccion] [int] NOT NULL CONSTRAINT [DF_NUEVA_DOCUMENTO_PAGO_TipoAccion] DEFAULT ((0))
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-PRINT N'Enabling constraints on [dbo].[NUEVA_VENTA_ITEMS]'
-GO
-ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] CHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_NUEVA_VENTAS]
-GO
-ALTER TABLE [dbo].[NUEVA_VENTA_ITEMS] CHECK CONSTRAINT [FK_NUEVA_VENTA_ITEMS_PRODUCTOS]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

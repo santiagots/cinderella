@@ -25,7 +25,7 @@ Public Class NegOrdenCompra
         Dim dsStockPedido As New DataSet
         Dim entStockPedido As List(Of OrdenCompra) = New List(Of OrdenCompra)
 
-        dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_Listado @id_Sucursal=" & idSucursal & " ,@fechaDesde='" & fechaDesde.ToString("yyyy/MM/dd") & "' ,@fechaHasta='" & fechaHasta.ToString("yyyy/MM/dd") & "'")
+        dsStockPedido = clsDatos.ConsultarBaseLocal("execute sp_OrdenCompra_Obtener_Listado @id_Sucursal=" & idSucursal & " ,@fechaDesde='" & fechaDesde.ToString("yyyy/MM/dd") & "' ,@fechaHasta='" & fechaHasta.ToString("yyyy/MM/dd") & "'")
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             For Each row As DataRow In dsStockPedido.Tables(0).Rows
@@ -44,7 +44,7 @@ Public Class NegOrdenCompra
         Dim dsStockPedido As New DataSet
         Dim entStockPedido As List(Of OrdenCompra) = New List(Of OrdenCompra)
 
-        dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoEstado @id_Sucursal=" & idSucursal & " ,@estado=" & estado)
+        dsStockPedido = clsDatos.ConsultarBaseLocal("execute sp_OrdenCompra_Obtener_ListadoEstado @id_Sucursal=" & idSucursal & " ,@estado=" & estado)
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             For Each row As DataRow In dsStockPedido.Tables(0).Rows
@@ -63,7 +63,7 @@ Public Class NegOrdenCompra
         Dim dsStockPedido As New DataSet
         Dim entStockPedido As List(Of OrdenCompra) = New List(Of OrdenCompra)
 
-        dsStockPedido = clsDatos.ConsultarBaseRemoto("execute sp_OrdenCompra_Obtener_ListadoProveedor @id_Sucursal=" & idSucursal & " ,@id_Proveedor=" & idProveedor)
+        dsStockPedido = clsDatos.ConsultarBaseLocal("execute sp_OrdenCompra_Obtener_ListadoProveedor @id_Sucursal=" & idSucursal & " ,@id_Proveedor=" & idProveedor)
 
         If dsStockPedido.Tables(0).Rows.Count <> 0 Then
             For Each row As DataRow In dsStockPedido.Tables(0).Rows

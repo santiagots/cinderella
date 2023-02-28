@@ -117,10 +117,12 @@ Public Class frmOrdenCompra
     End Sub
 
     Private Sub cbProveedor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbProveedorAlta.SelectedIndexChanged
-        txtProductoAlta.AutoCompleteCustomSource = CargraListaProductos(cbProveedorAlta.SelectedValue)
-        AltaDetallesBindingSource.Clear()
-        lblMontoTotalAlta.Text = "0"
-        lblTotalesAlta.Text = "0"
+        If (cbProveedorAlta.SelectedIndex > 0) Then
+            txtProductoAlta.AutoCompleteCustomSource = CargraListaProductos(cbProveedorAlta.SelectedValue)
+            AltaDetallesBindingSource.Clear()
+            lblMontoTotalAlta.Text = "0"
+            lblTotalesAlta.Text = "0"
+        End If
     End Sub
 
     Private Sub ActualizarTotales(OrdenCompra As OrdenCompra, monto As Label, cantidad As Label)
@@ -407,22 +409,24 @@ Public Class frmOrdenCompra
         End If
     End Sub
 
-    Private Sub dgOrdenCompraBusqueda_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgOrdenCompraBusqueda.CellContentClick
-        If dgOrdenCompraBusqueda.Columns(e.ColumnIndex).Name = "Eliminar" Then
-            If MessageBox.Show("¿Está seguro que desea eliminar la orden de compra?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                Try
-                    Me.Cursor = Cursors.WaitCursor
-                    Dim ordenCompra As OrdenCompra = BuscarOrdenCompraBindingSource.Current
+    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+        If MessageBox.Show("¿Está seguro que desea eliminar las ordens de compras seleccionadas?", "Administración de Ordenes de Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Try
+                Me.Cursor = Cursors.WaitCursor
+                Dim ordensCompraEliminar As List(Of OrdenCompra) = dgOrdenCompraBusqueda.Rows.Cast(Of DataGridViewRow).Where(Function(x) x.Cells(0).Value).Select(Of OrdenCompra)(Function(x) x.DataBoundItem).ToList()
+                For Each ordenCompra In ordensCompraEliminar
                     NegOrdenCompra.Eliminar(ordenCompra)
                     BuscarOrdenCompraBindingSource.Remove(BuscarOrdenCompraBindingSource.Current)
-                    ObtenerNotasPedidosAbiertasEnviadas()
-                    MessageBox.Show("Se ha eliminado la orden de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Me.Cursor = Cursors.Arrow
-                Catch ex As Exception
-                    Me.Cursor = Cursors.Arrow
-                    MessageBox.Show("Se ha producido un error al eliminar la orden de compra. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End If
+                Next
+
+                ObtenerNotasPedidosAbiertasEnviadas()
+                MessageBox.Show("Se ha eliminado las ordenes de compra.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Me.Cursor = Cursors.Arrow
+
+            Catch ex As Exception
+                Me.Cursor = Cursors.Arrow
+                MessageBox.Show("Se ha producido un error al eliminar la orden de compra. Por favor, Comuníquese con el administrador.", "Administración de Ordenes de Compra", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
 
@@ -757,5 +761,6 @@ Public Class frmOrdenCompra
             End If
         End If
     End Sub
+
 
 End Class

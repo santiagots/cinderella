@@ -27,20 +27,25 @@ Partial Class frmOrdenCompra
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmOrdenCompra))
         Me.tabOrdenCompra = New System.Windows.Forms.TabControl()
         Me.TabBusqueda = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.dgOrdenCompraBusqueda = New System.Windows.Forms.DataGridView()
+        Me.Seleccionado = New SistemaCinderella.DataGridViewCheckBoxHeaderColumn()
         Me.NombreProveedorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreEncargadoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EstadoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TipoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.BuscarOrdenCompraBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.btnEliminar = New System.Windows.Forms.Button()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
         Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
@@ -136,6 +141,24 @@ Partial Class frmOrdenCompra
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.DetallesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DataGridViewCheckBoxHeaderColumn1 = New SistemaCinderella.DataGridViewCheckBoxHeaderColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewImageColumn1 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.DataGridViewCheckBoxColumn1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewImageColumn3 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.DataGridViewImageColumn4 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.DataGridViewCheckBoxColumn2 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.DataGridViewImageColumn5 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.tabOrdenCompra.SuspendLayout()
         Me.TabBusqueda.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -228,21 +251,32 @@ Partial Class frmOrdenCompra
         Me.dgOrdenCompraBusqueda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgOrdenCompraBusqueda.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgOrdenCompraBusqueda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgOrdenCompraBusqueda.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NombreProveedorDataGridViewTextBoxColumn, Me.NombreEncargadoDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.EstadoDataGridViewTextBoxColumn, Me.TipoDataGridViewTextBoxColumn, Me.Eliminar})
+        Me.dgOrdenCompraBusqueda.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Seleccionado, Me.NombreProveedorDataGridViewTextBoxColumn, Me.NombreEncargadoDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn, Me.EstadoDataGridViewTextBoxColumn, Me.TipoDataGridViewTextBoxColumn})
         Me.dgOrdenCompraBusqueda.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dgOrdenCompraBusqueda.DataSource = Me.BuscarOrdenCompraBindingSource
         Me.dgOrdenCompraBusqueda.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgOrdenCompraBusqueda.Location = New System.Drawing.Point(3, 17)
         Me.dgOrdenCompraBusqueda.MultiSelect = False
         Me.dgOrdenCompraBusqueda.Name = "dgOrdenCompraBusqueda"
-        Me.dgOrdenCompraBusqueda.ReadOnly = True
+        Me.dgOrdenCompraBusqueda.RowHeadersVisible = False
         Me.dgOrdenCompraBusqueda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgOrdenCompraBusqueda.Size = New System.Drawing.Size(763, 430)
         Me.dgOrdenCompraBusqueda.TabIndex = 0
         '
+        'Seleccionado
+        '
+        Me.Seleccionado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Seleccionado.FillWeight = 30.0!
+        Me.Seleccionado.HeaderText = ""
+        Me.Seleccionado.MinimumWidth = 30
+        Me.Seleccionado.Name = "Seleccionado"
+        Me.Seleccionado.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Seleccionado.Width = 30
+        '
         'NombreProveedorDataGridViewTextBoxColumn
         '
         Me.NombreProveedorDataGridViewTextBoxColumn.DataPropertyName = "NombreProveedor"
+        Me.NombreProveedorDataGridViewTextBoxColumn.FillWeight = 98.90017!
         Me.NombreProveedorDataGridViewTextBoxColumn.HeaderText = "Proveedor"
         Me.NombreProveedorDataGridViewTextBoxColumn.Name = "NombreProveedorDataGridViewTextBoxColumn"
         Me.NombreProveedorDataGridViewTextBoxColumn.ReadOnly = True
@@ -250,6 +284,7 @@ Partial Class frmOrdenCompra
         'NombreEncargadoDataGridViewTextBoxColumn
         '
         Me.NombreEncargadoDataGridViewTextBoxColumn.DataPropertyName = "NombreEncargado"
+        Me.NombreEncargadoDataGridViewTextBoxColumn.FillWeight = 98.90017!
         Me.NombreEncargadoDataGridViewTextBoxColumn.HeaderText = "Encargado"
         Me.NombreEncargadoDataGridViewTextBoxColumn.Name = "NombreEncargadoDataGridViewTextBoxColumn"
         Me.NombreEncargadoDataGridViewTextBoxColumn.ReadOnly = True
@@ -257,6 +292,7 @@ Partial Class frmOrdenCompra
         'FechaDataGridViewTextBoxColumn
         '
         Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
+        Me.FechaDataGridViewTextBoxColumn.FillWeight = 98.90017!
         Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
         Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
         Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
@@ -264,6 +300,7 @@ Partial Class frmOrdenCompra
         'EstadoDataGridViewTextBoxColumn
         '
         Me.EstadoDataGridViewTextBoxColumn.DataPropertyName = "Estado"
+        Me.EstadoDataGridViewTextBoxColumn.FillWeight = 98.90017!
         Me.EstadoDataGridViewTextBoxColumn.HeaderText = "Estado"
         Me.EstadoDataGridViewTextBoxColumn.Name = "EstadoDataGridViewTextBoxColumn"
         Me.EstadoDataGridViewTextBoxColumn.ReadOnly = True
@@ -271,16 +308,10 @@ Partial Class frmOrdenCompra
         'TipoDataGridViewTextBoxColumn
         '
         Me.TipoDataGridViewTextBoxColumn.DataPropertyName = "Tipo"
+        Me.TipoDataGridViewTextBoxColumn.FillWeight = 98.90017!
         Me.TipoDataGridViewTextBoxColumn.HeaderText = "Tipo"
         Me.TipoDataGridViewTextBoxColumn.Name = "TipoDataGridViewTextBoxColumn"
         Me.TipoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'Eliminar
-        '
-        Me.Eliminar.HeaderText = "Eliminar"
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
         '
         'BuscarOrdenCompraBindingSource
         '
@@ -290,6 +321,7 @@ Partial Class frmOrdenCompra
         '
         Me.GroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox4.Controls.Add(Me.btnEliminar)
         Me.GroupBox4.Controls.Add(Me.btn_Restablecer)
         Me.GroupBox4.Controls.Add(Me.BtnFiltrar)
         Me.GroupBox4.Controls.Add(Me.TableLayoutPanel5)
@@ -300,6 +332,23 @@ Partial Class frmOrdenCompra
         Me.GroupBox4.TabIndex = 27
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Buscar"
+        '
+        'btnEliminar
+        '
+        Me.btnEliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnEliminar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnEliminar.FlatAppearance.BorderSize = 0
+        Me.btnEliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnEliminar.Location = New System.Drawing.Point(471, 123)
+        Me.btnEliminar.Name = "btnEliminar"
+        Me.btnEliminar.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.btnEliminar.Size = New System.Drawing.Size(94, 41)
+        Me.btnEliminar.TabIndex = 22
+        Me.btnEliminar.Text = "Eliminar"
+        Me.btnEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnEliminar.UseVisualStyleBackColor = True
         '
         'btn_Restablecer
         '
@@ -685,6 +734,7 @@ Partial Class frmOrdenCompra
         'DataGridViewTextBoxColumn1
         '
         Me.DataGridViewTextBoxColumn1.DataPropertyName = "Codigo"
+        Me.DataGridViewTextBoxColumn1.FillWeight = 98.90017!
         Me.DataGridViewTextBoxColumn1.HeaderText = "Código"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.ReadOnly = True
@@ -692,6 +742,7 @@ Partial Class frmOrdenCompra
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.DataPropertyName = "Nombre"
+        Me.DataGridViewTextBoxColumn2.FillWeight = 98.90017!
         Me.DataGridViewTextBoxColumn2.HeaderText = "Nombre"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.ReadOnly = True
@@ -701,6 +752,7 @@ Partial Class frmOrdenCompra
         Me.DataGridViewTextBoxColumn3.DataPropertyName = "Costo"
         DataGridViewCellStyle1.Format = "C2"
         Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridViewTextBoxColumn3.FillWeight = 98.90017!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Costo"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         Me.DataGridViewTextBoxColumn3.ReadOnly = True
@@ -708,29 +760,40 @@ Partial Class frmOrdenCompra
         'DataGridViewTextBoxColumn4
         '
         Me.DataGridViewTextBoxColumn4.DataPropertyName = "Cantidad"
+        Me.DataGridViewTextBoxColumn4.FillWeight = 98.90017!
         Me.DataGridViewTextBoxColumn4.HeaderText = "Cantidad"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
         '
         'DataGridViewTextBoxColumn5
         '
         Me.DataGridViewTextBoxColumn5.DataPropertyName = "Importe"
         DataGridViewCellStyle2.Format = "C2"
         Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.DataGridViewTextBoxColumn5.FillWeight = 98.90017!
         Me.DataGridViewTextBoxColumn5.HeaderText = "Importe"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         Me.DataGridViewTextBoxColumn5.ReadOnly = True
         '
         'EliminarAlta
         '
-        Me.EliminarAlta.HeaderText = "Eliminar"
+        Me.EliminarAlta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.EliminarAlta.FillWeight = 30.0!
+        Me.EliminarAlta.HeaderText = ""
         Me.EliminarAlta.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.EliminarAlta.MinimumWidth = 30
         Me.EliminarAlta.Name = "EliminarAlta"
+        Me.EliminarAlta.Width = 30
         '
         'AdvertenciaAlta
         '
-        Me.AdvertenciaAlta.HeaderText = "Advertencia"
+        Me.AdvertenciaAlta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.AdvertenciaAlta.FillWeight = 30.0!
+        Me.AdvertenciaAlta.HeaderText = ""
         Me.AdvertenciaAlta.Image = Global.SistemaCinderella.My.Resources.Recursos.warning_24
+        Me.AdvertenciaAlta.MinimumWidth = 30
         Me.AdvertenciaAlta.Name = "AdvertenciaAlta"
+        Me.AdvertenciaAlta.Width = 30
         '
         'Verificado
         '
@@ -1033,6 +1096,7 @@ Partial Class frmOrdenCompra
         'CodigoDataGridViewTextBoxColumn
         '
         Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn.FillWeight = 89.01015!
         Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Código"
         Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
         Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
@@ -1040,6 +1104,7 @@ Partial Class frmOrdenCompra
         'NombreDataGridViewTextBoxColumn
         '
         Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.FillWeight = 89.01015!
         Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
         Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
         Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
@@ -1049,6 +1114,7 @@ Partial Class frmOrdenCompra
         Me.CostoDataGridViewTextBoxColumn.DataPropertyName = "Costo"
         DataGridViewCellStyle3.Format = "C2"
         Me.CostoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        Me.CostoDataGridViewTextBoxColumn.FillWeight = 89.01015!
         Me.CostoDataGridViewTextBoxColumn.HeaderText = "Costo"
         Me.CostoDataGridViewTextBoxColumn.Name = "CostoDataGridViewTextBoxColumn"
         Me.CostoDataGridViewTextBoxColumn.ReadOnly = True
@@ -1056,6 +1122,7 @@ Partial Class frmOrdenCompra
         'CantidadDataGridViewTextBoxColumn
         '
         Me.CantidadDataGridViewTextBoxColumn.DataPropertyName = "Cantidad"
+        Me.CantidadDataGridViewTextBoxColumn.FillWeight = 89.01015!
         Me.CantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad"
         Me.CantidadDataGridViewTextBoxColumn.Name = "CantidadDataGridViewTextBoxColumn"
         '
@@ -1064,21 +1131,30 @@ Partial Class frmOrdenCompra
         Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
         DataGridViewCellStyle4.Format = "C2"
         Me.ImporteDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+        Me.ImporteDataGridViewTextBoxColumn.FillWeight = 89.01015!
         Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Importe"
         Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
         Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
         '
         'EliminarDetalle
         '
-        Me.EliminarDetalle.HeaderText = "Eliminar"
+        Me.EliminarDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.EliminarDetalle.FillWeight = 30.0!
+        Me.EliminarDetalle.HeaderText = ""
         Me.EliminarDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.EliminarDetalle.MinimumWidth = 30
         Me.EliminarDetalle.Name = "EliminarDetalle"
+        Me.EliminarDetalle.Width = 30
         '
         'AdvertenciaDetalle
         '
-        Me.AdvertenciaDetalle.HeaderText = "Advertencia"
+        Me.AdvertenciaDetalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.AdvertenciaDetalle.FillWeight = 30.0!
+        Me.AdvertenciaDetalle.HeaderText = ""
         Me.AdvertenciaDetalle.Image = Global.SistemaCinderella.My.Resources.Recursos.warning_24
+        Me.AdvertenciaDetalle.MinimumWidth = 30
         Me.AdvertenciaDetalle.Name = "AdvertenciaDetalle"
+        Me.AdvertenciaDetalle.Width = 30
         '
         'VerificadoDetalle
         '
@@ -1422,6 +1498,154 @@ Partial Class frmOrdenCompra
         Me.DetallesBindingSource.DataMember = "Detalles"
         Me.DetallesBindingSource.DataSource = Me.ModificacionOrdenCompraBindingSource
         '
+        'DataGridViewCheckBoxHeaderColumn1
+        '
+        Me.DataGridViewCheckBoxHeaderColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewCheckBoxHeaderColumn1.FillWeight = 30.0!
+        Me.DataGridViewCheckBoxHeaderColumn1.HeaderText = ""
+        Me.DataGridViewCheckBoxHeaderColumn1.MinimumWidth = 30
+        Me.DataGridViewCheckBoxHeaderColumn1.Name = "DataGridViewCheckBoxHeaderColumn1"
+        Me.DataGridViewCheckBoxHeaderColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewCheckBoxHeaderColumn1.Width = 50
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.DataPropertyName = "Codigo"
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Código"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        Me.DataGridViewTextBoxColumn6.Width = 106
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.DataPropertyName = "Nombre"
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Nombre"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 105
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.DataPropertyName = "Costo"
+        DataGridViewCellStyle5.Format = "C2"
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle5
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Costo"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.Width = 106
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.DataPropertyName = "Cantidad"
+        Me.DataGridViewTextBoxColumn9.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.Width = 105
+        '
+        'DataGridViewTextBoxColumn10
+        '
+        Me.DataGridViewTextBoxColumn10.DataPropertyName = "Importe"
+        DataGridViewCellStyle6.Format = "C2"
+        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle6
+        Me.DataGridViewTextBoxColumn10.HeaderText = "Importe"
+        Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
+        Me.DataGridViewTextBoxColumn10.ReadOnly = True
+        Me.DataGridViewTextBoxColumn10.Width = 106
+        '
+        'DataGridViewImageColumn1
+        '
+        Me.DataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewImageColumn1.FillWeight = 30.0!
+        Me.DataGridViewImageColumn1.HeaderText = ""
+        Me.DataGridViewImageColumn1.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
+        '
+        'DataGridViewImageColumn2
+        '
+        Me.DataGridViewImageColumn2.HeaderText = "Eliminar"
+        Me.DataGridViewImageColumn2.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.DataGridViewImageColumn2.Name = "DataGridViewImageColumn2"
+        Me.DataGridViewImageColumn2.Width = 370
+        '
+        'DataGridViewCheckBoxColumn1
+        '
+        Me.DataGridViewCheckBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewCheckBoxColumn1.DataPropertyName = "Verificado"
+        Me.DataGridViewCheckBoxColumn1.FillWeight = 30.0!
+        Me.DataGridViewCheckBoxColumn1.HeaderText = ""
+        Me.DataGridViewCheckBoxColumn1.Name = "DataGridViewCheckBoxColumn1"
+        Me.DataGridViewCheckBoxColumn1.Visible = False
+        '
+        'DataGridViewTextBoxColumn11
+        '
+        Me.DataGridViewTextBoxColumn11.DataPropertyName = "Codigo"
+        Me.DataGridViewTextBoxColumn11.HeaderText = "Código"
+        Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
+        Me.DataGridViewTextBoxColumn11.ReadOnly = True
+        Me.DataGridViewTextBoxColumn11.Width = 103
+        '
+        'DataGridViewTextBoxColumn12
+        '
+        Me.DataGridViewTextBoxColumn12.DataPropertyName = "Nombre"
+        Me.DataGridViewTextBoxColumn12.HeaderText = "Nombre"
+        Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
+        Me.DataGridViewTextBoxColumn12.ReadOnly = True
+        Me.DataGridViewTextBoxColumn12.Width = 102
+        '
+        'DataGridViewTextBoxColumn13
+        '
+        Me.DataGridViewTextBoxColumn13.DataPropertyName = "Costo"
+        DataGridViewCellStyle7.Format = "C2"
+        Me.DataGridViewTextBoxColumn13.DefaultCellStyle = DataGridViewCellStyle7
+        Me.DataGridViewTextBoxColumn13.HeaderText = "Costo"
+        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
+        Me.DataGridViewTextBoxColumn13.ReadOnly = True
+        Me.DataGridViewTextBoxColumn13.Width = 103
+        '
+        'DataGridViewTextBoxColumn14
+        '
+        Me.DataGridViewTextBoxColumn14.DataPropertyName = "Cantidad"
+        Me.DataGridViewTextBoxColumn14.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
+        Me.DataGridViewTextBoxColumn14.Width = 103
+        '
+        'DataGridViewTextBoxColumn15
+        '
+        Me.DataGridViewTextBoxColumn15.DataPropertyName = "Importe"
+        DataGridViewCellStyle8.Format = "C2"
+        Me.DataGridViewTextBoxColumn15.DefaultCellStyle = DataGridViewCellStyle8
+        Me.DataGridViewTextBoxColumn15.HeaderText = "Importe"
+        Me.DataGridViewTextBoxColumn15.Name = "DataGridViewTextBoxColumn15"
+        Me.DataGridViewTextBoxColumn15.ReadOnly = True
+        Me.DataGridViewTextBoxColumn15.Width = 103
+        '
+        'DataGridViewImageColumn3
+        '
+        Me.DataGridViewImageColumn3.HeaderText = "Advertencia"
+        Me.DataGridViewImageColumn3.Image = Global.SistemaCinderella.My.Resources.Recursos.warning_24
+        Me.DataGridViewImageColumn3.Name = "DataGridViewImageColumn3"
+        Me.DataGridViewImageColumn3.Width = 369
+        '
+        'DataGridViewImageColumn4
+        '
+        Me.DataGridViewImageColumn4.HeaderText = "Eliminar"
+        Me.DataGridViewImageColumn4.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.DataGridViewImageColumn4.Name = "DataGridViewImageColumn4"
+        Me.DataGridViewImageColumn4.Width = 360
+        '
+        'DataGridViewCheckBoxColumn2
+        '
+        Me.DataGridViewCheckBoxColumn2.DataPropertyName = "Verificado"
+        Me.DataGridViewCheckBoxColumn2.HeaderText = "Verificado"
+        Me.DataGridViewCheckBoxColumn2.Name = "DataGridViewCheckBoxColumn2"
+        Me.DataGridViewCheckBoxColumn2.Visible = False
+        '
+        'DataGridViewImageColumn5
+        '
+        Me.DataGridViewImageColumn5.HeaderText = "Advertencia"
+        Me.DataGridViewImageColumn5.Image = Global.SistemaCinderella.My.Resources.Recursos.warning_24
+        Me.DataGridViewImageColumn5.Name = "DataGridViewImageColumn5"
+        Me.DataGridViewImageColumn5.Width = 359
+        '
         'frmOrdenCompra
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1550,17 +1774,24 @@ Partial Class frmOrdenCompra
     Friend WithEvents dgOrdenCompraBusqueda As DataGridView
     Friend WithEvents cbEncargadoAlta As ComboBox
     Friend WithEvents DetallesBindingSource As BindingSource
-    Friend WithEvents NombreProveedorDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents NombreEncargadoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents FechaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents EstadoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents TipoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents btnEnviarAlta As Button
     Friend WithEvents dgMercaderiaDetalle As DataGridView
     Friend WithEvents lbl_Msg As Label
     Friend WithEvents BtnCargaAutomaticaAlta As Button
     Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
+    Friend WithEvents btnEliminar As Button
+    Friend WithEvents DataGridViewCheckBoxColumn1 As DataGridViewCheckBoxColumn
+    Friend WithEvents DataGridViewImageColumn1 As DataGridViewImageColumn
+    Friend WithEvents DataGridViewImageColumn2 As DataGridViewImageColumn
+    Friend WithEvents DataGridViewImageColumn3 As DataGridViewImageColumn
+    Friend WithEvents DataGridViewImageColumn4 As DataGridViewImageColumn
+    Friend WithEvents DataGridViewImageColumn5 As DataGridViewImageColumn
+    Friend WithEvents Seleccionado As DataGridViewCheckBoxHeaderColumn
+    Friend WithEvents NombreProveedorDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents NombreEncargadoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FechaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents EstadoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TipoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
@@ -1577,4 +1808,16 @@ Partial Class frmOrdenCompra
     Friend WithEvents EliminarDetalle As DataGridViewImageColumn
     Friend WithEvents AdvertenciaDetalle As DataGridViewImageColumn
     Friend WithEvents VerificadoDetalle As DataGridViewCheckBoxColumn
+    Friend WithEvents DataGridViewCheckBoxHeaderColumn1 As DataGridViewCheckBoxHeaderColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn8 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn9 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn10 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn15 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewCheckBoxColumn2 As DataGridViewCheckBoxColumn
 End Class
