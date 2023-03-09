@@ -28,6 +28,8 @@ namespace Factura.ExternalService
                 FeDetReq = new Afip.Wsfev1.FECAEDetRequest[] { ObtenerDetalle(request) }
             };
 
+            Log.Info("AFIP Request", feCAERequest);
+
             Afip.Wsfev1.FECAEResponse feCAEResponse = serviceClient.FECAESolicitar(ObtenerAuth(request.PasswordCertificado, request.RutaCertificado), feCAERequest);
 
             VerificarErrorEnRespuesta(feCAEResponse.Errors);
@@ -84,7 +86,9 @@ namespace Factura.ExternalService
 
             AgregarAlicutaIva(CAErequest.AlicuotasIva, request);
 
-            request.ImpTotal = request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib;
+            decimal impuestosTotales = (decimal)(request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib);
+
+            request.ImpTotal = (double)Monto.Redondeo(impuestosTotales);
 
             return request;
         }

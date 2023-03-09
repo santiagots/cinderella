@@ -16,6 +16,7 @@ Imports Factura.Service.Common.Contracts
 Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Data.Service
 Imports Ventas.Core.Model.ValueObjects
+Imports Common.Core.Helper
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -167,6 +168,11 @@ Namespace Formularios.Facturacion
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(ventaModel.ObtenerItemsVentaSeleccionados(), desdeReserva, CondicionesIVASeleccionada)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
 
+
+            Log.Info("FACTURA - VENTA", ventaModel)
+            Log.Info("FACTURA - FFACTURA", ventaModel.Factura)
+            Log.Info("FACTURA - REQUEST", obtenerNumeroFacturaRequest)
+
             Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
             Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
 
@@ -214,6 +220,11 @@ Namespace Formularios.Facturacion
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
 
             Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
+
+            Log.Info("NOTA CREDITO - VENTA", ventaModel)
+            Log.Info("NOTA CREDITO - FFACTURA", ventaModel.Factura)
+            Log.Info("NOTA CREDITO - REQUEST", ObtenerNumeroNotaCretidoRequest)
+
             Dim ObtenerNumeroNotaCretidoResponse As ObtenerNumeroNotaCretidoResponse = notaCredito.ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest)
 
             ventaModel.AgregarNotaCredito(ObtenerPuntoVenta(),

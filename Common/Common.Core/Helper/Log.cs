@@ -1,5 +1,8 @@
-﻿using NLog;
+﻿using Newtonsoft.Json;
+using NLog;
 using System;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 
 namespace Common.Core.Helper
 {
@@ -10,6 +13,16 @@ namespace Common.Core.Helper
         public static void InfoCurrentStack()
         {
             log.Error(CurrentStackCustomizedLog());
+        }
+
+        public static void Info(string mensaje, object obj)
+        {
+            string json = JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            log.Info($"{mensaje} :-> {json}");
         }
 
         public static void Info(string mensaje)
