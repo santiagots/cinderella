@@ -34,7 +34,7 @@ namespace Common.Service.NotaCredito
                 ImporteNeto = alicuotasIva.Sum(x => x.Monto),
                 AlicuotasIva = alicuotasIva,
                 NumeroFacturaOrigen = request.NumeroFacturaOrigen,
-                PuntoVentaOrigen = request.NumeroFacturaOrigen,
+                PuntoVentaOrigen = request.PuntoVentaOrigen,
                 PasswordCertificado = PasswordCertificado,
                 RutaCertificado = RutaCertificado
             };
