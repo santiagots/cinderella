@@ -235,11 +235,19 @@ Public Class frmStock
         End If
     End Sub
 
-    Private Sub btn_Exportar_Click(sender As Object, e As EventArgs) Handles btn_Exportar.Click
+    Private Sub btn_Exportar_Todo_Click(sender As Object, e As EventArgs) Handles btn_Exportar_Todo.Click
+        ExportarExcelStock(String.Format("Stock_Todo_{0}", My.Settings.NombreSucursal), True)
+    End Sub
+
+    Private Sub btn_Exportar_Base_Click(sender As Object, e As EventArgs) Handles btn_Exportar_Base.Click
+        ExportarExcelStock(String.Format("Stock_Base_{0}", My.Settings.NombreSucursal), False)
+    End Sub
+
+    Private Sub ExportarExcelStock(nombreArchivo As String, conDatos As Boolean)
         Try
             'Configuro la pantalla de guardado de archivos
             SaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-            SaveFileDialog.FileName = String.Format("Stock_{0}", My.Settings.NombreSucursal)
+            SaveFileDialog.FileName = nombreArchivo
             SaveFileDialog.Filter = "Excel Files|*.xlsx;"
 
             If SaveFileDialog.ShowDialog() = DialogResult.OK Then
@@ -257,7 +265,7 @@ Public Class frmStock
                 AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
 
                 'Exporto el listado de productos a Excel
-                NegStock.ExportarExcelStock(My.Settings.Sucursal, SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProductoSucursal"))
+                NegStock.ExportarExcelStock(My.Settings.Sucursal, SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProductoSucursal"), conDatos)
 
                 'Voy seteando la barra de progreso
                 frmCargadorDeEspera.Close()
@@ -288,7 +296,7 @@ Public Class frmStock
         frmCargadorDeEspera.Refresh()
     End Sub
 
-    Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar.Click
+    Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar_Todo.Click
         Try
             OpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             OpenFileDialog.Filter = "Excel Files|*.xlsx;"

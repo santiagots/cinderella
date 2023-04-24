@@ -244,10 +244,18 @@ Public Class frmProductos
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btn_Exportar.Click
+        ExportarExcel("Productos_Todo", True)
+    End Sub
+
+    Private Sub btn_ExportarBase_Click(sender As Object, e As EventArgs) Handles btn_ExportarBase.Click
+        ExportarExcel("Productos_Base", False)
+    End Sub
+
+    Private Sub ExportarExcel(nombreArchivo As String, conDatos As Boolean)
         Try
             'Configuro la pantalla de guardado de archivos
             SaveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-            SaveFileDialog.FileName = "Productos"
+            SaveFileDialog.FileName = nombreArchivo
             SaveFileDialog.Filter = "Excel Files|*.xlsx;"
 
             If SaveFileDialog.ShowDialog() = DialogResult.OK Then
@@ -265,7 +273,7 @@ Public Class frmProductos
                 AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
 
                 'Exporto el listado de productos a Excel
-                NegProductos.ExportarExcel(SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProducto"))
+                NegProductos.ExportarExcel(SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProducto"), conDatos)
 
                 'Voy seteando la barra de progreso
                 frmCargadorDeEspera.Close()
@@ -275,7 +283,7 @@ Public Class frmProductos
                 Me.Cursor = Cursors.Arrow
 
                 'si no completo la descripcion, muestro un msg de error.
-                MessageBox.Show("Se ha exportado el listado de productos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("Se ha generado el listado de productos de forma exitosa", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
         Catch ex As Exception
@@ -285,12 +293,20 @@ Public Class frmProductos
 
             'Cambio el cursor a "NORMAL"
             Me.Cursor = Cursors.Arrow
-            MessageBox.Show("Se ha producido un error en la exportación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Se ha producido un error en la generación de la información. Verifique que el documento no se encuentre en uso o esté abierto. Por favor, intente más tarde.", "Administración de Productos", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Log.Error(ex)
         End Try
     End Sub
 
     Private Sub btn_Importar_Click(sender As Object, e As EventArgs) Handles btn_Importar.Click
+        ImportarExcel(True, True, True)
+    End Sub
+
+    Private Sub btn_ImportarBase_Click(sender As Object, e As EventArgs)
+        ImportarExcel(False, True, True)
+    End Sub
+
+    Private Sub ImportarExcel(PermiteEliminar As Boolean, PermiteModificar As Boolean, PermiteAlta As Boolean)
         Try
             OpenFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             OpenFileDialog.Filter = "Excel Files|*.xlsx;"
@@ -436,4 +452,6 @@ Public Class frmProductos
             RemoveHandler DG_Productos.CellDoubleClick, AddressOf DG_Productos_CellDoubleClick
         End If
     End Sub
+
+
 End Class

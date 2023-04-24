@@ -3,8 +3,10 @@ Imports System.Data.SqlClient
 Imports System.Globalization
 Imports System.IO
 Imports System.Text
+Imports System.Windows.Forms
 Imports Common.Core.Helper
 Imports Datos
+Imports Entidades
 Imports Excel = Microsoft.Office.Interop.Excel
 
 Public Enum Fortmats
@@ -950,7 +952,7 @@ Public Class NegProductos
 #End Region
 
 #Region "Funciones Exportar Excel"
-    Sub ExportarExcel(nombreArchivo As String, nombrePlantilla As String)
+    Sub ExportarExcel(nombreArchivo As String, nombrePlantilla As String, conDatos As Boolean)
         Dim cmd As New SqlCommand
         Dim adapter As New SqlDataAdapter
         Dim dsProductos As DataSet = New DataSet()
@@ -961,10 +963,12 @@ Public Class NegProductos
         cmd.Connection = clsDatos.ConectarRemoto()
         cmd.CommandType = CommandType.StoredProcedure
 
-        RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
-        cmd.CommandText = "sp_Productos_ListadoExcel"
-        adapter = New SqlDataAdapter(cmd)
-        adapter.Fill(dsProductos)
+        If (conDatos) Then
+            RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
+            cmd.CommandText = "sp_Productos_ListadoExcel"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsProductos)
+        End If
 
         RaiseEvent UpdateProgress(2, "Obteniendo Categorias...")
         cmd.CommandText = "sp_ProductosCategorias_Listado"
@@ -1030,7 +1034,11 @@ Public Class NegProductos
 
         AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
 
-        Dim MaxRowsData = dsProductos.Tables(0).Rows.Count + NewRowsData
+        Dim MaxRowsData = NewRowsData
+
+        If (dsProductos.Tables.Count > 0) Then
+            MaxRowsData += dsProductos.Tables(0).Rows.Count
+        End If
 
         AgregarEstilo(xlWorkSheet, MaxRowsData)
 
@@ -1053,6 +1061,11 @@ Public Class NegProductos
     End Function
 
     Private Sub AddDataSetToWorkSheet(dsProductos As DataSet, xlWorkSheet As Excel.Worksheet)
+
+        If (dsProductos.Tables.Count = 0) Then
+            Return
+        End If
+
         Dim data(dsProductos.Tables(0).Rows.Count + 1, dsProductos.Tables(0).Columns.Count) As Object
 
         'Agrego el nombre de la Columna
@@ -1188,14 +1201,14 @@ Public Class NegProductos
 #End Region
 
 #Region "Funciones Importar Excel"
-    Function ImportarExcel(fileName As String, ByRef DatosConError As DataTable) As String
+    Function ImportarExcel(FileName As String, ByRef DatosConError As DataTable) As String
 
         Dim dsCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
         Dim dsSubCategoria As DataSet = New DataSet()
         Dim dsProductos As DataSet = New DataSet()
         Dim dsBackUp As DataSet = New DataSet()
-        Dim sourceData As DataTable
+        Dim DatosExcel As DataTable
 
         Dim encripta As New ClsEncriptacion()
         Using conn As SqlConnection = New SqlConnection()
@@ -1238,14 +1251,14 @@ Public Class NegProductos
             adapter.Fill(dsProductos)
         End Using
 
-        Dim DatosEliminados As List(Of DataRow)
-        Dim DatosActualizados As List(Of DataRow)
-        Dim DatosNuevos As List(Of DataRow)
+        Dim DatosEliminados As List(Of DataRow) = New List(Of DataRow)()
+        Dim DatosActualizados As List(Of DataRow) = New List(Of DataRow)()
+        Dim DatosNuevos As List(Of DataRow) = New List(Of DataRow)()
 
         RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
-        sourceData = GetDataFormExcel(fileName, "Productos").Tables(0)
+        DatosExcel = GetDataFormExcel(FileName, "Productos").Tables(0)
 
-        If Not (verificarColumnasExcel(sourceData)) Then
+        If Not (verificarColumnasExcel(DatosExcel)) Then
             Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
         End If
 
@@ -1253,27 +1266,18 @@ Public Class NegProductos
         DatosConError.Columns.Add("Descripcion_Error")
 
         RaiseEvent UpdateProgress(3, "Validando informacion del Excel...")
-        'Obtengo las filas eliminadas 
-        DatosEliminados = obtenerFilasEliminadas(dsProductos.Tables(0), sourceData)
 
-        'Eliminos las filar que tiene un mismo codigo y lo inserto como error
-        sourceData = ElmininarFilasComMismoValor(sourceData, DatosConError, "Codigo")
+        DatosExcel = ElmininarFilasComMismoCodigo(DatosExcel, DatosConError)
 
-        'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
-        DatosActualizados = obtenerFilasModificadas(dsProductos, sourceData)
+        DatosEliminados = ObtenerProductosEliminadas(dsProductos.Tables(0), DatosExcel)
 
-        'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
-        DatosNuevos = sourceData.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
+        DatosExcel = CompletarDatosVacios(DatosExcel, dsProductos)
 
-        'Verifico que estos productos nuevos no se encuentren en la base de datos
-        DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
-
-        'De las filas modificadas verifico que esten bien cargadas
+        DatosActualizados = ObtenerProductosModificadas(dsProductos, DatosExcel)
         DatosActualizados = ValidarDatosVacios(DatosActualizados, DatosConError)
 
-        'De las filas nuevas verifico que esten bien cargadas
+        DatosNuevos = ObtenerProductosNuevos(dsProductos, DatosExcel)
         DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
-
 
         Dim productos As List(Of String) = New List(Of String)
 
@@ -1292,6 +1296,15 @@ Public Class NegProductos
 
         If (productos.Count = 0) Then
             Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
+        End If
+
+        If DatosEliminados.Count = 0 AndAlso DatosActualizados.Count = 0 AndAlso DatosNuevos.Count = 0 Then
+            Return "No se han encontrado producto a importar."
+        End If
+
+        Dim respuesta As DialogResult = MessageBox.Show($"Se han encontrado {DatosNuevos.Count} nuevos productos, {DatosActualizados.Count} productos modificados y {DatosEliminados.Count} productos eliminados.{Environment.NewLine}¿Desea importarlos?", "Administración de Productos", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+        If (respuesta = DialogResult.No) Then
+            Return "Se ha cancelado la importación de los productos."
         End If
 
         Using conn As SqlConnection = New SqlConnection()
@@ -1317,6 +1330,15 @@ Public Class NegProductos
         End Using
 
         Return $"Se han cargado {DatosNuevos.Count} nuevos productos, se han actualizaron {DatosActualizados.Count} productos y se han eliminado {DatosEliminados.Count} productos."
+    End Function
+
+    Private Shared Function ObtenerProductosNuevos(dsProductos As DataSet, DatosExcel As DataTable) As List(Of DataRow)
+        'Busco los productos que en el excel no tiene ID (productos que pueden o no estar en la base)
+        Dim DatosNuevos As List(Of DataRow) = DatosExcel.AsEnumerable().Where(Function(x) x(0).ToString() = String.Empty).ToList().ToList()
+
+        'Verifico que estos productos nuevos no se encuentren en la base de datos
+        DatosNuevos = DatosNuevos.Where(Function(x) dsProductos.Tables(0).Select(String.Format("Codigo = '{0}'", x.ItemArray(1))).Length = 0).ToList()
+        Return DatosNuevos
     End Function
 
     Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer, ByRef DatosConError As DataTable) As List(Of String)
@@ -1443,39 +1465,41 @@ Public Class NegProductos
         Return True
     End Function
 
-    Function obtenerFilasEliminadas(base As DataTable, importados As DataTable) As List(Of DataRow)
-        Dim hTable As Hashtable = New Hashtable()
+    Function ObtenerProductosEliminadas(base As DataTable, importados As DataTable) As List(Of DataRow)
+        Dim IdProductosImportados As List(Of Integer) = New List(Of Integer)
         Dim deleteList As List(Of DataRow) = New List(Of DataRow)
 
-        'Agrego las valores a un HashTable para determinar si el valor de la columan se encuentra duplicado
-        For Each drow As DataRow In importados.Rows
-            If drow("id_producto").ToString() <> "" Then
-                If Not hTable.Contains(Integer.Parse(drow("id_producto").ToString())) Then
-                    hTable.Add(Integer.Parse(drow("id_producto").ToString()), String.Empty)
+        'creo que lista de IdProductos
+        For Each productoImportado As DataRow In importados.Rows
+            If productoImportado("id_producto").ToString() <> "" Then
+                If Not IdProductosImportados.Contains(Integer.Parse(productoImportado("id_producto").ToString())) Then
+                    IdProductosImportados.Add(Integer.Parse(productoImportado("id_producto").ToString()))
                 End If
             End If
         Next
 
-        For Each drow As DataRow In base.Rows
-            If Not hTable.Contains(Integer.Parse(drow("id_producto").ToString())) Then
-                deleteList.Add(drow)
-            End If
-        Next
-
+        'si la lista de IdProductos tiene datos el Excel importado es COMPLETO y tengo que eliminar los productos que no se encuentren en el listado
+        If (IdProductosImportados.Count > 0) Then
+            For Each drow As DataRow In base.Rows
+                If Not IdProductosImportados.Contains(Integer.Parse(drow("id_producto").ToString())) Then
+                    deleteList.Add(drow)
+                End If
+            Next
+        End If
         Return deleteList
     End Function
 
-    Function ElmininarFilasComMismoValor(dTable As DataTable, ByRef errors As DataTable, colName As String) As DataTable
-        Dim hTable As Hashtable = New Hashtable()
+    Function ElmininarFilasComMismoCodigo(dTable As DataTable, ByRef errors As DataTable) As DataTable
+        Dim IdProductosImportados As List(Of String) = New List(Of String)
         Dim duplicateList As ArrayList = New ArrayList()
 
-        'Agrego las valores a un HashTable para determinar si el valor de la columan se encuentra duplicado
+        'Agrego las valores a un lista para determinar si el valor de la columan se encuentra duplicado
         For Each drow As DataRow In dTable.Rows
 
-            If hTable.Contains(drow(colName)) Then
+            If IdProductosImportados.Contains(drow("Codigo")) Then
                 duplicateList.Add(drow)
             Else
-                hTable.Add(drow(colName), String.Empty)
+                IdProductosImportados.Add(drow("Codigo"))
             End If
         Next
 
@@ -1489,11 +1513,11 @@ Public Class NegProductos
         Return dTable
     End Function
 
-    Function obtenerFilasModificadas(dsProductos As DataSet, sourceData As DataTable) As List(Of DataRow)
+    Function ObtenerProductosModificadas(dsProductos As DataSet, sourceData As DataTable) As List(Of DataRow)
+        'Obtengo las filas en las que se modifico alguno de sus valores y que tengan un ID al momento de ser exportado el excel
         Return (From product In dsProductos.Tables(0).AsEnumerable()
-                Join d In sourceData.AsEnumerable() On product(0).ToString() Equals d(0).ToString()
-                Where (product(1).ToString() <> d(1).ToString() Or
-                      product(2).ToString() <> d(2).ToString() Or
+                Join d In sourceData.AsEnumerable() On product(1).ToString().ToUpper() Equals d(1).ToString().ToUpper()
+                Where (product(2).ToString() <> d(2).ToString() Or
                       product(3).ToString() <> d(3).ToString() Or
                       product(4).ToString() <> d(4).ToString() Or
                       product(5).ToString() <> d(5).ToString() Or
@@ -1510,6 +1534,36 @@ Public Class NegProductos
                       product(16).ToString() <> d(16).ToString() Or
                       product(17).ToString() <> d(17).ToString())
                 Select d).ToList()
+    End Function
+
+    Function CompletarDatosVacios(DatosExcel As DataTable, dsProductos As DataSet) As DataTable
+
+        Dim codigos As List(Of String) = DatosExcel.Rows.Cast(Of DataRow).Select(Of String)(Function(x) x("Codigo").ToString().ToUpper()).ToList()
+
+        Dim codigosYProductos As Dictionary(Of String, DataRow) = New Dictionary(Of String, DataRow)()
+
+
+        dsProductos.Tables(0).Rows.Cast(Of DataRow).
+            Where(Function(x) codigos.Contains(x("Codigo").ToString().ToUpper())).
+            ToList().
+            ForEach(Sub(x) codigosYProductos.Add(x("Codigo").ToString().ToUpper(), x))
+
+
+        DatosExcel.Rows.
+            Cast(Of DataRow).
+            ToList().
+            ForEach(Sub(x)
+                        Dim codigo As String = x("Codigo").ToString().ToUpper()
+                        If codigosYProductos.ContainsKey(codigo) Then
+                            For i = 0 To 17
+                                If (x(i) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(x(i).ToString())) Then
+                                    x(i) = codigosYProductos(codigo)(i)
+                                End If
+                            Next
+                        End If
+                    End Sub)
+
+        Return DatosExcel
     End Function
 
     Function ValidarDatosVacios(datos As List(Of DataRow), ByRef DatosConError As DataTable) As List(Of DataRow)

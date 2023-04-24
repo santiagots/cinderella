@@ -43,12 +43,14 @@ Partial Class frmStock
         Me.StocksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Paginado = New SistemaCinderella.Paginado()
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btn_Exportar_Base = New System.Windows.Forms.Button()
+        Me.btn_Exportar_Todo = New System.Windows.Forms.Button()
+        Me.btn_Importar_Todo = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.btn_Buscar = New System.Windows.Forms.Button()
         Me.btn_Restablecer = New System.Windows.Forms.Button()
-        Me.btn_Importar = New System.Windows.Forms.Button()
         Me.txt_buscar = New System.Windows.Forms.TextBox()
-        Me.btn_Exportar = New System.Windows.Forms.Button()
         Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
         Me.TabAlta = New System.Windows.Forms.TabPage()
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
@@ -114,6 +116,7 @@ Partial Class frmStock
         CType(Me.DG_Stock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.StocksBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Buscar.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabAlta.SuspendLayout()
         Me.GB_Alta.SuspendLayout()
@@ -143,7 +146,7 @@ Partial Class frmStock
         Me.TabStock.Location = New System.Drawing.Point(0, 0)
         Me.TabStock.Name = "TabStock"
         Me.TabStock.SelectedIndex = 0
-        Me.TabStock.Size = New System.Drawing.Size(1006, 610)
+        Me.TabStock.Size = New System.Drawing.Size(1006, 737)
         Me.TabStock.TabIndex = 0
         '
         'TabListado
@@ -156,7 +159,7 @@ Partial Class frmStock
         Me.TabListado.Location = New System.Drawing.Point(4, 29)
         Me.TabListado.Name = "TabListado"
         Me.TabListado.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabListado.Size = New System.Drawing.Size(998, 577)
+        Me.TabListado.Size = New System.Drawing.Size(998, 704)
         Me.TabListado.TabIndex = 0
         Me.TabListado.Text = "Stock"
         Me.TabListado.UseVisualStyleBackColor = True
@@ -171,7 +174,7 @@ Partial Class frmStock
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(112, 222)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(770, 167)
+        Me.lbl_Msg.Size = New System.Drawing.Size(770, 294)
         Me.lbl_Msg.TabIndex = 1
         Me.lbl_Msg.Text = "No se ha encontrado stocks cargados."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -193,11 +196,11 @@ Partial Class frmStock
         Me.DG_Stock.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CodigoDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.CategoriaDataGridViewTextBoxColumn, Me.ActualDataGridViewTextBoxColumn, Me.Reservado, Me.Restante, Me.MinimoDataGridViewTextBoxColumn, Me.OptimoDataGridViewTextBoxColumn, Me.VentaMensualDataGridViewTextBoxColumn, Me.Modificar, Me.Eliminar})
         Me.DG_Stock.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Stock.DataSource = Me.StocksBindingSource
-        Me.DG_Stock.Location = New System.Drawing.Point(8, 74)
+        Me.DG_Stock.Location = New System.Drawing.Point(8, 140)
         Me.DG_Stock.Name = "DG_Stock"
         Me.DG_Stock.RowHeadersVisible = False
         Me.DG_Stock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Stock.Size = New System.Drawing.Size(978, 462)
+        Me.DG_Stock.Size = New System.Drawing.Size(978, 523)
         Me.DG_Stock.TabIndex = 24
         '
         'CodigoDataGridViewTextBoxColumn
@@ -300,7 +303,7 @@ Partial Class frmStock
         Me.Paginado.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Paginado.DataBindings.Add(New System.Windows.Forms.Binding("TotalElementos", Me.FrmStockViewModelBindingSource, "TotalElementos", True))
         Me.Paginado.Leyenda = "{0} de {1}"
-        Me.Paginado.Location = New System.Drawing.Point(8, 542)
+        Me.Paginado.Location = New System.Drawing.Point(8, 669)
         Me.Paginado.Name = "Paginado"
         Me.Paginado.PaginaActual = 1
         Me.Paginado.Size = New System.Drawing.Size(978, 27)
@@ -311,36 +314,109 @@ Partial Class frmStock
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Buscar.Controls.Add(Me.TableLayoutPanel2)
         Me.GB_Buscar.Controls.Add(Me.TableLayoutPanel1)
         Me.GB_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Buscar.Location = New System.Drawing.Point(8, 6)
         Me.GB_Buscar.Name = "GB_Buscar"
-        Me.GB_Buscar.Size = New System.Drawing.Size(978, 68)
+        Me.GB_Buscar.Size = New System.Drawing.Size(978, 128)
         Me.GB_Buscar.TabIndex = 0
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Stock de productos"
         '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.ColumnCount = 4
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.btn_Exportar_Base, 2, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.btn_Exportar_Todo, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.btn_Importar_Todo, 3, 0)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 73)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(966, 46)
+        Me.TableLayoutPanel2.TabIndex = 32
+        '
+        'btn_Exportar_Base
+        '
+        Me.btn_Exportar_Base.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Exportar_Base.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar_Base.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
+        Me.btn_Exportar_Base.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Exportar_Base.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_Exportar_Base.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Exportar_Base.Location = New System.Drawing.Point(753, 3)
+        Me.btn_Exportar_Base.Name = "btn_Exportar_Base"
+        Me.btn_Exportar_Base.Size = New System.Drawing.Size(100, 38)
+        Me.btn_Exportar_Base.TabIndex = 12
+        Me.btn_Exportar_Base.Text = "Generar Base"
+        Me.btn_Exportar_Base.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStock.SetToolTip(Me.btn_Exportar_Base, "Haz click aquí para generar una archivo base. Esta función solo está habilitada p" &
+        "ara el modo Online")
+        Me.btn_Exportar_Base.UseVisualStyleBackColor = True
+        '
+        'btn_Exportar_Todo
+        '
+        Me.btn_Exportar_Todo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Exportar_Todo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Exportar_Todo.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
+        Me.btn_Exportar_Todo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Exportar_Todo.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_Exportar_Todo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Exportar_Todo.Location = New System.Drawing.Point(643, 3)
+        Me.btn_Exportar_Todo.Name = "btn_Exportar_Todo"
+        Me.btn_Exportar_Todo.Size = New System.Drawing.Size(100, 38)
+        Me.btn_Exportar_Todo.TabIndex = 10
+        Me.btn_Exportar_Todo.Text = "Exportar Todo"
+        Me.btn_Exportar_Todo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStock.SetToolTip(Me.btn_Exportar_Todo, "Haz click aquí para exportar el stock. Esta función solo está habilitada para el " &
+        "modo Online")
+        Me.btn_Exportar_Todo.UseVisualStyleBackColor = True
+        '
+        'btn_Importar_Todo
+        '
+        Me.btn_Importar_Todo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Importar_Todo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_Importar_Todo.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
+        Me.btn_Importar_Todo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Importar_Todo.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
+        Me.btn_Importar_Todo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_Importar_Todo.Location = New System.Drawing.Point(863, 3)
+        Me.btn_Importar_Todo.Name = "btn_Importar_Todo"
+        Me.btn_Importar_Todo.Size = New System.Drawing.Size(100, 38)
+        Me.btn_Importar_Todo.TabIndex = 11
+        Me.btn_Importar_Todo.Text = "Importar"
+        Me.btn_Importar_Todo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStock.SetToolTip(Me.btn_Importar_Todo, "Haz click aquí para importar el stock. Esta función solo está habilitada para el " &
+        "modo Online")
+        Me.btn_Importar_Todo.UseVisualStyleBackColor = True
+        '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.ColumnCount = 6
+        Me.TableLayoutPanel1.ColumnCount = 4
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.btn_Buscar, 5, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.btn_Restablecer, 4, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.btn_Importar, 3, 0)
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.btn_Buscar, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.btn_Restablecer, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_buscar, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.btn_Exportar, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 18)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 20)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(966, 44)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(966, 47)
         Me.TableLayoutPanel1.TabIndex = 31
         '
         'btn_Buscar
@@ -374,57 +450,21 @@ Partial Class frmStock
         Me.ToolStock.SetToolTip(Me.btn_Restablecer, "Haz click aquí para restablecer los filtros y el listado de stocks.")
         Me.btn_Restablecer.UseVisualStyleBackColor = True
         '
-        'btn_Importar
-        '
-        Me.btn_Importar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Importar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Importar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
-        Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
-        Me.btn_Importar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Importar.Location = New System.Drawing.Point(643, 3)
-        Me.btn_Importar.Name = "btn_Importar"
-        Me.btn_Importar.Size = New System.Drawing.Size(100, 38)
-        Me.btn_Importar.TabIndex = 11
-        Me.btn_Importar.Text = "Importar"
-        Me.btn_Importar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolStock.SetToolTip(Me.btn_Importar, "Haz click aquí para importar el stock. Esta función solo está habilitada para el " &
-        "modo Online")
-        Me.btn_Importar.UseVisualStyleBackColor = True
-        '
         'txt_buscar
         '
         Me.txt_buscar.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_buscar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmStockViewModelBindingSource, "FiltroPorCodigoNombre", True))
-        Me.txt_buscar.Location = New System.Drawing.Point(123, 11)
+        Me.txt_buscar.Location = New System.Drawing.Point(123, 13)
         Me.txt_buscar.Name = "txt_buscar"
-        Me.txt_buscar.Size = New System.Drawing.Size(400, 21)
+        Me.txt_buscar.Size = New System.Drawing.Size(620, 21)
         Me.txt_buscar.TabIndex = 4
-        '
-        'btn_Exportar
-        '
-        Me.btn_Exportar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Exportar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btn_Exportar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmStockViewModelBindingSource, "ModoEdicion", True))
-        Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
-        Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Exportar.Location = New System.Drawing.Point(533, 3)
-        Me.btn_Exportar.Name = "btn_Exportar"
-        Me.btn_Exportar.Size = New System.Drawing.Size(100, 38)
-        Me.btn_Exportar.TabIndex = 10
-        Me.btn_Exportar.Text = "Exportar"
-        Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ToolStock.SetToolTip(Me.btn_Exportar, "Haz click aquí para exportar el stock. Esta función solo está habilitada para el " &
-        "modo Online")
-        Me.btn_Exportar.UseVisualStyleBackColor = True
         '
         'lbl_CodigoBarra
         '
         Me.lbl_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_CodigoBarra.AutoSize = True
         Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 14)
+        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 16)
         Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
         Me.lbl_CodigoBarra.Size = New System.Drawing.Size(114, 15)
         Me.lbl_CodigoBarra.TabIndex = 7
@@ -436,7 +476,7 @@ Partial Class frmStock
         Me.TabAlta.Location = New System.Drawing.Point(4, 29)
         Me.TabAlta.Name = "TabAlta"
         Me.TabAlta.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabAlta.Size = New System.Drawing.Size(998, 577)
+        Me.TabAlta.Size = New System.Drawing.Size(998, 704)
         Me.TabAlta.TabIndex = 1
         Me.TabAlta.Text = "Alta de Stock"
         Me.TabAlta.UseVisualStyleBackColor = True
@@ -631,7 +671,7 @@ Partial Class frmStock
         Me.TabModificacion.Controls.Add(Me.GroupBox1)
         Me.TabModificacion.Location = New System.Drawing.Point(4, 29)
         Me.TabModificacion.Name = "TabModificacion"
-        Me.TabModificacion.Size = New System.Drawing.Size(998, 577)
+        Me.TabModificacion.Size = New System.Drawing.Size(998, 704)
         Me.TabModificacion.TabIndex = 2
         Me.TabModificacion.Text = "Modificacion de Stock"
         Me.TabModificacion.UseVisualStyleBackColor = True
@@ -1083,7 +1123,7 @@ Partial Class frmStock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1006, 610)
+        Me.ClientSize = New System.Drawing.Size(1006, 737)
         Me.Controls.Add(Me.TabStock)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -1096,6 +1136,7 @@ Partial Class frmStock
         CType(Me.DG_Stock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.StocksBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Buscar.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.TabAlta.ResumeLayout(False)
@@ -1177,8 +1218,8 @@ Partial Class frmStock
     Friend WithEvents Label7 As Label
     Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
-    Friend WithEvents btn_Importar As Button
-    Friend WithEvents btn_Exportar As Button
+    Friend WithEvents btn_Importar_Todo As Button
+    Friend WithEvents btn_Exportar_Todo As Button
     Friend WithEvents OpenFileDialog As OpenFileDialog
     Friend WithEvents SaveFileDialog As SaveFileDialog
     Friend WithEvents txt_ventaMensual As TextBox
@@ -1207,4 +1248,6 @@ Partial Class frmStock
     Friend WithEvents VentaMensualDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
     Friend WithEvents Eliminar As DataGridViewImageColumn
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents btn_Exportar_Base As Button
 End Class

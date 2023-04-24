@@ -1,10 +1,10 @@
-﻿Imports Entidades
+﻿Imports System.Data.OleDb
 Imports System.Data.SqlClient
-Imports Datos
-Imports Microsoft.Office.Interop
 Imports System.Globalization
-Imports System.Data.OleDb
+Imports System.Windows.Forms
 Imports Common.Core.Helper
+Imports Entidades
+Imports Microsoft.Office.Interop
 
 Public Class NegStock
     Dim clsDatos As New Datos.Conexion
@@ -475,9 +475,13 @@ Public Class NegStock
 
         xlWorkSheet.Name = "Productos"
 
-        AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
+        Dim MaxRowsData = NewRowsData
 
-        Dim MaxRowsData = dsProductos.Tables(0).Rows.Count + NewRowsData
+        If (dsProductos.Tables.Count > 0) Then
+            AddDataSetToWorkSheet(dsProductos, xlWorkSheet)
+
+            MaxRowsData += dsProductos.Tables(0).Rows.Count
+        End If
 
         AgregarEstilo(xlWorkSheet, MaxRowsData)
 
@@ -519,7 +523,7 @@ Public Class NegStock
         writeRange.Columns.AutoFit()
     End Sub
 
-    Sub ExportarExcelStock(idSucursal As Integer, nombreArchivo As String, nombrePlantilla As String)
+    Sub ExportarExcelStock(idSucursal As Integer, nombreArchivo As String, nombrePlantilla As String, conDatos As Boolean)
         Dim cmd As New SqlCommand
         Dim adapter As New SqlDataAdapter
         Dim dsStock As DataSet = New DataSet()
@@ -527,16 +531,18 @@ Public Class NegStock
         Dim dsSubCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
 
-        cmd.Connection = clsDatos.ConectarLocal()
-        cmd.CommandType = CommandType.StoredProcedure
+        If conDatos Then
+            cmd.Connection = clsDatos.ConectarLocal()
+            cmd.CommandType = CommandType.StoredProcedure
 
-        RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
-        cmd.CommandText = "sp_Productos_ListadoExcel_Sucursal"
-        With cmd.Parameters
-            .AddWithValue("@IdSucursal", idSucursal)
-        End With
-        adapter = New SqlDataAdapter(cmd)
-        adapter.Fill(dsStock)
+            RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
+            cmd.CommandText = "sp_Productos_ListadoExcel_Sucursal"
+            With cmd.Parameters
+                .AddWithValue("@IdSucursal", idSucursal)
+            End With
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsStock)
+        End If
 
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
@@ -588,33 +594,21 @@ Public Class NegStock
     End Sub
 
     Function ImportarExcelStock(idSucursal As Integer, idUsuario As Integer, usuario As String, fileName As String) As String
-
-        Dim cmd As New SqlCommand
-        Dim adapter As New SqlDataAdapter
         Dim dsStockRemoto As DataSet = New DataSet()
         Dim dsStockRemotoBitacora As DataSet = New DataSet()
-        Dim dsStockActual As DataSet = New DataSet()
-        Dim dtStockNuevo As DataTable
         Dim stock As List(Of String) = New List(Of String)
         Dim bitacoras As List(Of String) = New List(Of String)
+        Dim cantidadStockActualizar As Integer = 0
+        Dim cantidadStockAlta As Integer = 0
 
-        cmd.Connection = clsDatos.ConectarLocal()
-        cmd.CommandType = CommandType.StoredProcedure
 
         RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
-        cmd.CommandText = "sp_Stock_ListadoSucursal"
-        With cmd.Parameters
-            .AddWithValue("@Id_Sucursal", idSucursal)
-        End With
-        adapter = New SqlDataAdapter(cmd)
-        adapter.Fill(dsStockActual)
-
-        clsDatos.DesconectarLocal()
+        Dim dsStockActual As DataSet = ObtenerStockActual(idSucursal)
 
         RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
-        dtStockNuevo = GetDataFormExcel(fileName, "Productos").Tables(0)
+        Dim datosExcel As DataTable = GetDataFormExcel(fileName, "Productos").Tables(0)
 
-        If Not (verificarColumnasExcelSucursal(dtStockNuevo)) Then
+        If Not (verificarColumnasExcelSucursal(datosExcel)) Then
             Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
         End If
 
@@ -623,8 +617,21 @@ Public Class NegStock
         Dim fecha As String = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss")
         Dim motivo As String = "Actualizado desde archive excel"
 
+        If ExistenDatosRequeridosVacios(datosExcel) Then
+            Dim dsStockTotal As DataSet = ObtenerStockProductos(idSucursal)
+            Dim codigosDatosExcelIncompletos = completarDatosVacios(datosExcel, dsStockTotal.Tables(0))
+
+            If codigosDatosExcelIncompletos.Count > 0 Then
+                Return $"Los siguientes códigos {String.Join(", ", codigosDatosExcelIncompletos)}{Environment.NewLine}no pertenecen a un producto. Por favor, verifique que los códigos son correctos o que los datos estén sincronizados."
+            End If
+        End If
+
+        If ExistenDatosRequeridosVacios(datosExcel) Then
+
+        End If
+
         ''busco las altas, modificaciones y bajas de stock
-        For Each dato In dtStockNuevo.Rows
+        For Each dato In datosExcel.Rows
 
             'si no se cargo ningun valor en StockMinimo StockActual StockOptimo VentaMensual no importo el registro
             'If dato("StockMinimo") = 0 Or dato("StockActual") = 0 Or dato("StockOptimo") = 0 Or dato("VentaMensual") = 0 Then
@@ -649,6 +656,7 @@ Public Class NegStock
                     Dim update = String.Format("update stock set Modificado = {0}, Stock_Minimo = {1}, Stock_Actual = {2} , Stock_Optimo = {3}, Fecha_Mod = '{4}', id_Usuario = {5}, Motivo_Mod = '{6}', Fecha_Edicion = '{7}', Venta_Mensual = {8} where id_Producto = {9} and id_Sucursal = {10} and Borrado = 0;",
                                      "1", dato("StockMinimo"), dato("StockActual"), dato("StockOptimo"), DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"), idUsuario, "Actualizado desde archive excel", DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"), dato("VentaMensual"), dato("id_producto"), idSucursal.ToString())
                     stock.Add(update)
+                    cantidadStockActualizar += 1
                 End If
 
                 'el stock no existe
@@ -667,9 +675,14 @@ Public Class NegStock
                 Dim insert = String.Format("INSERT INTO dbo.STOCK (id_Stock,id_Producto,id_Sucursal,Stock_Actual,Stock_Minimo,Stock_Optimo,Habilitado,Fecha,id_Usuario,Motivo_Mod,Fecha_Mod,Modificado,Borrado,Fecha_Edicion,Venta_Mensual) VALUES({0},{1},{2},{3},{4},{5},{6},'{7}',{8},'{9}','{10}',{11},{12},'{13}',{14});",
                                            idStock, dato("id_producto"), idSucursal.ToString(), dato("StockActual"), dato("StockMinimo"), dato("StockOptimo"), "1", fecha, idUsuario, "", fecha, "0", "0", fecha, dato("VentaMensual"))
                 stock.Add(insert)
-
+                cantidadStockAlta += 1
             End If
         Next
+
+        Dim respuesta As DialogResult = MessageBox.Show($"Se han encontrado {cantidadStockAlta} nuevos stock y {cantidadStockActualizar} productos modificados.{Environment.NewLine}¿Desea importarlos?", "Administración de Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+        If (respuesta = DialogResult.No) Then
+            Return "Se ha cancelado la importación de los stocks."
+        End If
 
         If (stock.Count > 0) Then
 
@@ -740,6 +753,44 @@ Public Class NegStock
         End If
     End Function
 
+    Private Function ObtenerStockProductos(idSucursal As Integer) As DataSet
+        Dim adapter As SqlDataAdapter = New SqlDataAdapter()
+        Dim ds As DataSet = New DataSet()
+
+        Dim cmd As SqlCommand = New SqlCommand()
+        cmd.Connection = clsDatos.ConectarLocal()
+        cmd.CommandType = CommandType.StoredProcedure
+
+        RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
+        cmd.CommandText = "sp_Productos_ListadoExcel_Sucursal"
+        With cmd.Parameters
+            .AddWithValue("@IdSucursal", idSucursal)
+        End With
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(ds)
+
+        Return ds
+    End Function
+
+    Private Function ObtenerStockActual(idSucursal As Integer) As DataSet
+        Dim adapter As SqlDataAdapter = New SqlDataAdapter()
+        Dim ds As DataSet = New DataSet()
+
+        Dim cmd As SqlCommand = New SqlCommand()
+        cmd.Connection = clsDatos.ConectarLocal()
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.CommandText = "sp_Stock_ListadoSucursal"
+        With cmd.Parameters
+            .AddWithValue("@Id_Sucursal", idSucursal)
+        End With
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(ds)
+        clsDatos.DesconectarLocal()
+
+        Return ds
+    End Function
+
     Function GetDataFormExcel(fileName As String, workSheetName As String) As DataSet
 
         Dim connectionString As String = String.Format("Provider=Microsoft.ACE.OLEDB.12.0; data source='{0}'; Extended Properties=""Excel 12.0;HDR=YES;IMEX=1"" ", fileName)
@@ -774,6 +825,53 @@ Public Class NegStock
             Return False
         End If
         Return True
+    End Function
+
+    Function completarDatosVacios(stockImportar As DataTable, stockTotales As DataTable) As List(Of String)
+
+        Dim codigos As List(Of String) = stockImportar.Rows.Cast(Of DataRow).Select(Of String)(Function(x) x("Codigo").ToString().ToUpper()).ToList()
+        Dim codigosYStock As Dictionary(Of String, DataRow) = New Dictionary(Of String, DataRow)()
+        Dim codigosIncompletos As List(Of String) = New List(Of String)
+
+        stockTotales.Rows.Cast(Of DataRow).
+            Where(Function(x) codigos.Contains(x("Codigo").ToString().ToUpper())).
+            ToList().
+            ForEach(Sub(x) codigosYStock.Add(x("Codigo").ToString().ToUpper(), x))
+
+
+        stockImportar.Rows.
+            Cast(Of DataRow).
+            ToList().
+            ForEach(Sub(x)
+                        Dim codigo As String = x("Codigo").ToString().ToUpper()
+                        If (codigosYStock.ContainsKey(codigo)) Then
+                            For i = 0 To 11
+                                If (x(i) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(x(i))) Then
+                                    x(i) = codigosYStock(codigo)(i)
+                                End If
+                            Next
+                        Else
+                            codigosIncompletos.Add(codigo)
+                        End If
+                    End Sub)
+
+        Return codigosIncompletos
+    End Function
+
+    Private Function ExistenDatosRequeridosVacios(dtStockNuevo As DataTable) As Boolean
+
+        For Each row In dtStockNuevo.Rows
+            If String.IsNullOrWhiteSpace(row("id_producto").ToString()) OrElse
+               String.IsNullOrWhiteSpace(row("Codigo").ToString()) OrElse
+               String.IsNullOrWhiteSpace(row("StockActual").ToString()) OrElse
+               String.IsNullOrWhiteSpace(row("StockOptimo").ToString()) OrElse
+               String.IsNullOrWhiteSpace(row("StockMinimo").ToString()) OrElse
+               String.IsNullOrWhiteSpace(row("VentaMensual").ToString()) Then
+                Return True
+            End If
+        Next
+
+        Return False
     End Function
 
 End Class

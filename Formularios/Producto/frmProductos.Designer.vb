@@ -49,8 +49,23 @@ Partial Class frmProductos
         Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.DG_Productos = New System.Windows.Forms.DataGridView()
+        Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CategoriaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SubcategoriaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProveedoreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ListaTigreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ListaCapitalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MayoristaDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlternativoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.ProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GB_Buscar = New System.Windows.Forms.GroupBox()
+        Me.btn_ExportarBase = New System.Windows.Forms.Button()
         Me.btn_Restore = New System.Windows.Forms.Button()
         Me.btn_Importar = New System.Windows.Forms.Button()
         Me.btn_Exportar = New System.Windows.Forms.Button()
@@ -189,20 +204,6 @@ Partial Class frmProductos
         Me.ToolProd = New System.Windows.Forms.ToolTip(Me.components)
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
-        Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CategoriaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SubcategoriaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ProveedoreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ListaTigreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ListaCapitalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MayoristaDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.AlternativoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.HabilitadoDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.TabProductos.SuspendLayout()
         Me.TbListado.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -255,7 +256,7 @@ Partial Class frmProductos
         Me.TabProductos.Location = New System.Drawing.Point(0, 0)
         Me.TabProductos.Name = "TabProductos"
         Me.TabProductos.SelectedIndex = 0
-        Me.TabProductos.Size = New System.Drawing.Size(1006, 610)
+        Me.TabProductos.Size = New System.Drawing.Size(1006, 737)
         Me.TabProductos.TabIndex = 99
         '
         'TbListado
@@ -265,7 +266,7 @@ Partial Class frmProductos
         Me.TbListado.Location = New System.Drawing.Point(4, 29)
         Me.TbListado.Name = "TbListado"
         Me.TbListado.Padding = New System.Windows.Forms.Padding(3)
-        Me.TbListado.Size = New System.Drawing.Size(998, 577)
+        Me.TbListado.Size = New System.Drawing.Size(998, 704)
         Me.TbListado.TabIndex = 0
         Me.TbListado.Text = "Productos"
         Me.TbListado.UseVisualStyleBackColor = True
@@ -279,9 +280,9 @@ Partial Class frmProductos
         Me.GroupBox1.Controls.Add(Me.lbl_Msg)
         Me.GroupBox1.Controls.Add(Me.DG_Productos)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
-        Me.GroupBox1.Location = New System.Drawing.Point(10, 91)
+        Me.GroupBox1.Location = New System.Drawing.Point(10, 133)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(980, 478)
+        Me.GroupBox1.Size = New System.Drawing.Size(980, 563)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Productos"
@@ -294,7 +295,7 @@ Partial Class frmProductos
         Me.ProductosBindingNavigator.DeleteItem = Nothing
         Me.ProductosBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.ProductosBindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
-        Me.ProductosBindingNavigator.Location = New System.Drawing.Point(3, 450)
+        Me.ProductosBindingNavigator.Location = New System.Drawing.Point(3, 535)
         Me.ProductosBindingNavigator.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.ProductosBindingNavigator.MoveLastItem = Me.BindingNavigatorMoveLastItem
         Me.ProductosBindingNavigator.MoveNextItem = Me.BindingNavigatorMoveNextItem
@@ -348,6 +349,7 @@ Partial Class frmProductos
         '
         Me.BindingNavigatorPositionItem.AccessibleName = "Position"
         Me.BindingNavigatorPositionItem.AutoSize = False
+        Me.BindingNavigatorPositionItem.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.BindingNavigatorPositionItem.Name = "BindingNavigatorPositionItem"
         Me.BindingNavigatorPositionItem.Size = New System.Drawing.Size(50, 23)
         Me.BindingNavigatorPositionItem.Text = "0"
@@ -391,7 +393,7 @@ Partial Class frmProductos
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Msg.Location = New System.Drawing.Point(269, 221)
         Me.lbl_Msg.Name = "lbl_Msg"
-        Me.lbl_Msg.Size = New System.Drawing.Size(442, 50)
+        Me.lbl_Msg.Size = New System.Drawing.Size(442, 135)
         Me.lbl_Msg.TabIndex = 4
         Me.lbl_Msg.Text = "No se han encontrado productos."
         Me.lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -415,12 +417,166 @@ Partial Class frmProductos
         Me.DG_Productos.Name = "DG_Productos"
         Me.DG_Productos.ReadOnly = True
         Me.DG_Productos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
+        Me.DG_Productos.RowHeadersVisible = False
         DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DG_Productos.RowsDefaultCellStyle = DataGridViewCellStyle8
         Me.DG_Productos.RowTemplate.Height = 30
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Productos.Size = New System.Drawing.Size(974, 430)
+        Me.DG_Productos.Size = New System.Drawing.Size(974, 515)
         Me.DG_Productos.TabIndex = 0
+        '
+        'CodigoDataGridViewTextBoxColumn1
+        '
+        Me.CodigoDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CodigoDataGridViewTextBoxColumn1.DataPropertyName = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn1.HeaderText = "Código"
+        Me.CodigoDataGridViewTextBoxColumn1.Name = "CodigoDataGridViewTextBoxColumn1"
+        Me.CodigoDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.CodigoDataGridViewTextBoxColumn1.Width = 71
+        '
+        'NombreDataGridViewTextBoxColumn1
+        '
+        Me.NombreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.NombreDataGridViewTextBoxColumn1.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn1.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn1.MinimumWidth = 250
+        Me.NombreDataGridViewTextBoxColumn1.Name = "NombreDataGridViewTextBoxColumn1"
+        Me.NombreDataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'CategoriaDataGridViewTextBoxColumn
+        '
+        Me.CategoriaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.CategoriaDataGridViewTextBoxColumn.DataPropertyName = "Categoria"
+        Me.CategoriaDataGridViewTextBoxColumn.HeaderText = "Categoría"
+        Me.CategoriaDataGridViewTextBoxColumn.Name = "CategoriaDataGridViewTextBoxColumn"
+        Me.CategoriaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CategoriaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CategoriaDataGridViewTextBoxColumn.Width = 66
+        '
+        'SubcategoriaDataGridViewTextBoxColumn
+        '
+        Me.SubcategoriaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.SubcategoriaDataGridViewTextBoxColumn.DataPropertyName = "Subcategoria"
+        Me.SubcategoriaDataGridViewTextBoxColumn.HeaderText = "Subcategoría"
+        Me.SubcategoriaDataGridViewTextBoxColumn.Name = "SubcategoriaDataGridViewTextBoxColumn"
+        Me.SubcategoriaDataGridViewTextBoxColumn.ReadOnly = True
+        Me.SubcategoriaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.SubcategoriaDataGridViewTextBoxColumn.Width = 86
+        '
+        'ProveedoreDataGridViewTextBoxColumn
+        '
+        Me.ProveedoreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.ProveedoreDataGridViewTextBoxColumn.DataPropertyName = "Proveedore"
+        Me.ProveedoreDataGridViewTextBoxColumn.HeaderText = "Proveedore"
+        Me.ProveedoreDataGridViewTextBoxColumn.Name = "ProveedoreDataGridViewTextBoxColumn"
+        Me.ProveedoreDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ProveedoreDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ProveedoreDataGridViewTextBoxColumn.Width = 76
+        '
+        'ListaTigreDataGridViewTextBoxColumn1
+        '
+        Me.ListaTigreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.ListaTigreDataGridViewTextBoxColumn1.DataPropertyName = "ListaTigre"
+        DataGridViewCellStyle2.Format = "C2"
+        Me.ListaTigreDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle2
+        Me.ListaTigreDataGridViewTextBoxColumn1.HeaderText = "$ Tigre"
+        Me.ListaTigreDataGridViewTextBoxColumn1.Name = "ListaTigreDataGridViewTextBoxColumn1"
+        Me.ListaTigreDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.ListaTigreDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ListaTigreDataGridViewTextBoxColumn1.Width = 51
+        '
+        'PorcentajeDescuentoTigreDataGridViewTextBoxColumn1
+        '
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.DataPropertyName = "PorcentajeDescuentoTigre"
+        DataGridViewCellStyle3.Format = "P"
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.HeaderText = "% Tigre"
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.Name = "PorcentajeDescuentoTigreDataGridViewTextBoxColumn1"
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.Width = 55
+        '
+        'ListaCapitalDataGridViewTextBoxColumn1
+        '
+        Me.ListaCapitalDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.ListaCapitalDataGridViewTextBoxColumn1.DataPropertyName = "ListaCapital"
+        DataGridViewCellStyle4.Format = "C2"
+        Me.ListaCapitalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle4
+        Me.ListaCapitalDataGridViewTextBoxColumn1.HeaderText = "$ Capital"
+        Me.ListaCapitalDataGridViewTextBoxColumn1.Name = "ListaCapitalDataGridViewTextBoxColumn1"
+        Me.ListaCapitalDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.ListaCapitalDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ListaCapitalDataGridViewTextBoxColumn1.Width = 61
+        '
+        'PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1
+        '
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.DataPropertyName = "PorcentajeDescuentoCapital"
+        DataGridViewCellStyle5.Format = "P"
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle5
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.HeaderText = "% Capital"
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.Name = "PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1"
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.Width = 65
+        '
+        'MayoristaDataGridViewTextBoxColumn1
+        '
+        Me.MayoristaDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.MayoristaDataGridViewTextBoxColumn1.DataPropertyName = "Mayorista"
+        DataGridViewCellStyle6.Format = "C2"
+        Me.MayoristaDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle6
+        Me.MayoristaDataGridViewTextBoxColumn1.HeaderText = "Mayorista"
+        Me.MayoristaDataGridViewTextBoxColumn1.Name = "MayoristaDataGridViewTextBoxColumn1"
+        Me.MayoristaDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.MayoristaDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.MayoristaDataGridViewTextBoxColumn1.Width = 66
+        '
+        'AlternativoDataGridViewTextBoxColumn1
+        '
+        Me.AlternativoDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.AlternativoDataGridViewTextBoxColumn1.DataPropertyName = "Alternativo"
+        DataGridViewCellStyle7.Format = "C2"
+        Me.AlternativoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle7
+        Me.AlternativoDataGridViewTextBoxColumn1.HeaderText = "Alternativo"
+        Me.AlternativoDataGridViewTextBoxColumn1.Name = "AlternativoDataGridViewTextBoxColumn1"
+        Me.AlternativoDataGridViewTextBoxColumn1.ReadOnly = True
+        Me.AlternativoDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.AlternativoDataGridViewTextBoxColumn1.Width = 69
+        '
+        'HabilitadoDataGridViewCheckBoxColumn
+        '
+        Me.HabilitadoDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
+        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
+        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
+        Me.HabilitadoDataGridViewCheckBoxColumn.Width = 69
+        '
+        'Eliminar
+        '
+        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Eliminar.HeaderText = ""
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.MinimumWidth = 10
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Eliminar.Width = 19
+        '
+        'Modificar
+        '
+        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Modificar.HeaderText = ""
+        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
+        Me.Modificar.MinimumWidth = 10
+        Me.Modificar.Name = "Modificar"
+        Me.Modificar.ReadOnly = True
+        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Modificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Modificar.Width = 19
         '
         'ProductosBindingSource
         '
@@ -431,6 +587,7 @@ Partial Class frmProductos
         '
         Me.GB_Buscar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GB_Buscar.Controls.Add(Me.btn_ExportarBase)
         Me.GB_Buscar.Controls.Add(Me.btn_Restore)
         Me.GB_Buscar.Controls.Add(Me.btn_Importar)
         Me.GB_Buscar.Controls.Add(Me.btn_Exportar)
@@ -442,17 +599,34 @@ Partial Class frmProductos
         Me.GB_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Buscar.Location = New System.Drawing.Point(10, 6)
         Me.GB_Buscar.Name = "GB_Buscar"
-        Me.GB_Buscar.Size = New System.Drawing.Size(980, 79)
+        Me.GB_Buscar.Size = New System.Drawing.Size(980, 121)
         Me.GB_Buscar.TabIndex = 3
         Me.GB_Buscar.TabStop = False
         Me.GB_Buscar.Text = "Buscar Producto"
+        '
+        'btn_ExportarBase
+        '
+        Me.btn_ExportarBase.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_ExportarBase.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btn_ExportarBase.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_ExportarBase.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
+        Me.btn_ExportarBase.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btn_ExportarBase.Location = New System.Drawing.Point(662, 70)
+        Me.btn_ExportarBase.Name = "btn_ExportarBase"
+        Me.btn_ExportarBase.Size = New System.Drawing.Size(100, 40)
+        Me.btn_ExportarBase.TabIndex = 10
+        Me.btn_ExportarBase.Text = "Generar Base"
+        Me.btn_ExportarBase.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btn_ExportarBase, "Haz click aquí para generar una archivo base para el alta o modificación de los p" &
+        "roductos en Excel")
+        Me.btn_ExportarBase.UseVisualStyleBackColor = True
         '
         'btn_Restore
         '
         Me.btn_Restore.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restore.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Restore.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restore.Location = New System.Drawing.Point(662, 24)
+        Me.btn_Restore.Location = New System.Drawing.Point(874, 70)
         Me.btn_Restore.Name = "btn_Restore"
         Me.btn_Restore.Size = New System.Drawing.Size(100, 40)
         Me.btn_Restore.TabIndex = 9
@@ -466,7 +640,7 @@ Partial Class frmProductos
         Me.btn_Importar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Importar.Image = Global.SistemaCinderella.My.Resources.Recursos.Import_Excel
         Me.btn_Importar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Importar.Location = New System.Drawing.Point(556, 24)
+        Me.btn_Importar.Location = New System.Drawing.Point(768, 70)
         Me.btn_Importar.Name = "btn_Importar"
         Me.btn_Importar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Importar.TabIndex = 8
@@ -482,11 +656,11 @@ Partial Class frmProductos
         Me.btn_Exportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Exportar.Image = Global.SistemaCinderella.My.Resources.Recursos.export_excel
         Me.btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Exportar.Location = New System.Drawing.Point(450, 24)
+        Me.btn_Exportar.Location = New System.Drawing.Point(556, 70)
         Me.btn_Exportar.Name = "btn_Exportar"
         Me.btn_Exportar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Exportar.TabIndex = 7
-        Me.btn_Exportar.Text = "Exportar"
+        Me.btn_Exportar.Text = "Exportar Todo"
         Me.btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolProd.SetToolTip(Me.btn_Exportar, "Haz click aquí para exportar la información  de los productos a Excel")
         Me.btn_Exportar.UseVisualStyleBackColor = True
@@ -496,7 +670,7 @@ Partial Class frmProductos
         Me.btn_Restablecer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Restablecer.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btn_Restablecer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Restablecer.Location = New System.Drawing.Point(768, 23)
+        Me.btn_Restablecer.Location = New System.Drawing.Point(768, 24)
         Me.btn_Restablecer.Name = "btn_Restablecer"
         Me.btn_Restablecer.Size = New System.Drawing.Size(100, 40)
         Me.btn_Restablecer.TabIndex = 6
@@ -556,7 +730,7 @@ Partial Class frmProductos
         Me.txt_buscar.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmProductosViewModelBindingSource, "Filtro", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txt_buscar.Location = New System.Drawing.Point(156, 33)
         Me.txt_buscar.Name = "txt_buscar"
-        Me.txt_buscar.Size = New System.Drawing.Size(284, 21)
+        Me.txt_buscar.Size = New System.Drawing.Size(606, 21)
         Me.txt_buscar.TabIndex = 1
         '
         'TbAlta
@@ -565,7 +739,7 @@ Partial Class frmProductos
         Me.TbAlta.Location = New System.Drawing.Point(4, 29)
         Me.TbAlta.Name = "TbAlta"
         Me.TbAlta.Padding = New System.Windows.Forms.Padding(3)
-        Me.TbAlta.Size = New System.Drawing.Size(998, 577)
+        Me.TbAlta.Size = New System.Drawing.Size(998, 704)
         Me.TbAlta.TabIndex = 1
         Me.TbAlta.Text = "Alta de Producto"
         Me.TbAlta.UseVisualStyleBackColor = True
@@ -826,7 +1000,7 @@ Partial Class frmProductos
         Me.cb_Proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Proveedores.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Proveedores.FormattingEnabled = True
-        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 249)
+        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 248)
         Me.cb_Proveedores.Name = "cb_Proveedores"
         Me.cb_Proveedores.Size = New System.Drawing.Size(332, 23)
         Me.cb_Proveedores.TabIndex = 10
@@ -914,7 +1088,7 @@ Partial Class frmProductos
         Me.cb_Subcategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Subcategoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria.FormattingEnabled = True
-        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 219)
+        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 218)
         Me.cb_Subcategoria.Name = "cb_Subcategoria"
         Me.cb_Subcategoria.Size = New System.Drawing.Size(332, 23)
         Me.cb_Subcategoria.TabIndex = 9
@@ -945,7 +1119,7 @@ Partial Class frmProductos
         Me.cb_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Categoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria.FormattingEnabled = True
-        Me.cb_Categoria.Location = New System.Drawing.Point(143, 189)
+        Me.cb_Categoria.Location = New System.Drawing.Point(143, 188)
         Me.cb_Categoria.Name = "cb_Categoria"
         Me.cb_Categoria.Size = New System.Drawing.Size(332, 23)
         Me.cb_Categoria.TabIndex = 8
@@ -1217,7 +1391,7 @@ Partial Class frmProductos
         Me.TbMod.Controls.Add(Me.GB_Modificacion)
         Me.TbMod.Location = New System.Drawing.Point(4, 29)
         Me.TbMod.Name = "TbMod"
-        Me.TbMod.Size = New System.Drawing.Size(998, 577)
+        Me.TbMod.Size = New System.Drawing.Size(998, 704)
         Me.TbMod.TabIndex = 2
         Me.TbMod.Text = "Modificación de Producto"
         Me.TbMod.UseVisualStyleBackColor = True
@@ -1548,7 +1722,7 @@ Partial Class frmProductos
         Me.cb_Proveedor_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Proveedor_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Proveedor_mod.FormattingEnabled = True
-        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 249)
+        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 248)
         Me.cb_Proveedor_mod.Name = "cb_Proveedor_mod"
         Me.cb_Proveedor_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Proveedor_mod.TabIndex = 10
@@ -1604,7 +1778,7 @@ Partial Class frmProductos
         Me.cb_Subcategoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Subcategoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria_mod.FormattingEnabled = True
-        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 219)
+        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 218)
         Me.cb_Subcategoria_mod.Name = "cb_Subcategoria_mod"
         Me.cb_Subcategoria_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Subcategoria_mod.TabIndex = 9
@@ -1620,7 +1794,7 @@ Partial Class frmProductos
         Me.cb_Categoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Categoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria_mod.FormattingEnabled = True
-        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 189)
+        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 188)
         Me.cb_Categoria_mod.Name = "cb_Categoria_mod"
         Me.cb_Categoria_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Categoria_mod.TabIndex = 8
@@ -2001,164 +2175,11 @@ Partial Class frmProductos
         '
         Me.OpenFileDialog.FileName = "OpenFileDialog"
         '
-        'CodigoDataGridViewTextBoxColumn1
-        '
-        Me.CodigoDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.CodigoDataGridViewTextBoxColumn1.DataPropertyName = "Codigo"
-        Me.CodigoDataGridViewTextBoxColumn1.HeaderText = "Código"
-        Me.CodigoDataGridViewTextBoxColumn1.Name = "CodigoDataGridViewTextBoxColumn1"
-        Me.CodigoDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.CodigoDataGridViewTextBoxColumn1.Width = 71
-        '
-        'NombreDataGridViewTextBoxColumn1
-        '
-        Me.NombreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreDataGridViewTextBoxColumn1.DataPropertyName = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn1.HeaderText = "Nombre"
-        Me.NombreDataGridViewTextBoxColumn1.MinimumWidth = 250
-        Me.NombreDataGridViewTextBoxColumn1.Name = "NombreDataGridViewTextBoxColumn1"
-        Me.NombreDataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'CategoriaDataGridViewTextBoxColumn
-        '
-        Me.CategoriaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.CategoriaDataGridViewTextBoxColumn.DataPropertyName = "Categoria"
-        Me.CategoriaDataGridViewTextBoxColumn.HeaderText = "Categoría"
-        Me.CategoriaDataGridViewTextBoxColumn.Name = "CategoriaDataGridViewTextBoxColumn"
-        Me.CategoriaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CategoriaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CategoriaDataGridViewTextBoxColumn.Width = 66
-        '
-        'SubcategoriaDataGridViewTextBoxColumn
-        '
-        Me.SubcategoriaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.SubcategoriaDataGridViewTextBoxColumn.DataPropertyName = "Subcategoria"
-        Me.SubcategoriaDataGridViewTextBoxColumn.HeaderText = "Subcategoría"
-        Me.SubcategoriaDataGridViewTextBoxColumn.Name = "SubcategoriaDataGridViewTextBoxColumn"
-        Me.SubcategoriaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.SubcategoriaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.SubcategoriaDataGridViewTextBoxColumn.Width = 86
-        '
-        'ProveedoreDataGridViewTextBoxColumn
-        '
-        Me.ProveedoreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.ProveedoreDataGridViewTextBoxColumn.DataPropertyName = "Proveedore"
-        Me.ProveedoreDataGridViewTextBoxColumn.HeaderText = "Proveedore"
-        Me.ProveedoreDataGridViewTextBoxColumn.Name = "ProveedoreDataGridViewTextBoxColumn"
-        Me.ProveedoreDataGridViewTextBoxColumn.ReadOnly = True
-        Me.ProveedoreDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.ProveedoreDataGridViewTextBoxColumn.Width = 76
-        '
-        'ListaTigreDataGridViewTextBoxColumn1
-        '
-        Me.ListaTigreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.ListaTigreDataGridViewTextBoxColumn1.DataPropertyName = "ListaTigre"
-        DataGridViewCellStyle2.Format = "C2"
-        Me.ListaTigreDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle2
-        Me.ListaTigreDataGridViewTextBoxColumn1.HeaderText = "$ Tigre"
-        Me.ListaTigreDataGridViewTextBoxColumn1.Name = "ListaTigreDataGridViewTextBoxColumn1"
-        Me.ListaTigreDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.ListaTigreDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.ListaTigreDataGridViewTextBoxColumn1.Width = 51
-        '
-        'PorcentajeDescuentoTigreDataGridViewTextBoxColumn1
-        '
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.DataPropertyName = "PorcentajeDescuentoTigre"
-        DataGridViewCellStyle3.Format = "P"
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.HeaderText = "% Tigre"
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.Name = "PorcentajeDescuentoTigreDataGridViewTextBoxColumn1"
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.PorcentajeDescuentoTigreDataGridViewTextBoxColumn1.Width = 55
-        '
-        'ListaCapitalDataGridViewTextBoxColumn1
-        '
-        Me.ListaCapitalDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.ListaCapitalDataGridViewTextBoxColumn1.DataPropertyName = "ListaCapital"
-        DataGridViewCellStyle4.Format = "C2"
-        Me.ListaCapitalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle4
-        Me.ListaCapitalDataGridViewTextBoxColumn1.HeaderText = "$ Capital"
-        Me.ListaCapitalDataGridViewTextBoxColumn1.Name = "ListaCapitalDataGridViewTextBoxColumn1"
-        Me.ListaCapitalDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.ListaCapitalDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.ListaCapitalDataGridViewTextBoxColumn1.Width = 61
-        '
-        'PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1
-        '
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.DataPropertyName = "PorcentajeDescuentoCapital"
-        DataGridViewCellStyle5.Format = "P"
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle5
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.HeaderText = "% Capital"
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.Name = "PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1"
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.PorcentajeDescuentoCapitalDataGridViewTextBoxColumn1.Width = 65
-        '
-        'MayoristaDataGridViewTextBoxColumn1
-        '
-        Me.MayoristaDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.MayoristaDataGridViewTextBoxColumn1.DataPropertyName = "Mayorista"
-        DataGridViewCellStyle6.Format = "C2"
-        Me.MayoristaDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle6
-        Me.MayoristaDataGridViewTextBoxColumn1.HeaderText = "Mayorista"
-        Me.MayoristaDataGridViewTextBoxColumn1.Name = "MayoristaDataGridViewTextBoxColumn1"
-        Me.MayoristaDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.MayoristaDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.MayoristaDataGridViewTextBoxColumn1.Width = 66
-        '
-        'AlternativoDataGridViewTextBoxColumn1
-        '
-        Me.AlternativoDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.AlternativoDataGridViewTextBoxColumn1.DataPropertyName = "Alternativo"
-        DataGridViewCellStyle7.Format = "C2"
-        Me.AlternativoDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle7
-        Me.AlternativoDataGridViewTextBoxColumn1.HeaderText = "Alternativo"
-        Me.AlternativoDataGridViewTextBoxColumn1.Name = "AlternativoDataGridViewTextBoxColumn1"
-        Me.AlternativoDataGridViewTextBoxColumn1.ReadOnly = True
-        Me.AlternativoDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.AlternativoDataGridViewTextBoxColumn1.Width = 69
-        '
-        'HabilitadoDataGridViewCheckBoxColumn
-        '
-        Me.HabilitadoDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.HabilitadoDataGridViewCheckBoxColumn.DataPropertyName = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.HeaderText = "Habilitado"
-        Me.HabilitadoDataGridViewCheckBoxColumn.Name = "HabilitadoDataGridViewCheckBoxColumn"
-        Me.HabilitadoDataGridViewCheckBoxColumn.ReadOnly = True
-        Me.HabilitadoDataGridViewCheckBoxColumn.Width = 69
-        '
-        'Eliminar
-        '
-        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Eliminar.HeaderText = ""
-        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
-        Me.Eliminar.MinimumWidth = 10
-        Me.Eliminar.Name = "Eliminar"
-        Me.Eliminar.ReadOnly = True
-        Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Eliminar.Width = 19
-        '
-        'Modificar
-        '
-        Me.Modificar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Modificar.HeaderText = ""
-        Me.Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Editar
-        Me.Modificar.MinimumWidth = 10
-        Me.Modificar.Name = "Modificar"
-        Me.Modificar.ReadOnly = True
-        Me.Modificar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Modificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Modificar.Width = 19
-        '
         'frmProductos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1006, 610)
+        Me.ClientSize = New System.Drawing.Size(1006, 737)
         Me.Controls.Add(Me.TabProductos)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmProductos"
@@ -2390,4 +2411,5 @@ Partial Class frmProductos
     Friend WithEvents HabilitadoDataGridViewCheckBoxColumn As DataGridViewCheckBoxColumn
     Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
+    Friend WithEvents btn_ExportarBase As Button
 End Class
