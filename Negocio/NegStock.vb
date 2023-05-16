@@ -626,19 +626,9 @@ Public Class NegStock
             End If
         End If
 
-        If ExistenDatosRequeridosVacios(datosExcel) Then
-
-        End If
-
         ''busco las altas, modificaciones y bajas de stock
         For Each dato In datosExcel.Rows
-
-            'si no se cargo ningun valor en StockMinimo StockActual StockOptimo VentaMensual no importo el registro
-            'If dato("StockMinimo") = 0 Or dato("StockActual") = 0 Or dato("StockOptimo") = 0 Or dato("VentaMensual") = 0 Then
-            '    Continue For
-            'End If
-
-            Dim stockActual As DataRow = dsStockActual.Tables(0).Rows.Cast(Of DataRow)().FirstOrDefault(Function(x) dato("Codigo") = x("Codigo"))
+            Dim stockActual As DataRow = dsStockActual.Tables(0).Rows.Cast(Of DataRow)().FirstOrDefault(Function(x) dato("Codigo").ToString().ToUpper() = x("Codigo").ToString().ToUpper())
 
             'El sotck existe             
             If stockActual IsNot Nothing Then
@@ -679,12 +669,12 @@ Public Class NegStock
             End If
         Next
 
-        Dim respuesta As DialogResult = MessageBox.Show($"Se han encontrado {cantidadStockAlta} nuevos stock y {cantidadStockActualizar} productos modificados.{Environment.NewLine}¿Desea importarlos?", "Administración de Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
-        If (respuesta = DialogResult.No) Then
-            Return "Se ha cancelado la importación de los stocks."
-        End If
-
         If (stock.Count > 0) Then
+
+            Dim respuesta As DialogResult = MessageBox.Show($"Se han encontrado {cantidadStockAlta} nuevos stock y {cantidadStockActualizar} stock modificados.{Environment.NewLine}¿Desea importarlos?", "Administración de Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            If (respuesta = DialogResult.No) Then
+                Return "Se ha cancelado la importación de los stocks."
+            End If
 
             Dim conexionLocal As SqlConnection = clsDatos.ConectarLocal()
             Dim transaccionLocal As SqlTransaction = conexionLocal.BeginTransaction()
@@ -704,46 +694,10 @@ Public Class NegStock
                     cmdBitacoraRemoto.ExecuteNonQuery()
                 Next
 
-                'Dim cmdEliminoDatosLocal As SqlCommand = New SqlCommand($"delete from STOCK where id_Sucursal = {idSucursal}", conexionLocal, transaccionLocal)
-                'cmdEliminoDatosLocal.ExecuteNonQuery()
-
-                'Dim cmdEliminoDatosBitacoraLocal As SqlCommand = New SqlCommand($"delete from STOCK_BITACORA where id_Sucursal = {idSucursal}", conexionLocal, transaccionLocal)
-                'cmdEliminoDatosBitacoraLocal.ExecuteNonQuery()
-
-                'Dim cmdDatosRemotos As SqlCommand = New SqlCommand($"select * from STOCK where id_Sucursal = {idSucursal}", conexionRemota, transaccionRemota)
-                'adapter = New SqlDataAdapter(cmdDatosRemotos)
-                'adapter.Fill(dsStockRemoto)
-
-                'Dim cmdDatosRemotosBitacora As SqlCommand = New SqlCommand($"select * from STOCK_BITACORA where id_Sucursal = {idSucursal}", conexionRemota, transaccionRemota)
-                'adapter = New SqlDataAdapter(cmdDatosRemotosBitacora)
-                'adapter.Fill(dsStockRemotoBitacora)
-
-                'copio el stock a la base local
-                'Dim BulkCopy As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
-                'For Each column As DataColumn In dsStockRemoto.Tables(0).Columns
-                '    BulkCopy.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
-                'Next
-                'BulkCopy.DestinationTableName = "STOCK"
-                'BulkCopy.WriteToServer(dsStockRemoto.Tables(0))
-                'BulkCopy.Close()
-
-                'copio la bitacora a la base local
-                'Dim BulkCopyBitacora As New SqlBulkCopy(conexionLocal, SqlBulkCopyOptions.KeepIdentity, transaccionLocal)
-                'For Each column As DataColumn In dsStockRemotoBitacora.Tables(0).Columns
-                '    BulkCopyBitacora.ColumnMappings.Add(New SqlBulkCopyColumnMapping(column.ColumnName, column.ColumnName))
-                'Next
-                'BulkCopyBitacora.DestinationTableName = "STOCK_BITACORA"
-                'BulkCopyBitacora.WriteToServer(dsStockRemotoBitacora.Tables(0))
-                'BulkCopyBitacora.Close()
-
-                'transaccionRemota.Commit()
                 transaccionLocal.Commit()
-                'clsDatos.DesconectarRemoto()
                 clsDatos.DesconectarLocal()
             Catch ex As Exception
-                'transaccionRemota.Rollback()
                 transaccionLocal.Rollback()
-                'clsDatos.DesconectarRemoto()
                 clsDatos.DesconectarLocal()
                 Throw
             End Try
@@ -836,7 +790,13 @@ Public Class NegStock
         stockTotales.Rows.Cast(Of DataRow).
             Where(Function(x) codigos.Contains(x("Codigo").ToString().ToUpper())).
             ToList().
-            ForEach(Sub(x) codigosYStock.Add(x("Codigo").ToString().ToUpper(), x))
+            ForEach(Sub(x)
+                        Dim codigo As String = x("Codigo").ToString().ToUpper()
+                        If Not codigosYStock.ContainsKey(codigo) Then
+                            codigosYStock.Add(x("Codigo").ToString().ToUpper(), x)
+                        End If
+                    End Sub)
+
 
 
         stockImportar.Rows.
@@ -850,6 +810,9 @@ Public Class NegStock
                                     x(i) = codigosYStock(codigo)(i)
                                 End If
                             Next
+                            If Int(codigosYStock(codigo)("StockActual")) > 0 Then
+                                x("StockActual") = x("StockActual") + codigosYStock(codigo)("StockActual")
+                            End If
                         Else
                             codigosIncompletos.Add(codigo)
                         End If
