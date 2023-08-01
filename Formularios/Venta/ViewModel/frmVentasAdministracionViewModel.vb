@@ -136,12 +136,10 @@ Namespace Formularios.Venta
                 VentaModelSeleccionada.SeleccionarVentaItem(VentaItemViewModel.Producto.Codigo, True)
             Next
 
-            AnularVenta(VentaModelSeleccionada)
-
             If (VentaModelSeleccionada.Factura IsNot Nothing) Then
                 Await GenerarNotaCreditoVenta()
             Else
-                Await GuardarAnularVentaAsync(VentaModelSeleccionada)
+                Await AnularVentaAsync(VentaModelSeleccionada)
             End If
         End Function
 
@@ -151,12 +149,10 @@ Namespace Formularios.Venta
                 Throw New NegocioException("Error al anular el/los productos. No se encuentra productos a anular")
             End If
 
-            AnularVenta(VentaModelSeleccionada)
-
             If (VentaModelSeleccionada.ObtenerItemsVentaSeleccionadosYFacturados().Count > 0) Then
                 GenerarNotaCreditoProductos()
             Else
-                Await GuardarAnularVentaAsync(VentaModelSeleccionada)
+                Await AnularVentaAsync(VentaModelSeleccionada)
             End If
         End Function
 
@@ -268,7 +264,7 @@ Namespace Formularios.Venta
             If (guardar) Then
                 Await Task.Run(Sub() Comunes.Servicio.GuardarNotaCredito(venta.NotaCredito))
                 MessageBox.Show("Se ha generado la nota de crédito de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Await GuardarAnularVentaAsync(venta)
+                Await AnularVentaAsync(venta)
                 VentasPorAnular.Remove(VentasPorAnular.First(Function(x) x.Item1.Id = venta.Id))
                 If (VentasPorAnular.Any()) Then
                     NotaCredito(VentasPorAnular.First())
@@ -278,7 +274,7 @@ Namespace Formularios.Venta
             End If
         End Function
 
-        Public Function AnularVenta(venta As Model.Venta)
+        Public Async Function AnularVentaAsync(venta As Model.Venta) As Task
             'Si el total de items seleccionados es igual al total de items de la venta se tiene que anular toda la venta
             Dim ventaCompleta As Boolean = venta.ObtenerItemsVentaSeleccionados().Count = venta.VentaItems.Count
 
@@ -288,13 +284,6 @@ Namespace Formularios.Venta
                 Dim productoAnular As List(Of Model.VentaItem) = venta.ObtenerItemsVentaSeleccionados()
                 venta.AnularProductos(productoAnular, $"{VariablesGlobales.objUsuario.Apellido}, {VariablesGlobales.objUsuario.Nombre}")
             End If
-
-            Return ventaCompleta
-        End Function
-
-        Public Async Function GuardarAnularVentaAsync(venta As Model.Venta) As Task
-            'Si el total de items seleccionados es igual al total de items de la venta se tiene que anular toda la venta
-            Dim ventaCompleta As Boolean = venta.ObtenerItemsVentaSeleccionados().Count = venta.VentaItems.Count
 
             Await Task.Run(Sub() Comunes.Servicio.ActualizarVenta(venta))
             Await Task.Run(Sub() ActualizarStock(venta.VentaItems))
