@@ -767,6 +767,7 @@ Partial Class frmVentasAdministracion
         Me.txtDescripcionAnular.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtDescripcionAnular.BackColor = System.Drawing.SystemColors.Window
         Me.txtDescripcionAnular.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmVentasAdministracionViewModelBindingSource, "MotivoAnulacion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txtDescripcionAnular.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmVentasAdministracionViewModelBindingSource, "HabilitarAnular", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txtDescripcionAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

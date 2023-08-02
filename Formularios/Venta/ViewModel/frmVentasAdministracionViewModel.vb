@@ -10,6 +10,7 @@ Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.Formularios.Facturacion
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
+Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data.Service
 Imports Model = Ventas.Core.Model.VentaAggregate
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
@@ -131,6 +132,10 @@ Namespace Formularios.Venta
                 Throw New NegocioException("Error al anular la venta. No es posible anular una venta a clientes mayoristas estando em modo OFF LINE. Por favor, vuelva a intentar en modo ON LINE.")
             End If
 
+            If (String.IsNullOrWhiteSpace(MotivoAnulacion)) Then
+                Throw New NegocioException("Error al anular la venta. Debe ingresar un motivo para anular una venta.")
+            End If
+
             'selecciono todos los productos
             For Each VentaItemViewModel As Model.VentaItem In VentaModelSeleccionada.VentaItems
                 VentaModelSeleccionada.SeleccionarVentaItem(VentaItemViewModel.Producto.Codigo, True)
@@ -147,6 +152,15 @@ Namespace Formularios.Venta
 
             If (VentaModelSeleccionada.ObtenerItemsVentaSeleccionados().Count <= 0) Then
                 Throw New NegocioException("Error al anular el/los productos. No se encuentra productos a anular")
+            End If
+
+            If (VariablesGlobales.HayConexion = TipoBase.Local AndAlso VentaModelSeleccionada.TipoCliente = TipoCliente.Mayorista) Then
+                Throw New NegocioException("Error al anular la venta. No es posible anular una venta a clientes mayoristas estando em modo OFF LINE. Por favor, vuelva a intentar en modo ON LINE.")
+            End If
+
+            Dim productoAnular As List(Of Model.VentaItem) = VentaModelSeleccionada.ObtenerItemsVentaSeleccionados()
+            If (productoAnular.Any(Function(x) x.Anulada)) Then
+                Throw New NegocioException("Error al anular el/los productos. Al menos uno de los productos a anular ya se encuentra anulado.")
             End If
 
             If (VentaModelSeleccionada.ObtenerItemsVentaSeleccionadosYFacturados().Count > 0) Then
@@ -192,6 +206,9 @@ Namespace Formularios.Venta
                 Dim frmFacturarNueva As frmFacturar = New frmFacturar(facturarViewModel)
                 frmFacturarNueva.MdiParent = MdiParent
                 frmFacturarNueva.Show()
+            Else
+                VentasPorAnular.Remove(VentasPorAnular.First(Function(x) x.Item1.Id = ventasPorAnularItem.Item1.Id))
+                Throw New NegocioException("No se puede anular una venta facturada sin hacer una nota de crédito.")
             End If
         End Sub
 
