@@ -25,7 +25,7 @@ Namespace Formularios.Venta
         Inherits Comunes.Common
 
         Public Delegate Sub CargarProductoNombreyCodigoDelegate(nombreCodigoProductos As List(Of String))
-        Public Delegate Function StockInsuficienteDelegate(codigoProducto As String, stockCargado As Integer, stockDisponible As Integer) As Boolean
+        Public Delegate Function StockInsuficienteDelegate(codigoProducto As String, ByRef stockCargado As Integer, stockDisponible As Integer) As Boolean
         Public Delegate Function CantidadUnidadesProductoDelegate(codigoProducto As String, ByRef cantidadUnidades As Integer) As Boolean
         Public Delegate Sub FacturarDelegate(facturarViewModel As frmFacturarViewModel)
         Public Delegate Function FacturarDelegateCallBackAsync(facturar As Boolean, venta As ModelVenta.Venta) As Task

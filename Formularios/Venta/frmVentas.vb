@@ -433,7 +433,7 @@ Public Class frmVentas
             End Sub)
     End Sub
 
-    Public Function StockInsuficienteEvent(codigoProducto As String, stockCargado As Integer, stockDisponible As Integer) As Boolean
+    Public Function StockInsuficienteEvent(codigoProducto As String, ByRef stockCargado As Integer, stockDisponible As Integer) As Boolean
         Dim form As frmStockFaltante = New frmStockFaltante(codigoProducto, stockCargado, stockDisponible)
         form.ShowDialog()
         stockCargado = form.StockIngresado
