@@ -25,7 +25,7 @@ namespace Ventas.Core.Model.ValueObjects
 
         public decimal Disponible()
         {
-            return Ingreso.Total() - Egreso.Disponible() + TotalCajaFuerte;
+            return Ingreso.Total() - Egreso.Total() + TotalCajaFuerte;
         }
 
         protected override bool EqualsCore(SucursalSaldo other)
