@@ -148,7 +148,8 @@ namespace Ventas.Core.Model.VentaAggregate
 
             VentaPago pago = new VentaPago(Id, tipoPago, trajeta, numeroCuotas, porcentajeCft, numeroOrdenCheques, cuentaBancaria, monto, monto, descuento, cft, iva, habilitado);
 
-            Cheques.AddRange(cheques);
+            if(cheques != null)
+                Cheques.AddRange(cheques);
 
             if (pago.MontoPago.Total < 0)
                 throw new NegocioException("Error al registrar el pago. El total debe ser mayor a cero.");

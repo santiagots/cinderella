@@ -8,15 +8,9 @@ Public Class frmReservaAdministracion
 
     Public frmReservaAdministracionViewModel As frmReservaAdministracionViewModel
 
-
-    Sub New()
-        ' This call is required by the designer.
-        InitializeComponent()
-
-        frmReservaAdministracionViewModel = New frmReservaAdministracionViewModel(My.Settings.Sucursal, Me.MdiParent)
-    End Sub
-
     Private Sub frmReservaAdministracion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        frmReservaAdministracionViewModel = New frmReservaAdministracionViewModel(My.Settings.Sucursal, Me.MdiParent)
+
         EjecutarAsync(Async Function() As Task
                           FrmReservaAdministracionViewModelBindingSource.DataSource = frmReservaAdministracionViewModel
                           ReservaDetalle1.AutoScaleMode = AutoScaleMode.None

@@ -78,7 +78,8 @@ namespace Common.Data
 
             object uniqueEntity = SetEntitys(entity, entitys, new List<object>());
 
-            this.Entry(uniqueEntity).State = GetState(((IEntity)entity).EstadoEntidad);
+            if(uniqueEntity != null)
+                this.Entry(uniqueEntity).State = GetState(((IEntity)entity).EstadoEntidad);
 
             foreach (var item in ChangeTracker.Entries())
             {
