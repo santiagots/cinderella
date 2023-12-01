@@ -957,18 +957,6 @@ Public Class MDIContenedor
         Funciones.ActualizarEstado(Negocio.Funciones.HayConexionInternet(), Me)
     End Sub
 
-    Private Sub Btn_ColoresMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ColoresMenu.Click
-        'para administrar colores es necesario esta online
-        If (Not Negocio.Funciones.HayConexionInternet) Then
-            dialogoConexion.ShowDialog()
-        Else
-            Me.Cursor = Cursors.WaitCursor
-            Funciones.ControlInstancia(frmColores).MdiParent = Me
-            Funciones.ControlInstancia(frmColores).Show()
-            Me.Cursor = Cursors.Arrow
-        End If
-    End Sub
-
     Private Sub Btn_PerfilesMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_PerfilesMenu.Click
         'para administrar perfiles es necesario esta online
         If (Not Negocio.Funciones.HayConexionInternet) Then
@@ -1861,6 +1849,52 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmTransporte).MdiParent = Me
             Funciones.ControlInstancia(frmTransporte).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub SuppliersToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmSuppliers).MdiParent = Me
+            Funciones.ControlInstancia(frmSuppliers).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub ColoresToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles Btn_ColoresSubM.Click
+        'para administrar colores es necesario esta online
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmColores).MdiParent = Me
+            Funciones.ControlInstancia(frmColores).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub TiposProductosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles Btn_TiposProductosSubM.Click
+        'para administrar colores es necesario esta online
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmTipoProducto).MdiParent = Me
+            Funciones.ControlInstancia(frmTipoProducto).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub SupplierToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles Btn_SupplierSubM.Click
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmSuppliers).MdiParent = Me
+            Funciones.ControlInstancia(frmSuppliers).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

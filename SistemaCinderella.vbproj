@@ -225,7 +225,9 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -353,6 +355,28 @@
     <Compile Include="Formularios\Cliente\ViewModel\frmTransporteBuscarViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\frmTrasporteViewModel.vb" />
     <Compile Include="Formularios\Cliente\ViewModel\TransporteViewModel.vb" />
+    <Compile Include="Formularios\Comex\frmBuscarProductoComex.Designer.vb">
+      <DependentUpon>frmBuscarProductoComex.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Comex\frmBuscarProductoComex.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Comex\frmComexCompra.Designer.vb">
+      <DependentUpon>frmComexCompra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Comex\frmComexCompra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Producto\frmSuppliers.Designer.vb">
+      <DependentUpon>frmSuppliers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Producto\frmSuppliers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Comex\Mapper\MapperProfile.vb" />
+    <Compile Include="Formularios\Comex\Servicio\Servicio.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\frmSuppliersViewModel.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\SupplierItemViewModel.vb" />
     <Compile Include="Formularios\Comun\Comun.Designer.vb">
       <DependentUpon>Comun.vb</DependentUpon>
     </Compile>
@@ -530,9 +554,18 @@
     <Compile Include="Formularios\MovimientoDetalle\ViewModel\MovimientoSocio.vb" />
     <Compile Include="Formularios\MovimientoDetalle\ViewModel\MovimientoSueldo.vb" />
     <Compile Include="Formularios\MovimientoDetalle\ViewModel\MovimientoVenta.vb" />
+    <Compile Include="Formularios\Producto\frmTipoProducto.Designer.vb">
+      <DependentUpon>frmTipoProducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Producto\frmTipoProducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\Producto\Mapper\MapperProfile.vb" />
     <Compile Include="Formularios\Producto\Servicio\Servicio.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\ColorItemViewModel.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\frmColoresViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\frmSubCategoriaViewModel.vb" />
+    <Compile Include="Formularios\Producto\ViewModel\frmTipoProductoViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\ProductoItemViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\ProductoDetalleViewModel.vb" />
     <Compile Include="Formularios\Producto\ViewModel\SubcategoriaItemViewModel.vb" />
@@ -542,6 +575,7 @@
     <Compile Include="ControlesUsuario\VentaDetalle.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Formularios\Producto\ViewModel\TipoProductoItemViewModel.vb" />
     <Compile Include="Formularios\Reserva\frmReserva.Designer.vb">
       <DependentUpon>frmReserva.vb</DependentUpon>
     </Compile>
@@ -706,10 +740,10 @@
     <Compile Include="Formularios\dialogoConexion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmColores.Designer.vb">
+    <Compile Include="Formularios\Producto\frmColores.Designer.vb">
       <DependentUpon>frmColores.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmColores.vb">
+    <Compile Include="Formularios\Producto\frmColores.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmConfiguracion.Designer.vb">
@@ -1395,12 +1429,15 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmTransporteBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmTrasporteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.TransporteViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comex.frmSuppliersViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comun.frmConfiguracionBaseDatosViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaBancariaViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaCorrienteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmRemitoDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.frmColoresViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.frmTipoProductoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockBitacoraViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockMotivoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockViewModel.datasource" />
@@ -1444,6 +1481,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Cliente\frmTransporteBuscar.resx">
       <DependentUpon>frmTransporteBuscar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Comex\frmBuscarProductoComex.resx">
+      <DependentUpon>frmBuscarProductoComex.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Comex\frmComexCompra.resx">
+      <DependentUpon>frmComexCompra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Producto\frmSuppliers.resx">
+      <DependentUpon>frmSuppliers.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Comun\frmConfiguracionBaseDatos.resx">
       <DependentUpon>frmConfiguracionBaseDatos.vb</DependentUpon>
@@ -1514,6 +1560,9 @@
     <EmbeddedResource Include="Formularios\MovimientoDetalle\frmMoviminetoDetalle.resx">
       <DependentUpon>frmMoviminetoDetalle.vb</DependentUpon>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Producto\frmTipoProducto.resx">
+      <DependentUpon>frmTipoProducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Reserva\frmReserva.resx">
       <DependentUpon>frmReserva.vb</DependentUpon>
@@ -1587,7 +1636,7 @@
     <EmbeddedResource Include="Formularios\dialogoConexion.resx">
       <DependentUpon>dialogoConexion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmColores.resx">
+    <EmbeddedResource Include="Formularios\Producto\frmColores.resx">
       <DependentUpon>frmColores.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmConfiguracion.resx">
@@ -1868,8 +1917,8 @@
     <EmbeddedResource Include="Recursos.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Recursos.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Recursos.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <Content Include="bin\dlls\Interop.EpsonFPHostControlX.dll" />
     <Content Include="bin\dlls\itextsharp.dll" />
@@ -1937,6 +1986,10 @@
     <None Include="Imagenes\Crear Base.png" />
     <None Include="Imagenes\conectar basedatos.png" />
     <None Include="Imagenes\configurar basedatos.png" />
+    <None Include="Imagenes\Comex.png" />
+    <None Include="Imagenes\pdf_Exportar.png" />
+    <None Include="Imagenes\TipoProductos.png" />
+    <None Include="Imagenes\supplier.png" />
     <Content Include="Libs\openssl.cnf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2200,6 +2253,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Comex\Comex.Core\Comex.Core\Comex.Core\Comex.Core.csproj">
+      <Project>{1e71c461-0652-4e0a-8779-5a7d0d1bbbcd}</Project>
+      <Name>Comex.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Comex\Comex.Data\Comex.Data\Comex.Data.csproj">
+      <Project>{911fffb6-947e-4e3e-a44f-6ba1c9d196d5}</Project>
+      <Name>Comex.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="Common\Common.Core\Common.Core.csproj">
       <Project>{fc33c392-4689-4ce9-93dd-cdab4a65c04c}</Project>
       <Name>Common.Core</Name>
@@ -2703,6 +2764,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Formularios\Comex\ViewModel\" />
     <Folder Include="Formularios\InformeVenta\Mapper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

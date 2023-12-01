@@ -1000,7 +1000,7 @@ Partial Class frmProductos
         Me.cb_Proveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Proveedores.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Proveedores.FormattingEnabled = True
-        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 248)
+        Me.cb_Proveedores.Location = New System.Drawing.Point(143, 249)
         Me.cb_Proveedores.Name = "cb_Proveedores"
         Me.cb_Proveedores.Size = New System.Drawing.Size(332, 23)
         Me.cb_Proveedores.TabIndex = 10
@@ -1088,7 +1088,7 @@ Partial Class frmProductos
         Me.cb_Subcategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Subcategoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria.FormattingEnabled = True
-        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 218)
+        Me.cb_Subcategoria.Location = New System.Drawing.Point(143, 219)
         Me.cb_Subcategoria.Name = "cb_Subcategoria"
         Me.cb_Subcategoria.Size = New System.Drawing.Size(332, 23)
         Me.cb_Subcategoria.TabIndex = 9
@@ -1119,7 +1119,7 @@ Partial Class frmProductos
         Me.cb_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Categoria.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria.FormattingEnabled = True
-        Me.cb_Categoria.Location = New System.Drawing.Point(143, 188)
+        Me.cb_Categoria.Location = New System.Drawing.Point(143, 189)
         Me.cb_Categoria.Name = "cb_Categoria"
         Me.cb_Categoria.Size = New System.Drawing.Size(332, 23)
         Me.cb_Categoria.TabIndex = 8
@@ -1722,7 +1722,7 @@ Partial Class frmProductos
         Me.cb_Proveedor_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Proveedor_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Proveedor_mod.FormattingEnabled = True
-        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 248)
+        Me.cb_Proveedor_mod.Location = New System.Drawing.Point(143, 249)
         Me.cb_Proveedor_mod.Name = "cb_Proveedor_mod"
         Me.cb_Proveedor_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Proveedor_mod.TabIndex = 10
@@ -1778,7 +1778,7 @@ Partial Class frmProductos
         Me.cb_Subcategoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Subcategoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Subcategoria_mod.FormattingEnabled = True
-        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 218)
+        Me.cb_Subcategoria_mod.Location = New System.Drawing.Point(143, 219)
         Me.cb_Subcategoria_mod.Name = "cb_Subcategoria_mod"
         Me.cb_Subcategoria_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Subcategoria_mod.TabIndex = 9
@@ -1794,7 +1794,7 @@ Partial Class frmProductos
         Me.cb_Categoria_mod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_Categoria_mod.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.cb_Categoria_mod.FormattingEnabled = True
-        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 188)
+        Me.cb_Categoria_mod.Location = New System.Drawing.Point(143, 189)
         Me.cb_Categoria_mod.Name = "cb_Categoria_mod"
         Me.cb_Categoria_mod.Size = New System.Drawing.Size(332, 23)
         Me.cb_Categoria_mod.TabIndex = 8

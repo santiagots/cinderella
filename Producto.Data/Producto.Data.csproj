@@ -58,9 +58,12 @@
     <Compile Include="ProductoContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CategoriaRepository.cs" />
+    <Compile Include="Repository\ColorRepository.cs" />
     <Compile Include="Repository\ProductoRepository.cs" />
     <Compile Include="Repository\ProveedorRepository.cs" />
     <Compile Include="Repository\SubCategoriaRepository.cs" />
+    <Compile Include="Repository\SupplierRepository.cs" />
+    <Compile Include="Repository\TipoProductoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj">

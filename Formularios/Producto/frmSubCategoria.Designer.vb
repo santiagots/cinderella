@@ -845,7 +845,7 @@ Partial Class frmSubCategoria
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.44445!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Button2, 5, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.ComboBox3, 0, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.Label10, 0, 1)
@@ -886,7 +886,7 @@ Partial Class frmSubCategoria
         Me.ComboBox3.DisplayMember = "Value"
         Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(83, 41)
+        Me.ComboBox3.Location = New System.Drawing.Point(83, 42)
         Me.ComboBox3.Name = "ComboBox3"
         Me.ComboBox3.Size = New System.Drawing.Size(161, 23)
         Me.ComboBox3.TabIndex = 9
@@ -929,7 +929,7 @@ Partial Class frmSubCategoria
         Me.ComboBox4.DisplayMember = "Value"
         Me.ComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox4.FormattingEnabled = True
-        Me.ComboBox4.Location = New System.Drawing.Point(83, 3)
+        Me.ComboBox4.Location = New System.Drawing.Point(83, 4)
         Me.ComboBox4.Name = "ComboBox4"
         Me.ComboBox4.Size = New System.Drawing.Size(161, 23)
         Me.ComboBox4.TabIndex = 7

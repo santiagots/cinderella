@@ -959,6 +959,9 @@ Public Class NegProductos
         Dim dsCategoria As DataSet = New DataSet()
         Dim dsSubCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
+        Dim dsSuppliers As DataSet = New DataSet()
+        Dim dsColores As DataSet = New DataSet()
+        Dim dsTiposProductos As DataSet = New DataSet()
 
         cmd.Connection = clsDatos.ConectarRemoto()
         cmd.CommandType = CommandType.StoredProcedure
@@ -985,6 +988,21 @@ Public Class NegProductos
         adapter = New SqlDataAdapter(cmd)
         adapter.Fill(dsProveedor)
 
+        RaiseEvent UpdateProgress(5, "Obteniendo Suppliers...")
+        cmd.CommandText = "sp_Suppliers_Listado"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsSuppliers)
+
+        RaiseEvent UpdateProgress(6, "Obteniendo Colores...")
+        cmd.CommandText = "sp_Colores_Listado"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsColores)
+
+        RaiseEvent UpdateProgress(7, "Obteniendo Tipos Productos...")
+        cmd.CommandText = "sp_TiposProductos_Listado"
+        adapter = New SqlDataAdapter(cmd)
+        adapter.Fill(dsTiposProductos)
+
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
         Dim xlWorkSheet As Excel.Worksheet
@@ -993,7 +1011,7 @@ Public Class NegProductos
 
         For reintentos = 1 To 10
             Try
-                generoArchivo = CrearExcel(nombreArchivo, nombrePlantilla, dsProductos, dsCategoria, dsSubCategoria, dsProveedor, xlApp, xlWorkBook, xlWorkSheet, misValue)
+                generoArchivo = CrearExcel(nombreArchivo, nombrePlantilla, dsProductos, dsCategoria, dsSubCategoria, dsProveedor, dsSuppliers, dsColores, dsTiposProductos, xlApp, xlWorkBook, xlWorkSheet, misValue)
                 Exit For
             Catch ex As System.Runtime.InteropServices.COMException
                 Log.Info("ERROR Metodo: ExportarExcel Reintento " + reintentos.ToString() + Environment.NewLine + ex.ToString())
@@ -1023,7 +1041,7 @@ Public Class NegProductos
 
     End Sub
 
-    Private Function CrearExcel(nombreArchivo As String, nombrePlantilla As String, dsProductos As DataSet, dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, ByRef xlApp As Excel.Application, ByRef xlWorkBook As Excel.Workbook, ByRef xlWorkSheet As Excel.Worksheet, misValue As Object) As Boolean
+    Private Function CrearExcel(nombreArchivo As String, nombrePlantilla As String, dsProductos As DataSet, dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, dsSuppliers As DataSet, dsColores As DataSet, dsTiposProductos As DataSet, ByRef xlApp As Excel.Application, ByRef xlWorkBook As Excel.Workbook, ByRef xlWorkSheet As Excel.Worksheet, misValue As Object) As Boolean
         xlApp = New Excel.Application()
         xlWorkBook = xlApp.Workbooks.Add(System.IO.Path.GetFullPath(nombrePlantilla))
         xlWorkSheet = CType(xlWorkBook.Worksheets.Item(1), Excel.Worksheet)
@@ -1056,6 +1074,15 @@ Public Class NegProductos
 
         '//Agrego la validacion de combos para el cargado de Habilitado
         AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R", MaxRowsData)
+
+        '//Agrego la validacion de combos para el cargado de la categoria
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsSuppliers.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Suppliers", "S", MaxRowsData)
+
+        '//Agrego la validacion de combos para el cargado de la categoria
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsColores.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Colores", "T", MaxRowsData)
+
+        '//Agrego la validacion de combos para el cargado de la categoria
+        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsTiposProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "TiposProductos", "U", MaxRowsData)
 
         Return True
     End Function
@@ -1207,6 +1234,10 @@ Public Class NegProductos
         Dim dsProveedor As DataSet = New DataSet()
         Dim dsSubCategoria As DataSet = New DataSet()
         Dim dsProductos As DataSet = New DataSet()
+        Dim dsSuppliers As DataSet = New DataSet()
+        Dim dsColores As DataSet = New DataSet()
+        Dim dsTiposProductos As DataSet = New DataSet()
+
         Dim dsBackUp As DataSet = New DataSet()
         Dim DatosExcel As DataTable
 
@@ -1245,6 +1276,17 @@ Public Class NegProductos
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsProveedor)
 
+            cmd.CommandText = "sp_Suppliers_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsSuppliers)
+
+            cmd.CommandText = "sp_Colores_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsColores)
+
+            cmd.CommandText = "sp_TiposProductos_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsTiposProductos)
 
             cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
             adapter = New SqlDataAdapter(cmd)
@@ -1284,11 +1326,11 @@ Public Class NegProductos
         Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
         'Armo sentiencias Delete
-        productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, "Delete", idProductoMaximo, DatosConError))
+        productos.AddRange(ObtenerSQLPorProducto(DatosEliminados, dsCategoria, dsSubCategoria, dsProveedor, dsSuppliers, dsColores, dsTiposProductos, "Delete", idProductoMaximo, DatosConError))
         'Armo sentiencias Update
-        productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, "Update", idProductoMaximo, DatosConError))
+        productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, dsSuppliers, dsColores, dsTiposProductos, "Update", idProductoMaximo, DatosConError))
         'Armo sentiencias Insert
-        productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, "Insert", idProductoMaximo, DatosConError))
+        productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, dsSuppliers, dsColores, dsTiposProductos, "Insert", idProductoMaximo, DatosConError))
 
         If (DatosConError.Rows.Count > 0) Then
             Return $"No se ha podido importar el listado de productos, se han encontrar {DatosConError.Rows.Count} productos con errores. Por favor, verifique los errores y vuelva a intentarlo."
@@ -1316,10 +1358,12 @@ Public Class NegProductos
                     For i = 0 To productos.Count Step 200
                         Dim cantidad As Integer = If(i + 200 > productos.Count, productos.Count, i + 200)
                         RaiseEvent UpdateProgress(4, String.Format("Actualizando informacion en la base de datos {0} de {1}", cantidad.ToString(), productos.Count.ToString()))
-                        Dim sql As String = productos.Skip(i).Take(200).Aggregate(Function(x, y) x + " " + y)
-                        Dim cmd As SqlCommand = New SqlCommand(sql, conn)
-                        cmd.Transaction = tran
-                        cmd.ExecuteNonQuery()
+                        Dim sql As String = String.Join(" ", productos.Skip(i).Take(200))
+                        If (Not String.IsNullOrEmpty(sql)) Then
+                            Dim cmd As SqlCommand = New SqlCommand(sql, conn)
+                            cmd.Transaction = tran
+                            cmd.ExecuteNonQuery()
+                        End If
                     Next
                     tran.Commit()
                 Catch ex As Exception
@@ -1341,7 +1385,7 @@ Public Class NegProductos
         Return DatosNuevos
     End Function
 
-    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, comando As String, idProductoMaximo As Integer, ByRef DatosConError As DataTable) As List(Of String)
+    Function ObtenerSQLPorProducto(Datos As List(Of DataRow), dsCategoria As DataSet, dsSubCategoria As DataSet, dsProveedor As DataSet, dsSuppliers As DataSet, dsColores As DataSet, dsTiposProductos As DataSet, comando As String, idProductoMaximo As Integer, ByRef DatosConError As DataTable) As List(Of String)
         Dim i As Integer = 0
         Dim sql As List(Of String) = New List(Of String)
         Dim codigoBarras As String
@@ -1350,29 +1394,23 @@ Public Class NegProductos
         Do While (i < Datos.Count)
             mensajeError = String.Empty
 
-            'Obtengo el codigo de la Categoria ingresada
-            Dim categoriaDescripcion As String = Datos(i)("Categoria").ToString()
-            Dim categoria As DataRow = dsCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = categoriaDescripcion.ToUpper()).FirstOrDefault()
+            'Obtengo el codigo del Categoria ingresada
+            Dim categoria As DataRow = ValidarDato(Datos(i)("Categoria").ToString(), "CATEGORIA", dsCategoria, mensajeError)
 
-            If (categoria Is Nothing) Then
-                mensajeError += $"La categoria '{categoriaDescripcion}' no existe. Verifique que la categoria se encuentre registrado o ingrese una categoria valido.{Environment.NewLine}"
-            End If
+            'Obtengo el codigo del SubCategoria ingresada
+            Dim subCategoria As DataRow = ValidarDato(Datos(i)("SubCategoria").ToString(), "SUBCATEGORIA", dsSubCategoria, mensajeError)
 
-            'Obtengo el codigo de la SubCategoria ingresada
-            Dim subCategoriaDescripcion As String = Datos(i)("SubCategoria").ToString()
-            Dim subCategoria As DataRow = dsSubCategoria.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = subCategoriaDescripcion.ToUpper()).FirstOrDefault()
+            'Obtengo el codigo del Proveedor ingresada
+            Dim Proveedor As DataRow = ValidarDato(Datos(i)("Proveedor").ToString(), "PROVEEDOR", dsProveedor, mensajeError)
 
-            If (subCategoria Is Nothing) Then
-                mensajeError += $"El subcategoria '{subCategoriaDescripcion}' no existe. Verifique que la subcategoria se encuentre registrado o ingrese una subcategoria valido.{Environment.NewLine}"
-            End If
+            'Obtengo el codigo del Supplier ingresada
+            Dim Supplier As DataRow = ObtenerDato(Datos(i)("Supplier").ToString(), "SUPPLIER", dsSuppliers, mensajeError)
 
-            'Obtengo el codigo de la Proveedor ingresada
-            Dim ProveedorDescripcion As String = Datos(i)("Proveedor").ToString()
-            Dim Proveedor As DataRow = dsProveedor.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = ProveedorDescripcion.ToUpper()).FirstOrDefault()
+            'Obtengo el codigo del Color ingresada
+            Dim Color As DataRow = ObtenerDato(Datos(i)("Color").ToString(), "COLOR", dsColores, mensajeError)
 
-            If (Proveedor Is Nothing) Then
-                mensajeError += $"El proveedor '{ProveedorDescripcion}' no existe. Verifique que el proveedor se encuentre registrado o ingrese un proveedor valido.{Environment.NewLine}"
-            End If
+            'Obtengo el codigo del ProductType ingresada
+            Dim ProductType As DataRow = ObtenerDato(Datos(i)("ProductType").ToString(), "TIPO PRODUCTO", dsTiposProductos, mensajeError)
 
             If (Not String.IsNullOrEmpty(mensajeError)) Then
                 DatosConError.ImportRow(Datos(i))
@@ -1391,7 +1429,7 @@ Public Class NegProductos
                     codigoBarras = Datos(i)("CodigoBarra")
                 End If
 
-                sql.Add(ArmarInsert(Datos(i), categoria, subCategoria, Proveedor, codigoBarras, habilitado))
+                sql.Add(ArmarInsert(Datos(i), categoria, subCategoria, Proveedor, Supplier, Color, ProductType, codigoBarras, habilitado))
 
             ElseIf (comando = "Update") Then
                 If (String.IsNullOrEmpty(Datos(i)("CodigoBarra").ToString())) Then
@@ -1399,7 +1437,7 @@ Public Class NegProductos
                 Else
                     codigoBarras = Datos(i)("CodigoBarra")
                 End If
-                sql.Add(ArmarUpdate(Datos(i), categoria, subCategoria, Proveedor, codigoBarras, habilitado))
+                sql.Add(ArmarUpdate(Datos(i), categoria, subCategoria, Proveedor, Supplier, Color, ProductType, codigoBarras, habilitado))
             ElseIf (comando = "Delete") Then
                 sql.Add(ArmarDelete(Datos(i)))
             End If
@@ -1408,9 +1446,60 @@ Public Class NegProductos
         Return sql
     End Function
 
-    Function ArmarInsert(DatosAGuardar As DataRow, categoria As DataRow, subCategoria As DataRow, Proveedor As DataRow, CodigoBarras As String, habilitado As Integer) As String
+    Private Shared Function ValidarDato(dato As String, tipoDato As String, ds As DataSet, ByRef mensajeError As String) As DataRow
+        Dim dr As DataRow = ds.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = dato.ToUpper()).FirstOrDefault()
+
+        If (dr Is Nothing) Then
+            mensajeError += $"{tipoDato} '{dato}' no existe. Verifique que el {tipoDato} se encuentre registrado o ingrese un valor valido.{Environment.NewLine}"
+        End If
+
+        Return dr
+    End Function
+
+    Private Shared Function ObtenerDato(dato As String, tipoDato As String, ds As DataSet, ByRef mensajeError As String) As DataRow
+        Return ds.Tables(0).Rows.Cast(Of DataRow)().Where(Function(r) r.ItemArray(1).ToString().ToUpper() = dato.ToUpper()).FirstOrDefault()
+    End Function
+
+    Function ArmarInsert(DatosAGuardar As DataRow, categoria As DataRow, subCategoria As DataRow, Proveedor As DataRow, Supplier As DataRow, Color As DataRow, ProductType As DataRow, CodigoBarras As String, habilitado As Integer) As String
         Dim Productos As StringBuilder = New StringBuilder()
-        Productos.AppendFormat("INSERT INTO [dbo].[PRODUCTOS] ([id_Categoria],[id_Subcategoria],[id_Proveedor],[Nombre],[Descripcion],[Costo],[Origen],[Tamano],[Codigo],[CodigoBarra],[Fecha],[Habilitado],[Novedad],[SubirWeb]) VALUES ({0},{1},{2},'{3}','{4}',{5},'{6}','{7}','{8}','{9}','{10}',{11},{12},{13}); ", categoria.ItemArray(0), subCategoria.ItemArray(0), Proveedor.ItemArray(0), DatosAGuardar(2), DatosAGuardar(16), Decimal.Parse(DatosAGuardar(8).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(6), DatosAGuardar(7), DatosAGuardar(1), CodigoBarras, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"), habilitado, 0, 0)
+
+        Dim id_Categoria As Integer = categoria.ItemArray(0)
+        Dim id_Subcategoria As Integer = subCategoria.ItemArray(0)
+        Dim id_Proveedor As Integer = Proveedor.ItemArray(0)
+        Dim Nombre As String = DatosAGuardar(2)
+        Dim Descripcion As String = If(IsDBNull(DatosAGuardar(16)), Nothing, DatosAGuardar(16))
+        Dim Costo As Decimal = Decimal.Parse(DatosAGuardar(8).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture)
+        Dim Origen As String = If(IsDBNull(DatosAGuardar(6)), Nothing, DatosAGuardar(6))
+        Dim Tamano As String = If(IsDBNull(DatosAGuardar(7)), Nothing, DatosAGuardar(7))
+        Dim Codigo As String = DatosAGuardar(1)
+        Dim CodigoBarra As String = CodigoBarras
+        Dim Fecha As String = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+        Dim Novedad As Integer = 0
+        Dim SubirWeb As Integer = 0
+        Dim UCBM As Integer = If(IsDBNull(DatosAGuardar("UCBM")), 0, DatosAGuardar("UCBM"))
+        Dim DoG As Decimal = If(IsDBNull(DatosAGuardar("DoG")), 0, DatosAGuardar("DoG"))
+        Dim FOBUSD As Decimal = If(IsDBNull(DatosAGuardar("FOBUSD")), 0, DatosAGuardar("FOBUSD"))
+        Dim FOBRMB As Decimal = If(IsDBNull(DatosAGuardar("FOBRMB")), 0, DatosAGuardar("FOBRMB"))
+        Dim Packing As Integer = If(IsDBNull(DatosAGuardar("Packing")), 0, DatosAGuardar("Packing"))
+        Dim InPacking As Integer = If(IsDBNull(DatosAGuardar("InPacking")), 0, DatosAGuardar("InPacking"))
+        Dim UGW As Decimal = If(IsDBNull(DatosAGuardar("UGW")), 0, DatosAGuardar("UGW"))
+        Dim UNW As Decimal = If(IsDBNull(DatosAGuardar("UNW")), 0, DatosAGuardar("UNW"))
+        Dim BoxSize_X As Decimal = If(IsDBNull(DatosAGuardar("BoxSize_X")), 0, DatosAGuardar("BoxSize_X"))
+        Dim BoxSize_Y As Decimal = If(IsDBNull(DatosAGuardar("BoxSize_Y")), 0, DatosAGuardar("BoxSize_Y"))
+        Dim BoxSize_Z As Decimal = If(IsDBNull(DatosAGuardar("BoxSize_Z")), 0, DatosAGuardar("BoxSize_Z"))
+        Dim ProductSize_X As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_X")), 0, DatosAGuardar("ProductSize_X"))
+        Dim ProductSize_Y As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Y")), 0, DatosAGuardar("ProductSize_Y"))
+        Dim ProductSize_Z As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Z")), 0, DatosAGuardar("ProductSize_Z"))
+        Dim NCM As String = If(IsDBNull(DatosAGuardar("NCM")), 0, DatosAGuardar("NCM"))
+        Dim Modelo As String = If(IsDBNull(DatosAGuardar("Modelo")), 0, DatosAGuardar("Modelo"))
+        Dim SupplierProductCode As String = If(IsDBNull(DatosAGuardar("SupplierProductCode")), 0, DatosAGuardar("SupplierProductCode"))
+        Dim id_Supplier As Integer? = If(Supplier IsNot Nothing, Supplier.ItemArray(0), Nothing)
+        Dim id_Color As Integer? = If(Color IsNot Nothing, Color.ItemArray(0), Nothing)
+        Dim id_ProductType As Integer? = If(ProductType IsNot Nothing, ProductType.ItemArray(0), Nothing)
+        Dim QtyOfLights As Integer = If(IsDBNull(DatosAGuardar("QtyOfLights")), Nothing, DatosAGuardar("QtyOfLights"))
+
+
+        Productos.AppendFormat("INSERT INTO [dbo].[PRODUCTOS] ([id_Categoria],[id_Subcategoria],[id_Proveedor],[Nombre],[Descripcion],[Costo],[Origen],[Tamano],[Codigo],[CodigoBarra],[Fecha],[Habilitado],[Novedad],[SubirWeb],[UCBM],[DoG],[FOBUSD],[FOBRMB],[Packing],[InPacking],[UGW],[UNW],[BoxSize_X],[BoxSize_Y],[BoxSize_Z],[ProductSize_X],[ProductSize_Y],[ProductSize_Z],[NCM],[Modelo],[SupplierProductCode],[id_Supplier],[id_Color],[id_ProductType],[QtyOfLights]) VALUES ({0},{1},{2},'{3}','{4}',{5},'{6}','{7}','{8}','{9}','{10}',{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34}); ", id_Categoria, id_Subcategoria, id_Proveedor, Nombre, Descripcion, Costo, Origen, Tamano, Codigo, CodigoBarra, Fecha, habilitado, Novedad, SubirWeb, UCBM, DoG, FOBUSD, FOBRMB, Packing, InPacking, UGW, UNW, BoxSize_X, BoxSize_Y, BoxSize_Z, ProductSize_X, ProductSize_Y, ProductSize_Z, NCM, Modelo, SupplierProductCode, If(id_Supplier.HasValue, id_Supplier.Value, "NULL"), If(id_Color.HasValue, id_Color.Value, "NULL"), If(id_ProductType.HasValue, id_ProductType.Value, "NULL"), QtyOfLights)
         Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2}); ", "1", Decimal.Parse(DatosAGuardar(10).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
         Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2}); ", "2", Decimal.Parse(DatosAGuardar(11).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
         Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2}); ", "3", Decimal.Parse(DatosAGuardar(12).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
@@ -1430,9 +1519,45 @@ Public Class NegProductos
         Return Productos.ToString()
     End Function
 
-    Function ArmarUpdate(DatosAGuardar As DataRow, categoria As DataRow, subCategoria As DataRow, Proveedor As DataRow, CodigoBarras As String, habilitado As Integer) As String
+    Function ArmarUpdate(DatosAGuardar As DataRow, categoria As DataRow, subCategoria As DataRow, Proveedor As DataRow, Supplier As DataRow, Color As DataRow, ProductType As DataRow, CodigoBarras As String, habilitado As Integer) As String
         Dim Productos As StringBuilder = New StringBuilder()
-        Productos.AppendFormat("UPDATE [dbo].[PRODUCTOS]   SET [id_Categoria] = {0} ,[id_Subcategoria] = {1} ,[id_Proveedor] = {2} ,[Nombre] = '{3}' ,[Descripcion] = '{4}' ,[Costo] = {5} ,[Origen] = '{6}' ,[Tamano] = '{7}' ,[Codigo] = '{8}' ,[CodigoBarra] = '{9}' ,[Habilitado] = {10} ,[Novedad] = {11} ,[SubirWeb] = {12} WHERE id_producto = {13}; ", categoria.ItemArray(0), subCategoria.ItemArray(0), Proveedor.ItemArray(0), DatosAGuardar(2), DatosAGuardar(16), Decimal.Parse(DatosAGuardar(8).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(6), DatosAGuardar(7), DatosAGuardar(1), CodigoBarras, habilitado, 0, 0, DatosAGuardar(0))
+
+        Dim id_Categoria As Integer = categoria.ItemArray(0)
+        Dim id_Subcategoria As Integer = subCategoria.ItemArray(0)
+        Dim id_Proveedor As Integer = Proveedor.ItemArray(0)
+        Dim Nombre As String = DatosAGuardar(2)
+        Dim Descripcion As String = If(IsDBNull(DatosAGuardar(16)), Nothing, DatosAGuardar(16))
+        Dim Costo As Decimal = Decimal.Parse(DatosAGuardar(8).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture)
+        Dim Origen As String = If(IsDBNull(DatosAGuardar(6)), Nothing, DatosAGuardar(6))
+        Dim Tamano As String = If(IsDBNull(DatosAGuardar(7)), Nothing, DatosAGuardar(7))
+        Dim Codigo As String = DatosAGuardar(1)
+        Dim Novedad As Integer = 0
+        Dim SubirWeb As Integer = 0
+        Dim UCBM As Integer = If(IsDBNull(DatosAGuardar("UCBM")), 0, DatosAGuardar("UCBM"))
+        Dim DoG As Decimal = If(IsDBNull(DatosAGuardar("DoG")), 0, DatosAGuardar("DoG"))
+        Dim FOBUSD As Decimal = If(IsDBNull(DatosAGuardar("FOBUSD")), 0, DatosAGuardar("FOBUSD"))
+        Dim FOBRMB As Decimal = If(IsDBNull(DatosAGuardar("FOBRMB")), 0, DatosAGuardar("FOBRMB"))
+        Dim Packing As Integer = If(IsDBNull(DatosAGuardar("Packing")), 0, DatosAGuardar("Packing"))
+        Dim InPacking As Integer = If(IsDBNull(DatosAGuardar("InPacking")), 0, DatosAGuardar("InPacking"))
+        Dim UGW As Decimal = If(IsDBNull(DatosAGuardar("UGW")), 0, DatosAGuardar("UGW"))
+        Dim UNW As Decimal = If(IsDBNull(DatosAGuardar("UNW")), 0, DatosAGuardar("UNW"))
+        Dim BoxSize_X As Decimal = If(IsDBNull(DatosAGuardar("BoxSize_X")), 0, DatosAGuardar("BoxSize_X"))
+        Dim BoxSize_Y As Decimal = If(IsDBNull(DatosAGuardar("BoxSize_Y")), 0, DatosAGuardar("BoxSize_Y"))
+        Dim BoxSize_Z As Decimal = If(IsDBNull(DatosAGuardar("BoxSize_Z")), 0, DatosAGuardar("BoxSize_Z"))
+        Dim ProductSize_X As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_X")), 0, DatosAGuardar("ProductSize_X"))
+        Dim ProductSize_Y As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Y")), 0, DatosAGuardar("ProductSize_Y"))
+        Dim ProductSize_Z As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Z")), 0, DatosAGuardar("ProductSize_Z"))
+        Dim NCM As String = If(IsDBNull(DatosAGuardar("NCM")), 0, DatosAGuardar("NCM"))
+        Dim Modelo As String = If(IsDBNull(DatosAGuardar("Modelo")), 0, DatosAGuardar("Modelo"))
+        Dim SupplierProductCode As String = If(IsDBNull(DatosAGuardar("SupplierProductCode")), 0, DatosAGuardar("SupplierProductCode"))
+        Dim id_Supplier As Integer? = If(Supplier IsNot Nothing, Supplier.ItemArray(0), Nothing)
+        Dim id_Color As Integer? = If(Color IsNot Nothing, Color.ItemArray(0), Nothing)
+        Dim id_ProductType As Integer? = If(ProductType IsNot Nothing, ProductType.ItemArray(0), Nothing)
+        Dim QtyOfLights As Integer = If(IsDBNull(DatosAGuardar("QtyOfLights")), Nothing, DatosAGuardar("QtyOfLights"))
+        Dim id_producto As Integer = DatosAGuardar(0)
+
+
+        Productos.AppendFormat("UPDATE [dbo].[PRODUCTOS] SET [id_Categoria] = {0} ,[id_Subcategoria] = {1} ,[id_Proveedor] = {2} ,[Nombre] = '{3}' ,[Descripcion] = '{4}' ,[Costo] = {5} ,[Origen] = '{6}' ,[Tamano] = '{7}' ,[Codigo] = '{8}' ,[CodigoBarra] = '{9}' ,[Habilitado] = {10} ,[Novedad] = {11} ,[SubirWeb] = {12} ,[UCBM] = {13} ,[DoG] = {14} ,[FOBUSD] = {15} ,[FOBRMB] = {16} ,[Packing] = {17} ,[InPacking] = {18} ,[UGW] = {19} ,[UNW] = {20} ,[BoxSize_X] = {21} ,[BoxSize_Y] = {22} ,[BoxSize_Z] = {23} ,[ProductSize_X] = {24} ,[ProductSize_Y] = {25} ,[ProductSize_Z] = {26} ,[NCM] = {27} ,[Modelo] = {28} ,[SupplierProductCode] = {29} ,[id_Supplier] = {30} ,[id_Color] = {31} ,[id_ProductType] = {32} ,[QtyOfLights] = {33} WHERE id_producto = {34};", id_Categoria, id_Subcategoria, id_Proveedor, Nombre, Descripcion, Costo, Origen, Tamano, Codigo, CodigoBarras, habilitado, Novedad, SubirWeb, UCBM, DoG, FOBUSD, FOBRMB, Packing, InPacking, UGW, UNW, BoxSize_X, BoxSize_Y, BoxSize_Z, ProductSize_X, ProductSize_Y, ProductSize_Z, NCM, Modelo, SupplierProductCode, If(id_Supplier.HasValue, id_Supplier.Value, "NULL"), If(id_Color.HasValue, id_Color.Value, "NULL"), If(id_ProductType.HasValue, id_ProductType.Value, "NULL"), QtyOfLights, id_producto)
         Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}; ", Decimal.Parse(DatosAGuardar(10).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "1")
         Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}; ", Decimal.Parse(DatosAGuardar(11).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "2")
         Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}; ", Decimal.Parse(DatosAGuardar(12).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "3")
@@ -1446,7 +1571,7 @@ Public Class NegProductos
     Function verificarColumnasExcel(datos As DataTable) As Boolean
 
         'verifico que la cantidad de columnas no halla sido modificada 
-        If datos.Columns.Count <> 18 Then
+        If datos.Columns.Count <> 39 Then
             Return False
         End If
 
@@ -1459,7 +1584,18 @@ Public Class NegProductos
             datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Desc_Tigre" Or
             datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Desc_Capital" Or
             datos.Columns(14).ColumnName <> "Mayorista" Or datos.Columns(15).ColumnName <> "Alternativa" Or
-            datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Then
+            datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Or
+            datos.Columns(18).ColumnName <> "Supplier" Or datos.Columns(19).ColumnName <> "Color" Or
+            datos.Columns(20).ColumnName <> "ProductType" Or datos.Columns(21).ColumnName <> "UCBM" Or
+            datos.Columns(22).ColumnName <> "DoG" Or datos.Columns(23).ColumnName <> "FOBUSD" Or
+            datos.Columns(24).ColumnName <> "FOBRMB" Or datos.Columns(25).ColumnName <> "Packing" Or
+            datos.Columns(26).ColumnName <> "InPacking" Or datos.Columns(27).ColumnName <> "UGW" Or
+            datos.Columns(28).ColumnName <> "UNW" Or datos.Columns(29).ColumnName <> "BoxSize_X" Or
+            datos.Columns(30).ColumnName <> "BoxSize_Y" Or datos.Columns(31).ColumnName <> "BoxSize_Z" Or
+            datos.Columns(32).ColumnName <> "ProductSize_X" Or datos.Columns(33).ColumnName <> "ProductSize_Y" Or
+            datos.Columns(34).ColumnName <> "ProductSize_Z" Or datos.Columns(35).ColumnName <> "NCM" Or
+            datos.Columns(36).ColumnName <> "Modelo" Or datos.Columns(37).ColumnName <> "SupplierProductCode" Or
+            datos.Columns(38).ColumnName <> "QtyOfLights" Then
             Return False
         End If
         Return True
@@ -1532,7 +1668,28 @@ Public Class NegProductos
                       Decimal.Parse(If(product(14).ToString() = "", "0", product(14).ToString())) <> Decimal.Parse(If(d(14).ToString() = "", "0", d(14).ToString())) Or
                       Decimal.Parse(If(product(15).ToString() = "", "0", product(15).ToString())) <> Decimal.Parse(If(d(15).ToString() = "", "0", d(15).ToString())) Or
                       product(16).ToString() <> d(16).ToString() Or
-                      product(17).ToString() <> d(17).ToString())
+                      product(17).ToString() <> d(17).ToString() Or
+                      product(18).ToString() <> d(18).ToString() Or
+                      product(19).ToString() <> d(19).ToString() Or
+                      product(20).ToString() <> d(20).ToString() Or
+                      product(21).ToString() <> d(21).ToString() Or
+                      product(22).ToString() <> d(22).ToString() Or
+                      product(23).ToString() <> d(23).ToString() Or
+                      product(24).ToString() <> d(24).ToString() Or
+                      product(25).ToString() <> d(25).ToString() Or
+                      product(26).ToString() <> d(26).ToString() Or
+                      product(27).ToString() <> d(27).ToString() Or
+                      product(28).ToString() <> d(28).ToString() Or
+                      product(29).ToString() <> d(29).ToString() Or
+                      product(30).ToString() <> d(30).ToString() Or
+                      product(31).ToString() <> d(31).ToString() Or
+                      product(32).ToString() <> d(32).ToString() Or
+                      product(33).ToString() <> d(33).ToString() Or
+                      product(34).ToString() <> d(34).ToString() Or
+                      product(35).ToString() <> d(35).ToString() Or
+                      product(36).ToString() <> d(36).ToString() Or
+                      product(37).ToString() <> d(37).ToString() Or
+                      product(38).ToString() <> d(38).ToString())
                 Select d).ToList()
     End Function
 
@@ -1548,14 +1705,13 @@ Public Class NegProductos
             ToList().
             ForEach(Sub(x) codigosYProductos.Add(x("Codigo").ToString().ToUpper(), x))
 
-
         DatosExcel.Rows.
             Cast(Of DataRow).
             ToList().
             ForEach(Sub(x)
                         Dim codigo As String = x("Codigo").ToString().ToUpper()
                         If codigosYProductos.ContainsKey(codigo) Then
-                            For i = 0 To 17
+                            For i = 0 To 38
                                 If (x(i) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(x(i).ToString())) Then
                                     x(i) = codigosYProductos(codigo)(i)
                                 End If

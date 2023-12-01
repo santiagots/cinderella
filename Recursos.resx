@@ -127,8 +127,8 @@
   <data name="Cancelar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Cancelar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Mi_Cuenta_CerrarSesion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\usuario_cerrar_sesion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Cambios_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Cambios_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="warning-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\warning-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -204,9 +204,6 @@
   </data>
   <data name="Ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cambios_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\Cambios_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Archivo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Archivo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -322,6 +319,9 @@
   <data name="Usuarios" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\usuarios.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="configurar basedatos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\configurar basedatos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Cascada_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Cascada_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -400,6 +400,9 @@
   <data name="Update_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_Update_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Comex" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\Comex.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Conectado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\conectado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -442,8 +445,14 @@
   <data name="BoxLogin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\box_login.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pdf_Exportar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\pdf_Exportar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Productos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Productos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Mi_Cuenta_CerrarSesion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\usuario_cerrar_sesion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_quitar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\btn_quitar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -520,6 +529,9 @@
   <data name="Detalle_Pequeno" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Detalle_Pequeno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TipoProductos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\TipoProductos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="registracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\registracion.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -556,7 +568,7 @@
   <data name="Sucursal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Imagenes\Sucursal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="configurar basedatos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Imagenes\configurar basedatos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="supplier" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Imagenes\supplier.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -41,11 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IColorRepository.cs" />
     <Compile Include="Interfaces\IProductoRepository.cs" />
     <Compile Include="Interfaces\IProveedorRepository.cs" />
+    <Compile Include="Interfaces\ISupplierRepository.cs" />
+    <Compile Include="Interfaces\ITipoProductoRepository.cs" />
+    <Compile Include="Model\ProductoAgreggate\Color.cs" />
     <Compile Include="Model\ProductoAgreggate\Precio.cs" />
     <Compile Include="Model\ProductoAgreggate\Producto.cs" />
     <Compile Include="Model\ProductoAgreggate\Proveedor.cs" />
+    <Compile Include="Model\ProductoAgreggate\Supplier.cs" />
+    <Compile Include="Model\ProductoAgreggate\TipoProducto.cs" />
+    <Compile Include="Model\ValueObjects\Tamanio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -266,7 +266,7 @@ Public Class frmProductos
                 frmCargadorDeEspera.Text = "Generando Exportación a Excel "
                 frmCargadorDeEspera.lbl_Descripcion.Text = "iniciando..."
                 frmCargadorDeEspera.BarraProgreso.Minimum = 0
-                frmCargadorDeEspera.BarraProgreso.Maximum = 5
+                frmCargadorDeEspera.BarraProgreso.Maximum = 8
                 frmCargadorDeEspera.BarraProgreso.Value = 1
                 frmCargadorDeEspera.Refresh()
 

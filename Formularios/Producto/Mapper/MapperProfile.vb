@@ -1,5 +1,6 @@
 ﻿Imports AutoMapper
 Imports Common.Core.Model
+Imports Producto.Core.Model.ProductoAgreggate
 Imports Model = Producto.Core.Model.ProductoAgreggate
 
 
@@ -37,6 +38,13 @@ Namespace Formularios.Producto
             .ForMember(Function(des) des.CategoriaNombre, Sub(opt) opt.MapFrom(Function(src) src.Categoria.Descripcion)) _
             .ForMember(Function(des) des.SubcategoriaNombre, Sub(opt) opt.MapFrom(Function(src) src.Descripcion)) _
             .ForMember(Function(des) des.IVA, Sub(opt) opt.MapFrom(Function(src) src.IVA.Valor.ToString("p")))
+
+
+            CreateMap(Of Model.Color, ColorItemViewModel)().ReverseMap()
+
+            CreateMap(Of Model.TipoProducto, TipoProductoItemViewModel)().ReverseMap()
+
+            CreateMap(Of Supplier, SupplierItemViewModel)().ReverseMap()
 
         End Sub
     End Class
