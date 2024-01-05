@@ -296,6 +296,32 @@ Public Class MDIContenedor
             PreciosToolStripMenuItem.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Colores)) Then
+            Btn_ColoresSubM.Visible = True
+        Else
+            Btn_ColoresSubM.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Suppliers)) Then
+            Btn_SupplierSubM.Visible = True
+        Else
+            Btn_SupplierSubM.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_TiposProductos)) Then
+            Btn_TiposProductosSubM.Visible = True
+        Else
+            Btn_TiposProductosSubM.Visible = False
+        End If
+
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Colores) OrElse
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Suppliers) OrElse
+            VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_TiposProductos)) Then
+            ToolStripSeparator4.Visible = True
+        Else
+            ToolStripSeparator4.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Visualizar) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Crear) Or
             VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Categorías_Eliminar) Or

@@ -952,7 +952,7 @@ Public Class NegProductos
 #End Region
 
 #Region "Funciones Exportar Excel"
-    Sub ExportarExcel(nombreArchivo As String, nombrePlantilla As String, conDatos As Boolean)
+    Sub ExportarExcel(nombreArchivo As String, nombrePlantilla As String, conDatos As Boolean, incluirColumnasComex As Boolean)
         Dim cmd As New SqlCommand
         Dim adapter As New SqlDataAdapter
         Dim dsProductos As DataSet = New DataSet()
@@ -968,7 +968,7 @@ Public Class NegProductos
 
         If (conDatos) Then
             RaiseEvent UpdateProgress(1, "Obteniendo Productos...")
-            cmd.CommandText = "sp_Productos_ListadoExcel"
+            cmd.CommandText = If(incluirColumnasComex, "sp_Productos_ListadoExcelComex", "sp_Productos_ListadoExcel")
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsProductos)
         End If
@@ -988,20 +988,23 @@ Public Class NegProductos
         adapter = New SqlDataAdapter(cmd)
         adapter.Fill(dsProveedor)
 
-        RaiseEvent UpdateProgress(5, "Obteniendo Suppliers...")
-        cmd.CommandText = "sp_Suppliers_Listado"
-        adapter = New SqlDataAdapter(cmd)
-        adapter.Fill(dsSuppliers)
+        If (incluirColumnasComex) Then
+            RaiseEvent UpdateProgress(5, "Obteniendo Suppliers...")
+            cmd.CommandText = "sp_Suppliers_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsSuppliers)
 
-        RaiseEvent UpdateProgress(6, "Obteniendo Colores...")
-        cmd.CommandText = "sp_Colores_Listado"
-        adapter = New SqlDataAdapter(cmd)
-        adapter.Fill(dsColores)
+            RaiseEvent UpdateProgress(6, "Obteniendo Colores...")
+            cmd.CommandText = "sp_Colores_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsColores)
 
-        RaiseEvent UpdateProgress(7, "Obteniendo Tipos Productos...")
-        cmd.CommandText = "sp_TiposProductos_Listado"
-        adapter = New SqlDataAdapter(cmd)
-        adapter.Fill(dsTiposProductos)
+            RaiseEvent UpdateProgress(7, "Obteniendo Tipos Productos...")
+            cmd.CommandText = "sp_TiposProductos_Listado"
+            adapter = New SqlDataAdapter(cmd)
+            adapter.Fill(dsTiposProductos)
+        End If
+
 
         Dim xlApp As Excel.Application
         Dim xlWorkBook As Excel.Workbook
@@ -1076,13 +1079,19 @@ Public Class NegProductos
         AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, New String() {"Si", "No"}, "Habilitado", "R", MaxRowsData)
 
         '//Agrego la validacion de combos para el cargado de la categoria
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsSuppliers.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Suppliers", "S", MaxRowsData)
+        If (dsSuppliers.Tables.Count > 0 AndAlso dsSuppliers.Tables(0).Rows.Count > 0) Then
+            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsSuppliers.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Suppliers", "S", MaxRowsData)
+        End If
 
         '//Agrego la validacion de combos para el cargado de la categoria
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsColores.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Colores", "T", MaxRowsData)
+        If (dsColores.Tables.Count > 0 AndAlso dsColores.Tables(0).Rows.Count > 0) Then
+            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsColores.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "Colores", "T", MaxRowsData)
+        End If
 
         '//Agrego la validacion de combos para el cargado de la categoria
-        AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsTiposProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "TiposProductos", "U", MaxRowsData)
+        If (dsTiposProductos.Tables.Count > 0 AndAlso dsTiposProductos.Tables(0).Rows.Count > 0) Then
+            AgregarValidacionPorCombo(xlWorkBook, xlWorkSheet, dsTiposProductos.Tables(0).Rows.Cast(Of DataRow).Select(Function(x) x.ItemArray(1).ToString()).ToArray(), "TiposProductos", "U", MaxRowsData)
+        End If
 
         Return True
     End Function
@@ -1229,7 +1238,6 @@ Public Class NegProductos
 
 #Region "Funciones Importar Excel"
     Function ImportarExcel(FileName As String, ByRef DatosConError As DataTable) As String
-
         Dim dsCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
         Dim dsSubCategoria As DataSet = New DataSet()
@@ -1288,7 +1296,7 @@ Public Class NegProductos
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsTiposProductos)
 
-            cmd = New SqlCommand("sp_Productos_ListadoExcel", conn)
+            cmd = New SqlCommand("sp_Productos_ListadoExcelComex", conn)
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsProductos)
         End Using
@@ -1299,6 +1307,8 @@ Public Class NegProductos
 
         RaiseEvent UpdateProgress(2, "Obteniendo informacion del Excel...")
         DatosExcel = GetDataFormExcel(FileName, "Productos").Tables(0)
+
+        AgregarColumnasFaltantesEnExcel(DatosExcel)
 
         If Not (verificarColumnasExcel(DatosExcel)) Then
             Return "El documento Excel que se está intentando importar se encuentra corrupto o es un documento que no fue generado por el proceso de exportación. Recuerde que solo puede modificar la información del documento exportado, no así el orden y nombre de las columnas."
@@ -1477,7 +1487,7 @@ Public Class NegProductos
         Dim Novedad As Integer = 0
         Dim SubirWeb As Integer = 0
         Dim UCBM As Integer = If(IsDBNull(DatosAGuardar("UCBM")), 0, DatosAGuardar("UCBM"))
-        Dim DoG As Decimal = If(IsDBNull(DatosAGuardar("DoG")), 0, DatosAGuardar("DoG"))
+        Dim DoG As String = If(IsDBNull(DatosAGuardar("DoG")), Nothing, DatosAGuardar("DoG"))
         Dim FOBUSD As Decimal = If(IsDBNull(DatosAGuardar("FOBUSD")), 0, DatosAGuardar("FOBUSD"))
         Dim FOBRMB As Decimal = If(IsDBNull(DatosAGuardar("FOBRMB")), 0, DatosAGuardar("FOBRMB"))
         Dim Packing As Integer = If(IsDBNull(DatosAGuardar("Packing")), 0, DatosAGuardar("Packing"))
@@ -1490,16 +1500,16 @@ Public Class NegProductos
         Dim ProductSize_X As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_X")), 0, DatosAGuardar("ProductSize_X"))
         Dim ProductSize_Y As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Y")), 0, DatosAGuardar("ProductSize_Y"))
         Dim ProductSize_Z As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Z")), 0, DatosAGuardar("ProductSize_Z"))
-        Dim NCM As String = If(IsDBNull(DatosAGuardar("NCM")), 0, DatosAGuardar("NCM"))
-        Dim Modelo As String = If(IsDBNull(DatosAGuardar("Modelo")), 0, DatosAGuardar("Modelo"))
-        Dim SupplierProductCode As String = If(IsDBNull(DatosAGuardar("SupplierProductCode")), 0, DatosAGuardar("SupplierProductCode"))
+        Dim NCM As String = If(IsDBNull(DatosAGuardar("NCM")), Nothing, DatosAGuardar("NCM"))
+        Dim Modelo As String = If(IsDBNull(DatosAGuardar("Modelo")), Nothing, DatosAGuardar("Modelo"))
+        Dim SupplierProductCode As String = If(IsDBNull(DatosAGuardar("SupplierProductCode")), Nothing, DatosAGuardar("SupplierProductCode"))
         Dim id_Supplier As Integer? = If(Supplier IsNot Nothing, Supplier.ItemArray(0), Nothing)
         Dim id_Color As Integer? = If(Color IsNot Nothing, Color.ItemArray(0), Nothing)
         Dim id_ProductType As Integer? = If(ProductType IsNot Nothing, ProductType.ItemArray(0), Nothing)
         Dim QtyOfLights As Integer = If(IsDBNull(DatosAGuardar("QtyOfLights")), Nothing, DatosAGuardar("QtyOfLights"))
 
 
-        Productos.AppendFormat("INSERT INTO [dbo].[PRODUCTOS] ([id_Categoria],[id_Subcategoria],[id_Proveedor],[Nombre],[Descripcion],[Costo],[Origen],[Tamano],[Codigo],[CodigoBarra],[Fecha],[Habilitado],[Novedad],[SubirWeb],[UCBM],[DoG],[FOBUSD],[FOBRMB],[Packing],[InPacking],[UGW],[UNW],[BoxSize_X],[BoxSize_Y],[BoxSize_Z],[ProductSize_X],[ProductSize_Y],[ProductSize_Z],[NCM],[Modelo],[SupplierProductCode],[id_Supplier],[id_Color],[id_ProductType],[QtyOfLights]) VALUES ({0},{1},{2},'{3}','{4}',{5},'{6}','{7}','{8}','{9}','{10}',{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34}); ", id_Categoria, id_Subcategoria, id_Proveedor, Nombre, Descripcion, Costo, Origen, Tamano, Codigo, CodigoBarra, Fecha, habilitado, Novedad, SubirWeb, UCBM, DoG, FOBUSD, FOBRMB, Packing, InPacking, UGW, UNW, BoxSize_X, BoxSize_Y, BoxSize_Z, ProductSize_X, ProductSize_Y, ProductSize_Z, NCM, Modelo, SupplierProductCode, If(id_Supplier.HasValue, id_Supplier.Value, "NULL"), If(id_Color.HasValue, id_Color.Value, "NULL"), If(id_ProductType.HasValue, id_ProductType.Value, "NULL"), QtyOfLights)
+        Productos.AppendFormat("INSERT INTO [dbo].[PRODUCTOS] ([id_Categoria],[id_Subcategoria],[id_Proveedor],[Nombre],[Descripcion],[Costo],[Origen],[Tamano],[Codigo],[CodigoBarra],[Fecha],[Habilitado],[Novedad],[SubirWeb],[UCBM],[DoG],[FOBUSD],[FOBRMB],[Packing],[InPacking],[UGW],[UNW],[BoxSize_X],[BoxSize_Y],[BoxSize_Z],[ProductSize_X],[ProductSize_Y],[ProductSize_Z],[NCM],[Modelo],[SupplierProductCode],[id_Supplier],[id_Color],[id_ProductType],[QtyOfLights]) VALUES ({0},{1},{2},'{3}','{4}',{5},'{6}','{7}','{8}','{9}','{10}',{11},{12},{13},{14},'{15}',{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},'{28}','{29}','{30}',{31},{32},{33},{34}); ", id_Categoria, id_Subcategoria, id_Proveedor, Nombre, Descripcion, Costo, Origen, Tamano, Codigo, CodigoBarra, Fecha, habilitado, Novedad, SubirWeb, UCBM, DoG, FOBUSD.ToString(System.Globalization.CultureInfo.InvariantCulture), FOBRMB.ToString(System.Globalization.CultureInfo.InvariantCulture), Packing, InPacking, UGW.ToString(System.Globalization.CultureInfo.InvariantCulture), UNW.ToString(System.Globalization.CultureInfo.InvariantCulture), BoxSize_X.ToString(System.Globalization.CultureInfo.InvariantCulture), BoxSize_Y.ToString(System.Globalization.CultureInfo.InvariantCulture), BoxSize_Z.ToString(System.Globalization.CultureInfo.InvariantCulture), ProductSize_X.ToString(System.Globalization.CultureInfo.InvariantCulture), ProductSize_Y.ToString(System.Globalization.CultureInfo.InvariantCulture), ProductSize_Z.ToString(System.Globalization.CultureInfo.InvariantCulture), NCM, Modelo, SupplierProductCode, If(id_Supplier.HasValue, id_Supplier.Value, "NULL"), If(id_Color.HasValue, id_Color.Value, "NULL"), If(id_ProductType.HasValue, id_ProductType.Value, "NULL"), QtyOfLights)
         Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2}); ", "1", Decimal.Parse(DatosAGuardar(10).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
         Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2}); ", "2", Decimal.Parse(DatosAGuardar(11).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
         Productos.AppendFormat("INSERT INTO [dbo].[PRECIOS] ([id_Producto] ,[id_Lista] ,[Precio] ,[Habilitado]) VALUES ((SELECT IDENT_CURRENT('[dbo].[PRODUCTOS]')),{0},{1},{2}); ", "3", Decimal.Parse(DatosAGuardar(12).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), "1")
@@ -1534,7 +1544,7 @@ Public Class NegProductos
         Dim Novedad As Integer = 0
         Dim SubirWeb As Integer = 0
         Dim UCBM As Integer = If(IsDBNull(DatosAGuardar("UCBM")), 0, DatosAGuardar("UCBM"))
-        Dim DoG As Decimal = If(IsDBNull(DatosAGuardar("DoG")), 0, DatosAGuardar("DoG"))
+        Dim DoG As String = If(IsDBNull(DatosAGuardar("DoG")), Nothing, DatosAGuardar("DoG"))
         Dim FOBUSD As Decimal = If(IsDBNull(DatosAGuardar("FOBUSD")), 0, DatosAGuardar("FOBUSD"))
         Dim FOBRMB As Decimal = If(IsDBNull(DatosAGuardar("FOBRMB")), 0, DatosAGuardar("FOBRMB"))
         Dim Packing As Integer = If(IsDBNull(DatosAGuardar("Packing")), 0, DatosAGuardar("Packing"))
@@ -1547,9 +1557,9 @@ Public Class NegProductos
         Dim ProductSize_X As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_X")), 0, DatosAGuardar("ProductSize_X"))
         Dim ProductSize_Y As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Y")), 0, DatosAGuardar("ProductSize_Y"))
         Dim ProductSize_Z As Decimal = If(IsDBNull(DatosAGuardar("ProductSize_Z")), 0, DatosAGuardar("ProductSize_Z"))
-        Dim NCM As String = If(IsDBNull(DatosAGuardar("NCM")), 0, DatosAGuardar("NCM"))
-        Dim Modelo As String = If(IsDBNull(DatosAGuardar("Modelo")), 0, DatosAGuardar("Modelo"))
-        Dim SupplierProductCode As String = If(IsDBNull(DatosAGuardar("SupplierProductCode")), 0, DatosAGuardar("SupplierProductCode"))
+        Dim NCM As String = If(IsDBNull(DatosAGuardar("NCM")), Nothing, DatosAGuardar("NCM"))
+        Dim Modelo As String = If(IsDBNull(DatosAGuardar("Modelo")), Nothing, DatosAGuardar("Modelo"))
+        Dim SupplierProductCode As String = If(IsDBNull(DatosAGuardar("SupplierProductCode")), Nothing, DatosAGuardar("SupplierProductCode"))
         Dim id_Supplier As Integer? = If(Supplier IsNot Nothing, Supplier.ItemArray(0), Nothing)
         Dim id_Color As Integer? = If(Color IsNot Nothing, Color.ItemArray(0), Nothing)
         Dim id_ProductType As Integer? = If(ProductType IsNot Nothing, ProductType.ItemArray(0), Nothing)
@@ -1557,7 +1567,7 @@ Public Class NegProductos
         Dim id_producto As Integer = DatosAGuardar(0)
 
 
-        Productos.AppendFormat("UPDATE [dbo].[PRODUCTOS] SET [id_Categoria] = {0} ,[id_Subcategoria] = {1} ,[id_Proveedor] = {2} ,[Nombre] = '{3}' ,[Descripcion] = '{4}' ,[Costo] = {5} ,[Origen] = '{6}' ,[Tamano] = '{7}' ,[Codigo] = '{8}' ,[CodigoBarra] = '{9}' ,[Habilitado] = {10} ,[Novedad] = {11} ,[SubirWeb] = {12} ,[UCBM] = {13} ,[DoG] = {14} ,[FOBUSD] = {15} ,[FOBRMB] = {16} ,[Packing] = {17} ,[InPacking] = {18} ,[UGW] = {19} ,[UNW] = {20} ,[BoxSize_X] = {21} ,[BoxSize_Y] = {22} ,[BoxSize_Z] = {23} ,[ProductSize_X] = {24} ,[ProductSize_Y] = {25} ,[ProductSize_Z] = {26} ,[NCM] = {27} ,[Modelo] = {28} ,[SupplierProductCode] = {29} ,[id_Supplier] = {30} ,[id_Color] = {31} ,[id_ProductType] = {32} ,[QtyOfLights] = {33} WHERE id_producto = {34};", id_Categoria, id_Subcategoria, id_Proveedor, Nombre, Descripcion, Costo, Origen, Tamano, Codigo, CodigoBarras, habilitado, Novedad, SubirWeb, UCBM, DoG, FOBUSD, FOBRMB, Packing, InPacking, UGW, UNW, BoxSize_X, BoxSize_Y, BoxSize_Z, ProductSize_X, ProductSize_Y, ProductSize_Z, NCM, Modelo, SupplierProductCode, If(id_Supplier.HasValue, id_Supplier.Value, "NULL"), If(id_Color.HasValue, id_Color.Value, "NULL"), If(id_ProductType.HasValue, id_ProductType.Value, "NULL"), QtyOfLights, id_producto)
+        Productos.AppendFormat("UPDATE [dbo].[PRODUCTOS] SET [id_Categoria] = {0} ,[id_Subcategoria] = {1} ,[id_Proveedor] = {2} ,[Nombre] = '{3}' ,[Descripcion] = '{4}' ,[Costo] = {5} ,[Origen] = '{6}' ,[Tamano] = '{7}' ,[Codigo] = '{8}' ,[CodigoBarra] = '{9}' ,[Habilitado] = {10} ,[Novedad] = {11} ,[SubirWeb] = {12} ,[UCBM] = {13} ,[DoG] = '{14}' ,[FOBUSD] = {15} ,[FOBRMB] = {16} ,[Packing] = {17} ,[InPacking] = {18} ,[UGW] = {19} ,[UNW] = {20} ,[BoxSize_X] = {21} ,[BoxSize_Y] = {22} ,[BoxSize_Z] = {23} ,[ProductSize_X] = {24} ,[ProductSize_Y] = {25} ,[ProductSize_Z] = {26} ,[NCM] = '{27}' ,[Modelo] = '{28}' ,[SupplierProductCode] = '{29}' ,[id_Supplier] = {30} ,[id_Color] = {31} ,[id_ProductType] = {32} ,[QtyOfLights] = {33} WHERE id_producto = {34};", id_Categoria, id_Subcategoria, id_Proveedor, Nombre, Descripcion, Costo, Origen, Tamano, Codigo, CodigoBarras, habilitado, Novedad, SubirWeb, UCBM, DoG, FOBUSD.ToString(System.Globalization.CultureInfo.InvariantCulture), FOBRMB.ToString(System.Globalization.CultureInfo.InvariantCulture), Packing, InPacking, UGW.ToString(System.Globalization.CultureInfo.InvariantCulture), UNW.ToString(System.Globalization.CultureInfo.InvariantCulture), BoxSize_X.ToString(System.Globalization.CultureInfo.InvariantCulture), BoxSize_Y.ToString(System.Globalization.CultureInfo.InvariantCulture), BoxSize_Z.ToString(System.Globalization.CultureInfo.InvariantCulture), ProductSize_X.ToString(System.Globalization.CultureInfo.InvariantCulture), ProductSize_Y.ToString(System.Globalization.CultureInfo.InvariantCulture), ProductSize_Z.ToString(System.Globalization.CultureInfo.InvariantCulture), NCM, Modelo, SupplierProductCode, If(id_Supplier.HasValue, id_Supplier.Value, "NULL"), If(id_Color.HasValue, id_Color.Value, "NULL"), If(id_ProductType.HasValue, id_ProductType.Value, "NULL"), QtyOfLights, id_producto)
         Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}; ", Decimal.Parse(DatosAGuardar(10).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "1")
         Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}; ", Decimal.Parse(DatosAGuardar(11).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "2")
         Productos.AppendFormat("UPDATE [dbo].[PRECIOS] SET [Precio] = {0} WHERE [id_Producto] = {1} AND [id_Lista] = {2}; ", Decimal.Parse(DatosAGuardar(12).ToString()).ToString(System.Globalization.CultureInfo.InvariantCulture), DatosAGuardar(0), "3")
@@ -1577,29 +1587,59 @@ Public Class NegProductos
 
         'verifico que los nombres y orden de las columnas no hallan sido modificadas 
         If datos.Columns(0).ColumnName <> "id_producto" Or datos.Columns(1).ColumnName <> "Codigo" Or
-            datos.Columns(2).ColumnName <> "Nombre" Or datos.Columns(3).ColumnName <> "Categoria" Or
-            datos.Columns(4).ColumnName <> "SubCategoria" Or datos.Columns(5).ColumnName <> "Proveedor" Or
-            datos.Columns(6).ColumnName <> "Origen" Or datos.Columns(7).ColumnName <> "Tamaño" Or
-            datos.Columns(8).ColumnName <> "Costo" Or datos.Columns(9).ColumnName <> "CodigoBarra" Or
-            datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Desc_Tigre" Or
-            datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Desc_Capital" Or
-            datos.Columns(14).ColumnName <> "Mayorista" Or datos.Columns(15).ColumnName <> "Alternativa" Or
-            datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Or
-            datos.Columns(18).ColumnName <> "Supplier" Or datos.Columns(19).ColumnName <> "Color" Or
-            datos.Columns(20).ColumnName <> "ProductType" Or datos.Columns(21).ColumnName <> "UCBM" Or
-            datos.Columns(22).ColumnName <> "DoG" Or datos.Columns(23).ColumnName <> "FOBUSD" Or
-            datos.Columns(24).ColumnName <> "FOBRMB" Or datos.Columns(25).ColumnName <> "Packing" Or
-            datos.Columns(26).ColumnName <> "InPacking" Or datos.Columns(27).ColumnName <> "UGW" Or
-            datos.Columns(28).ColumnName <> "UNW" Or datos.Columns(29).ColumnName <> "BoxSize_X" Or
-            datos.Columns(30).ColumnName <> "BoxSize_Y" Or datos.Columns(31).ColumnName <> "BoxSize_Z" Or
-            datos.Columns(32).ColumnName <> "ProductSize_X" Or datos.Columns(33).ColumnName <> "ProductSize_Y" Or
-            datos.Columns(34).ColumnName <> "ProductSize_Z" Or datos.Columns(35).ColumnName <> "NCM" Or
-            datos.Columns(36).ColumnName <> "Modelo" Or datos.Columns(37).ColumnName <> "SupplierProductCode" Or
-            datos.Columns(38).ColumnName <> "QtyOfLights" Then
+                datos.Columns(2).ColumnName <> "Nombre" Or datos.Columns(3).ColumnName <> "Categoria" Or
+                datos.Columns(4).ColumnName <> "SubCategoria" Or datos.Columns(5).ColumnName <> "Proveedor" Or
+                datos.Columns(6).ColumnName <> "Origen" Or datos.Columns(7).ColumnName <> "Tamaño" Or
+                datos.Columns(8).ColumnName <> "Costo" Or datos.Columns(9).ColumnName <> "CodigoBarra" Or
+                datos.Columns(10).ColumnName <> "Efectivo_Tigre" Or datos.Columns(11).ColumnName <> "Desc_Tigre" Or
+                datos.Columns(12).ColumnName <> "Efectivo_Capital" Or datos.Columns(13).ColumnName <> "Desc_Capital" Or
+                datos.Columns(14).ColumnName <> "Mayorista" Or datos.Columns(15).ColumnName <> "Alternativa" Or
+                datos.Columns(16).ColumnName <> "Descripcion" Or datos.Columns(17).ColumnName <> "Habilitado" Or
+                datos.Columns(18).ColumnName <> "Supplier" Or datos.Columns(19).ColumnName <> "Color" Or
+                datos.Columns(20).ColumnName <> "ProductType" Or datos.Columns(21).ColumnName <> "UCBM" Or
+                datos.Columns(22).ColumnName <> "DoG" Or datos.Columns(23).ColumnName <> "FOBUSD" Or
+                datos.Columns(24).ColumnName <> "FOBRMB" Or datos.Columns(25).ColumnName <> "Packing" Or
+                datos.Columns(26).ColumnName <> "InPacking" Or datos.Columns(27).ColumnName <> "UGW" Or
+                datos.Columns(28).ColumnName <> "UNW" Or datos.Columns(29).ColumnName <> "BoxSize_X" Or
+                datos.Columns(30).ColumnName <> "BoxSize_Y" Or datos.Columns(31).ColumnName <> "BoxSize_Z" Or
+                datos.Columns(32).ColumnName <> "ProductSize_X" Or datos.Columns(33).ColumnName <> "ProductSize_Y" Or
+                datos.Columns(34).ColumnName <> "ProductSize_Z" Or datos.Columns(35).ColumnName <> "NCM" Or
+                datos.Columns(36).ColumnName <> "Modelo" Or datos.Columns(37).ColumnName <> "SupplierProductCode" Or
+                datos.Columns(38).ColumnName <> "QtyOfLights" Then
             Return False
         End If
         Return True
     End Function
+
+    Function AgregarColumnasFaltantesEnExcel(datos As DataTable)
+        CheckAndAddColumn(datos, "Supplier")
+        CheckAndAddColumn(datos, "Color")
+        CheckAndAddColumn(datos, "ProductType")
+        CheckAndAddColumn(datos, "UCBM")
+        CheckAndAddColumn(datos, "DoG")
+        CheckAndAddColumn(datos, "FOBUSD")
+        CheckAndAddColumn(datos, "FOBRMB")
+        CheckAndAddColumn(datos, "Packing")
+        CheckAndAddColumn(datos, "InPacking")
+        CheckAndAddColumn(datos, "UGW")
+        CheckAndAddColumn(datos, "UNW")
+        CheckAndAddColumn(datos, "BoxSize_X")
+        CheckAndAddColumn(datos, "BoxSize_Y")
+        CheckAndAddColumn(datos, "BoxSize_Z")
+        CheckAndAddColumn(datos, "ProductSize_X")
+        CheckAndAddColumn(datos, "ProductSize_Y")
+        CheckAndAddColumn(datos, "ProductSize_Z")
+        CheckAndAddColumn(datos, "NCM")
+        CheckAndAddColumn(datos, "Modelo")
+        CheckAndAddColumn(datos, "SupplierProductCode")
+        CheckAndAddColumn(datos, "QtyOfLights")
+    End Function
+
+    Private Shared Sub CheckAndAddColumn(datos As DataTable, nombreColumna As String)
+        If Not datos.Columns.Contains(nombreColumna) Then
+            datos.Columns.Add(nombreColumna)
+        End If
+    End Sub
 
     Function ObtenerProductosEliminadas(base As DataTable, importados As DataTable) As List(Of DataRow)
         Dim IdProductosImportados As List(Of Integer) = New List(Of Integer)
@@ -1674,18 +1714,18 @@ Public Class NegProductos
                       product(20).ToString() <> d(20).ToString() Or
                       product(21).ToString() <> d(21).ToString() Or
                       product(22).ToString() <> d(22).ToString() Or
-                      product(23).ToString() <> d(23).ToString() Or
-                      product(24).ToString() <> d(24).ToString() Or
+                      Decimal.Parse(If(product(23).ToString() = "", "0", product(23).ToString())) <> Decimal.Parse(If(d(23).ToString() = "", "0", d(23).ToString())) Or
+                      Decimal.Parse(If(product(24).ToString() = "", "0", product(24).ToString())) <> Decimal.Parse(If(d(24).ToString() = "", "0", d(24).ToString())) Or
                       product(25).ToString() <> d(25).ToString() Or
                       product(26).ToString() <> d(26).ToString() Or
-                      product(27).ToString() <> d(27).ToString() Or
-                      product(28).ToString() <> d(28).ToString() Or
-                      product(29).ToString() <> d(29).ToString() Or
-                      product(30).ToString() <> d(30).ToString() Or
-                      product(31).ToString() <> d(31).ToString() Or
-                      product(32).ToString() <> d(32).ToString() Or
-                      product(33).ToString() <> d(33).ToString() Or
-                      product(34).ToString() <> d(34).ToString() Or
+                      Decimal.Parse(If(product(27).ToString() = "", "0", product(27).ToString())) <> Decimal.Parse(If(d(27).ToString() = "", "0", d(27).ToString())) Or
+                      Decimal.Parse(If(product(28).ToString() = "", "0", product(28).ToString())) <> Decimal.Parse(If(d(28).ToString() = "", "0", d(28).ToString())) Or
+                      Decimal.Parse(If(product(29).ToString() = "", "0", product(29).ToString())) <> Decimal.Parse(If(d(29).ToString() = "", "0", d(29).ToString())) Or
+                      Decimal.Parse(If(product(30).ToString() = "", "0", product(30).ToString())) <> Decimal.Parse(If(d(30).ToString() = "", "0", d(30).ToString())) Or
+                      Decimal.Parse(If(product(31).ToString() = "", "0", product(31).ToString())) <> Decimal.Parse(If(d(31).ToString() = "", "0", d(31).ToString())) Or
+                      Decimal.Parse(If(product(32).ToString() = "", "0", product(32).ToString())) <> Decimal.Parse(If(d(32).ToString() = "", "0", d(32).ToString())) Or
+                      Decimal.Parse(If(product(33).ToString() = "", "0", product(33).ToString())) <> Decimal.Parse(If(d(33).ToString() = "", "0", d(33).ToString())) Or
+                      Decimal.Parse(If(product(34).ToString() = "", "0", product(34).ToString())) <> Decimal.Parse(If(d(34).ToString() = "", "0", d(34).ToString())) Or
                       product(35).ToString() <> d(35).ToString() Or
                       product(36).ToString() <> d(36).ToString() Or
                       product(37).ToString() <> d(37).ToString() Or
@@ -1711,7 +1751,7 @@ Public Class NegProductos
             ForEach(Sub(x)
                         Dim codigo As String = x("Codigo").ToString().ToUpper()
                         If codigosYProductos.ContainsKey(codigo) Then
-                            For i = 0 To 38
+                            For i = 0 To DatosExcel.Columns.Count - 1
                                 If (x(i) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(x(i).ToString())) Then
                                     x(i) = codigosYProductos(codigo)(i)
                                 End If

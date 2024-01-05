@@ -258,6 +258,9 @@ Public Class frmProductos
             SaveFileDialog.FileName = nombreArchivo
             SaveFileDialog.Filter = "Excel Files|*.xlsx;"
 
+            Dim incluirColumnasComex As Boolean = VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Productos_Administración_ExportarImportarComex)
+            Dim nombrePlantilla As String = If(incluirColumnasComex, ConfigurationManager.AppSettings("ExportarExcelPlantillaProductoConColumnasComex"), ConfigurationManager.AppSettings("ExportarExcelPlantillaProductoSinColumnasComex"))
+
             If SaveFileDialog.ShowDialog() = DialogResult.OK Then
                 'Cambio el cursor a "WAIT"
                 Me.Cursor = Cursors.WaitCursor
@@ -273,7 +276,7 @@ Public Class frmProductos
                 AddHandler NegProductos.UpdateProgress, AddressOf UpdateProgress
 
                 'Exporto el listado de productos a Excel
-                NegProductos.ExportarExcel(SaveFileDialog.FileName, ConfigurationManager.AppSettings("ExportarExcelPlantillaProducto"), conDatos)
+                NegProductos.ExportarExcel(SaveFileDialog.FileName, nombrePlantilla, conDatos, incluirColumnasComex)
 
                 'Voy seteando la barra de progreso
                 frmCargadorDeEspera.Close()

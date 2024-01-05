@@ -24,6 +24,7 @@
     Administración_Productos_Administración_Eliminar = 21
     Administración_Productos_Administración_Exportar = 22
     Administración_Productos_Administración_Importar = 23
+    Administración_Productos_Administración_ExportarImportarComex = 627
     Administración_Productos_Precios = 24
     Administración_Productos_Categorías_Visualizar = 25
     Administración_Productos_Categorías_Crear = 26
@@ -33,6 +34,9 @@
     Administración_Productos_Subcategoría_Crear = 30
     Administración_Productos_Subcategoría_Modificar = 31
     Administración_Productos_Subcategoría_Eliminar = 32
+    Administración_Productos_Colores = 624
+    Administración_Productos_Suppliers = 625
+    Administración_Productos_TiposProductos = 626
     Administración_Proveedores_Administración_Visualizar = 34
     Administración_Proveedores_Administración_Crear = 35
     Administración_Proveedores_Administración_Modificar = 36
