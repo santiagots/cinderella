@@ -214,6 +214,7 @@ Public Class frmMovimientoPlanilla
         'Valor de la Columna Fecha
         dgvCell = New DataGridViewTextBoxCell()
         dgvCell.Value = Fecha
+        dgvCell.ValueType = GetType(DateTime)
         dgvRow.Cells.Add(dgvCell)
 
         'Valor de la Columna Tipo
@@ -275,6 +276,10 @@ Public Class frmMovimientoPlanilla
         'Limpio el datagrid
         DG_Movimientos.Rows.Clear()
         DG_Movimientos.Refresh()
+
+        'Ordeno las filas, por fecha descendientemente.
+        DG_Movimientos.Sort(DG_Movimientos.Columns(1), System.ComponentModel.ListSortDirection.Descending)
+        DG_Movimientos.ClearSelection()
 
         If Tipo = "Todos los movimientos" Then
             'Muestro el form de espera..
@@ -468,12 +473,6 @@ Public Class frmMovimientoPlanilla
             End If
 
         End If
-
-
-
-        'Ordeno las filas, por fecha descendientemente.
-        DG_Movimientos.Sort(DG_Movimientos.Columns(1), System.ComponentModel.ListSortDirection.Descending)
-        DG_Movimientos.ClearSelection()
     End Sub
 
     Public Sub RefrescarPlanilla()

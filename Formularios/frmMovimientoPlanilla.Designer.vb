@@ -23,6 +23,7 @@ Partial Class frmMovimientoPlanilla
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMovimientoPlanilla))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -37,6 +38,14 @@ Partial Class frmMovimientoPlanilla
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DG_Movimientos = New System.Windows.Forms.DataGridView()
+        Me.ToolMov = New System.Windows.Forms.ToolTip(Me.components)
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id_Movimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Fecha = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -44,7 +53,6 @@ Partial Class frmMovimientoPlanilla
         Me.Monto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VerDetalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Eliminar = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ToolMov = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -148,7 +156,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbAnios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbAnios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbAnios.FormattingEnabled = True
-        Me.CbAnios.Location = New System.Drawing.Point(43, 11)
+        Me.CbAnios.Location = New System.Drawing.Point(43, 10)
         Me.CbAnios.Name = "CbAnios"
         Me.CbAnios.Size = New System.Drawing.Size(72, 23)
         Me.CbAnios.TabIndex = 3
@@ -161,7 +169,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbTipo.FormattingEnabled = True
         Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Cierre de Caja", "Egresos", "Gastos", "Impuestos", "Movimiento de Socio", "Caja Fuerte"})
-        Me.CbTipo.Location = New System.Drawing.Point(409, 11)
+        Me.CbTipo.Location = New System.Drawing.Point(409, 10)
         Me.CbTipo.Name = "CbTipo"
         Me.CbTipo.Size = New System.Drawing.Size(150, 23)
         Me.CbTipo.TabIndex = 1
@@ -173,7 +181,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbMeses.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbMeses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbMeses.FormattingEnabled = True
-        Me.CbMeses.Location = New System.Drawing.Point(181, 11)
+        Me.CbMeses.Location = New System.Drawing.Point(181, 10)
         Me.CbMeses.Name = "CbMeses"
         Me.CbMeses.Size = New System.Drawing.Size(72, 23)
         Me.CbMeses.TabIndex = 5
@@ -220,12 +228,73 @@ Partial Class frmMovimientoPlanilla
         Me.DG_Movimientos.Size = New System.Drawing.Size(658, 350)
         Me.DG_Movimientos.TabIndex = 2
         '
+        'ToolMov
+        '
+        Me.ToolMov.IsBalloon = True
+        Me.ToolMov.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolMov.ToolTipTitle = "Ayuda"
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.FillWeight = 55.56035!
+        Me.DataGridViewTextBoxColumn1.HeaderText = "id_Movimiento"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.FillWeight = 90.7573!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Fecha"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 108
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Tipo"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 53
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.FillWeight = 223.2513!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Descripcion"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.Width = 265
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.DataGridViewTextBoxColumn5.FillWeight = 80.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Monto"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.Width = 94
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.FillWeight = 39.74121!
+        Me.DataGridViewTextBoxColumn6.HeaderText = ""
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewTextBoxColumn6.Width = 47
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.FillWeight = 39.59391!
+        Me.DataGridViewTextBoxColumn7.HeaderText = ""
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewTextBoxColumn7.Width = 48
+        '
         'id_Movimiento
         '
         Me.id_Movimiento.FillWeight = 55.56035!
         Me.id_Movimiento.HeaderText = "id_Movimiento"
         Me.id_Movimiento.Name = "id_Movimiento"
         Me.id_Movimiento.ReadOnly = True
+        Me.id_Movimiento.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.id_Movimiento.Visible = False
         '
         'Fecha
@@ -234,6 +303,7 @@ Partial Class frmMovimientoPlanilla
         Me.Fecha.HeaderText = "Fecha"
         Me.Fecha.Name = "Fecha"
         Me.Fecha.ReadOnly = True
+        Me.Fecha.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         '
         'Tipo
         '
@@ -241,7 +311,8 @@ Partial Class frmMovimientoPlanilla
         Me.Tipo.HeaderText = "Tipo"
         Me.Tipo.Name = "Tipo"
         Me.Tipo.ReadOnly = True
-        Me.Tipo.Width = 56
+        Me.Tipo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Tipo.Width = 37
         '
         'Descripcion
         '
@@ -249,6 +320,7 @@ Partial Class frmMovimientoPlanilla
         Me.Descripcion.HeaderText = "Descripcion"
         Me.Descripcion.Name = "Descripcion"
         Me.Descripcion.ReadOnly = True
+        Me.Descripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Monto
         '
@@ -259,6 +331,7 @@ Partial Class frmMovimientoPlanilla
         Me.Monto.HeaderText = "Monto"
         Me.Monto.Name = "Monto"
         Me.Monto.ReadOnly = True
+        Me.Monto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'VerDetalle
         '
@@ -267,6 +340,7 @@ Partial Class frmMovimientoPlanilla
         Me.VerDetalle.Name = "VerDetalle"
         Me.VerDetalle.ReadOnly = True
         Me.VerDetalle.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.VerDetalle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Eliminar
         '
@@ -275,12 +349,7 @@ Partial Class frmMovimientoPlanilla
         Me.Eliminar.Name = "Eliminar"
         Me.Eliminar.ReadOnly = True
         Me.Eliminar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        '
-        'ToolMov
-        '
-        Me.ToolMov.IsBalloon = True
-        Me.ToolMov.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolMov.ToolTipTitle = "Ayuda"
+        Me.Eliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'frmMovimientoPlanilla
         '
@@ -313,12 +382,19 @@ Partial Class frmMovimientoPlanilla
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents BtnBuscar As System.Windows.Forms.Button
     Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents id_Movimiento As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Fecha As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Tipo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Descripcion As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Monto As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents VerDetalle As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Eliminar As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents id_Movimiento As DataGridViewTextBoxColumn
+    Friend WithEvents Fecha As DataGridViewTextBoxColumn
+    Friend WithEvents Tipo As DataGridViewTextBoxColumn
+    Friend WithEvents Descripcion As DataGridViewTextBoxColumn
+    Friend WithEvents Monto As DataGridViewTextBoxColumn
+    Friend WithEvents VerDetalle As DataGridViewTextBoxColumn
+    Friend WithEvents Eliminar As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
 End Class
