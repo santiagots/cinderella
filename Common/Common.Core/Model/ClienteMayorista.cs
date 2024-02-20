@@ -1,6 +1,4 @@
 ﻿using Common.Core.Enum;
-using System;
-using System.Reflection;
 
 namespace Common.Core.Model
 {
@@ -25,7 +23,12 @@ namespace Common.Core.Model
         public decimal MontoNotasPedido { get; set; }
         public int? IdTransporte { get; set; }
         public Transporte Transporte { get; set; }
-        public bool Habilitado { get; set; }
+        public bool Eliminado { get; set; }
+
+        public void Eliminar()
+        {
+            Eliminado = true;
+        }
 
         public void DebitarSaldoCuentaCorriente(decimal monto)
         {

@@ -1,6 +1,7 @@
 ﻿Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports SistemaCinderella.Formularios.Cliente
+Imports SistemaCinderella.Formularios.Producto
 
 Public Class frmClienteMayorista
     Inherits Comun
@@ -37,6 +38,18 @@ Public Class frmClienteMayorista
                           Await frmClienteMayoristaViewModel.ActualizarAsync()
                           Await frmClienteMayoristaViewModel.BuscarAsync()
                           MessageBox.Show(My.Resources.GuardadoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                      End Function)
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+        EjecutarAsync(Async Function() As Task
+                          Dim Result As DialogResult = MessageBox.Show("¿Está seguro que desea eliminar el cleinte?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                          If (Result = DialogResult.Yes) Then
+                              Await frmClienteMayoristaViewModel.EliminarAsync()
+                              Await frmClienteMayoristaViewModel.BuscarAsync()
+                              MessageBox.Show(My.Resources.BorradoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                          End If
+                          tabControl.SelectedTab = TbListado
                       End Function)
     End Sub
 
@@ -197,14 +210,22 @@ Public Class frmClienteMayorista
     End Sub
 
     Private Sub DG_Clientes_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Clientes.CellClick
-        Ejecutar(Sub()
-                     If DG_Clientes.Columns(e.ColumnIndex).Name = "CuentaCorriente" Then
-                         CargarCuentaCorriente(DG_Clientes.CurrentRow.DataBoundItem, Me.MdiParent)
-                     End If
-                     If DG_Clientes.Columns(e.ColumnIndex).Name = "Modificar" Then
-                         tabControl.SelectedTab = TbMod
-                     End If
-                 End Sub)
+        EjecutarAsync(Async Function() As Task
+                          If DG_Clientes.Columns(e.ColumnIndex).Name = "CuentaCorriente" Then
+                              CargarCuentaCorriente(DG_Clientes.CurrentRow.DataBoundItem, Me.MdiParent)
+                          End If
+                          If DG_Clientes.Columns(e.ColumnIndex).Name = "Modificar" Then
+                              tabControl.SelectedTab = TbMod
+                          End If
+                          If DG_Clientes.Columns(e.ColumnIndex).Name = "Eliminar" Then
+                              Dim Result As DialogResult = MessageBox.Show("¿Está seguro que desea eliminar el cliente?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                              If (Result = DialogResult.Yes) Then
+                                  Await frmClienteMayoristaViewModel.EliminarAsync()
+                                  Await frmClienteMayoristaViewModel.BuscarAsync()
+                                  MessageBox.Show(My.Resources.BorradoOk, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                              End If
+                          End If
+                      End Function)
     End Sub
 
     Private Sub DG_Clientes_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Clientes.CellDoubleClick

@@ -240,7 +240,7 @@ Namespace Formularios.Venta
 
         Public ReadOnly Property EsClienteMayorista As Integer
             Get
-                Return VentaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso Me.NotaPedidoModel Is Nothing
+                Return VentaModel.TipoCliente = Enums.TipoCliente.Mayorista
             End Get
         End Property
 

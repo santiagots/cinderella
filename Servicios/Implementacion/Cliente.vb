@@ -1,37 +1,45 @@
 ﻿Imports System.ServiceModel
-Imports Entidades
-Imports Negocio
+Imports Common.Core.Enum
+Imports Common.Core.Model
+Imports Common.Data.Service
 
 <ServiceBehavior(IncludeExceptionDetailInFaults:=True, UseSynchronizationContext:=False)>
 Public Class Cliente
     Implements ICliente
 
     Public Function GetClienteMayorista(RazonSocial As String) As List(Of EntidadClientes) Implements ICliente.GetClienteMayorista
-        Dim clientesNegocio As NegClienteMayorista = New NegClienteMayorista()
-        Dim direccionNegocio As NegDireccion = New NegDireccion()
-
         Dim Respuesta As List(Of EntidadClientes) = New List(Of EntidadClientes)()
 
-        For Each cli As Entidades.ClienteMayorista In clientesNegocio.TraerCliente(RazonSocial)
-            Dim dir As Direccion = direccionNegocio.Consulta(cli.IdDireccionFacturacion)
-            Dim codigoPostas As Integer = 0
-            Dim habilitado As Integer = 0
-            Integer.TryParse(dir.CodigoPostal, codigoPostas)
+        Dim clientesModel As List(Of ClienteMayorista) = ClienteMayoristaService.BuscarAsync(TipoBase.Local,
+                                                                                                    RazonSocial,
+                                                                                                    Nothing,
+                                                                                                    Nothing,
+                                                                                                    Nothing,
+                                                                                                    Nothing,
+                                                                                                    Nothing,
+                                                                                                    Nothing,
+                                                                                                    "RazonSocial",
+                                                                                                    OrdenadoDireccion.ASC,
+                                                                                                    1,
+                                                                                                    100,
+                                                                                                    Nothing).Result
 
-            Dim entCliente As EntidadClientes = New EntidadClientes()
-            entCliente.Codigo_Postal = codigoPostas
-            entCliente.Cuit = cli.Cuit
-            entCliente.Direccion = dir.Direccion
-            entCliente.Habilitado = cli.Habilitado
-            entCliente.id_Cliente = cli.Id
-            entCliente.Mail = dir.Email
-            entCliente.Observaciones = cli.Observaciones
-            entCliente.RazonSocial = cli.RazonSocial
-            entCliente.Telefono = dir.Telefono
-            entCliente.Bonificacion = cli.Bonificacion
+        Dim cpostal As Integer
 
-            Respuesta.Add(entCliente)
-        Next
+        clientesModel.ForEach(Sub(x)
+                                  Dim entCliente As EntidadClientes = New EntidadClientes()
+                                  entCliente.Codigo_Postal = If(Integer.TryParse(x.DomicilioFacturacion.CodigoPostal, cpostal), cpostal, 0)
+                                  entCliente.Cuit = x.Cuit
+                                  entCliente.Direccion = x.DomicilioFacturacion.Direccion
+                                  entCliente.Habilitado = 1
+                                  entCliente.id_Cliente = x.Id
+                                  entCliente.Mail = x.DomicilioFacturacion.Email
+                                  entCliente.Observaciones = x.Observaciones
+                                  entCliente.RazonSocial = x.RazonSocial
+                                  entCliente.Telefono = x.DomicilioFacturacion.Telefono
+                                  entCliente.Bonificacion = x.PorcentajeBonificacion
+                                  Respuesta.Add(entCliente)
+                              End Sub)
 
         Return Respuesta
     End Function

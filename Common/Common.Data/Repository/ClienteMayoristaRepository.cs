@@ -31,9 +31,6 @@ namespace Common.Data.Repository
             if (IdlistaPrecio != null)
                 ClientesMayoristas = ClientesMayoristas.Where(x => x.IdListaPrecio == IdlistaPrecio);
 
-            if (habilitado != null)
-                ClientesMayoristas = ClientesMayoristas.Where(x => x.Habilitado == habilitado);
-
             return ClientesMayoristas.Paginar(ordenadoPor, ordenarDireccion, pagina, itemsPorPagina, out totalElementos).ToListAsync();
         }
 
@@ -50,10 +47,16 @@ namespace Common.Data.Repository
         {
             AttachCliente(ref cliente);
 
-            if(cliente.DomicilioFacturacion != null)
+            if(cliente.DomicilioFacturacion?.Id > 0)
                 _context.Entry(cliente.DomicilioFacturacion).State = EntityState.Modified;
-            if (cliente.DomicilioEntrega != null)
+            else
+                cliente.DomicilioFacturacion = null;
+
+            if (cliente.DomicilioEntrega?.Id > 0)
                 _context.Entry(cliente.DomicilioEntrega).State = EntityState.Modified;
+            else
+                cliente.DomicilioEntrega = null;
+
             if (cliente != null)
                _context.Entry(cliente).State = EntityState.Modified;
             return _context.SaveChangesAsync();
@@ -81,20 +84,21 @@ namespace Common.Data.Repository
                                     .Include(x => x.DomicilioEntrega)
                                     .Include(x => x.DomicilioEntrega.Localidad)
                                     .Include(x => x.DomicilioEntrega.Provincia)
-                                    .Include(x => x.DomicilioEntrega.Distrito);
+                                    .Include(x => x.DomicilioEntrega.Distrito)
+                                    .Where(x => !x.Eliminado);
         }
 
         private void AttachCliente(ref ClienteMayorista cliente)
         {
             cliente.ListaPrecio = (ListaPrecio)_context.Attach(cliente.ListaPrecio);
 
-            if (cliente.DomicilioEntrega != null)
+            if (cliente.DomicilioEntrega?.Id > 0)
             {
                 cliente.DomicilioEntrega.Localidad = (Localidad)_context.Attach(cliente.DomicilioEntrega.Localidad);
                 cliente.DomicilioEntrega.Distrito = (Distrito)_context.Attach(cliente.DomicilioEntrega.Distrito);
                 cliente.DomicilioEntrega.Provincia = (Provincia)_context.Attach(cliente.DomicilioEntrega.Provincia);
             }
-            if (cliente.DomicilioFacturacion != null)
+            if (cliente.DomicilioFacturacion?.Id > 0)
             {
                 cliente.DomicilioFacturacion.Localidad = (Localidad)_context.Attach(cliente.DomicilioFacturacion.Localidad);
                 cliente.DomicilioFacturacion.Distrito = (Distrito)_context.Attach(cliente.DomicilioFacturacion.Distrito);

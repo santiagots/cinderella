@@ -32,7 +32,7 @@ Namespace Formularios.Cliente
         Public Property FacturacionCodigoPostal As String
         Public Property FacturacionTelefono As String
         Public Property FacturacionMail As String
-        Public Property EntregaId As Integer
+        Public Property EntregaId As Integer?
         Public Property EntregaDireccion As String
         Public Property EntregaProvincias As BindingList(Of KeyValuePair(Of Provincia, String)) = New BindingList(Of KeyValuePair(Of Provincia, String))()
         Public Property EntregaDistritos As BindingList(Of KeyValuePair(Of Distrito, String)) = New BindingList(Of KeyValuePair(Of Distrito, String))()
@@ -41,6 +41,5 @@ Namespace Formularios.Cliente
         Public Property EntregaDistritosSaleccionada As Distrito
         Public Property EntregaLocalidadesSaleccionada As Localidad
         Public Property EntregaCodigoPostal As String
-        Public Property Habilitado As String
     End Class
 End Namespace

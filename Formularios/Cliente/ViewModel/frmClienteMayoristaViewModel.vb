@@ -92,8 +92,15 @@ Namespace Formularios.Cliente
 
         Friend Async Function ActualizarAsync() As Task
             ValidarRequeridos(ModificacionClientes)
-            Dim clientes As ClienteMayorista = Mapper.Map(Of ClienteMayorista)(ModificacionClientes)
-            Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, clientes)
+            Dim cliente As ClienteMayorista = Mapper.Map(Of ClienteMayorista)(ModificacionClientes)
+            Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, cliente)
+        End Function
+
+        Friend Async Function EliminarAsync() As Task
+            ValidarRequeridos(ModificacionClientes)
+            Dim cliente As ClienteMayorista = Mapper.Map(Of ClienteMayorista)(ModificacionClientes)
+            cliente.Eliminar()
+            Await ClienteMayoristaService.ActualizarAsync(TipoBase.Remota, cliente)
         End Function
 
         Private Sub CargarHabilitado()

@@ -29,10 +29,10 @@ Partial Class frmTransporte
         Me.TabTransporte = New System.Windows.Forms.TabControl()
         Me.TbListado = New System.Windows.Forms.TabPage()
         Me.Paginado = New SistemaCinderella.Paginado()
+        Me.FrmTrasporteViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.FrmTrasporteViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label8 = New System.Windows.Forms.Label()
         Me.MaskedTextBox3 = New System.Windows.Forms.MaskedTextBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -95,9 +95,9 @@ Partial Class frmTransporte
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.TabTransporte.SuspendLayout()
         Me.TbListado.SuspendLayout()
+        CType(Me.FrmTrasporteViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
-        CType(Me.FrmTrasporteViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_Transporte, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TransportesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbAlta.SuspendLayout()
@@ -156,6 +156,10 @@ Partial Class frmTransporte
         Me.Paginado.TabIndex = 1
         Me.Paginado.TotalElementos = 0
         '
+        'FrmTrasporteViewModelBindingSource
+        '
+        Me.FrmTrasporteViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Cliente.frmTrasporteViewModel)
+        '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -176,7 +180,7 @@ Partial Class frmTransporte
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.44445!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.CheckBox1, 1, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.Label8, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.MaskedTextBox3, 4, 0)
@@ -206,10 +210,6 @@ Partial Class frmTransporte
         Me.CheckBox1.Size = New System.Drawing.Size(15, 39)
         Me.CheckBox1.TabIndex = 2
         Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'FrmTrasporteViewModelBindingSource
-        '
-        Me.FrmTrasporteViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Cliente.frmTrasporteViewModel)
         '
         'Label8
         '
@@ -470,7 +470,7 @@ Partial Class frmTransporte
         Me.Cb_Alt_Localidad.DisplayMember = "Value"
         Me.Cb_Alt_Localidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Alt_Localidad.FormattingEnabled = True
-        Me.Cb_Alt_Localidad.Location = New System.Drawing.Point(143, 153)
+        Me.Cb_Alt_Localidad.Location = New System.Drawing.Point(143, 154)
         Me.Cb_Alt_Localidad.Name = "Cb_Alt_Localidad"
         Me.Cb_Alt_Localidad.Size = New System.Drawing.Size(538, 23)
         Me.Cb_Alt_Localidad.TabIndex = 5
@@ -535,7 +535,7 @@ Partial Class frmTransporte
         Me.Cb_Alt_Distrito.DisplayMember = "Value"
         Me.Cb_Alt_Distrito.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Alt_Distrito.FormattingEnabled = True
-        Me.Cb_Alt_Distrito.Location = New System.Drawing.Point(143, 123)
+        Me.Cb_Alt_Distrito.Location = New System.Drawing.Point(143, 124)
         Me.Cb_Alt_Distrito.Name = "Cb_Alt_Distrito"
         Me.Cb_Alt_Distrito.Size = New System.Drawing.Size(538, 23)
         Me.Cb_Alt_Distrito.TabIndex = 4
@@ -566,7 +566,7 @@ Partial Class frmTransporte
         Me.Cb_Alt_Provincia.DisplayMember = "Value"
         Me.Cb_Alt_Provincia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Alt_Provincia.FormattingEnabled = True
-        Me.Cb_Alt_Provincia.Location = New System.Drawing.Point(143, 93)
+        Me.Cb_Alt_Provincia.Location = New System.Drawing.Point(143, 94)
         Me.Cb_Alt_Provincia.Name = "Cb_Alt_Provincia"
         Me.Cb_Alt_Provincia.Size = New System.Drawing.Size(538, 23)
         Me.Cb_Alt_Provincia.TabIndex = 3
@@ -776,7 +776,7 @@ Partial Class frmTransporte
         Me.Cb_Mod_Localidad.DisplayMember = "Value"
         Me.Cb_Mod_Localidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Mod_Localidad.FormattingEnabled = True
-        Me.Cb_Mod_Localidad.Location = New System.Drawing.Point(143, 154)
+        Me.Cb_Mod_Localidad.Location = New System.Drawing.Point(143, 153)
         Me.Cb_Mod_Localidad.Name = "Cb_Mod_Localidad"
         Me.Cb_Mod_Localidad.Size = New System.Drawing.Size(538, 23)
         Me.Cb_Mod_Localidad.TabIndex = 5
@@ -841,7 +841,7 @@ Partial Class frmTransporte
         Me.Cb_Mod_Distrito.DisplayMember = "Value"
         Me.Cb_Mod_Distrito.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Mod_Distrito.FormattingEnabled = True
-        Me.Cb_Mod_Distrito.Location = New System.Drawing.Point(143, 124)
+        Me.Cb_Mod_Distrito.Location = New System.Drawing.Point(143, 123)
         Me.Cb_Mod_Distrito.Name = "Cb_Mod_Distrito"
         Me.Cb_Mod_Distrito.Size = New System.Drawing.Size(538, 23)
         Me.Cb_Mod_Distrito.TabIndex = 4
@@ -872,7 +872,7 @@ Partial Class frmTransporte
         Me.Cb_Mod_Provincia.DisplayMember = "Value"
         Me.Cb_Mod_Provincia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Cb_Mod_Provincia.FormattingEnabled = True
-        Me.Cb_Mod_Provincia.Location = New System.Drawing.Point(143, 94)
+        Me.Cb_Mod_Provincia.Location = New System.Drawing.Point(143, 93)
         Me.Cb_Mod_Provincia.Name = "Cb_Mod_Provincia"
         Me.Cb_Mod_Provincia.Size = New System.Drawing.Size(538, 23)
         Me.Cb_Mod_Provincia.TabIndex = 3
@@ -958,10 +958,10 @@ Partial Class frmTransporte
         Me.Text = "Administración de Trasnportes"
         Me.TabTransporte.ResumeLayout(False)
         Me.TbListado.ResumeLayout(False)
+        CType(Me.FrmTrasporteViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
-        CType(Me.FrmTrasporteViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DG_Transporte, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TransportesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbAlta.ResumeLayout(False)

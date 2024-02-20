@@ -41,6 +41,7 @@ Partial Class frmClienteMayorista
         Me.CuentaCorrienteMontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CuentaCorriente = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Modificar = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Eliminar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.AltaClienteFiltroClientesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label49 = New System.Windows.Forms.Label()
         Me.txt_TotalSaldoCuentaCorriente = New System.Windows.Forms.TextBox()
@@ -165,9 +166,7 @@ Partial Class frmClienteMayorista
         Me.Btn_Agregar = New System.Windows.Forms.Button()
         Me.TbMod = New System.Windows.Forms.TabPage()
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel18 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label51 = New System.Windows.Forms.Label()
-        Me.chk_Habilitado_Mod = New System.Windows.Forms.CheckBox()
+        Me.Btn_Eliminar = New System.Windows.Forms.Button()
         Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
@@ -285,7 +284,6 @@ Partial Class frmClienteMayorista
         CType(Me.PercentUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TbMod.SuspendLayout()
         Me.GB_Modificacion.SuspendLayout()
-        Me.TableLayoutPanel18.SuspendLayout()
         Me.TableLayoutPanel8.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.TableLayoutPanel9.SuspendLayout()
@@ -391,7 +389,7 @@ Partial Class frmClienteMayorista
         Me.DG_Clientes.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Clientes.AutoGenerateColumns = False
         Me.DG_Clientes.ColumnHeadersHeight = 30
-        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Id, Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn, Me.NotaPedidoMontoDataGridViewTextBoxColumn, Me.CuentaCorrienteMontoDataGridViewTextBoxColumn, Me.CuentaCorriente, Me.Modificar})
+        Me.DG_Clientes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Id, Me.RazonSocialDataGridViewTextBoxColumn, Me.CuitDataGridViewTextBoxColumn, Me.NotaPedidoMontoDataGridViewTextBoxColumn, Me.CuentaCorrienteMontoDataGridViewTextBoxColumn, Me.CuentaCorriente, Me.Modificar, Me.Eliminar})
         Me.DG_Clientes.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DG_Clientes.DataSource = Me.AltaClienteFiltroClientesBindingSource
         Me.DG_Clientes.Dock = System.Windows.Forms.DockStyle.Fill
@@ -479,6 +477,15 @@ Partial Class frmClienteMayorista
         Me.Modificar.Name = "Modificar"
         Me.Modificar.ReadOnly = True
         Me.Modificar.Width = 5
+        '
+        'Eliminar
+        '
+        Me.Eliminar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Eliminar.HeaderText = ""
+        Me.Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Boton_Eliminar
+        Me.Eliminar.Name = "Eliminar"
+        Me.Eliminar.ReadOnly = True
+        Me.Eliminar.Width = 5
         '
         'AltaClienteFiltroClientesBindingSource
         '
@@ -1942,7 +1949,7 @@ Partial Class frmClienteMayorista
         Me.GB_Modificacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel18)
+        Me.GB_Modificacion.Controls.Add(Me.Btn_Eliminar)
         Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel8)
         Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel11)
         Me.GB_Modificacion.Controls.Add(Me.TableLayoutPanel12)
@@ -1958,41 +1965,20 @@ Partial Class frmClienteMayorista
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
         '
-        'TableLayoutPanel18
+        'Btn_Eliminar
         '
-        Me.TableLayoutPanel18.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel18.ColumnCount = 2
-        Me.TableLayoutPanel18.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
-        Me.TableLayoutPanel18.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel18.Controls.Add(Me.Label51, 0, 0)
-        Me.TableLayoutPanel18.Controls.Add(Me.chk_Habilitado_Mod, 1, 0)
-        Me.TableLayoutPanel18.Location = New System.Drawing.Point(6, 650)
-        Me.TableLayoutPanel18.Name = "TableLayoutPanel18"
-        Me.TableLayoutPanel18.RowCount = 1
-        Me.TableLayoutPanel18.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel18.Size = New System.Drawing.Size(383, 40)
-        Me.TableLayoutPanel18.TabIndex = 91
-        '
-        'Label51
-        '
-        Me.Label51.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label51.AutoSize = True
-        Me.Label51.Location = New System.Drawing.Point(3, 12)
-        Me.Label51.Name = "Label51"
-        Me.Label51.Size = New System.Drawing.Size(63, 15)
-        Me.Label51.TabIndex = 80
-        Me.Label51.Text = "Habilitado"
-        '
-        'chk_Habilitado_Mod
-        '
-        Me.chk_Habilitado_Mod.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.chk_Habilitado_Mod.AutoSize = True
-        Me.chk_Habilitado_Mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ModificacionClienteMayoristaDetalleBindingSource, "Habilitado", True))
-        Me.chk_Habilitado_Mod.Location = New System.Drawing.Point(143, 13)
-        Me.chk_Habilitado_Mod.Name = "chk_Habilitado_Mod"
-        Me.chk_Habilitado_Mod.Size = New System.Drawing.Size(15, 14)
-        Me.chk_Habilitado_Mod.TabIndex = 125
-        Me.chk_Habilitado_Mod.UseVisualStyleBackColor = True
+        Me.Btn_Eliminar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Eliminar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
+        Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(556, 650)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
+        Me.Btn_Eliminar.TabIndex = 129
+        Me.Btn_Eliminar.Text = "Eliminar"
+        Me.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Eliminar.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel8
         '
@@ -2806,7 +2792,7 @@ Partial Class frmClienteMayorista
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(556, 650)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(450, 650)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 128
@@ -2926,8 +2912,6 @@ Partial Class frmClienteMayorista
         CType(Me.PercentUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TbMod.ResumeLayout(False)
         Me.GB_Modificacion.ResumeLayout(False)
-        Me.TableLayoutPanel18.ResumeLayout(False)
-        Me.TableLayoutPanel18.PerformLayout()
         Me.TableLayoutPanel8.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.TableLayoutPanel9.ResumeLayout(False)
@@ -3111,9 +3095,6 @@ Partial Class frmClienteMayorista
     Friend WithEvents Label39 As Label
     Friend WithEvents cmb_Corredor_Buscar As ComboBox
     Friend WithEvents lbl_Msg As Label
-    Friend WithEvents TableLayoutPanel18 As TableLayoutPanel
-    Friend WithEvents Label51 As Label
-    Friend WithEvents chk_Habilitado_Mod As CheckBox
     Friend WithEvents Label52 As Label
     Friend WithEvents cmb_Corredor_Filtro As ComboBox
     Friend WithEvents Label53 As Label
@@ -3183,4 +3164,6 @@ Partial Class frmClienteMayorista
     Friend WithEvents CuentaCorrienteMontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CuentaCorriente As DataGridViewImageColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
+    Friend WithEvents Eliminar As DataGridViewImageColumn
+    Friend WithEvents Btn_Eliminar As Button
 End Class
