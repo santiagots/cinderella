@@ -25,11 +25,6 @@ Partial Class frmComexCompra
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmComexCompra))
         Me.Gb_Producto = New System.Windows.Forms.GroupBox()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Btn_Buscar = New System.Windows.Forms.Button()
-        Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
-        Me.Btn_Agregar = New System.Windows.Forms.Button()
-        Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.DG_Productos = New SistemaCinderella.CustomDataGrid()
         Me.ProductosQuitar = New System.Windows.Forms.DataGridViewImageColumn()
@@ -50,13 +45,18 @@ Partial Class frmComexCompra
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Btn_Finalizar = New System.Windows.Forms.Button()
+        Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
+        Me.Btn_Agregar = New System.Windows.Forms.Button()
+        Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
+        Me.Btn_Buscar = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Gb_Producto.SuspendLayout()
-        Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'Gb_Producto
@@ -71,76 +71,6 @@ Partial Class frmComexCompra
         Me.Gb_Producto.TabIndex = 11
         Me.Gb_Producto.TabStop = False
         Me.Gb_Producto.Text = "PRODUCTO"
-        '
-        'TableLayoutPanel4
-        '
-        Me.TableLayoutPanel4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel4.ColumnCount = 4
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Buscar, 3, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Agregar, 2, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.txt_CodigoBarra, 1, 0)
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(6, 19)
-        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 2
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(920, 44)
-        Me.TableLayoutPanel4.TabIndex = 30
-        '
-        'Btn_Buscar
-        '
-        Me.Btn_Buscar.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.Btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
-        Me.Btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Buscar.Location = New System.Drawing.Point(883, 5)
-        Me.Btn_Buscar.Name = "Btn_Buscar"
-        Me.Btn_Buscar.Size = New System.Drawing.Size(34, 34)
-        Me.Btn_Buscar.TabIndex = 9
-        Me.Btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Buscar.UseVisualStyleBackColor = True
-        '
-        'lbl_CodigoBarra
-        '
-        Me.lbl_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_CodigoBarra.AutoSize = True
-        Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 14)
-        Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
-        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(169, 15)
-        Me.lbl_CodigoBarra.TabIndex = 7
-        Me.lbl_CodigoBarra.Text = "Nombre / Código"
-        '
-        'Btn_Agregar
-        '
-        Me.Btn_Agregar.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
-        Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(777, 5)
-        Me.Btn_Agregar.Name = "Btn_Agregar"
-        Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
-        Me.Btn_Agregar.TabIndex = 1
-        Me.Btn_Agregar.Text = "Agregar"
-        Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Btn_Agregar.UseVisualStyleBackColor = True
-        '
-        'txt_CodigoBarra
-        '
-        Me.txt_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_CodigoBarra.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.txt_CodigoBarra.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.txt_CodigoBarra.Enabled = False
-        Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_CodigoBarra.Location = New System.Drawing.Point(178, 11)
-        Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(589, 21)
-        Me.txt_CodigoBarra.TabIndex = 0
         '
         'TableLayoutPanel1
         '
@@ -380,7 +310,7 @@ Partial Class frmComexCompra
         Me.Btn_Finalizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Finalizar.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
         Me.Btn_Finalizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Finalizar.Location = New System.Drawing.Point(847, 690)
+        Me.Btn_Finalizar.Location = New System.Drawing.Point(746, 690)
         Me.Btn_Finalizar.Name = "Btn_Finalizar"
         Me.Btn_Finalizar.Size = New System.Drawing.Size(95, 35)
         Me.Btn_Finalizar.TabIndex = 37
@@ -388,18 +318,88 @@ Partial Class frmComexCompra
         Me.Btn_Finalizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Finalizar.UseVisualStyleBackColor = True
         '
+        'txt_CodigoBarra
+        '
+        Me.txt_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_CodigoBarra.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txt_CodigoBarra.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.txt_CodigoBarra.Enabled = False
+        Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_CodigoBarra.Location = New System.Drawing.Point(178, 11)
+        Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
+        Me.txt_CodigoBarra.Size = New System.Drawing.Size(589, 21)
+        Me.txt_CodigoBarra.TabIndex = 0
+        '
+        'Btn_Agregar
+        '
+        Me.Btn_Agregar.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.Btn_Agregar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
+        Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Agregar.Location = New System.Drawing.Point(777, 5)
+        Me.Btn_Agregar.Name = "Btn_Agregar"
+        Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
+        Me.Btn_Agregar.TabIndex = 1
+        Me.Btn_Agregar.Text = "Agregar"
+        Me.Btn_Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Agregar.UseVisualStyleBackColor = True
+        '
+        'lbl_CodigoBarra
+        '
+        Me.lbl_CodigoBarra.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_CodigoBarra.AutoSize = True
+        Me.lbl_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_CodigoBarra.Location = New System.Drawing.Point(3, 14)
+        Me.lbl_CodigoBarra.Name = "lbl_CodigoBarra"
+        Me.lbl_CodigoBarra.Size = New System.Drawing.Size(169, 15)
+        Me.lbl_CodigoBarra.TabIndex = 7
+        Me.lbl_CodigoBarra.Text = "Nombre / Código"
+        '
+        'Btn_Buscar
+        '
+        Me.Btn_Buscar.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.Btn_Buscar.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
+        Me.Btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Btn_Buscar.Location = New System.Drawing.Point(883, 5)
+        Me.Btn_Buscar.Name = "Btn_Buscar"
+        Me.Btn_Buscar.Size = New System.Drawing.Size(34, 34)
+        Me.Btn_Buscar.TabIndex = 9
+        Me.Btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Btn_Buscar.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel4.ColumnCount = 4
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Buscar, 3, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Btn_Agregar, 2, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.txt_CodigoBarra, 1, 0)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(6, 19)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 2
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(920, 44)
+        Me.TableLayoutPanel4.TabIndex = 30
+        '
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.pdf_Exportar
+        Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.Conectado_32
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button1.Location = New System.Drawing.Point(746, 690)
+        Me.Button1.Location = New System.Drawing.Point(847, 690)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(95, 35)
         Me.Button1.TabIndex = 38
-        Me.Button1.Text = "Exportar"
+        Me.Button1.Text = "Guardar"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -418,23 +418,18 @@ Partial Class frmComexCompra
         Me.Name = "frmComexCompra"
         Me.Text = "Orden de Compra COMEX"
         Me.Gb_Producto.ResumeLayout(False)
-        Me.TableLayoutPanel4.ResumeLayout(False)
-        Me.TableLayoutPanel4.PerformLayout()
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Gb_Producto As GroupBox
-    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
-    Friend WithEvents Btn_Buscar As Button
-    Friend WithEvents lbl_CodigoBarra As Label
-    Friend WithEvents Btn_Agregar As Button
-    Friend WithEvents txt_CodigoBarra As TextBox
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents DG_Productos As CustomDataGrid
     Friend WithEvents ProductosQuitar As DataGridViewImageColumn
@@ -455,5 +450,10 @@ Partial Class frmComexCompra
     Friend WithEvents Label4 As Label
     Friend WithEvents Btn_Cancelar As Button
     Friend WithEvents Btn_Finalizar As Button
+    Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents Btn_Buscar As Button
+    Friend WithEvents lbl_CodigoBarra As Label
+    Friend WithEvents Btn_Agregar As Button
+    Friend WithEvents txt_CodigoBarra As TextBox
     Friend WithEvents Button1 As Button
 End Class

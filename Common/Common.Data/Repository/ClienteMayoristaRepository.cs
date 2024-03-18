@@ -92,13 +92,13 @@ namespace Common.Data.Repository
         {
             cliente.ListaPrecio = (ListaPrecio)_context.Attach(cliente.ListaPrecio);
 
-            if (cliente.DomicilioEntrega?.Id > 0)
+            if (cliente.DomicilioEntrega != null)
             {
                 cliente.DomicilioEntrega.Localidad = (Localidad)_context.Attach(cliente.DomicilioEntrega.Localidad);
                 cliente.DomicilioEntrega.Distrito = (Distrito)_context.Attach(cliente.DomicilioEntrega.Distrito);
                 cliente.DomicilioEntrega.Provincia = (Provincia)_context.Attach(cliente.DomicilioEntrega.Provincia);
             }
-            if (cliente.DomicilioFacturacion?.Id > 0)
+            if (cliente.DomicilioFacturacion != null)
             {
                 cliente.DomicilioFacturacion.Localidad = (Localidad)_context.Attach(cliente.DomicilioFacturacion.Localidad);
                 cliente.DomicilioFacturacion.Distrito = (Distrito)_context.Attach(cliente.DomicilioFacturacion.Distrito);

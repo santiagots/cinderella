@@ -807,7 +807,11 @@ Public Class NegStock
                         If (codigosYStock.ContainsKey(codigo)) Then
                             For i = 0 To 11
                                 If (x(i) Is DBNull.Value OrElse String.IsNullOrWhiteSpace(x(i))) Then
-                                    x(i) = codigosYStock(codigo)(i)
+                                    If i = 7 Then ''Si la columna es "StockActual" y no tiene valor se tiene que completar con 0
+                                        x(i) = 0
+                                    Else
+                                        x(i) = codigosYStock(codigo)(i)
+                                    End If
                                 End If
                             Next
                             If Int(codigosYStock(codigo)("StockActual")) > 0 Then
