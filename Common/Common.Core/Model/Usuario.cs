@@ -12,5 +12,10 @@ namespace Common.Core.Model
         public DateTime Fecha { get; private set; }
         public bool Habilitado { get; private set; }
         public int IdPerfil { get; private set; }
+
+        public override string ToString()
+        {
+            return $"{Apellido} {Nombre}";
+        }
     }
 }

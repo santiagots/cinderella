@@ -1,7 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
 Imports AutoMapper
-Imports Producto.Core.Model.ProductoAgreggate
+Imports Common.Core.Enum
+Imports Common.Core.Model
+Imports Common.Data.Service
 
 Namespace Formularios.Producto
     Public Class frmTipoProductoViewModel
@@ -20,7 +22,7 @@ Namespace Formularios.Producto
         End Property
 
         Friend Async Function BuscarAsync() As Task
-            Dim TiposProductosModel As List(Of TipoProducto) = Await Task.Run(Function() Servicio.BuscarTipoProducto(NombreBusqueda))
+            Dim TiposProductosModel As List(Of TipoProducto) = Await TipoProductoService.BuscarTipoProducto(TipoBase.Remota, NombreBusqueda)
 
             If TiposProductosModel Is Nothing Then
                 TiposProductosModel = New List(Of TipoProducto)()
@@ -32,19 +34,19 @@ Namespace Formularios.Producto
 
         Friend Async Function AltaAsync() As Task
             Dim tipoProducto As TipoProducto = New TipoProducto(TipoProductoNuevo.Nombre, TipoProductoNuevo.Habilitado)
-            Await Task.Run(Sub() Servicio.AltaTipoProducto(tipoProducto))
+            Await TipoProductoService.AltaTipoProducto(tipoProducto)
         End Function
 
         Friend Async Function ModificarAsync() As Task
             TipoProductoSeleccionadoModel.Modificar(TipoProductoMod.Nombre, TipoProductoMod.Habilitado)
-            Await Task.Run(Sub() Servicio.ModificarTipoProducto(TipoProductoSeleccionadoModel))
+            Await TipoProductoService.ModificarTipoProducto(TipoProductoSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.TiposProductos))
         End Function
 
         Friend Async Function EliminarAsync() As Task
             TipoProductoSeleccionadoModel.Eliminar()
 
-            Await Task.Run(Sub() Servicio.ModificarTipoProducto(TipoProductoSeleccionadoModel))
+            Await TipoProductoService.ModificarTipoProducto(TipoProductoSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.TiposProductos))
         End Function
 
@@ -54,7 +56,7 @@ Namespace Formularios.Producto
         End Sub
 
         Friend Async Function ObtenerSupplierAsync(id As Integer) As Task
-            TipoProductoSeleccionadoModel = Await Task.Run(Function() Servicio.ObtenerTipoProducto(id))
+            TipoProductoSeleccionadoModel = Await TipoProductoService.ObtenerTipoProducto(id)
 
             TipoProductoMod = Mapper.Map(Of TipoProductoItemViewModel)(TipoProductoSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.TipoProductoMod))

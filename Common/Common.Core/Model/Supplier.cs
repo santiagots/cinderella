@@ -1,7 +1,6 @@
 ﻿using Common.Core.Exceptions;
-using Common.Core.Model;
 
-namespace Producto.Core.Model.ProductoAgreggate
+namespace Common.Core.Model
 {
     public class Supplier : Entity<int>
     {

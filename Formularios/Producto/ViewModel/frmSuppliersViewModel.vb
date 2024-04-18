@@ -1,7 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
 Imports AutoMapper
-Imports Producto.Core.Model.ProductoAgreggate
+Imports Common.Core.Enum
+Imports Common.Core.Model
+Imports Common.Data.Service
 
 Namespace Formularios.Producto
     Public Class frmSuppliersViewModel
@@ -20,7 +22,7 @@ Namespace Formularios.Producto
         End Property
 
         Friend Async Function BuscarAsync() As Task
-            Dim suppliersModel As List(Of Supplier) = Await Task.Run(Function() Servicio.BuscarSupplier(NombreBusqueda))
+            Dim suppliersModel As List(Of Supplier) = Await SupplierService.BuscarSupplier(TipoBase.Remota, NombreBusqueda)
 
             If suppliersModel Is Nothing Then
                 suppliersModel = New List(Of Supplier)()
@@ -32,19 +34,19 @@ Namespace Formularios.Producto
 
         Friend Async Function AltaAsync() As Task
             Dim supplier As Supplier = New Supplier(SupplierNuevo.Nombre, SupplierNuevo.POL, SupplierNuevo.DeliveryTime, SupplierNuevo.Habilitado)
-            Await Task.Run(Sub() Servicio.AltaSupplier(supplier))
+            Await SupplierService.AltaSupplier(supplier)
         End Function
 
         Friend Async Function ModificarAsync() As Task
             SuppliersSeleccionadoModel.Modificar(SuppliersMod.Nombre, SuppliersMod.POL, SuppliersMod.DeliveryTime, SuppliersMod.Habilitado)
-            Await Task.Run(Sub() Servicio.ModificarSupplier(SuppliersSeleccionadoModel))
+            Await SupplierService.ModificarSupplier(SuppliersSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.Suppliers))
         End Function
 
         Friend Async Function EliminarAsync() As Task
             SuppliersSeleccionadoModel.Eliminar()
 
-            Await Task.Run(Sub() Servicio.ModificarSupplier(SuppliersSeleccionadoModel))
+            Await SupplierService.ModificarSupplier(SuppliersSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.Suppliers))
         End Function
 
@@ -54,7 +56,7 @@ Namespace Formularios.Producto
         End Sub
 
         Friend Async Function ObtenerSupplierAsync(id As Integer) As Task
-            SuppliersSeleccionadoModel = Await Task.Run(Function() Servicio.ObtenerSupplier(id))
+            SuppliersSeleccionadoModel = Await SupplierService.ObtenerSupplier(id)
 
             SuppliersMod = Mapper.Map(Of SupplierItemViewModel)(SuppliersSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.SuppliersMod))

@@ -1,7 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
 Imports AutoMapper
-Imports Model = Producto.Core.Model.ProductoAgreggate
+Imports Common.Core.Enum
+Imports Common.Data.Service
+Imports Model = Common.Core.Model
 
 Namespace Formularios.Producto
     Public Class frmColoresViewModel
@@ -20,7 +22,7 @@ Namespace Formularios.Producto
         End Property
 
         Friend Async Function BuscarAsync() As Task
-            Dim ColoresModel As List(Of Model.Color) = Await Task.Run(Function() Servicio.BuscarColores(NombreBusqueda))
+            Dim ColoresModel As List(Of Model.Color) = Await ColorService.BuscarColores(TipoBase.Remota, NombreBusqueda)
 
             If ColoresModel Is Nothing Then
                 ColoresModel = New List(Of Model.Color)()
@@ -32,19 +34,19 @@ Namespace Formularios.Producto
 
         Friend Async Function AltaAsync() As Task
             Dim color As Model.Color = New Model.Color(ColorNuevo.Nombre, ColorNuevo.Habilitado)
-            Await Task.Run(Sub() Servicio.AltaColor(color))
+            Await ColorService.AltaColor(color)
         End Function
 
         Friend Async Function ModificarAsync() As Task
             ColorSeleccionadoModel.Modificar(ColorMod.Nombre, ColorMod.Habilitado)
-            Await Task.Run(Sub() Servicio.ModificarColor(ColorSeleccionadoModel))
+            Await ColorService.ModificarColor(ColorSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.Colores))
         End Function
 
         Friend Async Function EliminarAsync() As Task
             ColorSeleccionadoModel.Eliminar()
 
-            Await Task.Run(Sub() Servicio.ModificarColor(ColorSeleccionadoModel))
+            Await ColorService.ModificarColor(ColorSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.Colores))
         End Function
 
@@ -54,7 +56,7 @@ Namespace Formularios.Producto
         End Sub
 
         Friend Async Function ObtenerSupplierAsync(id As Integer) As Task
-            ColorSeleccionadoModel = Await Task.Run(Function() Servicio.ObtenerColor(id))
+            ColorSeleccionadoModel = Await ColorService.ObtenerColor(id)
 
             ColorMod = Mapper.Map(Of ColorItemViewModel)(ColorSeleccionadoModel)
             NotifyPropertyChanged(NameOf(Me.ColorMod))

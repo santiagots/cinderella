@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-        sql5090.site4now.net.DB_9B1463_cinderellaProd    -  This database will be modified
+        sql5090.site4now.net.DB_9B1463_cinderella    -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 2/22/2024 10:44:27 PM
+Script created by SQL Compare version 14.2.9.15508 from Red Gate Software Ltd at 4/18/2024 9:34:50 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -24,12 +24,76 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Altering [dbo].[CLIENTEMAYORISTA]'
+PRINT N'Rebuilding [dbo].[TIPO_PRODUCTO]'
+GO
+CREATE TABLE [dbo].[RG_Recovery_1_TIPO_PRODUCTO]
+(
+[Id] [int] NOT NULL,
+[Nombre] [varchar] (255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Habilitado] [bit] NOT NULL,
+[Borrado] [bit] NOT NULL
+)
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-IF (COL_LENGTH(N'[dbo].[CLIENTEMAYORISTA]', N'Habilitado') IS NOT NULL) AND (COL_LENGTH(N'[dbo].[CLIENTEMAYORISTA]', N'Eliminado') IS NULL)
-EXEC sp_rename N'[dbo].[CLIENTEMAYORISTA].[Habilitado]', N'Eliminado', N'COLUMN'
+INSERT INTO [dbo].[RG_Recovery_1_TIPO_PRODUCTO]([Id], [Nombre], [Habilitado], [Borrado]) SELECT [Id], [Nombre], [Habilitado], [Borrado] FROM [dbo].[TIPO_PRODUCTO]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DROP TABLE [dbo].[TIPO_PRODUCTO]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+IF (OBJECT_ID(N'[dbo].[RG_Recovery_1_TIPO_PRODUCTO]', 'U') IS NOT NULL) AND (OBJECT_ID(N'[dbo].[TIPO_PRODUCTO]', 'U') IS NULL)
+EXEC sp_rename N'[dbo].[RG_Recovery_1_TIPO_PRODUCTO]', N'TIPO_PRODUCTO', N'OBJECT'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[NUEVA_COMEX_ORDEN_COMPRA]'
+GO
+IF OBJECT_ID(N'[dbo].[NUEVA_COMEX_ORDEN_COMPRA]', 'U') IS NULL
+CREATE TABLE [dbo].[NUEVA_COMEX_ORDEN_COMPRA]
+(
+[Id] [int] NOT NULL IDENTITY(1, 1),
+[id_Sucursal] [int] NOT NULL,
+[id_Empleado] [int] NOT NULL,
+[id_Supplier] [int] NOT NULL,
+[TerminosDePago] [varchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[PenalidadesPorDemora] [varchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[FechaDeEnvio] [varchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Estado] [int] NOT NULL,
+[Fecha] [datetime] NOT NULL,
+[FechaEdicion] [datetime] NOT NULL,
+[MotivoAnulado] [varchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[FechaAnulado] [datetime] NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_NUEVA_COMEX_ORDEN_COMPRA] on [dbo].[NUEVA_COMEX_ORDEN_COMPRA]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_COMEX_ORDEN_COMPRA]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_COMEX_ORDEN_COMPRA]', 'U'))
+ALTER TABLE [dbo].[NUEVA_COMEX_ORDEN_COMPRA] ADD CONSTRAINT [PK_NUEVA_COMEX_ORDEN_COMPRA] PRIMARY KEY CLUSTERED  ([Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[NUEVA_COMEX_ORDEN_COMPRA_ITEMS]'
+GO
+IF OBJECT_ID(N'[dbo].[NUEVA_COMEX_ORDEN_COMPRA_ITEMS]', 'U') IS NULL
+CREATE TABLE [dbo].[NUEVA_COMEX_ORDEN_COMPRA_ITEMS]
+(
+[Id] [int] NOT NULL IDENTITY(1, 1),
+[IdOrdenCompra] [int] NOT NULL,
+[IdProducto] [int] NOT NULL,
+[CantidadCajas] [int] NOT NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_NUEVA_COMEX_ORDEN_COMPRA_ITEMS] on [dbo].[NUEVA_COMEX_ORDEN_COMPRA_ITEMS]'
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PK_NUEVA_COMEX_ORDEN_COMPRA_ITEMS]', 'PK') AND parent_object_id = OBJECT_ID(N'[dbo].[NUEVA_COMEX_ORDEN_COMPRA_ITEMS]', 'U'))
+ALTER TABLE [dbo].[NUEVA_COMEX_ORDEN_COMPRA_ITEMS] ADD CONSTRAINT [PK_NUEVA_COMEX_ORDEN_COMPRA_ITEMS] PRIMARY KEY CLUSTERED  ([Id])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

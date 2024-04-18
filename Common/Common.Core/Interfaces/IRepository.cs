@@ -9,6 +9,7 @@ namespace Common.Core.Interfaces
     public interface IRepository<TEntity>
     {
         IEnumerable<TEntity> List();
+        Task<List<TEntity>> ListAsync();
         TEntity GetById(long id);
         Task<TEntity> GetByIdAsync(long id);
         void Insert(TEntity entity);

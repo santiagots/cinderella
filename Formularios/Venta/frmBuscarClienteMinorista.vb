@@ -2,7 +2,6 @@
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports SistemaCinderella.Formularios.Venta
-Imports SistemaCinderella.VistaModelo.Ventas
 Imports Ventas.Core.Model.BaseAgreggate
 
 Public Class frmBuscarClienteMinorista

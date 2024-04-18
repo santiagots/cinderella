@@ -190,6 +190,7 @@ Partial Class frmVentasAdministracion
         Me.DG_Ventas.Name = "DG_Ventas"
         Me.DG_Ventas.ReadOnly = True
         Me.DG_Ventas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
+        Me.DG_Ventas.RowHeadersVisible = False
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DG_Ventas.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.DG_Ventas.RowTemplate.Height = 30

@@ -1,18 +1,17 @@
 ﻿using Common.Core.Exceptions;
-using Common.Core.Model;
 
-namespace Producto.Core.Model.ProductoAgreggate
+namespace Common.Core.Model
 {
-    public class TipoProducto : Entity<int>
+    public class Color : Entity<int>
     {
         public string Nombre { get; set; }
         public bool Habilitado { get; set; }
         public bool Borrado { get; set; }
 
-        public TipoProducto() : base()
+        public Color() : base()
         { }
 
-        public TipoProducto(string nombre, bool habilitado)
+        public Color(string nombre, bool habilitado)
         {
             Nombre = nombre;
             Habilitado = habilitado;
@@ -24,7 +23,7 @@ namespace Producto.Core.Model.ProductoAgreggate
         public void Modificar(string nombre, bool habilitado)
         {
             if (string.IsNullOrEmpty(nombre))
-                throw new NegocioException("Error al registrar el tipo de producto. El campo nombre no pude ser vacío.");
+                throw new NegocioException("Error al registrar el Color. El campo nombre no pude ser vacío.");
 
             Nombre = nombre;
             Habilitado = habilitado;

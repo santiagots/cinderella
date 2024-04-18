@@ -40,9 +40,9 @@ Namespace Formularios.Producto
             .ForMember(Function(des) des.IVA, Sub(opt) opt.MapFrom(Function(src) src.IVA.Valor.ToString("p")))
 
 
-            CreateMap(Of Model.Color, ColorItemViewModel)().ReverseMap()
+            CreateMap(Of Color, ColorItemViewModel)().ReverseMap()
 
-            CreateMap(Of Model.TipoProducto, TipoProductoItemViewModel)().ReverseMap()
+            CreateMap(Of TipoProducto, TipoProductoItemViewModel)().ReverseMap()
 
             CreateMap(Of Supplier, SupplierItemViewModel)().ReverseMap()
 

@@ -1,9 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmBuscarProductoComex
-    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,35 +19,55 @@ Partial Class frmBuscarProductoComex
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.FrmBuscarProductoComexViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.ComboBox3 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.SuppliersBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.TiposProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Cb_ListaPrecio = New System.Windows.Forms.ComboBox()
+        Me.ColorsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.ComboBox4 = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.Btn_Limpiar = New System.Windows.Forms.Button()
-        Me.DG_Productos = New System.Windows.Forms.DataGridView()
-        Me.id_Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Nombre = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btn_Buscar = New System.Windows.Forms.Button()
+        Me.DG_Productos = New SistemaCinderella.CustomDataGrid()
+        Me.SupplierCodeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QtyOfLightsDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BoxSizeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CodigoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ModeloDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NombreDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColorDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductSizeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FOBUSDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FOBRMBDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.InPackingDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PackingDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.UCBMDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ProductosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.FrmBuscarProductoComexViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SuppliersBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TiposProductosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ColorsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ProductosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -59,8 +78,8 @@ Partial Class frmBuscarProductoComex
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox1.Controls.Add(Me.lbl_Msg)
         Me.GroupBox1.Controls.Add(Me.Btn_Limpiar)
-        Me.GroupBox1.Controls.Add(Me.DG_Productos)
         Me.GroupBox1.Controls.Add(Me.btn_Buscar)
+        Me.GroupBox1.Controls.Add(Me.DG_Productos)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
@@ -74,26 +93,24 @@ Partial Class frmBuscarProductoComex
         Me.TableLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel1.ColumnCount = 8
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66666!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66666!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667!))
-        Me.TableLayoutPanel1.Controls.Add(Me.TextBox3, 1, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label8, 0, 2)
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334!))
+        Me.TableLayoutPanel1.Controls.Add(Me.TextBox1, 7, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.TextBox3, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ComboBox3, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.ComboBox2, 7, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ComboBox1, 7, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label3, 3, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label2, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Cb_ListaPrecio, 4, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label4, 6, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label5, 6, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.ComboBox4, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label8, 0, 1)
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(13, 20)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
@@ -101,96 +118,86 @@ Partial Class frmBuscarProductoComex
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(757, 104)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(757, 71)
         Me.TableLayoutPanel1.TabIndex = 12
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmBuscarProductoComexViewModelBindingSource, "CantidadLuces", True))
+        Me.TextBox1.Location = New System.Drawing.Point(610, 42)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(144, 21)
+        Me.TextBox1.TabIndex = 13
+        '
+        'FrmBuscarProductoComexViewModelBindingSource
+        '
+        Me.FrmBuscarProductoComexViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Comex.frmBuscarProductoComexViewModel)
         '
         'TextBox3
         '
         Me.TextBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox3, 7)
-        Me.TextBox3.Location = New System.Drawing.Point(122, 76)
+        Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox3, 4)
+        Me.TextBox3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmBuscarProductoComexViewModelBindingSource, "NombreCodigoProductoBusqueda", True))
+        Me.TextBox3.Location = New System.Drawing.Point(93, 42)
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(632, 21)
+        Me.TextBox3.Size = New System.Drawing.Size(401, 21)
         Me.TextBox3.TabIndex = 1
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(3, 79)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(113, 15)
-        Me.Label8.TabIndex = 13
-        Me.Label8.Text = "Nombre"
         '
         'ComboBox3
         '
         Me.ComboBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox3.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.ComboBox3.DisplayMember = "Nombre"
+        Me.ComboBox3.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.FrmBuscarProductoComexViewModelBindingSource, "SupplierSeleccionado", True))
+        Me.ComboBox3.DataSource = Me.SuppliersBindingSource
+        Me.ComboBox3.DisplayMember = "Value"
         Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox3.Enabled = False
         Me.ComboBox3.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.ComboBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(122, 6)
+        Me.ComboBox3.Location = New System.Drawing.Point(93, 6)
         Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(113, 23)
+        Me.ComboBox3.Size = New System.Drawing.Size(143, 23)
         Me.ComboBox3.TabIndex = 19
-        Me.ComboBox3.ValueMember = "Id"
+        Me.ComboBox3.ValueMember = "Key"
         '
-        'ComboBox2
+        'SuppliersBindingSource
         '
-        Me.ComboBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox2.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.ComboBox2.DisplayMember = "Nombre"
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox2.Enabled = False
-        Me.ComboBox2.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.ComboBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(638, 41)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(116, 23)
-        Me.ComboBox2.TabIndex = 14
-        Me.ComboBox2.ValueMember = "Id"
+        Me.SuppliersBindingSource.DataMember = "Suppliers"
+        Me.SuppliersBindingSource.DataSource = Me.FrmBuscarProductoComexViewModelBindingSource
         '
         'ComboBox1
         '
         Me.ComboBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.ComboBox1.DisplayMember = "Nombre"
+        Me.ComboBox1.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.FrmBuscarProductoComexViewModelBindingSource, "TipoProductoSeleccionado", True))
+        Me.ComboBox1.DataSource = Me.TiposProductosBindingSource
+        Me.ComboBox1.DisplayMember = "Value"
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.Enabled = False
         Me.ComboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.ComboBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(638, 6)
+        Me.ComboBox1.Location = New System.Drawing.Point(610, 6)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(116, 23)
+        Me.ComboBox1.Size = New System.Drawing.Size(144, 23)
         Me.ComboBox1.TabIndex = 13
-        Me.ComboBox1.ValueMember = "Id"
+        Me.ComboBox1.ValueMember = "Key"
+        '
+        'TiposProductosBindingSource
+        '
+        Me.TiposProductosBindingSource.DataMember = "TiposProductos"
+        Me.TiposProductosBindingSource.DataSource = Me.FrmBuscarProductoComexViewModelBindingSource
         '
         'Label3
         '
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(261, 10)
+        Me.Label3.Location = New System.Drawing.Point(262, 10)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(113, 15)
+        Me.Label3.Size = New System.Drawing.Size(84, 15)
         Me.Label3.TabIndex = 14
         Me.Label3.Text = "Color"
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(3, 45)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(113, 15)
-        Me.Label2.TabIndex = 15
-        Me.Label2.Text = "POL"
         '
         'Label1
         '
@@ -198,7 +205,7 @@ Partial Class frmBuscarProductoComex
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(3, 10)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(113, 15)
+        Me.Label1.Size = New System.Drawing.Size(84, 15)
         Me.Label1.TabIndex = 13
         Me.Label1.Text = "Supplier"
         '
@@ -206,25 +213,31 @@ Partial Class frmBuscarProductoComex
         '
         Me.Cb_ListaPrecio.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cb_ListaPrecio.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Cb_ListaPrecio.DisplayMember = "Nombre"
+        Me.Cb_ListaPrecio.DataBindings.Add(New System.Windows.Forms.Binding("SelectedItem", Me.FrmBuscarProductoComexViewModelBindingSource, "ColorSeleccionado", True))
+        Me.Cb_ListaPrecio.DataSource = Me.ColorsBindingSource
+        Me.Cb_ListaPrecio.DisplayMember = "Value"
         Me.Cb_ListaPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.Cb_ListaPrecio.Enabled = False
         Me.Cb_ListaPrecio.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Cb_ListaPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Cb_ListaPrecio.FormattingEnabled = True
-        Me.Cb_ListaPrecio.Location = New System.Drawing.Point(380, 6)
+        Me.Cb_ListaPrecio.Location = New System.Drawing.Point(352, 6)
         Me.Cb_ListaPrecio.Name = "Cb_ListaPrecio"
-        Me.Cb_ListaPrecio.Size = New System.Drawing.Size(113, 23)
+        Me.Cb_ListaPrecio.Size = New System.Drawing.Size(142, 23)
         Me.Cb_ListaPrecio.TabIndex = 17
-        Me.Cb_ListaPrecio.ValueMember = "Id"
+        Me.Cb_ListaPrecio.ValueMember = "Key"
+        '
+        'ColorsBindingSource
+        '
+        Me.ColorsBindingSource.DataMember = "Colors"
+        Me.ColorsBindingSource.DataSource = Me.FrmBuscarProductoComexViewModelBindingSource
         '
         'Label4
         '
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(519, 10)
+        Me.Label4.Location = New System.Drawing.Point(520, 10)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(113, 15)
+        Me.Label4.Size = New System.Drawing.Size(84, 15)
         Me.Label4.TabIndex = 16
         Me.Label4.Text = "Product Type"
         '
@@ -232,27 +245,21 @@ Partial Class frmBuscarProductoComex
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(519, 45)
+        Me.Label5.Location = New System.Drawing.Point(520, 45)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(113, 15)
+        Me.Label5.Size = New System.Drawing.Size(84, 15)
         Me.Label5.TabIndex = 18
         Me.Label5.Text = "Qty of Lights"
         '
-        'ComboBox4
+        'Label8
         '
-        Me.ComboBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox4.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.ComboBox4.DisplayMember = "Nombre"
-        Me.ComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox4.Enabled = False
-        Me.ComboBox4.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.ComboBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox4.FormattingEnabled = True
-        Me.ComboBox4.Location = New System.Drawing.Point(122, 41)
-        Me.ComboBox4.Name = "ComboBox4"
-        Me.ComboBox4.Size = New System.Drawing.Size(113, 23)
-        Me.ComboBox4.TabIndex = 20
-        Me.ComboBox4.ValueMember = "Id"
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(3, 45)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(84, 15)
+        Me.Label8.TabIndex = 13
+        Me.Label8.Text = "Nombre"
         '
         'lbl_Msg
         '
@@ -260,8 +267,9 @@ Partial Class frmBuscarProductoComex
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Msg.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.lbl_Msg.DataBindings.Add(New System.Windows.Forms.Binding("Visible", Me.FrmBuscarProductoComexViewModelBindingSource, "SinResultados", True))
         Me.lbl_Msg.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_Msg.Location = New System.Drawing.Point(74, 327)
+        Me.lbl_Msg.Location = New System.Drawing.Point(82, 313)
         Me.lbl_Msg.Name = "lbl_Msg"
         Me.lbl_Msg.Size = New System.Drawing.Size(605, 89)
         Me.lbl_Msg.TabIndex = 11
@@ -275,58 +283,13 @@ Partial Class frmBuscarProductoComex
         Me.Btn_Limpiar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Limpiar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Limpiar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Limpiar.Location = New System.Drawing.Point(594, 130)
+        Me.Btn_Limpiar.Location = New System.Drawing.Point(584, 97)
         Me.Btn_Limpiar.Name = "Btn_Limpiar"
-        Me.Btn_Limpiar.Size = New System.Drawing.Size(85, 40)
+        Me.Btn_Limpiar.Size = New System.Drawing.Size(90, 40)
         Me.Btn_Limpiar.TabIndex = 8
         Me.Btn_Limpiar.Text = "Limpiar"
         Me.Btn_Limpiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Limpiar.UseVisualStyleBackColor = True
-        '
-        'DG_Productos
-        '
-        Me.DG_Productos.AllowUserToAddRows = False
-        Me.DG_Productos.AllowUserToDeleteRows = False
-        Me.DG_Productos.AllowUserToResizeColumns = False
-        Me.DG_Productos.AllowUserToResizeRows = False
-        Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DG_Productos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id_Producto, Me.Nombre, Me.Codigo})
-        Me.DG_Productos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.DG_Productos.Location = New System.Drawing.Point(9, 176)
-        Me.DG_Productos.MultiSelect = False
-        Me.DG_Productos.Name = "DG_Productos"
-        Me.DG_Productos.ReadOnly = True
-        Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Productos.Size = New System.Drawing.Size(761, 367)
-        Me.DG_Productos.TabIndex = 3
-        '
-        'id_Producto
-        '
-        Me.id_Producto.DataPropertyName = "id_Producto"
-        Me.id_Producto.FillWeight = 47.63173!
-        Me.id_Producto.HeaderText = "ID"
-        Me.id_Producto.Name = "id_Producto"
-        Me.id_Producto.ReadOnly = True
-        '
-        'Nombre
-        '
-        Me.Nombre.DataPropertyName = "Nombre"
-        Me.Nombre.FillWeight = 169.4452!
-        Me.Nombre.HeaderText = "Nombre"
-        Me.Nombre.Name = "Nombre"
-        Me.Nombre.ReadOnly = True
-        '
-        'Codigo
-        '
-        Me.Codigo.DataPropertyName = "Codigo"
-        Me.Codigo.FillWeight = 61.09564!
-        Me.Codigo.HeaderText = "Codigo"
-        Me.Codigo.Name = "Codigo"
-        Me.Codigo.ReadOnly = True
         '
         'btn_Buscar
         '
@@ -335,13 +298,135 @@ Partial Class frmBuscarProductoComex
         Me.btn_Buscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Buscar.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.btn_Buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Buscar.Location = New System.Drawing.Point(685, 130)
+        Me.btn_Buscar.Location = New System.Drawing.Point(680, 97)
         Me.btn_Buscar.Name = "btn_Buscar"
-        Me.btn_Buscar.Size = New System.Drawing.Size(85, 40)
+        Me.btn_Buscar.Size = New System.Drawing.Size(90, 40)
         Me.btn_Buscar.TabIndex = 2
         Me.btn_Buscar.Text = "Buscar"
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btn_Buscar.UseVisualStyleBackColor = True
+        '
+        'DG_Productos
+        '
+        Me.DG_Productos.AllowUserToAddRows = False
+        Me.DG_Productos.AllowUserToDeleteRows = False
+        Me.DG_Productos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DG_Productos.AutoGenerateColumns = False
+        Me.DG_Productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DG_Productos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SupplierCodeDataGridViewTextBoxColumn, Me.ProductTypeDataGridViewTextBoxColumn, Me.QtyOfLightsDataGridViewTextBoxColumn, Me.BoxSizeDataGridViewTextBoxColumn, Me.CodigoDataGridViewTextBoxColumn, Me.ModeloDataGridViewTextBoxColumn, Me.NombreDataGridViewTextBoxColumn, Me.ColorDataGridViewTextBoxColumn, Me.ProductSizeDataGridViewTextBoxColumn, Me.FOBUSDDataGridViewTextBoxColumn, Me.FOBRMBDataGridViewTextBoxColumn, Me.InPackingDataGridViewTextBoxColumn, Me.PackingDataGridViewTextBoxColumn, Me.UCBMDataGridViewTextBoxColumn})
+        Me.DG_Productos.DataSource = Me.ProductosBindingSource
+        Me.DG_Productos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
+        Me.DG_Productos.Location = New System.Drawing.Point(13, 143)
+        Me.DG_Productos.Name = "DG_Productos"
+        Me.DG_Productos.RowHeadersVisible = False
+        Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DG_Productos.Size = New System.Drawing.Size(754, 410)
+        Me.DG_Productos.TabIndex = 13
+        '
+        'SupplierCodeDataGridViewTextBoxColumn
+        '
+        Me.SupplierCodeDataGridViewTextBoxColumn.DataPropertyName = "SupplierCode"
+        Me.SupplierCodeDataGridViewTextBoxColumn.HeaderText = "SupplierCode"
+        Me.SupplierCodeDataGridViewTextBoxColumn.Name = "SupplierCodeDataGridViewTextBoxColumn"
+        Me.SupplierCodeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProductTypeDataGridViewTextBoxColumn
+        '
+        Me.ProductTypeDataGridViewTextBoxColumn.DataPropertyName = "ProductType"
+        Me.ProductTypeDataGridViewTextBoxColumn.HeaderText = "ProductType"
+        Me.ProductTypeDataGridViewTextBoxColumn.Name = "ProductTypeDataGridViewTextBoxColumn"
+        Me.ProductTypeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'QtyOfLightsDataGridViewTextBoxColumn
+        '
+        Me.QtyOfLightsDataGridViewTextBoxColumn.DataPropertyName = "QtyOfLights"
+        Me.QtyOfLightsDataGridViewTextBoxColumn.HeaderText = "QtyOfLights"
+        Me.QtyOfLightsDataGridViewTextBoxColumn.Name = "QtyOfLightsDataGridViewTextBoxColumn"
+        Me.QtyOfLightsDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'BoxSizeDataGridViewTextBoxColumn
+        '
+        Me.BoxSizeDataGridViewTextBoxColumn.DataPropertyName = "BoxSize"
+        Me.BoxSizeDataGridViewTextBoxColumn.HeaderText = "BoxSize"
+        Me.BoxSizeDataGridViewTextBoxColumn.Name = "BoxSizeDataGridViewTextBoxColumn"
+        Me.BoxSizeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'CodigoDataGridViewTextBoxColumn
+        '
+        Me.CodigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn.HeaderText = "Codigo"
+        Me.CodigoDataGridViewTextBoxColumn.Name = "CodigoDataGridViewTextBoxColumn"
+        Me.CodigoDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ModeloDataGridViewTextBoxColumn
+        '
+        Me.ModeloDataGridViewTextBoxColumn.DataPropertyName = "Modelo"
+        Me.ModeloDataGridViewTextBoxColumn.HeaderText = "Modelo"
+        Me.ModeloDataGridViewTextBoxColumn.Name = "ModeloDataGridViewTextBoxColumn"
+        Me.ModeloDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'NombreDataGridViewTextBoxColumn
+        '
+        Me.NombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.HeaderText = "Nombre"
+        Me.NombreDataGridViewTextBoxColumn.Name = "NombreDataGridViewTextBoxColumn"
+        Me.NombreDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ColorDataGridViewTextBoxColumn
+        '
+        Me.ColorDataGridViewTextBoxColumn.DataPropertyName = "Color"
+        Me.ColorDataGridViewTextBoxColumn.HeaderText = "Color"
+        Me.ColorDataGridViewTextBoxColumn.Name = "ColorDataGridViewTextBoxColumn"
+        Me.ColorDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProductSizeDataGridViewTextBoxColumn
+        '
+        Me.ProductSizeDataGridViewTextBoxColumn.DataPropertyName = "ProductSize"
+        Me.ProductSizeDataGridViewTextBoxColumn.HeaderText = "ProductSize"
+        Me.ProductSizeDataGridViewTextBoxColumn.Name = "ProductSizeDataGridViewTextBoxColumn"
+        Me.ProductSizeDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FOBUSDDataGridViewTextBoxColumn
+        '
+        Me.FOBUSDDataGridViewTextBoxColumn.DataPropertyName = "FOBUSD"
+        Me.FOBUSDDataGridViewTextBoxColumn.HeaderText = "FOBUSD"
+        Me.FOBUSDDataGridViewTextBoxColumn.Name = "FOBUSDDataGridViewTextBoxColumn"
+        Me.FOBUSDDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'FOBRMBDataGridViewTextBoxColumn
+        '
+        Me.FOBRMBDataGridViewTextBoxColumn.DataPropertyName = "FOBRMB"
+        Me.FOBRMBDataGridViewTextBoxColumn.HeaderText = "FOBRMB"
+        Me.FOBRMBDataGridViewTextBoxColumn.Name = "FOBRMBDataGridViewTextBoxColumn"
+        Me.FOBRMBDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'InPackingDataGridViewTextBoxColumn
+        '
+        Me.InPackingDataGridViewTextBoxColumn.DataPropertyName = "InPacking"
+        Me.InPackingDataGridViewTextBoxColumn.HeaderText = "InPacking"
+        Me.InPackingDataGridViewTextBoxColumn.Name = "InPackingDataGridViewTextBoxColumn"
+        Me.InPackingDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'PackingDataGridViewTextBoxColumn
+        '
+        Me.PackingDataGridViewTextBoxColumn.DataPropertyName = "Packing"
+        Me.PackingDataGridViewTextBoxColumn.HeaderText = "Packing"
+        Me.PackingDataGridViewTextBoxColumn.Name = "PackingDataGridViewTextBoxColumn"
+        Me.PackingDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'UCBMDataGridViewTextBoxColumn
+        '
+        Me.UCBMDataGridViewTextBoxColumn.DataPropertyName = "UCBM"
+        Me.UCBMDataGridViewTextBoxColumn.HeaderText = "UCBM"
+        Me.UCBMDataGridViewTextBoxColumn.Name = "UCBMDataGridViewTextBoxColumn"
+        Me.UCBMDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ProductosBindingSource
+        '
+        Me.ProductosBindingSource.DataMember = "Productos"
+        Me.ProductosBindingSource.DataSource = Me.FrmBuscarProductoComexViewModelBindingSource
         '
         'DataGridViewTextBoxColumn1
         '
@@ -381,7 +466,12 @@ Partial Class frmBuscarProductoComex
         Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        CType(Me.FrmBuscarProductoComexViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SuppliersBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TiposProductosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ColorsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ProductosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -389,19 +479,13 @@ Partial Class frmBuscarProductoComex
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents lbl_Msg As Label
     Friend WithEvents Btn_Limpiar As Button
-    Friend WithEvents DG_Productos As DataGridView
-    Friend WithEvents id_Producto As DataGridViewTextBoxColumn
-    Friend WithEvents Nombre As DataGridViewTextBoxColumn
-    Friend WithEvents Codigo As DataGridViewTextBoxColumn
     Friend WithEvents btn_Buscar As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents ComboBox2 As ComboBox
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Cb_ListaPrecio As ComboBox
     Friend WithEvents Label5 As Label
@@ -409,5 +493,30 @@ Partial Class frmBuscarProductoComex
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents ComboBox3 As ComboBox
-    Friend WithEvents ComboBox4 As ComboBox
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents FrmBuscarProductoComexViewModelBindingSource As BindingSource
+    Friend WithEvents SuppliersBindingSource As BindingSource
+    Friend WithEvents TiposProductosBindingSource As BindingSource
+    Friend WithEvents ColorsBindingSource As BindingSource
+    Friend WithEvents ProductosBindingSource As BindingSource
+    Friend WithEvents SupplierCodeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductTypeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents QtyOfLightsDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents BoxSizeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents CodigoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ModeloDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ColorDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ProductSizeDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FOBUSDDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TotalUSDDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FOBRMBDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TotalRMBDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents InPackingDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents PackingDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents BoxQTYDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TotalPCSDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents UCBMDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TotalCBMDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents DG_Productos As CustomDataGrid
 End Class

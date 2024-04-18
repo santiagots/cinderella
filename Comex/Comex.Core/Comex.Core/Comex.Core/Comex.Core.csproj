@@ -42,6 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\EstadoOrdenCompra.cs" />
+    <Compile Include="Interfaces\IEmpleadoRepository.cs" />
+    <Compile Include="Interfaces\IOrdenCompraRepository.cs" />
+    <Compile Include="Interfaces\IProductoRepository.cs" />
+    <Compile Include="Model\ComexAggregate\Empleado.cs" />
+    <Compile Include="Model\ComexAggregate\OrdenCompra.cs" />
+    <Compile Include="Model\ComexAggregate\OrdenCompraItem.cs" />
+    <Compile Include="Model\ComexAggregate\Producto.cs" />
+    <Compile Include="Model\ComexAggregate\Sucursal.cs" />
+    <Compile Include="Model\ValueObjects\Tamanio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,9 +60,6 @@
       <Name>Common.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Model\ComexAggregate\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

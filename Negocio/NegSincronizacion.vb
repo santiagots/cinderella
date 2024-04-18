@@ -240,6 +240,10 @@ Public Class NegSincronizacion
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_IVA", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_CUENTABANCARIA", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_TRANSPORTE", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_SUPPLIER", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "TIPO_PRODUCTO", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_COMEX_ORDEN_COMPRA", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_COMEX_ORDEN_COMPRA_ITEMS", .Sincronizar = New SinClaveUnicaSincronizar()})
 
         Return respuesta
     End Function

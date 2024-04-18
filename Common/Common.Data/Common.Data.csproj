@@ -66,19 +66,25 @@
     <Compile Include="Repository\BancoRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\ClienteMayoristaRepository.cs" />
+    <Compile Include="Repository\ColorRepository.cs" />
     <Compile Include="Repository\CuentaBancariaRepository.cs" />
     <Compile Include="Repository\DomicilioRepository.cs" />
     <Compile Include="Repository\FeriadoRepository.cs" />
     <Compile Include="Repository\IVARepository.cs" />
     <Compile Include="Repository\ListaPrecioRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\SupplierRepository.cs" />
+    <Compile Include="Repository\TipoProductoRepository.cs" />
     <Compile Include="Repository\TrasporteRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Service\BancoService.cs" />
     <Compile Include="Service\ClienteMayoristaService.cs" />
+    <Compile Include="Service\ColorService.cs" />
     <Compile Include="Service\CuentaBancariaService.cs" />
     <Compile Include="Service\DomicilioService.cs" />
     <Compile Include="Service\ListaPrecioService.cs" />
+    <Compile Include="Service\SupplierService.cs" />
+    <Compile Include="Service\TipoProductoService.cs" />
     <Compile Include="Service\TrasporteService.cs" />
     <Compile Include="Service\UsuarioService.cs" />
   </ItemGroup>

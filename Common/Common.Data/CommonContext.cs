@@ -40,6 +40,7 @@ namespace Common.Data
         }
 
         public DbSet<Banco> Banco { get; set; }
+        public DbSet<Color> Color { get; set; }
         public DbSet<CuentaBancaria> CuentaBancaria { get; set; }
         public DbSet<ClienteMayorista> ClienteMayorista { get; set; }
         public DbSet<Feriado> Feriado { get; set; }
@@ -51,6 +52,8 @@ namespace Common.Data
         public DbSet<IVA> IVA { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Transporte> Transporte { get; set; }
+        public DbSet<TipoProducto> TipoProducto { get; set; }
+        public DbSet<Supplier> Supplier { get; set; }
 
         public bool IsAttached<T>(Entity<T> entity) 
         {
@@ -184,6 +187,9 @@ namespace Common.Data
             modelBuilder.Entity<Banco>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<Banco>().Property(t => t.Id).HasColumnName("BancoId");
 
+            modelBuilder.Entity<Color>().ToTable("COLORES");
+            modelBuilder.Entity<Color>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
             modelBuilder.Entity<CuentaBancaria>().ToTable("NUEVA_CUENTABANCARIA");
             modelBuilder.Entity<CuentaBancaria>().HasRequired(v => v.Banco).WithMany().HasForeignKey(x => x.IdBanco);
 
@@ -247,6 +253,12 @@ namespace Common.Data
 
             modelBuilder.Entity<Transporte>().ToTable("NUEVA_TRANSPORTE");
             modelBuilder.Entity<Transporte>().HasOptional(v => v.Domicilio).WithMany().HasForeignKey(x => x.IdDomicilio);
+
+            modelBuilder.Entity<TipoProducto>().ToTable("TIPO_PRODUCTO");
+            modelBuilder.Entity<TipoProducto>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Supplier>().ToTable("NUEVA_SUPPLIER");
+            modelBuilder.Entity<Supplier>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             base.OnModelCreating(modelBuilder);
         }

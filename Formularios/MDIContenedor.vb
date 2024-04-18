@@ -631,6 +631,12 @@ Public Class MDIContenedor
             CuentasBancariasToolStripMenuItem.Visible = False
         End If
 
+        If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Administración_Comex_Administración)) Then
+            ComexToolStripMenuItem.Visible = True
+        Else
+            ComexToolStripMenuItem.Visible = False
+        End If
+
         If (VariablesGlobales.Patentes.ContainsKey(Entidades.TipoPatente.Planillas_Informes)) Then
             InformesToolStripMenuItem.Visible = True
         Else
@@ -1921,6 +1927,17 @@ Public Class MDIContenedor
             Me.Cursor = Cursors.WaitCursor
             Funciones.ControlInstancia(frmSuppliers).MdiParent = Me
             Funciones.ControlInstancia(frmSuppliers).Show()
+            Me.Cursor = Cursors.Arrow
+        End If
+    End Sub
+
+    Private Sub TestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestToolStripMenuItem.Click
+        If (Not Negocio.Funciones.HayConexionInternet) Then
+            dialogoConexion.ShowDialog()
+        Else
+            Me.Cursor = Cursors.WaitCursor
+            Funciones.ControlInstancia(frmComexOrdenCompraAdministracion).MdiParent = Me
+            Funciones.ControlInstancia(frmComexOrdenCompraAdministracion).Show()
             Me.Cursor = Cursors.Arrow
         End If
     End Sub

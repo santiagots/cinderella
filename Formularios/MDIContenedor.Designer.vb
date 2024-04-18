@@ -54,6 +54,7 @@ Partial Class MDIContenedor
         Me.PreciosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.Btn_ColoresSubM = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Btn_SupplierSubM = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_TiposProductosSubM = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.Btn_ProductosCatSubM = New System.Windows.Forms.ToolStripMenuItem()
@@ -98,6 +99,7 @@ Partial Class MDIContenedor
         Me.CostoFinancieroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CuentasBancariasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_PlanillasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.SucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovEntreSucursalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -170,7 +172,6 @@ Partial Class MDIContenedor
         Me.TemporizadorActualizaciones = New System.Windows.Forms.Timer(Me.components)
         Me.bgwEjecutarEnSegundoPlano = New System.ComponentModel.BackgroundWorker()
         Me.TemporizadorSoncronizacion = New System.Windows.Forms.Timer(Me.components)
-        Me.Btn_SupplierSubM = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuSuperior.SuspendLayout()
         Me.MenuAccesos.SuspendLayout()
         Me.MenuInferior.SuspendLayout()
@@ -364,14 +365,14 @@ Partial Class MDIContenedor
         '
         Me.Btn_ProductosMasivosSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_Masivos
         Me.Btn_ProductosMasivosSubM.Name = "Btn_ProductosMasivosSubM"
-        Me.Btn_ProductosMasivosSubM.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_ProductosMasivosSubM.Size = New System.Drawing.Size(159, 22)
         Me.Btn_ProductosMasivosSubM.Text = "Alta Masiva"
         '
         'Btn_ProductosSubM
         '
         Me.Btn_ProductosSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos
         Me.Btn_ProductosSubM.Name = "Btn_ProductosSubM"
-        Me.Btn_ProductosSubM.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_ProductosSubM.Size = New System.Drawing.Size(159, 22)
         Me.Btn_ProductosSubM.Text = "Administración"
         Me.Btn_ProductosSubM.ToolTipText = "Administración de Productos"
         '
@@ -379,45 +380,52 @@ Partial Class MDIContenedor
         '
         Me.PreciosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Precios
         Me.PreciosToolStripMenuItem.Name = "PreciosToolStripMenuItem"
-        Me.PreciosToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PreciosToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
         Me.PreciosToolStripMenuItem.Text = "Precios"
         Me.PreciosToolStripMenuItem.ToolTipText = "Administración de Precios"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(156, 6)
         '
         'Btn_ColoresSubM
         '
         Me.Btn_ColoresSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.Colores
         Me.Btn_ColoresSubM.Name = "Btn_ColoresSubM"
-        Me.Btn_ColoresSubM.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_ColoresSubM.Size = New System.Drawing.Size(159, 22)
         Me.Btn_ColoresSubM.Text = "Colores"
+        '
+        'Btn_SupplierSubM
+        '
+        Me.Btn_SupplierSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.supplier
+        Me.Btn_SupplierSubM.Name = "Btn_SupplierSubM"
+        Me.Btn_SupplierSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_SupplierSubM.Text = "Suppliers"
         '
         'Btn_TiposProductosSubM
         '
         Me.Btn_TiposProductosSubM.Image = CType(resources.GetObject("Btn_TiposProductosSubM.Image"), System.Drawing.Image)
         Me.Btn_TiposProductosSubM.Name = "Btn_TiposProductosSubM"
-        Me.Btn_TiposProductosSubM.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_TiposProductosSubM.Size = New System.Drawing.Size(159, 22)
         Me.Btn_TiposProductosSubM.Text = "Tipos Productos"
         '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(156, 6)
         '
         'Btn_ProductosCatSubM
         '
         Me.Btn_ProductosCatSubM.Name = "Btn_ProductosCatSubM"
-        Me.Btn_ProductosCatSubM.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_ProductosCatSubM.Size = New System.Drawing.Size(159, 22)
         Me.Btn_ProductosCatSubM.Text = "Categorias"
         Me.Btn_ProductosCatSubM.ToolTipText = "Categorias de Productos"
         '
         'Btn_ProductosSubcatSubM
         '
         Me.Btn_ProductosSubcatSubM.Name = "Btn_ProductosSubcatSubM"
-        Me.Btn_ProductosSubcatSubM.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_ProductosSubcatSubM.Size = New System.Drawing.Size(159, 22)
         Me.Btn_ProductosSubcatSubM.Text = "Subcategorias"
         Me.Btn_ProductosSubcatSubM.ToolTipText = "Subcategorias de Productos"
         '
@@ -523,7 +531,7 @@ Partial Class MDIContenedor
         '
         Me.AdministraciónToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
         Me.AdministraciónToolStripMenuItem.Name = "AdministraciónToolStripMenuItem"
-        Me.AdministraciónToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.AdministraciónToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AdministraciónToolStripMenuItem.Text = "Administración"
         '
         'VentasToolStripMenuItem1
@@ -531,7 +539,7 @@ Partial Class MDIContenedor
         Me.VentasToolStripMenuItem1.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas
         Me.VentasToolStripMenuItem1.Name = "VentasToolStripMenuItem1"
         Me.VentasToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F2
-        Me.VentasToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
+        Me.VentasToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
         Me.VentasToolStripMenuItem1.Text = "Ventas"
         '
         'Btn_Facturas
@@ -711,10 +719,18 @@ Partial Class MDIContenedor
         '
         'ComexToolStripMenuItem
         '
+        Me.ComexToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestToolStripMenuItem})
         Me.ComexToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Comex
         Me.ComexToolStripMenuItem.Name = "ComexToolStripMenuItem"
         Me.ComexToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ComexToolStripMenuItem.Text = "Comex"
+        '
+        'TestToolStripMenuItem
+        '
+        Me.TestToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
+        Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
+        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TestToolStripMenuItem.Text = "Administración"
         '
         'Btn_PlanillasMenu
         '
@@ -1325,13 +1341,6 @@ Partial Class MDIContenedor
         Me.TemporizadorSoncronizacion.Enabled = True
         Me.TemporizadorSoncronizacion.Interval = 3600000
         '
-        'Btn_SupplierSubM
-        '
-        Me.Btn_SupplierSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.supplier
-        Me.Btn_SupplierSubM.Name = "Btn_SupplierSubM"
-        Me.Btn_SupplierSubM.Size = New System.Drawing.Size(180, 22)
-        Me.Btn_SupplierSubM.Text = "Suppliers"
-        '
         'MDIContenedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1508,4 +1517,5 @@ Partial Class MDIContenedor
     Friend WithEvents Btn_TiposProductosSubM As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
     Friend WithEvents Btn_SupplierSubM As ToolStripMenuItem
+    Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
 End Class

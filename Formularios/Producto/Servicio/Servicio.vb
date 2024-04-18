@@ -1,13 +1,8 @@
-﻿Imports Comex.Core.Interfaces
-Imports Comex.Core.Model.ComexAggregate
-Imports Comex.Data
-Imports Comex.Data.Repository
-Imports Common.Core.Enum
+﻿Imports Common.Core.Enum
 Imports Common.Core.Interfaces
 Imports Common.Core.Model
 Imports Common.Data.Repository
 Imports Producto.Core.Interfaces
-Imports Producto.Core.Model.ProductoAgreggate
 Imports Producto.Data
 Imports Producto.Data.Repository
 Imports Model = Producto.Core.Model.ProductoAgreggate
@@ -109,90 +104,6 @@ Namespace Formularios.Producto
             Using context As ProductoContext = New ProductoContext()
                 Dim proveedorRepository As IProveedorRepository = New ProveedorRepository(context)
                 Return proveedorRepository.Obtener()
-            End Using
-        End Function
-
-        Friend Shared Function BuscarColores(nombre As String) As List(Of Model.Color)
-            Using context As ProductoContext = New ProductoContext()
-                Dim colorRepository As IColorRepository = New ColorRepository(context)
-                Return colorRepository.Buscar(nombre)
-            End Using
-        End Function
-
-        Friend Shared Sub AltaColor(color As Model.Color)
-            Using context As ProductoContext = New ProductoContext()
-                Dim supplierRepository As IRepository(Of Model.Color) = New Repository(Of Model.Color)(context)
-                supplierRepository.Insert(color)
-            End Using
-        End Sub
-
-        Friend Shared Sub ModificarColor(color As Model.Color)
-            Using context As ProductoContext = New ProductoContext()
-                Dim colorRepository As IColorRepository = New ColorRepository(context)
-                colorRepository.Actualizar(color)
-            End Using
-        End Sub
-
-        Friend Shared Function ObtenerColor(id As Integer) As Model.Color
-            Using context As ProductoContext = New ProductoContext()
-                Dim colorRepository As IRepository(Of Model.Color) = New Repository(Of Model.Color)(context)
-                Return colorRepository.GetById(id)
-            End Using
-        End Function
-
-        Friend Shared Function BuscarTipoProducto(nombre As String) As List(Of Model.TipoProducto)
-            Using context As ProductoContext = New ProductoContext()
-                Dim tipoProductoRepository As ITipoProductoRepository = New TipoProductoRepository(context)
-                Return tipoProductoRepository.Buscar(nombre)
-            End Using
-        End Function
-
-        Friend Shared Sub AltaTipoProducto(tipoProducto As Model.TipoProducto)
-            Using context As ProductoContext = New ProductoContext()
-                Dim tipoProductoRepository As IRepository(Of Model.TipoProducto) = New Repository(Of Model.TipoProducto)(context)
-                tipoProductoRepository.Insert(tipoProducto)
-            End Using
-        End Sub
-
-        Friend Shared Sub ModificarTipoProducto(tipoProducto As Model.TipoProducto)
-            Using context As ProductoContext = New ProductoContext()
-                Dim tipoProductoRepository As ITipoProductoRepository = New TipoProductoRepository(context)
-                tipoProductoRepository.Actualizar(tipoProducto)
-            End Using
-        End Sub
-
-        Friend Shared Function ObtenerTipoProducto(id As Integer) As Model.TipoProducto
-            Using context As ProductoContext = New ProductoContext()
-                Dim tipoProductoRepository As IRepository(Of Model.TipoProducto) = New Repository(Of Model.TipoProducto)(context)
-                Return tipoProductoRepository.GetById(id)
-            End Using
-        End Function
-
-        Public Shared Function ObtenerSupplier(id As Long) As Supplier
-            Using context As ProductoContext = New ProductoContext()
-                Dim supplierRepository As IRepository(Of Supplier) = New Repository(Of Supplier)(context)
-                Return supplierRepository.GetById(id)
-            End Using
-        End Function
-
-        Public Shared Sub AltaSupplier(supplier As Supplier)
-            Using context As ProductoContext = New ProductoContext()
-                Dim supplierRepository As IRepository(Of Supplier) = New Repository(Of Supplier)(context)
-                supplierRepository.Insert(supplier)
-            End Using
-        End Sub
-
-        Public Shared Sub ModificarSupplier(supplier As Supplier)
-            Using context As ProductoContext = New ProductoContext()
-                Dim supplierRepository As ISupplierRepository = New SupplierRepository(context)
-                supplierRepository.Actualizar(supplier)
-            End Using
-        End Sub
-
-        Public Shared Function BuscarSupplier(nombre As String) As List(Of Supplier)
-            Using context As ProductoContext = New ProductoContext()
-                Dim supplierRepository As ISupplierRepository = New SupplierRepository(context)
-                Return supplierRepository.Buscar(nombre)
             End Using
         End Function
     End Class

@@ -17,22 +17,16 @@ namespace Producto.Data
         }
 
         public DbSet<Categoria> Categoria { get; set; }
-        public DbSet<Color> Color { get; set; }
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Model.Producto> Producto { get; set; }
         public DbSet<Proveedor> Proveedor { get; set; }
         public DbSet<Precio> Precio { get; set; }
-        public DbSet<Supplier> Supplier { get; set; }
-        public DbSet<TipoProducto> TipoProducto { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            modelBuilder.Entity<Color>().ToTable("COLORES");
-            modelBuilder.Entity<Color>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<Categoria>().ToTable("PRODUCTOS_CATEGORIAS");
             modelBuilder.Entity<Categoria>().Property(t => t.Id).HasColumnName("id_Categoria");
@@ -74,12 +68,6 @@ namespace Producto.Data
             modelBuilder.Entity<Precio>().Property(t => t.IdProducto).HasColumnName("id_Producto");
             modelBuilder.Entity<Precio>().Property(t => t.IdLista).HasColumnName("id_Lista");
             modelBuilder.Entity<Precio>().Property(t => t.Monto).HasColumnName("Precio");
-
-            modelBuilder.Entity<Supplier>().ToTable("NUEVA_SUPPLIER");
-            modelBuilder.Entity<Supplier>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
-            modelBuilder.Entity<TipoProducto>().ToTable("TIPO_PRODUCTO");
-            modelBuilder.Entity<TipoProducto>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

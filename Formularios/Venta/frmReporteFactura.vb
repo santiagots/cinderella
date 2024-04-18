@@ -336,7 +336,7 @@ Public Class frmReporteFactura
         Dim qrGenerator As QRCodeGenerator = New QRCodeGenerator()
         Dim QRCodeData As QRCodeData = qrGenerator.CreateQrCode(QRDatos, QRCodeGenerator.ECCLevel.L)
         Dim QRCode As QRCode = New QRCode(QRCodeData)
-        Dim qrCodeImage As Bitmap = QRCode.GetGraphic(20, Color.Black, Color.White, True)
+        Dim qrCodeImage As Bitmap = QRCode.GetGraphic(20, Drawing.Color.Black, Drawing.Color.White, True)
 
         Using memory As MemoryStream = New MemoryStream()
             Using fs As FileStream = New FileStream(RutaImagenCodigoQR, FileMode.Create, FileAccess.ReadWrite)

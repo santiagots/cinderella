@@ -361,12 +361,24 @@
     <Compile Include="Formularios\Comex\frmBuscarProductoComex.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\Comex\frmComexCompra.Designer.vb">
-      <DependentUpon>frmComexCompra.vb</DependentUpon>
+    <Compile Include="Formularios\Comex\frmComexOrdenCompra.Designer.vb">
+      <DependentUpon>frmComexOrdenCompra.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\Comex\frmComexCompra.vb">
+    <Compile Include="Formularios\Comex\frmComexOrdenCompra.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\Comex\frmComexOrdenCompraAdministracion.Designer.vb">
+      <DependentUpon>frmComexOrdenCompraAdministracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Comex\frmComexOrdenCompraAdministracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Comex\ViewModel\BuscarProductoComexItemViewModel.vb" />
+    <Compile Include="Formularios\Comex\ViewModel\ComexOrdenCompraAdministracionItemViewModel.vb" />
+    <Compile Include="Formularios\Comex\ViewModel\ComexOrdenCompraItemsViewModel.vb" />
+    <Compile Include="Formularios\Comex\ViewModel\frmBuscarProductoComexViewModel.vb" />
+    <Compile Include="Formularios\Comex\ViewModel\frmComexOrdenCompraAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Comex\ViewModel\frmComexOrdenCompraViewModel.vb" />
     <Compile Include="Formularios\Producto\frmSuppliers.Designer.vb">
       <DependentUpon>frmSuppliers.vb</DependentUpon>
     </Compile>
@@ -1429,6 +1441,9 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmTransporteBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.frmTrasporteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Cliente.TransporteViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comex.frmBuscarProductoComexViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comex.frmComexOrdenCompraAdministracionViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comex.frmComexOrdenCompraViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comex.frmSuppliersViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Comun.frmConfiguracionBaseDatosViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaBancariaViewModel.datasource" />
@@ -1488,8 +1503,11 @@
     <EmbeddedResource Include="Formularios\Comex\frmBuscarProductoComex.resx">
       <DependentUpon>frmBuscarProductoComex.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\Comex\frmComexCompra.resx">
-      <DependentUpon>frmComexCompra.vb</DependentUpon>
+    <EmbeddedResource Include="Formularios\Comex\frmComexOrdenCompra.resx">
+      <DependentUpon>frmComexOrdenCompra.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Comex\frmComexOrdenCompraAdministracion.resx">
+      <DependentUpon>frmComexOrdenCompraAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Producto\frmSuppliers.resx">
       <DependentUpon>frmSuppliers.vb</DependentUpon>
@@ -2767,7 +2785,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Formularios\Comex\ViewModel\" />
     <Folder Include="Formularios\InformeVenta\Mapper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

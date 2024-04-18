@@ -52,7 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComexContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\EmpleadoRepository.cs" />
+    <Compile Include="Repository\OrdenCompraRepository.cs" />
+    <Compile Include="Repository\ProductoRepository.cs" />
+    <Compile Include="Service\EmpleadoService.cs" />
+    <Compile Include="Service\OrdenCompraService.cs" />
+    <Compile Include="Service\ProductoService.cs" />
+    <Compile Include="Service\SucursalService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common.Core\Common.Core.csproj">
@@ -72,9 +80,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

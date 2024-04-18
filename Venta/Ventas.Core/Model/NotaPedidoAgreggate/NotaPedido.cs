@@ -3,10 +3,8 @@ using Common.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ventas.Core.Enum;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ValueObjects;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ventas.Core.Model.NotaPedidoAgreggate
 {
