@@ -92,17 +92,30 @@ namespace Common.Data.Repository
         {
             cliente.ListaPrecio = (ListaPrecio)_context.Attach(cliente.ListaPrecio);
 
-            if (cliente.DomicilioEntrega != null)
+            if (cliente.DomicilioEntrega?.Id > 0)
             {
                 cliente.DomicilioEntrega.Localidad = (Localidad)_context.Attach(cliente.DomicilioEntrega.Localidad);
                 cliente.DomicilioEntrega.Distrito = (Distrito)_context.Attach(cliente.DomicilioEntrega.Distrito);
                 cliente.DomicilioEntrega.Provincia = (Provincia)_context.Attach(cliente.DomicilioEntrega.Provincia);
             }
-            if (cliente.DomicilioFacturacion != null)
+            else
+            {
+                cliente.DomicilioEntrega.Localidad = null;
+                cliente.DomicilioEntrega.Distrito = null;
+                cliente.DomicilioEntrega.Provincia = null;
+            }
+
+            if (cliente.DomicilioFacturacion?.Id > 0)
             {
                 cliente.DomicilioFacturacion.Localidad = (Localidad)_context.Attach(cliente.DomicilioFacturacion.Localidad);
                 cliente.DomicilioFacturacion.Distrito = (Distrito)_context.Attach(cliente.DomicilioFacturacion.Distrito);
                 cliente.DomicilioFacturacion.Provincia = (Provincia)_context.Attach(cliente.DomicilioFacturacion.Provincia);
+            }
+            else
+            {
+                cliente.DomicilioFacturacion.Localidad = null;
+                cliente.DomicilioFacturacion.Distrito = null;
+                cliente.DomicilioFacturacion.Provincia = null;
             }
         }
     }
