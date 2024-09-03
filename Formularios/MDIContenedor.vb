@@ -4,6 +4,7 @@ Imports Negocio
 Imports Entidades
 Imports System.ComponentModel
 Imports System.Globalization
+Imports System.Threading
 
 Public Class MDIContenedor
     Dim Funciones As New Funciones
@@ -26,6 +27,8 @@ Public Class MDIContenedor
     Dim tiempoAcumuladoCheques As Integer = 0
     Dim tiempoAcumuladoNotasPedidos As Integer = 0
     Dim tiempoAcumuladoOrdenesCompra As Integer = 0
+
+    Private Shared semaforo As New SemaphoreSlim(1, 1)
 
     Private Sub MDIContenedor_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If VariablesGlobales.Notificaciones > 0 Then 'Si posee notificaciones pendientes.
@@ -1781,20 +1784,27 @@ Public Class MDIContenedor
             Return
         End If
 
-        Dim formularios As FormCollection = Application.OpenForms
+        ' Adquirir el semáforo
+        Await semaforo.WaitAsync()
+        Try
+            Dim formularios As FormCollection = Application.OpenForms
 
-        Dim frmNotaPedidoAdministracion As frmNotaPedidoAdministracion = Funciones.ObtenerInstanciaFormulario("frmNotaPedidoAdministracion")
+            Dim frmNotaPedidoAdministracion As frmNotaPedidoAdministracion = Funciones.ObtenerInstanciaFormulario("frmNotaPedidoAdministracion")
 
-        If frmNotaPedidoAdministracion Is Nothing OrElse frmNotaPedidoAdministracion.IsDisposed Then
-            frmNotaPedidoAdministracion = New frmNotaPedidoAdministracion()
-            frmNotaPedidoAdministracion.MdiParent = Me
-            frmNotaPedidoAdministracion.Show()
-        Else
-            frmNotaPedidoAdministracion.BringToFront()
-            Await frmNotaPedidoAdministracion.notaPedidoViewModel.Buscar()
-        End If
+            If frmNotaPedidoAdministracion Is Nothing OrElse frmNotaPedidoAdministracion.IsDisposed Then
+                frmNotaPedidoAdministracion = New frmNotaPedidoAdministracion()
+                frmNotaPedidoAdministracion.MdiParent = Me
+                frmNotaPedidoAdministracion.Show()
+            Else
+                frmNotaPedidoAdministracion.BringToFront()
+                Await frmNotaPedidoAdministracion.notaPedidoViewModel.Buscar()
+            End If
 
-        Await Funciones.ActualizarNotasPedidosVentasAsync()
+            Await Funciones.ActualizarNotasPedidosVentasAsync()
+        Finally
+            ' Liberar el semáforo
+            semaforo.Release()
+        End Try
     End Function
 
     Private Sub btn_AdminReservas_Click(sender As Object, e As EventArgs) Handles btn_AdminReservas.Click
