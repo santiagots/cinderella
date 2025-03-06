@@ -50,9 +50,9 @@ namespace Factura.Device.Printer
             }
         }
 
-        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
-            return epsonTM.ObtenerNumeroFactura(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
+            return epsonTM.ObtenerNumeroFactura(productos, pagos, impuestos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
         public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)

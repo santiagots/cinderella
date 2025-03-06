@@ -145,12 +145,14 @@ namespace Factura.Service.Factura
 
                 List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
+                List<ImpuestoTicketRequest> impuestos = request.Impuestos.Select(x => new ImpuestoTicketRequest(x.Descripcion, x.Monto)).ToList();
+
                 string TipoFactura = string.Empty;
                 decimal MontoTotal = 0;
                 decimal MontoIvaTotal = 0;
                 decimal MontoVuelto = 0;
 
-                int numeroFactura = epsonFP.ObtenreNumeroFactura(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
+                int numeroFactura = epsonFP.ObtenreNumeroFactura(productos, pagos, impuestos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
 
                 return new ObtenerNumeroFacturaResponse() {
                     SubTotal = MontoTotal - MontoIvaTotal,

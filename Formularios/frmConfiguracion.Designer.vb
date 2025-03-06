@@ -104,6 +104,8 @@ Partial Class frmConfiguracion
         Me.TabMail = New System.Windows.Forms.TabPage()
         Me.TabFacturacion = New System.Windows.Forms.TabPage()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
         Me.btnCargarCertificadoAFIP = New System.Windows.Forms.Button()
         Me.btnObtenerArchivoCSR = New System.Windows.Forms.Button()
@@ -926,7 +928,7 @@ Partial Class frmConfiguracion
         Me.Btn_Controlador.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Controlador.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Controlador.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Controlador.Location = New System.Drawing.Point(284, 554)
+        Me.Btn_Controlador.Location = New System.Drawing.Point(284, 607)
         Me.Btn_Controlador.Name = "Btn_Controlador"
         Me.Btn_Controlador.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Controlador.TabIndex = 5
@@ -997,6 +999,8 @@ Partial Class frmConfiguracion
         'Panel3
         '
         Me.Panel3.AutoScroll = True
+        Me.Panel3.Controls.Add(Me.Label15)
+        Me.Panel3.Controls.Add(Me.Button1)
         Me.Panel3.Controls.Add(Me.GroupBox10)
         Me.Panel3.Controls.Add(Me.GroupBox4)
         Me.Panel3.Controls.Add(Me.GroupBox9)
@@ -1006,8 +1010,30 @@ Partial Class frmConfiguracion
         Me.Panel3.Controls.Add(Me.txt_MontoMaximoNotaCredito)
         Me.Panel3.Location = New System.Drawing.Point(8, 3)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(389, 603)
+        Me.Panel3.Size = New System.Drawing.Size(389, 654)
         Me.Panel3.TabIndex = 31
+        '
+        'Label15
+        '
+        Me.Label15.Location = New System.Drawing.Point(0, 419)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(205, 45)
+        Me.Label15.TabIndex = 20
+        Me.Label15.Text = "Regimen de Transparencia Fiscal al Consumidor"
+        '
+        'Button1
+        '
+        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.Enproceso
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button1.Location = New System.Drawing.Point(237, 424)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(141, 40)
+        Me.Button1.TabIndex = 19
+        Me.Button1.Text = "Configurar  Impuestos"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'GroupBox10
         '
@@ -1017,7 +1043,7 @@ Partial Class frmConfiguracion
         Me.GroupBox10.Controls.Add(Me.txt_facturacionElectronicaCertificadoNombre)
         Me.GroupBox10.Controls.Add(Me.Label42)
         Me.GroupBox10.Controls.Add(Me.Label43)
-        Me.GroupBox10.Location = New System.Drawing.Point(3, 420)
+        Me.GroupBox10.Location = New System.Drawing.Point(3, 474)
         Me.GroupBox10.Name = "GroupBox10"
         Me.GroupBox10.Size = New System.Drawing.Size(381, 128)
         Me.GroupBox10.TabIndex = 4
@@ -1805,4 +1831,6 @@ Partial Class frmConfiguracion
     Friend WithEvents Label42 As Label
     Friend WithEvents Label43 As Label
     Friend WithEvents btn_ConfigurarBaseDatos As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Label15 As Label
 End Class

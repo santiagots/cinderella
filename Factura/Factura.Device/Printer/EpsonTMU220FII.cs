@@ -3,7 +3,6 @@ using Common.Core.Exceptions;
 using Factura.Device.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Factura.Device.Printer
@@ -26,8 +25,8 @@ namespace Factura.Device.Printer
                     ConfigurarLineaEncabezado(11, string.Empty);
                     ConfigurarLineaEncabezado(12, string.Empty);
 
-                    ConfigurarLineaCola(4, string.Empty);
-                    ConfigurarLineaCola(5, string.Empty);
+                    ConfigurarLineaCola(string.Empty);
+                    ConfigurarLineaCola(string.Empty);
 
                     TipoDocumentoComprador = DNI;
                     NumeroDocumentoComprador = cuit;
@@ -37,11 +36,11 @@ namespace Factura.Device.Printer
                     ConfigurarLineaEncabezado(11, "RECEPTOR DEL COMPROBANTE");
                     ConfigurarLineaEncabezado(12, "RESPONSABLE MONOTRIBUTO");
 
-                    ColaRemplazo1 =        "El crédito fiscal discriminado en el pre";
-                    ColaRemplazo2 =        "sente comprobante, sólo podrá ser comput";
-                    ColaRemplazo3 =        "ado a efectos del Régimen de Sostenimien";
-                    ConfigurarLineaCola(4, "to e Inclusión Fiscal para Pequeños Cont");
-                    ConfigurarLineaCola(5, "ribuyentes de la Ley N 27.618");
+                    ColaRemplazo1 =     "El crédito fiscal discriminado en el pre";
+                    ColaRemplazo2 =     "sente comprobante, sólo podrá ser comput";
+                    ColaRemplazo3 =     "ado a efectos del Régimen de Sostenimien";
+                    ConfigurarLineaCola("to e Inclusión Fiscal para Pequeños Cont");
+                    ConfigurarLineaCola("ribuyentes de la Ley N 27.618");
 
                     LineaRemitoAsociados1 = ".";
                     TipoDocumentoComprador = CUIT;
@@ -54,8 +53,8 @@ namespace Factura.Device.Printer
                     ConfigurarLineaEncabezado(11, string.Empty);
                     ConfigurarLineaEncabezado(12, string.Empty);
 
-                    ConfigurarLineaCola(4, string.Empty);
-                    ConfigurarLineaCola(5, string.Empty);
+                    ConfigurarLineaCola(string.Empty);
+                    ConfigurarLineaCola(string.Empty);
 
                     LineaRemitoAsociados1 = ".";
                     TipoDocumentoComprador = CUIT;
@@ -79,7 +78,7 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));
@@ -371,14 +370,17 @@ namespace Factura.Device.Printer
         }
 
         // Funcion que Configura la linea de cola.
-        public void ConfigurarLineaCola(int numeroDeColaDeLinea, string texto)
+        public void ConfigurarLineaCola(string texto)
         {
             var commands = new List<string>();
 
             commands.Add(EpsonTMU220FIICommand.ConfigurarLineaCola.Cmd);
             commands.Add(EpsonTMU220FIICommand.ConfigurarLineaCola.CmdExt);
-            commands.Add(numeroDeColaDeLinea.ToString());
+            commands.Add(LineaColaIndice.ToString());
             commands.Add(ReemplazarCaracteres(texto));
+
+            LineaColaIndice++;
+
             SendData(commands);
         }
 

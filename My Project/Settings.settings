@@ -170,5 +170,20 @@
     <Setting Name="ConexionRemoto" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FacturaImpuestos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[{"Id":0,"Descripcion":"Otros Impuestos Nacionales Indirectos:","Porcentaje":0.1,"Monto":0}]</Value>
+    </Setting>
+    <Setting Name="FacturaIVADiscirimiar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="FacturaIVADescripcion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">IVA Contenido:</Value>
+    </Setting>
+    <Setting Name="FacturaHabilitarImpuestos" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="FacturaEncabezadoImpuestos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regimen de Transparencia Fiscal al Consumidor (Ley 27.743)</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

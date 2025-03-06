@@ -879,14 +879,14 @@ Partial Class SaldosSucursal
         Me.ToolTip.SetToolTip(Me.Button7, "Impuestos pagados por la sucursal.")
         Me.Button7.UseVisualStyleBackColor = True
         '
-        'Button1
+        'BtnGuardar
         '
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Help
         Me.Button1.FlatAppearance.BorderSize = 0
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Image = CType(resources.GetObject("BtnGuardar.Image"), System.Drawing.Image)
         Me.Button1.Location = New System.Drawing.Point(283, 128)
-        Me.Button1.Name = "Button1"
+        Me.Button1.Name = "BtnGuardar"
         Me.Button1.Size = New System.Drawing.Size(18, 19)
         Me.Button1.TabIndex = 101
         Me.Button1.Tag = "Ver Detalle"

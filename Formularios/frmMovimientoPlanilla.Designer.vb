@@ -128,13 +128,13 @@ Partial Class frmMovimientoPlanilla
         "s.")
         Me.BtnBuscar.UseVisualStyleBackColor = True
         '
-        'Button1
+        'BtnGuardar
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Button1.Location = New System.Drawing.Point(565, 3)
-        Me.Button1.Name = "Button1"
+        Me.Button1.Name = "BtnGuardar"
         Me.Button1.Size = New System.Drawing.Size(36, 38)
         Me.Button1.TabIndex = 7
         Me.ToolMov.SetToolTip(Me.Button1, "haz click aquí para restablecer los filtros y el listado de movimientos.")

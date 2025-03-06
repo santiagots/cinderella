@@ -385,7 +385,7 @@ Partial Class frmVerDocumentoFiscal
         Me.btnCerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnCerrar.UseVisualStyleBackColor = True
         '
-        'Button1
+        'BtnGuardar
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
@@ -395,7 +395,7 @@ Partial Class frmVerDocumentoFiscal
         Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.Location = New System.Drawing.Point(118, 355)
-        Me.Button1.Name = "Button1"
+        Me.Button1.Name = "BtnGuardar"
         Me.Button1.Size = New System.Drawing.Size(130, 36)
         Me.Button1.TabIndex = 9
         Me.Button1.Text = "Fac. Electrónica"

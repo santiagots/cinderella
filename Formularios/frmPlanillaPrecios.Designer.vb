@@ -532,7 +532,7 @@ Partial Class frmPlanillaPrecios
         Me.ToolPrecios.SetToolTip(Me.btn_Restablecer, "Haz click aquí para restablecer los filtros de busqueda de productos.")
         Me.btn_Restablecer.UseVisualStyleBackColor = True
         '
-        'Button1
+        'BtnGuardar
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
@@ -540,7 +540,7 @@ Partial Class frmPlanillaPrecios
         Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.Filtrar_32
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.Button1.Location = New System.Drawing.Point(3, 141)
-        Me.Button1.Name = "Button1"
+        Me.Button1.Name = "BtnGuardar"
         Me.Button1.Size = New System.Drawing.Size(68, 54)
         Me.Button1.TabIndex = 11
         Me.Button1.Text = "Filtrar"

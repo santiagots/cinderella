@@ -17,6 +17,8 @@ Imports Ventas.Core.Model.VentaAggregate
 Imports Common.Data.Service
 Imports Ventas.Core.Model.ValueObjects
 Imports Common.Core.Helper
+Imports Newtonsoft.Json
+Imports SistemaCinderella.Formularios.Comun
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
@@ -167,6 +169,7 @@ Namespace Formularios.Facturacion
 
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(ventaModel.ObtenerItemsVentaSeleccionados(), desdeReserva, CondicionesIVASeleccionada)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
+            obtenerNumeroFacturaRequest.Impuestos = ObtenerImpuestosRequest()
 
 
             Log.Info("FACTURA - VENTA", ventaModel)
@@ -436,6 +439,40 @@ Namespace Formularios.Facturacion
                                         .NumeroCuotas = x.NumeroCuotas}))
 
             Return request
+        End Function
+
+        Private Function ObtenerImpuestosRequest() As List(Of ImpuestoRequest)
+
+            Dim request As List(Of ImpuestoRequest) = New List(Of ImpuestoRequest)()
+
+            If (Not My.Settings.FacturaHabilitarImpuestos) Then
+                Return request
+            End If
+
+            Dim Inpuestos As List(Of FacturacionImpuestosViewModel) = JsonConvert.DeserializeObject(Of List(Of FacturacionImpuestosViewModel))(My.Settings.FacturaImpuestos)
+
+            ''fuerzo los calculos totales con la condicion Responsable Inscripto para obtener los totales discriminando el IVA
+            Dim MontoTotalPagoFacturable As MontoPago = ventaModel.TotalSeleccionado(CondicionIVA.Responsable_Inscripto)
+
+            request.Add(New ImpuestoRequest() With {
+                            .Descripcion = My.Settings.FacturaEncabezadoImpuestos})
+
+            If (My.Settings.FacturaIVADiscirimiar) Then
+                request.Add(New ImpuestoRequest() With {
+                            .Monto = MontoTotalPagoFacturable.IVA,
+                            .Descripcion = My.Settings.FacturaIVADescripcion})
+            End If
+
+
+            For Each impuesto As FacturacionImpuestosViewModel In Inpuestos
+                request.Add(New ImpuestoRequest() With {
+                            .Monto = MontoTotalPagoFacturable.Total * impuesto.Porcentaje + impuesto.Monto,
+                            .Descripcion = impuesto.Descripcion})
+
+            Next
+
+            Return request
+
         End Function
     End Class
 End Namespace

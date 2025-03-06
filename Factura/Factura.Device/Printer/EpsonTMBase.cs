@@ -1,14 +1,11 @@
-﻿using Common.Core.Constants;
-using Common.Core.Enum;
+﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
 using Common.Core.Helper;
 using EpsonFPHostControlX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Factura.Device.Printer
 {
@@ -52,14 +49,19 @@ namespace Factura.Device.Printer
         internal const string LIBRETA_CIVICA = "V";
         internal const string LIBRETA_ENROLAMIENTO = "E";
 
+        internal const int MAX_CARACTERES_LINEA = 48;
+
 
         internal string DescripcionExtra1 = "";
         internal string DescripcionExtra2 = "";
         internal string DescripcionExtra3 = "";
         internal string DescripcionExtra4 = "";
-        internal string ColaRemplazo1 = "Gracias por su compra.";
-        internal string ColaRemplazo2 = "";
+        internal string ColaRemplazo1 = "Gracias por su compra";
+        internal string ColaRemplazo2 = " ";
         internal string ColaRemplazo3 = "";
+        internal int LineaColaIndice = 4;
+        internal int LineaColaMaxIndice = 10;
+        internal List<string> LineasCola = new List<string>();
         internal string LineaRemitoAsociados1 = "";
         internal string LineaRemitoAsociados2 = "";
         internal string LineaRemitoAsociados3 = "";
@@ -175,10 +177,13 @@ namespace Factura.Device.Printer
             return oEpsonFP.ReturnCode.ToString("X").PadLeft(4, '0');
         }
 
-        internal string ReemplazarCaracteres(string Cadena)
+        internal string ReemplazarCaracteres(string Cadena, bool minuscula = true)
         {
             string CadenaFinal = "";
-            CadenaFinal = Cadena.ToLower();                  // Paso a minuscula todo el string.
+            if (minuscula)
+                CadenaFinal = Cadena.ToLower();                 // Paso a minuscula todo el string.
+            else
+                CadenaFinal = Cadena;
             CadenaFinal = CadenaFinal.Replace("í", "¡");    // Reemplazo i.
             CadenaFinal = CadenaFinal.Replace("ó", "¢");    // Reemplazo ó.
             CadenaFinal = CadenaFinal.Replace("á", " ");    // Reemplazo á.

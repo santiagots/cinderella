@@ -257,14 +257,14 @@ Partial Class frmChequesAltaMasiva
         Me.ClienteNombre.Size = New System.Drawing.Size(158, 20)
         Me.ClienteNombre.TabIndex = 4
         '
-        'Button1
+        'BtnGuardar
         '
         Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar24
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.Location = New System.Drawing.Point(767, 35)
-        Me.Button1.Name = "Button1"
+        Me.Button1.Name = "BtnGuardar"
         Me.Button1.Size = New System.Drawing.Size(84, 26)
         Me.Button1.TabIndex = 8
         Me.Button1.Text = "Buscar"

@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -715,6 +715,67 @@ Namespace My
             End Get
             Set
                 Me("ConexionRemoto") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("[{""Id"":0,""Descripcion"":""Otros Impuestos Nacionales Indirectos:"",""Porcentaje"":0.1,"& _ 
+            """Monto"":0}]")>  _
+        Public Property FacturaImpuestos() As String
+            Get
+                Return CType(Me("FacturaImpuestos"),String)
+            End Get
+            Set
+                Me("FacturaImpuestos") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property FacturaIVADiscirimiar() As Boolean
+            Get
+                Return CType(Me("FacturaIVADiscirimiar"),Boolean)
+            End Get
+            Set
+                Me("FacturaIVADiscirimiar") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("IVA Contenido:")>  _
+        Public Property FacturaIVADescripcion() As String
+            Get
+                Return CType(Me("FacturaIVADescripcion"),String)
+            End Get
+            Set
+                Me("FacturaIVADescripcion") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property FacturaHabilitarImpuestos() As Boolean
+            Get
+                Return CType(Me("FacturaHabilitarImpuestos"),Boolean)
+            End Get
+            Set
+                Me("FacturaHabilitarImpuestos") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Regimen de Transparencia Fiscal al Consumidor (Ley 27.743)")>  _
+        Public Property FacturaEncabezadoImpuestos() As String
+            Get
+                Return CType(Me("FacturaEncabezadoImpuestos"),String)
+            End Get
+            Set
+                Me("FacturaEncabezadoImpuestos") = value
             End Set
         End Property
     End Class

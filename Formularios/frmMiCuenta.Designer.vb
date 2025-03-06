@@ -167,7 +167,7 @@ Partial Class frmMiCuenta
         Me.Label3.TabIndex = 13
         Me.Label3.Text = "Mensajes:"
         '
-        'Button1
+        'BtnGuardar
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
@@ -175,7 +175,7 @@ Partial Class frmMiCuenta
         Me.Button1.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.Location = New System.Drawing.Point(264, 202)
-        Me.Button1.Name = "Button1"
+        Me.Button1.Name = "BtnGuardar"
         Me.Button1.Size = New System.Drawing.Size(100, 40)
         Me.Button1.TabIndex = 12
         Me.Button1.Text = "Cerrar"

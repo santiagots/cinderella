@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Contracts\ImpuestoRequest.cs" />
     <Compile Include="Factura\Contracts\ObtenerNumeroFacturaRequest.cs" />
     <Compile Include="Factura\Contracts\ObtenerNumeroFacturaResponse.cs" />
     <Compile Include="Common\Contracts\PagoRequest.cs" />

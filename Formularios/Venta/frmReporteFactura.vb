@@ -1,18 +1,19 @@
-﻿Imports CrystalDecisions.CrystalReports.Engine
-Imports Ventas.Core.Model.VentaAggregate
-Imports Common.Core.Model
-Imports Common.Core.Enum
-Imports Common.Core.Helper
-Imports Ventas.Data.Service
-Imports QRCoder
-Imports System.Drawing.Imaging
+﻿Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Reflection
-Imports Ventas.Core.Model.BaseAgreggate
+Imports Common.Core.Enum
+Imports Common.Core.Helper
+Imports Common.Core.Model
+Imports CrystalDecisions.CrystalReports.Engine
 Imports Factura.Core.Enum
 Imports Factura.Core.Helper
 Imports Newtonsoft.Json
+Imports QRCoder
+Imports SistemaCinderella.Formularios.Comun
+Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.ValueObjects
+Imports Ventas.Core.Model.VentaAggregate
+Imports Ventas.Data.Service
 
 Public Class frmReporteFactura
 
@@ -35,6 +36,7 @@ Public Class frmReporteFactura
     Private ds As New DataSet
     Private dtProductos As New DataTable
     Private dtTotales As New DataTable
+    Private dtImpuestos As New DataTable
 
     Private RutaImagenCodigoQR As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RQ.png")
 
@@ -67,58 +69,64 @@ Public Class frmReporteFactura
 
         InicializarTransaccionItemsTable(dtProductos)
         InicializarTotalesTable(dtTotales)
+        InicializarImpuestosTable(dtImpuestos)
 
         If (TipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
             CargarProductosVenta()
             CargarTotalesVenta()
+            CargarImpuestosVenta()
         Else
             CargarProductosNotaCredito()
             CargarTotalesNotaCredito()
         End If
 
         rpt.Database.Tables("TransaccionItem").SetDataSource(dtProductos)
-            rpt.Database.Tables("Totales").SetDataSource(dtTotales)
+        rpt.Database.Tables("Totales").SetDataSource(dtTotales)
+        rpt.Database.Tables("Impuestos").SetDataSource(dtImpuestos)
+        CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
+        CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
+        CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
+        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
+        CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaTelefono"), TextObject).Text = My.Settings.DatosFiscalTel
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaEmail"), TextObject).Text = My.Settings.DatosFiscalEmail
 
-            CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
-            CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
-            CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
+        CType(rpt.ReportDefinition.ReportObjects("txtFechaEmision"), TextObject).Text = Venta.Factura.Fecha.ToString("dd/MM/yyyy")
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaCuit"), TextObject).Text = My.Settings.DatosFiscalCUIT
+        CType(rpt.ReportDefinition.ReportObjects("txtFacturaIIBB"), TextObject).Text = My.Settings.DatosFiscalIIBB
+        CType(rpt.ReportDefinition.ReportObjects("txtInicioActividad"), TextObject).Text = My.Settings.DatosFiscalInicioActividad.ToString("dd/MM/yyyy")
 
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
-            CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
-            CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaTelefono"), TextObject).Text = My.Settings.DatosFiscalTel
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaEmail"), TextObject).Text = My.Settings.DatosFiscalEmail
+        CType(rpt.ReportDefinition.ReportObjects("txtClienteNombre"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.NombreYApellido, Venta.NotaCredito.NombreYApellido)
+        CType(rpt.ReportDefinition.ReportObjects("txtClienteDNI"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CUIT, Venta.NotaCredito.CUIT)
+        CType(rpt.ReportDefinition.ReportObjects("txtClienteDomicilio"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, $"{Venta.Factura.Direccion} - {Venta.Factura.Localidad}", $"{Venta.NotaCredito.Direccion} - {Venta.NotaCredito.Localidad}")
+        CType(rpt.ReportDefinition.ReportObjects("txtClienteCondicionIva"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CondicionIVA.ToString(), Venta.NotaCredito.CondicionIVA.ToString())
 
-            CType(rpt.ReportDefinition.ReportObjects("txtFechaEmision"), TextObject).Text = Venta.Factura.Fecha.ToString("dd/MM/yyyy")
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaCuit"), TextObject).Text = My.Settings.DatosFiscalCUIT
-            CType(rpt.ReportDefinition.ReportObjects("txtFacturaIIBB"), TextObject).Text = My.Settings.DatosFiscalIIBB
-            CType(rpt.ReportDefinition.ReportObjects("txtInicioActividad"), TextObject).Text = My.Settings.DatosFiscalInicioActividad.ToString("dd/MM/yyyy")
+        If TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito Then
+            CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).Text = $"{Venta.Factura.PuntoVenta.ToString().PadLeft(4, "0")} - {Venta.Factura.NumeroFactura.First().Numero.ToString().PadLeft(8, "0")}"
+        Else
+            CType(rpt.ReportDefinition.ReportObjects("lblComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
+            CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
+        End If
+        If CondicionIva = CondicionIVA.Monotributo Then
+            CType(rpt.ReportDefinition.ReportObjects("txtComantarios"), TextObject).Text = LEYENDA_MONOTRIBUTO
+        Else
+            CType(rpt.ReportDefinition.ReportObjects("txtComantarios"), TextObject).Text = String.Empty
+        End If
 
-            CType(rpt.ReportDefinition.ReportObjects("txtClienteNombre"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.NombreYApellido, Venta.NotaCredito.NombreYApellido)
-            CType(rpt.ReportDefinition.ReportObjects("txtClienteDNI"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CUIT, Venta.NotaCredito.CUIT)
-            CType(rpt.ReportDefinition.ReportObjects("txtClienteDomicilio"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, $"{Venta.Factura.Direccion} - {Venta.Factura.Localidad}", $"{Venta.NotaCredito.Direccion} - {Venta.NotaCredito.Localidad}")
-            CType(rpt.ReportDefinition.ReportObjects("txtClienteCondicionIva"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CondicionIVA.ToString(), Venta.NotaCredito.CondicionIVA.ToString())
+        If (My.Settings.FacturaHabilitarImpuestos) Then
+            CType(rpt.ReportDefinition.ReportObjects("txtImpuestosTitulo"), TextObject).Text = My.Settings.FacturaEncabezadoImpuestos
+        End If
 
-            If TipoDocumentoFiscal = TipoDocumentoFiscal.NotaCredito Then
-                CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).Text = $"{Venta.Factura.PuntoVenta.ToString().PadLeft(4, "0")} - {Venta.Factura.NumeroFactura.First().Numero.ToString().PadLeft(8, "0")}"
-            Else
-                CType(rpt.ReportDefinition.ReportObjects("lblComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
-                CType(rpt.ReportDefinition.ReportObjects("txtComprobanteOriginal"), TextObject).ObjectFormat.EnableSuppress = True
-            End If
-
-            If CondicionIva = CondicionIVA.Monotributo Then
-                CType(rpt.ReportDefinition.ReportObjects("txtComantarios"), TextObject).Text = LEYENDA_MONOTRIBUTO
-            End If
-
-            CType(rpt.ReportDefinition.ReportObjects("txtCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CAE, Venta.NotaCredito.CAE)
-            CType(rpt.ReportDefinition.ReportObjects("txtVencimientoCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.FechaVencimientoCAE?.ToString("dd/MM/yyyy"), Venta.NotaCredito.FechaVencimientoCAE?.ToString("dd/MM/yyyy"))
+        CType(rpt.ReportDefinition.ReportObjects("txtCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.CAE, Venta.NotaCredito.CAE)
+        CType(rpt.ReportDefinition.ReportObjects("txtVencimientoCAE"), TextObject).Text = If(TipoDocumentoFiscal = TipoDocumentoFiscal.Factura, Venta.Factura.FechaVencimientoCAE?.ToString("dd/MM/yyyy"), Venta.NotaCredito.FechaVencimientoCAE?.ToString("dd/MM/yyyy"))
 
 
-            rpt.SetParameterValue("rutaImagen", GenerarQRFactura())
+        rpt.SetParameterValue("rutaImagen", GenerarQRFactura())
 
-            CrViewer.ReportSource = rpt
+        CrViewer.ReportSource = rpt
             CrViewer.SelectionMode = SelectionMode.None
             CrViewer.Refresh()
     End Sub
@@ -171,6 +179,7 @@ Public Class frmReporteFactura
         AgregarRowPagos("Sub Total", Total)
 
         Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.ObtenerItemsVentaFacturados.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
+
         For Each item As IGrouping(Of IVA, VentaItem) In gruposIVAs
             Dim iva As Decimal = ObtenerMontoIva(item)
             Total += iva
@@ -200,12 +209,14 @@ Public Class frmReporteFactura
     End Sub
 
     Private Function ObtenerMontoIva(grupoIva As IGrouping(Of IVA, VentaItem)) As Decimal
-        Dim decuento As Decimal = grupoIva.Sum(Function(x) x.TotalDescuento(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        Dim cft As Decimal = grupoIva.Sum(Function(x) x.TotalCFT(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        Dim monto As Decimal = grupoIva.Sum(Function(x) x.TotalMonto(Venta.PorcentajeFacturacion, Venta.TipoCliente, CondicionIva))
-        Dim total As Decimal = monto - decuento + cft
+        Dim totalMontoPago As MontoPago = New MontoPago(0, 0, 0, 0)
 
-        Return total * grupoIva.Key.Valor
+        For Each item As VentaItem In grupoIva
+            Dim montoPago As MontoPago = item.TotalPago(Venta.PorcentajeFacturacion, TipoCliente, CondicionIva)
+            totalMontoPago += montoPago
+        Next
+
+        Return totalMontoPago.IVA
     End Function
 
     Private Sub CargarProductosVenta()
@@ -221,27 +232,27 @@ Public Class frmReporteFactura
     End Sub
 
     Private Sub CargarProducto(item As VentaItem)
-        Dim iva As Decimal = 0
-        Dim montoProducto As Decimal = 0
+        Dim montoPago As MontoPago = item.TotalPago(Venta.PorcentajeFacturacion, TipoCliente, CondicionIva)
+        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, Monto.Redondeo(montoPago.Monto), Monto.Redondeo(montoPago.IVA))
+    End Sub
 
-        If (TipoCliente = TipoCliente.Minorista) Then
-            Select Case CondicionIva
-                Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
-                    montoProducto = Monto.ObtenerSinIVA(item.MontoProducto.Valor, item.Producto.SubCategoria.IVA.Valor, Venta.PorcentajeFacturacion)
-                    iva = montoProducto * item.Producto.SubCategoria.IVA.Valor
-                Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
-                    montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
-            End Select
-        Else
-            Select Case CondicionIva
-                Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
-                    montoProducto = item.MontoProducto.Valor * Venta.PorcentajeFacturacion
-                    iva = item.MontoProducto.Iva
-                Case CondicionIVA.Consumidor_Final, CondicionIVA.Exento
-                    montoProducto = (item.MontoProducto.Valor * Venta.PorcentajeFacturacion) + item.MontoProducto.Iva
-            End Select
+    Private Sub CargarImpuestosVenta()
+        If (Not My.Settings.FacturaHabilitarImpuestos) Then
+            Return
         End If
-        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, Monto.Redondeo(montoProducto), Monto.Redondeo(iva))
+
+        Dim Inpuestos As List(Of FacturacionImpuestosViewModel) = JsonConvert.DeserializeObject(Of List(Of FacturacionImpuestosViewModel))(My.Settings.FacturaImpuestos)
+
+        ''fuerzo los calculos totales con la condicion Responsable Inscripto para obtener los totales discriminando el IVA
+        Dim MontoTotalPagoFacturable As MontoPago = Venta.TotalFacturable(CondicionIVA.Responsable_Inscripto)
+
+        If (My.Settings.FacturaIVADiscirimiar) Then
+            AgregarRowImpuestos(My.Settings.FacturaIVADescripcion, MontoTotalPagoFacturable.IVA)
+        End If
+
+        For Each impuesto As FacturacionImpuestosViewModel In Inpuestos
+            AgregarRowImpuestos(impuesto.Descripcion, MontoTotalPagoFacturable.Total * impuesto.Porcentaje + impuesto.Monto)
+        Next
     End Sub
 
     Private Sub InicializarTotalesTable(ByRef dtPagos As DataTable)
@@ -267,6 +278,14 @@ Public Class frmReporteFactura
         dtTrasnasccionItems.Columns("SubTotal").DefaultValue = 0
     End Sub
 
+    Private Sub InicializarImpuestosTable(ByRef dtImpuestos As DataTable)
+        dtImpuestos = ds.Tables.Add("Impuestos")
+        dtImpuestos.Columns.Add("Descripcion", Type.GetType("System.String"))
+        dtImpuestos.Columns.Add("Monto", Type.GetType("System.Double"))
+
+        dtImpuestos.Columns("Monto").DefaultValue = 0
+    End Sub
+
     Private Sub AgregarRowTransaccionItems(codigo As String, nombre As String, cantidad As Integer, Precio As Double, Iva As Double)
         Dim dr As DataRow = dtProductos.NewRow()
         dr(0) = codigo
@@ -285,6 +304,14 @@ Public Class frmReporteFactura
         dr(1) = monto
 
         dtTotales.Rows.Add(dr)
+    End Sub
+
+    Private Sub AgregarRowImpuestos(descripcion As String, monto As Decimal)
+        Dim dr As DataRow = dtImpuestos.NewRow()
+        dr(0) = descripcion
+        dr(1) = Common.Core.Helper.Monto.Redondeo(monto)
+
+        dtImpuestos.Rows.Add(dr)
     End Sub
 
     Private Function ObtenerLetraFactura() As String
