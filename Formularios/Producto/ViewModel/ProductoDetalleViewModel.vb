@@ -3,6 +3,8 @@ Imports Producto.Core.Model.ProductoAgreggate
 
 Namespace Formularios.Producto
     Public Class ProductoDetalleViewModel
+        Inherits Comunes.Common
+
         Public Property Id As Integer
         Public Property Nombre As String
         Public Property Origen As String

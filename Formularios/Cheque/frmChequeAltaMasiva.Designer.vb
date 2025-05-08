@@ -197,13 +197,13 @@ Partial Class frmChequeAltaMasiva
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(860, 39)
         Me.TableLayoutPanel1.TabIndex = 82
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmChequeAltaMasivaViewModelBindingSource, "TotalAPagar", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "C2"))
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox1.Location = New System.Drawing.Point(173, 6)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.Size = New System.Drawing.Size(138, 26)
         Me.TextBox1.TabIndex = 82

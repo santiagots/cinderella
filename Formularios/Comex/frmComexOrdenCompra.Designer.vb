@@ -597,7 +597,7 @@ Partial Class frmComexOrdenCompra
         Me.Label4.TabIndex = 38
         Me.Label4.Text = "Port of Loading (*)"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
@@ -608,7 +608,7 @@ Partial Class frmComexOrdenCompra
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox1.Location = New System.Drawing.Point(178, 48)
         Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(377, 39)
         Me.TextBox1.TabIndex = 39
         '

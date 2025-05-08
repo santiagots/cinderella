@@ -159,7 +159,17 @@ Partial Class frmConfiguracion
         Me.Label29 = New System.Windows.Forms.Label()
         Me.CbPeriodoActualizacionVentaMensual = New System.Windows.Forms.ComboBox()
         Me.btnModificarStock = New System.Windows.Forms.Button()
+        Me.TabProducto = New System.Windows.Forms.TabPage()
+        Me.GroupBox14 = New System.Windows.Forms.GroupBox()
+        Me.btnSeleccionarRutaImagenesProducto = New System.Windows.Forms.Button()
+        Me.txtRutaImagenesProducto = New System.Windows.Forms.TextBox()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.btnModificarProductos = New System.Windows.Forms.Button()
         Me.FontDialog = New System.Windows.Forms.FontDialog()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.RHabilitarImagenesProductoNo = New System.Windows.Forms.RadioButton()
+        Me.RHabilitarImagenesProductoSi = New System.Windows.Forms.RadioButton()
+        Me.Label44 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -188,6 +198,9 @@ Partial Class frmConfiguracion
         Me.GroupBox11.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
+        Me.TabProducto.SuspendLayout()
+        Me.GroupBox14.SuspendLayout()
+        Me.Panel6.SuspendLayout()
         Me.SuspendLayout()
         '
         'lbl_NombreSucursalActual
@@ -946,6 +959,7 @@ Partial Class frmConfiguracion
         Me.TabControl1.Controls.Add(Me.TabInternet)
         Me.TabControl1.Controls.Add(Me.TabHost)
         Me.TabControl1.Controls.Add(Me.TabStock)
+        Me.TabControl1.Controls.Add(Me.TabProducto)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -1636,6 +1650,118 @@ Partial Class frmConfiguracion
         Me.btnModificarStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnModificarStock.UseVisualStyleBackColor = True
         '
+        'TabProducto
+        '
+        Me.TabProducto.Controls.Add(Me.GroupBox14)
+        Me.TabProducto.Location = New System.Drawing.Point(4, 24)
+        Me.TabProducto.Name = "TabProducto"
+        Me.TabProducto.Size = New System.Drawing.Size(416, 456)
+        Me.TabProducto.TabIndex = 8
+        Me.TabProducto.Text = "Producto"
+        Me.TabProducto.UseVisualStyleBackColor = True
+        '
+        'GroupBox14
+        '
+        Me.GroupBox14.Controls.Add(Me.Panel6)
+        Me.GroupBox14.Controls.Add(Me.Label44)
+        Me.GroupBox14.Controls.Add(Me.btnSeleccionarRutaImagenesProducto)
+        Me.GroupBox14.Controls.Add(Me.txtRutaImagenesProducto)
+        Me.GroupBox14.Controls.Add(Me.Label45)
+        Me.GroupBox14.Controls.Add(Me.btnModificarProductos)
+        Me.GroupBox14.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox14.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox14.Name = "GroupBox14"
+        Me.GroupBox14.Size = New System.Drawing.Size(416, 456)
+        Me.GroupBox14.TabIndex = 8
+        Me.GroupBox14.TabStop = False
+        Me.GroupBox14.Text = "Configuración de Producto"
+        '
+        'btnSeleccionarRutaImagenesProducto
+        '
+        Me.btnSeleccionarRutaImagenesProducto.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnSeleccionarRutaImagenesProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSeleccionarRutaImagenesProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnSeleccionarRutaImagenesProducto.Location = New System.Drawing.Point(379, 61)
+        Me.btnSeleccionarRutaImagenesProducto.Name = "btnSeleccionarRutaImagenesProducto"
+        Me.btnSeleccionarRutaImagenesProducto.Size = New System.Drawing.Size(29, 26)
+        Me.btnSeleccionarRutaImagenesProducto.TabIndex = 4
+        Me.btnSeleccionarRutaImagenesProducto.Text = "..."
+        Me.btnSeleccionarRutaImagenesProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnSeleccionarRutaImagenesProducto.UseVisualStyleBackColor = True
+        '
+        'txtRutaImagenesProducto
+        '
+        Me.txtRutaImagenesProducto.Location = New System.Drawing.Point(105, 64)
+        Me.txtRutaImagenesProducto.Name = "txtRutaImagenesProducto"
+        Me.txtRutaImagenesProducto.ReadOnly = True
+        Me.txtRutaImagenesProducto.Size = New System.Drawing.Size(268, 21)
+        Me.txtRutaImagenesProducto.TabIndex = 0
+        '
+        'Label45
+        '
+        Me.Label45.AutoSize = True
+        Me.Label45.Location = New System.Drawing.Point(5, 67)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(94, 15)
+        Me.Label45.TabIndex = 1
+        Me.Label45.Text = "Ruta Imagenes:"
+        '
+        'btnModificarProductos
+        '
+        Me.btnModificarProductos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnModificarProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnModificarProductos.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
+        Me.btnModificarProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnModificarProductos.Location = New System.Drawing.Point(308, 383)
+        Me.btnModificarProductos.Name = "btnModificarProductos"
+        Me.btnModificarProductos.Size = New System.Drawing.Size(100, 40)
+        Me.btnModificarProductos.TabIndex = 3
+        Me.btnModificarProductos.Text = "Modificar"
+        Me.btnModificarProductos.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnModificarProductos.UseVisualStyleBackColor = True
+        '
+        'Panel6
+        '
+        Me.Panel6.Controls.Add(Me.RHabilitarImagenesProductoNo)
+        Me.Panel6.Controls.Add(Me.RHabilitarImagenesProductoSi)
+        Me.Panel6.Location = New System.Drawing.Point(235, 28)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(173, 27)
+        Me.Panel6.TabIndex = 29
+        '
+        'RHabilitarImagenesProductoNo
+        '
+        Me.RHabilitarImagenesProductoNo.AutoSize = True
+        Me.RHabilitarImagenesProductoNo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RHabilitarImagenesProductoNo.Location = New System.Drawing.Point(127, 3)
+        Me.RHabilitarImagenesProductoNo.Name = "RHabilitarImagenesProductoNo"
+        Me.RHabilitarImagenesProductoNo.Size = New System.Drawing.Size(43, 19)
+        Me.RHabilitarImagenesProductoNo.TabIndex = 26
+        Me.RHabilitarImagenesProductoNo.Tag = ""
+        Me.RHabilitarImagenesProductoNo.Text = "NO"
+        Me.RHabilitarImagenesProductoNo.UseVisualStyleBackColor = True
+        '
+        'RHabilitarImagenesProductoSi
+        '
+        Me.RHabilitarImagenesProductoSi.AutoSize = True
+        Me.RHabilitarImagenesProductoSi.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RHabilitarImagenesProductoSi.Location = New System.Drawing.Point(11, 3)
+        Me.RHabilitarImagenesProductoSi.Name = "RHabilitarImagenesProductoSi"
+        Me.RHabilitarImagenesProductoSi.Size = New System.Drawing.Size(36, 19)
+        Me.RHabilitarImagenesProductoSi.TabIndex = 25
+        Me.RHabilitarImagenesProductoSi.Tag = ""
+        Me.RHabilitarImagenesProductoSi.Text = "SI"
+        Me.RHabilitarImagenesProductoSi.UseVisualStyleBackColor = True
+        '
+        'Label44
+        '
+        Me.Label44.Location = New System.Drawing.Point(8, 33)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(221, 20)
+        Me.Label44.TabIndex = 30
+        Me.Label44.Text = "Habilitar Imagenes"
+        Me.Label44.UseWaitCursor = True
+        '
         'frmConfiguracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -1693,6 +1819,11 @@ Partial Class frmConfiguracion
         Me.Panel4.PerformLayout()
         Me.GroupBox12.ResumeLayout(False)
         Me.GroupBox12.PerformLayout()
+        Me.TabProducto.ResumeLayout(False)
+        Me.GroupBox14.ResumeLayout(False)
+        Me.GroupBox14.PerformLayout()
+        Me.Panel6.ResumeLayout(False)
+        Me.Panel6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1833,4 +1964,14 @@ Partial Class frmConfiguracion
     Friend WithEvents btn_ConfigurarBaseDatos As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents Label15 As Label
+    Friend WithEvents TabProducto As TabPage
+    Friend WithEvents GroupBox14 As GroupBox
+    Friend WithEvents txtRutaImagenesProducto As TextBox
+    Friend WithEvents Label45 As Label
+    Friend WithEvents btnModificarProductos As Button
+    Friend WithEvents btnSeleccionarRutaImagenesProducto As Button
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents RHabilitarImagenesProductoNo As RadioButton
+    Friend WithEvents RHabilitarImagenesProductoSi As RadioButton
+    Friend WithEvents Label44 As Label
 End Class

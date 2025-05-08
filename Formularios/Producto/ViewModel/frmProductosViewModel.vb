@@ -1,8 +1,12 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Threading.Tasks
 Imports AutoMapper
 Imports Common.Core.Enum
+Imports Common.Core.Exceptions
 Imports Common.Core.Model
+Imports Negocio
 Imports Model = Producto.Core.Model.ProductoAgreggate
 
 Namespace Formularios.Producto
@@ -17,7 +21,7 @@ Namespace Formularios.Producto
 
         Private ProductoDetalleSeleccionadoModel As Model.Producto
 
-
+        Public Property HabilitarFotos As Boolean = My.Settings.ImagenesProductosHabilitada
         Public Property FiltroPorCodigo As Boolean
         Public Property FiltroPorNombre As Boolean
         Public Property Filtro As String
@@ -72,6 +76,11 @@ Namespace Formularios.Producto
                                                                           listadoPrecios)
 
             Await Task.Run(Sub() Servicio.GuardarProducto(ProductoNuevoModel))
+
+            If HabilitarFotos AndAlso ProductoNuevo.Foto IsNot Nothing Then
+                GuardarImagen(ProductoNuevo)
+            End If
+
         End Function
 
         Friend Async Function ModificarProductoAsync() As Task
@@ -97,6 +106,13 @@ Namespace Formularios.Producto
                                                         ProductoDetalle.SubirAWeb)
 
             Await Task.Run(Sub() Servicio.ActualizarProducto(ProductoDetalleSeleccionadoModel))
+
+            If HabilitarFotos AndAlso ProductoDetalle.Foto IsNot Nothing Then
+                GuardarImagen(ProductoDetalle)
+            Else
+                Dim rutaImagenProducto As String = ObtenerRutaCompletaImagen(ProductoDetalle)
+                File.Delete(rutaImagenProducto)
+            End If
         End Function
 
         Friend Async Function EliminarProductoAsync(idProducto As Integer) As Task
@@ -170,6 +186,12 @@ Namespace Formularios.Producto
             ProductoDetalleSeleccionadoModel = productosModel
 
             ProductoDetalle = Mapper.Map(Of ProductoDetalleViewModel)(productosModel)
+
+            Dim rutaImagenProducto As String = ObtenerRutaCompletaImagen(ProductoDetalle)
+            If HabilitarFotos AndAlso File.Exists(rutaImagenProducto) Then
+                ProductoDetalle.Foto = Image.FromFile(rutaImagenProducto)
+            End If
+
         End Function
 
         Friend Async Function CargarProductosAsync() As Task(Of List(Of ProductoItemViewModel))
@@ -220,5 +242,42 @@ Namespace Formularios.Producto
             Me.Provedores = New BindingList(Of Model.Proveedor)(proveedoresModel)
             NotifyPropertyChanged(NameOf(Me.Provedores))
         End Function
+
+        Friend Sub CargarFotoProductoNuevo(rutaOriginal As String)
+            Me.ProductoNuevo.Foto = NegProductos.ComprimirYRedimensionarImagenDesdeArchivo(rutaOriginal)
+        End Sub
+
+        Friend Sub CargarFotoProductoModificado(rutaOriginal As String)
+            Me.ProductoDetalle.Foto = NegProductos.ComprimirYRedimensionarImagenDesdeArchivo(rutaOriginal)
+        End Sub
+
+        Private Sub GuardarImagen(Producto As ProductoDetalleViewModel)
+            If String.IsNullOrEmpty(My.Settings.ImagenesProductosRuta) Then
+                Throw New NegocioException("Error al guardar la imagen. No se ha podido guardar la imagen porque no se encuentra una ruta configurada, por favor configure una ruta en la sección de configuraciones.")
+            End If
+
+            Dim rutaDestino As String = ObtenerRutaCompletaImagen(Producto)
+
+            Dim carpetaDestino As String = Path.GetDirectoryName(rutaDestino)
+            If Not Directory.Exists(carpetaDestino) Then
+                Directory.CreateDirectory(carpetaDestino)
+            End If
+
+            Producto.Foto.Save(rutaDestino, ImageFormat.Jpeg)
+        End Sub
+
+        Private Shared Function ObtenerRutaCompletaImagen(Producto As ProductoDetalleViewModel) As String
+            Return $"{My.Settings.ImagenesProductosRuta}\{Producto.Categoria.Descripcion}\{Producto.SubCategoria.Descripcion}\{Producto.Codigo}.jpg"
+        End Function
+
+        Friend Sub QuitarFotoProductoNuevo()
+            Me.ProductoNuevo.Foto?.Dispose()
+            Me.ProductoNuevo.Foto = Nothing
+        End Sub
+
+        Friend Sub QuitarFotoProductoModificado()
+            Me.ProductoDetalle.Foto?.Dispose()
+            Me.ProductoDetalle.Foto = Nothing
+        End Sub
     End Class
 End Namespace

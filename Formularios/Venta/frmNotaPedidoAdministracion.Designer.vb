@@ -191,12 +191,12 @@ Partial Class frmNotaPedidoAdministracion
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(904, 146)
         Me.TableLayoutPanel1.TabIndex = 21
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.NotaPedidoBindingSource, "Numero", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "N0"))
         Me.TextBox1.Location = New System.Drawing.Point(143, 4)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(286, 21)
         Me.TextBox1.TabIndex = 430
         '

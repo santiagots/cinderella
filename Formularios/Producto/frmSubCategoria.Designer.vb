@@ -366,12 +366,12 @@ Partial Class frmSubCategoria
         Me.Label6.TabIndex = 1
         Me.Label6.Text = "Descripción"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmSubCategoriaViewModelBindingSource, "BuscarNombre", True))
         Me.TextBox1.Location = New System.Drawing.Point(393, 5)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(186, 20)
         Me.TextBox1.TabIndex = 2
         '
@@ -863,7 +863,7 @@ Partial Class frmSubCategoria
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(687, 75)
         Me.TableLayoutPanel4.TabIndex = 4
         '
-        'Button2
+        'btnModificarProductos
         '
         Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
@@ -871,7 +871,7 @@ Partial Class frmSubCategoria
         Me.Button2.Image = Global.SistemaCinderella.My.Resources.Recursos.IconoBuscar32
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button2.Location = New System.Drawing.Point(587, 33)
-        Me.Button2.Name = "Button2"
+        Me.Button2.Name = "btnModificarProductos"
         Me.Button2.Size = New System.Drawing.Size(97, 39)
         Me.Button2.TabIndex = 3
         Me.Button2.Text = "Buscar"

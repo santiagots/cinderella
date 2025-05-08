@@ -851,14 +851,14 @@ Partial Class SaldosSucursal
         Me.ToolTip.SetToolTip(Me.Button6, "Sueldos a la fecha de los empleados de la sucursal.")
         Me.Button6.UseVisualStyleBackColor = True
         '
-        'Button4
+        'btnModificarCargarFoto
         '
         Me.Button4.Cursor = System.Windows.Forms.Cursors.Help
         Me.Button4.FlatAppearance.BorderSize = 0
         Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.Image = CType(resources.GetObject("btnModificarCargarFoto.Image"), System.Drawing.Image)
         Me.Button4.Location = New System.Drawing.Point(283, 78)
-        Me.Button4.Name = "Button4"
+        Me.Button4.Name = "btnModificarCargarFoto"
         Me.Button4.Size = New System.Drawing.Size(18, 19)
         Me.Button4.TabIndex = 99
         Me.Button4.Tag = "Ver Detalle"
@@ -923,14 +923,14 @@ Partial Class SaldosSucursal
         Me.ToolTip.SetToolTip(Me.Button5, "Faltantes de efectivo en la caja de la sucursal.")
         Me.Button5.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnModificarProductos
         '
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Help
         Me.Button2.FlatAppearance.BorderSize = 0
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.Image = CType(resources.GetObject("btnModificarProductos.Image"), System.Drawing.Image)
         Me.Button2.Location = New System.Drawing.Point(283, 228)
-        Me.Button2.Name = "Button2"
+        Me.Button2.Name = "btnModificarProductos"
         Me.Button2.Size = New System.Drawing.Size(18, 21)
         Me.Button2.TabIndex = 104
         Me.Button2.Tag = "Ver Detalle"

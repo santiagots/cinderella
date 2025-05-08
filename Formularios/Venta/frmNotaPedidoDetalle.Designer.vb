@@ -45,21 +45,30 @@ Partial Class frmNotaPedidoDetalle
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox10 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_PorcentajeFacturacion = New Controles.PercentUpDown()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Btn_BuscarCliente = New System.Windows.Forms.Button()
+        Me.txt_PorcentajeBonificacion = New Controles.PercentUpDown()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.DG_ProductosTotales = New SistemaCinderella.CustomDataGrid()
         Me.CodigoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.NombreDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -80,36 +89,33 @@ Partial Class frmNotaPedidoDetalle
         Me.ProductosPorcentajeBonificacion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProductosQuitar = New System.Windows.Forms.DataGridViewImageColumn()
         Me.NotaPedidoItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Gb_Producto = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txt_PorcentajeBonificacion = New Controles.PercentUpDown()
         Me.lbl_CodigoBarra = New System.Windows.Forms.Label()
         Me.txt_CodigoBarra = New System.Windows.Forms.TextBox()
-        Me.Label33 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Btn_Guardar = New System.Windows.Forms.Button()
         Me.btnAnular = New System.Windows.Forms.Button()
         Me.Btn_Volver_Armado = New System.Windows.Forms.Button()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.txt_PorcentajeFacturacion = New Controles.PercentUpDown()
         CType(Me.FrmNotaPedidoDetalleViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
+        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TotalNotaPedidoItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NotaPedidoItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
         Me.Gb_Producto.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
-        CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Btn_Armado
@@ -155,7 +161,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Agregar.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_32
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(435, 5)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(815, 5)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 34)
         Me.Btn_Agregar.TabIndex = 8
@@ -216,9 +222,9 @@ Partial Class frmNotaPedidoDetalle
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.TextBox1)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(550, 447)
+        Me.GroupBox2.Location = New System.Drawing.Point(550, 481)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(395, 195)
+        Me.GroupBox2.Size = New System.Drawing.Size(395, 161)
         Me.GroupBox2.TabIndex = 35
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "COMENTARIOS"
@@ -232,7 +238,7 @@ Partial Class frmNotaPedidoDetalle
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(389, 175)
+        Me.TextBox1.Size = New System.Drawing.Size(389, 141)
         Me.TextBox1.TabIndex = 0
         '
         'GroupBox3
@@ -241,9 +247,9 @@ Partial Class frmNotaPedidoDetalle
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.Controls.Add(Me.TextBox2)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(15, 447)
+        Me.GroupBox3.Location = New System.Drawing.Point(15, 481)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(529, 236)
+        Me.GroupBox3.Size = New System.Drawing.Size(529, 202)
         Me.GroupBox3.TabIndex = 36
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "HISTORIAL COMENTARIOS"
@@ -257,7 +263,7 @@ Partial Class frmNotaPedidoDetalle
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
         Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox2.Size = New System.Drawing.Size(523, 216)
+        Me.TextBox2.Size = New System.Drawing.Size(523, 182)
         Me.TextBox2.TabIndex = 0
         '
         'TableLayoutPanel2
@@ -273,27 +279,25 @@ Partial Class frmNotaPedidoDetalle
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.99813!))
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox10, 3, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Label1, 2, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.TextBox7, 5, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.Label6, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox9, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.TextBox6, 7, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label16, 6, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label3, 4, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label21, 2, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.TextBox4, 3, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.Label5, 6, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox5, 7, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label10, 0, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.TextBox3, 1, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.TextBox8, 5, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Label4, 4, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label21, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.TextBox4, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label3, 2, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.TextBox7, 3, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label16, 4, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.TextBox6, 5, 1)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(918, 64)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(918, 65)
         Me.TableLayoutPanel2.TabIndex = 73
         '
         'TextBox10
@@ -318,17 +322,6 @@ Partial Class frmNotaPedidoDetalle
         Me.Label1.TabIndex = 77
         Me.Label1.Text = "Estado :"
         '
-        'TextBox7
-        '
-        Me.TextBox7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox7.BackColor = System.Drawing.SystemColors.Window
-        Me.TextBox7.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Vendedor", True))
-        Me.TextBox7.Location = New System.Drawing.Point(546, 36)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.ReadOnly = True
-        Me.TextBox7.Size = New System.Drawing.Size(138, 21)
-        Me.TextBox7.TabIndex = 76
-        '
         'Label6
         '
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -350,61 +343,6 @@ Partial Class frmNotaPedidoDetalle
         Me.TextBox9.ReadOnly = True
         Me.TextBox9.Size = New System.Drawing.Size(138, 21)
         Me.TextBox9.TabIndex = 70
-        '
-        'TextBox6
-        '
-        Me.TextBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox6.BackColor = System.Drawing.SystemColors.Window
-        Me.TextBox6.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Encargado", True))
-        Me.TextBox6.Location = New System.Drawing.Point(775, 36)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.ReadOnly = True
-        Me.TextBox6.Size = New System.Drawing.Size(140, 21)
-        Me.TextBox6.TabIndex = 75
-        '
-        'Label16
-        '
-        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(690, 39)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(79, 15)
-        Me.Label16.TabIndex = 35
-        Me.Label16.Text = "Encargado :"
-        '
-        'Label3
-        '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(461, 39)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(79, 15)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Vendedor :"
-        '
-        'Label21
-        '
-        Me.Label21.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label21.AutoSize = True
-        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label21.Location = New System.Drawing.Point(232, 39)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(79, 15)
-        Me.Label21.TabIndex = 69
-        Me.Label21.Text = "% Fact. :"
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox4.BackColor = System.Drawing.SystemColors.Window
-        Me.TextBox4.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeFacturacion", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "p"))
-        Me.TextBox4.Location = New System.Drawing.Point(317, 36)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.ReadOnly = True
-        Me.TextBox4.Size = New System.Drawing.Size(138, 21)
-        Me.TextBox4.TabIndex = 73
         '
         'Label5
         '
@@ -428,28 +366,6 @@ Partial Class frmNotaPedidoDetalle
         Me.TextBox5.Size = New System.Drawing.Size(140, 21)
         Me.TextBox5.TabIndex = 74
         '
-        'Label10
-        '
-        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(3, 39)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(79, 15)
-        Me.Label10.TabIndex = 26
-        Me.Label10.Text = "Cliente :"
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox3.BackColor = System.Drawing.SystemColors.Window
-        Me.TextBox3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Cliente", True))
-        Me.TextBox3.Location = New System.Drawing.Point(88, 36)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.ReadOnly = True
-        Me.TextBox3.Size = New System.Drawing.Size(138, 21)
-        Me.TextBox3.TabIndex = 72
-        '
         'TextBox8
         '
         Me.TextBox8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -472,26 +388,244 @@ Partial Class frmNotaPedidoDetalle
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "Tipo Venta :"
         '
+        'Label21
+        '
+        Me.Label21.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label21.Location = New System.Drawing.Point(3, 40)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(79, 15)
+        Me.Label21.TabIndex = 69
+        Me.Label21.Text = "% Fact. :"
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox4.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBox4.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeFacturacion", True, System.Windows.Forms.DataSourceUpdateMode.OnValidation, Nothing, "p"))
+        Me.TextBox4.Location = New System.Drawing.Point(88, 37)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.ReadOnly = True
+        Me.TextBox4.Size = New System.Drawing.Size(138, 21)
+        Me.TextBox4.TabIndex = 73
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(232, 40)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(79, 15)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "Vendedor :"
+        '
+        'TextBox7
+        '
+        Me.TextBox7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox7.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBox7.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Vendedor", True))
+        Me.TextBox7.Location = New System.Drawing.Point(317, 37)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.ReadOnly = True
+        Me.TextBox7.Size = New System.Drawing.Size(138, 21)
+        Me.TextBox7.TabIndex = 76
+        '
+        'Label16
+        '
+        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(461, 40)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(79, 15)
+        Me.Label16.TabIndex = 35
+        Me.Label16.Text = "Encargado :"
+        '
+        'TextBox6
+        '
+        Me.TextBox6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox6.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBox6.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "Encargado", True))
+        Me.TextBox6.Location = New System.Drawing.Point(546, 37)
+        Me.TextBox6.Name = "TextBox6"
+        Me.TextBox6.ReadOnly = True
+        Me.TextBox6.Size = New System.Drawing.Size(138, 21)
+        Me.TextBox6.TabIndex = 75
+        '
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.DG_ProductosTotales, 0, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.DG_Productos, 0, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox4, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.GroupBox1, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Gb_Producto, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.DG_ProductosTotales, 0, 4)
+        Me.TableLayoutPanel3.Controls.Add(Me.DG_Productos, 0, 3)
+        Me.TableLayoutPanel3.Controls.Add(Me.Gb_Producto, 0, 2)
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(15, 8)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 4
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70.0!))
+        Me.TableLayoutPanel3.RowCount = 5
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 69.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 69.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(930, 433)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(930, 467)
         Me.TableLayoutPanel3.TabIndex = 76
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox4.Controls.Add(Me.TableLayoutPanel1)
+        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox4.Location = New System.Drawing.Point(3, 94)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(924, 61)
+        Me.GroupBox4.TabIndex = 85
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "CLIENTE"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel1.ColumnCount = 8
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_PorcentajeFacturacion, 5, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.TextBox3, 2, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Btn_BuscarCliente, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.txt_PorcentajeBonificacion, 7, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label8, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label33, 6, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.TextBox11, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Label24, 4, 0)
+        Me.TableLayoutPanel1.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(7, 20)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(911, 34)
+        Me.TableLayoutPanel1.TabIndex = 0
+        '
+        'txt_PorcentajeFacturacion
+        '
+        Me.txt_PorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PorcentajeFacturacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeFacturacion", True))
+        Me.txt_PorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_PorcentajeFacturacion.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(620, 7)
+        Me.txt_PorcentajeFacturacion.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.txt_PorcentajeFacturacion.Name = "txt_PorcentajeFacturacion"
+        Me.txt_PorcentajeFacturacion.Size = New System.Drawing.Size(93, 21)
+        Me.txt_PorcentajeFacturacion.TabIndex = 13
+        Me.txt_PorcentajeFacturacion.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox3.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBox3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "NombreClienteMayorista", True))
+        Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox3.Location = New System.Drawing.Point(157, 7)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.ReadOnly = True
+        Me.TextBox3.Size = New System.Drawing.Size(315, 21)
+        Me.TextBox3.TabIndex = 1
+        '
+        'Btn_BuscarCliente
+        '
+        Me.Btn_BuscarCliente.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_BuscarCliente.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_BuscarCliente.FlatAppearance.BorderSize = 0
+        Me.Btn_BuscarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Btn_BuscarCliente.Image = Global.SistemaCinderella.My.Resources.Recursos.Clientes_32
+        Me.Btn_BuscarCliente.Location = New System.Drawing.Point(478, 3)
+        Me.Btn_BuscarCliente.Name = "Btn_BuscarCliente"
+        Me.Btn_BuscarCliente.Size = New System.Drawing.Size(41, 29)
+        Me.Btn_BuscarCliente.TabIndex = 2
+        Me.Btn_BuscarCliente.UseVisualStyleBackColor = True
+        '
+        'txt_PorcentajeBonificacion
+        '
+        Me.txt_PorcentajeBonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeBonificacion", True))
+        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
+        Me.txt_PorcentajeBonificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_PorcentajeBonificacion.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.txt_PorcentajeBonificacion.Location = New System.Drawing.Point(814, 7)
+        Me.txt_PorcentajeBonificacion.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.txt_PorcentajeBonificacion.Name = "txt_PorcentajeBonificacion"
+        Me.txt_PorcentajeBonificacion.Size = New System.Drawing.Size(94, 21)
+        Me.txt_PorcentajeBonificacion.TabIndex = 11
+        Me.txt_PorcentajeBonificacion.Value = New Decimal(New Integer() {0, 0, 0, 0})
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(3, 10)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(49, 15)
+        Me.Label8.TabIndex = 1
+        Me.Label8.Text = "Cliente"
+        '
+        'Label33
+        '
+        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.Location = New System.Drawing.Point(719, 10)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(89, 15)
+        Me.Label33.TabIndex = 9
+        Me.Label33.Text = "Bonificación"
+        '
+        'TextBox11
+        '
+        Me.TextBox11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox11.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBox11.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaPedidoDetalleViewModelBindingSource, "IdClienteMayorista", True))
+        Me.TextBox11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox11.Location = New System.Drawing.Point(58, 7)
+        Me.TextBox11.Name = "TextBox11"
+        Me.TextBox11.ReadOnly = True
+        Me.TextBox11.Size = New System.Drawing.Size(93, 21)
+        Me.TextBox11.TabIndex = 0
+        '
+        'Label24
+        '
+        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(525, 10)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(89, 15)
+        Me.Label24.TabIndex = 12
+        Me.Label24.Text = "Facturación"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
+        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(924, 85)
+        Me.GroupBox1.TabIndex = 78
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "DATOS NOTA PEDIDO"
         '
         'DG_ProductosTotales
         '
@@ -507,7 +641,7 @@ Partial Class frmNotaPedidoDetalle
         Me.DG_ProductosTotales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_ProductosTotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.DG_ProductosTotales.Enabled = False
-        Me.DG_ProductosTotales.Location = New System.Drawing.Point(3, 406)
+        Me.DG_ProductosTotales.Location = New System.Drawing.Point(3, 440)
         Me.DG_ProductosTotales.Name = "DG_ProductosTotales"
         Me.DG_ProductosTotales.ReadOnly = True
         Me.DG_ProductosTotales.RowHeadersVisible = False
@@ -594,11 +728,11 @@ Partial Class frmNotaPedidoDetalle
         Me.DG_Productos.DataSource = Me.NotaPedidoItemsBindingSource
         Me.DG_Productos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_Productos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
-        Me.DG_Productos.Location = New System.Drawing.Point(3, 163)
+        Me.DG_Productos.Location = New System.Drawing.Point(3, 232)
         Me.DG_Productos.Name = "DG_Productos"
         Me.DG_Productos.RowHeadersVisible = False
         Me.DG_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DG_Productos.Size = New System.Drawing.Size(924, 237)
+        Me.DG_Productos.Size = New System.Drawing.Size(924, 202)
         Me.DG_Productos.TabIndex = 79
         '
         'CodigoDataGridViewTextBoxColumn
@@ -668,70 +802,37 @@ Partial Class frmNotaPedidoDetalle
         Me.NotaPedidoItemsBindingSource.DataMember = "NotaPedidoItems"
         Me.NotaPedidoItemsBindingSource.DataSource = Me.FrmNotaPedidoDetalleViewModelBindingSource
         '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
-        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(924, 84)
-        Me.GroupBox1.TabIndex = 78
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "DATOS NOTA PEDIDO"
-        '
         'Gb_Producto
         '
         Me.Gb_Producto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Gb_Producto.Controls.Add(Me.TableLayoutPanel4)
         Me.Gb_Producto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Gb_Producto.Location = New System.Drawing.Point(3, 93)
+        Me.Gb_Producto.Location = New System.Drawing.Point(3, 163)
         Me.Gb_Producto.Name = "Gb_Producto"
-        Me.Gb_Producto.Size = New System.Drawing.Size(924, 64)
+        Me.Gb_Producto.Size = New System.Drawing.Size(924, 63)
         Me.Gb_Producto.TabIndex = 77
         Me.Gb_Producto.TabStop = False
         Me.Gb_Producto.Text = "PRODUCTO"
         '
         'TableLayoutPanel4
         '
-        Me.TableLayoutPanel4.ColumnCount = 7
+        Me.TableLayoutPanel4.ColumnCount = 3
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.txt_PorcentajeFacturacion, 4, 0)
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Btn_Agregar, 2, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.lbl_CodigoBarra, 0, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.txt_CodigoBarra, 1, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.txt_PorcentajeBonificacion, 6, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Label33, 5, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Label24, 3, 0)
         Me.TableLayoutPanel4.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
         Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 17)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(918, 44)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(918, 43)
         Me.TableLayoutPanel4.TabIndex = 30
-        '
-        'txt_PorcentajeBonificacion
-        '
-        Me.txt_PorcentajeBonificacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeBonificacion", True))
-        Me.txt_PorcentajeBonificacion.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmNotaPedidoDetalleViewModelBindingSource, "HabilitarEdicionDeProductos", True))
-        Me.txt_PorcentajeBonificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_PorcentajeBonificacion.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.txt_PorcentajeBonificacion.Location = New System.Drawing.Point(826, 11)
-        Me.txt_PorcentajeBonificacion.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.txt_PorcentajeBonificacion.Name = "txt_PorcentajeBonificacion"
-        Me.txt_PorcentajeBonificacion.Size = New System.Drawing.Size(89, 21)
-        Me.txt_PorcentajeBonificacion.TabIndex = 11
-        Me.txt_PorcentajeBonificacion.Value = New Decimal(New Integer() {0, 0, 0, 0})
         '
         'lbl_CodigoBarra
         '
@@ -754,19 +855,8 @@ Partial Class frmNotaPedidoDetalle
         Me.txt_CodigoBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_CodigoBarra.Location = New System.Drawing.Point(123, 11)
         Me.txt_CodigoBarra.Name = "txt_CodigoBarra"
-        Me.txt_CodigoBarra.Size = New System.Drawing.Size(302, 21)
+        Me.txt_CodigoBarra.Size = New System.Drawing.Size(682, 21)
         Me.txt_CodigoBarra.TabIndex = 7
-        '
-        'Label33
-        '
-        Me.Label33.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(731, 14)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(89, 15)
-        Me.Label33.TabIndex = 9
-        Me.Label33.Text = "Bonificación"
         '
         'PictureBox1
         '
@@ -839,30 +929,6 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Volver_Armado.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.Btn_Volver_Armado.UseVisualStyleBackColor = True
         '
-        'Label24
-        '
-        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label24.AutoSize = True
-        Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(541, 14)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(89, 15)
-        Me.Label24.TabIndex = 12
-        Me.Label24.Text = "Facturación"
-        '
-        'txt_PorcentajeFacturacion
-        '
-        Me.txt_PorcentajeFacturacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_PorcentajeFacturacion.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.FrmNotaPedidoDetalleViewModelBindingSource, "PorcentajeFacturacion", True))
-        Me.txt_PorcentajeFacturacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txt_PorcentajeFacturacion.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.txt_PorcentajeFacturacion.Location = New System.Drawing.Point(636, 11)
-        Me.txt_PorcentajeFacturacion.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.txt_PorcentajeFacturacion.Name = "txt_PorcentajeFacturacion"
-        Me.txt_PorcentajeFacturacion.Size = New System.Drawing.Size(89, 21)
-        Me.txt_PorcentajeFacturacion.TabIndex = 13
-        Me.txt_PorcentajeFacturacion.Value = New Decimal(New Integer() {0, 0, 0, 0})
-        '
         'frmNotaPedidoDetalle
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -895,18 +961,21 @@ Partial Class frmNotaPedidoDetalle
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
         CType(Me.DG_ProductosTotales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TotalNotaPedidoItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DG_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NotaPedidoItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
         Me.Gb_Producto.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
-        CType(Me.txt_PorcentajeBonificacion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txt_PorcentajeFacturacion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -926,7 +995,6 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents TextBox6 As TextBox
     Friend WithEvents TextBox5 As TextBox
     Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TextBox8 As TextBox
     Friend WithEvents Label21 As Label
     Friend WithEvents Label6 As Label
@@ -934,7 +1002,6 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents Label16 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents Label10 As Label
     Friend WithEvents TextBox9 As TextBox
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents Gb_Producto As GroupBox
@@ -978,4 +1045,10 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents txt_PorcentajeBonificacion As Controles.PercentUpDown
     Friend WithEvents Label24 As Label
     Friend WithEvents txt_PorcentajeFacturacion As Controles.PercentUpDown
+    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Btn_BuscarCliente As Button
+    Friend WithEvents Label8 As Label
+    Friend WithEvents TextBox11 As TextBox
 End Class

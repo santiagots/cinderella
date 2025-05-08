@@ -8,6 +8,8 @@ Namespace Formularios.Cliente
         Inherits Comunes.Common
 
         Public Property RazonSocial As String
+        Public Property Codigo As Integer?
+        Public Property CUIT As String
         Public Property OrdenadoPor As String = "RazonSocial"
         Public Property DireccionOrdenamiento As OrdenadoDireccion = OrdenadoDireccion.ASC
         Public Property PaginaActual As Integer = 1
@@ -22,7 +24,8 @@ Namespace Formularios.Cliente
         Friend Async Function BuscarAsync() As Task
             Dim clientesModel As List(Of ClienteMayorista) = Await ClienteMayoristaService.BuscarAsync(TipoBase.Local,
                                                                                                     RazonSocial,
-                                                                                                    Nothing,
+                                                                                                    CUIT,
+                                                                                                    Codigo,
                                                                                                     Nothing,
                                                                                                     Nothing,
                                                                                                     Nothing,
@@ -43,6 +46,8 @@ Namespace Formularios.Cliente
 
         Friend Function LimpiarAsync() As Task
             RazonSocial = String.Empty
+            Codigo = Nothing
+            CUIT = String.Empty
             Return BuscarAsync()
         End Function
     End Class

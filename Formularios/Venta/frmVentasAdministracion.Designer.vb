@@ -745,12 +745,12 @@ Partial Class frmVentasAdministracion
         Me.BtnAnularProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnAnularProducto.UseVisualStyleBackColor = True
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmVentasAdministracionViewModelBindingSource, "FechaAnulacion", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "G"))
         Me.TextBox1.Enabled = False
         Me.TextBox1.Location = New System.Drawing.Point(104, 117)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(179, 21)
         Me.TextBox1.TabIndex = 17
         '

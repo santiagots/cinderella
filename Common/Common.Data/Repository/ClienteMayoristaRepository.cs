@@ -15,9 +15,12 @@ namespace Common.Data.Repository
         {
         }
 
-        public Task<List<ClienteMayorista>> BuscarAsync(string razonSocial, string cuit, CondicionIVA? condicionIva, int? IdlistaPrecio, int? idCorredor, int? idEmpresa, bool? habilitado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
+        public Task<List<ClienteMayorista>> BuscarAsync(string razonSocial, string cuit, int? id, CondicionIVA? condicionIva, int? IdlistaPrecio, int? idCorredor, int? idEmpresa, bool? habilitado, string ordenadoPor, OrdenadoDireccion ordenarDireccion, int pagina, int itemsPorPagina, out int totalElementos)
         {
             IQueryable<ClienteMayorista> ClientesMayoristas = ObtenerConsulta();
+
+            if (id.HasValue)
+                ClientesMayoristas = ClientesMayoristas.Where(x => x.Id == id.Value);
 
             if (!string.IsNullOrEmpty(razonSocial))
                 ClientesMayoristas = ClientesMayoristas.Where(x => x.RazonSocial.Contains(razonSocial));

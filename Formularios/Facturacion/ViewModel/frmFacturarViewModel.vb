@@ -463,13 +463,14 @@ Namespace Formularios.Facturacion
                             .Descripcion = My.Settings.FacturaIVADescripcion})
             End If
 
-
-            For Each impuesto As FacturacionImpuestosViewModel In Inpuestos
-                request.Add(New ImpuestoRequest() With {
+            If Inpuestos IsNot Nothing Then
+                For Each impuesto As FacturacionImpuestosViewModel In Inpuestos
+                    request.Add(New ImpuestoRequest() With {
                             .Monto = MontoTotalPagoFacturable.Total * impuesto.Porcentaje + impuesto.Monto,
                             .Descripcion = impuesto.Descripcion})
 
-            Next
+                Next
+            End If
 
             Return request
 

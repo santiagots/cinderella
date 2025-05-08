@@ -9,6 +9,7 @@ Imports Ventas.Core.Enum
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.ValueObjects
+Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data.Service
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 
@@ -49,9 +50,21 @@ Namespace Formularios.Venta
             End Get
         End Property
 
-        Public ReadOnly Property Cliente As String
+        Public ReadOnly Property IdClienteMayorista As Integer?
+            Get
+                Return NotaPedidoModel.ClienteMayorista?.Id
+            End Get
+        End Property
+
+        Public ReadOnly Property NombreClienteMayorista As String
             Get
                 Return NotaPedidoModel.ClienteMayorista?.RazonSocial
+            End Get
+        End Property
+
+        Public ReadOnly Property EsClienteMayorista As Integer
+            Get
+                Return NotaPedidoModel.TipoCliente = TipoCliente.Mayorista
             End Get
         End Property
 
@@ -375,5 +388,28 @@ Namespace Formularios.Venta
 
             NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
         End Function
+
+        Friend Sub ClienteMayoristaChange(clienteMayorista As Common.Core.Model.ClienteMayorista)
+
+            AgregarComentario($"Se modifica el cliente ({Me.IdClienteMayorista}) {Me.NombreClienteMayorista.ToUpper()} por ({clienteMayorista.Id}) {clienteMayorista.Nombre.ToUpper()}")
+
+            Me.PorcentajeBonificacion = clienteMayorista.PorcentajeBonificacion
+            NotaPedidoModel.AgregarClienteMayorista(clienteMayorista)
+            ActualizarPorcentaBonificacionYPorcentajeFacturacion()
+
+            NotifyPropertyChanged(NameOf(Me.IdClienteMayorista))
+            NotifyPropertyChanged(NameOf(Me.NombreClienteMayorista))
+        End Sub
+
+        Friend Sub ActualizarPorcentaBonificacionYPorcentajeFacturacion()
+            For Each notaPedidoItem As NotaPedidoItem In NotaPedidoModel.NotaPedidoItems
+                NotaPedidoModel.ActualizaNotaPedidoItem(notaPedidoItem.Producto.Codigo,
+                                               notaPedidoItem.MontoProducto.Valor,
+                                               notaPedidoItem.Cantidad,
+                                               PorcentajeBonificacion,
+                                               PorcentajeFacturacion,
+                                               TipoCliente)
+            Next
+        End Sub
     End Class
 End Namespace

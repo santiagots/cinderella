@@ -704,13 +704,13 @@ Partial Class frmRemito
         Me.TextBox5.Size = New System.Drawing.Size(236, 21)
         Me.TextBox5.TabIndex = 26
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmRemitoDetalleViewModelBindingSource, "TrasporteLocalidad", True))
         Me.TextBox1.Location = New System.Drawing.Point(143, 76)
         Me.TextBox1.MaxLength = 255
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(236, 21)
         Me.TextBox1.TabIndex = 28
         '

@@ -98,10 +98,16 @@ Public Class frmConfiguracion
             txt_PuntoVentaControladora.Text = My.Settings.PuntoVentaFacturacionTicket
             txt_PuntoVentaManual.Text = My.Settings.PuntoVentaFacturacionManual
 
-            If (File.Exists(RutaCertificadoFacturacionElectronica)) Then
-                txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
-                txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
-            End If
+            Try
+                If (File.Exists(RutaCertificadoFacturacionElectronica)) Then
+                    txt_facturacionElectronicaCertificadoNombre.Text = CertificadosX509.ObtenerCN(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica)
+                    txt_facturacionElectronicaCertificadoVencimiento.Text = CertificadosX509.ObtenerVencimiento(RutaCertificadoFacturacionElectronica, PasswordCertificadoFacturacionElectronica).ToLongDateString()
+                End If
+            Catch ex As Exception
+                Log.Error(ex)
+                MessageBox.Show("Se ha encontrado un error obtener la configuración de los certificados para la facturación electrónica. Por favor, Comuníqueselo al administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
 
             'Comprobacion de notificaciones.
             Cb_TiempoComprobacionMensajes.SelectedItem = CStr(CInt((My.Settings("TemporizadorMensajes") / 60000)))
@@ -140,9 +146,18 @@ Public Class frmConfiguracion
                 txtFechaUltimoCalculoventaMensual.Text = "No calculado"
             End If
 
+            'cargo los valoes del tab Producto
+            If My.Settings.ImagenesProductosHabilitada Then
+                RHabilitarImagenesProductoSi.Checked = True
+            Else
+                RHabilitarImagenesProductoNo.Checked = True
+            End If
+            txtRutaImagenesProducto.Text = My.Settings.ImagenesProductosRuta
+
             EvaluarPermisos()
         Catch ex As Exception
-            MessageBox.Show("Se ha encontrado un error obtener la configuración. Por favor, Comuníqueselo al administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Log.Error(ex)
+            MessageBox.Show("Se ha encontrado un error obtener la configuración. Por favor, Comuníqueselo al administrador.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             'Cambio el cursor a NORMAL.
             Me.Cursor = Cursors.Arrow
@@ -187,6 +202,7 @@ Public Class frmConfiguracion
 
             MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -212,6 +228,7 @@ Public Class frmConfiguracion
                 MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -236,6 +253,7 @@ Public Class frmConfiguracion
                 MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -275,6 +293,7 @@ Public Class frmConfiguracion
                 MessageBox.Show("Debe completar todos los campos.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -352,6 +371,7 @@ Public Class frmConfiguracion
             MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -431,6 +451,7 @@ Public Class frmConfiguracion
             My.Settings.Save()
             MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -451,6 +472,7 @@ Public Class frmConfiguracion
             My.Settings.PeriodoCaulculoVentaMensual = CbPeriodoActualizacionVentaMensual.SelectedItem
             MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -564,6 +586,7 @@ Public Class frmConfiguracion
 
             MessageBox.Show("Se han actualizado las ventas mensuales para los productos en stock de forma exitosa.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show("Ha ocurrido un error al actualizar las ventas mensuales para los productos en stock. Por favor, Comuníqueselo al administrador", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me.Cursor = Cursors.Arrow
@@ -590,6 +613,7 @@ Public Class frmConfiguracion
 
             MessageBox.Show($"Respuesta del DNS: {reply.Status.ToString()}", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Asterisk)
         Catch ex As Exception
+            Log.Error(ex)
             MessageBox.Show($"Se genero un error al verificar el DNS. Por favor, Comuníqueselo al administrador.{Environment.NewLine}{ex.ToString()} ", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
@@ -695,5 +719,36 @@ Public Class frmConfiguracion
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim frmConfiguracionFacturacionImpuestos As frmConfiguracionFacturacionImpuestos = New frmConfiguracionFacturacionImpuestos()
         frmConfiguracionFacturacionImpuestos.ShowDialog()
+    End Sub
+
+    Private Sub btnSeleccionarRutaImagenesProducto_Click(sender As Object, e As EventArgs) Handles btnSeleccionarRutaImagenesProducto.Click
+        Dim folderDialog As New FolderBrowserDialog()
+
+        folderDialog.Description = "Seleccioná una carpeta para guardar la imagen"
+        folderDialog.ShowNewFolderButton = True
+
+        If folderDialog.ShowDialog() = DialogResult.OK Then
+            txtRutaImagenesProducto.Text = folderDialog.SelectedPath
+        End If
+    End Sub
+
+    Private Sub btnModificarProductos_Click(sender As Object, e As EventArgs) Handles btnModificarProductos.Click
+        If (RHabilitarImagenesProductoSi.Checked AndAlso String.IsNullOrEmpty(txtRutaImagenesProducto.Text)) Then
+            MessageBox.Show("Error al guardar la configuración. Debe seleccionar una carpeta para el guardado de las imagenes.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+        'Cambio el cursor a "WAIT"
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            My.Settings.ImagenesProductosHabilitada = RHabilitarImagenesProductoSi.Checked
+            My.Settings.ImagenesProductosRuta = txtRutaImagenesProducto.Text
+            MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As Exception
+            Log.Error(ex)
+            MessageBox.Show(ex.Message.ToString, "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        'Cambio el cursor a NORMAL.
+        Me.Cursor = Cursors.Arrow
     End Sub
 End Class

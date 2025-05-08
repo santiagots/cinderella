@@ -171,7 +171,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="FacturaImpuestos" Type="System.String" Scope="User">
-      <Value Profile="(Default)">[{"Id":0,"Descripcion":"Otros Impuestos Nacionales Indirectos:","Porcentaje":0.1,"Monto":0}]</Value>
+      <Value Profile="(Default)">[]</Value>
     </Setting>
     <Setting Name="FacturaIVADiscirimiar" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -184,6 +184,12 @@
     </Setting>
     <Setting Name="FacturaEncabezadoImpuestos" Type="System.String" Scope="User">
       <Value Profile="(Default)">Regimen de Transparencia Fiscal al Consumidor (Ley 27.743)</Value>
+    </Setting>
+    <Setting Name="ImagenesProductosRuta" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ImagenesProductosHabilitada" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

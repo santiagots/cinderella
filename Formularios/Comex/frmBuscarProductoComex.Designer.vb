@@ -121,12 +121,12 @@ Partial Class frmBuscarProductoComex
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(757, 71)
         Me.TableLayoutPanel1.TabIndex = 12
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmBuscarProductoComexViewModelBindingSource, "CantidadLuces", True))
         Me.TextBox1.Location = New System.Drawing.Point(610, 42)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(144, 21)
         Me.TextBox1.TabIndex = 13
         '

@@ -575,13 +575,13 @@ Partial Class VentaDetalle
         Me.Label10.TabIndex = 26
         Me.Label10.Text = "Cliente :"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.BackColor = System.Drawing.SystemColors.Window
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.VentaDetalleBindingSource, "Sucursal", True))
         Me.TextBox1.Location = New System.Drawing.Point(83, 5)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.Size = New System.Drawing.Size(162, 20)
         Me.TextBox1.TabIndex = 70

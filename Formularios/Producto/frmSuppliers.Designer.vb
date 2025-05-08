@@ -555,13 +555,13 @@ Partial Class frmSuppliers
         Me.Label8.TabIndex = 1
         Me.Label8.Text = "POL (*)"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmSuppliersViewModelBindingSource, "SuppliersMod.POL", True))
         Me.TextBox1.Location = New System.Drawing.Point(201, 34)
         Me.TextBox1.MaxLength = 255
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(456, 21)
         Me.TextBox1.TabIndex = 1
         '

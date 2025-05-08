@@ -33,7 +33,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.ChkMarcaManual = New System.Windows.Forms.CheckBox()
-        Me.FrmNotaCreditoAdministracionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ChkMarcaTicket = New System.Windows.Forms.CheckBox()
         Me.ChkMarcaElectronica = New System.Windows.Forms.CheckBox()
         Me.txtCUIT = New System.Windows.Forms.TextBox()
@@ -54,6 +53,18 @@ Partial Class frmNotaCreditoAdministracion
         Me.FHasta = New System.Windows.Forms.DateTimePicker()
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.DG_NotaCredito = New System.Windows.Forms.DataGridView()
+        Me.NotaCreditoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.FrmNotaCreditoAdministracionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewImageColumn1 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PuntoVentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CUITDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -64,16 +75,13 @@ Partial Class frmNotaCreditoAdministracion
         Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CondicionIVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Factura = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.NotaCreditoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
-        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.DG_NotaCredito, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NotaCreditoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -183,10 +191,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.ChkMarcaManual.TabIndex = 424
         Me.ChkMarcaManual.Text = "Manual"
         Me.ChkMarcaManual.UseVisualStyleBackColor = True
-        '
-        'FrmNotaCreditoAdministracionViewModelBindingSource
-        '
-        Me.FrmNotaCreditoAdministracionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmNotaCreditoAdministracionViewModel)
         '
         'ChkMarcaTicket
         '
@@ -317,7 +321,7 @@ Partial Class frmNotaCreditoAdministracion
         'txtNotaCreditoNro
         '
         Me.txtNotaCreditoNro.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtNotaCreditoNro.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaCreditoAdministracionViewModelBindingSource, "NumeroNotaCredito", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N2"))
+        Me.txtNotaCreditoNro.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmNotaCreditoAdministracionViewModelBindingSource, "NumeroNotaCredito", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
         Me.txtNotaCreditoNro.Location = New System.Drawing.Point(143, 4)
         Me.txtNotaCreditoNro.Name = "txtNotaCreditoNro"
         Me.txtNotaCreditoNro.Size = New System.Drawing.Size(293, 21)
@@ -445,6 +449,95 @@ Partial Class frmNotaCreditoAdministracion
         Me.DG_NotaCredito.Size = New System.Drawing.Size(930, 529)
         Me.DG_NotaCredito.TabIndex = 435
         '
+        'NotaCreditoBindingSource
+        '
+        Me.NotaCreditoBindingSource.DataMember = "NotaCredito"
+        Me.NotaCreditoBindingSource.DataSource = Me.FrmNotaCreditoAdministracionViewModelBindingSource
+        '
+        'FrmNotaCreditoAdministracionViewModelBindingSource
+        '
+        Me.FrmNotaCreditoAdministracionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmNotaCreditoAdministracionViewModel)
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "TipoFactura"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "T. Factura"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Width = 81
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "CondicionIVA"
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Condición IVA"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 81
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.DataPropertyName = "CUIT"
+        Me.DataGridViewTextBoxColumn3.HeaderText = "CUIT"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.Width = 89
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.DataPropertyName = "NombreYApellido"
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Nombre"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        Me.DataGridViewTextBoxColumn4.Width = 89
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.DataPropertyName = "Direccion"
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Dirección"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Width = 88
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.DataPropertyName = "Localidad"
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Localidad"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        Me.DataGridViewTextBoxColumn6.Width = 89
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.DataPropertyName = "Fecha"
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Fecha"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 89
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.DataPropertyName = "TipoFactura"
+        Me.DataGridViewTextBoxColumn8.HeaderText = "T. Factura"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.Width = 89
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.DataPropertyName = "CondicionIVA"
+        Me.DataGridViewTextBoxColumn9.HeaderText = "Condición IVA"
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.ReadOnly = True
+        Me.DataGridViewTextBoxColumn9.Width = 88
+        '
+        'DataGridViewImageColumn1
+        '
+        Me.DataGridViewImageColumn1.HeaderText = "Factura"
+        Me.DataGridViewImageColumn1.Image = Global.SistemaCinderella.My.Resources.Recursos.Detalle_Pequeno
+        Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
+        Me.DataGridViewImageColumn1.ReadOnly = True
+        Me.DataGridViewImageColumn1.Width = 89
+        '
         'NumeroDataGridViewTextBoxColumn
         '
         Me.NumeroDataGridViewTextBoxColumn.DataPropertyName = "Numero"
@@ -515,25 +608,6 @@ Partial Class frmNotaCreditoAdministracion
         Me.Factura.Name = "Factura"
         Me.Factura.ReadOnly = True
         '
-        'NotaCreditoBindingSource
-        '
-        Me.NotaCreditoBindingSource.DataMember = "NotaCredito"
-        Me.NotaCreditoBindingSource.DataSource = Me.FrmNotaCreditoAdministracionViewModelBindingSource
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.DataPropertyName = "TipoFactura"
-        Me.DataGridViewTextBoxColumn1.HeaderText = "T. Factura"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 81
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.DataPropertyName = "CondicionIVA"
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Condición IVA"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 81
-        '
         'frmNotaCreditoAdministracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -550,11 +624,11 @@ Partial Class frmNotaCreditoAdministracion
         Me.TableLayoutPanel1.PerformLayout()
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
-        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         CType(Me.DG_NotaCredito, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NotaCreditoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FrmNotaCreditoAdministracionViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -600,4 +674,12 @@ Partial Class frmNotaCreditoAdministracion
     Friend WithEvents Factura As DataGridViewImageColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn8 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn9 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewImageColumn1 As DataGridViewImageColumn
 End Class

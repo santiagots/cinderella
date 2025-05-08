@@ -18,6 +18,7 @@ Public Class Cliente
                                                                                                     Nothing,
                                                                                                     Nothing,
                                                                                                     Nothing,
+                                                                                                    Nothing,
                                                                                                     "RazonSocial",
                                                                                                     OrdenadoDireccion.ASC,
                                                                                                     1,

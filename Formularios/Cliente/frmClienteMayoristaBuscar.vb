@@ -8,6 +8,15 @@ Public Class frmClienteMayoristaBuscar
     Dim frmClienteMayoristaBuscarViewModel As frmClienteMayoristaBuscarViewModel = New frmClienteMayoristaBuscarViewModel()
     Public Property ClienteMayorista As ClienteMayorista
 
+    Sub New()
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        AddHandler txtCodigo.DataBindings(0).Parse, AddressOf NullParseHandler
+        AddHandler txtCuit.DataBindings(0).Parse, AddressOf NullParseHandler
+    End Sub
+
 
     Private Sub frmBuscarClienteMayorista_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         EjecutarAsync(Async Function() As Task
@@ -42,5 +51,15 @@ Public Class frmClienteMayoristaBuscar
         EjecutarAsync(Async Function() As Task
                           Await frmClienteMayoristaBuscarViewModel.LimpiarAsync()
                       End Function)
+    End Sub
+
+    Private Sub SoloDigitos(sender As Object, e As KeyPressEventArgs) Handles txtCodigo.KeyPress, txtCuit.KeyPress
+        If (Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar)) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub NullParseHandler(ByVal sender As Object, ByVal e As ConvertEventArgs)
+        If e.Value IsNot Nothing AndAlso String.IsNullOrEmpty(e.Value.ToString()) Then e.Value = Nothing
     End Sub
 End Class

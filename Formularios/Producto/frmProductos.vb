@@ -4,8 +4,6 @@ Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
 Imports Common.Core.Model
-Imports Datos
-Imports Producto.Core.Model.ProductoAgreggate
 Imports SistemaCinderella.Formularios.Producto
 
 Public Class frmProductos
@@ -120,11 +118,25 @@ Public Class frmProductos
     End Sub
 
     Private Sub TabProductos_Selected(ByVal sender As Object, ByVal e As System.Windows.Forms.TabControlEventArgs) Handles TabProductos.Selected
+        pb_foto.Image?.Dispose()
+        pb_foto.Image = Nothing
+        frmProductosViewModel.QuitarFotoProductoNuevo()
+
+        pb_ModificarFoto.Image?.Dispose()
+        pb_ModificarFoto.Image = Nothing
+        frmProductosViewModel.QuitarFotoProductoModificado()
+
         If TabProductos.SelectedTab.Name = "TbMod" AndAlso DG_Productos.CurrentRow IsNot Nothing Then
             EjecutarAsync(Async Function() As Task
                               Dim producto As ProductoItemViewModel = CType(DG_Productos.CurrentRow.DataBoundItem, ProductoItemViewModel)
                               Await frmProductosViewModel.CargarProductoAsync(producto.Id)
                               ProductoModificacionViewModelBindingSource.DataSource = frmProductosViewModel.ProductoDetalle
+
+                              If frmProductosViewModel.ProductoDetalle.Foto IsNot Nothing Then
+                                  pb_ModificarFoto.Image = frmProductosViewModel.ProductoDetalle.Foto
+                              Else
+                                  pb_ModificarFoto.Image = My.Resources.Recursos.Sinfoto
+                              End If
                           End Function)
         End If
 
@@ -132,6 +144,7 @@ Public Class frmProductos
             EjecutarAsync(Async Function() As Task
                               Await frmProductosViewModel.LimpiarProductoNuevo()
                               ProductoAltaViewModelBindingSource.DataSource = frmProductosViewModel.ProductoNuevo
+                              pb_foto.Image = My.Resources.Recursos.Sinfoto
                           End Function)
         End If
     End Sub
@@ -229,20 +242,6 @@ Public Class frmProductos
         TabProductos.SelectedTab = TabProductos.TabPages("TbListado")
     End Sub
 
-    'abro el open dialog para que seleccione una foto.
-    Private Sub btn_Open_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_Open.Click, btn_Open_mod.Click
-        Cargar.Title = "Seleccione una Fotografía" 'Título de la ventana que se abrirá para seleccionar el archivo.
-        Cargar.Filter = "Jpg|*.jpg|Png|*.png|Gif|*.gif|Todos los archivos|*.*" 'Tipo de extensiones soportadas, fijaros como en la primera parte se pone el nombre, el que se quiera, después ponemos una barra vertical a modo de separación y ponemos *."extensión", el asterisco significa que nos permitirá cualquier nombre de archivo, la extensión hay que ponerla IGUAL que las que queramos abrir, lo de todos los archivos es opcional..
-        Cargar.FilterIndex = 0 'Elegimos que se quede por defecto la primera extensión a la vista.
-        Cargar.InitialDirectory = "C:\Documents and Settings\" & My.User.Name & "\Escritorio" 'Con esto haremos que el directorio inicial sea nuestro escritorio, podemos modificarlo a nuestro antojo si quisieramos abrirlo en mis documentos o en algún otro lugar lo ponemos y ya está.
-        Cargar.RestoreDirectory = True 'De esta forma, mientras no cerremos la aplicación se "guardará" el último directorio seleccionado para no tener que elegirlo cada vez.
-        Cargar.FileName = "" 'Con esto hacemos que al abrir la ventana no haya un nombre escrito.
-        If Cargar.ShowDialog() = Windows.Forms.DialogResult.OK Then 'Si pulsamos aceptar en la ventanita.
-            'productoVistaModelo.ActualizarFoto(Cargar.FileName)
-
-        End If
-    End Sub
-
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btn_Exportar.Click
         ExportarExcel("Productos_Todo", True)
     End Sub
@@ -331,7 +330,7 @@ Public Class frmProductos
 
                 Dim DatosConError As DataTable = New DataTable()
 
-                Dim Mensaje As String = NegProductos.ImportarExcel(OpenFileDialog.FileName, DatosConError)
+                Dim Mensaje As String = NegProductos.ImportarExcel(OpenFileDialog.FileName, DatosConError, My.Settings.ImagenesProductosHabilitada, My.Settings.ImagenesProductosRuta)
 
                 'Voy seteando la barra de progreso
                 frmCargadorDeEspera.Close()
@@ -456,5 +455,49 @@ Public Class frmProductos
         End If
     End Sub
 
+    Private Sub btnAltaCargarFoto_Click(sender As Object, e As EventArgs) Handles btnAltaCargarFoto.Click
+        Ejecutar(Sub()
+                     Using openDialog As New OpenFileDialog()
+                         openDialog.Filter = "Imágenes|*.jpg;*.jpeg;*.png"
+                         openDialog.Title = "Seleccionar imagen"
 
+                         If openDialog.ShowDialog() = DialogResult.OK Then
+                             frmProductosViewModel.CargarFotoProductoNuevo(openDialog.FileName)
+                             pb_foto.Image = frmProductosViewModel.ProductoNuevo.Foto
+                         End If
+                     End Using
+                 End Sub)
+    End Sub
+
+    Private Sub btnModificarCargarFoto_Click(sender As Object, e As EventArgs) Handles btnModificarCargarFoto.Click
+        Ejecutar(Sub()
+                     Using openDialog As New OpenFileDialog()
+                         openDialog.Filter = "Imágenes|*.jpg;*.jpeg;*.png"
+                         openDialog.Title = "Seleccionar imagen"
+
+                         If openDialog.ShowDialog() = DialogResult.OK Then
+                             frmProductosViewModel.CargarFotoProductoModificado(openDialog.FileName)
+                             pb_ModificarFoto.Image = frmProductosViewModel.ProductoDetalle.Foto
+                         End If
+                     End Using
+                 End Sub)
+    End Sub
+
+    Private Sub btnAltaQuitarFoto_Click(sender As Object, e As EventArgs) Handles btnAltaQuitarFoto.Click
+        Ejecutar(Sub()
+                     frmProductosViewModel.QuitarFotoProductoNuevo()
+                     pb_foto.Image.Dispose()
+                     pb_foto.Image = Nothing
+                     pb_foto.Image = My.Resources.Recursos.Sinfoto
+                 End Sub)
+    End Sub
+
+    Private Sub btnQuitarCargarFoto_Click(sender As Object, e As EventArgs) Handles btnQuitarCargarFoto.Click
+        Ejecutar(Sub()
+                     frmProductosViewModel.QuitarFotoProductoModificado()
+                     pb_ModificarFoto.Image.Dispose()
+                     pb_ModificarFoto.Image = Nothing
+                     pb_ModificarFoto.Image = My.Resources.Recursos.Sinfoto
+                 End Sub)
+    End Sub
 End Class

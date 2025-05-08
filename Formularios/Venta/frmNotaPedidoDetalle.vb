@@ -279,4 +279,12 @@ Public Class frmNotaPedidoDetalle
 
         txt_CodigoBarra.Focus()
     End Sub
+
+    Private Sub Btn_BuscarCliente_Click(sender As Object, e As EventArgs) Handles Btn_BuscarCliente.Click
+        Dim frmBuscarClienteMayorista As frmClienteMayoristaBuscar = New frmClienteMayoristaBuscar()
+        frmBuscarClienteMayorista.ShowDialog()
+        If frmBuscarClienteMayorista.ClienteMayorista IsNot Nothing Then
+            NotaPedidoDetalleViewModel.ClienteMayoristaChange(frmBuscarClienteMayorista.ClienteMayorista)
+        End If
+    End Sub
 End Class

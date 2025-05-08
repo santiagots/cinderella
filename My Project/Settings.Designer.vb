@@ -720,8 +720,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("[{""Id"":0,""Descripcion"":""Otros Impuestos Nacionales Indirectos:"",""Porcentaje"":0.1,"& _ 
-            """Monto"":0}]")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("[]")>  _
         Public Property FacturaImpuestos() As String
             Get
                 Return CType(Me("FacturaImpuestos"),String)
@@ -776,6 +775,30 @@ Namespace My
             End Get
             Set
                 Me("FacturaEncabezadoImpuestos") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ImagenesProductosRuta() As String
+            Get
+                Return CType(Me("ImagenesProductosRuta"),String)
+            End Get
+            Set
+                Me("ImagenesProductosRuta") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ImagenesProductosHabilitada() As Boolean
+            Get
+                Return CType(Me("ImagenesProductosHabilitada"),Boolean)
+            End Get
+            Set
+                Me("ImagenesProductosHabilitada") = value
             End Set
         End Property
     End Class

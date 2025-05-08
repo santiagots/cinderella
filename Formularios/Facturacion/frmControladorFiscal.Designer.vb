@@ -329,13 +329,13 @@ Partial Class frmControladorFiscal
         Me.TextBox2.Size = New System.Drawing.Size(239, 20)
         Me.TextBox2.TabIndex = 15
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmControladorFiscalViewModelBindingSource, "ControladorFiscalJornadaHasta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmControladorFiscalViewModelBindingSource, "ControladorFiscalFiltrarPorJornada", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.TextBox1.Location = New System.Drawing.Point(588, 65)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(239, 20)
         Me.TextBox1.TabIndex = 14
         '

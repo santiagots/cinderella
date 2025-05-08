@@ -228,13 +228,13 @@ Partial Class frmTipoProducto
         Me.btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btn_Buscar.UseVisualStyleBackColor = True
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.frmTipoProductoViewModelBindingSource, "NombreBusqueda", True))
         Me.TextBox1.Location = New System.Drawing.Point(103, 31)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(356, 21)
         Me.TextBox1.TabIndex = 0
         '

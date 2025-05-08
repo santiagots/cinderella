@@ -267,12 +267,12 @@ Partial Class frmTransporte
         Me.Label6.TabIndex = 11
         Me.Label6.Text = "Razón Social"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmTrasporteViewModelBindingSource, "BuscarRazonSocial", True))
         Me.TextBox1.Location = New System.Drawing.Point(88, 5)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(165, 20)
         Me.TextBox1.TabIndex = 0
         '

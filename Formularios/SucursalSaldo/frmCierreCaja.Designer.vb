@@ -173,12 +173,12 @@ Partial Class frmCierreCaja
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Fecha"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmCierreCajaViewModelBindingSource, "Estado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.TextBox1.Location = New System.Drawing.Point(123, 44)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.Size = New System.Drawing.Size(330, 21)
         Me.TextBox1.TabIndex = 3

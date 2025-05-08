@@ -379,14 +379,14 @@ Partial Class frmConfiguracionFacturacionImpuestos
         Me.Label1.TabIndex = 13
         Me.Label1.Text = "(*) Descripción a Imprimir"
         '
-        'TextBox1
+        'txtCodigo
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmConfiguracionFacturacionImpuestosViewModelBindingSource, "ImpuestoDescripcion", True))
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox1.Location = New System.Drawing.Point(188, 7)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Name = "txtCodigo"
         Me.TextBox1.Size = New System.Drawing.Size(293, 21)
         Me.TextBox1.TabIndex = 14
         '

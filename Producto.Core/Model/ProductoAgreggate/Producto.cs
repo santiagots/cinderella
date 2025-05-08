@@ -117,6 +117,8 @@ namespace Producto.Core.Model.ProductoAgreggate
             Novedad = Novedad;
             SubirWeb = SubirWeb;
             Precios = precios;
+            BoxSize = new Tamanio();
+            ProductSize = new Tamanio();
         }
 
         public void ActualizarDatos(Categoria categoria, SubCategoria subcategoria, Proveedor proveedor, string nombre, string descripcion, decimal costo, string origen, string tamanio, string codigo, string foto, bool habilitado, bool novedad, bool subirWeb)

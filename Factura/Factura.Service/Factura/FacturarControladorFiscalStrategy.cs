@@ -145,7 +145,7 @@ namespace Factura.Service.Factura
 
                 List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
-                List<ImpuestoTicketRequest> impuestos = request.Impuestos.Select(x => new ImpuestoTicketRequest(x.Descripcion, x.Monto)).ToList();
+                List<ImpuestoTicketRequest> impuestos = request.Impuestos?.Select(x => new ImpuestoTicketRequest(x.Descripcion, x.Monto)).ToList() ?? new List<ImpuestoTicketRequest>();
 
                 string TipoFactura = string.Empty;
                 decimal MontoTotal = 0;

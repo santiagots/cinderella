@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Ventas.Core.Model.BaseAgreggate;
 using Ventas.Core.Model.ValueObjects;
+using Common.Core.Model;
 
 namespace Ventas.Core.Model.NotaPedidoAgreggate
 {
@@ -46,6 +47,12 @@ namespace Ventas.Core.Model.NotaPedidoAgreggate
         public void AgregarClienteMinorista(long idClienteMinorista)
         {
             IdClienteMinorista = idClienteMinorista;
+        }
+
+        public void AgregarClienteMayorista(ClienteMayorista clienteMayorista)
+        {
+            ClienteMayorista = clienteMayorista;
+            IdClienteMayorista = clienteMayorista.Id;
         }
 
         public void AgregarClienteMayorista(int idClienteMayorista)

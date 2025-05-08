@@ -29,9 +29,8 @@ namespace Factura.Device.Contracts
             List<string> resultado = new List<string>();
             string montoStr = string.Empty;
 
-            if (Monto != 0)
-                // Formateamos el monto con dos decimales
-                montoStr = Monto.ToString("F2", CultureInfo.InvariantCulture);
+            // Formateamos el monto con dos decimales
+            montoStr = Monto.ToString("F2", CultureInfo.InvariantCulture);
 
             // Calculamos el espacio disponible para el texto (lo que sobra después del monto)
             int espacioTexto = largoTotal - montoStr.Length;

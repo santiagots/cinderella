@@ -8,7 +8,7 @@ namespace Common.Core.Model.ValueObjects
         public decimal? Y { get; internal set; }
         public decimal? Z { get; internal set; }
 
-        protected Tamanio()
+        public Tamanio()
         {
         }
 

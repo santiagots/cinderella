@@ -1,5 +1,8 @@
 ﻿Imports System.Data.OleDb
 Imports System.Data.SqlClient
+Imports System.Drawing
+Imports System.Drawing.Imaging
+Imports System.Dynamic
 Imports System.Globalization
 Imports System.IO
 Imports System.Text
@@ -1237,7 +1240,7 @@ Public Class NegProductos
 #End Region
 
 #Region "Funciones Importar Excel"
-    Function ImportarExcel(FileName As String, ByRef DatosConError As DataTable) As String
+    Function ImportarExcel(FileName As String, ByRef DatosConError As DataTable, HabilitarFotos As Boolean, FotosRutaDestino As String) As String
         Dim dsCategoria As DataSet = New DataSet()
         Dim dsProveedor As DataSet = New DataSet()
         Dim dsSubCategoria As DataSet = New DataSet()
@@ -1299,6 +1302,7 @@ Public Class NegProductos
             cmd = New SqlCommand("sp_Productos_ListadoExcelComex", conn)
             adapter = New SqlDataAdapter(cmd)
             adapter.Fill(dsProductos)
+            dsProductos.Tables(0).Columns.Add("Imagen")
         End Using
 
         Dim DatosEliminados As List(Of DataRow) = New List(Of DataRow)()
@@ -1332,6 +1336,7 @@ Public Class NegProductos
         DatosNuevos = ValidarDatosVacios(DatosNuevos, DatosConError)
 
         Dim productos As List(Of String) = New List(Of String)
+        Dim productosImagenes As List(Of ExpandoObject) = New List(Of ExpandoObject)
 
         Dim idProductoMaximo As Integer = dsProductos.Tables(0).Rows.Cast(Of DataRow).Max(Function(x) x.ItemArray(0)) + 1
 
@@ -1341,20 +1346,25 @@ Public Class NegProductos
         productos.AddRange(ObtenerSQLPorProducto(DatosActualizados, dsCategoria, dsSubCategoria, dsProveedor, dsSuppliers, dsColores, dsTiposProductos, "Update", idProductoMaximo, DatosConError))
         'Armo sentiencias Insert
         productos.AddRange(ObtenerSQLPorProducto(DatosNuevos, dsCategoria, dsSubCategoria, dsProveedor, dsSuppliers, dsColores, dsTiposProductos, "Insert", idProductoMaximo, DatosConError))
+        'Obtengo las rutas de las imagenes
+        If HabilitarFotos Then
+            productosImagenes = ObtenerImagenesProducto(DatosExcel)
+        End If
+
 
         If (DatosConError.Rows.Count > 0) Then
             Return $"No se ha podido importar el listado de productos, se han encontrar {DatosConError.Rows.Count} productos con errores. Por favor, verifique los errores y vuelva a intentarlo."
         End If
 
-        If (productos.Count = 0) Then
+        If (productos.Count = 0 AndAlso productosImagenes.Count = 0) Then
             Return "No se encontraron nuevos productos o productos modificados en el Excel importado."
         End If
 
-        If DatosEliminados.Count = 0 AndAlso DatosActualizados.Count = 0 AndAlso DatosNuevos.Count = 0 Then
+        If DatosEliminados.Count = 0 AndAlso DatosActualizados.Count = 0 AndAlso DatosNuevos.Count = 0 AndAlso productosImagenes.Count = 0 Then
             Return "No se han encontrado producto a importar."
         End If
 
-        Dim respuesta As DialogResult = MessageBox.Show($"Se han encontrado {DatosNuevos.Count} nuevos productos, {DatosActualizados.Count} productos modificados y {DatosEliminados.Count} productos eliminados.{Environment.NewLine}¿Desea importarlos?", "Administración de Productos", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+        Dim respuesta As DialogResult = MessageBox.Show($"Se han encontrado{Environment.NewLine}{DatosNuevos.Count} nuevos productos{Environment.NewLine}{DatosActualizados.Count} productos modificados{Environment.NewLine}{DatosEliminados.Count} productos eliminados{Environment.NewLine}{productosImagenes.Count} imagenes de productos.{Environment.NewLine}¿Desea importarlos?", "Administración de Productos", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
         If (respuesta = DialogResult.No) Then
             Return "Se ha cancelado la importación de los productos."
         End If
@@ -1383,7 +1393,24 @@ Public Class NegProductos
             End Using
         End Using
 
-        Return $"Se han cargado {DatosNuevos.Count} nuevos productos, se han actualizaron {DatosActualizados.Count} productos y se han eliminado {DatosEliminados.Count} productos."
+        For Each producto In productosImagenes
+            Dim dict = CType(producto, IDictionary(Of String, Object))
+
+            Dim categoria As String = CStr(dict("Categoria"))
+            Dim subCategoria As String = CStr(dict("SubCategoria"))
+            Dim codigo As String = CStr(dict("Codigo"))
+            Dim rutaImagen As String = CStr(dict("RutaImagen"))
+
+            If Not File.Exists(rutaImagen) Then
+                Continue For
+            End If
+
+            Dim imagen As Image = NegProductos.ComprimirYRedimensionarImagenDesdeArchivo(rutaImagen)
+            Dim imagenRuta As String = $"{FotosRutaDestino}\{categoria}\{subCategoria}\{codigo}.jpg"
+            imagen.Save(imagenRuta, ImageFormat.Jpeg)
+        Next
+
+        Return $"Se han cargado {DatosNuevos.Count} nuevos productos.{Environment.NewLine}Se han actualizaron {DatosActualizados.Count} productos.{Environment.NewLine}Se han eliminado {DatosEliminados.Count} productos.{Environment.NewLine}Se han cargado {productosImagenes.Count} imagenes de productos."
     End Function
 
     Private Shared Function ObtenerProductosNuevos(dsProductos As DataSet, DatosExcel As DataTable) As List(Of DataRow)
@@ -1454,6 +1481,28 @@ Public Class NegProductos
             i = (i + 1)
         Loop
         Return sql
+    End Function
+
+    Function ObtenerImagenesProducto(DatosExcel As DataTable) As List(Of ExpandoObject)
+        Dim productosDinamicos As New List(Of ExpandoObject)
+
+        For Each row As DataRow In DatosExcel.Rows
+            If Not IsDBNull(row("Categoria")) AndAlso
+               Not IsDBNull(row("SubCategoria")) AndAlso
+               Not IsDBNull(row("Codigo")) AndAlso
+               Not IsDBNull(row("Imagen")) Then
+
+                Dim producto As IDictionary(Of String, Object) = New ExpandoObject()
+
+                producto("Categoria") = row("Categoria")
+                producto("SubCategoria") = row("SubCategoria")
+                producto("Codigo") = row("Codigo")
+                producto("RutaImagen") = row("Imagen")
+
+                productosDinamicos.Add(DirectCast(producto, ExpandoObject))
+            End If
+        Next
+        Return productosDinamicos
     End Function
 
     Private Shared Function ValidarDato(dato As String, tipoDato As String, ds As DataSet, ByRef mensajeError As String) As DataRow
@@ -1581,7 +1630,7 @@ Public Class NegProductos
     Function verificarColumnasExcel(datos As DataTable) As Boolean
 
         'verifico que la cantidad de columnas no halla sido modificada 
-        If datos.Columns.Count <> 39 Then
+        If datos.Columns.Count <> 40 Then
             Return False
         End If
 
@@ -1605,39 +1654,40 @@ Public Class NegProductos
                 datos.Columns(32).ColumnName <> "ProductSize_X" Or datos.Columns(33).ColumnName <> "ProductSize_Y" Or
                 datos.Columns(34).ColumnName <> "ProductSize_Z" Or datos.Columns(35).ColumnName <> "NCM" Or
                 datos.Columns(36).ColumnName <> "Modelo" Or datos.Columns(37).ColumnName <> "SupplierProductCode" Or
-                datos.Columns(38).ColumnName <> "QtyOfLights" Then
+                datos.Columns(38).ColumnName <> "QtyOfLights" Or datos.Columns(39).ColumnName <> "Imagen" Then
             Return False
         End If
         Return True
     End Function
 
-    Function AgregarColumnasFaltantesEnExcel(datos As DataTable)
-        CheckAndAddColumn(datos, "Supplier")
-        CheckAndAddColumn(datos, "Color")
-        CheckAndAddColumn(datos, "ProductType")
-        CheckAndAddColumn(datos, "UCBM")
-        CheckAndAddColumn(datos, "DoG")
-        CheckAndAddColumn(datos, "FOBUSD")
-        CheckAndAddColumn(datos, "FOBRMB")
-        CheckAndAddColumn(datos, "Packing")
-        CheckAndAddColumn(datos, "InPacking")
-        CheckAndAddColumn(datos, "UGW")
-        CheckAndAddColumn(datos, "UNW")
-        CheckAndAddColumn(datos, "BoxSize_X")
-        CheckAndAddColumn(datos, "BoxSize_Y")
-        CheckAndAddColumn(datos, "BoxSize_Z")
-        CheckAndAddColumn(datos, "ProductSize_X")
-        CheckAndAddColumn(datos, "ProductSize_Y")
-        CheckAndAddColumn(datos, "ProductSize_Z")
-        CheckAndAddColumn(datos, "NCM")
-        CheckAndAddColumn(datos, "Modelo")
-        CheckAndAddColumn(datos, "SupplierProductCode")
-        CheckAndAddColumn(datos, "QtyOfLights")
-    End Function
+    Sub AgregarColumnasFaltantesEnExcel(datos As DataTable)
+        CheckAndAddColumn(datos, "Supplier", 18)
+        CheckAndAddColumn(datos, "Color", 19)
+        CheckAndAddColumn(datos, "ProductType", 20)
+        CheckAndAddColumn(datos, "UCBM", 21)
+        CheckAndAddColumn(datos, "DoG", 22)
+        CheckAndAddColumn(datos, "FOBUSD", 23)
+        CheckAndAddColumn(datos, "FOBRMB", 24)
+        CheckAndAddColumn(datos, "Packing", 25)
+        CheckAndAddColumn(datos, "InPacking", 26)
+        CheckAndAddColumn(datos, "UGW", 27)
+        CheckAndAddColumn(datos, "UNW", 28)
+        CheckAndAddColumn(datos, "BoxSize_X", 29)
+        CheckAndAddColumn(datos, "BoxSize_Y", 30)
+        CheckAndAddColumn(datos, "BoxSize_Z", 31)
+        CheckAndAddColumn(datos, "ProductSize_X", 32)
+        CheckAndAddColumn(datos, "ProductSize_Y", 33)
+        CheckAndAddColumn(datos, "ProductSize_Z", 34)
+        CheckAndAddColumn(datos, "NCM", 35)
+        CheckAndAddColumn(datos, "Modelo", 36)
+        CheckAndAddColumn(datos, "SupplierProductCode", 37)
+        CheckAndAddColumn(datos, "QtyOfLights", 38)
+    End Sub
 
-    Private Shared Sub CheckAndAddColumn(datos As DataTable, nombreColumna As String)
+    Private Shared Sub CheckAndAddColumn(datos As DataTable, nombreColumna As String, posicion As Integer)
         If Not datos.Columns.Contains(nombreColumna) Then
-            datos.Columns.Add(nombreColumna)
+            Dim column = datos.Columns.Add(nombreColumna)
+            column.SetOrdinal(posicion)
         End If
     End Sub
 
@@ -1860,4 +1910,78 @@ Public Class NegProductos
             End Using
         End Using
     End Sub
+
+    Public Shared Function ComprimirYRedimensionarImagenDesdeArchivo(rutaOriginal As String, Optional tamanoObjetivoKB As Integer = 200, Optional maxWidth As Integer = 800, Optional maxHeight As Integer = 800) As Bitmap
+        ' Cargar imagen original
+        Dim imagenOriginal As Image = Image.FromFile(rutaOriginal)
+
+        ' Medir tamaño de la imagen original
+        Dim tamañoOriginalKB As Integer
+        Using ms As New MemoryStream()
+            imagenOriginal.Save(ms, Imaging.ImageFormat.Jpeg)
+            tamañoOriginalKB = ms.Length \ 1024
+        End Using
+
+        ' Si ya es menor o igual al tamaño objetivo, retornar la imagen original sin cambios
+        If tamañoOriginalKB <= tamanoObjetivoKB Then
+            Return New Bitmap(imagenOriginal)
+        End If
+
+        ' Si no, redimensionar y comprimir
+        Dim imagenRedimensionada As Image = Redimensionar(imagenOriginal, maxWidth, maxHeight)
+
+        Dim encoder As ImageCodecInfo = ImageCodecInfo.GetImageEncoders().First(Function(e) e.MimeType = "image/jpeg")
+        Dim encoderParams As New EncoderParameters(1)
+        Dim mejorCalidad As Long = 90
+        Dim diferenciaMinima As Long = Long.MaxValue
+        Dim mejorStream As MemoryStream = Nothing
+
+        For calidad As Long = 90 To 10 Step -5
+            encoderParams.Param(0) = New EncoderParameter(Imaging.Encoder.Quality, calidad)
+
+            Using ms As New MemoryStream()
+                imagenRedimensionada.Save(ms, encoder, encoderParams)
+                Dim tamañoActualKB = ms.Length \ 1024
+                Dim diferencia = Math.Abs(tamanoObjetivoKB - tamañoActualKB)
+
+                If diferencia < diferenciaMinima Then
+                    diferenciaMinima = diferencia
+                    mejorCalidad = calidad
+                    mejorStream?.Dispose()
+                    mejorStream = New MemoryStream(ms.ToArray())
+                End If
+
+                If tamañoActualKB <= tamanoObjetivoKB + 10 Then
+                    Exit For
+                End If
+            End Using
+        Next
+
+        imagenOriginal.Dispose()
+        imagenRedimensionada.Dispose()
+
+        ' Retornar imagen comprimida directamente desde memoria
+        mejorStream.Position = 0
+        Dim finalImage As Image = Image.FromStream(mejorStream)
+        Return New Bitmap(finalImage)
+    End Function
+
+
+    Private Shared Function Redimensionar(img As Image, maxWidth As Integer, maxHeight As Integer) As Image
+        Dim ratioX As Double = maxWidth / img.Width
+        Dim ratioY As Double = maxHeight / img.Height
+        Dim ratio As Double = Math.Min(ratioX, ratioY)
+
+        Dim nuevoAncho As Integer = CInt(img.Width * ratio)
+        Dim nuevoAlto As Integer = CInt(img.Height * ratio)
+
+        Dim nuevaImagen As New Bitmap(nuevoAncho, nuevoAlto)
+
+        Using g As Graphics = Graphics.FromImage(nuevaImagen)
+            g.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            g.DrawImage(img, 0, 0, nuevoAncho, nuevoAlto)
+        End Using
+
+        Return nuevaImagen
+    End Function
 End Class

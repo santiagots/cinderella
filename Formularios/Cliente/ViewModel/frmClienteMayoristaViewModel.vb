@@ -67,6 +67,7 @@ Namespace Formularios.Cliente
             Dim clientes As List(Of ClienteMayorista) = Await ClienteMayoristaService.BuscarAsync(TipoBase.Remota,
                                                                                                     FiltroRazonSocial,
                                                                                                     FiltroCuit,
+                                                                                                    Nothing,
                                                                                                     FiltroCondicionesIVASaleccionada.Key,
                                                                                                     FiltroListaPreciosSaleccionada.Key?.Id,
                                                                                                     FiltroCorredorSaleccionada.Key,

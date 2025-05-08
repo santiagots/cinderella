@@ -78,17 +78,13 @@ Partial Class frmProductos
         Me.GB_Alta = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txt_Foto = New System.Windows.Forms.TextBox()
-        Me.ProductoAltaViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.btn_Open = New System.Windows.Forms.Button()
         Me.lbl_Nombre = New System.Windows.Forms.Label()
         Me.lbl_Origen = New System.Windows.Forms.Label()
         Me.txt_Costo = New System.Windows.Forms.TextBox()
+        Me.ProductoAltaViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.lbl_Tamano = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.lbl_Codigo = New System.Windows.Forms.Label()
-        Me.lbl_Foto = New System.Windows.Forms.Label()
         Me.lbl_Categoria = New System.Windows.Forms.Label()
         Me.lbl_Subcategoria = New System.Windows.Forms.Label()
         Me.lbl_Proveedor = New System.Windows.Forms.Label()
@@ -111,6 +107,9 @@ Partial Class frmProductos
         Me.txt_Tamano = New System.Windows.Forms.TextBox()
         Me.txt_Codigo = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnAltaQuitarFoto = New System.Windows.Forms.Button()
+        Me.btnAltaCargarFoto = New System.Windows.Forms.Button()
         Me.pb_foto = New System.Windows.Forms.PictureBox()
         Me.GB_Precios = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
@@ -132,17 +131,13 @@ Partial Class frmProductos
         Me.GB_Modificacion = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel15 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txt_Foto_mod = New System.Windows.Forms.TextBox()
-        Me.ProductoModificacionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.btn_Open_mod = New System.Windows.Forms.Button()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.txt_Costo_mod = New System.Windows.Forms.TextBox()
+        Me.ProductoModificacionViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -162,10 +157,9 @@ Partial Class frmProductos
         Me.cb_Subcategoria_mod = New System.Windows.Forms.ComboBox()
         Me.cb_Categoria_mod = New System.Windows.Forms.ComboBox()
         Me.TableLayoutPanel14 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
-        Me.pb_CodigoBarra = New System.Windows.Forms.PictureBox()
-        Me.pb_foto_mod = New System.Windows.Forms.PictureBox()
-        Me.Ck_EliminarFoto = New System.Windows.Forms.CheckBox()
+        Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnQuitarCargarFoto = New System.Windows.Forms.Button()
+        Me.btnModificarCargarFoto = New System.Windows.Forms.Button()
         Me.Gb_Precios_mod = New System.Windows.Forms.GroupBox()
         Me.TableLayoutPanel10 = New System.Windows.Forms.TableLayoutPanel()
         Me.txtListaAlternativoMod = New System.Windows.Forms.TextBox()
@@ -180,6 +174,7 @@ Partial Class frmProductos
         Me.Label18 = New System.Windows.Forms.Label()
         Me.txtDescuentoTibreMod = New Controles.PercentUpDown()
         Me.txtDescuentoCapitalMod = New Controles.PercentUpDown()
+        Me.pb_ModificarFoto = New System.Windows.Forms.PictureBox()
         Me.Btn_Cancelar = New System.Windows.Forms.Button()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Btn_Eliminar = New System.Windows.Forms.Button()
@@ -218,12 +213,12 @@ Partial Class frmProductos
         Me.GB_Alta.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.ProductoAltaViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ProvedoresBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SubCategoriasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CategoriasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GB_Precios.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -233,16 +228,14 @@ Partial Class frmProductos
         Me.GB_Modificacion.SuspendLayout()
         Me.TableLayoutPanel15.SuspendLayout()
         Me.TableLayoutPanel8.SuspendLayout()
-        Me.TableLayoutPanel9.SuspendLayout()
         CType(Me.ProductoModificacionViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel14.SuspendLayout()
-        Me.TableLayoutPanel12.SuspendLayout()
-        CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pb_foto_mod, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel5.SuspendLayout()
         Me.Gb_Precios_mod.SuspendLayout()
         Me.TableLayoutPanel10.SuspendLayout()
         CType(Me.txtDescuentoTibreMod, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDescuentoCapitalMod, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pb_ModificarFoto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ListaProductosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -755,7 +748,7 @@ Partial Class frmProductos
         Me.GB_Alta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Alta.Location = New System.Drawing.Point(10, 6)
         Me.GB_Alta.Name = "GB_Alta"
-        Me.GB_Alta.Size = New System.Drawing.Size(980, 563)
+        Me.GB_Alta.Size = New System.Drawing.Size(980, 690)
         Me.GB_Alta.TabIndex = 0
         Me.GB_Alta.TabStop = False
         Me.GB_Alta.Text = "Formulario de Alta"
@@ -774,7 +767,7 @@ Partial Class frmProductos
         Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
         Me.TableLayoutPanel7.RowCount = 1
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(968, 493)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(968, 620)
         Me.TableLayoutPanel7.TabIndex = 68
         '
         'TableLayoutPanel1
@@ -782,14 +775,12 @@ Partial Class frmProductos
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 1, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Nombre, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Origen, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.txt_Costo, 1, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Tamano, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Label23, 0, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Codigo, 0, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.lbl_Foto, 0, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Categoria, 0, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Subcategoria, 0, 7)
         Me.TableLayoutPanel1.Controls.Add(Me.lbl_Proveedor, 0, 8)
@@ -825,46 +816,8 @@ Partial Class frmProductos
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(478, 487)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(478, 614)
         Me.TableLayoutPanel1.TabIndex = 68
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.txt_Foto, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.btn_Open, 1, 0)
-        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(143, 153)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(332, 29)
-        Me.TableLayoutPanel2.TabIndex = 6
-        '
-        'txt_Foto
-        '
-        Me.txt_Foto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Foto.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoAltaViewModelBindingSource, "FotoRuta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Foto.Location = New System.Drawing.Point(3, 4)
-        Me.txt_Foto.Name = "txt_Foto"
-        Me.txt_Foto.Size = New System.Drawing.Size(286, 21)
-        Me.txt_Foto.TabIndex = 6
-        '
-        'ProductoAltaViewModelBindingSource
-        '
-        Me.ProductoAltaViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Producto.ProductoDetalleViewModel)
-        '
-        'btn_Open
-        '
-        Me.btn_Open.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Open.Location = New System.Drawing.Point(299, 3)
-        Me.btn_Open.Name = "btn_Open"
-        Me.btn_Open.Size = New System.Drawing.Size(30, 23)
-        Me.btn_Open.TabIndex = 7
-        Me.btn_Open.Text = ". . ."
-        Me.btn_Open.UseVisualStyleBackColor = True
         '
         'lbl_Nombre
         '
@@ -897,6 +850,10 @@ Partial Class frmProductos
         Me.txt_Costo.TabIndex = 5
         Me.txt_Costo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
+        'ProductoAltaViewModelBindingSource
+        '
+        Me.ProductoAltaViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Producto.ProductoDetalleViewModel)
+        '
         'lbl_Tamano
         '
         Me.lbl_Tamano.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -926,16 +883,6 @@ Partial Class frmProductos
         Me.lbl_Codigo.Size = New System.Drawing.Size(134, 15)
         Me.lbl_Codigo.TabIndex = 0
         Me.lbl_Codigo.Text = "Código (*)"
-        '
-        'lbl_Foto
-        '
-        Me.lbl_Foto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbl_Foto.AutoSize = True
-        Me.lbl_Foto.Location = New System.Drawing.Point(3, 160)
-        Me.lbl_Foto.Name = "lbl_Foto"
-        Me.lbl_Foto.Size = New System.Drawing.Size(134, 15)
-        Me.lbl_Foto.TabIndex = 0
-        Me.lbl_Foto.Text = "Foto"
         '
         'lbl_Categoria
         '
@@ -971,7 +918,7 @@ Partial Class frmProductos
         '
         Me.lbl_Descripcion.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Descripcion.AutoSize = True
-        Me.lbl_Descripcion.Location = New System.Drawing.Point(3, 328)
+        Me.lbl_Descripcion.Location = New System.Drawing.Point(3, 392)
         Me.lbl_Descripcion.Name = "lbl_Descripcion"
         Me.lbl_Descripcion.Size = New System.Drawing.Size(134, 15)
         Me.lbl_Descripcion.TabIndex = 0
@@ -984,7 +931,7 @@ Partial Class frmProductos
         Me.chk_Novedad.Checked = True
         Me.chk_Novedad.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_Novedad.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoAltaViewModelBindingSource, "Novedad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chk_Novedad.Location = New System.Drawing.Point(143, 465)
+        Me.chk_Novedad.Location = New System.Drawing.Point(143, 592)
         Me.chk_Novedad.Name = "chk_Novedad"
         Me.chk_Novedad.Size = New System.Drawing.Size(332, 14)
         Me.chk_Novedad.TabIndex = 14
@@ -1018,7 +965,7 @@ Partial Class frmProductos
         Me.chk_SubirWeb.Checked = True
         Me.chk_SubirWeb.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_SubirWeb.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoAltaViewModelBindingSource, "SubirAWeb", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chk_SubirWeb.Location = New System.Drawing.Point(143, 435)
+        Me.chk_SubirWeb.Location = New System.Drawing.Point(143, 562)
         Me.chk_SubirWeb.Name = "chk_SubirWeb"
         Me.chk_SubirWeb.Size = New System.Drawing.Size(332, 14)
         Me.chk_SubirWeb.TabIndex = 13
@@ -1028,7 +975,7 @@ Partial Class frmProductos
         '
         Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(3, 404)
+        Me.Label2.Location = New System.Drawing.Point(3, 531)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(134, 15)
         Me.Label2.TabIndex = 0
@@ -1041,7 +988,7 @@ Partial Class frmProductos
         Me.chk_Habilitado.Checked = True
         Me.chk_Habilitado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_Habilitado.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoAltaViewModelBindingSource, "Habilitado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chk_Habilitado.Location = New System.Drawing.Point(143, 405)
+        Me.chk_Habilitado.Location = New System.Drawing.Point(143, 532)
         Me.chk_Habilitado.Name = "chk_Habilitado"
         Me.chk_Habilitado.Size = New System.Drawing.Size(332, 14)
         Me.chk_Habilitado.TabIndex = 12
@@ -1055,14 +1002,14 @@ Partial Class frmProductos
         Me.txt_Descripcion.MaxLength = 255
         Me.txt_Descripcion.Multiline = True
         Me.txt_Descripcion.Name = "txt_Descripcion"
-        Me.txt_Descripcion.Size = New System.Drawing.Size(332, 116)
+        Me.txt_Descripcion.Size = New System.Drawing.Size(332, 243)
         Me.txt_Descripcion.TabIndex = 11
         '
         'lbl_SubirWeb
         '
         Me.lbl_SubirWeb.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_SubirWeb.AutoSize = True
-        Me.lbl_SubirWeb.Location = New System.Drawing.Point(3, 434)
+        Me.lbl_SubirWeb.Location = New System.Drawing.Point(3, 561)
         Me.lbl_SubirWeb.Name = "lbl_SubirWeb"
         Me.lbl_SubirWeb.Size = New System.Drawing.Size(134, 15)
         Me.lbl_SubirWeb.TabIndex = 0
@@ -1072,7 +1019,7 @@ Partial Class frmProductos
         '
         Me.lbl_Novedad.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbl_Novedad.AutoSize = True
-        Me.lbl_Novedad.Location = New System.Drawing.Point(3, 464)
+        Me.lbl_Novedad.Location = New System.Drawing.Point(3, 591)
         Me.lbl_Novedad.Name = "lbl_Novedad"
         Me.lbl_Novedad.Size = New System.Drawing.Size(134, 15)
         Me.lbl_Novedad.TabIndex = 0
@@ -1164,16 +1111,68 @@ Partial Class frmProductos
         '
         Me.TableLayoutPanel6.ColumnCount = 1
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.TableLayoutPanel3, 0, 1)
         Me.TableLayoutPanel6.Controls.Add(Me.pb_foto, 0, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.GB_Precios, 0, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.GB_Precios, 0, 2)
         Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel6.Location = New System.Drawing.Point(487, 3)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
-        Me.TableLayoutPanel6.RowCount = 2
+        Me.TableLayoutPanel6.RowCount = 3
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51.0!))
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 216.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(478, 487)
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(478, 614)
         Me.TableLayoutPanel6.TabIndex = 99
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.69492!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.30508!))
+        Me.TableLayoutPanel3.Controls.Add(Me.btnAltaQuitarFoto, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.btnAltaCargarFoto, 1, 0)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 350)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(472, 45)
+        Me.TableLayoutPanel3.TabIndex = 69
+        '
+        'btnAltaQuitarFoto
+        '
+        Me.btnAltaQuitarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnAltaQuitarFoto.BackColor = System.Drawing.Color.Transparent
+        Me.btnAltaQuitarFoto.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmProductosViewModelBindingSource, "HabilitarFotos", True))
+        Me.btnAltaQuitarFoto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAltaQuitarFoto.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_standby_32
+        Me.btnAltaQuitarFoto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAltaQuitarFoto.Location = New System.Drawing.Point(259, 3)
+        Me.btnAltaQuitarFoto.Name = "btnAltaQuitarFoto"
+        Me.btnAltaQuitarFoto.Size = New System.Drawing.Size(100, 39)
+        Me.btnAltaQuitarFoto.TabIndex = 70
+        Me.btnAltaQuitarFoto.Text = "    Quitar Foto"
+        Me.btnAltaQuitarFoto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btnAltaQuitarFoto, "Agrega el producto al sistema.")
+        Me.btnAltaQuitarFoto.UseVisualStyleBackColor = False
+        '
+        'btnAltaCargarFoto
+        '
+        Me.btnAltaCargarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnAltaCargarFoto.BackColor = System.Drawing.Color.Transparent
+        Me.btnAltaCargarFoto.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmProductosViewModelBindingSource, "HabilitarFotos", True))
+        Me.btnAltaCargarFoto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAltaCargarFoto.Image = Global.SistemaCinderella.My.Resources.Recursos.camera
+        Me.btnAltaCargarFoto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAltaCargarFoto.Location = New System.Drawing.Point(369, 3)
+        Me.btnAltaCargarFoto.Name = "btnAltaCargarFoto"
+        Me.btnAltaCargarFoto.Size = New System.Drawing.Size(100, 39)
+        Me.btnAltaCargarFoto.TabIndex = 69
+        Me.btnAltaCargarFoto.Text = "   Cargar Foto"
+        Me.btnAltaCargarFoto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btnAltaCargarFoto, "Agrega el producto al sistema.")
+        Me.btnAltaCargarFoto.UseVisualStyleBackColor = False
         '
         'pb_foto
         '
@@ -1183,7 +1182,7 @@ Partial Class frmProductos
         Me.pb_foto.InitialImage = Nothing
         Me.pb_foto.Location = New System.Drawing.Point(3, 3)
         Me.pb_foto.Name = "pb_foto"
-        Me.pb_foto.Size = New System.Drawing.Size(472, 265)
+        Me.pb_foto.Size = New System.Drawing.Size(472, 341)
         Me.pb_foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.pb_foto.TabIndex = 40
         Me.pb_foto.TabStop = False
@@ -1194,7 +1193,7 @@ Partial Class frmProductos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GB_Precios.Controls.Add(Me.TableLayoutPanel4)
-        Me.GB_Precios.Location = New System.Drawing.Point(3, 274)
+        Me.GB_Precios.Location = New System.Drawing.Point(3, 401)
         Me.GB_Precios.Name = "GB_Precios"
         Me.GB_Precios.Size = New System.Drawing.Size(472, 210)
         Me.GB_Precios.TabIndex = 15
@@ -1364,7 +1363,7 @@ Partial Class frmProductos
         Me.Label25.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label25.AutoSize = True
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(6, 515)
+        Me.Label25.Location = New System.Drawing.Point(6, 642)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(117, 13)
         Me.Label25.TabIndex = 67
@@ -1377,7 +1376,7 @@ Partial Class frmProductos
         Me.Btn_Agregar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Agregar.Image = Global.SistemaCinderella.My.Resources.Recursos.Agregar_24
         Me.Btn_Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Agregar.Location = New System.Drawing.Point(874, 515)
+        Me.Btn_Agregar.Location = New System.Drawing.Point(874, 642)
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Agregar.TabIndex = 21
@@ -1409,7 +1408,7 @@ Partial Class frmProductos
         Me.GB_Modificacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GB_Modificacion.Location = New System.Drawing.Point(10, 6)
         Me.GB_Modificacion.Name = "GB_Modificacion"
-        Me.GB_Modificacion.Size = New System.Drawing.Size(980, 563)
+        Me.GB_Modificacion.Size = New System.Drawing.Size(980, 690)
         Me.GB_Modificacion.TabIndex = 1
         Me.GB_Modificacion.TabStop = False
         Me.GB_Modificacion.Text = "Formulario de Modificación"
@@ -1429,7 +1428,7 @@ Partial Class frmProductos
         Me.TableLayoutPanel15.Name = "TableLayoutPanel15"
         Me.TableLayoutPanel15.RowCount = 1
         Me.TableLayoutPanel15.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel15.Size = New System.Drawing.Size(968, 490)
+        Me.TableLayoutPanel15.Size = New System.Drawing.Size(968, 617)
         Me.TableLayoutPanel15.TabIndex = 93
         '
         'TableLayoutPanel8
@@ -1437,14 +1436,12 @@ Partial Class frmProductos
         Me.TableLayoutPanel8.ColumnCount = 2
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel8.Controls.Add(Me.TableLayoutPanel9, 1, 5)
         Me.TableLayoutPanel8.Controls.Add(Me.Label15, 0, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Label13, 0, 1)
         Me.TableLayoutPanel8.Controls.Add(Me.Label12, 0, 2)
         Me.TableLayoutPanel8.Controls.Add(Me.txt_Costo_mod, 1, 4)
         Me.TableLayoutPanel8.Controls.Add(Me.Label11, 0, 3)
         Me.TableLayoutPanel8.Controls.Add(Me.Label24, 0, 4)
-        Me.TableLayoutPanel8.Controls.Add(Me.Label7, 0, 5)
         Me.TableLayoutPanel8.Controls.Add(Me.Label9, 0, 6)
         Me.TableLayoutPanel8.Controls.Add(Me.Label8, 0, 7)
         Me.TableLayoutPanel8.Controls.Add(Me.Label4, 0, 8)
@@ -1480,46 +1477,8 @@ Partial Class frmProductos
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(478, 484)
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(478, 611)
         Me.TableLayoutPanel8.TabIndex = 88
-        '
-        'TableLayoutPanel9
-        '
-        Me.TableLayoutPanel9.ColumnCount = 2
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel9.Controls.Add(Me.txt_Foto_mod, 0, 0)
-        Me.TableLayoutPanel9.Controls.Add(Me.btn_Open_mod, 1, 0)
-        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(143, 153)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 1
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(332, 29)
-        Me.TableLayoutPanel9.TabIndex = 6
-        '
-        'txt_Foto_mod
-        '
-        Me.txt_Foto_mod.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Foto_mod.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ProductoModificacionViewModelBindingSource, "FotoRuta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txt_Foto_mod.Location = New System.Drawing.Point(3, 4)
-        Me.txt_Foto_mod.Name = "txt_Foto_mod"
-        Me.txt_Foto_mod.Size = New System.Drawing.Size(286, 21)
-        Me.txt_Foto_mod.TabIndex = 6
-        '
-        'ProductoModificacionViewModelBindingSource
-        '
-        Me.ProductoModificacionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Producto.ProductoDetalleViewModel)
-        '
-        'btn_Open_mod
-        '
-        Me.btn_Open_mod.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.btn_Open_mod.Location = New System.Drawing.Point(298, 3)
-        Me.btn_Open_mod.Name = "btn_Open_mod"
-        Me.btn_Open_mod.Size = New System.Drawing.Size(31, 23)
-        Me.btn_Open_mod.TabIndex = 7
-        Me.btn_Open_mod.Text = ". . ."
-        Me.btn_Open_mod.UseVisualStyleBackColor = True
         '
         'Label15
         '
@@ -1562,6 +1521,10 @@ Partial Class frmProductos
         Me.txt_Costo_mod.TabIndex = 5
         Me.txt_Costo_mod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
+        'ProductoModificacionViewModelBindingSource
+        '
+        Me.ProductoModificacionViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Producto.ProductoDetalleViewModel)
+        '
         'Label11
         '
         Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1581,16 +1544,6 @@ Partial Class frmProductos
         Me.Label24.Size = New System.Drawing.Size(134, 15)
         Me.Label24.TabIndex = 85
         Me.Label24.Text = "Costo"
-        '
-        'Label7
-        '
-        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(3, 160)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(134, 15)
-        Me.Label7.TabIndex = 63
-        Me.Label7.Text = "Foto"
         '
         'Label9
         '
@@ -1626,7 +1579,7 @@ Partial Class frmProductos
         '
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(3, 327)
+        Me.Label10.Location = New System.Drawing.Point(3, 390)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(134, 15)
         Me.Label10.TabIndex = 60
@@ -1636,7 +1589,7 @@ Partial Class frmProductos
         '
         Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(3, 401)
+        Me.Label14.Location = New System.Drawing.Point(3, 528)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(134, 15)
         Me.Label14.TabIndex = 72
@@ -1649,7 +1602,7 @@ Partial Class frmProductos
         Me.chk_Habilitado_mod.Checked = True
         Me.chk_Habilitado_mod.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_Habilitado_mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoModificacionViewModelBindingSource, "Habilitado", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 402)
+        Me.chk_Habilitado_mod.Location = New System.Drawing.Point(143, 529)
         Me.chk_Habilitado_mod.Name = "chk_Habilitado_mod"
         Me.chk_Habilitado_mod.Size = New System.Drawing.Size(332, 14)
         Me.chk_Habilitado_mod.TabIndex = 12
@@ -1662,7 +1615,7 @@ Partial Class frmProductos
         Me.chk_SubirWeb_mod.Checked = True
         Me.chk_SubirWeb_mod.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_SubirWeb_mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoModificacionViewModelBindingSource, "SubirAWeb", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chk_SubirWeb_mod.Location = New System.Drawing.Point(143, 432)
+        Me.chk_SubirWeb_mod.Location = New System.Drawing.Point(143, 559)
         Me.chk_SubirWeb_mod.Name = "chk_SubirWeb_mod"
         Me.chk_SubirWeb_mod.Size = New System.Drawing.Size(332, 14)
         Me.chk_SubirWeb_mod.TabIndex = 13
@@ -1675,7 +1628,7 @@ Partial Class frmProductos
         Me.chk_Novedad_mod.Checked = True
         Me.chk_Novedad_mod.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_Novedad_mod.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoModificacionViewModelBindingSource, "Novedad", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.chk_Novedad_mod.Location = New System.Drawing.Point(143, 462)
+        Me.chk_Novedad_mod.Location = New System.Drawing.Point(143, 589)
         Me.chk_Novedad_mod.Name = "chk_Novedad_mod"
         Me.chk_Novedad_mod.Size = New System.Drawing.Size(332, 14)
         Me.chk_Novedad_mod.TabIndex = 14
@@ -1685,7 +1638,7 @@ Partial Class frmProductos
         '
         Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(3, 431)
+        Me.Label6.Location = New System.Drawing.Point(3, 558)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(134, 15)
         Me.Label6.TabIndex = 76
@@ -1695,7 +1648,7 @@ Partial Class frmProductos
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(3, 461)
+        Me.Label5.Location = New System.Drawing.Point(3, 588)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(134, 15)
         Me.Label5.TabIndex = 77
@@ -1709,7 +1662,7 @@ Partial Class frmProductos
         Me.txt_Descripcion_mod.MaxLength = 255
         Me.txt_Descripcion_mod.Multiline = True
         Me.txt_Descripcion_mod.Name = "txt_Descripcion_mod"
-        Me.txt_Descripcion_mod.Size = New System.Drawing.Size(332, 113)
+        Me.txt_Descripcion_mod.Size = New System.Drawing.Size(332, 240)
         Me.txt_Descripcion_mod.TabIndex = 11
         '
         'cb_Proveedor_mod
@@ -1804,76 +1757,73 @@ Partial Class frmProductos
         '
         Me.TableLayoutPanel14.ColumnCount = 1
         Me.TableLayoutPanel14.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel12, 0, 0)
-        Me.TableLayoutPanel14.Controls.Add(Me.Gb_Precios_mod, 0, 1)
+        Me.TableLayoutPanel14.Controls.Add(Me.TableLayoutPanel5, 0, 1)
+        Me.TableLayoutPanel14.Controls.Add(Me.Gb_Precios_mod, 0, 2)
+        Me.TableLayoutPanel14.Controls.Add(Me.pb_ModificarFoto, 0, 0)
         Me.TableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel14.Location = New System.Drawing.Point(487, 3)
         Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
-        Me.TableLayoutPanel14.RowCount = 2
+        Me.TableLayoutPanel14.RowCount = 3
         Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51.0!))
         Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 216.0!))
-        Me.TableLayoutPanel14.Size = New System.Drawing.Size(478, 484)
+        Me.TableLayoutPanel14.Size = New System.Drawing.Size(478, 611)
         Me.TableLayoutPanel14.TabIndex = 15
         '
-        'TableLayoutPanel12
+        'TableLayoutPanel5
         '
-        Me.TableLayoutPanel12.ColumnCount = 2
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel12.Controls.Add(Me.pb_CodigoBarra, 0, 0)
-        Me.TableLayoutPanel12.Controls.Add(Me.pb_foto_mod, 1, 0)
-        Me.TableLayoutPanel12.Controls.Add(Me.Ck_EliminarFoto, 1, 1)
-        Me.TableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel12.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
-        Me.TableLayoutPanel12.RowCount = 2
-        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel12.Size = New System.Drawing.Size(472, 262)
-        Me.TableLayoutPanel12.TabIndex = 15
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.69492!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.30508!))
+        Me.TableLayoutPanel5.Controls.Add(Me.btnQuitarCargarFoto, 0, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.btnModificarCargarFoto, 1, 0)
+        Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 347)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(472, 45)
+        Me.TableLayoutPanel5.TabIndex = 70
         '
-        'pb_CodigoBarra
+        'btnQuitarCargarFoto
         '
-        Me.pb_CodigoBarra.BackColor = System.Drawing.Color.White
-        Me.pb_CodigoBarra.DataBindings.Add(New System.Windows.Forms.Binding("Image", Me.ProductoModificacionViewModelBindingSource, "CodigoBarrasImagen", True))
-        Me.pb_CodigoBarra.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pb_CodigoBarra.Location = New System.Drawing.Point(3, 3)
-        Me.pb_CodigoBarra.Name = "pb_CodigoBarra"
-        Me.pb_CodigoBarra.Size = New System.Drawing.Size(230, 231)
-        Me.pb_CodigoBarra.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pb_CodigoBarra.TabIndex = 81
-        Me.pb_CodigoBarra.TabStop = False
+        Me.btnQuitarCargarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnQuitarCargarFoto.BackColor = System.Drawing.Color.Transparent
+        Me.btnQuitarCargarFoto.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmProductosViewModelBindingSource, "HabilitarFotos", True))
+        Me.btnQuitarCargarFoto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnQuitarCargarFoto.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_standby_32
+        Me.btnQuitarCargarFoto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnQuitarCargarFoto.Location = New System.Drawing.Point(259, 3)
+        Me.btnQuitarCargarFoto.Name = "btnQuitarCargarFoto"
+        Me.btnQuitarCargarFoto.Size = New System.Drawing.Size(100, 39)
+        Me.btnQuitarCargarFoto.TabIndex = 70
+        Me.btnQuitarCargarFoto.Text = "    Quitar Foto"
+        Me.btnQuitarCargarFoto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btnQuitarCargarFoto, "Agrega el producto al sistema.")
+        Me.btnQuitarCargarFoto.UseVisualStyleBackColor = False
         '
-        'pb_foto_mod
+        'btnModificarCargarFoto
         '
-        Me.pb_foto_mod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pb_foto_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pb_foto_mod.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
-        Me.pb_foto_mod.InitialImage = Nothing
-        Me.pb_foto_mod.Location = New System.Drawing.Point(239, 3)
-        Me.pb_foto_mod.Name = "pb_foto_mod"
-        Me.pb_foto_mod.Size = New System.Drawing.Size(230, 231)
-        Me.pb_foto_mod.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pb_foto_mod.TabIndex = 70
-        Me.pb_foto_mod.TabStop = False
-        '
-        'Ck_EliminarFoto
-        '
-        Me.Ck_EliminarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Ck_EliminarFoto.AutoSize = True
-        Me.Ck_EliminarFoto.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.ProductoModificacionViewModelBindingSource, "EliminarFoto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.Ck_EliminarFoto.Location = New System.Drawing.Point(239, 240)
-        Me.Ck_EliminarFoto.Name = "Ck_EliminarFoto"
-        Me.Ck_EliminarFoto.Size = New System.Drawing.Size(230, 19)
-        Me.Ck_EliminarFoto.TabIndex = 15
-        Me.Ck_EliminarFoto.Text = "Eliminar Foto"
-        Me.Ck_EliminarFoto.UseVisualStyleBackColor = True
+        Me.btnModificarCargarFoto.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnModificarCargarFoto.BackColor = System.Drawing.Color.Transparent
+        Me.btnModificarCargarFoto.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmProductosViewModelBindingSource, "HabilitarFotos", True))
+        Me.btnModificarCargarFoto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnModificarCargarFoto.Image = Global.SistemaCinderella.My.Resources.Recursos.camera
+        Me.btnModificarCargarFoto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnModificarCargarFoto.Location = New System.Drawing.Point(369, 3)
+        Me.btnModificarCargarFoto.Name = "btnModificarCargarFoto"
+        Me.btnModificarCargarFoto.Size = New System.Drawing.Size(100, 39)
+        Me.btnModificarCargarFoto.TabIndex = 69
+        Me.btnModificarCargarFoto.Text = "   Cargar Foto"
+        Me.btnModificarCargarFoto.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolProd.SetToolTip(Me.btnModificarCargarFoto, "Agrega el producto al sistema.")
+        Me.btnModificarCargarFoto.UseVisualStyleBackColor = False
         '
         'Gb_Precios_mod
         '
         Me.Gb_Precios_mod.Controls.Add(Me.TableLayoutPanel10)
         Me.Gb_Precios_mod.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Gb_Precios_mod.Location = New System.Drawing.Point(3, 271)
+        Me.Gb_Precios_mod.Location = New System.Drawing.Point(3, 398)
         Me.Gb_Precios_mod.Name = "Gb_Precios_mod"
         Me.Gb_Precios_mod.Size = New System.Drawing.Size(472, 210)
         Me.Gb_Precios_mod.TabIndex = 16
@@ -2036,6 +1986,18 @@ Partial Class frmProductos
         Me.txtDescuentoCapitalMod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtDescuentoCapitalMod.Value = New Decimal(New Integer() {0, 0, 0, 0})
         '
+        'pb_ModificarFoto
+        '
+        Me.pb_ModificarFoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pb_ModificarFoto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pb_ModificarFoto.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
+        Me.pb_ModificarFoto.Location = New System.Drawing.Point(3, 3)
+        Me.pb_ModificarFoto.Name = "pb_ModificarFoto"
+        Me.pb_ModificarFoto.Size = New System.Drawing.Size(472, 338)
+        Me.pb_ModificarFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pb_ModificarFoto.TabIndex = 17
+        Me.pb_ModificarFoto.TabStop = False
+        '
         'Btn_Cancelar
         '
         Me.Btn_Cancelar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -2043,7 +2005,7 @@ Partial Class frmProductos
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(662, 516)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(662, 643)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Cancelar.TabIndex = 24
@@ -2057,7 +2019,7 @@ Partial Class frmProductos
         Me.Label26.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label26.AutoSize = True
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.Location = New System.Drawing.Point(6, 516)
+        Me.Label26.Location = New System.Drawing.Point(6, 643)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(117, 13)
         Me.Label26.TabIndex = 86
@@ -2070,7 +2032,7 @@ Partial Class frmProductos
         Me.Btn_Eliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Eliminar.Image = Global.SistemaCinderella.My.Resources.Recursos.Limpiar_32
         Me.Btn_Eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Eliminar.Location = New System.Drawing.Point(768, 517)
+        Me.Btn_Eliminar.Location = New System.Drawing.Point(768, 644)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Size = New System.Drawing.Size(100, 40)
         Me.Btn_Eliminar.TabIndex = 23
@@ -2087,7 +2049,7 @@ Partial Class frmProductos
         Me.btn_Modificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_Modificar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_Modificar.Location = New System.Drawing.Point(874, 516)
+        Me.btn_Modificar.Location = New System.Drawing.Point(874, 643)
         Me.btn_Modificar.Name = "btn_Modificar"
         Me.btn_Modificar.Size = New System.Drawing.Size(100, 40)
         Me.btn_Modificar.TabIndex = 22
@@ -2204,13 +2166,12 @@ Partial Class frmProductos
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel2.PerformLayout()
         CType(Me.ProductoAltaViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ProvedoresBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SubCategoriasBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CategoriasBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel6.ResumeLayout(False)
+        Me.TableLayoutPanel3.ResumeLayout(False)
         CType(Me.pb_foto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GB_Precios.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
@@ -2223,19 +2184,15 @@ Partial Class frmProductos
         Me.TableLayoutPanel15.ResumeLayout(False)
         Me.TableLayoutPanel8.ResumeLayout(False)
         Me.TableLayoutPanel8.PerformLayout()
-        Me.TableLayoutPanel9.ResumeLayout(False)
-        Me.TableLayoutPanel9.PerformLayout()
         CType(Me.ProductoModificacionViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel14.ResumeLayout(False)
-        Me.TableLayoutPanel12.ResumeLayout(False)
-        Me.TableLayoutPanel12.PerformLayout()
-        CType(Me.pb_CodigoBarra, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pb_foto_mod, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel5.ResumeLayout(False)
         Me.Gb_Precios_mod.ResumeLayout(False)
         Me.TableLayoutPanel10.ResumeLayout(False)
         Me.TableLayoutPanel10.PerformLayout()
         CType(Me.txtDescuentoTibreMod, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtDescuentoCapitalMod, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pb_ModificarFoto, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ListaProductosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -2247,7 +2204,6 @@ Partial Class frmProductos
     Friend WithEvents DG_Productos As System.Windows.Forms.DataGridView
     Friend WithEvents TbAlta As System.Windows.Forms.TabPage
     Friend WithEvents GB_Alta As System.Windows.Forms.GroupBox
-    Friend WithEvents lbl_Foto As System.Windows.Forms.Label
     Friend WithEvents cb_Subcategoria As System.Windows.Forms.ComboBox
     Friend WithEvents cb_Categoria As System.Windows.Forms.ComboBox
     Friend WithEvents lbl_Subcategoria As System.Windows.Forms.Label
@@ -2267,8 +2223,6 @@ Partial Class frmProductos
     Friend WithEvents Btn_Agregar As System.Windows.Forms.Button
     Friend WithEvents TbMod As System.Windows.Forms.TabPage
     Friend WithEvents GB_Modificacion As System.Windows.Forms.GroupBox
-    Friend WithEvents btn_Open As System.Windows.Forms.Button
-    Friend WithEvents txt_Foto As System.Windows.Forms.TextBox
     Friend WithEvents chk_Novedad As System.Windows.Forms.CheckBox
     Friend WithEvents lbl_Novedad As System.Windows.Forms.Label
     Friend WithEvents chk_SubirWeb As System.Windows.Forms.CheckBox
@@ -2279,9 +2233,6 @@ Partial Class frmProductos
     Friend WithEvents btn_Modificar As System.Windows.Forms.Button
     Friend WithEvents cb_Proveedor_mod As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents btn_Open_mod As System.Windows.Forms.Button
-    Friend WithEvents txt_Foto_mod As System.Windows.Forms.TextBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents cb_Subcategoria_mod As System.Windows.Forms.ComboBox
     Friend WithEvents cb_Categoria_mod As System.Windows.Forms.ComboBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
@@ -2301,7 +2252,6 @@ Partial Class frmProductos
     Friend WithEvents btn_Buscar As System.Windows.Forms.Button
     Friend WithEvents btn_Restablecer As System.Windows.Forms.Button
     Friend WithEvents pb_foto As System.Windows.Forms.PictureBox
-    Friend WithEvents pb_foto_mod As System.Windows.Forms.PictureBox
     Friend WithEvents GB_Precios As System.Windows.Forms.GroupBox
     Friend WithEvents lbl_Precio5 As System.Windows.Forms.Label
     Friend WithEvents txtListaMayorista As System.Windows.Forms.TextBox
@@ -2311,28 +2261,15 @@ Partial Class frmProductos
     Friend WithEvents lbl_Precio2 As System.Windows.Forms.Label
     Friend WithEvents txtListaTibre As System.Windows.Forms.TextBox
     Friend WithEvents lbl_Precio3 As System.Windows.Forms.Label
-    Friend WithEvents Gb_Precios_mod As System.Windows.Forms.GroupBox
-    Friend WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents txtListaMayoristaMod As System.Windows.Forms.TextBox
-    Friend WithEvents Label18 As System.Windows.Forms.Label
-    Friend WithEvents Label19 As System.Windows.Forms.Label
-    Friend WithEvents txtListaCapitalMod As System.Windows.Forms.TextBox
-    Friend WithEvents Label20 As System.Windows.Forms.Label
-    Friend WithEvents txtListaTibreMod As System.Windows.Forms.TextBox
-    Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents chk_Novedad_mod As System.Windows.Forms.CheckBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents chk_SubirWeb_mod As System.Windows.Forms.CheckBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents chk_Habilitado_mod As System.Windows.Forms.CheckBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents pb_CodigoBarra As System.Windows.Forms.PictureBox
     Friend WithEvents Btn_Eliminar As System.Windows.Forms.Button
-    Friend WithEvents Ck_EliminarFoto As System.Windows.Forms.CheckBox
     Friend WithEvents lbl_Precio6 As System.Windows.Forms.Label
     Friend WithEvents txtListaAlternativo As System.Windows.Forms.TextBox
-    Friend WithEvents Label22 As System.Windows.Forms.Label
-    Friend WithEvents txtListaAlternativoMod As System.Windows.Forms.TextBox
     Friend WithEvents txt_Costo As System.Windows.Forms.TextBox
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents txt_Costo_mod As System.Windows.Forms.TextBox
@@ -2348,16 +2285,12 @@ Partial Class frmProductos
     Friend WithEvents SaveFileDialog As System.Windows.Forms.SaveFileDialog
     Friend WithEvents btn_Restore As System.Windows.Forms.Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel6 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel8 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel9 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel15 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel14 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
     Friend WithEvents NombreDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents OrigenDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents TamanioDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -2385,8 +2318,6 @@ Partial Class frmProductos
     Friend WithEvents ListaProductosBindingSource As BindingSource
     Friend WithEvents txtDescuentoTigre As Controles.PercentUpDown
     Friend WithEvents txtDescuentoCapital As Controles.PercentUpDown
-    Friend WithEvents txtDescuentoTibreMod As Controles.PercentUpDown
-    Friend WithEvents txtDescuentoCapitalMod As Controles.PercentUpDown
     Friend WithEvents ProductosBindingNavigator As BindingNavigator
     Friend WithEvents BindingNavigatorCountItem As ToolStripLabel
     Friend WithEvents BindingNavigatorMoveFirstItem As ToolStripButton
@@ -2412,4 +2343,25 @@ Partial Class frmProductos
     Friend WithEvents Eliminar As DataGridViewImageColumn
     Friend WithEvents Modificar As DataGridViewImageColumn
     Friend WithEvents btn_ExportarBase As Button
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents btnAltaCargarFoto As Button
+    Friend WithEvents btnAltaQuitarFoto As Button
+    Friend WithEvents Gb_Precios_mod As GroupBox
+    Friend WithEvents TableLayoutPanel10 As TableLayoutPanel
+    Friend WithEvents txtListaAlternativoMod As TextBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents txtListaMayoristaMod As TextBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents txtListaCapitalMod As TextBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents txtListaTibreMod As TextBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents txtDescuentoTibreMod As Controles.PercentUpDown
+    Friend WithEvents txtDescuentoCapitalMod As Controles.PercentUpDown
+    Friend WithEvents pb_ModificarFoto As PictureBox
+    Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
+    Friend WithEvents btnQuitarCargarFoto As Button
+    Friend WithEvents btnModificarCargarFoto As Button
 End Class
