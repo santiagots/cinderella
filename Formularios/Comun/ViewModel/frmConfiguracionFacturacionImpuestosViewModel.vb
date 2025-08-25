@@ -39,6 +39,7 @@ Namespace Formularios.Comun
 
             My.Settings.FacturaIVADiscirimiar = IVADiscirimiarSi
             My.Settings.FacturaIVADescripcion = IVADescripcion
+            My.Settings.Save()
         End Sub
 
         Public Sub GuardarImpuesto()

@@ -20,6 +20,12 @@ namespace Ventas.Data.Service
             return remitoRepository.ObtenerPorVentaAsync(idVenta);
         }
 
+        public static Task<string> ObtenerUltimoDespachoAduana()
+        {
+            IRemitoRepository remitoRepository = new RemitoRepository(new VentaContext());
+            return remitoRepository.ObtenerUltimoDespachoAduana();
+        }
+
         public static Task GuardarAsync(Remito remito)
         {
             IRemitoRepository remitoRepository = new RemitoRepository(new VentaContext());

@@ -1,4 +1,5 @@
-﻿Imports CrystalDecisions.CrystalReports.Engine
+﻿Imports System.IO
+Imports CrystalDecisions.CrystalReports.Engine
 Imports Entidades
 Imports Negocio
 
@@ -43,6 +44,12 @@ Public Class frmReportePresupuesto
         Dim rpt As ReportePresupuesto = New ReportePresupuesto
 
         rpt.SetDataSource(ds.Tables("Presupuesto"))
+
+        If File.Exists(VariablesGlobales.RutaLogo) Then
+            rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+        Else
+            rpt.SetParameterValue("rutaLogo", String.Empty)
+        End If
 
         CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings("NombreSucursal")

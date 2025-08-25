@@ -18,7 +18,7 @@ Imports System
 Imports System.ComponentModel
 
 
-Public Class ReporteNotaPedidoMinorista
+Public Class ReporteNotaPedido
     Inherits ReportClass
     
     Public Sub New()
@@ -27,7 +27,7 @@ Public Class ReporteNotaPedidoMinorista
     
     Public Overrides Property ResourceName() As String
         Get
-            Return "ReporteNotaPedidoMinorista.rpt"
+            Return "ReporteNotaPedido.rpt"
         End Get
         Set
             'Do nothing
@@ -45,7 +45,7 @@ Public Class ReporteNotaPedidoMinorista
     
     Public Overrides Property FullResourceName() As String
         Get
-            Return "SistemaCinderella.ReporteNotaPedidoMinorista.rpt"
+            Return "SistemaCinderella.ReporteNotaPedido.rpt"
         End Get
         Set
             'Do nothing
@@ -91,10 +91,18 @@ Public Class ReporteNotaPedidoMinorista
             Return Me.ReportDefinition.Sections(4)
         End Get
     End Property
+    
+    <Browsable(false),  _
+     DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
+    Public ReadOnly Property Parameter_rutaLogo() As CrystalDecisions.[Shared].IParameterField
+        Get
+            Return Me.DataDefinition.ParameterFields(0)
+        End Get
+    End Property
 End Class
 
 <System.Drawing.ToolboxBitmapAttribute(GetType(CrystalDecisions.[Shared].ExportOptions), "report.bmp")>  _
-Public Class CachedReporteNotaPedidoMinorista
+Public Class CachedReporteNotaPedido
     Inherits Component
     Implements ICachedReport
     
@@ -136,7 +144,7 @@ Public Class CachedReporteNotaPedidoMinorista
     End Property
     
     Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
-        Dim rpt As ReporteNotaPedidoMinorista = New ReporteNotaPedidoMinorista()
+        Dim rpt As ReporteNotaPedido = New ReporteNotaPedido()
         rpt.Site = Me.Site
         Return rpt
     End Function

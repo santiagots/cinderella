@@ -15,7 +15,7 @@ namespace Ventas.Core.Model.VentaAggregate
         private decimal PorcentajeBonificacionMinorista;
         private MontoProducto MontoProductoMayorista;
         private decimal PorcentajeBonificacionMayorista;
-        internal Dictionary<VentaPago, decimal> Pagos { get; private set; }
+        public Dictionary<VentaPago, decimal> Pagos { get; private set; }
         public long IdVenta { get; private set; }
         public virtual Venta Venta { get; private set; }
         public bool EsDevolucion { get; private set; }
@@ -167,7 +167,7 @@ namespace Ventas.Core.Model.VentaAggregate
             return new MontoPago(monto, decuento, cft, montoIva);
         }
 
-        internal MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, CondicionIVA condicionIVA, TipoPago formaPago)
+        public MontoPago ObtenerMontoPago(decimal monto, decimal porcentajeRecargo, decimal porcentajeFacturacion, CondicionIVA condicionIVA, TipoPago formaPago)
         {
             if (formaPago == TipoPago.Bonificacion)
                 return new MontoPago(0, monto, 0, 0);

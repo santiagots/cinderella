@@ -17,6 +17,7 @@ Public Class frmVentas
     Private FinalizarDelegate As FinalizarDelegateAsync
     Private ventaViewModel As frmVentasViewModel
     Private Errores As NegManejadorErrores = New NegManejadorErrores()
+    Private WithEvents picPreview As New PictureBox()
 
     Public Sub New()
         ' This call is required by the designer.
@@ -25,6 +26,14 @@ Public Class frmVentas
         Dim DatagridViewCheckBoxHeaderCell As DatagridViewCheckBoxHeaderCell = DG_Productos.Columns("Seleccionado").HeaderCell
         DatagridViewCheckBoxHeaderCell.Checked = True
         AddHandler DatagridViewCheckBoxHeaderCell.OnCheckBoxClicked, New CheckBoxClickedHandler(AddressOf datagridViewCheckBoxHeaderCell_OnCheckBoxClicked)
+
+        ' Configurar el PictureBox flotante
+        picPreview.SizeMode = PictureBoxSizeMode.Zoom
+        picPreview.Size = New Size(250, 250)
+        picPreview.Visible = False
+        picPreview.BorderStyle = BorderStyle.FixedSingle
+        Me.Controls.Add(picPreview)
+        picPreview.BringToFront()
     End Sub
 
     Public Sub New(notaPedido As NotaPedido, finalizarDelegate As FinalizarDelegateAsync)
@@ -393,7 +402,7 @@ Public Class frmVentas
         EjecutarAsync(
             Async Function()
                 If MessageBox.Show("¿Desea efectuar la nota de pedido?", "Registro de Ventas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = vbYes Then
-                    If (Await ventaViewModel.NotaPedidoAsync()) Then
+                    If (Await ventaViewModel.GenerarNotaPedidoAsync() IsNot Nothing) Then
 
                         Dim Funciones As New Funciones
                         Await Funciones.ActualizarNotasPedidosVentasAsync()
@@ -483,4 +492,37 @@ Public Class frmVentas
     Private Sub Btn_Cancelar_Click(sender As Object, e As EventArgs) Handles Btn_Cancelar.Click
         Me.Close()
     End Sub
+
+    ' Cuando el mouse entra a una celda
+    Private Async Sub DataGridView1_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Productos.CellMouseEnter
+        If My.Settings.ImagenesProductosHabilitada AndAlso e.RowIndex >= 0 AndAlso e.ColumnIndex <= 2 Then
+            Dim fila As DataGridViewRow = DG_Productos.Rows(e.RowIndex)
+
+
+            Dim VentaItem As VentaItemViewModel = fila.DataBoundItem
+            Dim imgPath As String = $"{My.Settings.ImagenesProductosRuta}\{VentaItem.Categoria}\{VentaItem.SubCategoria}\{VentaItem.Codigo}.jpg"
+
+            If IO.File.Exists(imgPath) Then
+                picPreview.Image = Await Task.Run(Function() Image.FromFile(imgPath))
+            Else
+                picPreview.Image = My.Resources.Recursos.Sinfoto
+            End If
+
+            ' Obtener rectángulo de la fila (solo la fila, no todo el encabezado)
+            Dim rect As Rectangle = DG_Productos.GetRowDisplayRectangle(e.RowIndex, False)
+
+            ' Convertir la posición de la fila a coordenadas del formulario
+            Dim filaScreen As Point = DG_Productos.PointToScreen(New Point(rect.Left, rect.Bottom))
+            Dim filaForm As Point = Me.PointToClient(filaScreen)
+
+            picPreview.Location = filaForm
+            picPreview.Visible = True
+        End If
+    End Sub
+
+    ' Cuando el mouse sale de la celda, ocultar
+    Private Sub DataGridView1_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles DG_Productos.CellMouseLeave
+        picPreview.Visible = False
+    End Sub
+
 End Class

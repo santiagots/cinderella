@@ -4,7 +4,6 @@ Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
 Imports Common.Core.Extension
-Imports Common.Core.Helper
 Imports Common.Core.Model
 Imports Common.Data.Service
 Imports SistemaCinderella.Comunes
@@ -388,7 +387,6 @@ Namespace Formularios.Venta
                 frmReservaViewModel.ReservaDetalle.Email = clienteMayorista?.DomicilioFacturacion?.Email
             End If
 
-
             Dim frmReserva As frmReserva = New frmReserva(frmReservaViewModel)
             If (frmReserva.ShowDialog() = DialogResult.OK) Then
                 Await FinalizarVentaAsyn(True)
@@ -407,7 +405,7 @@ Namespace Formularios.Venta
             End If
         End Function
 
-        Friend Async Function NotaPedidoAsync() As Task(Of Boolean)
+        Friend Async Function GenerarNotaPedidoAsync() As Task(Of NotaPedido)
             Dim notaPedido As NotaPedido = Mapper.Map(Of NotaPedido)(VentaModel)
 
             If (Not notaPedido.NotaPedidoItems.Any()) Then
@@ -417,7 +415,7 @@ Namespace Formularios.Venta
             If TipoClienteSeleccionado = Enums.TipoCliente.Minorista Then
                 Dim frmDatosClienteMinorista As frmDatosClienteMinorista = New frmDatosClienteMinorista()
                 If (frmDatosClienteMinorista.ShowDialog() <> DialogResult.OK) Then
-                    Return False
+                    Return Nothing
                 End If
                 notaPedido.AgregarClienteMinorista(frmDatosClienteMinorista.ClienteMinorista.Id)
             Else
@@ -428,13 +426,7 @@ Namespace Formularios.Venta
             End If
 
             Await NotaPedidoService.GuardarAsync(notaPedido)
-
-            If (NotaPedidoModel IsNot Nothing) Then 'Si existe es porque esta editando la nota de pedido
-                NotaPedidoModel.VentaFinalizada(VariablesGlobales.objUsuario.Usuario)
-                Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
-                Await FinalizarNotaPedidoEvent()
-            End If
-            Return True
+            Return notaPedido
         End Function
 
         Friend Async Function FinalizarVentaAsyn(desdeReserva As Boolean) As Task
@@ -463,18 +455,27 @@ Namespace Formularios.Venta
 
             Await Task.Run(Sub() Servicio.GuardarVenta(VentaModel))
 
-            'Armar presupuesto
-
             FinalizarVentaEvent()
 
             If (ReservaModel IsNot Nothing) Then
                 Await Task.Run(Sub() Servicio.GuardarReserva(ReservaModel))
             End If
 
+            'Si la venta se realiza sin nota de pedido, genero una en estado cerrado
+            If (My.Settings.GenerarNotaPedidoEnVentaMayorista AndAlso
+                TipoClienteSeleccionado = Enums.TipoCliente.Mayorista AndAlso
+                NotaPedidoModel Is Nothing) Then
+
+                NotaPedidoModel = Await GenerarNotaPedidoAsync()
+            End If
+
             If (NotaPedidoModel IsNot Nothing) Then
                 NotaPedidoModel.VentaFinalizada(VariablesGlobales.objUsuario.Usuario)
                 Await NotaPedidoService.ActualizarAsync(NotaPedidoModel)
-                Await FinalizarNotaPedidoEvent()
+
+                If FinalizarNotaPedidoEvent IsNot Nothing Then
+                    Await FinalizarNotaPedidoEvent()
+                End If
             End If
         End Function
 

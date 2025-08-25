@@ -1,8 +1,8 @@
-﻿Imports CrystalDecisions.CrystalReports.Engine
+﻿Imports System.IO
+Imports CrystalDecisions.CrystalReports.Engine
 Imports Entidades
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.ValueObjects
-Imports Ventas.Core.Model.VentaAggregate
 
 Public Class frmReporteTransaccion
 
@@ -48,6 +48,12 @@ Public Class frmReporteTransaccion
 
         rpt.Database.Tables("TransaccionItem").SetDataSource(dtTrasnasccionItems)
         rpt.Database.Tables("Pago").SetDataSource(dtPagos)
+
+        If File.Exists(VariablesGlobales.RutaLogo) Then
+            rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+        Else
+            rpt.SetParameterValue("rutaLogo", String.Empty)
+        End If
 
         CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtTitulo"), TextObject).Text = Titulo

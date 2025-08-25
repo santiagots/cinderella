@@ -98,6 +98,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Guardar = New System.Windows.Forms.Button()
         Me.btnAnular = New System.Windows.Forms.Button()
         Me.Btn_Volver_Armado = New System.Windows.Forms.Button()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         CType(Me.FrmNotaPedidoDetalleViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -146,7 +147,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Cancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Cancelar.Image = Global.SistemaCinderella.My.Resources.Recursos.desconectado_32
         Me.Btn_Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Cancelar.Location = New System.Drawing.Point(18, 693)
+        Me.Btn_Cancelar.Location = New System.Drawing.Point(15, 693)
         Me.Btn_Cancelar.Name = "Btn_Cancelar"
         Me.Btn_Cancelar.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Cancelar.TabIndex = 16
@@ -208,7 +209,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Imprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Imprimir.Image = Global.SistemaCinderella.My.Resources.Recursos.icono_imprimir
         Me.Btn_Imprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Imprimir.Location = New System.Drawing.Point(230, 693)
+        Me.Btn_Imprimir.Location = New System.Drawing.Point(15, 648)
         Me.Btn_Imprimir.Name = "Btn_Imprimir"
         Me.Btn_Imprimir.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Imprimir.TabIndex = 81
@@ -249,7 +250,7 @@ Partial Class frmNotaPedidoDetalle
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.Location = New System.Drawing.Point(15, 481)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(529, 202)
+        Me.GroupBox3.Size = New System.Drawing.Size(529, 161)
         Me.GroupBox3.TabIndex = 36
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "HISTORIAL COMENTARIOS"
@@ -263,7 +264,7 @@ Partial Class frmNotaPedidoDetalle
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
         Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox2.Size = New System.Drawing.Size(523, 182)
+        Me.TextBox2.Size = New System.Drawing.Size(523, 141)
         Me.TextBox2.TabIndex = 0
         '
         'TableLayoutPanel2
@@ -888,7 +889,7 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Guardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Guardar.Image = Global.SistemaCinderella.My.Resources.Recursos.Editar_24
         Me.Btn_Guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Btn_Guardar.Location = New System.Drawing.Point(336, 693)
+        Me.Btn_Guardar.Location = New System.Drawing.Point(227, 693)
         Me.Btn_Guardar.Name = "Btn_Guardar"
         Me.Btn_Guardar.Size = New System.Drawing.Size(100, 39)
         Me.Btn_Guardar.TabIndex = 82
@@ -904,7 +905,7 @@ Partial Class frmNotaPedidoDetalle
         Me.btnAnular.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAnular.Image = Global.SistemaCinderella.My.Resources.Recursos.btn_standby_32
         Me.btnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnAnular.Location = New System.Drawing.Point(124, 693)
+        Me.btnAnular.Location = New System.Drawing.Point(121, 693)
         Me.btnAnular.Name = "btnAnular"
         Me.btnAnular.Size = New System.Drawing.Size(100, 39)
         Me.btnAnular.TabIndex = 83
@@ -929,12 +930,25 @@ Partial Class frmNotaPedidoDetalle
         Me.Btn_Volver_Armado.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.Btn_Volver_Armado.UseVisualStyleBackColor = True
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.FrmNotaPedidoDetalleViewModelBindingSource, "OcultarMostrarMontosEnImpresion", True))
+        Me.CheckBox1.Location = New System.Drawing.Point(121, 659)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(109, 19)
+        Me.CheckBox1.TabIndex = 85
+        Me.CheckBox1.Text = "Ocultar Montos"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'frmNotaPedidoDetalle
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Btn_Cancelar
         Me.ClientSize = New System.Drawing.Size(954, 737)
+        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Btn_Volver_Armado)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnAnular)
@@ -977,6 +991,7 @@ Partial Class frmNotaPedidoDetalle
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Btn_Armado As System.Windows.Forms.Button
@@ -1051,4 +1066,5 @@ Partial Class frmNotaPedidoDetalle
     Friend WithEvents Btn_BuscarCliente As Button
     Friend WithEvents Label8 As Label
     Friend WithEvents TextBox11 As TextBox
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

@@ -171,7 +171,6 @@ Namespace Formularios.Facturacion
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
             obtenerNumeroFacturaRequest.Impuestos = ObtenerImpuestosRequest()
 
-
             Log.Info("FACTURA - VENTA", ventaModel)
             Log.Info("FACTURA - FFACTURA", ventaModel.Factura)
             Log.Info("FACTURA - REQUEST", obtenerNumeroFacturaRequest)

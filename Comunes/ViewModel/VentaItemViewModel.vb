@@ -3,6 +3,8 @@
         Public Property Seleccionado As Boolean
         Public Property Codigo As String
         Public Property Nombre As String
+        Public Property Categoria As String
+        Public Property SubCategoria As String
         Public Property PorcentajeBonificacion As Decimal
         Public Property PorcentajePago As Decimal
         Public Property Cantidad As Integer

@@ -78,8 +78,13 @@ namespace Factura.Device.Printer
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
             productos.ForEach(x => {
                 if (x.Descuento > 0)
-                    DescuentosTicket(x.Nombre, x.Descuento * x.Cantidad, x.IVA);
-
+                {
+                    var montoDescuento = x.Descuento * x.Cantidad;
+                    if (montoDescuento > 0)
+                        DescuentosTicket(x.Nombre, montoDescuento, x.IVA);
+                    else
+                        RecargosTicket(x.Nombre, -montoDescuento, x.IVA);
+                }
                 if (x.CFT > 0)
                     RecargosTicket(x.Nombre, x.CFT * x.Cantidad, x.IVA);
             });

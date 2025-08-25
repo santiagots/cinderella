@@ -13,6 +13,8 @@ Module VariablesGlobales
     Public ReadOnly RutaCertificadoFacturacionElectronica As String = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\{Assembly.GetExecutingAssembly.GetName().Name}\CertificadoAFIP.p12"
     Public ReadOnly RutaArchivoKeyFacturacionElectronica As String = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\{Assembly.GetExecutingAssembly.GetName().Name}\ClavePrivada.key"
 
+    Public ReadOnly RutaLogo As String = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\{Assembly.GetExecutingAssembly.GetName().Name}\logo.png"
+
     Public ReadOnly colorFondoAlerta As Color = Color.FromArgb(255, 255, 75, 58)
     Public ReadOnly colorTextoAlerta As Color = Color.White
     Public ReadOnly colorFondoOk As Color = Color.FromArgb(255, 0, 205, 106)

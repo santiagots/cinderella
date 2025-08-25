@@ -117,11 +117,11 @@ Namespace Formularios.Cliente
             Dim frmReporte As Form
 
             Select Case cuentaCorrienteMovimientosItem.TipoMovimientoCuentaCorriente
-                Case TipoMovimientoCuentaCorriente.DepósitoOnLine
-                Case TipoMovimientoCuentaCorriente.DepósitoOffLine
+                Case TipoMovimientoCuentaCorriente.DepósitoOnLine,
+                     TipoMovimientoCuentaCorriente.DepósitoOffLine
                     frmReporte = New frmReporteDocumentoPagol(cuentaCorrienteMovimientosItem.Movimiento.IdComprobante)
-                Case TipoMovimientoCuentaCorriente.VentaOnLine
-                Case TipoMovimientoCuentaCorriente.VentaOffLine
+                Case TipoMovimientoCuentaCorriente.VentaOnLine,
+                     TipoMovimientoCuentaCorriente.VentaOffLine
                     Throw New NotImplementedException()
                 Case Else
                     Throw New InvalidOperationException()

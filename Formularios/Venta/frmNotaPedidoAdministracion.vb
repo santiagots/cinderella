@@ -44,7 +44,7 @@ Public Class frmNotaPedidoAdministracion
                     End If
                 End If
                 If dgNotasPedidos.Columns(e.ColumnIndex).Name = "Imprimir" Then
-                    notaPedidoViewModel.ImprimirNotaPedido(notaPedido, Me.MdiParent)
+                    notaPedidoViewModel.ImprimirNotaPedidoAsync(notaPedido, Me.MdiParent)
                 End If
             End Function)
     End Sub

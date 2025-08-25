@@ -133,7 +133,7 @@ Public Class frmNotaPedidoDetalle
     End Sub
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
-        Ejecutar(Sub() NotaPedidoDetalleViewModel.ImprimirNotaPedido(Me.MdiParent))
+        Ejecutar(Sub() NotaPedidoDetalleViewModel.ImprimirNotaPedidoAsync(Me.MdiParent))
     End Sub
 
     Private Sub DG_Productos_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles DG_Productos.CellBeginEdit

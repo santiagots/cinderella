@@ -1,4 +1,5 @@
 ﻿Imports AutoMapper
+Imports Common.Core.Model
 Imports Model = Ventas.Core.Model
 
 Namespace Comunes
@@ -39,6 +40,8 @@ Namespace Comunes
             CreateMap(Of Model.VentaAggregate.VentaItem, VentaItemViewModel)() _
                 .ForMember(Function(des) des.Cantidad, Sub(opt) opt.MapFrom(Function(src) src.Cantidad)) _
                 .ForMember(Function(des) des.Codigo, Sub(opt) opt.MapFrom(Function(src) src.Producto.Codigo)) _
+                .ForMember(Function(des) des.Categoria, Sub(opt) opt.MapFrom(Function(src) If(src.Producto.Categoria IsNot Nothing, src.Producto.Categoria.Descripcion, ""))) _
+                .ForMember(Function(des) des.SubCategoria, Sub(opt) opt.MapFrom(Function(src) If(src.Producto.SubCategoria IsNot Nothing, src.Producto.SubCategoria.Descripcion, ""))) _
                 .ForMember(Function(des) des.Iva, Sub(opt) opt.MapFrom(Function(src) src.MontoProducto.Iva)) _
                 .ForMember(Function(des) des.Monto, Sub(opt) opt.MapFrom(Function(src) src.MontoProducto.Valor)) _
                 .ForMember(Function(des) des.Nombre, Sub(opt) opt.MapFrom(Function(src) src.Producto.Nombre)) _

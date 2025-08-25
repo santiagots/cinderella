@@ -1,4 +1,5 @@
-﻿Imports System.Threading.Tasks
+﻿Imports System.IO
+Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports Common.Core.Model
 Imports Common.Data.Service
@@ -28,7 +29,7 @@ Public Class frmReporteMovimientosCuentaCorriente
 
     Private Sub frmReporteMovimientosCuentaCorriente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EjecutarAsync(Async Function() As Task
-                          Dim rpt = New ReporteMovimientoCuentaCorriente()
+                          Dim rpt = New ReporteMovimientoCuentaCorriente
 
                           Dim clienteMayorista As ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Remota, IdClienteMayorista)
                           Dim movimientos As List(Of Movimiento) = Await MovimientoService.ObtenerMovimientosAsync(TipoBase.Remota, IdClienteMayorista, FechaDesde, FechaHasta, MovimientosOrdenadoPor, MovimientosDireccionOrdenamiento, 1, 300, Nothing)
@@ -36,6 +37,12 @@ Public Class frmReporteMovimientosCuentaCorriente
                           InicializarPagosTable()
                           movimientos.ForEach(Sub(x) CargarMovimientos(x))
                           rpt.Database.Tables("MovimientoCuentaCorriente").SetDataSource(dtMovimientos)
+
+                          If File.Exists(VariablesGlobales.RutaLogo) Then
+                              rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+                          Else
+                              rpt.SetParameterValue("rutaLogo", String.Empty)
+                          End If
 
                           CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
                           CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)

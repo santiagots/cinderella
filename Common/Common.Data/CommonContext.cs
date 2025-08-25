@@ -84,6 +84,8 @@ namespace Common.Data
             if(uniqueEntity != null)
                 this.Entry(uniqueEntity).State = GetState(((IEntity)entity).EstadoEntidad);
 
+            var entidades = ChangeTracker.Entries();
+
             foreach (var item in ChangeTracker.Entries())
             {
                 item.State = GetState(((IEntity)item.Entity).EstadoEntidad);
@@ -108,7 +110,7 @@ namespace Common.Data
                 {
                     IList list = property.GetValue(entity, null) as IList;
 
-                    if (list == null) return entitys;
+                    if (list == null) continue;
 
                     //Recorro el enumerado obteniendo todas las entiedades hijas
                     foreach (object item in list)
@@ -145,7 +147,7 @@ namespace Common.Data
                 {
                     IList list = property.GetValue(entity, null) as IList;
 
-                    if (list == null) return null;
+                    if (list == null) continue;
 
                     //Recorro el enumerado obteniendo todas las entiedades hijas
                     foreach (object item in list)

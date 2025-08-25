@@ -1,4 +1,6 @@
-﻿Imports CrystalDecisions.CrystalReports.Engine
+﻿Imports System.IO
+Imports CrystalDecisions.CrystalReports.Engine
+Imports OfficeOpenXml.FormulaParsing.Excel.Functions.Text
 Imports Ventas.Core.Model.RemitoAgreggate
 
 Public Class frmReporteBulto
@@ -21,6 +23,12 @@ Public Class frmReporteBulto
                      Dim dtBultos As DataTable = InicializarTransaccionItemsTable()
                      CargarItems(dtBultos, RemitoModel.CantidadBultos, RemitoModel.IncluyeFactura)
                      reporte.Database.Tables("Bultos").SetDataSource(dtBultos)
+
+                     If File.Exists(VariablesGlobales.RutaLogo) Then
+                         reporte.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+                     Else
+                         reporte.SetParameterValue("rutaLogo", String.Empty)
+                     End If
 
                      CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
                      CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)

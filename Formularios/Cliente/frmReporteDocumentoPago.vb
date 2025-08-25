@@ -1,6 +1,8 @@
-﻿Imports System.Threading.Tasks
+﻿Imports System.IO
+Imports System.Threading.Tasks
 Imports Common.Core.Enum
 Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.ReportAppServer
 Imports Ventas.Core.Model.ChequeAggregate
 Imports Ventas.Core.Model.CuentaCorrienteAggregate
 Imports Ventas.Data.Service
@@ -50,6 +52,12 @@ Public Class frmReporteDocumentoPagol
                               rpt.Database.Tables("Cheque").SetDataSource(dtCheques)
                           Else
                               rpt.ReportDefinition.Sections("ChequesSection").SectionFormat.EnableSuppress = True
+                          End If
+
+                          If File.Exists(VariablesGlobales.RutaLogo) Then
+                              rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+                          Else
+                              rpt.SetParameterValue("rutaLogo", String.Empty)
                           End If
 
                           CType(rpt.ReportDefinition.ReportObjects("txtNombreRecibo"), TextObject).Text = $"Recibo Nro.: {documentoDePago.Numero}"

@@ -3,13 +3,11 @@ Imports System.Threading.Tasks
 Imports AutoMapper
 Imports Common.Core.Enum
 Imports Common.Core.Exceptions
+Imports Common.Data.Service
 Imports SistemaCinderella.Comunes
 Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
-Imports Ventas.Core.Enum
-Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.ValueObjects
-Imports Ventas.Core.Model.VentaAggregate
 Imports Ventas.Data.Service
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 
@@ -159,6 +157,8 @@ Namespace Formularios.Venta
         End Property
 
         Public Property Comentario As String = String.Empty
+
+        Public Property OcultarMostrarMontosEnImpresion As Boolean = False
 
         Dim _Visible As Boolean
         Public Property Visible As Boolean
@@ -329,18 +329,15 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.NotaPedidoItems))
         End Function
 
-        Friend Sub ImprimirNotaPedido(MdiParent As Form)
-            Dim frmReporteResumenReserva As frmReporteTransaccion = New frmReporteTransaccion("Resumen de Nota Pedido",
-                                                                                                    1,
-                                                                                                    NotaPedidoModel.TipoCliente,
-                                                                                                    NotaPedidoModel.Vendedor.ApellidoYNombre,
-                                                                                                    If(NotaPedidoModel.ClienteMinorista IsNot Nothing, NotaPedidoModel.ClienteMinorista.ApellidoYNombre, If(NotaPedidoModel.ClienteMayorista IsNot Nothing, NotaPedidoModel.ClienteMayorista.RazonSocial, "")),
-                                                                                                    NotaPedidoModel.Fecha,
-                                                                                                    NotaPedidoModel.NotaPedidoItems.Cast(Of TransaccionItem).ToList(),
-                                                                                                    Nothing)
+        Friend Async Function ImprimirNotaPedidoAsync(MdiParent As Form) As Task
+            Dim clienteMayorista
+            If (NotaPedidoModel.TipoCliente = TipoCliente.Mayorista) Then
+                clienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, NotaPedidoModel.IdClienteMayorista)
+            End If
+            Dim frmReporteResumenReserva As frmReporteNotaPedido = New frmReporteNotaPedido(NotaPedidoModel, clienteMayorista, OcultarMostrarMontosEnImpresion)
             frmReporteResumenReserva.MdiParent = MdiParent
             frmReporteResumenReserva.Show()
-        End Sub
+        End Function
 
         Friend Async Function VolverAEstadoIngresadoAsync() As Task
             NotaPedidoModel.VolverAIngresada(Comentario, VariablesGlobales.objUsuario.Usuario)

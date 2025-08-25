@@ -1,5 +1,4 @@
-﻿using Common.Core.Enum;
-using Common.Data.Repository;
+﻿using Common.Data.Repository;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,6 +31,14 @@ namespace Ventas.Data.Repository
             return _context.Remito
                 .Include(x => x.RemitoItems)
                 .Where(x => x.IdVenta == idVenta).FirstOrDefaultAsync();
+        }
+
+        public Task<string> ObtenerUltimoDespachoAduana()
+        {
+            return _context.Remito
+                .OrderByDescending(x => x.FechaEdicion)
+                .Select(x => x.DespachoImportacion)
+                .FirstOrDefaultAsync();
         }
     }
 }

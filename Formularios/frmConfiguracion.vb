@@ -1,9 +1,9 @@
-﻿Imports System.Configuration
+﻿Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Net
 Imports System.Net.NetworkInformation
+Imports System.Reflection
 Imports Common.Core.Helper
-Imports Datos
 Imports Negocio
 
 Public Class frmConfiguracion
@@ -38,6 +38,12 @@ Public Class frmConfiguracion
             txt_DatosFiscalCUIT.Text = My.Settings.DatosFiscalCUIT
             txt_DatosFiscalIIBB.Text = My.Settings.DatosFiscalIIBB
             dt_DatosFiscalInicioActividad.Value = If(My.Settings.DatosFiscalInicioActividad = Date.MinValue, Date.Now, My.Settings.DatosFiscalInicioActividad)
+
+            If File.Exists(VariablesGlobales.RutaLogo) Then
+                imgLogo.ImageLocation = VariablesGlobales.RutaLogo
+            Else
+                imgLogo.Image = My.Resources.Recursos.Sinfoto
+            End If
 
             'Cargo el listado de sucursales.
             If (NSucursales.ListadoSucursales().Tables.Count <> 0) Then
@@ -84,6 +90,12 @@ Public Class frmConfiguracion
                 RExentoSinIvaSI.Checked = True
             Else
                 RExentoSinIvaNo.Checked = True
+            End If
+
+            If My.Settings.GenerarNotaPedidoEnVentaMayorista Then
+                RGenerarNPVentaMayoristaSI.Checked = True
+            Else
+                RGenerarNPVentaMayoristaNO.Checked = True
             End If
 
             Cb_ModeloControladora.SelectedIndex = My.Settings.ModeloControladora
@@ -278,6 +290,12 @@ Public Class frmConfiguracion
                 Else
                     My.Settings.HabilitarExentoSinIVA = "NO"
                 End If
+                If RGenerarNPVentaMayoristaSI.Checked Then
+                    My.Settings.GenerarNotaPedidoEnVentaMayorista = True
+                Else
+                    My.Settings.GenerarNotaPedidoEnVentaMayorista = False
+                End If
+
                 My.Settings.ModeloControladora = Cb_ModeloControladora.SelectedIndex
                 My.Settings.ConexionControladora = Cb_ConexionControladora.SelectedItem
                 My.Settings.MontoTopeFaturacionTicket = Trim(txt_MontoTopeTicket.Text)
@@ -619,11 +637,52 @@ Public Class frmConfiguracion
 
     End Sub
 
-    Private Sub txt_DatosFiscalNombreFantasiaFuente_Click(sender As Object, e As EventArgs) Handles txt_DatosFiscalNombreFantasiaFuente.Click
+    Private Sub txt_DatosFiscalNombreFantasiaFuente_Click(sender As Object, e As EventArgs) Handles btn_DatosFiscalNombreFantasiaFuente.Click
         If (FontDialog.ShowDialog() = DialogResult.OK) Then
             My.Settings.DatosFiscalNombreFantasiaFuente = FontDialog.Font
         End If
     End Sub
+
+    Private Sub btn_CargarLogo_Click(sender As Object, e As EventArgs) Handles btn_CargarLogo.Click
+        Using openDialog As New OpenFileDialog()
+            openDialog.Filter = "Imágenes|*.jpg;*.jpeg;*.png"
+            openDialog.Title = "Seleccionar imagen"
+
+            If openDialog.ShowDialog() = DialogResult.OK Then
+                GuardarLogo(openDialog.FileName, 100)
+                imgLogo.ImageLocation = VariablesGlobales.RutaLogo
+            End If
+        End Using
+    End Sub
+
+    Private Sub btn_QuitarLogo_Click(sender As Object, e As EventArgs) Handles btn_QuitarLogo.Click
+        File.Delete(VariablesGlobales.RutaLogo)
+        imgLogo.Image = My.Resources.Recursos.Sinfoto
+    End Sub
+
+    Public Function GuardarLogo(path As String, lado As Integer) As String
+        Using src As Image = Image.FromFile(path)
+            ' calcular escala proporcional
+            Dim ratio As Double = Math.Min(lado / src.Width, lado / src.Height)
+            Dim newWidth As Integer = CInt(src.Width * ratio)
+            Dim newHeight As Integer = CInt(src.Height * ratio)
+
+            ' crear lienzo cuadrado
+            Dim logoImg As New Bitmap(lado, lado)
+            Using g As Graphics = Graphics.FromImage(logoImg)
+                g.Clear(Drawing.Color.White)
+                g.CompositingQuality = CompositingQuality.HighQuality
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic
+                g.SmoothingMode = SmoothingMode.HighQuality
+
+                ' centrar la imagen escalada
+                Dim x As Integer = (lado - newWidth) \ 2
+                Dim y As Integer = (lado - newHeight) \ 2
+                g.DrawImage(src, x, y, newWidth, newHeight)
+            End Using
+            logoImg.Save(VariablesGlobales.RutaLogo)
+        End Using
+    End Function
 
     Private Sub btnObtenerArchivoCSR_Click(sender As Object, e As EventArgs) Handles btnObtenerArchivoCSR.Click
         If String.IsNullOrWhiteSpace(My.Settings.DatosFiscalCUIT) OrElse String.IsNullOrWhiteSpace(My.Settings.DatosFiscalRazonSocial) OrElse String.IsNullOrWhiteSpace(My.Settings.DatosFiscalNombreFantasia) Then
@@ -742,6 +801,7 @@ Public Class frmConfiguracion
         Try
             My.Settings.ImagenesProductosHabilitada = RHabilitarImagenesProductoSi.Checked
             My.Settings.ImagenesProductosRuta = txtRutaImagenesProducto.Text
+            My.Settings.Save()
             MessageBox.Show("Los cambios se han realizado correctamente." & vbCrLf & "Reinicie la aplicación para que surjan efecto.", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             Log.Error(ex)
@@ -751,4 +811,6 @@ Public Class frmConfiguracion
         'Cambio el cursor a NORMAL.
         Me.Cursor = Cursors.Arrow
     End Sub
+
+
 End Class

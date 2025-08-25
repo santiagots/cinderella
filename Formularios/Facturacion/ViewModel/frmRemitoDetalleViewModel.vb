@@ -1,15 +1,14 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
 Imports Common.Core.Enum
+Imports Common.Core.Exceptions
+Imports Common.Core.Extension
 Imports Common.Core.Model
 Imports Common.Data.Service
-Imports SistemaCinderella.Comunes
 Imports Ventas.Core.Model.RemitoAgreggate
-Imports Common.Core.Extension
-Imports VentaModel = Ventas.Core.Model.VentaAggregate
 Imports Ventas.Core.Model.ValueObjects
 Imports Ventas.Data.Service
-Imports Common.Core.Exceptions
+Imports VentaModel = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Facturacion
 
@@ -105,19 +104,21 @@ Namespace Formularios.Facturacion
                 CargarClienteMayoristaDesdeRemito()
             Else 'cargo un remito nuevo
                 AgregarProductosDesdeVenta()
-
                 If VentaModel.TipoCliente = TipoCliente.Mayorista Then
                     Await CargarClienteMayoristaDesdeVentaAsync()
                 End If
+
+                DespachoImportacion = Await RemitoService.ObtenerUltimoDespachoAduana()
+                NotifyPropertyChanged(NameOf(Me.DespachoImportacion))
             End If
         End Function
 
         Private Sub AgregarProductosDesdeVenta()
             RemitoItems.Add(New RemitoItemViewModel With {.Codigo = "XXX",
-                                                              .Nombre = "Artículos de Decoración Varios",
-                                                              .Cantidad = 1,
-                                                              .Monto = VentaModel.MontoTotal.toDecimal(),
-                                                              .Total = VentaModel.MontoTotal.toDecimal()})
+                                                          .Nombre = "Artículos de Decoración Varios",
+                                                          .Cantidad = 1,
+                                                          .Monto = VentaModel.MontoTotal.toDecimal(),
+                                                          .Total = VentaModel.MontoTotal.toDecimal()})
         End Sub
 
         Private Sub AgregarProductosDesdeRemito()
@@ -138,7 +139,6 @@ Namespace Formularios.Facturacion
             ClienteNombre = clienteMayorista.RazonSocial
             ClienteCondicionIvaSeleccionada = clienteMayorista.CondicionIVA
             ClienteCUIT = clienteMayorista.Cuit
-            DespachoImportacion = String.Empty
 
             If (clienteMayorista.DomicilioEntrega IsNot Nothing) Then
                 ClienteDireccion = clienteMayorista.DomicilioEntrega.Direccion
@@ -187,7 +187,14 @@ Namespace Formularios.Facturacion
 
             Dim remitoModelAux As Remito
             If (RemitoModel Is Nothing) Then
-                Dim remitoItemsModel As List(Of RemitoItem) = RemitoItems.Select(Function(x) New RemitoItem(x.Codigo, x.Nombre, x.Cantidad, New MontoProducto(x.Total, 0))).ToList()
+                Dim remitoItemsModel As List(Of RemitoItem) = New List(Of RemitoItem)()
+
+                For Each RemitoItem As RemitoItemViewModel In RemitoItems
+                    Dim remitoItemModel = New RemitoItem(RemitoItem.Codigo, RemitoItem.Nombre, RemitoItem.Cantidad, New MontoProducto(RemitoItem.Total, 0))
+                    RemitoItem.Id = remitoItemModel.Id
+
+                    remitoItemsModel.Add(remitoItemModel)
+                Next
 
                 remitoModelAux = New Remito(VentaModel,
                                     Numero,

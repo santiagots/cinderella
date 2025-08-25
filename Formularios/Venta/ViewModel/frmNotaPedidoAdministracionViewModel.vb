@@ -7,6 +7,7 @@ Imports Ventas.Core.Enum
 Imports Ventas.Core.Model.NotaPedidoAgreggate
 Imports Ventas.Core.Model.BaseAgreggate
 Imports Ventas.Data.Service
+Imports Common.Data.Service
 
 Namespace Formularios.Venta
     Public Class frmNotaPedidoAdministracionViewModel
@@ -149,20 +150,17 @@ Namespace Formularios.Venta
             Await Buscar()
         End Function
 
-        Friend Sub ImprimirNotaPedido(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form)
+        Friend Async Function ImprimirNotaPedidoAsync(notaPedidoItem As NotaPedidoItemsViewModel, MdiParent As Form) As Task
             Dim notaPedido As NotaPedido = _NotaPedidosItems.FirstOrDefault(Function(x) x.Numero = notaPedidoItem.Numero)
+            Dim clienteMayorista
+            If (notaPedidoItem.TipoCliente = Common.Core.Enum.TipoCliente.Mayorista) Then
+                clienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, notaPedido.IdClienteMayorista)
+            End If
 
-            Dim frmReporteResumenReserva As frmReporteTransaccion = New frmReporteTransaccion("Resumen de Nota Pedido",
-                                                                                                    1,
-                                                                                                    notaPedido.TipoCliente,
-                                                                                                    notaPedido.Vendedor.ApellidoYNombre,
-                                                                                                    notaPedidoItem.NombreCliente,
-                                                                                                    notaPedido.Fecha,
-                                                                                                    notaPedido.NotaPedidoItems.Cast(Of TransaccionItem).ToList(),
-                                                                                                    Nothing)
+            Dim frmReporteResumenReserva As frmReporteNotaPedido = New frmReporteNotaPedido(notaPedido, clienteMayorista, False)
             frmReporteResumenReserva.MdiParent = MdiParent
             frmReporteResumenReserva.Show()
-        End Sub
+        End Function
 
         Public Sub Inicializar()
             FechaDesde = DateTime.Today

@@ -8,5 +8,6 @@ namespace Ventas.Core.Interfaces
         Task GuardarAsync(Remito remito);
         Task<Remito> ObtenerAsync(long idRemito);
         Task<Remito> ObtenerPorVentaAsync(long idVenta);
+        Task<string> ObtenerUltimoDespachoAduana();
     }
 }

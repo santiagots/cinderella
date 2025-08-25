@@ -2,7 +2,6 @@
 Imports System.IO
 Imports System.Reflection
 Imports Common.Core.Enum
-Imports Common.Core.Helper
 Imports Common.Core.Model
 Imports CrystalDecisions.CrystalReports.Engine
 Imports Factura.Core.Enum
@@ -83,9 +82,17 @@ Public Class frmReporteFactura
         rpt.Database.Tables("TransaccionItem").SetDataSource(dtProductos)
         rpt.Database.Tables("Totales").SetDataSource(dtTotales)
         rpt.Database.Tables("Impuestos").SetDataSource(dtImpuestos)
+
         CType(rpt.ReportDefinition.ReportObjects("txtTipoFactura"), TextObject).Text = ObtenerLetraFactura()
         CType(rpt.ReportDefinition.ReportObjects("txtCodigoTipoFactura"), TextObject).Text = $"Cod. {ObtenerCodigoFactura()}"
         CType(rpt.ReportDefinition.ReportObjects("txtNombreFactura"), TextObject).Text = $"{ObtenerNombreFactura(TipoDocumentoFiscal)} Nro.: {ObtenerNumeroFactura()}"
+
+        If File.Exists(VariablesGlobales.RutaLogo) Then
+            rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+        Else
+            rpt.SetParameterValue("rutaLogo", String.Empty)
+        End If
+
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
@@ -232,8 +239,8 @@ Public Class frmReporteFactura
     End Sub
 
     Private Sub CargarProducto(item As VentaItem)
-        Dim montoPago As MontoPago = item.TotalPago(Venta.PorcentajeFacturacion, TipoCliente, CondicionIva)
-        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, Monto.Redondeo(montoPago.Monto), Monto.Redondeo(montoPago.IVA))
+        ''Dim montoPago As MontoPago = item.(Venta.ObtenerBonificacionPorListaDePrecion)
+        AgregarRowTransaccionItems(item.Producto.Codigo, item.Producto.Nombre, item.Cantidad, item.MontoProducto.Valor, item.MontoProducto.Iva)
     End Sub
 
     Private Sub CargarImpuestosVenta()
