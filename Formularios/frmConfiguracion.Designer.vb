@@ -289,7 +289,7 @@ Partial Class frmConfiguracion
         '
         'btn_QuitarLogo
         '
-        Me.btn_QuitarLogo.Location = New System.Drawing.Point(209, 103)
+        Me.btn_QuitarLogo.Location = New System.Drawing.Point(342, 66)
         Me.btn_QuitarLogo.Name = "btn_QuitarLogo"
         Me.btn_QuitarLogo.Size = New System.Drawing.Size(56, 23)
         Me.btn_QuitarLogo.TabIndex = 32
@@ -298,7 +298,7 @@ Partial Class frmConfiguracion
         '
         'btn_CargarLogo
         '
-        Me.btn_CargarLogo.Location = New System.Drawing.Point(209, 76)
+        Me.btn_CargarLogo.Location = New System.Drawing.Point(342, 95)
         Me.btn_CargarLogo.Name = "btn_CargarLogo"
         Me.btn_CargarLogo.Size = New System.Drawing.Size(56, 23)
         Me.btn_CargarLogo.TabIndex = 29
@@ -311,7 +311,7 @@ Partial Class frmConfiguracion
         Me.imgLogo.Image = Global.SistemaCinderella.My.Resources.Recursos.Sinfoto
         Me.imgLogo.Location = New System.Drawing.Point(140, 66)
         Me.imgLogo.Name = "imgLogo"
-        Me.imgLogo.Size = New System.Drawing.Size(63, 60)
+        Me.imgLogo.Size = New System.Drawing.Size(196, 52)
         Me.imgLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.imgLogo.TabIndex = 31
         Me.imgLogo.TabStop = False
@@ -346,7 +346,7 @@ Partial Class frmConfiguracion
         Me.GroupBox13.Controls.Add(Me.Label25)
         Me.GroupBox13.Controls.Add(Me.txt_DatosFiscalNombreFantasia)
         Me.GroupBox13.Controls.Add(Me.Label34)
-        Me.GroupBox13.Location = New System.Drawing.Point(7, 132)
+        Me.GroupBox13.Location = New System.Drawing.Point(6, 124)
         Me.GroupBox13.Name = "GroupBox13"
         Me.GroupBox13.Size = New System.Drawing.Size(397, 266)
         Me.GroupBox13.TabIndex = 8
@@ -511,9 +511,9 @@ Partial Class frmConfiguracion
         Me.Label46.AutoSize = True
         Me.Label46.Location = New System.Drawing.Point(13, 76)
         Me.Label46.Name = "Label46"
-        Me.Label46.Size = New System.Drawing.Size(38, 15)
+        Me.Label46.Size = New System.Drawing.Size(54, 15)
         Me.Label46.TabIndex = 30
-        Me.Label46.Text = "Logo:"
+        Me.Label46.Text = "(*) Logo:"
         '
         'GroupBox2
         '

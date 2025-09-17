@@ -51,11 +51,15 @@ Public Class frmReporteTransaccion
 
         If File.Exists(VariablesGlobales.RutaLogo) Then
             rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = String.Empty
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).ObjectFormat.EnableSuppress = True
         Else
+            CType(rpt.ReportDefinition.ReportObjects("picLogo"), PictureObject).ObjectFormat.EnableSuppress = True
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
             rpt.SetParameterValue("rutaLogo", String.Empty)
         End If
 
-        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
         CType(rpt.ReportDefinition.ReportObjects("txtTitulo"), TextObject).Text = Titulo
         CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings.NombreSucursal
         CType(rpt.ReportDefinition.ReportObjects("txtNumero"), TextObject).Text = Numero

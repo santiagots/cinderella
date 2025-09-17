@@ -56,14 +56,17 @@ Public Class frmReporteDocumentoPagol
 
                           If File.Exists(VariablesGlobales.RutaLogo) Then
                               rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+                              CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = String.Empty
+                              CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ObjectFormat.EnableSuppress = True
                           Else
+                              CType(rpt.ReportDefinition.ReportObjects("picLogo"), PictureObject).ObjectFormat.EnableSuppress = True
+                              CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+                              CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
                               rpt.SetParameterValue("rutaLogo", String.Empty)
                           End If
 
                           CType(rpt.ReportDefinition.ReportObjects("txtNombreRecibo"), TextObject).Text = $"Recibo Nro.: {documentoDePago.Numero}"
 
-                          CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
-                          CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
                           CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
                           CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
                           CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad

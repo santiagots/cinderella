@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.ReportAppServer
 Imports Entidades
 Imports Negocio
 
@@ -51,7 +52,17 @@ Public Class frmReportePresupuesto
             rpt.SetParameterValue("rutaLogo", String.Empty)
         End If
 
-        CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+        If File.Exists(VariablesGlobales.RutaLogo) Then
+            rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = String.Empty
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).ObjectFormat.EnableSuppress = True
+        Else
+            CType(rpt.ReportDefinition.ReportObjects("picLogo"), PictureObject).ObjectFormat.EnableSuppress = True
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+            CType(rpt.ReportDefinition.ReportObjects("txtRazonSocial"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
+            rpt.SetParameterValue("rutaLogo", String.Empty)
+        End If
+
         CType(rpt.ReportDefinition.ReportObjects("txtSucursal"), TextObject).Text = My.Settings("NombreSucursal")
         CType(rpt.ReportDefinition.ReportObjects("txtNombreVendedor"), TextObject).Text = presupuesto.VendedorNombreyApellido
         CType(rpt.ReportDefinition.ReportObjects("txtNombreCliente"), TextObject).Text = presupuesto.RazonSocialClienteMayorista

@@ -26,12 +26,15 @@ Public Class frmReporteBulto
 
                      If File.Exists(VariablesGlobales.RutaLogo) Then
                          reporte.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+                         CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = String.Empty
+                         CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ObjectFormat.EnableSuppress = True
                      Else
+                         CType(reporte.ReportDefinition.ReportObjects("picLogo"), PictureObject).ObjectFormat.EnableSuppress = True
+                         CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+                         CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
                          reporte.SetParameterValue("rutaLogo", String.Empty)
                      End If
 
-                     CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
-                     CType(reporte.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
                      CType(reporte.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
                      CType(reporte.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
                      CType(reporte.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad

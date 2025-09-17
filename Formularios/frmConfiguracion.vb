@@ -181,8 +181,13 @@ Public Class frmConfiguracion
         'Cambio el cursor a "WAIT"
         Me.Cursor = Cursors.WaitCursor
 
+        If Not File.Exists(VariablesGlobales.RutaLogo) OrElse String.IsNullOrWhiteSpace(txt_DatosFiscalNombreFantasia.Text) Then
+            MessageBox.Show("Debe cargar un logo o completar el nombre de fantasía", "Configuración del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+
         If Cb_Sucursales.SelectedValue = 0 OrElse
-           String.IsNullOrWhiteSpace(txt_DatosFiscalNombreFantasia.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalRazonSocial.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalDireccion.Text) OrElse
            String.IsNullOrWhiteSpace(txt_DatosFiscalLocalidad.Text) OrElse
@@ -649,7 +654,7 @@ Public Class frmConfiguracion
             openDialog.Title = "Seleccionar imagen"
 
             If openDialog.ShowDialog() = DialogResult.OK Then
-                GuardarLogo(openDialog.FileName, 100)
+                GuardarLogo(openDialog.FileName, 340, 50)
                 imgLogo.ImageLocation = VariablesGlobales.RutaLogo
             End If
         End Using
@@ -660,28 +665,31 @@ Public Class frmConfiguracion
         imgLogo.Image = My.Resources.Recursos.Sinfoto
     End Sub
 
-    Public Function GuardarLogo(path As String, lado As Integer) As String
+    Public Function GuardarLogo(path As String, ancho As Integer, alto As Integer) As String
         Using src As Image = Image.FromFile(path)
             ' calcular escala proporcional
-            Dim ratio As Double = Math.Min(lado / src.Width, lado / src.Height)
+            Dim ratio As Double = Math.Min(ancho / src.Width, alto / src.Height)
             Dim newWidth As Integer = CInt(src.Width * ratio)
             Dim newHeight As Integer = CInt(src.Height * ratio)
 
-            ' crear lienzo cuadrado
-            Dim logoImg As New Bitmap(lado, lado)
+            ' crear lienzo rectangular
+            Dim logoImg As New Bitmap(ancho, alto)
             Using g As Graphics = Graphics.FromImage(logoImg)
-                g.Clear(Drawing.Color.White)
+                g.Clear(Color.White)
                 g.CompositingQuality = CompositingQuality.HighQuality
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic
                 g.SmoothingMode = SmoothingMode.HighQuality
 
                 ' centrar la imagen escalada
-                Dim x As Integer = (lado - newWidth) \ 2
-                Dim y As Integer = (lado - newHeight) \ 2
+                Dim x As Integer = (ancho - newWidth) \ 2
+                Dim y As Integer = (alto - newHeight) \ 2
                 g.DrawImage(src, x, y, newWidth, newHeight)
             End Using
+
             logoImg.Save(VariablesGlobales.RutaLogo)
         End Using
+
+        Return VariablesGlobales.RutaLogo
     End Function
 
     Private Sub btnObtenerArchivoCSR_Click(sender As Object, e As EventArgs) Handles btnObtenerArchivoCSR.Click

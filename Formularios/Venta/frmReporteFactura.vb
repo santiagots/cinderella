@@ -4,6 +4,7 @@ Imports System.Reflection
 Imports Common.Core.Enum
 Imports Common.Core.Model
 Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.CrystalReports.ViewerObjectModel
 Imports Factura.Core.Enum
 Imports Factura.Core.Helper
 Imports Newtonsoft.Json
@@ -89,12 +90,15 @@ Public Class frmReporteFactura
 
         If File.Exists(VariablesGlobales.RutaLogo) Then
             rpt.SetParameterValue("rutaLogo", VariablesGlobales.RutaLogo)
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = String.Empty
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ObjectFormat.EnableSuppress = True
         Else
+            CType(rpt.ReportDefinition.ReportObjects("picLogo"), PictureObject).ObjectFormat.EnableSuppress = True
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
+            CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
             rpt.SetParameterValue("rutaLogo", String.Empty)
         End If
 
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).Text = My.Settings.DatosFiscalNombreFantasia
-        CType(rpt.ReportDefinition.ReportObjects("txtFacturaNombreFantasia"), TextObject).ApplyFont(My.Settings.DatosFiscalNombreFantasiaFuente)
         CType(rpt.ReportDefinition.ReportObjects("txtFacturaRasonSocial"), TextObject).Text = My.Settings.DatosFiscalRazonSocial
         CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion1"), TextObject).Text = My.Settings.DatosFiscalDireccion
         CType(rpt.ReportDefinition.ReportObjects("txtFaturaDireccion2"), TextObject).Text = My.Settings.DatosFiscalLocalidad
@@ -134,8 +138,8 @@ Public Class frmReporteFactura
         rpt.SetParameterValue("rutaImagen", GenerarQRFactura())
 
         CrViewer.ReportSource = rpt
-            CrViewer.SelectionMode = SelectionMode.None
-            CrViewer.Refresh()
+        CrViewer.SelectionMode = SelectionMode.None
+        CrViewer.Refresh()
     End Sub
 
 
@@ -370,7 +374,7 @@ Public Class frmReporteFactura
         Dim qrGenerator As QRCodeGenerator = New QRCodeGenerator()
         Dim QRCodeData As QRCodeData = qrGenerator.CreateQrCode(QRDatos, QRCodeGenerator.ECCLevel.L)
         Dim QRCode As QRCode = New QRCode(QRCodeData)
-        Dim qrCodeImage As Bitmap = QRCode.GetGraphic(20, Drawing.Color.Black, Drawing.Color.White, True)
+        Dim qrCodeImage As Bitmap = QRCode.GetGraphic(3, Drawing.Color.Black, Drawing.Color.White, True)
 
         Using memory As MemoryStream = New MemoryStream()
             Using fs As FileStream = New FileStream(RutaImagenCodigoQR, FileMode.Create, FileAccess.ReadWrite)
@@ -412,7 +416,7 @@ Public Class frmReporteFactura
                                     .codAut = Long.Parse(documento.CAE)
                                 }
 
-        Return Base64Encode(JsonConvert.SerializeObject(qrDatos))
+        Return "https://www.afip.gob.ar/fe/qr/?p=" & Base64Encode(JsonConvert.SerializeObject(qrDatos))
     End Function
 
     Private Function Base64Encode(plainText As String) As String
