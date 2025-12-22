@@ -1,10 +1,6 @@
-﻿Imports Entidades
-Imports System.Data.SqlClient
-Imports Datos
-Imports System.Linq
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.Data.SqlClient
 Imports System.Reflection
+Imports Datos
 
 Public Class NegSincronizacion
     Dim objUsuario As Entidades.Usuario
@@ -244,6 +240,7 @@ Public Class NegSincronizacion
         respuesta.Add(New Tabla() With {.Nombre = "TIPO_PRODUCTO", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_COMEX_ORDEN_COMPRA", .Sincronizar = New SinClaveUnicaSincronizar()})
         respuesta.Add(New Tabla() With {.Nombre = "NUEVA_COMEX_ORDEN_COMPRA_ITEMS", .Sincronizar = New SinClaveUnicaSincronizar()})
+        respuesta.Add(New Tabla() With {.Nombre = "NUEVA_PERCEPCION", .Sincronizar = New SinClaveUnicaSincronizar()})
 
         Return respuesta
     End Function
@@ -287,8 +284,10 @@ Public Class NegSincronizacion
         respuesta.Add(NotapedidoItems()) 'nuevo
         respuesta.Add(Factura()) 'nuevo
         respuesta.Add(NumeroFactura()) 'nuevo
+        respuesta.Add(PercepcionFactura()) 'nuevo
         respuesta.Add(Notacredito()) 'nuevo
         respuesta.Add(NumeroNotacredito()) 'nuevo
+        respuesta.Add(PercepcionNotacredito()) 'nuevo
         respuesta.Add(Devolucion())
         respuesta.Add(DevolucionDetalle())
         respuesta.Add(MovimientoImpuesto())
@@ -751,11 +750,11 @@ Public Class NegSincronizacion
     Private Shared Function Presupuesto() As Tabla
         Dim tabla As Tabla = New Tabla()
 
-        tabla.ClavePrimaria = "id_Presupuesto"
-        tabla.ClaveSincronizacion = "Fecha_Edicion"
-        tabla.Nombre = "PRESUPUESTO"
-        tabla.SQLObtenerDatosLocal = "select * from PRESUPUESTO where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
-        tabla.SQLObtenerDatosRemoto = "select * from PRESUPUESTO where Fecha_Edicion >= @UltimaActualizacion AND id_Sucursal = @Sucursal"
+        tabla.ClavePrimaria = "id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_PRESUPUESTO"
+        tabla.SQLObtenerDatosLocal = "select * from NUEVA_PRESUPUESTO where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "select * from NUEVA_PRESUPUESTO where FechaEdicion >= @UltimaActualizacion AND IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -764,17 +763,17 @@ Public Class NegSincronizacion
     Private Shared Function PresupuestoDetalle() As Tabla
         Dim tabla As Tabla = New Tabla()
 
-        tabla.ClavePrimaria = "id_Detalle"
-        tabla.ClaveSincronizacion = "Fecha_Edicion"
-        tabla.Nombre = "PRESUPUESTO_DETALLE"
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_PRESUPUESTO_ITEMS"
         tabla.SQLObtenerDatosLocal = "Select D.* 
-                                        From PRESUPUESTO P
-                                        INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
-                                        where D.Fecha_Edicion >= @UltimaActualizacion and P.id_Sucursal = @Sucursal"
+                                        From NUEVA_PRESUPUESTO P
+                                        INNER Join NUEVA_PRESUPUESTO_ITEMS D ON P.Id = D.IdPresupuesto
+                                        where D.FechaEdicion >= @UltimaActualizacion and P.IdSucursal = @Sucursal"
         tabla.SQLObtenerDatosRemoto = "Select D.* 
-                                        From PRESUPUESTO P
-                                        INNER Join PRESUPUESTO_DETALLE D ON P.id_Presupuesto = D.id_Presupuesto
-                                        where D.Fecha_Edicion >= @UltimaActualizacion and P.id_Sucursal = @Sucursal"
+                                        From NUEVA_PRESUPUESTO P
+                                        INNER Join NUEVA_PRESUPUESTO_ITEMS D ON P.Id = D.IdPresupuesto
+                                        where D.FechaEdicion >= @UltimaActualizacion and P.IdSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()
         Return tabla
@@ -859,6 +858,26 @@ Public Class NegSincronizacion
         Return tabla
     End Function
 
+    Private Shared Function PercepcionFactura() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_PERCEPCION_FACTURA"
+        tabla.SQLObtenerDatosLocal = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
+                                        INNER Join NUEVA_PERCEPCION_FACTURA N ON F.Id = N.IdFactura
+                                        where F.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_FACTURA F ON V.Id = F.IdVenta
+                                        INNER Join NUEVA_PERCEPCION_FACTURA N ON F.Id = N.IdFactura
+                                        where F.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
     Private Shared Function Notacredito() As Tabla
         Dim tabla As Tabla = New Tabla()
         tabla.ClavePrimaria = "Id"
@@ -891,6 +910,26 @@ Public Class NegSincronizacion
                                         From NUEVA_VENTAS V
                                         INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
                                         INNER Join NUEVA_NUMERO_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
+                                        where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
+
+        tabla.Sincronizar = New ClaveUnicaSincronizar()
+        Return tabla
+    End Function
+
+    Private Shared Function PercepcionNotacredito() As Tabla
+        Dim tabla As Tabla = New Tabla()
+        tabla.ClavePrimaria = "Id"
+        tabla.ClaveSincronizacion = "FechaEdicion"
+        tabla.Nombre = "NUEVA_PERCEPCION_NOTA_CREDITO"
+        tabla.SQLObtenerDatosLocal = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
+                                        INNER Join NUEVA_PERCEPCION_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
+                                        where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
+        tabla.SQLObtenerDatosRemoto = "Select N.* 
+                                        From NUEVA_VENTAS V
+                                        INNER Join NUEVA_NOTA_CREDITO C ON V.Id = C.IdVenta
+                                        INNER Join NUEVA_PERCEPCION_NOTA_CREDITO N ON C.Id = N.IdNotaCredito
                                         where C.Fecha >= @UltimaActualizacion and V.idSucursal = @Sucursal"
 
         tabla.Sincronizar = New ClaveUnicaSincronizar()

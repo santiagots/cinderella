@@ -93,7 +93,7 @@ Partial Class frmMovimientoImpuesto
         Me.GroupBox1.Size = New System.Drawing.Size(372, 214)
         Me.GroupBox1.TabIndex = 14
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Alta de movimientos de ""Impuestos"" de la sucursal."
+        Me.GroupBox1.Text = "Alta de movimientos de ""Percepciones"" de la sucursal."
         '
         'Label5
         '
@@ -197,7 +197,7 @@ Partial Class frmMovimientoImpuesto
         Me.MaximizeBox = False
         Me.Name = "frmMovimientoImpuesto"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Movimientos | Impuestos"
+        Me.Text = "Movimientos | Percepciones"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.ErrorImpuestos, System.ComponentModel.ISupportInitialize).EndInit()

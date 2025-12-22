@@ -73,5 +73,27 @@
         internal static EpsonCommand CerraTicket = new EpsonCommand("\xB\x6", "\x0\x3");
 
         internal static EpsonCommand CerraNotaCredito = new EpsonCommand("\xD\x6", "\x0\x3");
+
+        internal static EpsonCommand PercepcionIIBBProvincial_Cod_07_Ticket = new EpsonCommand("\xB\x20", "\x0\x0");
+
+        internal static EpsonCommand PercepcionIIBBProvincial_Cod_07_NotaCredito = new EpsonCommand("\xD\x20", "\x0\x0");
+
+        internal static EpsonCommand PercepcionImpuestoMunicipal_Cod_08_Ticket = new EpsonCommand("\xB\x20", "\x0\x40");
+
+        internal static EpsonCommand ImpuestoNacional_Cod_01_Ticket = new EpsonCommand("\xB\x20", "\x0\x80");
+
+        internal static EpsonCommand ImpuestoProvincial_Cod_02_Ticket = new EpsonCommand("\xB\x20", "\x0\xC0");
+
+        internal static EpsonCommand PercepcionIVA_Cod_06_Ticket = new EpsonCommand("\xB\x20", "\x1\x0");
+
+        internal static EpsonCommand ImpuestoMunicipa_Cod_03_Ticket = new EpsonCommand("\xB\x20", "\x1\x40");
+
+        internal static EpsonCommand ImpuestoInterno_Cod_04_Ticket = new EpsonCommand("\xB\x20", "\x1\x80");
+
+        internal static EpsonCommand Tributo_IIBB_Cod_05_Ticket = new EpsonCommand("\xB\x20", "\x1\xC0");
+
+        internal static EpsonCommand OtrasPercepciones_Cod_09_Ticket = new EpsonCommand("\xB\x20", "\x2\x0");
+
+        internal static EpsonCommand Tributo_Otros_Cod_99_Ticket = new EpsonCommand("\xB\x20", "\x2\x40");
     }
 }

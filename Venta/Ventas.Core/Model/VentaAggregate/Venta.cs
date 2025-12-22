@@ -181,7 +181,7 @@ namespace Ventas.Core.Model.VentaAggregate
             IdVendedor = vendedor != null ? vendedor.Id : 0;
         }
 
-        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal subTotal, decimal iva, decimal total, List<int> numeroFactura, string cae, DateTime? fechaVencimientoCae)
+        public void AgregarFactura(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string provincia, string cuit, decimal subTotal, decimal iva, decimal total, List<int> numeroFactura, string cae, DateTime? fechaVencimientoCae, List<Percepcion> percepciones)
         {
             if (numeroFactura.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
@@ -190,17 +190,20 @@ namespace Ventas.Core.Model.VentaAggregate
 
             ObtenerItemsVentaSeleccionados().ToList().ForEach(x => x.MarcarComoFacturado());
 
-            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, subTotal, iva, total, numeroFactura, cae, fechaVencimientoCae);
+            Factura = new Factura(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, provincia, cuit, subTotal, iva, total, numeroFactura, cae, fechaVencimientoCae);
+            Factura.AgregarPersepciones(percepciones);
+
         }
 
-        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string cuit, decimal subTotal, decimal iva, decimal total, List<int> numeroNotaPedido, string cae, DateTime? fechaVencimientoCae)
+        public void AgregarNotaCredito(int puntoVenta, TipoFactura tipoFactura, CondicionIVA condicionesIVA, string nombreYApellido, string direccion, string localidad, string provincia, string cuit, decimal subTotal, decimal iva, decimal total, List<int> numeroNotaPedido, string cae, DateTime? fechaVencimientoCae, List<Percepcion> percepciones)
         {
             if (numeroNotaPedido.Count == 0)
                 throw new NegocioException($"Error al registrar la factura. Debe ingresar un número de factura.");
             if (tipoFactura == TipoFactura.Electronica && string.IsNullOrEmpty(cae))
                 throw new NegocioException($"Error al registrar la factura. No se encuentra un Codigo CAE.");
 
-            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, cuit, subTotal, iva, total, numeroNotaPedido, cae, fechaVencimientoCae);
+            NotaCredito = new NotaCredito(Id, puntoVenta, tipoFactura, condicionesIVA, nombreYApellido, direccion, localidad, provincia, cuit, subTotal, iva, total, numeroNotaPedido, cae, fechaVencimientoCae);
+            NotaCredito.AgregarPersepciones(percepciones);
         }
 
         public void AgregarComision(Decimal porcentajeComisionEncargado, Decimal porcentajeComisionVendedor)
@@ -520,40 +523,12 @@ namespace Ventas.Core.Model.VentaAggregate
             return MontoTotalPagoFacturable;
         }
 
-
-        public MontoPago TotalFacturable()
-        {
-            if (TipoCliente == TipoCliente.Minorista)
-                return TotalFacturable(CondicionIVA.Consumidor_Final);
-            else
-                return TotalFacturable(CondicionIVA.Responsable_Inscripto);
-
-        }
-
         public MontoPago TotalSeleccionado()
         {
             if (TipoCliente == TipoCliente.Minorista)
                 return TotalSeleccionado(CondicionIVA.Consumidor_Final);
             else
                 return TotalSeleccionado(CondicionIVA.Responsable_Inscripto);
-
-        }
-
-        public MontoPago TotalSeleccionadosYFacturados()
-        {
-            if (TipoCliente == TipoCliente.Minorista)
-                return TotalSeleccionadosYFacturados(CondicionIVA.Consumidor_Final);
-            else
-                return TotalSeleccionadosYFacturados(CondicionIVA.Responsable_Inscripto);
-
-        }
-
-        public MontoPago TotalAnuladoYFacturados()
-        {
-            if (TipoCliente == TipoCliente.Minorista)
-                return TotalAnuladoYFacturados(CondicionIVA.Consumidor_Final);
-            else
-                return TotalAnuladoYFacturados(CondicionIVA.Responsable_Inscripto);
 
         }
     }

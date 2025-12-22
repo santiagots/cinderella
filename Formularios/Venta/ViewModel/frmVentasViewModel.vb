@@ -18,6 +18,7 @@ Imports Enums = Common.Core.Enum
 Imports ModelBase = Ventas.Core.Model.BaseAgreggate
 Imports ModelCheque = Ventas.Core.Model.ChequeAggregate
 Imports ModelVenta = Ventas.Core.Model.VentaAggregate
+Imports ModelPresupuesto = Ventas.Core.Model.PresupuestoAgreggate
 
 Namespace Formularios.Venta
     Public Class frmVentasViewModel
@@ -302,7 +303,7 @@ Namespace Formularios.Venta
                 Dim producto As ModelBase.Producto = Productos.FirstOrDefault(Function(x) x.Codigo.ToUpper() = transaccionItem.Producto.Codigo.ToUpper())
                 producto = GuardarProductoCompletoEnListaDeProductos(producto)
 
-                If tipoCliente = TipoCliente.Minorista Then
+                If tipoCliente = tipoCliente.Minorista Then
                     montoProductoMinorista = transaccionItem.MontoProducto
                     porcentejeBonificacionMinorista = transaccionItem.PorcentajeBonificacion
 
@@ -448,6 +449,7 @@ Namespace Formularios.Venta
             VentaModel.GenerarNumero(cantidadVentas + 1, codigoVentaSucursal)
 
             Dim tasks As List(Of Task) = New List(Of Task)()
+            tasks.Add(GenerarPresupuesto())
             tasks.Add(AgregarComisiones())
             tasks.Add(ActualizarStock())
             tasks.Add(RegistrarMovimiento())
@@ -866,6 +868,13 @@ Namespace Formularios.Venta
             NotifyPropertyChanged(NameOf(Me.Iva))
             NotifyPropertyChanged(NameOf(Me.Total))
         End Sub
+
+        Private Async Function GenerarPresupuesto() As Task
+            If (VentaModel.TipoCliente = Enums.TipoCliente.Mayorista AndAlso VentaModel.PorcentajeFacturacion < 1) Then
+                Dim presupesuto As ModelPresupuesto.Presupuesto = New ModelPresupuesto.Presupuesto(VentaModel)
+                Await PresupuestoService.GuardarAsync(presupesuto)
+            End If
+        End Function
 
         Private Async Function AgregarComisiones() As Task
             Dim esFeriado As Boolean = Await Task.Run(Function() Servicio.EsFeriado())

@@ -8,8 +8,8 @@ namespace Factura.Device.Printer
 {
     interface IEpsonTM: IDisposable
     {
-        int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
-        int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
+        int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
+        int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
         void AbrirTicket();
         void AbrirNotaCredito();
         int CerrarTicket(out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto);
@@ -20,6 +20,7 @@ namespace Factura.Device.Printer
         void RecargosTicket(string descripcion, decimal recargo, decimal iva);
         void DescuentosNotaCredito(string descripcion, decimal descuento, decimal iva);
         void RecargosNotaCredito(string descripcion, decimal recargo, decimal iva);
+        void TributoTicket(string descripcion, decimal monto);
         void PagarTicket(TipoPago TipoPago, int numeroCuotas, decimal montoPago);
         void AgregarItemTicket(string codigoItem, string descripcion, int cantidad, decimal precioUnitario, decimal iva);
         void AgregarItemNotaCredito(string codigoItem, string descripcion, int cantidad, decimal precioUnitario, decimal iva);

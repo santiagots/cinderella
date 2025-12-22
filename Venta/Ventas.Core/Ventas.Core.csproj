@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IMovimientoRepository.cs" />
     <Compile Include="Interfaces\INotaCreditoRepository.cs" />
     <Compile Include="Interfaces\INotaPedidoRepository.cs" />
+    <Compile Include="Interfaces\IPresupuestoRepository.cs" />
     <Compile Include="Interfaces\IRemitoRepository.cs" />
     <Compile Include="Interfaces\IReservaRepository.cs" />
     <Compile Include="Interfaces\IStockRepository.cs" />
@@ -84,6 +85,8 @@
     <Compile Include="Model\InformeAggregate\InformeVentaPorTipoVenta.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedido.cs" />
     <Compile Include="Model\NotaPedidoAgreggate\NotaPedidoItem.cs" />
+    <Compile Include="Model\PresupuestoAgreggate\Presupuesto.cs" />
+    <Compile Include="Model\PresupuestoAgreggate\PresupuestoItem.cs" />
     <Compile Include="Model\RemitoAgreggate\Remito.cs" />
     <Compile Include="Model\RemitoAgreggate\RemitoItem.cs" />
     <Compile Include="Model\ValueObjects\Egreso.cs" />
@@ -98,6 +101,9 @@
     <Compile Include="Model\VentaAggregate\CierreCaja.cs" />
     <Compile Include="Model\VentaAggregate\Comision.cs" />
     <Compile Include="Model\VentaAggregate\Factura.cs" />
+    <Compile Include="Model\VentaAggregate\Percepcion.cs" />
+    <Compile Include="Model\VentaAggregate\PercepcionNotaCredito.cs" />
+    <Compile Include="Model\VentaAggregate\PercepcionFactura.cs" />
     <Compile Include="Model\VentaAggregate\NotaCredito.cs" />
     <Compile Include="Model\VentaAggregate\NumeroFactura.cs" />
     <Compile Include="Model\VentaAggregate\NumeroNotaCredito.cs" />

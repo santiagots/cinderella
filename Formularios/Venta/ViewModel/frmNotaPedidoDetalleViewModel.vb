@@ -23,7 +23,6 @@ Namespace Formularios.Venta
         Private StockInsuficienteEvent As StockInsuficienteDelegate
         Private CargarProductoNombreyCodigoEvent As CargarProductoNombreyCodigoDelegate
 
-        Private newPropertyValue As String
         Public ReadOnly Property Numero As Integer
             Get
                 Return NotaPedidoModel.Numero

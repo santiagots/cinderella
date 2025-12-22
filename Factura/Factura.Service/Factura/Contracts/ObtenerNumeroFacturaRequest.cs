@@ -11,6 +11,7 @@ namespace Factura.Service.Factura.Contracts
         public List<PagoRequest> Pagos { get; set; }
         public List<ProductoRequest> Productos { get; set; }
         public List<ImpuestoRequest> Impuestos { get; set; }
+        public List<PercepcionRequest> Percepciones { get; set; }
         public List<int> NumerosFacturas { get; set; }
         public decimal PorcentajeFacturacion { get; set; }
         public string NombreYApellido { get; set; }

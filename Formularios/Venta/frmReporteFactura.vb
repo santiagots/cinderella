@@ -62,6 +62,7 @@ Public Class frmReporteFactura
         Me.New
         Me.Venta = venta
         Me.TipoDocumentoFiscal = tipoDocumentoFiscal
+        Me.TipoCliente = venta.TipoCliente
     End Sub
 
     Private Sub frmReporteResumenVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -142,7 +143,6 @@ Public Class frmReporteFactura
         CrViewer.Refresh()
     End Sub
 
-
     Private Sub CargarTotalesVenta()
         Select Case CondicionIva
             Case CondicionIVA.Responsable_Inscripto, CondicionIVA.Monotributo
@@ -189,6 +189,16 @@ Public Class frmReporteFactura
         AgregarRowPagos("Recargos", totalFacturado.CFT)
         AgregarRowPagos("Sub Total", Total)
 
+        If (Venta.Factura.Percepciones IsNot Nothing) Then
+            Dim gruposPercepciones As List(Of IGrouping(Of String, PercepcionFactura)) = Venta.Factura.Percepciones.GroupBy(Function(x) x.Comcepto).ToList()
+
+            For Each item As IGrouping(Of String, PercepcionFactura) In gruposPercepciones
+                Dim totalPercepcion As Decimal = item.Sum(Function(x) x.Monto)
+                Total += totalPercepcion
+                AgregarRowPagos(item.Key, totalPercepcion)
+            Next
+        End If
+
         Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.ObtenerItemsVentaFacturados.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
 
         For Each item As IGrouping(Of IVA, VentaItem) In gruposIVAs
@@ -208,6 +218,16 @@ Public Class frmReporteFactura
         AgregarRowPagos("Descuento", -totalFacturado.Descuento)
         AgregarRowPagos("Recargos", totalFacturado.CFT)
         AgregarRowPagos("Sub Total", Total)
+
+        If (Venta.NotaCredito.Percepciones IsNot Nothing) Then
+            Dim gruposPercepciones As List(Of IGrouping(Of String, PercepcionFactura)) = Venta.Factura.Percepciones.GroupBy(Function(x) x.Comcepto).ToList()
+
+            For Each item As IGrouping(Of String, PercepcionFactura) In gruposPercepciones
+                Dim totalPercepcion As Decimal = item.Sum(Function(x) x.Monto)
+                Total += totalPercepcion
+                AgregarRowPagos(item.Key, totalPercepcion)
+            Next
+        End If
 
         Dim gruposIVAs As List(Of IGrouping(Of IVA, VentaItem)) = Venta.ObtenerItemsVentaAnuladasYFacturados.GroupBy(Function(x) x.Producto.SubCategoria.IVA).ToList()
         For Each item As IGrouping(Of IVA, VentaItem) In gruposIVAs

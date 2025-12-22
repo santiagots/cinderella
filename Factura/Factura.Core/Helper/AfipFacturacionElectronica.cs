@@ -1,6 +1,9 @@
 ﻿using Common.Core.Enum;
 using Common.Core.Exceptions;
 using Factura.Core.Enum;
+using System;
+using System.CodeDom;
+using System.Threading;
 
 namespace Factura.Core.Helper
 {
@@ -52,6 +55,24 @@ namespace Factura.Core.Helper
                 default:
                     return AfipFacturacionElectronicaConstantes.CUIT;
             };
+        }
+
+        public static int ObtenerCondicionIVA(CondicionIVA condicionesIVA)
+        {
+            switch (condicionesIVA)
+            {
+                case CondicionIVA.Responsable_Inscripto:
+                    return AfipFacturacionElectronicaConstantes.Responsable_Inscripto;
+                case CondicionIVA.Monotributo:
+                    return AfipFacturacionElectronicaConstantes.Monotributo;
+                case CondicionIVA.Consumidor_Final:
+                    return AfipFacturacionElectronicaConstantes.Consumidor_Final;
+                case CondicionIVA.Exento:
+                    return AfipFacturacionElectronicaConstantes.Exento;
+                default:
+                    throw new InvalidOperationException($"Condicion Iva: {condicionesIVA.ToString()} no encontrada.");
+            }
+            ;
         }
     }
 }

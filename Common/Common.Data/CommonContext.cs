@@ -7,7 +7,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
@@ -54,6 +53,8 @@ namespace Common.Data
         public DbSet<Transporte> Transporte { get; set; }
         public DbSet<TipoProducto> TipoProducto { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
+        public DbSet<Percepcion> Percepcion { get; set; }
+        
 
         public bool IsAttached<T>(Entity<T> entity) 
         {
@@ -261,6 +262,10 @@ namespace Common.Data
 
             modelBuilder.Entity<Supplier>().ToTable("NUEVA_SUPPLIER");
             modelBuilder.Entity<Supplier>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Percepcion>().ToTable("NUEVA_PERCEPCION");
+            modelBuilder.Entity<Percepcion>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Percepcion>().HasOptional(v => v.Provincia).WithMany().HasForeignKey(x => x.IdProvincia);
 
             base.OnModelCreating(modelBuilder);
         }

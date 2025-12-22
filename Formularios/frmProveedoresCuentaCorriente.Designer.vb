@@ -434,14 +434,14 @@ Partial Class frmProveedoresCuentaCorriente
         Me.Concepto.Name = "Concepto"
         Me.Concepto.ReadOnly = True
         '
-        'Importe
+        'Monto
         '
         Me.Importe.DataPropertyName = "Saldo"
         DataGridViewCellStyle2.Format = "C2"
         DataGridViewCellStyle2.NullValue = "0"
         Me.Importe.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Importe.HeaderText = "Importe"
-        Me.Importe.Name = "Importe"
+        Me.Importe.HeaderText = "Monto"
+        Me.Importe.Name = "Monto"
         Me.Importe.ReadOnly = True
         '
         'TabMercaderia

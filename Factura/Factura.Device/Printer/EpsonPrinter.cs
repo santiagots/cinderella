@@ -50,14 +50,14 @@ namespace Factura.Device.Printer
             }
         }
 
-        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenreNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
-            return epsonTM.ObtenerNumeroFactura(productos, pagos, impuestos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
+            return epsonTM.ObtenerNumeroFactura(productos, pagos, tributos, impuestos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
-            return epsonTM.ObtenerNumeroNotaCretido(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
+            return epsonTM.ObtenerNumeroNotaCretido(productos, pagos, tributos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
         public void CierreZ()

@@ -8,8 +8,6 @@ Imports Common.Core.Exceptions
 Imports Common.Core.Extension
 Imports Common.Core.Model
 Imports Common.Data.Service
-Imports NPOI.SS.UserModel
-Imports NPOI.XSSF.UserModel
 Imports OfficeOpenXml
 Imports Model = Ventas.Core.Model.ChequeAggregate
 

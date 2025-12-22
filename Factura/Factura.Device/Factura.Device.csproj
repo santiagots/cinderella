@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\ImpuestoTicketRequest.cs" />
+    <Compile Include="Contracts\TributoTicketRequest.cs" />
     <Compile Include="Printer\EpsonCommand.cs" />
     <Compile Include="Printer\EpsonPrinter.cs" />
     <Compile Include="Printer\EpsonTMBase.cs" />

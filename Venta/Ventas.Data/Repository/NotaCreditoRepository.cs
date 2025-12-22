@@ -58,6 +58,7 @@ namespace Ventas.Data.Repository
         {
                 return _context.NotaCredito
                     .Include(x => x.NumeroNotaCredito)
+                    .Include(x => x.Percepciones)
                     .FirstOrDefault(x => x.Id == id);
         }
     }

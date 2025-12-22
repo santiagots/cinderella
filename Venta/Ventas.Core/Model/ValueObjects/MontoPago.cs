@@ -8,6 +8,7 @@ namespace Ventas.Core.Model.ValueObjects
         public decimal Descuento { get; protected set; }
         public decimal CFT { get; protected set; }
         public decimal IVA { get; protected set; }
+        public decimal SubTotal { get { return Monto - Descuento + CFT; } }
         public decimal Total { get { return Monto - Descuento + CFT + IVA; } }
 
 

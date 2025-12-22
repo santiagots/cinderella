@@ -19,6 +19,7 @@ namespace Ventas.Data.Repository
         {
             return _context.Factura
                 .Include(x => x.NumeroFactura)
+                .Include(x => x.Percepciones)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -41,6 +42,7 @@ namespace Ventas.Data.Repository
         {
             IQueryable<Factura> ventas = _context.Factura
                                         .Include(x => x.NumeroFactura)
+                                        .Include(x => x.Percepciones)
                                         .Where(x => x.Venta.Sucursal.Id == idSucursal);
 
             if (cuit.HasValue)

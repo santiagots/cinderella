@@ -458,7 +458,7 @@ Public Class Funciones
         Return CadenaFinal
     End Function
 
-    'Formateo Importe.
+    'Formateo Monto.
     Public Function FormatearPrecio(ByVal num As Double, Optional ByVal pot As Integer = 4)
         Dim SinComas, SinPuntos As String
         Dim NumeroFinal As Integer

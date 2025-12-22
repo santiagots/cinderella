@@ -73,6 +73,7 @@ namespace Factura.ExternalService
             request.Concepto = AfipFacturacionElectronicaConstantes.CONCEPTO;
             request.DocTipo = AfipFacturacionElectronica.ObtenerTipoDocumento(CAErequest.CondicionIVA);
             request.DocNro = long.Parse(CAErequest.Cuit);
+            request.CondicionIVAReceptorId = AfipFacturacionElectronica.ObtenerCondicionIVA(CAErequest.CondicionIVA);
             request.CbteDesde = ObtenerNumeroComprobante(CAErequest.CondicionIVA, CAErequest.TipoDocumentoFiscal, CAErequest.PasswordCertificado, CAErequest.RutaCertificado);
             request.CbtesAsoc = ObtenerComprobanteAsociado(CAErequest.CondicionIVA, CAErequest.TipoDocumentoFiscal, CAErequest.PuntoVentaOrigen, CAErequest.NumeroFacturaOrigen);
             request.CbteHasta = request.CbteDesde;
@@ -82,9 +83,9 @@ namespace Factura.ExternalService
             request.ImpTotConc = 0;                                             //Importe total no grabado
             request.ImpNeto = (double)Monto.Redondeo(CAErequest.ImporteNeto);   //Importe total neto
             request.ImpOpEx = 0;                                                //Importe total excento
-            request.ImpTrib = 0;                                                //Importe total tributo
 
             AgregarAlicutaIva(CAErequest.AlicuotasIva, request);
+            AgregarTributos(CAErequest.Tributos, CAErequest.ImporteNeto, request);
 
             decimal impuestosTotales = (decimal)(request.ImpTotConc + request.ImpNeto + request.ImpOpEx + request.ImpIVA + request.ImpTrib);
 
@@ -109,6 +110,27 @@ namespace Factura.ExternalService
                 }).ToArray();
 
                 request.ImpIVA = request.Iva.Sum(x => x.Importe);
+            }
+        }
+
+        private static void AgregarTributos(List<AfipTributoRequest> trubutos, decimal importeNeto,  Afip.Wsfev1.FECAEDetRequest request)
+        {
+            if (trubutos.Count == 0)
+            {
+                request.ImpTrib = 0;
+            }
+            else
+            {
+                request.Tributos = trubutos.Select(x => new Afip.Wsfev1.Tributo()
+                {
+                    Id = x.Codigo,
+                    Desc = x.Comcepto,
+                    BaseImp = (double) importeNeto,
+                    Alic = (double) x.Alicuota,
+                    Importe = (double) x.Monto
+                }).ToArray();
+
+                request.ImpTrib = request.Tributos.Sum(x => x.Importe);
             }
         }
 

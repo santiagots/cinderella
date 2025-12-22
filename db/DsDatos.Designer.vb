@@ -101,8 +101,8 @@ Partial Public Class DsDatos
             If (Not (ds.Tables("Bultos")) Is Nothing) Then
                 MyBase.Tables.Add(New BultosDataTable(ds.Tables("Bultos")))
             End If
-            If (Not (ds.Tables("Impuestos")) Is Nothing) Then
-                MyBase.Tables.Add(New ImpuestosDataTable(ds.Tables("Impuestos")))
+            If (Not (ds.Tables("Percepciones")) Is Nothing) Then
+                MyBase.Tables.Add(New ImpuestosDataTable(ds.Tables("Percepciones")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -315,8 +315,8 @@ Partial Public Class DsDatos
             If (Not (ds.Tables("Bultos")) Is Nothing) Then
                 MyBase.Tables.Add(New BultosDataTable(ds.Tables("Bultos")))
             End If
-            If (Not (ds.Tables("Impuestos")) Is Nothing) Then
-                MyBase.Tables.Add(New ImpuestosDataTable(ds.Tables("Impuestos")))
+            If (Not (ds.Tables("Percepciones")) Is Nothing) Then
+                MyBase.Tables.Add(New ImpuestosDataTable(ds.Tables("Percepciones")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -404,7 +404,7 @@ Partial Public Class DsDatos
                 Me.tableBultos.InitVars
             End If
         End If
-        Me.tableImpuestos = CType(MyBase.Tables("Impuestos"),ImpuestosDataTable)
+        Me.tableImpuestos = CType(MyBase.Tables("Percepciones"),ImpuestosDataTable)
         If (initTable = true) Then
             If (Not (Me.tableImpuestos) Is Nothing) Then
                 Me.tableImpuestos.InitVars
@@ -2440,7 +2440,7 @@ Partial Public Class DsDatos
             Me.columnBanco = MyBase.Columns("Banco")
             Me.columnFechaDeposito = MyBase.Columns("FechaDeposito")
             Me.columnFechaIngreso = MyBase.Columns("FechaIngreso")
-            Me.columnImporte = MyBase.Columns("Importe")
+            Me.columnImporte = MyBase.Columns("Monto")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2456,7 +2456,7 @@ Partial Public Class DsDatos
             MyBase.Columns.Add(Me.columnFechaDeposito)
             Me.columnFechaIngreso = New Global.System.Data.DataColumn("FechaIngreso", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnFechaIngreso)
-            Me.columnImporte = New Global.System.Data.DataColumn("Importe", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnImporte = New Global.System.Data.DataColumn("Monto", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnImporte)
         End Sub
         
@@ -3107,7 +3107,7 @@ Partial Public Class DsDatos
             Me.columnTitular = MyBase.Columns("Titular")
             Me.columnCUIT = MyBase.Columns("CUIT")
             Me.columnEsCuentaCorriente = MyBase.Columns("EsCuentaCorriente")
-            Me.columnImporte = MyBase.Columns("Importe")
+            Me.columnImporte = MyBase.Columns("Monto")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3132,13 +3132,13 @@ Partial Public Class DsDatos
             MyBase.Columns.Add(Me.columnCUIT)
             Me.columnEsCuentaCorriente = New Global.System.Data.DataColumn("EsCuentaCorriente", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnEsCuentaCorriente)
-            Me.columnImporte = New Global.System.Data.DataColumn("Importe", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnImporte = New Global.System.Data.DataColumn("Monto", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnImporte)
             Me.columnBanco.Caption = "Librador"
             Me.columnCBU.Caption = "Banco"
             Me.columnNumeroCuenta.Caption = "FechaDeposito"
             Me.columnAlias.Caption = "FechaIngreso"
-            Me.columnTitular.Caption = "Importe"
+            Me.columnTitular.Caption = "Monto"
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3562,7 +3562,7 @@ Partial Public Class DsDatos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
             MyBase.New
-            Me.TableName = "Impuestos"
+            Me.TableName = "Percepciones"
             Me.BeginInit
             Me.InitClass
             Me.EndInit
@@ -4960,7 +4960,7 @@ Partial Public Class DsDatos
                 Try 
                     Return CType(Me(Me.tableCheque.ImporteColumn),Decimal)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Importe' in table 'Cheque' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'Cheque' is DBNull.", e)
                 End Try
             End Get
             Set
@@ -5363,7 +5363,7 @@ Partial Public Class DsDatos
                 Try 
                     Return CType(Me(Me.tableDeposito.ImporteColumn),Decimal)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Importe' in table 'Deposito' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'Deposito' is DBNull.", e)
                 End Try
             End Get
             Set
@@ -5599,7 +5599,7 @@ Partial Public Class DsDatos
                 Try 
                     Return CType(Me(Me.tableImpuestos.DescripcionColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Descripcion' in table 'Impuestos' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Descripcion' in table 'Percepciones' is DBNull.", e)
                 End Try
             End Get
             Set
@@ -5614,7 +5614,7 @@ Partial Public Class DsDatos
                 Try 
                     Return CType(Me(Me.tableImpuestos.MontoColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'Impuestos' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Monto' in table 'Percepciones' is DBNull.", e)
                 End Try
             End Get
             Set

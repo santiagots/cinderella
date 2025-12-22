@@ -61,6 +61,7 @@
     <Compile Include="Contracts\AfipAlicuotaIvaRequest.cs" />
     <Compile Include="Contracts\AfipObtenerCAERequest.cs" />
     <Compile Include="Contracts\AfipObtenerCAEResponse.cs" />
+    <Compile Include="Contracts\AfipTributoRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,10 +97,16 @@
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.ConceptoTipoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.CondicionIvaReceptorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.DocTipoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.DummyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEActividadesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FECAEAConsultarResponse.datasource">
@@ -156,6 +163,12 @@
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEPaisResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -207,7 +220,7 @@
     <None Include="Connected Services\Afip.Wsfev1\Factura.ExternalService.Afip.Wsfev1.OpcionalTipoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Afip.Wsfev1\service.wsdl" />
+    <None Include="Connected Services\Afip.Wsfev1\service1.wsdl" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

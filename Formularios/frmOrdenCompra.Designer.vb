@@ -767,11 +767,11 @@ Partial Class frmOrdenCompra
         '
         'DataGridViewTextBoxColumn5
         '
-        Me.DataGridViewTextBoxColumn5.DataPropertyName = "Importe"
+        Me.DataGridViewTextBoxColumn5.DataPropertyName = "Monto"
         DataGridViewCellStyle2.Format = "C2"
         Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle2
         Me.DataGridViewTextBoxColumn5.FillWeight = 98.90017!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Importe"
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         Me.DataGridViewTextBoxColumn5.ReadOnly = True
         '
@@ -1128,11 +1128,11 @@ Partial Class frmOrdenCompra
         '
         'ImporteDataGridViewTextBoxColumn
         '
-        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
+        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Monto"
         DataGridViewCellStyle4.Format = "C2"
         Me.ImporteDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
         Me.ImporteDataGridViewTextBoxColumn.FillWeight = 89.01015!
-        Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Importe"
+        Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
         Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True
         '
@@ -1543,10 +1543,10 @@ Partial Class frmOrdenCompra
         '
         'DataGridViewTextBoxColumn10
         '
-        Me.DataGridViewTextBoxColumn10.DataPropertyName = "Importe"
+        Me.DataGridViewTextBoxColumn10.DataPropertyName = "Monto"
         DataGridViewCellStyle6.Format = "C2"
         Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle6
-        Me.DataGridViewTextBoxColumn10.HeaderText = "Importe"
+        Me.DataGridViewTextBoxColumn10.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
         Me.DataGridViewTextBoxColumn10.ReadOnly = True
         Me.DataGridViewTextBoxColumn10.Width = 106
@@ -1610,10 +1610,10 @@ Partial Class frmOrdenCompra
         '
         'DataGridViewTextBoxColumn15
         '
-        Me.DataGridViewTextBoxColumn15.DataPropertyName = "Importe"
+        Me.DataGridViewTextBoxColumn15.DataPropertyName = "Monto"
         DataGridViewCellStyle8.Format = "C2"
         Me.DataGridViewTextBoxColumn15.DefaultCellStyle = DataGridViewCellStyle8
-        Me.DataGridViewTextBoxColumn15.HeaderText = "Importe"
+        Me.DataGridViewTextBoxColumn15.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn15.Name = "DataGridViewTextBoxColumn15"
         Me.DataGridViewTextBoxColumn15.ReadOnly = True
         Me.DataGridViewTextBoxColumn15.Width = 103

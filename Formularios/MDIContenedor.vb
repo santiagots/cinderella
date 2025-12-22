@@ -1814,10 +1814,17 @@ Public Class MDIContenedor
         Me.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub Btn_Facturas_Click(sender As Object, e As EventArgs) Handles Btn_Facturas.Click
+    Private Sub Btn_Facturas_Administracion_Click(sender As Object, e As EventArgs) Handles Btn_Facturas_Administracion.Click
         Me.Cursor = Cursors.WaitCursor
         Funciones.ControlInstancia(frmFacturaAdministracion).MdiParent = Me
         Funciones.ControlInstancia(frmFacturaAdministracion).Show()
+        Me.Cursor = Cursors.Arrow
+    End Sub
+
+    Private Sub Btn_Facturas_Percepcion_Click(sender As Object, e As EventArgs) Handles Btn_Facturas_Percepcion.Click
+        Me.Cursor = Cursors.WaitCursor
+        Funciones.ControlInstancia(frmPercepciones).MdiParent = Me
+        Funciones.ControlInstancia(frmPercepciones).Show()
         Me.Cursor = Cursors.Arrow
     End Sub
 

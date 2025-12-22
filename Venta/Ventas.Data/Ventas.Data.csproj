@@ -79,6 +79,7 @@
     <Compile Include="Repository\InformeVentaRepository.cs" />
     <Compile Include="Repository\NotaCreditoRepository.cs" />
     <Compile Include="Repository\NotaPedidoRepository.cs" />
+    <Compile Include="Repository\PresupuestoRepository.cs" />
     <Compile Include="Repository\RemitoRepository.cs" />
     <Compile Include="Repository\ReservaRepository.cs" />
     <Compile Include="Repository\StockRepository.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Service\CostoFinancieroService.cs" />
     <Compile Include="Service\DocumentoDePagoService.cs" />
     <Compile Include="Service\EmpleadoService.cs" />
+    <Compile Include="Service\PresupuestoService.cs" />
     <Compile Include="Service\RemitoService.cs" />
     <Compile Include="Service\SucursalService.cs" />
     <Compile Include="Service\TipoPagoService.cs" />

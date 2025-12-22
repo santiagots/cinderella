@@ -24,6 +24,7 @@ namespace Common.Service.NotaCredito
         public ObtenerNumeroNotaCretidoResponse ObtenerNumeroNotaCretido(ObtenerNumeroNotaCretidoRequest request)
         {
             List<AfipAlicuotaIvaRequest> alicuotasIva = ObtenerAfipAlicuotaIvaRequest(request.CondicionIVA, request.Productos, request.PorcentajeFacturacion);
+            List<AfipTributoRequest> tributos = ObtenerAfipTributosRequest(request.Percepciones);
 
             AfipObtenerCAERequest afipObtenerCAERequest = new AfipObtenerCAERequest()
             {
@@ -33,6 +34,7 @@ namespace Common.Service.NotaCredito
                 Cuit = request.Cuit,
                 ImporteNeto = alicuotasIva.Sum(x => x.Monto),
                 AlicuotasIva = alicuotasIva,
+                Tributos = tributos,
                 NumeroFacturaOrigen = request.NumeroFacturaOrigen,
                 PuntoVentaOrigen = request.PuntoVentaOrigen,
                 PasswordCertificado = PasswordCertificado,
@@ -69,6 +71,24 @@ namespace Common.Service.NotaCredito
             }
 
             return alicuotasIva;
+        }
+
+        private List<AfipTributoRequest> ObtenerAfipTributosRequest(List<PercepcionRequest> Percepciones)
+        {
+            List<AfipTributoRequest> tributos = new List<AfipTributoRequest>();
+
+            foreach (var percepcion in Percepciones)
+            {
+                tributos.Add(new AfipTributoRequest()
+                {
+                    Codigo = (short)percepcion.Tipo,
+                    Comcepto = percepcion.Comcepto,
+                    Alicuota = percepcion.Alicuota,
+                    Monto = percepcion.Monto
+                });
+            }
+
+            return tributos;
         }
     }
 }

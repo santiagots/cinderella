@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmControladorFiscal
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,10 +20,9 @@ Partial Class frmControladorFiscal
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmControladorFiscal))
         Me.btnCierreZ = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -39,7 +38,6 @@ Partial Class frmControladorFiscal
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.FDesdeCierreZ = New System.Windows.Forms.DateTimePicker()
-        Me.FrmControladorFiscalViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.FHastaCierreZ = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -59,30 +57,20 @@ Partial Class frmControladorFiscal
         Me.btn_Exportar = New System.Windows.Forms.Button()
         Me.BtnFiltrar = New System.Windows.Forms.Button()
         Me.dgTickets = New System.Windows.Forms.DataGridView()
-        Me.NumeroDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PuntoVentaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TipoFacturaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CondicionIVADataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CUITDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.NombreYApellidoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DireccionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LocalidadDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MontoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FechaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FacturasBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.lbl_Msg = New System.Windows.Forms.Label()
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.FolderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
+        Me.FrmControladorFiscalViewModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
-        CType(Me.FrmControladorFiscalViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FacturasBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FrmControladorFiscalViewModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnCierreZ
@@ -272,10 +260,6 @@ Partial Class frmControladorFiscal
         Me.FDesdeCierreZ.Size = New System.Drawing.Size(239, 20)
         Me.FDesdeCierreZ.TabIndex = 8
         '
-        'FrmControladorFiscalViewModelBindingSource
-        '
-        Me.FrmControladorFiscalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel)
-        '
         'FHastaCierreZ
         '
         Me.FHastaCierreZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -329,13 +313,13 @@ Partial Class frmControladorFiscal
         Me.TextBox2.Size = New System.Drawing.Size(239, 20)
         Me.TextBox2.TabIndex = 15
         '
-        'txtCodigo
+        'TextBox1
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmControladorFiscalViewModelBindingSource, "ControladorFiscalJornadaHasta", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "N0"))
         Me.TextBox1.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.FrmControladorFiscalViewModelBindingSource, "ControladorFiscalFiltrarPorJornada", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.TextBox1.Location = New System.Drawing.Point(588, 65)
-        Me.TextBox1.Name = "txtCodigo"
+        Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(239, 20)
         Me.TextBox1.TabIndex = 14
         '
@@ -387,7 +371,7 @@ Partial Class frmControladorFiscal
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold)
         Me.Label4.Location = New System.Drawing.Point(15, 24)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(57, 16)
+        Me.Label4.Size = New System.Drawing.Size(56, 16)
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "Estado"
         '
@@ -502,112 +486,17 @@ Partial Class frmControladorFiscal
         Me.dgTickets.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgTickets.AutoGenerateColumns = False
         Me.dgTickets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgTickets.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgTickets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgTickets.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.NumeroDataGridViewTextBoxColumn, Me.PuntoVentaDataGridViewTextBoxColumn, Me.TipoFacturaDataGridViewTextBoxColumn, Me.CondicionIVADataGridViewTextBoxColumn, Me.CUITDataGridViewTextBoxColumn, Me.NombreYApellidoDataGridViewTextBoxColumn, Me.DireccionDataGridViewTextBoxColumn, Me.LocalidadDataGridViewTextBoxColumn, Me.MontoDataGridViewTextBoxColumn, Me.FechaDataGridViewTextBoxColumn})
-        Me.dgTickets.DataSource = Me.FacturasBindingSource
+        Me.dgTickets.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1})
         Me.dgTickets.Location = New System.Drawing.Point(12, 325)
         Me.dgTickets.Name = "dgTickets"
         Me.dgTickets.ReadOnly = True
+        Me.dgTickets.RowHeadersVisible = False
         Me.dgTickets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgTickets.Size = New System.Drawing.Size(860, 471)
         Me.dgTickets.TabIndex = 4
-        '
-        'NumeroDataGridViewTextBoxColumn
-        '
-        Me.NumeroDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.NumeroDataGridViewTextBoxColumn.DataPropertyName = "Numero"
-        Me.NumeroDataGridViewTextBoxColumn.HeaderText = "Numero"
-        Me.NumeroDataGridViewTextBoxColumn.Name = "NumeroDataGridViewTextBoxColumn"
-        Me.NumeroDataGridViewTextBoxColumn.ReadOnly = True
-        Me.NumeroDataGridViewTextBoxColumn.Width = 69
-        '
-        'PuntoVentaDataGridViewTextBoxColumn
-        '
-        Me.PuntoVentaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.PuntoVentaDataGridViewTextBoxColumn.DataPropertyName = "PuntoVenta"
-        Me.PuntoVentaDataGridViewTextBoxColumn.HeaderText = "P. Venta"
-        Me.PuntoVentaDataGridViewTextBoxColumn.Name = "PuntoVentaDataGridViewTextBoxColumn"
-        Me.PuntoVentaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.PuntoVentaDataGridViewTextBoxColumn.Width = 73
-        '
-        'TipoFacturaDataGridViewTextBoxColumn
-        '
-        Me.TipoFacturaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.TipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.HeaderText = "T. Factura"
-        Me.TipoFacturaDataGridViewTextBoxColumn.Name = "TipoFacturaDataGridViewTextBoxColumn"
-        Me.TipoFacturaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.TipoFacturaDataGridViewTextBoxColumn.Width = 81
-        '
-        'CondicionIVADataGridViewTextBoxColumn
-        '
-        Me.CondicionIVADataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.CondicionIVADataGridViewTextBoxColumn.DataPropertyName = "CondicionIVA"
-        Me.CondicionIVADataGridViewTextBoxColumn.HeaderText = "Condición IVA"
-        Me.CondicionIVADataGridViewTextBoxColumn.Name = "CondicionIVADataGridViewTextBoxColumn"
-        Me.CondicionIVADataGridViewTextBoxColumn.ReadOnly = True
-        Me.CondicionIVADataGridViewTextBoxColumn.Width = 99
-        '
-        'CUITDataGridViewTextBoxColumn
-        '
-        Me.CUITDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.CUITDataGridViewTextBoxColumn.DataPropertyName = "CUIT"
-        Me.CUITDataGridViewTextBoxColumn.HeaderText = "CUIT"
-        Me.CUITDataGridViewTextBoxColumn.Name = "CUITDataGridViewTextBoxColumn"
-        Me.CUITDataGridViewTextBoxColumn.ReadOnly = True
-        Me.CUITDataGridViewTextBoxColumn.Width = 57
-        '
-        'NombreYApellidoDataGridViewTextBoxColumn
-        '
-        Me.NombreYApellidoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.NombreYApellidoDataGridViewTextBoxColumn.DataPropertyName = "NombreYApellido"
-        Me.NombreYApellidoDataGridViewTextBoxColumn.HeaderText = "Nombre"
-        Me.NombreYApellidoDataGridViewTextBoxColumn.Name = "NombreYApellidoDataGridViewTextBoxColumn"
-        Me.NombreYApellidoDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'DireccionDataGridViewTextBoxColumn
-        '
-        Me.DireccionDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.DireccionDataGridViewTextBoxColumn.DataPropertyName = "Direccion"
-        Me.DireccionDataGridViewTextBoxColumn.HeaderText = "Dirección"
-        Me.DireccionDataGridViewTextBoxColumn.Name = "DireccionDataGridViewTextBoxColumn"
-        Me.DireccionDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'LocalidadDataGridViewTextBoxColumn
-        '
-        Me.LocalidadDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.LocalidadDataGridViewTextBoxColumn.DataPropertyName = "Localidad"
-        Me.LocalidadDataGridViewTextBoxColumn.HeaderText = "Localidad"
-        Me.LocalidadDataGridViewTextBoxColumn.Name = "LocalidadDataGridViewTextBoxColumn"
-        Me.LocalidadDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'MontoDataGridViewTextBoxColumn
-        '
-        Me.MontoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.MontoDataGridViewTextBoxColumn.DataPropertyName = "Monto"
-        DataGridViewCellStyle1.Format = "C"
-        Me.MontoDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
-        Me.MontoDataGridViewTextBoxColumn.HeaderText = "Monto"
-        Me.MontoDataGridViewTextBoxColumn.Name = "MontoDataGridViewTextBoxColumn"
-        Me.MontoDataGridViewTextBoxColumn.ReadOnly = True
-        Me.MontoDataGridViewTextBoxColumn.Width = 62
-        '
-        'FechaDataGridViewTextBoxColumn
-        '
-        Me.FechaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.FechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.HeaderText = "Fecha"
-        Me.FechaDataGridViewTextBoxColumn.Name = "FechaDataGridViewTextBoxColumn"
-        Me.FechaDataGridViewTextBoxColumn.ReadOnly = True
-        Me.FechaDataGridViewTextBoxColumn.Width = 62
-        '
-        'FacturasBindingSource
-        '
-        Me.FacturasBindingSource.DataMember = "Facturas"
-        Me.FacturasBindingSource.DataSource = Me.FrmControladorFiscalViewModelBindingSource
         '
         'lbl_Msg
         '
@@ -629,6 +518,16 @@ Partial Class frmControladorFiscal
         '
         Me.FolderBrowserDialog.Description = "Seleccione una carpeta en donde se guardara el archivo"
         '
+        'FrmControladorFiscalViewModelBindingSource
+        '
+        Me.FrmControladorFiscalViewModelBindingSource.DataSource = GetType(SistemaCinderella.Formularios.Facturacion.frmControladorFiscalViewModel)
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Column1"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
         'frmControladorFiscal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -647,14 +546,13 @@ Partial Class frmControladorFiscal
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
-        CType(Me.FrmControladorFiscalViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         CType(Me.dgTickets, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FacturasBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FrmControladorFiscalViewModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -679,17 +577,6 @@ Partial Class frmControladorFiscal
     Friend WithEvents FDesdeCierreZ As System.Windows.Forms.DateTimePicker
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents FrmControladorFiscalViewModelBindingSource As BindingSource
-    Friend WithEvents FacturasBindingSource As BindingSource
-    Friend WithEvents NumeroDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents PuntoVentaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents TipoFacturaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents CondicionIVADataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents CUITDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents NombreYApellidoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents DireccionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents LocalidadDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents MontoDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents FechaDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents TableLayoutPanel5 As TableLayoutPanel
     Friend WithEvents btnInformacionTransaccionesPorFiltro As Button
@@ -706,4 +593,5 @@ Partial Class frmControladorFiscal
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents rblFiltroPorFecha As RadioButton
     Friend WithEvents FolderBrowserDialog As FolderBrowserDialog
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
 End Class

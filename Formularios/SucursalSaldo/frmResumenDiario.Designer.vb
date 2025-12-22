@@ -105,7 +105,7 @@ Partial Class frmResumenDiario
         '
         Me.txtMonto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtMonto.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmResumenDiarioViewModelBindingSource, "Importe", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txtMonto.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.FrmResumenDiarioViewModelBindingSource, "Monto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txtMonto.Location = New System.Drawing.Point(275, 83)
         Me.txtMonto.Name = "txtMonto"
         Me.txtMonto.Size = New System.Drawing.Size(194, 20)
@@ -123,7 +123,7 @@ Partial Class frmResumenDiario
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(98, 15)
         Me.Label14.TabIndex = 65
-        Me.Label14.Text = "Importe Físico"
+        Me.Label14.Text = "Monto Físico"
         '
         'Label13
         '

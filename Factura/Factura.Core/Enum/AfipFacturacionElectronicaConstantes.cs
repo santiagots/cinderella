@@ -25,6 +25,12 @@ namespace Factura.Core.Enum
         public static int CUIL = 86;
         public static int DNI = 96;
 
+        //TIPO CONDICION IVA
+        public static int Responsable_Inscripto = 1;
+        public static int Monotributo = 5;
+        public static int Consumidor_Final = 4;
+        public static int Exento = 3;
+
         //TIPO IVA
         public static int IVA = 5; //21%
 
@@ -40,5 +46,18 @@ namespace Factura.Core.Enum
         public static string PARCIAL = "P";
 
         public static string COMPROBANTE_AUTORIZADO_POR_CAE = "E";
+
+        //TIPO TRIBUTOS
+        public static string IMPUESTOS_NACIONALES = "1";
+        public static string IMPUESTOS_PROVINCIALES = "2";
+        public static string IMPUESTOS_MUNICIPALES = "3";
+        public static string IMPUESTOS_INTERNOS = "4";
+        public static string OTRO = "99";
+        public static string IIBB = "5";
+        public static string PERCEPCION_IVA = "6";
+        public static string PERCEPCION_IIBB = "7";
+        public static string PERCEPCION_IMPUESTOS_MUNICIPALES = "8";
+        public static string OTROS_PERCEPCIONES = "9";
+        public static string PERCEPCION_IVA_NO_CATEGORICADA = "13";
     }
 }

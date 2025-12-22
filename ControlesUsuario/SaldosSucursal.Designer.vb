@@ -777,12 +777,12 @@ Partial Class SaldosSucursal
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(144, 15)
         Me.Label1.TabIndex = 64
-        Me.Label1.Text = "Impuestos"
+        Me.Label1.Text = "Percepciones"
         '
         'txt_Impuesto
         '
         Me.txt_Impuesto.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txt_Impuesto.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "Impuestos", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
+        Me.txt_Impuesto.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.SaldoSucursalViewModelBindingSource, "Percepciones", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.txt_Impuesto.Location = New System.Drawing.Point(153, 103)
         Me.txt_Impuesto.Name = "txt_Impuesto"
         Me.txt_Impuesto.ReadOnly = True
@@ -876,7 +876,7 @@ Partial Class SaldosSucursal
         Me.Button7.Size = New System.Drawing.Size(18, 19)
         Me.Button7.TabIndex = 100
         Me.Button7.Tag = "Ver Detalle"
-        Me.ToolTip.SetToolTip(Me.Button7, "Impuestos pagados por la sucursal.")
+        Me.ToolTip.SetToolTip(Me.Button7, "Percepciones pagados por la sucursal.")
         Me.Button7.UseVisualStyleBackColor = True
         '
         'BtnGuardar

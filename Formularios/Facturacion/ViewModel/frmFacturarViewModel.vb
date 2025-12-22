@@ -1,35 +1,38 @@
 ﻿Imports System.ComponentModel
-Imports Common.Core.Extension
-Imports Enums = Common.Core.Enum
-Imports Common.Core.Exceptions
 Imports System.Threading.Tasks
-Imports Helper = Common.Core.Helper
-Imports Common.Core.Model
 Imports Common.Core.Enum
-Imports Model = Ventas.Core.Model.VentaAggregate
-Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
-Imports Common.Service.NotaCredito
-Imports Factura.Service.Factura
-Imports Factura.Service.NotaCredito.Contracts
-Imports Factura.Service.Factura.Contracts
-Imports Factura.Service.Common.Contracts
-Imports Ventas.Core.Model.VentaAggregate
-Imports Common.Data.Service
-Imports Ventas.Core.Model.ValueObjects
+Imports Common.Core.Exceptions
+Imports Common.Core.Extension
 Imports Common.Core.Helper
+Imports Common.Core.Model
+Imports Common.Data.Service
+Imports Common.Service.NotaCredito
+Imports Factura.Service.Common.Contracts
+Imports Factura.Service.Factura
+Imports Factura.Service.Factura.Contracts
+Imports Factura.Service.NotaCredito.Contracts
 Imports Newtonsoft.Json
 Imports SistemaCinderella.Formularios.Comun
+Imports SistemaCinderella.Formularios.Venta.frmVentasViewModel
+Imports Ventas.Core.Model.ValueObjects
+Imports Ventas.Core.Model.VentaAggregate
+Imports Enums = Common.Core.Enum
+Imports Helper = Common.Core.Helper
+Imports Model = Ventas.Core.Model.VentaAggregate
 
 Namespace Formularios.Facturacion
     Public Class frmFacturarViewModel
         Inherits Comunes.Common
 
         Private FacturarCallBackEvent As FacturarDelegateCallBackAsync
+        Private ClienteMayorista As ClienteMayorista
 
         Private desdeReserva As Boolean
         Private tipoDocumentoFiscal As TipoDocumentoFiscal
         Private CondicionIvaOriginal As CondicionIVA
         Private PuntoVentaOriginal As Integer
+
+        Private Percepciones As List(Of Model.Percepcion) = New List(Of Model.Percepcion)()
 
         Public ventaModel As Model.Venta
 
@@ -45,12 +48,14 @@ Namespace Formularios.Facturacion
         Public Property Descuento As Decimal
         Public Property CostoFinanciero As Decimal
         Public Property Iva As Decimal
+        Public Property Percepcion As Decimal
         Public Property Total As Decimal
         Public Property CondicionesIVA As BindingList(Of Enums.CondicionIVA)
         Public Property CondicionesIVASeleccionada As Enums.CondicionIVA = CondicionIVA.Consumidor_Final
         Public Property NombreYApellido As String
         Public Property Direccion As String
         Public Property Localidad As String
+        Public Property Provincia As String
         Public Property CUIT As String
         Public Property NumeroFacturaOrigen As Integer
         Public Property Numerofactura As String
@@ -116,6 +121,7 @@ Namespace Formularios.Facturacion
             Me.NombreYApellido = String.Empty
             Me.Direccion = String.Empty
             Me.Localidad = String.Empty
+            Me.Provincia = String.Empty
             Me.CUIT = String.Empty
             Me.tipoDocumentoFiscal = tipoDocumentoFiscal
             If (tipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
@@ -170,26 +176,14 @@ Namespace Formularios.Facturacion
             obtenerNumeroFacturaRequest.Productos = ObtenerProductoRequest(ventaModel.ObtenerItemsVentaSeleccionados(), desdeReserva, CondicionesIVASeleccionada)
             obtenerNumeroFacturaRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
             obtenerNumeroFacturaRequest.Impuestos = ObtenerImpuestosRequest()
+            obtenerNumeroFacturaRequest.Percepciones = Percepciones.Select(Function(x) New PercepcionRequest(x.Tipo, x.Comcepto, x.Alicuota, x.Monto)).ToList()
 
             Log.Info("FACTURA - VENTA", ventaModel)
             Log.Info("FACTURA - FFACTURA", ventaModel.Factura)
             Log.Info("FACTURA - REQUEST", obtenerNumeroFacturaRequest)
 
-            'Dim json As String = "{""Numero"":null,""Comisiones"":[],""Pagos"":[{""IdVenta"":5520240903151725513,""Venta"":null,""TipoPago"":2,""MontoPago"":{""Monto"":100.0,""Descuento"":0.0,""CFT"":0.0,""IVA"":0.0,""Total"":100.0},""MontoRestante"":0.0,""Tarjeta"":""Visa"",""NumeroCuotas"":1,""PorcentajeRecargo"":0.0,""NumeroOrdenChequesData"":"""",""IdCuentaBancaria"":null,""CuentaBancaria"":null,""NumeroOrdenCheques"":null,""FechaEdicion"":""2024-09-03T15:17:50.0835652-03:00"",""Habilitado"":true,""Id"":5520240903151750083,""EstadoEntidad"":0}],""Cheques"":[],""VentaItems"":[{""IdVenta"":5520240903151725513,""Venta"":null,""EsDevolucion"":false,""Facturada"":false,""Anulada"":false,""Seleccionado"":true,""PorcentajePago"":1.0,""MontoProducto"":{""Valor"":100.0,""Iva"":0.0},""Cantidad"":1,""Total"":{""Valor"":100.0,""Iva"":0.0},""PorcentajeBonificacion"":0.00,""IdProducto"":38182,""Producto"":{""Codigo"":""varios"",""CodigoBarra"":""7791234381821"",""Nombre"":""VARIOS"",""IdCategoria"":4,""Categoria"":{""Descripcion"":""Varios"",""SubCategorias"":null,""Habilitado"":true,""Id"":4,""EstadoEntidad"":0},""IdSubcategoria"":335,""SubCategoria"":{""IdCategoria"":0,""Categoria"":null,""IdIVA"":5,""IVA"":{""Valor"":0.2100,""Id"":5,""EstadoEntidad"":0},""Descripcion"":""Varios"",""Habilitado"":true,""Id"":335,""EstadoEntidad"":0},""Stock"":{""IdSucursal"":55,""IdProducto"":38182,""Cantidad"":-6,""Minimo"":0,""Optimo"":0,""Reservado"":13,""Disponible"":-19,""Habilitado"":true,""MotivoModificacion"":null,""IdUsuario"":0,""Modificado"":false,""Borrado"":false,""Fecha"":""2023-03-02T13:28:05.53"",""FechaModificacion"":""2023-03-02T00:00:00"",""FechaEdicion"":""2023-03-02T13:28:05.53"",""VentaMensual"":0,""Id"":5520230302132805530,""EstadoEntidad"":0},""Precios"":[{""IdProducto"":38182,""IdLista"":1,""Monto"":0.00,""Habilitado"":true,""Id"":229949,""EstadoEntidad"":0},{""IdProducto"":38182,""IdLista"":2,""Monto"":0.00,""Habilitado"":true,""Id"":229950,""EstadoEntidad"":0},{""IdProducto"":38182,""IdLista"":3,""Monto"":0.00,""Habilitado"":true,""Id"":229951,""EstadoEntidad"":0},{""IdProducto"":38182,""IdLista"":4,""Monto"":0.00,""Habilitado"":true,""Id"":229952,""EstadoEntidad"":0},{""IdProducto"":38182,""IdLista"":5,""Monto"":0.00,""Habilitado"":true,""Id"":229953,""EstadoEntidad"":0},{""IdProducto"":38182,""IdLista"":6,""Monto"":0.00,""Habilitado"":true,""Id"":229954,""EstadoEntidad"":0}],""Id"":38182,""EstadoEntidad"":0},""FechaEdicion"":""2024-09-03T15:17:35.6764725-03:00"",""Id"":5520240903151735676,""EstadoEntidad"":0}],""NotaCredito"":null,""Factura"":null,""Anulado"":false,""MotivoAnulado"":null,""FechaAnulado"":null,""CantidadTotal"":1,""PagoTotal"":{""Monto"":100.0,""Descuento"":0.0,""CFT"":0.0,""IVA"":0.0,""Total"":100.0},""EstaPaga"":true,""TipoCliente"":0,""IdSucursal"":55,""Sucursal"":null,""IdEncargado"":112,""Encargado"":{""Apellido"":""Aloy"",""Nombre"":""Marina"",""Habilitado"":true,""Tipo"":2,""ApellidoYNombre"":""Aloy Marina"",""Id"":112,""EstadoEntidad"":0},""IdVendedor"":91,""Vendedor"":{""Apellido"":""Gomez"",""Nombre"":""Andrea"",""Habilitado"":true,""Tipo"":1,""ApellidoYNombre"":""Gomez Andrea"",""Id"":91,""EstadoEntidad"":0},""PorcentajeFacturacion"":1.0,""IdClienteMayorista"":null,""ClienteMayorista"":null,""Fecha"":""2024-09-03T15:17:25.5132497-03:00"",""FechaEdicion"":""2024-09-03T15:17:25.5132497-03:00"",""MontoTotal"":{""Valor"":100.0,""Iva"":0.0},""Id"":5520240903151725513,""EstadoEntidad"":0}"
-
-            'ventaModel = JsonConvert.DeserializeObject(Of Model.Venta)(json)
-
-            Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = New ObtenerNumeroFacturaResponse() With {
-                .SubTotal = 123,
-                .Iva = 123,
-                .Total = 123,
-                .NumeroFactura = New List(Of Integer) From {1},
-                .CAE = "1234567890",
-                .FechaVencimientoCAE = DateTime.Now.AddDays(7)
-                }
-
-            'Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
-            'Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
+            Dim facturar As FacturarService = New FacturarService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
+            Dim ObtenerNumeroFacturaResponse As ObtenerNumeroFacturaResponse = facturar.ObtenerNumeroFactura(obtenerNumeroFacturaRequest)
 
             ventaModel.AgregarFactura(ObtenerPuntoVenta,
                                     TiposFacturaSeleccionada,
@@ -197,13 +191,15 @@ Namespace Formularios.Facturacion
                                     NombreYApellido,
                                     Direccion,
                                     Localidad,
+                                    Provincia,
                                     CUIT,
                                     ObtenerNumeroFacturaResponse.SubTotal,
                                     ObtenerNumeroFacturaResponse.Iva,
                                     ObtenerNumeroFacturaResponse.Total,
                                     ObtenerNumeroFacturaResponse.NumeroFactura,
                                     ObtenerNumeroFacturaResponse.CAE,
-                                    ObtenerNumeroFacturaResponse.FechaVencimientoCAE)
+                                    ObtenerNumeroFacturaResponse.FechaVencimientoCAE,
+                                    Percepciones)
 
             Visible = False
             Await FacturarCallBackEvent(True, ventaModel)
@@ -233,6 +229,7 @@ Namespace Formularios.Facturacion
 
             ObtenerNumeroNotaCretidoRequest.Productos = ObtenerProductoRequest(ventaModel.ObtenerItemsVentaSeleccionadosYFacturados(), desdeReserva, CondicionesIVASeleccionada)
             ObtenerNumeroNotaCretidoRequest.Pagos = ObtenerPagoRequest(ventaModel.Pagos)
+            ObtenerNumeroNotaCretidoRequest.Percepciones = Percepciones.Select(Function(x) New PercepcionRequest(x.Tipo, x.Comcepto, x.Alicuota, x.Monto)).ToList()
 
             Dim notaCredito As NotaCreditoService = New NotaCreditoService(TiposFacturaSeleccionada, VariablesGlobales.RutaCertificadoFacturacionElectronica, VariablesGlobales.PasswordCertificadoFacturacionElectronica)
 
@@ -248,13 +245,15 @@ Namespace Formularios.Facturacion
                                             NombreYApellido,
                                             Direccion,
                                             Localidad,
+                                            Provincia,
                                             CUIT,
                                             ObtenerNumeroNotaCretidoResponse.SubTotal,
                                             ObtenerNumeroNotaCretidoResponse.Iva,
                                             ObtenerNumeroNotaCretidoResponse.Total,
                                             ObtenerNumeroNotaCretidoResponse.NumeroNotaCredito,
                                             ObtenerNumeroNotaCretidoResponse.CAE,
-                                            ObtenerNumeroNotaCretidoResponse.FechaVencimientoCAE)
+                                            ObtenerNumeroNotaCretidoResponse.FechaVencimientoCAE,
+                                            Percepciones)
 
             Visible = False
             Await FacturarCallBackEvent(True, ventaModel)
@@ -310,9 +309,7 @@ Namespace Formularios.Facturacion
             CargarMontos()
         End Function
 
-        Public Sub CargarMontos()
-            Fecha = DateTime.Now()
-
+        Public Async Sub CargarMontos()
             Dim MontoTotalPagoFacturable As MontoPago = New MontoPago(0, 0, 0, 0)
 
             If (tipoDocumentoFiscal = TipoDocumentoFiscal.Factura) Then
@@ -320,19 +317,21 @@ Namespace Formularios.Facturacion
             Else
                 MontoTotalPagoFacturable = ventaModel.TotalSeleccionadosYFacturados(CondicionesIVASeleccionada)
             End If
+            Percepciones = Await ObtenerPercepciones(MontoTotalPagoFacturable.Monto, CondicionesIVASeleccionada, Provincia)
 
             Subtotal = MontoTotalPagoFacturable.Monto
             Descuento = MontoTotalPagoFacturable.Descuento
             CostoFinanciero = MontoTotalPagoFacturable.CFT
             Iva = MontoTotalPagoFacturable.IVA
-            Total = MontoTotalPagoFacturable.Total
+            Percepcion = Percepciones.Sum(Function(x) x.Monto)
+            Total = MontoTotalPagoFacturable.Total + Percepcion
 
             NotifyPropertyChanged(NameOf(Me.Subtotal))
             NotifyPropertyChanged(NameOf(Me.Descuento))
             NotifyPropertyChanged(NameOf(Me.CostoFinanciero))
             NotifyPropertyChanged(NameOf(Me.Iva))
+            NotifyPropertyChanged(NameOf(Me.Percepcion))
             NotifyPropertyChanged(NameOf(Me.Total))
-
         End Sub
 
         Public Async Function CargarNumeroFacturaAsync() As Task
@@ -344,12 +343,13 @@ Namespace Formularios.Facturacion
         End Function
 
         Public Async Function CargarClienteMayoristaAsync() As Task
-            Dim clienteMayorista As Common.Core.Model.ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, ventaModel.IdClienteMayorista)
-            CondicionesIVASeleccionada = clienteMayorista.CondicionIVA
-            NombreYApellido = clienteMayorista.RazonSocial
-            Direccion = clienteMayorista.DomicilioFacturacion?.Direccion
-            Localidad = clienteMayorista.DomicilioFacturacion?.Localidad.Descripcion
-            CUIT = clienteMayorista.Cuit
+            ClienteMayorista = Await ClienteMayoristaService.ObtenerAsync(TipoBase.Local, ventaModel.IdClienteMayorista)
+            CondicionesIVASeleccionada = ClienteMayorista.CondicionIVA
+            NombreYApellido = ClienteMayorista.RazonSocial
+            Direccion = ClienteMayorista.DomicilioFacturacion?.Direccion
+            Localidad = ClienteMayorista.DomicilioFacturacion?.Localidad.Descripcion
+            Provincia = ClienteMayorista.DomicilioFacturacion?.Provincia.Descripcion
+            CUIT = ClienteMayorista.Cuit
 
             NotifyPropertyChanged(NameOf(Me.CondicionesIVASeleccionada))
             NotifyPropertyChanged(NameOf(Me.NombreYApellido))
@@ -453,6 +453,20 @@ Namespace Formularios.Facturacion
             Return request
         End Function
 
+        Public Async Function ObtenerPercepciones(subTotal As Decimal, condicionIva As CondicionIVA, provincia As String) As Task(Of List(Of Model.Percepcion))
+            Dim percepciones As New List(Of Model.Percepcion)
+
+            Dim percepcionesModel As List(Of Common.Core.Model.Percepcion) = Await PercepcionService.Buscar(TipoBase.Local, provincia, CondicionesIVASeleccionada, True)
+
+            For Each percepcionItem In percepcionesModel
+                If subTotal >= percepcionItem.MontoDesde Then
+                    percepciones.Add(New Model.Percepcion(percepcionItem.TipoPercepcion, percepcionItem.Comcepto, percepcionItem.Alicuota, subTotal * percepcionItem.Alicuota))
+                End If
+            Next
+
+            Return percepciones
+        End Function
+
         Private Function ObtenerImpuestosRequest() As List(Of ImpuestoRequest)
 
             Dim request As List(Of ImpuestoRequest) = New List(Of ImpuestoRequest)()
@@ -467,19 +481,19 @@ Namespace Formularios.Facturacion
             Dim MontoTotalPagoFacturable As MontoPago = ventaModel.TotalSeleccionado(CondicionIVA.Responsable_Inscripto)
 
             request.Add(New ImpuestoRequest() With {
-                            .Descripcion = My.Settings.FacturaEncabezadoImpuestos})
+                        .Descripcion = My.Settings.FacturaEncabezadoImpuestos})
 
             If (My.Settings.FacturaIVADiscirimiar) Then
                 request.Add(New ImpuestoRequest() With {
-                            .Monto = MontoTotalPagoFacturable.IVA,
-                            .Descripcion = My.Settings.FacturaIVADescripcion})
+                        .Monto = MontoTotalPagoFacturable.IVA,
+                        .Descripcion = My.Settings.FacturaIVADescripcion})
             End If
 
             If Inpuestos IsNot Nothing Then
                 For Each impuesto As FacturacionImpuestosViewModel In Inpuestos
                     request.Add(New ImpuestoRequest() With {
-                            .Monto = MontoTotalPagoFacturable.Total * impuesto.Porcentaje + impuesto.Monto,
-                            .Descripcion = impuesto.Descripcion})
+                        .Monto = MontoTotalPagoFacturable.SubTotal * impuesto.Porcentaje + impuesto.Monto,
+                        .Descripcion = impuesto.Descripcion})
 
                 Next
             End If

@@ -38,8 +38,10 @@ namespace Ventas.Data.Repository
                             .Include(x => x.VentaItems)
                             .Include(x => x.VentaItems.Select(y => y.Producto.SubCategoria.IVA))
                             .Include(x => x.Factura)
+                            .Include(x => x.Factura.Percepciones)
                             .Include(x => x.Factura.NumeroFactura)
                             .Include(x => x.NotaCredito)
+                            .Include(x => x.NotaCredito.Percepciones)
                             .Include(x => x.NotaCredito.NumeroNotaCredito)
                             .FirstOrDefault(x => x.Id == idVenta);
 

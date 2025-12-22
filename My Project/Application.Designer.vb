@@ -33,31 +33,6 @@ Namespace My
 
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
         Protected Overrides Sub OnCreateMainForm()
-
-            Mapper.Initialize(Sub(x)
-                                  x.AddProfile(Of Comunes.MapperProfile)()
-                                  x.AddProfile(Of Formularios.CuentaBancaria.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Facturacion.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Venta.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Cheque.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Reserva.MapperProfile)()
-                                  x.AddProfile(Of Formularios.MovimientoDetalle.MapperProfile)()
-                                  x.AddProfile(Of Formularios.SucursalSaldo.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Producto.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Cliente.MapperProfile)()
-                                  x.AddProfile(Of Formularios.Comex.MapperProfile)()
-                                  x.AddProfile(Of Ventas.Suport.Mapper.MapperProfile)()
-                                  x.AddProfile(Of Servicios.MapperProfile)()
-                              End Sub)
-
-            Try
-                Dim rutaBaseDatos As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DB")
-                Datos.ConfigurarBaseDatos.Iniciar(Assembly.GetExecutingAssembly.GetName().Name, rutaBaseDatos)
-            Catch ex As Exception
-                MessageBox.Show(ex.ToString())
-                Common.Core.Helper.Log.Error(ex)
-            End Try
-
             Me.MainForm = Global.SistemaCinderella.frmLogin
         End Sub
 

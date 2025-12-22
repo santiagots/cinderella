@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6d0a0d56-a8e7-45f4-9659-829b7d29272c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="6d0a0d56-a8e7-45f4-9659-829b7d29272c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,7 +22,7 @@
     <MetadataSource Address="https://wswhomo.afip.gov.ar/wsfev1/service.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="aeb7809e-1901-4a3f-b1ef-21b751425f1d" SourceId="1" SourceUrl="http://wswhomo.afip.gov.ar/wsfev1/service.asmx?wsdl" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="c95da16f-ab29-4d6b-b720-f6e4a71172bf" SourceId="1" SourceUrl="https://wswhomo.afip.gov.ar/wsfev1/service.asmx?wsdl" />
     <MetadataFile FileName="service.disco" MetadataType="Disco" ID="e4a7a772-f375-4dd4-936f-1b267aa93aa6" SourceId="1" SourceUrl="https://wswhomo.afip.gov.ar/wsfev1/service.asmx?disco" />
   </Metadata>
   <Extensions>

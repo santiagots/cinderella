@@ -22,6 +22,8 @@ Public Class Conexion
     Public Function ConectarLocal()
         Try
             CadenaConexion = STRING_CONEXION_BASE_LOCAL
+            Log.Info($"ConectarLocal - ConnectionString: {CadenaConexion}")
+            Log.Info($"ConectarLocal - Assembly: {Assembly.GetEntryAssembly.GetName().Name}")
             miconexion = New SqlConnection
             miconexion.ConnectionString = String.Format(CadenaConexion, Assembly.GetEntryAssembly.GetName().Name)
             miconexion.Open()

@@ -89,7 +89,7 @@ Partial Class frmConfiguracionFacturacionImpuestos
         Me.GroupBox2.Size = New System.Drawing.Size(506, 103)
         Me.GroupBox2.TabIndex = 33
         Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Discriminar Importe IVA"
+        Me.GroupBox2.Text = "Discriminar Monto IVA"
         '
         'TableLayoutPanel2
         '
@@ -190,7 +190,7 @@ Partial Class frmConfiguracionFacturacionImpuestos
         Me.GroupBox1.Size = New System.Drawing.Size(506, 289)
         Me.GroupBox1.TabIndex = 34
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Configuración Otros Impuestos"
+        Me.GroupBox1.Text = "Configuración Otros Percepciones"
         '
         'Btn_Agregar_Imp
         '
@@ -221,7 +221,7 @@ Partial Class frmConfiguracionFacturacionImpuestos
         Me.GroupBox3.Size = New System.Drawing.Size(499, 98)
         Me.GroupBox3.TabIndex = 37
         Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Impuestos Disponibles"
+        Me.GroupBox3.Text = "Percepciones Disponibles"
         '
         'DG_Impuestos
         '
@@ -436,7 +436,7 @@ Partial Class frmConfiguracionFacturacionImpuestos
         Me.GroupBox4.Size = New System.Drawing.Size(506, 103)
         Me.GroupBox4.TabIndex = 41
         Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Habilitar Impuestos"
+        Me.GroupBox4.Text = "Habilitar Percepciones"
         '
         'TableLayoutPanel3
         '
@@ -532,7 +532,7 @@ Partial Class frmConfiguracionFacturacionImpuestos
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Name = "frmConfiguracionFacturacionImpuestos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Configuración Impuestos en Facturación"
+        Me.Text = "Configuración Percepciones en Facturación"
         Me.GroupBox2.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()

@@ -372,14 +372,14 @@ Partial Class frmChequesAltaMasiva
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(114, 13)
         Me.Label12.TabIndex = 162
-        Me.Label12.Text = "Importe (*)"
+        Me.Label12.Text = "Monto (*)"
         '
-        'Importe
+        'Monto
         '
         Me.Importe.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Importe.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Importe.Location = New System.Drawing.Point(523, 102)
-        Me.Importe.Name = "Importe"
+        Me.Importe.Name = "Monto"
         Me.Importe.Size = New System.Drawing.Size(234, 20)
         Me.Importe.TabIndex = 12
         '
@@ -691,7 +691,7 @@ Partial Class frmChequesAltaMasiva
         '
         'ImporteDataGridViewTextBoxColumn
         '
-        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Importe"
+        Me.ImporteDataGridViewTextBoxColumn.DataPropertyName = "Monto"
         Me.ImporteDataGridViewTextBoxColumn.HeaderText = "Monto"
         Me.ImporteDataGridViewTextBoxColumn.Name = "ImporteDataGridViewTextBoxColumn"
         Me.ImporteDataGridViewTextBoxColumn.ReadOnly = True

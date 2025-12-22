@@ -78,15 +78,16 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));
             pagos.ForEach(x => PagarTicket(x.TipoPago, x.NumeroCuotas, x.Neto(PorcentajeFacturacion)));
+            TributoTicket("IIBB prueba", 100, 5);
             return CerrarTicket(out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirNotaCredito();
             productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Neto, x.IVA));
@@ -247,6 +248,24 @@ namespace Factura.Device.Printer
             commands.Add(ReemplazarCaracteres(descripcion));
             commands.Add(FormatearPrecio(recargo, 2));
             SendData(commands/*, false*/);
+        }
+
+        public void TributoTicket(string descripcion, decimal monto)
+        {
+            throw new NegocioException("El modelo de impresoras EPSON TMU 220 FII no soporta este comando.");
+        }
+
+        // Funcion que Agrega tributos.
+        public void TributoTicket(string descripcion, decimal monto, decimal tasa)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMU220FIICommand.AgregarTributoIIBBProvincial.Cmd);
+            commands.Add(EpsonTMU220FIICommand.AgregarTributoIIBBProvincial.CmdExt);
+            commands.Add(ReemplazarCaracteres(descripcion));
+            commands.Add(FormatearPrecio(monto, 2));
+            commands.Add(FormatearPrecio(tasa, 2));
+            SendData(commands);
         }
 
         // Funcion que Paga un Tique.

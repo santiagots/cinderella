@@ -459,7 +459,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(134, 16)
         Me.Label6.TabIndex = 436
-        Me.Label6.Text = "Importe total"
+        Me.Label6.Text = "Monto total"
         '
         'txtCantidad
         '
@@ -501,7 +501,7 @@ Partial Class frmNotaPedidoAdministracion
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(146, 16)
         Me.Label7.TabIndex = 434
-        Me.Label7.Text = "Importe total sin IVA"
+        Me.Label7.Text = "Monto total sin IVA"
         '
         'lbl_Msg
         '

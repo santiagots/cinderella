@@ -168,7 +168,7 @@ Partial Class frmMovimientoPlanilla
         Me.CbTipo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CbTipo.FormattingEnabled = True
-        Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Cierre de Caja", "Egresos", "Gastos", "Impuestos", "Movimiento de Socio", "Caja Fuerte"})
+        Me.CbTipo.Items.AddRange(New Object() {"Todos los movimientos", "Cierre de Caja", "Egresos", "Gastos", "Percepciones", "Movimiento de Socio", "Caja Fuerte"})
         Me.CbTipo.Location = New System.Drawing.Point(409, 10)
         Me.CbTipo.Name = "CbTipo"
         Me.CbTipo.Size = New System.Drawing.Size(150, 23)

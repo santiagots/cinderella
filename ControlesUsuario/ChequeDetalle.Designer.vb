@@ -258,7 +258,7 @@ Partial Class ChequeDetalle
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(134, 13)
         Me.Label12.TabIndex = 162
-        Me.Label12.Text = "Importe (*)"
+        Me.Label12.Text = "Monto (*)"
         '
         'Btn_Buscar_Cliente
         '
@@ -274,12 +274,12 @@ Partial Class ChequeDetalle
         Me.Btn_Buscar_Cliente.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Btn_Buscar_Cliente.UseVisualStyleBackColor = True
         '
-        'Importe
+        'Monto
         '
         Me.Importe.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Importe.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.ChequeDetalleViewModelBindingSource, "Monto", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged, Nothing, "C2"))
         Me.Importe.Location = New System.Drawing.Point(143, 317)
-        Me.Importe.Name = "Importe"
+        Me.Importe.Name = "Monto"
         Me.Importe.Size = New System.Drawing.Size(264, 20)
         Me.Importe.TabIndex = 12
         '

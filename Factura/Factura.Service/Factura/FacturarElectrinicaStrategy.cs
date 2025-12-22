@@ -57,6 +57,7 @@ namespace Factura.Service.Factura
         public ObtenerNumeroFacturaResponse ObtenerNumeroFactura(ObtenerNumeroFacturaRequest request)
         {
             List<AfipAlicuotaIvaRequest> alicuotasIva = ObtenerAfipAlicuotaIvaRequest(request.CondicionIVA, request.Productos, request.PorcentajeFacturacion);
+            List<AfipTributoRequest> tributos = ObtenerAfipTributosRequest(request.Percepciones);
 
             AfipObtenerCAERequest afipObtenerCAERequest = new AfipObtenerCAERequest()
             {
@@ -66,6 +67,7 @@ namespace Factura.Service.Factura
                 Cuit = request.Cuit,
                 ImporteNeto = alicuotasIva.Sum(x => x.Monto),
                 AlicuotasIva = alicuotasIva,
+                Tributos = tributos,
                 PasswordCertificado = PasswordCertificado,
                 RutaCertificado = RutaCertificado 
             };
@@ -130,6 +132,24 @@ namespace Factura.Service.Factura
             }
 
             return alicuotasIva;
+        }
+
+        private List<AfipTributoRequest> ObtenerAfipTributosRequest(List<PercepcionRequest> Percepciones)
+        {
+            List<AfipTributoRequest> tributos = new List<AfipTributoRequest>();
+
+            foreach (var percepcion in Percepciones)
+            {
+                tributos.Add(new AfipTributoRequest()
+                {
+                    Codigo = (short)percepcion.Tipo,
+                    Comcepto = percepcion.Comcepto,
+                    Alicuota = percepcion.Alicuota,
+                    Monto = percepcion.Monto
+                });
+            }
+
+            return tributos;
         }
     }
 }

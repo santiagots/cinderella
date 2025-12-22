@@ -10,8 +10,10 @@ Namespace Formularios.Facturacion
         Public Property NombreYApellido As String
         Public Property Direccion As String
         Public Property Localidad As String
+        Public Property Provincia As String
         Public Property CUIT As String
         Public Property SubTotal As Decimal
+        Public Property Percepcion As Decimal
         Public Property Iva As Decimal
         Public Property Total As Decimal
         Public Property Fecha As DateTime

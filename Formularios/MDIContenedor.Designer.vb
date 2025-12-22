@@ -75,6 +75,9 @@ Partial Class MDIContenedor
         Me.AdministraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VentasToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_Facturas = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Btn_Facturas_Administracion = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
+        Me.Btn_Facturas_Percepcion = New System.Windows.Forms.ToolStripMenuItem()
         Me.Btn_DevolucionesMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdministracionDevolucionesMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.DevolucionesMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -262,14 +265,14 @@ Partial Class MDIContenedor
         '
         Me.ClienteMayoristaToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Sucursal
         Me.ClienteMayoristaToolStripMenuItem.Name = "ClienteMayoristaToolStripMenuItem"
-        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.ClienteMayoristaToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.ClienteMayoristaToolStripMenuItem.Text = "Mayorista"
         '
         'TransporteToolStripMenuItem
         '
         Me.TransporteToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Transporte_32
         Me.TransporteToolStripMenuItem.Name = "TransporteToolStripMenuItem"
-        Me.TransporteToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.TransporteToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.TransporteToolStripMenuItem.Text = "Transporte"
         '
         'Btn_EmpleadosMenu
@@ -365,14 +368,14 @@ Partial Class MDIContenedor
         '
         Me.Btn_ProductosMasivosSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos_Masivos
         Me.Btn_ProductosMasivosSubM.Name = "Btn_ProductosMasivosSubM"
-        Me.Btn_ProductosMasivosSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_ProductosMasivosSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_ProductosMasivosSubM.Text = "Alta Masiva"
         '
         'Btn_ProductosSubM
         '
         Me.Btn_ProductosSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.Productos
         Me.Btn_ProductosSubM.Name = "Btn_ProductosSubM"
-        Me.Btn_ProductosSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_ProductosSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_ProductosSubM.Text = "Administración"
         Me.Btn_ProductosSubM.ToolTipText = "Administración de Productos"
         '
@@ -380,52 +383,52 @@ Partial Class MDIContenedor
         '
         Me.PreciosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Precios
         Me.PreciosToolStripMenuItem.Name = "PreciosToolStripMenuItem"
-        Me.PreciosToolStripMenuItem.Size = New System.Drawing.Size(159, 22)
+        Me.PreciosToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.PreciosToolStripMenuItem.Text = "Precios"
         Me.PreciosToolStripMenuItem.ToolTipText = "Administración de Precios"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(156, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(157, 6)
         '
         'Btn_ColoresSubM
         '
         Me.Btn_ColoresSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.Colores
         Me.Btn_ColoresSubM.Name = "Btn_ColoresSubM"
-        Me.Btn_ColoresSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_ColoresSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_ColoresSubM.Text = "Colores"
         '
         'Btn_SupplierSubM
         '
         Me.Btn_SupplierSubM.Image = Global.SistemaCinderella.My.Resources.Recursos.supplier
         Me.Btn_SupplierSubM.Name = "Btn_SupplierSubM"
-        Me.Btn_SupplierSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_SupplierSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_SupplierSubM.Text = "Suppliers"
         '
         'Btn_TiposProductosSubM
         '
         Me.Btn_TiposProductosSubM.Image = CType(resources.GetObject("Btn_TiposProductosSubM.Image"), System.Drawing.Image)
         Me.Btn_TiposProductosSubM.Name = "Btn_TiposProductosSubM"
-        Me.Btn_TiposProductosSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_TiposProductosSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_TiposProductosSubM.Text = "Tipos Productos"
         '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(156, 6)
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(157, 6)
         '
         'Btn_ProductosCatSubM
         '
         Me.Btn_ProductosCatSubM.Name = "Btn_ProductosCatSubM"
-        Me.Btn_ProductosCatSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_ProductosCatSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_ProductosCatSubM.Text = "Categorias"
         Me.Btn_ProductosCatSubM.ToolTipText = "Categorias de Productos"
         '
         'Btn_ProductosSubcatSubM
         '
         Me.Btn_ProductosSubcatSubM.Name = "Btn_ProductosSubcatSubM"
-        Me.Btn_ProductosSubcatSubM.Size = New System.Drawing.Size(159, 22)
+        Me.Btn_ProductosSubcatSubM.Size = New System.Drawing.Size(160, 22)
         Me.Btn_ProductosSubcatSubM.Text = "Subcategorias"
         Me.Btn_ProductosSubcatSubM.ToolTipText = "Subcategorias de Productos"
         '
@@ -531,7 +534,7 @@ Partial Class MDIContenedor
         '
         Me.AdministraciónToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
         Me.AdministraciónToolStripMenuItem.Name = "AdministraciónToolStripMenuItem"
-        Me.AdministraciónToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AdministraciónToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.AdministraciónToolStripMenuItem.Text = "Administración"
         '
         'VentasToolStripMenuItem1
@@ -539,15 +542,35 @@ Partial Class MDIContenedor
         Me.VentasToolStripMenuItem1.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas
         Me.VentasToolStripMenuItem1.Name = "VentasToolStripMenuItem1"
         Me.VentasToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F2
-        Me.VentasToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+        Me.VentasToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
         Me.VentasToolStripMenuItem1.Text = "Ventas"
         '
         'Btn_Facturas
         '
+        Me.Btn_Facturas.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Btn_Facturas_Administracion, Me.ToolStripSeparator7, Me.Btn_Facturas_Percepcion})
         Me.Btn_Facturas.Image = Global.SistemaCinderella.My.Resources.Recursos.TicketPequeño
         Me.Btn_Facturas.Name = "Btn_Facturas"
         Me.Btn_Facturas.Size = New System.Drawing.Size(180, 22)
         Me.Btn_Facturas.Text = "Facturas"
+        '
+        'Btn_Facturas_Administracion
+        '
+        Me.Btn_Facturas_Administracion.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
+        Me.Btn_Facturas_Administracion.Name = "Btn_Facturas_Administracion"
+        Me.Btn_Facturas_Administracion.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_Facturas_Administracion.Text = "Administracióm"
+        '
+        'ToolStripSeparator7
+        '
+        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
+        Me.ToolStripSeparator7.Size = New System.Drawing.Size(177, 6)
+        '
+        'Btn_Facturas_Percepcion
+        '
+        Me.Btn_Facturas_Percepcion.Image = Global.SistemaCinderella.My.Resources.Recursos.Saldos
+        Me.Btn_Facturas_Percepcion.Name = "Btn_Facturas_Percepcion"
+        Me.Btn_Facturas_Percepcion.Size = New System.Drawing.Size(180, 22)
+        Me.Btn_Facturas_Percepcion.Text = "Percepciones"
         '
         'Btn_DevolucionesMenu
         '
@@ -613,7 +636,7 @@ Partial Class MDIContenedor
         Me.ImpuestosToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.bt_Impuestos_32
         Me.ImpuestosToolStripMenuItem.Name = "ImpuestosToolStripMenuItem"
         Me.ImpuestosToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
-        Me.ImpuestosToolStripMenuItem.Text = "Impuestos"
+        Me.ImpuestosToolStripMenuItem.Text = "Percepciones"
         '
         'DifDeCajaToolStripMenuItem
         '
@@ -729,7 +752,7 @@ Partial Class MDIContenedor
         '
         Me.TestToolStripMenuItem.Image = Global.SistemaCinderella.My.Resources.Recursos.Ventas_Admin
         Me.TestToolStripMenuItem.Name = "TestToolStripMenuItem"
-        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TestToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.TestToolStripMenuItem.Text = "Administración"
         '
         'Btn_PlanillasMenu
@@ -1209,9 +1232,9 @@ Partial Class MDIContenedor
         Me.AccesoImpuestos.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.AccesoImpuestos.Name = "AccesoImpuestos"
         Me.AccesoImpuestos.Size = New System.Drawing.Size(76, 51)
-        Me.AccesoImpuestos.Text = "Impuestos"
+        Me.AccesoImpuestos.Text = "Percepciones"
         Me.AccesoImpuestos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.AccesoImpuestos.ToolTipText = "Acceso a Impuestos"
+        Me.AccesoImpuestos.ToolTipText = "Acceso a Percepciones"
         '
         'AccesoDiferencia
         '
@@ -1518,4 +1541,7 @@ Partial Class MDIContenedor
     Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
     Friend WithEvents Btn_SupplierSubM As ToolStripMenuItem
     Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Btn_Facturas_Administracion As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator7 As ToolStripSeparator
+    Friend WithEvents Btn_Facturas_Percepcion As ToolStripMenuItem
 End Class

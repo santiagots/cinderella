@@ -158,7 +158,7 @@ namespace Ventas.Data.Repository
             if (fechaDesde.HasValue)
                 notaPedido = notaPedido.Where(x => DbFunctions.TruncateTime(x.Fecha).Value >= DbFunctions.TruncateTime(fechaDesde).Value);
 
-            if (fechaDesde.HasValue)
+            if (fechaHasta.HasValue)
                 notaPedido = notaPedido.Where(x => DbFunctions.TruncateTime(x.Fecha).Value <= DbFunctions.TruncateTime(fechaHasta).Value);
 
             if (idVendedor.HasValue)

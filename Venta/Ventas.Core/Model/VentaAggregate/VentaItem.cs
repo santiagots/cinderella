@@ -206,7 +206,8 @@ namespace Ventas.Core.Model.VentaAggregate
             monto = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, monto);
             descuento = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, descuento);
             cft = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, cft);
-            iva = CalcularMontoSegunCondicionIva(porcentajeFacturacion, condicionIva, tipoCliente, iva);
+            //paso 100% como porcentajeFacturacion porque el monto iva ya es correcto y no se tiene que ajustar
+            iva = CalcularMontoSegunCondicionIva(1, condicionIva, tipoCliente, iva);
 
             return new MontoPago(monto, descuento, cft, iva);
         }

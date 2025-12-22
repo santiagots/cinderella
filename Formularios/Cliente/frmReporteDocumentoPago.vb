@@ -151,9 +151,9 @@ Public Class frmReporteDocumentoPagol
         dtDepositos.Columns.Add("Titular", Type.GetType("System.String"))
         dtDepositos.Columns.Add("CUIT", Type.GetType("System.String"))
         dtDepositos.Columns.Add("EsCuentaCorriente", Type.GetType("System.String"))
-        dtDepositos.Columns.Add("Importe", Type.GetType("System.Double"))
+        dtDepositos.Columns.Add("Monto", Type.GetType("System.Double"))
 
-        dtDepositos.Columns("Importe").DefaultValue = 0
+        dtDepositos.Columns("Monto").DefaultValue = 0
     End Sub
 
     Private Sub InicializarChequesTable()
@@ -163,8 +163,8 @@ Public Class frmReporteDocumentoPagol
         dtCheques.Columns.Add("Banco", Type.GetType("System.String"))
         dtCheques.Columns.Add("FechaDeposito", Type.GetType("System.String"))
         dtCheques.Columns.Add("FechaIngreso", Type.GetType("System.String"))
-        dtCheques.Columns.Add("Importe", Type.GetType("System.Double"))
+        dtCheques.Columns.Add("Monto", Type.GetType("System.Double"))
 
-        dtCheques.Columns("Importe").DefaultValue = 0
+        dtCheques.Columns("Monto").DefaultValue = 0
     End Sub
 End Class

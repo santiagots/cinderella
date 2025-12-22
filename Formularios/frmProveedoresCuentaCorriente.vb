@@ -80,7 +80,7 @@
                     DG_Detalle.ColumnHeadersVisible = True
                     DG_Detalle.Columns("Fecha").DisplayIndex = 1
                     DG_Detalle.Columns("Concepto").DisplayIndex = 2
-                    DG_Detalle.Columns("Importe").DisplayIndex = 3
+                    DG_Detalle.Columns("Monto").DisplayIndex = 3
                     DG_Detalle.Refresh()
                 Else
                     DG_Detalle.ColumnHeadersVisible = False
@@ -156,7 +156,7 @@
                             DG_Detalle.ColumnHeadersVisible = True
                             DG_Detalle.Columns("Fecha").DisplayIndex = 1
                             DG_Detalle.Columns("Concepto").DisplayIndex = 2
-                            DG_Detalle.Columns("Importe").DisplayIndex = 3
+                            DG_Detalle.Columns("Monto").DisplayIndex = 3
                             DG_Detalle.Refresh()
                         Else
                             DG_Detalle.ColumnHeadersVisible = False
@@ -261,7 +261,7 @@
 
     'Pongo los valores en rojo si son negativos.
     Private Sub DG_Detalle_CellFormatting(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles DG_Detalle.CellFormatting
-        If DG_Detalle.Columns(e.ColumnIndex).Name.Equals("Importe") Then
+        If DG_Detalle.Columns(e.ColumnIndex).Name.Equals("Monto") Then
             If e.Value < 0 Then
                 e.CellStyle.ForeColor = Color.Red
                 e.CellStyle.SelectionForeColor = Color.Red
@@ -371,7 +371,7 @@
     Function CalcularImporteTotal()
         Dim subtotal As Double
         For i = 0 To (DG_Detalle.Rows.Count - 1)
-            subtotal += DG_Detalle.Rows(i).Cells.Item("Importe").Value
+            subtotal += DG_Detalle.Rows(i).Cells.Item("Monto").Value
         Next
         Return subtotal
     End Function

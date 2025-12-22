@@ -2,7 +2,6 @@
 using Common.Core.Exceptions;
 using Factura.Service.NotaCredito.Contracts;
 using System;
-using System.Collections.Generic;
 
 
 namespace Common.Service.NotaCredito

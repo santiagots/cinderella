@@ -44,7 +44,7 @@
     <SuiteName>Cinderella</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>117</ApplicationRevision>
+    <ApplicationRevision>131</ApplicationRevision>
     <ApplicationVersion>1.3.6.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -391,6 +391,16 @@
     </Compile>
     <Compile Include="Formularios\Comun\ViewModel\FacturacionImpuestosViewModel.vb" />
     <Compile Include="Formularios\Comun\ViewModel\frmConfiguracionFacturacionImpuestosViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\ControladorFiscalTicketsItems.vb" />
+    <Compile Include="Formularios\Facturacion\frmPercepciones.Designer.vb">
+      <DependentUpon>frmPercepciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Facturacion\frmPercepciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\Facturacion\ViewModel\frmPercepcionesViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\PercepcionDetalleViewModel.vb" />
+    <Compile Include="Formularios\Facturacion\ViewModel\PercepcionItem.vb" />
     <Compile Include="Formularios\Producto\frmSuppliers.Designer.vb">
       <DependentUpon>frmSuppliers.vb</DependentUpon>
     </Compile>
@@ -1088,10 +1098,10 @@
     <Compile Include="Formularios\frmReportePreciosSE.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmReportePresupuesto.Designer.vb">
+    <Compile Include="Formularios\Venta\frmReportePresupuesto.Designer.vb">
       <DependentUpon>frmReportePresupuesto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmReportePresupuesto.vb">
+    <Compile Include="Formularios\Venta\frmReportePresupuesto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\Facturacion\frmRemito.Designer.vb">
@@ -1300,9 +1310,12 @@
     <Compile Include="Formularios\Venta\ViewModel\frmCantidadUnidadesProductoViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmNotaPedidoDetalleViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmRemitoDetalleViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmPresupuestoAdministracionViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\frmPresupuestoDetalleViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmStockFaltanteViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\frmVentasAdministracionViewModel.vb" />
     <Compile Include="Formularios\Facturacion\ViewModel\frmVerDocumentoFiscalViewModel.vb" />
+    <Compile Include="Formularios\Venta\ViewModel\PresupuestoItemsViewModel.vb" />
     <Compile Include="Formularios\Venta\ViewModel\VentaAdministracionItemViewModel.vb" />
     <Compile Include="Funciones.vb" />
     <Compile Include="Formularios\MDIContenedor.Designer.vb">
@@ -1333,10 +1346,10 @@
     <Compile Include="Formularios\Venta\frmNotaPedidoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmPresupuestoAdministracion.Designer.vb">
+    <Compile Include="Formularios\Venta\frmPresupuestoAdministracion.Designer.vb">
       <DependentUpon>frmPresupuestoAdministracion.vb</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\frmPresupuestoAdministracion.vb">
+    <Compile Include="Formularios\Venta\frmPresupuestoAdministracion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Recursos.Designer.vb">
@@ -1367,6 +1380,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReporteMovimientoCuentaCorriente.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ReportePresupuesto2.vb">
+      <DependentUpon>ReportePresupuesto2.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reportes\ReporteRemito.vb">
       <AutoGen>True</AutoGen>
@@ -1469,7 +1488,10 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.CuentaCorrienteViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasBuscarViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.CuentaBancaria.frmCuentaBancariasViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmPercepcionesViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.frmRemitoDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.PercepcionDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Facturacion.PercepcionItem.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.frmColoresViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Producto.frmTipoProductoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.frmStockBitacoraViewModel.datasource" />
@@ -1480,6 +1502,8 @@
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Stock.StockItemViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmCantidadUnidadesProductoViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmNotaPedidoDetalleViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmPresupuestoAdministracionViewModel.datasource" />
+    <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmPresupuestoDetalleViewModel.datasource" />
     <None Include="My Project\DataSources\SistemaCinderella.Formularios.Venta.frmStockFaltanteViewModel.datasource" />
     <None Include="Plantilla\TemplateProductoSinColumnasComex.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1530,6 +1554,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Comun\frmConfiguracionFacturacionImpuestos.resx">
       <DependentUpon>frmConfiguracionFacturacionImpuestos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Facturacion\frmPercepciones.resx">
+      <DependentUpon>frmPercepciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Producto\frmSuppliers.resx">
       <DependentUpon>frmSuppliers.vb</DependentUpon>
@@ -1845,7 +1872,7 @@
     <EmbeddedResource Include="Formularios\frmReportePreciosSE.resx">
       <DependentUpon>frmReportePreciosSE.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmReportePresupuesto.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmReportePresupuesto.resx">
       <DependentUpon>frmReportePresupuesto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Facturacion\frmRemito.resx">
@@ -1957,7 +1984,7 @@
     <EmbeddedResource Include="Formularios\Venta\frmNotaPedidoAdministracion.resx">
       <DependentUpon>frmNotaPedidoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmPresupuestoAdministracion.resx">
+    <EmbeddedResource Include="Formularios\Venta\frmPresupuestoAdministracion.resx">
       <DependentUpon>frmPresupuestoAdministracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Recursos.resx">
@@ -2000,6 +2027,10 @@
     <EmbeddedResource Include="Reportes\ReporteMovimientoCuentaCorriente.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReporteMovimientoCuentaCorriente1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReportePresupuesto2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReportePresupuesto2.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReporteRemito.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

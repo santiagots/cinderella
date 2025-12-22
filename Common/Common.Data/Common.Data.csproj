@@ -72,6 +72,7 @@
     <Compile Include="Repository\FeriadoRepository.cs" />
     <Compile Include="Repository\IVARepository.cs" />
     <Compile Include="Repository\ListaPrecioRepository.cs" />
+    <Compile Include="Repository\PercepcionRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Repository\TipoProductoRepository.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Service\CuentaBancariaService.cs" />
     <Compile Include="Service\DomicilioService.cs" />
     <Compile Include="Service\ListaPrecioService.cs" />
+    <Compile Include="Service\PercepcionService.cs" />
     <Compile Include="Service\SupplierService.cs" />
     <Compile Include="Service\TipoProductoService.cs" />
     <Compile Include="Service\TrasporteService.cs" />

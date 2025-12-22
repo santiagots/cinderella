@@ -97,6 +97,7 @@
     <Compile Include="Enum\TipoDocumentoFiscal.cs" />
     <Compile Include="Enum\TipoEmpleado.cs" />
     <Compile Include="Enum\TipoFactura.cs" />
+    <Compile Include="Enum\TipoPercepcionFactura.cs" />
     <Compile Include="Enum\TipoMovimientoCuentaCorriente.cs" />
     <Compile Include="Enum\TipoPago.cs" />
     <Compile Include="Exceptions\NegocioException.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Interfaces\IIVARepository.cs" />
     <Compile Include="Interfaces\IFeriadoRepository.cs" />
     <Compile Include="Interfaces\IListaPrecioRepository.cs" />
+    <Compile Include="Interfaces\IPercepcionRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISubCategoriaRepository.cs" />
     <Compile Include="Interfaces\ISupplierRepository.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Model\IVA.cs" />
     <Compile Include="Model\ListaPrecio.cs" />
     <Compile Include="Model\Localidad.cs" />
+    <Compile Include="Model\Percepcion.cs" />
     <Compile Include="Model\Provincia.cs" />
     <Compile Include="Model\SubCategoria.cs" />
     <Compile Include="Model\Supplier.cs" />

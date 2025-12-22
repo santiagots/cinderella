@@ -12,6 +12,8 @@ Public Class ConfigurarBaseDatos
         Dim rutaAppData As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
         Dim rutaDestinoBaseDatos As String = Path.Combine(rutaAppData, nombreAplicacion)
 
+        Dim aa = My.Settings
+
         'Verifico si se deployo por red y si es la primera ejecucion por instalacion o actualizacion
         If (ApplicationDeployment.IsNetworkDeployed AndAlso ApplicationDeployment.CurrentDeployment.IsFirstRun) Then
             'Copio la base de datos a una carpeta segura
@@ -56,7 +58,6 @@ Public Class ConfigurarBaseDatos
                 Log.Info("Base remota" + Conexion.STRING_CONEXION_BASE_LOCAL)
                 Log.Info("--SCRIPT--")
                 Log.Info(script)
-
 
                 Dim conn As SqlConnection = conexion.ConectarLocal()
                 Dim server As Server = New Server(New ServerConnection(conn))

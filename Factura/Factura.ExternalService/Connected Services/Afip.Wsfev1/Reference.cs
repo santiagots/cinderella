@@ -297,7 +297,14 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MonIdField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double MonCotizField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CanMisMonExtField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CondicionIVAReceptorIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Factura.ExternalService.Afip.Wsfev1.CbteAsoc[] CbtesAsocField;
@@ -313,6 +320,12 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Factura.ExternalService.Afip.Wsfev1.Comprador[] CompradoresField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.Periodo PeriodoAsocField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.Actividad[] ActividadesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -532,7 +545,7 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=16)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
         public double MonCotiz {
             get {
                 return this.MonCotizField;
@@ -546,6 +559,32 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=17)]
+        public string CanMisMonExt {
+            get {
+                return this.CanMisMonExtField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CanMisMonExtField, value) != true)) {
+                    this.CanMisMonExtField = value;
+                    this.RaisePropertyChanged("CanMisMonExt");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+        public int CondicionIVAReceptorId {
+            get {
+                return this.CondicionIVAReceptorIdField;
+            }
+            set {
+                if ((this.CondicionIVAReceptorIdField.Equals(value) != true)) {
+                    this.CondicionIVAReceptorIdField = value;
+                    this.RaisePropertyChanged("CondicionIVAReceptorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=19)]
         public Factura.ExternalService.Afip.Wsfev1.CbteAsoc[] CbtesAsoc {
             get {
                 return this.CbtesAsocField;
@@ -558,7 +597,7 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=18)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=20)]
         public Factura.ExternalService.Afip.Wsfev1.Tributo[] Tributos {
             get {
                 return this.TributosField;
@@ -571,7 +610,7 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=19)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=21)]
         public Factura.ExternalService.Afip.Wsfev1.AlicIva[] Iva {
             get {
                 return this.IvaField;
@@ -584,7 +623,7 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=20)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=22)]
         public Factura.ExternalService.Afip.Wsfev1.Opcional[] Opcionales {
             get {
                 return this.OpcionalesField;
@@ -597,7 +636,7 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=21)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=23)]
         public Factura.ExternalService.Afip.Wsfev1.Comprador[] Compradores {
             get {
                 return this.CompradoresField;
@@ -606,6 +645,93 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
                 if ((object.ReferenceEquals(this.CompradoresField, value) != true)) {
                     this.CompradoresField = value;
                     this.RaisePropertyChanged("Compradores");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=24)]
+        public Factura.ExternalService.Afip.Wsfev1.Periodo PeriodoAsoc {
+            get {
+                return this.PeriodoAsocField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PeriodoAsocField, value) != true)) {
+                    this.PeriodoAsocField = value;
+                    this.RaisePropertyChanged("PeriodoAsoc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=25)]
+        public Factura.ExternalService.Afip.Wsfev1.Actividad[] Actividades {
+            get {
+                return this.ActividadesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActividadesField, value) != true)) {
+                    this.ActividadesField = value;
+                    this.RaisePropertyChanged("Actividades");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Periodo", Namespace="http://ar.gov.afip.dif.FEV1/")]
+    [System.SerializableAttribute()]
+    public partial class Periodo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FchDesdeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FchHastaField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string FchDesde {
+            get {
+                return this.FchDesdeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FchDesdeField, value) != true)) {
+                    this.FchDesdeField = value;
+                    this.RaisePropertyChanged("FchDesde");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string FchHasta {
+            get {
+                return this.FchHastaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FchHastaField, value) != true)) {
+                    this.FchHastaField = value;
+                    this.RaisePropertyChanged("FchHasta");
                 }
             }
         }
@@ -1198,6 +1324,50 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
                 if ((this.PorcentajeField.Equals(value) != true)) {
                     this.PorcentajeField = value;
                     this.RaisePropertyChanged("Porcentaje");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Actividad", Namespace="http://ar.gov.afip.dif.FEV1/")]
+    [System.SerializableAttribute()]
+    public partial class Actividad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private long IdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -4200,6 +4370,159 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CondicionIvaReceptorResponse", Namespace="http://ar.gov.afip.dif.FEV1/")]
+    [System.SerializableAttribute()]
+    public partial class CondicionIvaReceptorResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.CondicionIvaReceptor[] ResultGetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.Err[] ErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.Evt[] EventsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public Factura.ExternalService.Afip.Wsfev1.CondicionIvaReceptor[] ResultGet {
+            get {
+                return this.ResultGetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResultGetField, value) != true)) {
+                    this.ResultGetField = value;
+                    this.RaisePropertyChanged("ResultGet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public Factura.ExternalService.Afip.Wsfev1.Err[] Errors {
+            get {
+                return this.ErrorsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
+                    this.ErrorsField = value;
+                    this.RaisePropertyChanged("Errors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public Factura.ExternalService.Afip.Wsfev1.Evt[] Events {
+            get {
+                return this.EventsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventsField, value) != true)) {
+                    this.EventsField = value;
+                    this.RaisePropertyChanged("Events");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CondicionIvaReceptor", Namespace="http://ar.gov.afip.dif.FEV1/")]
+    [System.SerializableAttribute()]
+    public partial class CondicionIvaReceptor : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Cmp_ClaseField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string Desc {
+            get {
+                return this.DescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescField, value) != true)) {
+                    this.DescField = value;
+                    this.RaisePropertyChanged("Desc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string Cmp_Clase {
+            get {
+                return this.Cmp_ClaseField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Cmp_ClaseField, value) != true)) {
+                    this.Cmp_ClaseField = value;
+                    this.RaisePropertyChanged("Cmp_Clase");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DocTipoResponse", Namespace="http://ar.gov.afip.dif.FEV1/")]
     [System.SerializableAttribute()]
     public partial class DocTipoResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -4504,6 +4827,158 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FEActividadesResponse", Namespace="http://ar.gov.afip.dif.FEV1/")]
+    [System.SerializableAttribute()]
+    public partial class FEActividadesResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.ActividadesTipo[] ResultGetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.Err[] ErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Factura.ExternalService.Afip.Wsfev1.Evt[] EventsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public Factura.ExternalService.Afip.Wsfev1.ActividadesTipo[] ResultGet {
+            get {
+                return this.ResultGetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ResultGetField, value) != true)) {
+                    this.ResultGetField = value;
+                    this.RaisePropertyChanged("ResultGet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public Factura.ExternalService.Afip.Wsfev1.Err[] Errors {
+            get {
+                return this.ErrorsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
+                    this.ErrorsField = value;
+                    this.RaisePropertyChanged("Errors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public Factura.ExternalService.Afip.Wsfev1.Evt[] Events {
+            get {
+                return this.EventsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventsField, value) != true)) {
+                    this.EventsField = value;
+                    this.RaisePropertyChanged("Events");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActividadesTipo", Namespace="http://ar.gov.afip.dif.FEV1/")]
+    [System.SerializableAttribute()]
+    public partial class ActividadesTipo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private long IdField;
+        
+        private short OrdenField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public short Orden {
+            get {
+                return this.OrdenField;
+            }
+            set {
+                if ((this.OrdenField.Equals(value) != true)) {
+                    this.OrdenField = value;
+                    this.RaisePropertyChanged("Orden");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string Desc {
+            get {
+                return this.DescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescField, value) != true)) {
+                    this.DescField = value;
+                    this.RaisePropertyChanged("Desc");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://ar.gov.afip.dif.FEV1/", ConfigurationName="Afip.Wsfev1.ServiceSoap")]
     public interface ServiceSoap {
@@ -4635,6 +5110,13 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposCbteResponse> FEParamGetTiposCbteAsync(Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposCbteRequest request);
         
         // CODEGEN: Generating message contract since element name Auth from namespace http://ar.gov.afip.dif.FEV1/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://ar.gov.afip.dif.FEV1/FEParamGetCondicionIvaReceptor", ReplyAction="*")]
+        Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse FEParamGetCondicionIvaReceptor(Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ar.gov.afip.dif.FEV1/FEParamGetCondicionIvaReceptor", ReplyAction="*")]
+        System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse> FEParamGetCondicionIvaReceptorAsync(Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest request);
+        
+        // CODEGEN: Generating message contract since element name Auth from namespace http://ar.gov.afip.dif.FEV1/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://ar.gov.afip.dif.FEV1/FEParamGetTiposDoc", ReplyAction="*")]
         Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposDocResponse FEParamGetTiposDoc(Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposDocRequest request);
         
@@ -4647,6 +5129,13 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://ar.gov.afip.dif.FEV1/FEParamGetTiposPaises", ReplyAction="*")]
         System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposPaisesResponse> FEParamGetTiposPaisesAsync(Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposPaisesRequest request);
+        
+        // CODEGEN: Generating message contract since element name Auth from namespace http://ar.gov.afip.dif.FEV1/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://ar.gov.afip.dif.FEV1/FEParamGetActividades", ReplyAction="*")]
+        Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse FEParamGetActividades(Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ar.gov.afip.dif.FEV1/FEParamGetActividades", ReplyAction="*")]
+        System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse> FEParamGetActividadesAsync(Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -5403,12 +5892,16 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
         public string MonId;
         
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string FchCotiz;
+        
         public FEParamGetCotizacionRequestBody() {
         }
         
-        public FEParamGetCotizacionRequestBody(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string MonId) {
+        public FEParamGetCotizacionRequestBody(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string MonId, string FchCotiz) {
             this.Auth = Auth;
             this.MonId = MonId;
+            this.FchCotiz = FchCotiz;
         }
     }
     
@@ -5926,6 +6419,78 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FEParamGetCondicionIvaReceptorRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FEParamGetCondicionIvaReceptor", Namespace="http://ar.gov.afip.dif.FEV1/", Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequestBody Body;
+        
+        public FEParamGetCondicionIvaReceptorRequest() {
+        }
+        
+        public FEParamGetCondicionIvaReceptorRequest(Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://ar.gov.afip.dif.FEV1/")]
+    public partial class FEParamGetCondicionIvaReceptorRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string ClaseCmp;
+        
+        public FEParamGetCondicionIvaReceptorRequestBody() {
+        }
+        
+        public FEParamGetCondicionIvaReceptorRequestBody(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string ClaseCmp) {
+            this.Auth = Auth;
+            this.ClaseCmp = ClaseCmp;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FEParamGetCondicionIvaReceptorResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FEParamGetCondicionIvaReceptorResponse", Namespace="http://ar.gov.afip.dif.FEV1/", Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponseBody Body;
+        
+        public FEParamGetCondicionIvaReceptorResponse() {
+        }
+        
+        public FEParamGetCondicionIvaReceptorResponse(Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://ar.gov.afip.dif.FEV1/")]
+    public partial class FEParamGetCondicionIvaReceptorResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.CondicionIvaReceptorResponse FEParamGetCondicionIvaReceptorResult;
+        
+        public FEParamGetCondicionIvaReceptorResponseBody() {
+        }
+        
+        public FEParamGetCondicionIvaReceptorResponseBody(Factura.ExternalService.Afip.Wsfev1.CondicionIvaReceptorResponse FEParamGetCondicionIvaReceptorResult) {
+            this.FEParamGetCondicionIvaReceptorResult = FEParamGetCondicionIvaReceptorResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class FEParamGetTiposDocRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="FEParamGetTiposDoc", Namespace="http://ar.gov.afip.dif.FEV1/", Order=0)]
@@ -6055,6 +6620,74 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         
         public FEParamGetTiposPaisesResponseBody(Factura.ExternalService.Afip.Wsfev1.FEPaisResponse FEParamGetTiposPaisesResult) {
             this.FEParamGetTiposPaisesResult = FEParamGetTiposPaisesResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FEParamGetActividadesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FEParamGetActividades", Namespace="http://ar.gov.afip.dif.FEV1/", Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequestBody Body;
+        
+        public FEParamGetActividadesRequest() {
+        }
+        
+        public FEParamGetActividadesRequest(Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://ar.gov.afip.dif.FEV1/")]
+    public partial class FEParamGetActividadesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth;
+        
+        public FEParamGetActividadesRequestBody() {
+        }
+        
+        public FEParamGetActividadesRequestBody(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth) {
+            this.Auth = Auth;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FEParamGetActividadesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FEParamGetActividadesResponse", Namespace="http://ar.gov.afip.dif.FEV1/", Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponseBody Body;
+        
+        public FEParamGetActividadesResponse() {
+        }
+        
+        public FEParamGetActividadesResponse(Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://ar.gov.afip.dif.FEV1/")]
+    public partial class FEParamGetActividadesResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Factura.ExternalService.Afip.Wsfev1.FEActividadesResponse FEParamGetActividadesResult;
+        
+        public FEParamGetActividadesResponseBody() {
+        }
+        
+        public FEParamGetActividadesResponseBody(Factura.ExternalService.Afip.Wsfev1.FEActividadesResponse FEParamGetActividadesResult) {
+            this.FEParamGetActividadesResult = FEParamGetActividadesResult;
         }
     }
     
@@ -6364,11 +6997,12 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             return base.Channel.FEParamGetCotizacion(request);
         }
         
-        public Factura.ExternalService.Afip.Wsfev1.FECotizacionResponse FEParamGetCotizacion(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string MonId) {
+        public Factura.ExternalService.Afip.Wsfev1.FECotizacionResponse FEParamGetCotizacion(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string MonId, string FchCotiz) {
             Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionRequest inValue = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionRequest();
             inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionRequestBody();
             inValue.Body.Auth = Auth;
             inValue.Body.MonId = MonId;
+            inValue.Body.FchCotiz = FchCotiz;
             Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionResponse retVal = ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetCotizacion(inValue);
             return retVal.Body.FEParamGetCotizacionResult;
         }
@@ -6378,11 +7012,12 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             return base.Channel.FEParamGetCotizacionAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionResponse> FEParamGetCotizacionAsync(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string MonId) {
+        public System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionResponse> FEParamGetCotizacionAsync(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string MonId, string FchCotiz) {
             Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionRequest inValue = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionRequest();
             inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCotizacionRequestBody();
             inValue.Body.Auth = Auth;
             inValue.Body.MonId = MonId;
+            inValue.Body.FchCotiz = FchCotiz;
             return ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetCotizacionAsync(inValue);
         }
         
@@ -6562,6 +7197,33 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse Factura.ExternalService.Afip.Wsfev1.ServiceSoap.FEParamGetCondicionIvaReceptor(Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest request) {
+            return base.Channel.FEParamGetCondicionIvaReceptor(request);
+        }
+        
+        public Factura.ExternalService.Afip.Wsfev1.CondicionIvaReceptorResponse FEParamGetCondicionIvaReceptor(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string ClaseCmp) {
+            Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest inValue = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest();
+            inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequestBody();
+            inValue.Body.Auth = Auth;
+            inValue.Body.ClaseCmp = ClaseCmp;
+            Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse retVal = ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetCondicionIvaReceptor(inValue);
+            return retVal.Body.FEParamGetCondicionIvaReceptorResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse> Factura.ExternalService.Afip.Wsfev1.ServiceSoap.FEParamGetCondicionIvaReceptorAsync(Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest request) {
+            return base.Channel.FEParamGetCondicionIvaReceptorAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorResponse> FEParamGetCondicionIvaReceptorAsync(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth, string ClaseCmp) {
+            Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest inValue = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequest();
+            inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetCondicionIvaReceptorRequestBody();
+            inValue.Body.Auth = Auth;
+            inValue.Body.ClaseCmp = ClaseCmp;
+            return ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetCondicionIvaReceptorAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposDocResponse Factura.ExternalService.Afip.Wsfev1.ServiceSoap.FEParamGetTiposDoc(Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposDocRequest request) {
             return base.Channel.FEParamGetTiposDoc(request);
         }
@@ -6609,6 +7271,31 @@ namespace Factura.ExternalService.Afip.Wsfev1 {
             inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetTiposPaisesRequestBody();
             inValue.Body.Auth = Auth;
             return ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetTiposPaisesAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse Factura.ExternalService.Afip.Wsfev1.ServiceSoap.FEParamGetActividades(Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest request) {
+            return base.Channel.FEParamGetActividades(request);
+        }
+        
+        public Factura.ExternalService.Afip.Wsfev1.FEActividadesResponse FEParamGetActividades(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth) {
+            Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest inValue = new Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest();
+            inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequestBody();
+            inValue.Body.Auth = Auth;
+            Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse retVal = ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetActividades(inValue);
+            return retVal.Body.FEParamGetActividadesResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse> Factura.ExternalService.Afip.Wsfev1.ServiceSoap.FEParamGetActividadesAsync(Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest request) {
+            return base.Channel.FEParamGetActividadesAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesResponse> FEParamGetActividadesAsync(Factura.ExternalService.Afip.Wsfev1.FEAuthRequest Auth) {
+            Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest inValue = new Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequest();
+            inValue.Body = new Factura.ExternalService.Afip.Wsfev1.FEParamGetActividadesRequestBody();
+            inValue.Body.Auth = Auth;
+            return ((Factura.ExternalService.Afip.Wsfev1.ServiceSoap)(this)).FEParamGetActividadesAsync(inValue);
         }
     }
 }

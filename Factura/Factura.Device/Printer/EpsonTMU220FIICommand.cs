@@ -48,6 +48,8 @@ namespace Factura.Device.Printer
         internal static EpsonCommand CerraTicket = new EpsonCommand("\xB\x6", "\x0\x3");
 
         internal static EpsonCommand CerraNotaCredito = new EpsonCommand("\xD\x6", "\x0\x3");
+
+        internal static EpsonCommand AgregarTributoIIBBProvincial = new EpsonCommand("\xB\x20", "\x0\x0");
     }
 }
 

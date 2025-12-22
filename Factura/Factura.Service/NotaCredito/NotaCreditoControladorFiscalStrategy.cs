@@ -24,12 +24,14 @@ namespace Common.Service.NotaCredito
 
                 List<PagoTicketRequest> pagos = request.Pagos.Select(x => new PagoTicketRequest(x.TipoPago, x.NumeroCuotas, x.Monto, x.Descuento, x.CFT, x.IVA)).ToList();
 
+                List<TributoTicketRequest> tributos = request.Percepciones.Select(x => new TributoTicketRequest(x.Comcepto, x.Monto)).ToList();
+
                 string TipoFactura = string.Empty;
                 decimal MontoTotal = 0;
                 decimal MontoIvaTotal = 0;
                 decimal MontoVuelto = 0;
 
-                int numeroNotaCredito = epsonFP.ObtenerNumeroNotaCretido(productos, pagos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
+                int numeroNotaCredito = epsonFP.ObtenerNumeroNotaCretido(productos, pagos, tributos, out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
 
                 return new ObtenerNumeroNotaCretidoResponse()
                 {

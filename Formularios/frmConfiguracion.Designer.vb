@@ -1140,7 +1140,7 @@ Partial Class frmConfiguracion
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(141, 40)
         Me.Button1.TabIndex = 19
-        Me.Button1.Text = "Configurar  Impuestos"
+        Me.Button1.Text = "Configurar  Percepciones"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button1.UseVisualStyleBackColor = True
         '

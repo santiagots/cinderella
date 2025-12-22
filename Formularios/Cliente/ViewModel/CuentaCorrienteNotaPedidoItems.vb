@@ -15,7 +15,7 @@ Namespace Formularios.Cliente
 
         Public ReadOnly Property Vendedor As String
             Get
-                Return Movimiento.Vendedor.ApellidoYNombre
+                Return Movimiento.Vendedor?.ApellidoYNombre
             End Get
         End Property
 

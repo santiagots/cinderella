@@ -281,6 +281,11 @@ Namespace Formularios.Venta
             If (guardar) Then
                 Await Task.Run(Sub() Comunes.Servicio.GuardarNotaCredito(venta.NotaCredito))
                 MessageBox.Show("Se ha generado la nota de crédito de forma correcta.", "Administración de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                For Each item As PercepcionNotaCredito In venta.NotaCredito.Percepciones
+                    item.EstadoEntidad = EstadoEntidad.SinCambios
+                Next
+
                 Await AnularVentaAsync(venta)
                 VentasPorAnular.Remove(VentasPorAnular.First(Function(x) x.Item1.Id = venta.Id))
                 If (VentasPorAnular.Any()) Then

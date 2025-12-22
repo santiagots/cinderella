@@ -72,7 +72,7 @@ namespace Factura.Device.Printer
             Initialize(tipoConexionControladora);
         }
 
-        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroFactura(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, List<ImpuestoTicketRequest> impuestos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirTicket();
             productos.ForEach(x => AgregarItemTicket(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
@@ -88,6 +88,8 @@ namespace Factura.Device.Printer
                 if (x.CFT > 0)
                     RecargosTicket(x.Nombre, x.CFT * x.Cantidad, x.IVA);
             });
+
+            tributos.ForEach(x => TributoTicket(x.Descripcion, x.Monto));
 
             SubtotalTicket();
 
@@ -109,17 +111,20 @@ namespace Factura.Device.Printer
             return CerrarTicket(out TipoFactura, out MontoTotal, out MontoIvaTotal, out MontoVuelto);
         }
 
-        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
+        public int ObtenerNumeroNotaCretido(List<ProductoTicketRequest> productos, List<PagoTicketRequest> pagos, List<TributoTicketRequest> tributos, out string TipoFactura, out decimal MontoTotal, out decimal MontoIvaTotal, out decimal MontoVuelto)
         {
             AbrirNotaCredito();
             productos.ForEach(x => AgregarItemNotaCredito(x.Codigo, x.Nombre, x.Cantidad, x.Monto, x.IVA));
             productos.ForEach(x => {
-                if (x.Descuento > 0)
-                    DescuentosNotaCredito(x.Nombre, x.Descuento, x.IVA);
+                var montoDescuento = x.Descuento * x.Cantidad;
+                if (montoDescuento > 0)
+                    DescuentosNotaCredito(x.Nombre, montoDescuento, x.IVA);
 
                 if (x.CFT > 0)
                     RecargosNotaCredito(x.Nombre, x.CFT, x.IVA);
             });
+
+            tributos.ForEach(x => TributoNotaCredito(x.Descripcion, x.Monto));
 
             SubtotalNotaCredito();
 
@@ -294,6 +299,32 @@ namespace Factura.Device.Printer
             commands.Add("0");
             commands.Add(GRAVADO);
             SendData(commands/*, false*/);
+        }
+
+        // Funcion que Agrega tributos.
+        public void TributoTicket(string descripcion, decimal monto)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMT900FACommand.PercepcionIIBBProvincial_Cod_07_Ticket.Cmd);
+            commands.Add(EpsonTMT900FACommand.PercepcionIIBBProvincial_Cod_07_Ticket.CmdExt);
+            commands.Add(ReemplazarCaracteres(descripcion).ToUpper());
+            commands.Add(FormatearPrecio(monto, 2));
+            commands.Add(FormatearPrecio(0, 2));
+            SendData(commands);
+        }
+
+        // Funcion que Agrega tributos.
+        public void TributoNotaCredito(string descripcion, decimal monto)
+        {
+            var commands = new List<string>();
+
+            commands.Add(EpsonTMT900FACommand.PercepcionIIBBProvincial_Cod_07_NotaCredito.Cmd);
+            commands.Add(EpsonTMT900FACommand.PercepcionIIBBProvincial_Cod_07_NotaCredito.CmdExt);
+            commands.Add(ReemplazarCaracteres(descripcion).ToUpper());
+            commands.Add(FormatearPrecio(monto, 2));
+            commands.Add(FormatearPrecio(0, 2));
+            SendData(commands);
         }
 
         // Funcion que Paga un Tique.

@@ -210,14 +210,14 @@ Partial Class frmVerComprasCliente
         Me.Fecha.Name = "Fecha"
         Me.Fecha.ReadOnly = True
         '
-        'Importe
+        'Monto
         '
         Me.Importe.DataPropertyName = "MontoTotal"
         DataGridViewCellStyle2.Format = "C2"
         DataGridViewCellStyle2.NullValue = Nothing
         Me.Importe.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Importe.HeaderText = "Importe"
-        Me.Importe.Name = "Importe"
+        Me.Importe.HeaderText = "Monto"
+        Me.Importe.Name = "Monto"
         Me.Importe.ReadOnly = True
         '
         'Sucursal

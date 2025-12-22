@@ -731,7 +731,7 @@ Partial Class frmChequeAdministracion
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(154, 16)
         Me.Label7.TabIndex = 372
-        Me.Label7.Text = "Importe"
+        Me.Label7.Text = "Monto"
         '
         'Label5
         '

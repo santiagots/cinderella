@@ -1,9 +1,7 @@
-﻿Imports Negocio
-Imports Microsoft.Office.Interop
-Imports SistemaCinderella.Formularios.Facturacion
-Imports System.Threading.Tasks
+﻿Imports System.Threading.Tasks
 Imports Common.Core.Exceptions
 Imports Common.Core.Helper
+Imports SistemaCinderella.Formularios.Facturacion
 
 Public Class frmControladorFiscal
 
@@ -13,6 +11,7 @@ Public Class frmControladorFiscal
         EjecutarAsync(Async Function() As Task
                           frmControladorFiscalViewModel = New frmControladorFiscalViewModel(My.Settings.Sucursal)
                           FrmControladorFiscalViewModelBindingSource.DataSource = frmControladorFiscalViewModel
+                          frmControladorFiscalViewModel.DataGridImpuestos = dgTickets
                           Await frmControladorFiscalViewModel.BuscarAsync()
                           EvaluarPermisos()
                       End Function)
